@@ -1,6 +1,7 @@
 /datum/computer_file/program/robotact
 	filename = "robotact"
 	filedesc = "RoboTact"
+	category = PROGRAM_CATEGORY_ROBO
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_icon_state = "command"
@@ -22,7 +23,7 @@
 
 /datum/computer_file/program/robotact/run_program(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
-		to_chat(user, "<span class='warning'>A warning flashes across \the [computer]: Device Incompatible.</span>")
+		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
 		return FALSE
 	. = ..()
 	if(.)
@@ -39,7 +40,7 @@
 	var/mob/living/silicon/robot/borgo = tablet.borgo
 
 	data["name"] = borgo.name
-	data["designation"] = borgo.designation //Borgo module type
+	data["designation"] = borgo.model //Borgo model type
 	data["masterAI"] = borgo.connected_ai //Master AI
 
 	var/charge = 0
@@ -57,13 +58,14 @@
 	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
 	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade
 	data["thrustersStatus"] = "[borgo.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
+	data["selfDestructAble"] = (borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/))
 
-	//DEBUG -- Cover, TRUE for locked
+	//Cover, TRUE for locked
 	data["cover"] = "[borgo.locked? "LOCKED":"UNLOCKED"]"
 	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
 	data["locomotion"] = "[borgo.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[borgo.lockcharge?"DISABLED":"ENABLED"]"]"
-	//Module wire. FAULT if cut, NOMINAL otherwise
-	data["wireModule"] = "[borgo.wires.is_cut(WIRE_RESET_MODULE)?"FAULT":"NOMINAL"]"
+	//Model wire. FAULT if cut, NOMINAL otherwise
+	data["wireModule"] = "[borgo.wires.is_cut(WIRE_RESET_MODEL)?"FAULT":"NOMINAL"]"
 	//DEBUG -- Camera(net) wire. FAULT if cut (or no cameranet camera), DISABLED if pulse-disabled, NOMINAL otherwise
 	data["wireCamera"] = "[!borgo.builtInCamera || borgo.wires.is_cut(WIRE_CAMERA)?"FAULT":"[borgo.builtInCamera.can_use()?"NOMINAL":"DISABLED"]"]"
 	//AI wire. FAULT if wire is cut, CONNECTED if connected to AI, READY otherwise
@@ -110,7 +112,7 @@
 		if("alertPower")
 			if(borgo.stat == CONSCIOUS)
 				if(!borgo.cell || !borgo.cell.charge)
-					borgo.visible_message("<span class='notice'>The power warning light on <span class='name'>[borgo]</span> flashes urgently.</span>", \
+					borgo.visible_message(span_notice("The power warning light on [span_name("[borgo]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
 					playsound(borgo, 'sound/machines/buzz-two.ogg', 50, FALSE)
 
@@ -134,12 +136,18 @@
 			borgo.lamp_intensity = params["ref"]
 			borgo.toggle_headlamp(FALSE, TRUE)
 
+		if("selfDestruct")
+			if(borgo.stat || borgo.lockcharge) //No detonation while stunned or locked down
+				return
+			if(borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/)) //This option shouldn't even be showing otherwise
+				borgo.self_destruct(borgo)
+
 /**
-  * Forces a full update of the UI, if currently open.
-  *
-  * Forces an update that includes refreshing ui_static_data. Called by
-  * law changes and borg log additions.
-  */
+ * Forces a full update of the UI, if currently open.
+ *
+ * Forces an update that includes refreshing ui_static_data. Called by
+ * law changes and borg log additions.
+ */
 /datum/computer_file/program/robotact/proc/force_full_update()
 	if(tablet)
 		var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.borgo, src)

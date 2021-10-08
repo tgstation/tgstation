@@ -1,0 +1,354 @@
+2015-02-04:
+  Danno:
+  - bugfix: Fixes dufflebag's storage capacity.
+  Deantwo:
+  - bugfix: Removes duplicate fluorine from Chemical Dispenser.
+  - bugfix: Added GoonChems to the Portable Chem Dispenser.
+  - bugfix: Added cancel buttons to the ChemMaster and CondiMaster when making bottles,
+      pills, etc.
+  Delimusca:
+  - rscadd: Added new foam armblade toy to arcade prizes.
+  - tweak: Slimes can drag themselves to mobs to start feeding.
+  - tweak: Attacking another slime will pull them off their victim if they're feeding
+      or steal some of their mass.
+  GunHog:
+  - rscadd: 'Five new silicon emotes: *buzz2, *chime, *honk, *sad and *warn'
+  Incoming5643:
+  - rscadd: New contraband crate containing fifty butterflies.
+  - tweak: Shuttle will now always arrive, but won't launch in rounds where it would've
+      been previously auto-recalled.
+  Menshin:
+  - bugfix: Fixed being unable to place cables on plating.
+  Paprika:
+  - wip: Helmets for hardsuits are stored inside the suit and cannot be equipped without
+      the suit on.
+  - tweak: EVA space suits are now lighter for faster movement but lack flash or welding
+      protection, don't hide your identity and have less radiation protection.
+  Perakp:
+  - tweak: Tweaked slowdown due to coldness when in in low gravity.
+  Steelpoint:
+  - rscadd: ERT base equipment rooms are now access restriction to each role.
+  - tweak: ERT commander spawns wearing hardsuit for identification.
+  - rscadd: Two boxes of metal foam grenades added for ERT engineers.
+  - rscadd: Deep space sensors recently detected the derelict remains of the NTSS
+      Omen, a outdated Medical Frigate thought lost, within close proximity to Space
+      Station 13.
+  - rscadd: If any SS13 EVA Personal are able to locate this ship, they will be able
+      to pilot it back to the station for recovery. The ship may also have cordinates
+      for other locations.
+  Xhuis:
+  - rscadd: Changelings now have the ability Strained Muscles, which lets them move
+      at inhuman speeds at the cost of rapid stamina damage. It costs one evolution
+      points=.
+  - rscadd: Changelings now have the ability Augmented Eyesight, which lets them see
+      creatures through walls and see in the dark. It costs two evolution points.
+  - tweak: After many failed raids, the Syndicate have finally done something about
+      poor communications between cyborgs and operatives.
+  - rscadd: Syndicate Cyborgs now come equipped with operative pinpointers, which
+      will automatically point to the nearest nuclear operative.
+  - tweak: Handheld crew monitors can now be stored in medical belts.
+2015-02-05:
+  Danno:
+  - rscadd: Added suicide messages for all gun types and various different items.
+  Paprika:
+  - wip: Compacted ERT room by removing equipment rooms, filler rooms and pre-spawned
+      mechs.
+  - tweak: Rebalanced Pulse weapons to have more shots, faster charge, EMP immunity
+      and modified sprites.
+  - rscadd: ERT spawns fully equipped with no-slowdown suits.
+  - rscadd: Added blood and bleeding. If you take enough brute damage on a certain
+      limb, you will start bleeding, and will need to patch your bleeding with gauze
+      from medbay. You can replace lost blood by eating nutritious food and waiting
+      for your heart to reproduce it, or by getting a blood transfusion from an IV
+      drip.
+  Vekter:
+  - rscadd: Added a toy red button to the Arcade cabinets.
+2015-02-18:
+  Dannno:
+  - rscadd: Added proper slurring when drunk.
+  Deantwo:
+  - tweak: Updated the ChemMaster's UI to the station default along with some functionality
+      improvements.
+  - bugfix: You can now spam the 'Ready' button as much as you want without it setting
+      you 'Not ready' again.
+  Dorsidwarf:
+  - rscadd: Added the ability to call Central Command for the nuclear authentication
+      codes. This requires a captain-level ID and admin approval, and warns the crew.
+  Gun Hog:
+  - tweak: E.X.P.E.R.I-MENTOR meteor storm event replaced with a fireball that targets
+      random nearby mob.
+  - tweak: EMP event range reduced.
+  - bugfix: Self-duplicating relics limited to 10 copies.
+  - tweak: Nanotrasen has released a firmware patch for the Ore Redemption Machine,
+      which now allows the station AI, cyborgs, and maintenance drones to smelt raw
+      resources without the need of a valid identification card installed.
+  - tweak: Nanotrasen scientists have completed their designs for a lightweight, compacted
+      anti-armor ion weapon, without loss of efficiency. In theory, such a weapon
+      could easily fit within standard issue backpacks and satchels. With sufficient
+      research into weapons technology and materials, Nanotrasen believes a working
+      prototype can be fabricated.
+  Iamgoofball:
+  - rscadd: Buffs the shit out of Styptic Powder and Silver Sulf, they're now viable
+      to use. Synthflesh is still good for general treatment, but overall Styptic
+      and Silver Sulf deal with their respective damage types way better now.
+  - tweak: Improves kinetic accelerator's mining strength.
+  - tweak: The kinetic accelerator's cooldown can be decreased by tweaking the thermal
+      exchanger with a screwdriver.
+  - tweak: The range can be increased with plasma sheets
+  Incoming5643:
+  - rscadd: Medical borgs have been given full surgery tools which they can't fail
+      a procedure with.
+  - rscadd: Medical borgs also have rechargeable gauze.
+  - tweak: Borg hypo's omnizine replaced with salbutamol, salglu and charcoal.
+  - rscadd: Slime and Jelly mutant races now actually contain slime jelly. While playing
+      as these races you will naturally produce it internally from your nutrition,
+      so be sure to stay well fed as losing too much is dangerous to your health!
+      Beware of chems that clear toxins, as they can be rapidly fatal to you!
+  Jordie0608:
+  - tweak: Veil render and rifts changed to spawn with vars, rifts can be closed with
+      a nullrod.
+  Lo6a4evskiy:
+  - rscadd: General record now contains a species field and a photo of the crewmember.
+      Security record consoles allow you to update it with a photo taken in-game (with
+      detective's camera, for example, or AI's).
+  - rscadd: Expanded functionality of security HUDs to display rank and photos.
+  - rscadd: Medical HUDs allow user to change others' mental and physical status.
+      Currently has no gameplay effect other than changing records.
+  - rscadd: Medical HUDs can perform an examination at the distance, similrarly to
+      how attacking yourself with help intent works. Has limited ability to detect
+      suffocation and toxin damage.
+  Menshin:
+  - rscadd: Solar control computers remade with NanoUI
+  Paprika:
+  - tweak: Added rnd requirements to borg upgrades and tweaked the prices.
+  - rscadd: Changed some clothing around. Added a turtleneck for the HoS. Removed
+      'civillian' armor and gave normal armor to the bartender and HoP. Added flash
+      protection to the HoS' eyepatch, it functions like sunglasses now. Additionally,
+      added the ability to store ammo on your shoulder holster as detective.
+  - rscadd: Removed the defib steal objective. Added a compact defibrillator for the
+      CMO that equips to the belt. Removed defibrillators from RND. Removed the requirement
+      for people to not wear armor to revive them with defibs. Doubled defib timers
+      (10 minutes before permadeath).
+  - rscadd: Flashlights can be attached to pulse carbines.
+  - rscadd: Miners spawn with a brute patch.
+  - tweak: Mining station's sleeper has been replaced with an IV drip and more medkits.
+  - rscadd: Added hard-light holotape. This holographic police or engineering hazard
+      tape will block entry if you're running, so you need to walk to pass it. This
+      is to help people not sprint into breaches or crime scenes.
+  - bugfix: Fixed being able to sling the strapless improvised shotgun on your back.
+  - tweak: Reverted the price of the ebow to 12tc and removed the range limit of its
+      bolts.
+  Sometinyprick:
+  - rscadd: Novely pig mask prize from arcade machines, can be toggled to make you
+      squeal like a pig.
+  Steelpoint:
+  - rscadd: Security Cyborgs Advance Taser have been replaced with a Disabler.
+  TZK13:
+  - rscadd: Adds plaid skirts and new schoolgirl outfits to the autodrobe
+  - tweak: Novaflowers apply a firestack for every 20 potency they have.
+  - tweak: You can now juice whole watermelons instead of slices.
+  - rscadd: 'Advancements in the field of virology by Nanotrasen''s finest have uncovered
+      three new disease symptoms for further research:'
+  - rscadd: Ocular Restoration heals any eye trauma experienced by the infected patient.
+  - rscadd: Revitiligo increases the pigmentation levels of the infected patient's
+      skin.
+  - rscadd: Spontaneous Combustion ignites the infected patient without warning.
+  Vekter:
+  - rscadd: Added shot glasses! Can be obtained from the Booze-o-Mat.
+  - rscadd: A new premium vodka has been added to the game, hidden in a special spot.
+  - tweak: Due to constant attempts to break into the station's safe, the contents
+      have been relocated and have not been replaced. We promise. There is absolutely
+      NO reason to break into the vault's safe anymore.
+  - tweak: Each shot glass now holds 15 units, and the drinker takes all 15 in one
+      gulp instead of 5 at a time. This means you can mix certain shots (namely, the
+      B-52 and Toxins Special) in a shot glass. Both drinks have been made exclusive
+      to shot glasses and will no longer show their specific sprite in a normal glass.
+  - rscadd: Added new sprites for most alcohol in shot glasses. Everything else will
+      show up as 'shot of... what?'.
+  - bugfix: Fixed shot glasses turning into regular glasses when filled.
+  - bugfix: Fixed tequila bottle sprites not showing up.
+  - bugfix: Fixed a typo!
+  - tweak: Roboticists will now start with a full toolbelt instead of a toolbox.
+  drovidi:
+  - tweak: Blobs who burst in space will be given a 30 second warning before dying.
+  - tweak: If a blob does die from bursting in space, a new crewmember will be infected.
+  - bugfix: If there are no blobs or infected crew left after bursting, the round
+      will now end properly, rather than becoming endless.
+  phil235:
+  - tweak: You no longer need to cut the syphon wire to deconstruct air alarms.
+  - rscadd: 'Cooking overhaul: microwave recipes are converted to tablecraft recipes.'
+  - rscadd: Added customizable food (burger,sandwich,spaghettis,soup,salad,cake,bread,kebab,pie)
+      with specific color depending on ingredients used.
+  - rscadd: Added new food ingredients (dough, flat dough, cake batter, pie dough,
+      doughslice, bun, raw pastry base, pastry base, raw cutlet, cutlet, pizzabread).
+      Dough is made by mixing egg and flour, then transformed by using knife, rollingpin,
+      milk and microwave. Meat is now sliceable into rawcutlets (specific color for
+      each meat type).
+  - rscadd: Changed food recipes a bit (replacing stuff with new food ingredients).
+  - rscadd: Repurposed the microwave to actually cook certain food items(no reagents
+      required), renamed it microwave oven and added a power setting to it.
+  - rscadd: Bowl is no longer trash but a beaker-like container that is used in salad&amp;soup
+      recipes. Also, milk and soymilk cartons as well as flour packs are now condiment
+      bottles.
+  - rscadd: Changed the hunger system a bit, sugar becomes a normal reagent again.
+      Faster nutrition drain is now handled by a variable in junk food. Also added
+      a slight buff to vitamin.
+  xxalpha:
+  - rscadd: You now hear the voice of the chosen deity in prayers.
+2015-02-25:
+  Cheridan:
+  - rscadd: Foam now carries reagents, similarly to smoke. Have fun with that.
+  Dannno:
+  - rscadd: Altered the sprite for security hardsuits. The old sprite is now a HoS
+      specific hardsuit.
+  Delimusca:
+  - rscadd: Turret's guns replaced by a heavy energy cannon.
+  - tweak: Firing a heavy weapon sindlehandedly can make it recoil out of your hands.
+  Gun Hog:
+  - tweak: Nanotrasen has released new design specifications for the prototype combination
+      of standard night-vision equipment and Optical Meson Scanners. We believe that
+      this will address the concerns many Shaft Miners have concerning visiblity in
+      a potentially unsafe environment.
+  - bugfix: Fixed malf AI's turret upgrade power not working.
+  Iamgoofball:
+  - rscadd: You can now go into hyperglycaemic shock from having over 200u of Sugar
+      in your body at once. Treat it with Insulin.
+  - rscadd: Insulin has been added. Use it to treat hyperglycaemic shock. You can
+      get it from medical vendors and the Cargo medicine supplies crate.
+  - rscadd: Medvendor contents have been reduced from medical having everything they
+      need at roundstart level, and toxin bottles are now back in the vendor.
+  - rscadd: Medical Analyzers now have 2 modes, Medical Scan and Chemical Scan. You
+      can swap between modes by clicking on it in hand.
+  - rscadd: Medical scan is default behavior. Chemical scan shows all the reagents
+      inside the mob at the time, along with any addictions the mob has. It will show
+      if a reagent is overdosing.
+  - rscadd: Tobacco and Space Tobacco have Nicotine in them now.
+  - rscadd: Adds Methamphetamine to the game. Mix it with Ephedrine, Iodine, Phosphorous,
+      and Hydrogen at 374K.
+  - rscadd: Or, look around in Maintenance for Muriatic Acid, Caustic Soda, and Hydrogen
+      Chloride. Recipes are also available for these.
+  - rscadd: Adds Saltpetre. Mix it with Potassium, Nitrogen, and Oxygen.
+  - rscadd: Adds Bath Salts, mix it with Bad Food, Saltpetre, Nutriment, Space Cleaner,
+      Universal Enzyme, Tea, and Mercury at 374K.
+  - rscadd: Adds Aranesp. Mix it with Epinephrine, Atropine, and Morphine.
+  - rscadd: Adds Hotline. Get it from Poppy plants.
+  - rscadd: Strange Reagent revival was changed. It now won't gib but won't do anything
+      above a 100 BRUTE or BURN threshold.
+  - rscadd: Carpet now applies carpet tiles to whatever flooring it hits. Mix it with
+      Space Drugs and Blood.
+  - rscadd: Colorful Reagent colors have been improved drastically and now are more
+      varied and nicer looking.
+  - rscadd: Corn Starch has been added. Get it from juicing Corn.
+  - rscadd: Corn Syrup has been added. Mix it with Corn Starch and S-Acid.
+  - rscadd: Corgium has been added. Mix it with Nutriment, Colorful Reagent, Strange
+      Reagent, and Blood at 374K.
+  - rscadd: Adds Quantum Hair Dye. Mix it with Colorful Reagent, Radium, and Space
+      Drugs.
+  - rscadd: Adds Barber's Aid. Mix it with Carpet, Radium, and Space Drugs.
+  - rscadd: Adds Concentrated Barber's Aid. Mix it with Barber's Aid and Unstable
+      Mutagen.
+  - rscadd: Re-adds Chlorine Trifluoride. Mix it with Chlorine and Fluorine at 424K.
+  - rscadd: Adds Black Powder. Mix it with Saltpetre, Charcoal, and Sulfur. Ignite
+      it for an explosion at 474K
+  - rscadd: Finally nerfs Salglu Solution. It's no longer tricord 2.0.
+  - rscadd: Salt recipe is now Water + Sodium + Chlorine due to problems with recipe
+      mixing.
+  Incoming5643:
+  - rscadd: A new event has been added to the wizards summon events spell that gives
+      the game a distictively more roleplaying flair.
+  - rscadd: Optional population cap functionality has been added to the game. By default
+      all caps are disabled. Server owners should refer to config.txt to see their
+      list of options.
+  - rscadd: Medical borgs now have access to a deployable onboard roller bed. Should
+      the bed become lost, any roller bed may be used in its place.
+  Mandurrh:
+  - rscadd: Added interchangeable bar signs
+  - rscadd: Added bays fountain machines for the bar. Soda and Beer. Allowing bartenders
+      to have easier access to mix drinks and making more to make their job a little
+      less boring
+  - rscadd: Added color tiles to the light up floor tiles.
+  - rscadd: Added metal, glass, and cable to bar back room at round start for bartender
+      to make colored light dance floors.
+  - bugfix: Fixes clown cuffing both mobs and two pairs of cuffs appearing.
+  - bugfix: Fixes clown not being able to use his stamp as antag so no meta.
+  - bugfix: Fixes sleepypen bug. Instead of only dispensing 50u it dispenses the full
+      55u.
+  - bugfix: Fixed silicons not being able to pass through holotape.
+  Menshin:
+  - tweak: Getting into regenerative statis now puts the changeling into unconscious
+      state.
+  - bugfix: Fixed changeling 'Revive' not working.
+  Paprika:
+  - rscadd: Added an assistant cap, unlimited by default.
+  - tweak: Batons now slowly lose power when left on.
+  - rscadd: Batons, flashbangs and handcuffs can be seen when stored in a belt.
+  - tweak: Computers now emit light when they're on or bluescreened.
+  - rscadd: Added hotkeys for OOC and custom emotes. Press O and M when in hotkey
+      mode. Remember not to ick in ock!
+  - rscadd: Added megaphones for the HoS, HoP, and QM.
+  - tweak: Goliath tentacles no longer stun you if you cross them. They will only
+      stun you if you don't move away from them in time. They can do up to 15 damage
+      now, in addition to stunning you.
+  - tweak: Changed a lot of mining gear and prices. The resonator can now have up
+      to 3 fields active at once, but the fields need to detonate before they crush
+      rocks. Tweak the time before the fields detonate with a screwdriver and upgrade
+      the amount of fields at once with sheets of diamond.
+  - tweak: Overhauled straight mining tools. The sonic jackhammer is now the wall-crushing
+      tool, the diamond drill simply mines really fast. Borgs can now get upgraded
+      with the diamond mining tool with only a single sheet of diamond and an upgrade
+      module, they don't need illegal tech modules.
+  - tweak: Mining drills and the sonic jackhammer now draw power when they drill down
+      mineral walls. They can be recharged using any type of weapon recharger or by
+      replacing the cell using a screwdriver on them.
+  - experiment: Space now emits a dim light to adjacent tiles.
+  - tweak: Syndicate shotguns now start with buckshot instead of stunslugs.
+  - bugfix: Fixed welding tools using fuel when being switched on.
+  - tweak: Added a firing delay between shooting electrodes.
+  - tweak: Changed the stun revolver from a high-capacity taser to a disabler with
+      extra capacity.
+  - rscadd: Added a unique stun pistol for the head of security. It is a double capacity
+      taser with no shot delay and a loyalty pin, though it lacks a disable mode.
+  RandomMarine:
+  - rscadd: New brute treatment kit crate for cargo.
+  RemieRichards:
+  - rscadd: Explosions will now blow (throw) items away from the epicenter
+  - rscadd: Sharp items can now embedd themselves in a human's limbs
+  - rscadd: Embedded items have a chance to do some damage (based on w_class) each
+      life() call
+  - rscadd: Embedded items have a chance to fall out doing some more damage, but removing
+      the object
+  - rscadd: Adds a surgery to remove Embdedded objects
+  - rscadd: Adds throwing stars as an uplink item (100% chance to embedd)
+  - rscadd: Items placed on tables now center to exactly where you clicked.
+  Steelpoint:
+  - rscadd: SS13's Head of Security has received a new attempted 1:1 recreation of
+      a Old Earth weapon, the Captain's Antique Laser Gun.
+  - rscadd: This gun features three firing modes, Tase, Laser and Disable. However
+      this gun lacks the capability to recharge in the field, and is extreamly expensive.
+  - rscadd: 'INTERCEPTED TRANSMISSION REPORT: The Syndicate have expressed a interest
+      in this new weapon, and have instructed field agents to do whatever they can
+      to steal this weapon.'
+  TheVekter:
+  - rscadd: Box's vault nuke has been replaced with immobile Nuclear Self-Destruct
+      Mechanism.
+  - rscadd: Vault's new green floor tiles turn flashing red when Self-Destruct is
+      activated.
+  Xhuis:
+  - rscadd: Syndicate contacts have discovered new ways to manipulate alarms. Malfunctioning
+      AIs, as well as normal emags, can now disable the safeties on air and fire alarms.
+  - rscadd: When one emags an air alarm, its safeties are disabled, giving it the
+      Flood environmental type, which disables scrubbers as well as vent pressure
+      checks. Burn, pigs, burn!
+  - rscadd: When one emags a fire alarm, its thermal sesnsors are disabled. This will
+      prevent automatic alerts due to the alarm being unable to recognize high temperatures.
+  - rscadd: Malf AIs gain two new modules, both of which disable ALL air alarm safeties
+      and thermal sensors. These are separate abilities.
+  - tweak: Air and fire alarms have notifications on their interface about the current
+      safety status. One only has to glance at one to see that it's been tampered
+      with.
+  phil235:
+  - bugfix: Fixed arcade machines being usable from inside lockers to dupe rewards.
+  - rscdel: Silicons can no longer be grabbed by anyone. No more silicon choking
+  - rscadd: Custom food can now be renamed using a pen.
+  xxalpha:
+  - rscadd: 'Added new graffiti: cyka, prolizard, antilizard'

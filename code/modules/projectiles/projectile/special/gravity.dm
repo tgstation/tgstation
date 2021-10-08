@@ -11,11 +11,11 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/projectile/gravityrepulse/Initialize()
+/obj/projectile/gravityrepulse/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/repulse/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
+		power = min(C.gun?.power, 15)
 
 /obj/projectile/gravityrepulse/on_hit()
 	. = ..()
@@ -30,7 +30,7 @@
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.safe_throw_at(throwtarget,power+1,1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		thrown_items[A] = A
-	for(var/turf/F in range(T,power))
+	for(var/turf/F in RANGE_TURFS(power, T))
 		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/projectile/gravityattract
@@ -46,11 +46,11 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/projectile/gravityattract/Initialize()
+/obj/projectile/gravityattract/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/attract/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
+		power = min(C.gun?.power, 15)
 
 /obj/projectile/gravityattract/on_hit()
 	. = ..()
@@ -64,7 +64,7 @@
 				continue
 		A.safe_throw_at(T, power+1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		thrown_items[A] = A
-	for(var/turf/F in range(T,power))
+	for(var/turf/F in RANGE_TURFS(power, T))
 		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/projectile/gravitychaos
@@ -80,11 +80,11 @@
 	var/power = 4
 	var/list/thrown_items = list()
 
-/obj/projectile/gravitychaos/Initialize()
+/obj/projectile/gravitychaos/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/gravity/chaos/C = loc
 	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
+		power = min(C.gun?.power, 15)
 
 /obj/projectile/gravitychaos/on_hit()
 	. = ..()
@@ -98,5 +98,5 @@
 				continue
 		A.safe_throw_at(get_edge_target_turf(A, pick(GLOB.cardinals)), power+1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
 		thrown_items[A] = A
-	for(var/turf/Z in range(T,power))
+	for(var/turf/Z as anything in RANGE_TURFS(power,T))
 		new /obj/effect/temp_visual/gravpush(Z)

@@ -8,7 +8,7 @@
 	mind_control_duration = 2400
 
 /obj/item/organ/heart/gland/spiderman/activate()
-	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
+	to_chat(owner, span_warning("You feel something crawling in your skin."))
 	owner.faction |= "spiders"
 	var/obj/structure/spider/spiderling/S = new(owner.drop_location())
 	S.directive = "Protect your nest inside [owner.real_name]."

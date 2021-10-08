@@ -15,9 +15,11 @@ import './styles/themes/ntos.scss';
 import './styles/themes/paper.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
+import './styles/themes/wizard.scss';
+import './styles/themes/admin.scss';
 
 import { perf } from 'common/perf';
-import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 import { setupHotKeys } from './hotkeys';
 import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
@@ -70,6 +72,7 @@ const setupApp = () => {
     setupHotReloading();
     module.hot.accept([
       './components',
+      './debug',
       './layouts',
       './routes',
     ], () => {

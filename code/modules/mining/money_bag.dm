@@ -10,7 +10,7 @@
 	max_integrity = 100
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/bag/money/Initialize()
+/obj/item/storage/bag/money/Initialize(mapload)
 	. = ..()
 	if(prob(20))
 		icon_state = "moneybagalt"
@@ -28,3 +28,11 @@
 	new /obj/item/coin/gold(src)
 	new /obj/item/coin/gold(src)
 	new /obj/item/coin/adamantine(src)
+
+///Used in the dutchmen pirate shuttle.
+/obj/item/storage/bag/money/dutchmen/PopulateContents()
+	for(var/iteration in 1 to 9)
+		new /obj/item/coin/silver/doubloon(src)
+	for(var/iteration in 1 to 9)
+		new /obj/item/coin/gold/doubloon(src)
+	new /obj/item/coin/adamantine/doubloon(src)

@@ -1,7 +1,8 @@
 /obj/machinery/computer/bank_machine
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
-	icon = 'goon/icons/obj/goon_terminals.dmi'
+	icon_screen = "vault"
+	icon_keyboard = "security_key"
 	idle_power_usage = 100
 
 	var/siphoning = FALSE
@@ -11,7 +12,7 @@
 	var/minimum_time_between_warnings = 400
 	var/syphoning_credits = 0
 
-/obj/machinery/computer/bank_machine/Initialize()
+/obj/machinery/computer/bank_machine/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 	radio.subspace_transmission = TRUE
@@ -34,7 +35,7 @@
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			D.adjust_money(value)
-			to_chat(user, "<span class='notice'>You deposit [I]. The Cargo Budget is now [D.account_balance] cr.</span>")
+			to_chat(user, span_notice("You deposit [I]. The Cargo Budget is now [D.account_balance] cr."))
 		qdel(I)
 		return
 	return ..()

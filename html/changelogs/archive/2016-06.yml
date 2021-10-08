@@ -1,0 +1,660 @@
+2016-06-01:
+  coiax:
+  - rscadd: Added a mirror to the beach biodome. Beach Bums, rejoyce!
+  pudl:
+  - rscadd: The brig infirmary has received a redesign.
+2016-06-02:
+  Joan:
+  - tweak: Closed false walls will block air.
+  Lati:
+  - rscadd: R&D required levels and origin tech levels have been rebalanced
+  - experiment: Overall, items buildable in R&D have lower tech levels and items in
+      other departments have their tech levels raised. Remember to use science goggles
+      to see tech levels of items!
+  - tweak: There are now level gates at high levels. R&D scientists will need help
+      from others to get past these level gates.
+  - tweak: Other departments such as hydroponics and genetics will be important to
+      R&D's progress now and xenobio, mining and cargo are more important than before
+  - tweak: Efficiency upgrades are back in R&D machines and tweaked to be less powerful
+      in autolathes
+  - rscdel: Reliability has been removed from all items
+  - bugfix: Most bugs in R&D machines should be fixed
+  PKPenguin321 & Nienhaus:
+  - rscadd: Letterman jackets are now available from the ClothesMate.
+  Quiltyquilty:
+  - rscadd: The bar has seen a redesign.
+  coiax:
+  - rscadd: Clone pods now notify the medical channel on a successful clone. They
+      also notify the medical channel if the clone dies or is horribly mutilated;
+      but not if it is ejected early by authorised medical personnel.
+  - rscadd: Cloning pods now are more capable of cloning humanoid species that do
+      not breathe.
+  - bugfix: You can only be damaged once by a shuttle's arrival. It is still unpleasant
+      to be in the path of one though; try to avoid it.
+  - rscadd: Adds Asteroid emergency shuttle to shuttle templates. It is a very oddly
+      shaped one though, it might not be compatible with all stations.
+  - rscdel: The Chaplain soulshard can only turn a body into a shade once. A released
+      shade can still be reabsorbed by the stone to heal it.
+  - rscadd: The shuttle manipulator now has a Fast Travel button, for those admins
+      that really want a shuttle to get to where its going FAST.
+2016-06-04:
+  MrStonedOne:
+  - bugfix: fixes see_darkness improperly hiding ghosts in certain cases.
+  Xhuis:
+  - tweak: Clockwork marauders can now smash walls and tables.
+  - tweak: Servants are no longer turned into harvesters by Nar-Sie but instead take
+      heavy brute damage and begin to bleed. Similarly, cultists are no longer converted
+      by Ratvar but instead take heavy fire damage and are set ablaze.
+  - rscadd: Added clockwork reclaimers. Ghosts can now click on Ratvar to become clockwork
+      reclaimers - small constructs capable of forcefully converting those that still
+      resist Ratvar's reign. Alt-clicking a valid target will allow the reclaimer
+      to leap onto the head of any non-servant, latching onto their head and converting
+      the target if they are able. The target will be outfitted with an unremovable,
+      acid-proof hat version of the reclaimer. The reclaimer will be able to speak
+      as normal and attack its host and anything nearby. If the reclaimer's host goes
+      unconscious or dies, it will leap free.
+  - rscadd: Added pinion airlocks. These airlocks can only be opened by servants and
+      conventional deconstruction will not work on them. They can be created by proselytizing
+      a normal airlock or from Ratvar.
+  - rscadd: Added ratvarian windows. They are created when Ratvar twists the form
+      of a normal window, and there are both single-direction and full-tile variants.
+  - bugfix: Non-servants can no longer use clockwork proselytizers or mending motors.
+  - bugfix: Servants are now deconverted properly.
+  coiax:
+  - bugfix: The cloning pod now sounds robotic on the radio.
+  - rscadd: For extra observer drama, ghosts can now visibly see the countdown of
+      syndicate bombs, nuclear devices, cloning pods, gang dominators and AI doomsday
+      devices.
+2016-06-05:
+  Joan:
+  - rscadd: Clockwork structures can be damaged by projectiles and simple animals,
+      and will actually drop debris when destroyed.
+  - rscadd: AIs and Cyborgs that serve Ratvar can control clockwork airlocks and clockwork
+      windoors.
+  - rscadd: The clockwork proselytizer can now proselytize windows, doors, grilles,
+      and windoors.
+  - rscadd: The clockwork proselytizer can proselytize wall gears and alloy shards
+      to produce replicant alloy. It can also proselytize replicant alloy to refill,
+      in addition to refilling by attacking it with alloy.
+  - rscadd: The clockwork proselytizer can replace clockwork floors with clockwork
+      walls and vice versa.
+  - rscadd: Ratvar will convert windoors, tables, and computers in addition to everything
+      else.
+  - tweak: Ratvar now moves around much faster.
+  - rscadd: Ratvar and Nar-Sie will break each other's objects.
+  - tweak: The blind eye from a broken ocular warden now serves as a belligerent eye
+      instead of as replicant alloy. The pinion lock from a deconstructed clockwork
+      airlock now serves as a vanguard cogwheel instead of as replicant alloy.
+  - rscadd: Clockwork walls drop a wall gear when removed by a welding tool. The wall
+      gear is dense, but can be climbed over or unwrenched, and drops alloy shards
+      when broken. Clockwork walls drop alloy shards when broken by other means.
+  - bugfix: Fixed Nar-Sie wandering while battling Ratvar.
+  - bugfix: Ratvarian Spears now last for the proper 5 minute duration.
+  - bugfix: Servant communication now has ghost follow links.
+  - imageadd: New sigil sprites, courtesy Skowron.
+  - imageadd: Sigils of Transgression have a visual effect when stunning a target.
+  - imageadd: Clockwork spears now have a visual effect when breaking.
+  PKPenguin321:
+  - rscadd: The CMO's medical HUD implant now comes with a one-use autoimplanter for
+      ease of use.
+  RemieRichards:
+  - rscadd: Slimes may now be ordered to attack! You must be VERY good friends with
+      the slime(s) to give this command, asking them to attack their friends or other
+      slimes will result in them liking you less so be careful!
+  X-TheDark:
+  - rscadd: Mech battery replacement improved. The inserted battery's charge will
+      be set to the same percentage of the removed one's (or 10%, if removed one's
+      was less).
+  coiax:
+  - bugfix: Clicking the (F) link when an AI talks in binary chat will follow its
+      camera eye, the same as when (F) is clicked for its radio chat.
+  - bugfix: Laughter demons should now always let their friends go when asked correctly.
+  - rscadd: Cloning pods now grab the clone's mind when the body is ejected, rather
+      than when it starts cloning.
+  - rscadd: Wizards have been experimenting with summoning the slightly less lethal
+      "laughter demon". Please be aware that these demons appear to be nearly as dangerous
+      as their slaughter cousins. But adorable, nonetheless.
+  kevinz000:
+  - rscadd: Gravity Guns! It is a mildly expensive R&D gun that has a 5 second cooldown
+      between shots, but doesn't need to be recharged. It has two modes, attract and
+      repulse. For all your gravity-manipulation needs!
+2016-06-07:
+  Bobylein:
+  - rscadd: Nanotrasen is finally able to source transparent bottles for chemistry.
+  Iamgoofball:
+  - experiment: The Greytide Virus got some teeth.
+  Joan:
+  - wip: This is a bunch of Clockwork Cult changes.
+  - rscadd: Added the Clockwork Obelisk, an Application scripture that produces a
+      clockwork obelisk, which can Hierophant Broadcast a large message to all servants
+      or open a Spatial Gateway with 5 uses and a 10 second duration to any conscious
+      servant or clockwork obelisk.
+  - wip: Spatial Gateways of any source have doubled uses and duration when the target
+      is a clockwork obelisk.
+  - rscadd: Added the Mania Motor, an Application scripture that produces a mania
+      motor, which, while active, causes hallucinations and brain damage in all nearby
+      humans.
+  - wip: The Mania Motor will try to convert any non-servant human directly adjacent
+      to it at an additional power cost and will remove brain damage, hallucinations,
+      and the druggy effect from servants.
+  - rscadd: Added the Vitality Matrix, an Application scripture that produces a sigil
+      that will slowly drain health from non-servants that remain on it. Servants
+      that remain on the sigil will instead be healed with the vitality drained from
+      non-servants.
+  - wip: The Vitality Matrix can revive dead servants for a cost of 25 vitality plus
+      all non-oxygen damage the servant has. If it cannot immediately revive a servant,
+      it will still heal their corpse.
+  - experiment: Most clockwork structures, including the Mending Motor, Interdiction
+      Lens, and the newly added Clockwork Obelisk and Mania Motor, now require power
+      to function.
+  - wip: Mending Motors can still use alloy for power.
+  - tweak: The Sigil of Transmission has been remade into a power battery and will
+      power directly adjecent clockwork structures. Sigils of Transmission start off
+      with 4000 power and can be recharged with Volt Void.
+  - tweak: Volt Void drains somewhat more power, but will not damage the invoker unless
+      they drain too much power. Invokers with augmented limbs will instead have those
+      limbs healed unless they drain especially massive amounts of power.
+  - wip: Using Volt Void on top of a Sigil of Transmission will transfer most of the
+      power drained to the Sigil of Transmission, effectively making it far less likely
+      to damage the invoker.
+  - rscdel: You can no longer stack most sigils and clockwork objects with themself.
+      You can still have multiple different objects or sigils on a tile, however.
+  - tweak: The Break Will Script has been renamed to Dementia Doctrine, is slightly
+      faster, and causes slightly more brain damage.
+  - tweak: The Judicial Visor now uses an action button instead of alt-click. Cultists
+      of Nar-Sie judged by the visor will be stunned for half duration, but will be
+      set on fire.
+  - tweak: Multiple scriptures have had their component requirements changed. The
+      Summon Judicial Visor Script has been reduced from a Script to a Driver.
+  - rscadd: Recollection will now show both required and consumed components.
+  - tweak: Clockwork Marauders can now emerge from their host if their host is at
+      or below 60% total health(for humans, this is 20 health out of crit)
+  - tweak: Clockwork Marauders will slowly heal if directly adjacent to their host
+      and have a slightly larger threshold for their no-Fatigue bonus damage.
+  Quiltyquilty:
+  - rscadd: Botany, atmospherics and cargo now all have access to high-capacity watertanks.
+  - rscadd: The bar has now been outfitted with custom bar stools.
+  Xhuis:
+  - rscdel: Removed the global message played when Nar-Sie _begins_ to spawn (but
+      not when it actually spawns).
+  - tweak: Drunkenness recovery speed now increases with how drunk the imbiber is
+      and is much quicker when the imbiber is asleep.
+  - tweak: Suit storage units now take three seconds to enter (up from one) and have
+      different sounds and messages for UV ray cauterization.
+  - bugfix: Fixed some bugs with the suit storage unit, inserting mobs, and contents
+      to seemed to duplicate themselves.
+  - bugfix: The Summon Nar-Sie rune can now only be drawn on original station tiles
+      and fails to invoke if scribed on the station then moved elsewhere.
+  coiax:
+  - rscdel: Bluespace shelter capsules can no longer be used on shuttles.
+  - rscadd: Bluespace shelters may have different capsules stored. View what your
+      capsule has inside by examining it.
+  - rscdel: The Nar'sie rune cannot be scribed on shuttles or off Z-level.
+  - rscadd: The Raise Dead rune automatically grabs the ghost of the raised corpse.
+  - rscadd: Deadchat is now notified when a sentient mob dies.
+  phil235:
+  - rscadd: Monkeys and all other animals that should have blood now has it. Beating
+      them up will make you and your weapon bloody, just like beating a human does.
+      Dragging them when wounded and lying will leave a blood trail. Their blood is
+      still mostly cosmetic, they suffer no effects from low blood level, unlike humans.
+  - rscadd: When a mob leaves a blood trail while dragged, it loses blood. You can
+      no longer drag a corpse to make an inifinite amount of blood trails, because
+      once the victim's blood reaches a certain threshold it no longer leaves a blood
+      trail (and no longer lose any more blood). The threshold depends on how much
+      damage the mob has taken. You can always avoid hurting the dragged mob by making
+      them stand up or by buckling them to something or by putting them in a container.
+  - rscdel: You can no longer empty a mob of its blood entirely with a syringe, once
+      the mob's blood volume reaches a critically low level you are unable to draw
+      any more blood from it.
+  - tweak: A changeling absorbing a human now sucks all their blood.
+2016-06-08:
+  Cruix:
+  - bugfix: Changelings no longer lose the regenerate ability if they respect while
+      in regenerative stasis.
+  Fox McCloud:
+  - bugfix: Fixes Experimentor critical reactions not working
+  - bugfix: Fixes Experimentor item cloning not working
+  - bugfix: Fixes Experimentor producing coffee vending machines instead of coffe
+      cups
+  - tweak: Experimentor can only clone critical reaction items instead of anything
+      with an origin tech
+  GunHog:
+  - rscadd: Nanotrasen has approved the Hyper-Kenetic Accelerator upgrade for cyborg
+      mining modules.
+  - tweak: Each of the heads' ID computers are now themed for their department!
+  Joan:
+  - tweak: Anima Fragments have slightly more health and move faster, but slow down
+      temporarily when taking damage. Also they can move in space now.
+  Kor:
+  - rscadd: The clown will play a sad trombone noise upon death.
+  - rscadd: Colossi now roam the wastes.
+  - rscadd: Bubblegum now roams the wastes.
+  PKPenguin321:
+  - rscadd: You can now emag chemical dispensers, such as the ones in chemistry or
+      the bar, to unlock illegal chemicals.
+  lordpidey:
+  - tweak: Infernal jaunt has been significantly nerfed with an enter and exit delay.
+2016-06-09:
+  GunHog:
+  - rscadd: Nanotrasen scientists have completed a design for adapting mining cyborgs
+      to the Lavaland Wastes in the form of anti-ash storm plating. Research for this
+      technology must be adapted at your local station.
+  Joan:
+  - tweak: Anima Fragments have slightly less health and damage and will slow down
+      for longer when hit.
+  Kor:
+  - rscadd: The captain now spawns with the station charter, which allows him to name
+      the station.
+  Papa Bones:
+  - tweak: Loyalty implants have been refluffed to mindshield implants, they are mechanically
+      the same.
+  Xhuis:
+  - rscadd: You can now remove all plants and weeds from a hydroponics tray by using
+      a spade on it.
+  - rscadd: Added meatwheat, a mutated variant of wheat that can be crushed into meat
+      substitute.
+  - rscadd: Added ambrosia gaia, a mysterious plant that is rumored to provide nutrients
+      and water to any soil - hydroponic or otherwise - that it's planted in.
+  - rscadd: Added cherry bombs, a mutated variant of blue cherries that have an explosively
+      good taste. Oh, and don't pluck the stems.
+  coiax:
+  - tweak: The beacons from support guardians are now structures, rather than replacing
+      the floor tile. In practice, this will change little, aside from not leaving
+      empty plating when a beacon is removed because a new one has been placed.
+  nullbear:
+  - tweak: Removes the restriction on wormhole jaunters, preventing them from teleporting
+      you to beacons on other z-levels.
+  - tweak: No longer able to use beacons to bypass normal shuttle/centcomm anti-bluespace
+      measures.
+2016-06-11:
+  Joan:
+  - rscadd: Clockwork Slabs, Clockwork Caches near walls, and Tinkerer's Daemons will
+      now be more likely to generate components that the clockwork cult has the least
+      of.
+  - rscadd: Destroyed Clockwork Caches will drop all Tinkerer's Daemons in them.
+  - tweak: Clockwork Caches can now only generate a component every 30 seconds(when
+      near a clockwork wall), Clockwork Slabs can only generate a component every
+      40 seconds, and Tinkerer's Daemons can only generate a component every 20 seconds.
+      This should result in higher component generation for everything except Clockwork
+      Caches near clockwork walls.
+  - tweak: Adding a component to a Clockwork Slab instead puts that component in the
+      global component cache.
+  - tweak: Clockwork Slabs only generate components if held by a mob or in a mob's
+      storage, and when generating a component will prevent other Slabs held from
+      generating a component.
+  - tweak: The Replicant Driver no longer costs a Replicant Alloy to invoke; basically
+      you can throw free Slabs at converts.
+  - rscdel: Clockwork Slabs no longer have Repository as a menu option; instead, you
+      can examine them to see how many components they have access to.
+  - rscdel: Clockwork Caches directly on top of clockwork walls won't generate components
+      from that wall.
+  Lzimann:
+  - rscadd: Bar stools are now constructable with metal!
+  coiax:
+  - rscadd: Ghosts are notified when someone arrives on the Arrivals Shuttle. This
+      is independent of the announcement system, and the (F) link will follow the
+      arrived person.
+  - tweak: Slimes and aliens with custom names now retain those names when changing
+      forms.
+  kevinz000:
+  - bugfix: Malf AI hacking an APC that is then destroyed will no longer bug the AI
+  - bugfix: Being turned into a Revolutionary now stuns you for a short while.
+  - bugfix: Kinetic Accelerators no longer drop their firing pin or cell when destroyed
+      by lava
+  phil235:
+  - rscadd: Firelock assemblies can be reinforced with plasteel to construct heavy
+      firelocks.
+2016-06-12:
+  Joan:
+  - rscadd: Attacking a human you are pulling or have grabbed with a ratvarian spear
+      will impale them, doing massive damage, stunning the target, and breaking the
+      spear if they remain conscious after being attacked.
+  - tweak: The Function Call verb is now an action button.
+  Xhuis:
+  - rscdel: While experimenting with floral genetic engineering, Nanotrasen botanists
+      discovered an explosive variety of the cherry plant. Due to gross misuse, the
+      genes used to produce this strain have been isolated and removed while Central
+      Command decides how best to modify it.
+  xxalpha:
+  - rscadd: 'New wizard spell: Spacetime Distortion.'
+  - rscadd: 3x1 grafitti
+2016-06-13:
+  Joan:
+  - tweak: Sigils of Transgression will now only stun for about 5 seconds, from around
+      10 seconds.
+  - tweak: Sigils of Submission take about 5 seconds to convert a target, from around
+      3 seconds, and will glow faintly.
+  - rscadd: Sigils of any type can be attacked with an open hand to destroy them,
+      instead of requiring harm intent. Servants still require harm intent to do so.
+  Lati:
+  - rscadd: Nanotrasen has added one of their rare machine prototypes to cargo's selection.
+      It might be valuable to research.
+  Xhuis:
+  - rscadd: You can now create living cake/cat hybrids through a slightly expensive
+      crafting recipe. These "caks" are remarkably resilient, quickly regenerating
+      any brute damage dealt, and can be attacked on harm intent to take a bite to
+      be fed by a small amount. They serve as mobile sources of food and make great
+      pets.
+  - rscadd: If a brain occupied by a player is used in the crafting recipe for caks,
+      that player then takes control of the cak!
+2016-06-14:
+  Joan:
+  - tweak: The Gateway to the Celestial Derelict now takes exactly 5 minutes to successfully
+      summon Ratvar and has 500 health, from 1000.
+  - rscadd: You can now actually hit people adjacent to the Gateway; only the center
+      of the Gateway can be attacked. The Gateway is also now dense, allowing you
+      to more easily shoot at it.
+  - rscadd: All Scripture in the Clockwork Slab's recital has a simple description.
+  Razharas:
+  - rscadd: Wiki now has the method of cultivating kudzu vines that was in game for
+      over a year. https://tgstation13.org/wiki/Guide_to_hydroponics#Kudzu
+  kevinz000:
+  - tweak: Gravity Guns should no longer destroy local reality when set to attract
+      and shot in an east cardinal direction. Added safety checks has slightly increased
+      the cost of the gun's fabrication. Nanotrasen apologizes for the inconvenience.
+  - bugfix: Gravity guns now have an inhand sprite.
+2016-06-16:
+  GunHog:
+  - rscadd: In response to alarmingly high mining cyborg losses, Nanotrasen has equipped
+      the units with an internal positioning beacon, as standard within the module.
+  Joan:
+  - rscadd: You can now strike a Tinkerer's Cache with a Clockwork Proselytizer to
+      refill the Proselytizer from the global component cache.
+  - tweak: The Clockwork Proselytizer requires slightly less alloy to convert windows
+      and windoors.
+  - tweak: Several clockwork objects have more useful descriptions, most notably including
+      structures, which will show a general health level to non-servants and exact
+      health to servants.
+  - imageadd: The Clockwork Proselytizer has new, more appropriate inhands.
+  - tweak: Invoking Inath-Neq, the Resonant Cogwheel, now gives total invulnerability
+      to all servants in range for 15 seconds instead of buffing maximum health.
+  - tweak: Impaling a target with a ratvarian spear no longer breaks the spear.
+  - tweak: Judicial Markers(the things spawned from Ratvar's Flame, in turn spawned
+      from a Judicial Visor) explode one second faster.
+  - rscdel: Removed Dementia Doctrine, replacing it with an Application sigil.
+  - rscadd: Adds the Sigil of Accession, the previously-mentioned Application sigil,
+      which is much like a Sigil of Submission, except it isn't removed on converting
+      un-mindshielded targets and will disappear after converting a mindshielded target.
+  - tweak: Sigil of Submission is now a Script instead of a Driver; It's unlocked
+      one tier up, so you have to rely on the Drivers you have until you get Scripts,
+      instead of spamming both Driver sigils for free converts.
+  - rscadd: To replace Sigil of Submission in the Driver tier; Added Taunting Tirade,
+      which is a chanted scripture with a very fast invocation, which, on chanting,
+      confuses, dizzies, and briefly stuns nearby non-servants and allows the invoker
+      a brief time to relocate before continuing the chant.
+  - rscadd: Ghosts can now see the Gateway to the Celestial Derelict's remaining time
+      as a countdown.
+  - tweak: Anima Fragments are now slightly slower if not at maximum health and no
+      longer drop a soul vessel when destroyed.
+  Quiltyquilty:
+  - rscdel: Patches now hold only 40u.
+  - rscdel: Patches in first aid kits now only contain 20u of chemicals.
+  coiax:
+  - rscadd: Polymorphed mobs now have the same name, and where possible, the same
+      equipment as their previous form.
+2016-06-19:
+  Joan:
+  - tweak: Assassin holoparasite attack damage increased from 13 to 15, stealth cooldown
+      decreased from 20 seconds to 16 seconds.
+  - tweak: Charger holoparasite charge cooldown decreased from 5 seconds to 4 seconds.
+  - tweak: Chaos holoparasite attack damage decreased from 10 to 7, range decreased
+      from 10 to 7.
+  - tweak: Lightning holoparasite attack damage increased from 5 to 7, chain damage
+      increased by 33%.
+  - rscdel: Clock cult scripture unlock now only counts humans and silicons.
+  - rscadd: Servants of ratvar can now create cogscarab shells with a Script scripture.
+      Adding a soul vessel to one will produce a small, drone-like being with an inbuilt
+      proselytizer and tools.
+  - imageadd: Clockwork mobs have their own speechbubble icons.
+  - tweak: Invoking Sevtug now causes massive hallucinations, brain damage, confusion,
+      and dizziness for all non-servant humans on the same zlevel as the invoker.
+  - rscdel: Invoking Sevtug is no longer mind control. RIP mind control 2016-2016.
+  - tweak: Clockwork slabs now produce a component every 50 seconds, from 40, Tinkerer's
+      Caches now produce(if near a clockwork wall) a component every 35 seconds, from
+      30.
+  - experiment: 'Tinkerer''s daemons have a slightly higher cooldown for each component
+      of the type they chose to produce that''s already in the cache: This is very
+      slight, but it''ll add up if you have a lot of one component type and are trying
+      to get more of it with daemons; 5 of a component type will add a second of delay.'
+  Kor and Iamgoofball:
+  - rscadd: Miners can now purchase fulton extraction packs.
+  - rscadd: Miners can now purchase fulton medivac packs.
+  - rscadd: Two new fulton related bundles are available for purchase with vouchers.
+  Quiltyquilty:
+  - rscadd: Beepsky now has his own home in the labor shuttle room.
+  Wizard's Federation:
+  - bugfix: We've fired the old Pope, who was actually an apprentice in disguise.
+      We've a-pope-riately replaced him with a much more experienced magic user.
+  - rscadd: Some less-then-sane people have been sighted forming mysterious cults
+      in lieu of recent Pope sightings, lashing out at anyone who speaks ill of him.
+  - bugfix: We've rejiggered our trans-dimensional rifts, and almost all cases of
+      clergy members being flung into nothingness should be resolved.
+  - bugfix: All members of the Space Wizard's Clergy have been appropriately warned
+      about usage of skin-to-stone spells, and such there should be no more instances
+      of permanent statueification.
+  Xhuis:
+  - tweak: Revenants have been renamed to umbras and have undergone some tweaks.
+  coiax:
+  - rscadd: Drones can hear robotic talk, but cannot communicate on it. AIs and cyborgs
+      are encouraged to share information with station repair drones.
+  - rscadd: Potted plants can now be ordered from cargo.
+  - rscdel: AI turrets no longer fire at drones.
+2016-06-20:
+  Kor:
+  - rscadd: Cult runes can only be scribed on station and on mining.
+  - rscadd: The comms console now has a new option allowing you to communicate with
+      the other server.
+  Quiltyquilty:
+  - rscadd: The detective has been moved to above the post office.
+  coiax:
+  - rscadd: Birdboat's supply loop has been split into two unconnected halves, to
+      maintain award winning air quality.
+  incoming5643:
+  - experiment: New abilities for some races!
+  - rscadd: Skeletons (liches) and zombies now are much more susceptible to limb loss,
+      but can also reattach lost limbs manually without surgery.
+  - rscadd: Slimepeople can now lose their limbs, but also can regenerate them if
+      they have the jelly for it. Additionally slimepeople will (involuntarily) lose
+      limbs and convert them to slime jelly if they're extremely low on jelly.
+  - rscadd: Zombies and slimepeople now have reversed toxic damage, what usually heals
+      now hurts and what usually hurts now heals. Keep in mind that while you could
+      for example heal with unstable mutagen, you'd still mutate. Beware of secondary
+      effects! Drugs like antitoxin are especially dangerous to these races now since
+      not only do they do toxin damage, but they remove other toxic chems before they
+      can heal you. Be wary also of wide band healing drugs like omnizine.
+  - rscadd: For slime people the above mechanic also adds/drains slime jelly. So yes
+      inhaling plasma is now a valid way to build jelly (but you'll still suffocate
+      if there's no oxygen).
+  - rscadd: Pod people now mutate if shot with the mutation setting of the floral
+      somatoray.
+2016-06-22:
+  Cheridan:
+  - tweak: Flashes no longer stun cyborgs, instead working almost exactly like a human,
+      causing them to become confused and unequip their current module.
+  Joan:
+  - rscdel: Those who do not serve Ratvar cannot understand His creations.
+  - rscadd: You can now repair clockwork structures with a clockwork proselytizer.
+      This is about a third as efficient as a mending motor, costing 2 liquified alloy
+      to 1 health, and also about a third as fast.
+  - tweak: Scarab proselytizers are more efficient and will reap more alloy from metal
+      and plasteel.
+  - rscadd: They can also directly convert rods to alloy.
+  - tweak: Nuclear bombs will no longer explode the station if in space. Please be
+      aware of this.
+  Kor:
+  - rscadd: You can now pick up potted plants.
+  PKPenguin321:
+  - rscadd: You can now pick up a skateboard and use it as a weapon by dragging it
+      to yourself.
+  - imageadd: Skateboards have been given brand new sprites, courtesy of JStheguy
+  Quiltyquilty:
+  - rscadd: The AI is back in the center of the station. The gravity generator is
+      now where the SMES room used to be. The SMESes are in the equipment room.
+  Supermichael777:
+  - rscadd: Flaps are no longer space-racist and now accept all bots.
+  Xhuis:
+  - tweak: Holy weapons, such as the null rod and possessed blade, now protect from
+      Ratvar's magic.
+  coiax:
+  - rscadd: Certain custom station names may be rejected by Centcom.
+  - rscadd: Drone shells can be ordered in Emergency supplies at Cargo.
+2016-06-23:
+  Joan:
+  - tweak: Tinkerer's Caches generate components(when near clockwork walls) every
+      minute and a half, from every 35 seconds. Clockwork Slabs generate components
+      once per minute, from once per 50 seconds.
+  - tweak: Spatial Gateway will last four seconds per invoker, instead of two per
+      invoker.
+  - rscdel: Clockwork floors now only heal toxin damage on servants of Ratvar.
+  - rscdel: You can no longer place ocular wardens very close to other ocular wardens.
+  - tweak: The Flame produced by a Judicial Visor is no longer an effective melee
+      weapon and will trigger on all intents, not just harm intent.
+  Wizard's Federation:
+  - bugfix: Acolytes of Hades have revealed their true forms.
+  - rscadd: We've discovered a way to traverse portals left behind by Hades, and have
+      discovered a great treasure through it.
+  - bugfix: Hades has undergone Anger Management classes, and should no longer remain
+      wrathful for the duration of his visit.
+  coiax:
+  - rscadd: Changelings now evolve powers via the cellular emporium, which they can
+      access via an action button.
+  - rscadd: Due to budget cuts, the shuttle's hyperspace engines now create a visual
+      distortion at their destination, a few seconds before arrival. Crewmembers are
+      encouraged to use these "ripples" as an indication of where not to stand.
+  - bugfix: Shuttles now only run over mobs in turfs they are moving into, rather
+      than the entire rectangle.
+  - rscadd: If you are an observer, you can click on transition edges of a Z-level
+      in order to move as a mob would.
+  - rscadd: Due to safety concerns, the Hyperfractal Gigashuttle now has some safety
+      grilles to prevent accidental matter energising.
+  coiax, incoming:
+  - rscadd: Due to budget cuts, the builtin anti-orbit engines on the station have
+      been removed. As such, expect the station to start orbiting the system again,
+      and encounter an unpredictable stellar environment.
+  - rscdel: All permanent structures (not on station, Centcom or lavaland) have been
+      removed.
+  - rscadd: All removed structures are now space ruins, and can be placed randomly
+      in space ruin zlevels.
+  - wip: The White Ship remains at its current location, but has lost any reliable
+      landmarks near it. Its starting position will be made more random in a coming
+      update.
+  - rscadd: The Space Bar has a small atmos system added and a teleporter. Some other
+      ruins have been cleaned up to not have atmos active turfs.
+2016-06-24:
+  Joan:
+  - experiment: The Interdiction Lens has been reworked; instead of allowing you to
+      disable Telecomms, Cameras, or non-Servant Cyborgs, it drains power from all
+      APCs, SMES units, and non-Servant cyborgs in a relatively large area, funneling
+      that power into nearby Sigils of Transmission, then disables all cameras and
+      radios in that same area.
+  - wip: If it fails to find anything it could disable or drain any power, it turns
+      off for 2 minutes.
+  - tweak: You can now target yourself with Sentinel's Compromise, allowing you to
+      heal yourself with it.
+  - rscadd: Flashes will once again stun borgs, but for a much shorter time than they
+      previously did; average stun time is reduced from the previous average of 15
+      seconds to about 6 seconds. The confusion remains, but it will no longer unequip
+      borg modules.
+  MMMiracles:
+  - tweak: Metastation xenobiology's lights and cell have been modified so it won't
+      drain 5 minutes into the round.
+  SnipeDragon:
+  - bugfix: Changelings created at round start now correctly receive their Antag HUD.
+  Xhuis:
+  - rscadd: Cardboard cutouts have been added. Now you can set up advertisements for
+      your clown mart.
+2016-06-26:
+  Basilman:
+  - rscadd: The Donor prompt for becoming an alien queen maid is now an action button
+      instead, and can be toggled on and off.
+  Joan:
+  - rscadd: Fellowship Armory now invokes faster for each nearby servant and provides
+      clockwork gauntlets, which are shock-resistant and provide armor to the arms.
+  - tweak: It's not wise to equip clockwork armor if you don't serve Ratvar.
+  - bugfix: A full set of clockwork armor will now actually cover all limbs.
+  coiax:
+  - rscadd: Our administrators, here at /tg/, don't get enough credit for their wealth
+      of experience and knowledge. Now they get the chance to share that with you
+      by giving out custom tips!
+  - tweak: Gang domination now uses the same timing method as shuttles, making their
+      domination times more accurate.
+  - rscdel: The default shuttle transit time is now 15 seconds.
+  - rscadd: Please do not commit suicide with the nuclear authentication disk.
+  - rscadd: Observers now have a visible countdown for borg factories, silicons can
+      examine the factory to determine how long it has remaining until it is ready.
+  - rscadd: Clockwork mobs sound like Ratvar chants if you do not serve Ratvar.
+  - rscadd: When servants recite, they now talk in a strange voice that is more noticable.
+2016-06-28:
+  CoreOverload:
+  - rscadd: Kinetic accelerator now supports seclite attachment.
+  - rscadd: All cyborgs have been outfitted with ash-proof plating.
+  - rscadd: Mining cyborg module now includes a welder and a fire extinguisher.
+  - rscadd: 'Mining cyborgs now have a new upgrade: lavaproof tracks.'
+  Joan:
+  - rscdel: Clockwork Marauders are no longer totally invincible to damage unless
+      a holy weapon was involved.
+  - rscadd: Clockwork Marauders will take damage when attacked, but unless they're
+      fighting excessive amounts, they'll be forced to return to their host before
+      they'd normally die.
+  - experiment: A holy weapon held in either hand in the presence of a marauder will
+      massively increase the damage they take, making it much more likely the marauder
+      can be killed.
+  - tweak: Clockwork Marauders do slightly less damage at low fatigue levels.
+  - rscadd: Clockwork Marauders now have a chance to block melee attacks, negating
+      the damage from them, and an additional chance to immediately counter, attacking
+      whoever tried to attack them.
+  - wip: If Ratvar has awoken, Marauders have a much higher chance to block and counter,
+      will block thrown items and projectiles, and gradually regenerate.
+  - experiment: Clockwork Marauders no longer have a verb to communicate; they instead
+      use :b to do so.
+  - rscadd: Faked deaths are now effectively indistinguishable from real deaths.
+  MMMiracles:
+  - rscadd: Adds some ruins for space and lavaland. Balance not included.
+  - rscadd: Adds spooky ghosts.
+  SnipeDragon:
+  - bugfix: Cardboard Cutouts now become opaque when their appearance is changed.
+  Wizard's Federation:
+  - rscadd: Acolytes of Hades have been scolded for gluing their clothes to themselves,
+      and their clothes can now be cut off them.
+  - rscadd: Hades has learned a few new tricks, to ensure the ultimate demise of his
+      target.
+  - bugfix: Hades has faced a council of his repeated use of time magic inside chapels,
+      and as it was deemed unholy, he will no longer do it.
+  - rscadd: Wizards of the Wizard's Federation have been granted access to Dark Seeds,
+      ancient relics used to call upon Hades in a time of need.
+  Xhuis:
+  - rscdel: You can no longer put paper cups back onto water coolers. In addition,
+      they're now just called "liquid coolers" instead of changing based on their
+      contents.
+  coiax:
+  - rscadd: Status displays added to a variety of shuttle templates.
+  - rscdel: Large graffiti now consumes 5 uses from limited use crayons and spraycans,
+      as well as taking three times the amount of time to draw.
+  - rscadd: All items inside the supply shuttle will now be sold, regardless of whether
+      they're inside a container or not.
+  - bugfix: Fixes issue where the AI core APC on Metastation would not charge.
+  'name: Lzimann':
+  - rscadd: Engineer and atmos wintercoat can hold the RPD now!
+  optional name here:
+  - rscdel: Shadowlings have been completely removed.
+  oranges:
+  - tweak: You can now hear dice
+  timkoster1:
+  - rscadd: adds a hud soul counter for devils. Sprites by PouFrou and special thanks
+      to lordpidey for about everything.
+2016-06-29:
+  Joan:
+  - rscadd: Ghosts spawning via Ratvar can now choose to spawn as a Cogscarab with
+      a usable slab instead of as a Reclaimer.
+  - bugfix: You can no longer permanently block hostile simple mobs with sandbags
+      and other barricades.
+  MrStonedOne:
+  - rscadd: Ghosts may now jump between the two linked servers using the new Server
+      Hop verb. Rather than whine in deadchat about dieing, you can just go play a
+      new round on the other server.
+  coiax:
+  - rscadd: Adds a new UI to slimepeople, allowing them to select more easily which
+      body to swap to
+  - rscadd: Slimepeople swapping consciousness between bodies is now visible to onlookers
+  - bugfix: The AI malfunction "Hostile Lockdown" power now restores the station doors
+      to normal after 90 seconds, rather than keeping everything shut forever.

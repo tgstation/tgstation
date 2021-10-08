@@ -29,7 +29,7 @@
 					continue
 				new /datum/hallucination/stationmessage(C, TRUE, stationmessage)
 		if(4 to 6)
-			var/picked_hallucination = pick(	/datum/hallucination/bolts,
+			var/picked_hallucination = pick( /datum/hallucination/bolts,
 												/datum/hallucination/chat,
 												/datum/hallucination/message,
 												/datum/hallucination/bolts,

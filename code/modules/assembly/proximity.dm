@@ -12,7 +12,7 @@
 	var/sensitivity = 1
 	var/hearing_range = 3
 
-/obj/item/assembly/prox_sensor/Initialize()
+/obj/item/assembly/prox_sensor/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 0)
 	START_PROCESSING(SSobj, src)
@@ -23,7 +23,7 @@
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].</span>"
+	. += span_notice("The proximity sensor is [timing ? "arming" : (scanning ? "armed" : "disarmed")].")
 
 /obj/item/assembly/prox_sensor/activate()
 	if(!..())
@@ -32,7 +32,7 @@
 		timing = !timing
 	else
 		scanning = FALSE
-	update_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/assembly/prox_sensor/on_detach()
@@ -53,7 +53,7 @@
 	else
 		START_PROCESSING(SSobj, src)
 		proximity_monitor.SetHost(loc,src)
-	update_icon()
+	update_appearance()
 	return secured
 
 /obj/item/assembly/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
@@ -65,11 +65,9 @@
 	if(!scanning || !secured || next_activate > world.time)
 		return FALSE
 	pulse(FALSE)
-	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
-	for(var/CHM in get_hearers_in_view(hearing_range, src))
-		if(ismob(CHM))
-			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
+	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate = world.time + 30
 	return TRUE
 
@@ -87,7 +85,7 @@
 		return FALSE
 	scanning = scan
 	proximity_monitor.SetRange(scanning ? sensitivity : 0)
-	update_icon()
+	update_appearance()
 
 /obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
@@ -95,18 +93,19 @@
 	if(scanning && proximity_monitor.SetRange(sense))
 		sense()
 
-/obj/item/assembly/prox_sensor/update_icon()
-	cut_overlays()
+/obj/item/assembly/prox_sensor/update_appearance()
+	. = ..()
+	holder?.update_appearance()
+
+/obj/item/assembly/prox_sensor/update_overlays()
+	. = ..()
 	attached_overlays = list()
 	if(timing)
-		add_overlay("prox_timing")
+		. += "prox_timing"
 		attached_overlays += "prox_timing"
 	if(scanning)
-		add_overlay("prox_scanning")
+		. += "prox_scanning"
 		attached_overlays += "prox_scanning"
-	if(holder)
-		holder.update_icon()
-	return
 
 /obj/item/assembly/prox_sensor/ui_status(mob/user)
 	if(is_secured(user))
@@ -144,7 +143,7 @@
 				. = TRUE
 		if("time")
 			timing = !timing
-			update_icon()
+			update_appearance()
 			. = TRUE
 		if("input")
 			var/value = text2num(params["adjust"])

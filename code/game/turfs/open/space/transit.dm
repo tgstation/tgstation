@@ -3,7 +3,7 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
-	flags_1 = NOJAUNT_1 //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
+	flags_1 = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosion_block = INFINITY
 	vis_flags = VIS_HIDE
 
@@ -30,17 +30,16 @@
 /turf/open/space/transit/east
 	dir = EAST
 
-/turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
-	..()
+/turf/open/space/transit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
 	if(!locate(/obj/structure/lattice) in src)
-		throw_atom(AM)
+		throw_atom(arrived)
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
-	set waitfor = FALSE
-	if(!AM || istype(AM, /obj/docking_port))
+	if(!AM || istype(AM, /obj/docking_port) || istype(AM, /obj/effect/abstract))
 		return
-	if(AM.loc != src) 	// Multi-tile objects are "in" multiple locs but its loc is it's true placement.
-		return			// Don't move multi tile objects if their origin isn't in transit
+	if(AM.loc != src) // Multi-tile objects are "in" multiple locs but its loc is it's true placement.
+		return // Don't move multi tile objects if their origin isn't in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
@@ -80,9 +79,9 @@
 	return SSshuttle.is_in_shuttle_bounds(src)
 
 
-/turf/open/space/transit/Initialize()
+/turf/open/space/transit/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
 
@@ -92,6 +91,7 @@
 
 /turf/open/space/transit/update_icon_state()
 	icon_state = "speedspace_ns_[get_transit_state(src)]"
+	return ..()
 
 /proc/get_transit_state(turf/T)
 	var/p = 9

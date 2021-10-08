@@ -71,7 +71,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "m" = (
 /obj/structure/closet/syndicate{
@@ -90,7 +90,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
@@ -107,7 +107,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/preopen{
@@ -133,7 +133,7 @@
 	dir = 1;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "r" = (
 /turf/open/floor/mineral/plastitanium,
@@ -174,11 +174,10 @@
 	dir = 4;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "y" = (
 /obj/structure/chair/office{
-	dir = 2;
 	name = "tactical swivel chair"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -195,10 +194,9 @@
 	dir = 1
 	},
 /obj/structure/chair/office{
-	dir = 2;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "A" = (
 /obj/structure/chair/office{
@@ -229,7 +227,7 @@
 	dir = 8;
 	name = "tactical swivel chair"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "E" = (
 /obj/structure/chair/office{
@@ -255,7 +253,7 @@
 	},
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "G" = (
 /obj/effect/turf_decal/tile/red,
@@ -274,7 +272,7 @@
 	name = "red closet"
 	},
 /obj/item/clothing/under/syndicate/tacticool/skirt,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "H" = (
 /obj/effect/turf_decal/tile/red,
@@ -288,7 +286,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/mafia,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 
 (1,1,1) = {"

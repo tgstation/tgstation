@@ -1,8 +1,8 @@
 /*
  * Contains:
- *		Fire protection
- *		Bomb protection
- *		Radiation protection
+ * Fire protection
+ * Bomb protection
+ * Radiation protection
  */
 
 /*
@@ -15,7 +15,6 @@
 	icon_state = "fire"
 	inhand_icon_state = "ro_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/extinguisher, /obj/item/crowbar)
@@ -58,7 +57,7 @@
 	icon_state = "bombsuit"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	armor = list(MELEE = 20, BULLET = 0, LASER = 20,ENERGY = 30, BOMB = 100, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
-	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
 	cold_protection = HEAD
@@ -77,7 +76,6 @@
 	icon_state = "bombsuit"
 	inhand_icon_state = "bombsuit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -120,7 +118,7 @@
 	icon_state = RAD
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 60, RAD = 100, FIRE = 30, ACID = 30)
 	strip_delay = 60
 	equip_delay_other = 60
@@ -134,7 +132,6 @@
 	icon_state = RAD
 	inhand_icon_state = "rad_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

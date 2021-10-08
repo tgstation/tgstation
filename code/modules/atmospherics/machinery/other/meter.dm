@@ -2,8 +2,8 @@
 	name = "gas flow meter"
 	desc = "It measures something."
 	icon = 'icons/obj/atmospherics/pipes/meter.dmi'
-	icon_state = "meterX"
-	layer = GAS_PUMP_LAYER
+	icon_state = "meter"
+	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -12,8 +12,9 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
 	var/frequency = 0
 	var/atom/target
-	var/id_tag
 	var/target_layer = PIPING_LAYER_DEFAULT
+	greyscale_config = /datum/greyscale_config/meter
+	greyscale_colors = COLOR_GRAY
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
@@ -60,18 +61,18 @@
 
 /obj/machinery/meter/process_atmos()
 	if(!(target?.flags_1 & INITIALIZED_1))
-		icon_state = "meterX"
+		icon_state = "meter"
 		return FALSE
 
 	if(machine_stat & (BROKEN|NOPOWER))
-		icon_state = "meter0"
+		icon_state = "meter"
 		return FALSE
 
 	use_power(5)
 
 	var/datum/gas_mixture/environment = target.return_air()
 	if(!environment)
-		icon_state = "meterX"
+		icon_state = "meter0"
 		return FALSE
 
 	var/env_pressure = environment.return_pressure()
@@ -88,6 +89,27 @@
 		icon_state = "meter3_[val]"
 	else
 		icon_state = "meter4"
+
+	var/env_temperature = environment.temperature
+	if(env_pressure == 0 || env_temperature == 0)
+		greyscale_colors = COLOR_GRAY
+	else
+		switch(env_temperature)
+			if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
+				greyscale_colors = COLOR_RED
+			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
+				greyscale_colors = COLOR_ORANGE
+			if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
+				greyscale_colors = COLOR_YELLOW
+			if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
+				greyscale_colors = COLOR_VIBRANT_LIME
+			if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
+				greyscale_colors = COLOR_CYAN
+			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
+				greyscale_colors = COLOR_BLUE
+			else
+				greyscale_colors = COLOR_VIOLET
+	set_greyscale(colors=greyscale_colors)
 
 	if(frequency)
 		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
@@ -119,12 +141,12 @@
 
 /obj/machinery/meter/wrench_act(mob/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 	if (I.use_tool(src, user, 40, volume=50))
 		user.visible_message(
 			"[user] unfastens \the [src].",
-			"<span class='notice'>You unfasten \the [src].</span>",
-			"<span class='hear'>You hear ratchet.</span>")
+			span_notice("You unfasten \the [src]."),
+			span_hear("You hear ratchet."))
 		deconstruct()
 	return TRUE
 
@@ -145,7 +167,7 @@
 		deconstruct()
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
-//	why are you yelling?
+// why are you yelling?
 /obj/machinery/meter/turf
 
 /obj/machinery/meter/turf/reattach_to_layer()

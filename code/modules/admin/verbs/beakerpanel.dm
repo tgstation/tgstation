@@ -91,9 +91,9 @@
 					}
 
 					ul li {
-					  margin-top: -1px; /* Prevent double borders */
-					  padding: 12px; /* Add some padding */
-					  color: #ffffff;
+						margin-top: -1px; /* Prevent double borders */
+						padding: 12px; /* Add some padding */
+						color: #ffffff;
 						text-decoration: none;
 						background: #40628a;
 						border: 1px solid #161616;
@@ -102,7 +102,7 @@
 					}
 
 					.remove-reagent {
-					 background-color: #d03000;
+					background-color: #d03000;
 					}
 
 					.container-control {
@@ -261,15 +261,15 @@
 					<div class='uiContent'>
 
 		<div class="width: 100%">
-		  <button id="spawn-grenade">
+		<button id="spawn-grenade">
 		<i class="fas fa-bomb"></i>&nbsp;Spawn grenade
-		  </button>
+		</button>
 			<label for="grenade-type">Grenade type: </label>
-		 <select id="grenade-type">
-			 <option value="normal">Normal</option>
-		 </select>
-		 <div class="grenade-data normal">
-		 </div>
+		<select id="grenade-type">
+			<option value="normal">Normal</option>
+		</select>
+		<div class="grenade-data normal">
+		</div>
 			<br />
 <small>note: beakers recommended, other containers may have issues</small>
 		</div>
@@ -289,25 +289,25 @@
 			<div>
 			<button class="spawn-container">
 			<i class="fas fa-cog"></i>&nbsp;Spawn
-			  </button>
-			  &nbsp;&nbsp;&nbsp;
+				</button>
+				&nbsp;&nbsp;&nbsp;
 				<button class="import-reagents">
 			<i class="fas fa-file-import"></i>&nbsp;Import
-			  </button>
-			  &nbsp;&nbsp;&nbsp;
-			  <button class="export-reagents">
+				</button>
+				&nbsp;&nbsp;&nbsp;
+				<button class="export-reagents">
 			<i class="fas fa-file-export"></i>&nbsp;Export
-			  </button>
+				</button>
 
 			</div>
-				 <ul>
-			  <li>
+				<ul>
+				<li>
 
-			    <select class="select-new-reagent"></select><div class="reagent-div"><input style="width: 50%" type="text" name="newreagent" value="40" />&nbsp;&nbsp;<button class="add-reagent">
-			  <i class="fas fa-plus"></i>&nbsp;Add
-			  </button>
+					<select class="select-new-reagent"></select><div class="reagent-div"><input style="width: 50%" type="text" name="newreagent" value="40" />&nbsp;&nbsp;<button class="add-reagent">
+				<i class="fas fa-plus"></i>&nbsp;Add
+				</button>
 
-			  </div>
+				</div>
 			</li>
 			</ul>
 			</div>

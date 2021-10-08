@@ -2,6 +2,7 @@
 	name = "singularity hammer"
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon_state = "singularity_hammer0"
+	base_icon_state = "singularity_hammer"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
@@ -19,14 +20,15 @@
 	///track wielded status on item
 	var/wielded = FALSE
 
-/obj/item/singularityhammer/Initialize()
+/obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	AddElement(/datum/element/kneejerk)
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="singularity_hammer1")
+	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
 
 ///triggered on wield of two handed item
 /obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
@@ -41,8 +43,8 @@
 	wielded = FALSE
 
 /obj/item/singularityhammer/update_icon_state()
-	. = ..()
-	icon_state = "singularity_hammer0"
+	icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/item/singularityhammer/proc/recharge()
 	charged = TRUE
@@ -68,7 +70,7 @@
 				step_towards(H,pull)
 				step_towards(H,pull)
 
-/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -87,6 +89,7 @@
 	name = "Mjolnir"
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon_state = "mjollnir0"
+	base_icon_state = "mjollnir"
 	worn_icon_state = "mjolnir"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
@@ -98,25 +101,30 @@
 	w_class = WEIGHT_CLASS_HUGE
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/mjollnir/Initialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="mjollnir1", attacksound="sparks")
+	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound="sparks")
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = TRUE
 
 /// triggered on unwield of two handed item
 /obj/item/mjollnir/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	wielded = FALSE
 
 /obj/item/mjollnir/update_icon_state()
-	icon_state = "mjollnir0"
+	icon_state = "[base_icon_state]0"
+	return ..()
 
 /obj/item/mjollnir/proc/shock(mob/living/target)
 	target.Stun(1.5 SECONDS)
@@ -124,9 +132,9 @@
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
-	target.visible_message("<span class='danger'>[target.name] is shocked by [src]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
-		"<span class='hear'>You hear a heavy electrical crack!</span>")
+	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
+		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
+		span_hear("You hear a heavy electrical crack!"))
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 	return

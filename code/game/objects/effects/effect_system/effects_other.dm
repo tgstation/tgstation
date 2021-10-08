@@ -84,10 +84,10 @@
 //Reagent-based explosion effect
 
 /datum/effect_system/reagents_explosion
-	var/amount 						// TNT equivalent
-	var/flashing = FALSE			// does explosion creates flash effect?
-	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
-	var/explosion_message = 1				//whether we show a message to mobs.
+	var/amount // TNT equivalent
+	var/flashing = FALSE // does explosion creates flash effect?
+	var/flashing_factor = 0 // factor of how powerful the flash effect relatively to the explosion
+	var/explosion_message = 1 //whether we show a message to mobs.
 
 /datum/effect_system/reagents_explosion/set_up(amt, loca, flash = FALSE, flash_fact = 0, message = TRUE)
 	amount = amt
@@ -100,9 +100,12 @@
 	flashing = flash
 	flashing_factor = flash_fact
 
-/datum/effect_system/reagents_explosion/start()
-	if(explosion_message)
-		location.visible_message("<span class='danger'>The solution violently explodes!</span>", \
-								"<span class='hear'>You hear an explosion!</span>")
+/// Starts the explosion. The explosion_source is as part of logging and identifying the source of the explosion for logs.
+/datum/effect_system/reagents_explosion/start(atom/explosion_source = null)
+	if(!explosion_source)
+		stack_trace("Reagent explosion triggered without a source atom. This explosion may have incomplete logging.")
 
-	dyn_explosion(location, amount, flashing_factor)
+	if(explosion_message)
+		location.visible_message(span_danger("The solution violently explodes!"), span_hear("You hear an explosion!"))
+
+	dyn_explosion(location, amount, flash_range = flashing_factor, explosion_cause = explosion_source)

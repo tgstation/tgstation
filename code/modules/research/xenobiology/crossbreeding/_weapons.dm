@@ -37,8 +37,8 @@ Slimecrossing Weapons
 			attack_verb_simple = string_list(list("slash", "slice", "cut"))
 		if(BURN)
 			hitsound = 'sound/weapons/sear.ogg'
-			attack_verb_continuous = string_list(list("burns", "sings", "heats"))
-			attack_verb_simple = string_list(list("burn", "sing", "heat"))
+			attack_verb_continuous = string_list(list("burns", "singes", "heats"))
+			attack_verb_simple = string_list(list("burn", "singe", "heat"))
 		if(TOX)
 			hitsound = 'sound/weapons/pierce.ogg'
 			attack_verb_continuous = string_list(list("poisons", "doses", "toxifies"))
@@ -93,7 +93,7 @@ Slimecrossing Weapons
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
 
-/obj/item/gun/magic/bloodchill/Initialize()
+/obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 

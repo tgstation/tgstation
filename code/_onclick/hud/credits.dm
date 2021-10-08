@@ -18,7 +18,7 @@
 	for(var/I in credit_order_for_this_round)
 		if(!credits)
 			return
-		_credits += new /obj/screen/credit(null, I, src, credits_icon)
+		_credits += new /atom/movable/screen/credit(null, I, src, credits_icon)
 		sleep(CREDIT_SPAWN_SPEED)
 	sleep(CREDIT_ROLL_SPEED - CREDIT_SPAWN_SPEED)
 	remove_verb(src, /client/proc/ClearCredits)
@@ -31,20 +31,20 @@
 	QDEL_LIST(credits)
 	credits = null
 
-/obj/screen/credit
+/atom/movable/screen/credit
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	screen_loc = "12,1"
-	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
 	var/client/parent
 	var/matrix/target
 
-/obj/screen/credit/Initialize(mapload, credited, client/P, icon/I)
+/atom/movable/screen/credit/Initialize(mapload, credited, client/P, icon/I)
 	. = ..()
 	icon = I
 	parent = P
 	icon_state = credited
-	maptext = credited
+	maptext = MAPTEXT(credited)
 	maptext_x = world.icon_size + 8
 	maptext_y = (world.icon_size / 2) - 4
 	maptext_width = world.icon_size * 3
@@ -55,15 +55,16 @@
 	animate(src, alpha = 255, time = CREDIT_EASE_DURATION, flags = ANIMATION_PARALLEL)
 	addtimer(CALLBACK(src, .proc/FadeOut), CREDIT_ROLL_SPEED - CREDIT_EASE_DURATION)
 	QDEL_IN(src, CREDIT_ROLL_SPEED)
-	P.screen += src
+	if(parent)
+		parent.screen += src
 
-/obj/screen/credit/Destroy()
-	var/client/P = parent
-	P.screen -= src
+/atom/movable/screen/credit/Destroy()
 	icon = null
-	LAZYREMOVE(P.credits, src)
-	parent = null
+	if(parent)
+		parent.screen -= src
+		LAZYREMOVE(parent.credits, src)
+		parent = null
 	return ..()
 
-/obj/screen/credit/proc/FadeOut()
+/atom/movable/screen/credit/proc/FadeOut()
 	animate(src, alpha = 0, transform = target, time = CREDIT_EASE_DURATION)

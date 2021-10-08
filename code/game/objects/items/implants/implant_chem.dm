@@ -20,7 +20,7 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/implant/chem/Initialize()
+/obj/item/implant/chem/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	GLOB.tracked_chem_implants += src
@@ -46,9 +46,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	to_chat(R, "<span class='hear'>You hear a faint beep.</span>")
+	to_chat(R, span_hear("You hear a faint beep."))
 	if(!reagents.total_volume)
-		to_chat(R, "<span class='hear'>You hear a faint click from your chest.</span>")
+		to_chat(R, span_hear("You hear a faint click from your chest."))
 		qdel(src)
 
 

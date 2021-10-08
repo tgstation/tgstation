@@ -17,7 +17,7 @@
 	var/telecrystals
 	var/selected_cat
 	var/owner = null
-	var/datum/game_mode/gamemode
+	var/uplink_flag
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
 	var/hidden_crystals = 0
@@ -26,10 +26,11 @@
 	var/failsafe_code
 	var/compact_mode = FALSE
 	var/debug = FALSE
-
+	///Instructions on how to access the uplink based on location
+	var/unlock_text
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -48,9 +49,6 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
-
-	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
-
 	if(_owner)
 		owner = _owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -60,7 +58,8 @@
 			purchase_log = new(owner, src)
 	lockable = _lockable
 	active = _enabled
-	gamemode = _gamemode
+	src.uplink_flag = uplink_flag
+	update_items()
 	telecrystals = starting_tc
 	if(!lockable)
 		active = TRUE
@@ -71,33 +70,60 @@
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
 	active |= U.active
-	if(!gamemode)
-		gamemode = U.gamemode
+	uplink_flag |= U.uplink_flag
 	telecrystals += U.telecrystals
 	if(purchase_log && U.purchase_log)
 		purchase_log.MergeWithAndDel(U.purchase_log)
 
 /datum/component/uplink/Destroy()
-	gamemode = null
 	purchase_log = null
 	return ..()
 
+/datum/component/uplink/proc/update_items(user)
+	var/updated_items
+	updated_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
+	update_sales(updated_items)
+	update_special_equipment(user, updated_items)
+	uplink_items = updated_items
+
+/datum/component/uplink/proc/update_sales(updated_items)
+	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
+	if (uplink_items == null)
+		return
+	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
+		if (uplink_items[category] != null && updated_items[category] != null)
+			updated_items[category] = uplink_items[category]
+
+/datum/component/uplink/proc/update_special_equipment(mob/user, updated_items)
+	if(!user?.mind?.failed_special_equipment)
+		return
+	for(var/obj/item/equipment_path as anything in user.mind.failed_special_equipment)
+		var/datum/uplink_item/special_equipment/equipment_uplink_item = new
+		if(!updated_items[equipment_uplink_item.category])
+			updated_items[equipment_uplink_item.category] = list()
+		var/list/name_words = splittext(initial(equipment_path.name), " ")
+		var/capitalized_name
+		for(var/i in 1 to name_words.len)
+			name_words[i] = capitalize(name_words[i])
+		capitalized_name = name_words.Join(" ")
+		equipment_uplink_item.item = equipment_path
+		equipment_uplink_item.name = capitalized_name
+		equipment_uplink_item.desc = initial(equipment_path.desc)
+		updated_items[equipment_uplink_item.category][equipment_uplink_item.name] = equipment_uplink_item
+
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
-		to_chat(user, "<span class='notice'>You slot [TC] into [parent] and charge its internal uplink.</span>")
+		to_chat(user, span_notice("You slot [TC] into [parent] and charge its internal uplink."))
 	var/amt = TC.amount
 	telecrystals += amt
 	TC.use(amt)
-
-/datum/component/uplink/proc/set_gamemode(_gamemode)
-	gamemode = _gamemode
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 
 	if(!active)
-		return	//no hitting everyone/everything just to try to slot tcs in!
+		return //no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
 	for(var/category in uplink_items)
@@ -107,20 +133,22 @@
 			var/cost = UI.refund_amount || UI.cost
 			if(I.type == path && UI.refundable && I.check_uplink_validity())
 				telecrystals += cost
+				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
 				if(purchase_log)
 					purchase_log.total_spent -= cost
-				to_chat(user, "<span class='notice'>[I] refunded.</span>")
+				to_chat(user, span_notice("[I] refunded."))
 				qdel(I)
 				return
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	if(locked)
 		return
 	active = TRUE
+	update_items(user)
 	if(user)
-		ui_interact(user)
+		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -158,12 +186,8 @@
 			var/datum/uplink_item/I = uplink_items[category][item]
 			if(I.limited_stock == 0)
 				continue
-			if(I.restricted_roles.len)
-				var/is_inaccessible = TRUE
-				for(var/R in I.restricted_roles)
-					if(R == user.mind.assigned_role || debug)
-						is_inaccessible = FALSE
-				if(is_inaccessible)
+			if(length(I.restricted_roles))
+				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
 					continue
 			if(I.restricted_species)
 				if(ishuman(user))
@@ -233,7 +257,7 @@
 // Implant signal responses
 
 /datum/component/uplink/proc/implant_activation()
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/implant/implant = parent
 	locked = FALSE
@@ -243,7 +267,13 @@
 	SIGNAL_HANDLER
 
 	var/mob/user = arguments[2]
-	owner = "[user.key]"
+	owner = user?.key
+	if(owner && !purchase_log)
+		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
+		if(GLOB.uplink_purchase_logs_by_key[owner])
+			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
+		else
+			purchase_log = new(owner, src)
 
 /datum/component/uplink/proc/old_implant(datum/source, list/arguments, obj/item/implant/new_implant)
 	SIGNAL_HANDLER
@@ -260,7 +290,7 @@
 // PDA signal responses
 
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
@@ -270,7 +300,7 @@
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
+	to_chat(user, span_hear("The PDA softly beeps."))
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE
@@ -283,7 +313,7 @@
 // Radio signal responses
 
 /datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
@@ -298,7 +328,7 @@
 // Pen signal responses
 
 /datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
-	SIGNAL_HANDLER_DOES_SLEEP
+	SIGNAL_HANDLER
 
 	var/obj/item/pen/master = parent
 	previous_attempts += degrees
@@ -310,7 +340,7 @@
 		previous_attempts.Cut()
 		master.degrees = 0
 		interact(null, user)
-		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+		to_chat(user, span_warning("Your pen makes a clicking noise, before quickly rotating back to 0 degrees!"))
 
 	else if(compare_list(previous_attempts, failsafe_code))
 		failsafe(user)
@@ -329,7 +359,7 @@
 	if(istype(parent,/obj/item/pda))
 		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 	else if(istype(parent,/obj/item/radio))
-		return sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
+		return return_unused_frequency()
 	else if(istype(parent,/obj/item/pen))
 		var/list/L = list()
 		for(var/i in 1 to PEN_ROTATIONS)
@@ -344,5 +374,5 @@
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
 	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
-	explosion(T,1,2,3)
+	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.

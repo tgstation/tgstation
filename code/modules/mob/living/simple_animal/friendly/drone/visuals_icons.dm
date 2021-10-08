@@ -35,7 +35,6 @@
 		hands_overlays += r_hand_overlay
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			r_hand.layer = ABOVE_HUD_LAYER
 			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
@@ -48,7 +47,6 @@
 		hands_overlays += l_hand_overlay
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			l_hand.layer = ABOVE_HUD_LAYER
 			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
@@ -93,12 +91,12 @@
 	update_inv_internal_storage()
 
 /**
-  * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
-  *
-  * Does nothing if there is no usr
-  *
-  * Called on [/mob/proc/Login]
-  */
+ * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
+ *
+ * Does nothing if there is no usr
+ *
+ * Called on [/mob/proc/Login]
+ */
 /mob/living/simple_animal/drone/proc/pickVisualAppearance()
 	picked = FALSE
 	var/list/drone_icons = list(
@@ -141,8 +139,8 @@
 	picked = TRUE
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ */
 /mob/living/simple_animal/drone/proc/check_menu()
 	if(!istype(src))
 		return FALSE

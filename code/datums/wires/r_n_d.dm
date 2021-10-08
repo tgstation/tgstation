@@ -12,6 +12,8 @@
 	..()
 
 /datum/wires/rnd/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/machinery/rnd/R = holder
 	if(R.panel_open)
 		return TRUE

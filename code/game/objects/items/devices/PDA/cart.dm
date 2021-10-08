@@ -1,21 +1,3 @@
-
-#define CART_SECURITY			(1<<0)
-#define CART_ENGINE				(1<<1)
-#define CART_ATMOS				(1<<2)
-#define CART_MEDICAL			(1<<3)
-#define CART_MANIFEST			(1<<4)
-#define CART_CLOWN				(1<<5)
-#define CART_MIME				(1<<6)
-#define CART_JANITOR			(1<<7)
-#define CART_REAGENT_SCANNER	(1<<8)
-#define CART_NEWSCASTER			(1<<9)
-#define CART_REMOTE_DOOR		(1<<10)
-#define CART_STATUS_DISPLAY		(1<<11)
-#define CART_QUARTERMASTER		(1<<12)
-#define CART_HYDROPONICS		(1<<13)
-#define CART_DRONEPHONE			(1<<14)
-
-
 /obj/item/cartridge
 	name = "generic cartridge"
 	desc = "A data cartridge for portable microcomputers."
@@ -32,7 +14,7 @@
 
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/pda/host_pda = null
@@ -42,7 +24,7 @@
 	var/datum/data/record/active3 = null //Security
 	var/obj/machinery/computer/monitor/powmonitor = null // Power Monitor
 	var/list/powermonitors = list()
-	var/message1	// used for status_displays
+	var/message1 // used for status_displays
 	var/message2
 	var/list/stored_data = list()
 	var/current_channel
@@ -50,7 +32,7 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
-/obj/item/cartridge/Initialize()
+/obj/item/cartridge/Initialize(mapload)
 	. = ..()
 	var/obj/item/pda/pda = loc
 	if(istype(pda))
@@ -113,20 +95,20 @@
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty quad-bot interlink!"
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	access = CART_DRONEPHONE
 
 /obj/item/cartridge/signal
 	name = "generic signaler cartridge"
 	desc = "A data cartridge with an integrated radio signaler module."
 
-/obj/item/cartridge/signal/toxins
+/obj/item/cartridge/signal/ordnance
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
-	icon_state = "cart-tox"
+	icon_state = "cart-ord"
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
-/obj/item/cartridge/signal/Initialize()
+/obj/item/cartridge/signal/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 
@@ -148,7 +130,7 @@
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
-	bot_access_flags = MULE_BOT | CLEAN_BOT
+	bot_access_flags = MULE_BOT | CLEAN_BOT | VIBE_BOT
 
 /obj/item/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -160,7 +142,7 @@
 /obj/item/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE | CART_DRONEACCESS
 	bot_access_flags = FLOOR_BOT | FIRE_BOT
 
 /obj/item/cartridge/cmo
@@ -173,9 +155,9 @@
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 
-/obj/item/cartridge/rd/Initialize()
+/obj/item/cartridge/rd/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 
@@ -184,10 +166,10 @@
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
-	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
+	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	spam_enabled = 1
 
-/obj/item/cartridge/captain/Initialize()
+/obj/item/cartridge/captain/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 
@@ -269,7 +251,7 @@ Code:
 
 
 			if(!powercount)
-				menu += "<span class='danger'>No connection<BR></span>"
+				menu += span_danger("No connection<BR>")
 			else
 
 				menu += "<FONT SIZE=-1>"
@@ -283,7 +265,7 @@ Code:
 		if (433)
 			menu = "<h4>[PDAIMG(power)] Power Monitor </h4><BR>"
 			if(!powmonitor || !powmonitor.get_powernet())
-				menu += "<span class='danger'>No connection<BR></span>"
+				menu += span_danger("No connection<BR>")
 			else
 				var/list/L = list()
 				var/datum/powernet/connected_powernet = powmonitor.get_powernet()
@@ -292,7 +274,7 @@ Code:
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Location: [get_area_name(powmonitor, TRUE)]<BR>Total power: [DisplayPower(connected_powernet.viewavail)]<BR>Total load:  [DisplayPower(connected_powernet.viewload)]<BR>"
+				menu += "<PRE>Location: [get_area_name(powmonitor, TRUE)]<BR>Total power: [display_power(connected_powernet.viewavail)]<BR>Total load:  [display_power(connected_powernet.viewload)]<BR>"
 
 				menu += "<FONT SIZE=-1>"
 
@@ -308,7 +290,7 @@ Code:
 //would be to use <span style="width: NNNpx; overflow: none;">[A.area.name]</span>
 					for(var/obj/machinery/power/apc/A in L)
 						menu += copytext_char(add_trailing(A.area.name, 30, " "), 1, 30)
-						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(DisplayPower(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(round(A.cell.percent()), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(display_power(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(round(A.cell.percent()), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
 
@@ -548,7 +530,7 @@ Code:
 			if(!emoji_table)
 				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
-				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
+				for(var/emoji in sortList(icon_states(icon(EMOJI_SET))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")
 					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
 				collate += "</table><br>"
@@ -707,9 +689,9 @@ Code:
 			menu += "\[<A href='byond://?src=[REF(src)];mule=home'>Return Home</A>\]<BR>"
 
 		else
-			menu += "<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] "	//patrolon
-			menu += "\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] "	//patroloff
-			menu += "\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>"		//summon
+			menu += "<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] " //patrolon
+			menu += "\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] " //patroloff
+			menu += "\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>" //summon
 			menu += "Keep an ID inserted to upload access codes upon summoning."
 
 		menu += "<HR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(back)]Return to bot list</A>"

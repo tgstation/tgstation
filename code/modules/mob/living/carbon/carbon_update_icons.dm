@@ -1,5 +1,5 @@
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
-/mob/living/carbon/update_transform()
+/mob/living/carbon/perform_update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
@@ -8,11 +8,11 @@
 		changed++
 		ntransform.TurnTo(lying_prev , lying_angle)
 		if(!lying_angle) //Lying to standing
-			final_pixel_y = get_standard_pixel_y_offset()
+			final_pixel_y = base_pixel_y
 		else //if(lying != 0)
 			if(lying_prev == 0) //Standing to lying
-				pixel_y = get_standard_pixel_y_offset()
-				final_pixel_y = get_standard_pixel_y_offset(lying_angle)
+				pixel_y = base_pixel_y
+				final_pixel_y = base_pixel_y + PIXEL_Y_OFFSET_LYING
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
 	if(resize != RESIZE_DEFAULT_SIZE)
@@ -21,8 +21,8 @@
 		resize = RESIZE_DEFAULT_SIZE
 
 	if(changed)
+		SEND_SIGNAL(src, COMSIG_PAUSE_FLOATING_ANIM, 0.3 SECONDS)
 		animate(src, transform = ntransform, time = (lying_prev == 0 || lying_angle == 0) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
-		setMovetype(movement_type & ~FLOATING)  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
 
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -57,9 +57,8 @@
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
-			if(observers?.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
+			if(length(observers))
+				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
 						observe.client.screen += I
 					else
@@ -97,7 +96,7 @@
 		var/obj/item/bodypart/BP = X
 		if(BP.dmg_overlay_type)
 			if(BP.brutestate)
-				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0")	//we're adding icon_states of the base image as overlays
+				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0") //we're adding icon_states of the base image as overlays
 			if(BP.burnstate)
 				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
 
@@ -111,8 +110,8 @@
 		return
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1]
-		inv.update_icon()
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_MASK) + 1]
+		inv.update_appearance()
 
 	if(wear_mask)
 		if(!(check_obscured_slots() & ITEM_SLOT_MASK))
@@ -125,8 +124,8 @@
 	remove_overlay(NECK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1]
-		inv.update_icon()
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1]
+		inv.update_appearance()
 
 	if(wear_neck)
 		if(!(check_obscured_slots() & ITEM_SLOT_NECK))
@@ -139,8 +138,8 @@
 	remove_overlay(BACK_LAYER)
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
-		inv.update_icon()
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1]
+		inv.update_appearance()
 
 	if(back)
 		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
@@ -155,8 +154,8 @@
 		return
 
 	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
-		inv.update_icon()
+		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
+		inv.update_appearance()
 
 	if(head)
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
@@ -168,7 +167,11 @@
 /mob/living/carbon/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	if(handcuffed)
-		overlays_standing[HANDCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
+		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
+		if(handcuffed.blocks_emissive)
+			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
+
+		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
 
 
@@ -178,9 +181,9 @@
 /mob/living/carbon/proc/update_hud_handcuffed()
 	if(hud_used)
 		for(var/hand in hud_used.hand_slots)
-			var/obj/screen/inventory/hand/H = hud_used.hand_slots[hand]
+			var/atom/movable/screen/inventory/hand/H = hud_used.hand_slots[hand]
 			if(H)
-				H.update_icon()
+				H.update_appearance()
 
 //update whether our head item appears on our hud.
 /mob/living/carbon/proc/update_hud_head(obj/item/I)
@@ -203,9 +206,15 @@
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
-/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
-	. = list()
+/obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
 
+	. = list()
+	if(!blocks_emissive)
+		return
+
+	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
 
 /mob/living/carbon/update_body()
 	update_body_parts()
@@ -213,7 +222,7 @@
 /mob/living/carbon/proc/assign_bodypart_ownership()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		BP.original_owner = src
+		BP.original_owner = WEAKREF(src)
 
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE
@@ -235,9 +244,10 @@
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
+	var/draw_features = !HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		new_limbs += BP.get_limb_icon()
+		new_limbs += BP.get_limb_icon(draw_external_organs = draw_features)
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs

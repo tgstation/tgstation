@@ -20,10 +20,10 @@
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins digging into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins digging into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
+	user.visible_message(span_suicide("[user] couldn't do it!"))
 	return SHAME
 
 /obj/item/pickaxe/rusted
@@ -79,7 +79,7 @@
 	desc = "An integrated electric mining drill."
 	flags_1 = NONE
 
-/obj/item/pickaxe/drill/cyborg/Initialize()
+/obj/item/pickaxe/drill/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
@@ -139,15 +139,15 @@
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	sharpness = SHARP_EDGED
 
-/obj/item/shovel/Initialize()
+/obj/item/shovel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 150, 40) //it's sharp, so it works, but barely.
 
 /obj/item/shovel/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
-	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
+	user.visible_message(span_suicide("[user] couldn't do it!"))
 	return SHAME
 
 /obj/item/shovel/spade

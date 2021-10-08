@@ -53,20 +53,20 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	crusher_achievement_type = /datum/award/achievement/boss/swarmer_beacon_crusher
 	score_achievement_type = /datum/award/score/swarmer_beacon_score
 	faction = list("mining", "boss", "swarmer")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	stop_automated_movement = TRUE
 	wander = FALSE
 	layer = BELOW_MOB_LAYER
 	AIStatus = AI_OFF
 	del_on_death = TRUE
 	var/swarmer_spawn_cooldown = 0
-	var/swarmer_spawn_cooldown_amt = 150 //Deciseconds between the swarmers we spawn
+	var/swarmer_spawn_cooldown_amt = 15 SECONDS //Deciseconds between the swarmers we spawn
 	var/call_help_cooldown = 0
-	var/call_help_cooldown_amt = 150 //Deciseconds between calling swarmers to help us when attacked
+	var/call_help_cooldown_amt = 15 SECONDS //Deciseconds between calling swarmers to help us when attacked
 	var/static/list/swarmer_caps
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize(mapload)
 	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	for(var/ddir in GLOB.cardinals)
@@ -75,21 +75,31 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
 
 
-/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life()
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		var/createtype = GetUncappedAISwarmerType()
 		if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
-			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
+			update_cooldowns(list(COOLDOWN_UPDATE_SET_SPAWN = swarmer_spawn_cooldown_amt))
 			new createtype(loc)
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && world.time > call_help_cooldown)
-		call_help_cooldown = world.time + call_help_cooldown_amt
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_HELP = call_help_cooldown_amt))
 		summon_backup(25) //long range, only called max once per 15 seconds, so it's not deathlag
 
+/mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
+	. = ..()
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN])
+		swarmer_spawn_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_SPAWN]
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN])
+		swarmer_spawn_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_SPAWN]
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_HELP])
+		call_help_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_HELP]
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_HELP])
+		call_help_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_HELP]
 
 //SWARMER AI
 //AI versions of the swarmer mini-antag
@@ -97,10 +107,10 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 /mob/living/simple_animal/hostile/swarmer/ai
 	wander = 1
 	faction = list("swarmer", "mining")
-	weather_immunities = list("ash") //wouldn't be fun otherwise
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE) //wouldn't be fun otherwise
 	AIStatus = AI_ON
 
-/mob/living/simple_animal/hostile/swarmer/ai/Initialize()
+/mob/living/simple_animal/hostile/swarmer/ai/Initialize(mapload)
 	. = ..()
 	toggle_light() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
 	LAZYINITLIST(GLOB.AISwarmersByType[type])
@@ -159,7 +169,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 //RESOURCE SWARMER:
-//Similar to the original Player-Swarmers, these dismantle things to obtain the metal inside
+//Similar to the original Player-Swarmers, these dismantle things to obtain the iron inside
 //They then use this medal to produce more swarmers or traps/barricades
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource
@@ -188,7 +198,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	if(is_type_in_typecache(the_target, sharedWanted)) //always eat
 		return TRUE
 
-	return ..()	//else, have a nibble, see if it's food
+	return ..() //else, have a nibble, see if it's food
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/OpenFire(atom/A)

@@ -8,6 +8,7 @@
 	damage_deflection = 20
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 75, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 70)
 	max_integrity = 100
+	recipe_type = /datum/crafting_recipe/shutters
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
@@ -50,3 +51,6 @@
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open"
 	density = FALSE
+
+/obj/machinery/door/poddoor/shutters/bumpopen()
+	return

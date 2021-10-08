@@ -27,8 +27,8 @@
 /area/ruin/powered)
 "g" = (
 /obj/machinery/smartfridge/survival_pod{
-	name = "dusty survival pod storage";
-	desc = "A heated storage unit. This one's seen better days."
+	desc = "A heated storage unit. This one's seen better days.";
+	name = "dusty survival pod storage"
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
@@ -61,9 +61,7 @@
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /obj/structure/tubes,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "n" = (

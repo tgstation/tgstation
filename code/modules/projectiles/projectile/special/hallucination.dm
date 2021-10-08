@@ -23,12 +23,12 @@
 
 /obj/projectile/hallucination/fire()
 	..()
-	fake_icon = image('icons/obj/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
+	fake_icon = image('icons/obj/guns/projectiles.dmi', src, hal_icon_state, ABOVE_MOB_LAYER)
 	if(hal_target.client)
 		hal_target.client.images += fake_icon
 
 /obj/projectile/hallucination/Destroy()
-	if(hal_target.client)
+	if(hal_target?.client)
 		hal_target.client.images -= fake_icon
 	QDEL_NULL(fake_icon)
 	return ..()
@@ -48,10 +48,10 @@
 
 /obj/projectile/hallucination/proc/target_on_hit(mob/M)
 	if(M == hal_target)
-		to_chat(hal_target, "<span class='userdanger'>[M] is hit by \a [src] in the chest!</span>")
+		to_chat(hal_target, span_userdanger("[M] is hit by \a [src] in the chest!"))
 		hal_apply_effect()
 	else if(M in view(hal_target))
-		to_chat(hal_target, "<span class='danger'>[M] is hit by \a [src] in the chest!!</span>")
+		to_chat(hal_target, span_danger("[M] is hit by \a [src] in the chest!!"))
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir
 		if(starting)

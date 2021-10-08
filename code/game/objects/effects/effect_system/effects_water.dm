@@ -3,11 +3,12 @@
 /obj/effect/particle_effect/water
 	name = "water"
 	icon_state = "extinguish"
+	pass_flags = PASSTABLE | PASSMACHINE | PASSSTRUCTURE | PASSGRILLE | PASSBLOB | PASSVEHICLE
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-/obj/effect/particle_effect/water/Initialize()
+/obj/effect/particle_effect/water/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 70)
 
@@ -15,13 +16,13 @@
 	if (--src.life < 1)
 		qdel(src)
 		return FALSE
-	if(newloc.density)
-		return FALSE
 	return ..()
 
 /obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)
 		reagents.expose(A)
+	if(A.reagents)
+		A.reagents.expose_temperature(-25)
 	return ..()
 
 
@@ -34,10 +35,10 @@
 // will always spawn at the items location, even if it's moved.
 
 /* Example:
- var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread() -- creates new system
-steam.set_up(5, 0, mob.loc) -- sets up variables
-OPTIONAL: steam.attach(mob)
-steam.start() -- spawns the effect
+ *var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread() -- creates new system
+ *steam.set_up(5, 0, mob.loc) -- sets up variables
+ *OPTIONAL: steam.attach(mob)
+ *steam.start() -- spawns the effect
 */
 /////////////////////////////////////////////
 /obj/effect/particle_effect/steam
@@ -45,9 +46,13 @@ steam.start() -- spawns the effect
 	icon_state = "extinguish"
 	density = FALSE
 
-/obj/effect/particle_effect/steam/Initialize()
+/obj/effect/particle_effect/steam/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 20)
 
 /datum/effect_system/steam_spread
 	effect_type = /obj/effect/particle_effect/steam
+
+/obj/effect/particle_effect/water/Bump(atom/A)
+	if(A.reagents && reagents)
+		A.reagents.expose_temperature(reagents.chem_temp)

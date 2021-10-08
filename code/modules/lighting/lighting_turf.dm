@@ -1,49 +1,20 @@
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
-	var/datum/light_source/L
-	var/thing
-	for (thing in affecting_lights)
-		L = thing
-		L.vis_update()
+	lighting_corner_NE?.vis_update()
+	lighting_corner_SE?.vis_update()
+	lighting_corner_SW?.vis_update()
+	lighting_corner_NW?.vis_update()
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_object)
-		qdel(lighting_object, TRUE)
-
-	var/datum/lighting_corner/C
-	var/thing
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		C.update_active()
+		qdel(lighting_object, force=TRUE)
 
 // Builds a lighting object for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if (lighting_object)
-		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
+		qdel(lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
-		return
-
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-
-	new/atom/movable/lighting_object(src)
-
-	var/thing
-	var/datum/lighting_corner/C
-	var/datum/light_source/S
-	for (thing in corners)
-		if(!thing)
-			continue
-		C = thing
-		if (!C.active) // We would activate the corner, calculate the lighting for it.
-			for (thing in C.affecting)
-				S = thing
-				S.recalc_corner(C)
-			C.active = TRUE
+	new/datum/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -51,13 +22,20 @@
 		return 1
 
 	var/totallums = 0
-	var/thing
 	var/datum/lighting_corner/L
-	for (thing in corners)
-		if(!thing)
-			continue
-		L = thing
+	L = lighting_corner_NE
+	if (L)
 		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SE
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_SW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+	L = lighting_corner_NW
+	if (L)
+		totallums += L.lum_r + L.lum_b + L.lum_g
+
 
 	totallums /= 12 // 4 corners, each with 3 channels, get the average.
 
@@ -75,7 +53,7 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !(lighting_object.luminosity || dynamic_lumcount)
+	return !(luminosity || dynamic_lumcount)
 
 
 ///Proc to add movable sources of opacity on the turf and let it handle lighting code.
@@ -103,8 +81,7 @@
 			reconsider_lights()
 		return
 	directional_opacity = NONE
-	for(var/am in opacity_sources)
-		var/atom/movable/opacity_source = am
+	for(var/atom/movable/opacity_source as anything in opacity_sources)
 		if(opacity_source.flags_1 & ON_BORDER_1)
 			directional_opacity |= opacity_source.dir
 		else //If fulltile and opaque, then the whole tile blocks view, no need to continue checking.
@@ -116,21 +93,28 @@
 
 /turf/proc/change_area(area/old_area, area/new_area)
 	if(SSlighting.initialized)
-		if (new_area.dynamic_lighting != old_area.dynamic_lighting)
-			if (new_area.dynamic_lighting)
+		if (new_area.static_lighting != old_area.static_lighting)
+			if (new_area.static_lighting)
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
+	//Inherit overlay of new area
+	if(old_area.lighting_effect)
+		cut_overlay(old_area.lighting_effect)
+	if(new_area.lighting_effect)
+		add_overlay(new_area.lighting_effect)
 
 /turf/proc/generate_missing_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return
+	if (!lighting_corner_NE)
+		lighting_corner_NE = new/datum/lighting_corner(src, NORTH|EAST)
+
+	if (!lighting_corner_SE)
+		lighting_corner_SE = new/datum/lighting_corner(src, SOUTH|EAST)
+
+	if (!lighting_corner_SW)
+		lighting_corner_SW = new/datum/lighting_corner(src, SOUTH|WEST)
+
+	if (!lighting_corner_NW)
+		lighting_corner_NW = new/datum/lighting_corner(src, NORTH|WEST)
+
 	lighting_corners_initialised = TRUE
-	if (!corners)
-		corners = list(null, null, null, null)
-
-	for (var/i = 1 to 4)
-		if (corners[i]) // Already have a corner on this direction.
-			continue
-
-		corners[i] = new/datum/lighting_corner(src, GLOB.LIGHTING_CORNER_DIAGONAL[i])

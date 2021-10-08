@@ -8,10 +8,10 @@
 /mob/living/silicon/proc/deadchat_lawchange()
 	var/list/the_laws = laws.get_law_list(include_zeroth = TRUE)
 	var/lawtext = the_laws.Join("<br/>")
-	deadchat_broadcast("'s <b>laws were changed.</b> <a href='?src=[REF(src)]&dead=1&printlawtext=[url_encode(lawtext)]'>View</a>", "<span class='name'>[src]</span>", follow_target=src, message_type=DEADCHAT_LAWCHANGE)
+	deadchat_broadcast("'s <b>laws were changed.</b> <a href='?src=[REF(src)]&dead=1&printlawtext=[url_encode(lawtext)]'>View</a>", span_name("[src]"), follow_target=src, message_type=DEADCHAT_LAWCHANGE)
 
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, "<b>Your laws have been changed.</b>")
 		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset

@@ -1,0 +1,161 @@
+2012-01-01:
+  /tg/station team:
+  - unknown: ' (12 more months until doomsday)'
+  Doohl:
+  - unknown: <font color="red"><b>XENOS ARE NOW IMMUNE TO STUNNING!</b></font> To
+      compensate, stunning via tasers/batons now slows them down significantly.
+  Polymorph:
+  - unknown: Doors no longer close if they have a mob in the tile.  (Generally!)  Door
+      safties can now be overriden to close a door with a mob in the tile and injure
+      them severely.
+2012-01-03:
+  Erro:
+  - unknown: <font color="red"><b>Shift-clicking will now examine whatever you clicked
+      on!</b></font>
+  Polymorph:
+  - unknown: Alt-clicking will now pull whatever you clicked on!
+2012-01-07:
+  Donkieyo:
+  - unknown: You must now repair damaged plating with a welder before placing a floor
+      tile.
+  - unknown: You can now relabel canisters if they're under 1kPa.
+  Polymorph:
+  - unknown: Dragging your PDA onto your person from your inventory will bring up
+      the PDA screen.
+  - unknown: You can now send emergancy messages to Centcomm (Or, with some.. tampering,
+      the Syndicate.) via a comms console.  (This occurs in much the fashion as a
+      prayer.)
+2012-01-08:
+  Agouri:
+  - unknown: I'm back home and resumed work on Newscasters and Contraband.
+  - unknown: But I got bored and made cargo softcaps instead. Flippable! Enjoy, now
+      all we need is deliverable pizzas.
+  - unknown: "Oh, also enjoy some new bodybag functionality and sounds I had ready\
+      \ a while ago, with sprites from Farart. Use a pen to create a visible tag on\
+      \ the bodybag. Wirecutters to cut it off. Also it's no longer weldable because\
+      \ it makes no goddamn sense.\n  "
+2012-01-09:
+  ConstantA:
+  - unknown: "Reworked exosuit internal atmospherics (the situation when exosuit is\
+      \ set to take air from internal tank, otherwise cabin air = location air): \n\
+      \t\t<ul>\n\t\t\t<li>If current cabin presure is lower than &amp;quot;tank output\
+      \ pressure&amp;quot;, the air will be taken from internal tank (if possible),\
+      \ to equalize cabin pressure to &amp;quot;tank output pressure&amp;quot;</li>\n\
+      \t\t\t<li>If current cabin presure is higher than &amp;quot;tank output pressure&amp;quot;,\
+      \ the air will be siphoned from cabin to location until cabin pressure is equal\
+      \ to &amp;quot;tank output pressure&amp;quot;</li>\n\t\t\t<li>Tank air is not\
+      \ altered in any way even if it's overheated or overpressured - connect exosuit\
+      \ to atmos connector port to vent it</li>\n\t\t\t<li>&amp;quot;Tank output pressure&amp;quot;\
+      \ can be set through Maintenance window - Initiate maintenance protocol to get\
+      \ the option</li>\n\t\t</ul>\n\t"
+  - unknown: Fixed bug that prevented exosuit tank air updates if exosuit was connected
+      to connector port
+  - unknown: 'Combat exosuits melee won''t gib dead mobs anymore '
+  - unknown: QM exosuit circuit crates cost lowered to 30 points
+  - unknown: Exosuit plasma converter effectiveness +50%
+2012-01-15:
+  Doohl:
+  - unknown: <b>The radio overhaul 'Telecommunications' is now LIVE.</b> Please submit
+      any opinions/feedback in the forums and check the wiki article on Telecommunications
+      for some more info for the curious.
+  - unknown: The AI satellite has been replaced with a communications satellite. You
+      can get there via teleporter or space, just like the AI satellite. I highly
+      recommend not bum-rushing the new satellite, as you may be killed if you don't
+      have access. It's a very secure place.
+  - unknown: Once a human's toxicity level reaches a certain point, they begin throwing
+      up. This is a natural, but overall ineffective method of purging toxins from
+      the body.
+  - unknown: You can now travel Z-levels in Nuclear Emergency mode (the nuke disk
+      is still bound to the station). This means the nuclear agents can and probably
+      will fly off into space to blow up the comm satellite and shut down communications.
+2012-01-17:
+  Doohl:
+  - unknown: Syndicate shuttle now starts with a All-In-One telecommunication machine,
+      which acts as a mini-network for the syndie channel. It intercepts all station
+      radio activity, too, how cool is that?
+2012-01-19:
+  Petethegoat:
+  - unknown: Exciting new pen additions! Get the low-down at <a href="http://nanotrasen.com/wiki/index.php/Guide_to_paperwork">the
+      wiki</a>.
+2012-01-27:
+  Blaank:
+  - unknown: 'Added a vending machine to atmopherics reception desk that dispenses
+      large
+
+      oxygen tanks, plasma tanks, emergency oxegen tanks, extended capacity emergency
+
+      oxygen tanks, and breath masks.'
+  LastyScratch:
+  - unknown: Toggle-Ambience now works properly and has been moved from the OOC tab
+      to the Special Verbs tab to be with all the other toggles.
+  'Petethegoat updated (for a bunch of other people):':
+  - unknown: Lattice is now removed when you create plating or floor (credit Donkieyo).
+  - unknown: Monkeys now take damage while in crit (credit Nodrak).
+  - unknown: The warden now has his own jacket. (credit Shiftyeyesshady).
+  - unknown: Spectacular new dice that will display the proper side when rolled!!
+      (credit TedJustice)
+  - unknown: Borg RCDs can no longer take down R-walls. (headcoder orders)
+  RavingManiac:
+  - unknown: The bar now has a "stage" area for performances.
+2012-01-28:
+  BubbleWrap:
+  - unknown: Arresting buff!
+  - unknown: A person in handcuffs being pulled cannot be bumped out of the way, nor
+      can the person pulling them. They can still push through a crowd (they get bumped
+      back to behind the person being pulled, or pushed ahead depending on intent).
+2012-01-29:
+  /tg/station team:
+  - unknown: ' got Comp Arch exams on Wednesday :('
+  Agouri:
+  - unknown: '<font face="terminal"><b>UPDATE ON THE UPDATE</b>: Newspapers are now
+      fully working, sorry for that. Some minor icon bugs fixed. Now I''m free to
+      work on the contest prizes :3</font>'
+  - unknown: <b><font color="red">Newscasters are now LIVE!</font></b> Bug reports,
+      suggestions for extra uses, tears etc go <a href="http://code.google.com/p/tgstation13/source/detail?r=3005"
+      target="_blank">here</a>.
+  - unknown: What <b>ARE</b> newscasters? Fans of the Transmetropolitan series might
+      find them familiar. Basically, they're terminals connected to a station-wide
+      news network. Users are able to submit channels of their own (one per identified
+      user, with channels allowing feed stories by other people or, if you want the
+      channel to be your very own SpaceJournal, being submit-locked to you), while
+      others are able to read the channels, either through the terminals or a printed
+      newspaper which contains every news-story circulating at the time of printing.
+  - unknown: 'About censorship: You can censor channels and feed stories through Security
+      casters, found in the HoS''es office and the Bridge. Alternatively, if you want
+      a channel to stop operating completely, you can mark it with a D-Notice which
+      will freeze it and make all its messages unreadable for the duration it is in
+      effect. If you''ve got the access, of course.'
+  - unknown: Basically I think of the newscaster as nothing more as an additional
+      Roleplaying tool. Grab a newspaper along with your donuts and coffee from the
+      machines, read station rumors when you're manning your desk, be a station adventurer
+      or journalist with your very own network journal!
+  - unknown: I would ask for a bit of respect when using the machine, though. I removed
+      all and any channel and story restrictions regarding content, so you might end
+      up seeing channels that violate the rules, Report those to the admins.
+  - unknown: "Finally, due to the removal of the enforced \"Channel\" string, it's\
+      \ recommended to name your channels properly (\"Station Paranormal Activity\
+      \ Channel\" instead of \"Station Paranormal Activity\", for example\")\n\n  "
+2012-01-30:
+  Sieve:
+  - unknown: This stuff is actually already implemented, it just didn't make it to
+      the changelog
+  - unknown: Firefighter Mech - A reinforced Ripley that is more resistant to better
+      cope with fires, simply look in the Ripley Contruction manual for instructions.
+  - unknown: Mech contruction now has sounds for each step, not just 1/4 of them.
+  - unknown: Mech Fabricators are fixed, Manual Sync now works and certain reseach
+      will reduce the time needed to build components.
+  - unknown: Added special flaps to the mining station that disallow air-flow, removing
+      the need to shuffle Ore Boxes through the Airlocks.
+  - unknown: Each outpost has it's own system for the conveyors so they won't interfere
+      with each other.
+  - unknown: Powercell chargers have been buffed so now higher capacity cells are
+      actually useable.
+  - unknown: A diamond mech drill has been added. While it isn't any stronger than
+      the standard drill, it is much faster.
+2012-01-31:
+  Carn:
+  - unknown: Grammar &amp; various bug-fixes
+  - unknown: Thank-you to everyone who reported spelling/grammar mistakes. I'm still
+      working on it, so if you spot anymore please leave a comment <a href="http://nanotrasen.com/phpBB3/viewtopic.php?f=3&amp;t=7578"
+      target="_blank">here</a>. There's still lots to fix.
+  - unknown: Mining station areas should no longer lose air.

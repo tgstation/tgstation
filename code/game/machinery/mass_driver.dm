@@ -9,17 +9,20 @@
 	var/power = 1
 	var/code = 1
 	var/id = 1
-	var/drive_range = 50	//this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
+	var/drive_range = 50 //this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
 /obj/machinery/mass_driver/chapelgun
 	name = "holy driver"
 	id = MASSDRIVER_CHAPEL
 
-/obj/machinery/mass_driver/toxins
-	id = MASSDRIVER_TOXINS
+/obj/machinery/mass_driver/ordnance
+	id = MASSDRIVER_ORDNANCE
 
 /obj/machinery/mass_driver/trash
 	id = MASSDRIVER_DISPOSALS
+
+/obj/machinery/mass_driver/shack
+	id = MASSDRIVER_SHACK
 
 /obj/machinery/mass_driver/Destroy()
 	for(var/obj/machinery/computer/pod/control in GLOB.machines)
@@ -37,12 +40,12 @@
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
-		if(!O.anchored || ismecha(O))	//Mechs need their launch platforms.
+		if(!O.anchored || ismecha(O)) //Mechs need their launch platforms.
 			if(ismob(O) && !isliving(O))
 				continue
 			O_limit++
 			if(O_limit >= 20)
-				audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")
+				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
 			use_power(500)
 			O.throw_at(target, drive_range * power, power)

@@ -20,7 +20,7 @@
 /obj/machinery/door/password/Initialize(mapload)
 	. = ..()
 	if(voice_activated)
-		flags_1 |= HEAR_1
+		become_hearing_sensitive()
 
 /obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -43,10 +43,8 @@
 			do_animate("deny")
 
 /obj/machinery/door/password/update_icon_state()
-	if(density)
-		icon_state = "closed"
-	else
-		icon_state = "open"
+	. = ..()
+	icon_state = density ? "closed" : "open"
 
 /obj/machinery/door/password/do_animate(animation)
 	switch(animation)
@@ -70,4 +68,4 @@
 	return
 
 /obj/machinery/door/password/ex_act(severity, target)
-	return
+	return FALSE

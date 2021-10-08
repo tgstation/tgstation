@@ -9,7 +9,7 @@
 	var/enabled = TRUE
 	var/renamed = FALSE
 
-/obj/item/beacon/Initialize()
+/obj/item/beacon/Initialize(mapload)
 	. = ..()
 	if (enabled)
 		GLOB.teleportbeacons += src
@@ -17,7 +17,7 @@
 		icon_state = "beacon-off"
 
 /obj/item/beacon/Destroy()
-	GLOB.teleportbeacons.Remove(src)
+	GLOB.teleportbeacons -= src
 	return ..()
 
 /obj/item/beacon/attack_self(mob/user)
@@ -27,8 +27,8 @@
 		GLOB.teleportbeacons += src
 	else
 		icon_state = "beacon-off"
-		GLOB.teleportbeacons.Remove(src)
-	to_chat(user, "<span class='notice'>You [enabled ? "enable" : "disable"] the beacon.</span>")
+		GLOB.teleportbeacons -= src
+	to_chat(user, span_notice("You [enabled ? "enable" : "disable"] the beacon."))
 	return
 
 /obj/item/beacon/attackby(obj/item/W, mob/user)

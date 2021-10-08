@@ -14,7 +14,7 @@
 	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
 	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
 
-/obj/item/blackmarket_uplink/Initialize()
+/obj/item/blackmarket_uplink/Initialize(mapload)
 	. = ..()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
@@ -26,9 +26,9 @@
 	if(istype(I, /obj/item/holochip) || istype(I, /obj/item/stack/spacecash) || istype(I, /obj/item/coin))
 		var/worth = I.get_item_credit_value()
 		if(!worth)
-			to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
+			to_chat(user, span_warning("[I] doesn't seem to be worth anything!"))
 		money += worth
-		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [money] credits inserted.</span>")
+		to_chat(user, span_notice("You slot [I] into [src] and it reports a total of [money] credits inserted."))
 		qdel(I)
 		return
 	. = ..()
@@ -44,14 +44,14 @@
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
 	if(amount_to_remove > money)
-		to_chat(user, "<span class='warning'>There is only [money] credits in [src]</span>")
+		to_chat(user, span_warning("There is only [money] credits in [src]"))
 		return
 
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	money -= amount_to_remove
 	holochip.name = "washed " + holochip.name
 	user.put_in_hands(holochip)
-	to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 
 /obj/item/blackmarket_uplink/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -153,7 +153,7 @@
 	name = "Black Market Uplink"
 	result = /obj/item/blackmarket_uplink
 	time = 30
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	reqs = list(
 		/obj/item/stock_parts/subspace/amplifier = 1,
 		/obj/item/stack/cable_coil = 15,

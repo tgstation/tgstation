@@ -5,11 +5,11 @@
 	name = "bluespace gigabeacon"
 	desc = "A device that draws power from bluespace and creates a permanent tracking beacon."
 	layer = LOW_OBJ_LAYER
-	use_power = IDLE_POWER_USE
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	var/obj/item/beacon/Beacon
 
-/obj/machinery/bluespace_beacon/Initialize()
+/obj/machinery/bluespace_beacon/Initialize(mapload)
 	. = ..()
 	var/turf/T = loc
 	Beacon = new(T)
@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/machinery/bluespace_beacon/process()
-	if(!Beacon)
+	if(QDELETED(Beacon)) //Don't move it out of nullspace BACK INTO THE GAME for the love of god
 		var/turf/T = loc
 		Beacon = new(T)
 		Beacon.invisibility = INVISIBILITY_MAXIMUM

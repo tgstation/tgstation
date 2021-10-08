@@ -33,7 +33,7 @@
 			var/datum/beam/C = pick(enemychains)
 			qdel(C)
 			enemychains -= C
-		enemychains += Beam(target, "lightning[rand(1,12)]", time=70, maxdistance=7, beam_type=/obj/effect/ebeam/chain)
+		enemychains += Beam(target, "lightning[rand(1,12)]", maxdistance=7, beam_type=/obj/effect/ebeam/chain)
 
 /mob/living/simple_animal/hostile/guardian/beam/Destroy()
 	removechains()
@@ -43,7 +43,7 @@
 	. = ..()
 	if(.)
 		if(summoner)
-			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
+			summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
 		while(loc != summoner)
 			if(successfulshocks > 5)
 				successfulshocks = 0
@@ -70,7 +70,7 @@
 	cleardeletedchains()
 	if(summoner)
 		if(!summonerchain)
-			summonerchain = Beam(summoner, "lightning[rand(1,12)]", time=INFINITY, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/chain)
+			summonerchain = Beam(summoner, "lightning[rand(1,12)]", beam_type=/obj/effect/ebeam/chain)
 		. += chainshock(summonerchain)
 	if(enemychains.len)
 		for(var/chain in enemychains)
@@ -94,7 +94,7 @@
 			var/turf/T = get_turf_pixel(chainpart)
 			turfs |= T
 			if(T != get_turf(B.origin) && T != get_turf(B.target))
-				for(var/turf/TU in circlerange(T, 1))
+				for(var/turf/TU in circle_range(T, 1))
 					turfs |= TU
 	for(var/turf in turfs)
 		var/turf/T = turf
@@ -105,9 +105,9 @@
 				if(successfulshocks > 4)
 					L.electrocute_act(0)
 					L.visible_message(
-						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
-						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
-						"<span class='hear'>You hear a heavy electrical crack.</span>" \
+						span_danger("[L] was shocked by the lightning chain!"), \
+						span_userdanger("You are shocked by the lightning chain!"), \
+						span_hear("You hear a heavy electrical crack.") \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

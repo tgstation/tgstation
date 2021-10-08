@@ -15,8 +15,7 @@ export const Achievements = (props, context) => {
     <Window
       title="Achievements"
       width={540}
-      height={680}
-      resizable>
+      height={680}>
       <Window.Content scrollable>
         <Tabs>
           {categories.map(category => (

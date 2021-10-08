@@ -28,7 +28,7 @@
 	splash_holder.chem_temp = (total_temp/reactants.len) + extra_heat // Average temperature of reagents + extra heat.
 	splash_holder.handle_reactions() // React them now.
 
-	if(splash_holder.total_volume && affected_range >= 0)	//The possible reactions didnt use up all reagents, so we spread it around.
+	if(splash_holder.total_volume && affected_range >= 0) //The possible reactions didnt use up all reagents, so we spread it around.
 		var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()
 		steam.set_up(10, 0, epicenter)
 		steam.attach(epicenter)
@@ -58,7 +58,7 @@
 					break
 		var/list/reactable = accessible
 		for(var/turf/T in accessible)
-			for(var/atom/A in T.GetAllContents())
+			for(var/atom/A in T.get_all_contents())
 				if(!(A in viewable))
 					continue
 				reactable |= A

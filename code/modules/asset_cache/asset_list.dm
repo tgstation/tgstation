@@ -11,6 +11,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset
 	var/_abstract = /datum/asset
+	var/cached_url_mappings
+
+	/// Whether or not this asset should be loaded in the "early assets" SS
+	var/early = FALSE
 
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
@@ -18,6 +22,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/proc/get_url_mappings()
 	return list()
+
+/// Returns a cached tgui message of URL mappings
+/datum/asset/proc/get_serialized_url_mappings()
+	if (isnull(cached_url_mappings))
+		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+
+	return cached_url_mappings
 
 /datum/asset/proc/register()
 	return
@@ -169,6 +180,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
+	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
+	I = ModifyInserted(I)
 	var/size_id = "[I.Width()]x[I.Height()]"
 	var/size = sizes[size_id]
 
@@ -184,6 +197,15 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+/**
+ * A simple proc handing the Icon for you to modify before it gets turned into an asset.
+ *
+ * Arguments:
+ * * I: icon being turned into an asset
+ */
+/datum/asset/spritesheet/proc/ModifyInserted(icon/pre_asset)
+	return pre_asset
 
 /datum/asset/spritesheet/proc/InsertAll(prefix, icon/I, list/directions)
 	if (length(prefix))
@@ -217,12 +239,43 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/size_id = sprite[SPR_SIZE]
 	return {"[name][size_id] [sprite_name]"}
 
+/**
+ * Returns the size class (ex design32x32) for a given sprite's icon
+ *
+ * Arguments:
+ * * sprite_name - The sprite to get the size of
+ */
+/datum/asset/spritesheet/proc/icon_size_id(sprite_name)
+	var/sprite = sprites[sprite_name]
+	if (!sprite)
+		return null
+	var/size_id = sprite[SPR_SIZE]
+	return "[name][size_id]"
+
 #undef SPR_SIZE
 #undef SPR_IDX
 #undef SPRSZ_COUNT
 #undef SPRSZ_ICON
 #undef SPRSZ_STRIPPED
 
+
+/datum/asset/changelog_item
+	_abstract = /datum/asset/changelog_item
+	var/item_filename
+
+/datum/asset/changelog_item/New(date)
+	item_filename = SANITIZE_FILENAME("[date].yml")
+	SSassets.transport.register_asset(item_filename, file("html/changelogs/archive/" + item_filename))
+
+/datum/asset/changelog_item/send(client)
+	if (!item_filename)
+		return
+	. = SSassets.transport.send_assets(client, item_filename)
+
+/datum/asset/changelog_item/get_url_mappings()
+	if (!item_filename)
+		return
+	. = list("[item_filename]" = SSassets.transport.get_asset_url(item_filename))
 
 /datum/asset/spritesheet/simple
 	_abstract = /datum/asset/spritesheet/simple
@@ -252,7 +305,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 				continue
 			asset = fcopy_rsc(asset) //dedupe
 			var/prefix2 = (directions.len > 1) ? "[dir2text(direction)]." : ""
-			var/asset_name = sanitize_filename("[prefix].[prefix2][icon_state_name].png")
+			var/asset_name = SANITIZE_FILENAME("[prefix].[prefix2][icon_state_name].png")
 			if (generic_icon_names)
 				asset_name = "[generate_asset_name(asset)].png"
 
@@ -315,3 +368,28 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple/namespaced/proc/get_htmlloader(filename)
 	return url2htmlloader(SSassets.transport.get_asset_url(filename, assets[filename]))
 
+/// A subtype to generate a JSON file from a list
+/datum/asset/json
+	_abstract = /datum/asset/json
+	/// The filename, will be suffixed with ".json"
+	var/name
+
+/datum/asset/json/send(client)
+	return SSassets.transport.send_assets(client, "data/[name].json")
+
+/datum/asset/json/get_url_mappings()
+	return list(
+		"[name].json" = SSassets.transport.get_asset_url("data/[name].json"),
+	)
+
+/datum/asset/json/register()
+	var/filename = "data/[name].json"
+	fdel(filename)
+	text2file(json_encode(generate()), filename)
+	SSassets.transport.register_asset(filename, fcopy_rsc(filename))
+	fdel(filename)
+
+/// Returns the data that will be JSON encoded
+/datum/asset/json/proc/generate()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("generate() not implemented for [type]!")

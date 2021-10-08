@@ -2,7 +2,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/presents
 	name = "Conjure Presents!"
 	desc = "This spell lets you reach into S-space and retrieve presents! Yay!"
-	school = "santa"
+	school = SCHOOL_CONJURATION
 	charge_max = 600
 	clothes_req = FALSE
 	antimagic_allowed = TRUE

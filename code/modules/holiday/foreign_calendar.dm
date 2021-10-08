@@ -1,6 +1,7 @@
 #define BYOND_EPOCH 2451544.5
 #define HEBREW_EPOCH 347995.5
 #define ISLAMIC_EPOCH 1948439.5
+#define GREGORIAN_EPOCH 1721424.5
 
 /*
 Source for the method of calcuation
@@ -8,21 +9,41 @@ https://www.fourmilab.ch/documents/calendar/
 by John Walker 2015, released under public domain
 */
 /datum/foreign_calendar
-	var/static/jd
-	var/yy
+	var/jd
+	var/yyyy
 	var/mm
 	var/dd
 
-/datum/foreign_calendar/New()
+/datum/foreign_calendar/New(yyyy, mm, dd)
 	if (!jd)
-		jd = realtime_to_jd()
+		jd = gregorian_to_jd(yyyy, mm, dd)
 	set_date(jd)
 
 /datum/foreign_calendar/proc/set_date()
 	return
 
-/datum/foreign_calendar/proc/realtime_to_jd()
-	return round(world.realtime / 864000) + BYOND_EPOCH
+///Converts Gregorian date to Julian Day
+/datum/foreign_calendar/proc/gregorian_to_jd(year, month, day)
+	. = day // days this month
+	. += (GREGORIAN_EPOCH - 1) // start at gregorian epoch
+	. += (365 * (year - 1)) // add number of days
+	. += round(((367 * month) - 362) / 12) // days from previous months this year
+	. += round((year - 1) / 4) // figuring out leap years
+	. -= round((year - 1) / 100)
+	. += round((year - 1) / 400)
+	if (month > 2)
+		if (leap_gregorian(year))
+			. -= 1
+		else
+			. -= 2
+
+///Returns whether a year is a leap year in the Gregorian calendar
+/datum/foreign_calendar/proc/leap_gregorian(year)
+	return (year % 4 == 0) && ((year % 400 == 0) || (year % 100 != 0))
+
+///Converts BYOND realtime to Julian Day
+/datum/foreign_calendar/proc/realtime_to_jd(realtime)
+	return round(realtime / 864000) + BYOND_EPOCH
 
 //////////////////////////////
 //     Islamic Calendar     //
@@ -32,9 +53,9 @@ by John Walker 2015, released under public domain
 
 /datum/foreign_calendar/islamic/set_date()
 	var/jd_adj = round(jd) + 0.5 // adjust julian date so it ends in .5
-	yy = round(((30 * (jd_adj - ISLAMIC_EPOCH)) + 10646) / 10631)
-	mm = min(12, CEILING(((jd - (29 + islamic_to_jd(yy, 1, 1))) / 29.5) + 1, 1))
-	dd = jd - islamic_to_jd(yy, mm, 1) + 1
+	yyyy = round(((30 * (jd_adj - ISLAMIC_EPOCH)) + 10646) / 10631)
+	mm = min(12, CEILING(((jd - (29 + islamic_to_jd(yyyy, 1, 1))) / 29.5) + 1, 1))
+	dd = jd - islamic_to_jd(yyyy, mm, 1) + 1
 
 /datum/foreign_calendar/islamic/proc/islamic_to_jd(year, month, day)
 	return day + CEILING(29.5 * (month - 1), 1) + (year - 1) * 354 + round((3 + (11 * year)) / 30) + ISLAMIC_EPOCH - 1
@@ -66,7 +87,7 @@ by John Walker 2015, released under public domain
 
 // Julian to Hebrew
 /datum/foreign_calendar/hebrew/set_date(jd)
-	if (yy && mm && dd)
+	if (yyyy && mm && dd)
 		return
 	jd = round(jd) + 0.5
 	var/count = round(((jd - HEBREW_EPOCH) * 98496) / 35975351)
@@ -77,7 +98,7 @@ by John Walker 2015, released under public domain
 	for (var/i = month; jd > hebrew_to_jd(year, i, hebrew_month_days(year, i)); i++)
 		month++
 	var/day = (jd - hebrew_to_jd(year, month, 1)) + 1
-	yy = year
+	yyyy = year
 	mm = month
 	dd = day
 
@@ -116,7 +137,7 @@ by John Walker 2015, released under public domain
 		//  First of all, dispose of fixed-length 29 day months
 		if (2, 4, 6, 10, 13)
 			return 29
-   		//  If it's not a leap year, Adar has 29 days
+		//  If it's not a leap year, Adar has 29 days
 		if (12)
 			if (!hebrew_leap(year))
 				return 29
@@ -134,3 +155,4 @@ by John Walker 2015, released under public domain
 #undef ISLAMIC_EPOCH
 #undef BYOND_EPOCH
 #undef HEBREW_EPOCH
+#undef GREGORIAN_EPOCH

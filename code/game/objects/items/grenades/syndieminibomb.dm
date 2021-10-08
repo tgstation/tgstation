@@ -10,7 +10,7 @@
 	ex_light = 4
 	ex_flame = 2
 
-/obj/item/grenade/syndieminibomb/prime(mob/living/lanced_by)
+/obj/item/grenade/syndieminibomb/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)
@@ -39,7 +39,7 @@
 	shrapnel_type = /obj/projectile/bullet/shrapnel/mega
 	shrapnel_radius = 12
 
-/obj/item/grenade/frag/prime(mob/living/lanced_by)
+/obj/item/grenade/frag/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	qdel(src)
@@ -53,17 +53,16 @@
 	var/freeze_range = 4
 	var/rad_damage = 350
 	var/stamina_damage = 30
+	var/temp_adjust = -230
 
-/obj/item/grenade/gluon/prime(mob/living/lanced_by)
+/obj/item/grenade/gluon/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, rad_damage)
-	for(var/turf/T in view(freeze_range,loc))
-		if(isfloorturf(T))
-			var/turf/open/floor/F = T
-			F.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
-			for(var/mob/living/carbon/L in T)
-				L.adjustStaminaLoss(stamina_damage)
-				L.adjust_bodytemperature(-230)
+	for (var/turf/open/floor/floor in view(freeze_range, loc))
+		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
+		for(var/mob/living/carbon/victim in floor)
+			victim.adjustStaminaLoss(stamina_damage)
+			victim.adjust_bodytemperature(temp_adjust)
 	qdel(src)

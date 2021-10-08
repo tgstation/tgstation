@@ -20,11 +20,11 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		return //this will never happen.
 
 	else if(copytext(E.name, 1, 18) == "Out of resources!")//18 == length() of that string + 1
-		log_world("BYOND out of memory. Restarting")
-		log_game("BYOND out of memory. Restarting")
+		log_world("BYOND out of memory. Restarting ([E?.file]:[E?.line])")
 		TgsEndProcess()
+		. = ..()
 		Reboot(reason = 1)
-		return ..()
+		return
 
 	if (islist(stack_trace_storage))
 		for (var/line in splittext(E.desc, "\n"))
@@ -65,11 +65,11 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
 	else
 		var/datum/config_entry/CE = /datum/config_entry/number/error_cooldown
-		configured_error_cooldown = initial(CE.config_entry_value)
+		configured_error_cooldown = initial(CE.default)
 		CE = /datum/config_entry/number/error_limit
-		configured_error_limit = initial(CE.config_entry_value)
+		configured_error_limit = initial(CE.default)
 		CE = /datum/config_entry/number/error_silence_time
-		configured_error_silence_time = initial(CE.config_entry_value)
+		configured_error_silence_time = initial(CE.default)
 
 
 	//Each occurence of a unique error adds to its cooldown time...

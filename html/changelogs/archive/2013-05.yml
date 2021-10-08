@@ -1,0 +1,37 @@
+2013-05-02:
+  Malkevin:
+  - rscadd: You can now weld four floor tiles together to make a metal sheet
+  - rscadd: The All-In-One Grinder can now grind Metal, Plasteel, Glass, Reinforced
+      Glass, and Wood sheets
+  - tweak: Made grey backpacks slightly less ugly
+2013-05-05:
+  Rolan7:
+  - rscadd: Cargo manifests from CentComm may contain errors.  Stamp them DENIED for
+      refunds.  Doesn't apply to secure or large crates.  Check the orders console
+      for CentComm feedback.
+2013-05-07:
+  Ikarrus:
+  - tweak: As a part of the most recent round of budget cuts, toolboxes will now be
+      made with a cheaper but heavier alloy. HR reminds employees to avoid being struck
+      with toolboxes, as toolbox-related injuries are not covered under the company's
+      standard health plan.
+2013-05-11:
+  Malkevin:
+  - rscadd: SecHuds now check for valid clearance before allowing you to change someone's
+      arrest status. There is only one way to bypass the ID check, and its not the
+      usual way.
+2013-05-14:
+  Ikarrus:
+  - tweak: "Nanotrasen seeks to further cut operating costs on experimental cyborg\
+      \ units. \n\t\t<br/>-Cyborg chassis will now be made from a cheaper but less\
+      \ durable design. \n\t\t<br/>-RCDs found on engineering models have been replaced\
+      \ with a smaller model to make room for a metal rods module.\n\t\t<br/>-Cyborg\
+      \ arms will no longer be long enough to allow for self-repairs.\n\t\t<br/>NOTE:\
+      \ A cyborg's individual modules have been found to become non-operational should\
+      \ the unit sustain too much structural damage."
+2013-05-25:
+  Ikarrus:
+  - rscdel: CentCom announced some minor restructuring within Space Station 13's command
+      structure. Most notable of these changes is the removal of the Head of Personnel's
+      access to the security radio channel. CentCom officials have stated the intention
+      was to make the HoP's role more specialized and less partial towards security.

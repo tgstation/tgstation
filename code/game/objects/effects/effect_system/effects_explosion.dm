@@ -4,13 +4,13 @@
 	opacity = TRUE
 	anchored = TRUE
 
-/obj/effect/particle_effect/expl_particles/Initialize()
+/obj/effect/particle_effect/expl_particles/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/expl_particles/LateInitialize()
 	var/direct = pick(GLOB.alldirs)
-	var/steps_amt = pick(1;25,2;50,3,4;200)
+	var/steps_amt = pick(25;1,50;2,100;3,200;4)
 	for(var/j in 1 to steps_amt)
 		step(src, direct)
 		sleep(1)
@@ -33,7 +33,7 @@
 	pixel_x = -32
 	pixel_y = -32
 
-/obj/effect/explosion/Initialize()
+/obj/effect/explosion/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 10)
 

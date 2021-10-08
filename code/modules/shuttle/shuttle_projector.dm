@@ -1,6 +1,5 @@
 /// Projects a shuttle with visual juice while it docks/launches with vis_contents
 /obj/effect/abstract/shuttle_projector
-	layer = LOWER_SHUTTLE_MOVEMENT_LAYER
 	plane = LOWER_SHUTTLE_MOVEMENT_PLANE
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -40,7 +39,6 @@
 
 		// make it slightly invisible so we don't obstruct the full game view
 		docking_alpha = 80
-		layer = ABOVE_LIGHTING_LAYER
 		plane = ABOVE_LIGHTING_PLANE
 	else
 		scale_factor = 0.4

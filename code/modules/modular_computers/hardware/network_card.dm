@@ -3,17 +3,18 @@
 	desc = "A basic wireless network card for usage with standard NTNet frequencies."
 	power_usage = 50
 	icon_state = "radio_mini"
-	var/identification_id = null	// Identification ID. Technically MAC address of this device. Can't be changed by user.
-	var/identification_string = "" 	// Identification string, technically nickname seen in the network. Can be set by user.
+	network_id = NETWORK_CARDS // Network we are on
+	var/hardware_id = null // Identification ID. Technically MAC address of this device. Can't be changed by user.
+	var/identification_string = "" // Identification string, technically nickname seen in the network. Can be set by user.
 	var/long_range = 0
 	var/ethernet = 0 // Hard-wired, therefore always on, ignores NTNet wireless checks.
 	malfunction_probability = 1
 	device_type = MC_NET
-	var/static/ntnet_card_uid = 1
+
 
 /obj/item/computer_hardware/network_card/diagnostics(mob/user)
 	..()
-	to_chat(user, "NIX Unique ID: [identification_id]")
+	to_chat(user, "NIX Unique ID: [hardware_id]")
 	to_chat(user, "NIX User Tag: [identification_string]")
 	to_chat(user, "Supported protocols:")
 	to_chat(user, "511.m SFS (Subspace) - Standard Frequency Spread")
@@ -22,13 +23,10 @@
 	if(ethernet)
 		to_chat(user, "OpenEth (Physical Connection) - Physical network connection port")
 
-/obj/item/computer_hardware/network_card/New(l)
-	..()
-	identification_id = ntnet_card_uid++
 
 // Returns a string identifier of this network card
 /obj/item/computer_hardware/network_card/proc/get_network_tag()
-	return "[identification_string] (NID [identification_id])"
+	return "[identification_string] (NID [hardware_id])"
 
 // 0 - No signal, 1 - Low signal, 2 - High signal. 3 - Wired Connection
 /obj/item/computer_hardware/network_card/proc/get_signal(specific_action = 0)
