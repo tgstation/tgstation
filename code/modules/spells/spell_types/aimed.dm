@@ -189,32 +189,3 @@
 	P.pixel_x = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
 	P.pixel_y = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
 	P.preparePixelProjectile(target, user, null, current_angle)
-
-/obj/effect/proc_holder/spell/aimed/cointoss
-	name = "Coin Toss"
-	desc = "Toss a coin if you have enough credits."
-	school = SCHOOL_EVOCATION
-	charge_max = 150
-	clothes_req = FALSE
-	antimagic_allowed = TRUE
-	invocation = "Yeet"
-	invocation_type = INVOCATION_SHOUT
-	range = 12
-	cooldown_min = 20
-	projectile_type = /obj/projectile/bullet/coin
-	base_icon_state = "cointoss"
-	action_icon_state = "cointoss0"
-	action_background_icon_state = "bg_clown"
-	sound = 'sound/items/coinflip.ogg'
-	active_msg = "You syphon a coin from your pocket!"
-	deactive_msg = "You donate the coin back into your pocket."
-	active = FALSE
-
-/obj/effect/proc_holder/spell/aimed/cointoss/bananium
-	name = "Slippery Coin Toss"
-	desc = "Toss a slippery coin if you have enough credits."
-	charge_max = 600
-	invocation = "Yoink"
-	projectile_type = /obj/projectile/bullet/coin_b
-	base_icon_state = "cointoss_b"
-	action_icon_state = "cointoss_b0"

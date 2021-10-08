@@ -99,30 +99,3 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
 	item = new item_type
 	return item
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/mini_clowns //test purposes - Also a lot of fun
-	name = "Summon two mini clowns"
-	desc = "Useful backup."
-	charge_max = 1200
-	summon_type = list(/mob/living/simple_animal/hostile/retaliate/clown/mini)
-	summon_amt = 2
-	range = 1
-	action_icon = 'icons/mob/actions/actions_spells.dmi'
-	action_icon_state = "mini_clowns"
-	action_background_icon_state = "bg_clown"
-	cast_sound = 'sound/items/airhorn2.ogg'
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/money
-	name = "Money Domain Expansion"
-	desc = "This spell expands the clowns money domain."
-	school = SCHOOL_CONJURATION
-	charge_max = 300
-	clothes_req = FALSE
-	invocation = "Expand!"
-	invocation_type = INVOCATION_WHISPER
-	range = 0
-	summon_type = list(/turf/open/floor/carpet/money)
-	action_icon = 'icons/mob/actions/actions_spells.dmi'
-	action_icon_state = "moneycarpet"
-	action_background_icon_state = "bg_clown"
-	cast_sound = 'sound/machines/coindrop2.ogg'
