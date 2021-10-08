@@ -435,4 +435,106 @@
 	flick("glutton_mouth", pouch_owner)
 	playsound(pouch_owner, 'sound/misc/soggy.ogg', 75)
 
+/mob/living/simple_animal/hostile/retaliate/clown/mini
+	name = "Clowny"
+	desc = "Really cute and tiny."
+	icon_state = "mini_clown"
+	icon_living = "mini_clown"
+	maxHealth = 40
+	health = 40
+	harm_intent_damage = 8
+	melee_damage_lower = 5
+	melee_damage_upper = 10
+	speak = list("Hug?")
+	attack_sound = 'sound/creatures/clown_swing.ogg'
+	loot = list(/obj/effect/gibspawner/human, /obj/item/coin/iron)
+	attack_reagent = /datum/reagent/chlorine
 
+/mob/living/simple_animal/hostile/retaliate/clown/mini/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/simple_animal/hostile/retaliate/clown/crook
+	name = "Clown Crook"
+	desc = "A clown that works for a company."
+	icon_state = "walking_clown"
+	icon_living = "walking_clown"
+	response_disarm_continuous = "yeets"
+	response_disarm_simple = "yeet"
+	response_harm_continuous = "yeets"
+	response_harm_simple = "yeet"
+	speak = list("Credits please...", "I would like a credit!", "Hey, what we doin boss?!")
+	emote_hear = list("mumbles.", "farts.", "laughs.")
+	emote_see = list("flips a coin", "looks through his wallet", "checks his mucles", "smiles")
+	maxHealth = 60
+	health = 60
+	harm_intent_damage = 10
+	melee_damage_lower = 8
+	melee_damage_upper = 15
+	speak_chance = 10
+	attack_verb_continuous = "slaps"
+	attack_verb_simple = "slap"
+	attack_sound = 'sound/creatures/clown_swing.ogg'
+	deathsound = 'sound/items/bikehorn.ogg'
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/coin/silver)
+	var/obj/effect/proc_holder/spell/aimed/cointoss/cointoss = null
+	var/obj/effect/proc_holder/spell/aimed/cointoss/bananium/cointoss_b = null
+
+///This ability will let you fire a coin to deal damage to people.
+/mob/living/simple_animal/hostile/retaliate/clown/crook/Initialize()
+	. = ..()
+	cointoss = new /obj/effect/proc_holder/spell/aimed/cointoss
+	cointoss.clothes_req = 0
+	cointoss.human_req = 0
+	cointoss.player_lock = 0
+	AddSpell(cointoss)
+
+	cointoss_b = new /obj/effect/proc_holder/spell/aimed/cointoss/bananium
+	cointoss_b.clothes_req = 0
+	cointoss_b.human_req = 0
+	cointoss_b.player_lock = 0
+	AddSpell(cointoss_b)
+
+/mob/living/simple_animal/hostile/retaliate/clown/crook/boss
+	name = "Clown Kingpin"
+	desc = "A clown mastermind that uses tools to destroy his enemies."
+	icon_state = "big_walking_clown"
+	icon_living = "big_walking_clown"
+	move_resist = INFINITY
+	turns_per_move = 10
+	response_disarm_continuous = "hooks"
+	response_disarm_simple = "hook"
+	response_harm_continuous = "pummels"
+	response_harm_simple = "pummel"
+	speak = list("Credits now!!", "Give me the credit!!", "Get credit!!")
+	emote_see = list("flips through space cash like a card trick", "smiles at his stacked wallet", "flexes his mucles", "grins very widely")
+	maxHealth = 150
+	health = 150
+	speed = 2
+	pixel_x = -16
+	base_pixel_x = -16
+	harm_intent_damage = 15
+	melee_damage_lower = 12
+	melee_damage_upper = 25
+	attack_verb_continuous = "crushes"
+	attack_verb_simple = "crush"
+	speak_chance = 30
+	obj_damage = 40
+	environment_smash = 1
+	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/coin/bananium)
+	var/obj/effect/proc_holder/spell/aoe_turf/conjure/money/money = null
+	var/obj/effect/proc_holder/spell/aoe_turf/conjure/mini_clowns/clowns = null
+
+/mob/living/simple_animal/hostile/retaliate/clown/crook/boss/Initialize()
+	. = ..()
+	money = new /obj/effect/proc_holder/spell/aoe_turf/conjure/money
+	money.clothes_req = 0
+	money.human_req = 0
+	money.player_lock = 0
+	AddSpell(money)
+
+	clowns = new /obj/effect/proc_holder/spell/aoe_turf/conjure/mini_clowns
+	clowns.clothes_req = 0
+	clowns.human_req = 0
+	clowns.player_lock = 0
+	AddSpell(clowns)
