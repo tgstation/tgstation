@@ -22,6 +22,9 @@ GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circ
 	/// The flags of the circuit datatype
 	var/datatype_flags = 0
 
+	/// The datatypes that this datatype can receive from.
+	var/list/can_receive_from = list()
+
 	/// Whether this datatype should be loaded into the global circuit_datatypes list.
 	var/abstract = FALSE
 
@@ -43,7 +46,7 @@ GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circ
  * * datatype_to_check - The datatype to check
  */
 /datum/circuit_datatype/proc/can_receive_from_datatype(datatype_to_check)
-	return datatype == datatype_to_check // This is already done by default on the input port.
+	return datatype == datatype_to_check || (datatype_to_check in can_receive_from)
 
 /**
  * Called when the datatype is given to a port.
