@@ -22,6 +22,10 @@
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
+/// Signal datatype, with a slight variation in name to suggest it causes instant execution. Can only be an output port.
+#define PORT_TYPE_INSTANT_SIGNAL "instant signal"
+/// Signal datatype, with a slight variation in name to suggest that it can be used to respond to instant execution.
+#define PORT_TYPE_RESPONSE_SIGNAL "response signal"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
 /// Options datatype. Derivative of string.

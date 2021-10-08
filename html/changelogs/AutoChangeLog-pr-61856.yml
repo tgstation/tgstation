@@ -1,8 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - expansion: "Adds the dispenser shell, which accepts normal-sized items and lets you dispense them at any time."
-  - expansion: "Adds the For Each component and the Filter List component."
-  - refactor: "Refactored the circuit list datatype to support composite types (i.e. entity list, any list, number list), which are lists that can only contain values of the specified datatype. This also refactors anything that uses the list datatype to use composite lists."
-  - qol: "NTNet components now use composite lists to send and receive data"
-  - bugfix: "Prevented people from infinitely making lists with the list literal component."

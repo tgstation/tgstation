@@ -11,10 +11,6 @@ GLOBAL_LIST_INIT(wiremod_filter_info, list(
 		"y" = PORT_TYPE_NUMBER,
 		"size" = PORT_TYPE_NUMBER,
 	),
-	"color" = list(
-		"color" = PORT_TYPE_LIST(PORT_TYPE_ANY),
-		"space" = PORT_TYPE_NUMBER,
-	),
 	"displace" = list(
 		"x" = PORT_TYPE_NUMBER,
 		"y" = PORT_TYPE_NUMBER,
