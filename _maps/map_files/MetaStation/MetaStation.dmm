@@ -39853,6 +39853,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library)
 "mhk" = (
@@ -67394,6 +67397,9 @@
 	},
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
 	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library)
