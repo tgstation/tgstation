@@ -136,9 +136,6 @@
 		orbiting.end_orbit(src)
 		orbiting = null
 
-	// no reason not to do this unless you're a turf
-	vis_contents.Cut()
-
 	. = ..()
 
 	for(var/movable_content in contents)
