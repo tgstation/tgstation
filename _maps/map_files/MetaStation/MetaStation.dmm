@@ -44131,7 +44131,7 @@
 /area/science/storage)
 "nFR" = (
 /obj/machinery/vending/boozeomat,
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait/bar{
 	pixel_y = -28
 	},
 /obj/effect/turf_decal/tile/bar{

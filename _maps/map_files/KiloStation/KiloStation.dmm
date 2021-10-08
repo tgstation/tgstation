@@ -22285,11 +22285,11 @@
 /area/security/warden)
 "coG" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
 /obj/machinery/button/door/directional/south{
 	id = "captain_escape";
 	name = "Tactical Relocation Toggle"
 	},
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
 "coH" = (
@@ -28523,11 +28523,6 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/corner,
-/mob/living/simple_animal/bot/cleanbot{
-	auto_patrol = 1;
-	icon_state = "cleanbot1";
-	name = "Mopficcer Sweepsky"
-	},
 /obj/machinery/button/door/directional/south{
 	id = "custodialwagon";
 	name = "Custodial Bay Toggle";
@@ -28535,6 +28530,11 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/mob/living/simple_animal/bot/cleanbot{
+	auto_patrol = 1;
+	icon_state = "cleanbot1";
+	name = "Mopficcer Sweepsky"
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
@@ -50912,8 +50912,8 @@
 /obj/structure/reagent_dispensers/beerkeg{
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_y = -30
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_y = -32
 	},
 /turf/open/floor/iron/dark,
 /area/service/bar)
@@ -69344,10 +69344,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot/medbay,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/mob/living/simple_animal/bot/cleanbot/medbay,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "sMk" = (
@@ -83637,8 +83637,8 @@
 /obj/structure/water_source/puddle,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/carbon/human/species/monkey,
 /obj/machinery/light_switch/directional/south,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "yll" = (

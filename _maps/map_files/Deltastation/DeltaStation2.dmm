@@ -28262,10 +28262,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/simple_animal/sloth/citrus,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/mob/living/simple_animal/sloth/citrus,
 /turf/open/floor/iron,
 /area/cargo/qm)
 "dEb" = (
@@ -38671,8 +38671,8 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/west,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/structure/disposalpipe/segment,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "fCE" = (
@@ -49945,10 +49945,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/basic/cockroach,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/mob/living/basic/cockroach,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "iRw" = (
@@ -73191,8 +73191,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/mob/living/simple_animal/pet/fox/renault,
 /obj/machinery/newscaster/directional/south,
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/captain)
 "pGD" = (
@@ -86972,6 +86972,12 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
+"tIm" = (
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_x = -32
+	},
+/turf/open/floor/iron/dark,
+/area/service/bar)
 "tIE" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -138800,7 +138806,7 @@ bAY
 alf
 heA
 cgp
-heA
+aXI
 aXI
 aXI
 aXI
@@ -139057,7 +139063,7 @@ iXT
 alf
 hFM
 gMU
-unM
+tIm
 guN
 stu
 pqt

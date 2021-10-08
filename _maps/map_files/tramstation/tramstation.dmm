@@ -67028,7 +67028,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait/bar{
 	pixel_y = 28
 	},
 /obj/structure/cable,
