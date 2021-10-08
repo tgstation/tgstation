@@ -1,5 +1,5 @@
-import { useBackend } from '../backend';
-import { Button, Dimmer, Icon, Section, Stack } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type Pack = {
@@ -12,6 +12,7 @@ type Pack = {
 }
 
 type Category = {
+  name: string;
   packs: Pack[];
 }
 
@@ -35,16 +36,22 @@ export const DepartmentOrders = (props, context) => {
           || (
             <Stack vertical fill>
               <Stack.Item grow>
-                <Section scrollable fill>
-                  <Stack vertical>
-                    <Stack.Item >
-                      Order ready!
-                    </Stack.Item>
-                    <Stack.Item>
-                      <DepartmentCatalog />
-                    </Stack.Item>
-                  </Stack>
-                </Section>
+                <Stack fill vertical>
+                  <Stack.Item>
+                    <Section fill>
+                      <NoticeBox info>
+                        As employees of Nanotrasen, the selection of orders
+                        here are completely free of charge, only incurring
+                        a cooldown on the service. Cheaper items will make
+                        you wait for less time before Nanotrasen allows
+                        another purchase, to encourage tasteful spending.
+                      </NoticeBox>
+                    </Section>
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    <DepartmentCatalog />
+                  </Stack.Item>
+                </Stack>
               </Stack.Item>
             </Stack>
           )}
@@ -89,11 +96,32 @@ const DepartmentCatalog = (props, context) => {
   const {
     supplies,
   } = data;
+  const [
+    tabName,
+    setTabName,
+  ] = useLocalState(context, 'tabName', supplies[0]);
   return (
-    <Stack>
-      <Stack.Item>
-        {typeof supplies}
-      </Stack.Item>
-    </Stack>
+    <Section fill>
+      <Stack vertical>
+        <Stack.Item>
+          <Tabs textAlign="center" fluid>
+            {Object.keys(supplies).map(cat => (
+              <Tabs.Tab
+                key={cat}
+                selected={cat === tabName}
+                onClick={() => (setTabName(cat))}>
+                {cat}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Stack.Item>
+        <Stack.Item>
+          {tabName}
+        </Stack.Item>
+        <Stack.Item>
+          {Object.keys(supplies)[tabIndex]}
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };

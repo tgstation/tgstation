@@ -36,23 +36,34 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/ui_static_data(mob/user)
 	var/list/data = list()
-	data["supplies"] = list(list())
+	var/list/supply_data = list() //each item in this needs to be a Category
 	for(var/pack_key in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_key]
 		//skip groups we do not offer
 		if(!(pack.group in dep_groups))
 			continue
-		//packs we should not show, even if we show the group
+		//find which group this belongs to, make the group if it doesn't exist
+		var/list/target_group
+		for(var/list/possible_group in supply_data)
+			if(possible_group["name"] == pack.group)
+				target_group = pack.group
+		if(!target_group)
+			supply_data += list(
+				"name" = pack.group,
+				"packs" = list(),
+			)
+		//skip packs we should not show, even if we should show the group
 		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.DropPodOnly || pack.goody)
 			continue
 		//finally the pack data itself
-		data["supplies"][1][pack.group] += list(list(
+		data["supplies"][target_group]["packs"] += list(
 			"name" = pack.name,
 			"cost" = pack.get_cost(),
 			"id" = pack,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"access" = pack.access
-		))
+			"access" = pack.access,
+		)
+	data["supplies"] = supply_data
 	return data
 
 /obj/machinery/computer/department_orders/ui_act(action, list/params)
