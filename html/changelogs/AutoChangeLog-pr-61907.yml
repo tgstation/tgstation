@@ -1,4 +1,0 @@
-author: "InvalidArgument3"
-delete-after: True
-changes: 
-  - bugfix: "penetrator rounds will no longer ignore vehicles"

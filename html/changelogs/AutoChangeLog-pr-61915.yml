@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "Emagged and Syndicate borgs can now self-detonate. For emagged borgs, this destroys the MMI, so know what you're signing up for."

@@ -1,6 +1,0 @@
-author: "NamelessFairy & Mothblocks"
-delete-after: True
-changes: 
-  - expansion: "Replaces the ghost mafia button with a minigames button which opens the new minigames panel."
-  - qol: "CTF is now accessible through the new minigames menu"
-  - rscadd: "CTF can now be played through the CTF menu, accessible through the minigames menu"
