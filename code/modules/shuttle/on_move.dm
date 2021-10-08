@@ -23,10 +23,10 @@ All ShuttleMove procs go here
 	shuttle_gib(shuttle)
 
 /**
-  * Attempt to crush movabkes in a shuttle landing zone.
-  *
-  * * shuttle - The smashing shuttle
-  */
+ * Attempt to crush movables in a shuttle landing zone.
+ *
+ * * shuttle - The smashing shuttle
+ */
 /turf/proc/shuttle_gib(obj/docking_port/mobile/shuttle)
 	var/shuttle_dir = shuttle.dir
 	for(var/i in contents)
