@@ -145,7 +145,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	var/charge_per_use = 200
 	var/obj/item/stock_parts/cell/cell
 
-/obj/item/firelance/Initialize()
+/obj/item/firelance/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 	AddComponent(/datum/component/two_handed)
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 		var/turf/start_turf = get_turf(user)
 		var/turf/last_turf = get_ranged_target_turf(start_turf,user.dir,melt_range)
 		start_turf.Beam(last_turf,icon_state="solar_beam",time=1 SECONDS)
-		for(var/turf/turf_to_melt in getline(start_turf,last_turf))
+		for(var/turf/turf_to_melt in get_line(start_turf,last_turf))
 			if(turf_to_melt.density)
 				turf_to_melt.Melt()
 	inhand_icon_state = initial(inhand_icon_state)

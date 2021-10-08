@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	/// Visual object for handling the viscontents
 	var/obj/effect/gateway_portal_effect/portal_visuals
 
-/obj/machinery/gateway/Initialize()
+/obj/machinery/gateway/Initialize(mapload)
 	generate_destination()
 	update_appearance()
 	portal_visuals = new
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	destination_type = /datum/gateway_destination/gateway/home
 	destination_name = "Home Gateway"
 
-/obj/machinery/gateway/centerstation/Initialize()
+/obj/machinery/gateway/centerstation/Initialize(mapload)
 	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src

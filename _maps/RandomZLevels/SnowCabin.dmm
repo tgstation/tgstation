@@ -3157,7 +3157,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iJ" = (
-/obj/structure/bed/alien,
+/obj/structure/bed/abductor,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iK" = (

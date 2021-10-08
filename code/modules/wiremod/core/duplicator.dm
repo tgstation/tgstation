@@ -4,7 +4,6 @@
 GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
-	PORT_TYPE_LIST,
 	PORT_TYPE_ANY,
 	PORT_TYPE_OPTION,
 ))

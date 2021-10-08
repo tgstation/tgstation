@@ -35,7 +35,7 @@
 	var/normal_desc
 	//--end of love :'(--
 
-/obj/item/toy/plush/Initialize()
+/obj/item/toy/plush/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
@@ -508,7 +508,7 @@
 	attack_verb_simple = list("claw", "hiss", "tail slap")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
-/obj/item/toy/plush/lizard_plushie/Initialize()
+/obj/item/toy/plush/lizard_plushie/Initialize(mapload)
 	. = ..()
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
@@ -599,6 +599,32 @@
 	icon_state = "goat"
 	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
+	/// Whether or not this goat is currently taking in a monsterous doink
+	var/going_hard = FALSE
+
+/obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)
+	if(!istype(fat_dart))
+		return ..()
+	if(going_hard)
+		to_chat(user, span_notice("[src] is already going too hard!"))
+		return
+	if(!fat_dart.lit)
+		to_chat(user, span_notice("You'll have to light that first!"))
+		return
+	to_chat(user, span_notice("You put [fat_dart] into [src]'s mouth."))
+	qdel(fat_dart)
+	going_hard = TRUE
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/toy/plush/goatplushie/examine()
+	. = ..()
+	if(going_hard)
+		. += span_notice("[src] is going so hard, feel free to take a picture.")
+
+/obj/item/toy/plush/goatplushie/update_overlays()
+	. = ..()
+	if(going_hard)
+		. += "goat_dart"
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"

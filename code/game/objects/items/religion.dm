@@ -86,7 +86,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
-/obj/item/banner/security/Initialize()
+/obj/item/banner/security/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_SECURITY
 
@@ -110,7 +110,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "No wounds cannot be healed!"
 
-/obj/item/banner/medical/Initialize()
+/obj/item/banner/medical/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -142,7 +142,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "For Cuban Pete!"
 
-/obj/item/banner/science/Initialize()
+/obj/item/banner/science/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -169,7 +169,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "Hail Cargonia!"
 
-/obj/item/banner/cargo/Initialize()
+/obj/item/banner/cargo/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_CARGO
 
@@ -193,7 +193,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "All hail lord Singuloth!!"
 
-/obj/item/banner/engineering/Initialize()
+/obj/item/banner/engineering/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -217,7 +217,7 @@
 	//No icon state here since the default one is the NT banner
 	warcry = "Hail Nanotrasen!"
 
-/obj/item/banner/command/Initialize()
+/obj/item/banner/command/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_COMMAND
 
@@ -252,7 +252,7 @@
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	icon_state = "bannerpack"
 
-/obj/item/storage/backpack/bannerpack/Initialize()
+/obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.

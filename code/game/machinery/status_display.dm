@@ -175,7 +175,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/machinery/status_display/evac/Initialize()
+/obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
 	// register for radio system
 	SSradio.add_object(src, frequency)
@@ -356,7 +356,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/machinery/status_display/ai/Initialize()
+/obj/machinery/status_display/ai/Initialize(mapload)
 	. = ..()
 	GLOB.ai_status_displays.Add(src)
 

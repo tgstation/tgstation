@@ -57,7 +57,7 @@
 	attempting_awakening = TRUE
 	to_chat(awakener, span_notice("You attempt to wake the spirit of [parent]..."))
 
-	var/list/candidates = pollGhostCandidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/candidates = poll_ghost_candidates("Do you want to play as the spirit of [awakener.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(!LAZYLEN(candidates))
 		to_chat(awakener, span_warning("[parent] is dormant. Maybe you can try again later."))
 		attempting_awakening = FALSE
@@ -101,10 +101,10 @@
 /datum/component/spirit_holding/proc/attempt_exorcism(mob/exorcist)
 	var/atom/movable/exorcised_movable = parent
 	to_chat(exorcist, span_notice("You begin to exorcise [parent]..."))
-	playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+	playsound(parent, 'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = exorcised_movable))
 		return
-	playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
+	playsound(parent, 'sound/effects/pray_chaplain.ogg',60,TRUE)
 	UnregisterSignal(exorcised_movable, list(COMSIG_ATOM_RELAYMOVE, COMSIG_BIBLE_SMACKED))
 	RegisterSignal(exorcised_movable, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	to_chat(bound_spirit, span_userdanger("You were exorcised!"))

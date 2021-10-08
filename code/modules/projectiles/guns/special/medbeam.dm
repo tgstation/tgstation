@@ -16,7 +16,7 @@
 
 	weapon_weight = WEAPON_MEDIUM
 
-/obj/item/gun/medbeam/Initialize()
+/obj/item/gun/medbeam/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -103,7 +103,7 @@
 	dummy.pass_flags |= PASSTABLE|PASSGLASS|PASSGRILLE //Grille/Glass so it can be used through common windows
 	var/turf/previous_step = user_turf
 	var/first_step = TRUE
-	for(var/turf/next_step as anything in (getline(user_turf, target) - user_turf))
+	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
 		if(first_step)
 			for(var/obj/blocker in user_turf)
 				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
@@ -153,6 +153,6 @@
 /obj/item/gun/medbeam/mech
 	mounted = TRUE
 
-/obj/item/gun/medbeam/mech/Initialize()
+/obj/item/gun/medbeam/mech/Initialize(mapload)
 	. = ..()
 	STOP_PROCESSING(SSobj, src) //Mech mediguns do not process until installed, and are controlled by the holder obj

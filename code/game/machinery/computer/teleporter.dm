@@ -13,7 +13,7 @@
 	///Weakref to the target atom we're pointed at currently
 	var/datum/weakref/target_ref
 
-/obj/machinery/computer/teleporter/Initialize()
+/obj/machinery/computer/teleporter/Initialize(mapload)
 	. = ..()
 	id = "[rand(1000, 9999)]"
 	link_power_station()
@@ -234,7 +234,7 @@
 	update_trigger = add_input_port("Update Targets", PORT_TYPE_SIGNAL)
 
 	current_target = add_output_port("Current Target", PORT_TYPE_STRING)
-	possible_targets = add_output_port("Possible Targets", PORT_TYPE_LIST)
+	possible_targets = add_output_port("Possible Targets", PORT_TYPE_LIST(PORT_TYPE_ANY))
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/teleporter_control_console/register_usb_parent(atom/movable/shell)

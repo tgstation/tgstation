@@ -45,11 +45,17 @@
 	/// The power usage whenever this component receives an input
 	var/power_usage_per_input = 1
 
-	// Whether the component is removable or not. Only affects user UI
+	/// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
-	// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
+	/// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
 	var/required_shells = null
+
+	/// Determines the amount of space this circuit occupies in an integrated circuit.
+	var/circuit_size = 1
+
+	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
+	var/ui_buttons = null
 
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
@@ -63,15 +69,15 @@
 /obj/item/circuit_component/proc/add_option_port(name, list/list_to_use, order = 0, trigger = .proc/input_received)
 	return add_input_port(name, PORT_TYPE_OPTION, order = order, trigger = trigger, port_type = /datum/port/input/option, extra_args = list("possible_options" = list_to_use))
 
-/obj/item/circuit_component/Initialize()
+/obj/item/circuit_component/Initialize(mapload)
 	. = ..()
 	if(name == COMPONENT_DEFAULT_NAME)
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
 	populate_options()
 	populate_ports()
-	if(circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL)
+	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !trigger_input)
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL, order = 2)
-	if(circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)
+	if((circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL) && !trigger_output)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
@@ -213,6 +219,14 @@
 		trigger_output.set_output(COMPONENT_SIGNAL)
 	return TRUE
 
+/obj/item/circuit_component/proc/set_circuit_size(new_size)
+	if(parent)
+		parent.current_size -= circuit_size
+
+	circuit_size = new_size
+
+	if(parent)
+		parent.current_size += circuit_size
 
 /**
  * Called whether this circuit component should receive an input.
@@ -238,7 +252,7 @@
 		if(!cell?.use(power_usage_per_input))
 			return FALSE
 
-	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
+	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
 
 	return TRUE
@@ -296,6 +310,16 @@
 		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
 
 /**
+ * Called when a special button is pressed on this component in the UI.
+ *
+ * Arguments:
+ * * user - Interacting mob
+ * * action - A string for which action is being performed. No parameters passed because it's only a button press.
+ */
+/obj/item/circuit_component/proc/ui_perform_action(mob/user, action)
+	return
+
+/**
  * Creates a UI notice entry to be used in get_ui_notices()
  *
  * Returns a list that can then be added to the return list in get_ui_notices()
@@ -308,6 +332,11 @@
 		"content" = content,
 		"color" = color,
 	))
+
+/obj/item/circuit_component/ui_host(mob/user)
+	if(parent)
+		return parent.ui_host()
+	return ..()
 
 /**
  * Creates a table UI notice entry to be used in get_ui_notices()

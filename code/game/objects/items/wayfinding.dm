@@ -113,7 +113,7 @@
 
 	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
 
-	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.GetAllContents())
+	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.get_all_contents())
 		set_expression("veryhappy", 2 SECONDS)
 		say("You already have a pinpointer!")
 		return
@@ -177,7 +177,7 @@
 			holochip.name = "[holochip.credits] credit holochip"
 			user.put_in_hands(holochip)
 		else if(!itsmypinpointer)
-			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
+			var/costume = pick(subtypesof(/obj/effect/spawner/costume))
 			new costume(user.loc)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))

@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
-		createRandomZlevel()
+		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
 	// Load the virtual reality hub
 	if(CONFIG_GET(flag/virtual_reality))
@@ -293,7 +293,7 @@ Used by the AI doomsday and the self-destruct nuke.
 #undef INIT_ANNOUNCE
 
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(config.map_path == "custom")
+	if(config.map_path == CUSTOM_MAP_PATH)
 		fdel("_maps/custom/[config.map_file]")
 		// And as the file is now removed set the next map to default.
 		next_map_config = load_map_config(default_to_box = TRUE)
@@ -480,8 +480,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level
-
-	var/answer = input("What kind ? ","Away") as null|anything in possible_options
+	var/secret = FALSE
+	if(tgui_alert(usr, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
+		secret = TRUE
+	var/answer = input("What kind?","Away") as null|anything in possible_options
 	switch(answer)
 		if("Custom")
 			var/mapfile = input("Pick file:", "File") as null|file
@@ -490,13 +492,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			away_name = "[mapfile] custom"
 			to_chat(usr,span_notice("Loading [away_name]..."))
 			var/datum/map_template/template = new(mapfile, "Away Mission")
-			away_level = template.load_new_z()
+			away_level = template.load_new_z(secret)
 		else
 			if(answer in GLOB.potentialRandomZlevels)
 				away_name = answer
 				to_chat(usr,span_notice("Loading [away_name]..."))
 				var/datum/map_template/template = new(away_name, "Away Mission")
-				away_level = template.load_new_z()
+				away_level = template.load_new_z(secret)
 			else
 				return
 
@@ -595,8 +597,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	return isolated_ruins_z.z_value
 
 /datum/controller/subsystem/mapping/proc/spawn_maintenance_loot()
-	for(var/obj/effect/spawner/lootdrop/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
+	for(var/obj/effect/spawner/random/maintenance/spawner as anything in GLOB.maintenance_loot_spawners)
 		CHECK_TICK
 
 		spawner.spawn_loot()
-		spawner.hide()
+		qdel(spawner)

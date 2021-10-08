@@ -33,7 +33,7 @@
 /obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
 
-/obj/item/food/egg/gland/Initialize()
+/obj/item/food/egg/gland/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(get_random_reagent_id(), 15)
 
@@ -125,6 +125,15 @@
 	w_class = WEIGHT_CLASS_SMALL
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/boiledegg/rotten
+
+/obj/item/food/eggsausage
+	name = "egg with sausage"
+	desc = "A good egg with a side of sausages."
+	icon_state = "eggsausage"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment = 4)
+	foodtypes = MEAT | FRIED | BREAKFAST
+	tastes = list("egg" = 4, "meat" = 4)
+	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)

@@ -9,6 +9,7 @@
 	equip_delay_other = 25
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = 250)
+	gender = PLURAL
 	var/vision_flags = 0
 	var/darkness_view = 2 // Base human is 2
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
@@ -212,7 +213,7 @@
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
 
-/obj/item/clothing/glasses/regular/Initialize()
+/obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
 	var/static/list/loc_connections = list(
@@ -444,7 +445,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/thermal/syndi/Initialize()
+/obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -561,3 +562,15 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
+/obj/item/clothing/glasses/osi
+	name = "O.S.I. Sunglasses"
+	desc = "There's no such thing as good news! Just bad news and... weird news.."
+	icon_state = "osi_glasses"
+	inhand_icon_state = "osi_glasses"
+
+/obj/item/clothing/glasses/phantom
+	name = "Phantom Thief Mask"
+	desc = "Lookin' cool."
+	icon_state = "phantom_glasses"
+	inhand_icon_state = "phantom_glasses"

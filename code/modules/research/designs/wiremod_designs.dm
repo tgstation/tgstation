@@ -73,6 +73,11 @@
 	id = "comp_index"
 	build_path = /obj/item/circuit_component/index
 
+/datum/design/component/index_assoc
+	name = "Index Associative List Component"
+	id = "comp_index_assoc"
+	build_path = /obj/item/circuit_component/index/assoc_string
+
 /datum/design/component/length
 	name = "Length Component"
 	id = "comp_length"
@@ -252,6 +257,11 @@
 	name = "Typecast Component"
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
+
+/datum/design/component/pinpointer
+	name = "Proximity Pinpointer Component"
+	id = "comp_pinpointer"
+	build_path = /obj/item/circuit_component/pinpointer
 
 /datum/design/component/bci
 	category = list("Circuitry", "BCI Components")
