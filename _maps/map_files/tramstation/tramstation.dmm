@@ -57632,12 +57632,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
-"tSw" = (
-/obj/structure/sign/directions/engineering{
-	pixel_y = 40
-	},
-/turf/closed/wall/r_wall,
-/area/command/teleporter)
 "tSC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -153806,7 +153800,7 @@ kzH
 eFM
 xWF
 aDN
-tSw
+hkC
 acE
 anG
 awF
