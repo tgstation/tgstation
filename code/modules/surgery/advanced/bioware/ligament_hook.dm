@@ -2,13 +2,14 @@
 	name = "Ligament Hook"
 	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
 	However this weakens the connection, making them easier to detach as well."
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/clamp_bleeders,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/reshape_ligaments,
-				/datum/surgery_step/close)
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/reshape_ligaments,
+		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
 	bioware_target = BIOWARE_LIGAMENTS
 
@@ -18,14 +19,16 @@
 	time = 125
 
 /datum/surgery_step/reshape_ligaments/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You start reshaping [target]'s ligaments into a hook-like shape.</span>",
-		"<span class='notice'>[user] starts reshaping [target]'s ligaments into a hook-like shape.</span>",
-		"<span class='notice'>[user] starts manipulating [target]'s ligaments.</span>")
+	display_results(user, target, span_notice("You start reshaping [target]'s ligaments into a hook-like shape."),
+		span_notice("[user] starts reshaping [target]'s ligaments into a hook-like shape."),
+		span_notice("[user] starts manipulating [target]'s ligaments."))
+	display_pain(target, "Your limbs burn with severe pain!")
 
 /datum/surgery_step/reshape_ligaments/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, "<span class='notice'>You reshape [target]'s ligaments into a connective hook!</span>",
-		"<span class='notice'>[user] reshapes [target]'s ligaments into a connective hook!</span>",
-		"<span class='notice'>[user] finishes manipulating [target]'s ligaments.</span>")
+	display_results(user, target, span_notice("You reshape [target]'s ligaments into a connective hook!"),
+		span_notice("[user] reshapes [target]'s ligaments into a connective hook!"),
+		span_notice("[user] finishes manipulating [target]'s ligaments."))
+	display_pain(target, "Your limbs feel... strangely loose.")
 	new /datum/bioware/hooked_ligaments(target)
 	return ..()
 
@@ -36,10 +39,10 @@
 
 /datum/bioware/hooked_ligaments/on_gain()
 	..()
-	ADD_TRAIT(owner, TRAIT_LIMBATTACHMENT, "ligament_hook")
-	ADD_TRAIT(owner, TRAIT_EASYDISMEMBER, "ligament_hook")
+	ADD_TRAIT(owner, TRAIT_LIMBATTACHMENT, EXPERIMENTAL_SURGERY_TRAIT)
+	ADD_TRAIT(owner, TRAIT_EASYDISMEMBER, EXPERIMENTAL_SURGERY_TRAIT)
 
 /datum/bioware/hooked_ligaments/on_lose()
 	..()
-	REMOVE_TRAIT(owner, TRAIT_LIMBATTACHMENT, "ligament_hook")
-	REMOVE_TRAIT(owner, TRAIT_EASYDISMEMBER, "ligament_hook")
+	REMOVE_TRAIT(owner, TRAIT_LIMBATTACHMENT, EXPERIMENTAL_SURGERY_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_EASYDISMEMBER, EXPERIMENTAL_SURGERY_TRAIT)

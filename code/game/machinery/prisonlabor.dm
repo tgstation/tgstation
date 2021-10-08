@@ -9,16 +9,18 @@
 	var/obj/item/stack/license_plates/empty/current_plate
 	var/pressing = FALSE
 
-/obj/machinery/plate_press/update_icon()
-	. = ..()
+/obj/machinery/plate_press/update_icon_state()
 	if(!is_operational)
 		icon_state = "offline"
-	else if(pressing)
+		return ..()
+	if(pressing)
 		icon_state = "loop"
-	else if(current_plate)
+		return ..()
+	if(current_plate)
 		icon_state = "online_loaded"
-	else
-		icon_state = "online"
+		return ..()
+	icon_state = "online"
+	return ..()
 
 /obj/machinery/plate_press/Destroy()
 	QDEL_NULL(current_plate)
@@ -26,20 +28,20 @@
 
 /obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, params)
 	if(!is_operational)
-		to_chat(user, "<span class='warning'>[src] has to be on to do this!</span>")
+		to_chat(user, span_warning("[src] has to be on to do this!"))
 		return FALSE
 	if(current_plate)
-		to_chat(user, "<span class='warning'>[src] already has a plate in it!</span>")
+		to_chat(user, span_warning("[src] already has a plate in it!"))
 		return FALSE
 	if(istype(I, /obj/item/stack/license_plates/empty))
 		var/obj/item/stack/license_plates/empty/plate = I
 		plate.use(1)
 		current_plate = new plate.type(src, 1) //Spawn a new single sheet in the machine
-		update_icon()
+		update_appearance()
 	else
 		return ..()
 
-/obj/machinery/plate_press/attack_hand(mob/living/user)
+/obj/machinery/plate_press/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!pressing && current_plate)
 		work_press(user)
@@ -48,19 +50,19 @@
 /obj/machinery/plate_press/proc/work_press(mob/living/user)
 
 	pressing = TRUE
-	update_icon()
-	to_chat(user, "<span class='notice'>You start pressing a new license plate!</span>")
+	update_appearance()
+	to_chat(user, span_notice("You start pressing a new license plate!"))
 
 	if(!do_after(user, 40, target = src))
 		pressing = FALSE
-		update_icon()
+		update_appearance()
 		return FALSE
 
 	use_power(100)
-	to_chat(user, "<span class='notice'>You finish pressing a new license plate!</span>")
+	to_chat(user, span_notice("You finish pressing a new license plate!"))
 
 	pressing = FALSE
 	QDEL_NULL(current_plate)
-	update_icon()
+	update_appearance()
 
 	new /obj/item/stack/license_plates/filled(drop_location(), 1)

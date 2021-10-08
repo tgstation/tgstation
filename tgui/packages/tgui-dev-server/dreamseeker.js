@@ -4,11 +4,12 @@
  * @license MIT
  */
 
-import axios from 'axios';
 import { exec } from 'child_process';
-import { createLogger } from 'common/logging.js';
 import { promisify } from 'util';
+import { createLogger } from './logging.js';
+import { require } from './require.js';
 
+const axios = require('axios');
 const logger = createLogger('dreamseeker');
 
 const instanceByPid = new Map();
@@ -52,7 +53,7 @@ DreamSeeker.getInstancesByPids = async pids => {
   }
   if (pidsToResolve.length > 0) {
     try {
-      const command = 'netstat -ano | findstr LISTENING';
+      const command = 'netstat -ano | findstr TCP | findstr 0.0.0.0:0';
       const { stdout } = await promisify(exec)(command, {
         // Max buffer of 1MB (default is 200KB)
         maxBuffer: 1024 * 1024,

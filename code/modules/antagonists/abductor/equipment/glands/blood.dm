@@ -14,5 +14,5 @@
 		return
 	var/mob/living/carbon/human/H = owner
 	var/datum/species/species = H.dna.species
-	to_chat(H, "<span class='warning'>You feel your blood heat up for a moment.</span>")
+	to_chat(H, span_warning("You feel your blood heat up for a moment."))
 	species.exotic_blood = get_random_reagent_id()

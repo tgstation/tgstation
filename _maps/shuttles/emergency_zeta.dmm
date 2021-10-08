@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/abductor,
 /area/shuttle/escape)
 "c" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "d" = (
@@ -21,7 +21,7 @@
 /obj/item/anomaly_neutralizer{
 	pixel_x = -15
 	},
-/obj/item/reagent_containers/food/snacks/soylentgreen,
+/obj/item/food/soylentgreen,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "f" = (

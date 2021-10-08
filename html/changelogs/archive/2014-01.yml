@@ -1,0 +1,140 @@
+2014-01-01:
+  Errorage:
+  - tweak: The damage overlay for humans starts a little later than before. It used
+      to start at 10 points of fire + brute damage, it now starts at 35.
+2014-01-02:
+  Fleure:
+  - bugfix: Fixed bruisepacks and ointments not working.
+  - bugfix: Fixed injecting/stabbing mouth or eyes when only thick suit worn.
+2014-01-04:
+  Razharas:
+  - rscadd: Constructable machines now depend on R&amp;D; parts!
+  - rscadd: 'DNA scanner: Laser quality lessens irradiation. Manipulator quality drastically
+      improves precision (9x for best part) and scanner quality allows you to scan
+      suicides/ling husks, with the best part enabling the cloner''s autoprocess button,
+      making it scan people in the scanner automatically.'
+  - rscadd: 'Clone pod: Manipulator quality improves the speed of cloning. Scanning
+      module quality affects with how much health people will be ejected, will they
+      get negative mutation/no mutations/clean of all mutations/random good mutation,
+      at best quality will enable clone console''s autoprocess button and will try
+      to clone all the dead people in records automatically, together with best DNA
+      scanner parts cloning console will be able to work in full automatic regime
+      autoscanning people and autocloning them.'
+  - rscadd: 'Borg recharger: Capacitors'' quality and powercell max charge affect
+      the speed at which borgs recharge. Manipulator quality allows borg to be slowly
+      repaired while inside the recharges, best manipulator allows even fire damage
+      to be slowly repaired.'
+  - rscadd: 'Portable power generators: Capacitors'' quality produce more power. Better
+      lasers consume less fuel and reduce heat production PACMAN with best parts can
+      keep whole station powered with about sheet of plamsa per minute (approximately,
+      wasn''t potent enough to test).'
+  - rscadd: 'Autolathe: Better manipulator reduces the production time and lowers
+      the cost of things(they will also have less m_amt and g_amt to prevent production
+      of infinity metal), stacks'' cant be reduced in cost, because thatll make production
+      of infinity metal/glass easy'
+  - rscadd: 'Protolathe: Manipulators quality affects the cost of things(they will
+      also have less m_amt and g_amt to prevent production of infinity metal), best
+      manipulators reduces the cost 5 times (!)'
+  - rscadd: 'Circuit imprinter: Manipulator quality affects the cost, best manipulator
+      reduce cost(acid insluded) 4 times, i.e. 20 boards per 100 units of acid'
+  - rscadd: 'Destructive analyzer: Better parts allow items with less reliability
+      in. Redone how reliability is handled, you now see item reliability in the deconstruction
+      menu and deconstructing items that has same or one point less research type
+      level will rise the reliability of all known designs that has one or more research
+      type requirements as the deconstructed item. Designs of the same type raise
+      in reliability more. Critically broken things rise reliability of the design
+      drastically. Whole reliability system is not used a lot but now at least on
+      the R&amp;D; part it finally matters.'
+2014-01-07:
+  Fleure:
+  - tweak: Janitor now spawns with a service headset.
+  - tweak: Backpack watertank slowdown decreased.
+2014-01-10:
+  Rumia29, Nienhaus:
+  - imageadd: A new alt RD uniform spawns in his locker.
+2014-01-11:
+  JJRCop:
+  - rscadd: The new nuke toy can now be found in your local arcade machine.
+2014-01-12:
+  VistaPOWA:
+  - rscadd: Added Syndicate Cyborgs.
+  - rscadd: They can be ordered for 25 telecrystals by Nuclear Operatives. A ghost
+      / observer with "Be Operative" ticked in their game options will be chosen to
+      control it.
+  - rscadd: 'Their loadout is: Crowbar, Flash, Emag, Esword, Ebow, Laser Rifle. Each
+      weapon costs 100 charge to fire, except the Esword, which has a 500 charge hitcost.
+      Each borg is equipped with a 25k cell by default.'
+  - rscadd: Syndicate borgs can hear the binary channel, but they won't show up on
+      the Robotics Control computer or be visible to the AI. Their lawset is the standard
+      emag one.
+  - rscadd: Added two cyborg recharging stations to the Syndicate Shuttle.
+2014-01-14:
+  SirBayer:
+  - experiment: Armor now reduces damage by the protection percentage, instead of
+      randomly deciding to half or full block damage by those percentages.
+  - rscadd: Shotguns, with buckshot shells, will fire a spread of pellets at your
+      target, like a real shotgun blast.
+2014-01-15:
+  Dumpdavidson:
+  - bugfix: EMPs affect the equipment of a human again.
+  - tweak: EMP flashlight now recharges over time and its description no longer reveals
+      the illegal nature of the device.
+  - tweak: EMP implant now has two uses. <br/> EMP kit now contains two grenades.<br/>
+2014-01-17:
+  ManeaterMildred:
+  - tweak: Changed the way the Gygax worked. It now has less defense and shot deflection,
+      but is faster and have less battery drain per step.
+  - tweak: Nerfed the Carbine's brute damage and renamed it to FNX-99 "Hades" Carbine.
+  - tweak: "Nerfed the Gygax defense from 300 to 250.<br/>\n\t\t\t\t  Nerfed the Gygax\
+      \ projectile deflection chance from 15 to 5.<br/>\n\t\t\t\t  Buffed the Gygax\
+      \ speed from 3 to 2, making it faster.<br/>\n\t\t\t\t  Reduced the battery use\
+      \ when moving from 5 to 3.<br/>\n<br/>\n\t\t\t\t  The Mech Ion Rifle now has\
+      \ a faster cooldown, from 40 to 20.<br/>\n\t\t\t\t  Nerfed the carbine's Brute\
+      \ Damage from 20 to 5.<br/>\n<br/>\n\t\t\t\t  Please post feedback to these\
+      \ changes on the forums.\n<br/><br/><br/><br/><br/><br/><br/><br/>"
+2014-01-19:
+  Rolan7:
+  - rscadd: You can now sell mutant seeds, from hydroponics, to Centcom via the supply
+      shuttle.
+  - bugfix: Fixes powersinks causing APCs to stop automatically recharging.
+2014-01-21:
+  MrPerson:
+  - rscadd: Mobs now lie down via turning icons rather than preturned sprites.
+  - rscadd: You can lie down facing up or down and the turn can be 90 degrees clockwise
+      or counterclockwise.
+  - tweak: Resting will always make you lie to the right so you look good on beds.
+  - wip: Please report any bugs you find with this system.
+2014-01-24:
+  Ergovisavi:
+  - rscadd: Gibtonite, the explosive ore, can now be found on the asteroid. It's very
+      hard to tell between it and diamonds, at first glance.
+  - rscadd: Gibtonite deposits will blow up after a countdown when you attempt to
+      mine it, but you can stop it with an analyzer at any time. It makes for a good
+      mining explosive.
+  - rscadd: The closer you were to the explosion when you analyze the Gibtonite deposit,
+      the better the Gibtonite you can get from it.
+  - rscadd: Once extracted, it must be struck with a pickaxe or drill to activate
+      it, where it will go through its countdown again to explode!
+  - tweak: Explosives will no longer destroy the ore inside of asteroid walls or lying
+      on the floor.
+2014-01-25:
+  Miauw:
+  - rscadd: Adds changeling arm blades that cost 20 chems and do 25 brute damage.
+  - rscadd: Arm blades can pry open unpowered doors, replace surgical saws in brain
+      removal, slice tables and smash computers.
+2014-01-26:
+  Balrog:
+  - rscadd: Syndicate Playing Cards can now be found on the Syndicate Mothership and
+      purchased from uplinks for 1 telecrystal.
+  - rscadd: Syndicate Playing Cards are lethal weapons both in melee and when thrown,
+      but make the user's true allegiance to the Syndicate obvious.
+  - imageadd: Sprites are courtesy of Nienhaus.
+2014-01-28:
+  Demas:
+  - rscadd: Adds thud sounds to falling over
+  - wip: 'Known bug: Thuds play when cloning initialises or someone is put into cryo.
+      This will be fixed.'
+2014-01-30:
+  Petethegoat:
+  - tweak: Increased the walk speed. Legcuffed speed is unaffected, and is still suffering.
+  - tweak: Sped up alien drones, they are now the same speed as sentinels.

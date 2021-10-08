@@ -1,4 +1,4 @@
-/datum/blobstrain/reagent // Blobs that mess with reagents, all "legacy" ones
+/datum/blobstrain/reagent // Blobs that mess with reagents, all "legacy" ones // what do you mean "legacy" you never added an alternative
 	var/datum/reagent/reagent
 
 /datum/blobstrain/reagent/New(mob/camera/blob/new_overmind)
@@ -8,12 +8,12 @@
 
 /datum/blobstrain/reagent/attack_living(mob/living/L)
 	var/mob_protection = L.get_permeability_protection()
-	reagent.expose_mob(L, VAPOR, 25, 1, mob_protection, overmind)
+	reagent.expose_mob(L, VAPOR, BLOB_REAGENTATK_VOL, 1, mob_protection, overmind)
 	send_message(L)
 
 /datum/blobstrain/reagent/blobbernaut_attack(mob/living/L)
 	var/mob_protection = L.get_permeability_protection()
-	reagent.expose_mob(L, VAPOR, 20, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
+	reagent.expose_mob(L, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, 0, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
 /datum/blobstrain/reagent/on_sporedeath(mob/living/spore)
 	spore.reagents.add_reagent(reagent.type, 10)
@@ -24,7 +24,7 @@
 	description = "shouldn't exist and you should adminhelp immediately."
 	color = "#FFFFFF"
 	taste_description = "bad code and slime"
-	can_synth = FALSE
+	chemical_flags = NONE
 	penetrates_skin = NONE
 
 /// Used by blob reagents to calculate the reaction volume they should use when exposing mobs.

@@ -37,7 +37,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 10, FIRE = 95, ACID = 95)
 
 /obj/item/clothing/under/plasmaman/research_director
-	name = "chief engineer's plasma envirosuit"
+	name = "research director's plasma envirosuit"
 	desc = "It's an envirosuit worn by those with the know-how to achieve the position of \"Research Director\"."
 	icon_state = "rd_envirosuit"
 	inhand_icon_state = "rd_envirosuit"

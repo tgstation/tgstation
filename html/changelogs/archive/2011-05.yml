@@ -1,0 +1,129 @@
+2011-05-06:
+  /tg/station team:
+  - unknown: ' AMURRICA FUCK YEAH day - Dangercon update'
+  Agouri and Erro updated(I'm in the DangerCon team now, nyoro~n :3):
+  - unknown: Backpacks removed from all players. It was unrealistic. You can now had
+      to the living quarters to get one from the personal closets there.
+  - unknown: Any firearms now send you to critical in 1-2 shots. Doctors need to get
+      the wounded man to surgery to provide good treatment. Guide for bullet removal
+      is up on the wiki.
+  - unknown: Brute packs and kelotane removed altogether to encourage use of surgery
+      for heavy injury.
+  - unknown: Just kidding
+  - unknown: Fireaxe cabinets and Extinguisher wall-mounted closets now added around
+      the station, thank Nanotransen for that.
+  - unknown: Because of Nanotransen being Nanotransen, the fire cabinets are electrically
+      operated. AIs can lock them and you can hack them if you want the precious axe
+      inside and it's locked. The axe itself uses an experimental two-handed system,
+      so while it's <u><font color="red">FUCKING ROBUST</font></u> you need to wield
+      it to fully unlock its capabilities. Pick up axe and click it in your hand to
+      wield it, click it again or drop to unwield and carry it.You can also use it
+      as a crowbar for cranking doors and firedoors open when wielded, utilising the
+      lever on the back of the blade. And I didn't lie to you. It's fucking robust.
+  - unknown: "Fireaxe, when wielded, fully takes up your other hand as well. You can't\
+      \ switch hands and the fireaxe itself is unwieldy and won't fit anywhere. \n\
+      \t\t"
+  - unknown: A fireaxe cabinet can also be smashed if you've got a strong enough object
+      in your hand.
+  - unknown: "\n\t\t"
+  - unknown: "<b>EXTINGUISHER CLOSETS</b>, made by dear Erro, can be found in abundance\
+      \ around the station. Click once to open them, again to retrieve the extinguisher,\
+      \ attack with extinguisher to place it back. Limited uses, but we've got plans\
+      \ for our little friend.\n\t\t"
+  - unknown: '<u>Sprite kudos go to: Cheridan for most of them, Khodoque for the fantastic
+      fireaxe head. I merged those two. Also thanks to matty and Arcalane for giving
+      it a shot.</u>'
+  - unknown: <font size="2"><i>Has the piano got TOO annoying? Try the fire axe...</i></font>
+  - unknown: 'Oh, and tou can now construct Light floors! To do it: Use wires on glass,
+      then metal on the produced assembly, then place it on an uncovered floor like
+      you would when replacing broken floor tiles. To deconstruct: Crowbar on light
+      floor, use crowbar on produced assembly to remove metal, wirecutters to seperate
+      the wires from the glass. Sprites by delicious Hempuli.'
+  - unknown: "Got something to bitch about? Got a bug to report? Want to create drama?\
+      \ Did the clown destroy your piano while you were playing an amazing space remix\
+      \ of the moonlight sonata? Give it <a href=\"http://code.google.com/p/tgstation13/source/detail?r=1543\"\
+      >here</a>\n\n\t"
+  ConstantA:
+  - unknown: Mech pilots are now immune to zapping, thank you very much.
+  Rastaf.Zero:
+  - unknown: New uniforms added for captain and chaplain, in their respective lockers.
+      Credits to Farart.
+  Urist McDorf:
+  - unknown: Mime and Clown now spawn with Crayons. You can eat those crayons. And
+      use them for other nefarious purposes.
+  - unknown: Health Scanners (A new type of Goggles) now spawn in medbay. Use them,
+      doctors!
+  - unknown: New Arcade toy.
+  - unknown: Glowshrooms! What other lifeform will threaten the welfare of the station
+      now?!
+  - unknown: Bananas growable in hydroponics. Also soap is now on-board.
+  - unknown: Added new "Lights out!" random event.
+2011-05-07:
+  /tg/station team:
+  - unknown: ' Mother''s day?'
+  Agouri:
+  - unknown: Fireaxes now work. Derp.
+  Erro:
+  - unknown: New sprites for thermited walls and girders. Rework of thermited walls.
+      Thermited walls leave a remnant damaged wall, crowbar it to scrap it.
+  - unknown: More colors for the lightfloors <b>CANCELLED/POSTPONED</b>
+  Noise:
+  - unknown: Codephrases for traitors. More details <a href="http://code.google.com/p/tgstation13/source/detail?r=1558">here</a>
+  - unknown: New mech sprite
+2011-05-14:
+  /tg/station team:
+  - unknown: ' late friday 13 update.'
+  Darem:
+  - unknown: Chemistry update
+  - unknown: In containers where there isn't a perfect ratio of reagents, reactions
+      won't consume ALL of the related reagents (so if you mix 10 anti-toxin with
+      20 inaprovaline, you get 10 tricordrazine and 10 inaprovaline rather then just
+      10 tricodrazine)
+  - unknown: '<font color="red">Catalysts</font>: some reactions might need presence
+      of an element, while not directly consuming it.'
+  - unknown: "Reactions changed to use catalysts: all recipes that require Universal\
+      \ Enzyme now require 5 units of the enzyme but the enzyme isn't consumed (So\
+      \ Tofu, Cheese, Moonshine, Wine, Vodka, and Kahlua recipes). \n\t"
+  Errorage:
+  - unknown: '<font color="red">Smooth tables</font>: Tables now automatically determine
+      which direction and sprite they''ll use. They will connect to any adjacent table
+      unless there is a window between them (regular, reinforced, tinted, whichever)'
+  K0000:
+  - unknown: <font color="red">Cult updates:</font>
+  - unknown: <b>New rune!</b> Stun rune. When used as rune, briefly stuns everyone
+      around (including cultists). When imbued into a talisman, hit someone to stun
+      and briefly mute them. Spawnable with the starter talisman.
+  - unknown: Imbue rune doesnt disappear after succesful invocation, only the source
+      rune.
+  - unknown: Chaplain's bible now has 20% chance to convert a cultist (was 10%), and
+      gives a message on success.
+  - unknown: Also, wrapping paper is back! Find it in the mailroom.
+  NEO:
+  - unknown: Beginning of armor overhaul. Armor now has slightly better defence against
+      melee, and weaker against shots. More coming soon...someday
+  - unknown: Cyborgs finally drop their MMI when gibbed like they were supposed to
+      back when I added MMIs. Round- start cyborgs use whatever name you have selected
+      for your character for the brain that gets spawned for them.
+2011-05-19:
+  Errorage:
+  - unknown: Asteroid floors can be built on by adding tiles
+  - unknown: Mining satchels now fit in rig suit storage, on belts and in pockets.
+  - unknown: 'Cables now come in four colors: Red, yellow, green and blue.'
+  NEO:
+  - unknown: <font color="red">Armour overhaul, phase 3. See <a href="http://code.google.com/p/tgstation13/source/detail?r=1588">rev
+      notes</a> for details.</font>
+  - unknown: AI cores should now block movement.
+  - unknown: MMIs are now properly buildable with the mecha fabricator.
+  Urist:
+  - unknown: Added sandstone and mineral doors. Mineral boors cannot be opened by
+      the AI or NPCs.
+  - unknown: Removed Imperium robes from map.
+  - unknown: Added the ability to draw letters and graffiti with crayons.
+  - unknown: Removed fire axes except for bridge and atmospherics.
+  Veyveyr:
+  - unknown: New serviceborg sprite option.
+  - unknown: Map changes to robotics; removed borg fabricators and added second exosuit
+      fabricator.
+  - unknown: <font color="red">Cyborg parts are now built from exosuit fabricators
+      and benefit from research.</font>
+  - unknown: New exosuit fabricator and borg frame sprites.

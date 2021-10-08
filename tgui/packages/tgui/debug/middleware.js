@@ -24,7 +24,7 @@ export const debugMiddleware = store => {
     if (key.code === KEY_F12) {
       store.dispatch(toggleKitchenSink());
     }
-    if (key.ctrl && key.shift && key.code === KEY_BACKSPACE) {
+    if (key.ctrl && key.alt && key.code === KEY_BACKSPACE) {
       // NOTE: We need to call this in a timeout, because we need a clean
       // stack in order for this to be a fatal error.
       setTimeout(() => {
@@ -39,7 +39,7 @@ export const debugMiddleware = store => {
 };
 
 export const relayMiddleware = store => {
-  const devServer = require('tgui-dev-server/link/client');
+  const devServer = require('tgui-dev-server/link/client.cjs');
   const externalBrowser = location.search === '?external';
   if (externalBrowser) {
     devServer.subscribe(msg => {

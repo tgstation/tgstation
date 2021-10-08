@@ -7,18 +7,25 @@
 	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
 	anchored = TRUE
 
+/obj/effect/step_trigger/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
 
-/obj/effect/step_trigger/Crossed(H as mob|obj)
-	..()
+/obj/effect/step_trigger/proc/on_entered(datum/source, H as mob|obj)
+	SIGNAL_HANDLER
 	if(!H)
 		return
 	if(isobserver(H) && !affect_ghosts)
 		return
 	if(!ismob(H) && mobs_only)
 		return
-	Trigger(H)
+	INVOKE_ASYNC(src, .proc/Trigger, H)
 
 
 /obj/effect/step_trigger/singularity_act()
@@ -30,13 +37,13 @@
 /* Sends a message to mob when triggered*/
 
 /obj/effect/step_trigger/message
-	var/message	//the message to give to the mob
+	var/message //the message to give to the mob
 	var/once = 1
 	mobs_only = TRUE
 
 /obj/effect/step_trigger/message/Trigger(mob/M)
 	if(M.client)
-		to_chat(M, "<span class='info'>[message]</span>")
+		to_chat(M, span_info("[message]"))
 		if(once)
 			qdel(src)
 
@@ -44,9 +51,9 @@
 
 /obj/effect/step_trigger/thrower
 	var/direction = SOUTH // the direction of throw
-	var/tiles = 3	// if 0: forever until atom hits a stopper
+	var/tiles = 3 // if 0: forever until atom hits a stopper
 	var/immobilize = 1 // if nonzero: prevents mobs from moving while they're being flung
-	var/speed = 1	// delay of movement
+	var/speed = 1 // delay of movement
 	var/facedir = 0 // if 1: atom faces the direction of movement
 	var/nostop = 0 // if 1: will only be stopped by teleporters
 	var/list/affecting = list()
@@ -106,7 +113,7 @@
 /* Instant teleporter */
 
 /obj/effect/step_trigger/teleporter
-	var/teleport_x = 0	// teleportation coordinates (if one is null, then no teleport!)
+	var/teleport_x = 0 // teleportation coordinates (if one is null, then no teleport!)
 	var/teleport_y = 0
 	var/teleport_z = 0
 
@@ -136,7 +143,7 @@
 /obj/effect/step_trigger/teleport_fancy
 	var/locationx
 	var/locationy
-	var/uses = 1	//0 for infinite uses
+	var/uses = 1 //0 for infinite uses
 	var/entersparks = 0
 	var/exitsparks = 0
 	var/entersmoke = 0

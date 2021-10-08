@@ -1,16 +1,51 @@
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, LabeledList, NumberInput, Section } from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, Modal, NumberInput, Section, ProgressBar } from '../components';
 import { Window } from '../layouts';
 
 export const ThermoMachine = (props, context) => {
   const { act, data } = useBackend(context);
+  const pressure_error = !!data.skipping_work && (
+    <Modal>
+      <Box
+        style={{ margin: 'auto' }}
+        width="200px"
+        textAlign="center"
+        minHeight="39px">
+        {"No enviromental pressure or ports not connected/with no gas"}
+      </Box>
+    </Modal>
+  );
+  const cooling_efficiency_infos = !!data.cooling &&(
+    <LabeledList.Item label="Cooling Efficiency">
+      <ProgressBar
+        value={data.efficiency}
+        minValue={.4225}
+        maxValue={1}
+        ranges={{
+          good: [.826, 1],
+          average: [.65, .825],
+          bad: [.4225, .64],
+        }}>
+        {Math.round(data.efficiency * 10000)/100 + " %"}
+      </ProgressBar>
+    </LabeledList.Item>
+  );
+  const cooling_enviroment_reservoir = !!data.cooling &&(
+    <LabeledList.Item label="Enviroment as heat reservoir">
+      <Button
+        content={data.use_env_heat ? 'On' : 'Off'}
+        selected={data.use_env_heat}
+        onClick={() => act('use_env_heat')} />
+    </LabeledList.Item>
+  );
   return (
     <Window
       width={300}
-      height={230}>
+      height={350}>
       <Window.Content>
         <Section title="Status">
+          {pressure_error}
           <LabeledList>
             <LabeledList.Item label="Temperature">
               <AnimatedNumber
@@ -24,6 +59,10 @@ export const ThermoMachine = (props, context) => {
                 format={value => toFixed(value, 2)} />
               {' kPa'}
             </LabeledList.Item>
+            <LabeledList.Item label="Mode">
+              {data.cooling? 'Cooling' : 'Heating'}
+            </LabeledList.Item>
+            {cooling_efficiency_infos}
           </LabeledList>
         </Section>
         <Section
@@ -36,6 +75,14 @@ export const ThermoMachine = (props, context) => {
               onClick={() => act('power')} />
           )}>
           <LabeledList>
+            <LabeledList.Item label="Safeties">
+              <Button
+                content={data.safeties ? 'Safeties ON' : 'Safeties OFF'}
+                color={data.safeties ? "green" : "red"}
+                disabled={!data.hacked}
+                onClick={() => act('safeties')} />
+            </LabeledList.Item>
+            {cooling_enviroment_reservoir}
             <LabeledList.Item label="Target Temperature">
               <NumberInput
                 animated

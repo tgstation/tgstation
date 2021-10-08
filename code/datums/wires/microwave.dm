@@ -9,6 +9,8 @@
 	..()
 
 /datum/wires/microwave/interactable(mob/user)
+	if(!..())
+		return FALSE
 	. = FALSE
 	var/obj/machinery/microwave/M = holder
 	if(M.panel_open)

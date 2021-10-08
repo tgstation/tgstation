@@ -10,7 +10,7 @@
 	var/times_spoken_to = 0
 	var/list/shenanigans = list()
 
-/obj/structure/speaking_tile/Initialize()
+/obj/structure/speaking_tile/Initialize(mapload)
 	. = ..()
 	var/json_file = file("data/npc_saves/Poly.json")
 	if(!fexists(json_file))
@@ -92,7 +92,7 @@
 /obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_paw(mob/user)
+/obj/structure/speaking_tile/attack_paw(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/attack_hulk(mob/user)
@@ -107,12 +107,12 @@
 /obj/structure/speaking_tile/attack_slime(mob/user)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_animal(mob/user)
+/obj/structure/speaking_tile/attack_animal(mob/user, list/modifiers)
 	return interact(user)
 
 /obj/structure/speaking_tile/proc/SpeakPeace(list/statements)
 	for(var/i in 1 to statements.len)
-		say("<span class='deadsay'>[statements[i]]</span>")
+		say(span_deadsay("[statements[i]]"), sanitize=FALSE)
 		if(i != statements.len)
 			sleep(30)
 
@@ -124,20 +124,26 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/glass = 500)
 
-/obj/item/rupee/Initialize()
+/obj/item/rupee/Initialize(mapload)
 	. = ..()
 	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/item/rupee/Crossed(atom/movable/AM)
+/obj/item/rupee/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!ismob(AM))
 		return
-	var/mob/M = AM
-	if(M.put_in_hands(src))
-		if(src != M.get_active_held_item())
-			M.swap_hand()
-		equip_to_best_slot(M)
-	..()
+	INVOKE_ASYNC(src, .proc/put_in_crossers_hands, AM)
+
+/obj/item/rupee/proc/put_in_crossers_hands(mob/crosser)
+	if(crosser.put_in_hands(src))
+		if(src != crosser.get_active_held_item())
+			crosser.swap_hand()
+		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)
 	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)

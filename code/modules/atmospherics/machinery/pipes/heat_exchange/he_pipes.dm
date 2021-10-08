@@ -8,7 +8,7 @@
 
 	hide = FALSE
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize()
+/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize(mapload)
 	. = ..()
 
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
@@ -25,7 +25,7 @@
 	var/turf/T = loc
 	if(istype(T))
 		if(islava(T))
-			environment_temperature = 5000
+			environment_temperature = 5000 //Yuck
 		else if(T.blocks_air)
 			environment_temperature = T.temperature
 		else
@@ -33,7 +33,6 @@
 			environment_temperature = OT.GetTemperature()
 	else
 		environment_temperature = T.temperature
-
 	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
 		parent.temperature_interact(T, volume, thermal_conductivity)
 
@@ -79,3 +78,6 @@
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
 				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/update_pipe_icon()
+	return

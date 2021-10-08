@@ -1,0 +1,23 @@
+{
+    "sombrero": [
+        {
+            "type": "reference",
+            "reference_type": "/datum/greyscale_config/sombrero/base_righthand",
+            "blend_mode": "overlay",
+            "color_ids": [ 1, 2 ]
+        }
+    ],
+    "shamebrero": [
+        {
+            "type": "reference",
+            "reference_type": "/datum/greyscale_config/sombrero/base_righthand",
+            "blend_mode": "overlay",
+            "color_ids": [ 1, 2 ]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "dongles_righthand",
+            "blend_mode": "overlay"
+        }
+    ]
+}

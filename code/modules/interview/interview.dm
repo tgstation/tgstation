@@ -1,18 +1,18 @@
 /// State when an interview has been approved
-#define INTERVIEW_APPROVED	"interview_approved"
+#define INTERVIEW_APPROVED "interview_approved"
 /// State when an interview as been denied
-#define INTERVIEW_DENIED 	"interview_denied"
+#define INTERVIEW_DENIED "interview_denied"
 /// State when an interview has had no action on it yet
-#define INTERVIEW_PENDING	"interview_pending"
+#define INTERVIEW_PENDING "interview_pending"
 
 /**
-  * Represents a new-player interview form
-  *
-  * Represents a new-player interview form, enabled by configuration to require
-  * players with low playtime to request access to the server. To do so, they will
-  * out a brief questionnaire, and are otherwise unable to do anything while they
-  * wait for a response.
-  */
+ * Represents a new-player interview form
+ *
+ * Represents a new-player interview form, enabled by configuration to require
+ * players with low playtime to request access to the server. To do so, they will
+ * out a brief questionnaire, and are otherwise unable to do anything while they
+ * wait for a response.
+ */
 /datum/interview
 	/// Unique ID of the interview
 	var/id
@@ -47,39 +47,39 @@
 	welcome_message = CONFIG_GET(string/interview_welcome_msg)
 
 /**
-  * Approves the interview, forces reconnect of owner if relevant.
-  *
-  * Approves the interview, and if relevant will force the owner to reconnect so that they have the proper
-  * verbs returned to them.
-  * Arguments:
-  * * approved_by - The user who approved the interview, used for logging
-  */
+ * Approves the interview, forces reconnect of owner if relevant.
+ *
+ * Approves the interview, and if relevant will force the owner to reconnect so that they have the proper
+ * verbs returned to them.
+ * Arguments:
+ * * approved_by - The user who approved the interview, used for logging
+ */
 /datum/interview/proc/approve(client/approved_by)
 	status = INTERVIEW_APPROVED
 	read_only = TRUE
 	GLOB.interviews.approved_ckeys |= owner_ckey
 	GLOB.interviews.close_interview(src)
 	log_admin_private("[key_name(approved_by)] has approved interview #[id] for [owner_ckey][!owner ? "(DC)": ""].")
-	message_admins("<span class='adminnotice'>[key_name(approved_by)] has approved interview #[id] for [owner_ckey][!owner ? "(DC)": ""].</span>")
+	message_admins(span_adminnotice("[key_name(approved_by)] has approved [link_self()] for [owner_ckey][!owner ? "(DC)": ""]."))
 	if (owner)
 		SEND_SOUND(owner, sound('sound/effects/adminhelp.ogg'))
 		to_chat(owner, "<font color='red' size='4'><b>-- Interview Update --</b></font>" \
-			+ "\n<span class='adminsay'>Your interview was approved, you will now be reconnected in 5 seconds.</span>", confidential = TRUE)
+			+ "\n[span_adminsay("Your interview was approved, you will now be reconnected in 5 seconds.")]", confidential = TRUE)
 		addtimer(CALLBACK(src, .proc/reconnect_owner), 50)
 
 /**
-  * Denies the interview and adds the owner to the cooldown for new interviews.
-  *
-  * Arguments:
-  * * denied_by - The user who denied the interview, used for logging
-  */
+ * Denies the interview and adds the owner to the cooldown for new interviews.
+ *
+ * Arguments:
+ * * denied_by - The user who denied the interview, used for logging
+ */
 /datum/interview/proc/deny(client/denied_by)
 	status = INTERVIEW_DENIED
 	read_only = TRUE
 	GLOB.interviews.close_interview(src)
 	GLOB.interviews.cooldown_ckeys |= owner_ckey
 	log_admin_private("[key_name(denied_by)] has denied interview #[id] for [owner_ckey][!owner ? "(DC)": ""].")
-	message_admins("<span class='adminnotice'>[key_name(denied_by)] has denied interview #[id] for [owner_ckey][!owner ? "(DC)": ""].</span>")
+	message_admins(span_adminnotice("[key_name(denied_by)] has denied [link_self()] for [owner_ckey][!owner ? "(DC)": ""]."))
 	addtimer(CALLBACK(GLOB.interviews, /datum/interview_manager.proc/release_from_cooldown, owner_ckey), 180)
 	if (owner)
 		SEND_SOUND(owner, sound('sound/effects/adminhelp.ogg'))
@@ -88,16 +88,16 @@
 			+ " You may do this in three minutes.</span>", confidential = TRUE)
 
 /**
-  * Forces client to reconnect, used in the callback from approval
-  */
+ * Forces client to reconnect, used in the callback from approval
+ */
 /datum/interview/proc/reconnect_owner()
 	if (!owner)
 		return
 	winset(owner, null, "command=.reconnect")
 
 /**
-  * Verb for opening the existing interview, or if relevant creating a new interview if possible.
-  */
+ * Verb for opening the existing interview, or if relevant creating a new interview if possible.
+ */
 /mob/dead/new_player/proc/open_interview()
 	set name = "Open Interview"
 	set category = "Interview"
@@ -160,3 +160,9 @@
 			"response" = responses.len < i ? null : responses[i]
 		)
 		.["questions"] += list(data)
+
+/**
+ * Generates a clickable link to open this interview
+ */
+/datum/interview/proc/link_self()
+	return "<a href='?_src_=holder;[HrefToken(TRUE)];interview=[REF(src)]'>Interview #[id]</a>"

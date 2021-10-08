@@ -1,0 +1,200 @@
+2011-03-02:
+  /tg/station team:
+  - unknown: ' Wednesday'
+  ConstantA:
+  - unknown: <b>Added mecha control console and mecha tracking beacons.</b>
+  - unknown: <b>Some changes to gygax construction.</b>
+  Darem:
+  - unknown: <b>R&amp;D minor bugfixes.</b>
+  - unknown: <b>AI computer can now be deconstructed (right click and select 'accessinternals').</b>
+  - unknown: <b>Server room updated, added server equipment to use with R&amp;D.</b>
+  - unknown: <b>Wizard and ghost teleport lists are now in alphabetical order, ghosts
+      can now teleport to the mining station.</b>
+  - unknown: <b>Rightclicking and examining a constructable frame now tells you what
+      parts still need to be finished.</b>
+  - unknown: <b>Large grenades added to R&amp;D.</b>
+  Deeyach:
+  - unknown: <b>Mining given to the CE. (Reverted by Errorage)</b>
+  - unknown: <b>Clowns can now pick a new name upon entering the game (like wizards
+      previously).</b>
+  Errorage:
+  - unknown: <b>Mapping updates including Atmospherics department map fixes, CE's
+      office and some lights being added here and there.</b>
+  - unknown: <b><font color="red">Mining once again given to the quartermaster and
+      HoP. The CE has no business with mining.</font></b>
+  - unknown: <b>Removed the overstuffed Atmos/Engineering supply room.</b>
+  - unknown: <b>Replaced all 'engineering' doors in mining with maintenance doors
+      as they were causing confusion as to which department mining belongs to.</b>
+  - unknown: <b>The incinerator is now maintenance access only.</b>
+  Neo:
+  - unknown: <b>New look for the advanced energy gun. (Sprite by Cheridan)</b>
+  - unknown: <b>Mech fabricator accepts non-standard materials.</b>
+  - unknown: <b>Mules accesses fixed, so they can be unlocked once again.</b>
+  - unknown: <b><font color="red">Atmospherics department mapping overhaul. (Map by
+      Hawk_v3)</font></b>
+  - unknown: <b>Added more name options to arcade machines.</b>
+2011-03-06:
+  Deeyach:
+  - unknown: <b>Roboticists now spawn with a lab coat and an engineering pda</b>
+  Errorage:
+  - unknown: <b><font color="red">No. I did not code on my birthday!</font></b>
+  - unknown: <b>Windows can now be rotated clockwise and counter clockwise.</b>
+  - unknown: <b>Window creating process slightly changed to make it easier.</b>
+  - unknown: <b>Fixed the newly made reinforced windows bug where they weren't properly
+      unfastened and unscrewed.</b>
+  - unknown: <b>Examination room has a few windows now.</b>
+  - unknown: <b>Can you tell I reinstalled Windows?</b>
+  - unknown: <b>Robotics has health analyzers.</b>
+  - unknown: <b>Bugfixing.</b>
+  Neo:
+  - unknown: <font color="red"><b>Neo deserves a medal for all the bugfixing he's
+      done!</b></font> --errorage
+2011-03-15:
+  /tg/station team:
+  - unknown: ' International Day Against Police Brutality'
+  Constanta:
+  - unknown: <b>Added queueing to fabricator.</b>
+  Errorage:
+  - unknown: <b>Autolathe deconstruction fixed.</b>
+  - unknown: <b>Atmos Entrance fixed.</b>
+  - unknown: <b>AI no longer gibs themselves if they click on the singularity.</b>
+  - unknown: <b>Fixed all the issues I knew of about storage items.</b>
+  - unknown: <b>Redesigned Assembly line and surrounding maintenance shafts.</b>
+  - unknown: <b>Redesigned Tech storage. (Map by Veyveyr)</b>
+  Neo:
+  - unknown: '<b>New R&amp;D Item: The ''Bag of holding''. (Sprite by Cheridan)</b>'
+  - unknown: <b>Getting someone out of the cloner now leaves damage, which can only
+      be fixed in the cryo tube.</b>
+  - unknown: '<b>New reagent: Clonexadone, for use with the cryo tube.</b>'
+  - unknown: <b>Fixed using syringes on plants.</b>
+  Rastaf0:
+  - unknown: <b>Air alarms upgraded.</b>
+  - unknown: <b>Fixed problem with AI clicking on mulebot.</b>
+  - unknown: <b>Airlock controller (as in EVA) now react to commands faster.</b>
+  - unknown: <b>Fixed toxins mixing airlocks.</b>
+  TLE:
+  - unknown: <b><font color="red">Forum account activation added. Use the 'Activate
+      Forum Account' verb.</font></b>
+2011-03-18:
+  Deeaych:
+  - unknown: <b>The exam room has some extra prominence and features.</b>
+  - unknown: <b>A new costume for the clown or mime to enjoy.</b>
+  - unknown: <b>Service Cyborgs can be picked! Shaker, dropper, tray, pen, paper,
+      and DOSH to show their class off. When emagged, the friendly butler-borg is
+      able to serve up a deadly last meal. </b>
+  - unknown: <b>It should now be possible to spawn as a cyborg at round start. Spawned
+      cyborgs have a lower battery life than created cyborgs and begin the round in
+      the AI Foyer.</b>
+  Errorage:
+  - unknown: <b>You can now use the <i>me</i> command for emotes! It works the same
+      as <i>say "*custom"</i> set to visible.</b>
+  - unknown: <b>There is now a wave emote.</b>
+  - unknown: <b>Enjoy your tea!</b>
+  Rastaf0:
+  - unknown: <b>Fixed an issue with examining several objects in your hands (such
+      as beakers).</b>
+  - unknown: <b>Fixed bug with random last name being empty in rare cases.</b>
+  hunterluthi:
+  - unknown: <b>It is now possible to make 3x3 sets of tables.</b>
+  - unknown: <b>Fixed some missplaced grilles/lattices on the port solar.</b>
+  - unknown: <b>There is now a breakroom for the station and atmos engineers. It has
+      everything an intelligent young engineer needs. Namely, Cheesy Honkers and arcade
+      games.</b>
+2011-03-23:
+  /tg/station team:
+  - unknown: ' World Meteorological Day'
+  Agouri:
+  - unknown: New look for the Request consoles.
+  Errorage:
+  - unknown: You can now manually add coins into money bags, also fixed money bag
+      interaction window formatting.
+  - unknown: QM no longer has access to the entire mining station to stop him from
+      stealing supplies.
+  - unknown: New machine loading sprite for mining machinery. (sprites by Cheridan)
+  - unknown: Added a messanging server to the server room. It'll be used for messanging,
+      but ignore it for now.
+  - unknown: The delivery office now requires delivery office access. It's also no
+      longer called "Construction Zone"
+  - unknown: Almost all the mecha parts now have sprites. (Sprites by Cheridan)
+  - unknown: Tinted and frosted glass now look darker.
+  - unknown: There are now more money sprites.
+  - unknown: Department closets now contain the correct headsets.
+  Microwave:
+  - unknown: Bicaridine now heals a lot better than before.
+  - unknown: Added Diethylamine, Dry Ramen, Hot Ramen, Hell Ramen, Ice, Iced Coffee,
+      Iced Tea, Hot Chocolate. Each with it's own effects.
+  - unknown: Re-added pest spray to hydroponics.
+  - unknown: Carrots now contain a little imidazoline.
+  - unknown: HoS, Warden and Security Officer starting equipment changed.
+  - unknown: New crate, which contains armored vests and helmets. Requires security
+      access, costs 20.
+  - unknown: Miner lockers now contain meson scanners and mining jumpsuits.
+  - unknown: 'Food crate now contains milk. Lightbulb crates cost reduced to 5. Riot
+      crates cost reduced to 20. Emergency crate contains 2 med bots instead of floor
+      bots. Hydroponics crate no longer contains weed spray, pest spray. It''s latex
+      gloves were replaced with leather ones and an apron. '
+  - unknown: 'Added chef''s apron (can hold a kitchen knife) and a new service borg
+      sprite. '
+  - unknown: 'Autolathe can now construct kitchen knives. '
+  - unknown: 'Biosuit and syndicate space suits can now fit into backpacks. '
+  - unknown: 'Mime''s mask can now be used as a gas mask. '
+  - unknown: 'Added welding helmet ''off'' sprites. '
+  Neo:
+  - unknown: Fixed PacMan (and affiliates) generator construction.
+  - unknown: It is now possible to actually eat omelettes with the fork now, instead
+      of just stabbing yourself (or others) in the eye with it.
+  - unknown: Welding masks can now be flipped up or down. Note that when they're up
+      they don't hide your identity or protect you from welding.
+  - unknown: Reagent based healing should now work properly.
+  - unknown: Revolver has been balanced and made cheaper.
+  - unknown: Tasers now effect borgs.
+  - unknown: Plastic explosives are now bought in single bricks.
+  - unknown: Nuke team slightly buffed and their uplink updated with recently added
+      items.
+  - unknown: Player verbs have been reorganized into tabs.
+  - unknown: Energy swords now come in blue, green, purple and red.
+  - unknown: Cameras are now constructable and dismantlable. (Code donated by Powerful
+      Station 13)
+  - unknown: Updated the change network verb for AIs. (Code donated by Powerful Station
+      13)
+  - unknown: Added gold, silver and diamond pickaxes to R&amp;D which mine faster.
+  Rastaf0:
+  - unknown: Brig cell timers should now tick closer-to-real seconds.
+  - unknown: New look for food, including meat pie, carrot cake, loaded baked potato,
+      omelette, pie, xenopie and others. (some sprites by Farart)
+  - unknown: Hearing in lockers now works as intended.
+  - unknown: Fixed electronic blink sprite.
+  - unknown: Added the 'ghost ears' verb, which allows ghosts to not hear anything
+      but deadcast.
+  Veyveyr:
+  - unknown: Replaced nuke storage with a vault.
+  - unknown: Redesigned the mint, moved the public autolathe and n2o storage.
+  - unknown: New look for the coin press. (Sprite by Cheridan)
+  XSI:
+  - unknown: New AI core design.
+  - unknown: HoP now has a coffee machine!
+2011-03-26:
+  ConstantA:
+  - unknown: Removed redundand steps from Gygax and HONK construction.
+  - unknown: Added some mecha equipment designs to R&amp;D.
+  Microwave:
+  - unknown: Armor Can hold revolvers, and so can the detective's coat.
+  - unknown: 'Chef''s apron is going live, it can carry a knife, and has a slight
+      heat
+
+      resistance (only slight don''t run into a fire).'
+  - unknown: Kitty Ears!
+  - unknown: Various food nutriment changes.
+  - unknown: Added RIGs to the Mine EVA.
+  - unknown: Night vision goggles. They have a range of five tiles.
+  - unknown: 'Added Foods: Very Berry Pie, Tofu Pie, Tofu Kebab.'
+  - unknown: 'Modified foods: Custard Pie is now banana cream pie.'
+  Rastaf0:
+  - unknown: Food sprites from Farart
+  - unknown: 'New food: popcorn (corn in microwave), tofuburger (tofu+flour in microwave),
+      carpburger (carp meat+floor in microwave)'
+  - unknown: Medical belts are finally in medbay (credits belong to errorage, I only
+      added it)
+  - unknown: Pill bottles now can fit in containers (boxes, medbelts, etc) and in
+      pockets.
+  - unknown: Cutting camera now leaves fingerprints.

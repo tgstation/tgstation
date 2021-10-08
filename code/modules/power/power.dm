@@ -79,44 +79,88 @@
 
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
-/obj/machinery/proc/powered(chan = -1) // defaults to power_channel
+/obj/machinery/proc/powered(chan = power_channel)
 	if(!loc)
 		return FALSE
 	if(!use_power)
 		return TRUE
 
-	var/area/A = get_area(src)		// make sure it's in an area
+	var/area/A = get_area(src) // make sure it's in an area
 	if(!A)
-		return FALSE					// if not, then not powered
-	if(chan == -1)
-		chan = power_channel
-	return A.powered(chan)	// return power status of the area
+		return FALSE // if not, then not powered
+
+	return A.powered(chan) // return power status of the area
 
 // increment the power usage stats for an area
-/obj/machinery/proc/use_power(amount, chan = -1) // defaults to power_channel
-	var/area/A = get_area(src)		// make sure it's in an area
+/obj/machinery/proc/use_power(amount, chan = power_channel)
+	var/area/A = get_area(src) // make sure it's in an area
+	A?.use_power(amount, chan)
+
+/**
+ * An alternative to 'use_power', this proc directly costs the APC in direct charge, as opposed to being calculated periodically.
+ * - Amount: How much power the APC's cell is to be costed.
+ */
+/obj/machinery/proc/directly_use_power(amount)
+	var/area/A = get_area(src)
+	var/obj/machinery/power/apc/local_apc
 	if(!A)
-		return
-	if(chan == -1)
-		chan = power_channel
-	A.use_power(amount, chan)
+		return FALSE
+	local_apc = A.apc
+	if(!local_apc)
+		return FALSE
+	if(!local_apc.cell)
+		return FALSE
+	local_apc.cell.use(amount)
+	return TRUE
+
+/**
+ * Attempts to draw power directly from the APC's Powernet rather than the APC's battery. For high-draw machines, like the cell charger
+ *
+ * Checks the surplus power on the APC's powernet, and compares to the requested amount. If the requested amount is available, this proc
+ * will add the amount to the APC's usage and return that amount. Otherwise, this proc will return FALSE.
+ * If the take_any var arg is set to true, this proc will use and return any surplus that is under the requested amount, assuming that
+ * the surplus is above zero.
+ * Args:
+ * - amount, the amount of power requested from the Powernet. In standard loosely-defined SS13 power units.
+ * - take_any, a bool of whether any amount of power is acceptable, instead of all or nothing. Defaults to FALSE
+ */
+/obj/machinery/proc/use_power_from_net(amount, take_any = FALSE)
+	if(amount <= 0) //just in case
+		return FALSE
+	var/area/home = get_area(src)
+
+	if(!home)
+		return FALSE //apparently space isn't an area
+	if(!home.requires_power)
+		return amount //Shuttles get free power, don't ask why
+
+	var/obj/machinery/power/apc/local_apc = home?.apc
+	if(!local_apc)
+		return FALSE
+	var/surplus = local_apc.surplus()
+	if(surplus <= 0) //I don't know if powernet surplus can ever end up negative, but I'm just gonna failsafe it
+		return FALSE
+	if(surplus < amount)
+		if(!take_any)
+			return FALSE
+		amount = surplus
+	local_apc.add_load(amount)
+	return amount
 
 /obj/machinery/proc/addStaticPower(value, powerchannel)
 	var/area/A = get_area(src)
-	if(!A)
-		return
-	A.addStaticPower(value, powerchannel)
+	A?.addStaticPower(value, powerchannel)
 
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
 
 /**
-  * Called whenever the power settings of the containing area change
-  *
-  * by default, check equipment channel & set flag, can override if needed
-  *
-  * Returns TRUE if the NOPOWER flag was toggled
-  */
+ * Called whenever the power settings of the containing area change
+ *
+ * by default, check equipment channel & set flag, can override if needed
+ *
+ * Returns TRUE if the NOPOWER flag was toggled
+ */
 /obj/machinery/proc/power_change()
 	SIGNAL_HANDLER
 	SHOULD_CALL_PARENT(TRUE)
@@ -133,7 +177,7 @@
 			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
 			. = TRUE
 		set_machine_stat(machine_stat | NOPOWER)
-	update_icon()
+	update_appearance()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -218,7 +262,7 @@
 
 /proc/update_cable_icons_on_turf(turf/T)
 	for(var/obj/structure/cable/C in T.contents)
-		C.update_icon()
+		C.update_appearance()
 
 ///////////////////////////////////////////
 // GLOBAL PROCS for powernets handling
@@ -262,7 +306,7 @@
 		return
 
 	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
+	if(net1.cables.len < net2.cables.len) //net2 is larger than net1. Let's switch them around
 		var/temp = net1
 		net1 = net2
 		net2 = temp
@@ -282,7 +326,7 @@
 	var/area/source_area
 	if (isarea(power_source))
 		source_area = power_source
-		power_source = source_area.get_apc()
+		power_source = source_area.apc
 	else if (istype(power_source, /obj/structure/cable))
 		var/obj/structure/cable/Cable = power_source
 		power_source = Cable.powernet
@@ -353,9 +397,9 @@
 
 	if (isarea(power_source))
 		var/area/source_area = power_source
-		source_area.use_power(drained_energy/GLOB.CELLRATE)
+		source_area.use_power(drained_energy WATTS)
 	else if (istype(power_source, /datum/powernet))
-		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
+		var/drained_power = drained_energy WATTS //convert from "joules" to "watts"
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))
 		cell.use(drained_energy)
@@ -371,11 +415,6 @@
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.machinery_layer & machinery_layer)
-			C.update_icon()
+			C.update_appearance()
 			return C
 	return null
-
-/area/proc/get_apc()
-	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
-		if(APC.area == src)
-			return APC

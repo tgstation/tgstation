@@ -14,24 +14,22 @@
 	var/largest_click_time = 0
 	var/mob/largest_move_mob = null
 	var/mob/largest_click_mob = null
-	for(var/mob/M in world)
-		if(!M.client)
-			continue
-		if(M.next_move >= largest_move_time)
-			largest_move_mob = M
-			if(M.next_move > world.time)
-				largest_move_time = M.next_move - world.time
+	for(var/mob/frozen_mob as anything in GLOB.player_list)
+		if(frozen_mob.next_move >= largest_move_time)
+			largest_move_mob = frozen_mob
+			if(frozen_mob.next_move > world.time)
+				largest_move_time = frozen_mob.next_move - world.time
 			else
 				largest_move_time = 1
-		if(M.next_click >= largest_click_time)
-			largest_click_mob = M
-			if(M.next_click > world.time)
-				largest_click_time = M.next_click - world.time
+		if(frozen_mob.next_click >= largest_click_time)
+			largest_click_mob = frozen_mob
+			if(frozen_mob.next_click > world.time)
+				largest_click_time = frozen_mob.next_click - world.time
 			else
 				largest_click_time = 0
-		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  lastDblClick = [M.next_click]  world.time = [world.time]")
-		M.next_move = 1
-		M.next_click = 0
+		log_admin("DEBUG: [key_name(frozen_mob)]  next_move = [frozen_mob.next_move]  lastDblClick = [frozen_mob.next_click]  world.time = [world.time]")
+		frozen_mob.next_move = 1
+		frozen_mob.next_click = 0
 	message_admins("[ADMIN_LOOKUPFLW(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [DisplayTimeText(largest_move_time)]!")
 	message_admins("[ADMIN_LOOKUPFLW(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [DisplayTimeText(largest_click_time)]!")
 	message_admins("world.time = [world.time]")
@@ -50,12 +48,16 @@
 			output += "&nbsp;&nbsp;<b>ERROR</b><br>"
 			continue
 		for (var/filter in fqs.devices)
-			var/list/f = fqs.devices[filter]
-			if (!f)
+			var/list/filtered = fqs.devices[filter]
+			if (!filtered)
 				output += "&nbsp;&nbsp;[filter]: ERROR<br>"
 				continue
-			output += "&nbsp;&nbsp;[filter]: [f.len]<br>"
-			for (var/device in f)
+			output += "&nbsp;&nbsp;[filter]: [filtered.len]<br>"
+			for(var/datum/weakref/device_ref as anything in filtered)
+				var/atom/device = device_ref.resolve()
+				if(!device)
+					filtered -= device_ref
+					continue
 				if (istype(device, /atom))
 					var/atom/A = device
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device] ([AREACOORD(A)])<br>"
@@ -72,7 +74,7 @@
 	if(!src.holder)
 		return
 
-	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to reload all admins?", "Confirm", list("Yes", "No"))
 	if(confirm !="Yes")
 		return
 
@@ -95,8 +97,8 @@
 			message_admins("[key_name_admin(usr)] re-enabled the CDN asset transport")
 			log_admin("[key_name(usr)] re-enabled the CDN asset transport")
 		else
-			to_chat(usr, "<span class='adminnotice'>The CDN is not enabled!</span>")
-			if (alert(usr, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", "Try disabling filename mutations", "Nevermind") == "Try disabling filename mutations")
+			to_chat(usr, span_adminnotice("The CDN is not enabled!"))
+			if (tgui_alert(usr, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
 				SSassets.transport.dont_mutate_filenames = !SSassets.transport.dont_mutate_filenames
 				message_admins("[key_name_admin(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")
 				log_admin("[key_name(usr)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")

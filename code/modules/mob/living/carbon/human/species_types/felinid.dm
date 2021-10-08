@@ -1,7 +1,7 @@
 //Subtype of human
 /datum/species/human/felinid
 	name = "Felinid"
-	id = "felinid"
+	id = SPECIES_FELINE
 	say_mod = "meows"
 	limbs_id = "human"
 
@@ -11,9 +11,12 @@
 	mutant_organs = list(/obj/item/organ/tail/cat)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
+	disliked_food = GROSS | CLOTH | RAW
+	liked_food = SEAFOOD
 	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 	payday_modifier = 0.75
 	ass_image = 'icons/ass/asscat.png'
+	family_heirlooms = list(/obj/item/toy/cattoy)
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/felinid/spec_death(gibbed, mob/living/carbon/human/H)
@@ -24,6 +27,13 @@
 	if(H)
 		stop_wagging_tail(H)
 	. = ..()
+
+// Prevents felinids from taking toxin damage from carpotoxin
+/datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	. = ..()
+	if(istype(chem, /datum/reagent/toxin/carpotoxin))
+		var/datum/reagent/toxin/carpotoxin/fish = chem
+		fish.toxpwr = 0
 
 /datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
@@ -46,7 +56,7 @@
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(!pref_load)			//Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
+		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
 			if(H.dna.features["tail_human"] == "None")
 				H.dna.features["tail_human"] = "Cat"
 			if(H.dna.features["ears"] == "None")
@@ -58,7 +68,7 @@
 			mutantears = /obj/item/organ/ears
 		if(H.dna.features["tail_human"] == "Cat")
 			var/obj/item/organ/tail/cat/tail = new
-			tail.Insert(H, drop_if_replaced = FALSE)
+			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 		else
 			mutant_organs = list()
 	return ..()
@@ -98,7 +108,7 @@
 		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
 		kitty_tail.Insert(H, TRUE, FALSE)
 	if(!silent)
-		to_chat(H, "<span class='boldnotice'>Something is nya~t right.</span>")
+		to_chat(H, span_boldnotice("Something is nya~t right."))
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
@@ -120,4 +130,14 @@
 				var/obj/item/organ/new_ears = new target_species.mutantears
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
-		to_chat(H, "<span class='boldnotice'>You are no longer a cat.</span>")
+		to_chat(H, span_boldnotice("You are no longer a cat."))
+
+/datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human)
+	human.hairstyle = "Hime Cut"
+	human.hair_color = "fcc" // pink
+	human.update_hair()
+
+	var/obj/item/organ/ears/cat/cat_ears = human.getorgan(/obj/item/organ/ears/cat)
+	if (cat_ears)
+		cat_ears.color = human.hair_color
+		human.update_body()

@@ -1,0 +1,130 @@
+2014-12-08:
+  Ergovisavi:
+  - rscadd: Allows using replica pods to clone people without bodies.
+  - tweak: Speeds up replica pod cloning by adjusting the starting production.
+  - tweak: Replica pods will now only create plantmen.
+  - tweak: Mixing blood in a beaker or taking it from a suicide victim will render
+      the blood sample useless for replica pod cloning.
+  GunHog:
+  - rscadd: Our top Nanotrasen scientists have provided improved specifications for
+      the Rapid Part Exchange Device (RPED)! The RPED can now contain up to 50 machine
+      components, and will display identical items in groups when using its inventory
+      interface.
+  - rscadd: Note that power cells, being somewhat bulkier, will take up more space
+      inside the device. In addition, the RPED's firmware has also been updated to
+      assist in new machine construction! Simply have the required components inside
+      the RPED, apply it to an unfinished machine with its circuit board installed,
+      and watch as the device does the work!
+  - rscadd: Nanotrasen has updated station bound Artificial Intelligence unit design
+      specifications to include an integrated subspace radio transmitter. The transmitter
+      is programmed with all standard department channels, along with the inclusion
+      of its private channel. It is accessed using :o in its interface.
+  - rscadd: '{INCOMING CLASSIFIED SYNDICATE TRANSMISSION} Greetings, agents! Today,
+      we are happy to announce that we have successfully reverse engineered the new
+      subspace radio found in Nanotrasen''s newest AI build plans. We have included
+      our encryption data into these transmitters.'
+  - rscadd: Should you be deployed with one of our agent AIs, it may be wise of you
+      to purchase a syndicate encryption key in order to contact it securely. Remember,
+      as with other agents, a Syndicate AI is unlikely to be of the same Syndicate
+      corporation as you, and you both may actually have conflicting mission parameters!
+      Your channel, as always, is accessed using :t.
+  Paprika:
+  - tweak: Changed the way flashbang protection works. Currently, only security helmets
+      (and their derivatives like swat and riot), and some hardsuit helmets have flashbang
+      protection. Ear items like earmuffs and 'bowman' headsets (alternative, larger
+      headsets) have flashbang protection as well, so you're able to go hatless as
+      security. The Head of security, warden, and detective's hat do NOT have flashbang
+      protection, but their earpieces do, from the 'noise' part of the flashbang.
+      The flashbang blind still works as before, with only sunglasses/hardsuit helmets
+      protecting you.
+  Tkdrg:
+  - tweak: Security/Medical HUDs are now more responsive and less laggy.
+2014-12-10:
+  GunHog:
+  - rscadd: The Nanotrasen firmware update 12.05.14 for station AI units and cyborgs
+      includes a patch to give them more control of their automatic speech systems.
+      They can now chose if the message should be broadcasted with their installed
+      radio system and any frequency available to them.
+  Paprika:
+  - rscadd: Added winter coats and winter boots! Bundle up for space xmas! They are
+      available in most wardrobe and job lockers, and come with special features depending
+      on the flavor!
+  Paprka:
+  - rscadd: Added a new weapon for syndicate boarding parties, the C-90gl assault
+      rifle. This is a hybrid rifle with a lot of damage and a grenade launcher alt-fire.
+      Purchasable for 18TC.
+  - tweak: Suppressors can now be used on the protolathe SMG and the C-20r.
+  RemieRichards:
+  - tweak: Sounds in areas of low pressure (E.g. Space) are now much quieter
+  - tweak: To hear someone in space you need to be stood next to them, or use a radio
+  as334:
+  - rscadd: We've discovered that slimes react to the introduction of certain chemicals
+      in their bloodstream. Inaprovaline will decrease the slimes children's chance
+      of mutation, and plasma will increase it.
+  - rscadd: We've also found that feeding slimes solid plasma bars makes them more
+      friendly to humans.
+2014-12-16:
+  Paprika:
+  - tweak: Reverted security armor and helmets to the old (Grey) style of armor/helmets.
+  - tweak: Updated security jumpsuits to be more consistent across officer/warden/HoS
+      ranks.
+  - rscadd: Added tactical armor and helmets to replace the largely unused bulletproof
+      vest in the armory. This armor has higher bullet and explosive resistance than
+      normal armor, and uses the previous, more military armor/helmet sprites.
+  - rscadd: Added a new injury doll to go along with the overall health meter. This
+      will show you locational overall limb-based burn/brute damage, so you can tell
+      the difference between being hurt with burn/brute or toxins/stamina damage which
+      does not affect limbs.
+  - tweak: Reverted some UI icons back to their older status and changed some around
+      for readability. Thank you for your feedback.
+  Thunder12345:
+  - rscadd: Added a new FRAG-12 explosive shotgun shell, built from the unloaded technological
+      shell, using tablecrafting. Constructed using an unloaded technological tech
+      shell, 5 units sulphuric acid, 5 units polytrinic acid, 5 units glycerol, and
+      requires a screwdriver.
+  phil235:
+  - rscadd: 'Change to the hunger system. Eating food with sugar temporarily worsens
+      your nutrition drop rate. Eating too much sugar too quickly can make you temporarily
+      unable to eat any sugary food. The nutritional effect of sugar depends on how
+      hungry you are thus it cannot easily  raise your nutrition level past well fed
+      and is best used when hungry. Lots of sugar can make you a bit jittery at times.
+      Eating food with vitamin (new reagent) counteracts the sugar effects and can
+      give you temporary buffs when well fed: it lowers your chance to catch or spread
+      viruses,it makes your body''s metabolism more efficient that is it keeps healing
+      reagents longer and evacuate toxins faster and reduces damage from radioactive
+      reagents. Your metabolism gets less efficient if starving.'
+  - rscadd: 'New hunger hud icons: starving, hungry, fed, well fed, full, fat.'
+  - rscadd: Snack vending machine get a chef compartment that can be loaded with non-sugary
+      food by hand or with a tray by anyone with kitchen access (unless you hack the
+      machine with multitool or emag). The food can be unloaded by anyone, like regular
+      snacks
+  - rscadd: Cargo can get a nutritious pizza crate order for 60 points.
+  - tweak: Grown and cooked food gets some vitamin while junk food gets less nutriment
+      and more sugar (only hot donkpocket and ramen don't have sugar)
+  - tweak: The number of junk food in snack vending machine is lowered from 6 to 5
+      of each type.
+  - bugfix: Fixing not being able to load an omelette du fromage on a tray.
+2014-12-27:
+  Dorsidwarf:
+  - tweak: Buffs the RCD from 30 matter units to max capacity 100, and increases the
+      value of matter charges.
+  Paprika:
+  - experiment: Taser electrodes now have a limited range of 7 tiles.
+  - experiment: The energy gun's stun mode has been replaced with a disable mode.
+  - experiment: Security officers will now spawn with tasers.
+  - tweak: Disabler beams now go through windows and grilles.
+  - tweak: Disabler beams now do 33 stamina damage instead of 34. This means they
+      will only stun in 3 hits on someone that is NOT 100% healthy.
+  - tweak: Most ballistic projectiles now do stamina damage in addition to their regular
+      damage instead of stunning. This includes nuke op c-20r .45, detective's revolver,
+      etc. They are effectively better than disablers at stunning people, as well
+      as do significant damage, but they do not stun instantly like a taser. Expect
+      engagements to be a little longer and plan ahead for this.
+  - rscadd: Added an advanced taser for RnD, the child of a disabler and a taser.
+  Tkdrg:
+  - rscadd: Envoys from the distant Viji sector have brought an exotic contraption
+      to Centcomm. Known as the 'supermatter shard', it is a fragment of an ancient
+      alien artifact, believed to have a dangerous and mysterious power. This precious
+      item has been made available to the Space Station 13 cargo team for the cost
+      of a hundred supply points, as a reward for all your hard work. Good luck, and
+      stay safe.

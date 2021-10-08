@@ -2,7 +2,7 @@
 	///Name of the achievement, If null it won't show up in the achievement browser. (Handy for inheritance trees)
 	var/name
 	var/desc = "You did it."
-	///Found in UI_Icons/Achievements
+	///Found in ui_icons/achievements
 	var/icon = "default"
 	var/category = "Normal"
 
@@ -78,7 +78,7 @@
 
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
-	to_chat(user, "<span class='greenannounce'><B>Achievement unlocked: [name]!</B></span>")
+	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score

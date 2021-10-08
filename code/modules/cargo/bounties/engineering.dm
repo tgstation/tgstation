@@ -1,7 +1,7 @@
 /datum/bounty/item/engineering/gas
 	name = "Full Tank of Pluoxium"
 	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated."
-	reward = 7500
+	reward = CARGO_CRATE_VALUE * 15
 	wanted_types = list(/obj/item/tank)
 	var/moles_required = 20 // A full tank is 28 moles, but CentCom ignores that fact.
 	var/gas_type = /datum/gas/pluoxium
@@ -10,9 +10,10 @@
 	if(!..())
 		return FALSE
 	var/obj/item/tank/T = O
-	if(!T.air_contents.gases[gas_type])
+	var/datum/gas_mixture/our_mix = T.return_air()
+	if(!our_mix.gases[gas_type])
 		return FALSE
-	return T.air_contents.gases[gas_type][MOLES] >= moles_required
+	return our_mix.gases[gas_type][MOLES] >= moles_required
 
 /datum/bounty/item/engineering/gas/nitryl_tank
 	name = "Full Tank of Nitryl"
@@ -37,17 +38,17 @@
 /datum/bounty/item/engineering/gas/zauker_tank
 	name = "Full Tank of Zauker"
 	description = "The main planet of \[REDACTED] has been chosen as testing grounds for the new weapon that uses Zauker gas. Ship us a tank full of it. (20 Moles)"
-	reward = 10000
+	reward = CARGO_CRATE_VALUE * 20
 	gas_type = /datum/gas/zauker
 
 /datum/bounty/item/engineering/emitter
 	name = "Emitter"
 	description = "We think there may be a defect in your station's emitter designs, based on the sheer number of delaminations your sector seems to see. Ship us one of yours."
-	reward = 2500
+	reward = CARGO_CRATE_VALUE * 5
 	wanted_types = list(/obj/machinery/power/emitter)
 
 /datum/bounty/item/engineering/hydro_tray
 	name = "Hydroponics Tray"
 	description = "The lab technicians are trying to figure out how to lower the power drain of hydroponics trays, but we fried our last one. Mind building one for us?"
-	reward = 2000
+	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/machinery/hydroponics/constructable)

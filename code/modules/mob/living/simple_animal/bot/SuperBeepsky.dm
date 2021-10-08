@@ -5,7 +5,7 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
-	baton_type = /obj/item/melee/transforming/energy/sword/saber
+	baton_type = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
 	var/block_chance = 50
 	weapon_force = 30
@@ -20,18 +20,18 @@
 	weapon_force = 0
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
-	visible_message("<span class='warning'>[src] deflects [P] with its energy swords!</span>")
+	visible_message(span_warning("[src] deflects [P] with its energy swords!"))
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
 	return BULLET_ACT_BLOCK
 
-/mob/living/simple_animal/bot/secbot/grievous/Crossed(atom/movable/AM)
-	..()
+/mob/living/simple_animal/bot/secbot/grievous/on_entered(datum/source, atom/movable/AM)
+	. = ..()
 	if(ismob(AM) && AM == target)
-		visible_message("<span class='warning'>[src] flails his swords and cuts [AM]!</span>")
+		visible_message(span_warning("[src] flails his swords and cuts [AM]!"))
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
-		stun_attack(AM)
+		INVOKE_ASYNC(src, .proc/stun_attack, AM)
 
-/mob/living/simple_animal/bot/secbot/grievous/Initialize()
+/mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
 
@@ -43,7 +43,7 @@
 	if(mode != BOT_HUNT)
 		return
 	if(prob(block_chance))
-		visible_message("<span class='warning'>[src] deflects [user]'s attack with his energy swords!</span>")
+		visible_message(span_warning("[src] deflects [user]'s attack with his energy swords!"))
 		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 		return TRUE
 
@@ -51,7 +51,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
+		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 2)
 		back_to_idle()
 
 
@@ -59,27 +59,27 @@
 	if(!on)
 		return
 	switch(mode)
-		if(BOT_IDLE)		// idle
-			update_icon()
+		if(BOT_IDLE) // idle
+			update_appearance()
 			walk_to(src,0)
-			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
-				mode = BOT_START_PATROL	// switch to patrol mode
-		if(BOT_HUNT)		// hunting for perp
-			update_icon()
+			look_for_perp() // see if any criminals are in range
+			if(!mode && auto_patrol) // still idle, and set to patrol
+				mode = BOT_START_PATROL // switch to patrol mode
+		if(BOT_HUNT) // hunting for perp
+			update_appearance()
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
 				walk_to(src,0)
 				back_to_idle()
 				return
-			if(target)		// make sure target exists
-				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
+			if(target) // make sure target exists
+				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
 					target_lastloc = target.loc //stun_attack() can clear the target if they're dead, so this needs to be set first
 					stun_attack(target)
 					set_anchored(TRUE)
 					return
-				else								// not next to perp
+				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
 					walk_to(src, target,1,4)
 					if((get_dist(src, target)) >= (olddist))
@@ -98,7 +98,7 @@
 			bot_patrol()
 
 /mob/living/simple_animal/bot/secbot/grievous/look_for_perp()
-	anchored = FALSE
+	set_anchored(FALSE)
 	var/judgement_criteria = judgement_criteria()
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 		if((C.stat) || (C.handcuffed))
@@ -118,7 +118,7 @@
 			speak("Level [threatlevel] infraction alert!")
 			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
-			visible_message("<span class='warning'>[src] ignites his energy swords!</span>")
+			visible_message(span_warning("[src] ignites his energy swords!"))
 			icon_state = "grievous-c"
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
@@ -131,7 +131,7 @@
 /mob/living/simple_animal/bot/secbot/grievous/explode()
 
 	walk_to(src,0)
-	visible_message("<span class='boldannounce'>[src] lets out a huge cough as it blows apart!</span>")
+	visible_message(span_boldannounce("[src] lets out a huge cough as it blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)

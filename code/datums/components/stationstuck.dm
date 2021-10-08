@@ -35,14 +35,14 @@ It has a punishment variable that is what happens to the parent when they leave 
 		message = _message
 
 /**
-  * Called when parent leaves the zlevel this is set to (aka whichever zlevel it was on when it was added)
-  * Sends a message, then does an effect depending on what the punishment was.
-  *
-  * Punishments:
-  * * PUNISHMENT_MURDER: kills parent
-  * * PUNISHMENT_GIB: gibs parent
-  * * PUNISHMENT_TELEPORT:  finds a safe turf if possible, or a completely random one if not.
-  */
+ * Called when parent leaves the zlevel this is set to (aka whichever zlevel it was on when it was added)
+ * Sends a message, then does an effect depending on what the punishment was.
+ *
+ * Punishments:
+ * * PUNISHMENT_MURDER: kills parent
+ * * PUNISHMENT_GIB: gibs parent
+ * * PUNISHMENT_TELEPORT:  finds a safe turf if possible, or a completely random one if not.
+ */
 /datum/component/stationstuck/proc/punish()
 	SIGNAL_HANDLER
 

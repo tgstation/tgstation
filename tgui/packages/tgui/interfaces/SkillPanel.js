@@ -19,8 +19,7 @@ export const SkillPanel = (props, context) => {
     <Window
       title="Manage Skills"
       width={600}
-      height={500}
-      resizable>
+      height={500}>
       <Window.Content scrollable>
         <Section title={skills.playername}>
           <LabeledList>
@@ -38,7 +37,7 @@ export const SkillPanel = (props, context) => {
                 <br />
                 Total Experience: [{skill.exp} XP]
                 <br />
-                XP To Next Level: 
+                XP To Next Level:
                 {skill.exp_req !== 0 ? (
                   <span>
                     [{skill.exp_prog} / {skill.exp_req}]

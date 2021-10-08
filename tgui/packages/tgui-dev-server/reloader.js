@@ -4,14 +4,13 @@
  * @license MIT
  */
 
-import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import os from 'os';
 import { basename } from 'path';
-import { promisify } from 'util';
+import { DreamSeeker } from './dreamseeker.js';
+import { createLogger } from './logging.js';
 import { resolveGlob, resolvePath } from './util.js';
 import { regQuery } from './winreg.js';
-import { DreamSeeker } from './dreamseeker.js';
 
 const logger = createLogger('reloader');
 
@@ -68,7 +67,7 @@ export const findCacheRoot = async () => {
 
 const onCacheRootFound = cacheRoot => {
   logger.log(`found cache at '${cacheRoot}'`);
-  // Plant dummy
+  // Plant a dummy
   fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
 };
 
@@ -93,15 +92,21 @@ export const reloadByondCache = async bundleDir => {
   for (let cacheDir of cacheDirs) {
     // Clear garbage
     const garbage = await resolveGlob(cacheDir, './*.+(bundle|chunk|hot-update).*');
-    for (let file of garbage) {
-      await promisify(fs.unlink)(file);
+    try {
+      for (let file of garbage) {
+        fs.unlinkSync(file);
+      }
+      // Copy assets
+      for (let asset of assets) {
+        const destination = resolvePath(cacheDir, basename(asset));
+        fs.writeFileSync(destination, fs.readFileSync(asset));
+      }
+      logger.log(`copied ${assets.length} files to '${cacheDir}'`);
     }
-    // Copy assets
-    for (let asset of assets) {
-      const destination = resolvePath(cacheDir, basename(asset));
-      await promisify(fs.copyFile)(asset, destination);
+    catch (err) {
+      logger.error(`failed copying to '${cacheDir}'`);
+      logger.error(err);
     }
-    logger.log(`copied ${assets.length} files to '${cacheDir}'`);
   }
   // Notify dreamseeker
   const dss = await dssPromise;
