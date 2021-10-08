@@ -2231,6 +2231,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/carpet,
 /area/service/library)
 "ame" = (
@@ -2362,6 +2365,9 @@
 	},
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
 	},
 /turf/open/floor/carpet,
 /area/service/library)
@@ -5607,6 +5613,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/carpet,
 /area/service/library)
 "azA" = (
@@ -8167,6 +8176,9 @@
 	},
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
 	},
 /turf/open/floor/carpet,
 /area/service/library)
@@ -57620,12 +57632,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
-"tSw" = (
-/obj/structure/sign/directions/engineering{
-	pixel_y = 40
-	},
-/turf/closed/wall/r_wall,
-/area/command/teleporter)
 "tSC" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -67022,7 +67028,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait/bar{
 	pixel_y = 28
 	},
 /obj/structure/cable,
@@ -153794,7 +153800,7 @@ kzH
 eFM
 xWF
 aDN
-tSw
+hkC
 acE
 anG
 awF

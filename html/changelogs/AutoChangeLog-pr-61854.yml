@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - qol: "The tentacle slap ability button now goes red and displays a cooldown timer when on cooldown."
+  - bugfix: "Vat beasts now longer lose their ability when someone rides them."

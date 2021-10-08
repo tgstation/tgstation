@@ -42,7 +42,7 @@
 /obj/item/circuit_component/proccall/populate_ports()
 	entity = add_input_port("Target", PORT_TYPE_DATUM)
 	proc_name = add_input_port("Proc Name", PORT_TYPE_STRING)
-	arguments = add_input_port("Arguments", PORT_TYPE_LIST)
+	arguments = add_input_port("Arguments", PORT_TYPE_LIST(PORT_TYPE_ANY))
 
 	output_value = add_output_port("Output Value", PORT_TYPE_ANY)
 

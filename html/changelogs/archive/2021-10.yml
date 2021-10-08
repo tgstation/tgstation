@@ -203,3 +203,48 @@
   - code_imp: Indestructible paper wall support. It's better than the alternative.
   kopoba:
   - bugfix: fix ebow was able to accept pka modkits with 0 cost
+2021-10-07:
+  PeterMorrison1:
+  - bugfix: fixed dropped arrows being controllable with the bow
+  Watermelon914:
+  - qol: Refactored tgui list inputs to be a lot more user-friendly.
+  lovegreenstuff:
+  - bugfix: ice reaction oversight, now freezes at the proper 274k instead of 245k
+  tralezab code, melbert idea!:
+  - rscadd: There's a new wizard event, RPG titles. Summon the star duke!
+  zxaber:
+  - rscdel: The augment painter has been removed from the game.
+  - rscadd: Spraycans can now change the visual style of robotic augments via right-click.
+  - bugfix: Borg lights are now visible again.
+2021-10-08:
+  InvalidArgument3:
+  - bugfix: penetrator rounds will no longer ignore vehicles
+  JohnFulpWillard:
+  - qol: Choice beacons now use a TGUI menu
+  Melbert:
+  - bugfix: The huds for clown and mime fan are back
+  - bugfix: You can no longer be a simultaneous clown and mime fan, pick a side coward
+  - bugfix: Quirks that once were not compatible are now incompatible again
+  NamelessFairy & Mothblocks:
+  - expansion: Replaces the ghost mafia button with a minigames button which opens
+      the new minigames panel.
+  - qol: CTF is now accessible through the new minigames menu
+  - rscadd: CTF can now be played through the CTF menu, accessible through the minigames
+      menu
+  TiviPlus:
+  - bugfix: fixed ambient occlusion stacking sometimes
+  Watermelon914:
+  - expansion: Adds the dispenser shell, which accepts normal-sized items and lets
+      you dispense them at any time.
+  - expansion: Adds the For Each component and the Filter List component.
+  - refactor: Refactored the circuit list datatype to support composite types (i.e.
+      entity list, any list, number list), which are lists that can only contain values
+      of the specified datatype. This also refactors anything that uses the list datatype
+      to use composite lists.
+  - qol: NTNet components now use composite lists to send and receive data
+  - bugfix: Prevented people from infinitely making lists with the list literal component.
+  tralezab:
+  - bugfix: Fixes catwalks not working at all!
+  zxaber:
+  - rscadd: Emagged and Syndicate borgs can now self-detonate. For emagged borgs,
+      this destroys the MMI, so know what you're signing up for.

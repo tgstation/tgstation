@@ -18,7 +18,7 @@ export const DisplayName = (props, context) => {
   return (
     <Box {...rest}>
       <Flex direction="column">
-        <Flex.Item>
+        <Flex.Item textAlign={isOutput? "right" : "left"}>
           {(hasInput && (
             <InputComponent
               setValue={(val, extraParams) =>
