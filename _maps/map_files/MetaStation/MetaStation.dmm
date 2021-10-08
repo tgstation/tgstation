@@ -11295,10 +11295,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
-"ctk" = (
-/obj/machinery/power/supermatter_crystal/engine,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "ctm" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/firealarm/directional/south,
@@ -116943,7 +116939,7 @@ iYv
 wST
 mfL
 jrn
-ctk
+toS
 mNF
 pdy
 wST

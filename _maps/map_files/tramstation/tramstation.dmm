@@ -42369,10 +42369,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/explab)
-"nSy" = (
-/obj/machinery/power/supermatter_crystal/engine,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "nSz" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -99361,7 +99357,7 @@ xcb
 mYF
 kae
 mYF
-nSy
+mYF
 mYF
 ouR
 dxS

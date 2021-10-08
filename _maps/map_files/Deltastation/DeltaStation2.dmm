@@ -89047,12 +89047,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"uqa" = (
-/obj/machinery/power/supermatter_crystal/engine,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "uqc" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -123683,7 +123677,7 @@ xHj
 wCP
 hWu
 rgQ
-uqa
+tii
 wrL
 tLP
 vyP

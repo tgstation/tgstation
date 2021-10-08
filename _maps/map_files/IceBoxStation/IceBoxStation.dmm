@@ -42798,10 +42798,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
-"szM" = (
-/obj/machinery/power/supermatter_crystal/engine,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "szW" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -82199,7 +82195,7 @@ vzX
 jDs
 xxe
 jDx
-szM
+jDx
 jDx
 pWt
 gZG

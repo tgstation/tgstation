@@ -50063,10 +50063,6 @@
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
-"lGe" = (
-/obj/machinery/power/supermatter_crystal/engine,
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "lGj" = (
 /obj/structure/flora/junglebush/b,
 /obj/machinery/airalarm/directional/east,
@@ -119388,7 +119384,7 @@ gsY
 gYM
 vnk
 gYM
-lGe
+gYM
 gYM
 wTq
 fzE
