@@ -117,7 +117,10 @@
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
-	for(var/turf/TT in view(viewsize, T))
+	var/list/dims = getviewsize(viewsize)
+	var/h_radius = dims[1] / 2
+	var/v_radius = dims[2] / 2
+	for(var/turf/TT in RECT_TURFS(h_radius, v_radius, T))
 		if(TT.blueprint_data)
 			. += TT.blueprint_data
 
@@ -126,7 +129,7 @@
 		if(viewing)
 			clear_viewer()
 		viewing = user.client
-		showing = get_images(get_turf(user), viewing.view)
+		showing = get_images(get_turf(viewing.eye || user), viewing.view)
 		viewing.images |= showing
 		if(message)
 			to_chat(user, message)
