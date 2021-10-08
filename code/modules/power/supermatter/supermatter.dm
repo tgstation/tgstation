@@ -645,7 +645,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
 
 		//Zaps around 2.5 seconds at 1500 MeV, limited to 0.5 from 4000 MeV and up
-		if(power && last_power_zap + 4 SECONDS - (power * 0.001) < world.time)
+		if(power && (last_power_zap + 4 SECONDS - (power * 0.001)) < world.time)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 			var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
@@ -654,7 +654,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			supermatter_zap(
 				zapstart = src,
 				range = 3,
-				zap_str = 4 * power * power_multiplier * pressure_multiplier * co2_power_increase,
+				zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
 				zap_flags = ZAP_SUPERMATTER_FLAGS,
 				zap_cutoff = 300,
 				power_level = power

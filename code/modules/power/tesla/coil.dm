@@ -93,14 +93,14 @@
 	obj_flags |= BEING_SHOCKED
 	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 	flick("coilhit", src)
+	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
-		power = 0
+		return 0
 	if(zap_flags & ZAP_LOW_POWER_GEN)
 		power /= 10
 	zap_buckle_check(power)
 	var/power_removed = powernet ? power * input_power_multiplier : power
 	stored_energy += max((power_removed - 80) * 200, 0)
-	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/tesla_coil/proc/zap()
