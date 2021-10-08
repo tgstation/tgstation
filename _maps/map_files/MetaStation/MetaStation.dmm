@@ -28712,7 +28712,6 @@
 /area/maintenance/port/fore)
 "icp" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/aug_manipulator,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -39854,6 +39853,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library)
 "mhk" = (
@@ -44129,7 +44131,7 @@
 /area/science/storage)
 "nFR" = (
 /obj/machinery/vending/boozeomat,
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait/bar{
 	pixel_y = -28
 	},
 /obj/effect/turf_decal/tile/bar{
@@ -67395,6 +67397,9 @@
 	},
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
 	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library)

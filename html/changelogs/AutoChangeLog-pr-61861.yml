@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The airlock to MetaStation's Medical Cold Room is now properly named and requires Medbay General access."

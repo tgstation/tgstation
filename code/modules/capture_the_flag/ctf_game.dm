@@ -6,7 +6,6 @@
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
-#define CTF_REQUIRED_PLAYERS 4
 
 /obj/item/ctf
 	name = "banner"
@@ -638,4 +637,3 @@
 #undef FLAG_RETURN_TIME
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN
-#undef CTF_REQUIRED_PLAYERS

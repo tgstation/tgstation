@@ -80,7 +80,7 @@
 					continue
 				VM.shuttles[s] = shuttle
 
-		VM.map_path = "custom"
+		VM.map_path = CUSTOM_MAP_PATH
 		VM.map_file = "[map_file]"
 		VM.config_filename = "data/next_map.json"
 		var/json_value = list(

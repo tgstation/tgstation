@@ -1,4 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - bugfix: "The new mining base on Icebox will now fully load its surrounding plasma lake area."

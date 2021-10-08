@@ -10,6 +10,9 @@
 	/// The datatype of the circuit variable. Used by the setter and getter circuit components
 	var/datatype
 
+	/// The datatype handler for the circuit variable.
+	var/datum/circuit_datatype/datatype_handler
+
 	/// The colour that appears in the UI. The value is set to the datatype's matching colour
 	var/color
 
@@ -24,15 +27,10 @@
 	src.name = name
 	src.datatype = datatype
 
-	var/datum/circuit_datatype/circuit_datatype = GLOB.circuit_datatypes[datatype]
-
+	src.datatype_handler = GLOB.circuit_datatypes[datatype]
 	src.listeners = list()
-	src.color = circuit_datatype.color
+	src.color = datatype_handler.color
 
-
-/datum/circuit_variable/Destroy(force, ...)
-	listeners = null
-	return ..()
 
 /// Sets the value of the circuit component and triggers the appropriate listeners
 /datum/circuit_variable/proc/set_value(new_value)

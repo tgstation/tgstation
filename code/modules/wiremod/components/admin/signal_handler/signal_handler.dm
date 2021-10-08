@@ -68,7 +68,7 @@
 	unregister_all = add_input_port("Unregister All", PORT_TYPE_SIGNAL, order = 2, trigger = .proc/unregister_signals_all)
 
 	add_source_entity()
-	event_triggered = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
+	event_triggered = add_output_port("Triggered", PORT_TYPE_INSTANT_SIGNAL, order = 2)
 
 /obj/item/circuit_component/signal_handler/proc/add_source_entity()
 	if(target)
