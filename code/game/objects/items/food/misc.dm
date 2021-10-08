@@ -760,3 +760,36 @@
 	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet)//If there is no dog mom, we assume the pet fed itself.
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(src)
+
+/obj/item/food/clowncoin
+	name = "clown coin"
+	desc = "It is said clowns use this currency within clown planet."
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "clown_coin"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/iron = 4)
+	tastes = list("rusty" = 1)
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/clowncoin/bananium
+	name = "bananium clown coin"
+	desc = "A high priced coin, spend in clown planet."
+	icon_state = "clown_coin_b"
+	bite_consumption = 2
+	food_reagents = list(/datum/reagent/toxin/acid = 4, /datum/reagent/consumable/banana = 2, /datum/reagent/consumable/laughter = 6)
+	tastes = list("banana" = 1, "clowns" = 1)
+
+/obj/item/food/clowncoin/bananium/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 40)
+
+/obj/item/food/clownbill
+	name = "clown bill"
+	desc = "The finest bills on clown planet, also used for carpeting."
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "clown_bill"
+	food_reagents = list(/datum/reagent/toxin/acid = 4, /datum/reagent/toxin/staminatoxin = 4, /datum/reagent/chlorine = 22)
+	bite_consumption = 3
+	tastes = list("sour" = 1, "dishwater" = 1, "soap" = 1)
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_NORMAL
