@@ -93,8 +93,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/list/faction = list("turret")
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
-	/// Linked turret control panel of the turret
-	var/obj/machinery/turretid/cp = null
 	/// The turret will try to shoot from a turf in that direction when in a wall
 	var/wall_turret_direction
 	/// If the turret is manually controlled
