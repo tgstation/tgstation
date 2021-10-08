@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Removing invasive spreading from a plant will now actually remove invasive spreading"
+  - refactor: "Refactored seed / gene deletion, and a bit of gene addition / removal"
