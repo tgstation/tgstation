@@ -145,7 +145,7 @@ Subtrees also have procs for when the mob first starts using them and when they 
 
 Example:
 
-```
+```dm
 /datum/ai_planning_subtree/item_ghost_resist/SetupSubtree(datum/ai_controller/controller)
 	RegisterSignal(controller.pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	controller.blackboard[BB_LIKES_EQUIPPER] = FALSE
@@ -232,7 +232,7 @@ The last important thing to know is that behaviors take the keys from subtree pl
 
 BAD:
 
-```
+```dm
 /datum/ai_behavior/play_instrument
 
 /datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller)
@@ -247,7 +247,7 @@ BAD:
 
 GOOD:
 
-```
+```dm
 /datum/ai_behavior/play_instrument
 
 /datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller, song_datum_key)
