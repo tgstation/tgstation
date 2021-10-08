@@ -12,14 +12,19 @@
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
 
-	// Late loaded templates like shuttles can have maintenance loot.
-	// Once the game state progresses to roundstart, new maint loot spawners should just instantly pop.
-	if(SSticker.current_state >= GAME_STATE_SETTING_UP)
-		spawn_on_init = TRUE
-
 	. = ..()
 
 	GLOB.maintenance_loot_spawners += src
+
+/obj/effect/spawner/random/maintenance/should_spawn_on_init()
+	. = ..()
+
+	if(.)
+		return
+
+	// Late loaded templates like shuttles can have maintenance loot.
+	// Once the game state progresses to roundstart, new maint loot spawners should just instantly pop.
+	return (SSticker.current_state >= GAME_STATE_SETTING_UP)
 
 /obj/effect/spawner/random/maintenance/Destroy()
 	GLOB.maintenance_loot_spawners -= src
