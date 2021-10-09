@@ -581,7 +581,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					if(hair_color == "mutcolor")
 						facial_overlay.color = H.dna.features["mcolor"]
 					else if(hair_color == "fixedmutcolor")
-						facial_overlay.color = "[fixed_mut_color]"
+						facial_overlay.color = fixed_mut_color
 					else
 						facial_overlay.color = hair_color
 				else
@@ -654,7 +654,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						if(hair_color == "mutcolor")
 							hair_overlay.color = H.dna.features["mcolor"]
 						else if(hair_color == "fixedmutcolor")
-							hair_overlay.color = "[fixed_mut_color]"
+							hair_overlay.color = fixed_mut_color
 						else
 							hair_overlay.color = hair_color
 					else
@@ -956,20 +956,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					switch(accessory.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
-								accessory_overlay.color = "[fixed_mut_color]"
+								accessory_overlay.color = fixed_mut_color
 							else
-								accessory_overlay.color = "[source.dna.features["mcolor"]]"
+								accessory_overlay.color = source.dna.features["mcolor"]
 						if(HAIR)
 							if(hair_color == "mutcolor")
-								accessory_overlay.color = "[source.dna.features["mcolor"]]"
+								accessory_overlay.color = source.dna.features["mcolor"]
 							else if(hair_color == "fixedmutcolor")
-								accessory_overlay.color = "[fixed_mut_color]"
+								accessory_overlay.color = fixed_mut_color
 							else
-								accessory_overlay.color = "[source.hair_color]"
+								accessory_overlay.color = source.hair_color
 						if(FACEHAIR)
-							accessory_overlay.color = "[source.facial_hair_color]"
+							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
-							accessory_overlay.color = "[source.eye_color]"
+							accessory_overlay.color = source.eye_color
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
