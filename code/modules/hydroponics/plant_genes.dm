@@ -74,14 +74,14 @@
 	if(found_reagent?.type == reagent_id)
 		name = found_reagent.name
 
-/datum/plant_gene/reagent/New(new_reagent_id, new_reagent_rate = 0.05)
+/datum/plant_gene/reagent/New(new_reagent_id = /datum/reagent/consumable/nutriment, new_reagent_rate = 0.04)
 	. = ..()
 	// If we have a preset reagent ID, set our name from that
 	if(reagent_id)
 		set_reagent(reagent_id)
 
-	// Otherwise if we were passed a reagent id, set our reagent to that
-	else if(new_reagent_id)
+	// Otherwise set our reagent ID to the one passed to us
+	else
 		set_reagent(new_reagent_id)
 		rate = new_reagent_rate
 
