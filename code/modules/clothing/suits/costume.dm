@@ -536,3 +536,30 @@
 	icon_state = "football_armor_red"
 	inhand_icon_state = "football_armor_red"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/suit/beaker
+	name = "beakerman costume"
+	desc = "Time to save the day by using science and chemistry!"
+	icon_state = "beaker"
+	inhand_icon_state = "armor"
+	flags_inv = HIDEEARS|HIDEHAIR
+
+/obj/item/clothing/suit/facebook
+	name = "facebook costume"
+	desc = "Time to save the day by using facts and invading your privacy!"
+	icon_state = "facebook"
+	inhand_icon_state = "armor"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+
+/obj/item/clothing/suit/jestercoat
+	name = "purple leather coat"
+	desc = "It's advised you not smoke in this thing, while the bombs have been removed, some gunpower may remain."
+	icon_state = "the_jester_coat"
+	inhand_icon_state = "suitjacket_purp"
+
+/obj/item/clothing/suit/trickstercoat
+	name = "punctuated suit jacket"
+	desc = "The ones who know about the programs are the ones who get the money!"
+	icon_state = "trickstercoat"
+	inhand_icon_state = "labgreen"
+

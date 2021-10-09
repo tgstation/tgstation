@@ -373,3 +373,73 @@
 	icon_state = "referee"
 	inhand_icon_state = "referee"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/twotonesuit
+	name = "two tone suit"
+	desc = "Fortune smiles. Another day of wine and roses. Or in your case, beer and pizza."
+	icon_state = "harvey_flint"
+	inhand_icon_state = "black_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/patchworksuit
+	name = "patchwork suit"
+	desc = "I am a liar. No. We the acid scarred bitches of history of evil and hypocrisy exalt criminals to office."
+	icon_state = "artist"
+	inhand_icon_state = "black_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/patchworksuit/skirt
+	name = "patchwork skirt"
+	desc = "I am a lawyer. Yes. We the people of the United States, in order to form a more perfect Union, establish justice."
+	icon_state = "artist_skirt"
+	inhand_icon_state = "black_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/greenvest
+	name = "green vested suit"
+	desc = "Dress like some sort of canine chasing an automobile."
+	icon_state = "the_jester"
+	inhand_icon_state = "dg_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/trickster
+	name = "trickster suit"
+	desc = "Explore! Find their challenges! And when you fail to solve them and lie blubbering like an ignorant child on the floor you will know that the person wearing this is better than you."
+	icon_state = "trickster"
+	inhand_icon_state = "dg_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/penguin
+	name = "penguin suit"
+	desc = "A rather formal outfit, perfect for chainsmoking fat men."
+	icon_state = "penguin"
+	inhand_icon_state = "really_black_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/herotunic
+	name = "heroic tunic"
+	desc = "You've met with a terrible fate, haven't you?"
+	icon_state = "familiartunic"
+	inhand_icon_state = "g_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/gruoutfit
+	name = "russian officer uniform"
+	desc = "Alas, my finger must have slipped."
+	icon_state = "gru_officer"
+	inhand_icon_state = "allies_uniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/sillyzonka
+	name = "silly zonka wonka costume"
+	desc = "Baumeister Confections is in shambles!"
+	icon_state = "billydonka"
+	inhand_icon_state = "tan_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/purplesuit
+	name = "purple suit"
+	desc = "Two good weeks at the comedy club and you may be able to pull this ghastly thing off."
+	icon_state = "zootsuit"
+	inhand_icon_state = "p_suit"
+	can_adjust = FALSE

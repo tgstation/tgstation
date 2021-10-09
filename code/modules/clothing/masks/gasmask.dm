@@ -179,7 +179,10 @@
 		"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
 		"The Madman" = image(icon = src.icon, icon_state = "joker"),
-		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
+		"The Car Chaser" = image(icon = src.icon, icon_state = "the_jester"),
+		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow"),
+		"The Terror" = image(icon = src.icon, icon_state = "scaryclownmask"),
+		"The Bag" = image(icon = src.icon, icon_state = "gigglesmask")
 		)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
@@ -191,8 +194,11 @@
 	options["True Form"] = "clown"
 	options["The Feminist"] = "sexyclown"
 	options["The Madman"] = "joker"
+	options["The Car Chaser"] = "the_jester"
 	options["The Rainbow Color"] ="rainbow"
 	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
+	options["The Terror"] ="scaryclownmask"
+	options["The Bag"] ="gigglesmask"
 
 	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)

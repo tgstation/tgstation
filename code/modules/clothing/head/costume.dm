@@ -174,3 +174,26 @@
 	name = "basil boys helmet"
 	icon_state = "football_helmet_red"
 	inhand_icon_state = "football_helmet_red"
+
+/obj/item/clothing/head/trickster
+	name = "tricker's bowler hat"
+	desc = "Why ever would someone wear this? That's the question."
+	icon_state = "tricksterhat"
+	inhand_icon_state = "bowler"
+
+/obj/item/clothing/head/penguin
+	name = "fancy top hat"
+	desc = "Ah shit. I picked the cute one."
+	icon_state = "penguinhat"
+	inhand_icon_state = "that"
+
+/obj/item/clothing/head/sillyzonka
+	name = "brown top hat"
+	desc = "Caught you taking a peak. Nothing wrong with window shopping from time to time."
+	icon_state = "billydonkahat"
+	inhand_icon_state = "that"
+
+/obj/item/clothing/head/fez
+	name = "fez"
+	desc = "Everything's got to end sometime. Otherwise, nothing would ever get started."
+	icon_state = "fez"

@@ -9,6 +9,8 @@
 	products = list(
 		/obj/item/clothing/suit/chickensuit = 1,
 		/obj/item/clothing/head/chicken = 1,
+		/obj/item/clothing/suit/beaker = 1,
+		/obj/item/clothing/suit/facebook = 1,
 		/obj/item/clothing/under/rank/civilian/clown/blue = 1,
 		/obj/item/clothing/under/rank/civilian/clown/green = 1,
 		/obj/item/clothing/under/rank/civilian/clown/yellow = 1,
@@ -38,6 +40,21 @@
 		/obj/item/clothing/head/bowler = 1,
 		/obj/item/cane = 1,
 		/obj/item/clothing/under/suit/sl = 1,
+		/obj/item/clothing/head/sillyzonka = 1,
+		/obj/item/clothing/under/costume/sillyzonka = 1,
+		/obj/item/clothing/suit/toggle/lawyer/purple = 1,
+		/obj/item/clothing/under/costume/purplesuit = 1,
+		/obj/item/clothing/under/costume/twotonesuit = 1,
+		/obj/item/clothing/under/costume/patchworksuit/skirt = 1, //these are lined like this because of the description quote
+		/obj/item/clothing/under/costume/patchworksuit = 1,
+		/obj/item/clothing/under/costume/greenvest = 1,
+		/obj/item/clothing/suit/jestercoat = 1,
+		/obj/item/clothing/under/costume/trickster = 1,
+		/obj/item/clothing/suit/trickstercoat = 1,
+		/obj/item/clothing/head/trickster = 1,
+		/obj/item/clothing/under/costume/penguin = 1,
+		/obj/item/clothing/head/penguin = 1,
+		/obj/item/clothing/head/fez = 1,
 		/obj/item/clothing/mask/fakemoustache = 1,
 		/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 1,
 		/obj/item/clothing/head/plaguedoctorhat = 1,
@@ -58,6 +75,7 @@
 		/obj/item/clothing/head/bandana = 1,
 		/obj/item/clothing/head/bandana = 1,
 		/obj/item/clothing/under/costume/soviet = 1,
+		/obj/item/clothing/under/costume/gruoutfit = 1,
 		/obj/item/clothing/head/ushanka = 1,
 		/obj/item/clothing/suit/imperium_monk = 1,
 		/obj/item/clothing/mask/gas/cyborg = 1,
@@ -71,6 +89,7 @@
 		/obj/item/clothing/suit/wizrobe/fake = 1,
 		/obj/item/clothing/head/wizard/fake = 1,
 		/obj/item/staff = 3,
+		/obj/item/clothing/under/costume/herotunic = 1,
 		/obj/item/clothing/mask/gas/sexyclown = 1,
 		/obj/item/clothing/under/rank/civilian/clown/sexy = 1,
 		/obj/item/clothing/mask/gas/sexymime = 1,
@@ -131,7 +150,9 @@
 		/obj/item/gun/magic/wand/nothing = 2,
 		/obj/item/clothing/glasses/sunglasses/garb = 2,
 		/obj/item/clothing/glasses/blindfold = 1,
-		/obj/item/clothing/mask/muzzle = 2
+		/obj/item/clothing/mask/muzzle = 2,
+		/obj/item/clothing/under/rank/civilian/clown/scary = 1,
+		/obj/item/clothing/shoes/clown_shoes/scary = 1
 	)
 	premium = list(
 		/obj/item/clothing/suit/pirate/captain = 2,

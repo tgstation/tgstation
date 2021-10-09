@@ -86,3 +86,12 @@
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	inhand_icon_state = "sexyclown"
+
+/obj/item/clothing/under/rank/civilian/clown/scary
+	name = "scary clown suit"
+	desc = "<i>'Spooky HONK!'</i>"
+	icon_state = "scaryclown"
+	inhand_icon_state = "clown"
+	species_exception = list(/datum/species/golem/bananium)
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
