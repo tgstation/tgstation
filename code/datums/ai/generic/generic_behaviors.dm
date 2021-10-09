@@ -173,7 +173,7 @@
 /datum/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
 	. = ..()
 	if(succeeded)
-		controller.blackboard[hunger_timer_key] = world.time + rand(120, 600) SECONDS
+		controller.blackboard[hunger_timer_key] = world.time + rand(12 SECONDS, 60 SECONDS)
 
 /**find and set
  * Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.

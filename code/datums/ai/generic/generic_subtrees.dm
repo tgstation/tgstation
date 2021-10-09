@@ -48,7 +48,7 @@
 /datum/ai_planning_subtree/generic_hunger/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	//inits the blackboard timer
 	if(!controller.blackboard[BB_NEXT_HUNGRY])
-		controller.blackboard[BB_NEXT_HUNGRY] = world.time + rand(0, 300)
+		controller.blackboard[BB_NEXT_HUNGRY] = world.time + rand(0, 30 SECONDS)
 
 	if(world.time < controller.blackboard[BB_NEXT_HUNGRY])
 		return
