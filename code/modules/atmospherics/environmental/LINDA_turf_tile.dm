@@ -44,6 +44,7 @@
 		air.copy_from_turf(src)
 		#ifdef EVENTMODE
 		planetary_atmos = TRUE
+		initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 		#endif
 		if(planetary_atmos)
 			if(!SSair.planetary[initial_gas_mix])
