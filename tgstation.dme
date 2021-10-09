@@ -3891,7 +3891,7 @@
 #include "code\modules\wiremod\components\bci\hud\object_overlay.dm"
 #include "code\modules\wiremod\components\bci\hud\target_intercept.dm"
 #include "code\modules\wiremod\components\list\assoc_literal.dm"
-#include "code\modules\wiremod\components\list\concat.dm"
+#include "code\modules\wiremod\components\list\concat_list.dm"
 #include "code\modules\wiremod\components\list\filter.dm"
 #include "code\modules\wiremod\components\list\foreach.dm"
 #include "code\modules\wiremod\components\list\get_column.dm"

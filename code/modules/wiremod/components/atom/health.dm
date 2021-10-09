@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/health
 	display_name = "Get Health"
-	desc = "A component that returns the health of an organism."
+	desc = "A component that returns the health of an entity."
 
 	/// The input port
 	var/datum/port/input/input_port
