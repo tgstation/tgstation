@@ -145,9 +145,9 @@
 
 	if(!hidden)
 		playsound(target, 'sound/weapons/flash.ogg', 25, TRUE)
-		var/datum/effect_system/spark_spread/quantum/s = new /datum/effect_system/spark_spread/quantum
-		s.set_up(5, TRUE, target)
-		s.start()
+		var/datum/effect_system/spark_spread/quantum/spark_system = new /datum/effect_system/spark_spread/quantum()
+		spark_system.set_up(5, TRUE, target)
+		spark_system.start()
 
 	sleep(teleport_speed)
 
@@ -416,3 +416,5 @@
 			sending = FALSE
 			teleport(usr, our_pad)
 			. = TRUE
+
+#undef BEAM_FADE_TIME
