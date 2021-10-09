@@ -17220,7 +17220,7 @@
 "eck" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/catwalk_floor,
 /area/commons/lounge)
 "ecy" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -17520,7 +17520,7 @@
 /obj/machinery/power/apc/auto_name/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/catwalk_floor,
 /area/commons/lounge)
 "ehZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -28259,7 +28259,7 @@
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/commons/lounge)
 "ijR" = (
 /obj/effect/turf_decal/bot,
@@ -52332,7 +52332,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/catwalk_floor,
 /area/commons/lounge)
 "rPf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -57861,7 +57861,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/catwalk_floor,
 /area/commons/lounge)
 "tVq" = (
 /obj/structure/closet/radiation,
