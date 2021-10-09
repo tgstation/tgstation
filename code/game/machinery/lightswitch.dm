@@ -68,15 +68,17 @@
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
-	toggle_lights()
+	set_lights(!area.lightswitch)
 
-/obj/machinery/light_switch/proc/toggle_lights()
-	area.lightswitch = !area.lightswitch
+/obj/machinery/light_switch/proc/set_lights(status)
+	if(area.lightswitch == status)
+		return
+	area.lightswitch = status
 	area.update_appearance()
 
 	for(var/obj/machinery/light_switch/light_switch in area)
 		light_switch.update_appearance()
-		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_TOGGLED, area.lightswitch)
+		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_SET, status)
 
 	area.power_change()
 
@@ -112,18 +114,16 @@
 	. = ..()
 	if(istype(parent, /obj/machinery/light_switch))
 		attached_switch = parent
-		RegisterSignal(parent, COMSIG_LIGHT_SWITCH_TOGGLED, .proc/on_light_switch_toggle)
+		RegisterSignal(parent, COMSIG_LIGHT_SWITCH_SET, .proc/on_light_switch_set)
 
 /obj/item/circuit_component/light_switch/unregister_usb_parent(atom/movable/parent)
 	attached_switch = null
-	UnregisterSignal(parent, COMSIG_LIGHT_SWITCH_TOGGLED)
+	UnregisterSignal(parent, COMSIG_LIGHT_SWITCH_SET)
 	return ..()
 
-/obj/item/circuit_component/light_switch/proc/on_light_switch_toggle(datum/source, active)
+/obj/item/circuit_component/light_switch/proc/on_light_switch_set(datum/source, status)
 	SIGNAL_HANDLER
-	is_on.set_output(active)
+	is_on.set_output(status)
 
 /obj/item/circuit_component/light_switch/input_received(datum/port/input/port)
-	//Working around the fact we don't have boolean port types.
-	if(attached_switch.area.lightswitch == !on_setting.value)
-		attached_switch?.toggle_lights()
+	attached_switch?.set_lights(on_setting.value ? TRUE : FALSE)
