@@ -105,7 +105,13 @@
 	if(!json[id])
 		return
 	var/datum/picture/P = new
-	P.deserialize_list(json[id])
+
+	// Old photos were saved as, and I shit you not, encoded JSON strings.
+	if (istext(json[id]))
+		P.deserialize_json(json[id])
+	else
+		P.deserialize_list(json[id])
+
 	return P
 
 /proc/log_path_from_picture_ID(id)

@@ -93,7 +93,7 @@
 		if(COMP_INPUT_NUMBER)
 			input_response.set_datatype(PORT_TYPE_NUMBER)
 		if(COMP_INPUT_LIST)
-			parameter = add_input_port("Options List", PORT_TYPE_LIST)
+			parameter = add_input_port("Options List", PORT_TYPE_LIST(PORT_TYPE_ANY))
 			input_response.set_datatype(PORT_TYPE_STRING)
 
 #undef COMP_INPUT_STRING

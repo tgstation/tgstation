@@ -306,6 +306,7 @@
 	},
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "cd" = (
@@ -975,9 +976,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"fR" = (
-/turf/closed/mineral/random/snow,
-/area/icemoon/underground/unexplored)
 "fT" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -1122,10 +1120,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/stone,
 /area/service/bar)
-"gE" = (
-/obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/unexplored)
 "gF" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2461,6 +2455,7 @@
 /obj/item/vending_refill/cigarette,
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/service/bar)
 "mC" = (
@@ -4485,6 +4480,11 @@
 /obj/structure/ladder,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"vV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "vW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -5539,8 +5539,11 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "Bb" = (
-/turf/open/floor/plating/snowed/icemoon,
-/area/hallway/secondary/service)
+/obj/item/flashlight/lantern{
+	light_on = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Bd" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -5848,8 +5851,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "Cx" = (
@@ -7834,8 +7839,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/structure/table/wood,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron,
 /area/service/bar)
 "Ls" = (
@@ -9140,12 +9145,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Rx" = (
@@ -9506,6 +9511,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/stone,
 /area/service/bar/atrium)
 "Te" = (
@@ -9602,10 +9608,6 @@
 "Tw" = (
 /turf/open/floor/iron,
 /area/cargo/storage)
-"Ty" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/snowed/icemoon,
-/area/hallway/secondary/service)
 "Tz" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -10003,7 +10005,6 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/service/bar)
 "Vs" = (
@@ -19340,7 +19341,7 @@ ap
 ap
 ap
 yr
-Ee
+vV
 Hf
 Wh
 Ee
@@ -29395,7 +29396,7 @@ Rj
 Xo
 Fp
 Fp
-Iy
+Fp
 Iy
 Iy
 Iy
@@ -29651,8 +29652,8 @@ mO
 mO
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 Iy
 Iy
@@ -29908,8 +29909,8 @@ mO
 mO
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 Iy
 Iy
@@ -30165,8 +30166,8 @@ mO
 Fp
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 Iy
 Iy
@@ -30422,8 +30423,8 @@ Fp
 Fp
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 Iy
 ak
 ak
@@ -30679,9 +30680,9 @@ bq
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -30936,9 +30937,9 @@ bq
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31193,9 +31194,9 @@ bq
 Fp
 VW
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31450,9 +31451,9 @@ bq
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31707,9 +31708,9 @@ vC
 Fp
 Fp
 VW
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -31964,9 +31965,9 @@ mv
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -32221,9 +32222,9 @@ mv
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -32478,8 +32479,8 @@ mv
 Fp
 xO
 Fp
-Iy
-Iy
+Fp
+Fp
 ak
 ak
 ak
@@ -32735,8 +32736,8 @@ mv
 Fp
 Fp
 Fp
-Iy
-Iy
+Fp
+Fp
 ak
 ak
 ak
@@ -32992,7 +32993,7 @@ mv
 Fp
 Fp
 Fp
-Iy
+Fp
 ak
 ak
 ak
@@ -33730,7 +33731,7 @@ Iy
 Iy
 Iy
 Iy
-Iy
+Fp
 Fp
 Fp
 xO
@@ -33988,7 +33989,7 @@ Iy
 Iy
 Iy
 Iy
-Iy
+Fp
 Fp
 Fp
 Fp
@@ -34246,7 +34247,7 @@ Iy
 Iy
 Iy
 Iy
-Iy
+Fp
 Fp
 Fp
 Fp
@@ -34503,7 +34504,7 @@ ak
 ak
 ak
 ak
-Iy
+Fp
 Fp
 Fp
 Fp
@@ -34760,8 +34761,8 @@ ak
 ak
 ak
 ak
-As
-Iy
+Et
+Fp
 Fp
 Fp
 Fp
@@ -34785,7 +34786,7 @@ Fp
 Fp
 Fp
 Fp
-Iy
+Fp
 ak
 ak
 ak
@@ -35019,7 +35020,7 @@ ak
 ak
 ak
 ak
-Iy
+Fp
 xO
 Fp
 ys
@@ -35037,11 +35038,11 @@ Fp
 Fp
 Fp
 Fp
-Iy
-Iy
-Iy
-Iy
-Iy
+Fp
+Fp
+Fp
+Fp
+Fp
 ak
 ak
 ak
@@ -35274,9 +35275,9 @@ ak
 ak
 ak
 ak
-As
-As
-Iy
+Et
+Et
+Fp
 Fp
 Fp
 Xs
@@ -35289,11 +35290,11 @@ IP
 du
 Fp
 Fp
-gE
-Iy
-fR
-fR
-fR
+VW
+Fp
+Et
+Et
+Et
 ak
 ak
 ak
@@ -35530,11 +35531,11 @@ ak
 ak
 ak
 ak
-As
-As
-As
-Iy
-gE
+Et
+Et
+Et
+Fp
+VW
 Fp
 Fp
 Fp
@@ -35542,13 +35543,13 @@ Fp
 Fp
 PG
 PG
-Iy
-Iy
-Iy
-Iy
-Iy
-Iy
-As
+Fp
+Fp
+Fp
+Fp
+Fp
+Fp
+Et
 ak
 ak
 ak
@@ -35792,17 +35793,17 @@ ak
 ak
 ak
 ak
-As
+Et
 ak
 ak
-As
+Et
 xO
 Fp
 ak
 ak
 ak
 ak
-As
+Et
 ak
 ak
 ak
@@ -36048,17 +36049,17 @@ ak
 ak
 ak
 ak
-As
-As
+Et
+Et
 ak
 ak
 ak
-As
-As
+Et
+Et
 ak
 ak
-As
-As
+Et
+Et
 ak
 ak
 ak
@@ -51948,9 +51949,9 @@ ak
 ak
 ak
 Et
-Ty
-Bb
-Bb
+mv
+mv
+mv
 Et
 Et
 fK
@@ -52976,7 +52977,7 @@ ak
 ak
 ak
 Jf
-Fp
+Bb
 Fp
 PG
 PG

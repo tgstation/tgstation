@@ -1,4 +1,0 @@
-author: "InvalidArgument3"
-delete-after: True
-changes: 
-  - bugfix: "burning vehicles can now be extinguished."

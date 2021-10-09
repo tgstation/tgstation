@@ -13,14 +13,25 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	///Flags of the zap that the coil releases when the wire is pulsed
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
+	///Multiplier for power conversion
 	var/input_power_multiplier = 1
+	///Cooldown between pulsed zaps
 	var/zap_cooldown = 100
+	///Reference to the last zap done
 	var/last_zap = 0
+	///Amount of power stored inside the coil to be released in the powernet
+	var/stored_energy = 0
+
+/obj/machinery/power/tesla_coil/anchored
+	anchored = TRUE
 
 /obj/machinery/power/tesla_coil/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/tesla_coil(src)
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/tesla_coil/should_have_node()
 	return anchored
@@ -71,25 +82,26 @@
 
 	return ..()
 
+/obj/machinery/power/tesla_coil/process(delta_time)
+	var/power_produced = min(stored_energy, (stored_energy * 0.04) + 1000) * delta_time
+	add_avail(power_produced)
+	stored_energy -= power_produced
+
 /obj/machinery/power/tesla_coil/zap_act(power, zap_flags)
-	if(anchored && !panel_open)
-		//don't lose arc power when it's not connected to anything
-		//please place tesla coils all around the station to maximize effectiveness
-		obj_flags |= BEING_SHOCKED
-		addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
-		zap_buckle_check(power)
-		if(zap_flags & ZAP_GENERATES_POWER) //I don't want no tesla revolver making 8GW you hear
-			return power / 2
-		var/power_produced = powernet ? power * input_power_multiplier : power
-		add_avail(power_produced)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
-		if(D)
-			D.adjust_money(min(power_produced, 1))
-		flick("coilhit", src)
-		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		return power - power_produced //You get back the amount we didn't use
-	else
-		. = ..()
+	if(!anchored || panel_open)
+		return ..()
+	obj_flags |= BEING_SHOCKED
+	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
+	flick("coilhit", src)
+	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
+		return 0
+	if(zap_flags & ZAP_LOW_POWER_GEN)
+		power /= 10
+	zap_buckle_check(power)
+	var/power_removed = powernet ? power * input_power_multiplier : power
+	stored_energy += max((power_removed - 80) * 200, 0)
+	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/tesla_coil/proc/zap()
 	if((last_zap + zap_cooldown) > world.time || !powernet)
@@ -113,6 +125,9 @@
 	can_buckle = TRUE
 	buckle_lying = 0
 	buckle_requires_restraints = TRUE
+
+/obj/machinery/power/grounding_rod/anchored
+	anchored = TRUE
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()

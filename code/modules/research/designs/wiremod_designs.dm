@@ -73,6 +73,11 @@
 	id = "comp_index"
 	build_path = /obj/item/circuit_component/index
 
+/datum/design/component/index_assoc
+	name = "Index Associative List Component"
+	id = "comp_index_assoc"
+	build_path = /obj/item/circuit_component/index/assoc_string
+
 /datum/design/component/length
 	name = "Length Component"
 	id = "comp_length"

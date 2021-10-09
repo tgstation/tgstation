@@ -185,6 +185,7 @@
 	cyborg.update_module_innate()
 	new_model.rebuild_modules()
 	cyborg.radio.recalculateChannels()
+	cyborg.set_modularInterface_theme()
 
 	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
 	qdel(src)
