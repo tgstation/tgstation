@@ -5,7 +5,7 @@
  */
 /obj/item/circuit_component/split
 	display_name = "Split"
-	desc = "Splits a list and adds separator, turning it into a string"
+	desc = "Splits a string by the separator, turning it into a list"
 
 	/// The input port
 	var/datum/port/input/list_port
@@ -15,10 +15,11 @@
 
 	/// The result from the output
 	var/datum/port/output/output
+
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/split/populate_ports()
-	list_port = add_input_port("List", PORT_TYPE_LIST)
+	list_port = add_input_port("Input", PORT_TYPE_STRING)
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
@@ -40,4 +41,3 @@
 			text_list += "[entry]"
 
 	output.set_output(text_list.Join(seperator))
-
