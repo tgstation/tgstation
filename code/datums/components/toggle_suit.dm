@@ -3,7 +3,7 @@
  * When toggled, changes the atom's icon_state between [base_icon_state] and [base_icon_state]_t.
  */
 /datum/component/toggle_icon
-	/// Whether the weapon is toggled open or not
+	/// Whether the icon is toggled
 	var/toggled = FALSE
 	/// The base icon state we do operations on.
 	var/base_icon_state
@@ -53,7 +53,7 @@
 		source.balloon_alert(user, "you don't have hands!")
 		return
 
-	do_suit_toggle(source, living_user)
+	do_icon_toggle(source, living_user)
 
 /*
  * Signal proc for COMSIG_PARENT_EXAMINE.
@@ -75,7 +75,7 @@
  * source - the atom being toggled
  * user - the mob doing the toggling
  */
-/datum/component/toggle_icon/proc/do_suit_toggle(atom/source, mob/living/user)
+/datum/component/toggle_icon/proc/do_icon_toggle(atom/source, mob/living/user)
 	source.balloon_alert(user, "toggled [toggle_noun]")
 
 	toggled = !toggled
