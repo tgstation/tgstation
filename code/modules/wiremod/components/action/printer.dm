@@ -19,8 +19,6 @@
 	var/datum/port/input/eject
 	/// The signature that'll replace any %s and %sign used when printing text on paper.
 	var/datum/port/input/signature
-	/// Outputs a paper atom reference when eject is triggered.
-	var/datum/port/output/ejected_paper
 
 	/// The list of papers currently loaded on the component
 	var/list/obj/item/paper/loaded_papers
@@ -28,7 +26,6 @@
 	var/max_paper_capacity = 10
 
 /obj/item/circuit_component/printer/populate_ports()
-	//This should contain web-safe fonts or fonts set with the @font-face rule.
 	var/static/typeface_options = list(
 		PRINTER_FONT,
 		PEN_FONT,
@@ -41,8 +38,7 @@
 	typeface = add_option_port("Typeface", typeface_options, trigger = null)
 	text_color = add_input_port("Text Hex Color", PORT_TYPE_STRING, trigger = null, default = "#000000")
 	signature = add_input_port("Signature", PORT_TYPE_STRING, trigger = null, default = "signature")
-	eject = add_input_port("Eject", PORT_TYPE_SIGNAL, trigger = .proc/eject_paper)
-	ejected_paper = add_output_port("Ejected Paper", PORT_TYPE_ATOM)
+	eject = add_input_port("Eject", PORT_TYPE_SIGNAL, trigger = .proc/eject_paper, order = 2)
 
 /obj/item/circuit_component/printer/Destroy()
 	loaded_papers = null
@@ -116,9 +112,9 @@
 	var/obj/item/paper/paper = loaded_papers?[1]
 	if(!paper)
 		return
+	playsound(src, "sound/machines/dotprinter.ogg", 30, TRUE)
 	if(isliving(parent?.shell?.loc))
 		var/mob/living/living_loc = parent.shell.loc
 		living_loc.put_in_hands(paper)
 	else
 		paper.forceMove(drop_location())
-		ejected_paper.set_output(paper)

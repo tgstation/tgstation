@@ -47,7 +47,7 @@
 	var/info = ""
 	/**
 	 * What's been written on the paper by things other than players.
-	 * Will be sanitized by the UI, and finally 
+	 * Will be sanitized by the UI, and finally
 	 * added to info when the user edits the paper text.
 	 */
 	var/list/add_info
@@ -219,10 +219,6 @@
 /obj/item/paper/proc/add_info(text, color = "black", font = PEN_FONT, signature = "signature")
 	LAZYADD(add_info, text)
 	LAZYADD(add_info_style, list(list(color, font, signature)))
-
-/obj/item/paper/proc/test_stuff()
-	LAZYADD(add_info, "this <u>is</u> <i>a</i> <b>test</b> <span style=\"color:[COLOR_RED];font-family:'Times New Roman';\">AAAAAA</span> %sign %s \[___].")
-	LAZYADD(add_info_style, list(list("orange", CRAYON_FONT, "testman")))
 
 /obj/item/paper/proc/get_info_length()
 	. = length(info)
