@@ -15821,7 +15821,6 @@
 /area/command/heads_quarters/rd)
 "dOR" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
 	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
@@ -17332,6 +17331,10 @@
 /area/maintenance/starboard/fore)
 "eJJ" = (
 /obj/structure/table,
+/obj/machinery/airalarm/kitchen_cold_room{
+	dir = 4;
+	pixel_x = -24
+	},
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "eKm" = (
@@ -21470,7 +21473,6 @@
 	name = "Testing Lab Maintenance";
 	req_access_txt = "47"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -22728,10 +22730,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"hJS" = (
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/science/research)
 "hKf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/poster/official/fruit_bowl{
@@ -25801,7 +25799,6 @@
 /area/command/bridge)
 "jtd" = (
 /obj/machinery/holopad,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -27395,12 +27392,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "kpY" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "kqc" = (
@@ -27509,12 +27506,12 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "ksu" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "ksz" = (
@@ -28647,7 +28644,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/camera{
-	c_tag = "Atmospherics Project Room";
+	c_tag = "Atmospherics Project Room West";
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -30123,7 +30120,7 @@
 "lPf" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/camera{
-	c_tag = "Atmospherics Project Room";
+	c_tag = "Atmospherics Project Room East";
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -30933,10 +30930,6 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics South East";
-	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -32856,9 +32849,6 @@
 /area/maintenance/department/medical)
 "njb" = (
 /obj/effect/turf_decal/trimline/green/filled/corner,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
@@ -36841,14 +36831,6 @@
 /obj/item/clipboard,
 /turf/open/floor/iron,
 /area/cargo/qm)
-"pnZ" = (
-/obj/machinery/power/apc/auto_name/west,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/science/research)
 "poa" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/south,
@@ -37814,6 +37796,15 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"pRi" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "pRo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -39664,6 +39655,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"qTt" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "qTA" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -42667,7 +42667,6 @@
 	id = "rnd2";
 	name = "research lab shutters"
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -43827,7 +43826,6 @@
 /obj/structure/sink/kitchen{
 	pixel_y = 24
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "tcv" = (
@@ -48572,7 +48570,6 @@
 "vJF" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/evac/directional/east,
-/obj/machinery/aug_manipulator,
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
 "vJL" = (
@@ -81705,7 +81702,7 @@ wOE
 hua
 tLr
 ksu
-ksu
+pRi
 ksu
 hua
 mLE
@@ -82733,7 +82730,7 @@ hua
 mWg
 tLr
 kpY
-kpY
+qTt
 kpY
 hua
 mLE
@@ -99386,8 +99383,8 @@ jzH
 hjU
 rHq
 sYj
-hJS
-hJS
+bWr
+bWr
 jtd
 ezY
 ilR
@@ -99643,7 +99640,7 @@ bvx
 sxn
 bpX
 uIv
-bta
+bBD
 cnK
 bvH
 mqG
@@ -100157,8 +100154,8 @@ bpf
 iEK
 bpZ
 uIv
-bta
-pnZ
+bBD
+sVf
 ini
 xeS
 peS

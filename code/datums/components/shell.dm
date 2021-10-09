@@ -165,7 +165,7 @@
 
 		if(istype(item, /obj/item/circuit_component))
 			attached_circuit.add_component_manually(item, attacker)
-			return
+			return COMPONENT_NO_AFTERATTACK
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
