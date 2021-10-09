@@ -117,10 +117,10 @@
 
 /obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
 	. = list()
-	var/list/dims = getviewsize(viewsize)
-	var/h_radius = dims[1] / 2
-	var/v_radius = dims[2] / 2
-	for(var/turf/TT in RECT_TURFS(h_radius, v_radius, T))
+	var/list/dimensions = getviewsize(viewsize)
+	var/horizontal_radius = dimensions[1] / 2
+	var/vertical_radius = dimensions[2] / 2
+	for(var/turf/TT as anything in RECT_TURFS(horizontal_radius, vertical_radius, T))
 		if(TT.blueprint_data)
 			. += TT.blueprint_data
 
