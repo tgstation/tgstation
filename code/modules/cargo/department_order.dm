@@ -46,23 +46,25 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		var/list/target_group
 		for(var/list/possible_group in supply_data)
 			if(possible_group["name"] == pack.group)
-				target_group = pack.group
+				target_group = possible_group
+				break
 		if(!target_group)
-			supply_data += list(
+			target_group = list(
 				"name" = pack.group,
 				"packs" = list(),
 			)
+			supply_data += list(target_group)
 		//skip packs we should not show, even if we should show the group
 		if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.special && !pack.special_enabled) || pack.DropPodOnly || pack.goody)
 			continue
 		//finally the pack data itself
-		data["supplies"][target_group]["packs"] += list(
+		target_group["packs"] += list(list(
 			"name" = pack.name,
 			"cost" = pack.get_cost(),
 			"id" = pack,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
 			"access" = pack.access,
-		)
+		))
 	data["supplies"] = supply_data
 	return data
 

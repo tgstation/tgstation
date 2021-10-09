@@ -99,27 +99,24 @@ const DepartmentCatalog = (props, context) => {
   const [
     tabName,
     setTabName,
-  ] = useLocalState(context, 'tabName', supplies[0]);
+  ] = useLocalState(context, 'tabName', supplies[0].name);
   return (
     <Section fill>
       <Stack vertical>
         <Stack.Item>
           <Tabs textAlign="center" fluid>
-            {Object.keys(supplies).map(cat => (
+            {supplies.map(cat => (
               <Tabs.Tab
                 key={cat}
-                selected={cat === tabName}
-                onClick={() => (setTabName(cat))}>
-                {cat}
+                selected={cat.name === tabName}
+                onClick={() => (setTabName(cat.name))}>
+                {cat.name}
               </Tabs.Tab>
             ))}
           </Tabs>
         </Stack.Item>
         <Stack.Item>
           {tabName}
-        </Stack.Item>
-        <Stack.Item>
-          {Object.keys(supplies)[tabIndex]}
         </Stack.Item>
       </Stack>
     </Section>
