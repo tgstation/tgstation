@@ -1,5 +1,0 @@
-author: "Colovorat"
-delete-after: True
-changes: 
-  - expansion: "Adds catwalk floor crafting recipe"
-  - imageadd: "catwalk floor tile object sprite and inhand sprites"

@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "Rad collectors are gone, can be only spawned by admins. SM will now generate power by releasing zaps that will hit tesla coils around it. Roundstart setups might not be enough for bigger stations and t4 machines later in the round, recommended to upgrade the powergen."
