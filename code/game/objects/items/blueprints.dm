@@ -115,14 +115,14 @@
 
 	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
 
-/obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
+/obj/item/areaeditor/blueprints/proc/get_images(turf/central_turf, viewsize)
 	. = list()
 	var/list/dimensions = getviewsize(viewsize)
 	var/horizontal_radius = dimensions[1] / 2
 	var/vertical_radius = dimensions[2] / 2
-	for(var/turf/TT as anything in RECT_TURFS(horizontal_radius, vertical_radius, T))
-		if(TT.blueprint_data)
-			. += TT.blueprint_data
+	for(var/turf/nearby_turf as anything in RECT_TURFS(horizontal_radius, vertical_radius, central_turf))
+		if(nearby_turf.blueprint_data)
+			. += nearby_turf.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user?.client)
