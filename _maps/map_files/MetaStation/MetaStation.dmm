@@ -53669,7 +53669,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "qZu" = (
-/obj/machinery/drone_dispenser/preloaded,
+/obj/machinery/drone_dispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
 "qZG" = (

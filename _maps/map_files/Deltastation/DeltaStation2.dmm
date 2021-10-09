@@ -59068,7 +59068,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/drone_dispenser/preloaded,
+/obj/machinery/drone_dispenser,
 /turf/open/floor/iron,
 /area/science/research/abandoned)
 "lBr" = (
