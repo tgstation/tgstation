@@ -9,8 +9,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/mob/listeningTo
-	var/zoom_out_amt = 5.5
-	var/zoom_amt = 10
+	var/zoom_out_amt = 0
+	var/zoom_amt = 9
 
 /obj/item/binoculars/Initialize(mapload)
 	. = ..()
@@ -29,7 +29,9 @@
 	SIGNAL_HANDLER
 
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
+#ifndef EVENTMODE
 	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+#endif
 	listeningTo = user
 	user.visible_message(span_notice("[user] holds [src] up to [user.p_their()] eyes."), span_notice("You hold [src] up to your eyes."))
 	inhand_icon_state = "binoculars_wielded"

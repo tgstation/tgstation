@@ -113,6 +113,8 @@
 			if(WEST)
 				_x = -offset
 		animate(chief, pixel_x = world.icon_size*_x, pixel_y = world.icon_size*_y, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+	if(radius == 0)
+		return
 	//Ready for this one?
 	setTo(radius)
 
