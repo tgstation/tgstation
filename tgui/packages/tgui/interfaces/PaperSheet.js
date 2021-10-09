@@ -4,6 +4,7 @@
  * @author Original WarlockD (https://github.com/warlockd)
  * @author Changes stylemistake
  * @author Changes ThePotato97
+ * @author Changes Ghommie
  * @license MIT
  */
 
@@ -235,7 +236,6 @@ const PaperSheetView = (props, context) => {
       height="100%" >
       <Box
         className="Paper__Page"
-        color="black"
         fillPositionedParent
         width="100%"
         height="100%"
@@ -357,6 +357,53 @@ class PaperSheetStamper extends Component {
   }
 }
 
+// This is the main rendering part, this creates the html from marked text
+// as well as the form fields
+const createPreview = (
+  value, 
+  text,
+  do_fields = false,
+  color,
+  font,
+  field_counter,
+  user_name,
+  is_crayon = false,
+) => {
+  const out = { text: text };
+  // check if we are adding to paper, if not
+  // we still have to check if someone entered something
+  // into the fields
+  value = value.trim();
+  if (value.length > 0) {
+    // First lets make sure it ends in a new line
+    value += value[value.length] === "\n" ? " \n" : "\n \n";
+    // Second, we sanitize the text of html
+    const sanitized_text = sanitizeText(value);
+    const signed_text = signDocument(sanitized_text, color, user_name);
+    // Third we replace the [__] with fields as markedjs fucks them up
+    const fielded_text = createFields(
+      signed_text, font, 12, color, field_counter);
+    // Fourth, parse the text using markup
+    const formatted_text = run_marked_default(fielded_text.text);
+    // Fifth, we wrap the created text in the pin color, and font.
+    // crayon is bold (<b> tags), maybe make fountain pin italic?
+    const fonted_text = setFontinText(
+      formatted_text, font, color, is_crayon);
+    out.text += fonted_text;
+    out.field_counter = fielded_text.counter;
+  }
+  if (do_fields) {
+    // finally we check all the form fields to see
+    // if any data was entered by the user and
+    // if it was return the data and modify the text
+    const final_processing = checkAllFields(
+      out.text, font, color, user_name, is_crayon);
+    out.text = final_processing.text;
+    out.form_fields = final_processing.fields;
+  }
+  return out;
+};
+
 // ugh.  So have to turn this into a full
 // component too if I want to keep updates
 // low and keep the weird flashing down
@@ -366,58 +413,30 @@ class PaperSheetEdit extends Component {
     this.state = {
       previewSelected: "Preview",
       old_text: props.value || "",
+      counter: props.counter || 0,
       textarea_text: "",
       combined_text: props.value || "",
     };
   }
 
-  // This is the main rendering part, this creates the html from marked text
-  // as well as the form fields
-  createPreview(value, do_fields = false) {
+  createPreviewFromData(value, do_fields = false) {
     const { data } = useBackend(this.context);
     const {
-      text,
       pen_color,
       pen_font,
-      is_crayon,
-      field_counter,
       edit_usr,
+      is_crayon,
     } = data;
-    const out = { text: text };
-    // check if we are adding to paper, if not
-    // we still have to check if someone entered something
-    // into the fields
-    value = value.trim();
-    if (value.length > 0) {
-      // First lets make sure it ends in a new line
-      value += value[value.length] === "\n" ? " \n" : "\n \n";
-      // Second, we sanitize the text of html
-      const sanitized_text = sanitizeText(value);
-      const signed_text = signDocument(sanitized_text, pen_color, edit_usr);
-      // Third we replace the [__] with fields as markedjs fucks them up
-      const fielded_text = createFields(
-        signed_text, pen_font, 12, pen_color, field_counter);
-      // Fourth, parse the text using markup
-      const formatted_text = run_marked_default(fielded_text.text);
-      // Fifth, we wrap the created text in the pin color, and font.
-      // crayon is bold (<b> tags), maybe make fountain pin italic?
-      const fonted_text = setFontinText(
-        formatted_text, pen_font, pen_color, is_crayon);
-      out.text += fonted_text;
-      out.field_counter = fielded_text.counter;
-    }
-    if (do_fields) {
-      // finally we check all the form fields to see
-      // if any data was entered by the user and
-      // if it was return the data and modify the text
-      const final_processing = checkAllFields(
-        out.text, pen_font, pen_color, edit_usr, is_crayon);
-      out.text = final_processing.text;
-      out.form_fields = final_processing.fields;
-    }
-    return out;
+    return createPreview(value, 
+      this.state.old_text,
+      do_fields,
+      pen_color,
+      pen_font,
+      this.state.counter,
+      edit_usr,
+      is_crayon,
+    );
   }
-
   onInputHandler(e, value) {
     if (value !== this.state.textarea_text) {
       const combined_length = this.state.old_text.length
@@ -438,19 +457,21 @@ class PaperSheetEdit extends Component {
       }
       this.setState(() => ({
         textarea_text: value,
-        combined_text: this.createPreview(value),
+        combined_text: this.createPreviewFromData(value),
       }));
     }
   }
   // the final update send to byond, final upkeep
   finalUpdate(new_text) {
     const { act } = useBackend(this.context);
-    const final_processing = this.createPreview(new_text, true);
+    const final_processing = this.createPreviewFromData(new_text, true);
     act('save', final_processing);
     this.setState(() => { return {
       textarea_text: "",
       previewSelected: "save",
       combined_text: final_processing.text,
+      old_text: final_processing.text,
+      counter: final_processing.field_counter,
     }; });
     // byond should switch us to readonly mode from here
   }
@@ -489,7 +510,7 @@ class PaperSheetEdit extends Component {
                 const new_state = {
                   previewSelected: "Preview",
                   textarea_text: this.state.textarea_text,
-                  combined_text: this.createPreview(
+                  combined_text: this.createPreviewFromData(
                     this.state.textarea_text).text,
                 };
                 return new_state;
@@ -515,7 +536,7 @@ class PaperSheetEdit extends Component {
                     const new_state = {
                       previewSelected: "confirm",
                       textarea_text: this.state.textarea_text,
-                      combined_text: this.createPreview(
+                      combined_text: this.createPreviewFromData(
                         this.state.textarea_text).text,
                     };
                     return new_state;
@@ -566,7 +587,39 @@ export const PaperSheet = (props, context) => {
     sizeX,
     sizeY,
     name,
+    add_text,
+    add_font,
+    add_color,
+    add_sign,
+    field_counter,
   } = data;
+  // some features can add text to a paper sheet outside of this ui
+  // we need to parse, sanitize and add any of it to the text value.
+  const values = { text: text, field_counter: field_counter };
+  if (add_text) {
+    for (let index = 0; index < add_text.length; index++) {
+      const used_color = add_color && add_color.length > index
+        ? add_color[index]
+        : "black";
+      const used_font = add_font && add_font.length > index
+        ? add_font[index]
+        : "Verdana";
+      const used_sign = add_sign && add_sign.length > index
+        ? add_sign[index]
+        : "signature";
+      const processing = createPreview(
+        add_text[index],
+        values.text,
+        false,
+        used_color,
+        used_font,
+        values.field_counter,
+        used_sign
+      ); 
+      values.text = processing.text;
+      values.field_counter = processing.field_counter;
+    }
+  }
   const stamp_list = !stamps
     ? []
     : stamps;
@@ -575,14 +628,15 @@ export const PaperSheet = (props, context) => {
       case 0:
         return (
           <PaperSheetView
-            value={text}
+            value={values.text}
             stamps={stamp_list}
             readOnly />
         );
       case 1:
         return (
           <PaperSheetEdit
-            value={text}
+            value={values.text}
+            counter={values.field_counter}
             textColor={pen_color}
             fontFamily={pen_font}
             stamps={stamp_list}
@@ -591,7 +645,7 @@ export const PaperSheet = (props, context) => {
       case 2:
         return (
           <PaperSheetStamper
-            value={text}
+            value={values.text}
             stamps={stamp_list}
             stamp_class={stamp_class} />
         );
