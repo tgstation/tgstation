@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - bugfix: "Cyborgs can interact with a morgue tray to close it now, instead of needing to interact with the main structure."

@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed module circuit size not taking up capacity equal to the amount of circuit components inside of it."

@@ -5,6 +5,7 @@
 	var/can_be_driven = TRUE
 	/// If TRUE, this creature's abilities can be triggered by the rider while mounted
 	var/can_use_abilities = FALSE
+	var/list/shared_action_buttons = list()
 
 /datum/component/riding/creature/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	if(!isliving(parent))
@@ -129,24 +130,32 @@
 		force_dismount(yeet_mob, (!user.combat_mode)) // gentle on help, byeeee if not
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
-/datum/component/riding/creature/proc/setup_abilities(mob/living/M)
-	var/mob/living/ridden_creature = parent
-
-	for(var/i in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = i
-		M.AddAbility(proc_holder)
-
-/// Takes away the riding parent's abilities from the rider
-/datum/component/riding/creature/proc/remove_abilities(mob/living/M)
+/datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
 	if(!istype(parent, /mob/living))
 		return
 
 	var/mob/living/ridden_creature = parent
 
-	for(var/i in ridden_creature.abilities)
-		var/obj/effect/proc_holder/proc_holder = i
-		M.RemoveAbility(proc_holder)
+	for(var/ability in ridden_creature.abilities)
+		var/obj/effect/proc_holder/proc_holder = ability
+		if(!proc_holder.action)
+			return
+		proc_holder.action.Share(rider)
 
+/// Takes away the riding parent's abilities from the rider
+/datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
+	if(!istype(parent, /mob/living))
+		return
+
+	var/mob/living/ridden_creature = parent
+
+	for(var/ability in ridden_creature.abilities)
+		var/obj/effect/proc_holder/proc_holder = ability
+		if(!proc_holder.action)
+			return
+		if(rider == proc_holder.ranged_ability_user)
+			proc_holder.remove_ranged_ability()
+		proc_holder.action.Unshare(rider)
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/creature/human

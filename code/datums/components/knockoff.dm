@@ -50,7 +50,7 @@
 		return
 	if(!wearer.dropItemToGround(item))
 		return
-	wearer.visible_message(span_warning("[wearer]'s [item.name] gets knocked off!"),span_userdanger("Your [item.name] was knocked off!"))
+	wearer.visible_message(span_warning("[wearer]'s [item.name] get[item.p_s()] knocked off!"),span_userdanger("Your [item.name] [item.p_were()] knocked off!"))
 
 
 /datum/component/knockoff/proc/OnEquipped(datum/source, mob/living/carbon/human/H,slot)
