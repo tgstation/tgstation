@@ -131,6 +131,7 @@
 		target_datum = SSdcs
 
 	if(target_datum)
+		// We override because an admin may try registering a signal on the same object/datum again, so this prevents any runtimes from occuring
 		RegisterSignal(target_datum, registered_signal, .proc/handle_signal_received, override = TRUE)
 		registered_entities |= WEAKREF(target_datum)
 
