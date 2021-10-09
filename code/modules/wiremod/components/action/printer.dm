@@ -11,7 +11,7 @@
 	/// Prints stuff on the leftmost paper in the loaded_papers list.
 	var/datum/port/input/print
 	/// The selected font-family used when printing text on paper
-	var/datum/port/input/typeface
+	var/datum/port/input/option/typeface
 	/// The selected color used when printing text on paper
 	var/datum/port/input/text_color
 	/// Used to eject the leftmost paper on the loaded_papers list.
@@ -25,6 +25,12 @@
 	var/max_paper_capacity = 10
 
 /obj/item/circuit_component/printer/populate_ports()
+	print = add_input_port("Print", PORT_TYPE_STRING, trigger = .proc/print_on_paper)
+	text_color = add_input_port("Text Hex Color", PORT_TYPE_STRING, trigger = null, default = "#000000")
+	signature = add_input_port("Signature", PORT_TYPE_STRING, trigger = null, default = "signature")
+	eject = add_input_port("Eject", PORT_TYPE_SIGNAL, trigger = .proc/eject_paper, order = 2)
+
+/obj/item/circuit_component/printer/populate_options()
 	var/static/typeface_options = list(
 		PRINTER_FONT,
 		PEN_FONT,
@@ -33,14 +39,10 @@
 		"Impact",
 		"Webdings",
 	)
-	print = add_input_port("Print", PORT_TYPE_STRING, trigger = .proc/print_on_paper)
 	typeface = add_option_port("Typeface", typeface_options, trigger = null)
-	text_color = add_input_port("Text Hex Color", PORT_TYPE_STRING, trigger = null, default = "#000000")
-	signature = add_input_port("Signature", PORT_TYPE_STRING, trigger = null, default = "signature")
-	eject = add_input_port("Eject", PORT_TYPE_SIGNAL, trigger = .proc/eject_paper, order = 2)
 
 /obj/item/circuit_component/printer/Destroy()
-	loaded_papers = null
+	QDEL_LIST(loaded_papers)
 	return ..()
 
 /obj/item/circuit_component/printer/register_shell(atom/movable/shell)
@@ -75,7 +77,7 @@
 	if(length(loaded_papers) >= max_paper_capacity)
 		to_chat(user, span_warning("[src] can't hold any more paper."))
 	else if(user.transferItemToLoc(paper, src))
-		LAZYREMOVE(loaded_papers, paper)
+		LAZYADD(loaded_papers, paper)
 		to_chat(user, span_notice("You load [paper] in [src]."))
 	else
 		to_chat(user, span_warning("[paper] seems to be stuck to your hand."))
