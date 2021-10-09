@@ -19,7 +19,11 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/concat_list/populate_ports()
-	input_port = add_input_port("Input", PORT_TYPE_STRING)
+<<<<<<< HEAD:code/modules/wiremod/components/list/concat_list.dm
+	list_port = add_input_port("List", PORT_TYPE_LIST(PORT_TYPE_ANY))
+=======
+	list_port = add_input_port("List", PORT_TYPE_LIST(PORT_TYPE_ANY))
+>>>>>>> master:code/modules/wiremod/components/list/concat.dm
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_LIST)
 

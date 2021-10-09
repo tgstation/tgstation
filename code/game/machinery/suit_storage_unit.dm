@@ -403,19 +403,19 @@
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
 				things_to_clear += suit
-				things_to_clear += suit.GetAllContents()
+				things_to_clear += suit.get_all_contents()
 			if(helmet)
 				things_to_clear += helmet
-				things_to_clear += helmet.GetAllContents()
+				things_to_clear += helmet.get_all_contents()
 			if(mask)
 				things_to_clear += mask
-				things_to_clear += mask.GetAllContents()
+				things_to_clear += mask.get_all_contents()
 			if(storage)
 				things_to_clear += storage
-				things_to_clear += storage.GetAllContents()
+				things_to_clear += storage.get_all_contents()
 			if(mob_occupant)
 				things_to_clear += mob_occupant
-				things_to_clear += mob_occupant.GetAllContents()
+				things_to_clear += mob_occupant.get_all_contents()
 			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				var/atom/movable/dirty_movable = am
 				dirty_movable.wash(CLEAN_ALL)

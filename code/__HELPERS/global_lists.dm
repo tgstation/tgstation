@@ -92,3 +92,45 @@
 	for(var/path as anything in subtypesof(prototype))
 		L[path] = new path()
 	return L
+
+/**
+ * Checks if that loc and dir has an item on the wall
+**/
+GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
+	/obj/item/radio/intercom,
+	/obj/item/storage/secure/safe,
+	/obj/machinery/airalarm,
+	/obj/machinery/bounty_board,
+	/obj/machinery/button,
+	/obj/machinery/computer/security/telescreen,
+	/obj/machinery/computer/security/telescreen/entertainment,
+	/obj/machinery/door_timer,
+	/obj/machinery/embedded_controller/radio/simple_vent_controller,
+	/obj/machinery/firealarm,
+	/obj/machinery/flasher,
+	/obj/machinery/keycard_auth,
+	/obj/machinery/light_switch,
+	/obj/machinery/newscaster,
+	/obj/machinery/power/apc,
+	/obj/machinery/requests_console,
+	/obj/machinery/status_display,
+	/obj/structure/extinguisher_cabinet,
+	/obj/structure/fireaxecabinet,
+	/obj/structure/mirror,
+	/obj/structure/noticeboard,
+	/obj/structure/reagent_dispensers/peppertank,
+	/obj/structure/sign,
+	/obj/structure/sign/picture_frame
+	)))
+
+GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
+	/obj/machinery/camera,
+	/obj/machinery/light,
+	/obj/structure/camera_assembly,
+	/obj/structure/light_construct
+	)))
+
+GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
+	/obj/machinery/light,
+	/obj/structure/light_construct
+	)))

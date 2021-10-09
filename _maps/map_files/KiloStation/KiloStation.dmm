@@ -5776,13 +5776,14 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "aAF" = (
-/obj/machinery/aug_manipulator,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
 /area/science/robotics/lab)
 "aAI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -22284,11 +22285,11 @@
 /area/security/warden)
 "coG" = (
 /obj/structure/bed/dogbed/renault,
-/mob/living/simple_animal/pet/fox/renault,
 /obj/machinery/button/door/directional/south{
 	id = "captain_escape";
 	name = "Tactical Relocation Toggle"
 	},
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
 "coH" = (
@@ -28522,11 +28523,6 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/corner,
-/mob/living/simple_animal/bot/cleanbot{
-	auto_patrol = 1;
-	icon_state = "cleanbot1";
-	name = "Mopficcer Sweepsky"
-	},
 /obj/machinery/button/door/directional/south{
 	id = "custodialwagon";
 	name = "Custodial Bay Toggle";
@@ -28534,6 +28530,11 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/mob/living/simple_animal/bot/cleanbot{
+	auto_patrol = 1;
+	icon_state = "cleanbot1";
+	name = "Mopficcer Sweepsky"
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
@@ -39142,6 +39143,17 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/disposal)
+"hHY" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/circuit/green{
+	luminosity = 2
+	},
+/area/engineering/supermatter)
 "hIk" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -48253,12 +48265,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "kVo" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -50911,8 +50923,8 @@
 /obj/structure/reagent_dispensers/beerkeg{
 	pixel_y = 5
 	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_y = -30
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_y = -32
 	},
 /turf/open/floor/iron/dark,
 /area/service/bar)
@@ -52318,6 +52330,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/commons/vacant_room/commissary)
+"mwX" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/science/robotics/lab)
 "mwZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow,
@@ -65917,12 +65935,12 @@
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing)
 "rzN" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
@@ -69337,10 +69355,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot/medbay,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/mob/living/simple_animal/bot/cleanbot/medbay,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "sMk" = (
@@ -79759,6 +79777,17 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/warehouse)
+"wRq" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/circuit/green{
+	luminosity = 2
+	},
+/area/engineering/supermatter)
 "wRx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/masks,
@@ -83630,8 +83659,8 @@
 /obj/structure/water_source/puddle,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/carbon/human/species/monkey,
 /obj/machinery/light_switch/directional/south,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "yll" = (
@@ -118874,7 +118903,7 @@ eAV
 gOw
 eux
 kVo
-kVo
+wRq
 kVo
 qkL
 jts
@@ -119902,7 +119931,7 @@ qkL
 qoR
 opS
 rzN
-rzN
+hHY
 rzN
 qkL
 dlF
@@ -120089,7 +120118,7 @@ atq
 aXe
 aqU
 auk
-auk
+mwX
 xFs
 bFj
 bbQ

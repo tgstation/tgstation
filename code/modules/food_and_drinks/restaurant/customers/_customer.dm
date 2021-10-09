@@ -84,6 +84,7 @@
 			/obj/item/food/pizza/pineapple = 1,
 			/obj/item/food/burger/baconburger = 10,
 			/obj/item/food/pancakes = 4,
+			/obj/item/food/eggsausage = 5,
 		),
 		VENUE_BAR = list(
 			/datum/reagent/consumable/ethanol/b52 = 6,
