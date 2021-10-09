@@ -618,3 +618,13 @@
 			? right_list.Copy()\
 			: null\
 	)
+
+///Returns a list with items filtered from a list that can call callback
+/proc/special_list_filter(list/list_to_filter, datum/callback/condition)
+	if(!islist(list_to_filter) || !length(list_to_filter) || !istype(condition))
+		return list()
+	. = list()
+	for(var/i in list_to_filter)
+		if(condition.Invoke(i))
+			. |= i
+
