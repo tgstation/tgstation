@@ -3,6 +3,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "cordon"
 	invisibility = INVISIBILITY_ABSTRACT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	explosion_block = INFINITY
 	rad_insulation = RAD_FULL_INSULATION
 	opacity = TRUE
@@ -11,8 +12,15 @@
 	always_lit = TRUE
 	bullet_bounce_sound = null
 
+/turf/cordon/AfterChange()
+	. = ..()
+	SSair.high_pressure_delta -= src
+
+/turf/cordon/attack_ghost(mob/dead/observer/user)
+	return FALSE
+
 /turf/cordon/rust_heretic_act()
-	return
+	return FALSE
 
 /turf/cordon/acid_act(acidpwr, acid_volume, acid_id)
 	return FALSE
@@ -22,13 +30,16 @@
 	return src
 
 /turf/cordon/singularity_act()
-	return
+	return FALSE
 
 /turf/cordon/ScrapeAway(amount, flags)
-	return // :devilcat:
+	return src // :devilcat:
 
 /turf/cordon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
 	return BULLET_ACT_HIT
+
+/turf/cordon/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
+	return FALSE
 
 /area/cordon
 	name = "CORDON"
