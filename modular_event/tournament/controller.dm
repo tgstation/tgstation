@@ -28,6 +28,9 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 
 	var/static/list/arena_templates
 
+	/// HUD indexes indexed by team ID
+	var/static/list/team_hud_ids
+
 	var/countdown_started = FALSE
 	var/loading = FALSE
 
@@ -43,6 +46,9 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 	if (isnull(arena_templates))
 		arena_templates = list()
 		INVOKE_ASYNC(src, .proc/load_arena_templates)
+
+	if (isnull(team_hud_ids))
+		team_hud_ids = setup_team_huds()
 
 /obj/machinery/computer/tournament_controller/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -195,6 +201,8 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			contestant_mob.reset_perspective()
 
 			contestants += contestant_mob
+
+			assign_team_hud(contestant_mob, team_spawn_id)
 
 		spawn_toolboxes(team.toolbox_color, team_spawn_id, clients.len)
 
