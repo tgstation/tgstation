@@ -1,0 +1,4 @@
+author: "PeterMorrison1"
+delete-after: True
+changes: 
+  - bugfix: "fixed antagonist preference tooltip showing wrong descriptions"
