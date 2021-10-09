@@ -215,7 +215,7 @@
 	if(last_corrupt <= world.time)
 		var/list/validturfs = list()
 		var/list/cultturfs = list()
-		for(var/T in circleviewturfs(src, 5))
+		for(var/T in circle_view_turfs(src, 5))
 			if(istype(T, /turf/open/floor/engine/cult))
 				cultturfs |= T
 				continue

@@ -139,25 +139,25 @@
 	icon_state = "magic_mirror"
 	var/list/choosable_races = list()
 
-/obj/structure/mirror/magic/New()
+/obj/structure/mirror/magic/Initialize(mapload)
+	. = ..()
 	if(!choosable_races.len)
 		for(var/speciestype in subtypesof(/datum/species))
 			var/datum/species/S = speciestype
 			if(initial(S.changesource_flags) & MIRROR_MAGIC)
 				choosable_races += initial(S.id)
 		choosable_races = sortList(choosable_races)
-	..()
 
-/obj/structure/mirror/magic/lesser/New()
+/obj/structure/mirror/magic/lesser/Initialize(mapload)
 	choosable_races = get_selectable_species().Copy()
-	..()
+	return ..()
 
-/obj/structure/mirror/magic/badmin/New()
+/obj/structure/mirror/magic/badmin/Initialize(mapload)
 	for(var/speciestype in subtypesof(/datum/species))
 		var/datum/species/S = speciestype
 		if(initial(S.changesource_flags) & MIRROR_BADMIN)
 			choosable_races += initial(S.id)
-	..()
+	return ..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
 	. = ..()
