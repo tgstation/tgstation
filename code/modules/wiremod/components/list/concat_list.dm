@@ -8,37 +8,35 @@
 	desc = "Splits string by a separator, turning it into a list."
 
 	/// The input port
-	var/datum/port/input/list_port
+	var/datum/port/input/input_port
 
 	/// The seperator
 	var/datum/port/input/separator
 
 	/// The result from the output
 	var/datum/port/output/output
+
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/concat_list/populate_ports()
+<<<<<<< HEAD:code/modules/wiremod/components/list/concat_list.dm
 	list_port = add_input_port("List", PORT_TYPE_LIST(PORT_TYPE_ANY))
+=======
+	list_port = add_input_port("List", PORT_TYPE_LIST(PORT_TYPE_ANY))
+>>>>>>> master:code/modules/wiremod/components/list/concat.dm
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
-
-	output = add_output_port("Output", PORT_TYPE_STRING)
+	output = add_output_port("Output", PORT_TYPE_LIST)
 
 /obj/item/circuit_component/concat_list/input_received(datum/port/input/port)
 
-	var/seperator = separator.value
-	if(!seperator)
+	var/separator_value = separator.value
+	if(isnull(separator_value))
 		return
 
-	var/list/list_input = list_port.value
-	if(!list_input)
+	var/value = input_port.value
+	if(isnull(value))
 		return
 
-	var/list/text_list = list()
-	for(var/entry in list_input)
-		if(isatom(entry))
-			text_list += PORT_TYPE_ATOM
-		else
-			text_list += "[entry]"
+	var/list/result = splittext(value,separator_value)
 
-	output.set_output(text_list.Join(seperator))
-
+	output.set_output(result)
