@@ -20,12 +20,7 @@
 /obj/item/circuit_component/split/populate_ports()
 	list_port = add_input_port("List", PORT_TYPE_LIST)
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
-<<<<<<< HEAD
-
 	output = add_output_port("Output", PORT_TYPE_LIST(PORT_TYPE_STRING))
-=======
-	output = add_output_port("Output", PORT_TYPE_LIST(PORT_TYPE_STRING))
->>>>>>> master
 
 /obj/item/circuit_component/split/input_received(datum/port/input/port)
 
