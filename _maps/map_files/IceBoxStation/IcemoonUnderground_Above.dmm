@@ -2455,6 +2455,7 @@
 /obj/item/vending_refill/cigarette,
 /obj/machinery/light/small/directional/east,
 /obj/structure/table/wood,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/service/bar)
 "mC" = (
@@ -5850,8 +5851,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/service/bar)
 "Cx" = (
@@ -7836,8 +7839,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/structure/table/wood,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron,
 /area/service/bar)
 "Ls" = (
@@ -9142,12 +9145,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Rx" = (
@@ -9508,6 +9511,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/stone,
 /area/service/bar/atrium)
 "Te" = (
@@ -10001,7 +10005,6 @@
 	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/service/bar)
 "Vs" = (

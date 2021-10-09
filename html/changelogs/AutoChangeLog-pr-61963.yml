@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The beams from Emitters, and all hitscan weaponry, now render properly again."

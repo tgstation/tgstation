@@ -293,7 +293,7 @@ Used by the AI doomsday and the self-destruct nuke.
 #undef INIT_ANNOUNCE
 
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(config.map_path == "custom")
+	if(config.map_path == CUSTOM_MAP_PATH)
 		fdel("_maps/custom/[config.map_file]")
 		// And as the file is now removed set the next map to default.
 		next_map_config = load_map_config(default_to_box = TRUE)
@@ -601,4 +601,4 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		CHECK_TICK
 
 		spawner.spawn_loot()
-		spawner.hide()
+		qdel(spawner)

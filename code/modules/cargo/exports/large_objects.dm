@@ -71,11 +71,6 @@
 	unit_name = "field generator"
 	export_types = list(/obj/machinery/field/generator)
 
-/datum/export/large/collector
-	cost = CARGO_CRATE_VALUE * 2
-	unit_name = "radiation collector"
-	export_types = list(/obj/machinery/power/rad_collector)
-
 /datum/export/large/tesla_coil
 	cost = CARGO_CRATE_VALUE * 2.25
 	unit_name = "tesla coil"

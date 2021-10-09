@@ -60,6 +60,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// of the mob
 	var/deadchat_name
 	var/datum/spawners_menu/spawners_menu
+	var/datum/minigames_menu/minigames_menu
 
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
@@ -67,7 +68,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	add_verb(src, list(
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/tray_view))
+		/mob/dead/observer/proc/tray_view,
+		/mob/dead/observer/proc/open_minigames_menu))
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -176,6 +178,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 
 	QDEL_NULL(spawners_menu)
+	QDEL_NULL(minigames_menu)
 	return ..()
 
 /*
@@ -992,6 +995,20 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
+
+/mob/dead/observer/proc/open_minigames_menu()
+	set name = "Minigames Menu"
+	set desc = "See all currently available minigames"
+	set category = "Ghost"
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, span_warning("You must be a ghost to play minigames!"))
+		return
+	if(!minigames_menu)
+		minigames_menu = new(src)
+
+	minigames_menu.ui_interact(src)
 
 /mob/dead/observer/proc/tray_view()
 	set category = "Ghost"

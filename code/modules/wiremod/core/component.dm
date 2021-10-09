@@ -75,9 +75,9 @@
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
 	populate_options()
 	populate_ports()
-	if(circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL)
+	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !trigger_input)
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL, order = 2)
-	if(circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)
+	if((circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL) && !trigger_output)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
@@ -252,7 +252,7 @@
 		if(!cell?.use(power_usage_per_input))
 			return FALSE
 
-	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
+	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
 
 	return TRUE

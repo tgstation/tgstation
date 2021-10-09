@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Swarmers-banned ghosts can no longer create Swarmer bodies from the beacon."

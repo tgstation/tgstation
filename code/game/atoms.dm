@@ -681,8 +681,6 @@
 /atom/proc/examine_more(mob/user)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
-	if(!LAZYLEN(.)) // lol ..length
-		return list(span_notice("<i>You examine [src] closer, but find nothing of interest...</i>"))
 
 /**
  * Updates the appearence of the icon
