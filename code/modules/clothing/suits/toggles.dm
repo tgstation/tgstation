@@ -105,7 +105,7 @@
 			qdel(src)
 
 // Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
-// Pretty much just a holder for `/datum/component/toggle_suit`.
+// Pretty much just a holder for `/datum/component/toggle_icon`.
 
 /obj/item/clothing/suit/toggle
 	/// The noun that is displayed to the user on toggle. EX: "Toggles the suit's [buttons]".
@@ -113,7 +113,7 @@
 
 /obj/item/clothing/suit/toggle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_suit, toggle_noun)
+	AddComponent(/datum/component/toggle_icon, toggle_noun)
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize(mapload)
