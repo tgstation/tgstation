@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			UnregisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
 		return TRUE
 
-	if(GLOB.department_order_cooldowns[type] < world.time)
+	if(GLOB.department_order_cooldowns[type] > world.time)
 		return
 
 	if(!check_access(id_card))

@@ -1,6 +1,9 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs } from '../components';
+import { Box, Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
+
+// 4x crate value
+const COST_UPPER_BOUND = 800;
 
 type Pack = {
   name: string;
@@ -21,6 +24,26 @@ type Info = {
   supplies: Category[];
 };
 
+const CooldownEstimate = (props) => {
+  const {
+    cost,
+  } = props;
+  const cooldownColor = cost > COST_UPPER_BOUND * 0.75 && "red"
+    || cost > COST_UPPER_BOUND * 0.25 && "orange"
+    || "green";
+  const cooldownText = cost > COST_UPPER_BOUND * 0.75 && "long"
+  || cost > COST_UPPER_BOUND * 0.25 && "moderate"
+  || "short";
+  return (
+    <>
+      Estimated Cooldown:&ensp;
+      <Box as="span" textColor={cooldownColor}>
+        {cooldownText}
+      </Box>
+    </>
+  );
+};
+
 export const DepartmentOrders = (props, context) => {
   const { data } = useBackend<Info>(context);
   const {
@@ -38,15 +61,13 @@ export const DepartmentOrders = (props, context) => {
               <Stack.Item grow>
                 <Stack fill vertical>
                   <Stack.Item>
-                    <Section fill>
-                      <NoticeBox info>
-                        As employees of Nanotrasen, the selection of orders
-                        here are completely free of charge, only incurring
-                        a cooldown on the service. Cheaper items will make
-                        you wait for less time before Nanotrasen allows
-                        another purchase, to encourage tasteful spending.
-                      </NoticeBox>
-                    </Section>
+                    <NoticeBox info>
+                      As employees of Nanotrasen, the selection of orders
+                      here are completely free of charge, only incurring
+                      a cooldown on the service. Cheaper items will make
+                      you wait for less time before Nanotrasen allows
+                      another purchase, to encourage tasteful spending.
+                    </NoticeBox>
                   </Stack.Item>
                   <Stack.Item grow>
                     <DepartmentCatalog />
@@ -92,33 +113,59 @@ const CooldownDimmer = (props, context) => {
 };
 
 const DepartmentCatalog = (props, context) => {
-  const { data } = useBackend<Info>(context);
+  const { act, data } = useBackend<Info>(context);
   const {
     supplies,
   } = data;
   const [
-    tabName,
-    setTabName,
-  ] = useLocalState(context, 'tabName', supplies[0].name);
+    tabCategory,
+    setTabCategory,
+  ] = useLocalState(context, 'tabName', supplies[0]);
   return (
-    <Section fill>
-      <Stack vertical>
-        <Stack.Item>
-          <Tabs textAlign="center" fluid>
-            {supplies.map(cat => (
-              <Tabs.Tab
-                key={cat}
-                selected={cat.name === tabName}
-                onClick={() => (setTabName(cat.name))}>
-                {cat.name}
-              </Tabs.Tab>
+    <Stack vertical>
+      <Stack.Item>
+        <Tabs textAlign="center" fluid>
+          {supplies.map(cat => (
+            <Tabs.Tab
+              key={cat}
+              selected={tabCategory === cat}
+              onClick={() => (setTabCategory(cat))}>
+              {cat.name}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+      </Stack.Item>
+      <Stack.Item>
+        <Section fill>
+          <Stack vertical>
+            {tabCategory.packs.map(pack => (
+              <Stack.Item className="candystripe" key={pack.name}>
+                <Stack fill>
+                  <Stack.Item grow>
+                    <Tooltip content={pack.desc}>
+                      <Box as="span" style={{
+                        "border-bottom": "2px dotted rgba(255, 255, 255, 0.8)",
+                      }}>
+                        {pack.name}
+                      </Box>
+                    </Tooltip>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <CooldownEstimate cost={pack.cost} />
+                    &ensp;
+                    <Button
+                      onClick={() => act("order", {
+                        id: pack.id,
+                      })}>
+                      Order
+                    </Button>
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
             ))}
-          </Tabs>
-        </Stack.Item>
-        <Stack.Item>
-          {tabName}
-        </Stack.Item>
-      </Stack>
-    </Section>
+          </Stack>
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
