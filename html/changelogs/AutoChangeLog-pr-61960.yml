@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the dispenser shell and For Each and Filter components not appearing in the component printer."
