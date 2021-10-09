@@ -570,11 +570,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/pipe/process(delta_time)
 	var/turf/location = get_turf(src)
-	smoketime -= delta_time
+	var/mob/living/M = loc
+	if(isliving(loc))
+		M.IgniteMob()
+	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
+		var/datum/gas_mixture/air = return_air()
+		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+			extinguish()
+			return
+
+	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
-		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
-			var/mob/living/M = loc
 			to_chat(M, span_notice("Your [name] goes out."))
 			lit = FALSE
 			icon_state = icon_off
@@ -586,7 +593,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	open_flame(heat)
-	if(reagents?.total_volume) // check if it has any reagents at all
+	if((reagents?.total_volume) && COOLDOWN_FINISHED(src, drag_cooldown))
+		COOLDOWN_START(src, drag_cooldown, dragtime)
 		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/thing, mob/user, params)
