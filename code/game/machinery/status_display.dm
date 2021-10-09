@@ -56,10 +56,10 @@
 /obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return
-	if(!(atom_integrity < max_integrity))
+	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it doesn't need repairs!")
 		return TRUE
-	user.balloon_alert_to_viewers("repairing...", "repairing...")
+	user.balloon_alert_to_viewers("repairing display...", "repairing...")
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
 		return TRUE
 	balloon_alert(user, "repaired")
@@ -69,9 +69,9 @@
 	return TRUE
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(!NODECONSTRUCT_1)
+	if(flags_1 & NODECONSTRUCT_1)
 		return
-	if( !disassembled && !(flags_1 & NODECONSTRUCT_1) )
+	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
@@ -227,8 +227,8 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+		pixel_x = NSCOMPONENT(dir) ? 0 : (dir == EAST ? -world.icon_size : world.icon_size)
+		pixel_y = NSCOMPONENT(dir) ? (dir == NORTH ? -world.icon_size : world.icon_size) : 0
 	update_appearance()
 
 /obj/machinery/status_display/evac/Initialize(mapload)
