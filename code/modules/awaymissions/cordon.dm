@@ -27,6 +27,9 @@
 /turf/cordon/ScrapeAway(amount, flags)
 	return // :devilcat:
 
+/turf/cordon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit)
+	return BULLET_ACT_HIT
+
 /area/cordon
 	name = "CORDON"
 	icon_state = "cordon"
