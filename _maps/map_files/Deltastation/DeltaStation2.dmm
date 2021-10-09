@@ -46795,8 +46795,8 @@
 /obj/structure/window/reinforced/plasma/spawner/west{
 	dir = 4
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "hVZ" = (
@@ -73462,6 +73462,14 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
+"pKk" = (
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "pKR" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/purple{
@@ -82388,6 +82396,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
+"spy" = (
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "spz" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -87254,8 +87270,8 @@
 /obj/structure/window/reinforced/plasma/spawner/west{
 	dir = 1
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/cable,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "tLT" = (
@@ -123183,7 +123199,7 @@ cnP
 kuB
 qzf
 hVW
-hVW
+spy
 hVW
 qzf
 qzf
@@ -123699,7 +123715,7 @@ hWu
 rgQ
 uqa
 wrL
-tLP
+pKk
 vyP
 eZx
 hfD
