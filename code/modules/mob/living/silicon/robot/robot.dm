@@ -547,10 +547,12 @@
 	if(!client)
 		return
 	if(stat == DEAD)
-		if(!SSmapping.level_trait(z, ZTRAIT_SECRET))
-			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		else
+		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+			sight = null
+		else if(is_secret_level(z))
 			sight = initial(sight)
+		else
+			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
@@ -558,6 +560,8 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+		sight = null
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
@@ -588,6 +592,10 @@
 
 	if(see_override)
 		see_invisible = see_override
+
+	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+		sight = null
+
 	sync_lighting_plane_alpha()
 
 /mob/living/silicon/robot/update_stat()
