@@ -206,21 +206,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	update_use_power(active + IDLE_POWER_USE)
 	program = map_id
 
-	//clear the items from the previous program
-	for(var/holo_atom in spawned)
-		derez(holo_atom)
-
-	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
-		effects -= holo_effect
-		holo_effect.deactivate(src)
-
-	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
-	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
-	for(var/turf/closed/holo_turf in linked)
-		for(var/baseturf in holo_turf.baseturfs)
-			if(ispath(baseturf, /turf/open/floor/holofloor))
-				holo_turf.baseturfs -= baseturf
-				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+	clear_projection()
 
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
@@ -244,7 +230,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 		return
 
 	program = offline_program
+	clear_projection()
 
+	template = SSmapping.holodeck_templates[offline_program]
+	INVOKE_ASYNC(template, /datum/map_template/proc/load, bottom_left) //this is what actually loads the holodeck simulation into the map
+
+/obj/machinery/computer/holodeck/proc/clear_projection()
 	//clear the items from the previous program
 	for(var/holo_atom in spawned)
 		derez(holo_atom)
@@ -260,10 +251,6 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 			if(ispath(baseturf, /turf/open/floor/holofloor))
 				holo_turf.baseturfs -= baseturf
 				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
-
-	template = SSmapping.holodeck_templates[offline_program]
-
-	INVOKE_ASYNC(template, /datum/map_template/proc/load, bottom_left) //this is what actually loads the holodeck simulation into the map
 
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()
