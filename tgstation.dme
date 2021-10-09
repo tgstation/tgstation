@@ -3959,6 +3959,7 @@
 #include "modular_event\tournament\countdown.dm"
 #include "modular_event\tournament\disbanding.dm"
 #include "modular_event\tournament\hud.dm"
+#include "modular_event\tournament\open_bracket_action.dm"
 #include "modular_event\tournament\shutters.dm"
 #include "modular_event\tournament\teams.dm"
 #include "modular_event\tournament\toolbox.dm"
