@@ -389,9 +389,9 @@
 	var/dismantle_cooldown = 0
 	///Used for debug to show the excited groups active and their turfs
 	var/should_display = FALSE
-	///Id of the displayed group
+	///Id of the index color of the displayed group
 	var/display_id = 0
-	///Keep track of this specific group
+	///Wrapping loop of the index colors
 	var/static/wrapping_id = 0
 
 /datum/excited_group/New()
