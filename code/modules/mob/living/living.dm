@@ -311,12 +311,12 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
-
+		var/mob/living/carbon/human/grabbed_human = M
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			M.visible_message(span_warning("[src] grabs [M] [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by their hands":"passively"]!"), \
-							span_warning("[src] grabs you [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by your hands":"passively"]!"), null, null, src)
-			to_chat(src, span_notice("You grab [M] [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by their hands":"passively"]!"))
+			M.visible_message(span_warning("[src] grabs [M] [((zone_selected == "l_arm" || zone_selected == "r_arm") && ishuman(M) && grabbed_human.usable_hands > 0)? "by their hands":"passively"]!"), \
+							span_warning("[src] grabs you [((zone_selected == "l_arm" || zone_selected == "r_arm") && ishuman(M) && grabbed_human.usable_hands > 0)? "by your hands":"passively"]!"), null, null, src)
+			to_chat(src, span_notice("You grab [M] [((zone_selected == "l_arm" || zone_selected == "r_arm") && ishuman(M) && grabbed_human.usable_hands > 0)? "by their hands":"passively"]!"))
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
