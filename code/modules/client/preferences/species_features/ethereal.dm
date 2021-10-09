@@ -24,7 +24,8 @@
 		var/color = GLOB.color_list_ethereal[name]
 
 		var/icon/icon = new(ethereal_base)
-		icon.Blend("#[color]", ICON_MULTIPLY)
+		message_admins("[color]")
+		icon.Blend("[color]", ICON_MULTIPLY)
 		values[name] = icon
 
 	return values
