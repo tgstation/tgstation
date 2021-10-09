@@ -46,9 +46,13 @@
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
 /datum/port/proc/set_value(value, force = FALSE)
+	if(isweakref(value))
+		var/datum/weakref/reference_to_obj = value
+		value = reference_to_obj.resolve()
+
 	if(src.value != value || force)
-		if(isatom(value))
-			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
+		if(isatom(src.value))
+			UnregisterSignal(src.value, COMSIG_PARENT_QDELETING)
 		src.value = datatype_handler.convert_value(src, value, force)
 		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
