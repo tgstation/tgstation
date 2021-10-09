@@ -23,7 +23,7 @@
 	/// Determines if the bluespace launchpad is blatantly obvious on teleportation.
 	var/hidden = FALSE
 	/// The beam on teleportation
-	var/teleport_beam = "plasmabeam"
+	var/teleport_beam = "sm_arc_supercharged"
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = 0
