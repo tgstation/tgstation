@@ -1,4 +1,0 @@
-author: "lovegreenstuff"
-delete-after: True
-changes: 
-  - bugfix: "ice reaction oversight, now freezes at the proper 274k instead of 245k"

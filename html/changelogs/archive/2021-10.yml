@@ -203,3 +203,102 @@
   - code_imp: Indestructible paper wall support. It's better than the alternative.
   kopoba:
   - bugfix: fix ebow was able to accept pka modkits with 0 cost
+2021-10-07:
+  PeterMorrison1:
+  - bugfix: fixed dropped arrows being controllable with the bow
+  Watermelon914:
+  - qol: Refactored tgui list inputs to be a lot more user-friendly.
+  lovegreenstuff:
+  - bugfix: ice reaction oversight, now freezes at the proper 274k instead of 245k
+  tralezab code, melbert idea!:
+  - rscadd: There's a new wizard event, RPG titles. Summon the star duke!
+  zxaber:
+  - rscdel: The augment painter has been removed from the game.
+  - rscadd: Spraycans can now change the visual style of robotic augments via right-click.
+  - bugfix: Borg lights are now visible again.
+2021-10-08:
+  InvalidArgument3:
+  - bugfix: penetrator rounds will no longer ignore vehicles
+  JohnFulpWillard:
+  - qol: Choice beacons now use a TGUI menu
+  Melbert:
+  - bugfix: The huds for clown and mime fan are back
+  - bugfix: You can no longer be a simultaneous clown and mime fan, pick a side coward
+  - bugfix: Quirks that once were not compatible are now incompatible again
+  NamelessFairy & Mothblocks:
+  - expansion: Replaces the ghost mafia button with a minigames button which opens
+      the new minigames panel.
+  - qol: CTF is now accessible through the new minigames menu
+  - rscadd: CTF can now be played through the CTF menu, accessible through the minigames
+      menu
+  TiviPlus:
+  - bugfix: fixed ambient occlusion stacking sometimes
+  Watermelon914:
+  - expansion: Adds the dispenser shell, which accepts normal-sized items and lets
+      you dispense them at any time.
+  - expansion: Adds the For Each component and the Filter List component.
+  - refactor: Refactored the circuit list datatype to support composite types (i.e.
+      entity list, any list, number list), which are lists that can only contain values
+      of the specified datatype. This also refactors anything that uses the list datatype
+      to use composite lists.
+  - qol: NTNet components now use composite lists to send and receive data
+  - bugfix: Prevented people from infinitely making lists with the list literal component.
+  tralezab:
+  - bugfix: Fixes catwalks not working at all!
+  zxaber:
+  - rscadd: Emagged and Syndicate borgs can now self-detonate. For emagged borgs,
+      this destroys the MMI, so know what you're signing up for.
+2021-10-09:
+  Burgermancoding:
+  - qol: you can orbit people who send messages using the gangster cellphone from
+      families
+  Colovorat:
+  - expansion: Adds catwalk floor crafting recipe
+  - imageadd: catwalk floor tile object sprite and inhand sprites
+  DaddyIssues and Grobelon:
+  - expansion: 'Added 3 new foods: Catburgers, Egg with sausage, and Sausage bread.'
+  Ghilker:
+  - balance: Rad collectors are gone, can be only spawned by admins. SM will now generate
+      power by releasing zaps that will hit tesla coils around it. Roundstart setups
+      might not be enough for bigger stations and t4 machines later in the round,
+      recommended to upgrade the powergen.
+  Ghommie:
+  - expansion: 'The Mr. Deempisi Portrait plaque has been replaced with a very special
+      picture frame: A small picture of one out four random things (Mr. Deempisi included)
+      that can have a photo affixed over it. The photo will persist between rounds
+      on that specific station until removed of if the frame is destroyed. Each station
+      gets one, all but one (Kilo is too damn cramped) located in the bar behind the
+      bartender counter. It''s also more artsy than other picture frames now. spriteadd:
+      Desouled the picture frame sprites.'
+  Krysonism:
+  - qol: The tentacle slap ability button now goes red and displays a cooldown timer
+      when on cooldown.
+  - bugfix: Vat beasts now longer lose their ability when someone rides them.
+  - expansion: Adds carp scales, and carp scale crafting.
+  Melbert:
+  - bugfix: Removing invasive spreading from a plant will now actually remove invasive
+      spreading
+  - refactor: Refactored seed / gene deletion, and a bit of gene addition / removal
+  Timberpoes:
+  - bugfix: Observers will no longer see ghost icons representing Maintenance Loot
+      Spawners of Roundstart Past once the round has actually started.
+  Wallemations:
+  - expansion: The Goat Plushie has picked up some bad habits, please try not to let
+      it near any illicit substances for the sake of its rehabilitation.
+  Watermelon914:
+  - admin: Admins can now stop animations on an object as well as decide if it starts
+      parallel or not.
+  - bugfix: Fixed animating filters in steps not working at all.
+  - qol: Gave instantly executing ports special datatypes to distinguish what ports
+      cause instant execution
+  - bugfix: Fixed default FPS for new players and applies it to them when they join.
+  Zytolg:
+  - bugfix: Fixes the floating sign in the Tramstation Teleporter
+  esainane:
+  - code_imp: freon_gas_act is now called freeze_turf. It was only ever used in two
+      places, neither of which involved Freon.
+  thestubborn:
+  - bugfix: the Driscoll poncho should be centered now
+  timothymtorres:
+  - qol: Adds random statue spawners to secure art exhibits in the library for Meta,
+      Tram, and Delta.

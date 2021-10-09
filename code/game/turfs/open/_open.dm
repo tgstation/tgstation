@@ -178,7 +178,7 @@
 	air.temperature += temp
 	air_update_turf(FALSE, FALSE)
 
-/turf/open/proc/freon_gas_act()
+/turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			continue
