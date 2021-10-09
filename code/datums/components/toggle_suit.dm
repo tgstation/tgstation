@@ -29,7 +29,7 @@
 /*
  * Signal proc for COMSIG_CLICK_ALT.
  * If the user is living, adjacent to the source,
- * and has arms / is not incapacitated, call do_suit_toggle.
+ * and has arms / is not incapacitated, call do_icon_toggle.
  *
  * source - the atom being clicked on
  * user - the mob doing the click
