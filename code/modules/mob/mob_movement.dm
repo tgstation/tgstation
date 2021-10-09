@@ -91,7 +91,7 @@
 		return FALSE
 
 	var/mob/living/L = mob  //Already checked for isliving earlier
-	if(L.incorporeal_move) //Move though walls
+	if(L.incorporeal_move && !SSmapping.level_trait(mob.z, ZTRAIT_SECRET)) //Move though walls
 		Process_Incorpmove(direct)
 		return FALSE
 
