@@ -455,6 +455,7 @@
 /obj/item/radio/intercom/chapel{
 	pixel_x = 28
 	},
+/obj/machinery/light/small/red/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "ci" = (
@@ -8961,6 +8962,7 @@
 /obj/item/radio/intercom/chapel{
 	pixel_x = 28
 	},
+/obj/machinery/light/small/red/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "Lb" = (

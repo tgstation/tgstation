@@ -12216,7 +12216,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "cqR" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/plating,
@@ -13933,7 +13933,7 @@
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "cPl" = (
 /obj/structure/disposalpipe/junction{
 	dir = 8
@@ -17550,6 +17550,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "eTD" = (
@@ -18848,6 +18849,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/wood,
 /area/service/library)
 "fBN" = (
@@ -19513,7 +19515,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "fVB" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -22079,6 +22081,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "hoJ" = (
@@ -22536,7 +22539,6 @@
 	req_access_txt = "2"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -23227,6 +23229,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Art Gallery"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/sepia,
 /area/service/library)
 "hYK" = (
@@ -24020,7 +24023,7 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "itV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -24355,7 +24358,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "iBj" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light/directional/south,
@@ -26804,7 +26807,7 @@
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "jTe" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
@@ -27472,7 +27475,7 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "kmD" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29261,6 +29264,7 @@
 /area/medical/break_room)
 "lmp" = (
 /obj/machinery/light/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
 "lmz" = (
@@ -32735,7 +32739,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "mZc" = (
 /obj/structure/cable,
 /turf/open/floor/engine,
@@ -34088,7 +34092,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "nLZ" = (
 /obj/structure/closet/secure_closet/medical1,
 /obj/effect/turf_decal/trimline/blue/line,
@@ -38866,7 +38870,7 @@
 /area/service/bar/atrium)
 "qkY" = (
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "qlc" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -39762,10 +39766,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
-"qLJ" = (
-/obj/machinery/firealarm/directional/south,
-/turf/closed/wall,
-/area/service/library)
 "qMs" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -42169,7 +42169,7 @@
 	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "sbG" = (
 /turf/open/openspace,
 /area/service/hydroponics)
@@ -45419,8 +45419,8 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "tMq" = (
-/obj/machinery/newscaster/directional/south,
 /obj/effect/landmark/start/hangover,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood,
 /area/service/library)
 "tMH" = (
@@ -46733,6 +46733,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/light/small/directional/east,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/service/library)
 "usd" = (
@@ -48001,6 +48002,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Art Gallery"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/sepia,
 /area/service/library)
 "vcb" = (
@@ -48017,6 +48019,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/west,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/carpet,
 /area/service/library)
 "vdv" = (
@@ -50303,7 +50306,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "wql" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50917,6 +50920,7 @@
 /area/science/research)
 "wJz" = (
 /obj/machinery/skill_station,
+/obj/machinery/bounty_board/directional/north,
 /turf/open/floor/wood,
 /area/service/library)
 "wJF" = (
@@ -51432,7 +51436,7 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/service/chapel)
+/area/hallway/primary/starboard)
 "xap" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -99223,7 +99227,7 @@ dCx
 pXx
 byR
 fWj
-qLJ
+pXx
 pXx
 aYV
 mGd
@@ -102040,11 +102044,11 @@ edH
 nUI
 pOZ
 kgP
-eHY
-eHY
-eHY
-eHY
-eHY
+sdJ
+sdJ
+sdJ
+sdJ
+sdJ
 eHY
 eHY
 eHY
@@ -102297,11 +102301,11 @@ rGS
 rGS
 rGS
 rGS
-eHY
+sdJ
 kCi
 pLk
 seu
-eHY
+sdJ
 oKR
 tSp
 eHY
