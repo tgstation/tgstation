@@ -569,30 +569,30 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return ..()
 
 /obj/item/clothing/mask/cigarette/pipe/process(delta_time)
-	var/mob/living/M = loc
+	var/mob/living/living_smoker = loc
 	if(isliving(loc))
-		M.IgniteMob()
+		living_smoker.IgniteMob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
-		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+		if(!air?.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
 			extinguish()
 			return
 
 	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
 		if(ismob(loc))
-			to_chat(M, span_notice("Your [name] goes out."))
+			to_chat(living_smoker, span_notice("Your [name] goes out."))
 			lit = FALSE
 			icon_state = icon_off
 			inhand_icon_state = icon_off
-			M.update_inv_wear_mask()
+			living_smoker.update_inv_wear_mask()
 			packeditem = FALSE
 			name = "empty [initial(name)]"
 		STOP_PROCESSING(SSobj, src)
 		return
 
 	open_flame(heat)
-	if((reagents?.total_volume) && COOLDOWN_FINISHED(src, drag_cooldown))
+	if(reagents?.total_volume && COOLDOWN_FINISHED(src, drag_cooldown))
 		COOLDOWN_START(src, drag_cooldown, dragtime)
 		handle_reagents()
 
