@@ -202,8 +202,8 @@
 
 /datum/ai_behavior/find_and_set/pawn_must_hold_item/search_tactic(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	if(!(locate(/obj/item) in living_pawn.held_items))
-		return //we want to fail the search if we don't have something to give
+	if(!living_pawn.get_num_held_items())
+		return //we want to fail the search if we don't have something held
 	. = ..()
 
 /**
