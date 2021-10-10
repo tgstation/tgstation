@@ -87,12 +87,19 @@
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()
 	. = ..()
-	. += emissive_appearance(icon, "growing_vat_glow", alpha = src.alpha)
+	var/static/image/on_overlay
+	var/static/image/off_overlay
+	var/static/image/emissive_overlay
+	if(isnull(on_overlay))
+		on_overlay = iconstate2appearance(icon, "growing_vat_on")
+		off_overlay = iconstate2appearance(icon, "growing_vat_off")
+		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", alpha = src.alpha)
+	. += emissive_overlay
 	if(is_operational)
 		if(resampler_active)
-			. += "growing_vat_on"
+			. += on_overlay
 		else
-			. += "growing_vat_off"
+			. += off_overlay
 	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
@@ -106,6 +113,7 @@
 
 /obj/machinery/plumbing/growing_vat/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	if(obj_flags & EMAGGED)
 		return
 	resampler_active = !resampler_active
@@ -116,14 +124,14 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You overload [src]'s resampling circuit."))
+	flick("growing_vat_emagged", src)
 
 /obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
 	SIGNAL_HANDLER
 	if(resampler_active)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
-	else
-		UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
-		QDEL_NULL(biological_sample)
-	update_appearance()
+		return SPARE_SAMPLE
+	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)

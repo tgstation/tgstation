@@ -90,7 +90,9 @@
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have dissipated!"))
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
-	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
 	var/datum/effect_system/smoke_spread/smoke = new
@@ -101,7 +103,9 @@
 			var/atom/thing = new created_thing(get_turf(vat))
 			ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 			vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
-	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)

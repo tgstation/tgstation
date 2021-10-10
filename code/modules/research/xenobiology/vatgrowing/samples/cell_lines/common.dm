@@ -443,7 +443,9 @@
 	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
-	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/clown/bananaclown
 	desc = "Clown bits with banana chunks"
@@ -593,7 +595,9 @@
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
 	for(var/i in 1 to 5)
 		new /mob/living/simple_animal/hostile/bee(get_turf(vat))
-	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/leaper
 	desc = "atypical amphibian cells"
