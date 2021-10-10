@@ -1,0 +1,5 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - rscadd: "Added back the reset keybindings button."
+  - bugfix: "Fixed weird scaling on the buttons in a tabbed list UI (such as \"Communications\" in the keybindings menu)"

@@ -110,7 +110,7 @@
 		else
 			icon_state = "thermo_1"
 		return ..()
-	icon_state = "thermo_0"
+	icon_state = "thermo_base"
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/update_overlays()

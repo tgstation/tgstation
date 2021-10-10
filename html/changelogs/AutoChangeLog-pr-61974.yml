@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The CE's blueprints can now once again show an overlay of the station's original structural layout! Cleaning up after an explosion is now - well, realistically, just as frustrating as ever, but it looks nice!"

@@ -3,6 +3,7 @@
 /// Middleware to handle keybindings
 /datum/preference_middleware/keybindings
 	action_delegations = list(
+		"reset_all_keybinds" = .proc/reset_all_keybinds,
 		"reset_keybinds_to_defaults" = .proc/reset_keybinds_to_defaults,
 		"set_keybindings" = .proc/set_keybindings,
 	)
@@ -21,6 +22,13 @@
 	return list(
 		get_asset_datum(/datum/asset/json/keybindings)
 	)
+
+/datum/preference_middleware/keybindings/proc/reset_all_keybinds(list/params, mob/user)
+	preferences.key_bindings = deepCopyList(GLOB.default_hotkeys)
+	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
+	preferences.update_static_data(user)
+
+	return TRUE
 
 /datum/preference_middleware/keybindings/proc/reset_keybinds_to_defaults(list/params, mob/user)
 	var/keybind_name = params["keybind_name"]
