@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Bluespace anomalies will no longer teleport camera eyes, such as AI eye, Blob Overmind eye, Advanced Camera consoles, or the Xenobiology Slime management console. This is particularly relevant for the Xenobiology advanced slime console, as the eye cannot move outside of, or while outside of, the area the console is in."

@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Datum input ports can now have atoms and datums uploaded to them."

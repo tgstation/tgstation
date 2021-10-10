@@ -302,3 +302,39 @@
   timothymtorres:
   - qol: Adds random statue spawners to secure art exhibits in the library for Meta,
       Tram, and Delta.
+2021-10-10:
+  Arkatos:
+  - bugfix: Thermomachine design icon in the R&D Console UI will now show properly.
+  Guillaume Prata:
+  - bugfix: Cyborgs can interact with a morgue tray to close it now, instead of needing
+      to interact with the main structure.
+  Krysonism:
+  - qol: The mega arachnid now has a toggleable self only small sprite. No more hitting
+      yourself!
+  Mooshimi:
+  - qol: status displays can now be wrenched off the wall, and frames can be printed
+      at the autolathe
+  PeterMorrison1:
+  - bugfix: fixed antagonist preference tooltip showing wrong descriptions
+  Watermelon914:
+  - bugfix: Fixed variables sometimes just not working.
+  - bugfix: Fixed the dispenser shell and For Each and Filter components not appearing
+      in the component printer.
+  - bugfix: Fixed the changeling antag panel
+  - bugfix: Fixed the wizard's antag panel.
+  - admin: Datum input ports can now have atoms and datums uploaded to them.
+  esainane:
+  - bugfix: HFR ambience will no longer play intensely when the HFR is out of fuel
+  - bugfix: SMs meant to be immobile should now be truly immobile.
+  - bugfix: Bluespace anomalies will no longer teleport camera eyes, such as AI eye,
+      Blob Overmind eye, Advanced Camera consoles, or the Xenobiology Slime management
+      console. This is particularly relevant for the Xenobiology advanced slime console,
+      as the eye cannot move outside of, or while outside of, the area the console
+      is in.
+  - spellcheck: Fixed a typo in the Hostile Statue description.
+  - code_imp: Remove a very useless check from APC code
+  - bugfix: The beams from Emitters, and all hitscan weaponry, now render properly
+      again.
+  - bugfix: CentCom now has one APC per area.
+  tralezab:
+  - bugfix: Preferences menu now supports Halloween races
