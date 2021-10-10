@@ -49,6 +49,9 @@
 /datum/mind/proc/transfer_antag_huds(datum/atom_hud/antag/newhud)
 	leave_all_antag_huds()
 	set_antag_hud(current, antag_hud_icon_state)
+#ifdef EVENTMODE
+	return
+#endif
 	if(newhud)
 		newhud.join_hud(current)
 

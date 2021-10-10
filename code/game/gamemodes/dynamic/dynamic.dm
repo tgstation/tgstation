@@ -401,6 +401,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 
+#ifdef EVENTMODE
+	return ..() // no intercept announcements during special events
+#endif
 	if (!CONFIG_GET(flag/no_intercept_report))
 		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
 
