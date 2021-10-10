@@ -1,0 +1,7 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a runtime with the integrated circuit duplicator"
+  - admin: "Signal Handler circuit components are no longer limited to 1 registered object."
+  - admin: "Get variable circuit components can now get GLOB variables"
+  - admin: "Animate and Save Shell circuit components will now apply DF_VAR_EDITED"

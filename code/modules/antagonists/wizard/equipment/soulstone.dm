@@ -117,8 +117,8 @@
 			. += span_cult("This shard is spent; it is now just a creepy rock.")
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
-	for(var/mob/living/simple_animal/shade/A in src)
-		A.death()
+	for(var/mob/living/simple_animal/shade/shade in src)
+		INVOKE_ASYNC(shade, /mob/living/proc/death)
 	return ..()
 
 /obj/item/soulstone/proc/hot_potato(mob/living/user)
@@ -422,7 +422,7 @@
 	chosen_ghost = victim.get_ghost(TRUE,TRUE) //Try to grab original owner's ghost first
 
 	if(!chosen_ghost || !chosen_ghost.client) //Failing that, we grab a ghosts
-		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", ROLE_CULTIST, 50, POLL_IGNORE_SHADE)
+		var/list/consenting_candidates = poll_ghost_candidates("Would you like to play as a Shade?", "Cultist", ROLE_CULTIST, 50, POLL_IGNORE_SHADE)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!victim || user.incapacitated() || !user.is_holding(src) || !user.CanReach(victim, src))

@@ -73,6 +73,11 @@
 	id = "comp_index"
 	build_path = /obj/item/circuit_component/index
 
+/datum/design/component/index_assoc
+	name = "Index Associative List Component"
+	id = "comp_index_assoc"
+	build_path = /obj/item/circuit_component/index/assoc_string
+
 /datum/design/component/length
 	name = "Length Component"
 	id = "comp_length"
@@ -286,6 +291,17 @@
 	id = "comp_counter_overlay"
 	build_path = /obj/item/circuit_component/counter_overlay
 
+/datum/design/component/foreach
+	name = "For Each Component"
+	id = "comp_foreach"
+	build_path = /obj/item/circuit_component/foreach
+
+/datum/design/component/filter_list
+	name = "Filter List Component"
+	id = "comp_filter_list"
+	build_path = /obj/item/circuit_component/foreach
+
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
@@ -375,6 +391,18 @@
 		/datum/material/iron = 15000,
 	)
 	build_path = /obj/item/shell/airlock
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/dispenser_shell
+	name = "Dispenser Shell"
+	desc = "A dispenser shell that can dispense items."
+	id = "dispenser_shell"
+	materials = list(
+		/datum/material/glass = 5000,
+		/datum/material/iron = 15000,
+	)
+	build_path = /obj/item/shell/dispenser
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 

@@ -100,7 +100,7 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = FALSE
-	max_mod_capacity = 0
+	max_mod_capacity = -1
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"

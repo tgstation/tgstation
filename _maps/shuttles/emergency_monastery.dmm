@@ -1222,7 +1222,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "oH" = (
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait{
 	pixel_y = 28
 	},
 /obj/item/kirbyplants{
@@ -2269,7 +2269,7 @@
 /area/shuttle/escape)
 "zU" = (
 /obj/structure/dresser,
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait{
 	pixel_y = 28
 	},
 /turf/open/floor/iron/grimy,

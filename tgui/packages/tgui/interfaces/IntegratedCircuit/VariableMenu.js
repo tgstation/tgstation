@@ -99,7 +99,7 @@ export class VariableMenu extends Component {
                             Drag me onto the circuit's grid
                             to make a setter for this variable`
                             }
-                            icon="hammer"
+                            icon="pen"
                           />
                         </Stack.Item>
                         <Stack.Item>
@@ -113,7 +113,7 @@ export class VariableMenu extends Component {
                             color={val.color}
                             onMouseDown={(e) =>
                               handleMouseDownGetter(e, val.name)}
-                            icon="eye"
+                            icon="book-open"
                           />
                         </Stack.Item>
                         <Stack.Item>
@@ -162,10 +162,21 @@ export class VariableMenu extends Component {
                         height="100%"
                         color="green"
                         onClick={(e) =>
-                          onAddVariable(variable_name, variable_type, e)}
+                          onAddVariable(variable_name, variable_type, false, e)}
                         fluid
                       >
-                        <PlusIconButton />
+                        <IconButton icon="plus" />
+                      </Button>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        height="100%"
+                        color="green"
+                        onClick={(e) =>
+                          onAddVariable(variable_name, variable_type, true, e)}
+                        fluid
+                      >
+                        <IconButton icon="list" />
                       </Button>
                     </Stack.Item>
                   </Stack>
@@ -179,12 +190,12 @@ export class VariableMenu extends Component {
   }
 }
 
-const PlusIconButton = (props, context) => {
+const IconButton = (props, context) => {
   return (
     <Stack fill align="center">
-      <Stack.Item grow>
+      <Stack.Item grow basis="content">
         <Icon
-          name="plus"
+          name={props.icon}
           size={1}
           width="100%"
           m="0em"

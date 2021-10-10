@@ -23,7 +23,7 @@
 /obj/item/circuit_component/spawn_atom/populate_ports()
 	input_path = add_input_port("Type", PORT_TYPE_ANY)
 	spawn_at = add_input_port("Spawn At", PORT_TYPE_ATOM)
-	parameters = add_input_port("Parameters", PORT_TYPE_LIST)
+	parameters = add_input_port("Parameters", PORT_TYPE_LIST(PORT_TYPE_ANY))
 
 	spawned_atom = add_output_port("Spawned Atom", PORT_TYPE_ATOM)
 
@@ -40,4 +40,6 @@
 
 	params.Insert(1, spawn_at.value)
 
-	spawned_atom.set_output(new typepath(arglist(params)))
+	var/atom/spawned = new typepath(arglist(params))
+	spawned.datum_flags |= DF_VAR_EDITED
+	spawned_atom.set_output(spawned)

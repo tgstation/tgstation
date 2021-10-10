@@ -201,7 +201,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!ispath(component_type,/datum/component))
 		CRASH("Wrong component type in [type] - [component_type] is not a component")
 	var/turf/T = get_turf(src)
-	for(var/atom/A in T.GetAllContents())
+	for(var/atom/A in T.get_all_contents())
 		if(A == src)
 			continue
 		if(target_name && A.name != target_name)
@@ -426,7 +426,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
 	var/turf/target_turf = get_turf(src)
 	var/matches_found = 0
-	for(var/a in target_turf.GetAllContents())
+	for(var/a in target_turf.get_all_contents())
 		var/atom/atom_on_turf = a
 		if(atom_on_turf == src)
 			continue
@@ -464,7 +464,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/I = fetch_icon(icon_url)
 	var/turf/target_turf = get_turf(src)
 	var/matches_found = 0
-	for(var/a in target_turf.GetAllContents())
+	for(var/a in target_turf.get_all_contents())
 		var/atom/atom_on_turf = a
 		if(atom_on_turf == src)
 			continue
@@ -521,3 +521,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/component_target = get_turf(src)
 	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE)
 	qdel(src)
+
+/obj/effect/mapping_helpers/ztrait_injector
+	name = "ztrait injector"
+	icon_state = "ztrait"
+	/// List of traits to add to this.
+	var/list/traits_to_add = list()
+
+/obj/effect/mapping_helpers/ztrait_injector/Initialize()
+	. = ..()
+	var/datum/space_level/level = SSmapping.z_list[z]
+	if(!level || !length(traits_to_add))
+		return
+	level.traits |= traits_to_add
+	SSweather.update_z_level(level) //in case of someone adding a weather for the level, we want SSweather to update for that

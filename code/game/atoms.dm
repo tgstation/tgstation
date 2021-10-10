@@ -213,6 +213,10 @@
  * If the item is being created at runtime any time after the Atom subsystem is intialized then
  * it's false.
  *
+ * The mapload argument occupies the same position as loc when Initialize() is called by New().
+ * loc will no longer be needed after it passed New(), and thus it is being overwritten
+ * with mapload at the end of atom/New() before this proc (atom/Initialize()) is called.
+ *
  * You must always call the parent of this proc, otherwise failures will occur as the item
  * will not be seen as initalized (this can lead to all sorts of strange behaviour, like
  * the item being completely unclickable)
@@ -677,8 +681,6 @@
 /atom/proc/examine_more(mob/user)
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
-	if(!LAZYLEN(.)) // lol ..length
-		return list(span_notice("<i>You examine [src] closer, but find nothing of interest...</i>"))
 
 /**
  * Updates the appearence of the icon

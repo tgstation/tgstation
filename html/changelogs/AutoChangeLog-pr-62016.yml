@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed two issues with paper code. Namely paper text being always colored black outside of edit mode and signatures showing the current name and not the real name."

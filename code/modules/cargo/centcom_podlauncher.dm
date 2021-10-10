@@ -92,10 +92,12 @@
 	cam_screen.del_on_map_removal = TRUE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
 		if (!renderLighting && instance.plane == LIGHTING_PLANE)
 			instance.alpha = 100
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = TRUE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -779,9 +781,9 @@
 		selector.moveToNullspace() //Otherwise, we move the selector to nullspace until it is needed again
 
 /datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
-	for (var/obj/O in bay.GetAllContents())
+	for (var/obj/O in bay.get_all_contents())
 		qdel(O)
-	for (var/mob/M in bay.GetAllContents())
+	for (var/mob/M in bay.get_all_contents())
 		qdel(M)
 	for (var/bayturf in bay)
 		var/turf/turf_to_clear = bayturf

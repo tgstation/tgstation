@@ -22,12 +22,23 @@
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
-/// List datatype
-#define PORT_TYPE_LIST "list"
+/// Signal datatype, with a slight variation in name to suggest it causes instant execution. Can only be an output port.
+#define PORT_TYPE_INSTANT_SIGNAL "instant signal"
+/// Signal datatype, with a slight variation in name to suggest that it can be used to respond to instant execution.
+#define PORT_TYPE_RESPONSE_SIGNAL "response signal"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
 /// Options datatype. Derivative of string.
 #define PORT_TYPE_OPTION "option"
+
+// Composite datatypes
+#define PORT_COMPOSITE_TYPE_LIST "list"
+/// List datatype
+#define PORT_TYPE_LIST(datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_LIST, datatype)
+
+#define PORT_COMPOSITE_TYPE_ASSOC_LIST "assoc list"
+/// Associative List datatype. Derivative of list.
+#define PORT_TYPE_ASSOC_LIST(key_datatype, datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_ASSOC_LIST, key_datatype, datatype)
 
 // Other datatypes
 /// Atom datatype
@@ -108,3 +119,7 @@
 #define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
 /// The datatype won't update the value when it is connected to the port
 #define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)
+/// Allows the datatype to take entity values from the circuit multitool.
+#define DATATYPE_FLAG_ALLOW_ATOM_INPUT (1<<2)
+/// The datatype has been generated and is an existing composite datatype
+#define DATATYPE_FLAG_COMPOSITE (1<<3)

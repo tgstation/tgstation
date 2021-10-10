@@ -534,10 +534,12 @@
 	if(!client)
 		return
 	if(stat == DEAD)
-		if(!SSmapping.level_trait(z, ZTRAIT_SECRET))
-			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		else
+		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+			sight = null
+		else if(is_secret_level(z))
 			sight = initial(sight)
+		else
+			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
@@ -580,7 +582,11 @@
 
 	if(see_override)
 		see_invisible = see_override
-	. = ..()
+
+	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+		sight = null
+
+	return ..()
 
 
 //to recalculate and update the mob's total tint from tinted equipment it's wearing.
