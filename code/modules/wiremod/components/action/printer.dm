@@ -7,6 +7,7 @@
 	display_name = "Printer"
 	desc = "A component that prints a string input on a paper. Requires a shell and paper. \
 		Attack with paper to load them in the circuit. Use in hand to dump the bottom-most paper."
+	circuit_flags = CIRCUIT_FLAG_REFUSE_MODULE
 
 	/// Prints stuff on the leftmost paper in the loaded_papers list.
 	var/datum/port/input/print
@@ -43,6 +44,16 @@
 
 /obj/item/circuit_component/printer/Destroy()
 	QDEL_LIST(loaded_papers)
+	return ..()
+
+/obj/item/circuit_component/mmi/add_to(obj/item/integrated_circuit/add_to)
+	. = ..()
+	if(HAS_TRAIT(add_to, TRAIT_COMPONENT_PRINTER))
+		return FALSE
+	ADD_TRAIT(add_to, TRAIT_COMPONENT_PRINTER, src)
+
+/obj/item/circuit_component/mmi/removed_from(obj/item/integrated_circuit/removed_from)
+	REMOVE_TRAIT(removed_from, TRAIT_COMPONENT_PRINTER, src)
 	return ..()
 
 /obj/item/circuit_component/printer/register_shell(atom/movable/shell)
