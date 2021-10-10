@@ -251,7 +251,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		psyOverlay = new()
 
 	if (!moveable)
-		move_resist = MOVE_FORCE_EXTREMELY_STRONG // Avoiding being moved by statues or other memes
+		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
