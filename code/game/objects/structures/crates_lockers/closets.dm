@@ -418,8 +418,8 @@
 		update_appearance()
 	else if (can_install_electronics && W.tool_behaviour == TOOL_SCREWDRIVER\
 			&& (secure || electronics) && !locked && (welded || !can_weld_shut))
-		user.visible_message(span_notice("[user] begins to pry the electronics from the [src]."),\
-			span_notice("You begin to pry the electronics from the [src]..."))
+		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
+			span_notice("You begin to remove the electronics from the [src]..."))
 		var/had_electronics = !!electronics
 		var/was_secure = secure
 		if (!do_after(user, 40, target = src))
