@@ -54,7 +54,8 @@
 /turf/open/floor/wood,
 /area/tdome/arena)
 "fS" = (
-/turf/open/floor/iron/stairs/right,
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/right,
 /area/tdome/arena)
 "gp" = (
 /turf/open/floor/wood{
@@ -62,7 +63,8 @@
 	},
 /area/tdome/arena)
 "gz" = (
-/turf/open/floor/iron/stairs/medium,
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/medium,
 /area/tdome/arena)
 "gH" = (
 /obj/structure/fluff/paper/stack{
@@ -75,7 +77,8 @@
 /turf/open/floor/wood,
 /area/tdome/arena)
 "hy" = (
-/turf/open/floor/iron/stairs/medium{
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/medium{
 	dir = 4
 	},
 /area/tdome/arena)
@@ -277,12 +280,14 @@
 /area/tdome/arena)
 "Jq" = (
 /obj/structure/railing,
-/turf/open/floor/iron/stairs/right{
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/right{
 	dir = 8
 	},
 /area/tdome/arena)
 "KZ" = (
-/turf/open/floor/iron/stairs/right{
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/right{
 	dir = 4
 	},
 /area/tdome/arena)
@@ -410,12 +415,14 @@
 	},
 /area/tdome/arena)
 "Tm" = (
-/turf/open/floor/iron/stairs/medium{
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/medium{
 	dir = 8
 	},
 /area/tdome/arena)
 "Vl" = (
-/turf/open/floor/iron/stairs/left{
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/left{
 	dir = 8
 	},
 /area/tdome/arena)
@@ -433,11 +440,13 @@
 /turf/open/floor/wood,
 /area/tdome/arena)
 "Yc" = (
-/turf/open/floor/iron/stairs/left,
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/left,
 /area/tdome/arena)
 "Yx" = (
 /obj/structure/railing,
-/turf/open/floor/iron/stairs/left{
+/turf/open/floor/wood,
+/obj/structure/fake_stairs_turf/left{
 	dir = 4
 	},
 /area/tdome/arena)

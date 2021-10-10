@@ -4,7 +4,8 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "b" = (
-/turf/open/floor/iron/stairs/left{
+/turf/open/floor/iron/dark,
+/obj/structure/fake_stairs_turf/left{
 	dir = 4
 	},
 /area/tdome/arena)
@@ -24,7 +25,8 @@
 /turf/open/floor/circuit/red,
 /area/tdome/arena)
 "k" = (
-/turf/open/floor/iron/stairs/medium{
+/turf/open/floor/iron/dark,
+/obj/structure/fake_stairs_turf/medium{
 	dir = 8
 	},
 /area/tdome/arena)
@@ -52,7 +54,8 @@
 /turf/open/floor/circuit/off,
 /area/tdome/arena)
 "u" = (
-/turf/open/floor/iron/stairs/right{
+/turf/open/floor/iron/dark,
+/obj/structure/fake_stairs_turf/right{
 	dir = 8
 	},
 /area/tdome/arena)
@@ -62,7 +65,8 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "A" = (
-/turf/open/floor/iron/stairs/medium{
+/turf/open/floor/iron/dark,
+/obj/structure/fake_stairs_turf/medium{
 	dir = 4
 	},
 /area/tdome/arena)
@@ -81,12 +85,14 @@
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "E" = (
-/turf/open/floor/iron/stairs/left{
+/turf/open/floor/iron/dark,
+/obj/structure/fake_stairs_turf/left{
 	dir = 8
 	},
 /area/tdome/arena)
 "F" = (
-/turf/open/floor/iron/stairs/right{
+/turf/open/floor/iron/dark,
+/obj/structure/fake_stairs_turf/right{
 	dir = 4
 	},
 /area/tdome/arena)
