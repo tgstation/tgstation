@@ -82,31 +82,10 @@
 				else
 					message_prompt += ", "
 		message_prompt += "**"
-	else
-		var/num_of_responders = input(src, "how many fakes", "fake", 0)
-		if(num_of_responders)
-			var/list/fake = list()
-			for(var/i in 1 to num_of_responders)
-				fake += random_unique_name()
-			SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
-			message_prompt += "\n\n**This ticket is already being responded to by: "
-			var/admins_counted = 0
-
-			for(var/nam in fake)
-				admins_counted++
-				message_prompt += "[nam]"
-				switch(num_of_responders - admins_counted)
-					if(0)
-					if(1)
-						message_prompt += " and "
-					else
-						message_prompt += ", "
-			message_prompt += "**"
-
 
 	if(AH)
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-		if(length(AH._interactions) == 1 && AH.opening_responders) // add the admin who is currently responding to the list of people responding
+		if(length(AH._interactions) == 1) // add the admin who is currently responding to the list of people responding
 			LAZYADD(AH.opening_responders, src)
 
 	var/msg = input(src, message_prompt, "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
