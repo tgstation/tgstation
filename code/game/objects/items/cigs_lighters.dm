@@ -569,7 +569,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return ..()
 
 /obj/item/clothing/mask/cigarette/pipe/process(delta_time)
-	var/mob/living/living_smoker = loc
 	if(isliving(loc))
 		var/mob/living/living_smoker = loc
 		living_smoker.IgniteMob()
