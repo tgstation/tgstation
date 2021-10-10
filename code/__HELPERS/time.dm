@@ -103,3 +103,11 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 /proc/daysSince(realtimev)
 	return round((world.realtime - realtimev) / (24 HOURS))
+
+/proc/time_to_twelve_hour(time, format = "hh:mm:ss")
+	var/am_pm = "AM"
+	if(time > (12 HOURS))
+		am_pm = "PM"
+		if(time > (13 HOURS))
+			time -= 12 HOURS
+	return "[time2text(time, "hh:mm:ss")] [am_pm]"

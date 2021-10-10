@@ -3901,6 +3901,7 @@
 #include "code\modules\wiremod\components\utility\getter.dm"
 #include "code\modules\wiremod\components\utility\router.dm"
 #include "code\modules\wiremod\components\utility\setter.dm"
+#include "code\modules\wiremod\components\utility\timepiece.dm"
 #include "code\modules\wiremod\components\utility\typecast.dm"
 #include "code\modules\wiremod\components\utility\typecheck.dm"
 #include "code\modules\wiremod\core\admin_panel.dm"
