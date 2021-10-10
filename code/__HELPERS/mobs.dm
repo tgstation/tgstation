@@ -489,6 +489,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	message = span_deadsay("[source]<span class='linkify'>[message]</span>")
 
 	for(var/mob/M in GLOB.player_list)
+		if (!M.client)
+			continue
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
 		var/list/ignoring

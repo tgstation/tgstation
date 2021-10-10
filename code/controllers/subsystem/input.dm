@@ -36,4 +36,6 @@ SUBSYSTEM_DEF(input)
 
 /datum/controller/subsystem/input/fire()
 	for(var/mob/user as anything in GLOB.keyloop_list)
+		if (!user.client)
+			continue
 		user.focus?.keyLoop(user.client)
