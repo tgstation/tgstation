@@ -2027,6 +2027,7 @@
 #include "code\modules\atmospherics\machinery\portable\scrubber.dm"
 #include "code\modules\awaymissions\away_props.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
+#include "code\modules\awaymissions\cordon.dm"
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\exile.dm"
 #include "code\modules\awaymissions\gateway.dm"
