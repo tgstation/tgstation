@@ -571,6 +571,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/process(delta_time)
 	var/mob/living/living_smoker = loc
 	if(isliving(loc))
+		var/mob/living/living_smoker = loc
 		living_smoker.IgniteMob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
@@ -581,6 +582,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
 		if(ismob(loc))
+			var/mob/living/living_smoker = loc
 			to_chat(living_smoker, span_notice("Your [name] goes out."))
 			lit = FALSE
 			icon_state = icon_off
