@@ -184,16 +184,17 @@
 /datum/ai_behavior/find_and_set
 	action_cooldown = 5 SECONDS
 
-/datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller, set_key, locate_path, search_range)
+/datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller, set_key, locate_path, search_range, ...)
 	. = ..()
-	var/find_this_thing = search_tactic(controller, locate_path, search_range)
+	var/list/search_tactic_arguments = list(controller) + args.Copy(4)
+	var/find_this_thing = search_tactic(arglist(search_tactic_arguments))
 	if(find_this_thing)
 		controller.blackboard[set_key] = find_this_thing
 		finish_action(controller, TRUE)
 	else
 		finish_action(controller, FALSE)
 
-/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range, ...)
 	return locate(locate_path) in oview(search_range, controller.pawn)
 
 /**
@@ -236,6 +237,23 @@
 /datum/ai_behavior/find_and_set/in_hands/search_tactic(datum/ai_controller/controller, locate_path)
 	var/mob/living/living_pawn = controller.pawn
 	return locate(locate_path) in living_pawn.held_items
+
+/**
+ * Variant of find and set that considers an aggro list to see if the target is hated
+ */
+/datum/ai_behavior/find_and_set/aggro_list
+
+/datum/ai_behavior/find_and_set/aggro_list/search_tactic(datum/ai_controller/controller, locate_path, search_range, aggro_list_key)
+	var/list/aggro_list = controller.blackboard[aggro_list_key]
+
+	for(var/potential_target in aggro_list)
+		if(!istype(potential_target, locate_path))
+			continue //not what we're looking for
+		if(aggro_list[potential_target] <= 0)
+			continue //not aggro'd
+		if(get_dist(potential_target, controller.pawn) > search_range)
+			continue //out of range
+		return potential_target
 
 /**
  * Drops items in hands, very important for future behaviors that require the pawn to grab stuff

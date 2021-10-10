@@ -67,13 +67,12 @@
  * * BB_ITEM_TARGET - set by this subtree, target mob we're attacking
  */
 /datum/ai_planning_subtree/item_target_from_aggro_list
-	var/list/aggro_list = controller.blackboard[BB_ITEM_AGGRO_LIST]
 
-	for(var/mob/potential_target as anything in aggro_list)
-		if(aggro_list[potential_target] <= 0)
-			continue
-		if(get_dist(potential_target, item_pawn) <= ITEM_AGGRO_VIEW_RANGE)
-			controller.blackboard[BB_ITEM_TARGET] = potential_target
+/datum/ai_planning_subtree/item_target_from_aggro_list/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	if(controller.blackboard[BB_ITEM_TARGET])
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/aggro_list, BB_ITEM_TARGET, /mob/living/carbon, ITEM_AGGRO_VIEW_RANGE, BB_ITEM_AGGRO_LIST)
 
 /**
  * Item Throw Attack Subtree
@@ -88,8 +87,6 @@
 /datum/ai_planning_subtree/item_throw_attack
 
 /datum/ai_planning_subtree/item_throw_attack/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/obj/item/item_pawn = controller.pawn
-
 	if(!controller.blackboard[BB_ITEM_TARGET] || !DT_PROB(ITEM_AGGRO_ATTACK_CHANCE, delta_time))
 		return //no target, or didn't aggro
 

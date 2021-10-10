@@ -1,10 +1,4 @@
 
-//these are all behaviors that set item target blackboards
-
-/datum/ai_behavior/find_and_set/item_target
-	locate_path = /mob/living/carbon
-	bb_key_to_set = BB_ITEM_TARGET
-
 ///This behavior is for obj/items, it is used to free themselves out of the hands of whoever is holding them
 /datum/ai_behavior/item_escape_grasp
 
@@ -27,7 +21,6 @@
 	var/attack_sound
 	///Max attempts to make
 	var/max_attempts = 3
-
 
 /datum/ai_behavior/item_move_close_and_attack/setup(datum/ai_controller/controller, aggro_list_key, target_key, throw_count_key)
 	. = ..()
