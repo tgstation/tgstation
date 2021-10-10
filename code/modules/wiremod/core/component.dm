@@ -99,7 +99,7 @@
 /obj/item/circuit_component/examine(mob/user)
 	. = ..()
 	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
-		. += span_notitce("It's incompatible with module components.")
+		. += span_notice("It's incompatible with module components.")
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.
