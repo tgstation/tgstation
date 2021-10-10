@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from "../backend";
-import { Button, Dropdown, Flex, Section, Stack } from "../components";
+import { Button, Dropdown, Section, Stack } from "../components";
 import { Window } from "../layouts";
 
 type TournamentControllerData = {
@@ -76,8 +76,8 @@ const RoundInfo = (props, context) => {
         </Stack.Item>
       </Stack>
 
-      <Flex justify="space-around" wrap="wrap" mt={2}>
-        <Flex.Item>
+      <Stack vertical mt={2}>
+        <Stack.Item>
           <Button
             icon="user-friends"
             onClick={() => {
@@ -89,53 +89,53 @@ const RoundInfo = (props, context) => {
           >
             Spawn teams
           </Button>
-        </Flex.Item>
+        </Stack.Item>
 
-        <Flex.Item>
+        <Stack.Item>
           <Button
             icon="door-closed"
             onClick={() => act("close_shutters")}
           >
             Close shutters
           </Button>
-        </Flex.Item>
+        </Stack.Item>
 
-        <Flex.Item>
+        <Stack.Item>
           <Button
             icon="door-open"
             onClick={() => act("open_shutters")}
           >
             Open shutters
           </Button>
-        </Flex.Item>
+        </Stack.Item>
 
-        <Flex.Item>
+        <Stack.Item>
           <Button.Confirm
             content="Start countdown"
             icon="stopwatch"
             onClick={() => act("start_countdown")}
             tooltip="This will open the shutters at the end of the countdown."
           />
-        </Flex.Item>
+        </Stack.Item>
 
-        <Flex.Item>
+        <Stack.Item>
           <Button.Confirm
             content="Disband teams"
             icon="user-minus"
             onClick={() => act("disband_teams")}
             tooltip="This will send team members to their dressing rooms."
           />
-        </Flex.Item>
+        </Stack.Item>
 
-        <Flex.Item>
+        <Stack.Item>
           <Button.Confirm
             content="Clear arena"
             icon="recycle"
             onClick={() => act("clear_arena")}
             tooltip="You don't have to do this if you're already loading a new map, by the way."
           />
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
