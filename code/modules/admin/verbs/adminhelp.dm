@@ -181,6 +181,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/obj/effect/statclick/ahelp/statclick
 	/// Static counter used for generating each ticket ID
 	var/static/ticket_counter = 0
+	/// The list of admins currently responding to the opening ticket before it gets a response
+	var/list/opening_responders
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
