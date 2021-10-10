@@ -123,7 +123,7 @@
 	eat_time = 0
 
 /obj/item/food/blt
-	name = "blt"
+	name = "\improper BLT"
 	desc = "A classic bacon, lettuce, and tomato sandwich."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "blt"
