@@ -494,9 +494,9 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/list/ignoring
 		if(M.client?.prefs)
 			var/datum/preferences/prefs = M.client?.prefs
-			chat_toggles = prefs?.chat_toggles
-			toggles = prefs?.toggles
-			ignoring = prefs?.ignoring
+			chat_toggles = prefs.chat_toggles
+			toggles = prefs.toggles
+			ignoring = prefs.ignoring
 		if(admin_only)
 			if (!M.client?.holder)
 				return
