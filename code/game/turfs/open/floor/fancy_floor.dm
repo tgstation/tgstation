@@ -385,10 +385,6 @@
 		if(!ismoney_carpet(get_step(src, direction)))
 			REMOVE_TRAIT(L, TRAIT_CLOWN_CARPET, TURF_TRAIT)
 
-/turf/open/floor/carpet/money/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(honk_stuff(AM))
-		START_PROCESSING(SSobj, src)
-
 /turf/open/floor/carpet/money/process(delta_time)
 	if(!honk_stuff(null, delta_time))
 		STOP_PROCESSING(SSobj, src)
