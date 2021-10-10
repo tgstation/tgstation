@@ -32,7 +32,8 @@
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
 /atom/proc/add_fingerprint(mob/M, ignoregloves = FALSE)
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
-	. = D.add_fingerprint(M, ignoregloves)
+	if (D)
+		. = D.add_fingerprint(M, ignoregloves)
 
 /atom/proc/add_fiber_list(list/fibertext) //ASSOC LIST FIBERTEXT = FIBERTEXT
 	if(length(fibertext))
