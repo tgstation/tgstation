@@ -318,7 +318,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
-	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
+	else if((istype(I, /obj/item/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [title]..."))
 		if(do_after(user, 30, target = src))
 			to_chat(user, span_notice("You carve out the pages from [title]! You didn't want to read it anyway."))

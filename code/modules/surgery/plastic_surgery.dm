@@ -12,7 +12,7 @@
 	name = "reshape face"
 	implements = list(
 		TOOL_SCALPEL = 100,
-		/obj/item/kitchen/knife = 50,
+		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
 	time = 64
 

@@ -4118,7 +4118,7 @@
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife{
+/obj/item/knife/kitchen{
 	pixel_x = 6
 	},
 /turf/open/floor/wood,

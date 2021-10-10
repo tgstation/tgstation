@@ -341,9 +341,9 @@
 			if(prob(10))
 				belt = /obj/item/storage/belt/mining/primitive
 			if(prob(30))
-				r_pocket = /obj/item/kitchen/knife/combat/bone
+				r_pocket = /obj/item/knife/combat/bone
 			if(prob(30))
-				l_pocket = /obj/item/kitchen/knife/combat/bone
+				l_pocket = /obj/item/knife/combat/bone
 		if("Clown")
 			name = pick(GLOB.clown_names)
 			outfit = /datum/outfit/job/clown

@@ -316,8 +316,8 @@
 /area/ruin/space/has_grav/deepstorage/storage)
 "aU" = (
 /obj/structure/closet/cardboard,
-/obj/item/kitchen/knife,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
+/obj/item/knife/kitchen,
 /obj/item/cultivator,
 /obj/item/hatchet,
 /obj/item/kitchen/rollingpin,
@@ -381,7 +381,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bb" = (

@@ -297,7 +297,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	//cake + knife to cut it!
 	if(length(table))
 		var/turf/food_turf = get_turf(pick(table))
-		new /obj/item/kitchen/knife(food_turf)
+		new /obj/item/knife/kitchen(food_turf)
 		var/obj/item/food/cake/birthday/iancake = new(food_turf)
 		iancake.desc = "Happy birthday, Ian!"
 
