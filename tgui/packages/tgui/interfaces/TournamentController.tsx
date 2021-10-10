@@ -74,6 +74,17 @@ const RoundInfo = (props, context) => {
             onSelected={setSelectedTeamB}
           />
         </Stack.Item>
+
+        <Stack.Item>
+          <Button
+            icon="user-edit"
+            onClick={() => {
+              act("vv_teams");
+            }}
+          >
+            VV teams
+          </Button>
+        </Stack.Item>
       </Stack>
 
       <Stack vertical mt={2}>

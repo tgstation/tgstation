@@ -89,6 +89,10 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 		if ("spawn_teams")
 			spawn_teams(usr, list(params["team_a"], params["team_b"]))
 			return TRUE
+		if ("vv_teams")
+			if (usr.client)
+				usr.client.debug_variables(GLOB.tournament_teams)
+			return TRUE
 
 /obj/machinery/computer/tournament_controller/ui_state(mob/user)
 	return GLOB.admin_state
