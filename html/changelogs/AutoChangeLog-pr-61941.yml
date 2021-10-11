@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscdel: "Removed the action button for toggling griffin and owl wings, you can still open and close them with alt-click."
+  - refactor: "Toggle Suit component for labcoats, suit coats, and formal coats (and some others)"
