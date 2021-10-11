@@ -108,7 +108,7 @@ Things you **CAN'T** do:
 
 [UI Development](../tgui/README.md)
 
-[Walkthrough Guide to AI Datums](../code/datums/ai/making_your_ai.md)
+[AI Datums](../code/datums/ai/making_your_ai.md)
 
 ## Pull Request Process
 

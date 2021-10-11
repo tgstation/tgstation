@@ -2,6 +2,10 @@
 
 This is a step by step guide for making an AI Controller for your atom. It teaches the basics of each part of an AI Controller so the target for this guide is someone who doesn't know anything about Controllers and wants to hop in.
 
+### Note on examples used
+
+At the moment the quality of ai datums has some dubious quality all around the place, and I wanted to show the best examples. So while I walk through this with the basic cow ai as an example, I do swap to other datums involving items, generic instrument planning, and some other stuff to help explain singular concepts. I make it clear later in the guide when I'm getting back to following along with filling out the cow ai, so watch out for that.
+
 ## Starting out
 
 We're simply starting out with our definition of what we're modifying. Any atom can have an ai controller.
@@ -141,7 +145,7 @@ Let's visualize this in a case where the subtrees should stop prematurely!
 
 ### Subtree Setup
 
-Subtrees also have procs for when the mob first starts using them and when they stop. You can use this to make subtrees "reactive" to events via signals, and this is where we set defaults for blackboards if necessary (we want lists to be empty, not null!)
+Subtrees also have procs for when the mob first starts using them and when they stop. You can use this to make subtrees "react" to events via signals, and this is where we set defaults for blackboards if necessary (we want lists to be empty, not null!)
 
 Example:
 
@@ -189,11 +193,11 @@ GOOD:
 		return SUBTREE_RETURN_FINISH_PLANNING
 ```
 
-As you can see we're putting the search behavior... on a behavior! and sinc e the planning subtree passes to other subtrees afterwards, the monkey will still find things to do. The next pass, if the search behavior was successful, the action can be completed.
+As you can see we're putting the search behavior... on a behavior! and since the planning subtree passes to other subtrees afterwards, the monkey will still find things to do. The next pass, if the search behavior was successful the action can be completed.
 
 ### Behaviors for subtrees
 
-Finally, we've reached the final stop on this controller rabbit hole: Behaviors! These are what subtrees are planning, and the AI will do THESE from first planned all the way to the end, just like it runs through subtrees.
+Finally, we've reached the final stop on this controller rabbit hole: Behaviors! These are what subtrees are planning, and the AI will do **these** from first planned all the way to the end, just like it runs through subtrees.
 
 As before, let's take a look at a basic example of one:
 
@@ -278,4 +282,4 @@ Wow, what a tangent! But it's important to understand subtree planning as it is 
 
 ### Finished Product: A COW.
 
-And... we're finished! The tip_reaction subtree hooks signals and runs behaviors when the cow is tipped, the random speech occasionally plans speech, the idle behavior runs when no behaviors are planned, and the cow acts like a cow! We used a mob in this case because everyone knows how a cow works as it's a very simple creature. But AI Controllers work on anything! It's just as valid of a use case to make, say, the staff of animation apply AI Controllers to items.
+And... we're finished! The tip_reaction subtree hooks into signals and runs behaviors when the cow is tipped, the random speech occasionally plans speech, the idle behavior runs when no behaviors are planned, and the cow acts like a cow! We used a mob in this case because everyone knows how a cow works as it's a very simple creature, but AI Controllers work on anything! It's just as valid of a use case to make, say, the staff of animation apply AI Controllers to items.
