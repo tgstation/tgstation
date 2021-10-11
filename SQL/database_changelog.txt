@@ -10,13 +10,14 @@ In any query remember to add a prefix to the table names if you use one.
 
 -----------------------------------------------------
 Version 5.17, 8 October 2021, by MrStonedOne + Mothblocks
-Changes bans and tickets to not require a round ID. In the BSQL past, these were handled as 0, but in the move to rust-g this behavior was lost.
+Changes any table that requrired a NOT NULL round ID to now accept NULL. In the BSQL past, these were handled as 0, but in the move to rust-g this behavior was lost.
 
 ```
+ALTER TABLE `admin_log` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `ban` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `citation` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `connection_log` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
-ALTER TABLE `death` CHANGE `round_id` `round_id` INT(11) NULL;
+ALTER TABLE `death` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `feedback` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `legacy_population` CHANGE `round_id` `round_id` INT(11) UNSIGNED NULL;
 ALTER TABLE `library` CHANGE `round_id_created` `round_id_created` INT(11) UNSIGNED NULL;
