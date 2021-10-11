@@ -264,6 +264,11 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 
+	for (var/obj/item/card/id/id as anything in mob_occupant.get_all_contents_type(/obj/item/card/id))
+		if (id.registered_account && id.registered_account.add_to_accounts && length(id.registered_account.bank_cards) == 1) //don't want to get rid of it if there's another ID out there with it on it
+			qdel(id.registered_account)
+		qdel(id)
+
 	for(var/obj/item/item_content as anything in mob_occupant)
 		if(!istype(item_content) || HAS_TRAIT(item_content, TRAIT_NODROP))
 			continue

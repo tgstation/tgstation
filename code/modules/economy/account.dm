@@ -17,7 +17,8 @@
 	account_holder = newname
 	account_job = job
 	payday_modifier = modifier
-	setup_unique_account_id()
+	if (add_to_accounts)
+		setup_unique_account_id()
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
