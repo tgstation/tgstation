@@ -522,20 +522,11 @@
 					if (!can_purchase_this_shuttle(shuttle_template))
 						continue
 
-					var/has_access = FALSE
-
-					for (var/purchase_access in shuttle_template.who_can_purchase)
-						if (purchase_access in authorize_access)
-							has_access = TRUE
-							break
-
-					if (!has_access)
-						continue
-
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
 						"creditCost" = shuttle_template.credit_cost,
+						"emagOnly" = shuttle_template.emag_only,
 						"prerequisites" = shuttle_template.prerequisites,
 						"ref" = REF(shuttle_template),
 					))
@@ -627,6 +618,9 @@
 /obj/machinery/computer/communications/proc/can_purchase_this_shuttle(datum/map_template/shuttle/shuttle_template)
 	if (isnull(shuttle_template.who_can_purchase))
 		return FALSE
+
+	if (shuttle_template.emag_only)
+		return !!(obj_flags & EMAGGED)
 
 	for (var/access in authorize_access)
 		if (access in shuttle_template.who_can_purchase)
