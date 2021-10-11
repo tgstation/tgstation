@@ -28,7 +28,7 @@
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
-	CalculateAffectingAreas()
+	qdel(src)
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
