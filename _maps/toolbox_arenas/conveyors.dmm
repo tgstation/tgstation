@@ -1,13 +1,13 @@
 "a" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/effect/turf_decal/tile/brown,/turf/open/floor/iron,/area/tdome/arena)
 "b" = (/obj/machinery/conveyor/auto{dir = 6},/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plating,/area/tdome/arena)
 "c" = (/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/iron,/area/tdome/arena)
+"d" = (/obj/machinery/conveyor/auto{dir = 5; icon_state = "conveyor_map_inverted"; verted = -1},/obj/effect/turf_decal/stripes/line{dir = 9},/obj/structure/closet/crate,/turf/open/floor/plating,/area/tdome/arena)
 "e" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/tile/brown,/turf/open/floor/iron,/area/tdome/arena)
 "f" = (/turf/open/floor/plating,/area/tdome/arena)
-"g" = (/obj/structure/railing,/obj/machinery/conveyor/auto{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 1},/obj/structure/girder/displaced,/turf/open/floor/plating,/area/tdome/arena)
 "h" = (/obj/effect/turf_decal/tile/brown,/obj/structure/table/reinforced,/turf/open/floor/iron,/area/tdome/arena)
 "i" = (/obj/structure/lattice/catwalk,/obj/structure/closet/crate/freezer,/turf/open/openspace,/area/tdome/arena)
 "k" = (/obj/effect/turf_decal/tile/brown{dir = 8},/obj/structure/table/reinforced,/turf/open/floor/iron,/area/tdome/arena)
-"l" = (/obj/machinery/conveyor/auto{dir = 5; icon_state = "conveyor_map_inverted"; verted = -1},/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/plating,/area/tdome/arena)
+"l" = (/obj/machinery/conveyor/auto{dir = 5; icon_state = "conveyor_map_inverted"; verted = -1},/obj/effect/turf_decal/stripes/line{dir = 9},/obj/structure/girder/displaced,/turf/open/floor/plating,/area/tdome/arena)
 "m" = (/obj/structure/railing{dir = 8},/obj/machinery/conveyor/auto,/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plating,/area/tdome/arena)
 "n" = (/obj/structure/railing{dir = 4},/obj/machinery/conveyor/auto,/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plating,/area/tdome/arena)
 "o" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/tile/brown{dir = 4},/obj/structure/table/reinforced,/turf/open/floor/iron,/area/tdome/arena)
@@ -21,6 +21,7 @@
 "x" = (/turf/open/floor/iron,/area/tdome/arena)
 "y" = (/obj/structure/lattice/catwalk,/obj/structure/closet/crate/secure,/turf/open/openspace,/area/tdome/arena)
 "z" = (/obj/effect/turf_decal/tile/brown{dir = 1},/obj/structure/table/reinforced,/turf/open/floor/iron,/area/tdome/arena)
+"A" = (/obj/structure/railing{dir = 1},/obj/machinery/conveyor/auto{dir = 4},/obj/effect/turf_decal/stripes/line,/obj/structure/girder/displaced,/turf/open/floor/plating,/area/tdome/arena)
 "B" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/tile/brown{dir = 8},/turf/open/floor/iron,/area/tdome/arena)
 "C" = (/obj/machinery/conveyor/auto{dir = 6; icon_state = "conveyor_map_inverted"; verted = -1},/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/plating,/area/tdome/arena)
 "D" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/effect/turf_decal/tile/brown,/obj/structure/table/reinforced,/turf/open/floor/iron,/area/tdome/arena)
@@ -47,11 +48,11 @@
 "Z" = (/obj/machinery/conveyor/auto{dir = 9; icon_state = "conveyor_map_inverted"; verted = -1},/obj/effect/turf_decal/stripes/line{dir = 10},/turf/open/floor/plating,/area/tdome/arena)
 
 (1,1,1) = {"
-EGolQQCfNWWbIza
-xxFvXHVfPXJmcxx
-xxBPiHmfvLXVexx
-zGFZuuMftSYKczG
-khFNWWbflQgCckh
+EGodQQCfNWWbIza
+xxFnXHqfPXJmcxx
+xxBniHqfvLXVexx
+zGFZAuMftSYKczG
+khFNWWbflQQCckh
 xxUvJyVfniHqsxx
 xxFvLXmfnOJqcxx
 ahDtSRKfZuwMpkE

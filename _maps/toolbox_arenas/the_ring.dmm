@@ -31,7 +31,9 @@
 	},
 /area/tdome/arena)
 "o" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler{
+	tank_volume = 0
+	},
 /obj/effect/turf_decal/tile/dark/full,
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
@@ -81,7 +83,9 @@
 /area/tdome/arena)
 "D" = (
 /obj/effect/turf_decal/tile/dark/full,
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler{
+	tank_volume = 0
+	},
 /turf/open/floor/iron/dark,
 /area/tdome/arena)
 "E" = (
