@@ -57,7 +57,7 @@
 		var/seed_modifier = 0
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
-		var/obj/item/stack/plank = new plank_type(user.loc, 1 + seed_modifier)
+		new plank_type(user.loc, 1 + seed_modifier)
 		qdel(src)
 
 	if(CheckAccepted(W))
