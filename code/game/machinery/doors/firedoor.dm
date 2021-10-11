@@ -30,6 +30,9 @@
 	var/alarm_type = null
 	var/detecting = TRUE
 	var/detect_cooldown = 0
+	var/merger_id = "firelocks"
+	var/merger_typecache
+	var/mutable_appearance/warn_lights
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
@@ -39,6 +42,8 @@
 
 	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/MergerAdding)
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/MergerRemoving)
+	if(!merger_typecache)
+		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -99,31 +104,32 @@
 		return
 
 	if(exposed_temperature > T0C + 200)
-		start_activation_process(ALARM_FIRE)
+		start_activation_process(FIRELOCK_ALARM_TYPE_HOT)
 		return
 	if(exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-		start_activation_process(ALARM_ATMOS)
+		start_activation_process(FIRELOCK_ALARM_TYPE_COLD)
 		return
 	activate()//Fallback. If firelocks regularly trigger themselves as generic, we need to do some bugfixing
 
-/obj/machinery/door/firedoor/proc/start_activation_process(code = ALARM_GENERIC)
+/obj/machinery/door/firedoor/proc/start_activation_process(code = FIRELOCK_ALARM_TYPE_GENERIC)
 	if(alarm_type)
 		return //We're already active
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		INVOKE_ASYNC(buddylock, .proc/activate, code)
 
-/obj/machinery/door/firedoor/proc/activate(code = ALARM_GENERIC)
+/obj/machinery/door/firedoor/proc/activate(code = FIRELOCK_ALARM_TYPE_GENERIC)
 	SIGNAL_HANDLER
 	if(alarm_type)
 		return //Already active
 	alarm_type = code
-	switch(alarm_type)
-		if(ALARM_GENERIC)
-			color = COLOR_BLACK //DEBUG -- replace colors with overlay lights
-		if(ALARM_FIRE)
-			color = COLOR_RED
-		if(ALARM_ATMOS)
-			color = COLOR_BLUE
+//	switch(alarm_type)
+//		if(FIRELOCK_ALARM_TYPE_GENERIC)
+//			color = COLOR_BLACK //DEBUG -- replace colors with overlay lights
+//		if(FIRELOCK_ALARM_TYPE_HOT)
+//			color = COLOR_RED
+//		if(FIRELOCK_ALARM_TYPE_COLD)
+//			color = COLOR_BLUE
 	if(!being_held_open)
 		INVOKE_ASYNC(src, .proc/close)
 
@@ -131,7 +137,7 @@
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
 	alarm_type = null
-	color = COLOR_WHITE //DEBUG -- same as above
+//	color = COLOR_WHITE //DEBUG -- same as above
 	detect_cooldown = world.time + DETECT_COOLDOWN_STEP_TIME
 	INVOKE_ASYNC(src, .proc/open)
 
@@ -299,10 +305,17 @@ obj/machinery/door/firedoor/update_icon_state()
 	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
 
 /obj/machinery/door/firedoor/update_overlays()
+	cut_overlays()
 	. = ..()
-	if(!welded)
-		return
-	. += density ? "welded" : "welded_open"
+	if(welded)
+		. += density ? "welded" : "welded_open"
+	if(alarm_type && powered())
+		if(!warn_lights)
+			warn_lights = new()
+		warn_lights.icon = icon
+		warn_lights.icon_state = alarm_type
+		warn_lights.plane = ABOVE_LIGHTING_PLANE
+		add_overlay(warn_lights)
 
 /obj/machinery/door/firedoor/open()
 	. = ..()

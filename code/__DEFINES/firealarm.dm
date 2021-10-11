@@ -5,3 +5,9 @@
 #define FIRE_DETECT_STOP "fire_detect_stop"
 ///Sent when the fire detection of an area is enabled
 #define FIRE_DETECT_START "fire_detect_start"
+///Designates a fire lock should be closed due to HEAT
+#define FIRELOCK_ALARM_TYPE_HOT "firelock_alarm_type_hot"
+///Designates a fire lock should be closed due to COLD
+#define FIRELOCK_ALARM_TYPE_COLD "firelock_alarm_type_cold"
+///Designates a fire lock should be closed due unknown reasons (IE fire alarm was pulled)
+#define FIRELOCK_ALARM_TYPE_GENERIC "firelock_alarm_type_generic"

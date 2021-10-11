@@ -135,7 +135,7 @@
 		return //area alarm already active
 	//COOLDOWN_START(my_area, last_alarm, FIREALARM_COOLDOWN)//DEBUG -- fix cooldown
 	my_area.firealert()
-	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_ALARM, ALARM_GENERIC)
+	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_ALARM, FIRELOCK_ALARM_TYPE_GENERIC)
 	//playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)//DEBUG -- fix sound
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
@@ -153,17 +153,26 @@
 		return
 	. = ..()
 	add_fingerprint(user)
-	var/area/area = get_area(src)
-	if(area.fire)
-		reset(user)
-	else
-		alarm(user)
+	alarm(user)
+
+/obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)
+	if(buildstage != 2)
+		return
+	. = ..()
+	add_fingerprint(user)
+	reset(user)
 
 /obj/machinery/firealarm/attack_ai(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/firealarm/attack_ai_secondary(mob/user)
+	return attack_hand_secondary(user)
+
 /obj/machinery/firealarm/attack_robot(mob/user)
 	return attack_hand(user)
+
+/obj/machinery/firealarm/attack_robot_secondary(mob/user)
+	return attack_hand_secondary(user)
 
 /obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, params)
 	add_fingerprint(user)

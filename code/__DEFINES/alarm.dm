@@ -11,5 +11,3 @@
 #define ALARM_BURGLAR "Burglar"
 ///Sent by motion detecting cameras when they well, detect motion
 #define ALARM_MOTION "Motion"
-///Sent by fire alarms when pulled
-#define ALARM_GENERIC "Generic"
