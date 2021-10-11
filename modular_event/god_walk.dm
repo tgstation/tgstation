@@ -15,21 +15,21 @@
 	action_icon_state = "hide"
 	action_background_icon_state = "bg_default"
 
-/obj/effect/proc_holder/spell/targeted/godwalk/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/godwalk/cast_check(skipcharge = 0, mob/user = usr)
 	return TRUE
 
-/obj/effect/proc_holder/spell/targeted/godwalk/cast(list/targets,mob/living/user = usr)
+/obj/effect/proc_holder/spell/targeted/godwalk/cast(list/targets, mob/living/user = usr)
 	if(istype(user.loc, /obj/effect/dummy/phased_mob/godwhisp))
 		var/obj/effect/dummy/phased_mob/godwhisp/whisp = user.loc
 		qdel(whisp)
 		user.visible_message(span_boldnotice("[user] emerges from thin air!"))
-		playsound(get_turf(user), 'sound/magic/ethereal_exit.ogg', 15, TRUE, -1)
+		playsound(get_turf(user), 'sound/magic/ethereal_exit.ogg', 10, TRUE, -1)
 		REMOVE_TRAIT(user, TRAIT_MOVE_VENTCRAWLING, "godwalk") // to allow use of up/down verb
 		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, "godwalk")
 		REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, "godwalk")
 		user.update_sight()
 		return
-	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 25, TRUE, -1)
+	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 15, TRUE, -1)
 	user.visible_message(span_boldnotice("[user] vanishes!"))
 	user.SetAllImmobility(0)
 	user.setStaminaLoss(0, 0)

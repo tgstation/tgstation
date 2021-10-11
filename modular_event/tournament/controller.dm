@@ -209,6 +209,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			contestant_mob.forceMove(pick(valid_team_spawns[team_spawn_id]))
 			contestant_mob.key = client?.key
 			contestant_mob.reset_perspective()
+			ADD_TRAIT(contestant_mob, TRAIT_BYPASS_MEASURES, "arena")
 
 			contestants += contestant_mob
 
@@ -218,7 +219,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 
 		index += 1
 
-	var/message = "loaded [team_names.len] teams ([team_names.Join(", ")]) for [arena_id] arena."
+	var/message = "spawned [team_names.len] teams ([team_names.Join(", ")]) for [arena_id] arena."
 	message_admins("[key_name_admin(user)] [message]")
 	log_admin("[key_name(user)] [message]")
 

@@ -17,7 +17,7 @@
 			countdown_timers[player_mob.client] = tournament_countdown
 			player_mob.client?.screen += tournament_countdown
 
-	for (var/timer in 5 to 1 step -1)
+	for (var/timer in 3 to 1 step -1)
 		for (var/client in countdown_timers)
 			var/atom/movable/screen/tournament_countdown/tournament_countdown = countdown_timers[client]
 			tournament_countdown.set_text(timer)
@@ -29,7 +29,7 @@
 
 	for (var/client in countdown_timers)
 		var/atom/movable/screen/tournament_countdown/tournament_countdown = countdown_timers[client]
-		tournament_countdown.set_text("GO!")
+		tournament_countdown.set_text("Fight!")
 
 	stoplag(2 SECONDS)
 
