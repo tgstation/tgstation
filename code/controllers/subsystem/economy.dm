@@ -56,7 +56,8 @@ SUBSYSTEM_DEF(economy)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
 		mail_blocked = TRUE
 	for(var/dep_id in department_accounts)
-		if(dep_id == ACCOUNT_CAR) //cargo starts with nothing
+		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
+			new /datum/bank_account/department(dep_id, 0)
 			continue
 		new /datum/bank_account/department(dep_id, budget_to_hand_out)
 	return ..()
