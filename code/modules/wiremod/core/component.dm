@@ -82,7 +82,6 @@
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
 
-
 /obj/item/circuit_component/Destroy()
 	if(parent)
 		// Prevents a Destroy() recursion
@@ -96,6 +95,11 @@
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
 	return ..()
+
+/obj/item/circuit_component/examine(mob/user)
+	. = ..()
+	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		. += span_notice("It's incompatible with module components.")
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.

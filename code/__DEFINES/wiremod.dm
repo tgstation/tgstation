@@ -113,6 +113,8 @@
 #define CIRCUIT_FLAG_HIDDEN (1<<4)
 /// This circuit component has been marked as a component that has instant execution and will show up in the UI as so. This will only cause a visual change.
 #define CIRCUIT_FLAG_INSTANT (1<<5)
+/// This circuit component can't be loaded in module component. Saves us some headaches.
+#define CIRCUIT_FLAG_REFUSE_MODULE (1<<6)
 
 // Datatype flags
 /// The datatype supports manual inputs
