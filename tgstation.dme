@@ -3976,6 +3976,8 @@
 #include "modular_event\event_aheal\code\action.dm"
 #include "modular_event\event_aheal\code\living.dm"
 #include "modular_event\fluff\stairs.dm"
+#include "modular_event\free_antag_hud\client_procs.dm"
+#include "modular_event\free_antag_hud\login.dm"
 #include "modular_event\init_overwrites\vendor_init.dm"
 #include "modular_event\jobs\jobs.dm"
 #include "modular_event\spooky_mansion\spiral_stair\ladders.dm"
