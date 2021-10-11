@@ -1,6 +1,9 @@
 /obj/item/knife
 	name = "knife"
+	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	inhand_icon_state = "knife"
 	worn_icon_state = "knife"
 	desc = "The original knife, it is said that all other knives are only copies of this one."
