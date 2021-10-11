@@ -8,7 +8,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
-	movement_type = FLOATING
 	speak_emote = list("hisses")
 	gender = NEUTER
 	mob_biotypes = NONE
@@ -68,6 +67,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
 	updatetheme(theme)
+	AddElement(/datum/element/simple_flying)
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
