@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "exotic fuel pellet"
 	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 6000000
-	requirements = list(/datum/gas/hypernoblium = 100, /datum/gas/stimulum = 100)
+	requirements = list(/datum/gas/hypernoblium = 100, /datum/gas/nitrium = 100)
 	products = list(/obj/item/fuel_pellet/exotic = 1)
 
 /datum/gas_recipe/crystallizer/crystal_foam
@@ -190,3 +190,13 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	energy_release = 140000
 	requirements = list(/datum/gas/carbon_dioxide = 150, /datum/gas/nitrous_oxide = 100, /datum/gas/water_vapor = 25)
 	products = list(/obj/item/grenade/gas_crystal/crystal_foam = 1)
+
+/datum/gas_recipe/crystallizer/crystallized_nitrium
+	id = "crystallized_nitrium"
+	name = "Nitrium crystal"
+	min_temp = 10
+	max_temp = 25
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 45000
+	requirements = list(/datum/gas/nitrium = 150, /datum/gas/oxygen = 70, /datum/gas/bz = 50)
+	products = list(/obj/item/nitrium_crystal = 1)
