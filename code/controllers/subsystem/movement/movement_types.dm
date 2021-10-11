@@ -8,6 +8,8 @@
 	var/atom/movable/moving
 	///Different flags that apply to the loop
 	var/flags = NONE
+	///Defines how different move loops override each other. Lower numbers beat higher numbers
+	var/precedence = MOVEMENT_DEFAULT_PRECEDENCE
 	///Time to stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
 	///Delay between each move in deci-seconds
@@ -15,11 +17,12 @@
 	///The next time we should process
 	var/timer = 0
 
-/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, flags)
+/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, flags, precedence, precedence)
 	src.owner = owner
 	src.controller = controller
 	src.moving = moving
 	src.flags = flags
+	src.precedence = precedence
 	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/nuke_loop)
 
 /datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
@@ -95,11 +98,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move(moving, direction, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move, override, flags, delay, timeout, direction)
+/proc/move(moving, direction, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move, override, flags, precedence, delay, timeout, direction)
 
 ///Replacement for walk()
 /datum/move_loop/move
@@ -113,6 +117,8 @@
 
 /datum/move_loop/move/move()
 	. = moving.Move(get_step(moving, direction), direction)
+	if(QDELETED(src))
+		return FALSE
 
 /**
  * Handles drifting, most commonly used by space movement
@@ -125,11 +131,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/drift(moving, direction, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move/drift, override, flags, delay, timeout, direction)
+/proc/drift(moving, direction, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move/drift, override, flags, precedence, delay, timeout, direction)
 
 /datum/move_loop/move/drift
 	var/atom/inertia_last_loc
@@ -168,9 +175,9 @@
 	var/old_loc = moving.loc
 	moving.inertia_moving = TRUE
 	. = ..()
-	if(!moving) //If we got qdel'd during the move
+	if(!. && QDELETED(src))
 		return FALSE
-	moving.inertia_moving = FALSE 
+	moving.inertia_moving = FALSE
 	moving.setDir(old_dir)
 	if (moving.loc == old_loc)
 		qdel(src)
@@ -214,11 +221,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/force_move(moving, chasing, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, flags, delay, timeout, chasing)
+/proc/force_move(moving, chasing, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, flags, precedence, delay, timeout, chasing)
 
 ///Used for force-move loops
 /datum/move_loop/has_target/force_move
@@ -260,11 +268,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, flags, delay, timeout, chasing, min_dist)
+/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, flags, precedence, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
 /datum/move_loop/has_target/dist_bound/move_to
@@ -291,11 +300,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, flags, delay, timeout, chasing, max_dist)
+/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, flags, precedence, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
 /datum/move_loop/has_target/dist_bound/move_away
@@ -322,11 +332,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, flags, delay, timeout, chasing, home)
+/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, flags, precedence, delay, timeout, chasing, home)
 
 ///Helper proc for homing
 /proc/home_onto(moving, chasing, delay, timeout, override)
@@ -436,11 +447,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, flags, delay, timeout, chasing)
+/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, flags, precedence, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
@@ -461,13 +473,14 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_rand(moving, directions, delay, timeout, override, subsystem, flags)
+/proc/move_rand(moving, directions, delay, timeout, override, subsystem, flags, precedence)
 	if(!directions)
 		directions = GLOB.alldirs
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, flags, delay, timeout, directions)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, flags, precedence, delay, timeout, directions)
 
 /**
  * This isn't actually the same as walk_rand
@@ -505,11 +518,12 @@
  * override - Should we replace the current loop if it exists. Defaults to TRUE
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
  * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_to_rand(moving, delay, timeout, override, subsystem, flags)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, flags, delay, timeout)
+/proc/move_to_rand(moving, delay, timeout, override, subsystem, flags, precedence)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, flags, precedence, delay, timeout)
 
 ///Wrapper around step_rand
 /datum/move_loop/move_to_rand

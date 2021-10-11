@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(move_manager)
 	return ..()
 
 ///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
-/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, override=TRUE, flags)
+/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, override=TRUE, flags, priority=MOVEMENT_DEFAULT_PRECEDENCE)
 	var/datum/movement_packet/our_data = packets[thing_to_add]
 	if(!our_data)
 		our_data = new(thing_to_add)
@@ -57,14 +57,14 @@ SUBSYSTEM_DEF(move_manager)
 	return ..()
 
 ///Adds a loop to our parent. Returns TRUE if a success, FALSE otherwise
-/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override, flags)
+/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override, flags, precedence)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
 	if(existing_loop && !override)
 		return FALSE //Give up
 
-	var/list/arguments = args.Copy(5) //Just send the args we're not dealing with here
+	var/list/arguments = args.Copy(6) //Just send the args we're not dealing with here
 
-	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, flags) //Pass the mob to move and ourselves in via new
+	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, flags, precedence) //Pass the mob to move and ourselves in via new
 
 	var/worked_out = new_loop.setup(arglist(arguments)) //Here goes the rest
 	if(!worked_out)
@@ -85,11 +85,11 @@ SUBSYSTEM_DEF(move_manager)
 		contesting_subsystem.add_loop(running_loop)
 		return TRUE
 
+	if(running_loop.precedence > contestant.precedence)
+		return FALSE
+
 	var/datum/controller/subsystem/movement/current_subsystem = running_loop.controller
 	var/datum/controller/subsystem/movement/contesting_subsystem = contestant.controller
-
-	if(contesting_subsystem.precedence > current_subsystem.precedence)
-		return FALSE
 
 	current_subsystem.remove_loop(running_loop)
 	contesting_subsystem.add_loop(contestant)
@@ -102,16 +102,17 @@ SUBSYSTEM_DEF(move_manager)
 	if(!length(existing_loops)) //Die
 		qdel(src)
 		return
-	var/datum/controller/subsystem/movement/favorite = existing_loops[1] //Take the first index
-	for(var/i in 2 to length(existing_loops))
-		var/datum/controller/subsystem/movement/checking = existing_loops[i]
-		if(favorite.precedence < checking.precedence)
+	var/datum/move_loop/favorite
+	for(var/datum/controller/subsystem/movement/owner as anything in existing_loops)
+		var/datum/move_loop/checking = existing_loops[owner]
+		if(favorite && favorite.precedence < checking.precedence)
 			continue
 		favorite = checking
 
-	var/datum/move_loop/favorite_loop = existing_loops[favorite]
-	running_loop = favorite_loop
-	favorite.add_loop(running_loop)
+	var/datum/controller/subsystem/movement/favorite_subsystem = favorite.controller
+
+	running_loop = favorite
+	favorite_subsystem.add_loop(running_loop)
 
 /datum/movement_packet/proc/remove_loop(datum/controller/subsystem/movement/remove_from, datum/move_loop/loop_to_remove)
 	if(loop_to_remove == running_loop)

@@ -2,8 +2,6 @@ SUBSYSTEM_DEF(movement)
 	name = "Movement Loop"
 	flags = SS_BACKGROUND|SS_NO_INIT|SS_KEEP_TIMING
 	wait = 1 //Fire each tick
-	///Defines how different movement types override each other. Lower numbers beat higher numbers
-	var/precedence = MOVEMENT_DEFAULT_PRECEDENCE
 	///The list of datums we're processing
 	var/list/processing = list()
 	///Used to make pausing possible

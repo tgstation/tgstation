@@ -810,9 +810,13 @@
 		return TRUE
 
 	//TDLR;
+	//Move packets to atom/movable
+	//Get rid of drift(), should just use move() combined with some signals
 	//Test precedence system. Dab on floyd
+	//Maybe fuck with that client delay thing a bit more? I think it might break things that both drift and move. Test it
+
 	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
-	drift(moving = src, direction = direction, delay = inertia_move_delay, subsystem = SSspacedrift, flags = MOVELOOP_OVERRIDE_CLIENT_CONTROL)
+	drift(moving = src, direction = direction, delay = inertia_move_delay, subsystem = SSspacedrift, flags = MOVELOOP_OVERRIDE_CLIENT_CONTROL, precedence = MOVEMENT_SPACE_PRECEDENCE)
 	return TRUE
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
