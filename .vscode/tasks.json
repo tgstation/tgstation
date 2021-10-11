@@ -89,6 +89,6 @@
 			],
 			"group": "build",
 			"label": "tgui: sonar"
-		},
+		}
 	]
 }
