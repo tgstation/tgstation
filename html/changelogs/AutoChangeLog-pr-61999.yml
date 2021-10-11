@@ -1,6 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - balance: "Bluespace launchpad maximum range decreased from 60 to 40. Traitor launchpad unaffected."
-  - balance: "Bluespace launchpads will now give a visual indication of the turf they are teleporting to/teleporting from as well as a noise notification. Does not apply to traitor launchpads."
-  - balance: "Bluespace launchpads will now show a beam that fades out between the target turf and the launchpad after it has done the teleportation. Again, does not apply to traitor launchpads."

@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - qol: "toggle random events doesn't uselessly include a message to the user, only to admins... which the user is."
