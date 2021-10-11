@@ -22,9 +22,7 @@
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
 
 /datum/species/vampire/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
-		return TRUE
-	return FALSE
+	return TRUE
 
 /datum/species/vampire/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
@@ -50,10 +48,11 @@
 		C.adjustOxyLoss(-2 * delta_time)
 		C.adjustCloneLoss(-2 * delta_time)
 		return
-	C.blood_volume -= 0.125 * delta_time
+	var/obj/shapeshift_holder/H = locate() in C
+	if(H)
+		C.blood_volume -= 0.125 * delta_time
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, span_danger("You ran out of blood!"))
-		var/obj/shapeshift_holder/H = locate() in C
 		if(H)
 			H.shape.dust() //make sure we're killing the bat if you are out of blood, if you don't it creates weird situations where the bat is alive but the caster is dusted.
 		C.dust()
