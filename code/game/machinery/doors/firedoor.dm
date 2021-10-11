@@ -28,7 +28,7 @@
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
