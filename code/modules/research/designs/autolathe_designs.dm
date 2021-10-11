@@ -933,7 +933,7 @@
 	id = "cleaver"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 18000)
-	build_path = /obj/itemknife/butcher
+	build_path = /obj/item/knife/butcher
 	category = list("hacked", "Dinnerware")
 
 /datum/design/spraycan
