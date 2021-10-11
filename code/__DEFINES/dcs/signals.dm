@@ -449,6 +449,10 @@
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
+///from base of atom/movable/newtonian_move(): (inertia_direction)
+#define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
+	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
+	#define COMPONENT_MOVABLE_NEWTONIAN_ALLOW (1<<1)
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"
 	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits
@@ -1257,7 +1261,7 @@
 ///from /datum/move_loop/process():
 #define COMSIG_MOVELOOP_PROCESS_CHECK "process_check"
 	#define MOVELOOP_STOP_PROCESSING (1<<0)
-	
+
 // /datum/element/movetype_handler signals
 /// Called when the floating anim has to be temporarily stopped and restarted later: (timer)
 #define COMSIG_PAUSE_FLOATING_ANIM "pause_floating_anim"

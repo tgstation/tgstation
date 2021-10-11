@@ -6,6 +6,8 @@
 	var/datum/controller/subsystem/movement/controller
 	///The thing we're moving about
 	var/atom/movable/moving
+	///Different flags that apply to the loop
+	var/flags = NONE
 	///Time to stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
 	///Delay between each move in deci-seconds
@@ -13,22 +15,26 @@
 	///The next time we should process
 	var/timer = 0
 
-/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving)
+/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, flags)
 	src.owner = owner
 	src.controller = controller
 	src.moving = moving
+	src.flags = flags
 	RegisterSignal(moving, COMSIG_PARENT_QDELETING, .proc/nuke_loop)
 
 /datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
 	if(!ismovable(moving) || !owner)
 		return FALSE
 
-	src.delay = delay
+	src.delay = max(delay, 1) //Please...
 	src.lifetime =  max(world.time + timeout, INFINITY)
 	return TRUE
 
 /datum/move_loop/proc/start_loop()
 	src.timer = world.time + delay
+	return
+
+/datum/move_loop/proc/stop_loop()
 	return
 
 /datum/move_loop/Destroy()
@@ -48,8 +54,6 @@
 	qdel(src)
 
 /datum/move_loop/process(delta_ticks)
-	if(timer > world.time)
-		return
 	if(SEND_SIGNAL(moving, COMSIG_MOVELOOP_PROCESS_CHECK) & MOVELOOP_STOP_PROCESSING) //Chance for the object to react
 		qdel(src)
 		return
@@ -58,13 +62,23 @@
 		nuke_loop()
 		return
 
+	var/visual_delay = max((world.time - timer) / delay, 1)
 	timer = world.time + delay
-	moving.set_glide_size(DELAY_TO_GLIDE_SIZE(delay))
-	move()
+	if(!move()) //If we didn't go anywhere
+		return
+	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
+	if(flags & MOVELOOP_OVERRIDE_CLIENT_CONTROL && istype(moving, /mob))
+		var/mob/moved_mob = moving
+		var/client/our_client = moved_mob.client
+		if(our_client)
+			 //You can step when our delay is over, plus a bit to account for how delay is checked
+			var/deciseconds_to_ticklag = INVERSE(world.tick_lag)
+			our_client.ignore_movement_until = world.time + delay * visual_delay * deciseconds_to_ticklag
 
 ///Handles the actual move, overriden by children
+///Returns FALSE if nothing happen, TRUE otherwise
 /datum/move_loop/proc/move()
-	return
+	return FALSE
 
 
 /proc/stop_looping(atom/moving, subsystem)
@@ -79,11 +93,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move(moving, direction, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move, override, delay, timeout, direction)
+/proc/move(moving, direction, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move, override, flags, delay, timeout, direction)
 
 ///Replacement for walk()
 /datum/move_loop/move
@@ -96,8 +112,7 @@
 	direction = dir
 
 /datum/move_loop/move/move()
-	moving.Move(get_step(moving, direction), direction)
-
+	. = moving.Move(get_step(moving, direction), direction)
 
 /**
  * Handles drifting, most commonly used by space movement
@@ -108,41 +123,58 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/drift(moving, direction, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move/drift, override, delay, timeout, direction)
+/proc/drift(moving, direction, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move/drift, override, flags, delay, timeout, direction)
 
 /datum/move_loop/move/drift
 	var/atom/inertia_last_loc
 
 /datum/move_loop/move/drift/start_loop()
 	inertia_last_loc = moving.loc
+	RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/check_inertia)
+	RegisterSignal(moving, COMSIG_MOVABLE_NEWTONIAN_MOVE, .proc/handle_newtonian_move)
 	return ..()
 
-/datum/move_loop/move/drift/move()
-	if (!moving.loc || moving.loc != inertia_last_loc || moving.Process_Spacemove(0))
-		moving.inertia_dir = 0
+/datum/move_loop/move/drift/stop_loop()
+	moving.inertia_moving = FALSE
+	UnregisterSignal(moving, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE))
+	return ..()
 
-	if (!moving.inertia_dir)
+/datum/move_loop/move/drift/proc/check_inertia(datum/source, old_loc)
+	SIGNAL_HANDLER
+	if(!isturf(moving.loc) || moving.Process_Spacemove(0))
 		qdel(src)
 		return
+	if(!moving.inertia_moving)
+		if(inertia_last_loc != moving.loc)
+			qdel(src)
+		return
+	inertia_last_loc = moving.loc
 
-	direction = moving.inertia_dir
+/datum/move_loop/move/drift/proc/handle_newtonian_move(datum/source, inertia_direction)
+	direction = inertia_direction
+	inertia_last_loc = moving.loc
+	if(!inertia_direction)
+		qdel(src)
+	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
 
+/datum/move_loop/move/drift/move()
 	var/old_dir = moving.dir
 	var/old_loc = moving.loc
 	moving.inertia_moving = TRUE
-	..()
-	moving.inertia_moving = FALSE //Moving becomes null here? somehow? what? Oh. OHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH it's the override I think.
-	//Should really use signals to react to movements rather then trying to track it directly like this, would let us avoid the many registrations issue too.
-	//Means a bigger refactor though. Pain
+	. = ..()
+	if(!moving) //If we got qdel'd during the move
+		return FALSE
+	moving.inertia_moving = FALSE 
 	moving.setDir(old_dir)
-	inertia_last_loc = moving.loc
 	if (moving.loc == old_loc)
 		qdel(src)
-		return
+		return FALSE
 
 /datum/move_loop/has_target
 	///The thing we're moving in relation to, either at or away from
@@ -162,7 +194,7 @@
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because of reasons
 
 /datum/move_loop/has_target/Destroy()
-	if(!isturf(target))
+	if(!isturf(target) && target)
 		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	return ..()
 
@@ -180,17 +212,19 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/force_move(moving, chasing, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, delay, timeout, chasing)
+/proc/force_move(moving, chasing, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, flags, delay, timeout, chasing)
 
 ///Used for force-move loops
 /datum/move_loop/has_target/force_move
 
 /datum/move_loop/has_target/force_move/move()
-	moving.forceMove(get_step(moving, get_dir(moving, target)))
+	return moving.forceMove(get_step(moving, get_dir(moving, target)))
 
 
 ///Base class of move_to and move_away, deals with the distance and target aspect of things
@@ -224,11 +258,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, delay, timeout, chasing, min_dist)
+/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, flags, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
 /datum/move_loop/has_target/dist_bound/move_to
@@ -240,7 +276,7 @@
 	. = ..()
 	if(!.)
 		return
-	step_to(moving, target)
+	return step_to(moving, target)
 
 
 /**
@@ -253,11 +289,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, delay, timeout, chasing, max_dist)
+/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, flags, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
 /datum/move_loop/has_target/dist_bound/move_away
@@ -269,7 +307,7 @@
 	. = ..()
 	if(!.)
 		return
-	step_away(moving, target)
+	return step_away(moving, target)
 
 
 /**
@@ -282,11 +320,13 @@
  * home - Should we move towards the object at all times? Or launch towards them, but allow walls and such to take us off track. Defaults to FALSE
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to INFINITY
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, delay, timeout, chasing, home)
+/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, flags, delay, timeout, chasing, home)
 
 ///Helper proc for homing
 /proc/home_onto(moving, chasing, delay, timeout, override)
@@ -345,7 +385,7 @@
 		x_ticker -= (x_ticker > 0) ? 1 : -1
 	if(abs(y_ticker) >= 1)
 		y_ticker -= (y_ticker > 0) ? 1 : -1
-	moving.Move(moving_towards, get_dir(moving, moving_towards))
+	return moving.Move(moving_towards, get_dir(moving, moving_towards))
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
@@ -394,18 +434,20 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, delay, timeout, chasing)
+/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, flags, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
 
 /datum/move_loop/has_target/move_towards_budget/move()
 	var/dir = get_dir(moving, target)
-	moving.Move(get_step(moving, dir), dir)
+	return moving.Move(get_step(moving, dir), dir)
 
 
 /**
@@ -417,13 +459,15 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_rand(moving, directions, delay, timeout, override, subsystem)
+/proc/move_rand(moving, directions, delay, timeout, override, subsystem, flags)
 	if(!directions)
 		directions = GLOB.alldirs
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, delay, timeout, directions)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, flags, delay, timeout, directions)
 
 /**
  * This isn't actually the same as walk_rand
@@ -447,9 +491,9 @@
 		var/testdir = pick(potential_dirs)
 		var/turf/moving_towards = get_step(moving, testdir)
 		if(moving.Move(moving_towards, testdir)) //If it worked, we're done
-			break
+			return TRUE
 		potential_dirs -= testdir
-
+	return FALSE
 
 /**
  * Wrapper around walk_rand(), doesn't actually result in a random walk, it's more like moving to random places in viewish
@@ -459,14 +503,16 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * override - Should we replace the current loop if it exists. Defaults to TRUE
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
+ * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_to_rand(moving, delay, timeout, override, subsystem)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, delay, timeout)
+/proc/move_to_rand(moving, delay, timeout, override, subsystem, flags)
+	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, flags, delay, timeout)
 
 ///Wrapper around step_rand
 /datum/move_loop/move_to_rand
 
 /datum/move_loop/move_to_rand/move()
-	step_rand(moving)
+	return step_rand(moving)

@@ -960,7 +960,7 @@
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 40
+			client.move_delay = world.time + 4 SECONDS
 	else
 		pulledby.stop_pulling()
 		return FALSE

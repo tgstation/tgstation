@@ -26,10 +26,9 @@
 	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
-	var/inertia_dir = 0
-	var/atom/inertia_last_loc
-	var/inertia_moving = 0
-	var/inertia_next_move = 0
+	///Are we moving with inertia? Mostly used as an optimization
+	var/inertia_moving = FALSE
+	///Delay in deciseconds between inertia based movement
 	var/inertia_move_delay = 5
 	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
 	var/pass_flags = NONE
@@ -521,7 +520,6 @@
 				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
 				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
 					newtonian_move(direct)
 			moving_diagonally = 0
 			return
@@ -568,7 +566,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (!inertia_moving)
-		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(movement_dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
@@ -806,35 +803,16 @@
 /// Only moves the object if it's under no gravity
 /atom/movable/proc/newtonian_move(direction)
 	if(!isturf(loc) || Process_Spacemove(0))
-		inertia_dir = 0
+		stop_looping(src, SSspacedrift)
 		return FALSE
 
-	inertia_dir = direction
-	if(!direction)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
 
-	//Lemon TODO: Make this suck less
-	var/datum/movement_packet/packet = SSmove_manager.get_packet(src)
-	if(istype(packet?.running_loop, /datum/move_loop/move/drift))
-		var/datum/move_loop/move/drift/existing_drift = packet.running_loop
-		if(existing_drift.controller == SSspacedrift)
-			existing_drift.inertia_last_loc = loc
-			return
-
 	//TDLR;
-	//Fix/work around glide size in client/move
-	//Do something about how inerial_last_loc is tracked
-	//Change how glide size is set during each loop to make it more consistent with the actual delay between steps (The min should go)
 	//Test precedence system. Dab on floyd
-
-	//Ok so this doesn't actually do anything
-	//Since client/Move ovverides this directly after the move completes to account for like, the direction you actually ended up moving in
-	//Rather then the direction it expects you to move in
-	//We either need to override that cleanly, or shift the start of the drift forward a bit so it finishes on time. both options kinda suck though.
-	//Also need to make glide size stuff scale better for the move types. right now it delays based off actual/real byond time, in reality we should scale based on
-	//How slow the ss is going. That's a bit hard to track, maybe we could calculate it for each object? slight cost there though. I hope it gets rid of the weird snapping I was seeing
-	set_glide_size(DELAY_TO_GLIDE_SIZE(inertia_move_delay))
-	drift(moving = src, direction = inertia_dir, delay = inertia_move_delay, subsystem = SSspacedrift)
+	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
+	drift(moving = src, direction = direction, delay = inertia_move_delay, subsystem = SSspacedrift, flags = MOVELOOP_OVERRIDE_CLIENT_CONTROL)
 	return TRUE
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -946,11 +924,9 @@
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
-		if(!buckled_mob.Move(newloc, direct, glide_size_override))
-			Move(buckled_mob.loc, direct)
+		if(!buckled_mob.Move(newloc, direct, glide_size_override)) //If a mob buckled to us can't make the same move as us
+			Move(buckled_mob.loc, direct) //Move back to its location
 			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
 			return FALSE
 	return TRUE
 

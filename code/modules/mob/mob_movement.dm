@@ -69,9 +69,8 @@
 /client/Move(new_loc, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
 		return FALSE
-	else
-		next_move_dir_add = 0
-		next_move_dir_sub = 0
+	next_move_dir_add = 0
+	next_move_dir_sub = 0
 	var/old_move_delay = move_delay
 	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
@@ -82,6 +81,8 @@
 		return FALSE //This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
+	if(world.time < ignore_movement_until) //Please don't move our mob before this
+		return
 	if(!isliving(mob))
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
@@ -127,6 +128,7 @@
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
+	visual_delay = 0
 
 	var/confusion = L.get_confusion()
 	if(confusion)
@@ -145,7 +147,11 @@
 
 	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
 		add_delay *= 2
-	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
+	if(visual_delay)
+		mob.set_glide_size(visual_delay)
+	else
+		mob.set_glide_size(DELAY_TO_GLIDE_SIZE(add_delay))
+
 	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
@@ -331,6 +337,15 @@
  */
 /mob/proc/mob_negates_gravity()
 	return FALSE
+
+/mob/newtonian_move(direction)
+	. = ..()
+	if(!.) //Only do this if we're actually going somewhere
+		return
+	if(!client)
+		return
+	client.ignore_movement_until = world.time + inertia_move_delay * SSspacedrift.visual_delay * INVERSE(world.tick_lag)
+	client.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay) //Make sure moving into a space move looks like a space move
 
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)

@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(move_manager)
 	return ..()
 
 ///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
-/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, override=TRUE)
+/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, override=TRUE, flags)
 	var/datum/movement_packet/our_data = packets[thing_to_add]
 	if(!our_data)
 		our_data = new(thing_to_add)
@@ -28,7 +28,15 @@ SUBSYSTEM_DEF(move_manager)
 ///Temporary proc for use while packets live on the subsystem. I'm going to move them to the objects later, but it makes debugging harder
 /datum/controller/subsystem/move_manager/proc/get_packet(atom/movable/packet_holder)
 	return packets[packet_holder]
-	
+
+///See above. Returns 1 if we're using the subsystem, 0 otherwise
+/datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_holder, datum/controller/subsystem/movement/subsystem)
+	var/datum/movement_packet/packet = get_packet(packet_holder)
+	if(!packet)
+		return
+	var/datum/move_loop/active_loop = packet.running_loop
+	return (active_loop && active_loop == packet.existing_loops[subsystem])
+
 ///A packet of information that describes the current state of a moving object
 /datum/movement_packet
 	///Our parent atom
@@ -49,14 +57,14 @@ SUBSYSTEM_DEF(move_manager)
 	return ..()
 
 ///Adds a loop to our parent. Returns TRUE if a success, FALSE otherwise
-/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override)
+/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override, flags)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
 	if(existing_loop && !override)
 		return FALSE //Give up
 
-	var/list/arguments = args.Copy(4) //Just send the args we're not dealing with here
+	var/list/arguments = args.Copy(5) //Just send the args we're not dealing with here
 
-	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent) //Pass the mob to move and ourselves in via new
+	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, flags) //Pass the mob to move and ourselves in via new
 
 	var/worked_out = new_loop.setup(arglist(arguments)) //Here goes the rest
 	if(!worked_out)
