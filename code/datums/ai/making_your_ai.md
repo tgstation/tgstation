@@ -256,7 +256,7 @@ GOOD:
 	var/datum/song/song = controller.blackboard[song_datum_key]
 
 	song.start_playing(controller.pawn)
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE) //NOTE: you may forget, but this doesn't end the proc! return after it if you have code later
 ```
 
 ## "Okay, back to what we were doing!"
