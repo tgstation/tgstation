@@ -263,10 +263,17 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		announcer.announce("CRYOSTORAGE", mob_occupant.real_name, announce_rank, list())
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
-
-	for (var/obj/item/card/id/id as anything in mob_occupant.get_all_contents_type(/obj/item/card/id))
-		if (id.registered_account && id.registered_account.add_to_accounts && length(id.registered_account.bank_cards) == 1) //don't want to get rid of it if there's another ID out there with it on it
-			qdel(id.registered_account)
+	var/list/cards_in_mob = mob_occupant.get_all_contents_type(/obj/item/card/id)
+	for (var/obj/item/card/id/id as anything in cards_in_mob)
+		var/datum/bank_account/checking_account = id.registered_account
+		if (checking_account && checking_account.add_to_accounts && length(checking_account.bank_cards))
+			var/all_cards_in_mob = TRUE
+			for (var/obj/item/card/id/id2 as anything in checking_account.bank_cards)
+				if (!(id2 in cards_in_mob))
+					all_cards_in_mob = FALSE
+			if (all_cards_in_mob)
+				SSeconomy.bank_accounts_by_id -= "[checking_account.account_id]"
+				SSeconomy.cryod_accounts["[checking_account.account_id]"] = checking_account
 		qdel(id)
 
 	for(var/obj/item/item_content as anything in mob_occupant)

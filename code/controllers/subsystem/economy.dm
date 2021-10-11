@@ -49,6 +49,8 @@ SUBSYSTEM_DEF(economy)
 	var/mail_waiting = 0
 	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.
 	var/mail_blocked = FALSE
+	///Accounts that have cryo'd, so we can count them in the mr_moneybags check at roundend
+	var/cryod_accounts = list()
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
