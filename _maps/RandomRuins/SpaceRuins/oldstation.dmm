@@ -2853,7 +2853,7 @@
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "hK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/rad_collector,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "hL" = (
@@ -6298,11 +6298,6 @@
 "rX" = (
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/ancientstation/deltacorridor)
-"rZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/grounding_rod,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "sy" = (
@@ -11437,8 +11432,8 @@ bE
 hK
 hK
 dh
-rZ
-rZ
+dh
+dh
 dh
 Zk
 DC
