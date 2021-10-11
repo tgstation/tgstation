@@ -176,7 +176,7 @@ const Blanks = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     blanks,
-    category
+    category,
   } = data;
 
   const sortBlanks = sortBy(
@@ -184,15 +184,16 @@ const Blanks = (props, context) => {
   )(blanks || []);
 
   const categories = [];
-    for (let blank of sortBlanks) {
-      if (!categories.includes(blank.category)) {
-        categories.push(blank.category);
-      }
+  for (let blank of sortBlanks) {
+    if (!categories.includes(blank.category)) {
+      categories.push(blank.category);
     }
+  }
 
   let selectCategory;
   if (category === null) {
-    selectCategory = sortBlanks.filter(blank => blank.category === categories[0]);
+    selectCategory = sortBlanks.filter(blank => 
+	blank.category === categories[0]);
   } else {
     selectCategory = sortBlanks.filter(blank => blank.category === category);
   }
@@ -213,7 +214,7 @@ const Blanks = (props, context) => {
             content={blank.code}
             tooltip={blank.name}
             onClick={() => act("print_blank", {
-              path: blank.path
+              path: blank.path,
             })}
           />
         ))}
