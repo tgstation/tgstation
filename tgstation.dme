@@ -654,6 +654,7 @@
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
 #include "code\datums\components\tippable.dm"
+#include "code\datums\components\toggle_suit.dm"
 #include "code\datums\components\transforming.dm"
 #include "code\datums\components\trapdoor.dm"
 #include "code\datums\components\twohanded.dm"
