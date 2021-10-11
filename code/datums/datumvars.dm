@@ -5,6 +5,7 @@
 	return TRUE
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
+	SHOULD_CALL_PARENT(TRUE)
 	if(var_name == NAMEOF(src, vars))
 		return FALSE
 	vars[var_name] = var_value
