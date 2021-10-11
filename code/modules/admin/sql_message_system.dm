@@ -627,13 +627,19 @@
 	browser.set_content(jointext(output, ""))
 	browser.open()
 
-/proc/get_message_output(type, target_ckey, show_secret = TRUE, after_timestamp = 0)
+/proc/get_message_output(type, target_ckey, show_secret = TRUE, after_timestamp)
 	if(!SSdbcore.Connect())
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	if(!type)
 		return
 	var/output
+	var/list/parameters = list(
+		"targetckey" = target_ckey,
+		"type" = type,
+	)
+	if(after_timestamp)
+		parameters["after_timestamp"] = after_timestamp
 	var/datum/db_query/query_get_message_output = SSdbcore.NewQuery({"
 		SELECT
 			id,
@@ -646,9 +652,9 @@
 		AND deleted = 0
 		AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
 		AND ((type != 'message' AND type != 'watchlist entry') OR targetckey = :targetckey)
-		AND timestamp > :after_timestamp
+		[after_timestamp? "AND timestamp > :after_timestamp": ""]
 		[!show_secret? "AND secret = 0": ""]
-	"}, list("targetckey" = target_ckey, "type" = type, "after_timestamp" = after_timestamp))
+	"}, parameters)
 	if(!query_get_message_output.warn_execute())
 		qdel(query_get_message_output)
 		return
