@@ -78,7 +78,7 @@
 
 	var/area/area = get_area(src)
 
-	if(!area.fire)
+	if(!(area.fire || LAZYLEN(area.active_firelocks)))
 		. += "fire_off"
 		. += mutable_appearance(icon, "fire_off")
 		. += emissive_appearance(icon, "fire_off", alpha = src.alpha)
@@ -112,7 +112,8 @@
 		user.visible_message(span_warning("Sparks fly out of [src]!"),
 							span_notice("You emag [src], disabling the thermal sensors of nearby firelocks."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_EMAG)
+	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+		firelock.update_detect(FIRE_DETECT_EMAG)
 
 /**
  * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level
@@ -135,7 +136,8 @@
 		return //area alarm already active
 	//COOLDOWN_START(my_area, last_alarm, FIREALARM_COOLDOWN)//DEBUG -- fix cooldown
 	my_area.firealert()
-	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_ALARM, FIRELOCK_ALARM_TYPE_GENERIC)
+	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	//playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)//DEBUG -- fix sound
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
@@ -144,7 +146,8 @@
 	if(!is_operational)
 		return
 	my_area.unset_fire_alarm_effects()
-	SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_CLEAR)
+	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+		firelock.reset()
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
@@ -157,10 +160,10 @@
 
 /obj/machinery/firealarm/attack_hand_secondary(mob/user, list/modifiers)
 	if(buildstage != 2)
-		return
-	. = ..()
+		return ..()
 	add_fingerprint(user)
 	reset(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/firealarm/attack_ai(mob/user)
 	return attack_hand(user)
@@ -337,9 +340,11 @@
 		to_chat(user, span_warning("The control circuitry of [src] appears to be malfunctioning."))
 		return
 	if(my_area.fire_detect)
-		SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_STOP)
+		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+			firelock.update_detect(FIRE_DETECT_STOP)
 	else
-		SEND_SIGNAL(my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_START)
+		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+			firelock.update_detect(FIRE_DETECT_START)
 	my_area.fire_detect = !my_area.fire_detect
 	to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
 

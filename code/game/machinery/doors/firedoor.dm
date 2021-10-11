@@ -1,7 +1,7 @@
 #define CONSTRUCTION_PANEL_OPEN 1 //Maintenance panel is open, still functioning
 #define CONSTRUCTION_NO_CIRCUIT 2 //Circuit board removed, can safely weld apart
 #define DEFAULT_STEP_TIME 20 /// default time for each step
-#define DETECT_COOLDOWN_STEP_TIME 50 ///Wait time before we can detect an issue again, after a recent clear.
+#define DETECT_COOLDOWN_STEP_TIME 5 SECONDS ///Wait time before we can detect an issue again, after a recent clear.
 
 /obj/machinery/door/firedoor
 	name = "firelock"
@@ -22,21 +22,24 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, RAD = 100, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-	var/area/my_area
 	var/nextstate = null
 	var/boltslocked = TRUE
+	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
+	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
 	var/being_held_open = FALSE
+	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
 	var/alarm_type = null
-	var/detecting = TRUE
+	///Cooldown for Detections. If current world time is not greater than (dectect_cooldown + DETECT_COOLDOWN_STEP_TIME), we don't activate. Prevents instant re-activations when air mixing would solve an issue
 	var/detect_cooldown = 0
+	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
 	var/merger_typecache
+	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
-	my_area = get_area(src)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 
@@ -55,6 +58,7 @@
 	remove_from_areas()
 	UnregisterSignal(src, COMSIG_MERGER_ADDING)
 	UnregisterSignal(src, COMSIG_MERGER_REMOVING)
+	return ..()
 
 ///////////////////////////////////////////////////////////////////
 // Merger handling
@@ -81,16 +85,16 @@
 	remove_from_areas()
 	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
 	for(var/area/place in affecting_areas)
-		RegisterSignal(place, COMSIG_AREA_FIRE_DETECT_CHANGE, .proc/update_detect)
-		RegisterSignal(place, COMSIG_AREA_FIRE_ALARM, .proc/activate)
-		RegisterSignal(place, COMSIG_AREA_FIRE_CLEAR, .proc/reset)
+		LAZYADD(place.firedoors, src)
 
 /obj/machinery/door/firedoor/proc/remove_from_areas()
 	if(affecting_areas)
-		for(var/place in affecting_areas)
-			UnregisterSignal(place, COMSIG_AREA_FIRE_DETECT_CHANGE)
-			UnregisterSignal(place, COMSIG_AREA_FIRE_ALARM)
-			UnregisterSignal(place, COMSIG_AREA_FIRE_CLEAR)
+		for(var/area/place in affecting_areas)
+			LAZYREMOVE(place.firedoors, src)
+			LAZYREMOVE(place.active_firelocks, src)
+			if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
+				for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
+					fire_panel.update_icon()
 
 /obj/machinery/door/firedoor/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return world.time > detect_cooldown && (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
@@ -98,8 +102,9 @@
 /obj/machinery/door/firedoor/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(obj_flags & EMAGGED)
 		return
-	if(!my_area.fire_detect)
-		return
+	for(var/area/place in affecting_areas)
+		if(!place.fire_detect) //if any area is set to disable detection
+			return
 	if(alarm_type)
 		return
 
@@ -123,13 +128,11 @@
 	if(alarm_type)
 		return //Already active
 	alarm_type = code
-//	switch(alarm_type)
-//		if(FIRELOCK_ALARM_TYPE_GENERIC)
-//			color = COLOR_BLACK //DEBUG -- replace colors with overlay lights
-//		if(FIRELOCK_ALARM_TYPE_HOT)
-//			color = COLOR_RED
-//		if(FIRELOCK_ALARM_TYPE_COLD)
-//			color = COLOR_BLUE
+	for(var/area/place in affecting_areas)
+		LAZYADD(place.active_firelocks, src)
+		if(LAZYLEN(place.active_firelocks) == 1) //if we're the first to activate in this particular area
+			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
+				fire_panel.update_icon()
 	if(!being_held_open)
 		INVOKE_ASYNC(src, .proc/close)
 
@@ -137,7 +140,11 @@
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
 	alarm_type = null
-//	color = COLOR_WHITE //DEBUG -- same as above
+	for(var/area/place in affecting_areas)
+		LAZYREMOVE(place.active_firelocks, src)
+		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
+			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
+				fire_panel.update_icon()
 	detect_cooldown = world.time + DETECT_COOLDOWN_STEP_TIME
 	INVOKE_ASYNC(src, .proc/open)
 
@@ -148,13 +155,6 @@
 			obj_flags |= EMAGGED
 			alarm_type = null
 			open()
-		if(FIRE_DETECT_STOP)
-			detecting = FALSE
-		if(FIRE_DETECT_START)
-			for(var/area/place in affecting_areas)
-				if(!place.fire_detect)
-					return
-			detecting = TRUE
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)

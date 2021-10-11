@@ -415,12 +415,6 @@
 #define COMSIG_AREA_ENTERED "area_entered"
 ///from base of area/Exited(): (atom/movable/gone, direction)
 #define COMSIG_AREA_EXITED "area_exited"
-///signal from firealarm object to firelocks to handle alarm activation. Uses defines from the alarm.dm file.
-#define COMSIG_AREA_FIRE_ALARM "area_fire_alarm"
-///signal from firealarm object to firelocks to clear the alarm.
-#define COMSIG_AREA_FIRE_CLEAR "area_fire_clear"
-///signal from a firealarm to the area, detectable by firelocks. Handles a few mass state changes. See the firealarm Define file too.
-#define COMSIG_AREA_FIRE_DETECT_CHANGE "area_fire_detect_change"
 
 // /turf signals
 

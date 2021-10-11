@@ -701,7 +701,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
-		SEND_SIGNAL(F.my_area, COMSIG_AREA_FIRE_DETECT_CHANGE, FIRE_DETECT_EMAG)
+		for(var/obj/machinery/door/firedoor/firelock in F.my_area.firedoors)
+			firelock.obj_flags |= EMAGGED
 		F.update_appearance()
 	to_chat(owner, span_notice("All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized."))
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
