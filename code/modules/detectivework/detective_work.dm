@@ -31,6 +31,8 @@
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
 /atom/proc/add_fingerprint(mob/M, ignoregloves = FALSE)
+	if (QDELING(src))
+		return
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	if (D)
 		. = D.add_fingerprint(M, ignoregloves)
