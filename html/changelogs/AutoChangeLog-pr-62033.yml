@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "MMI components can't be no longer attached to modules. This was causing race conditions with other MMI components present in the circuit (not much of a good thing)."

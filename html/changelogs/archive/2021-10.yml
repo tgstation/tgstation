@@ -338,3 +338,39 @@
   - bugfix: CentCom now has one APC per area.
   tralezab:
   - bugfix: Preferences menu now supports Halloween races
+2021-10-11:
+  Fikou:
+  - bugfix: fixes unpowered space ruins actually being powered
+  - expansion: more secret away mission stuff
+  Ghommie:
+  - bugfix: Fixed two issues with paper code. Namely paper text being always colored
+      black outside of edit mode and signatures showing the current name and not the
+      real name.
+  - expansion: Added USB ports to light switches.
+  Mothblocks:
+  - rscadd: Added back the reset keybindings button.
+  - bugfix: Fixed weird scaling on the buttons in a tabbed list UI (such as "Communications"
+      in the keybindings menu)
+  Watermelon914:
+  - bugfix: Fixed a runtime with the integrated circuit duplicator
+  - admin: Signal Handler circuit components are no longer limited to 1 registered
+      object.
+  - admin: Get variable circuit components can now get GLOB variables
+  - admin: Animate and Save Shell circuit components will now apply DF_VAR_EDITED
+  - bugfix: Fixes the changeling panel not working at all.
+  - balance: Bluespace launchpad maximum range decreased from 60 to 40. Traitor launchpad
+      unaffected.
+  - balance: Bluespace launchpads will now give a visual indication of the turf they
+      are teleporting to/teleporting from as well as a noise notification. Does not
+      apply to traitor launchpads.
+  - balance: Bluespace launchpads will now show a beam that fades out between the
+      target turf and the launchpad after it has done the teleportation. Again, does
+      not apply to traitor launchpads.
+  esainane:
+  - bugfix: The CE's blueprints can now once again show an overlay of the station's
+      original structural layout! Cleaning up after an explosion is now - well, realistically,
+      just as frustrating as ever, but it looks nice!
+  tralezab:
+  - refactor: Refactored monkey AI a bit, noticeable changes should be minimal!
+  - qol: toggle random events doesn't uselessly include a message to the user, only
+      to admins... which the user is.
