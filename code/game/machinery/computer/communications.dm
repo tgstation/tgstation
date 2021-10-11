@@ -229,7 +229,10 @@
 			SSshuttle.existing_shuttle = SSshuttle.emergency
 			SSshuttle.action_load(shuttle, replace = TRUE)
 			bank_account.adjust_money(-shuttle.credit_cost)
-			minor_announce("[usr.real_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+
+			var/purchaser_name = (obj_flags & EMAGGED) ? scramble_message_replace_chars("AUTHENTICATION FAILURE: CVE-2018-17107", 60) : usr.real_name
+			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+
 			message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [shuttle.name].")
 			log_shuttle("[key_name(usr)] has purchased [shuttle.name].")
 			SSblackbox.record_feedback("text", "shuttle_purchase", 1, shuttle.name)
