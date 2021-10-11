@@ -619,8 +619,6 @@
 						fail_reason = "No intelligence pattern can be detected in patient's brain. Further attempts futile."
 					if (DEFIB_FAIL_NO_BRAIN)
 						fail_reason = "Patient's brain is missing. Further attempts futile."
-					if (DEFIB_FAIL_AGHOST) // this should be reached only if an admin dies while in aghost state
-						fail_reason = "Patient is temporarily catatonic. Further attempts futile."
 
 				if(fail_reason)
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
@@ -643,7 +641,8 @@
 					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful."))
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
-					H.grab_ghost()
+					if(defib_result == DEFIB_POSSIBLE)
+						H.grab_ghost()
 					H.revive(full_heal = FALSE, admin_revive = FALSE)
 					H.emote("gasp")
 					H.Jitter(100)

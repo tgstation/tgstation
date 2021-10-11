@@ -841,9 +841,7 @@
 		return FALSE
 
 /mob/living/carbon/proc/can_defib()
-	
-	if(key && key[1] == "@") // Adminghosts (#61870)
-		return DEFIB_FAIL_AGHOST
+
 	
 	if (suiciding)
 		return DEFIB_FAIL_SUICIDE
@@ -876,7 +874,10 @@
 
 		if (BR.suicided || BR.brainmob?.suiciding)
 			return DEFIB_FAIL_NO_INTELLIGENCE
-
+	
+	if(key && key[1] == "@") // Adminghosts (#61870)
+		return DEFIB_NOGRAB_AGHOST
+	
 	return DEFIB_POSSIBLE
 
 /mob/living/carbon/harvest(mob/living/user)
