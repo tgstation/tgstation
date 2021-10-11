@@ -15861,10 +15861,10 @@
 /turf/open/openspace,
 /area/science/xenobiology)
 "dQC" = (
-/mob/living/carbon/human/species/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "dQS" = (
@@ -16501,10 +16501,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ekN" = (
-/mob/living/carbon/human/species/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "ekV" = (
@@ -46966,7 +46966,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/item/tank/internals/plasma,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "engsm";
@@ -50761,11 +50760,11 @@
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/power/apc/auto_name/north,
 /obj/structure/cable,
-/mob/living/simple_animal/pet/dog/corgi/ian{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/mob/living/simple_animal/pet/dog/corgi/ian{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
