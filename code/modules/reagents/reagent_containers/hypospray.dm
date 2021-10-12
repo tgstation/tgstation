@@ -24,35 +24,35 @@
 	inject(M, user)
 
 ///Handles all injection checks, injection and logging.
-/obj/item/reagent_containers/hypospray/proc/inject(mob/living/M, mob/user)
+/obj/item/reagent_containers/hypospray/proc/inject(mob/living/mob, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))
 		return FALSE
-	if(!iscarbon(M))
+	if(!iscarbon(mob))
 		return FALSE
 
 	//Always log attemped injects for admins
 	var/list/injected = list()
-	for(var/datum/reagent/R in reagents.reagent_list)
-		injected += R.name
+	for(var/datum/reagent/reagent in reagents.reagent_list)
+		injected += reagent.name
 	var/contained = english_list(injected)
-	log_combat(user, M, "attempted to inject", src, "([contained])")
+	log_combat(user, mob, "attempted to inject", src, "([contained])")
 
-	if(reagents.total_volume && (ignore_flags || M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
-		to_chat(M, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [M] with [src]."))
+	if(reagents.total_volume && (ignore_flags || mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
+		to_chat(mob, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [mob] with [src]."))
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 
 
-		if(M.reagents)
+		if(mob.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+				trans = reagents.trans_to(mob, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 			else
-				reagents.expose(M, INJECT, fraction)
-				trans = reagents.copy_to(M, amount_per_transfer_from_this)
+				reagents.expose(mob, INJECT, fraction)
+				trans = reagents.copy_to(mob, amount_per_transfer_from_this)
 			to_chat(user, span_notice("[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src]."))
-			log_combat(user, M, "injected", src, "([contained])")
+			log_combat(user, mob, "injected", src, "([contained])")
 		return TRUE
 	return FALSE
 
