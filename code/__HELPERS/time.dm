@@ -106,8 +106,8 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 
 /**
  * Converts a time expressed in deciseconds (like world.time) to the 12-hour time format.
- * the format arg is the format passed down to time2text() (e.g. "hh:mm" will output hours and minutes, not seconds).
- * the timezone is the time value offset from UTC. It's to be done outside time2text() to get the AM/PM right.
+ * the format arg is the format passed down to time2text() (e.g. "hh:mm" is hours and minutes but not seconds).
+ * the timezone is the time value offset from the local time. It's to be applied outside time2text() to get the AM/PM right.
  */
 /proc/time_to_twelve_hour(time, format = "hh:mm:ss", timezone = TIMEZONE_UTC)
 	time = (time + ((timezone - GLOB.timezoneOffset) HOURS)) % 24 HOURS
