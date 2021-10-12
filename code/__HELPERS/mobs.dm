@@ -139,7 +139,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, sortList(list(
+GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -646,7 +646,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sort_list(borgs)
 		else
 			. = pick(borgs)
 	return .
@@ -655,7 +655,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/ais = active_ais(FALSE, z)
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sort_list(ais)
 		else
 			. = pick(ais)
 	return .
@@ -683,7 +683,7 @@ GLOBAL_LIST_EMPTY(species_list)
 ///Orders mobs by type then by name. Accepts optional arg to sort a custom list, otherwise copies GLOB.mob_list.
 /proc/sort_mobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortNames(GLOB.mob_list)
+	var/list/sortmob = sort_names(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/camera/mob_to_sort in sortmob)

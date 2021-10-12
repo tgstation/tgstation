@@ -712,7 +712,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/list/finalized = list()
 	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
-	listclearnulls(finalized)
+	list_clear_nulls(finalized)
 	if(length(finalized) > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)

@@ -261,7 +261,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
 		law_weights -= AI_LAWS_ASIMOV
 	while(!lawtype && law_weights.len)
-		var/possible_id = pickweightAllowZero(law_weights)
+		var/possible_id = pick_weight_allow_zero(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id
@@ -328,7 +328,7 @@
 		replaceable_groups[LAW_INHERENT] = inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
-	var/picked_group = pickweight(replaceable_groups)
+	var/picked_group = pick_weight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
 			. = zeroth
