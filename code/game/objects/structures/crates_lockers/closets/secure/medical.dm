@@ -15,7 +15,10 @@
 		/obj/item/reagent_containers/glass/bottle/morphine = 2,
 		/obj/item/reagent_containers/glass/bottle/epinephrine= 3,
 		/obj/item/reagent_containers/glass/bottle/multiver = 3,
-		/obj/item/storage/box/rxglasses = 1)
+		/obj/item/storage/box/rxglasses = 1,
+		/obj/item/clothing/suit/radiation/medical = 1,
+		/obj/item/clothing/head/radiation/medical = 1,
+		/obj/item/geiger_counter = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/secure_closet/medical2

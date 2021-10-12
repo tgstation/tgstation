@@ -129,7 +129,7 @@
 /obj/item/clothing/head/radiation/medical
 	name = "radiation hood (medical)"
 	desc = "A hood designed to protect medical staff from contaiminated patients. Useful for when an engineer walks into medbay complaining about the taste of metal."
-	icon_state = RAD
+	icon_state = RAD_MED
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -151,5 +151,5 @@
 
 /obj/item/clothing/suit/radiation/medical
 	name = "radiation suit (medical)"
-	desc = "A suit designed to protect medical staff from contaiminated patients. Useful for when an engineer walks into medbay complaining about the taste of metal.
-	icon_state = RAD
+	desc = "A suit designed to protect medical staff from contaiminated patients. Useful for when an engineer walks into medbay complaining about the taste of metal."
+	icon_state = RAD_MED
