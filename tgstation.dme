@@ -3983,6 +3983,7 @@
 #include "modular_event\spooky_mansion\sconce\sconce.dm"
 #include "modular_event\spooky_mansion\spiral_stair\ladders.dm"
 #include "modular_event\spooky_mansion\street_lamp\street_lamp.dm"
+#include "modular_event\spooky_mansion\toolbox\toolbox.dm"
 #include "modular_event\tournament\controller.dm"
 #include "modular_event\tournament\countdown.dm"
 #include "modular_event\tournament\disbanding.dm"
