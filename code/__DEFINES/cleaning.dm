@@ -13,7 +13,7 @@
 #define CLEAN_TYPE_FIBERS (1 << 3)
 /// Cleans diseases off of the cleanable atom.
 #define CLEAN_TYPE_DISEASE (1 << 4)
-/// Special type, add this flag to make some cleaning processes non-instant. Currently only used for showers when removing radiation.
+/// Special type, add this flag to make some cleaning processes non-instant.
 #define CLEAN_TYPE_WEAK (1 << 5)
 /// Cleans paint off of the cleanable atom.
 #define CLEAN_TYPE_PAINT (1 << 6)

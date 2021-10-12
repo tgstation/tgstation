@@ -437,15 +437,6 @@
 		. = TRUE
 	..()
 
-/datum/reagent/medicine/potass_iodide
-	name = "Potassium Iodide"
-	description = "Efficiently restores low radiation damage."
-	reagent_state = LIQUID
-	color = "#BAA15D"
-	metabolization_rate = 2 * REAGENTS_METABOLISM
-	ph = 12 //It's a reducing agent
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
 	description = "Reduces massive amounts toxin damage while purging other chemicals from the body."

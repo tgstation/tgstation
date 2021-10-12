@@ -24,7 +24,6 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					/obj/item/reagent_containers/glass/bottle/syriniver = 1,
 					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,
 					/obj/item/reagent_containers/glass/bottle/morphine = 3,
-					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,
 					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
 					/obj/item/reagent_containers/syringe/antiviral = 5,
 					/obj/item/reagent_containers/medigel/libital = 2,

@@ -15,7 +15,7 @@
 	var/obj/item/clothing/head/helmet/space/helmet = null
 	var/obj/item/clothing/mask/mask = null
 	var/obj/item/storage = null
-								// if you add more storage slots, update cook() to clear their radiation too.
+								// if you add more storage slots, update cook()
 
 	/// What type of spacesuit the unit starts with when spawned.
 	var/suit_type = null
@@ -38,7 +38,7 @@
 	/**
 	* If the hack wire is cut/pulsed.
 	* Modifies effects of cook()
-	* * If FALSE, decontamination sequence will clear radiation for all atoms (and their contents) contained inside the unit, and burn any mobs inside.
+	* * If FALSE, decontamination sequence will burn any mobs inside.
 	* * If TRUE, decontamination sequence will delete all items contained within, and if occupied by a mob, intensifies burn damage delt. All wires will be cut at the end.
 	*/
 	var/uv_super = FALSE

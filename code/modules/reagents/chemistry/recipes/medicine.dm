@@ -127,11 +127,6 @@
 	required_temp = 374
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
-/datum/chemical_reaction/medicine/potass_iodide
-	results = list(/datum/reagent/medicine/potass_iodide = 2)
-	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/iodine = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
-
 /datum/chemical_reaction/medicine/pen_acid
 	results = list(/datum/reagent/medicine/pen_acid = 6)
 	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/toxin/cyanide = 1)
@@ -306,7 +301,7 @@
 
 /datum/chemical_reaction/medicine/haloperidol
 	results = list(/datum/reagent/medicine/haloperidol = 5)
-	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/fuel/oil = 1)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/fuel/oil = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/medicine/regen_jelly

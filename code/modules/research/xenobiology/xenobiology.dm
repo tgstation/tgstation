@@ -311,7 +311,6 @@
 			to_chat(user, span_notice("You activate [src]. Your genome feels more stable!"))
 			user.adjustCloneLoss(-15)
 			user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
-			user.reagents.add_reagent(/datum/reagent/medicine/potass_iodide, 10)
 			return 250
 
 		if(SLIME_ACTIVATE_MAJOR)

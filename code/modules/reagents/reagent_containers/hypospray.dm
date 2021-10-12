@@ -183,7 +183,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/penacid
 	name = "pentetic acid medipen"
-	desc = "An autoinjector containing pentetic acid, used to reduce high levels of radiations and moderate toxins."
+	desc = "An autoinjector containing pentetic acid, used to reduce moderate levels of toxins."
 	icon_state = "penacid"
 	inhand_icon_state = "penacid"
 	base_icon_state = "penacid"

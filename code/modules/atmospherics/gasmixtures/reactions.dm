@@ -946,7 +946,6 @@
 	requirements = list(
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = 50,
 		"MAX_TEMP" = T0C
 	)
@@ -956,16 +955,13 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var produced_amount = min(5, cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5), cached_gases[/datum/gas/tritium][MOLES] * INVERSE(0.01))
-	if(cached_gases[/datum/gas/carbon_dioxide][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/oxygen][MOLES] - produced_amount * 0.5 < 0 || cached_gases[/datum/gas/tritium][MOLES] - produced_amount * 0.01 < 0)
+	var/produced_amount = min(2, cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
+	if(cached_gases[/datum/gas/carbon_dioxide][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/oxygen][MOLES] - produced_amount * 0.5 < 0)
 		return NO_REACTION
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= produced_amount
 	cached_gases[/datum/gas/oxygen][MOLES] -= produced_amount * 0.5
-	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount * 0.01
 	ASSERT_GAS(/datum/gas/pluoxium, air)
 	cached_gases[/datum/gas/pluoxium][MOLES] += produced_amount
-	ASSERT_GAS(/datum/gas/hydrogen, air)
-	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.01
 	energy_released += produced_amount * 250
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()

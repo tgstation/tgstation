@@ -391,7 +391,7 @@
 	\"Yes, it has a safety record of N-A-N, which is apparently larger than 100%.\""
 	admin_notes = "Supermatter that spawns on shuttle is special anchored 'hugbox' supermatter that cannot take damage and does not take in or emit gas. \
 	Outside of admin intervention, it cannot explode. \
-	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
+	It does, however, still dust anything on contact and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
 	credit_cost = CARGO_CRATE_VALUE * 200
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
@@ -447,7 +447,7 @@
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
 	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	
+
 /datum/map_template/shuttle/emergency/casino
 	suffix = "casino"
 	name = "Lucky Jackpot Casino Shuttle"

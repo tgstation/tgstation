@@ -540,7 +540,7 @@
 
 /datum/reagent/toxin/polonium
 	name = "Polonium"
-	description = "An extremely radioactive material in liquid form. Ingestion results in fatal irradiation."
+	description = "An extremely radioactive material in liquid form. Ingestion results in fatal intoxication."
 	reagent_state = LIQUID
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM

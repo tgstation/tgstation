@@ -192,11 +192,6 @@
 	desc = "A small bottle of diphenhydramine."
 	list_reagents = list(/datum/reagent/medicine/diphenhydramine = 30)
 
-/obj/item/reagent_containers/glass/bottle/potass_iodide
-	name = "anti-radiation bottle"
-	desc = "A small bottle of potassium iodide."
-	list_reagents = list(/datum/reagent/medicine/potass_iodide = 30)
-
 /obj/item/reagent_containers/glass/bottle/salglu_solution
 	name = "saline-glucose solution bottle"
 	desc = "A small bottle of saline-glucose solution."

@@ -253,7 +253,7 @@
 
 /obj/item/reagent_containers/syringe/penacid
 	name = "syringe (pentetic acid)"
-	desc = "Contains pentetic acid, used to reduce high levels of radiation and heal severe toxins."
+	desc = "Contains pentetic acid, used to heal severe toxins."
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 15)
 
 /obj/item/reagent_containers/syringe/syriniver

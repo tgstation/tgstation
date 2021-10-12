@@ -176,7 +176,7 @@
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
-	desc = "Used to treat toxic blood content and radiation poisoning."
+	desc = "Used to treat toxic blood content."
 	icon_state = "antitoxin"
 	inhand_icon_state = "firstaid-toxin"
 	damagetype_healed = TOX
@@ -195,7 +195,6 @@
 	var/static/items_inside = list(
 	    /obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
-		/obj/item/storage/pill_bottle/potassiodide = 1,
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -373,14 +372,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/mutadone(src)
 
-/obj/item/storage/pill_bottle/potassiodide
-	name = "bottle of potassium iodide pills"
-	desc = "Contains pills used to reduce radiation damage."
-
-/obj/item/storage/pill_bottle/potassiodide/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/potassiodide(src)
-
 /obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
 	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
@@ -472,7 +463,7 @@
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
-	desc = "Contains pills to expunge radiation and toxins."
+	desc = "Contains pills to expunge toxins."
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	for(var/i in 1 to 3)
