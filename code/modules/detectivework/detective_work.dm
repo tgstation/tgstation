@@ -34,8 +34,7 @@
 	if (QDELING(src))
 		return
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
-	if (D)
-		. = D.add_fingerprint(M, ignoregloves)
+	. = D?.add_fingerprint(M, ignoregloves)
 
 /atom/proc/add_fiber_list(list/fibertext) //ASSOC LIST FIBERTEXT = FIBERTEXT
 	if(length(fibertext))
