@@ -40,7 +40,7 @@
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
-	togglename = "sleeves"
+	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
 //Cook
