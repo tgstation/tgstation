@@ -20,15 +20,15 @@
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/item/reagent_containers/hypospray/attack(mob/living/mob, mob/user)
-	inject(mob, user)
+/obj/item/reagent_containers/hypospray/attack(mob/living/affected_mob, mob/user)
+	inject(affected_mob, user)
 
 ///Handles all injection checks, injection and logging.
-/obj/item/reagent_containers/hypospray/proc/inject(mob/living/mob, mob/user)
+/obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))
 		return FALSE
-	if(!iscarbon(mob))
+	if(!iscarbon(affected_mob))
 		return FALSE
 
 	//Always log attemped injects for admins
@@ -36,23 +36,23 @@
 	for(var/datum/reagent/reagent in reagents.reagent_list)
 		injected += reagent.name
 	var/contained = english_list(injected)
-	log_combat(user, mob, "attempted to inject", src, "([contained])")
+	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
 
-	if(reagents.total_volume && (ignore_flags || mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
-		to_chat(mob, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [mob] with [src]."))
+	if(reagents.total_volume && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
+		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice("You inject [affected_mob] with [src]."))
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 
 
-		if(mob.reagents)
+		if(affected_mob.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(mob, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
+				trans = reagents.trans_to(affected_mob, amount_per_transfer_from_this, transfered_by = user, methods = INJECT)
 			else
-				reagents.expose(mob, INJECT, fraction)
-				trans = reagents.copy_to(mob, amount_per_transfer_from_this)
+				reagents.expose(affected_mob, INJECT, fraction)
+				trans = reagents.copy_to(affected_mob, amount_per_transfer_from_this)
 			to_chat(user, span_notice("[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src]."))
-			log_combat(user, mob, "injected", src, "([contained])")
+			log_combat(user, affected_mob, "injected", src, "([contained])")
 		return TRUE
 	return FALSE
 
@@ -121,7 +121,7 @@
 	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
-/obj/item/reagent_containers/hypospray/medipen/inject(mob/living/M, mob/user)
+/obj/item/reagent_containers/hypospray/medipen/inject(mob/living/affected_mob, mob/user)
 	. = ..()
 	if(.)
 		reagents.maximum_volume = 0 //Makes them useless afterwards
@@ -232,9 +232,9 @@
 	base_icon_state = "stimpen"
 	volume = 30
 	amount_per_transfer_from_this = 30
-	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8 ,/datum/reagent/medicine/leporazine = 6)
+	list_reagents = list( /datum/reagent/medicine/epinephrine = 8, /datum/reagent/medicine/c2/aiuri = 8, /datum/reagent/medicine/c2/libital = 8, /datum/reagent/medicine/leporazine = 6)
 
-/obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/mob, mob/user)
+/obj/item/reagent_containers/hypospray/medipen/survival/inject(mob/living/affected_mob, mob/user)
 	if(lavaland_equipment_pressure_check(get_turf(user)))
 		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 		return ..()
@@ -244,7 +244,7 @@
 		return
 
 	to_chat(user,span_notice("You start manually releasing the low-pressure gauge..."))
-	if(!do_mob(user, mob, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
+	if(!do_mob(user, affected_mob, 10 SECONDS, interaction_key = DOAFTER_SOURCE_SURVIVALPEN))
 		return
 
 	amount_per_transfer_from_this = initial(amount_per_transfer_from_this) * 0.5
