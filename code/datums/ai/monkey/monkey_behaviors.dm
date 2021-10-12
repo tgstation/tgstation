@@ -304,5 +304,5 @@
 
 	if(!valids.len)
 		finish_action(controller, FALSE)
-	controller.blackboard[set_key] = pickweight(valids)
+	controller.blackboard[set_key] = pick_weight(valids)
 	finish_action(controller, TRUE)
