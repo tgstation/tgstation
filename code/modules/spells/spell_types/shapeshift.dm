@@ -173,7 +173,7 @@
 
 /obj/shapeshift_holder/Moved()
 	. = ..()
-	if(!restoring || QDELETED(src))
+	if(!restoring && !QDELETED(src))
 		restore()
 
 /obj/shapeshift_holder/handle_atom_del(atom/A)

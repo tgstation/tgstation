@@ -116,7 +116,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	update_appearance()
 
-	if(!T || SSmapping.level_trait(T.z, ZTRAIT_SECRET))
+	if(!T || is_secret_level(T.z))
 		var/list/turfs = get_area_turfs(/area/shuttle/arrival)
 		if(turfs.len)
 			T = pick(turfs)
@@ -462,7 +462,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
-	if (!istype(target) || (SSmapping.level_trait(target.z, ZTRAIT_SECRET) && !client?.holder))
+	if (!istype(target) || (is_secret_level(target.z) && !client?.holder))
 		return
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
@@ -624,18 +624,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images -= GLOB.ghost_images_default
+				client?.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)
-				client.images -= GLOB.ghost_images_simple
-	lastsetting = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
+				client?.images -= GLOB.ghost_images_simple
+	lastsetting = client?.prefs.read_preference(/datum/preference/choiced/ghost_others)
 	if(!ghostvision)
 		return
 	if(lastsetting != GHOST_OTHERS_THEIR_SETTING)
 		switch(lastsetting)
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images |= (GLOB.ghost_images_default-ghostimage_default)
+				client?.images |= (GLOB.ghost_images_default-ghostimage_default)
 			if(GHOST_OTHERS_SIMPLE)
-				client.images |= (GLOB.ghost_images_simple-ghostimage_simple)
+				client?.images |= (GLOB.ghost_images_simple-ghostimage_simple)
 
 /mob/dead/observer/verb/possess()
 	set category = "Ghost"
@@ -901,7 +901,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client && mob_eye && istype(mob_eye))
 		client.eye = mob_eye
 		client.perspective = EYE_PERSPECTIVE
-		if(SSmapping.level_trait(mob_eye.z, ZTRAIT_SECRET) && !client?.holder)
+		if(is_secret_level(mob_eye.z) && !client?.holder)
 			sight = null //we dont want ghosts to see through walls in secret areas
 		RegisterSignal(mob_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/on_observing_z_changed)
 		if(mob_eye.hud_used)
@@ -914,7 +914,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/on_observing_z_changed(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 
-	if(SSmapping.level_trait(new_turf.z, ZTRAIT_SECRET) && !client?.holder)
+	if(is_secret_level(new_turf.z) && !client?.holder)
 		sight = null //we dont want ghosts to see through walls in secret areas
 	else
 		sight = initial(sight)

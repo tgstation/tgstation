@@ -45,6 +45,15 @@ SUBSYSTEM_DEF(weather)
 				eligible_zlevels["[z]"][W] = probability
 	return ..()
 
+/datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
+	var/z = level.z_value
+	for(var/datum/weather/weather as anything in subtypesof(/datum/weather))
+		var/probability = initial(weather.probability)
+		var/target_trait = initial(weather.target_trait)
+		if(probability && level.traits[target_trait])
+			LAZYINITLIST(eligible_zlevels["[z]"])
+			eligible_zlevels["[z]"][weather] = probability
+
 /datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels)
 	if (istext(weather_datum_type))
 		for (var/V in subtypesof(/datum/weather))

@@ -302,3 +302,87 @@
   timothymtorres:
   - qol: Adds random statue spawners to secure art exhibits in the library for Meta,
       Tram, and Delta.
+2021-10-10:
+  Arkatos:
+  - bugfix: Thermomachine design icon in the R&D Console UI will now show properly.
+  Guillaume Prata:
+  - bugfix: Cyborgs can interact with a morgue tray to close it now, instead of needing
+      to interact with the main structure.
+  Krysonism:
+  - qol: The mega arachnid now has a toggleable self only small sprite. No more hitting
+      yourself!
+  Mooshimi:
+  - qol: status displays can now be wrenched off the wall, and frames can be printed
+      at the autolathe
+  PeterMorrison1:
+  - bugfix: fixed antagonist preference tooltip showing wrong descriptions
+  Watermelon914:
+  - bugfix: Fixed variables sometimes just not working.
+  - bugfix: Fixed the dispenser shell and For Each and Filter components not appearing
+      in the component printer.
+  - bugfix: Fixed the changeling antag panel
+  - bugfix: Fixed the wizard's antag panel.
+  - admin: Datum input ports can now have atoms and datums uploaded to them.
+  esainane:
+  - bugfix: HFR ambience will no longer play intensely when the HFR is out of fuel
+  - bugfix: SMs meant to be immobile should now be truly immobile.
+  - bugfix: Bluespace anomalies will no longer teleport camera eyes, such as AI eye,
+      Blob Overmind eye, Advanced Camera consoles, or the Xenobiology Slime management
+      console. This is particularly relevant for the Xenobiology advanced slime console,
+      as the eye cannot move outside of, or while outside of, the area the console
+      is in.
+  - spellcheck: Fixed a typo in the Hostile Statue description.
+  - code_imp: Remove a very useless check from APC code
+  - bugfix: The beams from Emitters, and all hitscan weaponry, now render properly
+      again.
+  - bugfix: CentCom now has one APC per area.
+  tralezab:
+  - bugfix: Preferences menu now supports Halloween races
+2021-10-11:
+  Fikou:
+  - bugfix: fixes unpowered space ruins actually being powered
+  - expansion: more secret away mission stuff
+  Ghommie:
+  - bugfix: Fixed two issues with paper code. Namely paper text being always colored
+      black outside of edit mode and signatures showing the current name and not the
+      real name.
+  - expansion: Added USB ports to light switches.
+  Mothblocks:
+  - rscadd: Added back the reset keybindings button.
+  - bugfix: Fixed weird scaling on the buttons in a tabbed list UI (such as "Communications"
+      in the keybindings menu)
+  Watermelon914:
+  - bugfix: Fixed a runtime with the integrated circuit duplicator
+  - admin: Signal Handler circuit components are no longer limited to 1 registered
+      object.
+  - admin: Get variable circuit components can now get GLOB variables
+  - admin: Animate and Save Shell circuit components will now apply DF_VAR_EDITED
+  - bugfix: Fixes the changeling panel not working at all.
+  - balance: Bluespace launchpad maximum range decreased from 60 to 40. Traitor launchpad
+      unaffected.
+  - balance: Bluespace launchpads will now give a visual indication of the turf they
+      are teleporting to/teleporting from as well as a noise notification. Does not
+      apply to traitor launchpads.
+  - balance: Bluespace launchpads will now show a beam that fades out between the
+      target turf and the launchpad after it has done the teleportation. Again, does
+      not apply to traitor launchpads.
+  esainane:
+  - bugfix: The CE's blueprints can now once again show an overlay of the station's
+      original structural layout! Cleaning up after an explosion is now - well, realistically,
+      just as frustrating as ever, but it looks nice!
+  tralezab:
+  - refactor: Refactored monkey AI a bit, noticeable changes should be minimal!
+  - qol: toggle random events doesn't uselessly include a message to the user, only
+      to admins... which the user is.
+2021-10-12:
+  Ghommie:
+  - bugfix: MMI components can't be no longer attached to modules. This was causing
+      race conditions with other MMI components present in the circuit (not much of
+      a good thing).
+  Melbert:
+  - rscdel: Removed the action button for toggling griffin and owl wings, you can
+      still open and close them with alt-click.
+  - refactor: Toggle Suit component for labcoats, suit coats, and formal coats (and
+      some others)
+  tralezab:
+  - bugfix: Basic mobs can once again be vareditted

@@ -203,7 +203,7 @@ const MemoriesSection = (props, context) => {
           <Stack.Item>
             <Dropdown
               width="100%"
-              selected={selectedMemory.name}
+              selected={selectedMemory?.name}
               options={
                 memories.map(memory => {
                   return memory.name;

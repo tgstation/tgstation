@@ -206,6 +206,8 @@
 		"comp_concat_list",
 		"comp_delay",
 		"comp_direction",
+		"comp_filter_list",
+		"comp_foreach",
 		"comp_get_column",
 		"comp_gps",
 		"comp_health",
@@ -673,6 +675,7 @@
 	design_ids = list(
 		"bot_shell",
 		"controller_shell",
+		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
 		"money_bot_shell",
