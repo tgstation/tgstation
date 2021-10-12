@@ -53,11 +53,11 @@
 
 	switch(time_unit.value)
 		if(COMP_TIMEPIECE_HOURS)
-			time = round(station_time() / 10 / 60 / 60)
+			time = round(station_time() / (1 HOURS))
 		if(COMP_TIMEPIECE_MINUTES)
-			time = round(station_time() / 10 / 60)
+			time = round(station_time() / (1 MINUTES))
 		if(COMP_TIMEPIECE_SECONDS)
-			time = round(station_time() / 10)
+			time = round(station_time() / (1 SECONDS))
 
 	num_output.set_output(time)
 
