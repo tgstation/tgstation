@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - qol: "lower sound level of the coils, the sound and range is calculated by a function based on the zap power"
