@@ -126,6 +126,11 @@
 	resistance_flags = NONE
 	flags_1 = RAD_PROTECT_CONTENTS_1
 
+/obj/item/clothing/head/radiation/medical
+	name = "radiation hood (medical)"
+	desc = "A hood designed to protect medical staff from contaiminated patients. Useful for when an engineer walks into medbay complaining about the taste of metal."
+	icon_state = RAD
+
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
@@ -143,3 +148,8 @@
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 	flags_1 = RAD_PROTECT_CONTENTS_1
+
+/obj/item/clothing/suit/radiation/medical
+	name = "radiation suit (medical)"
+	desc = "A suit designed to protect medical staff from contaiminated patients. Useful for when an engineer walks into medbay complaining about the taste of metal.
+	icon_state = RAD
