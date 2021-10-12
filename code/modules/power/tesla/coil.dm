@@ -29,8 +29,6 @@
 	var/zap_sound_range = 0
 	///Calculated volume of zap sounds based on power
 	var/zap_sound_volume = 0
-	///Cooldown for zap sounds
-	COOLDOWN_DECLARE(zap_sound_cooldown)
 
 /obj/machinery/power/tesla_coil/anchored
 	anchored = TRUE
@@ -103,9 +101,6 @@
 	obj_flags |= BEING_SHOCKED
 	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 	flick("coilhit", src)
-	if(COOLDOWN_FINISHED(src, zap_sound_cooldown))
-		playsound(src.loc, 'sound/magic/lightningshock.ogg', zap_sound_volume, TRUE, zap_sound_range)
-		COOLDOWN_START(src, zap_sound_cooldown, 1 SECONDS)
 	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
 		return 0
 	if(zap_flags & ZAP_LOW_POWER_GEN)
