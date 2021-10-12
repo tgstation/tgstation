@@ -37,7 +37,7 @@
 	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
 
 /datum/species/zombie/check_roundstart_eligible()
-	return TRUE()
+	return TRUE
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
