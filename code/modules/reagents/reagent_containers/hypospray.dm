@@ -70,6 +70,7 @@
 	inhand_icon_state = "combat_hypo"
 	icon_state = "combat_hypo"
 	volume = 90
+	possible_transfer_amounts = list(5,10)
 	ignore_flags = 1 // So they can heal their comrades.
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 30, /datum/reagent/medicine/omnizine = 30, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/atropine = 15)
 
@@ -92,6 +93,7 @@
 	inhand_icon_state = "holy_hypo"
 	icon_state = "holy_hypo"
 	volume = 250
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg/tire = 50, /datum/reagent/peaceborg/confuse = 50)
 	amount_per_transfer_from_this = 50
 
