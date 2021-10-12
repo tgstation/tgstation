@@ -287,6 +287,14 @@
 /obj/structure/displaycase/noalert
 	alert = FALSE
 
+/obj/structure/displaycase/noalert/broodmother
+	start_showpiece_type = /obj/item/crusher_trophy/broodmother_tongue
+	req_access = list(ACCESS_CENT_SPECOPS)
+
+/obj/structure/displaycase/noalert/xenoqueen
+	start_showpiece_type = /obj/item/organ/alien/eggsac
+	req_access = list(ACCESS_CENT_SPECOPS)
+
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."

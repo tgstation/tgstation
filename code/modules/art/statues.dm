@@ -63,7 +63,7 @@
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 /obj/structure/statue/angelstatue
-	icon = 'icons/obj/crypt.dmi' 
+	icon = 'icons/obj/crypt.dmi'
 	icon_state = "angel"
 	name = "angel statue"
 	desc = "You can imagine at one point this statue was quite the sight to behold"
@@ -303,6 +303,89 @@
 	max_integrity = 1000
 	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
+
+/obj/structure/statue/taxidermy
+	icon = 'icons/mob/animal.dmi'
+	anchored = TRUE
+	desc = "Its glossy eyes stare lifelessly at you."
+
+/obj/structure/statue/taxidermy/bear
+	name = "stuffed bear"
+	icon_state = "brownbear"
+
+/obj/structure/statue/taxidermy/blankbody
+	name = "stuffed creature"
+	icon_state = "blank-body"
+
+/obj/structure/statue/taxidermy/broodmother
+	name = "stuffed broodmother"
+	icon = 'icons/mob/lavaland/lavaland_elites.dmi'
+	icon_state = "broodmother"
+
+/obj/structure/statue/taxidermy/chick
+	name = "stuffed chick"
+	icon_state = "chick"
+
+/obj/structure/statue/taxidermy/chicken
+	name = "stuffed chicken"
+	icon_state = "chicken_brown"
+
+/obj/structure/statue/taxidermy/deer
+	name = "stuffed deer"
+	icon_state = "deer-doe"
+
+/obj/structure/statue/taxidermy/fox
+	name = "stuffed fox"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "fox"
+
+/obj/structure/statue/taxidermy/goliathbaby
+	name = "stuffed baby goliath"
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "goliath_baby"
+
+/obj/structure/statue/taxidermy/goose
+	name = "stuffed goose"
+	icon_state = "goose"
+
+/obj/structure/statue/taxidermy/gorilla
+	name = "stuffed gorilla"
+	icon = 'icons/mob/gorilla.dmi'
+	icon_state = "crawling"
+
+/obj/structure/statue/taxidermy/honkmunculus
+	name = "stuffed honkmunculus"
+	icon = 'icons/mob/clown_mobs.dmi'
+	icon_state = "honkmunculus"
+
+/obj/structure/statue/taxidermy/monkey
+	name = "stuffed monkey"
+	icon = 'icons/mob/monkey.dmi'
+	icon_state = "monkey1"
+
+/obj/structure/statue/taxidermy/moonicorn
+	name = "stuffed moonicorn"
+	icon = 'icons/mob/cows.dmi'
+	icon_state = "moonicorn"
+
+/obj/structure/statue/taxidermy/poly
+	name = "stuffed parrot"
+	icon_state = "parrot_sit"
+
+/obj/structure/statue/taxidermy/wizard
+	name = "stuffed wizard"
+	icon = 'icons/mob/simple_human.dmi'
+	icon_state = "paperwizard"
+
+/obj/structure/statue/taxidermy/wolf
+	name = "stuffed white wolf"
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "whitewolf"
+
+/obj/structure/statue/taxidermy/xenoqueen
+	name = "stuffed alien queen"
+	icon = 'icons/mob/alienqueen.dmi'
+	icon_state = "alienq"
 
 /obj/item/chisel
 	name = "chisel"

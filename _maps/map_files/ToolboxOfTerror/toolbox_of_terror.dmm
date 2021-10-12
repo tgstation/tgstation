@@ -307,6 +307,17 @@
 	},
 /turf/open/water,
 /area/awaymission/cabin/snowforest)
+"cR" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	color = "#964B00";
+	layer = 5
+	},
+/obj/structure/statue/taxidermy/wolf{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "cS" = (
 /obj/structure/table/wood,
 /obj/item/book/random,
@@ -424,6 +435,16 @@
 	},
 /turf/open/floor/carpet/lone/star,
 /area/awaymission/cabin/snowforest)
+"dU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "dW" = (
 /obj/structure/railing/corner,
 /turf/open/floor/mineral/diamond,
@@ -506,6 +527,25 @@
 	},
 /turf/open/floor/plating/grass/lavaland,
 /area/awaymission/cabin/snowforest)
+"eS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 9
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/blankbody{
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "eW" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/flashlight/lantern,
@@ -518,6 +558,13 @@
 	dir = 8
 	},
 /turf/open/floor/wood/parquet,
+/area/awaymission/cabin/snowforest)
+"fe" = (
+/obj/structure/displaycase/noalert/xenoqueen,
+/obj/item/flashlight/spotlight{
+	light_range = 3
+	},
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "ff" = (
 /turf/closed/indestructible/fakeglass,
@@ -619,6 +666,13 @@
 	pixel_x = 6
 	},
 /turf/open/floor/carpet/orange,
+/area/awaymission/cabin/snowforest)
+"fU" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	color = "#964B00"
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "fV" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -737,6 +791,16 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/cabin/snowforest)
+"gN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "gV" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/wood/parquet,
@@ -836,6 +900,13 @@
 /turf/open/floor/wood/large{
 	icon_state = "wood_large-broken2"
 	},
+/area/awaymission/cabin/snowforest)
+"hG" = (
+/obj/structure/displaycase/noalert/broodmother,
+/obj/item/flashlight/spotlight{
+	light_range = 3
+	},
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "hH" = (
 /obj/structure/table/wood,
@@ -1324,6 +1395,16 @@
 	},
 /turf/open/floor/plating/grass/lavaland,
 /area/awaymission/cabin/snowforest)
+"mT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "mW" = (
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron,
@@ -1617,6 +1698,22 @@
 	icon_state = "wood_large-broken2"
 	},
 /area/awaymission/cabin/snowforest)
+"py" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/bear,
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "pA" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -1716,6 +1813,16 @@
 /obj/item/living_heart,
 /turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
+"qe" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "qf" = (
 /obj/structure/table,
 /obj/item/storage/box/ingredients/grains{
@@ -1752,6 +1859,13 @@
 "qp" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"qs" = (
+/obj/structure/displaycase/labcage,
+/obj/item/flashlight/spotlight{
+	light_range = 3
+	},
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest)
 "qt" = (
 /obj/structure/flora/tree/jungle,
@@ -1827,6 +1941,19 @@
 	dir = 1
 	},
 /turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"qT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 1
+	},
+/obj/structure/statue/taxidermy/wolf{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "qU" = (
 /obj/machinery/defibrillator_mount/loaded/directional/south,
@@ -1921,6 +2048,20 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"rK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/structure/statue/taxidermy/fox{
+	dir = 1;
+	pixel_x = 16
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "rL" = (
 /turf/open/chasm,
 /area/awaymission/cabin/snowforest)
@@ -2113,6 +2254,16 @@
 /obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"tf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "ti" = (
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/carpet/royalblack,
@@ -2121,6 +2272,16 @@
 /obj/structure/table/wood/poker,
 /obj/item/storage/card_binder,
 /turf/open/floor/carpet/lone,
+/area/awaymission/cabin/snowforest)
+"to" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/railing{
+	color = "#964B00"
+	},
+/obj/structure/statue/taxidermy/goliathbaby{
+	pixel_y = 10
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "tq" = (
 /obj/structure/table/wood/fancy,
@@ -2394,6 +2555,17 @@
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet/lone,
 /area/awaymission/cabin/snowforest)
+"vv" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 9
+	},
+/obj/structure/statue/taxidermy/deer,
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "vx" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/open/floor/plating/dirt,
@@ -2591,6 +2763,25 @@
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"xL" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 9
+	},
+/obj/structure/statue/taxidermy/poly{
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "xN" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8
@@ -2638,6 +2829,39 @@
 "yf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
+/area/awaymission/cabin/snowforest)
+"yg" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 6;
+	layer = 4
+	},
+/obj/structure/statue/taxidermy/monkey{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"yh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 1
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/xenoqueen{
+	dir = 8;
+	pixel_x = -16;
+	pixel_y = -10
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "yj" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -2933,9 +3157,38 @@
 	},
 /turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest)
+"Ax" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/honkmunculus{
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "AA" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/plating/dirt,
+/area/awaymission/cabin/snowforest)
+"AB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/statue/taxidermy/goose,
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "AF" = (
 /obj/structure/displaycase/trophy,
@@ -2980,6 +3233,17 @@
 "Bb" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/carpet/lone/star,
+/area/awaymission/cabin/snowforest)
+"Bc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4
+	},
+/obj/structure/statue/taxidermy/bear,
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Be" = (
 /obj/structure/table/wood/fancy/green,
@@ -3177,6 +3441,19 @@
 	},
 /turf/open/floor/mineral/diamond,
 /area/awaymission/cabin/snowforest)
+"CK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 6
+	},
+/obj/structure/statue/taxidermy/chick{
+	pixel_y = 11
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "CN" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/window/reinforced/survival_pod{
@@ -3231,6 +3508,17 @@
 	},
 /obj/structure/flora/rock,
 /turf/open/water,
+/area/awaymission/cabin/snowforest)
+"Di" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 4;
+	layer = 2.4
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "Dk" = (
 /obj/structure/stone_tile/surrounding_tile,
@@ -3534,6 +3822,24 @@
 "Fy" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/stone,
+/area/awaymission/cabin/snowforest)
+"Fz" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 9
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/chicken{
+	pixel_x = 16
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "FA" = (
 /obj/effect/landmark/toolbox{
@@ -3846,6 +4152,25 @@
 	},
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"ID" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/wizard{
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "IF" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
@@ -3921,6 +4246,19 @@
 	dir = 4
 	},
 /turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"JJ" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 10
+	},
+/obj/structure/statue/taxidermy/goliathbaby{
+	pixel_y = 10
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "JK" = (
 /obj/structure/easel,
@@ -4148,6 +4486,16 @@
 /obj/item/clothing/shoes/wheelys/rollerskates,
 /turf/open/floor/eighties,
 /area/awaymission/cabin/snowforest)
+"Mb" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 9
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "Mc" = (
 /obj/structure/flora/tree/jungle,
 /turf/open/floor/grass,
@@ -4230,6 +4578,25 @@
 "Mz" = (
 /obj/structure/flora/rock/jungle,
 /turf/open/floor/plating/grass/jungle,
+/area/awaymission/cabin/snowforest)
+"MB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/moonicorn{
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "MC" = (
 /obj/structure/railing{
@@ -4608,6 +4975,17 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest)
+"Pp" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 6;
+	layer = 2.4
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "Pq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4635,6 +5013,24 @@
 	dir = 8
 	},
 /turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"PB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/gorilla{
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "PC" = (
 /obj/structure/chair/sofa/corp/left{
@@ -4754,6 +5150,24 @@
 "QB" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest)
+"QC" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_x = 16;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/chick{
+	dir = 4
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "QG" = (
 /obj/structure/chair/pew/right{
@@ -5185,6 +5599,16 @@
 	},
 /turf/open/floor/wood/large,
 /area/tdome/tdome1)
+"UE" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
 "UG" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
@@ -5310,6 +5734,30 @@
 "VL" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass,
+/area/awaymission/cabin/snowforest)
+"VM" = (
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_y = -16
+	},
+/obj/structure/statue/taxidermy/broodmother{
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin/snowforest)
+"VU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/railing{
+	color = "#964B00";
+	dir = 1
+	},
+/obj/item/flashlight/spotlight{
+	light_range = 3;
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin/snowforest)
 "VV" = (
 /obj/structure/flora/rock,
@@ -27193,23 +27641,23 @@ Iv
 aX
 Iv
 nX
-NT
-Fr
-NT
 Fr
 Fr
 Fr
-NT
 Fr
-NT
 Fr
-NT
 Fr
-NT
 Fr
-NT
 Fr
-NT
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
+Fr
 Fr
 Fr
 LW
@@ -27318,9 +27766,9 @@ Fr
 NT
 Jv
 Jv
-NT
 Fr
-NT
+Fr
+Fr
 Fr
 Fr
 Fr
@@ -27998,7 +28446,7 @@ LW
 LW
 LW
 LW
-LW
+qs
 LW
 LW
 LW
@@ -28123,14 +28571,14 @@ uF
 Rv
 Yy
 Yy
+MB
+tf
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+eS
+UE
+Fr
+Ax
+tf
 LW
 LW
 LW
@@ -28253,16 +28701,16 @@ uF
 RB
 UU
 Yy
+dU
+qe
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+gN
+dU
 Fr
+Di
+Pp
+LW
+LW
 Fr
 LW
 LW
@@ -28388,11 +28836,11 @@ LW
 LW
 LW
 LW
+Fr
 LW
 LW
 LW
 LW
-fH
 Fr
 LW
 LW
@@ -28513,16 +28961,16 @@ uF
 RB
 WN
 Yy
+PB
+tf
+LW
+xL
+UE
+Fr
+QC
+tf
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-fH
 Fr
 Fr
 Fr
@@ -28643,16 +29091,16 @@ rZ
 Yy
 Yy
 Yy
+dU
+yg
+LW
+gN
+dU
+Fr
+AB
+CK
 LW
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
-fH
 Fr
 ur
 ur
@@ -28778,7 +29226,7 @@ LW
 LW
 LW
 LW
-LW
+Fr
 LW
 LW
 LW
@@ -28903,14 +29351,14 @@ sy
 XV
 XV
 XV
+py
+tf
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+Fz
+rK
+Fr
+ID
+tf
 LW
 mM
 Lt
@@ -29033,14 +29481,14 @@ KU
 SO
 FA
 XV
+Bc
+qe
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+gN
+dU
+Fr
+dU
+qe
 LW
 mM
 Nk
@@ -29163,7 +29611,7 @@ KZ
 Tp
 Gu
 XV
-LW
+hG
 LW
 LW
 LW
@@ -29293,14 +29741,14 @@ Or
 Tp
 Gu
 XV
+UE
+JJ
 LW
+vv
+tf
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+Mb
+tf
 LW
 LW
 LW
@@ -29423,14 +29871,14 @@ KZ
 Tp
 Gu
 XV
+VM
+fU
 LW
+VU
+fU
 LW
-LW
-LW
-LW
-LW
-LW
-LW
+yh
+fU
 LW
 LW
 LW
@@ -29553,15 +30001,15 @@ Ox
 Uc
 Gu
 XV
+fH
+to
 LW
+qT
+cR
 LW
-LW
-LW
-LW
-LW
-LW
-LW
-LW
+mT
+fU
+fe
 LW
 LW
 LW
