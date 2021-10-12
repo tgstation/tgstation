@@ -1,3 +1,4 @@
+import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
 import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "../components";
@@ -11,6 +12,11 @@ const STATE_MESSAGES = "messages";
 
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = "SWIPE_NEEDED";
+
+const sortShuttles = sortBy(
+  shuttle => !shuttle.emagOnly,
+  shuttle => shuttle.creditCost
+);
 
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
@@ -140,15 +146,6 @@ const NoConnectionModal = () => {
 const PageBuyingShuttle = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const shuttles = [...data.shuttles];
-  shuttles.sort((shuttleA, shuttleB) => {
-    if (shuttleA.emagOnly !== shuttleB.emagOnly) {
-      return shuttleB.emagOnly - shuttleA.emagOnly;
-    } else {
-      return shuttleA.creditCost - shuttleB.creditCost;
-    }
-  });
-
   return (
     <Box>
       <Section>
@@ -163,7 +160,7 @@ const PageBuyingShuttle = (props, context) => {
         Budget: <b>{data.budget.toLocaleString()}</b> credits
       </Section>
 
-      {shuttles.map(shuttle => (
+      {sortShuttles(data.shuttles).map(shuttle => (
         <Section
           title={(
             <span
