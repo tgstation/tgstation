@@ -11522,6 +11522,9 @@
 /obj/item/clothing/suit/radiation/medical,
 /obj/item/clothing/suit/radiation/medical,
 /obj/item/clothing/suit/radiation/medical,
+/obj/item/geiger_counter,
+/obj/item/geiger_counter,
+/obj/item/geiger_counter,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "cwB" = (
