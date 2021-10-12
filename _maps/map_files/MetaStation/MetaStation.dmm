@@ -11519,6 +11519,9 @@
 	name = "First Aid Supplies";
 	req_access_txt = "5"
 	},
+/obj/item/clothing/suit/radiation/medical,
+/obj/item/clothing/suit/radiation/medical,
+/obj/item/clothing/suit/radiation/medical,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "cwB" = (
