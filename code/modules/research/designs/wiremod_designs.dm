@@ -108,6 +108,11 @@
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
 
+/datum/design/component/timepiece
+	name = "Timepiece Component"
+	id = "comp_timepiece"
+	build_path = /obj/item/circuit_component/timepiece
+
 /datum/design/component/tostring
 	name = "To String Component"
 	id = "comp_tostring"

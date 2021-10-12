@@ -240,6 +240,7 @@
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
+		"comp_timepiece",
 		"comp_tonumber",
 		"comp_tostring",
 		"comp_typecast",
