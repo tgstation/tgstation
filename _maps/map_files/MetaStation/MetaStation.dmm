@@ -3456,10 +3456,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/item/geiger_counter{
-	pixel_x = 7;
-	pixel_y = 3
-	},
 /obj/item/radio/off{
 	pixel_x = -5;
 	pixel_y = 2

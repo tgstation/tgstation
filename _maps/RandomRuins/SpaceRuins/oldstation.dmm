@@ -6687,9 +6687,6 @@
 /obj/item/clothing/head/radiation,
 /obj/item/clothing/head/radiation,
 /obj/item/clothing/head/radiation,
-/obj/item/geiger_counter,
-/obj/item/geiger_counter,
-/obj/item/geiger_counter,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "FH" = (

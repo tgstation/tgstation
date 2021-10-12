@@ -44360,8 +44360,6 @@
 /obj/item/tank/internals/emergency_oxygen/engi{
 	pixel_x = 5
 	},
-/obj/item/geiger_counter,
-/obj/item/geiger_counter,
 /obj/structure/table,
 /obj/structure/sign/warning/xeno_mining{
 	pixel_x = -32
@@ -76951,10 +76949,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/geiger_counter{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/item/toy/figure/ninja{
 	pixel_x = 8;
 	pixel_y = 6
