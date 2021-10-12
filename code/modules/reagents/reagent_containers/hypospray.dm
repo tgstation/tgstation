@@ -33,8 +33,8 @@
 
 	//Always log attemped injects for admins
 	var/list/injected = list()
-	for(var/datum/reagent/reagent in reagents.reagent_list)
-		injected += reagent.name
+	for(var/datum/reagent/injected_reagent in reagents.reagent_list)
+		injected += injected_reagent.name
 	var/contained = english_list(injected)
 	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
 
