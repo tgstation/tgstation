@@ -26,6 +26,9 @@ require only minor tweaks.
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 
+/// Special map path value for custom adminloaded stations.
+#define CUSTOM_MAP_PATH "custom"
+
 // traits
 // boolean - marks a level as having that property if present
 #define ZTRAIT_CENTCOM "CentCom"
@@ -49,6 +52,9 @@ require only minor tweaks.
 
 /// boolean - does this z prevent phasing
 #define ZTRAIT_NOPHASE "No Phase"
+
+/// boolean - does this z prevent xray/meson/thermal vision
+#define ZTRAIT_NOXRAY "No X-Ray"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"

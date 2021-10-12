@@ -13,17 +13,17 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 	var/list/quirks = list() //Assoc. list of all roundstart quirk datum types; "name" = /path/
 	var/list/quirk_points = list() //Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
-	var/list/quirk_blacklist = list() //A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
 	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
 	var/list/hardcore_quirks = list()
 
-	var/static/list/quirks_blacklist = list(
+	/// A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
+	var/static/list/quirk_blacklist = list(
 		list("Blind","Nearsighted"),
 		list("Jolly","Depression","Apathetic","Hypersensitive"),
 		list("Ageusia","Vegetarian","Deviant Tastes"),
 		list("Ananas Affinity","Ananas Aversion"),
 		list("Alcohol Tolerance","Light Drinker"),
-		list("Clown Fan","Mime Fan"),
+		list("Clown Enjoyer","Mime Fan"),
 		list("Bad Touch", "Friendly"),
 		list("Extrovert", "Introvert"),
 	)
@@ -150,7 +150,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/balance = 0
-	
+
 	var/list/all_quirks = get_quirks()
 
 	for (var/quirk_name in quirks)

@@ -31,7 +31,7 @@ const textWidth = (text, font, fontsize) => {
 
 const setFontinText = (text, font, color, bold=false) => {
   return "<span style=\""
-    + "color:'" + color + "';"
+    + "color:" + color + ";"
     + "font-family:'" + font + "';"
     + ((bold)
       ? "font-weight: bold;"
@@ -55,7 +55,7 @@ const createInputField = (length, width, font,
       + "type=\"text\" "
       + "style=\""
       + "font:'" + fontsize + "x " + font + "';"
-      + "color:'" + color + "';"
+      + "color:" + color + ";"
       + "min-width:" + width + ";"
       + "max-width:" + width + ";"
       + "\" "

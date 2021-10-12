@@ -1,0 +1,1 @@
+#define CTF_REQUIRED_PLAYERS 4
