@@ -21,19 +21,19 @@
 	toolspeed = 0.1
 
 	/// The amount of radiation to give to the user of this tool; regardless of what they did with it.
-	var/radiation_on_use = 20
+	var/radiation_on_use = 2
 
 	/// How likely is a critical fail?
 	var/crit_fail_prob = 1
 
 	/// The amount of radiation to give to the user if they roll the worst effects. Negative numbers will heal radiation instead!
-	var/crit_fail_rads = 50
+	var/crit_fail_rads = 5
 
 	/// The amount of damage to take in BOTH Tox and Oxy on critical fail
 	var/crit_fail_damage = 15
 
 	/// We only apply damage and force vomit if the user has OVER this many rads
-	var/crit_fail_rads_threshold = 300
+	var/crit_fail_rads_threshold = 30
 
 /obj/item/wirebrush/advanced/examine(mob/user)
 	. = ..()
@@ -47,14 +47,14 @@
 
 	if(prob(crit_fail_prob))
 		to_chat(user, span_danger("You feel a sharp pain as your entire body grows oddly warm."))
-		user.radiation += crit_fail_rads
-		if(user.radiation > crit_fail_rads_threshold) // If you ignore the warning signs you get punished
+		user.apply_damage_type(crit_fail_rads, TOX)
+		if(user.get_damage_amount(TOX) > crit_fail_rads_threshold) // If you ignore the warning signs you get punished
 			user.emote("vomit")
 			user.adjustToxLoss(crit_fail_damage, forced=TRUE)
 			user.adjustOxyLoss(crit_fail_damage, forced=TRUE)
 		return
 
-	user.radiation += radiation_on_use
+	user.apply_damage_type(radiation_on_use, TOX)
 
 	if(prob(25))
 		user.emote("cough")

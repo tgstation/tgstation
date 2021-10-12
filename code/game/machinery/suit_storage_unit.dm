@@ -139,7 +139,6 @@
 	name = "radiation suit storage unit"
 	suit_type = /obj/item/clothing/suit/radiation
 	helmet_type = /obj/item/clothing/head/radiation
-	storage_type = /obj/item/geiger_counter
 
 /obj/machinery/suit_storage_unit/open
 	state_open = TRUE
@@ -398,7 +397,6 @@
 				visible_message(span_notice("[src]'s door slides open. The glowing yellow lights dim to a gentle green."))
 			else
 				visible_message(span_warning("[src]'s door slides open, barraging you with the nauseating smell of charred flesh."))
-				mob_occupant.radiation = 0
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)

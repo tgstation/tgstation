@@ -323,7 +323,7 @@
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
 
-/obj/item/tank/rad_act(strength)
+/* /obj/item/tank/rad_act(strength)
 	. = ..()
 	var/gas_change = FALSE
 	var/list/cached_gases = air_contents.gases
@@ -346,6 +346,6 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
-		START_PROCESSING(SSobj, src)
+		START_PROCESSING(SSobj, src) */
 
 #undef ASSUME_AIR_DT_FACTOR

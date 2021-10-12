@@ -200,9 +200,6 @@
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE
 
-/obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	H.radiation = 0
-
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
 	result = /obj/item/banner/engineering/mundane

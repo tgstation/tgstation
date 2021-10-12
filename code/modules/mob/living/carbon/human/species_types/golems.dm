@@ -372,14 +372,6 @@
 	punchstunthreshold = 9
 	prefix = "Uranium"
 	special_names = list("Oxide", "Rod", "Meltdown", "235")
-	COOLDOWN_DECLARE(radiation_emission_cooldown)
-
-/datum/species/golem/uranium/proc/radiation_emission(mob/living/carbon/human/H)
-	if(!COOLDOWN_FINISHED(src, radiation_emission_cooldown))
-		return
-	else
-		radiation_pulse(H, 50)
-		COOLDOWN_START(src, radiation_emission_cooldown, 2 SECONDS)
 
 /datum/species/golem/uranium/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
@@ -387,22 +379,7 @@
 	var/radiation_block = target.run_armor_check(affecting, RAD)
 	///standard damage roll for use in determining how much you irradiate per punch
 	var/attacker_irradiate_value = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
-	target.apply_effect(attacker_irradiate_value*5, EFFECT_IRRADIATE, radiation_block)
-
-/datum/species/golem/uranium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	..()
-	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && M != H &&  M.combat_mode)
-		radiation_emission(H)
-
-/datum/species/golem/uranium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
-	..()
-	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && user != H)
-		radiation_emission(H)
-
-/datum/species/golem/uranium/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	..()
-	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown))
-		radiation_emission(H)
+	target.apply_effect(attacker_irradiate_value*5, EFFECT_STUTTER, radiation_block)
 
 //Immune to physical bullets and resistant to brute, but very vulnerable to burn damage. Dusts on death.
 /datum/species/golem/sand

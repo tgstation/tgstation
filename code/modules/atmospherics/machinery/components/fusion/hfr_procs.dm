@@ -389,11 +389,8 @@
 	var/heavy_impact_explosion = 0
 	var/devastating_explosion = 0
 	var/em_pulse = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_EMP
-	var/rad_pulse = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_RADIATION_PULSE
 	var/emp_light_size = 0
 	var/emp_heavy_size = 0
-	var/rad_pulse_size = 0
-	var/rad_pulse_strength = 0
 	var/gas_spread = 0
 	var/gas_pockets = 0
 	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
@@ -417,9 +414,6 @@
 		if(em_pulse)
 			emp_light_size = power_level * 3
 			emp_heavy_size = power_level * 1
-		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 1))
-			rad_pulse_strength = power_level * 3000
 		gas_pockets = 5
 		gas_spread = power_level * 2
 
@@ -427,9 +421,6 @@
 		if(em_pulse)
 			emp_light_size = power_level * 5
 			emp_heavy_size = power_level * 3
-		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 3))
-			rad_pulse_strength = power_level * 5000
 		gas_pockets = 7
 		gas_spread = power_level * 4
 
@@ -437,9 +428,6 @@
 		if(em_pulse)
 			emp_light_size = power_level * 7
 			emp_heavy_size = power_level * 5
-		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 5))
-			rad_pulse_strength = power_level * 7000
 		gas_pockets = 10
 		gas_spread = power_level * 6
 
@@ -447,9 +435,6 @@
 		if(em_pulse)
 			emp_light_size = power_level * 9
 			emp_heavy_size = power_level * 7
-		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 7))
-			rad_pulse_strength = power_level * 9000
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
@@ -488,14 +473,6 @@
 		ignorecap = TRUE
 		)
 
-	if(rad_pulse)
-		radiation_pulse(
-			source = loc,
-			intensity = rad_pulse_strength,
-			range_modifier = rad_pulse_size,
-			log = TRUE
-			)
-
 	if(em_pulse)
 		empulse(
 			epicenter = loc,
@@ -518,13 +495,6 @@
 		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
 		human.hallucination += strength * distance_root * delta_time
 		human.hallucination = clamp(human.hallucination, 0, 200)
-
-/**
- * Emit radiation
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(radiation)
-	rad_power = clamp(radiation / 1e5, 0, FUSION_RAD_MAX)
-	radiation_pulse(loc, rad_power)
 
 /*
  * HFR cracking related procs

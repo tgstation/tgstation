@@ -1096,15 +1096,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
-			if(PDA_SCANNER_HALOGEN)
-				C.visible_message(span_notice("[user] analyzes [C]'s radiation levels."))
-
-				user.show_message(span_notice("Analyzing Results for [C]:"))
-				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
-				else
-					user.show_message(span_notice("No radiation detected."))
-
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()
 	if(!proximity)

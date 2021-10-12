@@ -13,8 +13,6 @@
 	max_integrity = 200
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 50, ACID = 50)
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	rad_insulation = RAD_MEDIUM_INSULATION
 
 	var/door_opened = FALSE //if it's open or not.
 	var/isSwitchingStates = FALSE //don't try to change stats if we're already opening
@@ -212,13 +210,11 @@
 	icon_state = "silver"
 	sheetType = /obj/item/stack/sheet/mineral/silver
 	max_integrity = 300
-	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/mineral_door/gold
 	name = "gold door"
 	icon_state = "gold"
 	sheetType = /obj/item/stack/sheet/mineral/gold
-	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/mineral_door/uranium
 	name = "uranium door"
@@ -238,7 +234,6 @@
 
 /obj/structure/mineral_door/transparent
 	opacity = FALSE
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/mineral_door/transparent/Close()
 	..()
@@ -280,7 +275,6 @@
 	icon_state = "diamond"
 	sheetType = /obj/item/stack/sheet/mineral/diamond
 	max_integrity = 1000
-	rad_insulation = RAD_EXTREME_INSULATION
 
 /obj/structure/mineral_door/wood
 	name = "wood door"
@@ -290,7 +284,6 @@
 	sheetType = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/mineral_door/wood/pickaxe_door(mob/living/user, obj/item/I)
 	return

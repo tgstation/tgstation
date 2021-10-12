@@ -426,11 +426,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	///Accumulates radiation, then adds it as a whole number to the owner
 	var/radiation_ticker
 
-/datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	//for some reason radiation doesn't work when small
-	owner.radiation += creation_purity * delta_time * 0.5
-	..()
-
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
 	name = "Syrinifergus"

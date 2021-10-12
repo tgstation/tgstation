@@ -191,7 +191,7 @@
 		add_fingerprint(user)
 		..()
 
-/obj/machinery/portable_atmospherics/rad_act(strength)
+/* /obj/machinery/portable_atmospherics/rad_act(strength)
 	. = ..()
 	var/gas_change = FALSE
 	var/list/cached_gases = air_contents.gases
@@ -214,4 +214,4 @@
 
 	if(gas_change)
 		air_contents.garbage_collect()
-		SSair.start_processing_machine(src)
+		SSair.start_processing_machine(src) */

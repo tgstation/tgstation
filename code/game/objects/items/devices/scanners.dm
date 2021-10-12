@@ -238,11 +238,6 @@ GENE SCANNER
 	if(advanced)
 		render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
 
-	if (M.radiation)
-		render_list += "<span class='alert ml-1'>Subject is irradiated.</span>\n"
-		if(advanced)
-			render_list += "<span class='info ml-1'>Radiation Level: [M.radiation]%.</span>\n"
-
 	if(advanced && M.hallucinating())
 		render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
 

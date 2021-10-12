@@ -88,30 +88,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
 	custom_materials = list(/datum/material/uranium = 4000)
 
-/turf/closed/wall/mineral/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = 1
-			radiation_pulse(src, 40)
-			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
-				T.radiate()
-			last_event = world.time
-			active = null
-			return
-	return
-
-/turf/closed/wall/mineral/uranium/attack_hand(mob/user, list/modifiers)
-	radiate()
-	. = ..()
-
-/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
-	radiate()
-	..()
-
-/turf/closed/wall/mineral/uranium/Bumped(atom/movable/AM)
-	radiate()
-	..()
-
 /turf/closed/wall/mineral/uranium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
 

@@ -1,4 +1,4 @@
-//radiation needs to be over this amount to get power
+/* //radiation needs to be over this amount to get power
 #define RAD_COLLECTOR_EFFICIENCY 80
 #define RAD_COLLECTOR_COEFFICIENT 100
 //(this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
@@ -209,3 +209,4 @@
 #undef RAD_COLLECTOR_COEFFICIENT
 #undef RAD_COLLECTOR_STORED_OUT
 #undef RAD_COLLECTOR_OUTPUT
+ */

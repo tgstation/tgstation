@@ -101,7 +101,6 @@
 		/obj/item/hemostat,
 		/obj/item/blood_filter,
 		/obj/item/shears,
-		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,

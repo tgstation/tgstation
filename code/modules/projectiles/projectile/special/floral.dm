@@ -12,7 +12,7 @@
 		var/mob/living/L = target
 		if(L.mob_biotypes & MOB_PLANT)
 			if(prob(15))
-				L.rad_act(rand(30, 80))
+				L.apply_damage_type(rand(3, 8), TOX)
 				L.Paralyze(100)
 				L.visible_message(span_warning("[L] writhes in pain as [L.p_their()] vacuoles boil."), span_userdanger("You writhe in pain as your vacuoles boil!"), span_hear("You hear the crunching of leaves."))
 				if(iscarbon(L) && L.has_dna())

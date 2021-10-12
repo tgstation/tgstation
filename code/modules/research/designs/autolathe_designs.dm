@@ -970,14 +970,6 @@
 	build_path = /obj/item/hand_labeler
 	category = list("initial", "Electronics")
 
-/datum/design/geiger
-	name = "Geiger Counter"
-	id = "geigercounter"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
-	build_path = /obj/item/geiger_counter
-	category = list("initial", "Tools")
-
 /datum/design/turret_control_frame
 	name = "Turret Control Frame"
 	id = "turret_control"

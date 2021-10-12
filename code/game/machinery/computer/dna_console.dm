@@ -313,7 +313,6 @@
 		else
 			data["subjectStatus"] = scanner_occupant.stat
 		data["subjectHealth"] = scanner_occupant.health
-		data["subjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
 		data["isMonkey"] = ismonkey(scanner_occupant)
 		data["subjectUNI"] = scanner_occupant.dna.unique_identity
@@ -324,7 +323,6 @@
 		data["subjectName"] = null
 		data["subjectStatus"] = null
 		data["subjectHealth"] = null
-		data["subjectRads"] = null
 		data["subjectEnzymes"] = null
 		//data["subjectMutations"] = null
 		data["storage"]["occupant"] = null
@@ -418,7 +416,7 @@
 			scanner_occupant.dna.generate_dna_blocks()
 			scrambleready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))
-			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2)
+			scanner_occupant.apply_damage_type(RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2), TOX)
 			return
 
 		// Check whether a specific mutation is eligible for discovery within the
@@ -526,7 +524,7 @@
 			//  we've increased the occupant rads
 			sequence = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
 			scanner_occupant.dna.mutation_index[path] = sequence
-			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff
+			scanner_occupant.apply_damage_type(RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff, TOX)
 			scanner_occupant.domutcheck()
 
 			// GUARD CHECK - Modifying genetics can lead to edge cases where the
@@ -1611,7 +1609,7 @@
 
 	// Pre-calc the rad increase since we'll be using it in all the possible
 	//  operations
-	var/rad_increase = rand(100/(connected_scanner.damage_coeff ** 2),250/(connected_scanner.damage_coeff ** 2))
+	var/rad_increase = rand(10/(connected_scanner.damage_coeff ** 2),50/(connected_scanner.damage_coeff ** 2))
 
 	switch(type)
 		if("ui")
@@ -1624,7 +1622,7 @@
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
-			scanner_occupant.radiation += rad_increase
+			scanner_occupant.apply_damage_type(rad_increase, TOX)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("uf")
@@ -1637,7 +1635,7 @@
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_features = buffer_slot["UF"]
 			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-			scanner_occupant.radiation += rad_increase
+			scanner_occupant.apply_damage_type(rad_increase, TOX)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("ue")
@@ -1652,7 +1650,7 @@
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
-			scanner_occupant.radiation += rad_increase
+			scanner_occupant.apply_damage_type(rad_increase, TOX)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("mixed")
@@ -1670,7 +1668,7 @@
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
-			scanner_occupant.radiation += rad_increase
+			scanner_occupant.apply_damage_type(rad_increase, TOX)
 			scanner_occupant.domutcheck()
 			return TRUE
 

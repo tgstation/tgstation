@@ -86,8 +86,6 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
 	name = "holofirelock"
@@ -97,8 +95,6 @@
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
 	alpha = 150
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
-	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"

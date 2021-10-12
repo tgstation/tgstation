@@ -12,7 +12,6 @@
 #define INVESTIGATE_PORTAL "portals"
 #define INVESTIGATE_RESEARCH "research"
 #define INVESTIGATE_HALLUCINATIONS "hallucinations"
-#define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_EXONET "exonet"
 #define INVESTIGATE_PRESENTS "presents"
 #define INVESTIGATE_HYPERTORUS "hypertorus"

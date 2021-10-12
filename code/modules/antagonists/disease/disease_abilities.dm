@@ -42,7 +42,6 @@ new /datum/disease_ability/symptom/powerful/heal/metabolism,
 new /datum/disease_ability/symptom/powerful/heal/dark,
 new /datum/disease_ability/symptom/powerful/heal/water,
 new /datum/disease_ability/symptom/powerful/heal/plasma,
-new /datum/disease_ability/symptom/powerful/heal/radiation,
 new /datum/disease_ability/symptom/powerful/heal/coma,
 new /datum/disease_ability/symptom/powerful/youth
 ))
@@ -439,9 +438,6 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/powerful/heal/plasma
 	symptoms = list(/datum/symptom/heal/plasma)
-
-/datum/disease_ability/symptom/powerful/heal/radiation
-	symptoms = list(/datum/symptom/heal/radiation)
 
 /datum/disease_ability/symptom/powerful/heal/coma
 	symptoms = list(/datum/symptom/heal/coma)

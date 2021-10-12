@@ -260,7 +260,7 @@
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
 
-/turf/open/rad_act(strength)
+/* /turf/open/rad_act(strength)
 	. = ..()
 	var/gas_change = FALSE
 	var/list/cached_gases = air.gases
@@ -283,5 +283,5 @@
 
 	if(gas_change)
 		air.garbage_collect()
-		air_update_turf(FALSE, FALSE)
+		air_update_turf(FALSE, FALSE) */
 

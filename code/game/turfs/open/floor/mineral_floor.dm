@@ -257,41 +257,6 @@
 	floor_tile = /obj/item/stack/tile/mineral/uranium
 	icons = list("uranium","uranium_dam")
 	custom_materials = list(/datum/material/uranium = 500)
-	var/last_event = 0
-	var/active = null
-
-/turf/open/floor/mineral/uranium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(.)
-		return
-	if(isliving(arrived))
-		radiate()
-
-/turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
-	.=..()
-	if(!.)
-		radiate()
-
-/turf/open/floor/mineral/uranium/attack_hand(mob/user, list/modifiers)
-	.=..()
-	if(!.)
-		radiate()
-
-/turf/open/floor/mineral/uranium/attack_paw(mob/user, list/modifiers)
-	.=..()
-	if(!.)
-		radiate()
-
-/turf/open/floor/mineral/uranium/proc/radiate()
-	if(!active)
-		if(world.time > last_event+15)
-			active = TRUE
-			radiation_pulse(src, 10)
-			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
-				T.radiate()
-			last_event = world.time
-			active = FALSE
-			return
 
 // ALIEN ALLOY
 /turf/open/floor/mineral/abductor

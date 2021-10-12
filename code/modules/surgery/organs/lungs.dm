@@ -277,13 +277,6 @@
 		if(bz_pp > BZ_brain_damage_min && prob(33))
 			breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 
-	// Tritium
-		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
-		if (trit_pp > 50)
-			breather.radiation += trit_pp/2 //If you're breathing in half an atmosphere of radioactive gas, you fucked up.
-		else
-			breather.radiation += trit_pp/10
-
 	// Nitryl
 		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
 		if (prob(nitryl_pp))

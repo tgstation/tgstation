@@ -6,13 +6,12 @@
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
-	flags_1 = ON_BORDER_1 | RAD_PROTECT_CONTENTS_1
+	flags_1 = ON_BORDER_1
 	max_integrity = 25
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
-	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
 	var/state = WINDOW_OUT_OF_FRAME
@@ -399,7 +398,6 @@
 	damage_deflection = 11
 	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
-	rad_insulation = RAD_HEAVY_INSULATION
 	receive_ricochet_chance_mod = 1.1
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
@@ -509,7 +507,6 @@
 	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
-	rad_insulation = RAD_NO_INSULATION
 
 /obj/structure/window/plasma/Initialize(mapload, direct)
 	. = ..()
@@ -707,7 +704,6 @@
 	damage_deflection = 21 //The same as reinforced plasma windows.3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
-	rad_insulation = RAD_HEAVY_INSULATION
 
 /obj/structure/window/reinforced/plasma/plastitanium/unanchored
 	anchored = FALSE

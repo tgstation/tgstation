@@ -76,7 +76,6 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/wrench = 1,
 		/obj/item/crowbar = 1,
 		/obj/item/t_scanner = 1,
-		/obj/item/geiger_counter = 1,
 		/obj/item/analyzer = 1,
 		/obj/item/mop = 1,
 		/obj/item/pushbroom = 1,

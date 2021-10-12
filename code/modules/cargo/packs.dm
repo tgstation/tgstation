@@ -215,8 +215,6 @@
 					/obj/item/clothing/head/radiation,
 					/obj/item/clothing/suit/radiation,
 					/obj/item/clothing/suit/radiation,
-					/obj/item/geiger_counter,
-					/obj/item/geiger_counter,
 					/obj/item/reagent_containers/food/drinks/bottle/vodka,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass)

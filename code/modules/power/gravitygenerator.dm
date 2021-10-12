@@ -337,8 +337,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
 			updateDialog()
-			if(prob(25)) // To help stop "Your clothes feel warm." spam.
-				pulse_radiation()
 
 			var/overlay_state = null
 			switch(charge_count)
@@ -359,10 +357,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 					if(overlay_state)
 						middle.add_overlay(overlay_state)
 					current_overlay = overlay_state
-
-
-/obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	radiation_pulse(src, 200)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
