@@ -250,9 +250,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
  */
 /area/proc/firealert(obj/source)
-	if (!fire)
-		set_fire_alarm_effect()
-		alarm_manager.send_alarm(ALARM_FIRE, source)
+	alarm_manager.send_alarm(ALARM_FIRE, source)
+
+/**
+ * Clear a firealarm alert for this area
+ *
+ * Sends an all-clear to all ai players, alert consoles, drones and alarm monitor programs in the world
+ */
+/area/proc/alertreset(obj/source)
+	alarm_manager.clear_alarm(ALARM_FIRE, source)
 
 /**
  * Close and lock a door passed into this proc
@@ -293,6 +299,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	for(var/obj/machinery/light/L in src)
 		L.update()
+	for(var/obj/machinery/firealarm/firepanel in firealarms)
+		firepanel.set_status()
 
 /**
  * unset the fire alarm visual affects in an area

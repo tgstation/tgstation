@@ -1,5 +1,3 @@
-#define FIREALARM_COOLDOWN 67 // Chosen fairly arbitrarily, it is the length of the audio in FireAlarm.ogg. The actual track length is 7 seconds 8ms but but the audio stops at 6s 700ms
-
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
@@ -33,8 +31,8 @@
 	luminosity = 1
 
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
-	COOLDOWN_DECLARE(last_alarm)
 	var/area/my_area = null
+	var/datum/looping_sound/firealarm/soundloop
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
@@ -47,9 +45,32 @@
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_appearance()
 	my_area = get_area(src)
+	LAZYADD(my_area.firealarms, src)
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
+	soundloop = new(src, FALSE)
+
+/obj/machinery/firealarm/Destroy()
+	if(my_area)
+		LAZYREMOVE(my_area.firealarms, src)
+		my_area = null
+	QDEL_NULL(soundloop)
+	return ..()
+
+/**
+ * Sets the sound state, and then calls update_icon()
+ *
+ * This proc exists to be called by areas and firelocks
+ * so that it may update its icon and start or stop playing
+ * the alarm sound based on the my_area.fire var.
+ */
+/obj/machinery/firealarm/proc/set_status()
+	if(my_area.fire || LAZYLEN(my_area.active_firelocks))
+		soundloop.start()
+	else
+		soundloop.stop()
+	update_icon()
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
@@ -129,16 +150,13 @@
 		update_appearance()
 
 /obj/machinery/firealarm/proc/alarm(mob/user)
-	//if(!is_operational || !COOLDOWN_FINISHED(my_area, last_alarm)) //DEBUG -- fix cooldown
 	if(!is_operational)
 		return
 	if(my_area.fire)
 		return //area alarm already active
-	//COOLDOWN_START(my_area, last_alarm, FIREALARM_COOLDOWN)//DEBUG -- fix cooldown
 	my_area.firealert()
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
-	//playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)//DEBUG -- fix sound
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 

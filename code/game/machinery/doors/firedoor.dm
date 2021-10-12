@@ -22,7 +22,6 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, RAD = 100, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
-	var/nextstate = null
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
@@ -55,6 +54,7 @@
 	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
 
 /obj/machinery/door/firedoor/Destroy()
+	reset() //This handles some alert/alarm clearing, if we were destroyed while active.
 	remove_from_areas()
 	UnregisterSignal(src, COMSIG_MERGER_ADDING)
 	UnregisterSignal(src, COMSIG_MERGER_REMOVING)
@@ -64,16 +64,16 @@
 // Merger handling
 
 /obj/machinery/door/firedoor/proc/MergerAdding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
-    SIGNAL_HANDLER
-    if(new_merger.id != merger_id)
-        return
-    RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/MergerRefreshComplete)
+	SIGNAL_HANDLER
+	if(new_merger.id != merger_id)
+		return
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/MergerRefreshComplete)
 
 /obj/machinery/door/firedoor/proc/MergerRemoving(obj/machinery/door/firedoor/us, datum/merger/old_merger)
-    SIGNAL_HANDLER
-    if(old_merger.id != merger_id)
-        return
-    UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
+	SIGNAL_HANDLER
+	if(old_merger.id != merger_id)
+		return
+	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
 
 /// Handles the firelocks to register only one signal per group
 /obj/machinery/door/firedoor/proc/MergerRefreshComplete(datum/merger/merger, list/leaving_members, list/joining_members)
@@ -94,10 +94,10 @@
 			LAZYREMOVE(place.active_firelocks, src)
 			if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 				for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-					fire_panel.update_icon()
+					fire_panel.set_status()
 
 /obj/machinery/door/firedoor/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return world.time > detect_cooldown && (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
+	return world.time > detect_cooldown && (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
 
 /obj/machinery/door/firedoor/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(obj_flags & EMAGGED)
@@ -108,7 +108,7 @@
 	if(alarm_type)
 		return
 
-	if(exposed_temperature > T0C + 200)
+	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		start_activation_process(FIRELOCK_ALARM_TYPE_HOT)
 		return
 	if(exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
@@ -132,9 +132,12 @@
 		LAZYADD(place.active_firelocks, src)
 		if(LAZYLEN(place.active_firelocks) == 1) //if we're the first to activate in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-				fire_panel.update_icon()
+				fire_panel.set_status()
+			if(place == get_area(src))
+				place.firealert(place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
+	update_icon() //Sets the lights even if the door doesn't move.
 	if(!being_held_open)
-		INVOKE_ASYNC(src, .proc/close)
+		INVOKE_ASYNC(src, .proc/correct_state)
 
 
 /obj/machinery/door/firedoor/proc/reset()
@@ -144,9 +147,12 @@
 		LAZYREMOVE(place.active_firelocks, src)
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-				fire_panel.update_icon()
+				fire_panel.set_status()
+			if(place == get_area(src))
+				place.alertreset(place) //Same as before. Let other firelocks in other areas handle their home area alert clearing.
 	detect_cooldown = world.time + DETECT_COOLDOWN_STEP_TIME
-	INVOKE_ASYNC(src, .proc/open)
+	update_icon() //Sets the lights even if the door doesn't move.
+	INVOKE_ASYNC(src, .proc/correct_state)
 
 /obj/machinery/door/firedoor/proc/update_detect(code)
 	SIGNAL_HANDLER
@@ -168,7 +174,8 @@
 
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/latetoggle)
+	update_icon()
+	correct_state()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -221,6 +228,7 @@
 		user.visible_message(span_danger("[user] [welded?"welds":"unwelds"] [src]."), span_notice("You [welded ? "weld" : "unweld"] [src]."))
 		log_game("[key_name(user)] [welded ? "welded":"unwelded"] firedoor [src] with [W] at [AREACOORD(src)]")
 		update_appearance()
+		correct_state()
 
 /// We check for adjacency when using the primary attack.
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user)
@@ -249,7 +257,7 @@
 	if(density)
 		open()
 		if(alarm_type)
-			addtimer(CALLBACK(src, .proc/close), 2 SECONDS, TIMER_UNIQUE)
+			addtimer(CALLBACK(src, .proc/correct_state), 2 SECONDS, TIMER_UNIQUE)
 	else
 		close()
 
@@ -260,7 +268,7 @@
 	if(!QDELETED(user) && Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
 	being_held_open = FALSE
-	INVOKE_ASYNC(src, .proc/close)
+	INVOKE_ASYNC(src, .proc/correct_state)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
@@ -276,7 +284,7 @@
 	if(density)
 		open()
 		if(alarm_type)
-			addtimer(CALLBACK(src, .proc/close), 2 SECONDS, TIMER_UNIQUE)
+			addtimer(CALLBACK(src, .proc/correct_state), 2 SECONDS, TIMER_UNIQUE)
 	else
 		close()
 	return TRUE
@@ -291,7 +299,7 @@
 		return
 	open()
 	if(alarm_type)
-		addtimer(CALLBACK(src, .proc/close), 2 SECONDS, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/correct_state), 2 SECONDS, TIMER_UNIQUE)
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
@@ -317,42 +325,45 @@ obj/machinery/door/firedoor/update_icon_state()
 		warn_lights.plane = ABOVE_LIGHTING_PLANE
 		add_overlay(warn_lights)
 
+/**
+ * Corrects the current state of the door, based on if alarm_type is set.
+ *
+ * This proc is called after weld and power restore events. Gives the
+ * illusion that the door is constantly attempting to move without actually
+ * having to process it. Timers also call this, so that if alarm_type
+ * changes during the timer, the door doesn't close or open incorrectly.
+ */
+/obj/machinery/door/firedoor/proc/correct_state()
+	to_chat(world, "DEBUG -- correct_state() called")
+	if(alarm_type && !density) //We should be closed but we're not
+		return close()
+	if(!alarm_type && density) //We should be open but we're not
+		return open()
+
 /obj/machinery/door/firedoor/open()
+	if(welded)
+		return
 	. = ..()
-	latetoggle()
 
 /obj/machinery/door/firedoor/close()
 	if(HAS_TRAIT(loc, TRAIT_FIREDOOR_STOP))
 		return
 	. = ..()
-	latetoggle()
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		var/turf/T = get_turf(src)
+		var/turf/targetloc = get_turf(src)
 		if(disassembled || prob(40))
-			var/obj/structure/firelock_frame/F = new assemblytype(T)
+			var/obj/structure/firelock_frame/fatal = new assemblytype(targetloc)
 			if(disassembled)
-				F.constructionStep = CONSTRUCTION_PANEL_OPEN
+				fatal.constructionStep = CONSTRUCTION_PANEL_OPEN
 			else
-				F.constructionStep = CONSTRUCTION_NO_CIRCUIT
-				F.update_integrity(F.max_integrity * 0.5)
-			F.update_appearance()
+				fatal.constructionStep = CONSTRUCTION_NO_CIRCUIT
+				fatal.update_integrity(fatal.max_integrity * 0.5)
+			fatal.update_appearance()
 		else
-			new /obj/item/electronics/firelock (T)
+			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
-
-
-/obj/machinery/door/firedoor/proc/latetoggle()
-	if(operating || machine_stat & NOPOWER || !nextstate)
-		return
-	switch(nextstate)
-		if(FIREDOOR_OPEN)
-			nextstate = null
-			open()
-		if(FIREDOOR_CLOSED)
-			nextstate = null
-			close()
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
@@ -378,6 +389,21 @@ obj/machinery/door/firedoor/update_icon_state()
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/machinery/door/firedoor/update_overlays()
+	if(alarm_type && powered())
+		if(!warn_lights)
+			warn_lights = new()
+		switch(dir) //Thin firelocks hug the edge of the sprite and so there's no real room for the lights without this
+			if(NORTH)
+				warn_lights.pixel_y = 2
+			if(SOUTH)
+				warn_lights.pixel_y = -2
+			if(EAST)
+				warn_lights.pixel_x = 2
+			if(WEST)
+				warn_lights.pixel_x = -2
+	return ..()
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -440,14 +466,14 @@ obj/machinery/door/firedoor/update_icon_state()
 	icon_state = "[base_icon_state][constructionStep]"
 	return ..()
 
-/obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
+/obj/structure/firelock_frame/attackby(obj/item/object, mob/user)
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			if(C.tool_behaviour == TOOL_CROWBAR)
-				C.play_tool_sound(src)
+			if(object.tool_behaviour == TOOL_CROWBAR)
+				object.play_tool_sound(src)
 				user.visible_message(span_notice("[user] begins removing the circuit board from [src]..."), \
 					span_notice("You begin prying out the circuit board from [src]..."))
-				if(!C.use_tool(src, user, DEFAULT_STEP_TIME))
+				if(!object.use_tool(src, user, DEFAULT_STEP_TIME))
 					return
 				if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 					return
@@ -458,14 +484,14 @@ obj/machinery/door/firedoor/update_icon_state()
 				constructionStep = CONSTRUCTION_NO_CIRCUIT
 				update_appearance()
 				return
-			if(C.tool_behaviour == TOOL_WRENCH)
+			if(object.tool_behaviour == TOOL_WRENCH)
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					to_chat(user, span_warning("There's already a firelock there."))
 					return
-				C.play_tool_sound(src)
+				object.play_tool_sound(src)
 				user.visible_message(span_notice("[user] starts bolting down [src]..."), \
 					span_notice("You begin bolting [src]..."))
-				if(!C.use_tool(src, user, DEFAULT_STEP_TIME))
+				if(!object.use_tool(src, user, DEFAULT_STEP_TIME))
 					return
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					return
@@ -478,61 +504,61 @@ obj/machinery/door/firedoor/update_icon_state()
 					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
-			if(istype(C, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/P = C
+			if(istype(object, /obj/item/stack/sheet/plasteel))
+				var/obj/item/stack/sheet/plasteel/plasteel_sheet = object
 				if(reinforced)
 					to_chat(user, span_warning("[src] is already reinforced."))
 					return
-				if(P.get_amount() < 2)
+				if(plasteel_sheet.get_amount() < 2)
 					to_chat(user, span_warning("You need more plasteel to reinforce [src]."))
 					return
 				user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
 					span_notice("You begin reinforcing [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(do_after(user, DEFAULT_STEP_TIME, target = src))
-					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.get_amount() < 2 || !P)
+					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || plasteel_sheet.get_amount() < 2 || !plasteel_sheet)
 						return
 					user.visible_message(span_notice("[user] reinforces [src]."), \
 						span_notice("You reinforce [src]."))
 					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-					P.use(2)
+					plasteel_sheet.use(2)
 					reinforced = 1
 				return
 		if(CONSTRUCTION_NO_CIRCUIT)
-			if(istype(C, /obj/item/electronics/firelock))
-				user.visible_message(span_notice("[user] starts adding [C] to [src]..."), \
+			if(istype(object, /obj/item/electronics/firelock))
+				user.visible_message(span_notice("[user] starts adding [object] to [src]..."), \
 					span_notice("You begin adding a circuit board to [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(!do_after(user, DEFAULT_STEP_TIME, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 					return
-				qdel(C)
+				qdel(object)
 				user.visible_message(span_notice("[user] adds a circuit to [src]."), \
-					span_notice("You insert and secure [C]."))
+					span_notice("You insert and secure [object]."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				constructionStep = CONSTRUCTION_PANEL_OPEN
 				return
-			if(C.tool_behaviour == TOOL_WELDER)
-				if(!C.tool_start_check(user, amount=1))
+			if(object.tool_behaviour == TOOL_WELDER)
+				if(!object.tool_start_check(user, amount=1))
 					return
 				user.visible_message(span_notice("[user] begins cutting apart [src]'s frame..."), \
 					span_notice("You begin slicing [src] apart..."))
 
-				if(C.use_tool(src, user, DEFAULT_STEP_TIME, volume=50, amount=1))
+				if(object.use_tool(src, user, DEFAULT_STEP_TIME, volume=50, amount=1))
 					if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 						return
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
 						span_notice("You cut [src] into metal."))
-					var/turf/T = get_turf(src)
-					new /obj/item/stack/sheet/iron(T, 3)
+					var/turf/tagetloc = get_turf(src)
+					new /obj/item/stack/sheet/iron(tagetloc, 3)
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(T, 2)
+						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
 					qdel(src)
 				return
-			if(istype(C, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/P = C
-				if(!P.adapt_circuit(user, DEFAULT_STEP_TIME * 0.5))
+			if(istype(object, /obj/item/electroadaptive_pseudocircuit))
+				var/obj/item/electroadaptive_pseudocircuit/raspberrypi = object
+				if(!raspberrypi.adapt_circuit(user, DEFAULT_STEP_TIME * 0.5))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt a firelock circuit and slot it into the assembly."))
