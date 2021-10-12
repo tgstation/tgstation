@@ -11,7 +11,7 @@
  */
 /obj/item/circuit_component/timepiece
 	display_name = "Timepiece"
-	desc = "A component that outputs the current station time. The text output port is used for time formats while the numberical output port is used for units of time."
+	desc = "A component that outputs the current station time. The text output port is used for time formats while the numerical output port is used for units of time."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The time format of the text output
@@ -24,8 +24,8 @@
 	var/datum/port/output/num_output
 
 /obj/item/circuit_component/timepiece/populate_ports()
-	text_output = add_output_port("Time Format Output", PORT_TYPE_STRING)
-	num_output = add_output_port("Unit Of Time Output", PORT_TYPE_NUMBER)
+	text_output = add_output_port("Time Format", PORT_TYPE_STRING)
+	num_output = add_output_port("Unit of Time", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/timepiece/populate_options()
 	var/static/format_options = list(
@@ -38,7 +38,7 @@
 		COMP_TIMEPIECE_MINUTES,
 		COMP_TIMEPIECE_SECONDS,
 	)
-	time_unit = add_option_port("Unit Of Time", unit_options)
+	time_unit = add_option_port("Unit of Time", unit_options)
 
 /obj/item/circuit_component/timepiece/input_received(datum/port/input/port)
 	var/time
@@ -47,7 +47,7 @@
 		if(COMP_TIMEPIECE_TWENTYFOUR_HOUR)
 			time = station_time_timestamp()
 		if(COMP_TIMEPIECE_TWELVE_HOUR)
-			time = time_to_twelve_hour(station_time(TRUE))
+			time = time_to_twelve_hour(station_time())
 
 	text_output.set_output(time)
 

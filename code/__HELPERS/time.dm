@@ -104,10 +104,18 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 /proc/daysSince(realtimev)
 	return round((world.realtime - realtimev) / (24 HOURS))
 
-/proc/time_to_twelve_hour(time, format = "hh:mm:ss")
+/**
+ * Converts a time expressed in deciseconds (like world.time) to the 12-hour time format.
+ * the format arg is the format passed down to time2text() (e.g. "hh:mm" will output hours and minutes, not seconds).
+ * the timezone is the time value offset from UTC. It's to be done outside time2text() to get the AM/PM right.
+ */
+/proc/time_to_twelve_hour(time, format = "hh:mm:ss", timezone = TIMEZONE_UTC)
+	time = (time + ((timezone - GLOB.timezoneOffset) HOURS)) % 24 HOURS
 	var/am_pm = "AM"
-	if(time > (12 HOURS))
+	if(time > 12 HOURS)
 		am_pm = "PM"
-		if(time > (13 HOURS))
-			time -= 12 HOURS
-	return "[time2text(time, "hh:mm:ss")] [am_pm]"
+		if(time > 13 HOURS)
+			time -= 12 HOURS // e.g. 4:16 PM but not 00:42 PM
+	else if (time < 1 HOURS)
+		time += 12 HOURS // e.g. 12.23 AM
+	return "[time2text(time, format)] [am_pm]"
