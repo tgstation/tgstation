@@ -6,8 +6,14 @@
 	requires_power = TRUE
 
 /area/awaymission/cabin/snowforest
-	name = "Snow Forest"
+	name = "Spooky Forest"
 	icon_state = "away"
+
+/area/awaymission/cabin/snowforest/mansion
+	name = "Spooky Mansion"
+
+/area/awaymission/cabin/snowforest/crypt
+	name = "Spooky Crypt"
 
 /area/awaymission/cabin/snowforest/sovietsurface
 	name = "Snow Forest"

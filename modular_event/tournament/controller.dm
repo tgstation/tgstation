@@ -58,6 +58,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 
 /obj/machinery/computer/tournament_controller/ui_static_data(mob/user)
 	return list(
+		"arena_id" = arena_id,
 		"arena_templates" = assoc_to_keys(arena_templates),
 		"team_names" = assoc_to_keys(GLOB.tournament_teams),
 	)
@@ -69,13 +70,13 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 
 	switch (action)
 		if ("clear_arena")
-			clear_arena()
+			clear_arena(usr, manual = TRUE)
 			return TRUE
 		if ("close_shutters")
 			close_shutters()
 			return TRUE
 		if ("disband_teams")
-			disband_teams()
+			disband_teams(usr)
 			return TRUE
 		if ("open_shutters")
 			open_shutters()
@@ -162,15 +163,19 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 		to_chat(user, span_warning("Something went wrong while loading the map."))
 		return
 
-	message_admins("[key_name_admin(user)] loaded [arena_template_name] event arena for [arena_id] arena.")
-	log_admin("[key_name(user)] loaded [arena_template_name] event arena for [arena_id] arena.")
+	message_admins("[key_name_admin(user)] loaded [arena_template_name] map for [arena_id] arena.")
+	log_admin("[key_name(user)] loaded [arena_template_name] map for [arena_id] arena.")
 
-/obj/machinery/computer/tournament_controller/proc/clear_arena()
+/obj/machinery/computer/tournament_controller/proc/clear_arena(mob/user, manual = FALSE)
 	for (var/turf/arena_turf in get_arena_turfs())
 		arena_turf.empty(turf_type = /turf/open/floor/plating, baseturf_type = /turf/open/floor/plating)
 
 	QDEL_LIST(contestants)
 	QDEL_LIST(toolboxes)
+
+	if(manual)
+		message_admins("[key_name_admin(user)] manually cleared the map for [arena_id] arena.")
+		log_admin("[key_name_admin(user)] manually cleared the map for [arena_id] arena.")
 
 /obj/machinery/computer/tournament_controller/proc/spawn_teams(mob/user, list/team_names)
 	QDEL_LIST(contestants)
@@ -205,6 +210,8 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			var/mob/living/carbon/human/contestant_mob = new
 
 			client?.prefs?.apply_prefs_to(contestant_mob)
+			if(!(contestant_mob.dna?.species in list(/datum/species/human, /datum/species/moth, /datum/species/lizard, /datum/species/human/felinid)))
+				contestant_mob.set_species(/datum/species/human)
 			contestant_mob.equipOutfit(team.outfit)
 			contestant_mob.forceMove(pick(valid_team_spawns[team_spawn_id]))
 			contestant_mob.key = client?.key

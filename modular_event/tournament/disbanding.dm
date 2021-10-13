@@ -29,7 +29,7 @@
 
 	return ..()
 
-/obj/machinery/computer/tournament_controller/proc/disband_teams()
+/obj/machinery/computer/tournament_controller/proc/disband_teams(mob/user)
 	for (var/team_id in old_mobs)
 		var/obj/disband_location = disband_locations[team_id]
 
@@ -46,3 +46,6 @@
 
 	QDEL_LIST(contestants)
 	old_mobs.Cut()
+
+	message_admins("[key_name_admin(user)] disbanded [arena_id] arena teams.")
+	log_admin("[key_name_admin(user)] disbanded [arena_id] arena teams.")

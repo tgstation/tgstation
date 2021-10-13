@@ -4,11 +4,13 @@
 	icon = 'modular_event/spooky_mansion/street_lamp/icon.dmi'
 	icon_state = "streetlamp"
 	anchored = TRUE
+	density = TRUE
 	light_system = STATIC_LIGHT
 	light_power = 0.5
 	light_range = 8
 	light_color = COLOR_VERY_SOFT_YELLOW
-	pixel_y = 32
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_y = 16
 
 /obj/structure/mansion/street_lamp/Initialize(mapload)
 	. = ..()

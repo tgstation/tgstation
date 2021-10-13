@@ -3,7 +3,7 @@
  * By default it has a 30 second cooldown.
  */
 /datum/action/cooldown/arena_aheal
-	name = "Heal Self"
+	name = "Fully Heal Self"
 	icon_icon = 'modular_event/event_aheal/icons/button.dmi'
 	button_icon_state = "arena_heal"
 	cooldown_time = 30 SECONDS

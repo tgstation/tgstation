@@ -1,6 +1,6 @@
 #define ARENA_RED_TEAM "red"
 #define ARENA_GREEN_TEAM "green"
-#define ARENA_DEFAULT_ID "arena_default"
+#define ARENA_DEFAULT_ID "main"
 #define ARENA_CORNER_A "cornerA"
 #define ARENA_CORNER_B "cornerB"
 

@@ -3,6 +3,7 @@ import { Button, Dropdown, Section, Stack } from "../components";
 import { Window } from "../layouts";
 
 type TournamentControllerData = {
+  arena_id: string,
   arena_templates: string[],
   team_names: string[],
 };
@@ -14,12 +15,12 @@ const ArenaInfo = (props, context) => {
     = useLocalState<string | null>(context, "selectedArena", null);
 
   return (
-    <Section title="Arena">
+    <Section title={"Arena - " + data.arena_id}>
       <Stack fill>
         <Stack.Item grow>
           <Dropdown
             width="100%"
-            selected={selectedArena ?? "Load an arena..."}
+            selected={selectedArena ?? "Select a map..."}
             options={data.arena_templates}
             onSelected={setSelectedArea}
           />
@@ -89,7 +90,9 @@ const RoundInfo = (props, context) => {
 
       <Stack vertical mt={2}>
         <Stack.Item>
-          <Button
+          <Button.Confirm
+            content="Spawn teams"
+            color="green"
             icon="user-friends"
             onClick={() => {
               act("spawn_teams", {
@@ -97,9 +100,7 @@ const RoundInfo = (props, context) => {
                 team_b: selectedTeamB,
               });
             }}
-          >
-            Spawn teams
-          </Button>
+          />
         </Stack.Item>
 
         <Stack.Item>
@@ -132,6 +133,7 @@ const RoundInfo = (props, context) => {
         <Stack.Item>
           <Button.Confirm
             content="Disband teams"
+            color="red"
             icon="user-minus"
             onClick={() => act("disband_teams")}
             tooltip="This will send team members to their dressing rooms."
@@ -141,6 +143,7 @@ const RoundInfo = (props, context) => {
         <Stack.Item>
           <Button.Confirm
             content="Clear arena"
+            color="red"
             icon="recycle"
             onClick={() => act("clear_arena")}
             tooltip="You don't have to do this if you're already loading a new map, by the way."

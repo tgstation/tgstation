@@ -4,12 +4,13 @@
 	icon = 'icons/obj/statue.dmi'
 	icon_state = ""
 	density = TRUE
-	anchored = FALSE
+	anchored = TRUE
 	max_integrity = 100
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	layer = ABOVE_ALL_MOB_LAYER
 	/// Beauty component mood modifier
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
