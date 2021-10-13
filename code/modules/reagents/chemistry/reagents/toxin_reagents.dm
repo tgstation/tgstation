@@ -254,7 +254,7 @@
 	switch(current_cycle)
 		if(1 to 5)
 			M.add_confusion(1 * REM * delta_time)
-			M.drowsyness += 1 * REM * delta_time
+			M.adjust_drowsyness(1 * REM * delta_time)
 			M.slurring += 3 * REM * delta_time
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
@@ -447,7 +447,7 @@
 	switch(current_cycle)
 		if(1 to 10)
 			M.add_confusion(2 * REM * normalise_creation_purity() * delta_time)
-			M.drowsyness += 2 * REM * normalise_creation_purity() * delta_time
+			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 			. = TRUE

@@ -541,7 +541,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
 			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!"), \
 								span_userdanger("You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!"))
-			L.drowsyness += 2
+			L.adjust_drowsyness(2)
 			return
 		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
 							span_userdanger("You suddenly feel very drowsy!"))
@@ -553,7 +553,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil protection completely protected [L.p_them()]!"), \
 								span_userdanger("Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!"))
 			return
-		L.drowsyness += 1
+		L.adjust_drowsyness(1)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
 		L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src]!"), \
 							span_userdanger("You suddenly feel drowsy!"))
