@@ -212,7 +212,7 @@
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	update_icon()
-	correct_state()
+	INVOKE_ASYNC(src, .proc/correct_state)
 
 /obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -311,8 +311,6 @@
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
-	if(alarm_type)
-		close()
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
