@@ -320,6 +320,7 @@
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	required_type = /mob/living/silicon/ai
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()

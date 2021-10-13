@@ -386,3 +386,31 @@
       some others)
   tralezab:
   - bugfix: Basic mobs can once again be vareditted
+2021-10-13:
+  Colovorat:
+  - bugfix: You can no longer extract and transform DNA of species that have no DNA
+  Fikou:
+  - bugfix: fixes mode switch actions on storage items being broken
+  Ghilker:
+  - qol: lower sound level of the coils, the sound and range is calculated by a function
+      based on the zap power
+  Ghommie:
+  - expansion: A timepiece circuit component has been added. It can output the station
+      time in different time formats and units of time when triggered.
+  InvalidArgument3:
+  - expansion: The Yellow slimecore plasma reaction is back in the form of creating
+      an EMP-proof cell.
+  Melbert:
+  - rscadd: 'Icebox: The Chapel, Library, and Departures Lounge (and some maintenance
+      around it) have been revamped and expanded to utilize multi-z.'
+  Mothblocks:
+  - bugfix: Fixed a bug where bans could not be applied if the database connection
+      was not immediately established, even after a re-establish.
+  - server: Updated database schema to allow for null round IDs in bans and tickets.
+  RandomGamer123:
+  - bugfix: Contractor support units now do not get a second uplink with 20 TC in
+      them.
+  - bugfix: Malf AIs cannot be rolled midround if one has already been rolled roundstart.
+  - bugfix: Syringe/Hypospray failure messages now reflect the proper body part.
+  Wayland-Smithy:
+  - bugfix: Fixed base lighting appearance inheritance.

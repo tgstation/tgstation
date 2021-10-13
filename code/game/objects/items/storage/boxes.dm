@@ -929,7 +929,7 @@
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_designs = sortList(list(
+	papersack_designs = sort_list(list(
 		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
 		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
 		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),

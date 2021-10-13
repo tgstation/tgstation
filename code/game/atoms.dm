@@ -1259,7 +1259,7 @@
 						if(!valid_id)
 							to_chat(usr, span_warning("A reagent with that ID doesn't exist!"))
 				if("Choose from a list")
-					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in sortList(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
+					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
 				if("I'm feeling lucky")
 					chosen_id = pick(subtypesof(/datum/reagent))
 			if(chosen_id)

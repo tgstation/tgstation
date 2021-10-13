@@ -108,6 +108,11 @@
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
 
+/datum/design/component/timepiece
+	name = "Timepiece Component"
+	id = "comp_timepiece"
+	build_path = /obj/item/circuit_component/timepiece
+
 /datum/design/component/tostring
 	name = "To String Component"
 	id = "comp_tostring"
@@ -304,7 +309,7 @@
 /datum/design/component/filter_list
 	name = "Filter List Component"
 	id = "comp_filter_list"
-	build_path = /obj/item/circuit_component/foreach
+	build_path = /obj/item/circuit_component/filter_list
 
 
 /datum/design/compact_remote_shell

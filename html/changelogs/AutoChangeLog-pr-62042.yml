@@ -1,4 +1,0 @@
-author: "Wayland-Smithy"
-delete-after: True
-changes: 
-  - bugfix: "Fixed base lighting appearance inheritance."

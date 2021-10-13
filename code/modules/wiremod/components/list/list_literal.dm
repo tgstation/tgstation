@@ -112,10 +112,10 @@
 	var/lists = 1
 	while(length(lists_to_check))
 		var/list/list_to_iterate = lists_to_check[length(lists_to_check)]
+		lists_to_check.len--
 		for(var/list/list_data in list_to_iterate)
 			lists_to_check += list(list_data)
 			lists += 1
-		lists_to_check.len--
 		if(lists > max_list_count)
 			return lists
 	return lists
