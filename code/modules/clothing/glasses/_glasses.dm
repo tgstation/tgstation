@@ -226,7 +226,7 @@
 	SIGNAL_HANDLER
 	if(damaged_clothes == CLOTHING_SHREDDED)
 		return
-	if(IN_INVENTORY)
+	if(item_flags & IN_INVENTORY)
 		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
