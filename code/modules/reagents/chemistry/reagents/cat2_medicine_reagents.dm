@@ -297,6 +297,34 @@
 /******TOXIN******/
 /*Suffix: -iver*/
 
+/datum/reagent/medicine/c2/seiver //a bit of a gray joke
+	name = "Seiver"
+	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs burns removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
+	inverse_chem_val = 0.3
+	ph = 3.7
+	inverse_chem = /datum/reagent/inverse/technetium
+	inverse_chem_val = 0.45
+	failed_chem = null
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/human/M, delta_time, times_fired)
+	var/chemtemp = min(holder.chem_temp, 1000)
+	chemtemp = chemtemp ? chemtemp : 273 //why do you have null sweaty
+	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
+
+	//you're hot
+	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * delta_time * normalise_creation_purity() //max 2.5 tox healing per second
+	if(toxcalc > 0)
+		M.adjustToxLoss(-toxcalc * delta_time * normalise_creation_purity())
+		healypoints += toxcalc
+
+	//you're yes and... oh no!
+	healypoints = round(healypoints, 0.1)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, healypoints / 5)
+	..()
+	return TRUE
+
+
 /datum/reagent/medicine/c2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
 	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."

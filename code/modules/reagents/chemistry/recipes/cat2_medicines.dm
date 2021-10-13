@@ -249,6 +249,30 @@
 /*****TOX*****/
 //These all care about purity in their reactions
 
+/datum/chemical_reaction/medicine/seiver
+	results = list(/datum/reagent/medicine/c2/seiver = 3)
+	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/potassium = 1, /datum/reagent/aluminium = 1)
+	mix_message = "The mixture gives out a goopy slorp."
+	is_cold_recipe = TRUE
+	required_temp = 320
+	optimal_temp = 280
+	overheat_temp = NO_OVERHEAT
+	optimal_ph_min = 5
+	optimal_ph_max = 8
+	determin_ph_range = 2
+	temp_exponent_factor = 1
+	ph_exponent_factor = 0.5
+	thermic_constant = -500
+	H_ion_release = -2
+	rate_up_lim = 15
+	purity_min = 0.2
+	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
+
+/datum/chemical_reaction/medicine/seiver/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
+	if(off_cooldown(holder, equilibrium, 1, "seiver_rads"))
+		return
+
 /datum/chemical_reaction/medicine/multiver
 	results = list(/datum/reagent/medicine/c2/multiver = 2)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/salt = 1)
