@@ -11,11 +11,6 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
-#define ADD_INFO_COLOR 1
-#define ADD_INFO_FONT 2
-#define ADD_INFO_SIGN 3
-
-
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
  * so we do loose a bit of functionality but we gain in easy of use of
@@ -89,7 +84,7 @@
 		var/static/greyscale_info = regex("(?<=<font style=\")color=(.*)?>", "i")
 		new_paper.info = replacetext(info, greyscale_info, "nocolor=$1>")
 		for(var/list/style as anything in add_info_style)
-			LAZYADD(new_paper.add_info_style, list(list("black", style[ADD_INFO_FONT], style[ADD_INFO_SIGN])))
+			LAZYADD(new_paper.add_info_style, list(list(DEF_ADD_INFO_COLOR, style[ADD_INFO_FONT], style[ADD_INFO_SIGN])))
 	new_paper.add_info = add_info?.Copy()
 	new_paper.stamps = stamps?.Copy()
 	new_paper.stamped = stamped?.Copy()
@@ -106,6 +101,7 @@
  */
 /obj/item/paper/proc/setText(text, update_icon = TRUE)
 	info = text
+	add_info = null
 	add_info_style = null
 	form_fields = null
 	field_counter = 0
@@ -216,21 +212,20 @@
 	add_fingerprint(user)
 	fire_act(I.get_temperature())
 
-/obj/item/paper/proc/add_info(text, color = "black", font = PEN_FONT, signature = "signature")
+/obj/item/paper/proc/add_info(text, color = DEF_ADD_INFO_COLOR, font = DEF_ADD_INFO_FONT, signature = DEF_ADD_INFO_SIGN)
 	LAZYADD(add_info, text)
 	LAZYADD(add_info_style, list(list(color, font, signature)))
 
 /obj/item/paper/proc/get_info_length()
-	. = length(info)
+	. = length_char(info)
 	for(var/index in 1 to length(add_info))
 		var/style = LAZYACCESS(add_info_style, index)
 		if(style)
 			var/static/regex/sign_regex = regex("%s(?:ign)?(?=\\s|$)?", "igm")
-			//hacky, but that's how it appears in the info after going through the UI
-			. += length("<span style=\"color:[style[ADD_INFO_COLOR]];font-family:'[style[ADD_INFO_FONT]]';\"></span>")
-			. += length(sign_regex.Replace(add_info[index], style[ADD_INFO_SIGN]))
+			var/signed_text = sign_regex.Replace(add_info[index], style[ADD_INFO_SIGN])
+			. += length_char(PAPER_MARK_TEXT(signed_text, style[ADD_INFO_COLOR], style[ADD_INFO_FONT]))
 		else
-			. += length(add_info[index])
+			. += length_char(add_info[index])
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user))
@@ -280,15 +275,21 @@
 /obj/item/paper/ui_static_data(mob/user)
 	. = list()
 	.["text"] = info
-	if(add_info)
+	if(length(add_info))
 		.["add_text"] = add_info
 		.["add_color"] = list()
 		.["add_font"] = list()
 		.["add_sign"] = list()
-		for(var/list/style as anything in add_info_style)
+		for(var/index in 1 to length(add_info))
+			var/list/style = LAZYACCESS(add_info_style, index)
+			if(!islist(index) || length(style) < ADD_INFO_SIGN) // failsafe for malformed add_info_style.
+				var/list/corrected_style = list(DEF_ADD_INFO_COLOR, DEF_ADD_INFO_FONT, DEF_ADD_INFO_SIGN)
+				LAZYADD(add_info_style, corrected_style)
+				style = corrected_style
 			.["add_color"] += style[ADD_INFO_COLOR]
 			.["add_font"] += style[ADD_INFO_FONT]
 			.["add_sign"] += style[ADD_INFO_SIGN]
+
 	.["max_length"] = MAX_PAPER_LENGTH
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
 	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
@@ -400,6 +401,8 @@
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
 					info = in_paper
+					add_info = null
+					add_info_style = null
 					update_static_data(usr,ui)
 
 			update_appearance()
@@ -444,6 +447,3 @@
 #undef MODE_READING
 #undef MODE_WRITING
 #undef MODE_STAMPING
-#undef ADD_INFO_COLOR
-#undef ADD_INFO_FONT
-#undef ADD_INFO_SIGN

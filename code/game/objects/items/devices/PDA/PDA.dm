@@ -1126,11 +1126,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 			A.analyzer_act(user, src)
 
 	if (!scanmode && istype(A, /obj/item/paper) && owner)
-		var/obj/item/paper/PP = A
-		if (!PP.info)
+		var/obj/item/paper/paper = A
+		if (!paper.get_info_length())
 			to_chat(user, span_warning("Unable to scan! Paper is blank."))
 			return
-		notehtml = PP.info
+		notehtml = paper.info
+		if(paper.add_info)
+			for(var/index in 1 to length(paper.add_info))
+				var/list/style = paper.add_info_style[index]
+				notehtml += PAPER_MARK_TEXT(paper.add_info[index], style[ADD_INFO_COLOR], style[ADD_INFO_FONT])
 		note = replacetext(notehtml, "<BR>", "\[br\]")
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")

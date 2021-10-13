@@ -357,15 +357,14 @@ class PaperSheetStamper extends Component {
   }
 }
 
-// This is the main rendering part, this creates the html from marked text
-// as well as the form fields
+// This creates the html from marked text as well as the form fields
 const createPreview = (
   value, 
   text,
   do_fields = false,
+  field_counter,
   color,
   font,
-  field_counter,
   user_name,
   is_crayon = false,
 ) => {
@@ -421,20 +420,14 @@ class PaperSheetEdit extends Component {
 
   createPreviewFromData(value, do_fields = false) {
     const { data } = useBackend(this.context);
-    const {
-      pen_color,
-      pen_font,
-      edit_usr,
-      is_crayon,
-    } = data;
     return createPreview(value, 
       this.state.old_text,
       do_fields,
-      pen_color,
-      pen_font,
       this.state.counter,
-      edit_usr,
-      is_crayon,
+      data.pen_color,
+      data.pen_font,
+      data.edit_usr,
+      data.is_crayon,
     );
   }
   onInputHandler(e, value) {
@@ -598,24 +591,18 @@ export const PaperSheet = (props, context) => {
   const values = { text: text, field_counter: field_counter };
   if (add_text) {
     for (let index = 0; index < add_text.length; index++) {
-      const used_color = add_color && add_color.length > index
-        ? add_color[index]
-        : "black";
-      const used_font = add_font && add_font.length > index
-        ? add_font[index]
-        : "Verdana";
-      const used_sign = add_sign && add_sign.length > index
-        ? add_sign[index]
-        : "signature";
+      const used_color = add_color[index];
+      const used_font = add_font[index];
+      const used_sign = add_sign[index];
       const processing = createPreview(
         add_text[index],
         values.text,
         false,
+        values.field_counter,
         used_color,
         used_font,
-        values.field_counter,
         used_sign
-      ); 
+      );
       values.text = processing.text;
       values.field_counter = processing.field_counter;
     }
