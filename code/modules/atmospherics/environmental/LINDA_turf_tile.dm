@@ -634,7 +634,8 @@ Then we space some of our heat, and think about if we should stop conducting.
 	var/delta_temperature = (temperature_archived - TCMB) //hardcoded space temperature
 	if(heat_capacity <= 0 || abs(delta_temperature) <= MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		return
-	var/heat = thermal_conductivity * delta_temperature * (heat_capacity * HEAT_CAPACITY_VACUUM / (heat_capacity + HEAT_CAPACITY_VACUUM))
+	var/heat = thermal_conductivity * delta_temperature * \
+		(heat_capacity * HEAT_CAPACITY_VACUUM / (heat_capacity + HEAT_CAPACITY_VACUUM))
 	temperature -= heat/heat_capacity
 
 /turf/open/proc/temperature_share_open_to_solid(turf/sharer)
