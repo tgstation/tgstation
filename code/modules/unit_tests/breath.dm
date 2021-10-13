@@ -76,4 +76,4 @@
 	//Reset initial_gas_mix to avoid future issues on other tests
 	var/turf/open/to_fill = run_loc_floor_bottom_left
 	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-
+	return ..()
