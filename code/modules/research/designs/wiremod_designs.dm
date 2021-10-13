@@ -304,7 +304,7 @@
 /datum/design/component/filter_list
 	name = "Filter List Component"
 	id = "comp_filter_list"
-	build_path = /obj/item/circuit_component/foreach
+	build_path = /obj/item/circuit_component/filter_list
 
 
 /datum/design/compact_remote_shell
