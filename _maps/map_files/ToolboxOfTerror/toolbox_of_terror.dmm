@@ -517,6 +517,19 @@
 	name = "CentCom Warehouse"
 	},
 /area/tdome/tdome1)
+"ev" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
 "ew" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/brflowers,
@@ -996,6 +1009,19 @@
 /obj/structure/dresser,
 /turf/open/floor/carpet,
 /area/awaymission/cabin/snowforest/mansion)
+"ii" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
 "im" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/turf_decal/weather/dirt{
@@ -1275,6 +1301,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest/crypt)
+"kR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
 "kS" = (
 /obj/structure/flora/rock/pile/largejungle,
 /turf/open/water,
@@ -2320,6 +2359,19 @@
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"sH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
 "sK" = (
 /turf/closed/wall/mineral/bananium,
 /area/awaymission/cabin/snowforest)
@@ -2789,6 +2841,19 @@
 /obj/effect/turf_decal/siding,
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/mansion)
+"wC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
 "wD" = (
 /obj/structure/destructible/cult/tome,
 /turf/open/floor/plating/dirt,
@@ -3359,6 +3424,16 @@
 /obj/structure/statue/taxidermy/goose,
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/mansion)
+"AD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "AF" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/plating/grass,
@@ -3775,6 +3850,16 @@
 	},
 /turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest/mansion)
+"Dp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "Dt" = (
 /obj/structure/chair/sofa/corner{
 	dir = 4
@@ -4397,6 +4482,16 @@
 	icon_state = "wood_large-broken3"
 	},
 /area/awaymission/cabin/snowforest/mansion)
+"HU" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "HY" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/effect/turf_decal/weather/dirt{
@@ -4525,6 +4620,16 @@
 	},
 /turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest/mansion)
+"IW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "IY" = (
 /turf/closed/wall/mineral/diamond,
 /area/awaymission/cabin/snowforest/crypt)
@@ -4583,6 +4688,16 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/cabin/snowforest)
+"JG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "JH" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
@@ -4646,6 +4761,16 @@
 /obj/structure/flora/rock/pile/largejungle,
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/cabin/snowforest/mansion)
+"Kh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/tdome/arena)
 "Ki" = (
 /obj/structure/fluff/fokoff_sign{
 	desc = "A crudely-made sign with the words 'don't step on the flowers' written in some sort of red paint."
@@ -6481,6 +6606,17 @@
 /obj/structure/chair/sofa/corp/left,
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/cabin/snowforest/vip_only)
+"Yf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/landmark/tournament_spawn_valid_location,
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
 "Yg" = (
 /obj/structure/statue/sandstone/venus{
 	dir = 8
@@ -13819,12 +13955,12 @@ bh
 bh
 Ix
 jY
-ei
-sw
-sw
-sw
-sw
-pO
+kR
+wC
+wC
+wC
+wC
+sH
 jY
 Ix
 QH
@@ -16159,12 +16295,12 @@ bh
 bh
 Ix
 lB
-dI
-wp
-wp
-wp
-wp
-oK
+Yf
+ii
+ii
+ii
+ii
+ev
 lB
 Ix
 QH
@@ -30460,12 +30596,12 @@ Mg
 Mg
 XV
 Gu
-FG
-Ox
-Ox
-Ox
-Ox
-Uc
+Dp
+HU
+HU
+HU
+HU
+IW
 Gu
 XV
 Mj
@@ -32800,12 +32936,12 @@ jQ
 iM
 XV
 BG
-Fn
-KU
-KU
-KU
-KU
-SO
+Kh
+AD
+AD
+AD
+AD
+JG
 BG
 XV
 SG
