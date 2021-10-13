@@ -57,17 +57,17 @@
 /datum/id_trim/job/proc/refresh_trim_access()
 	// If there's no config loaded then assume minimal access.
 	if(!config)
-		access = minimal_access.Copy()
-		wildcard_access = minimal_wildcard_access.Copy()
+		access |= minimal_access.Copy()
+		wildcard_access |= minimal_wildcard_access.Copy()
 		return FALSE
 
 	// There is a config loaded. Check for the jobs_have_minimal_access flag being set.
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
-		access = minimal_access.Copy()
-		wildcard_access = minimal_wildcard_access.Copy()
+		access |= minimal_access.Copy()
+		wildcard_access |= minimal_wildcard_access.Copy()
 	else
-		access = minimal_access + extra_access
-		wildcard_access = minimal_wildcard_access + extra_wildcard_access
+		access |= minimal_access + extra_access
+		wildcard_access |= minimal_wildcard_access + extra_wildcard_access
 
 	// If the config has global maint access set, we always want to add maint access.
 	if(CONFIG_GET(flag/everyone_has_maint_access))
@@ -169,7 +169,7 @@
 	assignment = "Chief Engineer"
 	trim_state = "trim_chiefengineer"
 	extra_access = list(ACCESS_TELEPORTER)
-	extra_wildcard_access = list(ACCESS_CE)
+	extra_wildcard_access = list()
 	minimal_access = list(ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE, ACCESS_CE, ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_EVA,
 					ACCESS_EXTERNAL_AIRLOCKS, ACCESS_HEADS, ACCESS_KEYCARD_AUTH, ACCESS_MAINT_TUNNELS, ACCESS_MECH_ENGINE,
 					ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_RC_ANNOUNCE, ACCESS_SEC_DOORS, ACCESS_TCOMSAT, ACCESS_TECH_STORAGE)
@@ -182,7 +182,7 @@
 	assignment = "Chief Medical Officer"
 	trim_state = "trim_chiefmedicalofficer"
 	extra_access = list(ACCESS_TELEPORTER)
-	extra_wildcard_access = list(ACCESS_CMO)
+	extra_wildcard_access = list()
 	minimal_access = list(ACCESS_CHEMISTRY, ACCESS_EVA, ACCESS_HEADS, ACCESS_KEYCARD_AUTH, ACCESS_MAINT_TUNNELS, ACCESS_MECH_MEDICAL,
 					ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_PSYCHOLOGY, ACCESS_RC_ANNOUNCE,
 					ACCESS_SEC_DOORS, ACCESS_SURGERY, ACCESS_VIROLOGY)
@@ -251,7 +251,7 @@
 	assignment = "Head of Personnel"
 	trim_state = "trim_headofpersonnel"
 	extra_access = list()
-	extra_wildcard_access = list(ACCESS_HOP)
+	extra_wildcard_access = list()
 	minimal_access = list(ACCESS_AI_UPLOAD, ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_AUX_BASE, ACCESS_BAR, ACCESS_CARGO, ACCESS_CHAPEL_OFFICE,
 					ACCESS_CHANGE_IDS, ACCESS_CONSTRUCTION, ACCESS_COURT, ACCESS_CREMATORIUM, ACCESS_ENGINE, ACCESS_EVA, ACCESS_GATEWAY,
 					ACCESS_HEADS, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_KEYCARD_AUTH, ACCESS_KITCHEN, ACCESS_LAWYER, ACCESS_LIBRARY,
@@ -268,7 +268,7 @@
 	assignment = "Head of Security"
 	trim_state = "trim_headofsecurity"
 	extra_access = list(ACCESS_TELEPORTER)
-	extra_wildcard_access = list(ACCESS_HOS)
+	extra_wildcard_access = list()
 	minimal_access = list(ACCESS_ALL_PERSONAL_LOCKERS, ACCESS_ARMORY, ACCESS_AUX_BASE, ACCESS_BRIG, ACCESS_CONSTRUCTION, ACCESS_COURT,
 					ACCESS_ENGINE, ACCESS_EVA, ACCESS_FORENSICS_LOCKERS, ACCESS_GATEWAY, ACCESS_HEADS, ACCESS_KEYCARD_AUTH,
 					ACCESS_MAILSORTING, ACCESS_MAINT_TUNNELS, ACCESS_MECH_SECURITY, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM,
@@ -392,7 +392,7 @@
 	assignment = "Research Director"
 	trim_state = "trim_researchdirector"
 	extra_access = list()
-	extra_wildcard_access = list(ACCESS_RD)
+	extra_wildcard_access = list()
 	minimal_access = list(ACCESS_AI_UPLOAD, ACCESS_AUX_BASE, ACCESS_EVA, ACCESS_GATEWAY, ACCESS_GENETICS, ACCESS_HEADS, ACCESS_KEYCARD_AUTH,
 					ACCESS_NETWORK, ACCESS_MAINT_TUNNELS, ACCESS_MECH_ENGINE, ACCESS_MECH_MINING, ACCESS_MECH_SECURITY, ACCESS_MECH_SCIENCE,
 					ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MINISAT, ACCESS_MORGUE,
