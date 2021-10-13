@@ -24,7 +24,8 @@ SUBSYSTEM_DEF(lag_switch)
 		auto_switch = TRUE
 		trigger_pop = auto_switch_pop
 		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
-	return ..()
+	. = ..()
+	set_all_measures(TRUE, TRUE) // EVENTMODE - Start with auto measures on
 
 /datum/controller/subsystem/lag_switch/proc/client_connected(datum/source, client/connected)
 	SIGNAL_HANDLER

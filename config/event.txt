@@ -3,3 +3,5 @@
 BRACKET_URL https://challonge.com/toolbox2021
 
 COMMS_KEY change_this_pwd_on_the_server
+
+ALLOW_HOLIDAYS 0
