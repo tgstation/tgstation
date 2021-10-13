@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Contractor support units now do not get a second uplink with 20 TC in them."

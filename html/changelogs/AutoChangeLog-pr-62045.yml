@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Malf AIs cannot be rolled midround if one has already been rolled roundstart."

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - expansion: "A timepiece circuit component has been added. It can output the station time in different time formats and units of time when triggered."
