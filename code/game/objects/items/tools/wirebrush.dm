@@ -47,14 +47,11 @@
 
 	if(prob(crit_fail_prob))
 		to_chat(user, span_danger("You feel a sharp pain as your entire body grows oddly warm."))
-		user.apply_damage_type(crit_fail_rads, TOX)
 		if(user.get_damage_amount(TOX) > crit_fail_rads_threshold) // If you ignore the warning signs you get punished
 			user.emote("vomit")
 			user.adjustToxLoss(crit_fail_damage, forced=TRUE)
 			user.adjustOxyLoss(crit_fail_damage, forced=TRUE)
 		return
-
-	user.apply_damage_type(radiation_on_use, TOX)
 
 	if(prob(25))
 		user.emote("cough")

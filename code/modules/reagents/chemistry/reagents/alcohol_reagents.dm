@@ -287,10 +287,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.apply_damage_type(max(M.get_damage_amount(TOX) - (2 * REM * delta_time),0), TOX)
-	return ..()
-
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
 	description = "This appears to be beer mixed with milk. Disgusting."
@@ -665,13 +661,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Screwdriver"
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
-	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
-		// Engineers lose radiation poisoning at a massive rate.
-		M.apply_damage_type(max(M.get_damage_amount(BURN) - (25 * REM * delta_time), 0), TOX)
-	return ..()
 
 /datum/reagent/consumable/ethanol/booger
 	name = "Booger"

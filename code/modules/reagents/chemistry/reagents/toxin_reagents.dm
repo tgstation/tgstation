@@ -547,10 +547,6 @@
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.apply_damage_type(4 * REM * delta_time, TOX)
-	..()
-
 /datum/reagent/toxin/histamine
 	name = "Histamine"
 	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal."

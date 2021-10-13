@@ -414,18 +414,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	restore_lung_levels(lungs)
 
-//seiver
-//Inverse
-//Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
-/datum/reagent/inverse/technetium
-	name = "Technetium 99"
-	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
-	metabolization_rate = 0.3 * REM
-	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
-	tox_damage = 0
-	///Accumulates radiation, then adds it as a whole number to the owner
-	var/radiation_ticker
-
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
 /datum/reagent/inverse/healing/syriniver
 	name = "Syrinifergus"

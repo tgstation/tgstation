@@ -43,7 +43,6 @@
 						else
 							H.easy_random_mutate(POSITIVE)
 						H.domutcheck()
-		L.apply_damage_type(10, TOX)
 
 /datum/weather/rad_storm/end()
 	if(..())
