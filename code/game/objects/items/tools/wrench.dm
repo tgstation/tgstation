@@ -92,7 +92,7 @@
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
-		force_on = 6, \ /* this has got to be a joke, an energy wrench is whacking people harder by ONE brute more*/
+		force_on = 6, \
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
