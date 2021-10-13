@@ -16,12 +16,23 @@ SUBSYSTEM_DEF(trait_limited_areas)
 
 		var/area/area = get_area(mob)
 		if (!isnull(area.trait_required) && !HAS_TRAIT(mob, area.trait_required))
-			var/turf/turf = get_turf(mob)
-			message_admins("[key_name_admin(mob)] was in [area] without the [area.trait_required] trait! <a href='?src=[REF(src)];area=[REF(area)];mob=[REF(mob)];turf=[REF(turf)]'>GIVE TRAIT (AND TELEPORT BACK)</a>")
-			mob.forceMove(mob.mind?.assigned_role?.get_latejoin_spawn_point() || pick(SSjob.latejoin_trackers) || SSjob.get_last_resort_spawn_points())
+			SEND_SOUND(mob, 'sound/misc/notice1.ogg')
+			to_chat(mob, span_big(span_alertwarning("You are not authorized to be in \"[area]\" Leave now or you will be booted to the curb.")))
+			addtimer(CALLBACK(src, .proc/boot_confirm, area, mob), 5 SECONDS, TIMER_CLIENT_TIME)
 
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/trait_limited_areas/proc/boot_confirm(area/area, mob/mob)
+	if (get_area(mob) != area)
+		return
+	var/turf/turf = get_turf(mob)
+	if (!(mob in area.mobs_booted))
+		area.mobs_booted += mob
+		message_admins("[key_name_admin(mob)] was in [area] without the [area.trait_required] trait! <a href='?src=[REF(src)];area=[REF(area)];mob=[REF(mob)];turf=[REF(turf)]'>GIVE TRAIT (AND TELEPORT BACK)</a>")
+	mob.forceMove(mob.mind?.assigned_role?.get_latejoin_spawn_point() || pick(SSjob.latejoin_trackers) || SSjob.get_last_resort_spawn_points())
+	playsound(get_turf(mob), 'sound/effects/assslap.ogg', 100, TRUE)
+	log_game("[key_name(mob)] was booted from [area] for lacking the proper trait.")
 
 /datum/controller/subsystem/trait_limited_areas/Topic(href, list/href_list)
 	. = ..()
@@ -69,8 +80,14 @@ SUBSYSTEM_DEF(trait_limited_areas)
 
 /area
 	var/trait_required = null
+	var/list/mobs_booted = list()
 
-/area/vip_only
+/area/awaymission/cabin/snowforest/vip_only
 	name = "VIP Room"
-	icon_state = "yellow"
+	icon_state = "bluenew"
 	trait_required = TRAIT_VIP
+
+/area/awaymission/cabin/snowforest/staff_only
+	name = "Casting Booth"
+	icon_state = "red"
+	trait_required = TRAIT_COMMENTATOR

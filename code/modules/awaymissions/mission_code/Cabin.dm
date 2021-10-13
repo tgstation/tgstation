@@ -7,7 +7,7 @@
 
 /area/awaymission/cabin/snowforest
 	name = "Spooky Forest"
-	icon_state = "away"
+	icon_state = "yellow"
 
 /area/awaymission/cabin/snowforest/mansion
 	name = "Spooky Mansion"

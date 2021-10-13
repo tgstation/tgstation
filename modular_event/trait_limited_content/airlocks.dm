@@ -1,4 +1,11 @@
 /obj/machinery/door/airlock/bronze/trait_limited
+	name = "limited access airlock"
+
+/obj/machinery/door/airlock/bronze/trait_limited/Initialize(mapload)
+	. = ..()
+	var/area/area = get_area(src)
+	if (!isnull(area.trait_required))
+		desc = "[area.trait_required] only"
 
 /obj/machinery/door/airlock/bronze/trait_limited/allowed(mob/user)
 	. = ..()
