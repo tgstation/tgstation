@@ -281,7 +281,7 @@
 		return
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
-		return //returning this as FALSE prevents the screwdriver from being immediately eaten by the autolathe after you screw the panel open/closed. why? don't ask me
+		return
 
 	if(machine_stat)
 		return
