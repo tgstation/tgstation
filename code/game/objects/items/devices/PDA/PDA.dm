@@ -808,7 +808,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Show it to ghosts
 	var/ghost_message = span_name("[owner] </span><span class='game say'>PDA Message</span> --> [span_name("[target_text]")]: <span class='message'>[signal.format_message()]")
 	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
