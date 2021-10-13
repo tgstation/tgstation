@@ -42,3 +42,13 @@
 
 /obj/effect/dummy/phased_mob/godwhisp/phased_check(mob/living/user, direction)
 	return get_step(src, direction) // override to bypass all jaunt blockers
+
+/obj/effect/dummy/phased_mob/godwhisp/Destroy()
+	// Eject contents if deleted somehow
+	var/atom/dest = drop_location()
+	if(!dest) //You're in nullspace you clown
+		return ..()
+	for(var/_phasing_in in contents)
+		var/atom/movable/phasing_in = _phasing_in
+		phasing_in.forceMove(drop_location())
+	return ..()

@@ -12,6 +12,9 @@
 /area/awaymission/cabin/snowforest/mansion
 	name = "Spooky Mansion"
 
+/area/awaymission/cabin/snowforest/mansion/vip_entrance
+	name = "VIP Entrance"
+
 /area/awaymission/cabin/snowforest/crypt
 	name = "Spooky Crypt"
 

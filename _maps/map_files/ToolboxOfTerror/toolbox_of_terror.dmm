@@ -2864,9 +2864,8 @@
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
 "xe" = (
-/obj/structure/table/bronze,
-/turf/open/floor/wood,
-/area/awaymission/cabin/snowforest/vip_only)
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion/vip_entrance)
 "xf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -3058,7 +3057,7 @@
 /turf/open/floor/gravel,
 /area/awaymission/cabin/snowforest)
 "ys" = (
-/obj/machinery/door/airlock/bronze/trait_limited,
+/obj/structure/table/bronze,
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/vip_only)
 "yu" = (
@@ -3099,10 +3098,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest/mansion)
-"yH" = (
-/obj/structure/chair/stool/directional/south,
-/turf/open/floor/carpet/red,
-/area/awaymission/cabin/snowforest/vip_only)
 "yI" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -30718,7 +30713,7 @@ Mg
 Mg
 Mg
 uC
-lk
+ys
 xU
 wX
 xW
@@ -30847,8 +30842,8 @@ rn
 Mg
 Mg
 Mg
+uC
 ys
-lk
 lk
 xu
 lk
@@ -31368,8 +31363,8 @@ Mg
 Mg
 Mg
 uC
-xe
-yH
+bq
+lk
 lk
 lk
 oF
@@ -31495,11 +31490,11 @@ Fl
 eD
 rn
 Mg
-Mg
-Mg
-uC
 xe
-yH
+xe
+fB
+bq
+lk
 lk
 lk
 oF
@@ -31625,8 +31620,8 @@ Fl
 Zc
 rn
 Mg
-Mg
-Mg
+xe
+xe
 uC
 bq
 mE
@@ -31755,11 +31750,11 @@ Fl
 Ow
 rn
 Mg
-Mg
-Mg
-uC
 xe
-yH
+xe
+fB
+bq
+lk
 lk
 lk
 oF
@@ -31888,8 +31883,8 @@ Mg
 Mg
 Mg
 uC
-xe
-yH
+bq
+lk
 lk
 lk
 oF
@@ -32407,8 +32402,8 @@ rn
 Mg
 Mg
 Mg
+uC
 ys
-lk
 lk
 wW
 lk
@@ -32538,7 +32533,7 @@ Mg
 Mg
 Mg
 uC
-lk
+ys
 xU
 wX
 xW

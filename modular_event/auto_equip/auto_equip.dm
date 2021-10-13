@@ -85,6 +85,7 @@ SUBSYSTEM_DEF(auto_equip)
 	..()
 
 	new /obj/item/clothing/accessory/medal/bronze_heart/donator(src)
+	new /obj/item/teleportation_scroll(src)
 
 /obj/item/clothing/accessory/medal/bronze_heart/donator
 	name = "Donator medal"

@@ -1,5 +1,8 @@
 /obj/machinery/door/airlock/bronze/trait_limited
 	name = "limited access airlock"
+	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
+	opacity = FALSE
+	glass = TRUE
 
 /obj/machinery/door/airlock/bronze/trait_limited/Initialize(mapload)
 	. = ..()

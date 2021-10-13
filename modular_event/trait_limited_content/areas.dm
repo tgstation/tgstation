@@ -76,7 +76,8 @@ SUBSYSTEM_DEF(trait_limited_areas)
 		to_chat(usr, span_warning("The mob was given the trait, but somehow, the turf reference is invalid!"))
 		return
 
-	mob.forceMove(turf)
+	// wait to move them back so they don't get re-booted by a still running timer
+	addtimer(CALLBACK(mob, /atom/movable/proc/forceMove, turf), 5 SECONDS, TIMER_CLIENT_TIME)
 
 /area
 	var/trait_required = null
@@ -86,8 +87,10 @@ SUBSYSTEM_DEF(trait_limited_areas)
 	name = "VIP Room"
 	icon_state = "bluenew"
 	trait_required = TRAIT_VIP
+	area_flags = UNIQUE_AREA | NO_ALERTS | NOTELEPORT
 
 /area/awaymission/cabin/snowforest/staff_only
 	name = "Casting Booth"
 	icon_state = "red"
 	trait_required = TRAIT_COMMENTATOR
+	area_flags = UNIQUE_AREA | NO_ALERTS | NOTELEPORT
