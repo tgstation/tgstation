@@ -136,6 +136,7 @@
 	obj_damage = 11
 	melee_damage_lower = 0
 	melee_damage_upper = 0
+	sharpness = NONE //it's made of butter
 	armour_penetration = 0
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
