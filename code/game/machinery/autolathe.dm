@@ -290,7 +290,7 @@
 		balloon_alert(user, "close the panel first!")
 		return
 
-	return
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
