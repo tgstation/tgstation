@@ -32,6 +32,7 @@
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wrench"
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 
@@ -65,8 +66,8 @@
 	sleep(20)
 	if(!user)
 		return
-	for(var/obj/item/W in user)
-		user.dropItemToGround(W)
+	for(var/obj/item/suicide_wrench in user)
+		user.dropItemToGround(suicide_wrench)
 	suicider = user.real_name
 	user.dust()
 	return OXYLOSS
@@ -91,7 +92,7 @@
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
-		force_on = 6, \
+		force_on = 6, \ /* this has got to be a joke, an energy wrench is whacking people harder by ONE brute more*/
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
