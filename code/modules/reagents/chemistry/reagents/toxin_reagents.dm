@@ -619,10 +619,7 @@
 	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/newsize = current_size
-	switch(volume)
-		if(0 to 19)
-			newsize = 1.1 * RESIZE_DEFAULT_SIZE
+	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
 	M.resize = newsize/current_size
 	current_size = newsize
 	M.update_transform()
