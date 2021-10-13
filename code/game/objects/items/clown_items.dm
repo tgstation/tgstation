@@ -78,7 +78,7 @@
 	desc = "The most advanced soap known to mankind."
 	icon_state = "soapomega"
 	cleanspeed = 3 //Only the truest of mind soul and body get one of these
-	uses = 301
+	uses = 9001
 
 /obj/item/soap/omega/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!"))
