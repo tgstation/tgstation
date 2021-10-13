@@ -178,7 +178,7 @@
 
 /mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes the butter bear's attacks against vertical targets slip said targets
 	. = ..()
-	if(. && isliving(target))
+	if(isliving(target)) //we don't check for . here, since attack_animal() (and thus AttackingTarget()) will return false if your damage dealt is 0
 		var/mob/living/L = target
 		if((L.body_position == STANDING_UP))
 			L.Knockdown(20)
