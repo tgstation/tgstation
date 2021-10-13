@@ -72,6 +72,8 @@
 
 	TEST_ASSERT(!lab_rat.has_alert("not_enough_oxy"), "Ashwalkers can't get a full breath from the Lavaland's initial_gas_mix on a turf")
 
+/datum/unit_test/breath_sanity_ashwalker/Destroy()
 	//Reset initial_gas_mix to avoid future issues on other tests
+	var/turf/open/to_fill = run_loc_floor_bottom_left
 	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
