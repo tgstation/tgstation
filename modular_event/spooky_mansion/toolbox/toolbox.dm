@@ -7,6 +7,6 @@
 	custom_materials = null
 	has_latches = FALSE
 	light_system = MOVABLE_LIGHT
-	light_color = COLOR_LIME // like the pro crusher ;P
-	light_power = 0.3
+	light_color = "#66ff66" // lime like the pro crusher ;P
+	light_power = 0.8
 	light_range = 3
