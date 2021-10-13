@@ -70240,7 +70240,7 @@
 	req_access_txt = "35"
 	},
 /turf/open/floor/iron,
-/area/construction)
+/area/service/hydroponics)
 "oIa" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
