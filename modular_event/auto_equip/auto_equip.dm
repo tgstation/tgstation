@@ -78,6 +78,7 @@ SUBSYSTEM_DEF(auto_equip)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
+	new /obj/item/cowbell(src)
 	new /obj/item/binoculars(src)
 
 /obj/item/storage/box/tournament/vip/PopulateContents()

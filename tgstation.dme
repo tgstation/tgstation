@@ -3973,6 +3973,7 @@
 #include "modular_event\no_destruction.dm"
 #include "modular_event\station_traits.dm"
 #include "modular_event\auto_equip\auto_equip.dm"
+#include "modular_event\cowbell\cowbell.dm"
 #include "modular_event\custom_clothes\code\beefman_onesie.dm"
 #include "modular_event\event_aheal\code\action.dm"
 #include "modular_event\event_aheal\code\living.dm"
