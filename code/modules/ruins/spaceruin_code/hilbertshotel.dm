@@ -16,7 +16,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	//Lore Stuff
 	var/ruinSpawned = FALSE
 
-/obj/item/hilbertshotel/Initialize()
+/obj/item/hilbertshotel/Initialize(mapload)
 	. = ..()
 	//Load templates
 	INVOKE_ASYNC(src, .proc/prepare_rooms)
@@ -253,7 +253,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	explosion_block = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 
-/turf/open/space/bluespace/Initialize()
+/turf/open/space/bluespace/Initialize(mapload)
 	. = ..()
 	update_icon_state()
 
@@ -261,10 +261,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = base_icon_state
 	return ..()
 
-/turf/open/space/bluespace/Entered(atom/movable/A)
+/turf/open/space/bluespace/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(parentSphere && A.forceMove(get_turf(parentSphere)))
-		do_sparks(3, FALSE, get_turf(A))
+	if(parentSphere && arrived.forceMove(get_turf(parentSphere)))
+		do_sparks(3, FALSE, get_turf(arrived))
 
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
@@ -351,18 +351,18 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	requires_power = FALSE
 	has_gravity = TRUE
 	area_flags = NOTELEPORT | HIDDEN_AREA
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	ambientsounds = list('sound/ambience/servicebell.ogg')
 	var/roomnumber = 0
 	var/obj/item/hilbertshotel/parentSphere
 	var/datum/turf_reservation/reservation
 	var/turf/storageTurf
 
-/area/hilbertshotel/Entered(atom/movable/AM)
+/area/hilbertshotel/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(AM, /obj/item/hilbertshotel))
-		relocate(AM)
-	var/list/obj/item/hilbertshotel/hotels = AM.get_all_contents_type(/obj/item/hilbertshotel)
+	if(istype(arrived, /obj/item/hilbertshotel))
+		relocate(arrived)
+	var/list/obj/item/hilbertshotel/hotels = arrived.get_all_contents_type(/obj/item/hilbertshotel)
 	for(var/obj/item/hilbertshotel/H in hotels)
 		if(parentSphere == H)
 			relocate(H)
@@ -395,10 +395,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(M, span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
 	H.forceMove(targetturf)
 
-/area/hilbertshotel/Exited(atom/movable/AM)
+/area/hilbertshotel/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(gone))
+		var/mob/M = gone
 		if(M.mind)
 			var/stillPopulated = FALSE
 			var/list/currentLivingMobs = get_all_contents_type(/mob/living) //Got to catch anyone hiding in anything
@@ -446,16 +446,16 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/roomNumber
 	var/obj/item/hilbertshotel/parentSphere
 
-/obj/item/abstracthotelstorage/Entered(atom/movable/AM, atom/oldLoc)
+/obj/item/abstracthotelstorage/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(arrived))
+		var/mob/M = arrived
 		M.notransform = TRUE
 
-/obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
+/obj/item/abstracthotelstorage/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
+	if(ismob(gone))
+		var/mob/M = gone
 		M.notransform = FALSE
 
 //Space Ruin stuff
@@ -492,7 +492,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "Doctor Hilbert"
 	mob_name = "Doctor Hilbert"
 	mob_gender = "male"
-	assignedrole = null
+	spawner_job_path = /datum/job/ghost_role
 	ghost_usable = FALSE
 	oxy_damage = 500
 	mob_species = /datum/species/skeleton
@@ -510,7 +510,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/paper/crumpled/docslogs
 	name = "Research Logs"
 
-/obj/item/paper/crumpled/docslogs/Initialize()
+/obj/item/paper/crumpled/docslogs/Initialize(mapload)
 	. = ..()
 	info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>

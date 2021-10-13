@@ -16,7 +16,6 @@
 	var/hasmob = FALSE // contains a mob
 
 /obj/structure/disposalholder/Destroy()
-	QDEL_NULL(gas)
 	active = FALSE
 	return ..()
 

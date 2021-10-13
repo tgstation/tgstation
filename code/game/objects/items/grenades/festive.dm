@@ -2,7 +2,7 @@
 
 /obj/item/sparkler
 	name = "sparkler"
-	desc = "A little stick coated with metal power and barium nitrate, burns with a pleasing sparkle."
+	desc = "A little stick coated with metal powder and barium nitrate, burns with a pleasing sparkle."
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "sparkler"
 	w_class = WEIGHT_CLASS_TINY
@@ -99,8 +99,7 @@
 		to_chat(user, span_danger("You've already removed all of the fuse!"))
 
 /obj/item/grenade/firecracker/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 80)
-	var/turf/T = get_turf(src)
-	log_grenade(user, T)
+	log_grenade(user)
 	if(user)
 		add_fingerprint(user)
 		if(msg)

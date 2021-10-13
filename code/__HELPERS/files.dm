@@ -1,3 +1,11 @@
+
+/**
+ * For FTP requests. (i.e. downloading runtime logs.)
+ *
+ * However it'd be ok to use for accessing attack logs and such too, which are even laggier.
+ */
+GLOBAL_VAR_INIT(fileaccess_timer, 0)
+
 /client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
@@ -13,7 +21,7 @@
 		if(path != root)
 			choices.Insert(1,"/")
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sortList(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
 		switch(choice)
 			if(null)
 				return
@@ -84,7 +92,7 @@
 	var/static/notch = 0
 	// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
 	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
-	notch = WRAP(notch+1, 0, 2^15)
+	notch = WRAP(notch+1, 0, 2**15)
 	fcopy(file, filename)
 	. = md5filepath(filename)
 	fdel(filename)

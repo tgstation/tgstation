@@ -17,7 +17,7 @@
 	///Used to track if anything of note has happen while running process_atmos()
 	var/excited = TRUE
 
-/obj/machinery/portable_atmospherics/Initialize()
+/obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
 	air_contents = new
 	air_contents.volume = volume
@@ -26,7 +26,7 @@
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
-	QDEL_NULL(air_contents)
+	air_contents = null
 	SSair.stop_processing_machine(src)
 
 	return ..()

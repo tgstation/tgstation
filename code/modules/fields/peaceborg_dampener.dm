@@ -106,7 +106,7 @@
 	staging -= AM
 	return ..()
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, border_dir)
 	if(istype(AM, /obj/projectile))
 		staging[AM] = get_turf(AM)
 	. = ..()

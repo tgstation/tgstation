@@ -63,20 +63,23 @@
 
 /**
  * This proc copies this sheet of paper to a new
- * sheet,  Makes it nice and easy for carbon and
- * the copyer machine
+ * sheet. Used by carbon papers and the photocopier machine.
  */
-/obj/item/paper/proc/copy()
-	var/obj/item/paper/N = new(arglist(args))
-	N.info = info
-	N.color = color
-	N.update_icon_state()
-	N.stamps = stamps
-	N.stamped = stamped.Copy()
-	N.form_fields = form_fields.Copy()
-	N.field_counter = field_counter
-	copy_overlays(N, TRUE)
-	return N
+/obj/item/paper/proc/copy(paper_type = /obj/item/paper, atom/location = loc, colored = TRUE)
+	var/obj/item/paper/new_paper = new paper_type (location)
+	if(colored)
+		new_paper.color = color
+		new_paper.info = info
+	else //This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+		var/static/greyscale_info = regex("<font face=\"([PEN_FONT]|[CRAYON_FONT])\" color=", "i")
+		new_paper.info = replacetext(info, greyscale_info, "<font face=\"$1\" nocolor=")
+	new_paper.stamps = stamps?.Copy()
+	new_paper.stamped = stamped?.Copy()
+	new_paper.form_fields = form_fields.Copy()
+	new_paper.field_counter = field_counter
+	new_paper.update_icon_state()
+	copy_overlays(new_paper, TRUE)
+	return new_paper
 
 /**
  * This proc sets the text of the paper and updates the
@@ -98,7 +101,7 @@
 			contact_poison = null
 	. = ..()
 
-/obj/item/paper/Initialize()
+/obj/item/paper/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-9, 9)
 	pixel_y = base_pixel_y + rand(-8, 8)
@@ -199,7 +202,7 @@
 		return
 
 	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder))
+	if(istype(P, /obj/item/clipboard) || istype(P, /obj/item/folder) || istype(P, /obj/item/paper_bin))
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
@@ -249,13 +252,15 @@
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
-	data["edit_usr"] = "[user]"
+	data["edit_usr"] = "[user.real_name]"
 
 	var/obj/holding = user.get_active_held_item()
 	// Use a clipboard's pen, if applicable
 	if(istype(loc, /obj/item/clipboard))
 		var/obj/item/clipboard/clipboard = loc
-		if(clipboard.pen)
+		// This is just so you can still use a stamp if you're holding one. Otherwise, it'll
+		// use the clipboard's pen, if applicable.
+		if(!istype(holding, /obj/item/stamp) && clipboard.pen)
 			holding = clipboard.pen
 	if(istype(holding, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/PEN = holding
@@ -323,6 +328,7 @@
 					stampoverlay.pixel_y = rand(-3, 2)
 					add_overlay(stampoverlay)
 					LAZYADD(stamped, stamp_icon_state)
+					update_icon()
 
 				update_static_data(usr,ui)
 				var/obj/O = ui.user.get_active_held_item()
@@ -365,14 +371,14 @@
  */
 /obj/item/paper/construction
 
-/obj/item/paper/construction/Initialize()
+/obj/item/paper/construction/Initialize(mapload)
 	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /**
  * Natural paper
  */
-/obj/item/paper/natural/Initialize()
+/obj/item/paper/natural/Initialize(mapload)
 	. = ..()
 	color = "#FFF5ED"
 

@@ -697,7 +697,7 @@ function checkchangelog($payload, $compile = true) {
 			case 'add':
 			case 'adds':
 			case 'rscadd':
-				if($item != 'Added new things' && $item != 'Added more things') {
+				if($item != 'Added new mechanics or gameplay changes' && $item != 'Added more things') {
 					$tags[] = 'Mechanic';
 					$currentchangelogblock[] = array('type' => 'rscadd', 'body' => $item);
 				}

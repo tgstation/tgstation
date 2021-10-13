@@ -23,8 +23,6 @@ new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/medium/fever,
 new /datum/disease_ability/symptom/medium/chills,
 new /datum/disease_ability/symptom/medium/headache,
-new /datum/disease_ability/symptom/medium/nano_boost,
-new /datum/disease_ability/symptom/medium/nano_destroy,
 new /datum/disease_ability/symptom/medium/viraladaptation,
 new /datum/disease_ability/symptom/medium/viralevolution,
 new /datum/disease_ability/symptom/medium/disfiguration,
@@ -222,7 +220,7 @@ new /datum/disease_ability/symptom/powerful/youth
 		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
 
 		for(var/mob/living/M in oview(4, SD.affected_mob))
-			if(is_A_facing_B(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
+			if(is_source_facing_target(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
 				M.AirborneContractDisease(SD, TRUE)
 
 	StartCooldown()
@@ -361,12 +359,6 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/symptom/medium/headache
 	symptoms = list(/datum/symptom/headache)
-
-/datum/disease_ability/symptom/medium/nano_boost
-	symptoms = list(/datum/symptom/nano_boost)
-
-/datum/disease_ability/symptom/medium/nano_destroy
-	symptoms = list(/datum/symptom/nano_destroy)
 
 /datum/disease_ability/symptom/medium/viraladaptation
 	symptoms = list(/datum/symptom/viraladaptation)

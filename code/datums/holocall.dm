@@ -81,6 +81,7 @@
 	if(!QDELETED(hologram))
 		hologram.HC = null
 		QDEL_NULL(hologram)
+	hologram = null
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I

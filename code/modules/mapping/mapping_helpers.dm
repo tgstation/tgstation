@@ -12,7 +12,7 @@
 
 	plane = POINT_PLANE
 
-/obj/effect/baseturf_helper/Initialize()
+/obj/effect/baseturf_helper/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -93,7 +93,7 @@
 	icon_state = ""
 	var/late = FALSE
 
-/obj/effect/mapping_helpers/Initialize()
+/obj/effect/mapping_helpers/Initialize(mapload)
 	..()
 	return late ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_QDEL
 
@@ -126,6 +126,16 @@
 	else
 		airlock.cyclelinkeddir = dir
 
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
+	name = "airlock multi-cyclelink helper"
+	icon_state = "airlock_multicyclelink_helper"
+	var/cycle_id
+
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.closeOtherId)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] closeOtherId, but it's already set!")
+	else
+		airlock.closeOtherId = cycle_id
 
 /obj/effect/mapping_helpers/airlock/locked
 	name = "airlock lock helper"
@@ -171,7 +181,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/no_lava
 	icon_state = "no_lava"
 
-/obj/effect/mapping_helpers/no_lava/Initialize()
+/obj/effect/mapping_helpers/no_lava/Initialize(mapload)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
@@ -191,7 +201,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!ispath(component_type,/datum/component))
 		CRASH("Wrong component type in [type] - [component_type] is not a component")
 	var/turf/T = get_turf(src)
-	for(var/atom/A in T.GetAllContents())
+	for(var/atom/A in T.get_all_contents())
 		if(A == src)
 			continue
 		if(target_name && A.name != target_name)
@@ -283,11 +293,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				new /obj/item/toy/balloon/corgi(thing)
 			else
 				openturfs += thing
+
 	//cake + knife to cut it!
-	var/turf/food_turf = get_turf(pick(table))
-	new /obj/item/kitchen/knife(food_turf)
-	var/obj/item/food/cake/birthday/iancake = new(food_turf)
-	iancake.desc = "Happy birthday, Ian!"
+	if(length(table))
+		var/turf/food_turf = get_turf(pick(table))
+		new /obj/item/kitchen/knife(food_turf)
+		var/obj/item/food/cake/birthday/iancake = new(food_turf)
+		iancake.desc = "Happy birthday, Ian!"
+
 	//some balloons! this picks an open turf and pops a few balloons in and around that turf, yay.
 	for(var/i in 1 to balloon_clusters)
 		var/turf/clusterspot = pick_n_take(openturfs)
@@ -413,7 +426,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
 	var/turf/target_turf = get_turf(src)
 	var/matches_found = 0
-	for(var/a in target_turf.GetAllContents())
+	for(var/a in target_turf.get_all_contents())
 		var/atom/atom_on_turf = a
 		if(atom_on_turf == src)
 			continue
@@ -451,7 +464,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/I = fetch_icon(icon_url)
 	var/turf/target_turf = get_turf(src)
 	var/matches_found = 0
-	for(var/a in target_turf.GetAllContents())
+	for(var/a in target_turf.get_all_contents())
 		var/atom/atom_on_turf = a
 		if(atom_on_turf == src)
 			continue
@@ -508,3 +521,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/component_target = get_turf(src)
 	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE)
 	qdel(src)
+
+/obj/effect/mapping_helpers/ztrait_injector
+	name = "ztrait injector"
+	icon_state = "ztrait"
+	/// List of traits to add to this.
+	var/list/traits_to_add = list()
+
+/obj/effect/mapping_helpers/ztrait_injector/Initialize()
+	. = ..()
+	var/datum/space_level/level = SSmapping.z_list[z]
+	if(!level || !length(traits_to_add))
+		return
+	level.traits |= traits_to_add
+	SSweather.update_z_level(level) //in case of someone adding a weather for the level, we want SSweather to update for that

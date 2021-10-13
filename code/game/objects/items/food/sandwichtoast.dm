@@ -115,9 +115,21 @@
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bun" = 3, "meat" = 2)
-	foodtypes = GRAIN | MEAT | VEGETABLES
+	foodtypes = GRAIN | MEAT //Ketchup is not a vegetable
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/hotdog/debug
 	eat_time = 0
+
+/obj/item/food/blt
+	name = "\improper BLT"
+	desc = "A classic bacon, lettuce, and tomato sandwich."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "blt"
+	bite_consumption = 4
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bacon" = 3, "lettuce" = 2, "tomato" = 2, "bread" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES | BREAKFAST
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL

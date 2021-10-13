@@ -18,8 +18,10 @@
 	var/blockers = NONE
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/rot_react,
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
+
+
 
 /datum/component/rot/Initialize(delay, scaling, severity)
 	if(!isatom(parent))
@@ -37,7 +39,7 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
 	if(ismovable(parent))
-		AddElement(/datum/element/connect_loc, parent, loc_connections)
+		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life
@@ -60,7 +62,7 @@
 /datum/component/rot/UnregisterFromParent()
 	. = ..()
 	if(ismovable(parent))
-		RemoveElement(/datum/element/connect_loc, parent, loc_connections)
+		qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 ///One of two procs that modifies blockers, this one handles removing a blocker and potentially restarting the rot
 /datum/component/rot/proc/start_up(blocker_type)
@@ -112,6 +114,11 @@
 /datum/component/rot/proc/rot_react_touch(datum/source, mob/living/react_to)
 	SIGNAL_HANDLER
 	rot_react(source, react_to, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+
+/// Triggered when something enters the component's parent.
+/datum/component/rot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	rot_react(source, arrived)
 
 ///The main bit of logic for the rot component, does a temperature check and has a chance to infect react_to
 /datum/component/rot/proc/rot_react(source, mob/living/react_to, target_zone = null)

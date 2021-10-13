@@ -54,7 +54,8 @@
 		victim = null
 	if(A == spear)
 		spear = null
-	deconstruct(TRUE)
+	if(!QDELETED(src))
+		deconstruct(TRUE)
 	return ..()
 
 /obj/structure/headpike/deconstruct(disassembled)

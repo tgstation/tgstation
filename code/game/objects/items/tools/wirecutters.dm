@@ -3,6 +3,7 @@
 	desc = "This cuts wires."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "cutters_map"
+	worn_icon_state = "cutters"
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -38,7 +39,7 @@
 		"yellow" = "#d58c18"
 	)
 
-/obj/item/wirecutters/Initialize()
+/obj/item/wirecutters/Initialize(mapload)
 	if(random_color)
 		var/our_color = pick(wirecutter_colors)
 		set_greyscale(colors=list(wirecutter_colors[our_color]))

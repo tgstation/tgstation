@@ -42,7 +42,7 @@
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		if(prob(30))
 			paper.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
-			paper.AddComponent(/datum/component/honkspam)
+			paper.AddElement(/datum/element/honkspam)
 	return paper
 
 /obj/item/paper_bin/Destroy()
@@ -78,7 +78,7 @@
 		var/mob/living/living_mob = user
 		if(!(living_mob.mobility_flags & MOBILITY_PICKUP))
 			return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(CLICK_CD_RAPID)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
 		return
@@ -92,7 +92,7 @@
 		update_appearance()
 	else if(LAZYLEN(papers))
 		var/obj/item/paper/top_paper = papers[papers.len]
-		papers.Remove(top_paper)
+		LAZYREMOVE(papers, top_paper)
 		top_paper.add_fingerprint(user)
 		top_paper.forceMove(user.loc)
 		user.put_in_hands(top_paper)
@@ -112,7 +112,7 @@
 		if(!user.transferItemToLoc(paper, src))
 			return
 		to_chat(user, span_notice("You put [paper] in [src]."))
-		papers.Add(paper)
+		LAZYADD(papers, paper)
 		update_appearance()
 	else if(istype(I, /obj/item/pen) && !bin_pen)
 		var/obj/item/pen/pen = I
@@ -125,7 +125,7 @@
 		return ..()
 
 /obj/item/paper_bin/proc/at_overlay_limit()
-	return overlays.len >= MAX_ATOM_OVERLAYS
+	return overlays.len >= MAX_ATOM_OVERLAYS - 1
 
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()

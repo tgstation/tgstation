@@ -1,4 +1,4 @@
-
+GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 /client/proc/secrets() //Creates a verb for admins to open up the ui
 	set name = "Secrets"
@@ -86,11 +86,9 @@
 		if("infinite_sec")
 			if(!is_debugger)
 				return
-			var/datum/job/J = SSjob.GetJob("Security Officer")
-			if(!J)
-				return
-			J.total_positions = -1
-			J.spawn_positions = -1
+			var/datum/job/sec_job = SSjob.GetJobType(/datum/job/security_officer)
+			sec_job.total_positions = -1
+			sec_job.spawn_positions = -1
 			message_admins("[key_name_admin(holder)] has removed the cap on security officers.")
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
@@ -140,7 +138,7 @@
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.unique_identity)]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=fingerprints;size=440x410")
 		if("ctfbutton")
@@ -224,7 +222,7 @@
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					E = DC.runEvent()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease), /proc/cmp_typepaths_asc)
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), /proc/cmp_typepaths_asc)
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
 					DO.virus_type = virus
@@ -398,7 +396,7 @@
 				var/list/candidates = list()
 
 				if (prefs["offerghosts"]["value"] == "Yes")
-					candidates = pollGhostCandidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
+					candidates = poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
 
 				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
 					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
@@ -452,24 +450,16 @@
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
 				return
+			if(GLOB.everyone_a_traitor)
+				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
+				return
 			var/objective = stripped_input(holder, "Enter an objective")
 			if(!objective)
 				return
+			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
 			for(var/mob/living/player in GLOB.player_list)
-				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
-					continue
-				if(player.stat == DEAD || !player.mind || ispAI(player))
-					continue
-				if(is_special_character(player))
-					continue
-				var/datum/antagonist/traitor/traitor_datum = new()
-				traitor_datum.give_objectives = FALSE
-				var/datum/objective/new_objective = new
-				new_objective.owner = player
-				new_objective.explanation_text = objective
-				traitor_datum.objectives += new_objective
-				player.mind.add_antag_datum(traitor_datum)
+				GLOB.everyone_a_traitor.make_traitor(null, player)
 			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]"))
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
@@ -499,7 +489,7 @@
 				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound(SSstation.announcer.event_sounds[ANNOUNCER_ANIMES]))
 
-				if(H.dna.species.id == "human")
+				if(H.dna.species.id == SPECIES_HUMAN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
@@ -562,7 +552,7 @@
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+			candidates = poll_ghost_candidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
 
 			if(length(candidates) == 0)
 				return FALSE
@@ -607,7 +597,7 @@
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.copy_to(spawnedMob)
+				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
 				spawnedMob.key = chosen.key
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
@@ -616,3 +606,31 @@
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+
+///Makes sure latejoining crewmembers also become traitors.
+/datum/everyone_is_a_traitor_controller
+	var/objective = ""
+
+/datum/everyone_is_a_traitor_controller/New(objective)
+	src.objective = objective
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/make_traitor)
+
+/datum/everyone_is_a_traitor_controller/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
+
+/datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)
+	SIGNAL_HANDLER
+	if(player.stat == DEAD || !player.mind)
+		return
+	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
+		return
+	if(is_special_character(player))
+		return
+	var/datum/antagonist/traitor/traitor_datum = new()
+	traitor_datum.give_objectives = FALSE
+	var/datum/objective/new_objective = new
+	new_objective.owner = player
+	new_objective.explanation_text = objective
+	traitor_datum.objectives += new_objective
+	player.mind.add_antag_datum(traitor_datum)

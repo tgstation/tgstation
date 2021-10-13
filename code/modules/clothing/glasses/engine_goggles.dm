@@ -14,6 +14,7 @@
 	inhand_icon_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
+	gender = PLURAL
 
 	vision_flags = NONE
 	darkness_view = 2
@@ -24,7 +25,7 @@
 	var/range = 1
 	var/list/connection_images = list()
 
-/obj/item/clothing/glasses/meson/engine/Initialize()
+/obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_appearance()
@@ -73,9 +74,7 @@
 			H.update_sight()
 
 	update_appearance()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	toggle_mode(user, TRUE)

@@ -34,9 +34,9 @@
 		icon_state = "paperplane_carbon" // It's the purple carbon copy. Use the purple paper plane
 	update_appearance()
 
-/obj/item/paperplane/Exited(atom/movable/AM, atom/newLoc)
+/obj/item/paperplane/Exited(atom/movable/gone, direction)
 	. = ..()
-	if (AM == internalPaper)
+	if (internalPaper == gone)
 		internalPaper = null
 		if(!QDELETED(src))
 			qdel(src)
@@ -120,7 +120,7 @@
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src
-		if(!Carbon.iscopy && !Carbon.copied)
+		if(!Carbon.copied)
 			to_chat(user, span_notice("Take off the carbon copy first."))
 			return
 	//Origami Master

@@ -81,7 +81,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	special_target = aimed_at
 	loopy_rod = force_looping
 
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
@@ -92,7 +92,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
-	RemoveElement(/datum/element/point_of_interest)
 	SSaugury.unregister_doom(src)
 
 	return ..()
@@ -122,10 +121,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
 		Bump(atom_crossed_over)
 
-/obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/atom_entered)
+/obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/destination, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	if(atom_entered.density && isturf(atom_entered))
-		Bump(atom_entered)
+	if(destination.density && isturf(destination))
+		Bump(destination)
 
 /obj/effect/immovablerod/Moved()
 	if(!loc)

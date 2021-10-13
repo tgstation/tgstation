@@ -179,6 +179,10 @@
 		toggle_mode()
 
 /obj/machinery/iv_drip/attack_hand_secondary(mob/user, modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(dripfeed)
 		dripfeed = FALSE
 		to_chat(usr, span_notice("You loosen the valve to speed up the [src]."))
@@ -293,7 +297,7 @@
 	density = TRUE
 	use_internal_storage = TRUE
 
-/obj/machinery/iv_drip/plumbing/Initialize()
+/obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))

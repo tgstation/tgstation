@@ -17,6 +17,9 @@
 	var/processing_quirk = FALSE
 	/// When making an abstract quirk (in OOP terms), don't forget to set this var to the type path for that abstract quirk.
 	var/abstract_parent_type = /datum/quirk
+	/// The icon to show in the preferences menu.
+	/// This references a tgui icon, so it can be FontAwesome or a tgfont (with a tg- prefix).
+	var/icon
 
 /datum/quirk/Destroy()
 	if(quirk_holder)
@@ -63,7 +66,8 @@
 		START_PROCESSING(SSquirks, src)
 
 	if(!quirk_transfer)
-		to_chat(quirk_holder, gain_text)
+		if(gain_text)
+			to_chat(quirk_holder, gain_text)
 		add_unique()
 
 		if(quirk_holder.client)
@@ -84,11 +88,11 @@
 
 	quirk_holder.quirks -= src
 
-	if(!quirk_transfer)
+	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
 
 	if(mob_trait)
-		REMOVE_TRAIT(quirk_holder, mob_trait, ROUNDSTART_TRAIT)
+		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 
 	if(processing_quirk)
 		STOP_PROCESSING(SSquirks, src)

@@ -930,6 +930,7 @@
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
+	glass_icon_state = "soldry"
 	glass_name = "Sol Dry"
 	glass_desc = "A soothing, mellow drink made from ginger."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

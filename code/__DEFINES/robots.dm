@@ -1,6 +1,11 @@
 /*ALL DEFINES FOR AIS, CYBORGS, AND SIMPLE ANIMAL BOTS*/
 
 #define DEFAULT_AI_LAWID "default"
+#define LAW_ZEROTH "zeroth"
+#define LAW_INHERENT "inherent"
+#define LAW_SUPPLIED "supplied"
+#define LAW_ION "ion"
+#define LAW_HACKED "hacked"
 
 //Bot defines, placed here so they can be read by other things!
 #define BOT_STEP_DELAY 4 //Delay between movemements
@@ -28,7 +33,7 @@
 #define BOT_WAIT_FOR_NAV 16 // waiting for nav computation
 #define BOT_NO_ROUTE 17 // no destination beacon found (or no route)
 #define BOT_SHOWERSTANCE 18 // cleaning unhygienic humans
-#define BOT_TIPPED 19 // someone tipped a medibot over ;_;
+#define BOT_TIPPED 19 // someone tipped a bot over ;_;
 
 //Bot types
 #define SEC_BOT (1<<0) // Secutritrons (Beepsky) and ED-209s
@@ -66,3 +71,11 @@
 #define BORG_CHOOSE_MODULE_ONE    1
 #define BORG_CHOOSE_MODULE_TWO    2
 #define BORG_CHOOSE_MODULE_THREE   3
+
+#define SKIN_ICON "skin_icon"
+#define SKIN_ICON_STATE "skin_icon_state"
+#define SKIN_PIXEL_X "skin_pixel_x"
+#define SKIN_PIXEL_Y "skin_pixel_y"
+#define SKIN_LIGHT_KEY "skin_light_key"
+#define SKIN_HAT_OFFSET "skin_hat_offset"
+#define SKIN_TRAITS "skin_traits"

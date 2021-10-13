@@ -47,7 +47,7 @@
 		maxcharge = override_maxcharge
 	charge = maxcharge
 	if(ratingdesc)
-		desc += " This one has a rating of [DisplayEnergy(maxcharge)], and you should not swallow it."
+		desc += " This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
 	update_appearance()
 
 /obj/item/stock_parts/cell/create_reagents(max_vol, flags)
@@ -161,31 +161,34 @@
 				corrupt()
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
-	if(isethereal(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/datum/species/ethereal/E = H.dna.species
-		var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
-		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-		if((E.drain_time > world.time) || !stomach)
-			return
-		if(charge < CELL_POWER_DRAIN)
-			to_chat(H, span_warning("[src] doesn't have enough power!"))
-			return
-		if(stomach.crystal_charge > charge_limit)
-			to_chat(H, span_warning("Your charge is full!"))
-			return
-		to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
-		E.drain_time = world.time + CELL_DRAIN_TIME
-		if(do_after(user, CELL_DRAIN_TIME, target = src))
-			if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+
+		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+
+			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - CELL_POWER_GAIN
+			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+			if((stomach.drain_time > world.time) || !stomach)
 				return
-			if(istype(stomach))
-				to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))
-				stomach.adjust_charge(CELL_POWER_GAIN)
-				charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
-			else
-				to_chat(H, span_warning("You can't receive charge from [src]!"))
-		return
+			if(charge < CELL_POWER_DRAIN)
+				to_chat(H, span_warning("[src] doesn't have enough power!"))
+				return
+			if(stomach.crystal_charge > charge_limit)
+				to_chat(H, span_warning("Your charge is full!"))
+				return
+			to_chat(H, span_notice("You begin clumsily channeling power from [src] into your body."))
+			stomach.drain_time = world.time + CELL_DRAIN_TIME
+			if(do_after(user, CELL_DRAIN_TIME, target = src))
+				if((charge < CELL_POWER_DRAIN) || (stomach.crystal_charge > charge_limit))
+					return
+				if(istype(stomach))
+					to_chat(H, span_notice("You receive some charge from [src], wasting some in the process."))
+					stomach.adjust_charge(CELL_POWER_GAIN)
+					charge -= CELL_POWER_DRAIN //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+				else
+					to_chat(H, span_warning("You can't receive charge from [src]!"))
+			return
 
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
@@ -201,7 +204,7 @@
 	return rating * maxcharge
 
 /* Cell variants*/
-/obj/item/stock_parts/cell/empty/Initialize()
+/obj/item/stock_parts/cell/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -212,7 +215,7 @@
 	maxcharge = 500
 	custom_materials = list(/datum/material/glass=40)
 
-/obj/item/stock_parts/cell/crap/empty/Initialize()
+/obj/item/stock_parts/cell/crap/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -234,7 +237,7 @@
 	maxcharge = 600 //600 max charge / 100 charge per shot = six shots
 	custom_materials = list(/datum/material/glass=40)
 
-/obj/item/stock_parts/cell/secborg/empty/Initialize()
+/obj/item/stock_parts/cell/secborg/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -275,7 +278,7 @@
 	chargerate = 2250
 	rating = 2
 
-/obj/item/stock_parts/cell/high/empty/Initialize()
+/obj/item/stock_parts/cell/high/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -288,7 +291,7 @@
 	chargerate = 2000
 	rating = 3
 
-/obj/item/stock_parts/cell/super/empty/Initialize()
+/obj/item/stock_parts/cell/super/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -301,7 +304,7 @@
 	chargerate = 3000
 	rating = 4
 
-/obj/item/stock_parts/cell/hyper/empty/Initialize()
+/obj/item/stock_parts/cell/hyper/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -315,7 +318,7 @@
 	chargerate = 4000
 	rating = 5
 
-/obj/item/stock_parts/cell/bluespace/empty/Initialize()
+/obj/item/stock_parts/cell/bluespace/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
@@ -364,13 +367,22 @@
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
-/obj/item/stock_parts/cell/emproof/empty/Initialize()
+/obj/item/stock_parts/cell/emproof/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return
+
+/obj/item/stock_parts/cell/emproof/slime
+	name = "EMP-proof slime core"
+	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "yellow slime extract"
+	custom_materials = null
+	maxcharge = 5000
+	rating = 5
 
 /obj/item/stock_parts/cell/beam_rifle
 	name = "beam rifle capacitor"
@@ -394,7 +406,7 @@
 	custom_materials = list(/datum/material/glass = 20)
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/stock_parts/cell/emergency_light/Initialize()
+/obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(!A.lightswitch || !A.light_power)
@@ -410,7 +422,7 @@
 	grind_results = null
 	rating = 5
 
-/obj/item/stock_parts/cell/crystal_cell/Initialize()
+/obj/item/stock_parts/cell/crystal_cell/Initialize(mapload)
 	. = ..()
 	charge = 50000
 

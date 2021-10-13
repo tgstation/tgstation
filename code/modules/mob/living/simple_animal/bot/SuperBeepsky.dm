@@ -5,7 +5,7 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
-	baton_type = /obj/item/melee/transforming/energy/sword/saber
+	baton_type = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
 	var/block_chance = 50
 	weapon_force = 30
@@ -31,7 +31,7 @@
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 		INVOKE_ASYNC(src, .proc/stun_attack, AM)
 
-/mob/living/simple_animal/bot/secbot/grievous/Initialize()
+/mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
 

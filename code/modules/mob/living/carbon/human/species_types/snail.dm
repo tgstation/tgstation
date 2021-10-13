@@ -1,6 +1,6 @@
 /datum/species/snail
 	name = "Snailperson"
-	id = "snail"
+	id = SPECIES_SNAIL
 	offset_features = list(OFFSET_GLASSES = list(0,4))
 	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
@@ -62,8 +62,9 @@
 /obj/item/storage/backpack/snail/dropped(mob/user, silent)
 	. = ..()
 	emptyStorage()
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
-/obj/item/storage/backpack/snail/Initialize()
+/obj/item/storage/backpack/snail/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "snailshell")

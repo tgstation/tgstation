@@ -9,14 +9,19 @@
 	equip_delay_other = 25
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = 250)
+	gender = PLURAL
 	var/vision_flags = 0
-	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING //admin only for now
-	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
+	var/darkness_view = 2 // Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
+	/// Override to allow glasses to set higher than normal see_invis
+	var/invis_override = 0
 	var/lighting_alpha
-	var/list/icon/current = list() //the current hud icons
-	var/vision_correction = FALSE //does wearing these glasses correct some of our vision defects?
-	var/glass_colour_type //colors your vision when worn
+	/// The current hud icons
+	var/list/icon/current = list()
+	/// Does wearing these glasses correct some of our vision defects?
+	var/vision_correction = FALSE
+	/// Colors your vision when worn
+	var/glass_colour_type
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -38,8 +43,12 @@
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(. && user)
 		user.update_sight()
+		if(iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -56,16 +65,18 @@
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, span_notice("You will now see glasses colors."))
-					else
-						to_chat(H, span_notice("You will no longer see glasses colors."))
-					H.update_glasses_color(src, 1)
+		var/mob/living/carbon/human/human_user = user
+
+		if (human_user.glasses != src)
+			return ..()
+
+		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
+			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will now see glasses colors."))
+		else
+			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will no longer see glasses colors."))
+		human_user.update_glasses_color(src, TRUE)
 	else
 		return ..()
 
@@ -81,7 +92,7 @@
 
 
 /mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if(client?.prefs.uses_glasses_colour && glasses_equipped)
+	if (HAS_TRAIT(src, TRAIT_SEE_GLASS_COLORS) && glasses_equipped)
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)
@@ -202,13 +213,13 @@
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
 
-/obj/item/clothing/glasses/regular/Initialize()
+/obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 
 /obj/item/clothing/glasses/regular/proc/on_entered(datum/source, atom/movable/movable)
@@ -222,7 +233,7 @@
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 
-/obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
+/obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
 	vision_correction = FALSE
 
@@ -434,7 +445,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/thermal/syndi/Initialize()
+/obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -506,72 +517,6 @@
 	worn_icon_state = "psych_glasses"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
-/obj/item/clothing/glasses/godeye
-	name = "eye of god"
-	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."
-	icon_state = "godeye"
-	inhand_icon_state = "godeye"
-	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
-	darkness_view = 8
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	resistance_flags = LAVA_PROOF | FIRE_PROOF
-	custom_materials = null
-	clothing_flags = SCAN_REAGENTS
-	var/double = FALSE
-
-/obj/item/clothing/glasses/godeye/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user) && slot == ITEM_SLOT_EYES)
-		ADD_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-
-		pain(user)
-
-/obj/item/clothing/glasses/godeye/dropped(mob/user)
-	. = ..()
-	// Behead someone, their "glasses" drop on the floor
-	// and thus, the god eye should no longer be sticky
-	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-
-/obj/item/clothing/glasses/godeye/attackby(obj/item/W as obj, mob/user as mob, params)
-	if(istype(W, /obj/item/clothing/glasses/godeye) && W != src && W.loc == user)
-		if(!double)
-			var/obj/item/clothing/glasses/godeye/double/T = /obj/item/clothing/glasses/godeye/double
-
-			icon_state = initial(T.icon_state)
-			inhand_icon_state = initial(T.inhand_icon_state)
-
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.update_inv_glasses()
-
-				// Apply pain now, so message is still for solo eye bore
-				if(C.glasses == src)
-					pain(C)
-
-			name = initial(T.name)
-			desc = initial(T.desc)
-			double = TRUE
-		else
-			to_chat(user, span_notice("[W] winks at you and vanishes into the abyss, you feel really unlucky."))
-		qdel(W)
-	..()
-
-/obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
-	// If pain/pain immunity ever implemented, check for it here.
-
-	to_chat(victim, span_userdanger("You experience blinding pain, as [src] [double ? "burrow" : "burrows"] into your skull."))
-	victim.emote("scream")
-	victim.flash_act()
-
-/obj/item/clothing/glasses/godeye/double
-	name = "eyes of god"
-	desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes. There's no real reason to have two, but that isn't stopping you."
-	icon_state = "doublegodeye"
-	inhand_icon_state = "doublegodeye"
-
-	double = TRUE
-
-
 /obj/item/clothing/glasses/debug
 	name = "debug glasses"
 	desc = "Medical, security and diagnostic hud. Alt click to toggle xray."
@@ -617,3 +562,15 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
+/obj/item/clothing/glasses/osi
+	name = "O.S.I. Sunglasses"
+	desc = "There's no such thing as good news! Just bad news and... weird news.."
+	icon_state = "osi_glasses"
+	inhand_icon_state = "osi_glasses"
+
+/obj/item/clothing/glasses/phantom
+	name = "Phantom Thief Mask"
+	desc = "Lookin' cool."
+	icon_state = "phantom_glasses"
+	inhand_icon_state = "phantom_glasses"

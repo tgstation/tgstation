@@ -124,6 +124,10 @@
 			if(istype(head_item, /obj/item/reagent_containers/pill))
 				for(var/datum/action/item_action/hands_free/activate_pill/pill_action in head_item.actions)
 					qdel(pill_action)
+			else if(istype(head_item, /obj/item/organ))
+				var/obj/item/organ/organ = head_item
+				if(organ.organ_flags & ORGAN_UNREMOVABLE)
+					continue
 			head_item.forceMove(head_turf)
 	eyes = null
 	ears = null
@@ -201,7 +205,7 @@
 		img.pixel_y = px_y
 	add_overlay(standing)
 
-/obj/item/bodypart/head/get_limb_icon(dropped)
+/obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.

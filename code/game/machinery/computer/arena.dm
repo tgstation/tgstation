@@ -168,7 +168,7 @@
 		var/list/keys = list()
 		for(var/mob/M in GLOB.player_list)
 			keys += M.client
-		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
+		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sort_key(keys)
 		//Could be freeform if you want to add disconnected i guess
 		if(!selection)
 			return
@@ -188,7 +188,7 @@
 	if(!isobserver(oldbody))
 		return
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
-	oldbody.client.prefs.copy_to(M)
+	oldbody.client.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects

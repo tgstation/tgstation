@@ -39,7 +39,7 @@
 			visible_message(span_notice("[src] begins climbing out from the ventilation system...") ,span_notice("You begin climbing out from the ventilation system..."))
 			if(!client)
 				return
-			visible_message(span_notice("[src] scrambles out from the ventilation ducts!"),span_notice("You out from the ventilation ducts."))
+			visible_message(span_notice("[src] scrambles out from the ventilation ducts!"),span_notice("You scramble out from the ventilation ducts."))
 			forceMove(ventcrawl_target.loc)
 			REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 			update_pipe_vision()

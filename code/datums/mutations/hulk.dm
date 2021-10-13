@@ -6,7 +6,7 @@
 	locked = TRUE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
-	species_allowed = list("human") //no skeleton/lizard hulk
+	species_allowed = list(SPECIES_HUMAN) //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
 	var/scream_delay = 50
@@ -186,8 +186,9 @@
 	var/turf/current_spin_turf = yeeted_person.loc
 	var/turf/intermediate_spin_turf = get_step(yeeted_person, the_hulk.dir) // the diagonal
 	var/turf/next_spin_turf = get_step(the_hulk, the_hulk.dir)
+	var/direction = get_dir(current_spin_turf, intermediate_spin_turf)
 
-	if((isturf(current_spin_turf) && current_spin_turf.Exit(yeeted_person)) && (isturf(next_spin_turf) && next_spin_turf.Enter(yeeted_person)))
+	if((isturf(current_spin_turf) && current_spin_turf.Exit(yeeted_person, direction)) && (isturf(next_spin_turf) && next_spin_turf.Enter(yeeted_person)))
 		yeeted_person.forceMove(next_spin_turf)
 		yeeted_person.face_atom(the_hulk)
 

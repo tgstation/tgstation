@@ -112,6 +112,8 @@
 		owner.remove_status_effect(src)
 
 /datum/status_effect/frozenstasis/proc/breakCube()
+	SIGNAL_HANDLER
+
 	owner.remove_status_effect(src)
 
 /datum/status_effect/frozenstasis/on_remove()
@@ -525,7 +527,7 @@
 	else
 		cooldown = max_cooldown
 		var/list/sheets = list()
-		for(var/obj/item/stack/sheet/S in owner.GetAllContents())
+		for(var/obj/item/stack/sheet/S in owner.get_all_contents())
 			if(S.amount < S.max_amount)
 				sheets += S
 
@@ -550,7 +552,7 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.GetAllContents())
+	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
@@ -774,6 +776,7 @@
 		originalname = H.real_name
 		H.dna.copy_dna(originalDNA)
 		randomize_human(H)
+		H.dna.update_dna_identity()
 	return ..()
 
 /datum/status_effect/stabilized/green/tick() //Only occasionally give examiners a warning.
@@ -861,7 +864,7 @@
 
 /datum/status_effect/stabilized/oil/tick()
 	if(owner.stat == DEAD)
-		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5)
+		explosion(owner, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 	return ..()
 
 /datum/status_effect/stabilized/black

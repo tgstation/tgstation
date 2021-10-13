@@ -34,7 +34,7 @@
 	var/trapped = 0
 	var/mob/trapped_mob
 
-/obj/structure/closet/Initialize()
+/obj/structure/closet/Initialize(mapload)
 	. = ..()
 	if(prob(30))
 		set_spooky_trap()
@@ -129,7 +129,7 @@
 	layer = 4
 	var/timer = 0
 
-/mob/living/simple_animal/shade/howling_ghost/Initialize()
+/mob/living/simple_animal/shade/howling_ghost/Initialize(mapload)
 	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
@@ -188,13 +188,13 @@
 	maxHealth = INFINITY
 	health = INFINITY
 	emote_see = list("silently stares")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	var/timer
 
-/mob/living/simple_animal/hostile/clown_insane/Initialize()
+/mob/living/simple_animal/hostile/clown_insane/Initialize(mapload)
 	. = ..()
 	status_flags |= GODMODE //Slightly easier to maintain.
 

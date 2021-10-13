@@ -17,7 +17,6 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
-		/obj/item/melee/baton/abductor,
 		/obj/item/melee/baton,
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
@@ -30,7 +29,7 @@
 	var/stealth_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, RAD = 15, FIRE = 70, ACID = 70)
 	var/combat_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 90, ACID = 90)
 
-/obj/item/clothing/suit/armor/abductor/vest/Initialize()
+/obj/item/clothing/suit/armor/abductor/vest/Initialize(mapload)
 	. = ..()
 	stealth_armor = getArmor(arglist(stealth_armor))
 	combat_armor = getArmor(arglist(combat_armor))
@@ -57,9 +56,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
@@ -281,7 +278,7 @@
 		radio_off_mob(M)
 
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
-	var/list/all_items = M.GetAllContents()
+	var/list/all_items = M.get_all_contents()
 
 	for(var/obj/I in all_items)
 		if(istype(I, /obj/item/radio/))
@@ -396,6 +393,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
+	automatic_charge_overlays = FALSE
 	fire_delay = 30
 	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
@@ -443,22 +441,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	inhand_icon_state = "wonderprod"
 
 	force = 7
-
-	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT
+	wound_bonus = FALSE
 
 	actions_types = list(/datum/action/item_action/toggle_mode)
-	convertible = FALSE
 
-	attack_cooldown = 0 SECONDS
-	confusion_amt = 0
-	stamina_loss_amt = 0
-	apply_stun_delay = 0 SECONDS
-	stun_time = 14 SECONDS
-
-	preload_cell_type = /obj/item/stock_parts/cell/infinite //Any sufficiently advanced technology is indistinguishable from magic
-	activate_sound = null
-	can_remove_cell = FALSE
+	cooldown = 0 SECONDS
+	stamina_damage = 0
+	knockdown_time = 14 SECONDS
+	on_stun_sound = 'sound/weapons/egloves.ogg'
+	affect_cyborg = TRUE
 
 	var/mode = BATON_STUN
 
@@ -484,8 +475,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_PROBE)
 			txt = "probing"
 
-	if(!turned_on)
-		toggle_on(user)
+	var/is_stun_mode = mode == BATON_STUN
+	var/is_stun_or_sleep = mode == BATON_STUN || mode == BATON_SLEEP
+
+	affect_cyborg = is_stun_mode
+	log_stun_attack = is_stun_mode // other modes have their own log entries.
+	stun_animation = is_stun_or_sleep
+	on_stun_sound = is_stun_or_sleep ? 'sound/weapons/egloves.ogg' : null
+
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
 	update_appearance()
 
@@ -505,61 +502,40 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/attack(mob/target, mob/living/user)
+/obj/item/melee/baton/abductor/baton_attack(mob/target, mob/living/user, modifiers)
 	if(!AbductorCheck(user))
-		return FALSE
+		return BATON_ATTACK_DONE
+	return ..()
 
-	if(!deductcharge(cell_hit_cost))
-		to_chat(user, span_warning("[src] [cell ? "is out of charge" : "does not have a power source installed"]."))
-		return FALSE
-
-	if(!turned_on)
-		toggle_on(user)
-
-	if(iscyborg(target))
-		if(mode == BATON_STUN)
-			..()
-		return FALSE
-
-	if(!isliving(target))
-		return FALSE
-
-	if(clumsy_check(user))
-		return FALSE
-
-	var/mob/living/L = target
-
-	user.do_attack_animation(L)
-
-	if(shields_blocked(L, user))
-		return FALSE
-
+/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	switch (mode)
 		if(BATON_STUN)
-			..()
+			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
+				span_userdanger("[user] stuns you with [src]!"))
+			target.Jitter(20)
+			target.set_confusion(max(10, target.get_confusion()))
+			target.stuttering = max(8, target.stuttering)
+			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_STUNRESISTANCE) ? 0.1 : 1))
 		if(BATON_SLEEP)
-			SleepAttack(L,user)
+			SleepAttack(target,user)
 		if(BATON_CUFF)
-			CuffAttack(L,user)
+			CuffAttack(target,user)
 		if(BATON_PROBE)
-			ProbeAttack(L,user)
-	return
+			ProbeAttack(target,user)
 
-/obj/item/melee/baton/abductor/apply_stun_effect_end(mob/living/target)
-	StunAttack(target)
+/obj/item/melee/baton/abductor/get_stun_description(mob/living/target, mob/living/user)
+	return // chat messages are handled in their own procs.
 
-/obj/item/melee/baton/abductor/proc/StunAttack(mob/living/L)
-	L.Paralyze(stun_time)
+/obj/item/melee/baton/abductor/get_cyborg_stun_description(mob/living/target, mob/living/user)
+	return // same as above.
 
 /obj/item/melee/baton/abductor/attack_self(mob/living/user)
+	. = ..()
 	toggle(user)
 
-/obj/item/melee/baton/abductor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	turned_on = FALSE
-	..()
-
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
-	playsound(src, stun_sound, 50, TRUE, -1)
+	playsound(src, on_stun_sound, 50, TRUE, -1)
 	if(L.incapacitated(TRUE, TRUE))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
@@ -840,12 +816,12 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
 
-/obj/structure/table/optable/abductor/Initialize()
+/obj/structure/table/optable/abductor/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/table/optable/abductor/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -871,6 +847,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor"
 	icon_door = "abductor"
 	can_weld_shut = FALSE
+	door_anim_time = 0
 	material_drop = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/door_assembly/door_assembly_abductor

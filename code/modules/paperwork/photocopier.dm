@@ -44,7 +44,7 @@
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
 
-/obj/machinery/photocopier/Initialize()
+/obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
@@ -218,8 +218,8 @@
 /obj/machinery/photocopier/proc/make_devil_paper_copy()
 	if(!paper_copy)
 		return
-	var/obj/item/paper/contract/employment/E = paper_copy
-	var/obj/item/paper/contract/employment/C = new(loc, E.target.current)
+	var/obj/item/paper/employment_contract/E = paper_copy
+	var/obj/item/paper/employment_contract/C = new(loc, E.employee_name)
 	give_pixel_offset(C)
 
 /**
@@ -230,24 +230,13 @@
 /obj/machinery/photocopier/proc/make_paper_copy()
 	if(!paper_copy)
 		return
-	var/obj/item/paper/copied_paper = new(loc)
+	var/obj/item/paper/copied_paper = paper_copy.copy(/obj/item/paper, loc, FALSE)
 	give_pixel_offset(copied_paper)
-	if(toner_cartridge.charges > 10) // Lots of toner, make it dark.
-		copied_paper.info = "<font color = #101010>"
-	else // No toner? shitty copies for you!
-		copied_paper.info = "<font color = #808080>"
 
-	var/copied_info = paper_copy.info
-	copied_info = replacetext(copied_info, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=") //state of the art techniques in action
-	copied_info = replacetext(copied_info, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=") //This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-	copied_paper.info += copied_info
-	copied_paper.info += "</font>"
+	//the font color dependant on the amount of toner left.
+	copied_paper.info = "<font color = [toner_cartridge.charges > 10 ? "#101010" : "#808080"]>[copied_paper.info]</font>"
 	copied_paper.name = paper_copy.name
-	copied_paper.update_appearance()
-	copied_paper.stamps = paper_copy.stamps
-	if(paper_copy.stamped)
-		copied_paper.stamped = paper_copy.stamped.Copy()
-	copied_paper.copy_overlays(paper_copy, TRUE)
+
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
@@ -384,7 +373,7 @@
 	else
 		return ..()
 
-/obj/machinery/photocopier/obj_break(damage_flag)
+/obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
 	if(. && toner_cartridge.charges)
 		new /obj/effect/decal/cleanable/oil(get_turf(src))
@@ -427,7 +416,7 @@
 			visible_message(span_warning("[document_copy] is shoved out of the way by [ass]!"))
 			document_copy = null
 
-/obj/machinery/photocopier/Exited(atom/movable/AM, atom/newloc)
+/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
 	check_ass() // There was potentially a person sitting on the copier, check if they're still there.
 	return ..()
 

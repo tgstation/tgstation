@@ -8,7 +8,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/vr/pre_equip(mob/living/carbon/human/H)
-	H.dna.species.before_equip_job(null, H)
+	H.dna.species.pre_equip_species_outfit(null, H)
 
 /datum/outfit/vr/syndicate
 	name = "Syndicate VR Operative - Basic"

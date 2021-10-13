@@ -29,90 +29,22 @@
 	new_gene.mutability_flags = mutability_flags
 	return new_gene
 
-/// Core plant genes. Stores the main variables: lifespan, endurance, production, yield, potency, instability, weed rate/chance
-/datum/plant_gene/core
-	/// The number value of our core gene.
-	var/value = 0
-
-/datum/plant_gene/core/get_name()
-	return "[name] [value]"
+/*
+ * on_new_seed is called when seed genes are initialized on the /obj/seed.
+ *
+ * new_seed - the seed being created
+ */
+/datum/plant_gene/proc/on_new_seed(obj/item/seeds/new_seed)
+	return // Not implemented
 
 /*
- * Apply our core gene's stats to our seed's stats.
+ * on_removed is called when the gene is removed from a seed.
+ * Also called when a seed is qdel'd (and all the genes are removed and deleted).
+ *
+ * old_seed - our seed, before being removed
  */
-/datum/plant_gene/core/proc/apply_stat(obj/item/seeds/our_seed)
-	return
-
-/datum/plant_gene/core/New(initial_value = 0)
-	value = initial_value
-
-/datum/plant_gene/core/Copy()
-	. = ..()
-	var/datum/plant_gene/core/new_core_gene = .
-	new_core_gene.value = value
-	return
-
-/datum/plant_gene/core/can_add(obj/item/seeds/our_seed)
-	. = ..()
-	if(!.)
-		return FALSE
-	return our_seed.get_gene(type) // We can't double-add core plant genes.
-
-/datum/plant_gene/core/lifespan
-	name = "Lifespan"
-	value = 25
-
-/datum/plant_gene/core/lifespan/apply_stat(obj/item/seeds/our_seed)
-	our_seed.lifespan = value
-
-/datum/plant_gene/core/endurance
-	name = "Endurance"
-	value = 15
-
-/datum/plant_gene/core/endurance/apply_stat(obj/item/seeds/our_seed)
-	our_seed.endurance = value
-
-/datum/plant_gene/core/production
-	name = "Production Speed"
-	value = 6
-
-/datum/plant_gene/core/production/apply_stat(obj/item/seeds/our_seed)
-	our_seed.production = value
-
-/datum/plant_gene/core/yield
-	name = "Yield"
-	value = 3
-
-/datum/plant_gene/core/yield/apply_stat(obj/item/seeds/our_seed)
-	our_seed.yield = value
-
-/datum/plant_gene/core/potency
-	name = "Potency"
-	value = 10
-
-/datum/plant_gene/core/potency/apply_stat(obj/item/seeds/our_seed)
-	our_seed.potency = value
-
-/datum/plant_gene/core/instability
-	name = "Stability"
-	value = 10
-
-/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/our_seed)
-	our_seed.instability = value
-
-/datum/plant_gene/core/weed_rate
-	name = "Weed Growth Rate"
-	value = 1
-
-/datum/plant_gene/core/weed_rate/apply_stat(obj/item/seeds/our_seed)
-	our_seed.weed_rate = value
-
-/datum/plant_gene/core/weed_chance
-	name = "Weed Vulnerability"
-	value = 5
-
-/datum/plant_gene/core/weed_chance/apply_stat(obj/item/seeds/our_seed)
-	our_seed.weed_chance = value
+/datum/plant_gene/proc/on_removed(obj/item/seeds/old_seed)
+	return // Not implemented
 
 /// Reagent genes store a reagent ID and reagent ratio.
 /datum/plant_gene/reagent
@@ -178,24 +110,6 @@
 		rate = reagent.rate
 		return TRUE
 	return FALSE
-
-/datum/plant_gene/reagent/polypyr
-	name = "Polypyrylium Oligomers"
-	reagent_id = /datum/reagent/medicine/polypyr
-	rate = 0.15
-	mutability_flags = PLANT_GENE_GRAFTABLE
-
-/datum/plant_gene/reagent/liquidelectricity
-	name = "Enriched Liquid Electricity"
-	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
-	rate = 0.1
-	mutability_flags = PLANT_GENE_GRAFTABLE
-
-/datum/plant_gene/reagent/carbon
-	name = "Carbon"
-	reagent_id = /datum/reagent/carbon
-	rate = 0.1
-	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
@@ -265,14 +179,6 @@
 	if(examine_line)
 		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
 
-	return TRUE
-
-/*
- * on_new_seed is called when seed genes are initialized on the /obj/seed.
- *
- * new_seed - the seed being created
- */
-/datum/plant_gene/trait/proc/on_new_seed(obj/item/seeds/new_seed)
 	return TRUE
 
 /// Add on any unique examine text to the plant's examine text.
@@ -420,7 +326,7 @@
 	to_chat(eater, span_notice("You feel energized as you bite into [our_plant]."))
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/cell/found_cell in eater.GetAllContents())
+	for(var/obj/item/stock_parts/cell/found_cell in eater.get_all_contents())
 		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
@@ -648,7 +554,7 @@
 		pocell.maxcharge *= (electrical_gene.rate * 100)
 	pocell.charge = pocell.maxcharge
 	pocell.name = "[our_plant.name] battery"
-	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [DisplayEnergy(pocell.maxcharge)], and you should not swallow it."
+	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [display_energy(pocell.maxcharge)], and you should not swallow it."
 
 	if(our_plant.reagents.has_reagent(/datum/reagent/toxin/plasma, 2))
 		pocell.rigged = TRUE
@@ -734,6 +640,10 @@
 	if(!(new_seed.resistance_flags & FIRE_PROOF))
 		new_seed.resistance_flags |= FIRE_PROOF
 
+/datum/plant_gene/trait/fire_resistance/on_removed(obj/item/seeds/old_seed)
+	if(old_seed.resistance_flags & FIRE_PROOF)
+		old_seed.resistance_flags &= ~FIRE_PROOF
+
 /datum/plant_gene/trait/fire_resistance/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
@@ -748,13 +658,11 @@
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
-	. = ..()
-	if(!.)
-		return FALSE
+	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_spread)
 
-	RegisterSignal(new_seed, COMSIG_PLANT_ON_GROW, .proc/try_spread)
+/datum/plant_gene/trait/invasive/on_removed(obj/item/seeds/old_seed)
+	UnregisterSignal(old_seed, COMSIG_SEED_ON_GROW)
 
-	return TRUE
 /*
  * Attempt to find an adjacent tray we can spread to.
  *
@@ -921,6 +829,23 @@
 	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
+/// Traits for flowers, makes plants not decompose.
+/datum/plant_gene/trait/preserved
+	name = "Natural Insecticide"
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/preserved/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	var/obj/item/food/grown/grown_plant = our_plant
+	if(istype(grown_plant))
+		grown_plant.preserved_food = TRUE
+
+/datum/plant_gene/trait/carnivory
+	name = "Obligate Carnivory"
+
 /// Plant type traits. Incompatible with one another.
 /datum/plant_gene/trait/plant_type
 	name = "you shouldn't see this"
@@ -938,7 +863,3 @@
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
-
-/// Plant doesn't get annoyed by pests in their tray.
-/datum/plant_gene/trait/plant_type/carnivory
-	name = "Obligate Carnivory"

@@ -287,18 +287,20 @@
 	selected_experiment = null
 
 /**
- * Attempts to get rnd servers on the same z-level as a provided turf
+ * Attempts to get rnd servers that are on the station z-level, also checks if provided turf is on the station z-level
  *
  * Arguments:
- * * turf_to_check_for_servers - The turf to get servers on the same z-level of
+ * * turf_to_check_for_servers - The turf to check if its on the station z-level
  */
 /datum/component/experiment_handler/proc/get_available_servers(turf/turf_to_check_for_servers = null)
 	if (!turf_to_check_for_servers)
 		turf_to_check_for_servers = get_turf(parent)
 	var/list/local_servers = list()
+	if (!SSmapping.level_trait(turf_to_check_for_servers.z,ZTRAIT_STATION))
+		return local_servers
 	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
 		var/turf/position_of_this_server_machine = get_turf(server)
-		if (turf_to_check_for_servers && position_of_this_server_machine && position_of_this_server_machine.z == turf_to_check_for_servers.z)
+		if (position_of_this_server_machine && SSmapping.level_trait(position_of_this_server_machine.z,ZTRAIT_STATION))
 			local_servers += server
 	return local_servers
 

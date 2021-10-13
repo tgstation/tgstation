@@ -88,7 +88,7 @@
 	else
 		chargesa--
 		insistinga = 0
-		var/wish = input("You want...","Wish") as null|anything in sortList(list("Power","Wealth","Immortality","Peace"))
+		var/wish = input("You want...","Wish") as null|anything in sort_list(list("Power","Wealth","Immortality","Peace"))
 		switch(wish)
 			if("Power")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
@@ -131,7 +131,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/meatgrinder/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -153,7 +153,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		explosion(src, devastation_range = 1)
+		explosion(src, devastation_range = 1, explosion_cause = src)
 		qdel(src)
 
 /////For the Wishgranter///////////

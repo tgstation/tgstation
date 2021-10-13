@@ -53,7 +53,7 @@
 	species = "sweetpotato"
 	plantname = "Sweet Potato Plants"
 	product = /obj/item/food/grown/potato/sweet
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/potato/sweet

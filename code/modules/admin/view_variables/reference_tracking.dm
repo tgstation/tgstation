@@ -9,7 +9,7 @@
 			running_find_references = null
 			//restart the garbage collector
 			SSgarbage.can_fire = TRUE
-			SSgarbage.next_fire = world.time + world.tick_lag
+			SSgarbage.update_nextfire(reset_time = TRUE)
 			return
 
 		if(!skip_alert && tgui_alert(usr,"Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", list("Yes", "No")) != "Yes")
@@ -51,11 +51,11 @@
 
 	//restart the garbage collector
 	SSgarbage.can_fire = TRUE
-	SSgarbage.next_fire = world.time + world.tick_lag
+	SSgarbage.update_nextfire(reset_time = TRUE)
 
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
 	#ifdef REFERENCE_TRACKING_DEBUG
-	if(!found_refs)
+	if(!found_refs && SSgarbage.should_save_refs)
 		found_refs = list()
 	#endif
 
@@ -89,7 +89,8 @@
 
 			if(variable == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[varname] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[varname] = TRUE
 				#endif
 				log_reftracker("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
 				continue
@@ -107,7 +108,8 @@
 			//Check normal entrys
 			if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_cache] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_cache] = TRUE
 				#endif
 				log_reftracker("Found [type] \ref[src] in list [container_name].")
 				continue
@@ -118,7 +120,8 @@
 			//Check assoc entrys
 			if(assoc_val == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_cache] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_cache] = TRUE
 				#endif
 				log_reftracker("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 				continue

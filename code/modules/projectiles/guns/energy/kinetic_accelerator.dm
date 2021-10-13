@@ -47,11 +47,11 @@
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
-/obj/item/gun/energy/kinetic_accelerator/Exited(atom/A)
-	if(modkits.len && (A in modkits))
-		var/obj/item/borg/upgrade/modkit/MK = A
+/obj/item/gun/energy/kinetic_accelerator/Exited(atom/movable/gone, direction)
+	if(gone in modkits)
+		var/obj/item/borg/upgrade/modkit/MK = gone
 		MK.uninstall(src)
-	. = ..()
+	return ..()
 
 /obj/item/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/borg/upgrade/modkit))
@@ -84,7 +84,7 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
-/obj/item/gun/energy/kinetic_accelerator/Initialize()
+/obj/item/gun/energy/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 	if(!holds_charge)
 		empty()
@@ -127,7 +127,7 @@
 
 	var/carried = 0
 	if(!unique_frequency)
-		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
+		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.get_all_contents())
 			if(!K.unique_frequency)
 				carried++
 
@@ -230,6 +230,9 @@
 	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
 
+//mecha_kineticgun version of the projectile
+/obj/projectile/kinetic/mech
+	range = 5
 
 //Modkits
 /obj/item/borg/upgrade/modkit

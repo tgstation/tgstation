@@ -56,7 +56,7 @@
 
 	var/num_lines = 0
 	msg += "<table style='width: 100%; table-layout: fixed'><tr>"
-	for(var/line in sortList(Lines))
+	for(var/line in sort_list(Lines))
 		msg += "<td>[line]</td>"
 
 		num_lines += 1

@@ -48,15 +48,15 @@
 		//Because the leaping sprite is bigger than the normal one
 		body_position_pixel_x_offset = -32
 		body_position_pixel_y_offset = -32
-		LAZYADD(weather_immunities,"lava")
 		update_icons()
+		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
 		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_end()
 	leaping = FALSE
 	body_position_pixel_x_offset = 0
 	body_position_pixel_y_offset = 0
-	LAZYREMOVE(weather_immunities, "lava")
+	REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 	update_icons()
 
 /mob/living/carbon/alien/humanoid/hunter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -82,7 +82,7 @@
 				Paralyze(40, ignore_canstun = TRUE)
 
 			toggle_leap(0)
-		else if(hit_atom.density && !hit_atom.CanPass(src))
+		else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))
 			visible_message(span_danger("[src] smashes into [hit_atom]!"), span_alertalien("[src] smashes into [hit_atom]!"))
 			Paralyze(40, ignore_canstun = TRUE)
 

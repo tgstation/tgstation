@@ -16,7 +16,7 @@
 	// Stop people from "diving into" the crate accidentally, and then detonating it.
 	divable = FALSE
 
-/obj/structure/closet/crate/secure/loot/Initialize()
+/obj/structure/closet/crate/secure/loot/Initialize(mapload)
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
@@ -150,11 +150,11 @@
 		if(46 to 50)
 			new /obj/item/storage/box/syndie_kit/chameleon/broken
 		if(51 to 52) // 2% chance
-			new /obj/item/melee/classic_baton(src)
+			new /obj/item/melee/baton(src)
 		if(53 to 54)
 			new /obj/item/toy/balloon/corgi(src)
 		if(55 to 56)
-			var/newitem = pick(subtypesof(/obj/item/toy/prize))
+			var/newitem = pick(subtypesof(/obj/item/toy/mecha))
 			new newitem(src)
 		if(57 to 58)
 			new /obj/item/toy/balloon/syndicate(src)
@@ -196,12 +196,12 @@
 		if(88)
 			new /obj/item/reagent_containers/food/drinks/bottle/lizardwine(src)
 		if(89)
-			new /obj/item/melee/transforming/energy/sword/bananium(src)
+			new /obj/item/melee/energy/sword/bananium(src)
 		if(90)
 			new /obj/item/dnainjector/wackymut(src)
 		if(91)
 			for(var/i in 1 to 30)
-				new /mob/living/simple_animal/hostile/cockroach(src)
+				new /mob/living/basic/cockroach(src)
 		if(92)
 			new /obj/item/katana(src)
 		if(93)

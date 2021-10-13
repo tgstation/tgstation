@@ -10,9 +10,9 @@
 		if(M.binarycheck())
 			if(isAI(M))
 				var/renderedAI = span_binarysay("Robotic Talk, <a href='?src=[REF(M)];track=[html_encode(name)]'>[span_name("[name] ([desig])")]</a> <span class='message'>[message_a]</span>")
-				to_chat(M, renderedAI)
+				to_chat(M, renderedAI, avoid_highlighting = src == M)
 			else
-				to_chat(M, span_binarysay("[rendered]"))
+				to_chat(M, span_binarysay("[rendered]"), avoid_highlighting = src == M)
 		if(isobserver(M))
 			var/following = src
 			// If the AI talks on binary chat, we still want to follow

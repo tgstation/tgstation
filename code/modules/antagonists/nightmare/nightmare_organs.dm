@@ -12,7 +12,7 @@
 
 /obj/item/organ/brain/nightmare/Insert(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	if(M.dna.species.id != "nightmare")
+	if(M.dna.species.id != SPECIES_NIGHTMARE)
 		M.set_species(/datum/species/shadow/nightmare)
 		visible_message(span_warning("[M] thrashes as [src] takes root in [M.p_their()] body!"))
 	var/obj/effect/proc_holder/spell/targeted/shadowwalk/SW = new
@@ -86,7 +86,7 @@
 		return
 
 	owner.revive(full_heal = TRUE, admin_revive = FALSE)
-	if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
+	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)
 		old_owner.set_species(/datum/species/shadow)

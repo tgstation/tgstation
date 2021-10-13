@@ -90,7 +90,7 @@ const MedicalKioskScanButton = (props, context) => {
           name={paid ? 'check' : 'dollar-sign'}
           color={paid ? 'green' : 'grey'} />
       </Stack.Item>
-      <Stack.Item grow>
+      <Stack.Item grow basis="content">
         <Button
           fluid
           icon={icon}

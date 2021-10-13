@@ -46,7 +46,7 @@
 	inhand_icon_state = "balloon-empty"
 
 
-/obj/item/toy/waterballoon/Initialize()
+/obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
 	create_reagents(10)
 
@@ -325,63 +325,68 @@
 /obj/item/toy/sword
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+	icon_state = "e_sword"
 	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "sword0"
-	inhand_icon_state = "sword0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	var/active = 0
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
+	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
-	var/saber_color
+	/// The color of our fake energy sword
+	var/saber_color = "blue"
 
-/obj/item/toy/sword/attack_self(mob/user)
-	active = !( active )
-	if (active)
-		to_chat(user, span_notice("You extend the plastic blade with a quick flick of your wrist."))
-		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
-		if(hacked)
-			icon_state = "swordrainbow"
-			inhand_icon_state = "swordrainbow"
-		else
-			icon_state = "swordblue"
-			inhand_icon_state = "swordblue"
-		w_class = WEIGHT_CLASS_BULKY
-	else
-		to_chat(user, span_notice("You push the plastic blade back down into the handle."))
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
-		icon_state = "sword0"
-		inhand_icon_state = "sword0"
-		w_class = WEIGHT_CLASS_SMALL
-	add_fingerprint(user)
+/obj/item/toy/sword/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		throw_speed_on = throw_speed, \
+		hitsound_on = hitsound, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-// Copied from /obj/item/melee/transforming/energy/sword/attackby
-/obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/toy/sword))
-		if(HAS_TRAIT(W, TRAIT_NODROP) || HAS_TRAIT(src, TRAIT_NODROP))
-			to_chat(user, span_warning("\the [HAS_TRAIT(src, TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [HAS_TRAIT(src, TRAIT_NODROP) ? W : src]!"))
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Updates our icon to have the correct color, and give some feedback.
+ */
+/obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	if(active)
+		icon_state = "[icon_state]_[saber_color]"
+
+	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
+	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+// Copied from /obj/item/melee/energy/sword/attackby
+/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
+	if(istype(weapon, /obj/item/toy/sword))
+		var/obj/item/toy/sword/attatched_sword = weapon
+		if(HAS_TRAIT(weapon, TRAIT_NODROP))
+			to_chat(user, span_warning("[weapon] is stuck to your hand, you can't attach it to [src]!"))
+			return
+		else if(HAS_TRAIT(src, TRAIT_NODROP))
+			to_chat(user, span_warning("[src] is stuck to your hand, you can't attach it to [weapon]!"))
 			return
 		else
 			to_chat(user, span_notice("You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool."))
-			var/obj/item/dualsaber/toy/newSaber = new /obj/item/dualsaber/toy(user.loc)
-			if(hacked) // That's right, we'll only check the "original" "sword".
-				newSaber.hacked = TRUE
-				newSaber.saber_color = "rainbow"
-			qdel(W)
+			var/obj/item/dualsaber/toy/new_saber = new /obj/item/dualsaber/toy(user.loc)
+			if(attatched_sword.hacked || hacked)
+				new_saber.hacked = TRUE
+				new_saber.saber_color = "rainbow"
+			qdel(weapon)
 			qdel(src)
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!hacked)
+			user.put_in_hands(new_saber)
+	else if(weapon.tool_behaviour == TOOL_MULTITOOL)
+		if(hacked)
+			to_chat(user, span_warning("It's already fabulous!"))
+		else
 			hacked = TRUE
 			saber_color = "rainbow"
 			to_chat(user, span_warning("RNBW_ENGAGE"))
-
-			if(active)
-				icon_state = "swordrainbow"
-				user.update_inv_hands()
-		else
-			to_chat(user, span_warning("It's already fabulous!"))
 	else
 		return ..()
 
@@ -534,12 +539,12 @@
 	if(!..())
 		pop_burst()
 
-/obj/item/toy/snappop/Initialize()
+/obj/item/toy/snappop/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
 	SIGNAL_HANDLER
@@ -557,7 +562,7 @@
 /obj/effect/decal/cleanable/ash/snappop_phoenix
 	var/respawn_time = 300
 
-/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize()
+/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
@@ -681,7 +686,7 @@
 	var/list/card_attack_verb_simple = list("attack")
 
 
-/obj/item/toy/cards/Initialize()
+/obj/item/toy/cards/Initialize(mapload)
 	. = ..()
 	if(card_attack_verb_continuous)
 		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
@@ -709,8 +714,9 @@
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
-/obj/item/toy/cards/deck/Initialize()
+/obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/drag_pickup)
 	populate_deck()
 
 ///Generates all the cards within the deck.
@@ -799,24 +805,6 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/deck/MouseDrop(atom/over_object)
-	. = ..()
-	var/mob/living/M = usr
-	if(!istype(M) || !(M.mobility_flags & MOBILITY_PICKUP))
-		return
-	if(Adjacent(usr))
-		if(over_object == M && loc != M)
-			M.put_in_hands(src)
-			to_chat(usr, span_notice("You pick up the deck."))
-
-		else if(istype(over_object, /atom/movable/screen/inventory/hand))
-			var/atom/movable/screen/inventory/hand/H = over_object
-			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				to_chat(usr, span_notice("You pick up the deck."))
-
-	else
-		to_chat(usr, span_warning("You can't reach it from here!"))
-
 
 
 /obj/item/toy/cards/cardhand
@@ -855,7 +843,6 @@
 	cardUser.visible_message(span_notice("[cardUser] draws a card from [cardUser.p_their()] hand."), span_notice("You take the [C.cardname] from your hand."))
 
 	interact(cardUser)
-	update_sprite()
 	if(length(currenthand) == 1)
 		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
 		N.parentdeck = parentdeck
@@ -864,7 +851,9 @@
 		qdel(src)
 		N.pickup(cardUser)
 		cardUser.put_in_hands(N)
-		to_chat(cardUser, span_notice("You also take [currenthand[1]] and hold it."))
+		to_chat(cardUser, span_notice("You also take [N.cardname] and hold it."))
+	else
+		update_sprite()
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
@@ -1247,8 +1236,7 @@
  */
 
 /obj/item/toy/figure
-	name = "Non-Specific Action Figure action figure"
-	desc = null
+	name = "\improper Non-Specific Action Figure action figure"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
 	var/cooldown = 0
@@ -1256,7 +1244,7 @@
 	var/toysound = 'sound/machines/click.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/figure/Initialize()
+/obj/item/toy/figure/Initialize(mapload)
 	. = ..()
 	desc = "A \"Space Life\" brand [src]."
 
@@ -1267,195 +1255,205 @@
 		playsound(user, toysound, 20, TRUE)
 
 /obj/item/toy/figure/cmo
-	name = "Chief Medical Officer action figure"
+	name = "\improper Chief Medical Officer action figure"
 	icon_state = "cmo"
 	toysay = "Suit sensors!"
 
 /obj/item/toy/figure/assistant
-	name = "Assistant action figure"
+	name = "\improper Assistant action figure"
 	icon_state = "assistant"
 	inhand_icon_state = "assistant"
-	toysay = "Grey tide world wide!"
+	toysay = "Greytide world wide!"
 
 /obj/item/toy/figure/atmos
-	name = "Atmospheric Technician action figure"
+	name = "\improper Atmospheric Technician action figure"
 	icon_state = "atmos"
 	toysay = "Glory to Atmosia!"
 
 /obj/item/toy/figure/bartender
-	name = "Bartender action figure"
+	name = "\improper Bartender action figure"
 	icon_state = "bartender"
 	toysay = "Where is Pun Pun?"
 
 /obj/item/toy/figure/borg
-	name = "Cyborg action figure"
+	name = "\improper Cyborg action figure"
 	icon_state = "borg"
 	toysay = "I. LIVE. AGAIN."
 	toysound = 'sound/voice/liveagain.ogg'
 
 /obj/item/toy/figure/botanist
-	name = "Botanist action figure"
+	name = "\improper Botanist action figure"
 	icon_state = "botanist"
 	toysay = "Blaze it!"
 
 /obj/item/toy/figure/captain
-	name = "Captain action figure"
+	name = "\improper Captain action figure"
 	icon_state = "captain"
 	toysay = "Any heads of staff?"
 
 /obj/item/toy/figure/cargotech
-	name = "Cargo Technician action figure"
+	name = "\improper Cargo Technician action figure"
 	icon_state = "cargotech"
 	toysay = "For Cargonia!"
 
 /obj/item/toy/figure/ce
-	name = "Chief Engineer action figure"
+	name = "\improper Chief Engineer action figure"
 	icon_state = "ce"
 	toysay = "Wire the solars!"
 
 /obj/item/toy/figure/chaplain
-	name = "Chaplain action figure"
+	name = "\improper Chaplain action figure"
 	icon_state = "chaplain"
 	toysay = "Praise Space Jesus!"
 
 /obj/item/toy/figure/chef
-	name = "Chef action figure"
+	name = "\improper Cook action figure"
 	icon_state = "chef"
-	toysay = " I'll make you into a burger!"
+	toysay = "I'll make you into a burger!"
 
 /obj/item/toy/figure/chemist
-	name = "Chemist action figure"
+	name = "\improper Chemist action figure"
 	icon_state = "chemist"
 	toysay = "Get your pills!"
 
 /obj/item/toy/figure/clown
-	name = "Clown action figure"
+	name = "\improper Clown action figure"
 	icon_state = "clown"
 	toysay = "Honk!"
 	toysound = 'sound/items/bikehorn.ogg'
 
 /obj/item/toy/figure/ian
-	name = "Ian action figure"
+	name = "\improper Ian action figure"
 	icon_state = "ian"
 	toysay = "Arf!"
 
 /obj/item/toy/figure/detective
-	name = "Detective action figure"
+	name = "\improper Detective action figure"
 	icon_state = "detective"
 	toysay = "This airlock has grey jumpsuit and insulated glove fibers on it."
 
 /obj/item/toy/figure/dsquad
-	name = "Death Squad Officer action figure"
+	name = "\improper Deathsquad Officer action figure"
 	icon_state = "dsquad"
-	toysay = "Kill em all!"
+	toysay = "Kill 'em all!"
 
 /obj/item/toy/figure/engineer
-	name = "Engineer action figure"
+	name = "\improper Station Engineer action figure"
 	icon_state = "engineer"
 	toysay = "Oh god, the singularity is loose!"
 
 /obj/item/toy/figure/geneticist
-	name = "Geneticist action figure"
+	name = "\improper Geneticist action figure"
 	icon_state = "geneticist"
 	toysay = "Smash!"
 
 /obj/item/toy/figure/hop
-	name = "Head of Personnel action figure"
+	name = "\improper Head of Personnel action figure"
 	icon_state = "hop"
 	toysay = "Giving out all access!"
 
 /obj/item/toy/figure/hos
-	name = "Head of Security action figure"
+	name = "\improper Head of Security action figure"
 	icon_state = "hos"
 	toysay = "Go ahead, make my day."
 
 /obj/item/toy/figure/qm
-	name = "Quartermaster action figure"
+	name = "\improper Quartermaster action figure"
 	icon_state = "qm"
 	toysay = "Please sign this form in triplicate and we will see about geting you a welding mask within 3 business days."
 
 /obj/item/toy/figure/janitor
-	name = "Janitor action figure"
+	name = "\improper Janitor action figure"
 	icon_state = "janitor"
 	toysay = "Look at the signs, you idiot."
 
 /obj/item/toy/figure/lawyer
-	name = "Lawyer action figure"
+	name = "\improper Lawyer action figure"
 	icon_state = "lawyer"
 	toysay = "My client is a dirty traitor!"
 
 /obj/item/toy/figure/curator
-	name = "Curator action figure"
+	name = "\improper Curator action figure"
 	icon_state = "curator"
 	toysay = "One day while..."
 
 /obj/item/toy/figure/md
-	name = "Medical Doctor action figure"
+	name = "\improper Medical Doctor action figure"
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
 /obj/item/toy/figure/paramedic
-	name = "Paramedic action figure"
+	name = "\improper Paramedic action figure"
 	icon_state = "paramedic"
 	toysay = "And the best part? I'm not even a real doctor!"
 
+/obj/item/toy/figure/psychologist
+	name = "\improper Psychologist action figure"
+	icon_state = "psychologist"
+	toysay = "Alright, just take these happy pills!"
+
+/obj/item/toy/figure/prisoner
+	name = "\improper Prisoner action figure"
+	icon_state = "prisoner"
+	toysay = "I did not hit her! I did not!"
+
 /obj/item/toy/figure/mime
-	name = "Mime action figure"
+	name = "\improper Mime action figure"
 	icon_state = "mime"
 	toysay = "..."
 	toysound = null
 
 /obj/item/toy/figure/miner
-	name = "Shaft Miner action figure"
+	name = "\improper Shaft Miner action figure"
 	icon_state = "miner"
 	toysay = "COLOSSUS RIGHT OUTSIDE THE BASE!"
 
 /obj/item/toy/figure/ninja
-	name = "Ninja action figure"
+	name = "\improper Space Ninja action figure"
 	icon_state = "ninja"
-	toysay = "Oh god! Stop shooting, I'm friendly!"
+	toysay = "I am the shadow warrior!"
 
 /obj/item/toy/figure/wizard
-	name = "Wizard action figure"
+	name = "\improper Wizard action figure"
 	icon_state = "wizard"
-	toysay = "Ei Nath!"
+	toysay = "EI NATH!"
 	toysound = 'sound/magic/disintegrate.ogg'
 
 /obj/item/toy/figure/rd
-	name = "Research Director action figure"
+	name = "\improper Research Director action figure"
 	icon_state = "rd"
 	toysay = "Blowing all of the borgs!"
 
 /obj/item/toy/figure/roboticist
-	name = "Roboticist action figure"
+	name = "\improper Roboticist action figure"
 	icon_state = "roboticist"
 	toysay = "Big stompy mechs!"
 	toysound = 'sound/mecha/mechstep.ogg'
 
 /obj/item/toy/figure/scientist
-	name = "Scientist action figure"
+	name = "\improper Scientist action figure"
 	icon_state = "scientist"
-	toysay = "I call toxins."
+	toysay = "I call ordnance."
 	toysound = 'sound/effects/explosionfar.ogg'
 
 /obj/item/toy/figure/syndie
-	name = "Nuclear Operative action figure"
+	name = "\improper Nuclear Operative action figure"
 	icon_state = "syndie"
 	toysay = "Get that fucking disk!"
 
 /obj/item/toy/figure/secofficer
-	name = "Security Officer action figure"
+	name = "\improper Security Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
 	toysound = 'sound/runtime/complionator/dredd.ogg'
 
 /obj/item/toy/figure/virologist
-	name = "Virologist action figure"
+	name = "\improper Virologist action figure"
 	icon_state = "virologist"
 	toysay = "The cure is potassium!"
 
 /obj/item/toy/figure/warden
-	name = "Warden action figure"
+	name = "\improper Warden action figure"
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
@@ -1482,7 +1480,7 @@
 	if (istype(M))
 		M.log_talk(message, LOG_SAY, tag="dummy toy")
 
-	say(message, language)
+	say(message, language, sanitize = FALSE)
 	return NOPASS
 
 /obj/item/toy/dummy/GetVoice()
@@ -1495,12 +1493,12 @@
 	icon_state = "shell1"
 	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
-/obj/item/toy/seashell/Initialize()
+/obj/item/toy/seashell/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	icon_state = "shell[rand(1,3)]"
-	color = pickweight(possible_colors)
+	color = pick_weight(possible_colors)
 	setDir(pick(GLOB.cardinals))
 
 /obj/item/toy/brokenradio
@@ -1605,6 +1603,9 @@
 		animate(pixel_y = user.pixel_y - (2 * direction), time = 1, easing = SINE_EASING)
 		animate(pixel_y = user.pixel_y + (1 * direction), time = 1, easing = SINE_EASING)
 	user.changeNext_move(CLICK_CD_MELEE)
+
+///All people who have used an Intento this round along with their high scores.
+GLOBAL_LIST_EMPTY(intento_players)
 
 #define HELP "help"
 #define DISARM "disarm"
@@ -1756,12 +1757,12 @@
 	COOLDOWN_START(src, next_process, TIME_PER_DEMO_STEP)
 
 /obj/item/toy/intento/proc/process_end(mob/user)
-	if(user)
-		var/award_score = score
+	if(user && GLOB.intento_players[user.ckey] < score)
+		GLOB.intento_players[user.ckey] = score
 		var/award_status = user.client.get_award_status(/datum/award/score/intento_score)
-		if(award_score - award_status > 0)
-			award_score -= award_status
-		user.client.give_award(/datum/award/score/intento_score, user, award_score)
+		var/award_score = score - award_status
+		if(award_score > 0)
+			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
 	say("GAME OVER. Your score was [score]!")
 	playsound(src, 'sound/machines/synth_no.ogg', 50, FALSE)

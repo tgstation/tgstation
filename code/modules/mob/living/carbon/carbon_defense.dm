@@ -59,7 +59,7 @@
 	return TRUE
 
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(!skipcatch && can_catch_item() && istype(AM, /obj/item) && isturf(AM.loc))
+	if(!skipcatch && can_catch_item() && istype(AM, /obj/item) && !HAS_TRAIT(AM, TRAIT_UNCATCHABLE) && isturf(AM.loc))
 		var/obj/item/I = AM
 		I.attack_hand(src)
 		if(get_active_held_item() == I) //if our attack_hand() picks up the item...
@@ -146,7 +146,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
@@ -303,6 +303,31 @@
 							span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
 			log_combat(src, target, "shoved", "knocking them down")
+<<<<<<< HEAD
+=======
+		else if(target_table)
+			target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+			target.visible_message(span_danger("[name] shoves [target.name] onto \the [target_table]!"),
+							span_userdanger("You're shoved onto \the [target_table] by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name] onto \the [target_table]!"))
+			target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+			log_combat(src, target, "shoved", "onto [target_table] (table)")
+		else if(target_collateral_carbon)
+			target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+			if(!target_collateral_carbon.is_shove_knockdown_blocked())
+				target_collateral_carbon.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+			target.visible_message(span_danger("[name] shoves [target.name] into [target_collateral_carbon.name]!"),
+				span_userdanger("You're shoved into [target_collateral_carbon.name] by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name] into [target_collateral_carbon.name]!"))
+			log_combat(src, target, "shoved", "into [target_collateral_carbon.name]")
+		else if(target_disposal_bin)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+			target.forceMove(target_disposal_bin)
+			target.visible_message(span_danger("[name] shoves [target.name] into \the [target_disposal_bin]!"),
+							span_userdanger("You're shoved into \the [target_disposal_bin] by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, span_danger("You shove [target.name] into \the [target_disposal_bin]!"))
+			log_combat(src, target, "shoved", "into [target_disposal_bin] (disposal bin)")
+>>>>>>> upstream/master
 	else
 		target.visible_message(span_danger("[name] shoves [target.name]!"),
 						span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)

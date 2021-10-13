@@ -104,7 +104,7 @@
 
 	if(parent)
 		REMOVE_TRAIT(parent_as_movable, TRAIT_ELECTRIFIED_BUCKLE, INNATE_TRAIT)
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_MOVABLE_UNBUCKLE, COMSIG_ATOM_EXIT, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
+		UnregisterSignal(parent, list(COMSIG_MOVABLE_BUCKLE, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER)))
 		if(requested_signal_parent_emits)
 			UnregisterSignal(parent, requested_signal_parent_emits)
 
