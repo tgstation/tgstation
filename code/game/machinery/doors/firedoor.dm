@@ -25,6 +25,8 @@
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
+	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
+	var/area/my_area
 	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
 	var/being_held_open = FALSE
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
@@ -41,6 +43,7 @@
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
+	my_area = get_area(src)
 
 	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/MergerAdding)
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/MergerRemoving)
@@ -54,7 +57,6 @@
 	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
 
 /obj/machinery/door/firedoor/Destroy()
-	reset() //This handles some alert/alarm clearing, if we were destroyed while active.
 	remove_from_areas()
 	UnregisterSignal(src, COMSIG_MERGER_ADDING)
 	UnregisterSignal(src, COMSIG_MERGER_REMOVING)
@@ -81,13 +83,26 @@
 ///////////////////////////////////////////////////////////////////
 // End of Merger
 
+/**
+ * Calculates what areas we should worry about.
+ *
+ * This proc builds a list of areas we are in and areas we border
+ * and writes it to affecting_areas.
+ */
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
 	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
 	for(var/area/place in affecting_areas)
 		LAZYADD(place.firedoors, src)
 
+/**
+ * Removes us from any lists of areas in the affecting_areas list, then clears affecting_areas
+ *
+ * Undoes everything done in the CalculateAffectingAreas() proc, to clean up prior to deletion.
+ * Calls reset() first, in case any alarms need to be cleared first.
+ */
 /obj/machinery/door/firedoor/proc/remove_from_areas()
+	reset() //This handles some alert/alarm clearing
 	if(affecting_areas)
 		for(var/area/place in affecting_areas)
 			LAZYREMOVE(place.firedoors, src)
@@ -116,6 +131,16 @@
 		return
 	activate()//Fallback. If firelocks regularly trigger themselves as generic, we need to do some bugfixing
 
+/**
+ * Begins activation process of us and our neighbors.
+ *
+ * This proc will call activate() on every fire lock (including us) listed
+ * in the merge group datum. Returns without doing anything if our alarm_type
+ * was already set, as that means that we're already active.
+ *
+ * Arguments:
+ * code should be one of three defined alarm types, or can be not supplied. Will dictate the color of the fire alarm lights, and defults to "firelock_alarm_type_generic"
+ */
 /obj/machinery/door/firedoor/proc/start_activation_process(code = FIRELOCK_ALARM_TYPE_GENERIC)
 	if(alarm_type)
 		return //We're already active
@@ -123,6 +148,17 @@
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		INVOKE_ASYNC(buddylock, .proc/activate, code)
 
+
+/**
+ * Proc that handles activation of the firelock and all this details
+ *
+ * Sets the alarm_type variable based on the single arg, which is in turn
+ * used by several procs to understand the intended state of the fire lock.
+ * Also calls set_status() on all fire alarms in all affected areas, tells
+ * the area the firelock sits in to report the event (AI, alarm consoles, etc)
+ * and finally calls correct_state(), which will handle opening or closing
+ * this fire lock.
+ */
 /obj/machinery/door/firedoor/proc/activate(code = FIRELOCK_ALARM_TYPE_GENERIC)
 	SIGNAL_HANDLER
 	if(alarm_type)
@@ -133,13 +169,20 @@
 		if(LAZYLEN(place.active_firelocks) == 1) //if we're the first to activate in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
-			if(place == get_area(src))
-				place.firealert(place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
+			if(place == my_area)
+				place.alarm_manager.send_alarm(ALARM_FIRE, place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
 	update_icon() //Sets the lights even if the door doesn't move.
 	if(!being_held_open)
 		INVOKE_ASYNC(src, .proc/correct_state)
 
-
+/**
+ * Proc that handles reset steps
+ *
+ * Sets the alarm_type to null, removes us from active firelock lists
+ * in the affected areas, and may tell fire alarms to update their icon
+ * Also sets the detect cooldown so that we can't immediately re-activate
+ * and finally calls correct_state() to handle opening the fire lock.
+ */
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
 	alarm_type = null
@@ -148,19 +191,13 @@
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
-			if(place == get_area(src))
-				place.alertreset(place) //Same as before. Let other firelocks in other areas handle their home area alert clearing.
 	detect_cooldown = world.time + DETECT_COOLDOWN_STEP_TIME
 	update_icon() //Sets the lights even if the door doesn't move.
 	INVOKE_ASYNC(src, .proc/correct_state)
 
-/obj/machinery/door/firedoor/proc/update_detect(code)
-	SIGNAL_HANDLER
-	switch(code)
-		if(FIRE_DETECT_EMAG)
-			obj_flags |= EMAGGED
-			alarm_type = null
-			open()
+/obj/machinery/door/firedoor/emag_act(mob/user)
+	obj_flags |= EMAGGED
+	open()
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
@@ -321,7 +358,7 @@ obj/machinery/door/firedoor/update_icon_state()
 		if(!warn_lights)
 			warn_lights = new()
 		warn_lights.icon = icon
-		warn_lights.icon_state = alarm_type
+		warn_lights.icon_state = "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]"
 		warn_lights.plane = ABOVE_LIGHTING_PLANE
 		add_overlay(warn_lights)
 
@@ -334,7 +371,8 @@ obj/machinery/door/firedoor/update_icon_state()
  * changes during the timer, the door doesn't close or open incorrectly.
  */
 /obj/machinery/door/firedoor/proc/correct_state()
-	to_chat(world, "DEBUG -- correct_state() called")
+	if(obj_flags & EMAGGED)
+		return //Unmotivated, indifferent, we have no real care what state we're in anymore.
 	if(alarm_type && !density) //We should be closed but we're not
 		return close()
 	if(!alarm_type && density) //We should be open but we're not

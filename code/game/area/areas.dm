@@ -27,7 +27,7 @@
 	var/list/firealarms
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
-	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing
+	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.
 	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
@@ -243,22 +243,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
 	return ..()
-
-/**
- * Generate a firealarm alert for this area
- *
- * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
- */
-/area/proc/firealert(obj/source)
-	alarm_manager.send_alarm(ALARM_FIRE, source)
-
-/**
- * Clear a firealarm alert for this area
- *
- * Sends an all-clear to all ai players, alert consoles, drones and alarm monitor programs in the world
- */
-/area/proc/alertreset(obj/source)
-	alarm_manager.clear_alarm(ALARM_FIRE, source)
 
 /**
  * Close and lock a door passed into this proc

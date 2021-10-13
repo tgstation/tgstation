@@ -29,9 +29,11 @@
 
 	//Trick to get the glowing overlay visible from a distance
 	luminosity = 1
-
-	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	///Buildstate for contruction steps. 2 = complete, 1 = no wires, 0 = circuit gone
+	var/buildstage = 2
+	///Our home area, set in Init. Due to loading step order, this seems to be null very early in the server setup process, which is why some procs use `my_area?` for var or list checks.
 	var/area/my_area = null
+	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
@@ -68,8 +70,10 @@
 /obj/machinery/firealarm/proc/set_status()
 	if(my_area.fire || LAZYLEN(my_area.active_firelocks))
 		soundloop.start()
+		set_light(l_power = 0.8)
 	else
 		soundloop.stop()
+		set_light(l_power = 0)
 	update_icon()
 
 /obj/machinery/firealarm/update_icon_state()
@@ -97,12 +101,13 @@
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
 		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", alpha = src.alpha)
 
-	var/area/area = get_area(src)
+//	var/area/area = get_area(src)
 
-	if(!(area.fire || LAZYLEN(area.active_firelocks)))
-		. += "fire_off"
-		. += mutable_appearance(icon, "fire_off")
-		. += emissive_appearance(icon, "fire_off", alpha = src.alpha)
+	if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
+		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
+			. += "fire_off"
+			. += mutable_appearance(icon, "fire_off")
+			. += emissive_appearance(icon, "fire_off", alpha = src.alpha)
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
 		. += mutable_appearance(icon, "fire_emagged")
@@ -134,7 +139,7 @@
 							span_notice("You emag [src], disabling the thermal sensors of nearby firelocks."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-		firelock.update_detect(FIRE_DETECT_EMAG)
+		firelock.emag_act(user)
 
 /**
  * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level
@@ -149,23 +154,37 @@
 	if(is_station_level(z))
 		update_appearance()
 
+/**
+ * Sounds the fire alarm and closes all firelocks in the area. Also tells the area to color the lights red.
+ *
+ * Arguments:
+ * * mob/user is the user that pulled the alarm.
+ */
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational)
 		return
 	if(my_area.fire)
 		return //area alarm already active
-	my_area.firealert()
+	my_area.alarm_manager.send_alarm(ALARM_FIRE, my_area)
+	my_area.set_fire_alarm_effect()
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 
+/**
+ * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
+ *
+ * Arguments:
+ * * mob/user is the user that reset the alarm.
+ */
 /obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational)
 		return
 	my_area.unset_fire_alarm_effects()
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.reset()
+	my_area.alarm_manager.clear_alarm(ALARM_FIRE, my_area)
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
@@ -333,18 +352,13 @@
 		new /obj/item/stack/cable_coil(loc, 3)
 	qdel(src)
 
-/obj/machinery/firealarm/proc/update_fire_light(fire)
-	if(fire == !!light_power)
-		return  // do nothing if we're already active
-	if(fire)
-		set_light(l_power = 0.8)
-	else
-		set_light(l_power = 0)
-
 // Allows users to examine the state of the thermal sensor
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
-	. += "A light on the side indicates thermal safety detection by local firelocks is [my_area.fire_detect ? "enabled" : "disabled"]."
+	if(my_area.fire)
+		. += "The local area fire warning light is flashing."
+	else
+		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
@@ -357,14 +371,11 @@
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("The control circuitry of [src] appears to be malfunctioning."))
 		return
-	if(my_area.fire_detect)
-		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-			firelock.update_detect(FIRE_DETECT_STOP)
-	else
-		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-			firelock.update_detect(FIRE_DETECT_START)
 	my_area.fire_detect = !my_area.fire_detect
+	for(var/obj/machinery/firealarm/fire_panel in my_area.firealarms)
+		fire_panel.update_icon()
 	to_chat(user, span_notice("You [ my_area.fire_detect ? "enable" : "disable" ] the local firelock thermal sensors!"))
+	log_game("[user] has [ my_area.fire_detect ? "enabled" : "disabled" ] firelock sensors using [src] at [COORD(src)]")
 
 /obj/machinery/firealarm/directional/north
 	pixel_y = 26
