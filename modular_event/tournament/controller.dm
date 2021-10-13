@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			var/mob/living/carbon/human/contestant_mob = new
 
 			client?.prefs?.apply_prefs_to(contestant_mob)
-			if(!(contestant_mob.dna?.species in list(/datum/species/human, /datum/species/moth, /datum/species/lizard, /datum/species/human/felinid)))
+			if(!(contestant_mob.dna?.species?.type in list(/datum/species/human, /datum/species/moth, /datum/species/lizard, /datum/species/human/felinid)))
 				contestant_mob.set_species(/datum/species/human)
 			contestant_mob.equipOutfit(team.outfit)
 			contestant_mob.forceMove(pick(valid_team_spawns[team_spawn_id]))

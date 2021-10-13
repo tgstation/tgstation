@@ -1,0 +1,18 @@
+{
+    "name": "Skill Issue",
+    "roster": [
+        "Bowlofcereal",
+        "spiderhandsmcgee",
+        "Alexeivichi"
+    ],
+    "toolbox_color": "#ff0019",
+    "outfit": {
+        "head": "/obj/item/clothing/head/helmet/marine",
+        "mask": "/obj/item/clothing/mask/gas/sechailer/swat",
+        "glasses": "/obj/item/clothing/glasses/hud/security",
+        "suit": "/obj/item/clothing/suit/armor/vest/marine/security",
+        "uniform": "/obj/item/clothing/under/syndicate/combat",
+        "gloves": "/obj/item/clothing/gloves/combat",
+        "shoes": "/obj/item/clothing/shoes/combat"
+    }
+}

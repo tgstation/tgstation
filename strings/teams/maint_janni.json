@@ -1,0 +1,19 @@
+{
+    "name": "The Maintenance Jannies",
+    "roster": [
+        "fikou",
+        "kylerace",
+        "waltermeldron"
+    ],
+    "toolbox_color": "#36b413",
+    "outfit": {
+        "head": "/obj/item/clothing/head/fedora/det_hat",
+        "mask": "/obj/item/clothing/mask/cigarette/robustgold",
+        "glasses": "/obj/item/clothing/glasses/sunglasses/spy",
+        "neck": "/obj/item/clothing/neck/tie/black",
+        "suit": "/obj/item/clothing/suit/det_suit/noir",
+        "uniform": "/obj/item/clothing/under/rank/security/detective",
+        "gloves": "/obj/item/clothing/gloves/krav_maga/combatglovesplus",
+        "shoes": "/obj/item/clothing/shoes/combat/swat"
+    }
+}

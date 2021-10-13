@@ -1,0 +1,17 @@
+{
+    "name": "Yogstation Robusto Squad",
+    "roster": [
+        "Fluffe9911",
+        "theos",
+        "baiomu"
+    ],
+    "toolbox_color": "#47daff",
+    "outfit": {
+        "head": "/obj/item/clothing/head/hos/beret/syndicate",
+        "glasses": "/obj/item/clothing/glasses/sunglasses",
+        "neck": "/obj/item/clothing/neck/tie/black",
+        "uniform": "/obj/item/clothing/under/syndicate",
+        "gloves": "/obj/item/clothing/gloves/krav_maga/combatglovesplus",
+        "shoes": "/obj/item/clothing/shoes/combat"
+    }
+}

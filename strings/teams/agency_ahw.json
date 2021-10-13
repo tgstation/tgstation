@@ -1,0 +1,14 @@
+{
+    "name": "Agency Against Hank Wimbleton",
+    "roster": [
+        "Jerman5",
+        "The spire",
+        "Zray3003"
+    ],
+    "toolbox_color": "#373e43",
+    "outfit": {
+        "uniform": "/obj/item/clothing/under/color/grey",
+        "gloves": "/obj/item/clothing/gloves/color/grey",
+        "shoes": "/obj/item/clothing/shoes/sneakers/black"
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "Bird Bourgeoisie",
+    "roster": [
+        "BagelRama",
+        "SonoFelice",
+        "Jollygreengiant69"
+    ],
+    "toolbox_color": "#851bb3",
+    "outfit": {
+        "head": "/obj/item/clothing/head/fedora",
+        "mask": "/obj/item/clothing/mask/animal/rat/raven",
+        "glasses": "/obj/item/clothing/glasses/sunglasses/spy",
+        "neck": "/obj/item/clothing/neck/eldritch_amulet",
+        "suit": "/obj/item/clothing/suit/toggle/lawyer/black",
+        "uniform": "/obj/item/clothing/under/suit/black",
+        "gloves": "/obj/item/clothing/gloves/fingerless",
+        "shoes": "/obj/item/clothing/shoes/laceup"
+    }
+}

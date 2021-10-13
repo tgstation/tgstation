@@ -1,0 +1,17 @@
+{
+    "name": "Dying for Denholm",
+    "roster": [
+        "Scriptis",
+        "ccheese_god",
+        "AwkwardStereo"
+    ],
+    "toolbox_color": "#1369b5",
+    "outfit": {
+        "head": "/obj/item/clothing/head/hopcap",
+        "mask": "/obj/item/clothing/mask/cigarette/robust",
+        "glasses": "/obj/item/clothing/glasses/sunglasses/spy",
+        "suit": "/obj/item/clothing/suit/armor/vest/alt",
+        "uniform": "/obj/item/clothing/under/rank/civilian/head_of_personnel",
+        "shoes": "/obj/item/clothing/shoes/sneakers/brown"
+    }
+}

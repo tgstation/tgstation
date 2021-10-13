@@ -1,0 +1,16 @@
+{
+    "name": "Spacemen in Black",
+    "roster": [
+        "WeenMachine4003",
+        "Pohtato",
+        "riry733"
+    ],
+    "toolbox_color": "#d5f1ff",
+    "outfit": {
+        "glasses": "/obj/item/clothing/glasses/sunglasses/spy",
+        "neck": "/obj/item/clothing/neck/tie/black",
+        "suit": "/obj/item/clothing/suit/toggle/lawyer/black",
+        "uniform": "/obj/item/clothing/under/suit/black",
+        "shoes": "/obj/item/clothing/shoes/laceup"
+    }
+}

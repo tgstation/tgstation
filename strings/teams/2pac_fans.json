@@ -1,0 +1,13 @@
+{
+    "name": "2PAC FANCLUB",
+    "roster": [
+        "wouju",
+		"garfieldlives",
+		"der kommlssar"
+    ],
+    "toolbox_color": "#996633",
+    "outfit": {
+        "uniform": "/obj/item/clothing/under/costume/jabroni",
+        "shoes": "/obj/item/clothing/shoes/jackboots/fast"
+    }
+}

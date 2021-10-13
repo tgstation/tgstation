@@ -1,0 +1,16 @@
+{
+    "name": "Sigma Tide",
+    "roster": [
+        "Purf",
+        "Customs4",
+        "YesYesYesYes"
+    ],
+    "toolbox_color": "#eeff00",
+    "outfit": {
+        "head": "/obj/item/clothing/head/helmet/riot",
+        "mask": "/obj/item/clothing/mask/gas",
+        "uniform": "/obj/item/clothing/under/color/grey/ancient",
+        "gloves": "/obj/item/clothing/gloves/color/yellow",
+        "shoes": "/obj/item/clothing/shoes/sneakers/black"
+    }
+}

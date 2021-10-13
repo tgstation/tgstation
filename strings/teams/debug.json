@@ -1,8 +1,9 @@
 {
-	"name": "Team Debug",
+	"name": "Debug Team",
 	"toolbox_color": "#ff77ff",
 	"roster": [
-		"jaredfogle"
+		"jaredfogle",
+		"waylandsmithy"
 	],
 	"outfit": {
 		"back": "/obj/item/storage/backpack/medic",

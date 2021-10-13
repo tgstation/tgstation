@@ -1,3 +1,5 @@
 # If set, will provide every player with an action button to open this URL.
 # Stylized as "Open Bracket", since this was designed for the Toolbox Tournament.
-BRACKET_URL https://challonge.com/tgyxtp6i
+BRACKET_URL https://challonge.com/toolbox2021
+
+COMMS_KEY change_this_pwd_on_the_server

@@ -1,0 +1,15 @@
+{
+    "name": "The Beeftide",
+    "roster": [
+        "John Willard",
+        "Grobelon",
+        "SgtHunk"
+    ],
+    "toolbox_color": "#1369b5",
+    "outfit": {
+        "head": "/obj/item/clothing/head/hooded/beefman",
+        "suit": "/obj/item/clothing/suit/hooded/beefman",
+        "uniform": "/obj/item/clothing/under/color/grey",
+        "shoes": "/obj/item/clothing/shoes/beefman_shoes"
+    }
+}

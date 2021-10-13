@@ -1,0 +1,13 @@
+{
+    "name": "Unnamed Team",
+    "roster": [
+        "Bdudy",
+        "MrDoomBringer",
+        "FreshestSoup"
+    ],
+    "toolbox_color": "#1369b5",
+    "outfit": {
+        "uniform": "/obj/item/clothing/under/color/grey",
+        "shoes": "/obj/item/clothing/shoes/sneakers/black"
+    }
+}

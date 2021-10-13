@@ -1,0 +1,16 @@
+{
+    "name": "zxhgnfsfd",
+    "roster": [
+        "Tapubulu",
+        "DefinitelyNotATraitor",
+        "joe13413"
+    ],
+    "toolbox_color": "#fc33ff",
+    "outfit": {
+        "glasses": "/obj/item/clothing/glasses/regular",
+        "neck": "/obj/item/clothing/neck/cloak/skill_reward/gaming",
+        "uniform": "/obj/item/clothing/under/pants/mustangjeans",
+        "gloves": "/obj/item/clothing/gloves/cut",
+        "shoes": "/obj/item/clothing/shoes/sneakers/brown"
+    }
+}

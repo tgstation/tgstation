@@ -1,0 +1,15 @@
+{
+    "name": "The Dracunyas",
+    "roster": [
+        "JosephJomama",
+        "SoreYew",
+        "saladlegs"
+    ],
+    "toolbox_color": "#fd85ff",
+    "outfit": {
+        "suit": "/obj/item/clothing/suit/dracula",
+        "uniform": "/obj/item/clothing/under/costume/draculass",
+        "gloves": "/obj/item/clothing/gloves/color/white",
+        "shoes": "/obj/item/clothing/shoes/laceup"
+    }
+}

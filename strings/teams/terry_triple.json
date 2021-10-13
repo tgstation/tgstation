@@ -1,0 +1,19 @@
+{
+    "name": "Triple Terry Threat",
+    "roster": [
+        "kieth4",
+        "cimika",
+        "riggle"
+    ],
+    "toolbox_color": "#1369b5",
+    "outfit": {
+        "head": "/obj/item/clothing/head/helmet/plate",
+        "mask": "/obj/item/clothing/mask/gas/sechailer",
+        "glasses": "/obj/item/clothing/glasses/hud/security/sunglasses",
+        "neck": "/obj/item/clothing/neck/stripedredscarf",
+        "suit": "/obj/item/clothing/suit/hooded/wintercoat/security/hos",
+        "uniform": "/obj/item/clothing/under/rank/security/head_of_security",
+        "gloves": "/obj/item/clothing/gloves/krav_maga/combatglovesplus",
+        "shoes": "/obj/item/clothing/shoes/combat/swat"
+    }
+}
