@@ -11,7 +11,6 @@ type Pack = {
   id: string;
   desc: string;
   goody: string;
-  access: number;
 }
 
 type Category = {
