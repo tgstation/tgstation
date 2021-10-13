@@ -59838,7 +59838,7 @@
 "pqp" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
-	name = "Hydroponics";
+	name = "Service Door";
 	req_one_access_txt = "35;28"
 	},
 /turf/open/floor/iron/dark,
