@@ -11,7 +11,7 @@ type Pack = {
   id: string;
   desc: string;
   goody: string;
-  access: string;
+  access: number;
 }
 
 type Category = {
@@ -82,7 +82,7 @@ export const DepartmentOrders = (props, context) => {
 };
 
 const CooldownDimmer = (props, context) => {
-  const { data } = useBackend<Info>(context);
+  const { act, data } = useBackend<Info>(context);
   const {
     time_left,
   } = data;
@@ -97,13 +97,14 @@ const CooldownDimmer = (props, context) => {
           />
         </Stack.Item>
         <Stack.Item fontSize="18px" color="orange">
-          Ready for another order in {time_left} seconds...
+          Ready for another order in {time_left}...
         </Stack.Item>
         <Stack.Item fontSize="18px" color="orange">
           <Button
             tooltip="This action requires Head of Staff access!"
             fontSize="14px"
-            color="red">
+            color="red"
+            onClick={() => act("override_order")}>
             Override
           </Button>
         </Stack.Item>

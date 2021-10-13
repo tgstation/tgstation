@@ -31,7 +31,11 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/ui_data(mob/user)
 	var/list/data = list()
-	data["time_left"] = GLOB.department_order_cooldowns[type] SECONDS
+	var/cooldown = GLOB.department_order_cooldowns[type] - world.time
+	if(cooldown < 0)
+		data["time_left"] = 0
+	else
+		data["time_left"] = DisplayTimeText(cooldown)
 	return data
 
 /obj/machinery/computer/department_orders/ui_static_data(mob/user)
@@ -61,9 +65,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		target_group["packs"] += list(list(
 			"name" = pack.name,
 			"cost" = pack.get_cost(),
-			"id" = pack,
+			"id" = pack.type,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"access" = pack.access,
 		))
 	data["supplies"] = supply_data
 	return data
@@ -127,10 +130,10 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	UnregisterSignal(COMSIG_SUPPLY_SHUTTLE_BUY)
 
 /obj/machinery/computer/department_orders/proc/calculate_cooldown(credits)
-	//minimum value of a crate,  max
-	var/min = CARGO_CRATE_VALUE * 1.4
+	//minimum value of a crate
+	var/min = CARGO_CRATE_VALUE * 3
 	//maximum fairly expensive crate
-	var/max = CARGO_CRATE_VALUE * 4
+	var/max = CARGO_CRATE_VALUE * 6
 	credits = clamp(credits, min, max)
 	var/time_x = (credits - min)/(max - min) //convert to between 0 and 1
 	var/time_y = ease_in_out_circ(time_x) + 1 //convert "0 to 1 x" to "1 to 2 y"
