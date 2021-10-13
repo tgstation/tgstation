@@ -112,6 +112,10 @@
 	target.grad_style = value
 	target.update_hair()
 
+/datum/preference/choiced/hair_gradient/create_default_value()
+	return "None"
+
+
 /datum/preference/color_legacy/hair_gradient
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
