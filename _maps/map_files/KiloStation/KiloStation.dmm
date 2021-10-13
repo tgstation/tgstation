@@ -39780,14 +39780,14 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Hydroponics";
-	req_access_txt = "35"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/navbeacon/wayfinding,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_access_txt = "35"
+	},
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "hTF" = (
@@ -59837,8 +59837,8 @@
 /area/engineering/atmos)
 "pqp" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Service Door";
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
 	req_one_access_txt = "35;28"
 	},
 /turf/open/floor/iron/dark,

@@ -31679,13 +31679,13 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "mAv" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Hydroponics";
-	req_one_access_txt = "35;28"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_access_txt = "35;28"
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
@@ -31944,11 +31944,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "mFN" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Hydroponics";
-	req_one_access_txt = "35;28"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_access_txt = "35;28"
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},

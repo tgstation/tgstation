@@ -70226,10 +70226,6 @@
 /area/engineering/atmos)
 "oHM" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Hydroponics";
-	req_access_txt = "35"
-	},
 /obj/machinery/navbeacon/wayfinding,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -70239,8 +70235,12 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_access_txt = "35"
+	},
 /turf/open/floor/iron,
-/area/service/hydroponics)
+/area/construction)
 "oIa" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
