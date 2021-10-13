@@ -30,11 +30,7 @@
  */
 /mob/proc/adjust_drowsyness(amount)
 	drowsyness = max(drowsyness + amount, 0)
-/**
- * Adds passed value to drowsyness, capping at second value
- */
-/mob/proc/adjust_drowsyness_capped(amount, cap)
-	drowsyness = max(min(drowsyness + amount, cap), 0)
+
 
 ///Blind a mobs eyes by amount
 /mob/proc/blind_eyes(amount)
