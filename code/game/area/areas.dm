@@ -18,7 +18,7 @@
 	///Do we have an active fire alarm?
 	var/fire = FALSE
 	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
-	var/fire_detect = TRUE //FYI this intentionally does not update from emag_act on fire alarms
+	var/fire_detect = TRUE
 	///A list of all fire locks in this area. Used by fire alarm panels when resetting fire locks or activating all in an area
 	var/list/firedoors
 	///A list of firelocks currently active. Used by fire alarms when setting their icons.

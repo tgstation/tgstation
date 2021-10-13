@@ -62,6 +62,20 @@
 	UnregisterSignal(src, COMSIG_MERGER_REMOVING)
 	return ..()
 
+/obj/machinery/door/firedoor/examine(mob/user)
+	. = ..()
+	if(!density)
+		. += span_notice("It is open, but could be <b>pried</b> closed.")
+	else if(!welded)
+		. += span_notice("It is closed, but could be <b>pried</b> open.")
+		. += span_notice("Hold the firelock temporarily open by prying it with <i>left-click</i> and standing next to it.")
+		. += span_notice("Prying by <i>right-clicking</i> the firelock will open it permanently.")
+		. += span_notice("Deconstruction would require it to be <b>welded</b> shut.")
+	else if(boltslocked)
+		. += span_notice("It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.")
+	else
+		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
+
 ///////////////////////////////////////////////////////////////////
 // Merger handling
 
