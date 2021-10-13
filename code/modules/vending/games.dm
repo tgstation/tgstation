@@ -22,7 +22,6 @@
 		/obj/item/skillchip/wine_taster=2,
 		/obj/item/skillchip/light_remover=2,
 		/obj/item/skillchip/useless_adapter=5,
-		/obj/item/dyespray=3,
 		/obj/item/razor=3,
 	)
 	contraband = list(
