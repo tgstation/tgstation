@@ -32,6 +32,7 @@
 
 	TEST_ASSERT(!lab_rat.has_alert("not_enough_oxy"), "Humans can't get a full breath from the standard initial_gas_mix on a turf")
 
+/// Tests to make sure plasmaman can breath from their internal tanks
 /datum/unit_test/breath_sanity_plasmamen
 
 /datum/unit_test/breath_sanity_plasmamen/Run()
@@ -45,14 +46,14 @@
 
 	lab_rat.breathe()
 
-	TEST_ASSERT(!lab_rat.has_alert("not_enough_plas"), "Plasmamen can't get a full breath from standard plasma tanks")
+	TEST_ASSERT(!lab_rat.has_alert("not_enough_plas"), "Plasmamen can't get a full breath from a standard plasma tank")
 	lab_rat.clear_alert("not_enough_plas")
 
 	//Prep the mob
-	lab_rat.forceMove(run_loc_floor_bottom_left)
 	source.toggle_internals(lab_rat)
-	TEST_ASSERT(!lab_rat.internal, "toggle_internals() failed to toggle internals")
+	TEST_ASSERT(!lab_rat.internal, "Plasmaman toggle_internals() failed to toggle internals")
 
+/// Tests to make sure ashwalkers can breath from the lavaland air
 /datum/unit_test/breath_sanity_ashwalker
 
 /datum/unit_test/breath_sanity_ashwalker/Run()
@@ -69,7 +70,8 @@
 
 	lab_rat.breathe()
 
-	TEST_ASSERT(!lab_rat.has_alert("not_enough_oxy"), "Ashwalkers can't get a full breath from the standard initial_gas_mix on a turf")
+	TEST_ASSERT(!lab_rat.has_alert("not_enough_oxy"), "Ashwalkers can't get a full breath from the Lavaland's initial_gas_mix on a turf")
 
-
+	//Reset initial_gas_mix to avoid future issues on other tests
+	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
