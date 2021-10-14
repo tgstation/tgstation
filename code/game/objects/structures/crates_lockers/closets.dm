@@ -234,7 +234,7 @@
 	for(var/atom/movable/AM in L)
 		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
 			break
-	for(var/i in reverseRange(L.GetAllContents()))
+	for(var/i in reverse_range(L.get_all_contents()))
 		var/atom/movable/thing = i
 		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 

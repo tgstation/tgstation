@@ -139,7 +139,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, sortList(list(
+GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -492,18 +492,18 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
 		var/list/ignoring
-		if(M.client.prefs)
-			var/datum/preferences/prefs = M.client.prefs
+		if(M.client?.prefs)
+			var/datum/preferences/prefs = M.client?.prefs
 			chat_toggles = prefs.chat_toggles
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
 		if(admin_only)
-			if (!M.client.holder)
+			if (!M.client?.holder)
 				return
 			else
 				message += span_deadsay(" (This is viewable to admins only).")
 		var/override = FALSE
-		if(M.client.holder && (chat_toggles & CHAT_DEAD))
+		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
@@ -646,7 +646,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sort_list(borgs)
 		else
 			. = pick(borgs)
 	return .
@@ -655,7 +655,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/ais = active_ais(FALSE, z)
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sort_list(ais)
 		else
 			. = pick(ais)
 	return .
@@ -679,3 +679,198 @@ GLOBAL_LIST_EMPTY(species_list)
 /// Gets the client of the mob, allowing for mocking of the client.
 /// You only need to use this if you know you're going to be mocking clients somewhere else.
 #define GET_CLIENT(mob) (##mob.client || ##mob.mock_client)
+
+///Orders mobs by type then by name. Accepts optional arg to sort a custom list, otherwise copies GLOB.mob_list.
+/proc/sort_mobs()
+	var/list/moblist = list()
+	var/list/sortmob = sort_names(GLOB.mob_list)
+	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/camera/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/silicon/pai/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/silicon/robot/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/carbon/human/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/brain/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/carbon/alien/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/dead/observer/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/dead/new_player/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/simple_animal/slime/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	for(var/mob/living/simple_animal/mob_to_sort in sortmob)
+		// We've already added slimes.
+		if(isslime(mob_to_sort))
+			continue
+		moblist += mob_to_sort
+	for(var/mob/living/basic/mob_to_sort in sortmob)
+		moblist += mob_to_sort
+	return moblist
+
+///returns a mob type controlled by a specified ckey
+/proc/get_mob_by_ckey(key)
+	if(!key)
+		return
+	var/list/mobs = sort_mobs()
+	for(var/mob/mob in mobs)
+		if(mob.ckey == key)
+			return mob
+
+///Return a string for the specified body zone
+/proc/parse_zone(zone)
+	if(zone == BODY_ZONE_PRECISE_R_HAND)
+		return "right hand"
+	else if (zone == BODY_ZONE_PRECISE_L_HAND)
+		return "left hand"
+	else if (zone == BODY_ZONE_L_ARM)
+		return "left arm"
+	else if (zone == BODY_ZONE_R_ARM)
+		return "right arm"
+	else if (zone == BODY_ZONE_L_LEG)
+		return "left leg"
+	else if (zone == BODY_ZONE_R_LEG)
+		return "right leg"
+	else if (zone == BODY_ZONE_PRECISE_L_FOOT)
+		return "left foot"
+	else if (zone == BODY_ZONE_PRECISE_R_FOOT)
+		return "right foot"
+	else
+		return zone
+
+///Returns the direction that the initiator and the target are facing
+/proc/check_target_facings(mob/living/initiator, mob/living/target)
+	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
+	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
+	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
+	if(!isliving(target) || target.body_position == LYING_DOWN)
+	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
+		return FALSE
+	if(initiator.dir == target.dir) //mobs are facing the same direction
+		return FACING_SAME_DIR
+	if(is_source_facing_target(initiator,target) && is_source_facing_target(target,initiator)) //mobs are facing each other
+		return FACING_EACHOTHER
+	if(initiator.dir + 2 == target.dir || initiator.dir - 2 == target.dir || initiator.dir + 6 == target.dir || initiator.dir - 6 == target.dir) //Initating mob is looking at the target, while the target mob is looking in a direction perpendicular to the 1st
+		return FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR
+
+///Returns the occupant mob or brain from a specified input
+/proc/get_mob_or_brainmob(occupant)
+	var/mob/living/mob_occupant
+
+	if(isliving(occupant))
+		mob_occupant = occupant
+
+	else if(isbodypart(occupant))
+		var/obj/item/bodypart/head/head = occupant
+
+		mob_occupant = head.brainmob
+
+	else if(isorgan(occupant))
+		var/obj/item/organ/brain/brain = occupant
+		mob_occupant = brain.brainmob
+
+	return mob_occupant
+
+///Generalised helper proc for letting mobs rename themselves. Used to be clname() and ainame()
+/mob/proc/apply_pref_name(preference_type, client/requesting_client)
+	if(!requesting_client)
+		requesting_client = client
+	var/oldname = real_name
+	var/newname
+	var/loop = 1
+	var/safety = 0
+
+	var/random = CONFIG_GET(flag/force_random_names) || (requesting_client ? is_banned_from(requesting_client.ckey, "Appearance") : FALSE)
+
+	while(loop && safety < 5)
+		if(!safety && !random)
+			newname = requesting_client?.prefs?.read_preference(preference_type)
+		else
+			var/datum/preference/preference = GLOB.preference_entries[preference_type]
+			newname = preference.create_informed_default_value(requesting_client.prefs)
+
+		for(var/mob/living/checked_mob in GLOB.player_list)
+			if(checked_mob == src)
+				continue
+			if(!newname || checked_mob.real_name == newname)
+				newname = null
+				loop++ // name is already taken so we roll again
+				break
+		loop--
+		safety++
+
+	if(newname)
+		fully_replace_character_name(oldname, newname)
+		return TRUE
+	return FALSE
+
+///Returns the amount of currently living players
+/proc/living_player_count()
+	var/living_player_count = 0
+	for(var/mob in GLOB.player_list)
+		if(mob in GLOB.alive_mob_list)
+			living_player_count += 1
+	return living_player_count
+
+GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
+
+///Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(range = world.view, center, invis_flags = 0)
+	if(!center)
+		return
+
+	GLOB.dview_mob.loc = center
+
+	GLOB.dview_mob.see_invisible = invis_flags
+
+	. = view(range, GLOB.dview_mob)
+	GLOB.dview_mob.loc = null
+
+/mob/dview
+	name = "INTERNAL DVIEW MOB"
+	invisibility = 101
+	density = FALSE
+	see_in_dark = 1e6
+	move_resist = INFINITY
+	var/ready_to_die = FALSE
+
+/mob/dview/Initialize(mapload) //Properly prevents this mob from gaining huds or joining any global lists
+	SHOULD_CALL_PARENT(FALSE)
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_1 |= INITIALIZED_1
+	return INITIALIZE_HINT_NORMAL
+
+/mob/dview/Destroy(force = FALSE)
+	if(!ready_to_die)
+		stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+		if (!force)
+			return QDEL_HINT_LETMELIVE
+
+		log_world("EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS")
+		GLOB.dview_mob = new
+	return ..()
+
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	GLOB.dview_mob.loc = center;           \
+	GLOB.dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, GLOB.dview_mob))
+
+#define FOR_DVIEW_END GLOB.dview_mob.loc = null
+
+///Makes a call in the context of a different usr. Use sparingly
+/world/proc/push_usr(mob/user_mob, datum/callback/invoked_callback, ...)
+	var/temp = usr
+	usr = user_mob
+	if (length(args) > 2)
+		. = invoked_callback.Invoke(arglist(args.Copy(3)))
+	else
+		. = invoked_callback.Invoke()
+	usr = temp

@@ -194,7 +194,7 @@
 			use_power(750)
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
-				var/picked = pickweight(nodes) //This should work.
+				var/picked = pick_weight(nodes) //This should work.
 				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
@@ -285,7 +285,7 @@
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
-			var/newPath = text2path(pickweight(valid_items))
+			var/newPath = text2path(pick_weight(valid_items))
 			loaded_item = new newPath(src)
 			visible_message(span_warning("[src] malfunctions, transforming [savedName] into [loaded_item]!"))
 			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)

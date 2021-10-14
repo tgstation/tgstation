@@ -53,6 +53,8 @@
 #define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
+///global mob logged in signal! (/mob/added_player)
+#define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
 
 /// signals from globally accessible objects
 
@@ -814,6 +816,12 @@
 /// from /obj/machinery/atmospherics/components/binary/valve/toggle(): (on)
 #define COMSIG_VALVE_SET_OPEN "valve_toggled"
 
+/// from /obj/machinery/atmospherics/components/binary/pump/set_on(active): (on)
+#define COMSIG_PUMP_SET_ON "pump_set_on"
+
+/// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
+#define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
+
 // /obj access signals
 
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
@@ -1149,8 +1157,12 @@
 #define COMSIG_PLANT_ON_SLIP "plant_on_slip"
 ///called when a plant with liquid contents is squashed on (atom/target)
 #define COMSIG_PLANT_ON_SQUASH "plant_on_squash"
-///called when a plant grows in a tray (obj/machinery/hydroponics)
-#define COMSIG_PLANT_ON_GROW "plant_on_grow"
+///called when a plant backfires via the backfire element (mob/victim)
+#define COMSIG_PLANT_ON_BACKFIRE "plant_on_backfire"
+///called when a seed grows in a tray (obj/machinery/hydroponics)
+#define COMSIG_SEED_ON_GROW "plant_on_grow"
+///called when a seed is planted in a tray (obj/machinery/hydroponics)
+#define COMSIG_SEED_ON_PLANTED "plant_on_plant"
 
 //Gibs
 
@@ -1452,6 +1464,12 @@
 
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
+
+/// Called in /obj/structure/dispenserbot/add_item(). (obj/item/to_add)
+#define COMSIG_DISPENSERBOT_ADD_ITEM "moneybot_add_item"
+
+/// Called in /obj/structure/dispenserbot/remove_item(). (obj/item/to_remove)
+#define COMSIG_DISPENSERBOT_REMOVE_ITEM "moneybot_remove_item"
 
 /// Called when somebody passes through a scanner gate and it triggers
 #define COMSIG_SCANGATE_PASS_TRIGGER "scangate_pass_trigger"

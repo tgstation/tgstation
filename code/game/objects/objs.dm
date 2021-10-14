@@ -348,7 +348,7 @@
 	for(var/reskin_option in unique_reskin)
 		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
 		items += list("[reskin_option]" = item_image)
-	sortList(items)
+	sort_list(items)
 
 	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
 	if(!pick)

@@ -729,7 +729,7 @@
 		return
 
 	if(is_capped)
-		to_chat(user, span_warning("Take the cap off first!"))
+		balloon_alert(user, "take the cap off first!")
 		return
 
 	if(check_empty(user))
@@ -777,6 +777,31 @@
 		return
 
 	. = ..()
+
+/obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(is_capped)
+		balloon_alert(user, "take the cap off first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(check_empty(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(istype(target, /obj/item/bodypart) && actually_paints)
+		var/obj/item/bodypart/limb = target
+		if(limb.status == BODYPART_ROBOTIC)
+			var/list/skins = list()
+			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
+			for(var/skin_option in style_list_icons)
+				var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = limb.icon_state)
+				skins += list("[skin_option]" = part_image)
+			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
+			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
+				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+				limb.icon = style_list_icons[choice]
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped

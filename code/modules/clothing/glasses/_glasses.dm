@@ -226,6 +226,8 @@
 	SIGNAL_HANDLER
 	if(damaged_clothes == CLOTHING_SHREDDED)
 		return
+	if(item_flags & IN_INVENTORY)
+		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
 		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))

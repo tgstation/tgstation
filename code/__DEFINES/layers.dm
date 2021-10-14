@@ -42,7 +42,7 @@
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
 #define LOW_OBJ_LAYER 2.5
-///catwalk overlay of /turf/open/floor/plating/plating_catwalk
+///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.54
