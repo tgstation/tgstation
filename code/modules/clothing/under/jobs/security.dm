@@ -227,7 +227,7 @@
 	inhand_icon_state = "spacepolice_families"
 	can_adjust = FALSE
 
-obj/item/clothing/under/rank/security/detective/disco
+/obj/item/clothing/under/rank/security/detective/disco
 	name = "superstar cop uniform"
 	desc = "Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar."
 	icon_state = "jamrock_suit"
