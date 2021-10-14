@@ -415,10 +415,20 @@
 
 /datum/greyscale_config/changshan
 	name = "Changshan"
-	icon_file = 'icons/mob/clothing/under/suits.dmi'
+	icon_file = 'icons/obj/clothing/under/suits.dmi'
 	json_config = 'code/datums/greyscale/json_configs/changshan.json'
 
 /datum/greyscale_config/cheongsam
 	name = "Cheongsam"
-	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
 	json_config = 'code/datums/greyscale/json_configs/cheongsam.json'
+
+/datum/greyscale_config/changshan/worn
+	name = "Worn Changshan"
+	icon_file = 'icons/mob/clothing/under/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/changshan_worn.json'
+
+/datum/greyscale_config/cheongsam/worn
+	name = "Worn Cheongsam"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/cheongsam_worn.json'

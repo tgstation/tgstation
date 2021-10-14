@@ -86,6 +86,7 @@
 		/obj/item/clothing/under/suit/burgundy = 1,
 		/obj/item/clothing/under/suit/charcoal = 1,
 		/obj/item/clothing/under/suit/white = 1,
+		/obj/item/clothing/under/suit/changshan = 1,
 		/obj/item/clothing/under/suit/sl = 1,
 		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/head/that = 1,
@@ -98,6 +99,7 @@
 		/obj/item/clothing/under/dress/striped = 1,
 		/obj/item/clothing/under/dress/sailor = 1,
 		/obj/item/clothing/under/dress/redeveninggown = 1,
+		/obj/item/clothing/under/dress/cheongsam = 1,
 		/obj/item/clothing/under/dress/blacktango = 1,
 		/obj/item/clothing/suit/ianshirt = 1,
 		/obj/item/clothing/shoes/laceup = 2,
@@ -170,9 +172,7 @@
 		/obj/item/clothing/suit/basil_boys = 20,
 		/obj/item/clothing/under/costume/basil_boys = 20,
 		/obj/item/clothing/head/basil_boys = 20,
-		/obj/item/clothing/shoes/basil_boys = 20,
-		/obj/item/clothing/under/suit/changshan = 1,
-		/obj/item/clothing/under/dress/cheongsam = 1
+		/obj/item/clothing/shoes/basil_boys = 20
 	)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool = 1,
