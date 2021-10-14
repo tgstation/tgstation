@@ -414,3 +414,18 @@
   - bugfix: Syringe/Hypospray failure messages now reflect the proper body part.
   Wayland-Smithy:
   - bugfix: Fixed base lighting appearance inheritance.
+2021-10-14:
+  FA120:
+  - bugfix: list literal can now contain tables,like they are supposed to
+  Guillaume Prata:
+  - imageadd: Engineering clothes have working reflective stripes now. Easier for
+      someone to find your corpse in maints, harder for you to hide in the dark to
+      do bad things.
+  Melbert:
+  - bugfix: You no longer see yourself in everything you double examine
+  Seris02:
+  - bugfix: regal rat can now eat cheese + runtime fixes for its signal
+  SomethingFish:
+  - expansion: Adds a BLT sandwich as a new food to the game.
+  Watermelon914:
+  - bugfix: Fixes filter list component not being a filter list component
