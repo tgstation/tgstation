@@ -36885,7 +36885,6 @@
 	name = "Radiation Chamber Shutters"
 	},
 /obj/structure/cable,
-/obj/item/tank/internals/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter)
 "eZQ" = (
