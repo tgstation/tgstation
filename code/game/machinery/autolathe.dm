@@ -284,7 +284,7 @@
 		return
 
 	if(machine_stat)
-		return
+		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
