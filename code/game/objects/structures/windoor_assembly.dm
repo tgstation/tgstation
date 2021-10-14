@@ -27,7 +27,7 @@
 	var/facing = "l" //Does the windoor open to the left or right?
 	var/secure = FALSE //Whether or not this creates a secure windoor
 	var/state = "01" //How far the door assembly has progressed
-	CanAtmosPass = ATMOS_PASS_PROC
+	can_atmos_pass = ATMOS_PASS_PROC
 
 /obj/structure/windoor_assembly/Initialize(mapload, loc, set_dir)
 	. = ..()
@@ -68,7 +68,7 @@
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
 		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
 
-/obj/structure/windoor_assembly/CanAtmosPass(turf/T)
+/obj/structure/windoor_assembly/can_atmos_pass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

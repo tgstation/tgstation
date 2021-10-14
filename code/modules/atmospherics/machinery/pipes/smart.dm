@@ -10,6 +10,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	device_type = QUATERNARY
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
+	///Current active connections
 	var/connections = NONE
 
 /obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
@@ -46,7 +47,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 
 	icon_state = "[bitfield]_[piping_layer]"
 
-/obj/machinery/atmospherics/pipe/smart/SetInitDirections(init_dir)
+/obj/machinery/atmospherics/pipe/smart/set_init_directions(init_dir)
 	if(init_dir)
 		initialize_directions = init_dir
 	else

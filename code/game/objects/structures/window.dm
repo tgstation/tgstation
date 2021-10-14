@@ -11,7 +11,7 @@
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
-	CanAtmosPass = ATMOS_PASS_PROC
+	can_atmos_pass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
@@ -327,7 +327,7 @@
 	if(anchored)
 		move_update_air(T)
 
-/obj/structure/window/CanAtmosPass(turf/T)
+/obj/structure/window/can_atmos_pass(turf/T)
 	if(!anchored || !density)
 		return TRUE
 	return !(fulltile || dir == get_dir(loc, T))
@@ -548,7 +548,7 @@
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
-/obj/structure/window/reinforced/plasma/BlockSuperconductivity()
+/obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
 
 /obj/structure/window/reinforced/plasma/spawner/east
@@ -730,7 +730,7 @@
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
 	decon_speed = 10
-	CanAtmosPass = ATMOS_PASS_YES
+	can_atmos_pass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	knocksound = "pageturn"
