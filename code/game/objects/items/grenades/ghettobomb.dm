@@ -20,12 +20,12 @@
 	var/range = 3
 	var/list/times
 
-/obj/item/grenade/iedcasing/Initialize()
+/obj/item/grenade/iedcasing/Initialize(mapload)
 	. = ..()
 	add_overlay("improvised_grenade_filled")
 	add_overlay("improvised_grenade_wired")
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
-	det_time = text2num(pickweight(times))
+	det_time = text2num(pick_weight(times))
 	if(det_time < 0) //checking for 'duds'
 		range = 1
 		det_time = rand(30,80)
@@ -37,7 +37,7 @@
 /obj/item/grenade/iedcasing/spawned
 	check_parts = TRUE
 
-/obj/item/grenade/iedcasing/spawned/Initialize()
+/obj/item/grenade/iedcasing/spawned/Initialize(mapload)
 	new /obj/item/reagent_containers/food/drinks/soda_cans/random(src)
 	return ..()
 

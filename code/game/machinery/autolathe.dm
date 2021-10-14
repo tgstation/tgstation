@@ -1,6 +1,6 @@
 /obj/machinery/autolathe
 	name = "autolathe"
-	desc = "It produces items using iron and glass."
+	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
 	use_power = IDLE_POWER_USE
@@ -44,7 +44,7 @@
 							"Imported"
 							)
 
-/obj/machinery/autolathe/Initialize()
+/obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
@@ -206,7 +206,7 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sort_list(list_to_show, /proc/cmp_typepaths_asc)
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
@@ -253,11 +253,18 @@
 			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
-		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
-			for(var/B in D.blueprints)
-				if(B)
-					stored_research.add_design(B)
+			var/obj/item/disk/design_disk/disky = O
+			var/list/not_imported
+			for(var/datum/design/blueprint as anything in disky.blueprints)
+				if(!blueprint)
+					continue
+				if(blueprint.build_type & AUTOLATHE)
+					stored_research.add_design(blueprint)
+				else
+					LAZYADD(not_imported, blueprint.name)
+			if(not_imported)
+				to_chat(user, span_warning("The following design[not_imported.len > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
 		busy = FALSE
 		return TRUE
 
@@ -401,7 +408,7 @@
 			else
 				stored_research.remove_design(D)
 
-/obj/machinery/autolathe/hacked/Initialize()
+/obj/machinery/autolathe/hacked/Initialize(mapload)
 	. = ..()
 	adjust_hacked(TRUE)
 

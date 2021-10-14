@@ -4,7 +4,6 @@
 GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
-	PORT_TYPE_LIST,
 	PORT_TYPE_ANY,
 	PORT_TYPE_OPTION,
 ))
@@ -47,6 +46,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 				if(port_to_check.name == port_name)
 					port = port_to_check
 					break
+
+			if(!port)
+				LOG_ERROR(errors, "Port '[port_name]' not found on [component.type] when trying to set it to a value of [port_data["stored_data"]]!")
+				continue
 
 			port.set_input(port_data["stored_data"])
 
@@ -108,6 +111,8 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 					continue
 
 				port.connect(output_port)
+
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_POST_LOAD)
 
 #undef LOG_ERROR
 
@@ -180,6 +185,8 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		new_data["datatype"] = variable.datatype
 		variables += list(new_data)
 	general_data["variables"] = variables
+
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_PRE_SAVE_TO_JSON, general_data)
 
 	return json_encode(general_data)
 

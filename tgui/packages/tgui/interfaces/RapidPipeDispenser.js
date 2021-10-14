@@ -222,7 +222,7 @@ const SmartPipeBlockSection = (props, context) => {
                 default (all directions can connect)`} />
             </Stack.Item>
             <Stack.Item>
-              <Button iconRotation={-90} icon="arrow-right"
+              <Button icon="arrow-up"
                 disabled={!!data.smart_pipe}
                 selected={init_directions["north"]}
                 onClick={() => act('init_dir_setting', {
@@ -255,7 +255,7 @@ const SmartPipeBlockSection = (props, context) => {
           </Stack>
         </Stack.Item>
         <Stack.Item grow>
-          <Button iconRotation={90} icon="arrow-right"
+          <Button icon="arrow-down"
             selected={init_directions["south"]}
             onClick={() => act('init_dir_setting', {
               dir_flag: "south",

@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Leftover plasma tanks formerly intended for radiation collectors have been removed."

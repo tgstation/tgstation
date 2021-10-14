@@ -1,3 +1,97 @@
+
+GLOBAL_DATUM_INIT(AdminProcCallHandler, /mob/proccall_handler, new())
+GLOBAL_PROTECT(AdminProcCallHandler)
+
+/// Used to handle proccalls called indirectly by an admin (e.g. tgs, circuits).
+/// Has to be a mob because IsAdminAdvancedProcCall() checks usr, which is a mob variable.
+/// So usr is set to this for any proccalls that don't have any usr mob/client to refer to.
+/mob/proccall_handler
+	name = "ProcCall Handler"
+	desc = "If you are seeing this, tell a coder."
+
+	var/list/callers = list()
+
+	invisibility = INVISIBILITY_ABSTRACT
+	density = FALSE
+
+/// Adds a caller.
+/mob/proccall_handler/proc/add_caller(caller_name)
+	callers += caller_name
+	name = "[initial(name)] ([callers.Join(") (")])"
+
+/// Removes a caller.
+/mob/proccall_handler/proc/remove_caller(caller_name)
+	callers -= caller_name
+	name = "[initial(name)] ([callers.Join(") (")])"
+
+/mob/proccall_handler/Initialize(mapload)
+	. = ..()
+	if(GLOB.AdminProcCallHandler && GLOB.AdminProcCallHandler != src)
+		return INITIALIZE_HINT_QDEL
+	GLOB.AdminProcCallHandler = src
+
+/mob/proccall_handler/vv_edit_var(var_name, var_value)
+	if(GLOB.AdminProcCallHandler != src)
+		return ..()
+	return FALSE
+
+/mob/proccall_handler/vv_do_topic(list/href_list)
+	if(GLOB.AdminProcCallHandler != src)
+		return ..()
+	return FALSE
+
+/mob/proccall_handler/CanProcCall(procname)
+	if(GLOB.AdminProcCallHandler != src)
+		return ..()
+	return FALSE
+
+// Shit will break if this is allowed to be deleted
+/mob/proccall_handler/Destroy(force)
+	if(GLOB.AdminProcCallHandler != src)
+		return ..()
+	if(!force)
+		stack_trace("Attempted deletion on [type] - [name], aborting.")
+		return QDEL_HINT_LETMELIVE
+	return ..()
+
+/**
+ * Handles a userless proccall, used by circuits.
+ *
+ * Arguments:
+ * * user - a string used to identify the user
+ * * target - the target to proccall on
+ * * proc - the proc to call
+ * * arguments - any arguments
+ */
+/proc/HandleUserlessProcCall(user, datum/target, procname, list/arguments)
+	if(IsAdminAdvancedProcCall())
+		return
+	var/mob/proccall_handler/handler = GLOB.AdminProcCallHandler
+	handler.add_caller(user)
+	var/lastusr = usr
+	usr = handler
+	. = WrapAdminProcCall(target, procname, arguments)
+	usr = lastusr
+	handler.remove_caller(user)
+
+/**
+ * Handles a userless sdql, used by circuits and tgs.
+ *
+ * Arguments:
+ * * user - a string used to identify the user
+ * * query_text - the query text
+ */
+/proc/HandleUserlessSDQL(user, query_text)
+	if(IsAdminAdvancedProcCall())
+		return
+	var/mob/proccall_handler/handler = GLOB.AdminProcCallHandler
+	handler.add_caller(user)
+	var/lastusr = usr
+	usr = handler
+	. = world.SDQL2_query(query_text, user, user)
+	usr = lastusr
+	handler.remove_caller(user)
+
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
@@ -94,22 +188,30 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		to_chat(usr, "Proccall on [target.type]/proc/[procname] is disallowed!", confidential = TRUE)
 		return
 	var/current_caller = GLOB.AdminProcCaller
-	var/ckey = usr ? usr.client.ckey : GLOB.AdminProcCaller
-	if(!ckey)
+	var/user_identifier = usr ? usr.client?.ckey : GLOB.AdminProcCaller
+	var/is_remote_handler = usr == GLOB.AdminProcCallHandler
+	if(is_remote_handler)
+		user_identifier = GLOB.AdminProcCallHandler.name
+
+	if(!user_identifier)
 		CRASH("WrapAdminProcCall with no ckey: [target] [procname] [english_list(arguments)]")
 
-	if(current_caller && current_caller != ckey)
+	if(!is_remote_handler && current_caller && current_caller != user_identifier)
 		to_chat(usr, span_adminnotice("Another set of admin called procs are still running. Try again later."), confidential = TRUE)
 		return
 
 	GLOB.LastAdminCalledProc = procname
 	if(target != GLOBAL_PROC)
 		GLOB.LastAdminCalledTargetRef = REF(target)
-	GLOB.AdminProcCaller = ckey //if this runtimes, too bad for you
-	++GLOB.AdminProcCallCount
-	. = world.WrapAdminProcCall(target, procname, arguments)
-	if(--GLOB.AdminProcCallCount == 0)
-		GLOB.AdminProcCaller = null
+
+	if(!is_remote_handler)
+		GLOB.AdminProcCaller = user_identifier //if this runtimes, too bad for you
+		++GLOB.AdminProcCallCount
+		. = world.WrapAdminProcCall(target, procname, arguments)
+		if(--GLOB.AdminProcCallCount == 0)
+			GLOB.AdminProcCaller = null
+	else
+		. = world.WrapAdminProcCall(target, procname, arguments)
 
 //adv proc call this, ya nerds
 /world/proc/WrapAdminProcCall(datum/target, procname, list/arguments)
@@ -124,7 +226,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 #ifdef TESTING
 	return FALSE
 #else
-	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
+	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
@@ -145,7 +247,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	if(!lst)
 		return
 
-	if(!A || !IsValidSrc(A))
+	if(!A || !is_valid_src(A))
 		to_chat(usr, span_warning("Error: callproc_datum(): owner of proc no longer exists."), confidential = TRUE)
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")

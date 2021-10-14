@@ -1,5 +1,0 @@
-author: "Mothblocks, Floyd on lots of the design"
-delete-after: True
-changes: 
-  - refactor: "The preferences menu has been completely rewritten in tgui."
-  - refactor: "The \"Stop Sounds\" verb has been moved to OOC."

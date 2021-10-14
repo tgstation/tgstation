@@ -111,10 +111,9 @@ All ShuttleMove procs go here
 
 // Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-
 	var/turf/newT = get_turf(src)
 	if (newT.z != oldT.z)
-		onTransitZ(oldT.z, newT.z)
+		on_changed_z_level(oldT, newT)
 
 	if(light)
 		update_light()
@@ -244,20 +243,20 @@ All ShuttleMove procs go here
 					break
 
 			if(!connected)
-				nullifyNode(i)
+				nullify_node(i)
 
 		if(!nodes[i])
 			missing_nodes = TRUE
 
 	if(missing_nodes)
-		atmosinit()
+		atmos_init()
 		for(var/obj/machinery/atmospherics/A in pipeline_expansion())
-			A.atmosinit()
-			if(A.returnPipenet())
-				A.addMember(src)
+			A.atmos_init()
+			if(A.return_pipenet())
+				A.add_member(src)
 		SSair.add_to_rebuild_queue(src)
 	else
-		// atmosinit() calls update_appearance(), so we don't need to call it
+		// atmos_init() calls update_appearance(), so we don't need to call it
 		update_appearance()
 
 /obj/machinery/navbeacon/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)

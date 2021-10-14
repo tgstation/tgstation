@@ -126,7 +126,7 @@
 			else
 				to_chat(usr, "<span class='warning'>Could not spawn you in as briefing officer as you are not a ghost!</spawn>")
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
+		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you wish to be considered for [ertemplate.polldesc]?", "deathsquad")
 		var/teamSpawned = FALSE
 
 		if(candidates.len == 0)
@@ -157,7 +157,7 @@
 				var/mob/dead/observer/potential_leader = i
 				candidate_living_exps[potential_leader] = potential_leader.client?.get_exp_living(TRUE)
 
-			candidate_living_exps = sortList(candidate_living_exps, cmp=/proc/cmp_numeric_dsc)
+			candidate_living_exps = sort_list(candidate_living_exps, cmp=/proc/cmp_numeric_dsc)
 			if(candidate_living_exps.len > ERT_EXPERIENCED_LEADER_CHOOSE_TOP)
 				candidate_living_exps = candidate_living_exps.Cut(ERT_EXPERIENCED_LEADER_CHOOSE_TOP+1) // pick from the top ERT_EXPERIENCED_LEADER_CHOOSE_TOP contenders in playtime
 			earmarked_leader = pick(candidate_living_exps)

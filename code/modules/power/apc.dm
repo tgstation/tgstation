@@ -264,9 +264,10 @@
 		area.power_equip = FALSE
 		area.power_environ = FALSE
 		area.power_change()
+		area.apc = null
 	QDEL_NULL(alarm_manager)
 	if(occupier)
-		malfvacate(1)
+		malfvacate(TRUE)
 	if(wires)
 		QDEL_NULL(wires)
 	if(cell)
@@ -314,6 +315,11 @@
 
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
+
+	if (area)
+		if (area.apc)
+			WARNING("Duplicate APC created at [AREACOORD(src)]")
+		area.apc = src
 
 	update_appearance()
 
@@ -933,7 +939,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = DisplayPower(lastused_total),
+		"totalLoad" = display_power(lastused_total),
 		"coverLocked" = coverlocked,
 		"siliconUser" = user.has_unlimited_silicon_privilege || user.using_power_flow_console(),
 		"malfStatus" = get_malf_status(user),
@@ -943,7 +949,7 @@
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
-				"powerLoad" = DisplayPower(lastused_equip),
+				"powerLoad" = display_power(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
 					"auto" = list("eqp" = 3),
@@ -953,7 +959,7 @@
 			),
 			list(
 				"title" = "Lighting",
-				"powerLoad" = DisplayPower(lastused_light),
+				"powerLoad" = display_power(lastused_light),
 				"status" = lighting,
 				"topicParams" = list(
 					"auto" = list("lgt" = 3),
@@ -963,7 +969,7 @@
 			),
 			list(
 				"title" = "Environment",
-				"powerLoad" = DisplayPower(lastused_environ),
+				"powerLoad" = display_power(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),
@@ -1019,7 +1025,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				to_chat(user, span_danger("\The [src] has eee disabled!"))
+				to_chat(user, span_danger("\The [src] has been disabled!"))
 			return FALSE
 	return TRUE
 
@@ -1147,10 +1153,12 @@
 		occupier.parent = malf.parent
 	else
 		occupier.parent = malf
-	malf.shunted = 1
+	malf.shunted = TRUE
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
+	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/CR = new
 	CR.Grant(occupier)
 	occupier.cancel_camera()
@@ -1160,7 +1168,7 @@
 		return
 	if(occupier.parent && occupier.parent.stat != DEAD)
 		occupier.mind.transfer_to(occupier.parent)
-		occupier.parent.shunted = 0
+		occupier.parent.shunted = FALSE
 		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
 		qdel(occupier)
@@ -1168,11 +1176,13 @@
 		to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
 		if(forced)
 			occupier.forceMove(drop_location())
-			occupier.death()
+			INVOKE_ASYNC(occupier, /mob/living/proc/death)
 			occupier.gib()
-			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
-				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
-				P.alert = FALSE
+
+	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
+		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
+			disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
+			disk_pinpointers.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(card.AI)
@@ -1485,7 +1495,7 @@
 	operating = FALSE
 	atom_break()
 	if(occupier)
-		malfvacate(1)
+		malfvacate(TRUE)
 	update()
 
 // overload all the lights in this APC area

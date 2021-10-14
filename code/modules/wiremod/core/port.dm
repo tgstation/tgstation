@@ -49,7 +49,7 @@
 	if(src.value != value || force)
 		if(isatom(value))
 			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
-		src.value = datatype_handler.convert_value(src, value)
+		src.value = datatype_handler.convert_value(src, value, force)
 		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
@@ -92,7 +92,7 @@
 	datatype_handler = handler
 	color = datatype_handler.color
 	datatype_handler.on_gain(src)
-	src.value = datatype_handler.convert_value(src, value)
+	src.value = null
 	SEND_SIGNAL(src, COMSIG_PORT_SET_TYPE, type_to_set)
 	if(connected_component?.parent)
 		SStgui.update_uis(connected_component.parent)
@@ -124,6 +124,7 @@
  * an integrated circuit
  */
 /datum/port/proc/disconnect_all()
+	value = null
 	SEND_SIGNAL(src, COMSIG_PORT_DISCONNECT)
 
 /datum/port/input/disconnect_all()
@@ -168,16 +169,26 @@
 	src.connected_ports = list()
 
 /**
- * Introduces two ports to one another.
+ * Connects an input port to an output port.
+ *
+ * Arguments:
+ * * output - The output port to connect to.
  */
 /datum/port/input/proc/connect(datum/port/output/output)
-	connected_ports |= output
+	if(output in connected_ports)
+		return
+	connected_ports += output
 	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
 	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/check_type)
 	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(!(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE))
 		set_input(output.value)
+
+/datum/port/input/set_datatype(new_type)
+	. = ..()
+	for(var/datum/port/output/port as anything in connected_ports)
+		check_type(port)
 
 /**
  * Determines if a datatype is compatible with another port of a different type.

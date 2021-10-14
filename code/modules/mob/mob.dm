@@ -445,34 +445,37 @@
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+/mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind() && !blind_examine_check(A)) //blind people see things differently (through touch)
+	if(is_blind() && !blind_examine_check(examinify)) //blind people see things differently (through touch)
 		return
 
-	face_atom(A)
+	face_atom(examinify)
 	var/list/result
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time)
-			result = A.examine(src)
-			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
-			RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/clear_from_recent_examines, override=TRUE) // to flush the value if deleted early
-			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
-			handle_eye_contact(A)
+		var/ref_to_atom = ref(examinify)
+		var/examine_time = client.recent_examines[ref_to_atom]
+		if(examine_time && (world.time - examine_time < EXAMINE_MORE_WINDOW))
+			result = examinify.examine_more(src)
+			if(!length(result))
+				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
 		else
-			result = A.examine_more(src)
+			result = examinify.examine(src)
+			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
+			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
+			handle_eye_contact(examinify)
 	else
-		result = A.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
+		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
 	to_chat(src, "<span class='infoplain'>[result.Join("\n")]</span>")
-	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 
 /mob/proc/blind_examine_check(atom/examined_thing)
@@ -508,7 +511,7 @@
 
 	/// how long it takes for the blind person to find the thing they're examining
 	var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
-	if(client?.recent_examines && client?.recent_examines[examined_thing]) //easier to find things we just touched
+	if(client?.recent_examines && client?.recent_examines[ref(examined_thing)]) //easier to find things we just touched
 		examine_delay_length = 0.33 SECONDS
 	else if(isobj(examined_thing))
 		examine_delay_length *= 1.5
@@ -528,16 +531,14 @@
 	return TRUE
 
 
-/mob/proc/clear_from_recent_examines(atom/A)
+/mob/proc/clear_from_recent_examines(ref_to_clear)
 	SIGNAL_HANDLER
-
 	if(!client)
 		return
-	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(client.recent_examines, A)
+	LAZYREMOVE(client.recent_examines, ref_to_clear)
 
 /**
- * handle_eye_contact() is called when we examine() something. If we examine an alive mob with a mind who has examined us in the last second within 5 tiles, we make eye contact!
+ * handle_eye_contact() is called when we examine() something. If we examine an alive mob with a mind who has examined us in the last 2 seconds within 5 tiles, we make eye contact!
  *
  * Note that if either party has their face obscured, the other won't get the notice about the eye contact
  * Also note that examine_more() doesn't proc this or extend the timer, just because it's simpler this way and doesn't lose much.
@@ -547,8 +548,16 @@
 	return
 
 /mob/living/handle_eye_contact(mob/living/examined_mob)
-	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client || !examined_mob.client?.recent_examines || !(src in examined_mob.client.recent_examines))
+	if(!istype(examined_mob) || src == examined_mob || examined_mob.stat >= UNCONSCIOUS || !client)
 		return
+
+	var/imagined_eye_contact = FALSE
+	if(!LAZYACCESS(examined_mob.client?.recent_examines, src))
+		// even if you haven't looked at them recently, if you have the shift eyes trait, they may still imagine the eye contact
+		if(HAS_TRAIT(examined_mob, TRAIT_SHIFTY_EYES) && prob(10 - get_dist(src, examined_mob)))
+			imagined_eye_contact = TRUE
+		else
+			return
 
 	if(get_dist(src, examined_mob) > EYE_CONTACT_RANGE)
 		return
@@ -558,7 +567,7 @@
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, src, msg), 3) // so the examine signal has time to fire and this will print after
 
-	if(is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
+	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, examined_mob, msg), 3)
 
@@ -676,22 +685,22 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
-	log_game("[key_name(usr)] used abandon mob.")
+	log_game("[key_name(usr)] used the respawn button.")
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -910,6 +919,15 @@
 
 ///Add a spell to the mobs spell list
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
+	// HACK: Preferences menu creates one of every selectable species.
+	// Some species, like vampires, create spells when they're made.
+	// The "action" is created when those spells Initialize.
+	// Preferences menu can create these assets at *any* time, primarily before
+	// the atoms SS initializes.
+	// That means "action" won't exist.
+	if (isnull(S.action))
+		return
+
 	LAZYADD(mob_spell_list, S)
 	S.action.Grant(src)
 
@@ -1073,7 +1091,7 @@
 
 ///update the ID name of this mob
 /mob/proc/replace_identification_name(oldname,newname)
-	var/list/searching = GetAllContents()
+	var/list/searching = get_all_contents()
 	var/search_id = 1
 	var/search_pda = 1
 
