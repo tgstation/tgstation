@@ -17,7 +17,8 @@ SUBSYSTEM_DEF(trait_limited_areas)
 		var/area/area = get_area(mob)
 		if (!isnull(area.trait_required) && !HAS_TRAIT(mob, area.trait_required))
 			SEND_SOUND(mob, 'sound/misc/notice1.ogg')
-			to_chat(mob, span_big(span_alertwarning("You are not authorized to be in \"[area]\" Leave now or you will be booted to the curb.")))
+			// mobs norally should not be able to trigger this, mostly for admemes spawning themself in
+			to_chat(mob, span_alertwarning("You are not authorized to be in \"[area]\" Leave now or you will be booted to the curb."))
 			addtimer(CALLBACK(src, .proc/boot_confirm, area, mob), 5 SECONDS, TIMER_CLIENT_TIME)
 
 		if (MC_TICK_CHECK)

@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(auto_equip)
 		return
 
 	log_config("Loading vips.txt")
-	vips = world.file2list(vip_file)
+	for (var/vip in world.file2list(vip_file))
+		vips += ckey(vip)
 
 /mob/living/carbon/human/dress_up_as_job(datum/job/equipping, visual_only)
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
