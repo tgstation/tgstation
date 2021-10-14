@@ -3650,7 +3650,7 @@
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "awL" = (
-/obj/structure/chair/wood,
+/obj/structure/chair/pew,
 /turf/open/floor/iron{
 	icon_state = "chapel"
 	},
@@ -6325,8 +6325,8 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "aUZ" = (
-/obj/structure/chair/wood,
 /obj/machinery/light/directional/west,
+/obj/structure/chair/pew/left,
 /turf/open/floor/iron{
 	dir = 8;
 	icon_state = "chapel"
@@ -24820,6 +24820,13 @@
 	},
 /turf/open/floor/iron,
 /area/maintenance/department/science)
+"dmB" = (
+/obj/structure/chair/pew/right,
+/turf/open/floor/iron{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/service/chapel)
 "dmC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -34731,6 +34738,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"eqF" = (
+/obj/structure/chair/pew/right,
+/turf/open/floor/iron{
+	icon_state = "chapel"
+	},
+/area/service/chapel)
 "eqG" = (
 /obj/structure/table/wood,
 /obj/item/stack/package_wrap{
@@ -39007,7 +39020,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "fHP" = (
-/obj/structure/chair/wood,
+/obj/structure/chair/pew,
 /turf/open/floor/iron{
 	dir = 1;
 	icon_state = "chapel"
@@ -48437,10 +48450,10 @@
 /turf/closed/wall,
 /area/engineering/atmos/upper)
 "irb" = (
-/obj/structure/chair/wood,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/chair/pew,
 /turf/open/floor/iron{
 	dir = 8;
 	icon_state = "chapel"
@@ -48967,10 +48980,10 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "iCu" = (
-/obj/structure/chair/wood,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/chair/pew/left,
 /turf/open/floor/iron{
 	icon_state = "chapel"
 	},
@@ -55603,8 +55616,8 @@
 /turf/open/floor/carpet,
 /area/service/library)
 "kBG" = (
-/obj/structure/chair/wood,
 /obj/machinery/newscaster/directional/west,
+/obj/structure/chair/pew/left,
 /turf/open/floor/iron{
 	dir = 1;
 	icon_state = "chapel"
@@ -57208,7 +57221,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "lbr" = (
-/obj/structure/chair/wood,
+/obj/structure/chair/pew,
 /turf/open/floor/iron{
 	dir = 4;
 	icon_state = "chapel"
@@ -61038,13 +61051,13 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "mcW" = (
-/obj/structure/chair/wood,
 /obj/machinery/camera{
 	c_tag = "Chapel - Starboard";
 	dir = 8;
 	name = "chapel camera"
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/structure/chair/pew/right,
 /turf/open/floor/iron{
 	icon_state = "chapel"
 	},
@@ -61121,6 +61134,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/security/prison/safe)
+"mdJ" = (
+/obj/structure/chair/pew/left,
+/turf/open/floor/iron{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/service/chapel)
 "mdV" = (
 /obj/machinery/power/solar{
 	id = "aftport";
@@ -89755,9 +89775,9 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "uyr" = (
-/obj/structure/chair/wood,
 /obj/machinery/light/directional/east,
 /obj/machinery/newscaster/directional/east,
+/obj/structure/chair/pew/right,
 /turf/open/floor/iron{
 	icon_state = "chapel"
 	},
@@ -91308,6 +91328,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
+"uVw" = (
+/obj/structure/chair/pew/left,
+/turf/open/floor/iron{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/service/chapel)
 "uVx" = (
 /obj/machinery/light/directional/north,
 /obj/structure/sign/nanotrasen{
@@ -99294,7 +99321,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos)
 "xoE" = (
-/obj/structure/chair/wood,
+/obj/structure/chair/pew/right,
 /turf/open/floor/iron{
 	dir = 8;
 	icon_state = "chapel"
@@ -99855,6 +99882,13 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/service/library/abandoned)
+"xxe" = (
+/obj/structure/chair/pew,
+/turf/open/floor/iron{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/service/chapel)
 "xxj" = (
 /obj/structure/table,
 /obj/item/trash/raisins,
@@ -136366,7 +136400,7 @@ sOY
 paX
 paX
 joK
-xoE
+mdJ
 kBG
 aUZ
 aAb
@@ -136880,7 +136914,7 @@ xtI
 paX
 ufW
 cmw
-xoE
+xxe
 fHP
 xoE
 nOd
@@ -137137,8 +137171,8 @@ wfC
 paX
 ufW
 ygu
-awL
-lbr
+eqF
+dmB
 ljv
 oCI
 ljv
@@ -137651,8 +137685,8 @@ lFj
 paX
 wzg
 wEP
-xoE
-fHP
+mdJ
+uVw
 jhp
 wEP
 niX
@@ -138165,7 +138199,7 @@ voe
 paX
 paX
 wEP
-xoE
+xxe
 fHP
 irb
 sYe
@@ -138423,7 +138457,7 @@ paX
 paX
 tKZ
 mcW
-lbr
+dmB
 uyr
 rbm
 ljv
