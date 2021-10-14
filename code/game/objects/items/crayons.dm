@@ -802,7 +802,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.color)
 		paint_color = target.color
-		to_chat(user, span_notice("You adjust the color of [src] to match [target]"))
+		to_chat(user, span_notice("You adjust the color of [src] to match [target]."))
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	else
