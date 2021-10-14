@@ -93,7 +93,7 @@
 	inhand_icon_state = "holy_hypo"
 	icon_state = "holy_hypo"
 	volume = 250
-	possible_transfer_amounts = list(5,10,15,20,25,30,50)
+	possible_transfer_amounts = list(25,50)
 	list_reagents = list(/datum/reagent/water/holywater = 150, /datum/reagent/peaceborg/tire = 50, /datum/reagent/peaceborg/confuse = 50)
 	amount_per_transfer_from_this = 50
 
