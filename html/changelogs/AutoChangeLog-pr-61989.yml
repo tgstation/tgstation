@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation's maintenance now has new catwalk tiles covering the various piping/wiring throughout."
+  - bugfix: "Tramstation's powernet should be slightly more resistant to bouts of power outages caused by rogue syndicate mice operatives."
+  - bugfix: "Patched up a few missed spots involving pipe/wiring for departments like Botany/Courtroom."
