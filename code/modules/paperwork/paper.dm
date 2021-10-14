@@ -11,6 +11,10 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
+#define DEFAULT_ADD_INFO_COLOR "black"
+#define DEFAULT_ADD_INFO_FONT "Verdana"
+#define DEFAULT_ADD_INFO_SIGN "signature"
+
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
  * so we do loose a bit of functionality but we gain in easy of use of
@@ -84,7 +88,7 @@
 		var/static/greyscale_info = regex("(?<=<font style=\")color=(.*)?>", "i")
 		new_paper.info = replacetext(info, greyscale_info, "nocolor=$1>")
 		for(var/list/style as anything in add_info_style)
-			LAZYADD(new_paper.add_info_style, list(list(DEF_ADD_INFO_COLOR, style[ADD_INFO_FONT], style[ADD_INFO_SIGN])))
+			LAZYADD(new_paper.add_info_style, list(list(DEFAULT_ADD_INFO_COLOR, style[ADD_INFO_FONT], style[ADD_INFO_SIGN])))
 	new_paper.add_info = add_info?.Copy()
 	new_paper.stamps = stamps?.Copy()
 	new_paper.stamped = stamped?.Copy()
@@ -152,7 +156,7 @@
 	return (BRUTELOSS)
 
 /obj/item/paper/proc/clearpaper()
-	setText("", FALSE)
+	setText("", update_icon = FALSE)
 	stamps = null
 	LAZYCLEARLIST(stamped)
 	cut_overlays()
@@ -212,7 +216,7 @@
 	add_fingerprint(user)
 	fire_act(I.get_temperature())
 
-/obj/item/paper/proc/add_info(text, color = DEF_ADD_INFO_COLOR, font = DEF_ADD_INFO_FONT, signature = DEF_ADD_INFO_SIGN)
+/obj/item/paper/proc/add_info(text, color = DEFAULT_ADD_INFO_COLOR, font = DEFAULT_ADD_INFO_FONT, signature = DEFAULT_ADD_INFO_SIGN)
 	LAZYADD(add_info, text)
 	LAZYADD(add_info_style, list(list(color, font, signature)))
 
@@ -283,7 +287,7 @@
 		for(var/index in 1 to length(add_info))
 			var/list/style = LAZYACCESS(add_info_style, index)
 			if(!islist(index) || length(style) < ADD_INFO_SIGN) // failsafe for malformed add_info_style.
-				var/list/corrected_style = list(DEF_ADD_INFO_COLOR, DEF_ADD_INFO_FONT, DEF_ADD_INFO_SIGN)
+				var/list/corrected_style = list(DEFAULT_ADD_INFO_COLOR, DEFAULT_ADD_INFO_FONT, DEFAULT_ADD_INFO_SIGN)
 				LAZYADD(add_info_style, corrected_style)
 				style = corrected_style
 			.["add_color"] += style[ADD_INFO_COLOR]
@@ -447,3 +451,6 @@
 #undef MODE_READING
 #undef MODE_WRITING
 #undef MODE_STAMPING
+#undef DEFAULT_ADD_INFO_COLOR
+#undef DEFAULT_ADD_INFO_FONT
+#undef DEFAULT_ADD_INFO_SIGN

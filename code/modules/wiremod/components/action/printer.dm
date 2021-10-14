@@ -13,8 +13,10 @@
 	var/datum/port/input/print
 	/// The selected font-family used when printing text on paper
 	var/datum/port/input/option/typeface
-	/// The selected color used when printing text on paper
-	var/datum/port/input/text_color
+	/// The RGB values of the color used when printing text on paper
+	var/datum/port/input/text_color_red
+	var/datum/port/input/text_color_green
+	var/datum/port/input/text_color_blue
 	/// Used to eject the leftmost paper on the loaded_papers list.
 	var/datum/port/input/eject
 	/// The signature that'll replace any %s and %sign used when printing text on paper.
@@ -27,7 +29,9 @@
 
 /obj/item/circuit_component/printer/populate_ports()
 	print = add_input_port("Print", PORT_TYPE_STRING, trigger = .proc/print_on_paper)
-	text_color = add_input_port("Text Hex Color", PORT_TYPE_STRING, trigger = null, default = "#000000")
+	text_color_red = add_input_port("Color (Red)", PORT_TYPE_NUMBER, trigger = null, default = 0)
+	text_color_green = add_input_port("Color (Green)", PORT_TYPE_NUMBER, trigger = null, default = 0)
+	text_color_blue = add_input_port("Color (Blue)", PORT_TYPE_NUMBER, trigger = null, default = 0)
 	signature = add_input_port("Signature", PORT_TYPE_STRING, trigger = null, default = "signature")
 	eject = add_input_port("Eject", PORT_TYPE_SIGNAL, trigger = .proc/eject_paper, order = 2)
 
@@ -46,13 +50,13 @@
 	QDEL_LIST(loaded_papers)
 	return ..()
 
-/obj/item/circuit_component/mmi/add_to(obj/item/integrated_circuit/add_to)
+/obj/item/circuit_component/printer/add_to(obj/item/integrated_circuit/add_to)
 	. = ..()
 	if(HAS_TRAIT(add_to, TRAIT_COMPONENT_PRINTER))
 		return FALSE
 	ADD_TRAIT(add_to, TRAIT_COMPONENT_PRINTER, src)
 
-/obj/item/circuit_component/mmi/removed_from(obj/item/integrated_circuit/removed_from)
+/obj/item/circuit_component/printer/removed_from(obj/item/integrated_circuit/removed_from)
 	REMOVE_TRAIT(removed_from, TRAIT_COMPONENT_PRINTER, src)
 	return ..()
 
@@ -108,7 +112,9 @@
 /obj/item/circuit_component/printer/pre_input_received(datum/port/input/port)
 	if(port != print)
 		return
-	text_color.set_value(sanitize_hexcolor(text_color.value, 6, TRUE))
+	text_color_red.set_value(clamp(text_color_red.value, 0, 255))
+	text_color_green.set_value(clamp(text_color_green.value, 0, 255))
+	text_color_blue.set_value(clamp(text_color_blue.value, 0, 255))
 	signature.set_value(reject_bad_text(signature.value, MAX_NAME_LEN, FALSE) || "signature")
 
 /obj/item/circuit_component/printer/proc/print_on_paper(datum/port/input/port)
@@ -117,7 +123,7 @@
 	var/obj/item/paper/paper = loaded_papers?[1]
 	if(!paper)
 		return
-	paper.add_info(print.value, text_color.value, typeface.value, signature.value)
+	paper.add_info(print.value, rgb(text_color_red, text_color_green, text_color_blue), typeface.value, signature.value)
 	log_paper("Printer component writing to paper [paper.name]. [parent.get_creator()].")
 
 /obj/item/circuit_component/printer/proc/eject_paper(datum/port/input/port, list/return_values)
