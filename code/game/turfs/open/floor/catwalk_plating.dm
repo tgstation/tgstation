@@ -12,9 +12,6 @@
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	baseturfs = /turf/open/floor/plating
 	footstep = FOOTSTEP_CATWALK
-	barefootstep = FOOTSTEP_CATWALK
-	clawfootstep = FOOTSTEP_CATWALK
-	heavyfootstep = FOOTSTEP_CATWALK
 	var/covered = TRUE
 
 /turf/open/floor/plating/catwalk_floor/Initialize(mapload)
