@@ -241,6 +241,9 @@
 		return
 
 	var/mob/living/target = controller.blackboard[attack_target_key]
+	if (!target)
+		finish_action(controller, FALSE)
+		return
 	var/mob/living/living_pawn = controller.pawn
 
 	controller.current_movement_target = target
@@ -251,6 +254,9 @@
 		return //Do the rest next turn
 
 	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
+	if (!disposal)
+		finish_action(controller, FALSE)
+		return
 	controller.current_movement_target = disposal
 
 	if(living_pawn.Adjacent(disposal))
