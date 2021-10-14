@@ -715,11 +715,11 @@
 			var/unban_datetime = query_unban_search_bans.item[15]
 			var/unban_key = query_unban_search_bans.item[16]
 			var/unban_round_id = query_unban_search_bans.item[17]
-			var/target = ban_target_string(player_key, player_ip, player_cid)
+			var/target = ban_target_string(banned_player_key, banned_player_ip, banned_player_cid)
 
 			var/unban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[banned_player_key];unbanadminkey=[banning_admin_key];unbanip=[banned_player_ip];unbancid=[banned_player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
 
-			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[target]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
+			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[target]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[banning_admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
 			if(!expiration_time)
 				output += "<b>Permanent ban</b>."
 			else
@@ -727,7 +727,7 @@
 			if(unban_datetime)
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
 			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
-			output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
+			output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[banned_player_key];editbanip=[banned_player_ip];editbancid=[banned_player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[banning_admin_key]'>Edit</a><br>[unban_href]"
 			if(edits)
 				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
 			output += "</div></div></div>"
@@ -743,7 +743,8 @@
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
 	var/target = ban_target_string(player_key, player_ip, player_cid)
-	if(tgui_alert(usr, "Please confirm unban of [target] from [role].", "Unban confirmation", list("Yes", "No")) == "No")
+	// Make sure the only input that doesn't early return is "Yes" - This is the only situation in which we want the unban to proceed.
+	if(tgui_alert(usr, "Please confirm unban of [target] from [role].", "Unban confirmation", list("Yes", "No")) != "Yes")
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
@@ -770,6 +771,46 @@
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
 			to_chat(i, span_boldannounce("[usr.client.key] has removed a ban from [role] for your IP or CID."), confidential = TRUE)
+	unban_panel(player_key, admin_key, player_ip, player_cid, page)
+
+/// Sometimes an admin did not intend to unban a player. This proc undoes an unbanning operation by setting the unbanned_ keys in the DB back to null.
+/datum/admins/proc/reban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
+	if(!check_rights(R_BAN))
+		return
+	if(!SSdbcore.Connect())
+		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		return
+	var/target = ban_target_string(player_key, player_ip, player_cid)
+	// Make sure the only input that doesn't early return is "Yes" - This is the only situation in which we want the unban to proceed.
+	if(tgui_alert(usr, "Please confirm undoing of unban of [target] from [role].", "Reban confirmation", list("Yes", "No")) != "Yes")
+		return
+	var/kn = key_name(usr)
+	var/kna = key_name_admin(usr)
+	var/change_message = "[usr.client.key] re-activated ban of [target] from [role]<hr>"
+	var/datum/db_query/query_reban = SSdbcore.NewQuery({"
+		UPDATE [format_table_name("ban")] SET
+			unbanned_datetime = NULL,
+			unbanned_ckey = NULL,
+			unbanned_ip = NULL,
+			unbanned_computerid = NULL,
+			unbanned_round_id = NULL,
+			edits = CONCAT(IFNULL(edits,''), :change_message)
+		WHERE id = :ban_id
+	"}, list("ban_id" = ban_id, "admin_ckey" = usr.client.ckey, "admin_ip" = usr.client.address, "admin_cid" = usr.client.computer_id, "round_id" = GLOB.round_id))
+	if(!query_reban.warn_execute())
+		qdel(query_reban)
+		return
+	qdel(query_reban)
+	log_admin_private("[kn] has rebanned [target] from [role].")
+	message_admins("[kna] has rebanned [target] from [role].")
+	var/client/C = GLOB.directory[player_key]
+	if(C)
+		build_ban_cache(C)
+		to_chat(C, span_boldannounce("[usr.client.key] has re-activated a removed ban from [role] for your key."), confidential = TRUE)
+	for(var/client/i in GLOB.clients - C)
+		if(i.address == player_ip || i.computer_id == player_cid)
+			build_ban_cache(i)
+			to_chat(i, span_boldannounce("[usr.client.key] has re-activated a removed ban from [role] for your IP or CID."), confidential = TRUE)
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
 /datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
