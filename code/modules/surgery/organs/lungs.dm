@@ -290,10 +290,10 @@
 			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
 			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
 		gas_breathed = breath_gases[/datum/gas/nitrium][MOLES]
-		if (nitrium_pp > gas_stimulation_min)
+		if (nitrium_pp > 5)
 			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
 			breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
-		if (nitrium_pp > 5)
+		if (nitrium_pp > 10)
 			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
 			breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
 
