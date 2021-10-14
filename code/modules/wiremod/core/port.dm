@@ -133,6 +133,7 @@
 		disconnect(output)
 
 /datum/port/input/proc/disconnect(datum/port/output/output)
+	SIGNAL_HANDLER
 	connected_ports -= output
 	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
 	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)
