@@ -701,23 +701,24 @@
 			var/ban_datetime = query_unban_search_bans.item[2]
 			var/ban_round_id  = query_unban_search_bans.item[3]
 			var/role = query_unban_search_bans.item[4]
-			//make the href for unban here so only the search parameters are passed
-			var/unban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
 			var/expiration_time = query_unban_search_bans.item[5]
 			//we don't cast duration as num because if the duration is large enough to be converted to scientific notation by byond then the + character gets lost when passed through href causing SQL to interpret '4.321e 007' as '4'
 			var/duration = query_unban_search_bans.item[6]
 			var/expired = query_unban_search_bans.item[7]
 			var/applies_to_admins = text2num(query_unban_search_bans.item[8])
 			var/reason = query_unban_search_bans.item[9]
-			player_key = query_unban_search_bans.item[10]
-			player_ip = query_unban_search_bans.item[11]
-			player_cid = query_unban_search_bans.item[12]
-			admin_key = query_unban_search_bans.item[13]
+			var/banned_player_key = query_unban_search_bans.item[10]
+			var/banned_player_ip = query_unban_search_bans.item[11]
+			var/banned_player_cid = query_unban_search_bans.item[12]
+			var/banning_admin_key = query_unban_search_bans.item[13]
 			var/edits = query_unban_search_bans.item[14]
 			var/unban_datetime = query_unban_search_bans.item[15]
 			var/unban_key = query_unban_search_bans.item[16]
 			var/unban_round_id = query_unban_search_bans.item[17]
 			var/target = ban_target_string(player_key, player_ip, player_cid)
+
+			var/unban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[banned_player_key];unbanadminkey=[banning_admin_key];unbanip=[banned_player_ip];unbancid=[banned_player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
+
 			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[target]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
 			if(!expiration_time)
 				output += "<b>Permanent ban</b>."
