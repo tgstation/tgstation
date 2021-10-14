@@ -1,3 +1,5 @@
+#define COIL_POWER_CONVERSION_MULTIPLIER 0.9
+
 /obj/machinery/power/tesla_coil
 	name = "tesla coil"
 	desc = "For the union!"
@@ -106,8 +108,11 @@
 	if(zap_flags & ZAP_LOW_POWER_GEN)
 		power /= 10
 	zap_buckle_check(power)
-	var/power_removed = powernet ? power * input_power_multiplier : power
-	stored_energy += max((power_removed - 80) * 200, 0)
+	var/power_removed = powernet ? power * COIL_POWER_CONVERSION_MULTIPLIER : 0
+	if(zap_flags & ZAP_MAIN_POWER_GEN)
+		stored_energy += power_removed
+	else
+		stored_energy += max((power_removed - 80) * 200, 0)
 	return max(power - power_removed, 0) //You get back the amount we didn't use
 
 /obj/machinery/power/tesla_coil/proc/zap()
@@ -163,3 +168,5 @@
 		return 0
 	else
 		. = ..()
+
+#undef COIL_POWER_CONVERSION_MULTIPLIER

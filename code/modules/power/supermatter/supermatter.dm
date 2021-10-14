@@ -656,11 +656,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 			supermatter_zap(
 				zapstart = src,
-				range = 3,
-				zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
-				zap_flags = ZAP_SUPERMATTER_FLAGS,
+				range = 4,
+				zap_str = 260 * power * power_multiplier * pressure_multiplier * co2_power_increase,
+				zap_flags = ZAP_SUPERMATTER_FLAGS | ZAP_MAIN_POWER_GEN,
 				zap_cutoff = 300,
-				power_level = power
+				power_level = power,
+				change_radius = FALSE
 			)
 			last_power_zap = world.time
 
@@ -1150,7 +1151,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(PYRO_ANOMALY)
 			new /obj/effect/anomaly/pyro(local_turf, 200, FALSE)
 
-/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE)
+/obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, change_radius = TRUE)
 	if(QDELETED(zapstart))
 		return
 	. = zapstart.dir
@@ -1279,7 +1280,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(target_turf?.return_air())
 		pressure = max(1,target_turf.return_air().return_pressure())
 	//We get our range with the strength of the zap and the pressure, the higher the former and the lower the latter the better
-	var/new_range = clamp(zap_str / pressure * 10, 2, 7)
+	var/new_range = range
+	if(change_radius)
+		new_range = clamp(zap_str / pressure * 10, 2, 7)
 	var/zap_count = 1
 	if(prob(5))
 		zap_str -= (zap_str/10)
@@ -1287,7 +1290,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/j in 1 to zap_count)
 		if(zap_count > 1)
 			targets_hit = targets_hit.Copy() //Pass by ref begone
-		supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit, zap_cutoff, power_level, zap_icon)
+		supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit, zap_cutoff, power_level, zap_icon, change_radius)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'
