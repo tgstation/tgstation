@@ -753,7 +753,7 @@
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/change_message = "[usr.client.key] unbanned [target] from [role]<hr>"
+	var/change_message = "[usr.client.key] unbanned [target] from [role] on [SQLtime()] during round #[GLOB.round_id]<hr>"
 	var/datum/db_query/query_unban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NOW(),
@@ -793,7 +793,7 @@
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/change_message = "[usr.client.key] re-activated ban of [target] from [role]<hr>"
+	var/change_message = "[usr.client.key] re-activated ban of [target] from [role] on [SQLtime()] during round #[GLOB.round_id]<hr>"
 	var/datum/db_query/query_reban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NULL,
