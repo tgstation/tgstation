@@ -688,7 +688,7 @@
 ///When a carbon mob is headpatted, this is called on the carbon that is headpatted. (mob/living/headpatter)
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
 ///When a carbon mob is disarmed, this is called on objects that have unique behavior when the target is shoved into it (obj/structure/table, obj/machinery/disposal/bin)
-#define COMSIG_CARBON_DISARM_COLLIDE
+#define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
 
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
