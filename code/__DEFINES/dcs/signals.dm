@@ -1258,6 +1258,10 @@
 ///from base of datum/component/two_handed/proc/unwield(mob/living/carbon/user): (/mob/user)
 #define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
 
+// /datum/component/radiation_detector
+/// Sent from /datum/component/radiation_detector: (radiation_count)
+#define COMSIG_RADIATION_DETECTOR_UPDATE "radiation_detector_update"
+
 // /datum/element/movetype_handler signals
 /// Called when the floating anim has to be temporarily stopped and restarted later: (timer)
 #define COMSIG_PAUSE_FLOATING_ANIM "pause_floating_anim"

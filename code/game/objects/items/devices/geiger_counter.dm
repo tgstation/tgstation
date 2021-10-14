@@ -22,39 +22,32 @@
 	var/datum/looping_sound/geiger/soundloop
 
 	var/scanning = FALSE
-	var/radiation_count = 0
-	var/current_tick_amount = 0
-	var/last_tick_amount = 0
+	var/radiation_store = 0 // for emagged
+	var/last_radiation_count = 0
 	var/fail_to_receive = 0
 	var/current_warning = 1
 
 /obj/item/geiger_counter/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/radiation_detector)
+	RegisterSignal(src, COMSIG_RADIATION_DETECTOR_UPDATE, .proc/rad_update)
 
 	soundloop = new(src, FALSE)
 
 /obj/item/geiger_counter/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	UnregisterSignal(COMSIG_RADIATION_DETECTOR_UPDATE)
 	QDEL_NULL(soundloop)
 
 	return ..()
 
-/obj/item/geiger_counter/process(delta_time)
-	if(scanning)
-		radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
-
-		if(current_tick_amount)
-			grace = RAD_GEIGER_GRACE_PERIOD
-			last_tick_amount = current_tick_amount
-
-		else if(!(obj_flags & EMAGGED))
-			grace -= delta_time
-			if(grace <= 0)
-				radiation_count = 0
-
-	current_tick_amount = 0
-
+/obj/item/geiger_counter/proc/rad_update(datum/source,radiation_count)
+	SIGNAL_HANDLER
+	if(scanning && last_radiation_count != radiation_count) // to prevent unneeded updates, sound and appearance are updated when scanning is toggled
+		last_radiation_count = radiation_count
+		update_appearance()
+		update_sound()
+		if(obj_flags & EMAGGED)
+			radiation_store += radiation_count
 	update_appearance()
 	update_sound()
 
@@ -66,7 +59,7 @@
 	if(obj_flags & EMAGGED)
 		. += span_warning("The display seems to be incomprehensible.")
 		return
-	switch(radiation_count)
+	switch(last_radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
 			. += span_notice("Ambient radiation level count reports that all is well.")
 		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
@@ -80,7 +73,7 @@
 		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
 			. += span_boldannounce("Ambient radiation levels above critical level!")
 
-	. += span_notice("The last radiation amount detected was [last_tick_amount]")
+	. += span_notice("The last radiation amount detected was [last_radiation_count]")
 
 /obj/item/geiger_counter/update_icon_state()
 	if(!scanning)
@@ -90,7 +83,7 @@
 		icon_state = "geiger_on_emag"
 		return ..()
 
-	switch(radiation_count)
+	switch(last_radiation_count)
 		if(-INFINITY to RAD_LEVEL_NORMAL)
 			icon_state = "geiger_on_1"
 		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
@@ -110,22 +103,16 @@
 	if(!scanning)
 		loop.stop()
 		return
-	if(!radiation_count)
+	if(!last_radiation_count)
 		loop.stop()
 		return
-	loop.last_radiation = radiation_count
+	loop.last_radiation = last_radiation_count
 	loop.start()
-
-/obj/item/geiger_counter/rad_act(amount)
-	. = ..()
-	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
-		return
-	current_tick_amount += amount
-	update_appearance()
 
 /obj/item/geiger_counter/attack_self(mob/user)
 	scanning = !scanning
 	update_appearance()
+	update_sound()
 	to_chat(user, span_notice("[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src]."))
 
 /obj/item/geiger_counter/afterattack(atom/target, mob/living/user, params)
@@ -136,8 +123,8 @@
 			addtimer(CALLBACK(src, .proc/scan, target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
 		else
 			user.visible_message(span_notice("[user] scans [target] with [src]."), span_danger("You project [src]'s stored radiation into [target]!"))
-			target.rad_act(radiation_count)
-			radiation_count = 0
+			target.rad_act(radiation_store)
+			radiation_store = 0
 		return TRUE
 
 /obj/item/geiger_counter/proc/scan(atom/A, mob/user)
@@ -165,7 +152,7 @@
 			return FALSE
 		user.visible_message(span_notice("[user] refastens [src]'s maintenance panel!"), span_notice("You reset [src] to its factory settings!"))
 		obj_flags &= ~EMAGGED
-		radiation_count = 0
+		last_radiation_count = 0
 		update_appearance()
 		return TRUE
 	else
@@ -177,7 +164,7 @@
 	if(!scanning)
 		to_chat(usr, span_warning("[src] must be on to reset its radiation level!"))
 		return
-	radiation_count = 0
+	last_radiation_count = 0
 	to_chat(usr, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
 	update_appearance()
 

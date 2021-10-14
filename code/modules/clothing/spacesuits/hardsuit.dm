@@ -20,19 +20,19 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	var/current_tick_amount = 0
-	var/radiation_count = 0
-	var/grace = RAD_GEIGER_GRACE_PERIOD
 	var/datum/looping_sound/geiger/soundloop
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE, TRUE)
 	soundloop.volume = 5
+	AddComponent(/datum/component/radiation_detector)
+	RegisterSignal(src, COMSIG_RADIATION_DETECTOR_UPDATE, .proc/rad_update)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
 	. = ..()
+	UnregisterSignal(COMSIG_RADIATION_DETECTOR_UPDATE)
 	if(!QDELETED(suit))
 		qdel(suit)
 	suit = null
@@ -74,24 +74,8 @@
 	if(msg && ishuman(wearer))
 		wearer.show_message("[icon2html(src, wearer)]<b>[span_robot("[msg]")]</b>", MSG_VISUAL)
 
-/obj/item/clothing/head/helmet/space/hardsuit/rad_act(amount)
-	. = ..()
-	if(amount <= RAD_BACKGROUND_RADIATION)
-		return
-	current_tick_amount += amount
-
-/obj/item/clothing/head/helmet/space/hardsuit/process(delta_time)
-	radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
-
-	if(current_tick_amount)
-		grace = RAD_GEIGER_GRACE_PERIOD
-	else
-		grace -= delta_time
-		if(grace <= 0)
-			radiation_count = 0
-
-	current_tick_amount = 0
-
+/obj/item/clothing/head/helmet/space/hardsuit/proc/rad_update(datum/source,radiation_count)
+	SIGNAL_HANDLER
 	soundloop.last_radiation = radiation_count
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
