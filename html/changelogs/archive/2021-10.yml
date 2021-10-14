@@ -165,3 +165,267 @@
       cable, and rack on the same tile.
   tralezab:
   - bugfix: You can now hold people at gunpoint from range!
+2021-10-05:
+  Iamgoofball:
+  - server: Dynamic now has an extra configuration value, max_threat_level. Defaults
+      to 100 threat.
+  Krysonism:
+  - bugfix: Shark biopsy samples are now clean and don't contain a duplicate shark
+      cell line.
+  Melbert:
+  - bugfix: Fixes people getting rejected by the panic bunker when they probably shouldn't
+      have been (if you can read this, it probably doesn't affect you anymore)
+  Mothblocks:
+  - bugfix: Old photos from persistent photo albums will now no longer be lost.
+  Timberpoes:
+  - bugfix: Captains can sleep tight at night knowing that Disky no longer fears escape
+      shuttle rides at the end of the shift. The nuke disk will no longer teleport
+      itself back to the station from the emergency shuttle when the emergency shuttle
+      departs.
+  - admin: Admins should no longer get trolled by URL keys creating clickable links
+      that look the same as admin PM shortcuts.
+  Zytolg:
+  - bugfix: The new mining base on Icebox will now fully load its surrounding plasma
+      lake area.
+  - bugfix: The Kilostation Art Closet now provides station sevants with the necessary
+      art supplies.
+  esainane:
+  - bugfix: The airlock to MetaStation's Medical Cold Room is now properly named and
+      requires Medbay General access.
+  - bugfix: Kitchen cold rooms which are cold (that is, those on Ice, Meta, and Tram)
+      now have their air alarms configured to expect this.
+2021-10-06:
+  JohnFulpWillard:
+  - bugfix: Surgeries that repair organs will once again repair the organ.
+  - bugfix: Swarmers-banned ghosts can no longer create Swarmer bodies from the beacon.
+  Zytolg:
+  - expansion: Remaps the Holding Facility into 2021 Standards
+  - code_imp: Indestructible paper wall support. It's better than the alternative.
+  kopoba:
+  - bugfix: fix ebow was able to accept pka modkits with 0 cost
+2021-10-07:
+  PeterMorrison1:
+  - bugfix: fixed dropped arrows being controllable with the bow
+  Watermelon914:
+  - qol: Refactored tgui list inputs to be a lot more user-friendly.
+  lovegreenstuff:
+  - bugfix: ice reaction oversight, now freezes at the proper 274k instead of 245k
+  tralezab code, melbert idea!:
+  - rscadd: There's a new wizard event, RPG titles. Summon the star duke!
+  zxaber:
+  - rscdel: The augment painter has been removed from the game.
+  - rscadd: Spraycans can now change the visual style of robotic augments via right-click.
+  - bugfix: Borg lights are now visible again.
+2021-10-08:
+  InvalidArgument3:
+  - bugfix: penetrator rounds will no longer ignore vehicles
+  JohnFulpWillard:
+  - qol: Choice beacons now use a TGUI menu
+  Melbert:
+  - bugfix: The huds for clown and mime fan are back
+  - bugfix: You can no longer be a simultaneous clown and mime fan, pick a side coward
+  - bugfix: Quirks that once were not compatible are now incompatible again
+  NamelessFairy & Mothblocks:
+  - expansion: Replaces the ghost mafia button with a minigames button which opens
+      the new minigames panel.
+  - qol: CTF is now accessible through the new minigames menu
+  - rscadd: CTF can now be played through the CTF menu, accessible through the minigames
+      menu
+  TiviPlus:
+  - bugfix: fixed ambient occlusion stacking sometimes
+  Watermelon914:
+  - expansion: Adds the dispenser shell, which accepts normal-sized items and lets
+      you dispense them at any time.
+  - expansion: Adds the For Each component and the Filter List component.
+  - refactor: Refactored the circuit list datatype to support composite types (i.e.
+      entity list, any list, number list), which are lists that can only contain values
+      of the specified datatype. This also refactors anything that uses the list datatype
+      to use composite lists.
+  - qol: NTNet components now use composite lists to send and receive data
+  - bugfix: Prevented people from infinitely making lists with the list literal component.
+  tralezab:
+  - bugfix: Fixes catwalks not working at all!
+  zxaber:
+  - rscadd: Emagged and Syndicate borgs can now self-detonate. For emagged borgs,
+      this destroys the MMI, so know what you're signing up for.
+2021-10-09:
+  Burgermancoding:
+  - qol: you can orbit people who send messages using the gangster cellphone from
+      families
+  Colovorat:
+  - expansion: Adds catwalk floor crafting recipe
+  - imageadd: catwalk floor tile object sprite and inhand sprites
+  DaddyIssues and Grobelon:
+  - expansion: 'Added 3 new foods: Catburgers, Egg with sausage, and Sausage bread.'
+  Ghilker:
+  - balance: Rad collectors are gone, can be only spawned by admins. SM will now generate
+      power by releasing zaps that will hit tesla coils around it. Roundstart setups
+      might not be enough for bigger stations and t4 machines later in the round,
+      recommended to upgrade the powergen.
+  Ghommie:
+  - expansion: 'The Mr. Deempisi Portrait plaque has been replaced with a very special
+      picture frame: A small picture of one out four random things (Mr. Deempisi included)
+      that can have a photo affixed over it. The photo will persist between rounds
+      on that specific station until removed of if the frame is destroyed. Each station
+      gets one, all but one (Kilo is too damn cramped) located in the bar behind the
+      bartender counter. It''s also more artsy than other picture frames now. spriteadd:
+      Desouled the picture frame sprites.'
+  Krysonism:
+  - qol: The tentacle slap ability button now goes red and displays a cooldown timer
+      when on cooldown.
+  - bugfix: Vat beasts now longer lose their ability when someone rides them.
+  - expansion: Adds carp scales, and carp scale crafting.
+  Melbert:
+  - bugfix: Removing invasive spreading from a plant will now actually remove invasive
+      spreading
+  - refactor: Refactored seed / gene deletion, and a bit of gene addition / removal
+  Timberpoes:
+  - bugfix: Observers will no longer see ghost icons representing Maintenance Loot
+      Spawners of Roundstart Past once the round has actually started.
+  Wallemations:
+  - expansion: The Goat Plushie has picked up some bad habits, please try not to let
+      it near any illicit substances for the sake of its rehabilitation.
+  Watermelon914:
+  - admin: Admins can now stop animations on an object as well as decide if it starts
+      parallel or not.
+  - bugfix: Fixed animating filters in steps not working at all.
+  - qol: Gave instantly executing ports special datatypes to distinguish what ports
+      cause instant execution
+  - bugfix: Fixed default FPS for new players and applies it to them when they join.
+  Zytolg:
+  - bugfix: Fixes the floating sign in the Tramstation Teleporter
+  esainane:
+  - code_imp: freon_gas_act is now called freeze_turf. It was only ever used in two
+      places, neither of which involved Freon.
+  thestubborn:
+  - bugfix: the Driscoll poncho should be centered now
+  timothymtorres:
+  - qol: Adds random statue spawners to secure art exhibits in the library for Meta,
+      Tram, and Delta.
+2021-10-10:
+  Arkatos:
+  - bugfix: Thermomachine design icon in the R&D Console UI will now show properly.
+  Guillaume Prata:
+  - bugfix: Cyborgs can interact with a morgue tray to close it now, instead of needing
+      to interact with the main structure.
+  Krysonism:
+  - qol: The mega arachnid now has a toggleable self only small sprite. No more hitting
+      yourself!
+  Mooshimi:
+  - qol: status displays can now be wrenched off the wall, and frames can be printed
+      at the autolathe
+  PeterMorrison1:
+  - bugfix: fixed antagonist preference tooltip showing wrong descriptions
+  Watermelon914:
+  - bugfix: Fixed variables sometimes just not working.
+  - bugfix: Fixed the dispenser shell and For Each and Filter components not appearing
+      in the component printer.
+  - bugfix: Fixed the changeling antag panel
+  - bugfix: Fixed the wizard's antag panel.
+  - admin: Datum input ports can now have atoms and datums uploaded to them.
+  esainane:
+  - bugfix: HFR ambience will no longer play intensely when the HFR is out of fuel
+  - bugfix: SMs meant to be immobile should now be truly immobile.
+  - bugfix: Bluespace anomalies will no longer teleport camera eyes, such as AI eye,
+      Blob Overmind eye, Advanced Camera consoles, or the Xenobiology Slime management
+      console. This is particularly relevant for the Xenobiology advanced slime console,
+      as the eye cannot move outside of, or while outside of, the area the console
+      is in.
+  - spellcheck: Fixed a typo in the Hostile Statue description.
+  - code_imp: Remove a very useless check from APC code
+  - bugfix: The beams from Emitters, and all hitscan weaponry, now render properly
+      again.
+  - bugfix: CentCom now has one APC per area.
+  tralezab:
+  - bugfix: Preferences menu now supports Halloween races
+2021-10-11:
+  Fikou:
+  - bugfix: fixes unpowered space ruins actually being powered
+  - expansion: more secret away mission stuff
+  Ghommie:
+  - bugfix: Fixed two issues with paper code. Namely paper text being always colored
+      black outside of edit mode and signatures showing the current name and not the
+      real name.
+  - expansion: Added USB ports to light switches.
+  Mothblocks:
+  - rscadd: Added back the reset keybindings button.
+  - bugfix: Fixed weird scaling on the buttons in a tabbed list UI (such as "Communications"
+      in the keybindings menu)
+  Watermelon914:
+  - bugfix: Fixed a runtime with the integrated circuit duplicator
+  - admin: Signal Handler circuit components are no longer limited to 1 registered
+      object.
+  - admin: Get variable circuit components can now get GLOB variables
+  - admin: Animate and Save Shell circuit components will now apply DF_VAR_EDITED
+  - bugfix: Fixes the changeling panel not working at all.
+  - balance: Bluespace launchpad maximum range decreased from 60 to 40. Traitor launchpad
+      unaffected.
+  - balance: Bluespace launchpads will now give a visual indication of the turf they
+      are teleporting to/teleporting from as well as a noise notification. Does not
+      apply to traitor launchpads.
+  - balance: Bluespace launchpads will now show a beam that fades out between the
+      target turf and the launchpad after it has done the teleportation. Again, does
+      not apply to traitor launchpads.
+  esainane:
+  - bugfix: The CE's blueprints can now once again show an overlay of the station's
+      original structural layout! Cleaning up after an explosion is now - well, realistically,
+      just as frustrating as ever, but it looks nice!
+  tralezab:
+  - refactor: Refactored monkey AI a bit, noticeable changes should be minimal!
+  - qol: toggle random events doesn't uselessly include a message to the user, only
+      to admins... which the user is.
+2021-10-12:
+  Ghommie:
+  - bugfix: MMI components can't be no longer attached to modules. This was causing
+      race conditions with other MMI components present in the circuit (not much of
+      a good thing).
+  Melbert:
+  - rscdel: Removed the action button for toggling griffin and owl wings, you can
+      still open and close them with alt-click.
+  - refactor: Toggle Suit component for labcoats, suit coats, and formal coats (and
+      some others)
+  tralezab:
+  - bugfix: Basic mobs can once again be vareditted
+2021-10-13:
+  Colovorat:
+  - bugfix: You can no longer extract and transform DNA of species that have no DNA
+  Fikou:
+  - bugfix: fixes mode switch actions on storage items being broken
+  Ghilker:
+  - qol: lower sound level of the coils, the sound and range is calculated by a function
+      based on the zap power
+  Ghommie:
+  - expansion: A timepiece circuit component has been added. It can output the station
+      time in different time formats and units of time when triggered.
+  InvalidArgument3:
+  - expansion: The Yellow slimecore plasma reaction is back in the form of creating
+      an EMP-proof cell.
+  Melbert:
+  - rscadd: 'Icebox: The Chapel, Library, and Departures Lounge (and some maintenance
+      around it) have been revamped and expanded to utilize multi-z.'
+  Mothblocks:
+  - bugfix: Fixed a bug where bans could not be applied if the database connection
+      was not immediately established, even after a re-establish.
+  - server: Updated database schema to allow for null round IDs in bans and tickets.
+  RandomGamer123:
+  - bugfix: Contractor support units now do not get a second uplink with 20 TC in
+      them.
+  - bugfix: Malf AIs cannot be rolled midround if one has already been rolled roundstart.
+  - bugfix: Syringe/Hypospray failure messages now reflect the proper body part.
+  Wayland-Smithy:
+  - bugfix: Fixed base lighting appearance inheritance.
+2021-10-14:
+  FA120:
+  - bugfix: list literal can now contain tables,like they are supposed to
+  Guillaume Prata:
+  - imageadd: Engineering clothes have working reflective stripes now. Easier for
+      someone to find your corpse in maints, harder for you to hide in the dark to
+      do bad things.
+  Melbert:
+  - bugfix: You no longer see yourself in everything you double examine
+  Seris02:
+  - bugfix: regal rat can now eat cheese + runtime fixes for its signal
+  SomethingFish:
+  - expansion: Adds a BLT sandwich as a new food to the game.
+  Watermelon914:
+  - bugfix: Fixes filter list component not being a filter list component

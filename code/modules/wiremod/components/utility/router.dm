@@ -26,14 +26,7 @@
 	var/list/datum/port/output/outs
 
 /obj/item/circuit_component/router/populate_options()
-	var/static/component_options = list(
-		PORT_TYPE_ANY,
-		PORT_TYPE_STRING,
-		PORT_TYPE_NUMBER,
-		PORT_TYPE_LIST,
-		PORT_TYPE_ATOM,
-	)
-	router_options = add_option_port("Router Options", component_options)
+	router_options = add_option_port("Router Options", GLOB.wiremod_basic_types)
 
 /obj/item/circuit_component/router/populate_ports()
 	current_type = router_options.value

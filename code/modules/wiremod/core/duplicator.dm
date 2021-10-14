@@ -4,7 +4,6 @@
 GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_NUMBER,
 	PORT_TYPE_STRING,
-	PORT_TYPE_LIST,
 	PORT_TYPE_ANY,
 	PORT_TYPE_OPTION,
 ))
@@ -47,6 +46,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 				if(port_to_check.name == port_name)
 					port = port_to_check
 					break
+
+			if(!port)
+				LOG_ERROR(errors, "Port '[port_name]' not found on [component.type] when trying to set it to a value of [port_data["stored_data"]]!")
+				continue
 
 			port.set_input(port_data["stored_data"])
 

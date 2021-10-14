@@ -252,7 +252,7 @@
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
-	data["edit_usr"] = "[user]"
+	data["edit_usr"] = "[user.real_name]"
 
 	var/obj/holding = user.get_active_held_item()
 	// Use a clipboard's pen, if applicable

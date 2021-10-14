@@ -554,8 +554,17 @@
 
 /datum/action/innate/use_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
-	var/datum/species/jelly/luminescent/species = owner
-	if(species?.current_extract)
+
+	if(!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/gazer = owner
+	var/datum/species/jelly/luminescent/species = gazer?.dna?.species
+
+	if(!istype(species, /datum/species/jelly/luminescent))
+		return
+
+	if(species.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
 /datum/action/innate/use_extract/Activate()
@@ -720,7 +729,7 @@
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(H))
 		options += Ms
-	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sortNames(options)
+	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sort_names(options)
 	if(!M)
 		return
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
