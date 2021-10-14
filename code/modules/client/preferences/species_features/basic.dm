@@ -115,14 +115,11 @@
 /datum/preference/choiced/hair_gradient/create_default_value()
 	return "None"
 
-/datum/preference/color_legacy/hair_gradient
+/datum/preference/color/hair_gradient
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient_color"
 
-/datum/preference/color_legacy/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/color/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	target.grad_color = value
 	target.update_hair()
-
-/datum/preference/color_legacy/eye_color/create_default_value()
-	return random_color()
