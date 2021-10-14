@@ -38,6 +38,16 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency, FALSE)
 
+/turf/open/openspace/Enter(atom/movable/AM, atom/oldloc)
+	. = ..()
+	if(.)
+		AM.set_currently_z_moving(CURRENTLY_Z_FALLING_FROM_MOVE) ///Has higher priority so AM doesn't fall on Entered()
+
+/turf/open/openspace/Entered(atom/movable/AM)
+	. = ..()
+	if(AM.set_currently_z_moving(CURRENTLY_Z_FALLING))
+		zFall(AM)
+
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return TRUE

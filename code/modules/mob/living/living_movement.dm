@@ -53,10 +53,48 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-/mob/living/canZMove(dir, turf/target)
+/mob/set_currently_z_moving(value)
 	if(buckled)
-		return buckled.can_zTravel(target, dir) && (buckled.movement_type & FLYING | FLOATING)
-	return can_zTravel(target, dir) && (movement_type & FLYING | FLOATING)
+		return buckled.set_currently_z_moving(value)
+	return ..()
+
+/mob/living/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
+	if(buckled)
+		if(buckled.currently_z_moving)
+			return FALSE
+		if(!(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+			buckled.unbuckle_mob(src, TRUE)
+		else
+			if(!target)
+				target = can_z_move(dir, get_turf(src), null, z_move_flags, src)
+				if(!target)
+					return FALSE
+			return buckled.zMove(arglist(args)) // Return value is a loc.
+	return ..()
+
+/mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
+	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated())
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider || src, "<span class='warning'>[rider ? src : "You"] can't do that right now!</span>")
+		return FALSE
+	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+		return ..()
+	switch(SEND_SIGNAL(buckled, COMSIG_BUCKLED_CAN_Z_MOVE, direction, start, destination, z_move_flags, src))
+		if(COMPONENT_RIDDEN_ALLOW_Z_MOVE) // Can be ridden.
+			return buckled.can_z_move(direction, start, destination, z_move_flags, src)
+		if(COMPONENT_RIDDEN_STOP_Z_MOVE) // Is a ridable but can't be ridden right now. Feedback messages already done.
+			return FALSE
+		else
+			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)
+				return buckled.can_z_move(direction, start, destination, z_move_flags, src)
+			if(z_move_flags & ZMOVE_FEEDBACK)
+				to_chat(src, "<span class='notice'>Unbuckle from [buckled] first.<span>")
+			return FALSE
+
+/mob/living/get_z_move_affected()
+	. = ..()
+	if(buckled)
+		. |= buckled
 
 /mob/living/keybind_face_direction(direction)
 	if(stat > SOFT_CRIT)

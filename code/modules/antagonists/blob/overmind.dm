@@ -106,10 +106,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(blobstrain.effectdesc)
 				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
-/mob/camera/blob/can_zFall(turf/source, levels)
-	// Prevent blob from falling through zlevels
-	return FALSE
-
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
 	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isgroundlessturf(T))

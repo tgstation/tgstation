@@ -252,38 +252,44 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
+/// Recursive proc that precipitates a movable (plus whatever buckled to it) to lower z levels if possible.
+/turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, turf/oldloc)
+	var/turf/target = get_step_multiz(src, DOWN)
+	if(!target || (!isobj(falling) && !ismob(falling)))
+		return FALSE
+	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
+		return FALSE
+
+	falling.currently_z_moving = CURRENTLY_Z_FALLING // So it doesn't trigger other zFall calls on forceMove()
+
+	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
+	target.zImpact(falling, levels, src)
+	return TRUE
+
+///Called each time the target falls down a z level, possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
+/turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
 	var/flags = NONE
-	var/mov_name = A.name
+	var/list/falling_movables = falling.get_z_move_affected()
+	var/list/falling_mov_names
+	for(var/atom/movable/falling_mov as anything in falling_movables)
+		falling_mov_names += falling_mov.name
 	for(var/i in contents)
 		var/atom/thing = i
-		flags |= thing.intercept_zImpact(A, levels)
+		flags |= thing.intercept_zImpact(falling_movables, levels)
 		if(flags & FALL_STOP_INTERCEPTING)
 			break
 	if(prev_turf && !(flags & FALL_NO_MESSAGE))
-		prev_turf.visible_message(span_danger("[mov_name] falls through [prev_turf]!"))
-	if(flags & FALL_INTERCEPTED)
-		return
-	if(zFall(A, levels + 1))
+		for(var/mov_name in falling_mov_names)
+			prev_turf.visible_message(span_danger("[mov_name] falls through [prev_turf]!"))
+	if(!(flags & FALL_INTERCEPTED) && zFall(falling, levels + 1))
 		return FALSE
-	A.visible_message(span_danger("[A] crashes into [src]!"))
-	A.onZImpact(src, levels)
-	return TRUE
-
-/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
-	SHOULD_BE_PURE(TRUE)
-	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
-
-/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
-	var/turf/target = get_step_multiz(src, DOWN)
-	if(!target || (!isobj(A) && !ismob(A)))
-		return FALSE
-	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
-		return FALSE
-	A.zfalling = TRUE
-	A.forceMove(target)
-	A.zfalling = FALSE
-	target.zImpact(A, levels, src)
+	for(var/atom/movable/falling_mov as anything in falling_movables)
+		if(!(flags & FALL_RETAIN_PULL))
+			falling_mov.stop_pulling()
+		if(!(flags & FALL_INTERCEPTED))
+			falling_mov.onZImpact(src, levels)
+		if(falling_mov.pulledby && (falling_mov.z != falling_mov.pulledby.z || get_dist(falling_mov, falling_mov.pulledby) > 1))
+			falling_mov.pulledby.stop_pulling()
 	return TRUE
 
 /turf/proc/handleRCL(obj/item/rcl/C, mob/user)
@@ -353,14 +359,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	..()
+	. = ..()
 	//melting
 	if(isobj(arrived) && air && air.temperature > T0C)
 		var/obj/O = arrived
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
-	if(!arrived.zfalling)
-		zFall(arrived)
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)

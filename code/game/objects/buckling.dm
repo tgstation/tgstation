@@ -158,10 +158,14 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
 	var/turf/location = buckled_mob.loc
-	if(istype(location) && !buckled_mob.zfalling)
+	if(istype(location) && !buckled_mob.currently_z_moving)
 		location.zFall(buckled_mob)
 
 	post_unbuckle_mob(.)
+
+	if(!QDELETED(buckled_mob) && !buckled_mob.currently_z_moving && isturf(buckled_mob.loc)) // In the case they unbuckled to a flying movable midflight.
+		var/turf/pitfall = buckled_mob.loc
+		pitfall?.zFall(buckled_mob)
 
 /atom/movable/proc/on_set_anchored(atom/movable/source, anchorvalue)
 	SIGNAL_HANDLER
