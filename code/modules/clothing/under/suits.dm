@@ -150,7 +150,7 @@
 	name = "changshan"
 	desc = "A gorgeously embroidered silk shirt."
 	icon_state = "changshan"
-	inhand_icon_state = "laywer_red"
+	inhand_icon_state = "lawyer_red"
 	body_parts_covered = CHEST|GROIN|LEGS
 	greyscale_config = /datum/greyscale_config/changshan
 	greyscale_config_worn = /datum/greyscale_config/changshan/worn
