@@ -57,17 +57,17 @@
 /datum/id_trim/job/proc/refresh_trim_access()
 	// If there's no config loaded then assume minimal access.
 	if(!config)
-		access |= minimal_access.Copy()
-		wildcard_access |= minimal_wildcard_access.Copy()
+		access = minimal_access.Copy()
+		wildcard_access = minimal_wildcard_access.Copy()
 		return FALSE
 
 	// There is a config loaded. Check for the jobs_have_minimal_access flag being set.
 	if(CONFIG_GET(flag/jobs_have_minimal_access))
-		access |= minimal_access.Copy()
-		wildcard_access |= minimal_wildcard_access.Copy()
+		access = minimal_access.Copy()
+		wildcard_access = minimal_wildcard_access.Copy()
 	else
-		access |= minimal_access + extra_access
-		wildcard_access |= minimal_wildcard_access + extra_wildcard_access
+		access = minimal_access | extra_access
+		wildcard_access = minimal_wildcard_access | extra_wildcard_access
 
 	// If the config has global maint access set, we always want to add maint access.
 	if(CONFIG_GET(flag/everyone_has_maint_access))
