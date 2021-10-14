@@ -11,7 +11,7 @@
 	hide = TRUE
 	shift_underlay_only = FALSE
 
-	pipe_flags = PIPING_ONE_PER_TURF
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DISTANCE_PREFERENCE
 	pipe_state = "connector"
 	custom_reconcilation = TRUE
 

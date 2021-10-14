@@ -12,6 +12,8 @@
 	pipe_state = "injector"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DISTANCE_PREFERENCE
+
 	///Variable used for radio frequency injection
 	var/injecting = FALSE
 	///Rate of operation of the device

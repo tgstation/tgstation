@@ -12,6 +12,8 @@
 	pipe_state = "pvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DISTANCE_PREFERENCE
+
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)

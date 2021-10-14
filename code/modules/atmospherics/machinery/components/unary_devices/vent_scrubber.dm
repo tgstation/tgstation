@@ -17,6 +17,8 @@
 	pipe_state = "scrubber"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DISTANCE_PREFERENCE
+
 	///The mode of the scrubber (SCRUBBING or SIPHONING)
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 	///The list of gases we are filtering

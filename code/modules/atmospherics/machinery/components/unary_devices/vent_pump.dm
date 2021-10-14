@@ -20,6 +20,8 @@
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DISTANCE_PREFERENCE
+
 	///Direction of pumping the gas (RELEASING or SIPHONING)
 	var/pump_direction = RELEASING
 	///Should we check internal pressure, external pressure, both or none? (EXT_BOUND, INT_BOUND, NO_BOUND)

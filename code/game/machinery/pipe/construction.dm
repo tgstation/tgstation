@@ -162,6 +162,8 @@ Buildable meters
 	for(var/obj/machinery/atmospherics/machine in loc)
 		// Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 		if(machine.pipe_flags & flags & PIPING_ONE_PER_TURF)
+			if((machine.pipe_flags & flags & PIPING_DISTANCE_PREFERENCE) && check_separation(machine))
+				continue
 			to_chat(user, span_warning("Something is hogging the tile!"))
 			return TRUE
 		// skip checks if we don't overlap layers, either by being on the same layer or by something being on all layers
@@ -269,6 +271,11 @@ Buildable meters
 			return TRUE
 		return FALSE
 	// No smart pipes involved, the conflict can't be solved this way.
+	return FALSE
+
+/obj/item/pipe/proc/check_separation(obj/machinery/atmospherics/machine)
+	if((machine.piping_layer == PIPING_LAYER_MIN && piping_layer == PIPING_LAYER_MAX) || (machine.piping_layer == PIPING_LAYER_MAX && piping_layer == PIPING_LAYER_MIN))
+		return TRUE
 	return FALSE
 
 /obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)
