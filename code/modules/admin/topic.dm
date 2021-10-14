@@ -1953,6 +1953,16 @@
 		var/admin_key = href_list["unbanadminkey"]
 		unban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
 
+	else if(href_list["rebanid"])
+		var/ban_id = href_list["rebanid"]
+		var/player_key = href_list["rebankey"]
+		var/player_ip = href_list["rebanip"]
+		var/player_cid = href_list["rebancid"]
+		var/role = href_list["rebanrole"]
+		var/page = href_list["rebanpage"]
+		var/admin_key = href_list["rebanadminkey"]
+		reban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
+
 	else if(href_list["unbanlog"])
 		var/ban_id = href_list["unbanlog"]
 		ban_log(ban_id)

@@ -717,8 +717,6 @@
 			var/unban_round_id = query_unban_search_bans.item[17]
 			var/target = ban_target_string(banned_player_key, banned_player_ip, banned_player_cid)
 
-			var/unban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[banned_player_key];unbanadminkey=[banning_admin_key];unbanip=[banned_player_ip];unbancid=[banned_player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
-
 			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[target]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[banning_admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
 			if(!expiration_time)
 				output += "<b>Permanent ban</b>."
@@ -727,7 +725,14 @@
 			if(unban_datetime)
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
 			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
-			output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[banned_player_key];editbanip=[banned_player_ip];editbancid=[banned_player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[banning_admin_key]'>Edit</a><br>[unban_href]"
+
+			var/un_or_reban_href
+			if(unban_datetime)
+				un_or_reban_href = "<a href='?_src_=holder;[HrefToken()];rebanid=[ban_id];rebankey=[banned_player_key];rebanadminkey=[banning_admin_key];rebanip=[banned_player_ip];rebancid=[banned_player_cid];rebanrole=[role];rebanpage=[page]'>Reban</a>"
+			else
+				un_or_reban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[banned_player_key];unbanadminkey=[banning_admin_key];unbanip=[banned_player_ip];unbancid=[banned_player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
+			output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[banned_player_key];editbanip=[banned_player_ip];editbancid=[banned_player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[banning_admin_key]'>Edit</a><br>[un_or_reban_href]"
+
 			if(edits)
 				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
 			output += "</div></div></div>"
@@ -748,15 +753,17 @@
 		return
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
+	var/change_message = "[usr.client.key] unbanned [target] from [role]<hr>"
 	var/datum/db_query/query_unban = SSdbcore.NewQuery({"
 		UPDATE [format_table_name("ban")] SET
 			unbanned_datetime = NOW(),
 			unbanned_ckey = :admin_ckey,
 			unbanned_ip = INET_ATON(:admin_ip),
 			unbanned_computerid = :admin_cid,
-			unbanned_round_id = :round_id
+			unbanned_round_id = :round_id,
+			edits = CONCAT(IFNULL(edits,''), :change_message)
 		WHERE id = :ban_id
-	"}, list("ban_id" = ban_id, "admin_ckey" = usr.client.ckey, "admin_ip" = usr.client.address, "admin_cid" = usr.client.computer_id, "round_id" = GLOB.round_id))
+	"}, list("ban_id" = ban_id, "admin_ckey" = usr.client.ckey, "admin_ip" = usr.client.address, "admin_cid" = usr.client.computer_id, "round_id" = GLOB.round_id, "change_message" = change_message))
 	if(!query_unban.warn_execute())
 		qdel(query_unban)
 		return
@@ -796,7 +803,7 @@
 			unbanned_round_id = NULL,
 			edits = CONCAT(IFNULL(edits,''), :change_message)
 		WHERE id = :ban_id
-	"}, list("ban_id" = ban_id, "admin_ckey" = usr.client.ckey, "admin_ip" = usr.client.address, "admin_cid" = usr.client.computer_id, "round_id" = GLOB.round_id))
+	"}, list("change_message" = change_message, "ban_id" = ban_id))
 	if(!query_reban.warn_execute())
 		qdel(query_reban)
 		return
