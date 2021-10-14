@@ -65,6 +65,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	icon_dead = "cotton-dead"
+	mutatelist = null
 
 /obj/item/grown/cotton/durathread
 	seed = /obj/item/seeds/cotton/durathread

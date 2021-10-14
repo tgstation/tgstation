@@ -30,8 +30,16 @@
 	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
 	)
 
-/// Amount of cash you can get from a maxcap
+/// The maximum amount of cash you can get from toxins experiments.
 #define TECHWEB_BOMB_CASHCAP 50000
+/// The range required to generate any cash from toxins experiments.
+#define TECHWEB_BOMB_MIN_RANGE (GLOB.MAX_EX_LIGHT_RANGE)
+/// The range required to produce the maximum amount of cash from toxins experiments.
+#define TECHWEB_BOMB_MAX_RANGE 300
+/// A constant used to scale the cash produced by toxins experiments.
+#define TECHWEB_BOMB_SCALE_CONST 300000
+/// A constant used to scale the cash produced by toxins experiments.
+#define TECHWEB_BOMB_SCALE_DIVISOR 1500
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3
@@ -42,6 +50,7 @@
 #define CELL_LINE_TABLE_MOIST "cell_line_moist_table"
 #define CELL_LINE_TABLE_BLOB "cell_line_blob_table"
 #define CELL_LINE_TABLE_CLOWN "cell_line_clown_table"
+#define CELL_LINE_TABLE_ALGAE "cell_line_algae_table"
 
 //! Biopsy cell line types
 #define CELL_LINE_TABLE_BEAR "cell_line_bear_table"
@@ -53,6 +62,7 @@
 #define CELL_LINE_TABLE_COCKROACH "cell_line_cockroach_table"
 #define CELL_LINE_TABLE_CORGI "cell_line_corgi_table"
 #define CELL_LINE_TABLE_COW "cell_line_cow_table"
+#define CELL_LINE_TABLE_MOONICORN "cell_line_moonicorn_table"
 #define CELL_LINE_TABLE_GELATINOUS "cell_line_gelatinous_table"
 #define CELL_LINE_TABLE_GRAPE "cell_line_grape_table"
 #define CELL_LINE_TABLE_MEGACARP "cell_line_megacarp_table"
@@ -64,6 +74,11 @@
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
 #define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 #define CELL_LINE_TABLE_GLUTTON "cell_line_glutton_table"
+#define CELL_LINE_TABLE_FROG	"cell_line_frog_table"
+#define CELL_LINE_TABLE_WALKING_MUSHROOM "cell_line_walking_mushroom_table"
+#define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
+#define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
+#define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

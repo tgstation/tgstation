@@ -100,7 +100,7 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = FALSE
-	max_mod_capacity = 0
+	max_mod_capacity = -1
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -375,6 +375,6 @@
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY
 
-/obj/item/gun/energy/tesla_cannon/Initialize()
+/obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)

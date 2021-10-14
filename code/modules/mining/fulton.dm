@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	else
 		var/A
 
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sortNames(possible_beacons)
+		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sort_names(possible_beacons)
 
 		if(!A)
 			return
@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	density = FALSE
 	var/beacon_network = "station"
 
-/obj/structure/extraction_point/Initialize()
+/obj/structure/extraction_point/Initialize(mapload)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	GLOB.total_extraction_beacons += src
@@ -182,7 +182,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return TRUE
-	for(var/thing in A.GetAllContents())
+	for(var/thing in A.get_all_contents())
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.stat != DEAD)

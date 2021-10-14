@@ -335,7 +335,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha, appearance_flags = KEEP_APART)
+	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/simple
 	name = "simple neon carpet"
@@ -1099,7 +1099,7 @@
 
 /obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
-	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha, appearance_flags = KEEP_APART)
+	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha)
 
 /obj/item/stack/tile/emissive_test/sixty
 	amount = 60
@@ -1111,4 +1111,16 @@
 	merge_type = /obj/item/stack/tile/emissive_test/white
 
 /obj/item/stack/tile/emissive_test/white/sixty
+	amount = 60
+
+/obj/item/stack/tile/catwalk_tile
+	name = "catwalk floor"
+	singular_name = "catwalk floor tile"
+	desc = "Catwalk floor to be able see things underneath"
+	icon_state = "catwalk_floor"
+	inhand_icon_state = "tile-catwalk"
+	turf_type = /turf/open/floor/plating/catwalk_floor
+	merge_type = /obj/item/stack/tile/catwalk_tile
+
+/obj/item/stack/tile/catwalk_tile/sixty
 	amount = 60

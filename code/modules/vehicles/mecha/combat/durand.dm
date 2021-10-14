@@ -14,7 +14,7 @@
 	var/obj/durand_shield/shield
 
 
-/obj/vehicle/sealed/mecha/combat/durand/Initialize()
+/obj/vehicle/sealed/mecha/combat/durand/Initialize(mapload)
 	. = ..()
 	shield = new /obj/durand_shield(loc, src, layer, dir)
 	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
@@ -151,6 +151,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	///To keep track of things during the animation
 	var/switching = FALSE
 	var/currentuser
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF //The shield should not take damage from fire,  lava, or acid; that's the mech's job.
 
 
 /obj/durand_shield/Initialize(mapload, _chassis, _layer, _dir)
@@ -232,13 +233,13 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		return
 	. = ..()
 	flick("shield_impact", src)
-	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
+	if(!chassis.use_power((max_integrity - atom_integrity) * 100))
 		chassis.cell?.charge = 0
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(chassis.occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
 			action.Trigger(FALSE)
-	obj_integrity = 10000
+	atom_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()
 	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)

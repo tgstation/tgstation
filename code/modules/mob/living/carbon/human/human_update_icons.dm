@@ -227,6 +227,7 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown) //if the inventory is open ...
 				client.screen += glasses //Either way, add the item to the HUD
 		update_observer_view(glasses,1)
+		//This is in case the glasses would be going above the hair, like welding goggles that were lifted up
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/clothing/eyes.dmi')
 
@@ -423,9 +424,7 @@ There are several things that need to be remembered:
 	if(legcuffed)
 		var/mutable_appearance/legcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		if(legcuffed.blocks_emissive)
-			var/mutable_appearance/legcuff_blocker = mutable_appearance('icons/mob/mob.dmi', "legcuff1", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-			legcuff_blocker.color = GLOB.em_block_color
-			legcuff_overlay.overlays += legcuff_blocker
+			legcuff_overlay.overlays += emissive_blocker(legcuff_overlay.icon, legcuff_overlay.icon_state, alpha = legcuff_overlay.alpha)
 
 		overlays_standing[LEGCUFF_LAYER] = legcuff_overlay
 		apply_overlay(LEGCUFF_LAYER)

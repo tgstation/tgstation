@@ -615,8 +615,15 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	///Mob Size of the current mob sprite.
+	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
+	M.resize = newsize/current_size
+	current_size = newsize
+	M.update_transform()
+
 	toxpwr = 0.1 * volume
 	M.adjustBruteLoss((0.3 * volume) * REM * delta_time, 0)
 	. = TRUE
@@ -625,6 +632,12 @@
 		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
+
+/datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/M)
+	M.resize = RESIZE_DEFAULT_SIZE/current_size
+	current_size = RESIZE_DEFAULT_SIZE
+	M.update_transform()
+	..()
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"

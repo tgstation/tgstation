@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	///Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
-/obj/machinery/gravity_generator/main/Initialize()
+/obj/machinery/gravity_generator/main/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, TRUE)
 
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	qdel(src)
 
 /obj/machinery/gravity_generator/proc/set_broken()
-	obj_break()
+	atom_break()
 
 /obj/machinery/gravity_generator/proc/set_fix()
 	set_machine_stat(machine_stat & ~BROKEN)
@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 // Generator which spawns with the station.
 //
 
-/obj/machinery/gravity_generator/main/station/Initialize()
+/obj/machinery/gravity_generator/main/station/Initialize(mapload)
 	. = ..()
 	setup_parts()
 	middle.add_overlay("activated")

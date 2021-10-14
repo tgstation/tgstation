@@ -22,7 +22,7 @@
 
 	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
-/obj/machinery/navbeacon/Initialize()
+/obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
 
 	if(wayfinding)
@@ -44,11 +44,11 @@
 	glob_lists_deregister()
 	return ..()
 
-/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
-	if (GLOB.navbeacons["[old_z]"])
-		GLOB.navbeacons["[old_z]"] -= src
-	if (GLOB.navbeacons["[new_z]"])
-		GLOB.navbeacons["[new_z]"] += src
+/obj/machinery/navbeacon/on_changed_z_level(turf/old_turf, turf/new_turf)
+	if (GLOB.navbeacons["[old_turf?.z]"])
+		GLOB.navbeacons["[old_turf?.z]"] -= src
+	if (GLOB.navbeacons["[new_turf?.z]"])
+		GLOB.navbeacons["[new_turf?.z]"] += src
 	..()
 
 // set the transponder codes assoc list from codes_txt

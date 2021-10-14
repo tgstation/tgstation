@@ -153,21 +153,37 @@ SUBSYSTEM_DEF(explosions)
 		A.color = null
 		A.maptext = ""
 
-/proc/dyn_explosion(turf/epicenter, power, flame_range = 0, flash_range = null, adminlog = TRUE, ignorecap = TRUE, silent = FALSE, smoke = TRUE)
+/**
+ * Using default dyn_ex scale:
+ *
+ * 100 explosion power is a (5, 10, 20) explosion.
+ * 75 explosion power is a (4, 8, 17) explosion.
+ * 50 explosion power is a (3, 7, 14) explosion.
+ * 25 explosion power is a (2, 5, 10) explosion.
+ * 10 explosion power is a (1, 3, 6) explosion.
+ * 5 explosion power is a (0, 1, 3) explosion.
+ * 1 explosion power is a (0, 0, 1) explosion.
+ *
+ * Arguments:
+ * * epicenter: Turf the explosion is centered at.
+ * * power - Dyn explosion power. See reference above.
+ * * flame_range: Flame range. Equal to the equivalent of the light impact range multiplied by this value.
+ * * flash_range: The range at which the explosion flashes people. Equal to the equivalent of the light impact range multiplied by this value.
+ * * adminlog: Whether to log the explosion/report it to the administration.
+ * * ignorecap: Whether to ignore the relevant bombcap. Defaults to FALSE.
+ * * flame_range: The range at which the explosion should produce hotspots.
+ * * silent: Whether to generate/execute sound effects.
+ * * smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * * explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
+ */
+/proc/dyn_explosion(turf/epicenter, power, flame_range = 0, flash_range = null, adminlog = TRUE, ignorecap = TRUE, silent = FALSE, smoke = TRUE, atom/explosion_cause = null)
 	if(!power)
 		return
 	var/range = 0
 	range = round((2 * power)**GLOB.DYN_EX_SCALE)
-	explosion(epicenter, devastation_range = round(range * 0.25), heavy_impact_range = round(range * 0.5), light_impact_range = round(range), flame_range = flame_range*range, flash_range = flash_range*range, adminlog = adminlog, ignorecap = ignorecap, silent = silent, smoke = smoke)
+	explosion(epicenter, devastation_range = round(range * 0.25), heavy_impact_range = round(range * 0.5), light_impact_range = round(range), flame_range = flame_range*range, flash_range = flash_range*range, adminlog = adminlog, ignorecap = ignorecap, silent = silent, smoke = smoke, explosion_cause = explosion_cause)
 
-// Using default dyn_ex scale:
-// 100 explosion power is a (5, 10, 20) explosion.
-// 75 explosion power is a (4, 8, 17) explosion.
-// 50 explosion power is a (3, 7, 14) explosion.
-// 25 explosion power is a (2, 5, 10) explosion.
-// 10 explosion power is a (1, 3, 6) explosion.
-// 5 explosion power is a (0, 1, 3) explosion.
-// 1 explosion power is a (0, 0, 1) explosion.
+
 
 /**
  * Makes a given atom explode.
@@ -183,8 +199,9 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
+/proc/explosion(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
 	. = SSexplosions.explode(arglist(args))
 
 
@@ -202,9 +219,22 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - explosion_cause: [Optional] The atom that caused the explosion, when different to the origin. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE)
-	var/list/arguments = list(EXARG_KEY_ORIGIN = origin, EXARG_KEY_DEV_RANGE = devastation_range, EXARG_KEY_HEAVY_RANGE = heavy_impact_range, EXARG_KEY_LIGHT_RANGE = light_impact_range, EXARG_KEY_FLAME_RANGE = flame_range, EXARG_KEY_FLASH_RANGE = flash_range, EXARG_KEY_ADMIN_LOG = adminlog, EXARG_KEY_IGNORE_CAP = ignorecap, EXARG_KEY_SILENT = silent, EXARG_KEY_SMOKE = smoke)
+/datum/controller/subsystem/explosions/proc/explode(atom/origin, devastation_range = 0, heavy_impact_range = 0, light_impact_range = 0, flame_range = 0, flash_range = 0, adminlog = TRUE, ignorecap = FALSE, silent = FALSE, smoke = FALSE, atom/explosion_cause = null)
+	var/list/arguments = list(
+		EXARG_KEY_ORIGIN = origin,
+		EXARG_KEY_DEV_RANGE = devastation_range,
+		EXARG_KEY_HEAVY_RANGE = heavy_impact_range,
+		EXARG_KEY_LIGHT_RANGE = light_impact_range,
+		EXARG_KEY_FLAME_RANGE = flame_range,
+		EXARG_KEY_FLASH_RANGE = flash_range,
+		EXARG_KEY_ADMIN_LOG = adminlog,
+		EXARG_KEY_IGNORE_CAP = ignorecap,
+		EXARG_KEY_SILENT = silent,
+		EXARG_KEY_SMOKE = smoke,
+		EXARG_KEY_EXPLOSION_CAUSE = explosion_cause ? explosion_cause : origin,
+	)
 	var/atom/location = isturf(origin) ? origin : origin.loc
 	if(SEND_SIGNAL(origin, COMSIG_ATOM_EXPLODE, arguments) & COMSIG_CANCEL_EXPLOSION)
 		return // Signals are incompatible with `arglist(...)` so we can't actually use that for these. Additionally,
@@ -225,8 +255,8 @@ SUBSYSTEM_DEF(explosions)
 		return
 
 	arguments -= EXARG_KEY_ORIGIN
-	propagate_blastwave(arglist(list(location) + arguments))
 
+	propagate_blastwave(arglist(list(location) + arguments))
 
 /**
  * Handles the effects of an explosion originating from a given point.
@@ -247,8 +277,9 @@ SUBSYSTEM_DEF(explosions)
  * - flame_range: The range at which the explosion should produce hotspots.
  * - silent: Whether to generate/execute sound effects.
  * - smoke: Whether to generate a smoke cloud provided the explosion is powerful enough to warrant it.
+ * - explosion_cause: The atom that caused the explosion. Used for logging.
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, atom/explosion_cause)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
@@ -279,15 +310,46 @@ SUBSYSTEM_DEF(explosions)
 
 	var/max_range = max(devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/started_at = REALTIMEOFDAY
+
+	// Now begins a bit of a logic train to find out whodunnit.
+	var/who_did_it = "N/A"
+	var/who_did_it_game_log = "N/A"
+
+	// Projectiles have special handling. They rely on a firer var and not fingerprints. Check special cases for firer being
+	// mecha, mob or an object such as the gun itself. Handle each uniquely.
+	if(isprojectile(explosion_cause))
+		var/obj/projectile/fired_projectile = explosion_cause
+		if(ismecha(fired_projectile.firer))
+			var/obj/vehicle/sealed/mecha/firing_mecha = fired_projectile.firer
+			var/list/mob/drivers = firing_mecha.return_occupants()
+			if(length(drivers))
+				who_did_it = "\[Mecha drivers:"
+				who_did_it_game_log = "\[Mecha drivers:"
+				for(var/mob/driver in drivers)
+					who_did_it += " [ADMIN_LOOKUPFLW(driver)]"
+					who_did_it_game_log = " [key_name(driver)]"
+				who_did_it += "\]"
+				who_did_it_game_log += "\]"
+		else if(ismob(fired_projectile.firer))
+			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer)]\]"
+			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer)]\]"
+		else
+			who_did_it = "\[Projectile firer: [ADMIN_LOOKUPFLW(fired_projectile.firer.fingerprintslast)]\]"
+			who_did_it_game_log = "\[Projectile firer: [key_name(fired_projectile.firer.fingerprintslast)]\]"
+	// Otherwise if the explosion cause is an atom, try get the fingerprints.
+	else if(istype(explosion_cause))
+		who_did_it = ADMIN_LOOKUPFLW(explosion_cause.fingerprintslast)
+		who_did_it_game_log = key_name(explosion_cause.fingerprintslast)
+
 	if(adminlog)
-		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
+		message_admins("Explosion with size (Devast: [devastation_range], Heavy: [heavy_impact_range], Light: [light_impact_range], Flame: [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]. Possible cause: [explosion_cause]. Last fingerprints: [who_did_it].")
+		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)].  Possible cause: [explosion_cause]. Last fingerprints: [who_did_it_game_log].")
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 	var/z0 = epicenter.z
 	var/area/areatype = get_area(epicenter)
-	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flame" = flame_range, "flash" = flash_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = time_stamp("YYYY-MM-DD hh:mm:ss", 1)))
+	SSblackbox.record_feedback("associative", "explosion", 1, list("dev" = devastation_range, "heavy" = heavy_impact_range, "light" = light_impact_range, "flame" = flame_range, "flash" = flash_range, "orig_dev" = orig_dev_range, "orig_heavy" = orig_heavy_range, "orig_light" = orig_light_range, "x" = x0, "y" = y0, "z" = z0, "area" = areatype.type, "time" = time_stamp("YYYY-MM-DD hh:mm:ss", 1), "possible_cause" = explosion_cause, "possible_suspect" = who_did_it_game_log))
 
 	// Play sounds; we want sounds to be different depending on distance so we will manually do it ourselves.
 	// Stereo users will also hear the direction of the explosion!
@@ -354,7 +416,7 @@ SUBSYSTEM_DEF(explosions)
 			for(var/I in T)
 				var/atom/A = I
 				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += A.GetAllContents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
+					items += A.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
 			for(var/thing in items)
 				var/atom/movable/movable_thing = thing
 				if(QDELETED(movable_thing))

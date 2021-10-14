@@ -16,7 +16,7 @@
 
 	var/locked = FALSE
 
-/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags)
+/datum/component/shell/Initialize(unremovable_circuit_components, capacity, shell_flags, starting_circuit)
 	. = ..()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -24,6 +24,9 @@
 	src.shell_flags = shell_flags || src.shell_flags
 	src.capacity = capacity || src.capacity
 	set_unremovable_circuit_components(unremovable_circuit_components)
+
+	if(starting_circuit)
+		attach_circuit(starting_circuit)
 
 /datum/component/shell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
@@ -48,6 +51,7 @@
 		if(ispath(circuit_component))
 			circuit_component = new circuit_component()
 		circuit_component.removable = FALSE
+		circuit_component.set_circuit_size(0)
 		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
 		unremovable_circuit_components += circuit_component
 
@@ -145,7 +149,7 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, /obj/item.proc/attack_obj, attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, /obj/item.proc/attack_atom, attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)
@@ -161,7 +165,7 @@
 
 		if(istype(item, /obj/item/circuit_component))
 			attached_circuit.add_component_manually(item, attacker)
-			return
+			return COMPONENT_NO_AFTERATTACK
 
 	if(!istype(item, /obj/item/integrated_circuit))
 		return
@@ -175,7 +179,7 @@
 		source.balloon_alert(attacker, "there is already a circuitboard inside!")
 		return
 
-	if(length(logic_board.attached_components) - length(unremovable_circuit_components) > capacity)
+	if(logic_board.current_size > capacity)
 		source.balloon_alert(attacker, "this is too large to fit into [parent]!")
 		return
 
@@ -185,7 +189,7 @@
 /// Sets whether the shell is locked or not
 /datum/component/shell/proc/set_locked(new_value)
 	locked = new_value
-	attached_circuit?.locked = locked
+	attached_circuit?.set_locked(new_value)
 
 
 /datum/component/shell/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
@@ -248,8 +252,8 @@
 		source.balloon_alert(user, "it's locked!")
 		return COMPONENT_CANCEL_ADD_COMPONENT
 
-	if(length(attached_circuit.attached_components) - length(unremovable_circuit_components) >= capacity)
-		source.balloon_alert(user, "it's at maximum capacity!")
+	if(attached_circuit.current_size + added_comp.circuit_size > capacity)
+		source.balloon_alert(user, "it won't fit!")
 		return COMPONENT_CANCEL_ADD_COMPONENT
 
 /**
@@ -270,7 +274,7 @@
 	attached_circuit.set_shell(parent_atom)
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
-	attached_circuit.locked = FALSE
+	attached_circuit.set_locked(FALSE)
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		attached_circuit.on = parent_atom.anchored
@@ -296,7 +300,7 @@
 	for(var/obj/item/circuit_component/to_remove as anything in unremovable_circuit_components)
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
-	attached_circuit.locked = FALSE
+	attached_circuit.set_locked(FALSE)
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)

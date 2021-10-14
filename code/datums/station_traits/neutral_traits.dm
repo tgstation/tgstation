@@ -13,6 +13,9 @@
 	report_message = "System's local planet has irregular atmospherical properties"
 	trait_to_give = STATION_TRAIT_UNNATURAL_ATMOSPHERE
 
+	// This station trait modifies the atmosphere, which is too far past the time admins are able to revert it
+	can_revert = FALSE
+
 /datum/station_trait/unique_ai
 	name = "Unique AI"
 	trait_type = STATION_TRAIT_NEUTRAL

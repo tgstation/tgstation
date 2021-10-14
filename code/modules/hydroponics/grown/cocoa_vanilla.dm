@@ -38,7 +38,7 @@
 	plantname = "Vanilla Tree"
 	product = /obj/item/food/grown/vanillapod
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/vanilla = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/vanillapod
@@ -63,7 +63,7 @@
 	yield = 3
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -96,7 +96,7 @@
 	foodtypes = TOXIC
 	tastes = list("acrid bitterness" = 1)
 
-/obj/item/food/grown/bungopit/Initialize()
+/obj/item/food/grown/bungopit/Initialize(mapload)
 	. =..()
 	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/toxin/bungotoxin, seed.potency * 0.10) //More than this will kill at too low potency

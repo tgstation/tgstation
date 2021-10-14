@@ -18,7 +18,7 @@
 	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
 
 
-/turf/open/floor/glass/Initialize()
+/turf/open/floor/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
 	return INITIALIZE_HINT_LATELOAD

@@ -1,9 +1,4 @@
-#define LAW_ZEROTH "zeroth"
-#define LAW_INHERENT "inherent"
-#define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
-#define LAW_HACKED "hacked"
-
+#define AI_LAWS_ASIMOV "asimov"
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
@@ -36,7 +31,7 @@
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
-	id = "asimov"
+	id = AI_LAWS_ASIMOV
 	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
@@ -263,8 +258,10 @@
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		law_weights -= AI_LAWS_ASIMOV
 	while(!lawtype && law_weights.len)
-		var/possible_id = pickweightAllowZero(law_weights)
+		var/possible_id = pick_weight_allow_zero(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id
@@ -331,7 +328,7 @@
 		replaceable_groups[LAW_INHERENT] = inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
-	var/picked_group = pickweight(replaceable_groups)
+	var/picked_group = pick_weight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
 			. = zeroth
@@ -450,11 +447,11 @@
 
 	for(var/law in hacked)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#660000'>[law]</font>" : law]"
+			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#660000'>[law]</font>" : law]"
 
 	for(var/law in ion)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
+			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
 
 	var/number = 1
 	for(var/law in inherent)
@@ -467,3 +464,5 @@
 			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
 			number++
 	return data
+
+#undef AI_LAWS_ASIMOV

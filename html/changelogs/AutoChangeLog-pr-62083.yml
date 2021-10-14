@@ -1,0 +1,4 @@
+author: "Coconutwarrior97"
+delete-after: True
+changes: 
+  - bugfix: "Lavaproof borg upgrade for miner borgs now works properly."

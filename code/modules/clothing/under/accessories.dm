@@ -166,6 +166,7 @@
 							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+							add_memory_in_range(M, 7, MEMORY_RECEIVED_MEDAL, list(DETAIL_PROTAGONIST = M, DETAIL_MEDAL_TYPE = src, DETAIL_DEUTERAGONIST = user, DETAIL_MEDAL_REASON = input), STORY_VALUE_AMAZING)
 
 		else
 			to_chat(user, span_warning("Medals can only be pinned on jumpsuits!"))
@@ -338,13 +339,13 @@
 	icon_state = "pocketprotector"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize()
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
 	. = ..()
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
 	new /obj/item/pen/blue(src)
 
-/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize()
+/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to 3)
 		new /obj/item/lipstick/random(src)
@@ -353,35 +354,35 @@
 //REAL BIG FAN//
 ////////////////
 
-/obj/item/clothing/accessory/fan_clown_pin
+/obj/item/clothing/accessory/clown_enjoyer_pin
 	name = "\improper Clown Pin"
 	desc = "A pin to show off your appreciation for clowns and clowning!"
-	icon_state = "fan_clown_pin"
+	icon_state = "clown_enjoyer_pin"
 
-/obj/item/clothing/accessory/fan_clown_pin/on_uniform_equip(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
-	if(HAS_TRAIT(L, TRAIT_FAN_CLOWN))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "fan_clown_pin", /datum/mood_event/fan_clown_pin)
+	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
 
-/obj/item/clothing/accessory/fan_clown_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
-	if(HAS_TRAIT(L, TRAIT_FAN_CLOWN))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fan_clown_pin")
+	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
+		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "clown_enjoyer_pin")
 
-/obj/item/clothing/accessory/fan_mime_pin
+/obj/item/clothing/accessory/mime_fan_pin
 	name = "\improper Mime Pin"
 	desc = "A pin to show off your appreciation for mimes and miming!"
-	icon_state = "fan_mime_pin"
+	icon_state = "mime_fan_pin"
 
-/obj/item/clothing/accessory/fan_mime_pin/on_uniform_equip(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/mime_fan_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
-	if(HAS_TRAIT(L, TRAIT_FAN_MIME))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "fan_mime_pin", /datum/mood_event/fan_mime_pin)
+	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "mime_fan_pin", /datum/mood_event/mime_fan_pin)
 
-/obj/item/clothing/accessory/fan_mime_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/mime_fan_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
-	if(HAS_TRAIT(L, TRAIT_FAN_MIME))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "fan_mime_pin")
+	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
+		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "mime_fan_pin")
 
 ////////////////
 //OONGA BOONGA//

@@ -5,7 +5,7 @@ This file contains the cult dagger and rune list code
 */
 
 
-/obj/item/melee/cultblade/dagger/Initialize()
+/obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
 	if(!LAZYLEN(GLOB.rune_types))
 		GLOB.rune_types = list()

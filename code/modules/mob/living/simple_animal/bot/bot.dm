@@ -149,7 +149,7 @@
 	to_chat(src, span_userdanger("You turned off!"))
 	update_appearance()
 
-/mob/living/simple_animal/bot/Initialize()
+/mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
 	// Give bots a fancy new ID card that can hold any access.
@@ -459,7 +459,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
+	var/list/adjacent = T.get_atmos_adjacent_turfs(1)
 	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
 		adjacent = shuffle(adjacent)
 		shuffle = FALSE
@@ -901,7 +901,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	use_power = NO_POWER_USE
 	anchored = FALSE
 
-/obj/machinery/bot_core/Initialize()
+/obj/machinery/bot_core/Initialize(mapload)
 	. = ..()
 	if(!isbot(loc))
 		return INITIALIZE_HINT_QDEL

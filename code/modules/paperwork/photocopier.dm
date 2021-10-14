@@ -44,7 +44,7 @@
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
 
-/obj/machinery/photocopier/Initialize()
+/obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
@@ -373,7 +373,7 @@
 	else
 		return ..()
 
-/obj/machinery/photocopier/obj_break(damage_flag)
+/obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
 	if(. && toner_cartridge.charges)
 		new /obj/effect/decal/cleanable/oil(get_turf(src))
