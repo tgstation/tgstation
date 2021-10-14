@@ -42,9 +42,9 @@
 
 		if (!(TRAIT_NOHUNGER in species.inherent_traits))
 			diet = list(
-				"liked_food" = bitfield2list(species.liked_food, food_flags),
-				"disliked_food" = bitfield2list(species.disliked_food, food_flags),
-				"toxic_food" = bitfield2list(species.toxic_food, food_flags),
+				"liked_food" = bitfield_to_list(species.liked_food, food_flags),
+				"disliked_food" = bitfield_to_list(species.disliked_food, food_flags),
+				"toxic_food" = bitfield_to_list(species.toxic_food, food_flags),
 			)
 
 		data[species_id] = list(

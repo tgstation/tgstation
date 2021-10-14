@@ -47,6 +47,10 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 					port = port_to_check
 					break
 
+			if(!port)
+				LOG_ERROR(errors, "Port '[port_name]' not found on [component.type] when trying to set it to a value of [port_data["stored_data"]]!")
+				continue
+
 			port.set_input(port_data["stored_data"])
 
 	var/list/external_objects = general_data["external_objects"]

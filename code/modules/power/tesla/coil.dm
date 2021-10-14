@@ -24,6 +24,12 @@
 	///Amount of power stored inside the coil to be released in the powernet
 	var/stored_energy = 0
 
+	//Variables to calculate sound based on stored_energy to give engineers an audioclue of the magnitude of energy production.
+	///Calculated range of zap sounds based on power
+	var/zap_sound_range = 0
+	///Calculated volume of zap sounds based on power
+	var/zap_sound_volume = 0
+
 /obj/machinery/power/tesla_coil/anchored
 	anchored = TRUE
 
@@ -86,6 +92,8 @@
 	var/power_produced = min(stored_energy, (stored_energy * 0.04) + 1000) * delta_time
 	add_avail(power_produced)
 	stored_energy -= power_produced
+	zap_sound_volume = min(stored_energy/100000, 100)
+	zap_sound_range = min(stored_energy/2000000, 10)
 
 /obj/machinery/power/tesla_coil/zap_act(power, zap_flags)
 	if(!anchored || panel_open)
@@ -93,7 +101,6 @@
 	obj_flags |= BEING_SHOCKED
 	addtimer(CALLBACK(src, .proc/reset_shocked), 1 SECONDS)
 	flick("coilhit", src)
-	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 	if(!(zap_flags & ZAP_GENERATES_POWER)) //Prevent infinite recursive power
 		return 0
 	if(zap_flags & ZAP_LOW_POWER_GEN)
@@ -110,7 +117,7 @@
 	var/power = (powernet.avail) * 0.2 * input_power_multiplier  //Always always always use more then you output for the love of god
 	power = min(surplus(), power) //Take the smaller of the two
 	add_load(power)
-	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+	playsound(src.loc, 'sound/magic/lightningshock.ogg', zap_sound_volume, TRUE, zap_sound_range)
 	tesla_zap(src, 10, power, zap_flags)
 	zap_buckle_check(power)
 

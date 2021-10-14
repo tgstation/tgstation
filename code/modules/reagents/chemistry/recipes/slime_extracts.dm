@@ -267,6 +267,15 @@
 	empulse(get_turf(holder.my_atom), 3, 7)
 	..()
 
+/datum/chemical_reaction/slime/slimecell
+	required_reagents = list(/datum/reagent/toxin/plasma = 1)
+	required_container = /obj/item/slime_extract/yellow
+	required_other = TRUE
+
+/datum/chemical_reaction/slime/slimecell/on_reaction(datum/reagents/holder, created_volume)
+	new /obj/item/stock_parts/cell/emproof/slime(get_turf(holder.my_atom))
+	..()
+
 /datum/chemical_reaction/slime/slimeglow
 	required_reagents = list(/datum/reagent/water = 1)
 	required_container = /obj/item/slime_extract/yellow

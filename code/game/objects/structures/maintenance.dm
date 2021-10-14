@@ -32,7 +32,7 @@ at the cost of risking a vicious bite.**/
 	if(prob(40))
 		critter_infested = FALSE
 	if(prob(75))
-		var/picked_item = pickweight(loot)
+		var/picked_item = pick_weight(loot)
 		hidden_item = new picked_item(src)
 	loot = null
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)

@@ -25,7 +25,7 @@
 	add_overlay("improvised_grenade_filled")
 	add_overlay("improvised_grenade_wired")
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
-	det_time = text2num(pickweight(times))
+	det_time = text2num(pick_weight(times))
 	if(det_time < 0) //checking for 'duds'
 		range = 1
 		det_time = rand(30,80)

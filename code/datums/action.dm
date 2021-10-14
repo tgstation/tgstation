@@ -416,9 +416,6 @@
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
 
-/datum/action/item_action/toggle_wings
-	name = "Toggle Wings"
-
 /datum/action/item_action/toggle_human_head
 	name = "Toggle Human Head"
 
@@ -797,6 +794,11 @@
 
 /datum/action/small_sprite/megafauna/legion
 	small_icon_state = "mega_legion"
+
+/datum/action/small_sprite/mega_arachnid
+	small_icon = 'icons/mob/jungle/arachnid.dmi'
+	small_icon_state = "arachnid_mini"
+	background_icon_state = "bg_demon"
 
 /datum/action/small_sprite/Trigger()
 	..()

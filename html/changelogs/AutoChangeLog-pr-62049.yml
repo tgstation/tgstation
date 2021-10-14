@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - spellcheck: "Fixed incorrect \"the\"'s being inserted before the names of improper nouns in item stripping code."

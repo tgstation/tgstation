@@ -169,7 +169,7 @@ Charged extracts:
 	if(!istype(H))
 		to_chat(user, span_warning("You must be a humanoid to use this!"))
 		return
-	var/racechoice = input(H, "Choose your slime subspecies.", "Slime Selection") as null|anything in sortList(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc)
+	var/racechoice = input(H, "Choose your slime subspecies.", "Slime Selection") as null|anything in sort_list(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc)
 	if(!racechoice)
 		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return

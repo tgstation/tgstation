@@ -100,7 +100,6 @@ GLOBAL_LIST_INIT(huds, list(
 /datum/atom_hud/proc/unregister_mob(datum/source, force)
 	SIGNAL_HANDLER
 	remove_hud_from(source, TRUE)
-	remove_from_hud(source)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user,hidden_atom)
 	if(hudusers[hud_user])

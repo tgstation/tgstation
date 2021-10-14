@@ -261,7 +261,7 @@
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
 		option.info = span_boldnotice("[initial(spider.menu_description)]")
 		display_spiders[initial(spider.name)] = option
-	sortList(display_spiders)
+	sort_list(display_spiders)
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
 	chosen_spider = spider_list[chosen_spider]
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)

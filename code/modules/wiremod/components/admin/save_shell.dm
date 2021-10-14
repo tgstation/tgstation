@@ -11,6 +11,8 @@
 	/// Returns the output from the proccall
 	var/datum/port/output/on_loaded
 
+	var/atom/movable/loaded_shell
+
 /obj/item/circuit_component/save_shell/populate_ports()
 	on_loaded = add_output_port("On Loaded", PORT_TYPE_SIGNAL)
 
@@ -25,6 +27,7 @@
 
 /obj/item/circuit_component/save_shell/proc/on_post_load(datum/source)
 	SIGNAL_HANDLER
+	loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
 	on_loaded.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/save_shell/proc/on_pre_save_to_json(datum/source, list/general_data)
@@ -41,8 +44,6 @@
 		var/variable_data = shell.vars[variable]
 		if(!istext(variable_data) && !isnum(variable_data))
 			continue
-		if(initial(shell.vars[variable]) == variable_data)
-			continue
 		shell_variables[variable] = variable_data
 
 	component_data["shell_variables"] = shell_variables
@@ -52,14 +53,16 @@
 		return
 
 	var/shell_type = text2path(component_data["shell_type"])
-	if(!shell_type)
+	if(!shell_type || !ispath(shell_type, /atom))
 		return ..()
 
-	var/atom/movable/shell = new shell_type(drop_location())
+	loaded_shell = new shell_type(drop_location())
+	if(!loaded_shell)
+		return
+	loaded_shell.datum_flags |= DF_VAR_EDITED
+
 	var/list/shell_variables = component_data["shell_variables"]
 	for(var/variable in shell_variables - GLOB.duplicate_forbidden_vars)
 		var/variable_data = shell_variables[variable]
-		shell.vv_edit_var(variable, variable_data)
-	var/datum/component/shell/shell_component = shell.AddComponent(/datum/component/shell)
-	shell_component.attach_circuit(parent)
+		loaded_shell.vv_edit_var(variable, variable_data)
 	return ..()

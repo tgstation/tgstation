@@ -819,6 +819,8 @@
 /// from /obj/machinery/atmospherics/components/binary/pump/set_on(active): (on)
 #define COMSIG_PUMP_SET_ON "pump_set_on"
 
+/// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
+#define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
 
 // /obj access signals
 

@@ -38,10 +38,16 @@
 	for(var/obj/item/circuit_component/component as anything in listeners)
 		component.trigger_component()
 
+/datum/circuit_variable/proc/on_listener_qdel(datum/listener)
+	SIGNAL_HANDLER
+	listeners -= listener
+
 /// Adds a listener to receive inputs when the variable has a value that is set.
 /datum/circuit_variable/proc/add_listener(obj/item/circuit_component/to_add)
 	listeners += to_add
+	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, .proc/on_listener_qdel)
 
 /// Removes a listener to receive inputs when the variable has a value that is set. Listener will usually clean themselves up
 /datum/circuit_variable/proc/remove_listener(obj/item/circuit_component/to_remove)
+	UnregisterSignal(to_remove, COMSIG_PARENT_QDELETING)
 	listeners -= to_remove
