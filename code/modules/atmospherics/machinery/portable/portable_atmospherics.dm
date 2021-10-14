@@ -6,6 +6,8 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 60, ACID = 30)
 	anchored = FALSE
 
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
 	///Stores the reference of the connecting port
@@ -61,13 +63,13 @@
  * Arguments:
  * * new_port - the connector that we trying to connect to
  */
-/obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
+/obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port, mouse_drop = FALSE)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return FALSE
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != get_turf(src))
+	if(new_port.loc != get_turf(src) && !mouse_drop)
 		return FALSE
 
 	//Perform the connection
@@ -116,6 +118,7 @@
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
 	. = ..()
+	. += span_notice("You can drag [src] on a connector while holding a wrench to connect it.")
 	if(!holding)
 		return
 	. += span_notice("\The [src] contains [holding]. Alt-click [src] to remove it.")+\
@@ -166,6 +169,7 @@
 			span_notice("You unfasten [src] from the port."), \
 			span_hear("You hear a ratchet."))
 		update_appearance()
+		change_density(TRUE)
 		return TRUE
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 	if(!possible_port)
@@ -181,7 +185,62 @@
 		span_hear("You hear a ratchet."))
 	update_appearance()
 	investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
+	change_density()
 	return TRUE
+
+/obj/machinery/portable_atmospherics/proc/change_density(set_density)
+	if(!isnull(set_density))
+		density = set_density
+		return
+
+	var/turf/our_turf = get_turf(src)
+	var/portable_amounts = 0
+	for(var/obj/machinery/portable_atmospherics/portable in our_turf.contents)
+		if(portable == src)
+			continue
+		portable_amounts++
+		portable.change_density(TRUE)
+
+	if(portable_amounts > 0)
+		density = TRUE
+		return
+
+	if(connected_port.piping_layer == PIPING_LAYER_MIN || connected_port.piping_layer == PIPING_LAYER_MAX)
+		density = FALSE
+		return
+
+	density = TRUE
+
+/obj/machinery/portable_atmospherics/MouseDrop(obj/machinery/atmospherics/components/unary/portables_connector/connector)
+	. = ..()
+
+	var/mob/user = usr
+
+	if(!istype(connector) || connected_port || connector.connected_device)
+		return
+
+	if(get_dist(user, connector) > 1 || get_dist(user, src) > 1)
+		return
+
+	var/obj/item/held_item = user.get_active_held_item()
+	if (isnull(held_item))
+		return
+	var/tool_behaviour = held_item.tool_behaviour
+
+	if(tool_behaviour != TOOL_WRENCH)
+		to_chat(user, span_notice("You need a wrench in hand for that."))
+		return
+
+	if(!connect(connector, TRUE))
+		return
+
+	held_item.play_tool_sound(src)
+	user.visible_message( \
+		"[user] connects [src].", \
+		span_notice("You fasten [src] to the port."), \
+		span_hear("You hear a ratchet."))
+	forceMove(connector.loc)
+	change_density()
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/item, mob/user)
 	if(item.force < 10 && !(machine_stat & BROKEN))
