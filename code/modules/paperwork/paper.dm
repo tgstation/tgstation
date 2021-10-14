@@ -490,7 +490,7 @@
 	category = BLANK_CATEGORY_RESEARCH
 	name = "Permission to perform non-standard research"	
 	
-/obj/item/paper/blank/nt_rsh_pr
+/obj/item/paper/blank/nt_rsh_pe
 	code = "NT-RSH-PE"
 	category = BLANK_CATEGORY_RESEARCH
 	name = "Permit for the issuance of research equipment"
