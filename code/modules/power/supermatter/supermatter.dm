@@ -1262,6 +1262,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			zap_str /= 3
 
 	else if(isliving(target))//If we got a fleshbag on our hands
+		if(zap_flags & ZAP_MAIN_POWER_GEN)
+			zap_str /= 30 //should lose power much faster.
 		var/mob/living/creature = target
 		creature.set_shocked()
 		addtimer(CALLBACK(creature, /mob/living/proc/reset_shocked), 1 SECONDS)
@@ -1274,6 +1276,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	else
 		zap_str = target.zap_act(zap_str, zap_flags)
+		if(zap_flags & ZAP_MAIN_POWER_GEN)
+			zap_str /= 30 //should lose power much faster.
 	//This gotdamn variable is a boomer and keeps giving me problems
 	var/turf/target_turf = get_turf(target)
 	var/pressure = 1
