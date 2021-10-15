@@ -1,4 +1,5 @@
-/obj/item/knife
+// Knife Template, should not appear in game normaly //
+/obj/item/knife 
 	name = "knife"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
@@ -38,6 +39,7 @@
 						span_suicide("[user] is slitting [user.p_their()] throat with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide."), \
 						span_suicide("[user] is slitting [user.p_their()] stomach open with the [src.name]! It looks like [user.p_theyre()] trying to commit seppuku.")))
 	return (BRUTELOSS)
+/////
 
 /obj/item/knife/ritual
 	name = "ritual knife"
