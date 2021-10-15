@@ -217,6 +217,8 @@
 	add_overlay("RD-server-objective-stripes")
 
 /obj/machinery/rnd/server/master/Destroy()
+	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
+		QDEL_NULL(source_code_hdd)
 	SSresearch.master_servers -= src
 
 	return ..()
