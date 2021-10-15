@@ -216,6 +216,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			contestant_mob.forceMove(pick(valid_team_spawns[team_spawn_id]))
 			contestant_mob.key = client?.key
 			contestant_mob.reset_perspective()
+			contestant_mob.set_nutrition(NUTRITION_LEVEL_FED + 50)
 			ADD_TRAIT(contestant_mob, TRAIT_BYPASS_MEASURES, "arena")
 
 			contestants += contestant_mob
