@@ -43,6 +43,8 @@
 	var/healium_sleep_min = 6
 	///Whether these lungs react negatively to miasma
 	var/suffers_miasma = TRUE
+	///Whether these lungs electrolyze water vapor
+	var/do_electrolysis = FALSE
 
 	var/oxy_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/oxy_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
@@ -249,6 +251,15 @@
 	//-- TRACES --//
 
 	if(breath) // If there's some other shit in the air lets deal with it here.
+
+	// H2O
+
+		if(do_electrolysis)
+			gas_breathed = breath_gases[/datum/gas/water_vapor][MOLES]
+			breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
+			breath_gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
+			breath_gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
+			gas_breathed = 0
 
 	// N2O
 
@@ -609,3 +620,17 @@
 		suffers_miasma = FALSE
 
 #undef GAS_TOLERANCE
+
+/obj/item/organ/lungs/ethereal
+	name = "aeration reticulum"
+	desc = "This exotic lung resembles aerogel in weight and texture."
+	icon_state = "lungs_ethereal"
+	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
+	heat_level_2_threshold = 473
+	heat_level_3_threshold = 1073
+	do_electrolysis = TRUE
+
+
+
+
+
