@@ -289,7 +289,6 @@
 	hardcore_value = 5
 	var/glasses
 
-
 /datum/quirk/item_quirk/nearsighted/add_unique()
 	glasses = glasses || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/glasses)
 
