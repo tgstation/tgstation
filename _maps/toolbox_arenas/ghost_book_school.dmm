@@ -24,13 +24,10 @@
 /turf/open/floor/wood,
 /area/tdome/arena)
 "bB" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/indestructible/wood{
+	opacity = 0
 	},
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/sepia,
 /area/tdome/arena)
 "bV" = (
 /turf/open/floor/wood{
@@ -41,22 +38,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/tdome/arena)
-"fB" = (
-/obj/structure/table/wood,
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/obj/structure/sign/poster/contraband{
-	pixel_x = -32
-	},
-/obj/item/storage/toolbox/mechanical/old,
-/turf/open/floor/wood,
-/area/tdome/arena)
-"gd" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/noticeboard/directional/south,
-/turf/open/floor/sepia,
-/area/tdome/arena)
 "if" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
@@ -66,7 +47,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/noticeboard/directional/south,
 /turf/open/floor/sepia,
 /area/tdome/arena)
 "jh" = (
@@ -78,7 +58,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/noticeboard/directional/north,
 /obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/sepia,
 /area/tdome/arena)
@@ -101,19 +80,9 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/sepia,
 /area/tdome/arena)
-"pF" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/turf/open/floor/sepia,
-/area/tdome/arena)
 "rA" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
-	},
-/obj/structure/sign/painting/library{
-	pixel_y = 32
 	},
 /obj/structure/sign/poster/ripped{
 	pixel_x = 32
@@ -131,7 +100,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/noticeboard/directional/north,
 /turf/open/floor/sepia,
 /area/tdome/arena)
 "uE" = (
@@ -201,12 +169,6 @@
 	icon_state = "wood-broken7"
 	},
 /area/tdome/arena)
-"Gh" = (
-/obj/effect/turf_decal/siding/wood,
-/obj/structure/noticeboard/directional/south,
-/obj/effect/decal/cleanable/food/flour,
-/turf/open/floor/sepia,
-/area/tdome/arena)
 "Hp" = (
 /obj/structure/table/wood,
 /obj/item/pen,
@@ -222,21 +184,12 @@
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/wood,
 /area/tdome/arena)
-"KJ" = (
-/obj/structure/table/wood,
-/obj/structure/noticeboard/directional/south,
-/obj/item/paper_bin,
-/turf/open/floor/wood,
-/area/tdome/arena)
 "Lv" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/sepia,
 /area/tdome/arena)
 "LT" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
 /obj/structure/sign/poster/ripped{
 	pixel_x = -32
 	},
@@ -247,13 +200,6 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/tdome/arena)
-"OU" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/structure/noticeboard/directional/north,
-/turf/open/floor/sepia,
 /area/tdome/arena)
 "TI" = (
 /obj/structure/chair/greyscale,
@@ -272,7 +218,6 @@
 /area/tdome/arena)
 "VB" = (
 /obj/structure/table/wood,
-/obj/structure/noticeboard/directional/north,
 /obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/tdome/arena)
@@ -303,12 +248,6 @@
 /area/tdome/arena)
 "Yq" = (
 /obj/structure/table/wood,
-/obj/structure/sign/painting/library{
-	pixel_y = -32
-	},
-/obj/structure/sign/poster/contraband{
-	pixel_x = 32
-	},
 /obj/item/storage/toolbox/mechanical/old,
 /turf/open/floor/wood,
 /area/tdome/arena)
@@ -338,7 +277,7 @@
 /area/tdome/arena)
 
 (1,1,1) = {"
-bB
+Wa
 Yl
 Lv
 Wq
@@ -368,14 +307,14 @@ nk
 if
 "}
 (4,1,1) = {"
-OU
+Wa
 jh
 wX
 bV
 DB
 DB
 uE
-KJ
+VB
 "}
 (5,1,1) = {"
 rA
@@ -395,7 +334,7 @@ zP
 zP
 zP
 zP
-XZ
+bB
 "}
 (7,1,1) = {"
 Af
@@ -428,7 +367,7 @@ DB
 Af
 "}
 (10,1,1) = {"
-XZ
+bB
 zP
 zP
 zP
@@ -438,7 +377,7 @@ zP
 XZ
 "}
 (11,1,1) = {"
-fB
+Yq
 nk
 Vt
 DB
@@ -455,7 +394,7 @@ nc
 DB
 Wa
 Xn
-Gh
+wX
 "}
 (13,1,1) = {"
 if
@@ -475,7 +414,7 @@ DB
 DB
 Wa
 yi
-gd
+Lv
 "}
 (15,1,1) = {"
 aL
@@ -485,5 +424,5 @@ nk
 al
 Wa
 Yl
-pF
+Lv
 "}
