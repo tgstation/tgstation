@@ -1,0 +1,359 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bt" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark/textured_half,
+/area/tdome/arena)
+"cj" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 10
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"dK" = (
+/turf/open/floor/iron/stairs/old{
+	dir = 1
+	},
+/area/tdome/arena)
+"ex" = (
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"hp" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"kW" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"sW" = (
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"tE" = (
+/turf/closed/indestructible/opshuttle{
+	opacity = 0
+	},
+/area/tdome/arena)
+"xG" = (
+/obj/effect/turf_decal/siding/wideplating/dark,
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"yW" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 9
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"Bk" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 6
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"BO" = (
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/item/kirbyplants/fullysynthetic,
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"BS" = (
+/obj/structure/fans{
+	name = "Film Projector"
+	},
+/obj/item/flashlight/lantern/syndicate{
+	name = "Projector Lense";
+	pixel_y = 18
+	},
+/turf/closed/indestructible/opshuttle{
+	opacity = 0
+	},
+/area/tdome/arena)
+"Cy" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"Dn" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"DN" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"EZ" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 5
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"PB" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 1
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"Rx" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 8
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"TC" = (
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/item/kirbyplants/fullysynthetic,
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"US" = (
+/turf/closed/indestructible/oldshuttle{
+	opacity = 0
+	},
+/area/tdome/arena)
+"WU" = (
+/turf/open/floor/iron/dark/textured_half,
+/area/tdome/arena)
+"XJ" = (
+/obj/effect/turf_decal/siding/wideplating/dark{
+	dir = 4
+	},
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+"Zt" = (
+/obj/structure/railing{
+	color = "black";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/tdome/arena)
+
+(1,1,1) = {"
+tE
+WU
+WU
+yW
+ex
+Rx
+ex
+cj
+"}
+(2,1,1) = {"
+US
+WU
+bt
+PB
+Zt
+Cy
+Zt
+xG
+"}
+(3,1,1) = {"
+US
+WU
+WU
+EZ
+sW
+XJ
+sW
+Bk
+"}
+(4,1,1) = {"
+US
+WU
+WU
+dK
+WU
+dK
+WU
+dK
+"}
+(5,1,1) = {"
+US
+WU
+DN
+BO
+kW
+BO
+kW
+tE
+"}
+(6,1,1) = {"
+US
+bt
+PB
+Zt
+Cy
+Zt
+Cy
+tE
+"}
+(7,1,1) = {"
+US
+WU
+PB
+Zt
+Cy
+Zt
+Cy
+tE
+"}
+(8,1,1) = {"
+US
+WU
+PB
+Zt
+Cy
+Zt
+tE
+BS
+"}
+(9,1,1) = {"
+US
+WU
+PB
+Zt
+Cy
+Zt
+Cy
+tE
+"}
+(10,1,1) = {"
+US
+bt
+PB
+Zt
+Cy
+Zt
+Cy
+tE
+"}
+(11,1,1) = {"
+US
+WU
+hp
+TC
+Dn
+TC
+Dn
+tE
+"}
+(12,1,1) = {"
+US
+WU
+WU
+dK
+WU
+dK
+WU
+dK
+"}
+(13,1,1) = {"
+US
+WU
+WU
+yW
+ex
+Rx
+ex
+cj
+"}
+(14,1,1) = {"
+US
+WU
+bt
+PB
+Zt
+Cy
+Zt
+xG
+"}
+(15,1,1) = {"
+tE
+WU
+WU
+EZ
+sW
+XJ
+sW
+Bk
+"}

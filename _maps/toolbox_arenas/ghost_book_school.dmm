@@ -1,0 +1,489 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/obj/structure/table/wood,
+/obj/item/paper/carbon,
+/obj/item/pen/red,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/tdome/arena)
+"aL" = (
+/obj/structure/closet{
+	anchored = 1;
+	name = "School Supplies"
+	},
+/obj/item/toy/foamblade,
+/obj/item/toy/foamfinger,
+/obj/item/toy/katana,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"bu" = (
+/obj/structure/sign/poster/ripped{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"bB" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"bV" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/tdome/arena)
+"ca" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"fB" = (
+/obj/structure/table/wood,
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/obj/structure/sign/poster/contraband{
+	pixel_x = -32
+	},
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"gd" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/noticeboard/directional/south,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"if" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"iH" = (
+/obj/structure/chair/wood/wings{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/noticeboard/directional/south,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"jh" = (
+/obj/structure/table/wood,
+/obj/item/folder/yellow,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"mh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"nc" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/tdome/arena)
+"nk" = (
+/obj/item/chair,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"oq" = (
+/obj/structure/table/wood,
+/obj/item/pen/red,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"pt" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"pF" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"rA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/sign/painting/library{
+	pixel_y = 32
+	},
+/obj/structure/sign/poster/ripped{
+	pixel_x = 32
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"sr" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"sI" = (
+/obj/item/chair/wood/wings,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"uE" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/tdome/arena)
+"wX" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"xd" = (
+/obj/structure/chair/greyscale{
+	dir = 1
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/tdome/arena)
+"yi" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/food/flour,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"yN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/mineral_door/paperframe{
+	name = "Classroom 1-A";
+	opacity = 0
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"zP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/window/paperframe{
+	opacity = 0
+	},
+/turf/open/floor/wood/tile,
+/area/tdome/arena)
+"Af" = (
+/obj/structure/mineral_door/paperframe{
+	name = "Classrooms"
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"DB" = (
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Ef" = (
+/obj/structure/table_frame/wood,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"FI" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/tdome/arena)
+"Gh" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/noticeboard/directional/south,
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"Hp" = (
+/obj/structure/table/wood,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Hx" = (
+/obj/structure/chair/greyscale{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Jw" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"KJ" = (
+/obj/structure/table/wood,
+/obj/structure/noticeboard/directional/south,
+/obj/item/paper_bin,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Lv" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"LT" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/obj/structure/sign/poster/ripped{
+	pixel_x = -32
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"Md" = (
+/obj/structure/chair/greyscale,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/tdome/arena)
+"OU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/noticeboard/directional/north,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"TI" = (
+/obj/structure/chair/greyscale,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"TQ" = (
+/obj/structure/table/wood,
+/obj/item/paper/carbon,
+/obj/item/pen/red,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Vt" = (
+/obj/structure/table/wood,
+/obj/item/paper/carbon,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"VB" = (
+/obj/structure/table/wood,
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper_bin,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Wa" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"Wq" = (
+/obj/structure/table/wood,
+/obj/item/paper/carbon,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Xn" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"XZ" = (
+/turf/closed/indestructible/wood{
+	opacity = 0
+	},
+/area/tdome/arena)
+"Yl" = (
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"Yq" = (
+/obj/structure/table/wood,
+/obj/structure/sign/painting/library{
+	pixel_y = -32
+	},
+/obj/structure/sign/poster/contraband{
+	pixel_x = 32
+	},
+/obj/item/storage/toolbox/mechanical/old,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"Yu" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen/red,
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"YI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/mineral_door/paperframe{
+	name = "Classroom 1-B"
+	},
+/turf/open/floor/sepia,
+/area/tdome/arena)
+"ZC" = (
+/obj/structure/sign/poster/ripped{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/tdome/arena)
+
+(1,1,1) = {"
+bB
+Yl
+Lv
+Wq
+DB
+Hp
+xd
+aL
+"}
+(2,1,1) = {"
+mh
+pt
+Lv
+DB
+uE
+DB
+DB
+Jw
+"}
+(3,1,1) = {"
+sI
+sr
+Lv
+ca
+Hx
+Wq
+nk
+if
+"}
+(4,1,1) = {"
+OU
+jh
+wX
+bV
+DB
+DB
+uE
+KJ
+"}
+(5,1,1) = {"
+rA
+Yl
+Lv
+Ef
+nk
+Vt
+DB
+Yq
+"}
+(6,1,1) = {"
+XZ
+zP
+yN
+zP
+zP
+zP
+zP
+XZ
+"}
+(7,1,1) = {"
+Af
+DB
+uE
+DB
+DB
+DB
+DB
+Af
+"}
+(8,1,1) = {"
+XZ
+bu
+DB
+DB
+DB
+bV
+ZC
+XZ
+"}
+(9,1,1) = {"
+Af
+FI
+DB
+nc
+DB
+DB
+DB
+Af
+"}
+(10,1,1) = {"
+XZ
+zP
+zP
+zP
+zP
+YI
+zP
+XZ
+"}
+(11,1,1) = {"
+fB
+nk
+Vt
+DB
+TQ
+Wa
+Yl
+LT
+"}
+(12,1,1) = {"
+VB
+bV
+DB
+nc
+DB
+Wa
+Xn
+Gh
+"}
+(13,1,1) = {"
+if
+DB
+oq
+TI
+Ef
+Wa
+Yu
+iH
+"}
+(14,1,1) = {"
+Jw
+DB
+uE
+DB
+DB
+Wa
+yi
+gd
+"}
+(15,1,1) = {"
+aL
+Md
+ca
+nk
+al
+Wa
+Yl
+pF
+"}

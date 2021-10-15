@@ -1,0 +1,297 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/oldshuttle,
+/area/tdome/arena)
+"do" = (
+/obj/structure/door_assembly/door_assembly_fre,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/oldshuttle,
+/area/tdome/arena)
+"hM" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/tdome/arena)
+"jg" = (
+/obj/machinery/light/built/directional/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/tdome/arena)
+"jz" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/textured_half,
+/area/tdome/arena)
+"jD" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/tdome/arena)
+"pb" = (
+/turf/open/floor/iron/showroomfloor,
+/area/tdome/arena)
+"px" = (
+/turf/open/floor/oldshuttle,
+/area/tdome/arena)
+"qI" = (
+/obj/machinery/light/broken/directional/north,
+/turf/open/floor/iron/white/side,
+/area/tdome/arena)
+"rg" = (
+/obj/machinery/light/broken/directional/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/tdome/arena)
+"rY" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/tdome/arena)
+"rZ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/light/built/directional/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/tdome/arena)
+"sY" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/door_assembly/door_assembly_silver,
+/turf/open/floor/iron/showroomfloor,
+/area/tdome/arena)
+"vc" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/textured_half,
+/area/tdome/arena)
+"wP" = (
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/tdome/arena)
+"AS" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron/white/side,
+/area/tdome/arena)
+"Cc" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Eh" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron/white/side,
+/area/tdome/arena)
+"GB" = (
+/turf/open/floor/iron/white/side,
+/area/tdome/arena)
+"KS" = (
+/turf/closed/indestructible/oldshuttle{
+	opacity = 0
+	},
+/area/tdome/arena)
+"MM" = (
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/tdome/arena)
+"MO" = (
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/obj/structure/door_assembly/door_assembly_silver,
+/turf/open/floor/iron/showroomfloor,
+/area/tdome/arena)
+"Xy" = (
+/obj/structure/barricade/wooden/crude,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/white,
+/turf/open/floor/iron/textured_half,
+/area/tdome/arena)
+"Yc" = (
+/obj/machinery/light/built/directional/north,
+/turf/open/floor/iron/white/side,
+/area/tdome/arena)
+"Zj" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/tdome/arena)
+"Zs" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/light/built/directional/north,
+/turf/open/floor/iron/white/side,
+/area/tdome/arena)
+
+(1,1,1) = {"
+px
+px
+KS
+qI
+rZ
+KS
+do
+px
+"}
+(2,1,1) = {"
+px
+px
+vc
+GB
+jD
+vc
+px
+px
+"}
+(3,1,1) = {"
+KS
+Cc
+KS
+GB
+jD
+KS
+KS
+Cc
+"}
+(4,1,1) = {"
+am
+px
+Xy
+GB
+jD
+jz
+px
+px
+"}
+(5,1,1) = {"
+px
+px
+KS
+GB
+hM
+KS
+px
+px
+"}
+(6,1,1) = {"
+Cc
+KS
+KS
+qI
+jg
+KS
+Zj
+KS
+"}
+(7,1,1) = {"
+MM
+sY
+KS
+GB
+wP
+KS
+MM
+rY
+"}
+(8,1,1) = {"
+MM
+pb
+vc
+GB
+wP
+vc
+pb
+rY
+"}
+(9,1,1) = {"
+MM
+rY
+KS
+GB
+wP
+KS
+MO
+rY
+"}
+(10,1,1) = {"
+KS
+Zj
+KS
+Yc
+rg
+KS
+KS
+Cc
+"}
+(11,1,1) = {"
+px
+px
+KS
+AS
+wP
+KS
+px
+px
+"}
+(12,1,1) = {"
+px
+px
+jz
+Eh
+wP
+Xy
+px
+am
+"}
+(13,1,1) = {"
+Cc
+KS
+KS
+Eh
+wP
+KS
+Cc
+KS
+"}
+(14,1,1) = {"
+px
+am
+vc
+Eh
+wP
+vc
+px
+px
+"}
+(15,1,1) = {"
+px
+do
+KS
+Zs
+rg
+KS
+px
+px
+"}
