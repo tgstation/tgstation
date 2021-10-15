@@ -52,7 +52,8 @@
 				return TRUE
 			to_chat(user, span_notice("You cut apart [src]."))
 			var/obj/item/stack/sheet/plastic/five/P = new(loc)
-			P.add_fingerprint(user)
+			if (!QDELETED(P))
+				P.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 

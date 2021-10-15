@@ -653,9 +653,9 @@
 			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)
 				var/turf/T = get_turf(src)
 				if (AIStatus == AI_Z_OFF)
-					SSidlenpcpool.idle_mobs_by_zlevel[T.z] -= src
+					SSidlenpcpool.idle_mobs_by_zlevel[T?.z] -= src
 				else
-					SSidlenpcpool.idle_mobs_by_zlevel[T.z] += src
+					SSidlenpcpool.idle_mobs_by_zlevel[T?.z] += src
 			GLOB.simple_animals[AIStatus] -= src
 			GLOB.simple_animals[togglestatus] += src
 			AIStatus = togglestatus
