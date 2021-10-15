@@ -124,6 +124,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	return ..()
 
 /obj/item/circuit_component/digital_valve/proc/handle_valve_toggled(datum/source, on)
+	SIGNAL_HANDLER
 	is_open.set_output(on)
 	if(on)
 		opened.set_output(COMPONENT_SIGNAL)
