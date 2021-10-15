@@ -64198,7 +64198,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/grounding_rod/anchored,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "nbH" = (
@@ -69492,7 +69492,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/tesla_coil/anchored,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "ozg" = (
@@ -77150,7 +77150,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "qKx" = (
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -84164,7 +84164,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/tesla_coil/anchored,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "sOa" = (
@@ -84424,7 +84424,7 @@
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "sTy" = (
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Engineering - Secure Storage";
@@ -86460,7 +86460,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/grounding_rod/anchored,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "tBF" = (
