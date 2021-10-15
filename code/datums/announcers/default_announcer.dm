@@ -1,7 +1,7 @@
 /datum/centcom_announcer/default
 	welcome_sounds = list('sound/ai/default/welcome.ogg')
 	alert_sounds = list('sound/ai/default/attention.ogg')
-	command_report_sounds = list('sound/ai/default/commandreport.ogg')
+	command_report_sounds = list('sound/ai/default/attention.ogg')
 	event_sounds = list(ANNOUNCER_AIMALF = 'sound/ai/default/aimalf.ogg',
 		ANNOUNCER_ALIENS = 'sound/ai/default/aliens.ogg',
 		ANNOUNCER_ANIMES = 'sound/ai/default/animes.ogg',
@@ -17,4 +17,5 @@
 		ANNOUNCER_SHUTTLECALLED = 'sound/ai/default/shuttlecalled.ogg',
 		ANNOUNCER_SHUTTLEDOCK = 'sound/ai/default/shuttledock.ogg',
 		ANNOUNCER_SHUTTLERECALLED = 'sound/ai/default/shuttlerecalled.ogg',
-		ANNOUNCER_SPANOMALIES = 'sound/ai/default/spanomalies.ogg')
+		ANNOUNCER_SPANOMALIES = 'sound/ai/default/spanomalies.ogg',
+		ANNOUNCER_COMMAND = 'sound/ai/default/commandreport.ogg')
