@@ -163,6 +163,7 @@
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)
+	log_admin("[key_name(usr)] [add_or_remove]ed the '[chosen_trait]' trait for [D]([D.type])")
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
