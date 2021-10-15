@@ -3955,7 +3955,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/security{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -28648,8 +28648,8 @@
 "dFg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/computer/department_orders/science,
 /turf/open/floor/iron,
 /area/science/research)
 "dFs" = (
@@ -58287,10 +58287,10 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 10
 	},
-/obj/machinery/computer/cargo/request{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
+/obj/machinery/computer/department_orders/engineering{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -63014,7 +63014,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/service{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -98643,7 +98643,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/medical{
 	dir = 1
 	},
 /turf/open/floor/iron,

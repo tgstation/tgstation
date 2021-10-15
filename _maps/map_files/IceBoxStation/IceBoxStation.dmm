@@ -8395,7 +8395,7 @@
 /turf/open/floor/plating/icemoon,
 /area/science/test_area)
 "btP" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer/department_orders/science,
 /turf/open/floor/iron,
 /area/science/research)
 "btS" = (
@@ -14801,11 +14801,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/cargo/request{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
+	},
+/obj/machinery/computer/department_orders/security{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/security/office)
@@ -29879,10 +29879,10 @@
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
 "lIj" = (
-/obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
+/obj/machinery/computer/department_orders/medical,
 /turf/open/floor/iron,
 /area/medical/medbay/aft)
 "lIw" = (
@@ -30001,9 +30001,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/cargo/request{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
@@ -30018,6 +30015,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/machinery/computer/department_orders/engineering{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "lMh" = (
@@ -34190,10 +34190,10 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "nSm" = (
-/obj/machinery/computer/chef_order{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/modular_computer/console/preset/cargochat/service{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -50301,10 +50301,10 @@
 /turf/open/floor/iron,
 /area/service/janitor)
 "wIs" = (
-/obj/machinery/computer/cargo/request{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/computer/department_orders/service{
 	dir = 4
 	},
 /turf/open/floor/plating,
