@@ -41,25 +41,64 @@ SUBSYSTEM_DEF(auto_equip)
 
 	var/ckey = ckey(mind?.key)
 	var/team_outfit
+	var/team_camo
 
 	for (var/team_name in GLOB.tournament_teams)
 		var/datum/tournament_team/tournament_team = GLOB.tournament_teams[team_name]
 
 		if (ckey in tournament_team.roster)
 			team_outfit = tournament_team.outfit
+			team_camo = tournament_team.camo_placeholder
 			break
 
 	if (team_outfit)
 		// Equip everything else *after* team stuff, so they have their backpacks still.
-		equipOutfit(team_outfit, visual_only)
+		equip_inert_outfit(team_outfit, team_camo)
 
 	if (ckey in SSauto_equip.vips)
 		equipOutfit(/datum/outfit/job/vip, visual_only)
 	else
 		equipOutfit(equipping.outfit, visual_only)
 
+/mob/living/carbon/human/proc/equip_inert_outfit(datum/outfit/model_outfit, datum/outfit/camo_outfit, changeable = TRUE)
+	camo_outfit.equip(src)
+
+	// mostly copy pasta from chameleon_outfit/proc/select_outfit but a lot less restrictive
+	var/list/outfit_parts = model_outfit.get_chameleon_disguise_info()
+	for(var/datum/action/item_action/chameleon/change/change_action as anything in chameleon_item_actions)
+		for(var/outfit_part in outfit_parts)
+			if(ispath(outfit_part, change_action.chameleon_type))
+				change_action.update_look(src, outfit_part)
+				break
+		var/atom/target = change_action.target
+		// make the gear fully combat inert
+		target.armor = new
+
+	//hardsuit helmets/suit hoods
+	if(model_outfit.toggle_helmet && (ispath(model_outfit.suit, /obj/item/clothing/suit/space/hardsuit) || ispath(model_outfit.suit, /obj/item/clothing/suit/hooded)))
+		//make sure they are actually wearing the suit, not just holding it, and that they have a chameleon hat
+		if(istype(wear_suit, /obj/item/clothing/suit/chameleon) && istype(head, /obj/item/clothing/head/chameleon))
+			var/helmet_type
+			if(ispath(model_outfit.suit, /obj/item/clothing/suit/space/hardsuit))
+				var/obj/item/clothing/suit/space/hardsuit/hardsuit = model_outfit.suit
+				helmet_type = initial(hardsuit.helmettype)
+			else
+				var/obj/item/clothing/suit/hooded/hooded = model_outfit.suit
+				helmet_type = initial(hooded.hoodtype)
+
+			if(helmet_type)
+				var/obj/item/clothing/head/chameleon/hat = head
+				hat.chameleon_action.update_look(src, helmet_type)
+
+	if(!changeable)
+		for(var/action in chameleon_item_actions)
+			qdel(action) // we can't just QDEL_LIST instead because the Cut() will fail
+
 /datum/outfit/job/vip
 	name = "Donator"
+	id = /obj/item/card/id/advanced/gold
+	id_trim = /datum/id_trim/centcom/vip
+
 	box = /obj/item/storage/box/tournament/vip
 	backpack_contents = list(/obj/item/storage/box/syndie_kit/chameleon = 1)
 
@@ -67,7 +106,6 @@ SUBSYSTEM_DEF(auto_equip)
 	head = /obj/item/clothing/head/bowler
 	ears = /obj/item/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/suit/black_really
-	glasses = /obj/item/clothing/glasses/hud/health
 	gloves = /obj/item/clothing/gloves/color/white
 
 // Tournament box
@@ -87,6 +125,7 @@ SUBSYSTEM_DEF(auto_equip)
 	..()
 
 	new /obj/item/clothing/accessory/medal/bronze_heart/donator(src)
+	new /obj/item/clothing/glasses/hud/health(src)
 
 /obj/item/clothing/accessory/medal/bronze_heart/donator
 	name = "Donator medal"
