@@ -1,0 +1,1 @@
+GLOBAL_LIST_INIT(glasses, list(/obj/item/clothing/glasses, /obj/item/clothing/glasses/regular/hipster))
