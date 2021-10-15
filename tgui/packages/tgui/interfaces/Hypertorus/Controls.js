@@ -1,7 +1,7 @@
 import { useBackend } from '../../backend';
 import { Box, Button, Icon, Knob, LabeledControls, LabeledList, NumberInput, Section, Tooltip } from '../../components';
 import { getGasLabel } from '../../constants';
-import { ActFixed, ActSet, HelpDummy, HoverHelp } from './helpers';
+import { HelpDummy, HoverHelp } from './helpers';
 
 /*
  * This module holds user interactable controls. Some may be good candidates
@@ -51,7 +51,7 @@ const ComboKnob = props => {
         maxValue={maxValue}
         step={step}
         stepPixelSize={1}
-        onDrag={ActSet(act, parameter)}
+        onDrag={(_, v) => act(parameter, { [parameter]: v })}
         {...rest}
       />
       <Button
@@ -61,7 +61,7 @@ const ComboKnob = props => {
         right="-20px"
         color="transparent"
         icon="fast-forward"
-        onClick={ActFixed(act, parameter, maxValue)}
+        onClick={() => act(parameter, { [parameter]: maxValue })}
       />
       <Button
         fluid
@@ -70,7 +70,7 @@ const ComboKnob = props => {
         right="-20px"
         color="transparent"
         icon="undo"
-        onClick={ActFixed(act, parameter, defaultValue)}
+        onClick={() => act(parameter, { [parameter]: defaultValue })}
       />
       <Button
         fluid
@@ -79,7 +79,7 @@ const ComboKnob = props => {
         right="-20px"
         color="transparent"
         icon="fast-backward"
-        onClick={ActFixed(act, parameter, minValue)}
+        onClick={() => act(parameter, { [parameter]: minValue })}
       />
     </Box>
   );

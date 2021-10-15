@@ -10,18 +10,7 @@ export const to_exponential_if_big = (value) => {
   return Math.round(value);
 };
 
-const ActParam = (key, value) => {
-  const ret = {};
-  ret[key] = value;
-  return ret;
-};
-
-// Helpers to wrap act() for simple behavior
-export const ActFixed = (act, key, ...vals) =>
-  () => act(key, ActParam(key, ...vals));
-
-export const ActSet = (act, key) => (e, val) => act(key, ActParam(key, val));
-
+// Simple question mark icon with a hover tooltip
 export const HoverHelp = props => (
   <Tooltip content={props.content}>
     <Icon name="question-circle" width="12px" mr="6px" />

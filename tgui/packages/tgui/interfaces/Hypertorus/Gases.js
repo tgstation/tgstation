@@ -4,7 +4,7 @@ import { toFixed } from 'common/math';
 import { useBackend } from '../../backend';
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
-import { ActFixed, ActSet, HelpDummy, HoverHelp } from './helpers';
+import { HelpDummy, HoverHelp } from './helpers';
 
 /*
  * Displays contents of gas mixtures, along with help text for gases with
@@ -78,14 +78,14 @@ const GasList = (props, context) => {
           icon={data[input_switch] ? 'power-off' : 'times'}
           content={data[input_switch] ? 'On' : 'Off'}
           selected={data[input_switch]}
-          onClick={ActFixed(act, input_switch)} />
+          onClick={() => act(input_switch)} />
         <NumberInput
           animated
           value={parseFloat(data[input_rate])}
           unit="mol/s"
           minValue={input_min}
           maxValue={input_max}
-          onDrag={ActSet(act, input_rate)}
+          onDrag={(_, v) => act(input_rate, { [input_rate]: v })}
         />
       </LabeledList.Item>
       {gases.map(gas => {

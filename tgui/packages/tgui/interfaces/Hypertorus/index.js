@@ -3,7 +3,6 @@ import { Button, Collapsible, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 import { HypertorusGases } from './Gases';
-import { ActFixed } from './helpers';
 import { HypertorusParameters } from './Parameters';
 import { HypertorusRecipes } from './Recipes';
 import { HypertorusTemperatures } from './Temperatures';
@@ -21,7 +20,7 @@ const HypertorusMainControls = (props, context) => {
             icon={data.start_power ? 'power-off' : 'times'}
             content={data.start_power ? 'On' : 'Off'}
             selected={data.start_power}
-            onClick={ActFixed(act, 'start_power')} />
+            onClick={() => act('start_power')} />
         </Stack.Item>
         <Stack.Item color="label">
           {'Start cooling: '}
@@ -33,7 +32,7 @@ const HypertorusMainControls = (props, context) => {
             icon={data.start_cooling ? 'power-off' : 'times'}
             content={data.start_cooling ? 'On' : 'Off'}
             selected={data.start_cooling}
-            onClick={ActFixed(act, 'start_cooling')} />
+            onClick={() => act('start_cooling')} />
         </Stack.Item>
       </Stack>
       <Collapsible title="Recipe selection">
