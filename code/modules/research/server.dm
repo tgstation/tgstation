@@ -205,6 +205,7 @@
 	var/deconstruction_state = HDD_PANEL_CLOSED
 	var/front_panel_screws = 4
 	var/hdd_wires = 6
+	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 
 /obj/machinery/rnd/server/master/Initialize(mapload)
 	. = ..()
@@ -215,9 +216,6 @@
 	add_overlay("RD-server-objective-stripes")
 
 /obj/machinery/rnd/server/master/Destroy()
-	if(source_code_hdd)
-		QDEL_NULL(source_code_hdd)
-
 	SSresearch.master_servers -= src
 
 	return ..()
@@ -318,12 +316,12 @@
 		if(usr)
 			var/mob/user = usr
 
-			message_admins("[ADMIN_LOOKUPFLW(user)] deconstructed [ADMIN_JMP(src)], destroying [source_code_hdd] inside.")
-			log_game("[key_name(user)] deconstructed [src], destroying [source_code_hdd] inside.")
+			message_admins("[ADMIN_LOOKUPFLW(user)] deconstructed [ADMIN_JMP(src)].")
+			log_game("[key_name(user)] deconstructed [src].")
 			return ..()
 
-		message_admins("[ADMIN_JMP(src)] has been deconstructed by an unknown user, destroying [source_code_hdd] inside.")
-		log_game("[src] has been deconstructed by an unknown user, destroying [source_code_hdd] inside.")
+		message_admins("[ADMIN_JMP(src)] has been deconstructed by an unknown user.")
+		log_game("[src] has been deconstructed by an unknown user.")
 
 	return ..()
 
