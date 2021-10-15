@@ -1287,9 +1287,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		zap_str -= (zap_str/10)
 		zap_count += 1
 	for(var/j in 1 to zap_count)
+		var/child_targets_hit = targets_hit
 		if(zap_count > 1)
-			targets_hit = targets_hit.Copy() //Pass by ref begone
-		supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit, zap_cutoff, power_level, zap_icon)
+			child_targets_hit = targets_hit.Copy() //Pass by ref begone
+		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'
