@@ -8413,7 +8413,7 @@
 /turf/open/floor/carpet/green,
 /area/awaymission/cabin/snowforest/mansion)
 "YV" = (
-/obj/machinery/limbgrower,
+/obj/machinery/limbgrower/infinite,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest/crypt)
 "YW" = (
