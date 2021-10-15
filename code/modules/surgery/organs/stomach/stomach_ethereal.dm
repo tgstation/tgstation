@@ -2,17 +2,17 @@
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
+	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and electric discharges!</span>"
+	high_threshold_cleared = "<span class='info'>The electric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles.</span>"
+	low_threshold_cleared = "<span class='info'>The pins and needles feeling seems to die out as your charge starts to feel far more stable.</span>"
 	///basically satiety but electrical
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 	var/damagemodifer = 0.25
-	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, the battery are one of the last organs to die (of the ones we have)
-	low_threshold_passed = "<span class='info'>You can feel your power draining as a feeling of pins and needles fills your abdomen.</span>"
-	high_threshold_passed = "<span class='warning'>Your abdomen is filled with the feeling of shocks and electric discharges!</span>"
-	high_threshold_cleared = "<span class='info'>The electric feeling in your stomach seems to fade away, leaving behind a feeling of pins and needles.</span>"
-	low_threshold_cleared = "<span class='info'>The pins and needles feeling seems to die out as your charge starts to feel far more stable.</span>"
-
+	decay_factor = STANDARD_ORGAN_DECAY * 0.9 // fails around 16.5 minutes, the battery is one of the last organs to die (of the ones we have)
+	
 /obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
 	. = ..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
