@@ -5,6 +5,7 @@ GLOBAL_LIST_INIT_TYPED(tournament_teams, /datum/tournament_team, get_tournament_
 	var/name
 	var/toolbox_color
 	var/list/roster = list()
+	var/datum/ntnet_conversation/team_chat
 	var/datum/outfit/outfit
 	var/datum/outfit/camo_placeholder
 
@@ -29,6 +30,11 @@ GLOBAL_LIST_INIT_TYPED(tournament_teams, /datum/tournament_team, get_tournament_
 	if (!istext(name))
 		return "No name."
 	tournament_team.name = name
+
+	var/datum/ntnet_conversation/team_chat = new
+	team_chat.title = name
+	team_chat.password = random_string(32, GLOB.alphabet + GLOB.alphabet_upper + GLOB.numerals)
+	tournament_team.team_chat = team_chat
 
 	var/toolbox_color = data["toolbox_color"]
 	if (!findtext(toolbox_color, GLOB.is_color))

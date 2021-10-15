@@ -36,7 +36,7 @@
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
 	. = ..()
-	if(.)
+	if(. || filedesc == "Team Chat Client")
 		return
 
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
