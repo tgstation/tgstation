@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	var/list/dep_groups = list()
 
 /obj/machinery/computer/department_orders/ui_interact(mob/user, datum/tgui/ui)
-	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "DepartmentOrders")
 		ui.open()
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(cooldown < 0)
 		data["time_left"] = 0
 	else
-		data["time_left"] = DisplayTimeText(cooldown)
+		data["time_left"] = DisplayTimeText(cooldown, 1)
 	data["can_override"] = department_order ? TRUE : FALSE
 	return data
 
@@ -89,6 +89,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			return
 
 		if(department_order && (department_order in SSshuttle.shoppinglist))
+			GLOB.department_order_cooldowns[type] = 0
 			SSshuttle.shoppinglist -= department_order
 			department_order = null
 			UnregisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
@@ -132,15 +133,14 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	UnregisterSignal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
 
 /obj/machinery/computer/department_orders/proc/calculate_cooldown(credits)
-	//minimum value of a crate
-	var/min = CARGO_CRATE_VALUE * 3
-	//maximum fairly expensive crate
-	var/max = CARGO_CRATE_VALUE * 6
+	//minimum almost the lowest value of a crate
+	var/min = CARGO_CRATE_VALUE * 1.6
+	//maximum fairly expensive crate at 3000
+	var/max = CARGO_CRATE_VALUE * 15
 	credits = clamp(credits, min, max)
 	var/time_x = (credits - min)/(max - min) //convert to between 0 and 1
 	var/time_y = ease_in_out_circ(time_x) + 1 //convert "0 to 1 x" to "1 to 2 y"
 	time_y = 10 MINUTES * time_y
-	addtimer(CALLBACK(SSshuttle,), time_y)
 	GLOB.department_order_cooldowns[type] = world.time + time_y
 
 /obj/machinery/computer/department_orders/service

@@ -4,7 +4,7 @@ import { Box, Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs, Tooltip } f
 import { Window } from '../layouts';
 
 // 4x crate value
-const COST_UPPER_BOUND = 800;
+const COST_UPPER_BOUND = 6000;
 
 type Pack = {
   name: string;
@@ -37,6 +37,7 @@ const CooldownEstimate = (props) => {
   || "short";
   return (
     <>
+      {cost}
       Estimated Cooldown:&ensp;
       <Box as="span" textColor={cooldownColor}>
         {cooldownText}
@@ -56,7 +57,7 @@ export const DepartmentOrders = (props, context) => {
       width={620}
       height={580} >
       <Window.Content>
-        {time_left
+        {!!time_left
           && <CooldownDimmer />
           || (
             <Stack vertical fill>
@@ -92,18 +93,20 @@ const CooldownDimmer = (props, context) => {
   return (
     <Dimmer>
       <Stack vertical>
-        <Stack.Item>
+        <Stack.Item textAlign="center">
           <Icon
             color="orange"
             name="route"
-            size={10}
+            size={20}
           />
         </Stack.Item>
         <Stack.Item fontSize="18px" color="orange">
           Ready for another order in {time_left}...
         </Stack.Item>
-        <Stack.Item fontSize="18px" color="orange">
+        <Stack.Item textAlign="center" color="orange">
           <Button
+            width="300px"
+            lineHeight={2}
             tooltip={!!can_override
               && "This action requires Head of Staff access!"
               || "Crate already shipped! No cancelling now!"}
@@ -111,7 +114,9 @@ const CooldownDimmer = (props, context) => {
             color="red"
             disabled={!can_override}
             onClick={() => act("override_order")}>
-            Override
+            <Box fontSize="22px">
+              Override
+            </Box>
           </Button>
         </Stack.Item>
       </Stack>

@@ -243,7 +243,7 @@
 		return
 	if(opened)
 		return
-	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, force) & BLOCK_OPEN)
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
 		return
 	welded = FALSE
 	locked = FALSE

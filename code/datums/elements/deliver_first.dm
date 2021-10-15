@@ -61,10 +61,12 @@
 	playsound(target, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 ///signal called before opening target, blocks opening
-/datum/element/deliver_first/proc/on_pre_open(obj/structure/closet/target, force)
+/datum/element/deliver_first/proc/on_pre_open(obj/structure/closet/target, mob/living/user, force)
 	SIGNAL_HANDLER
 	if(force)
 		return
+	if(user)
+		target.balloon_alert(user, "access denied until delivery!")
 	playsound(target, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return BLOCK_OPEN
 
