@@ -317,6 +317,11 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
+	opacity = FALSE
+
+/obj/structure/mineral_door/paperframe/Close()
+	..()
+	set_opacity(FALSE)
 
 /obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()

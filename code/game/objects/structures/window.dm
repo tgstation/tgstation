@@ -765,7 +765,7 @@
 
 /obj/structure/window/paperframe/update_appearance(updates)
 	. = ..()
-	set_opacity(atom_integrity >= max_integrity)
+	set_opacity(FALSE)
 
 /obj/structure/window/paperframe/update_icon(updates=ALL)
 	. = ..()
