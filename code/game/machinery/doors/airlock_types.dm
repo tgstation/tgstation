@@ -300,7 +300,7 @@
 
 /obj/machinery/door/airlock/wood
 	name = "wooden airlock"
-	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/wood.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
 	greyscale_config = null
 	greyscale_colors = null
