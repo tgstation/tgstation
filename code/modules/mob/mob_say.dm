@@ -110,7 +110,10 @@
 		return message
 	mods[MODE_CUSTOM_SAY_EMOTE] = lowertext(copytext_char(message, 1, customsaypos))
 	message = copytext(message, customsaypos + 1)
-	if (!message)
+	var/emote_ban = is_banned_from(ckey, "Emote")
+	if (emote_ban)
+		mods[MODE_CUSTOM_SAY_EMOTE] = null
+	if (!message && !emote_ban)
 		mods[MODE_CUSTOM_SAY_ERASE_INPUT] = TRUE
 		message = "an interesting thing to say"
 	return message
