@@ -65,8 +65,7 @@ SUBSYSTEM_DEF(auto_equip)
 
 	// mostly copy pasta from chameleon_outfit/proc/select_outfit but a lot less restrictive
 	var/list/outfit_parts = model_outfit.get_chameleon_disguise_info()
-	for(var/V in chameleon_item_actions)
-		var/datum/action/item_action/chameleon/change/change_action = V
+	for(var/datum/action/item_action/chameleon/change/change_action as anything in chameleon_item_actions)
 		for(var/outfit_part in outfit_parts)
 			if(ispath(outfit_part, change_action.chameleon_type))
 				change_action.update_look(src, outfit_part)
