@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
@@ -19,6 +20,7 @@ type Category = {
 }
 
 type Info = {
+  can_override: BooleanLike;
   time_left: number;
   supplies: Category[];
 };
@@ -50,6 +52,7 @@ export const DepartmentOrders = (props, context) => {
   } = data;
   return (
     <Window
+      title="Department Orders"
       width={620}
       height={580} >
       <Window.Content>
@@ -83,6 +86,7 @@ export const DepartmentOrders = (props, context) => {
 const CooldownDimmer = (props, context) => {
   const { act, data } = useBackend<Info>(context);
   const {
+    can_override,
     time_left,
   } = data;
   return (
@@ -100,9 +104,12 @@ const CooldownDimmer = (props, context) => {
         </Stack.Item>
         <Stack.Item fontSize="18px" color="orange">
           <Button
-            tooltip="This action requires Head of Staff access!"
+            tooltip={!!can_override
+              && "This action requires Head of Staff access!"
+              || "Crate already shipped! No cancelling now!"}
             fontSize="14px"
             color="red"
+            disabled={!can_override}
             onClick={() => act("override_order")}>
             Override
           </Button>

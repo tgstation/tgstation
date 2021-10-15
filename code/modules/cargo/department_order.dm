@@ -36,6 +36,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		data["time_left"] = 0
 	else
 		data["time_left"] = DisplayTimeText(cooldown)
+	data["can_override"] = department_order ? TRUE : FALSE
 	return data
 
 /obj/machinery/computer/department_orders/ui_static_data(mob/user)
@@ -82,8 +83,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 	//needs to come BEFORE preventing actions!
 	if(action == "override_order")
-
-		if(check_access_list(list(override_access)))
+		if(!(override_access in id_card.GetAccess()))
 			balloon_alert(usr, "requires head of staff access!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 			return
@@ -103,8 +103,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		return
 
 	. = TRUE
-	var/id = params["id"]
-	id = text2path(id) || id
+	var/id = text2path(params["id"])
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
@@ -116,9 +115,12 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	else if(issilicon(usr))
 		name = usr.real_name
 		rank = "Silicon"
+	//already have a signal to finalize the order
+	var/already_signalled = department_order ? TRUE : FALSE
 	department_order = new(pack, name, rank, ckey, "", null, department_delivery_area, null)
 	SSshuttle.shoppinglist += department_order
-	RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, .proc/finalize_department_order)
+	if(!already_signalled)
+		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, .proc/finalize_department_order)
 	say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
@@ -127,7 +129,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	SIGNAL_HANDLER
 	if(department_order && (department_order in SSshuttle.shoppinglist))
 		department_order = null
-	UnregisterSignal(COMSIG_SUPPLY_SHUTTLE_BUY)
+	UnregisterSignal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
 
 /obj/machinery/computer/department_orders/proc/calculate_cooldown(credits)
 	//minimum value of a crate
@@ -138,6 +140,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	var/time_x = (credits - min)/(max - min) //convert to between 0 and 1
 	var/time_y = ease_in_out_circ(time_x) + 1 //convert "0 to 1 x" to "1 to 2 y"
 	time_y = 10 MINUTES * time_y
+	addtimer(CALLBACK(SSshuttle,), time_y)
 	GLOB.department_order_cooldowns[type] = world.time + time_y
 
 /obj/machinery/computer/department_orders/service
