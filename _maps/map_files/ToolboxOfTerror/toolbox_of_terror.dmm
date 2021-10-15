@@ -2011,7 +2011,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/awaymission/cabin/snowforest)
+/area/awaymission/cabin/snowforest/mansion)
 "of" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plating/dirt,
@@ -2468,10 +2468,9 @@
 /turf/open/floor/plating/grass/jungle,
 /area/awaymission/cabin/snowforest/mansion)
 "qn" = (
-/obj/structure/table/wood/fancy/royalblue,
-/obj/item/paper/fluff,
-/turf/open/floor/carpet/stellar,
-/area/awaymission/cabin/snowforest)
+/obj/structure/mansion/sconce/double,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest/mansion)
 "qp" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood/large,
@@ -3493,9 +3492,9 @@
 /turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest/mansion)
 "vY" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/cabin/snowforest)
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/bronze,
+/area/awaymission/cabin/snowforest/mansion)
 "wb" = (
 /obj/structure/mansion/sconce/double{
 	dir = 4
@@ -4124,10 +4123,6 @@
 /obj/effect/decal/cleanable/food/tomato_smudge,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin/snowforest/mansion)
-"zH" = (
-/obj/structure/bookcase/random/nonfiction,
-/turf/open/floor/carpet/stellar,
-/area/awaymission/cabin/snowforest)
 "zI" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -4897,7 +4892,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/bronze,
-/area/awaymission/cabin/snowforest)
+/area/awaymission/cabin/snowforest/mansion)
 "Eb" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -5405,10 +5400,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/mansion)
-"Hl" = (
-/obj/structure/table/wood/fancy/royalblue,
-/turf/open/floor/carpet/stellar,
-/area/awaymission/cabin/snowforest)
 "Hp" = (
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/gravel,
@@ -5541,10 +5532,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/closed/indestructible/rock,
 /area/awaymission/cabin/snowforest/crypt)
-"Ic" = (
-/obj/structure/mansion/sconce/double,
-/turf/open/floor/bronze,
-/area/awaymission/cabin/snowforest/mansion)
 "If" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -5930,7 +5917,7 @@
 "Kq" = (
 /obj/machinery/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/bronze,
-/area/awaymission/cabin/snowforest)
+/area/awaymission/cabin/snowforest/mansion)
 "Kr" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/stonebrick,
@@ -6125,7 +6112,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/table/wood/shuttle_bar,
+/obj/structure/table/wood,
 /turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest/mansion)
 "Lz" = (
@@ -6249,14 +6236,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/awaymission/cabin/snowforest/mansion)
-"LY" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/wheelys/rollerskates,
-/obj/item/clothing/shoes/wheelys/rollerskates,
-/obj/item/clothing/shoes/wheelys/rollerskates,
-/obj/item/clothing/shoes/wheelys/rollerskates,
-/turf/open/floor/eighties,
-/area/awaymission/cabin/snowforest)
 "Mb" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -7114,7 +7093,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/cabin/snowforest)
+/area/awaymission/cabin/snowforest/mansion)
 "QN" = (
 /turf/open/floor/mansion/road,
 /area/awaymission/cabin/snowforest)
@@ -8163,11 +8142,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/obj/structure/table/wood/shuttle_bar,
 /obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
 	},
+/obj/structure/table/wood,
 /turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest/mansion)
 "Xr" = (
@@ -8343,6 +8322,7 @@
 /area/awaymission/cabin/snowforest/mansion)
 "Ys" = (
 /obj/structure/rack,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/bronze,
 /area/awaymission/cabin/snowforest/mansion)
 "Yt" = (
@@ -8496,10 +8476,6 @@
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest/mansion)
-"Zj" = (
-/obj/machinery/hydroponics/soil,
-/turf/open/floor/plating/grass,
-/area/awaymission/cabin/snowforest)
 "Zk" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -8514,10 +8490,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/mansion)
-"Zp" = (
-/obj/effect/decal/cleanable/food/egg_smudge,
-/turf/open/floor/iron/cafeteria,
-/area/awaymission/cabin/snowforest)
 "Zq" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/window/reinforced/survival_pod{
@@ -28638,12 +28610,12 @@ ph
 sO
 ph
 GI
-qF
-Zp
-jt
+Bj
+wA
+YJ
 ob
-vY
-vY
+xP
+xP
 Dc
 zP
 jK
@@ -30282,7 +30254,7 @@ cq
 cq
 cq
 Fr
-LY
+yu
 qN
 qN
 qN
@@ -30542,7 +30514,7 @@ cq
 SL
 cq
 Fr
-LY
+yu
 qN
 uA
 qN
@@ -30730,8 +30702,8 @@ EI
 rn
 rn
 rn
-Fr
-Fr
+rn
+rn
 Fr
 JN
 qQ
@@ -30860,7 +30832,7 @@ Ur
 Ur
 Ur
 Fj
-Fr
+rn
 Fr
 cY
 pV
@@ -34722,8 +34694,8 @@ rn
 Hx
 jQ
 jQ
-jQ
 iM
+rn
 XV
 BG
 Kh
@@ -34853,7 +34825,7 @@ Ir
 Ir
 Ir
 Ir
-Ic
+rn
 XV
 BG
 Fs
@@ -34982,8 +34954,8 @@ rn
 Ir
 Ir
 ll
-Ir
-Ir
+qn
+rn
 XV
 BG
 Fs
@@ -35113,7 +35085,7 @@ Ir
 Ir
 ll
 Ir
-Ir
+rn
 XV
 BG
 Fs
@@ -35243,7 +35215,7 @@ Ir
 Ir
 Ys
 Ir
-Ir
+rn
 XV
 BG
 FG
@@ -35373,7 +35345,7 @@ Ir
 Ir
 ll
 Ir
-Ir
+rn
 XV
 XV
 XV
@@ -35503,7 +35475,7 @@ yO
 Ir
 Ys
 Ir
-Ir
+rn
 bI
 rG
 bI
@@ -35633,7 +35605,7 @@ Ir
 Ir
 ll
 Ir
-Ir
+rn
 bI
 bI
 bI
@@ -35763,7 +35735,7 @@ Ir
 Ir
 Ys
 Ir
-Ir
+rn
 bI
 BK
 Uk
@@ -35872,7 +35844,7 @@ Ps
 Ps
 Ps
 Fr
-Fr
+rn
 rn
 rn
 rn
@@ -35893,7 +35865,7 @@ Ir
 Ir
 ll
 Ir
-Ir
+rn
 bI
 BK
 Uk
@@ -36022,8 +35994,8 @@ rn
 Ir
 Ir
 ll
-Ir
-Ir
+qn
+rn
 bI
 BM
 Uk
@@ -36153,7 +36125,7 @@ Ir
 Ir
 Ir
 Ir
-Ic
+rn
 bI
 bI
 Gc
@@ -36282,8 +36254,8 @@ rn
 td
 jQ
 jQ
-jQ
-Hx
+vY
+rn
 bI
 bI
 bI
@@ -36392,7 +36364,7 @@ pH
 eA
 JA
 Ks
-Zj
+ND
 dL
 rn
 Wx
@@ -36782,7 +36754,7 @@ DQ
 JA
 JA
 Fr
-Fr
+rn
 rn
 rn
 hc
@@ -36912,7 +36884,7 @@ JA
 JA
 JA
 Fr
-zH
+fQ
 fQ
 rn
 rn
@@ -37042,7 +37014,7 @@ JA
 Hy
 JA
 Ks
-Hl
+fW
 fW
 gX
 OY
@@ -37172,7 +37144,7 @@ DQ
 JA
 JA
 Ks
-qn
+gX
 BE
 UC
 UC
@@ -37302,7 +37274,7 @@ JA
 JA
 JA
 Ks
-zH
+fQ
 UC
 UC
 UC
@@ -37432,7 +37404,7 @@ JA
 JA
 JA
 Ks
-zH
+fQ
 UC
 UC
 qK
@@ -37562,7 +37534,7 @@ JA
 wz
 JA
 Fr
-Fr
+rn
 sT
 sT
 rn
@@ -37692,7 +37664,7 @@ JA
 JA
 JA
 Ks
-Fy
+iH
 Ux
 Ux
 Kc
@@ -38011,7 +37983,7 @@ rn
 AZ
 yY
 DC
-Fr
+rn
 Fr
 cq
 cq
@@ -38140,7 +38112,7 @@ nJ
 rn
 rn
 tq
-Fr
+rn
 Fr
 cq
 cq
@@ -38269,7 +38241,7 @@ dH
 Mg
 GC
 rn
-Fr
+rn
 Fr
 cq
 cq
@@ -38754,7 +38726,7 @@ Ks
 Ks
 Ks
 Fr
-Fr
+rn
 Qu
 Qu
 qZ
@@ -38763,7 +38735,7 @@ el
 yR
 Ea
 Sj
-Fr
+rn
 Fr
 Fr
 Ks
