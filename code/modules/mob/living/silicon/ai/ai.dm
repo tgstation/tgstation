@@ -591,8 +591,8 @@
 				if("Station Member")
 					var/list/personnel_list = list()
 
-					for(var/datum/data/record/t in GLOB.data_core.locked)//Look in data core locked.
-						personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
+					for(var/datum/data/record/record_datum in GLOB.data_core.locked)//Look in data core locked.
+						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["image"]//Pull names, rank, and image.
 
 					if(personnel_list.len)
 						input = input("Select a crew member:") as null|anything in sort_list(personnel_list)
