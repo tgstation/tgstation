@@ -15,10 +15,13 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
 
-/// defines for [/atom/movable/var/currently_z_moving]. Higher numbers mean higher priority.
-#define CURRENTLY_Z_MOVING_GENERIC 1
-/// This one is for falling down open space from stuff such as deleted tile, pit grate...
-#define CURRENTLY_Z_FALLING 2
+/**
+ * currently_z_moving defines. Higher numbers mean higher priority.
+ * This one is for falling down open space from stuff such as deleted tile, pit grate...
+ */
+#define CURRENTLY_Z_FALLING 1
+/// currently_z_moving is set to this in zMove() if 0.
+#define CURRENTLY_Z_MOVING_GENERIC 2
 /// This one is for falling down open space from movement.
 #define CURRENTLY_Z_FALLING_FROM_MOVE 3
 /// This one is for going upstairs.
@@ -38,7 +41,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define ZMOVE_CHECK_PULLING (1<<0)
 /// Checks if pulledby is nearby. if not, stop being pulled.
 #define ZMOVE_CHECK_PULLEDBY (1<<1)
-/// flags for different checks done in [/atom/movable/proc/can_z_move]
+/// flags for different checks done in [/atom/movable/proc/can_z_move]. Should be self-explainatory.
 #define ZMOVE_FALL_CHECKS (1<<2)
 #define ZMOVE_CAN_FLY_CHECKS (1<<3)
 #define ZMOVE_INCAPACITATED_CHECKS (1<<4)
@@ -50,6 +53,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define ZMOVE_ALLOW_BUCKLED (1<<7)
 /// If the movable is actually ventcrawling vertically.
 #define ZMOVE_VENTCRAWLING (1<<8)
+/// Includes movables that're either pulled by the source or mobs buckled to it in the list of moving movables.
+#define ZMOVE_INCLUDE_PULLED (1<<9)
 
 #define ZMOVE_CHECK_PULLS (ZMOVE_CHECK_PULLING|ZMOVE_CHECK_PULLEDBY)
 

@@ -53,23 +53,23 @@
 			return
 	remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 
-/mob/set_currently_z_moving(value)
-	if(buckled)
-		return buckled.set_currently_z_moving(value)
-	return ..()
-
-/mob/living/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS, recursions_left = 1, list/falling_movs)
+/**
+ * We want to relay the zmovement to the buckled atom when possible
+ * and only run what we can't have on buckled.zMove() or buckled.can_z_move() here.
+ * This way we can avoid esoteric bugs, copypasta and inconsistencies.
+ */
+/mob/living/zMove(dir, turf/target, z_move_flags = ZMOVE_FLIGHT_FLAGS)
 	if(buckled)
 		if(buckled.currently_z_moving)
 			return FALSE
 		if(!(z_move_flags & ZMOVE_ALLOW_BUCKLED))
-			buckled.unbuckle_mob(src, TRUE)
+			buckled.unbuckle_mob(src, forced = TRUE, can_fall = FALSE)
 		else
 			if(!target)
 				target = can_z_move(dir, get_turf(src), null, z_move_flags, src)
 				if(!target)
 					return FALSE
-			return buckled.zMove(arglist(args)) // Return value is a loc.
+			return buckled.zMove(dir, target, z_move_flags) // Return value is a loc.
 	return ..()
 
 /mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
@@ -91,10 +91,10 @@
 				to_chat(src, "<span class='notice'>Unbuckle from [buckled] first.<span>")
 			return FALSE
 
-/mob/living/get_z_move_affected()
-	. = ..()
+/mob/set_currently_z_moving(value)
 	if(buckled)
-		. |= buckled
+		return buckled.set_currently_z_moving(value)
+	return ..()
 
 /mob/living/keybind_face_direction(direction)
 	if(stat > SOFT_CRIT)
