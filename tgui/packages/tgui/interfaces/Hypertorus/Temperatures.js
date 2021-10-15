@@ -1,6 +1,5 @@
 import { useBackend } from '../../backend';
-import { Box, Icon, Flex, Section, Stack, Tooltip } from '../../components';
-
+import { Box, Flex, Icon, Section, Stack, Tooltip } from '../../components';
 import { to_exponential_if_big } from './helpers';
 
 /*

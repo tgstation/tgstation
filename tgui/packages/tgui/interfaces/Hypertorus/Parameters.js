@@ -1,7 +1,7 @@
+import { toFixed } from 'common/math';
 import { useBackend } from '../../backend';
 import { LabeledControls, RoundGauge, Section } from '../../components';
 import { formatSiUnit } from '../../format';
-import { toFixed } from 'common/math';
 
 /*
  * Parameter display

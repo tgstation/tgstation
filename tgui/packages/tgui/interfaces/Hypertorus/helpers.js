@@ -1,5 +1,3 @@
-
-
 import { Icon, Tooltip } from '../../components';
 
 // Exponential rendering specifically for HFR values.

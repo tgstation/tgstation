@@ -1,12 +1,10 @@
-import { useBackend } from '../../backend';
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { ActSet, HoverHelp, HelpDummy } from './helpers';
-
+import { useBackend } from '../../backend';
 import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../../components';
 import { getGasColor, getGasLabel } from '../../constants';
-import { ActFixed } from './helpers';
+import { ActFixed, ActSet, HelpDummy, HoverHelp } from './helpers';
 
 /*
  * Displays contents of gas mixtures, along with help text for gases with
