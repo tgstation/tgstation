@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return returntext
 	return "[copytext_char("[freq]", 1, 4)].[copytext_char("[freq]", 4, 5)]"
 
-/atom/movable/proc/attach_spans(input, list/spans)
+/proc/attach_spans(input, list/spans)
 	return "[message_spans_start(spans)][input]</span>"
 
 /proc/message_spans_start(list/spans)
