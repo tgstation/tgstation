@@ -63,7 +63,7 @@
 		if(buckled.currently_z_moving)
 			return FALSE
 		if(!(z_move_flags & ZMOVE_ALLOW_BUCKLED))
-			buckled.unbuckle_mob(src, forced = TRUE, can_fall = FALSE)
+			buckled.unbuckle_mob(src, force = TRUE, can_fall = FALSE)
 		else
 			if(!target)
 				target = can_z_move(dir, get_turf(src), null, z_move_flags, src)

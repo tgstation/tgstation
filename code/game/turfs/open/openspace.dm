@@ -46,7 +46,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/Entered(atom/movable/AM)
 	. = ..()
 	if(AM.set_currently_z_moving(CURRENTLY_Z_FALLING))
-		zFall(AM)
+		zFall(AM, falling_from_move = TRUE)
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
