@@ -1137,13 +1137,6 @@
 		var/mob/M = locate(href_list["sendmob"])
 		usr.client.sendmob(M)
 
-	else if(href_list["narrateto"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["narrateto"])
-		usr.client.cmd_admin_direct_narrate(M)
-
 	else if(href_list["subtlemessage"])
 		if(!check_rights(R_ADMIN))
 			return

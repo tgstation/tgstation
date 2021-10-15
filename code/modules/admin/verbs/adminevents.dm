@@ -62,68 +62,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_world_narrate()
-	set category = "Admin.Events"
-	set name = "Global Narrate"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text|null
-
-	if (!msg)
-		return
-	to_chat(world, "[msg]", confidential = TRUE)
-	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins(span_adminnotice("[key_name_admin(usr)] Sent a global narrate"))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Global Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_admin_local_narrate(atom/A)
-	set category = "Admin.Events"
-	set name = "Local Narrate"
-
-	if(!check_rights(R_ADMIN))
-		return
-	if(!A)
-		return
-	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num|null
-	if(!range)
-		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text|null
-	if (!msg)
-		return
-	for(var/mob/M in view(range,A))
-		to_chat(M, msg, confidential = TRUE)
-
-	log_admin("LocalNarrate: [key_name(usr)] at [AREACOORD(A)]: [msg]")
-	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(usr)] at [ADMIN_VERBOSEJMP(A)]:</b> [msg]<BR>"))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_admin_direct_narrate(mob/M)
-	set category = "Admin.Events"
-	set name = "Direct Narrate"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(!M)
-		M = input("Direct narrate to whom?", "Active Players") as null|anything in GLOB.player_list
-
-	if(!M)
-		return
-
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text|null
-
-	if( !msg )
-		return
-
-	to_chat(M, msg, confidential = TRUE)
-	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-	msg = span_adminnotice("<b> DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]):</b> [msg]<BR>")
-	message_admins(msg)
-	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Direct Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Admin.Events"
 	set name = "Add Custom AI law"
