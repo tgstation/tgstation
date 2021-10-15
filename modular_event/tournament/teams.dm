@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT_TYPED(tournament_teams, /datum/tournament_team, get_tournament_
 	var/toolbox_color
 	var/list/roster = list()
 	var/datum/outfit/outfit
+	var/datum/outfit/camo_placeholder
 
 /datum/tournament_team/proc/get_clients()
 	var/list/clients = list()
@@ -48,19 +49,40 @@ GLOBAL_LIST_INIT_TYPED(tournament_teams, /datum/tournament_team, get_tournament_
 	if (!islist(outfit_data))
 		return "No outfit provided."
 
-	// MOTHBLOCKS TODO: Make sure none of this has any armor
 	var/datum/outfit/outfit = new
+	var/datum/outfit/camo_placeholder = new
 	outfit.belt = text2path(outfit_data["belt"])
+	if (outfit.belt)
+		camo_placeholder.belt = /obj/item/storage/belt/chameleon
 	outfit.ears = text2path(outfit_data["ears"])
+	if (outfit.ears)
+		camo_placeholder.ears = /obj/item/radio/headset/chameleon
 	outfit.glasses = text2path(outfit_data["glasses"])
+	if (outfit.glasses)
+		camo_placeholder.glasses = /obj/item/clothing/glasses/chameleon
 	outfit.gloves = text2path(outfit_data["gloves"])
+	if (outfit.gloves)
+		camo_placeholder.gloves = /obj/item/clothing/gloves/chameleon
 	outfit.head = text2path(outfit_data["head"])
+	if (outfit.head)
+		camo_placeholder.head = /obj/item/clothing/head/chameleon
 	outfit.mask = text2path(outfit_data["mask"])
+	if (outfit.mask)
+		camo_placeholder.mask = /obj/item/clothing/mask/chameleon
 	outfit.neck = text2path(outfit_data["neck"])
+	if (outfit.neck)
+		camo_placeholder.neck = /obj/item/clothing/neck/chameleon
 	outfit.shoes = text2path(outfit_data["shoes"])
+	if (outfit.shoes)
+		camo_placeholder.shoes = /obj/item/clothing/shoes/chameleon
 	outfit.suit = text2path(outfit_data["suit"])
+	if (outfit.suit)
+		camo_placeholder.suit = /obj/item/clothing/suit/chameleon
 	outfit.uniform = text2path(outfit_data["uniform"])
+	if (outfit.uniform)
+		camo_placeholder.uniform = /obj/item/clothing/under/chameleon
 
+	tournament_team.camo_placeholder = camo_placeholder
 	tournament_team.outfit = outfit
 
 	return tournament_team
