@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - code_imp: "removes color_legacy prefs and changes sanitize_hexcolor()'s default to 6 characters"
