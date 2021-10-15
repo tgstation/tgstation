@@ -212,7 +212,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			client?.prefs?.apply_prefs_to(contestant_mob)
 			if(!(contestant_mob.dna?.species?.type in list(/datum/species/human, /datum/species/moth, /datum/species/lizard, /datum/species/human/felinid)))
 				contestant_mob.set_species(/datum/species/human)
-			contestant_mob.equipInertOutfit(team.outfit, team.camo_placeholder, changeable = FALSE)
+			contestant_mob.equip_inert_outfit(team.outfit, team.camo_placeholder, changeable = FALSE)
 			var/obj/item/card/id/advanced/centcom/ert/id_card = new(contestant_mob)
 			id_card.desc = "A Toolbox Competitor ID Card"
 			id_card.registered_name = contestant_mob.real_name

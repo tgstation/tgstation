@@ -53,14 +53,14 @@ SUBSYSTEM_DEF(auto_equip)
 
 	if (team_outfit)
 		// Equip everything else *after* team stuff, so they have their backpacks still.
-		equipInertOutfit(team_outfit, team_camo)
+		equip_inert_outfit(team_outfit, team_camo)
 
 	if (ckey in SSauto_equip.vips)
 		equipOutfit(/datum/outfit/job/vip, visual_only)
 	else
 		equipOutfit(equipping.outfit, visual_only)
 
-/mob/living/carbon/human/proc/equipInertOutfit(datum/outfit/model_outfit, datum/outfit/camo_outfit, changeable = TRUE)
+/mob/living/carbon/human/proc/equip_inert_outfit(datum/outfit/model_outfit, datum/outfit/camo_outfit, changeable = TRUE)
 	camo_outfit.equip(src)
 
 	// mostly copy pasta from chameleon_outfit/proc/select_outfit but a lot less restrictive
