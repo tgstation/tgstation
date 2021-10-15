@@ -60,9 +60,9 @@
 	SIGNAL_HANDLER
 	if(!repairs)
 		adjust_charge(amount / 3.5)
-	if(repairs)
-		if(crystal_charge < ETHEREAL_CHARGE_FULL - amount / 3.5)
-			adjust_charge(amount / 3.5)
+		return
+	if(crystal_charge < ETHEREAL_CHARGE_FULL - amount / 3.5)
+		adjust_charge(amount / 3.5)
 
 /obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
