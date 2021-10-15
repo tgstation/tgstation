@@ -210,6 +210,7 @@
 /obj/machinery/rnd/server/master/Initialize(mapload)
 	. = ..()
 	name = "\improper Master " + name
+	desc += "\nIt looks incredibly resistant to damage!"
 	source_code_hdd = new(src)
 	SSresearch.master_servers += src
 
