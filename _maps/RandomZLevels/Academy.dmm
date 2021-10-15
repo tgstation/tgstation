@@ -2429,7 +2429,7 @@
 /area/awaymission/academy/academycellar)
 "kT" = (
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
 /obj/item/candle/infinite,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)

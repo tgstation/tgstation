@@ -39,7 +39,7 @@
 	inhand_icon_state = "chef"
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
@@ -51,7 +51,7 @@
 	inhand_icon_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
 
 //Detective
 /obj/item/clothing/suit/det_suit
