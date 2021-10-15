@@ -54,6 +54,8 @@
 
 #define MODE_SING "sing"
 
+#define MODE_CUSTOM_SAY "custom_say"
+
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
 #define SPAN_YELL "yell"
