@@ -61,12 +61,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/endspanpart = "</span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[say_emphasis(lang_treat(speaker, message_language, raw_message, spans, message_mods))]</span></span>"
-
+	var/messagepart
 	var/languageicon = ""
-	var/datum/language/D = GLOB.language_datum_instances[message_language]
-	if(istype(D) && D.display_icon(src))
-		languageicon = "[D.get_icon()] "
+	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		messagepart = " <span class='message'>[say_emphasis(message_mods[MODE_CUSTOM_SAY_EMOTE])]</span></span>"
+	else
+		messagepart = " <span class='message'>[say_emphasis(lang_treat(speaker, message_language, raw_message, spans, message_mods))]</span></span>"
+
+		var/datum/language/D = GLOB.language_datum_instances[message_language]
+		if(istype(D) && D.display_icon(src))
+			languageicon = "[D.get_icon()] "
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
@@ -93,11 +97,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!input)
 		input = "..."
 
+	var/say_mod
+	if (!message_mods[MODE_CUSTOM_SAY_EMOTE])
+		say_mod = say_mod(input, message_mods)
+	else
+		say_mod = message_mods[MODE_CUSTOM_SAY_EMOTE]
+
 	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
-	var/spanned = attach_spans(input, spans)
-	return "[say_mod(input, message_mods)][spanned ? ", \"[spanned]\"" : ""]"
+	var/spanned = input ? attach_spans(input, spans) : null
+	return "[say_mod][spanned ? ", \"[spanned]\"" : ""]"
 
 /// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
@@ -115,25 +125,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 #undef ENCODE_HTML_EMPHASIS
 
-/atom/movable/proc/quoteless_say_quote(input, list/spans = list(speech_span), message_mods)
-	var/pos = findtext(input, "*")
-	return pos ? copytext(input, pos + 1) : input
-
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list(), no_quote = FALSE)
+	var/atom/movable/source = speaker.GetSource() //is the speaker virtual
+	source = source ? source : speaker
 	if(has_language(language))
-		var/atom/movable/AM = speaker.GetSource()
-		if(AM) //Basically means "if the speaker is virtual"
-			return no_quote ? AM.quoteless_say_quote(raw_message, spans, message_mods) : AM.say_quote(raw_message, spans, message_mods)
-		else
-			return no_quote ? speaker.quoteless_say_quote(raw_message, spans, message_mods) : speaker.say_quote(raw_message, spans, message_mods)
+		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
 	else if(language)
-		var/atom/movable/AM = speaker.GetSource()
 		var/datum/language/D = GLOB.language_datum_instances[language]
 		raw_message = D.scramble(raw_message)
-		if(AM)
-			return no_quote ? AM.quoteless_say_quote(raw_message, spans, message_mods) : AM.say_quote(raw_message, spans, message_mods)
-		else
-			return no_quote ? speaker.quoteless_say_quote(raw_message, spans, message_mods) : speaker.say_quote(raw_message, spans, message_mods)
+		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
 	else
 		return "makes a strange sound."
 
@@ -150,13 +150,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[copytext_char("[freq]", 1, 4)].[copytext_char("[freq]", 4, 5)]"
 
 /atom/movable/proc/attach_spans(input, list/spans)
-	var/customsayverb = findtext(input,"*")
-	if (customsayverb)
-		input = capitalize(copytext(input, customsayverb + length(input[customsayverb])))
-	if (input)
-		return "[message_spans_start(spans)][input]</span>"
-	else
-		return
+	return "[message_spans_start(spans)][input]</span>"
 
 /proc/message_spans_start(list/spans)
 	var/output = "<span class='"
