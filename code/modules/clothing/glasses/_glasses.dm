@@ -576,3 +576,41 @@
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
 	inhand_icon_state = "phantom_glasses"
+
+/obj/item/clothing/glasses/salesman
+	name = "tinted glasses"
+	desc = "A pair of glasses with uniquely tinted lenses. The frame is inscribed with 'Best Salesman 1997'."
+	icon_state = "salesman"
+	inhand_icon_state = "salesman"
+	var/mob/living/carbon/human/bigshot //wearer
+	var/bigmood = FALSE //check for icon change
+
+/obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot != ITEM_SLOT_EYES)
+		return
+	bigshot = user
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
+	..()
+	if(!istype(user) || user.glasses != src)
+		bigshot = initial(bigshot)
+		desc = initial(desc)
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/salesman/process(delta_time)
+	var/datum/component/mood/mood = bigshot.GetComponent(/datum/component/mood)
+	if(mood && mood.sanity < SANITY_UNSTABLE)
+		bigmood = TRUE
+	else
+		bigmood = FALSE
+		
+	if(bigmood && icon_state != "salesman_fzz")
+		icon_state = "salesman_fzz"
+		desc = "A pair of glasses, the lenses are full of static. They've seen better days..."
+		bigshot.update_inv_head()
+	if(!bigmood && icon_state != "salesman")
+		icon_state = initial(icon_state)
+		desc = initial(desc)
+		bigshot.update_inv_head()
