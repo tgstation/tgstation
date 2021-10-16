@@ -3969,6 +3969,7 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "modular_event\exclude_borg_models.dm"
 #include "modular_event\god_walk.dm"
 #include "modular_event\no_destruction.dm"
 #include "modular_event\station_traits.dm"
