@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - rscadd: "added ability to change hologram appearance to custom character"
