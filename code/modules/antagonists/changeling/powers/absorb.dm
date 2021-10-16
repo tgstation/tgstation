@@ -25,7 +25,7 @@
 
 	var/mob/living/carbon/target = owner.pulling
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
-	return changeling.can_absorb_dna(target)
+	return changeling.can_absorb_dna(target, override_nontrue_absorb = TRUE)
 
 /datum/action/changeling/absorb_dna/sting_action(mob/owner)
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -39,9 +39,22 @@
 	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
 	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
 
-	if(!changeling.has_dna(target.dna))
-		changeling.add_new_profile(target)
+	var/is_existing_profile = FALSE
+	var/credit_absorb = TRUE // we get credit if we absorb a corpse we don't have DNA from, or if it's a corpse that's only been DNA stung previously
+
+	for(var/datum/changelingprofile/iter_profile as anything in changeling.stored_profiles)
+		credit_absorb = FALSE
+		if(iter_profile.dna.is_same_as(target.dna))
+			is_existing_profile = TRUE
+			credit_absorb = !iter_profile.true_absorb // we only get credit for the absorb if the existing DNA isn't already a true absorb
+			iter_profile.true_absorb = TRUE // set true_absorb to true for this person because- well, we truly absorbed them!
+			break
+
+	if(credit_absorb)
 		changeling.trueabsorbs++
+
+	if(!is_existing_profile)
+		changeling.add_new_profile(target, true_absorb = TRUE)
 
 	if(owner.nutrition < NUTRITION_LEVEL_WELL_FED)
 		owner.set_nutrition(min((owner.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
@@ -57,7 +70,7 @@
 	changeling.chem_charges = min(changeling.chem_charges+10, changeling.chem_storage)
 	changeling.canrespec = TRUE
 
-	target.death(0)
+	target.death()
 	target.Drain()
 	return TRUE
 

@@ -242,7 +242,15 @@
 			return TRUE
 	return FALSE
 
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE)
+/**
+ * Checker proc to see if we can absorb a given human target. Returns TRUE if we can, FALSE if we can't.
+ *
+ * Arguments:
+ * * target - Who we're trying to absorb
+ * * verbose - If TRUE, print a message to the changeling about why we can't absorb, if we can't
+ * * override_nontrue_absorb - Set to TRUE for true absoprtions, which lets them override non-true absorptions, AKA DNA stings
+ */
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE, override_nontrue_absorb = FALSE)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -266,14 +274,23 @@
 		if(verbose)
 			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
 		return
-	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+	if(!ishuman(target))
 		if(verbose)
 			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
 		return
 	if(has_dna(target.dna))
-		if(verbose)
-			to_chat(user, span_warning("We already have this DNA in storage!"))
-		return
+		// in order for it to be possible to true absorb a body we already DNA stung, we have to be able to override DNA sting profiles
+		var/abort_absorb = TRUE
+		if(override_nontrue_absorb)
+			for(var/datum/changelingprofile/iter_profile in stored_profiles)
+				if(iter_profile.dna.is_same_as(target.dna) && !iter_profile.true_absorb)
+					abort_absorb = FALSE // the profile we have on this guy was only a DNA sting, so an absorption still goes through
+					break
+
+		if(abort_absorb)
+			if(verbose)
+				to_chat(user, span_warning("We already have this DNA in storage!"))
+			return
 	if(!target.has_dna())
 		if(verbose)
 			to_chat(user, span_warning("[target] is not compatible with our biology."))
@@ -281,7 +298,7 @@
 	return TRUE
 
 
-/datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0)
+/datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0, true_absorb = FALSE)
 	var/datum/changelingprofile/prof = new
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
@@ -290,6 +307,7 @@
 	prof.dna = new_dna
 	prof.name = H.real_name
 	prof.protected = protect
+	prof.true_absorb = true_absorb
 
 	prof.underwear = H.underwear
 	prof.undershirt = H.undershirt
@@ -341,8 +359,8 @@
 	stored_profiles += prof
 	absorbedcount++
 
-/datum/antagonist/changeling/proc/add_new_profile(mob/living/carbon/human/H, protect = 0)
-	var/datum/changelingprofile/prof = create_profile(H, protect)
+/datum/antagonist/changeling/proc/add_new_profile(mob/living/carbon/human/H, protect = 0, true_absorb = FALSE)
+	var/datum/changelingprofile/prof = create_profile(H, protect, true_absorb)
 	add_profile(prof)
 	return prof
 
@@ -620,6 +638,8 @@
 	var/datum/icon_snapshot/profile_snapshot
 	/// ID HUD icon associated with the profile
 	var/id_icon
+	/// DNA stings profiles can be overwritten by true absorb profiles
+	var/true_absorb = FALSE
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
@@ -647,6 +667,7 @@
 	newprofile.stored_scars = stored_scars.Copy()
 	newprofile.profile_snapshot = profile_snapshot
 	newprofile.id_icon = id_icon
+	newprofile.true_absorb = true_absorb
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()
