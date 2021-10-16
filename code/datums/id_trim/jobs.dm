@@ -327,7 +327,7 @@
 /datum/id_trim/job/paramedic
 	assignment = "Paramedic"
 	trim_state = "trim_paramedic"
-	extra_access = list(ACCESS_SURGERY)
+	extra_access = list(ACCESS_SURGERY, ACCESS_EXTERNAL_AIRLOCKS)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_EVA, ACCESS_HYDROPONICS,
 					ACCESS_MAINT_TUNNELS, ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_RESEARCH)
 	config_job = "paramedic"
