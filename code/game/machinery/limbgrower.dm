@@ -221,7 +221,7 @@
 		if(selected_category == SPECIES_HUMAN) //humans don't use the full colour spectrum, they use random_skin_tone
 			limb.skin_tone = random_skin_tone()
 		else
-			limb.species_color = random_short_color()
+			limb.species_color = "#[random_color()]"
 		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 		limb.should_draw_greyscale = TRUE
 	else

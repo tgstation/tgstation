@@ -9053,7 +9053,7 @@
 /area/maintenance/port/aft)
 "bUX" = (
 /obj/structure/closet/crate/bin,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUY" = (
@@ -13918,7 +13918,6 @@
 "cWi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/cargo/sorting)
@@ -34950,9 +34949,9 @@
 /obj/item/kitchen/spoon/plastic,
 /obj/item/kitchen/spoon/plastic,
 /obj/item/kitchen/spoon/plastic,
-/obj/item/kitchen/knife/plastic,
-/obj/item/kitchen/knife/plastic,
-/obj/item/kitchen/knife/plastic,
+/obj/item/knife/plastic,
+/obj/item/knife/plastic,
+/obj/item/knife/plastic,
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/bag/tray/cafeteria,
@@ -58720,7 +58719,7 @@
 	pixel_y = 4
 	},
 /obj/item/wrench,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "sQs" = (

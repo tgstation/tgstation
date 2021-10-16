@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - balance: "Atmospheric Technicians will have external airlock access by default now instead of only on skeleton crew."

@@ -13,7 +13,7 @@
 	pass_flags_self = PASSDOORS
 	max_integrity = 350
 	armor = list(MELEE = 30, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	flags_1 = PREVENT_CLICK_UNDER_1
 	receive_ricochet_chance_mod = 0.8
 	damage_deflection = 10
@@ -265,7 +265,7 @@
 		try_to_weld_secondary(weapon, user)
 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		
+
 	if (weapon.tool_behaviour == TOOL_CROWBAR)
 		var/forced_open = FALSE
 		if(istype(weapon, /obj/item/crowbar))
@@ -433,7 +433,7 @@
 	if(!glass && GLOB.cameranet)
 		GLOB.cameranet.updateVisibility(src, 0)
 
-/obj/machinery/door/BlockSuperconductivity() // All non-glass airlocks block heat, this is intended.
+/obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
 		return 1
 	return 0

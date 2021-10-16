@@ -1522,3 +1522,8 @@
 #define COMSIG_ADDED_POINT_OF_INTEREST "added_point_of_interest"
 /// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed : (atom/old_poi)
 #define COMSIG_REMOVED_POINT_OF_INTEREST "removed_point_of_interest"
+
+//Cytology signals
+///Sent from /datum/biological_sample/proc/reset_sample
+#define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
+	#define SPARE_SAMPLE (1<<0)
