@@ -51,8 +51,8 @@
 	)
 
 	test_filter(
-		"This message is softblocks, meaning it's banned EVERYWHERE, unless you really want to send it uwu",
-		"softblocks",
+		"This message is testsoftblocks, meaning it's banned EVERYWHERE, unless you really want to send it uwu",
+		"testsoftblocks",
 		SOFT_BLOCKED_SHARED,
 		SOFT_BLOCKED_SHARED,
 		SOFT_BLOCKED_SHARED,
