@@ -50,14 +50,6 @@
 		BLOCKED_SHARED,
 	)
 
-	test_filter(
-		"This message is testsoftblocks, meaning it's banned EVERYWHERE, unless you really want to send it uwu",
-		"testsoftblocks",
-		SOFT_BLOCKED_SHARED,
-		SOFT_BLOCKED_SHARED,
-		SOFT_BLOCKED_SHARED,
-	)
-
 /datum/unit_test/chat_filter_sanity/proc/test_filter(
 	message,
 	blocked_word,
