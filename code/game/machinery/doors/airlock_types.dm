@@ -373,7 +373,7 @@
 		else
 			// always open from the space side
 			// get_dir(src, user) & space_dir, checked in unresricted_sides
-			var/should_safety_open = shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
+			var/should_safety_open = shuttledocked || cyclelinkedairlock?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
 			return try_to_activate_door(user, should_safety_open)
 
 	return ..()
