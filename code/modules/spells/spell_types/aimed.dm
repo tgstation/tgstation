@@ -196,6 +196,7 @@
 	school = SCHOOL_EVOCATION
 	charge_max = 150
 	clothes_req = FALSE
+	human_req = FALSE
 	antimagic_allowed = TRUE
 	invocation = "Yeet"
 	invocation_type = INVOCATION_SHOUT
@@ -213,7 +214,6 @@
 /obj/effect/proc_holder/spell/aimed/cointoss/bananium
 	name = "Slippery Coin Toss"
 	desc = "Toss a slippery coin if you have enough credits."
-	charge_max = 600
 	invocation = "Yoink"
 	projectile_type = /obj/projectile/bullet/coin_b
 	base_icon_state = "cointoss_b"

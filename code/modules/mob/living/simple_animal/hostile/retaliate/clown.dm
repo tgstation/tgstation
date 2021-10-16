@@ -484,15 +484,12 @@
 /mob/living/simple_animal/hostile/retaliate/clown/crook/Initialize()
 	. = ..()
 	cointoss = new /obj/effect/proc_holder/spell/aimed/cointoss
-	cointoss.clothes_req = 0
-	cointoss.human_req = 0
 	cointoss.player_lock = 0
 	AddSpell(cointoss)
 
 	cointoss_b = new /obj/effect/proc_holder/spell/aimed/cointoss/bananium
-	cointoss_b.clothes_req = 0
-	cointoss_b.human_req = 0
 	cointoss_b.player_lock = 0
+	cointoss_b.charge_max = 600
 	AddSpell(cointoss_b)
 
 /mob/living/simple_animal/hostile/retaliate/clown/crook/boss
@@ -528,13 +525,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/crook/boss/Initialize()
 	. = ..()
 	money = new /obj/effect/proc_holder/spell/aoe_turf/conjure/money
-	money.clothes_req = 0
-	money.human_req = 0
-	money.player_lock = 0
 	AddSpell(money)
 
 	clowns = new /obj/effect/proc_holder/spell/aoe_turf/conjure/mini_clowns
-	clowns.clothes_req = 0
-	clowns.human_req = 0
-	clowns.player_lock = 0
 	AddSpell(clowns)

@@ -70,3 +70,6 @@
 /obj/item/ammo_casing/magic/nothing
 	projectile_type = /obj/projectile/magic/nothing
 	harmful = FALSE
+
+/obj/item/ammo_casing/magic/coin
+	projectile_type = /obj/projectile/bullet/coin

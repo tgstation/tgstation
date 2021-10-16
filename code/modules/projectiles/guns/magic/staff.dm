@@ -160,3 +160,15 @@
 	inhand_icon_state = "pharoah_sceptre"
 	worn_icon_state = "wipestaff"
 	school = SCHOOL_FORBIDDEN //arguably the worst staff in the entire game effect wise
+
+/obj/item/gun/magic/staff/money
+	name = "staff of money"
+	desc = "Used for making money on clown planet."
+	fire_sound = 'sound/items/coinflip.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/coin
+	icon_state = "staffofmoney"
+	inhand_icon_state = "staffofmoney"
+	force = 15
+	max_charges = 14
+	recharge_rate = 6
+	school = SCHOOL_EVOCATION

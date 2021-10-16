@@ -104,6 +104,9 @@
 	name = "Summon two mini clowns"
 	desc = "Useful backup."
 	charge_max = 1200
+	clothes_req = FALSE
+	human_req = FALSE
+	player_lock = FALSE
 	summon_type = list(/mob/living/simple_animal/hostile/retaliate/clown/mini)
 	summon_amt = 2
 	range = 1
@@ -118,6 +121,8 @@
 	school = SCHOOL_CONJURATION
 	charge_max = 300
 	clothes_req = FALSE
+	human_req = FALSE
+	player_lock = FALSE
 	invocation = "Expand!"
 	invocation_type = INVOCATION_WHISPER
 	range = 0
