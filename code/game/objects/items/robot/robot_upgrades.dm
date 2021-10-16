@@ -274,15 +274,15 @@
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
 
-/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/Robot, user = usr)
+/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/the_robot, user = usr)
 	. = ..()
 	if(.)
-		ADD_TRAIT(Robot, TRAIT_LAVA_IMMUNE, type)
+		ADD_TRAIT(the_robot, TRAIT_LAVA_IMMUNE, type)
 
-/obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/Robot, user = usr)
+/obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/the_robot, user = usr)
 	. = ..()
 	if (.)
-		REMOVE_TRAIT(Robot, TRAIT_LAVA_IMMUNE, type)
+		REMOVE_TRAIT(the_robot, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
