@@ -1179,8 +1179,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > COIL)
 			continue
 
-		if(istype(test, /obj/machinery/power/tesla_coil/))
-			var/obj/machinery/power/tesla_coil/coil = test
+		if(istype(test, /obj/machinery/power/energy_accumulator/tesla_coil/))
+			var/obj/machinery/power/energy_accumulator/tesla_coil/coil = test
 			if(coil.anchored && !(coil.obj_flags & BEING_SHOCKED) && !coil.panel_open && prob(70))//Diversity of death
 				if(target_type != COIL)
 					arc_targets = list()
@@ -1190,8 +1190,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > ROD)
 			continue
 
-		if(istype(test, /obj/machinery/power/grounding_rod/))
-			var/obj/machinery/power/grounding_rod/rod = test
+		if(istype(test, /obj/machinery/power/energy_accumulator/grounding_rod/))
+			var/obj/machinery/power/energy_accumulator/grounding_rod/rod = test
 			//We're adding machine damaging effects, rods need to be surefire
 			if(rod.anchored && !rod.panel_open)
 				if(target_type != ROD)
