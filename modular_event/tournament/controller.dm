@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 
 /// Controller for the tournament
 /obj/machinery/computer/tournament_controller
-	name = "tournament controller"
+	name = "tournament machine"
 	desc = "contact mothblocks if you want to learn more"
 
 	/// The arena ID to be looking for
@@ -31,11 +31,19 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 	/// HUD indexes indexed by team ID
 	var/static/list/team_hud_ids
 
+	/// Internal radio for death announcements
+	var/obj/item/radio/radio
+
+
 	var/countdown_started = FALSE
 	var/loading = FALSE
 
 /obj/machinery/computer/tournament_controller/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
+
+	radio = new(src)
+	radio.independent = TRUE
+	radio.set_frequency(FREQ_CENTCOM)
 
 	if (arena_id in GLOB.tournament_controllers)
 		stack_trace("Tournament controller had arena_id \"[arena_id]\", which is reused!")
@@ -223,8 +231,10 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 			contestant_mob.forceMove(pick(valid_team_spawns[team_spawn_id]))
 			contestant_mob.key = client?.key
 			contestant_mob.reset_perspective()
+			contestant_mob.job = team.name
 			contestant_mob.set_nutrition(NUTRITION_LEVEL_FED + 50)
 			ADD_TRAIT(contestant_mob, TRAIT_BYPASS_MEASURES, "arena")
+			RegisterSignal(contestant_mob, COMSIG_LIVING_DEATH, .proc/contestant_died)
 
 			contestants += contestant_mob
 
@@ -239,6 +249,12 @@ GLOBAL_LIST_EMPTY(tournament_controllers)
 	log_admin("[key_name(user)] [message]")
 
 	old_mobs = new_old_mobs
+
+/obj/machinery/computer/tournament_controller/proc/contestant_died(source, gibbed)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/contestant_mob = source
+	radio.talk_into(src, "Toolboxer [contestant_mob] ([contestant_mob.job]) has died in the [arena_id] arena!")
+	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 
 /obj/machinery/computer/tournament_controller/proc/spawn_toolboxes(toolbox_color, team_spawn_id, number_to_spawn)
 	var/list/spawns = toolbox_spawns[team_spawn_id]
