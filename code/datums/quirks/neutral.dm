@@ -180,11 +180,7 @@
 	quirk_holder.add_client_colour(/datum/client_colour/monochrome)
 
 /datum/quirk/monochromatic/post_add()
-	var/datum/mind/mind = quirk_holder.mind
-	if (iscarbon(quirk_holder))
-		var/mob/living/carbon/carbon = quirk_holder
-		mind = carbon.last_mind
-	if(is_detective_job(mind.assigned_role))
+	if(is_detective_job(quirk_holder.mind.assigned_role))
 		to_chat(quirk_holder, span_boldannounce("Mmm. Nothing's ever clear on this station. It's all shades of gray..."))
 		quirk_holder.playsound_local(quirk_holder, 'sound/ambience/ambidet1.ogg', 50, FALSE)
 

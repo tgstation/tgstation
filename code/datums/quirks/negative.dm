@@ -203,11 +203,7 @@
 	if(!family_heirloom)
 		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realise your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
 		return
-	var/datum/mind/mind = quirk_holder.mind
-	if (iscarbon(quirk_holder))
-		var/mob/living/carbon/carbon = quirk_holder
-		mind = carbon.last_mind
-	family_heirloom.AddComponent(/datum/component/heirloom, mind, family_name)
+	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 	return ..()
 
@@ -723,11 +719,7 @@
 /datum/quirk/item_quirk/junkie/smoker/post_add()
 	. = ..()
 	var/brand = initial(drug_container_type.name)
-	var/datum/mind/mind = quirk_holder.mind
-	if (iscarbon(quirk_holder))
-		var/mob/living/carbon/carbon = quirk_holder
-		mind = carbon.last_mind
-	mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	quirk_holder.mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
 
 /datum/quirk/item_quirk/junkie/smoker/process(delta_time)
 	. = ..()
@@ -784,11 +776,7 @@
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 
 /datum/quirk/item_quirk/allergic/post_add()
-	var/datum/mind/mind = quirk_holder.mind
-	if (iscarbon(quirk_holder))
-		var/mob/living/carbon/carbon = quirk_holder
-		mind = carbon.last_mind
-	mind.add_memory(MEMORY_ALLERGY, list(DETAIL_ALLERGY_TYPE = allergy_string), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	quirk_holder.mind.add_memory(MEMORY_ALLERGY, list(DETAIL_ALLERGY_TYPE = allergy_string), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
 /datum/quirk/item_quirk/allergic/process(delta_time)
