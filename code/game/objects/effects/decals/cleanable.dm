@@ -21,7 +21,7 @@
 					return INITIALIZE_HINT_QDEL
 	#ifdef EVENTMODE
 	///AUTO CLEAN - outside arena only
-	if(!istype(get_area(src), /area/tdome/arena))
+	if(!istype(get_area(src), /area/tdome/arena) && !mapload)
 		QDEL_IN(src, 30)
 	return . //skip disease handling
 	#endif
