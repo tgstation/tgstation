@@ -261,6 +261,11 @@ AI MODULES
 	if(is_ic_filtered(targName))
 		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY U W U WITHOUT THE SPACES
 		return
+	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
+	if(soft_filter_result)
+		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" this word is soft blocked due to \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\" , Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law")
 	laws[1] = targName
 	..()
 
@@ -468,6 +473,11 @@ AI MODULES
 	if(is_ic_filtered(targName))
 		to_chat(user, span_warning("Error: Law contains invalid text."))
 		return
+	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
+	if(soft_filter_result)
+		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" this word is soft blocked due to \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\" , Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law")
 	laws[1] = targName
 	..()
 
@@ -490,6 +500,11 @@ AI MODULES
 	if(is_ic_filtered(targName)) // not even the syndicate can uwu
 		to_chat(user, span_warning("Error: Law contains invalid text."))
 		return
+	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
+	if(soft_filter_result)
+		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" this word is soft blocked due to \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\" , Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law")
 	laws[1] = targName
 	..()
 

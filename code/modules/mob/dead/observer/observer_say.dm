@@ -11,6 +11,18 @@
 
 /mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	message = trim(message) //trim now and sanitize after checking for special admin radio keys
+
+	var/list/filter_result = is_ooc_filtered(message)
+	if (filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
+		return
+
+	var/list/soft_filter_result = is_soft_ooc_filtered(message)
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" this word is soft blocked due to \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\" , Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term")
+
 	if(!message)
 		return
 	var/list/message_mods = list()

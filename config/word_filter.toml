@@ -1,10 +1,11 @@
 # This configuration file forms the in-game chat filter.
 # Values are stored as "word" = "reason for being banned".
+# Values should be in lowercase to prevent errors down the line.
+# Soft filter reasons should be kept short or the tgui gets messy
 
 # Anything in here will be blocked from IC interactions, dead chat, and OOC
 [shared]
 "blockedinshared" = "This message is not allowed anywhere, please use a different weird test phrase."
-"aaaaaa" = "aaaaaaa"
 
 # Anything in here is blocked just from IC interactions, such as chat or names, but is allowed in dead chat and OOC
 [ic]
@@ -17,12 +18,12 @@
 
 # Anything in here will warn the player if said in IC, Deadchat or OOC, the player must approve their message to send it
 [soft_shared]
-"ERP" = "Insert reason here, you risk being banned should you use this term improperly"
+"softblocks" = "Insert reason here"
 
 # InsertDescLater
-#[soft_ic]
-#"softerblocks" = "cat noises"
+[soft_ic]
+"softerblocks" = "cat noises"
 
 # InsertDescLater
-#[soft_ic_outside_pda]
-#"softestblocks" = "catter patter"
+[soft_ic_outside_pda]
+"softestblocks" = "catter patter"
