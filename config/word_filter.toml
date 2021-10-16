@@ -1,7 +1,7 @@
 # This configuration file forms the in-game chat filter.
 # Values are stored as "word" = "reason for being banned".
 # Values should be in lowercase to prevent errors down the line.
-# Soft filter reasons should be kept short or the tgui gets messy
+# Soft filter reasons should be kept short or the tgui gets messy.
 
 # Anything in here will be blocked from IC interactions, dead chat, and OOC
 [shared]
@@ -16,7 +16,7 @@
 [ic_outside_pda]
 "<(0_0<)" = "Kirby dancing is strictly prohibited on this server."
 
-# Anything in here will warn the player if said in IC, Deadchat or OOC, the player must approve their message to send it
+# Anything in here will warn the player if said in IC, dead chat or OOC, the player must approve their message to send it
 [soft_shared]
 "testsoftblocks" = "You risk being banned if this term is used improperly."
 
