@@ -117,9 +117,10 @@ SUBSYSTEM_DEF(auto_equip)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
-	new /obj/item/cowbell(src)
 	new /obj/item/binoculars(src)
 	new /obj/item/teleportation_scroll(src)
+	new /obj/item/cowbell(src)
+	new /obj/item/toy/foamfinger/toolbox(src)
 
 /obj/item/storage/box/tournament/vip/PopulateContents()
 	..()
@@ -130,3 +131,7 @@ SUBSYSTEM_DEF(auto_equip)
 /obj/item/clothing/accessory/medal/bronze_heart/donator
 	name = "Donator medal"
 	desc = "A medal for those who gave back to help a good cause."
+
+/obj/item/toy/foamfinger/toolbox
+	name = "tournament foam finger"
+	desc = "root for your favorite toolbox team!"
