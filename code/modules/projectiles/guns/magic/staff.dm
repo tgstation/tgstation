@@ -169,6 +169,6 @@
 	icon_state = "staffofmoney"
 	inhand_icon_state = "staffofmoney"
 	force = 15
-	max_charges = 14
+	max_charges = 16
 	recharge_rate = 6
 	school = SCHOOL_EVOCATION
