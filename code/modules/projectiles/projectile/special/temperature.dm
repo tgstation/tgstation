@@ -35,5 +35,5 @@
 	var/turf/T = get_turf(src)
 	if(isopenturf(T))
 		var/turf/open/O = T
-		O.freon_gas_act()
+		O.freeze_turf()
 	return ..()

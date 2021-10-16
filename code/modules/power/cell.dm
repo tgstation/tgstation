@@ -47,7 +47,7 @@
 		maxcharge = override_maxcharge
 	charge = maxcharge
 	if(ratingdesc)
-		desc += " This one has a rating of [DisplayEnergy(maxcharge)], and you should not swallow it."
+		desc += " This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
 	update_appearance()
 
 /obj/item/stock_parts/cell/create_reagents(max_vol, flags)
@@ -374,6 +374,15 @@
 
 /obj/item/stock_parts/cell/emproof/corrupt()
 	return
+
+/obj/item/stock_parts/cell/emproof/slime
+	name = "EMP-proof slime core"
+	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "yellow slime extract"
+	custom_materials = null
+	maxcharge = 5000
+	rating = 5
 
 /obj/item/stock_parts/cell/beam_rifle
 	name = "beam rifle capacitor"

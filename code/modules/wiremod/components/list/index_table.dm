@@ -21,7 +21,7 @@
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	target_index = add_input_port("Index", PORT_TYPE_NUMBER)
 
-	output_list = add_output_port("Output", PORT_TYPE_LIST)
+	output_list = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_ANY))
 
 /obj/item/circuit_component/index_table/input_received(datum/port/input/port)
 

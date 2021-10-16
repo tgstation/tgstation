@@ -33,9 +33,13 @@
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
 
-	if(spawn_on_init)
+	if(should_spawn_on_init())
 		spawn_loot()
 		return INITIALIZE_HINT_QDEL
+
+/// Helper proc that returns TRUE if the spawner should spawn loot in Initialise() and FALSE otherwise. Override this to change spawning behaviour.
+/obj/effect/spawner/random/proc/should_spawn_on_init()
+	return spawn_on_init
 
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/random/proc/spawn_loot(lootcount_override)
@@ -58,9 +62,9 @@
 	if(loot?.len)
 		var/loot_spawned = 0
 		while((spawn_loot_count-loot_spawned) && loot.len)
-			var/lootspawn = pickweight(loot)
+			var/lootspawn = pick_weight(loot)
 			while(islist(lootspawn))
-				lootspawn = pickweight(lootspawn)
+				lootspawn = pick_weight(lootspawn)
 			if(!spawn_loot_double)
 				loot.Remove(lootspawn)
 			if(lootspawn && (spawn_scatter_radius == 0 || spawn_locations.len))
@@ -135,7 +139,7 @@
 		stat_table[item] /= loot_count
 
 /obj/item/loot_table_maker/proc/pick_loot(lootpool) //selects path from loot table and returns it
-	var/lootspawn = pickweight(lootpool)
+	var/lootspawn = pick_weight(lootpool)
 	while(islist(lootspawn))
-		lootspawn = pickweight(lootspawn)
+		lootspawn = pick_weight(lootspawn)
 	return lootspawn

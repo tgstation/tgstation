@@ -461,9 +461,10 @@ export class IntegratedCircuit extends Component {
                 variables={variables}
                 types={global_basic_types}
                 onClose={(event) => this.setState({ menuOpen: false })}
-                onAddVariable={(name, type, event) => act("add_variable", {
+                onAddVariable={(name, type, asList, event) => act("add_variable", {
                   variable_name: name,
                   variable_datatype: type,
+                  is_list: asList,
                 })}
                 onRemoveVariable={(name, event) => act("remove_variable", {
                   variable_name: name,

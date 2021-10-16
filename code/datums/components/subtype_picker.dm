@@ -49,7 +49,7 @@
 
 		name2subtype[initial(subtype.name)] = subtype
 		built_radial_list += list(initial(subtype.name) = option)
-	built_radial_list = sortList(built_radial_list)
+	built_radial_list = sort_list(built_radial_list)
 
 /**
  * pick_subtype: called from on_attack_self, shows a user a radial menu of all available null rod reskins and replaces the current null rod with the user's chosen reskinned variant

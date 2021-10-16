@@ -1371,7 +1371,7 @@
 /area/awaymission/snowdin/post/kitchen)
 "dU" = (
 /obj/structure/table,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/kitchen)
@@ -1555,7 +1555,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/kitchen)
 "eC" = (
-/obj/item/kitchen/knife{
+/obj/item/knife/kitchen{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -2035,7 +2035,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/hydro)
 "fS" = (
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},

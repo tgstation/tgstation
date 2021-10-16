@@ -48,7 +48,7 @@
 
 	// In practice, the list will never run out, but this is for sanity.
 	while (customer_types_to_choose.len)
-		customer_type = pickweight(customer_types_to_choose)
+		customer_type = pick_weight(customer_types_to_choose)
 
 		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
 		if (customer.can_use(src))

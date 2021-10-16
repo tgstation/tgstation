@@ -311,7 +311,7 @@
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/reagent_containers/glass/bottle/venom,
 /obj/item/reagent_containers/glass/bottle/curare,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/meat/slab/human,
 /obj/item/food/meat/slab/human,
@@ -331,7 +331,7 @@
 "Cl" = (
 /obj/structure/sacrificealtar,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/bloodletter,
+/obj/item/knife/bloodletter,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Dm" = (
