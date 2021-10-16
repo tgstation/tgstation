@@ -13,6 +13,11 @@
 "ac" = (
 /turf/closed/indestructible/iron,
 /area/tdome/tdome2)
+"ad" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/bookmanagement,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "ae" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/turf_decal/weather/dirt{
@@ -572,6 +577,11 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/snowforest/mansion)
+"dV" = (
+/obj/structure/table/wood,
+/obj/item/candle/infinite,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion)
 "dW" = (
 /obj/structure/railing/corner,
 /turf/open/floor/mineral/diamond,
@@ -759,6 +769,13 @@
 	pixel_y = -16
 	},
 /turf/open/floor/wood,
+/area/awaymission/cabin/snowforest/mansion)
+"eT" = (
+/obj/structure/fluff/paper/stack{
+	dir = 5;
+	mouse_opacity = 0
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest/mansion)
 "eU" = (
 /obj/machinery/hydroponics/soil,
@@ -1251,6 +1268,12 @@
 /obj/item/toy/cards/deck/tarot,
 /turf/open/floor/carpet/lone/star,
 /area/awaymission/cabin/snowforest/mansion)
+"hV" = (
+/obj/structure/chair/sofa{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "hW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -1378,6 +1401,12 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/tdome/tdome2)
+"iP" = (
+/obj/structure/fluff/paper/stack{
+	mouse_opacity = 0
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion)
 "iR" = (
 /obj/structure/flora/tree/jungle/small,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -1750,6 +1779,10 @@
 	},
 /turf/open/floor/carpet/green,
 /area/awaymission/cabin/snowforest/mansion)
+"kW" = (
+/obj/item/kirbyplants/dead,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "kX" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
@@ -1889,6 +1922,11 @@
 "lH" = (
 /turf/closed/indestructible/rock,
 /area/awaymission/cabin/snowforest/crypt)
+"lI" = (
+/obj/item/kirbyplants/dead,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "lM" = (
 /obj/effect/mob_spawn/human/pirate/skeleton/captain,
 /obj/effect/cult_turf/overlay/floor/bloodcult,
@@ -2013,6 +2051,12 @@
 "mM" = (
 /turf/open/floor/stone,
 /area/awaymission/cabin/snowforest)
+"mO" = (
+/obj/machinery/vending/games,
+/turf/open/floor/wood/large{
+	icon_state = "wood_large-broken3"
+	},
+/area/awaymission/cabin/snowforest/mansion)
 "mS" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 5
@@ -2385,6 +2429,11 @@
 /obj/effect/landmark/tournament_spawn_valid_location,
 /turf/open/floor/wood,
 /area/tdome/arena)
+"oL" = (
+/obj/structure/table/wood,
+/obj/item/newspaper,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "oM" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -2959,6 +3008,11 @@
 /obj/effect/mob_spawn/human/corpse/charredskeleton,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest/crypt)
+"rD" = (
+/obj/structure/table/wood,
+/obj/item/pen/fountain,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion)
 "rF" = (
 /obj/structure/closet/crate/grave,
 /turf/open/floor/plating/grass,
@@ -3065,6 +3119,16 @@
 	name = "Lord's Chambers"
 	},
 /turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion)
+"si" = (
+/obj/structure/rack{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "minibar";
+	name = "skeletal minibar"
+	},
+/obj/item/organ/liver,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest/mansion)
 "sj" = (
 /obj/effect/turf_decal/delivery,
@@ -3686,6 +3750,13 @@
 	pixel_x = 11
 	},
 /turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
+"vm" = (
+/obj/structure/fluff/paper{
+	dir = 1;
+	mouse_opacity = 0
+	},
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/mansion)
 "vn" = (
 /obj/structure/flora/tree/jungle,
@@ -4451,6 +4522,10 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest/mansion)
+"zr" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/carpet/red,
 /area/awaymission/cabin/snowforest/mansion)
 "zt" = (
 /obj/structure/table/wood/poker,
@@ -6242,6 +6317,10 @@
 "IY" = (
 /turf/closed/wall/mineral/diamond,
 /area/awaymission/cabin/snowforest/crypt)
+"Ja" = (
+/obj/item/kirbyplants/dead,
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion)
 "Jd" = (
 /mob/living/simple_animal/deer{
 	name = "John"
@@ -6885,6 +6964,10 @@
 	},
 /turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest/mansion)
+"Mo" = (
+/obj/structure/mansion/sconce/double,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "Mp" = (
 /obj/item/instrument/trumpet/spectral,
 /obj/structure/mansion/sconce/double{
@@ -7027,6 +7110,11 @@
 /area/awaymission/cabin/snowforest/crypt)
 "Nb" = (
 /obj/item/wrench,
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
+"Nc" = (
+/obj/structure/table/wood,
+/obj/item/storage/briefcase,
 /turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest/mansion)
 "Ne" = (
@@ -7449,6 +7537,14 @@
 /obj/structure/flora/ausbushes/leafybush,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"OW" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/cabin/snowforest/mansion)
 "OY" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/structure/mansion/sconce/fixednorth{
@@ -8308,6 +8404,12 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/plating/dirt,
 /area/awaymission/cabin/snowforest)
+"Ua" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/cabin/snowforest/mansion)
 "Ub" = (
 /obj/machinery/shower{
 	dir = 4
@@ -9241,6 +9343,12 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
+/area/awaymission/cabin/snowforest/mansion)
+"YU" = (
+/obj/structure/chair/wood/wings{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/cabin/snowforest/mansion)
 "YV" = (
 /obj/machinery/limbgrower/infinite,
@@ -31644,9 +31752,9 @@ Mg
 Mg
 Mg
 Mg
-Mg
-Mg
-Mg
+rn
+rn
+rn
 Yy
 Yy
 Yy
@@ -31774,9 +31882,9 @@ Mg
 Mg
 Mg
 Mg
+Ja
 Mg
-Mg
-Mg
+eT
 Yy
 Yy
 Cr
@@ -31906,7 +32014,7 @@ Mg
 Mg
 Mg
 Mg
-Mg
+kC
 Yy
 AP
 CO
@@ -32031,12 +32139,12 @@ rn
 Mg
 Mg
 Mg
+wb
 Mg
 Mg
 Mg
 Mg
-Mg
-Mg
+Ua
 Yy
 AU
 CO
@@ -32161,12 +32269,12 @@ rn
 Mg
 Mg
 Mg
+rn
+IL
+vm
 Mg
 Mg
-Mg
-Mg
-Mg
-Mg
+oL
 Yy
 Be
 CO
@@ -32291,12 +32399,12 @@ rn
 Mg
 Mg
 Mg
+rn
+lI
+iP
 Mg
 Mg
-Mg
-Mg
-Mg
-Mg
+RO
 Yy
 Yy
 Yy
@@ -32421,12 +32529,12 @@ rn
 Mg
 Mg
 Mg
+rn
+qp
 Mg
+zr
 Mg
-Mg
-Mg
-Mg
-Mg
+Yn
 Yy
 GX
 Yy
@@ -32551,12 +32659,12 @@ rn
 Mg
 Mg
 Mg
+rn
+kW
 Mg
+zr
 Mg
-Mg
-Mg
-Mg
-Mg
+hV
 XV
 XV
 XV
@@ -32681,12 +32789,12 @@ rn
 vy
 Mg
 Mg
+rn
+vc
 Mg
 Mg
 Mg
-Mg
-Mg
-Mg
+za
 XV
 Gu
 Fn
@@ -32811,12 +32919,12 @@ rn
 Mg
 Mg
 Mg
+rn
+kW
 Mg
 Mg
 Mg
-Mg
-Mg
-Mg
+RO
 XV
 Gu
 Fs
@@ -32941,12 +33049,12 @@ rn
 Mg
 Mg
 Mg
-Mg
-Mg
-Mg
-Mg
-Mg
-Mg
+rn
+ad
+OW
+rD
+dV
+dH
 XV
 Gu
 Fs
@@ -33071,12 +33179,12 @@ rn
 Mg
 Mg
 Mg
-Mg
-Mg
-Mg
-Mg
-Mg
-Mg
+rn
+mO
+dH
+kC
+Nc
+RO
 XV
 AS
 Fs
@@ -33201,12 +33309,12 @@ rn
 Mg
 Mg
 Mg
-Mg
-Mg
-Mg
-Mg
-Mg
-Mg
+rn
+si
+YU
+dH
+dH
+Mo
 XV
 Gu
 Dp
