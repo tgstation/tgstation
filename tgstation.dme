@@ -1288,6 +1288,7 @@
 #include "code\game\objects\items\inducer.dm"
 #include "code\game\objects\items\inspector.dm"
 #include "code\game\objects\items\kitchen.dm"
+#include "code\game\objects\items\knives.dm"
 #include "code\game\objects\items\latexballoon.dm"
 #include "code\game\objects\items\mail.dm"
 #include "code\game\objects\items\maintenance_loot.dm"

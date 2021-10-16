@@ -2363,7 +2363,7 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -32
 	},
-/obj/item/kitchen/knife/combat/bone{
+/obj/item/knife/combat/bone{
 	desc = "An old bone sharpened into a blade. It's rather dull nowadays.";
 	force = 8;
 	name = "ancient bone dagger";
@@ -3348,7 +3348,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/flour,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)

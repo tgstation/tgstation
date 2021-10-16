@@ -541,7 +541,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cE" = (
 /obj/structure/table/reinforced,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cF" = (

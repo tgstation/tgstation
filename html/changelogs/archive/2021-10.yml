@@ -466,3 +466,15 @@
   Zytolg:
   - bugfix: The Nanotrasen Materials Reclamation Program has recycled the spare firelock
       trapped in the Cargo Offices east windows.
+2021-10-16:
+  Gandalf2k15:
+  - qol: Added the dyekit functions to the character preferences menu.
+  Ghommie:
+  - bugfix: Fixed monkeys having the wrong on fire overlay when ablaze.
+  Seris02:
+  - bugfix: quantum pads and other things with fault do_teleport calls no longer cause
+      runtimes
+  - code_imp: removes color_legacy prefs and changes sanitize_hexcolor()'s default
+      to 6 characters
+  thatoneplebeian:
+  - refactor: refactored drowsiness code

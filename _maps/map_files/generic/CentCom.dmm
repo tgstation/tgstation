@@ -1430,7 +1430,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
 "fX" = (
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible/start_area,
 /area/start)
 "fY" = (
 /obj/effect/landmark/start/new_player,
@@ -8540,7 +8540,7 @@
 /obj/structure/destructible/cult/talisman{
 	desc = "An altar dedicated to the Wizards' Federation"
 	},
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "zP" = (
@@ -11460,7 +11460,7 @@
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = -8
 	},
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -15726,7 +15726,7 @@
 "US" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/chef_recipes,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/centcom/holding)
 "UU" = (
@@ -20909,21 +20909,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
 aa
 aa
 aa
@@ -21166,21 +21166,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
+fX
 aa
 aa
 aa

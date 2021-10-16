@@ -248,14 +248,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (isnull(requested_preference))
 				return FALSE
 
-			if (!istype(requested_preference, /datum/preference/color) \
-				&& !istype(requested_preference, /datum/preference/color_legacy) \
-			)
+			if (!istype(requested_preference, /datum/preference/color))
 				return FALSE
 
 			var/default_value = read_preference(requested_preference.type)
-			if (istype(requested_preference, /datum/preference/color_legacy))
-				default_value = expand_three_digit_color(default_value)
 
 			// Yielding
 			var/new_color = input(

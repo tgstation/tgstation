@@ -66,8 +66,8 @@
 		/obj/item/reagent_containers/food/condiment/rice = 20,
 		/obj/item/reagent_containers/food/condiment/enzyme = 15,
 		/obj/item/reagent_containers/food/condiment/soymilk = 15,
-		/obj/item/kitchen/knife = 4,
-		/obj/item/kitchen/knife/butcher = 2
+		/obj/item/knife/kitchen = 4,
+		/obj/item/knife/butcher = 2
 	)
 
 
