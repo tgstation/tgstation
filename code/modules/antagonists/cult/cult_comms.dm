@@ -20,8 +20,10 @@
 	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
 	if(!input || !IsAvailable())
 		return
-	if(CHAT_FILTER_CHECK(input))
-		to_chat(usr, span_warning("You cannot send a message that contains a word prohibited in IC chat!"))
+
+	var/list/filter_result = is_ic_filtered(input)
+	if(filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
 	cultist_commune(usr, input)
 
@@ -103,7 +105,7 @@
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
 			SEND_SOUND(B.current, 'sound/magic/exit_blood.ogg')
 			asked_cultists += B.current
-	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
+	var/list/yes_voters = poll_candidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
 	if(QDELETED(Nominee) || Nominee.incapacitated())
 		team.cult_vote_called = FALSE
 		for(var/datum/mind/B in team.members)

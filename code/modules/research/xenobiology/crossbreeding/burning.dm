@@ -9,7 +9,7 @@ Burning extracts:
 	effect = "burning"
 	icon_state = "burning"
 
-/obj/item/slimecross/burning/Initialize()
+/obj/item/slimecross/burning/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
@@ -311,5 +311,5 @@ Burning extracts:
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
 	user.visible_message(span_notice("[src] flattens into a glowing rainbow blade."))
-	new /obj/item/kitchen/knife/rainbowknife(get_turf(user))
+	new /obj/item/knife/rainbowknife(get_turf(user))
 	..()

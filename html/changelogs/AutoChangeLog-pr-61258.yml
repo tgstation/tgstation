@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "RnD discount experiments now reduce the proper amount of points needed instead of gradually growing into a 100% free tech node."

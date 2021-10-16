@@ -29,7 +29,7 @@
 	idle_power_usage = 150
 	active_power_usage = 2000
 
-/obj/machinery/atmospherics/miner/Initialize()
+/obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
 	set_active(active) //Force overlay update.
 

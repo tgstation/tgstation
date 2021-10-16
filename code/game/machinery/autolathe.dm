@@ -1,10 +1,6 @@
-#define AUTOLATHE_MAIN_MENU 1
-#define AUTOLATHE_CATEGORY_MENU 2
-#define AUTOLATHE_SEARCH_MENU 3
-
 /obj/machinery/autolathe
 	name = "autolathe"
-	desc = "It produces items using iron and glass."
+	desc = "It produces items using iron, glass, plastic and maybe some more."
 	icon_state = "autolathe"
 	density = TRUE
 	use_power = IDLE_POWER_USE
@@ -48,7 +44,7 @@
 							"Imported"
 							)
 
-/obj/machinery/autolathe/Initialize()
+/obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
@@ -181,7 +177,7 @@
 
 			var/multiplier = text2num(params["multiplier"])
 			if(!multiplier)
-				to_chat(usr, "<span class=\"alert\">[src] only accepts a numerical multiplier!</span>")
+				to_chat(usr, span_alert("[src] only accepts a numerical multiplier!"))
 				return
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
 			multiplier = clamp(round(multiplier),1,50)
@@ -210,7 +206,7 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sort_list(list_to_show, /proc/cmp_typepaths_asc)
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
@@ -219,27 +215,24 @@
 
 			if(materials.has_materials(materials_used))
 				busy = TRUE
-				to_chat(usr, "<span class=\"notice\">You print [multiplier] item(s) from the [src]</span>")
+				to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
 				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
 				. = TRUE
 			else
-				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
+				to_chat(usr, span_alert("Not enough materials for this operation."))
 		else
-			to_chat(usr, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+			to_chat(usr, span_alert("The autolathe is busy. Please wait for completion of previous operation."))
 
 /obj/machinery/autolathe/on_deconstruction()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
-	if (busy)
-		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
-		return TRUE
-
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
+	if(busy)
+		balloon_alert(user, "it's busy!")
 		return TRUE
 
 	if(default_deconstruction_crowbar(O))
@@ -257,19 +250,46 @@
 
 	if(istype(O, /obj/item/disk/design_disk))
 		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
-			span_notice("You begin to load a design from \the [O]..."),
+			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
-		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
-			for(var/B in D.blueprints)
-				if(B)
-					stored_research.add_design(B)
+			var/obj/item/disk/design_disk/disky = O
+			var/list/not_imported
+			for(var/datum/design/blueprint as anything in disky.blueprints)
+				if(!blueprint)
+					continue
+				if(blueprint.build_type & AUTOLATHE)
+					stored_research.add_design(blueprint)
+				else
+					LAZYADD(not_imported, blueprint.name)
+			if(not_imported)
+				to_chat(user, span_warning("The following design[not_imported.len > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
 		busy = FALSE
 		return TRUE
 
+	if(panel_open)
+		balloon_alert(user, "close the panel first!")
+		return FALSE
+
 	return ..()
 
+/obj/machinery/autolathe/attackby_secondary(obj/item/weapon, mob/living/user, params)
+	if(busy)
+		balloon_alert(user, "it's busy!")
+		return TRUE
+
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
+		return FALSE //returning this as FALSE prevents the screwdriver from being immediately eaten by the autolathe after you screw the panel open/closed. why? don't ask me
+
+	if(machine_stat)
+		return TRUE
+
+	if(panel_open)
+		balloon_alert(user, "close the panel first!")
+		return FALSE
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
@@ -388,7 +408,7 @@
 			else
 				stored_research.remove_design(D)
 
-/obj/machinery/autolathe/hacked/Initialize()
+/obj/machinery/autolathe/hacked/Initialize(mapload)
 	. = ..()
 	adjust_hacked(TRUE)
 

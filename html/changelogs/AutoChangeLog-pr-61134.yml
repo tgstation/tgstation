@@ -1,5 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "When reprogramming a smart pipe to permit more directions, the smart pipe will now immediately connect in any newly allowed direction, rather than only connecting when a component is newly placed."
-  - bugfix: "The RPD now correctly reprograms smart pipes to more restrictive states."

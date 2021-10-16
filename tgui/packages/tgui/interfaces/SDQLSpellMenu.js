@@ -372,7 +372,7 @@ export const SDQLSpellMenu = (props, context) => {
   const { type, types, fixed_type, alert, parse_errors } = data;
 
   return (
-    <Window width={800} height={600}>
+    <Window width={800} height={600} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item grow={1} basis={0}>

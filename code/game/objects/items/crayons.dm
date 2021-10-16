@@ -1,5 +1,3 @@
-#define DARK_COLOR_LIGHTNESS_THRESHOLD 0.25
-
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
 #define RANDOM_PUNCTUATION "Random Punctuation"
@@ -79,7 +77,7 @@
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|OXYLOSS)
 
-/obj/item/toy/crayon/Initialize()
+/obj/item/toy/crayon/Initialize(mapload)
 	. = ..()
 
 	dye_color = crayon_color
@@ -606,7 +604,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
 
-/obj/item/storage/crayons/Initialize()
+/obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 7
@@ -708,7 +706,7 @@
 
 		return (OXYLOSS)
 
-/obj/item/toy/crayon/spraycan/Initialize()
+/obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
@@ -724,14 +722,14 @@
 		. += "It has [charges_left] use\s left."
 	else
 		. += "It is empty."
-	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].")
+	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
 	if(is_capped)
-		to_chat(user, span_warning("Take the cap off first!"))
+		balloon_alert(user, "take the cap off first!")
 		return
 
 	if(check_empty(user))
@@ -762,9 +760,7 @@
 
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		if(actually_paints)
-			var/list/rgb = hex2rgb(paint_color)
-			var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
-			var/color_is_dark = hsl[3] < DARK_COLOR_LIGHTNESS_THRESHOLD
+			var/color_is_dark = is_color_dark(paint_color)
 
 			if (color_is_dark && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
@@ -781,6 +777,38 @@
 		return
 
 	. = ..()
+
+/obj/item/toy/crayon/spraycan/afterattack_secondary(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(is_capped)
+		balloon_alert(user, "take the cap off first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(check_empty(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(istype(target, /obj/item/bodypart) && actually_paints)
+		var/obj/item/bodypart/limb = target
+		if(limb.status == BODYPART_ROBOTIC)
+			var/list/skins = list()
+			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
+			for(var/skin_option in style_list_icons)
+				var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = limb.icon_state)
+				skins += list("[skin_option]" = part_image)
+			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
+			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
+				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
+				limb.icon = style_list_icons[choice]
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.color)
+		paint_color = target.color
+		to_chat(user, span_notice("You adjust the color of [src] to match [target]."))
+		update_appearance()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	else
+		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
+
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped
@@ -865,7 +893,6 @@
 	charges = -1
 	desc = "Now with 30% more bluespace technology."
 
-#undef DARK_COLOR_LIGHTNESS_THRESHOLD
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER
 #undef RANDOM_PUNCTUATION

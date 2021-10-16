@@ -34,7 +34,7 @@
 	max_equip = 5
 	destruction_sleep_duration = 20
 
-/obj/vehicle/sealed/mecha/combat/gygax/dark/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/gygax/dark/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)

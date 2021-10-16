@@ -1,3 +1,13 @@
+/// How much to scale the light range of the explosion for blastcannon shots.
+#define BLASTCANNON_LIGHT_RANGE_SCALE (1/20)
+/// How much to scale the heavy range of the explosion for blastcannon shots.
+#define BLASTCANNON_HEAVY_RANGE_SCALE (1/10)
+/// How much to scale the devastation range of the explosion for blastcannon shots.
+#define BLASTCANNON_DEV_RANGE_SCALE (1/5)
+/// How much to scale the explosion ranges for blastcannon shots.
+#define BLASTCANNON_RANGE_EXP (1 / GLOB.DYN_EX_SCALE)
+
+
 /**
  * A gun that consumes a TTV to shoot an projectile with equivalent power.
  *
@@ -35,7 +45,7 @@
 	var/debug_power = 0
 
 
-/obj/item/gun/blastcannon/Initialize()
+/obj/item/gun/blastcannon/Initialize(mapload)
 	. = ..()
 	if(!pin)
 		pin = new
@@ -137,9 +147,9 @@
 	SIGNAL_HANDLER
 	. = COMSIG_CANCEL_EXPLOSION
 
-	var/heavy = arguments[EXARG_KEY_DEV_RANGE]
-	var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
-	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
+	var/heavy = (arguments[EXARG_KEY_DEV_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_DEV_RANGE_SCALE
+	var/medium = (arguments[EXARG_KEY_HEAVY_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_HEAVY_RANGE_SCALE
+	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_LIGHT_RANGE_SCALE
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
 		visible_message(span_warning("[src] lets out a little \"phut\"."))
@@ -312,3 +322,8 @@
 
 /obj/projectile/blastwave/ex_act()
 	return FALSE
+
+#undef BLASTCANNON_LIGHT_RANGE_SCALE
+#undef BLASTCANNON_HEAVY_RANGE_SCALE
+#undef BLASTCANNON_DEV_RANGE_SCALE
+#undef BLASTCANNON_RANGE_EXP
