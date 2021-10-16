@@ -35,7 +35,7 @@
 	soundloop = new(src, FALSE)
 
 /obj/item/geiger_counter/Destroy()
-	UnregisterSignal(COMSIG_RADIATION_DETECTOR_UPDATE)
+	UnregisterSignal(src, COMSIG_RADIATION_DETECTOR_UPDATE)
 	QDEL_NULL(soundloop)
 
 	return ..()

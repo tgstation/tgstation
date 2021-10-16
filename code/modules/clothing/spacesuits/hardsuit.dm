@@ -31,7 +31,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
-	UnregisterSignal(COMSIG_RADIATION_DETECTOR_UPDATE)
+	UnregisterSignal(src, COMSIG_RADIATION_DETECTOR_UPDATE)
 	. = ..()
 	if(!QDELETED(suit))
 		qdel(suit)
