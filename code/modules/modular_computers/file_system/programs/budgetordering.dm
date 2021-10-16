@@ -212,7 +212,7 @@
 					computer.say("No ID card detected.")
 					return
 				if(istype(id_card, /obj/item/card/id/departmental_budget))
-					computer.say("The [src] rejects [id_card].")
+					computer.say("[id_card] cannot be used to make purchases.")
 					return
 				account = id_card.registered_account
 				if(!istype(account))

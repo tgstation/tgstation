@@ -76,7 +76,7 @@
 
 	if(!mapload) //sync up nightshift lighting for player made lights
 		var/area/local_area = get_area(src)
-		var/obj/machinery/power/apc/temp_apc = local_area.get_apc()
+		var/obj/machinery/power/apc/temp_apc = local_area.apc
 		nightshift_enabled = temp_apc?.nightshift_lights
 
 	if(start_with_cell && !no_emergency)

@@ -594,15 +594,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/abandonedzoo)
 "LD" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 8;
-	environ = 0;
-	lighting = 0;
-	name = "Worn-out APC";
-	pixel_x = -25
-	},
 /obj/structure/rack,
-/obj/item/melee/baton/security/cattleprod,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /obj/machinery/power/apc/unlocked{
@@ -612,9 +604,7 @@
 	name = "Worn-out APC";
 	pixel_x = -25
 	},
-/obj/structure/rack,
 /obj/item/melee/baton/security/cattleprod,
-/obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Mb" = (

@@ -398,9 +398,9 @@
 	icon_state = "fern"
 	trimmable = FALSE
 
-/obj/item/kirbyplants/fern/Initialize()
+/obj/item/kirbyplants/fern/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, 1, 5)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 5)
 
 //a rock is flora according to where the icon file is
 //and now these defines
@@ -502,4 +502,3 @@
 /obj/structure/flora/rock/pile/largejungle/Initialize(mapload)
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
-

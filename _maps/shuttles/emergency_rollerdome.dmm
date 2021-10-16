@@ -125,7 +125,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
@@ -288,7 +288,7 @@
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/storage/bag/tray,
 /obj/item/food/cake/birthday,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Yr" = (

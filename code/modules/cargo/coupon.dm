@@ -18,7 +18,7 @@
 	if(rig_omen)
 		discount_pct_off = COUPON_OMEN
 	else
-		discount_pct_off = pickweight(chances)
+		discount_pct_off = pick_weight(chances)
 	if(discount_pct_off == COUPON_OMEN)
 		name = "coupon - fuck you"
 		desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
