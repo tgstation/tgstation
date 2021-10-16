@@ -94,9 +94,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/list/filter_result
+	var/list/soft_filter_result
 	if(client && !forced)
 		//The filter doesn't act on the sanitized message, but the raw message.
 		filter_result = is_ic_filtered(message)
+		soft_filter_result = is_soft_ic_filtered(message)
 
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -110,6 +112,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
+
+	if(soft_filter_result)
+		//desc
+		if(tgui_alert(usr,"Your message \"[message]\" looks like it \"(soft_filter_result[CHAT_FILTER_INDEX_REASON])\" , Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
+			return
+
 	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)

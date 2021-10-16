@@ -36,6 +36,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
 
+	var/list/soft_filter_result = is_soft_ooc_filtered(msg)
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it \"(soft_filter_result[CHAT_FILTER_INDEX_REASON])\" , Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+
 	if(!msg)
 		return
 

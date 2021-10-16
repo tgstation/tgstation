@@ -4,6 +4,7 @@
 # Anything in here will be blocked from IC interactions, dead chat, and OOC
 [shared]
 "blockedinshared" = "This message is not allowed anywhere, please use a different weird test phrase."
+"aaaaaa" = "aaaaaaa"
 
 # Anything in here is blocked just from IC interactions, such as chat or names, but is allowed in dead chat and OOC
 [ic]
@@ -13,3 +14,15 @@
 # On /tg/, netspeak is OK in PDAs.
 [ic_outside_pda]
 "<(0_0<)" = "Kirby dancing is strictly prohibited on this server."
+
+# Anything in here will warn the player if said in IC, Deadchat or OOC, the player must approve their message to send it
+[soft_shared]
+"ERP" = "Insert reason here, you risk being banned should you use this term improperly"
+
+# InsertDescLater
+#[soft_ic]
+#"softerblocks" = "cat noises"
+
+# InsertDescLater
+#[soft_ic_outside_pda]
+#"softestblocks" = "catter patter"
