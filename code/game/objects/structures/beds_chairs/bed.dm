@@ -54,6 +54,11 @@
 	resistance_flags = NONE
 	var/foldabletype = /obj/item/roller
 
+
+/obj/structure/bed/roller/examine(mob/user)
+	. = ..()
+	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
+
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
