@@ -78,6 +78,12 @@ GLOBAL_LIST_INIT(team_chat_admin_ckeys, list("waylandsmithy", "exavere", "sacko"
 	if(istype(newop))
 		operator = newop
 
+/datum/ntnet_conversation/remove_client(datum/computer_file/program/chatclient/leaving)
+	if(!istype(leaving))
+		return
+	if(leaving in active_clients)
+		active_clients.Remove(leaving)
+
 #define CHANNELNAME_SIZE 32
 #define MESSAGE_SIZE 2048
 
