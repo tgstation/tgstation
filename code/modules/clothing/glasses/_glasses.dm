@@ -594,19 +594,17 @@
 
 /obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
 	..()
-	if(!istype(user) || user.glasses != src)
-		UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
-		bigshot = initial(bigshot)
-		desc = initial(desc)
+	UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
+	bigshot = initial(bigshot)
+	icon_state = initial(icon_state)
+	desc = initial(desc)
 
-/obj/item/clothing/glasses/salesman/proc/moodshift()
-	var/datum/component/mood/mood = bigshot.GetComponent(/datum/component/mood)
-	if(mood)
-		if(mood.sanity < SANITY_UNSTABLE)	
-			icon_state = "salesman_fzz"
-			desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
-			bigshot.update_inv_glasses()
-		else
-			icon_state = initial(icon_state)
-			desc = initial(desc)
-			bigshot.update_inv_glasses()
+/obj/item/clothing/glasses/salesman/proc/moodshift(atom/movable/source, amount)
+	if(amount < SANITY_UNSTABLE)	
+		icon_state = "salesman_fzz"
+		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
+		bigshot.update_inv_glasses()
+	else
+		icon_state = initial(icon_state)
+		desc = initial(desc)
+		bigshot.update_inv_glasses()

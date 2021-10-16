@@ -221,39 +221,34 @@
 		return
 	sanity = amount
 	var/mob/living/master = parent
+	SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
-			SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
 			sanity_level = 3
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
-			SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
-			SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			master.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
