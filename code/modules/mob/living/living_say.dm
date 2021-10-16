@@ -452,7 +452,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return 0
 
-/mob/living/say_mod(input, message_mods)
+/mob/living/say_mod(input, list/message_mods = list())
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		. = verb_whisper
 	else if(message_mods[WHISPER_MODE] == MODE_WHISPER_CRIT)
