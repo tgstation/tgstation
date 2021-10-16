@@ -581,6 +581,10 @@
 	set name = "Point To"
 	set category = "Object"
 
+#ifdef EVENTMODE
+	if(!(client?.ckey in GLOB.team_chat_admin_ckeys))
+		return FALSE
+#endif
 	if(client && !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))

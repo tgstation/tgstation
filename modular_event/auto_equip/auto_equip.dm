@@ -57,6 +57,7 @@ SUBSYSTEM_DEF(auto_equip)
 
 	if (ckey in SSauto_equip.vips)
 		equipOutfit(/datum/outfit/job/vip, visual_only)
+		ADD_TRAIT(src, TRAIT_VIP, "auto_equip")
 	else
 		equipOutfit(equipping.outfit, visual_only)
 
