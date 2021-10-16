@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				var/path = saved_vars[special_list_vars[params["list"]]]
 				var/datum/sample = new path
 				var/list/choosable_vars = map_var_list(sample.vars-list_vars[params["list"]], sample)
-				var/chosen_var = tgui_input_list(user, "Select variable to add.", "Add SDQL Spell", sortList(choosable_vars))
+				var/chosen_var = tgui_input_list(user, "Select variable to add.", "Add SDQL Spell", sort_list(choosable_vars))
 				if(chosen_var)
 					if(islist(sample.vars[choosable_vars[chosen_var]]))
 						list_vars[params["list"]][choosable_vars[chosen_var]] = list("type" = "list", "value" = null, "flags" = LIST_VAR_FLAGS_TYPED|LIST_VAR_FLAGS_NAMED)
@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 
 //Change all references in the list vars, either to null (for saving) or to their string representation (for display)
 /datum/give_sdql_spell/proc/json_sanitize_list_vars(list/list_vars, mode = SANITIZE_NULLIFY)
-	var/list/temp_list_vars = deepCopyList(list_vars)
+	var/list/temp_list_vars = deep_copy_list(list_vars)
 	for(var/V in temp_list_vars)
 		var/list/L = temp_list_vars[V]
 		for(var/W in L)

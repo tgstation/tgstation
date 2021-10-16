@@ -47,6 +47,9 @@
 	return ..()
 
 /obj/item/integrated_circuit/module/add_component(obj/item/circuit_component/to_add, mob/living/user)
+	if(to_add.circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		balloon_alert(user, "doesn't fit into module!")
+		return
 	. = ..()
 	if(attached_module)
 		attached_module.circuit_size += to_add.circuit_size

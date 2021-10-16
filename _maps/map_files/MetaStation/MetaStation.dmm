@@ -9053,7 +9053,7 @@
 /area/maintenance/port/aft)
 "bUX" = (
 /obj/structure/closet/crate/bin,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUY" = (
@@ -13918,7 +13918,6 @@
 "cWi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/cargo/sorting)
@@ -23035,6 +23034,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/cytology)
+"fUP" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	name = "Gas to Chamber"
+	},
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "fUR" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/purple,
@@ -28712,7 +28718,6 @@
 /area/maintenance/port/fore)
 "icp" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/aug_manipulator,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -31320,6 +31325,13 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
+"iZv" = (
+/obj/structure/window/reinforced/plasma,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "iZM" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32888,6 +32900,15 @@
 /obj/machinery/seed_extractor,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"jFd" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/grounding_rod/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "jFe" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Pharmacy Maintenance";
@@ -34928,9 +34949,9 @@
 /obj/item/kitchen/spoon/plastic,
 /obj/item/kitchen/spoon/plastic,
 /obj/item/kitchen/spoon/plastic,
-/obj/item/kitchen/knife/plastic,
-/obj/item/kitchen/knife/plastic,
-/obj/item/kitchen/knife/plastic,
+/obj/item/knife/plastic,
+/obj/item/knife/plastic,
+/obj/item/knife/plastic,
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/bag/tray/cafeteria,
@@ -35015,14 +35036,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"kuT" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Mix Bypass"
-	},
-/turf/open/floor/engine,
-/area/engineering/supermatter/room)
 "kuY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -35568,6 +35581,13 @@
 	},
 /turf/open/floor/iron/white/side,
 /area/medical/medbay/central)
+"kDK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
+/turf/open/floor/engine,
+/area/engineering/supermatter/room)
 "kDL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -39771,10 +39791,10 @@
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "mfL" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "mfM" = (
@@ -39853,6 +39873,9 @@
 	},
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
+	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
 	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library)
@@ -43785,13 +43808,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"nzH" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Gas to Chamber"
-	},
-/turf/open/floor/engine,
-/area/engineering/supermatter)
 "nzL" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -44129,7 +44145,7 @@
 /area/science/storage)
 "nFR" = (
 /obj/machinery/vending/boozeomat,
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait/bar{
 	pixel_y = -28
 	},
 /obj/effect/turf_decal/tile/bar{
@@ -48227,12 +48243,12 @@
 /turf/open/floor/iron/dark,
 /area/security/brig)
 "pdy" = (
-/obj/machinery/power/rad_collector/anchored,
 /obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "pdS" = (
@@ -58703,7 +58719,7 @@
 	pixel_y = 4
 	},
 /obj/item/wrench,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "sQs" = (
@@ -62707,6 +62723,14 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
+"umM" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Mix Bypass"
+	},
+/turf/open/floor/engine,
+/area/engineering/supermatter/room)
 "unk" = (
 /obj/machinery/door/window/northleft{
 	dir = 8;
@@ -67396,6 +67420,9 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
+/obj/effect/spawner/random/decoration/statue{
+	spawn_loot_chance = 50
+	},
 /turf/open/floor/carpet/royalblue,
 /area/service/library)
 "vVo" = (
@@ -71242,13 +71269,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/commons/dorms)
-"xqo" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
-/turf/open/floor/engine,
-/area/engineering/supermatter/room)
 "xqs" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -116171,7 +116191,7 @@ gsg
 jOd
 jOd
 fPi
-nzH
+fUP
 toS
 wCN
 fPi
@@ -116941,11 +116961,11 @@ aGS
 gsg
 iYv
 wST
-mfL
+iZv
 jrn
 ctk
 mNF
-pdy
+jFd
 wST
 ifR
 jqt
@@ -117195,7 +117215,7 @@ rVz
 qHT
 vQt
 aGS
-kuT
+umM
 ugD
 toS
 mfL
@@ -117967,7 +117987,7 @@ kKv
 nQq
 wLu
 xGy
-xqo
+kDK
 tpa
 xle
 gda

@@ -39,8 +39,8 @@
 	inhand_icon_state = "chef"
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/kitchen)
-	togglename = "sleeves"
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
+	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
 //Cook
@@ -51,7 +51,7 @@
 	inhand_icon_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
 
 //Detective
 /obj/item/clothing/suit/det_suit
@@ -92,6 +92,11 @@
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"
@@ -100,7 +105,6 @@
 	inhand_icon_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	togglename = "buttons"
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/lawyer/purple
@@ -124,7 +128,7 @@
 	icon_state = "suspenders"
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
-	togglename = "straps"
+	toggle_noun = "straps"
 	species_exception = list(/datum/species/golem)
 	greyscale_config = /datum/greyscale_config/suspenders
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
