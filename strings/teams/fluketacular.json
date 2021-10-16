@@ -1,0 +1,17 @@
+{
+    "name": "Fluketacular Operatives",
+    "roster": [
+        "Woldmord",
+        "mrmelbert",
+        "Thedragmeme"
+    ],
+    "toolbox_color": "#841010",
+    "outfit": {
+        "mask": "/obj/item/clothing/mask/gas/hunter",
+        "glasses": "/obj/item/clothing/glasses/sunglasses/garb/supergarb",
+        "suit": "/obj/item/clothing/suit/armor/vest/capcarapace/syndicate",
+        "uniform": "/obj/item/clothing/under/syndicate",
+        "gloves": "/obj/item/clothing/gloves/color/black",
+        "shoes": "/obj/item/clothing/shoes/cowboy/black"
+    }
+}

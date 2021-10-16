@@ -1,0 +1,15 @@
+{
+    "name": "Sillycons",
+    "roster": [
+        "RoobToob",
+        "Blastin",
+        "MaxiRRRR"
+    ],
+    "toolbox_color": "#707070",
+    "outfit": {
+        "head": "/obj/item/clothing/head/cardborg",
+        "suit": "/obj/item/clothing/suit/cardborg",
+        "uniform": "/obj/item/clothing/under/rank/rnd/roboticist",
+        "shoes": "/obj/item/clothing/shoes/sneakers/cyborg"
+    }
+}

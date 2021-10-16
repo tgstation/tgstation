@@ -1,0 +1,18 @@
+{
+    "name": "Basil Bread Bois",
+    "roster": [
+        "EnderSub9",
+        "Redrover1760",
+        "Wulfenbach"
+    ],
+    "toolbox_color": "#00ff00",
+    "outfit": {
+        "head": "/obj/item/clothing/head/helmet/space/hardsuit/syndi/owl",
+        "mask": "/obj/item/clothing/mask/gas/owl_mask",
+        "glasses": "/obj/item/clothing/glasses/monocle",
+        "neck": "/obj/item/clothing/neck/cloak/skill_reward/gaming",
+        "suit": "/obj/item/clothing/suit/space/hardsuit/syndi/owl",
+        "uniform": "/obj/item/clothing/under/costume/owl",
+        "gloves": "/obj/item/clothing/gloves/cut"
+    }
+}

@@ -2550,6 +2550,10 @@
 	},
 /turf/open/floor/carpet/lone,
 /area/awaymission/cabin/snowforest/mansion)
+"pw" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/iron,
+/area/awaymission/cabin/snowforest/mansion)
 "px" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled,
@@ -5609,6 +5613,7 @@
 /area/awaymission/cabin/snowforest)
 "Fj" = (
 /obj/structure/mansion/sconce,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/awaymission/cabin/snowforest/mansion)
 "Fl" = (
@@ -6725,6 +6730,10 @@
 	pixel_x = 6
 	},
 /turf/open/floor/iron,
+/area/awaymission/cabin/snowforest/mansion)
+"LL" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/stonebrick,
 /area/awaymission/cabin/snowforest/mansion)
 "LM" = (
 /obj/structure/chair/comfy{
@@ -31841,7 +31850,7 @@ rn
 VA
 Ur
 Ur
-Ur
+pw
 rn
 Fr
 nM
@@ -37935,7 +37944,7 @@ rn
 OJ
 rn
 UN
-vU
+LL
 rn
 rn
 rn

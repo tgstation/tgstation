@@ -1,0 +1,15 @@
+{
+    "name": "Bee Team",
+    "roster": [
+        "super12pl",
+        "howluinb",
+        "LocalKraken"
+    ],
+    "toolbox_color": "#444444",
+    "outfit": {
+        "glasses": "/obj/item/clothing/glasses/sunglasses",
+        "uniform": "/obj/item/clothing/under/costume/swagoutfit",
+        "gloves": "/obj/item/clothing/gloves/cut/heirloom",
+        "shoes": "/obj/item/clothing/shoes/swagshoes"
+    }
+}

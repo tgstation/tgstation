@@ -1,0 +1,17 @@
+{
+    "name": "Entire Population Of Campbell",
+    "roster": [
+        "iguanadie",
+        "capsandi",
+        "ghom"
+    ],
+    "toolbox_color": "#9bd1e8",
+    "outfit": {
+        "head": "/obj/item/clothing/head/mailman",
+        "glasses": "/obj/item/clothing/glasses/sunglasses",
+        "neck": "/obj/item/clothing/neck/tie/detective",
+        "uniform": "/obj/item/clothing/under/misc/mailman",
+        "gloves": "/obj/item/clothing/gloves/color/white",
+        "shoes": "/obj/item/clothing/shoes/sneakers/brown"
+    }
+}
