@@ -203,8 +203,11 @@
 	if(!family_heirloom)
 		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realise your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
 		return
-
-	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.last_mind, family_name)
+	var/datum/mind/mind = quirk_holder.mind
+	if (iscarbon(quirk_holder))
+		var/mob/living/carbon/carbon = quirk_holder
+		mind = carbon.last_mind
+	family_heirloom.AddComponent(/datum/component/heirloom, mind, family_name)
 
 	return ..()
 
@@ -474,7 +477,7 @@
 		quirk_holder.hallucination += rand(10, 25)
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
-	if(!quirk_holder.last_mind || quirk_holder.last_mind.special_role)
+	if(!quirk_holder.mind || quirk_holder.mind.special_role)
 		return
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
@@ -720,7 +723,11 @@
 /datum/quirk/item_quirk/junkie/smoker/post_add()
 	. = ..()
 	var/brand = initial(drug_container_type.name)
-	quirk_holder.last_mind?.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	var/datum/mind/mind = quirk_holder.mind
+	if (iscarbon(quirk_holder))
+		var/mob/living/carbon/carbon = quirk_holder
+		mind = carbon.last_mind
+	mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
 
 /datum/quirk/item_quirk/junkie/smoker/process(delta_time)
 	. = ..()
@@ -777,7 +784,11 @@
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 
 /datum/quirk/item_quirk/allergic/post_add()
-	quirk_holder.last_mind?.add_memory(MEMORY_ALLERGY, list(DETAIL_ALLERGY_TYPE = allergy_string), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	var/datum/mind/mind = quirk_holder.mind
+	if (iscarbon(quirk_holder))
+		var/mob/living/carbon/carbon = quirk_holder
+		mind = carbon.last_mind
+	mind.add_memory(MEMORY_ALLERGY, list(DETAIL_ALLERGY_TYPE = allergy_string), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
 /datum/quirk/item_quirk/allergic/process(delta_time)
