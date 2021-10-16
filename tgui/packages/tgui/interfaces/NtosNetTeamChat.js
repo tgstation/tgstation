@@ -55,12 +55,11 @@ export const NtosNetTeamChat = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     title,
-    can_admin,
     adminmode,
     authed,
-    username,
     active_channel,
     is_operator,
+    auto_scroll,
     strong,
     selfref,
     all_channels = [],
@@ -124,7 +123,7 @@ export const NtosNetTeamChat = (props, context) => {
           <Stack.Item grow={5}>
             <Stack vertical fill>
               <Stack.Item grow>
-                <Section scrollable fill>
+                <SectionAutoScroll scrollable fill doAuto={!!auto_scroll}>
                   {in_channel && (
                     authorized ? (
                       messages.map(message => (
@@ -154,7 +153,7 @@ export const NtosNetTeamChat = (props, context) => {
                   ) || (
                     <NoChannelDimmer />
                   )}
-                </Section>
+                </SectionAutoScroll>
               </Stack.Item>
               {!!in_channel && (
                 <Input
@@ -222,6 +221,11 @@ export const NtosNetTeamChat = (props, context) => {
                       </Stack>
                     </Section>
                   </Stack.Item>
+                  <Button.Checkbox
+                    checked={auto_scroll}
+                    onClick={() => act('PRG_auto_scroll')}>
+                    Auto scroll
+                  </Button.Checkbox>
                   {!!(is_operator && authed) && (
                     <Section>
                       <Stack.Item mb="8px">
@@ -247,3 +251,13 @@ export const NtosNetTeamChat = (props, context) => {
     </NtosWindow>
   );
 };
+
+
+export class SectionAutoScroll extends Section {
+  componentDidUpdate() {
+    if (this.props.doAuto) {
+      this.scrollableRef.current
+        .scrollTop = this.scrollableRef.current.scrollHeight;
+    }
+  }
+}

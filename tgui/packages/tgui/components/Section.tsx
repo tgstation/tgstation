@@ -20,6 +20,7 @@ interface SectionProps extends BoxProps {
   level?: boolean;
   /** @deprecated Please use `scrollable` property */
   overflowY?: any;
+  doAuto?: boolean; // oh god oh fuck
 }
 
 export class Section extends Component<SectionProps> {

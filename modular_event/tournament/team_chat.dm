@@ -101,6 +101,7 @@ GLOBAL_LIST_INIT(team_chat_admin_ckeys, list("waylandsmithy", "exavere", "sacko"
 	tgui_id = "NtosNetTeamChat"
 	program_icon = "comment-alt"
 	alert_able = TRUE
+	var/auto_scroll = TRUE
 
 /datum/computer_file/program/chatclient/team/ui_status(mob/user)
 	if(program_state != PROGRAM_STATE_ACTIVE) // Our program was closed. Close the ui if it exists.
@@ -163,6 +164,9 @@ GLOBAL_LIST_INIT(team_chat_admin_ckeys, list("waylandsmithy", "exavere", "sacko"
 			var/datum/computer_file/program/chatclient/team/pinged = locate(params["ref"]) in channel.active_clients + channel.offline_clients
 			channel.ping_user(src, pinged)
 			return TRUE
+		if("PRG_auto_scroll")
+			auto_scroll = !auto_scroll
+			return TRUE
 
 /datum/computer_file/program/chatclient/team/ui_close(mob/user)
 	if(program_state != PROGRAM_STATE_KILLED)
@@ -190,6 +194,7 @@ GLOBAL_LIST_INIT(team_chat_admin_ckeys, list("waylandsmithy", "exavere", "sacko"
 				"id" = conv.id
 			)))
 	data["all_channels"] = all_channels
+	data["auto_scroll"] = auto_scroll
 
 	data["active_channel"] = active_channel
 	data["selfref"] = REF(src) //used to verify who is you, as usernames can be copied.
