@@ -2326,8 +2326,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(DT_PROB(10, delta_time) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "ccc"
-			metabolizer.hair_color = "ccc"
+			metabolizer.facial_hair_color = "#cccccc"
+			metabolizer.hair_color = "#cccccc"
 			metabolizer.update_hair()
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)

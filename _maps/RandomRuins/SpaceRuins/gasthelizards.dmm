@@ -185,7 +185,7 @@
 /area/ruin/space/has_grav/gasthelizard)
 "y" = (
 /obj/structure/table/reinforced,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /obj/item/restraints/handcuffs,
 /obj/item/reagent_containers/spray/pepper,
 /turf/open/floor/iron/dark/airless,
