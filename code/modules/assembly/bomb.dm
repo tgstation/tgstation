@@ -174,13 +174,13 @@ var/list/gas_comp = list(
 	if(fuel_moles == 0)
 		return
 	for(var/gas_id in fuel_gases)
-		gas_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / fuel_moles, 0, 1)
+		gas_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / fuel_moles, 0, 1) //Composition of fuels.
 
 	for(var/gas_id in gas_explosion_modifiers)
 		for(var/i = 1 to 4)
-			explosion_modifier[i] += gas_explosion_modifiers[gas_id][i] * gas_comp[gas_id]
+			explosion_modifier[i] += gas_explosion_modifiers[gas_id][i] * gas_comp[gas_id] //Calculate modifiers.
 	for(var/i = 1 to 4)
-		explosion_modifier[i] += (1 - (T0C + 100) / our_mix.temperature) * (0.9 - explosion_modifier[i])
+		explosion_modifier[i] += (1 - (T0C + 100) / our_mix.temperature) * (0.9 - explosion_modifier[i]) //When temperature is above 373.15K, converge the modifiers to 0.9.
 	our_mix.garbage_collect()
 	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
 	var/strength = fuel_moles * bomb_mixture.temperature / 10000
