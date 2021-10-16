@@ -38,7 +38,7 @@
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
-
+	rpg_title = "Thiefcatcher"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -58,7 +58,7 @@
 	r_pocket = /obj/item/lighter
 	backpack_contents = list(/obj/item/storage/box/evidence=1,\
 		/obj/item/detective_scanner=1,\
-		/obj/item/melee/classic_baton=1)
+		/obj/item/melee/baton=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 	implants = list(/obj/item/implant/mindshield)

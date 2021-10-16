@@ -7,7 +7,7 @@
 	///alpha 0-255 of lighting_effect and thus baselighting intensity
 	var/base_lighting_alpha = 0
 	///The colour of the light acting on this area
-	var/base_lighting_color = null
+	var/base_lighting_color = COLOR_WHITE
 
 /area/proc/set_base_lighting(new_base_lighting_color = -1, new_alpha = -1)
 	if(base_lighting_alpha == new_alpha && base_lighting_color == new_base_lighting_color)
@@ -27,6 +27,12 @@
 		if("base_lighting_alpha")
 			set_base_lighting(new_alpha = var_value)
 			return TRUE
+		if("static_lighting")
+			if(!static_lighting)
+				create_area_lighting_objects()
+			else
+				remove_area_lighting_objects()
+
 	return ..()
 
 /area/proc/update_base_lighting()
@@ -53,6 +59,7 @@
 	lighting_effect.blend_mode = BLEND_ADD
 	lighting_effect.alpha = base_lighting_alpha
 	lighting_effect.color = base_lighting_color
+	lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 	for(var/turf/T in src)
 		T.add_overlay(lighting_effect)
 		T.luminosity = 1

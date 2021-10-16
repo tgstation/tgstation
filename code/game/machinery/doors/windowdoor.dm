@@ -14,7 +14,7 @@
 	flags_1 = ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS
-	CanAtmosPass = ATMOS_PASS_PROC
+	can_atmos_pass = ATMOS_PASS_PROC
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	network_id = NETWORK_DOOR_AIRLOCKS
 	set_dir_on_move = FALSE
@@ -56,7 +56,7 @@
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
 	QDEL_LIST(debris)
-	if(obj_integrity == 0)
+	if(atom_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
 	var/turf/floor = get_turf(src)
@@ -128,7 +128,7 @@
 
 	return TRUE
 
-/obj/machinery/door/window/CanAtmosPass(turf/T)
+/obj/machinery/door/window/can_atmos_pass(turf/T)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
@@ -140,6 +140,8 @@
 
 /obj/machinery/door/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+	if(leaving.movement_type & PHASING)
+		return
 
 	if(leaving == src)
 		return // Let's not block ourselves.

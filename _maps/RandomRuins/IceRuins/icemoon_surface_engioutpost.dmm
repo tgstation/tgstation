@@ -173,7 +173,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aM" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
@@ -747,12 +747,12 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cZ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "db" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
@@ -908,17 +908,17 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "na" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "tH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "xA" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)

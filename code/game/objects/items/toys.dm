@@ -46,7 +46,7 @@
 	inhand_icon_state = "balloon-empty"
 
 
-/obj/item/toy/waterballoon/Initialize()
+/obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
 	create_reagents(10)
 
@@ -337,7 +337,7 @@
 	/// The color of our fake energy sword
 	var/saber_color = "blue"
 
-/obj/item/toy/sword/Initialize()
+/obj/item/toy/sword/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/transforming, \
 		throw_speed_on = throw_speed, \
@@ -539,7 +539,7 @@
 	if(!..())
 		pop_burst()
 
-/obj/item/toy/snappop/Initialize()
+/obj/item/toy/snappop/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -562,7 +562,7 @@
 /obj/effect/decal/cleanable/ash/snappop_phoenix
 	var/respawn_time = 300
 
-/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize()
+/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
@@ -686,7 +686,7 @@
 	var/list/card_attack_verb_simple = list("attack")
 
 
-/obj/item/toy/cards/Initialize()
+/obj/item/toy/cards/Initialize(mapload)
 	. = ..()
 	if(card_attack_verb_continuous)
 		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
@@ -714,7 +714,7 @@
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
-/obj/item/toy/cards/deck/Initialize()
+/obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
 	populate_deck()
@@ -843,7 +843,6 @@
 	cardUser.visible_message(span_notice("[cardUser] draws a card from [cardUser.p_their()] hand."), span_notice("You take the [C.cardname] from your hand."))
 
 	interact(cardUser)
-	update_sprite()
 	if(length(currenthand) == 1)
 		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
 		N.parentdeck = parentdeck
@@ -852,7 +851,9 @@
 		qdel(src)
 		N.pickup(cardUser)
 		cardUser.put_in_hands(N)
-		to_chat(cardUser, span_notice("You also take [currenthand[1]] and hold it."))
+		to_chat(cardUser, span_notice("You also take [N.cardname] and hold it."))
+	else
+		update_sprite()
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
@@ -1243,7 +1244,7 @@
 	var/toysound = 'sound/machines/click.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/figure/Initialize()
+/obj/item/toy/figure/Initialize(mapload)
 	. = ..()
 	desc = "A \"Space Life\" brand [src]."
 
@@ -1479,7 +1480,7 @@
 	if (istype(M))
 		M.log_talk(message, LOG_SAY, tag="dummy toy")
 
-	say(message, language)
+	say(message, language, sanitize = FALSE)
 	return NOPASS
 
 /obj/item/toy/dummy/GetVoice()
@@ -1492,12 +1493,12 @@
 	icon_state = "shell1"
 	var/static/list/possible_colors = list("" =  2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
-/obj/item/toy/seashell/Initialize()
+/obj/item/toy/seashell/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	icon_state = "shell[rand(1,3)]"
-	color = pickweight(possible_colors)
+	color = pick_weight(possible_colors)
 	setDir(pick(GLOB.cardinals))
 
 /obj/item/toy/brokenradio

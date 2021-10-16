@@ -158,10 +158,8 @@
 	var/shrapnel_type
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/list/embedding
-
 	///If TRUE, hit mobs even if they're on the floor and not our target
-	var/hit_stunned_targets = FALSE
-
+	var/hit_prone_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
@@ -172,7 +170,7 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-/obj/projectile/Initialize()
+/obj/projectile/Initialize(mapload)
 	. = ..()
 	decayedRange = range
 	if(embedding)
@@ -316,15 +314,15 @@
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		best_angle += NICE_SHOT_RICOCHET_BONUS
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
-		if(L.stat == DEAD || !isInSight(src, L))
+		if(L.stat == DEAD || !is_in_sight(src, L))
 			continue
-		var/our_angle = abs(closer_angle_difference(Angle, Get_Angle(src.loc, L.loc)))
+		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
 			best_angle = our_angle
 			unlucky_sob = L
 
 	if(unlucky_sob)
-		set_angle(Get_Angle(src, unlucky_sob.loc))
+		set_angle(get_angle(src, unlucky_sob.loc))
 
 /obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
 	beam_segments[beam_index] = point_cache
@@ -504,15 +502,15 @@
 		var/mob/living/L = target
 		if(direct_target)
 			return TRUE
-		// If target not able to use items, move and stand - or if they're just dead, pass over.
 		if(L.stat == DEAD)
 			return FALSE
-		if(!L.density)
+		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
 			return FALSE
-		if(L.body_position != LYING_DOWN)
-			return TRUE
-		var/stunned = HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)
-		return !stunned || hit_stunned_targets
+		if(!hit_prone_targets)
+			if(!L.density)
+				return FALSE
+			if(L.body_position != LYING_DOWN)
+				return TRUE
 	return TRUE
 
 /**
@@ -628,7 +626,7 @@
 /obj/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
 	var/turf/current = get_turf(src)
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
-	return getline(current, ending)
+	return get_line(current, ending)
 
 /obj/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE //Bullets don't drift in space
@@ -680,7 +678,7 @@
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
-		set_angle(Get_Angle(src, target))
+		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/matrix = new
@@ -872,7 +870,7 @@
 	if(targloc || !length(modifiers))
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		set_angle(Get_Angle(src, targloc) + spread)
+		set_angle(get_angle(src, targloc) + spread)
 
 	if(isliving(source) && length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, modifiers)
@@ -883,7 +881,7 @@
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		set_angle(Get_Angle(src, targloc) + spread)
+		set_angle(get_angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)

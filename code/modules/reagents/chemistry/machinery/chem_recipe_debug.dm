@@ -52,7 +52,7 @@
 	var/datum/chemical_reaction/edit_recipe
 
 ///Create reagents datum
-/obj/machinery/chem_recipe_debug/Initialize()
+/obj/machinery/chem_recipe_debug/Initialize(mapload)
 	. = ..()
 	create_reagents(9000)//I want to make sure everything fits
 	end_processing()
@@ -112,9 +112,9 @@
 
 /obj/machinery/chem_recipe_debug/proc/relay_all_reactions()
 	say("Completed testing, missing reactions products (may have exploded) are:")
-	say("[problem_string]")
+	say("[problem_string]", sanitize=FALSE)
 	say("Problem with results are:")
-	say("[impure_string]")
+	say("[impure_string]", sanitize=FALSE)
 	say("Reactions with minor impurity: [minorImpurity], reactions with major impurity: [majorImpurity]")
 	processing = FALSE
 	problem_string = null

@@ -26,17 +26,9 @@
 	var/list/datum/port/output/outs
 
 /obj/item/circuit_component/router/populate_options()
-	var/static/component_options = list(
-		PORT_TYPE_ANY,
-		PORT_TYPE_STRING,
-		PORT_TYPE_NUMBER,
-		PORT_TYPE_LIST,
-		PORT_TYPE_ATOM,
-	)
-	router_options = add_option_port("Router Options", component_options)
+	router_options = add_option_port("Router Options", GLOB.wiremod_basic_types)
 
-/obj/item/circuit_component/router/Initialize()
-	. = ..()
+/obj/item/circuit_component/router/populate_ports()
 	current_type = router_options.value
 	if(input_port_amount > 1)
 		input_selector = add_input_port("Input Selector", PORT_TYPE_NUMBER, default = 1)
@@ -61,8 +53,7 @@
 
 // If I is in range, L[I]. If I is out of range, wrap around.
 #define WRAPACCESS(L, I) L[(((I||1)-1)%length(L)+length(L))%length(L)+1]
-/obj/item/circuit_component/router/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/router/pre_input_received(datum/port/input/port)
 	var/current_option = router_options.value
 	if(current_type != current_option)
 		current_type = current_option
@@ -70,8 +61,8 @@
 			input.set_datatype(current_type)
 		for(var/datum/port/output/output as anything in outs)
 			output.set_datatype(current_type)
-	if(.)
-		return
+
+/obj/item/circuit_component/router/input_received(datum/port/input/port)
 	var/datum/port/input/input = WRAPACCESS(ins, input_selector ? input_selector.value : 1)
 	var/datum/port/output/output = WRAPACCESS(outs, output_selector ? output_selector.value : 1)
 	output.set_output(input.value)

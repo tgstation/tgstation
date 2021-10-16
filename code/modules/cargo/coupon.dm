@@ -18,7 +18,7 @@
 	if(rig_omen)
 		discount_pct_off = COUPON_OMEN
 	else
-		discount_pct_off = pickweight(chances)
+		discount_pct_off = pick_weight(chances)
 	if(discount_pct_off == COUPON_OMEN)
 		name = "coupon - fuck you"
 		desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
@@ -30,7 +30,7 @@
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
-/obj/item/coupon/attack_obj(obj/O, mob/living/user, params)
+/obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)

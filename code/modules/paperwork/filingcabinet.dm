@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
 	var/virgin = TRUE
 
-/obj/structure/filingcabinet/employment/Initialize()
+/obj/structure/filingcabinet/employment/Initialize(mapload)
 	. = ..()
 	GLOB.employmentCabinets += src
 

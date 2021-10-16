@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
 /obj/machinery/conveyor/proc/broken()
-	obj_break()
+	atom_break()
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, dir)
@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch. It appears to only go in one direction."
 	oneway = TRUE
 
-/obj/machinery/conveyor_switch/oneway/Initialize()
+/obj/machinery/conveyor_switch/oneway/Initialize(mapload)
 	. = ..()
 	if((dir == NORTH) || (dir == WEST))
 		invert_icon = TRUE
@@ -387,7 +387,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the switch
 
-/obj/item/conveyor_switch_construct/Initialize()
+/obj/item/conveyor_switch_construct/Initialize(mapload)
 	. = ..()
 	id = "[rand()]" //this couldn't possibly go wrong
 
@@ -467,26 +467,30 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/datum/port/output/direction
 	var/obj/machinery/conveyor_switch/attached_switch
 
-/obj/item/circuit_component/conveyor_switch/Initialize()
-	. = ..()
+/obj/item/circuit_component/conveyor_switch/populate_ports()
 	direction = add_output_port("Conveyor Direction", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/conveyor_switch/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Conveyor direction 0 means that it is stopped, 1 means that it is active and -1 means that it is working in reverse mode", "orange", "info")
 
-/obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/conveyor_switch/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/conveyor_switch))
-		attached_switch = parent
+	if(istype(shell, /obj/machinery/conveyor_switch))
+		attached_switch = shell
 
-/obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/conveyor_switch/unregister_usb_parent(atom/movable/shell)
 	attached_switch = null
 	return ..()
 
 /obj/item/circuit_component/conveyor_switch/input_received(datum/port/input/port)
-	. = ..()
-	if(. || !attached_switch)
+	if(!attached_switch)
+		return
+
+	INVOKE_ASYNC(src, .proc/update_conveyers, port)
+
+/obj/item/circuit_component/conveyor_switch/proc/update_conveyers(datum/port/input/port)
+	if(!attached_switch)
 		return
 
 	attached_switch.update_position()

@@ -66,7 +66,7 @@
 		charges--
 		var/difficulty = 0
 		if(target.cartridge)
-			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
+			difficulty += bit_count(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
 			if(target.cartridge.access & CART_MANIFEST)
 				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))

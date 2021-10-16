@@ -23,7 +23,7 @@
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
@@ -44,7 +44,7 @@
 	else
 		return ..()
 
-/obj/structure/reagent_dispensers/Initialize()
+/obj/structure/reagent_dispensers/Initialize(mapload)
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
 	if(reagent_id)
 		reagents.add_reagent(reagent_id, tank_volume)
@@ -166,7 +166,7 @@
 	dir = EAST
 	pixel_x = -30
 
-/obj/structure/reagent_dispensers/peppertank/Initialize()
+/obj/structure/reagent_dispensers/peppertank/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"

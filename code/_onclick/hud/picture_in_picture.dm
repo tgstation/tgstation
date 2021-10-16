@@ -13,7 +13,7 @@
 
 	var/mutable_appearance/standard_background
 
-/atom/movable/screen/movable/pic_in_pic/Initialize()
+/atom/movable/screen/movable/pic_in_pic/Initialize(mapload)
 	. = ..()
 	make_backgrounds()
 
