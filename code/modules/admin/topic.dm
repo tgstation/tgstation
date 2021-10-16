@@ -1961,7 +1961,8 @@
 		var/role = href_list["rebanrole"]
 		var/page = href_list["rebanpage"]
 		var/admin_key = href_list["rebanadminkey"]
-		reban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
+		var/applies_to_admins = href_list["applies_to_admins"]
+		reban(ban_id, applies_to_admins, player_key, player_ip, player_cid, role, page, admin_key)
 
 	else if(href_list["unbanlog"])
 		var/ban_id = href_list["unbanlog"]

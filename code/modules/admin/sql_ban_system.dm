@@ -456,7 +456,7 @@
 		to_chat(usr, span_danger("Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]"), confidential = TRUE)
 		return
 	if(edit_id)
-		edit_ban(edit_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
+		edit_ban(edit_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes, roles_to_ban[1] == "Server")
 	else
 		create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
 
@@ -492,29 +492,8 @@
 					return
 		qdel(query_create_ban_get_player)
 	var/admin_ckey = usr.client.ckey
-	if(applies_to_admins)
-		var/datum/db_query/query_check_adminban_count = SSdbcore.NewQuery({"
-			SELECT COUNT(DISTINCT bantime)
-			FROM [format_table_name("ban")]
-			WHERE
-				a_ckey = :admin_ckey AND
-				applies_to_admins = 1 AND
-				unbanned_datetime IS NULL AND
-				(expiration_time IS NULL OR expiration_time > NOW())
-		"}, list("admin_ckey" = admin_ckey))
-		if(!query_check_adminban_count.warn_execute()) //count distinct bantime to treat rolebans made at the same time as one ban
-			qdel(query_check_adminban_count)
-			return
-		if(query_check_adminban_count.NextRow())
-			var/adminban_count = text2num(query_check_adminban_count.item[1])
-			var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-			if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
-				max_adminbans = MAX_ADMINBANS_PER_HEADMIN
-			if(adminban_count >= max_adminbans)
-				to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
-				qdel(query_check_adminban_count)
-				return
-		qdel(query_check_adminban_count)
+	if(applies_to_admins && !can_place_additional_admin_ban(admin_ckey))
+		return
 	var/admin_ip = usr.client.address
 	var/admin_cid = usr.client.computer_id
 	duration = text2num(duration)
@@ -523,7 +502,8 @@
 	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
-	var/note_reason = "Banned from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"] [isnull(duration) ? "permanently" : "for [time_message]"] - [reason]"
+	var/is_server_ban = (roles_to_ban[1] == "Server")
+	var/note_reason = "Banned from [is_server_ban ? "the server" : " Roles: [roles_to_ban.Join(", ")]"] [isnull(duration) ? "permanently" : "for [time_message]"] - [reason]"
 	var/list/clients_online = GLOB.clients.Copy()
 	var/list/admins_online = list()
 	for(var/client/C in clients_online)
@@ -563,35 +543,23 @@
 	if(!SSdbcore.MassInsert(format_table_name("ban"), sql_ban, warn = TRUE, special_columns = special_columns))
 		return
 	var/target = ban_target_string(player_key, player_ip, player_cid)
-	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
-	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
-	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
+	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][is_server_ban ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
+	log_admin_private("[kn] [msg][is_server_ban ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
+	message_admins("[kna] [msg][is_server_ban ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
 	if(applies_to_admins)
 		send2adminchat("BAN ALERT","[kn] [msg]")
 	if(player_ckey)
 		create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
-	var/client/C = GLOB.directory[player_ckey]
-	var/datum/admin_help/AH = admin_ticket_log(player_ckey, "[kna] [msg]")
-	var/appeal_url = "No ban appeal url set!"
-	appeal_url = CONFIG_GET(string/banappeals)
-	var/is_admin = FALSE
-	if(C)
-		build_ban_cache(C)
-		to_chat(C, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
-		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
-			is_admin = TRUE
-		if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
-			qdel(C)
-	if(roles_to_ban[1] == "Server" && AH)
-		AH.Resolve()
-	for(var/client/i in GLOB.clients - C)
-		if(i.address == player_ip || i.computer_id == player_cid)
-			build_ban_cache(i)
-			to_chat(i, span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
-			if(GLOB.admin_datums[i.ckey] || GLOB.deadmins[i.ckey])
-				is_admin = TRUE
-			if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
-				qdel(i)
+
+	var/player_ban_notification = span_boldannounce("You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [is_server_ban ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]")
+	var/other_ban_notification = span_boldannounce("Another player sharing your IP or CID has been banned by [usr.client.key] from [is_server_ban ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br>[span_danger("This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].")]")
+
+	notify_all_banned_players(player_ckey, player_ip, player_cid, player_ban_notification, other_ban_notification, is_server_ban, applies_to_admins)
+
+	var/datum/admin_help/linked_ahelp_ticket = admin_ticket_log(player_ckey, "[kna] [msg]")
+
+	if(is_server_ban && linked_ahelp_ticket)
+		linked_ahelp_ticket.Resolve()
 
 /datum/admins/proc/unban_panel(player_key, admin_key, player_ip, player_cid, page = 0)
 	if(!check_rights(R_BAN))
@@ -728,7 +696,7 @@
 
 			var/un_or_reban_href
 			if(unban_datetime)
-				un_or_reban_href = "<a href='?_src_=holder;[HrefToken()];rebanid=[ban_id];rebankey=[banned_player_key];rebanadminkey=[banning_admin_key];rebanip=[banned_player_ip];rebancid=[banned_player_cid];rebanrole=[role];rebanpage=[page]'>Reban</a>"
+				un_or_reban_href = "<a href='?_src_=holder;[HrefToken()];rebanid=[ban_id];applies_to_admins=[applies_to_admins];rebankey=[banned_player_key];rebanadminkey=[banning_admin_key];rebanip=[banned_player_ip];rebancid=[banned_player_cid];rebanrole=[role];rebanpage=[page]'>Reban</a>"
 			else
 				un_or_reban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[banned_player_key];unbanadminkey=[banning_admin_key];unbanip=[banned_player_ip];unbancid=[banned_player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
 			output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[banned_player_key];editbanip=[banned_player_ip];editbancid=[banned_player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[banning_admin_key]'>Edit</a><br>[un_or_reban_href]"
@@ -781,16 +749,21 @@
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
 /// Sometimes an admin did not intend to unban a player. This proc undoes an unbanning operation by setting the unbanned_ keys in the DB back to null.
-/datum/admins/proc/reban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
+/datum/admins/proc/reban(ban_id, applies_to_admins, player_key, player_ip, player_cid, role, page, admin_key)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
+
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	// Make sure the only input that doesn't early return is "Yes" - This is the only situation in which we want the unban to proceed.
 	if(tgui_alert(usr, "Please confirm undoing of unban of [target] from [role].", "Reban confirmation", list("Yes", "No")) != "Yes")
 		return
+
+	if(applies_to_admins && !can_place_additional_admin_ban(usr.client.ckey))
+		return
+
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
 	var/change_message = "[usr.client.key] re-activated ban of [target] from [role] on [SQLtime()] during round #[GLOB.round_id]<hr>"
@@ -810,17 +783,15 @@
 	qdel(query_reban)
 	log_admin_private("[kn] has rebanned [target] from [role].")
 	message_admins("[kna] has rebanned [target] from [role].")
-	var/client/C = GLOB.directory[player_key]
-	if(C)
-		build_ban_cache(C)
-		to_chat(C, span_boldannounce("[usr.client.key] has re-activated a removed ban from [role] for your key."), confidential = TRUE)
-	for(var/client/i in GLOB.clients - C)
-		if(i.address == player_ip || i.computer_id == player_cid)
-			build_ban_cache(i)
-			to_chat(i, span_boldannounce("[usr.client.key] has re-activated a removed ban from [role] for your IP or CID."), confidential = TRUE)
+
+	var/banned_player_message = span_boldannounce("[usr.client.key] has re-activated a removed ban from [role] for your key.")
+	var/banned_other_message = span_boldannounce("[usr.client.key] has re-activated a removed ban from [role] for your IP or CID.")
+	var/kick_banned_players = (role == "Server")
+
+	notify_all_banned_players(ckey(player_key), player_ip, player_cid, banned_player_message, banned_other_message, kick_banned_players, applies_to_admins)
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
-/datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
+/datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes, is_server_ban)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -859,28 +830,9 @@
 					qdel(query_edit_ban_get_player)
 					return
 		qdel(query_edit_ban_get_player)
-	if(applies_to_admins && (applies_to_admins != old_applies))
-		var/datum/db_query/query_check_adminban_count = SSdbcore.NewQuery({"
-			SELECT COUNT(DISTINCT bantime)
-			FROM [format_table_name("ban")]
-			WHERE a_ckey = :admin_ckey
-				AND applies_to_admins = 1
-				AND unbanned_datetime IS NULL
-				AND (expiration_time IS NULL OR expiration_time > NOW())
-		"}, list("admin_ckey" = usr.client.ckey))
-		if(!query_check_adminban_count.warn_execute()) //count distinct bantime to treat rolebans made at the same time as one ban
-			qdel(query_check_adminban_count)
-			return
-		if(query_check_adminban_count.NextRow())
-			var/adminban_count = text2num(query_check_adminban_count.item[1])
-			var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-			if(R_EVERYTHING && !(R_EVERYTHING & rank.can_edit_rights)) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
-				max_adminbans = MAX_ADMINBANS_PER_HEADMIN
-			if(adminban_count >= max_adminbans)
-				to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
-				qdel(query_check_adminban_count)
-				return
-		qdel(query_check_adminban_count)
+
+	if(applies_to_admins && (applies_to_admins != old_applies) && !can_place_additional_admin_ban(usr.client.ckey))
+		return
 
 	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
@@ -942,14 +894,14 @@
 	message_admins("[kna] has edited the [changes_keys_text] of a ban for [old_key ? "[old_key]" : "[old_ip]-[old_cid]"].")
 	if(changes["Applies to admins"])
 		send2adminchat("BAN ALERT","[kn] has edited a ban for [old_key ? "[old_key]" : "[old_ip]-[old_cid]"] to [applies_to_admins ? "" : "not"]affect admins")
-	var/client/C = GLOB.directory[old_key]
-	if(C)
-		build_ban_cache(C)
-		to_chat(C, span_boldannounce("[usr.client.key] has edited the [changes_keys_text] of a ban for your key."), confidential = TRUE)
-	for(var/client/i in GLOB.clients - C)
-		if(i.address == old_ip || i.computer_id == old_cid)
-			build_ban_cache(i)
-			to_chat(i, span_boldannounce("[usr.client.key] has edited the [changes_keys_text] of a ban for your IP or CID."), confidential = TRUE)
+
+	var/player_edit_message = span_boldannounce("[usr.client.key] has edited the [changes_keys_text] of a ban for your key.")
+	var/other_edit_message = span_boldannounce("[usr.client.key] has edited the [changes_keys_text] of a ban for your IP or CID.")
+
+	var/kick_banned_players = (is_server_ban && (changes["Key"] || changes["IP"] || changes["CID"]))
+
+	notify_all_banned_players(player_ckey, player_ip, player_cid, player_edit_message, other_edit_message, kick_banned_players, applies_to_admins)
+
 	unban_panel(player_key, null, null, null, page)
 
 /datum/admins/proc/ban_log(ban_id)
@@ -985,3 +937,79 @@
 		else
 			. += "NULL"
 	. = jointext(., "/")
+
+/**
+ * Checks if the admin can place an additional admin ban.
+ *
+ * Returns FALSE if the query fails to execute.
+ * Returns FALSE and notifies the admin in chat if they are at their max number of admin bans already.
+ * Returns TRUE if an admin can place an additional admin ban.
+ *
+ * Arguments:
+ * * admin_ckey - The ckey of the admin who is trying to place an admin ban.
+ */
+/datum/admins/proc/can_place_additional_admin_ban(admin_ckey)
+	var/datum/db_query/query_check_adminban_count = SSdbcore.NewQuery({"
+		SELECT COUNT(DISTINCT bantime)
+		FROM [format_table_name("ban")]
+		WHERE
+			a_ckey = :admin_ckey AND
+			applies_to_admins = 1 AND
+			unbanned_datetime IS NULL AND
+			(expiration_time IS NULL OR expiration_time > NOW())
+	"}, list("admin_ckey" = admin_ckey))
+	if(!query_check_adminban_count.warn_execute()) //count distinct bantime to treat rolebans made at the same time as one ban
+		qdel(query_check_adminban_count)
+		return FALSE
+	if(query_check_adminban_count.NextRow())
+		var/adminban_count = text2num(query_check_adminban_count.item[1])
+		var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
+		if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
+			max_adminbans = MAX_ADMINBANS_PER_HEADMIN
+		if(adminban_count >= max_adminbans)
+			to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)
+			qdel(query_check_adminban_count)
+			return FALSE
+	qdel(query_check_adminban_count)
+	return TRUE
+
+/**
+ * Notifies all banned players about their ban and gives them a link to appeal from the config. If it was a server ban, it also kicks them.
+ *
+ * If the banned player's ckey has a linked client on the server, it notifies them of the ban details and kicks them if it was a server ban.
+ * If there is anyone else sharing the banned player's IP or CID, it notifies them of the ban details and kicks them if it was a server ban.
+ *
+ * Builds the ban cache for every client impacted by the ban.
+ *
+ * Arguments:
+ * * banned_player_ckey - The ckey of the banned player.
+ * * banned_player_ip - IP address of the banned player.
+ * * banned_player_cid - CID of the banned player.
+ * * banned_player_message - The message to show to only the specifically banned player.
+ * * banned_other_message - The message to show to any other players who share the banned player's IP or CID.
+ * * kick_banned_players - TRUE if we want to kick affected players, FALSE otherwise. This should generally only be TRUE for server bans.
+ * * applies_to_admins - TRUE if this ban applies to admins and we may need to kick them, FALSE otherwise.
+ */
+/datum/admins/proc/notify_all_banned_players(banned_player_ckey, banned_player_ip, banned_player_cid, banned_player_message, banned_other_message, kick_banned_players, applies_to_admins)
+	var/client/player_client = GLOB.directory[banned_player_ckey]
+
+	var/appeal_url = "No ban appeal url set!"
+	appeal_url = CONFIG_GET(string/banappeals)
+
+	var/is_admin = FALSE
+	if(player_client)
+		build_ban_cache(player_client)
+		to_chat(player_client, span_boldannounce("[banned_player_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
+		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
+			is_admin = TRUE
+		if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
+			qdel(player_client)
+
+	for(var/client/other_player_client in GLOB.clients - player_client)
+		if(other_player_client.address == banned_player_ip || other_player_client.computer_id == banned_player_cid)
+			build_ban_cache(other_player_client)
+			to_chat(other_player_client, span_boldannounce("[banned_other_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
+			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
+				is_admin = TRUE
+			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
+				qdel(other_player_client)
