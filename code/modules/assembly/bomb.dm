@@ -84,11 +84,9 @@ var/list/gas_comp = list(
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
 		var/datum/gas_mixture/bomb_mix = bombtank.return_air()
-		bomb_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bomb_mix.temperature]")
 		to_chat(user, span_notice("A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited."))
 		add_fingerprint(user)
-		bomb_mix.garbage_collect()
 		return TRUE
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
