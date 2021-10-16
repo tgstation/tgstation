@@ -3911,6 +3911,7 @@
 #include "code\modules\wiremod\components\math\logic.dm"
 #include "code\modules\wiremod\components\math\not.dm"
 #include "code\modules\wiremod\components\math\random.dm"
+#include "code\modules\wiremod\components\math\trigonometry.dm"
 #include "code\modules\wiremod\components\ntnet\ntnet_receive.dm"
 #include "code\modules\wiremod\components\ntnet\ntnet_send.dm"
 #include "code\modules\wiremod\components\sensors\pressuresensor.dm"
