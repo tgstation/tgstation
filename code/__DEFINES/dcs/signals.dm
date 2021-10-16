@@ -735,6 +735,8 @@
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon updates their health (source = carbon)
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
+///Called when a carbon updates their sanity (source = carbon)
+#define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
 
 // simple_animal signals
 /// called when a simplemob is given sentience from a potion (target = person who sentienced)
