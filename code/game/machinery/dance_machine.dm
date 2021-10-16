@@ -84,6 +84,10 @@
 	return ..()
 
 /obj/machinery/jukebox/ui_status(mob/user)
+#ifdef EVENTMODE
+	to_chat(user, span_warning("Sorry no dance parties during the special event!"))
+	return UI_CLOSE
+#endif
 	if(!anchored)
 		to_chat(user,span_warning("This device must be anchored by a wrench!"))
 		return UI_CLOSE
@@ -126,7 +130,9 @@
 	. = ..()
 	if(.)
 		return
-
+#ifdef EVENTMODE
+	return
+#endif
 	switch(action)
 		if("toggle")
 			if(QDELETED(src))
