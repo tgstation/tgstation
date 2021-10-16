@@ -59,7 +59,7 @@
 
 	return null
 
-///Given a text, will return that word is on the soft OOC filter, with the reason
+///Given a text, will return that word is on the soft OOC filter, with the reason.
 /// Returns null if the message is OK.
 /proc/is_soft_ooc_filtered(message)
 	if (config.soft_ooc_filter_regex?.Find(message))

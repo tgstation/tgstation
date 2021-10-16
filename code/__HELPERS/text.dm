@@ -28,7 +28,7 @@
 		return ""
 	var/list/soft_filter_result = is_soft_ooc_filtered(t)
 	if(soft_filter_result)
-		if(tgui_alert(usr,"This name contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" this name is soft blocked due to \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\" , Are you sure you want to use this name?", "Soft Blocked Name", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr,"This name contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use this name?", "Soft Blocked Name", list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be setting a name to a disallowed term")
 	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
