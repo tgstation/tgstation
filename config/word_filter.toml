@@ -18,12 +18,12 @@
 
 # Anything in here will warn the player if said in IC, Deadchat or OOC, the player must approve their message to send it
 [soft_shared]
-"softblocks" = "Insert reason here"
+"testsoftblocks" = "You risk being banned if this term is used improperly"
 
-# InsertDescLater
+# Anything in here will warn the player if said ICly, but is allowed in dead chat and OOC, the player must approve their message to send it
 [soft_ic]
-"softerblocks" = "cat noises"
+"testsofterblocks" = "This term is commonly considered OOC, only use it in context"
 
-# InsertDescLater
+# Anything in here will warn the player if said ICly *except* PDAs. the player must approve their message to send it
 [soft_ic_outside_pda]
-"softestblocks" = "catter patter"
+"testsoftestblocks" = "Stop saying debug phrases ICly"
