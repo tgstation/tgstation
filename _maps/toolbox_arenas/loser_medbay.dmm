@@ -1,0 +1,647 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ab" = (
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ac" = (
+/obj/structure/sign/departments/medbay/alt{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ad" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ae" = (
+/obj/item/wrench/medical,
+/obj/structure/sign/warning/coldtemp{
+	name = "\improper CRYOGENICS";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"af" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"ag" = (
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"ah" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"ai" = (
+/obj/structure/sign/warning/coldtemp{
+	name = "\improper CRYOGENICS";
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"aj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ak" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"al" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"am" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"an" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ap" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ar" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"as" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"at" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"au" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"av" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aw" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ax" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ay" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"az" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aA" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot_white,
+/mob/living/simple_animal/bot/medbot{
+	auto_patrol = 1;
+	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
+	name = "Inspector Johnson"
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aB" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aC" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aD" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/mob/living/simple_animal/bot/cleanbot{
+	auto_patrol = 1;
+	icon_state = "cleanbot1";
+	name = "Mopficcer Sweepsky"
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aE" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aG" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/o2,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aH" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/bed/roller,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aI" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/cell_charger,
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aJ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/medical_kiosk,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aK" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/storage/firstaid/regular,
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aL" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/bed/roller,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aM" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/o2,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aO" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/bot,
+/mob/living/simple_animal/bot/cleanbot/medbay{
+	icon_state = "cleanbot1";
+	on = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/structure/bed/roller,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aQ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/item/reagent_containers/chem_pack{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/storage/box/rxglasses{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/stack/medical/gauze{
+	pixel_x = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aR" = (
+/obj/item/reagent_containers/syringe,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/item/reagent_containers/syringe{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = 12
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/item/stack/medical/mesh,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aT" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/structure/bed/roller,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aU" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aW" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aX" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aY" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"aZ" = (
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"ba" = (
+/obj/structure/sink{
+	dir = 1
+	},
+/obj/structure/sign/departments/medbay/alt{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"bb" = (
+/obj/structure/sink{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"bc" = (
+/obj/structure/table/optable,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"bd" = (
+/obj/structure/table,
+/obj/item/storage/backpack/duffelbag/med,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"be" = (
+/obj/item/shears,
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = -32
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+"bf" = (
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/stack/package_wrap,
+/obj/item/hand_labeler,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/tdome/arena)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aZ
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(3,1,1) = {"
+ac
+al
+av
+av
+av
+aW
+ab
+ba
+"}
+(4,1,1) = {"
+ad
+am
+aw
+aG
+aN
+ax
+ab
+bb
+"}
+(5,1,1) = {"
+ae
+an
+ax
+ab
+aO
+ax
+ab
+ab
+"}
+(6,1,1) = {"
+af
+as
+ay
+aH
+aP
+ax
+ab
+bc
+"}
+(7,1,1) = {"
+af
+ap
+az
+aI
+aQ
+ax
+ab
+bd
+"}
+(8,1,1) = {"
+ag
+aq
+aA
+aJ
+aR
+aX
+ab
+be
+"}
+(9,1,1) = {"
+ah
+ar
+aB
+aK
+aS
+ax
+ab
+bd
+"}
+(10,1,1) = {"
+ah
+as
+aC
+aL
+aT
+ax
+ab
+bc
+"}
+(11,1,1) = {"
+ai
+an
+aD
+ab
+aU
+ax
+ab
+ab
+"}
+(12,1,1) = {"
+aj
+at
+aE
+aM
+aV
+ax
+ab
+bb
+"}
+(13,1,1) = {"
+ac
+au
+aF
+aF
+aF
+aY
+ab
+ba
+"}
+(14,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(15,1,1) = {"
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+bf
+"}

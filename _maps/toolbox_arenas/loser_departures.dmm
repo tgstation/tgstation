@@ -1,0 +1,352 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/turf/open/floor/iron,
+/area/tdome/arena)
+"c" = (
+/obj/machinery/computer/arcade,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"d" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"f" = (
+/obj/item/trash/pistachios,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"h" = (
+/obj/machinery/computer/arcade,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"j" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"k" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/item/trash/energybar,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"m" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"n" = (
+/obj/structure/sign/departments/evac,
+/turf/closed/wall,
+/area/tdome/arena)
+"o" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/structure/flora/ausbushes/palebush,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/tdome/arena)
+"p" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall,
+/area/tdome/arena)
+"q" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/grass,
+/area/tdome/arena)
+"r" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"s" = (
+/obj/item/trash/candy,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"t" = (
+/obj/structure/chair,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"u" = (
+/obj/structure/chair,
+/obj/item/trash/tray,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"v" = (
+/obj/structure/chair,
+/obj/item/trash/semki,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"w" = (
+/obj/item/trash/raisins,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"x" = (
+/obj/item/plate,
+/obj/item/trash/popcorn,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"y" = (
+/obj/item/trash/sosjerky,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"z" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/tdome/arena)
+"A" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"B" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"C" = (
+/obj/item/trash/syndi_cakes,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"D" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+"E" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena)
+
+(1,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+y
+b
+z
+"}
+(3,1,1) = {"
+c
+b
+b
+s
+b
+b
+b
+z
+"}
+(4,1,1) = {"
+d
+i
+m
+i
+i
+m
+i
+A
+"}
+(5,1,1) = {"
+e
+j
+n
+t
+j
+n
+t
+B
+"}
+(6,1,1) = {"
+e
+j
+o
+u
+j
+q
+t
+B
+"}
+(7,1,1) = {"
+f
+j
+p
+t
+j
+p
+t
+B
+"}
+(8,1,1) = {"
+e
+j
+q
+t
+j
+o
+t
+B
+"}
+(9,1,1) = {"
+e
+k
+p
+t
+j
+p
+t
+B
+"}
+(10,1,1) = {"
+e
+j
+q
+v
+j
+o
+t
+C
+"}
+(11,1,1) = {"
+e
+j
+n
+t
+j
+n
+t
+B
+"}
+(12,1,1) = {"
+g
+l
+r
+l
+l
+r
+l
+D
+"}
+(13,1,1) = {"
+h
+b
+b
+w
+x
+b
+b
+E
+"}
+(14,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+E
+"}
+(15,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
