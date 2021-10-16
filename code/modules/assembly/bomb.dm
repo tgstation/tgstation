@@ -13,6 +13,31 @@
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
+///The list of gases that have an effect in the explosion.
+var/list/fuel_gases = list(
+	/datum/gas/oxygen,
+	/datum/gas/plasma,
+	/datum/gas/hydrogen,
+	/datum/gas/tritium,
+	/datum/gas/antinoblium,
+)
+///The explosion modifiers of the gases. From devastation to flash range.
+var/list/gas_explosion_modifiers = list(
+	/datum/gas/oxygen = list(0.1, 0.2, 1.5, 1.5),
+	/datum/gas/plasma = list(0.75, 0.6, 0.5, 0.5),
+	/datum/gas/hydrogen = list(0.75, 0.75, 2, 2),
+	/datum/gas/tritium = list(1, 1, 1, 1),
+	/datum/gas/antinoblium = list(4, 0, 0, 0),
+)
+///The composition of gases that effect the explosion.
+var/list/gas_comp = list(
+	/datum/gas/oxygen = 0,
+	/datum/gas/plasma = 0,
+	/datum/gas/hydrogen = 0,
+	/datum/gas/tritium = 0,
+	/datum/gas/antinoblium = 0,
+)
+
 /obj/item/onetankbomb/IsSpecialAssembly()
 	return TRUE
 
@@ -59,9 +84,11 @@
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
 		var/datum/gas_mixture/bomb_mix = bombtank.return_air()
+		bomb_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bomb_mix.temperature]")
 		to_chat(user, span_notice("A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited."))
 		add_fingerprint(user)
+		bomb_mix.garbage_collect()
 		return TRUE
 
 /obj/item/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
@@ -141,50 +168,28 @@
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
 	START_PROCESSING(SSobj, src)
 	var/datum/gas_mixture/our_mix = return_air()
+	var/explosion_modifier = list(0, 0, 0, 0)
+	for(var/gas_id in fuel_gases)
+		our_mix.assert_gas(gas_id)
 
-	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
-	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
+	var/fuel_moles = our_mix.total_moles()
+	if(fuel_moles == 0)
+		return
+	for(var/gas_id in fuel_gases)
+		gas_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / fuel_moles, 0, 1)
+
+	for(var/gas_id in gas_explosion_modifiers)
+		for(var/i = 1 to 4)
+			explosion_modifier[i] += gas_explosion_modifiers[gas_id][i] * gas_comp[gas_id]
+	for(var/i = 1 to 4)
+		explosion_modifier[i] += (1 - (T0C + 100) / our_mix.temperature) * (0.9 - explosion_modifier[i])
 	our_mix.garbage_collect()
 	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
-	var/strength = 1
-
+	var/strength = fuel_moles * bomb_mixture.temperature / 10000
 	var/turf/ground_zero = get_turf(loc)
 
-	if(bomb_mixture.temperature > (T0C + 400))
-		strength = (fuel_moles/15)
-
-		if(strength >=2)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1))
-		else if(strength >=1)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
-		else if(strength >=0.5)
-			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4)
-		else if(strength >=0.2)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 250))
-		strength = (fuel_moles/20)
-
-		if(strength >=1)
-			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
-		else if(strength >=0.5)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
-	else if(bomb_mixture.temperature > (T0C + 100))
-		strength = (fuel_moles/25)
-
-		if(strength >=1)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1))
-		else
-			ground_zero.assume_air(bomb_mixture)
-			ground_zero.hotspot_expose(1000, 125)
-
+	if(bomb_mixture.temperature >= (T0C + 100) && strength >= 0.2)
+		explosion(ground_zero, devastation_range = round(strength * explosion_modifier[1], 1), heavy_impact_range = round(strength * 2 * explosion_modifier[2], 1), light_impact_range = round(strength * 4 * explosion_modifier[3], 1), flash_range = round(strength * 6 * explosion_modifier[4], 1))
 	else
 		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
