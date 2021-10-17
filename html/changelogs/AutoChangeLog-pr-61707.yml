@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Observers will no longer see ghost icons representing Maintenance Loot Spawners of Roundstart Past once the round has actually started."

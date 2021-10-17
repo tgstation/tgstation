@@ -1,7 +1,7 @@
 /datum/circuit_datatype/datum
 	datatype = PORT_TYPE_DATUM
 	color = "yellow"
-	datatype_flags = DATATYPE_FLAG_ALLOW_MANUAL_INPUT
+	datatype_flags = DATATYPE_FLAG_ALLOW_MANUAL_INPUT|DATATYPE_FLAG_ALLOW_ATOM_INPUT
 	can_receive_from = list(
 		PORT_TYPE_ATOM,
 	)

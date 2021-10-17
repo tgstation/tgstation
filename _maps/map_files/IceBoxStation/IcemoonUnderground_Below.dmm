@@ -22,17 +22,6 @@
 "at" = (
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
-"aL" = (
-/obj/structure/fluff/tram_rail,
-/obj/structure/lattice/catwalk,
-/obj/structure/fluff/tram_rail{
-	pixel_y = 17
-	},
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "bz" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -95,16 +84,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
-"et" = (
-/obj/structure/fluff/tram_rail/end{
-	dir = 4;
-	pixel_y = -17
-	},
-/obj/structure/fluff/tram_rail/end{
-	dir = 4
-	},
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "eL" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -150,6 +129,16 @@
 /obj/item/clothing/head/helmet/skull,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/commons/storage/mining)
+"fk" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4;
+	pixel_y = -17
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "fl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -198,6 +187,17 @@
 	},
 /turf/open/floor/iron,
 /area/mine/eva)
+"gW" = (
+/obj/structure/fluff/tram_rail{
+	pixel_y = 17
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/fluff/tram_rail,
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "gX" = (
 /obj/structure/fence/corner{
 	dir = 1
@@ -492,13 +492,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
-"pV" = (
-/obj/structure/fluff/tram_rail,
-/obj/structure/fluff/tram_rail{
-	pixel_y = 17
-	},
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "qy" = (
 /mob/living/simple_animal/hostile/asteroid/gutlunch,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -576,6 +569,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
+"tr" = (
+/obj/structure/railing/corner,
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "tE" = (
 /obj/machinery/newscaster/directional/north,
 /obj/structure/closet/firecloset,
@@ -589,13 +586,10 @@
 /obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/commons/storage/mining)
-"uI" = (
-/obj/structure/fluff/tram_rail/end{
-	dir = 4
-	},
-/obj/structure/fluff/tram_rail/end{
-	dir = 4;
-	pixel_y = -17
+"uV" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/fluff/tram_rail{
+	pixel_y = 17
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
@@ -639,9 +633,6 @@
 /obj/item/flashlight/lantern,
 /turf/open/floor/plating,
 /area/mine/eva)
-"wC" = (
-/turf/closed/mineral/random/snow,
-/area/icemoon/underground/explored)
 "wD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -680,6 +671,9 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/eva)
+"yt" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/explored)
 "yN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -789,6 +783,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/mine/eva)
+"CZ" = (
+/obj/structure/fluff/tram_rail{
+	pixel_y = 17
+	},
+/obj/structure/fluff/tram_rail,
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "Dc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -835,13 +836,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/explored)
-"Fh" = (
-/obj/structure/fluff/tram_rail{
-	pixel_y = 17
-	},
-/obj/structure/fluff/tram_rail,
-/turf/open/lava/plasma/ice_moon,
 /area/icemoon/underground/explored)
 "Fx" = (
 /obj/structure/cable,
@@ -891,10 +885,6 @@
 "GR" = (
 /turf/closed/wall/ice,
 /area/mine/eva)
-"GX" = (
-/obj/structure/railing/corner,
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "HA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1068,6 +1058,17 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
+"LF" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/lattice/catwalk,
+/obj/structure/fluff/tram_rail{
+	pixel_y = 17
+	},
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "LN" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/item/kirbyplants/fullysynthetic{
@@ -1249,17 +1250,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/eva)
-"Sl" = (
-/obj/structure/fluff/tram_rail{
-	pixel_y = 17
-	},
-/obj/structure/lattice/catwalk,
-/obj/structure/fluff/tram_rail,
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/lava/plasma/ice_moon,
-/area/icemoon/underground/explored)
 "Sy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1328,6 +1318,16 @@
 "Uu" = (
 /turf/closed/wall,
 /area/mine/mechbay)
+"Vg" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 4;
+	pixel_y = -17
+	},
+/turf/open/lava/plasma/ice_moon,
+/area/icemoon/underground/explored)
 "Vz" = (
 /obj/machinery/telecomms/relay/preset/mining,
 /obj/structure/window/reinforced/spawner/east,
@@ -17533,11 +17533,11 @@ zt
 zt
 zt
 zt
-uI
+Vg
 zt
 zt
 zt
-et
+fk
 zt
 zt
 zt
@@ -17546,8 +17546,8 @@ fQ
 fQ
 fQ
 fQ
-wC
-wC
+yt
+yt
 qI
 qI
 qI
@@ -17790,11 +17790,11 @@ zt
 zt
 zt
 zt
-Sl
+gW
 zt
 zt
 zt
-aL
+LF
 zt
 zt
 zt
@@ -17802,10 +17802,10 @@ Zs
 wk
 wk
 Lq
-wC
-wC
-wC
-wC
+yt
+yt
+yt
+yt
 qI
 qI
 qI
@@ -18047,11 +18047,11 @@ zt
 zt
 zt
 zt
-Fh
+CZ
 zt
 zt
 zt
-pV
+uV
 zt
 zt
 zt
@@ -18304,11 +18304,11 @@ zt
 zt
 zt
 zt
-Fh
+CZ
 zt
 zt
 zt
-pV
+uV
 zt
 zt
 zt
@@ -18561,11 +18561,11 @@ zt
 zt
 zt
 zt
-Fh
+CZ
 zt
 zt
 zt
-pV
+uV
 zt
 zt
 zt
@@ -18574,7 +18574,7 @@ FC
 KA
 De
 De
-wC
+yt
 qI
 qI
 qI
@@ -18815,7 +18815,7 @@ zt
 zt
 zt
 zt
-GX
+tr
 mE
 HY
 sd
@@ -18831,8 +18831,8 @@ FC
 fU
 zt
 zt
-wC
-wC
+yt
+yt
 qI
 qI
 qI
@@ -48329,9 +48329,9 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
+yt
+yt
+yt
 qI
 qI
 qI
@@ -48585,11 +48585,11 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
+yt
+fQ
+fQ
+fQ
+yt
 qI
 qI
 qI
@@ -48841,13 +48841,13 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+yt
+fQ
+fQ
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -49098,13 +49098,13 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+fQ
+fQ
+zt
+zt
+fQ
+fQ
 qI
 qI
 qI
@@ -49355,14 +49355,14 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+fQ
+fQ
+fQ
+zt
+zt
+zt
+fQ
+fQ
 qI
 qI
 qI
@@ -49612,15 +49612,15 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+fQ
+fQ
+zt
+zt
+zt
+zt
+zt
+fQ
+yt
 qI
 qI
 qI
@@ -49869,16 +49869,16 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+fQ
+fQ
+zt
+zt
+zt
+zt
+zt
+fQ
+yt
+yt
 qI
 qI
 qI
@@ -50125,17 +50125,17 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+fQ
+fQ
+fQ
+zt
+zt
+zt
+zt
+zt
+fQ
+fQ
+yt
 qI
 qI
 qI
@@ -50382,17 +50382,17 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+fQ
+fQ
+zt
+zt
+zt
+zt
+zt
+zt
+zt
+fQ
+yt
 qI
 qI
 qI
@@ -50639,17 +50639,17 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+fQ
+zt
+zt
+zt
+zt
+zt
+zt
+zt
+fQ
+yt
 qI
 qI
 qI
@@ -50896,17 +50896,17 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+fQ
+fQ
+zt
+zt
+zt
+zt
+zt
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -51153,16 +51153,16 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+yt
+fQ
+fQ
+zt
+zt
+zt
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -51411,15 +51411,15 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+yt
+fQ
+fQ
+fQ
+fQ
+fQ
+yt
+yt
 qI
 qI
 qI
@@ -51669,13 +51669,13 @@ qI
 qI
 qI
 qI
-qI
-qI
-qI
-qI
-qI
-qI
-qI
+yt
+yt
+fQ
+fQ
+fQ
+yt
+yt
 qI
 qI
 qI

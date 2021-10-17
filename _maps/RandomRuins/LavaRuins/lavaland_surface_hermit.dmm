@@ -116,7 +116,7 @@
 /area/ruin/powered)
 "A" = (
 /obj/structure/table,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "B" = (

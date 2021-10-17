@@ -992,7 +992,7 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
 "oF" = (
@@ -1516,7 +1516,7 @@
 /area/ruin/plasma_facility/commons)
 "yp" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/item/food/grown/carrot,
 /obj/item/food/grown/potato,
 /obj/item/food/meat/slab/human/mutant/zombie,

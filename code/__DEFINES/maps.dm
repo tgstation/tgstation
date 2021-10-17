@@ -53,6 +53,9 @@ require only minor tweaks.
 /// boolean - does this z prevent phasing
 #define ZTRAIT_NOPHASE "No Phase"
 
+/// boolean - does this z prevent xray/meson/thermal vision
+#define ZTRAIT_NOXRAY "No X-Ray"
+
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 

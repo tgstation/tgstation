@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		var/obj/item/stack/sheet/cloth/C = I
 		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
 		if(do_after(user, 35, target = src))
-			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
+			var/obj/item/knife/shiv/S = new /obj/item/knife/shiv
 			C.use(1)
 			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
 			remove_item_from_storage(src)
