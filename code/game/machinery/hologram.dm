@@ -444,7 +444,7 @@ Possible to do for anyone motivated enough:
 			if(AI.holo_appearance)
 				Hologram.appearance = AI.holo_appearance
 				Hologram.alpha = 190
-				Hologram.add_atom_colour("#7db4e1", FIXED_COLOUR_PRIORITY)
+				Hologram.add_atom_colour(list(#00004b, #000096, #0000e1), FIXED_COLOUR_PRIORITY)
 			else
 				Hologram.icon = AI.holo_icon
 
