@@ -262,19 +262,17 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!input_cell)
 		input_cell = get_cell_of(to_remove)
 		if(!input_cell)
-			find_hanging_cell_refs_for_movable(to_remove, FALSE, TRUE)
+			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
 
 	input_cell.client_contents -= to_remove
 	input_cell.hearing_contents -= to_remove
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside
-/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, should_yield = TRUE, remove_from_cells = TRUE)
+/datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
 	var/list/containing_cells = list()
 	for(var/list/z_level_grid as anything in grids_by_z_level)
 		for(var/list/cell_row as anything in z_level_grid)
-			if(should_yield)
-				CHECK_TICK
 			for(var/datum/spatial_grid_cell/cell as anything in cell_row)
 				if(to_remove in (cell.hearing_contents | cell.client_contents))
 					containing_cells += cell
