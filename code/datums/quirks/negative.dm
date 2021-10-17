@@ -291,17 +291,16 @@
 
 /datum/quirk/item_quirk/nearsighted/add_unique()
 	glasses = glasses || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/glasses)
+	switch(glasses)
+		if ("Thin")
+			glasses = /obj/item/clothing/glasses/regular/thin
+		if ("Circle")
+			glasses = /obj/item/clothing/glasses/regular/circle
+		if ("Hipster")
+			glasses = /obj/item/clothing/glasses/regular/hipster
+		else
+			glasses = /obj/item/clothing/glasses/regular
 
-	if(!glasses || glasses == "Regular") // default selection
-		glasses = /obj/item/clothing/glasses/regular
-	else
-		switch(glasses)
-			if ("Thin")
-				glasses = /obj/item/clothing/glasses/regular/thin
-			if ("Circle")
-				glasses = /obj/item/clothing/glasses/regular/circle
-			if ("Hipster")
-				glasses = /obj/item/clothing/glasses/regular/hipster
 	give_item_to_holder(glasses, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/nearsighted/add()
