@@ -1,5 +1,5 @@
 /*****************Marker Beacons**************************/
-GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
+GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 "Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,

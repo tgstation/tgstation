@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
-/obj/structure/cable/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
+/obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
 	if(avail())

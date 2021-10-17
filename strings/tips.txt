@@ -237,7 +237,7 @@ As a Morph, you can talk while disguised, but your words have a chance of being 
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
 As a Ghost, you can see the inside of a container on the ground by clicking on it.
 As a Ghost, you can double click on just about anything to follow it. Or just warp around!
-As a Ghost, you can both start and join capture the flag games by clicking on one of the team spawners, which can be found under the "Misc" section of the orbit menu.
+As a Ghost, you can both start and join capture the flag games through the minigames menu, or by clicking on one of the team spawners, which can be found under the "Misc" section of the orbit menu.
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
 As a Security Officer, remember that you can attach a sec-lite to your disabler or your helmet!
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.

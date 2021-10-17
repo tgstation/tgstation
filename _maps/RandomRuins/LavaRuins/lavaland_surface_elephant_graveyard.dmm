@@ -303,7 +303,7 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bk" = (
-/obj/item/kitchen/knife/combat/bone,
+/obj/item/knife/combat/bone,
 /obj/item/organ/tongue,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/asteroid/basalt/wasteland,

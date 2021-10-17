@@ -2,7 +2,7 @@
 
 /// Phobia types that can be pulled randomly for brain traumas.
 /// Also determines what phobias you can choose as your preference with the quirk.
-GLOBAL_LIST_INIT(phobia_types, sortList(list(
+GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"aliens",
 	"anime",
 	"authority",

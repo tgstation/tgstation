@@ -193,7 +193,7 @@
 	var/mob/living/carbon/human/species/monkey/punpun/punpun = locate()
 	if(!punpun)
 		return
-	var/weapon_type = pickweight(weapon_types)
+	var/weapon_type = pick_weight(weapon_types)
 	var/obj/item/weapon = new weapon_type
 	if(!punpun.put_in_l_hand(weapon) && !punpun.put_in_r_hand(weapon))
 		// Guess they did all this with whatever they have in their hands already

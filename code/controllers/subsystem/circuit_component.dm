@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(circuit_component)
 	var/list/callbacks_to_invoke = list()
 	var/list/currentrun = list()
 
+	var/list/instant_run_stack = list()
+
 	var/instant_run_tick = 0
 	var/instant_run_start_cpu_usage = 0
 	var/instant_run_max_cpu_usage = 10
@@ -45,9 +47,17 @@ SUBSYSTEM_DEF(circuit_component)
 	callbacks_to_invoke += to_call
 
 /// Queues any callbacks to be executed instantly instead of using the subsystem.
-/datum/controller/subsystem/circuit_component/proc/queue_instant_run()
+/datum/controller/subsystem/circuit_component/proc/queue_instant_run(start_cpu_time)
+	if(instant_run_tick)
+		instant_run_stack += list(instant_run_callbacks_to_run)
+		// If we're already instantly executing, don't change the start_cpu_time.
+		start_cpu_time = instant_run_start_cpu_usage
+
+	if(!start_cpu_time)
+		start_cpu_time = TICK_USAGE
+
 	instant_run_tick = world.time
-	instant_run_start_cpu_usage = TICK_USAGE
+	instant_run_start_cpu_usage = start_cpu_time
 	instant_run_callbacks_to_run = list()
 
 /**
@@ -67,7 +77,11 @@ SUBSYSTEM_DEF(circuit_component)
 			to_call.InvokeAsync(received_inputs)
 			qdel(to_call)
 
-	instant_run_tick = 0
+	if(length(instant_run_stack))
+		instant_run_callbacks_to_run = pop(instant_run_stack)
+	else
+		instant_run_tick = 0
+
 	if((TICK_USAGE - instant_run_start_cpu_usage) < instant_run_max_cpu_usage)
 		return received_inputs
 	else

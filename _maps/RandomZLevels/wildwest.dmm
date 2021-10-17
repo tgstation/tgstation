@@ -627,7 +627,7 @@
 /area/awaymission/wildwest/gov)
 "cW" = (
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
