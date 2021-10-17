@@ -813,11 +813,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(HAIR in species.species_traits)
 		hairstyle = client.prefs.read_preference(/datum/preference/choiced/hairstyle)
-		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color_legacy/hair_color))
+		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/hair_color))
 
 	if(FACEHAIR in species.species_traits)
 		facial_hairstyle = client.prefs.read_preference(/datum/preference/choiced/facial_hairstyle)
-		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color_legacy/facial_hair_color))
+		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
 
 	qdel(species)
 

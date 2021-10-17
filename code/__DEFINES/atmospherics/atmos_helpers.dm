@@ -1,8 +1,8 @@
 //DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED. I WILL BEAT YOU WITH A STICK. See the actual proc for more details
 ///Check if the turfs allows gas passage based on density, do not use.
-#define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+#define CANATMOSPASS(A, O) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
 ///Check if the turfs allows gas passage on a z level, do not use.
-#define CANVERTICALATMOSPASS(A, O) ( A.CanAtmosPassVertical == ATMOS_PASS_PROC ? A.CanAtmosPass(O, TRUE) : ( A.CanAtmosPassVertical == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPassVertical ) )
+#define CANVERTICALATMOSPASS(A, O) ( A.can_atmos_pass_vertical == ATMOS_PASS_PROC ? A.can_atmos_pass(O, TRUE) : ( A.can_atmos_pass_vertical == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass_vertical ) )
 
 //Helpers
 ///Moves the icon of the device based on the piping layer and on the direction

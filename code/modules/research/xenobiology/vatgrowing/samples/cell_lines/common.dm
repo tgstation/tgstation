@@ -439,11 +439,13 @@
 
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
-	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 
 	var/mob/selected_mob = pick(list(/mob/living/simple_animal/hostile/retaliate/clown/mutant/slow, /mob/living/simple_animal/hostile/retaliate/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/clown/bananaclown
 	desc = "Clown bits with banana chunks"
@@ -591,9 +593,11 @@
 
 /datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
-	QDEL_NULL(vat.biological_sample)
 	for(var/i in 1 to 5)
 		new /mob/living/simple_animal/hostile/bee(get_turf(vat))
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/leaper
 	desc = "atypical amphibian cells"

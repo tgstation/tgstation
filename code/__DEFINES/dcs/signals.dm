@@ -1517,6 +1517,9 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
+///Called when the ticker fails to set up the game for start
+#define COMSIG_TICKER_ERROR_SETTING_UP "comsig_ticker_error_setting_up"
+
 /// Called when the round has started, but before GAME_STATE_PLAYING
 #define COMSIG_TICKER_ROUND_STARTING "comsig_ticker_round_starting"
 
@@ -1527,3 +1530,8 @@
 #define COMSIG_ADDED_POINT_OF_INTEREST "added_point_of_interest"
 /// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed : (atom/old_poi)
 #define COMSIG_REMOVED_POINT_OF_INTEREST "removed_point_of_interest"
+
+//Cytology signals
+///Sent from /datum/biological_sample/proc/reset_sample
+#define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
+	#define SPARE_SAMPLE (1<<0)
