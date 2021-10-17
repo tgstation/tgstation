@@ -69,6 +69,7 @@
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/vegetarian/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
 	new_species.liked_food &= ~MEAT
 	new_species.disliked_food |= MEAT
 
@@ -108,6 +109,7 @@
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/pineapple_liker/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
 	new_species.liked_food |= PINEAPPLE
 
 /datum/quirk/pineapple_liker/remove()
@@ -132,6 +134,7 @@
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/pineapple_hater/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
 	new_species.disliked_food |= PINEAPPLE
 
 /datum/quirk/pineapple_hater/remove()
@@ -158,6 +161,7 @@
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/deviant_tastes/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
 	var/liked = new_species.liked_food
 	new_species.liked_food = new_species.disliked_food
 	new_species.disliked_food = liked

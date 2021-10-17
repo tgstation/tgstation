@@ -153,7 +153,7 @@
 /turf/open/floor/engine,
 /area/shuttle/escape)
 "aC" = (
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/engine,
 /area/shuttle/escape)

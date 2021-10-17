@@ -55,7 +55,7 @@
 /obj/item/circuitboard/machine/grounding_rod
 	name = "Grounding Rod (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/grounding_rod
+	build_path = /obj/machinery/power/energy_accumulator/grounding_rod
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
@@ -142,7 +142,7 @@
 	name = "Tesla Controller (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	desc = "Does not let you shoot lightning from your hands."
-	build_path = /obj/machinery/power/tesla_coil
+	build_path = /obj/machinery/power/energy_accumulator/tesla_coil
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 

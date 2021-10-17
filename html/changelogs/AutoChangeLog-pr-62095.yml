@@ -1,0 +1,4 @@
+author: "lovegreenstuff"
+delete-after: True
+changes: 
+  - bugfix: "probital now works properly on ingest. you now get mitogen again"

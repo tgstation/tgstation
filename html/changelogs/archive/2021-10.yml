@@ -429,3 +429,52 @@
   - expansion: Adds a BLT sandwich as a new food to the game.
   Watermelon914:
   - bugfix: Fixes filter list component not being a filter list component
+2021-10-15:
+  ArcaneMusic:
+  - expansion: Venom swells your mob when stung.
+  Coconutwarrior97:
+  - bugfix: Fixes the holoparas breaking their users glasses when manifesting bug.
+  - bugfix: Lavaproof borg upgrade for miner borgs now works properly.
+  LemonInTheDark:
+  - bugfix: Fixes openspace not working if the floor below has been changed
+  MMMiracles:
+  - rscadd: Tramstation's maintenance now has new catwalk tiles covering the various
+      piping/wiring throughout.
+  - bugfix: Tramstation's powernet should be slightly more resistant to bouts of power
+      outages caused by rogue syndicate mice operatives.
+  - bugfix: Patched up a few missed spots involving pipe/wiring for departments like
+      Botany/Courtroom.
+  Maurukas:
+  - balance: The super matter crystal can no longer be immediately delaminated by
+      firing a gun into it, only brought close to the delamination threshold.
+  Melbert:
+  - rscadd: 'Icebox: Science RND and Genetics remap!'
+  RandomGamer123:
+  - bugfix: Leftover plasma tanks formerly intended for radiation collectors have
+      been removed.
+  Ryll/Shaps:
+  - rscadd: Added new quirk, "Shifty Eyes", which rarely causes people who examine
+      you while standing closeby to think that you both made eye contact, even when
+      you didn't.
+  - balance: The time window for making eye contact with someone else has been extended
+      from  examining each other within 1 second to within 2 seconds.
+  - spellcheck: Fixed incorrect "the"'s being inserted before the names of improper
+      nouns in item stripping code.
+  SuperNovaa41:
+  - spellcheck: No more phantom hand grabbing.
+  - bugfix: Pipes now properly fulfill your nicotine cravings.
+  Zytolg:
+  - bugfix: The Nanotrasen Materials Reclamation Program has recycled the spare firelock
+      trapped in the Cargo Offices east windows.
+2021-10-16:
+  Gandalf2k15:
+  - qol: Added the dyekit functions to the character preferences menu.
+  Ghommie:
+  - bugfix: Fixed monkeys having the wrong on fire overlay when ablaze.
+  Seris02:
+  - bugfix: quantum pads and other things with fault do_teleport calls no longer cause
+      runtimes
+  - code_imp: removes color_legacy prefs and changes sanitize_hexcolor()'s default
+      to 6 characters
+  thatoneplebeian:
+  - refactor: refactored drowsiness code
