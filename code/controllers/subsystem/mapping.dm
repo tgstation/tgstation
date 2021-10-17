@@ -50,7 +50,6 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/New()
 	..()
-#define FORCE_MAP "_maps/multiz_debug.json"
 #ifdef FORCE_MAP
 	config = load_map_config(FORCE_MAP)
 #else

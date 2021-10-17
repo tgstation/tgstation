@@ -805,7 +805,8 @@
 	move_stacks++
 	var/atom/oldloc = loc
 	if(destination)
-		if(pulledby && pulledby.loc != destination && !currently_z_moving) ///don't stop pulling items dragged through z levels.
+		///zMove already handles whether a pull from another movable should be broken.
+		if(pulledby && !currently_z_moving)
 			pulledby.stop_pulling()
 		var/same_loc = oldloc == destination
 		var/area/old_area = get_area(oldloc)

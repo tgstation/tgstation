@@ -131,8 +131,8 @@
 	vehicle_moved(source, null, new_dir)
 
 /// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
-/datum/component/riding/proc/ride_check(mob/living/rider, consequences = TRUE)
-	return TRUE
+/datum/component/riding/proc/ride_check(mob/living/rider)
+	return
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent

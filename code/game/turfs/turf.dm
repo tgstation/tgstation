@@ -253,16 +253,19 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Recursive proc that precipitates a movable (plus whatever buckled to it) to lower z levels if possible.
 /turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, falling_from_move = FALSE)
-	if(isliving(falling))
+	var/turf/target = get_step_multiz(src, DOWN)
+	if(!target)
+		return FALSE
+	var/isliving = isliving(falling)
+	if(!isobj(falling) && !isliving)
+		return
+	if(isliving)
 		var/mob/living/falling_living = falling
 		//relay this mess to whatever the mob is buckled to.
 		if(falling_living.buckled)
 			falling = falling_living.buckled
 	if(!falling_from_move && falling.currently_z_moving)
 		return
-	var/turf/target = get_step_multiz(src, DOWN)
-	if(!target || (!isobj(falling) && !ismob(falling)))
-		return FALSE
 	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
 		falling.currently_z_moving = FALSE
 		return FALSE
