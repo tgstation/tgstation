@@ -609,7 +609,6 @@
 						if("Yes")
 							var/mob/living/carbon/human/dummy/ai_dummy = new
 							var/mutable_appearance/appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
-							// var/icon/character_icon = getHologramIcon(getFlatIcon(appearance))
 							if(appearance)
 								holo_appearance = null
 								qdel(holo_icon)
