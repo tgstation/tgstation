@@ -69,7 +69,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	if(!amount)
 		return
 	for(var/iterator in 1 to amount)
-		var/datum/station_trait/trait_type = pickweight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
+		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.

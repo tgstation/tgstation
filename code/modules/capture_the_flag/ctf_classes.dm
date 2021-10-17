@@ -47,7 +47,7 @@
 	// Make items in the hands NODROP
 	for(var/obj/item/held_item in human_to_equip.held_items)
 		no_drops += held_item
-	listclearnulls(no_drops) // For any slots we didn't have filled
+	list_clear_nulls(no_drops) // For any slots we didn't have filled
 	// Apply TRAIT_NODROP to everything
 	for(var/obj/item/item_to_nodrop as anything in no_drops)
 		ADD_TRAIT(item_to_nodrop, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)

@@ -4677,7 +4677,7 @@
 "kp" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},

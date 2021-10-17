@@ -3137,6 +3137,10 @@
 /obj/item/toy/foamblade,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
+"iJ" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating/snowed,
+/area/awaymission/cabin/caves)
 "iK" = (
 /obj/structure/flora/rock/icy{
 	desc = "A mountain rock."
@@ -4193,15 +4197,6 @@
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
-"lr" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/shiv/carrot,
-/obj/effect/decal/cleanable/glitter/blue{
-	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
-	},
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/cabin/caves)
 "ls" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/melee/baseball_bat,
@@ -5060,16 +5055,13 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
-"yy" = (
-/obj/effect/decal/cleanable/insectguts,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/gibs,
-/mob/living/simple_animal/hostile/skeleton/ratty{
-	dir = 1
+"yi" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/hivebot/range/soviet,
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
 	},
-/turf/open/floor/carpet,
-/area/awaymission/cabin/caves/mountain)
+/area/awaymission/cabin/caves/sovietcave)
 "zv" = (
 /obj/structure/dresser,
 /obj/machinery/button/door/directional/north{
@@ -5078,30 +5070,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
-"CU" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
-/turf/open/floor/carpet,
-/area/awaymission/cabin/caves/mountain)
-"DB" = (
-/obj/structure/bed/abductor,
-/turf/open/floor/plating/snowed,
-/area/awaymission/cabin/caves)
-"Fm" = (
-/obj/effect/decal/cleanable/glitter/blue{
-	desc = "It looks like fancy glitter to me.";
-	name = "icy wind"
-	},
-/mob/living/simple_animal/hostile/statue/snowman,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/cabin/caves)
-"Lm" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/hostile/hivebot/range/soviet,
-/turf/open/floor/mineral/plastitanium/red{
-	name = "soviet floor"
-	},
-/area/awaymission/cabin/caves/sovietcave)
 "Na" = (
 /obj/machinery/button/door/directional/north{
 	id = "fightingcommunity10";
@@ -5116,6 +5084,14 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"Pc" = (
+/obj/effect/decal/cleanable/glitter/blue{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind"
+	},
+/mob/living/simple_animal/hostile/statue/snowman,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/cabin/caves)
 "So" = (
 /obj/machinery/button/door/directional/north{
 	id = "fightingcommunity30";
@@ -5123,6 +5099,16 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"UH" = (
+/obj/effect/decal/cleanable/insectguts,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/mob/living/simple_animal/hostile/skeleton/ratty{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/awaymission/cabin/caves/mountain)
 "Vg" = (
 /obj/machinery/button/door/directional/north{
 	id = "fightingcommunity50";
@@ -5130,6 +5116,20 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"Wd" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/knife/shiv/carrot,
+/obj/effect/decal/cleanable/glitter/blue{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/cabin/caves)
+"Xf" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/mouse,
+/turf/open/floor/carpet,
+/area/awaymission/cabin/caves/mountain)
 
 (1,1,1) = {"
 ab
@@ -16712,7 +16712,7 @@ cx
 cx
 cx
 fG
-CU
+Xf
 fG
 gd
 gd
@@ -18517,7 +18517,7 @@ gd
 gd
 fG
 fH
-CU
+Xf
 cx
 cx
 cx
@@ -20573,14 +20573,14 @@ gd
 gd
 fG
 gA
-CU
+Xf
 fG
 gT
 fH
 gT
 fG
 kX
-yy
+UH
 cx
 co
 co
@@ -20825,7 +20825,7 @@ cx
 cx
 fG
 fG
-CU
+Xf
 gd
 gd
 gu
@@ -21607,7 +21607,7 @@ fG
 fG
 fG
 fG
-CU
+Xf
 fG
 cx
 co
@@ -21855,7 +21855,7 @@ fG
 fI
 fG
 fG
-CU
+Xf
 fG
 fG
 fG
@@ -39125,7 +39125,7 @@ iA
 iC
 iC
 iC
-DB
+iJ
 iz
 gx
 gx
@@ -51565,7 +51565,7 @@ gx
 gx
 li
 ld
-Fm
+Pc
 lk
 lv
 gx
@@ -51822,7 +51822,7 @@ gx
 lf
 li
 le
-lr
+Wd
 le
 ld
 gx
@@ -57754,7 +57754,7 @@ it
 it
 it
 ii
-Lm
+yi
 ii
 gx
 ii
@@ -57777,7 +57777,7 @@ ii
 im
 im
 kF
-Lm
+yi
 ii
 im
 ii
@@ -62139,7 +62139,7 @@ gx
 gx
 ii
 im
-Lm
+yi
 ii
 gx
 gx
@@ -62652,7 +62652,7 @@ gx
 gx
 gx
 ii
-Lm
+yi
 im
 ii
 gx
@@ -64452,7 +64452,7 @@ gx
 gx
 ii
 im
-Lm
+yi
 ii
 gx
 gx
@@ -64965,7 +64965,7 @@ gx
 gx
 gx
 ii
-Lm
+yi
 im
 ii
 gx

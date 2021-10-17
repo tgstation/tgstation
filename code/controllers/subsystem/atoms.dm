@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(atoms)
 	else
 		SEND_SIGNAL(A,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 		if(created_atoms && from_template && ispath(the_type, /atom/movable))//we only want to populate the list with movables
-			created_atoms += A.GetAllContents()
+			created_atoms += A.get_all_contents()
 
 	return qdeleted || QDELING(A)
 

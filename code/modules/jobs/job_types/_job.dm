@@ -102,6 +102,9 @@
 	/// String. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
 	var/policy_index = ""
 
+	///RPG job names, for the memes
+	var/rpg_title
+
 
 /datum/job/New()
 	. = ..()

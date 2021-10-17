@@ -93,8 +93,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/list/faction = list(TRAIT_FACTION_TURRET)
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
-	/// Linked turret control panel of the turret
-	var/obj/machinery/turretid/cp = null
 	/// The turret will try to shoot from a turf in that direction when in a wall
 	var/wall_turret_direction
 	/// If the turret is manually controlled
@@ -207,9 +205,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	//deletes its own cover with it
 	QDEL_NULL(cover)
 	base = null
-	if(cp)
-		cp.turrets -= src
-		cp = null
 	QDEL_NULL(stored_gun)
 	QDEL_NULL(spark_system)
 	remove_control()
@@ -883,7 +878,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/ailock = FALSE
 	/// Variable dictating if linked turrets will shoot cyborgs
 	var/shoot_cyborgs = FALSE
-	/// List of all linked turrets
+	/// List of weakrefs to all turrets
 	var/list/turrets = list()
 
 /obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
@@ -913,9 +908,8 @@ DEFINE_BITFIELD(turret_flags, list(
 		control_area = get_area(src)
 
 	for(var/obj/machinery/porta_turret/T in control_area)
-		turrets |= T
-		T.cp = src
-
+		turrets |= WEAKREF(T)
+	
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && !(machine_stat & BROKEN))
@@ -931,7 +925,7 @@ DEFINE_BITFIELD(turret_flags, list(
 			return
 		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
-			turrets |= M.buffer
+			turrets |= WEAKREF(M.buffer)
 			to_chat(user, span_notice("You link \the [M.buffer] with \the [src]."))
 			return
 
@@ -1020,8 +1014,12 @@ DEFINE_BITFIELD(turret_flags, list(
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
-	for (var/obj/machinery/porta_turret/aTurret in turrets)
-		aTurret.setState(enabled, lethal, shoot_cyborgs)
+	for (var/datum/weakref/turret_ref in turrets)
+		var/obj/machinery/porta_turret/turret = turret_ref.resolve()
+		if(!turret)
+			turrets -= turret_ref
+			continue
+		turret.setState(enabled, lethal, shoot_cyborgs)
 	update_appearance()
 
 /obj/machinery/turretid/update_icon_state()

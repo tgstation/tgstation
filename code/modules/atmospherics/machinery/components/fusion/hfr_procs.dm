@@ -220,7 +220,10 @@
 		var/next_sound = round((100 - aggression) * 5) + 5
 		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
-	soundloop.volume = clamp((power_level + 1) * 8, 0, 50)
+	var/ambient_hum = 1
+	if (check_fuel())
+		ambient_hum = power_level + 1
+	soundloop.volume = clamp(ambient_hum * 8, 0, 50)
 
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
@@ -450,7 +453,7 @@
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
-	var/list/around_turfs = circlerangeturfs(src, gas_spread)
+	var/list/around_turfs = circle_range_turfs(src, gas_spread)
 	for(var/turf/turf as anything in around_turfs)
 		if(isclosedturf(turf) || isspaceturf(turf))
 			around_turfs -= turf

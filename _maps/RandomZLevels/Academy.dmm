@@ -5,10 +5,6 @@
 "ab" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/academy/headmaster)
-"ac" = (
-/mob/living/simple_animal/hostile/carp/ranged/wiz_friendly,
-/turf/open/space,
-/area/space/nearstation)
 "ad" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/carpet,
@@ -125,10 +121,6 @@
 /obj/item/dice/d20/fate,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
-"aK" = (
-/mob/living/simple_animal/hostile/morph/skellie_friendly,
-/turf/open/floor/engine/cult,
-/area/awaymission/academy/academycellar)
 "aL" = (
 /turf/closed/wall/mineral/wood,
 /area/awaymission/academy/academycellar)
@@ -2423,12 +2415,6 @@
 /obj/item/candle/infinite,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
-"kT" = (
-/obj/structure/table/wood,
-/obj/item/kitchen/knife/ritual,
-/obj/item/candle/infinite,
-/turf/open/floor/engine/cult,
-/area/awaymission/academy/academycellar)
 "kU" = (
 /obj/effect/decal/remains/human,
 /obj/effect/rune/malformed,
@@ -2962,6 +2948,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/academyaft)
+"vc" = (
+/mob/living/simple_animal/hostile/morph/skellie_friendly,
+/turf/open/floor/engine/cult,
+/area/awaymission/academy/academycellar)
 "vD" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
@@ -2975,6 +2965,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/headmaster)
+"za" = (
+/obj/structure/table/wood,
+/obj/item/knife/ritual,
+/obj/item/candle/infinite,
+/turf/open/floor/engine/cult,
+/area/awaymission/academy/academycellar)
 "zR" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -3013,6 +3009,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
+"CS" = (
+/mob/living/simple_animal/hostile/carp/ranged/wiz_friendly,
+/turf/open/space,
+/area/space/nearstation)
 "Dy" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -5922,7 +5922,7 @@ aa
 aa
 aa
 aa
-ac
+CS
 aa
 aa
 aa
@@ -7057,7 +7057,7 @@ aS
 aa
 aa
 aa
-ac
+CS
 aa
 aa
 aa
@@ -8147,7 +8147,7 @@ aa
 aa
 aa
 aa
-ac
+CS
 aS
 aS
 aS
@@ -10348,7 +10348,7 @@ hR
 hE
 hR
 hc
-ac
+CS
 aa
 aa
 aa
@@ -11584,7 +11584,7 @@ aa
 aa
 aa
 aa
-ac
+CS
 aa
 aa
 aa
@@ -13407,7 +13407,7 @@ aa
 aa
 aa
 aa
-ac
+CS
 aa
 aa
 aa
@@ -14737,7 +14737,7 @@ aa
 aa
 aa
 aa
-ac
+CS
 aa
 bs
 bs
@@ -16137,7 +16137,7 @@ dK
 dK
 dK
 dK
-aK
+vc
 aL
 dK
 dK
@@ -16784,7 +16784,7 @@ aG
 aG
 aL
 dK
-kT
+za
 dK
 dK
 kX
@@ -17017,7 +17017,7 @@ aG
 aa
 aa
 aa
-ac
+CS
 aa
 aa
 aa
@@ -17493,7 +17493,7 @@ aa
 aa
 aa
 aa
-ac
+CS
 aa
 aa
 aa

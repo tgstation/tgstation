@@ -168,7 +168,7 @@
 		var/list/keys = list()
 		for(var/mob/M in GLOB.player_list)
 			keys += M.client
-		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
+		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sort_key(keys)
 		//Could be freeform if you want to add disconnected i guess
 		if(!selection)
 			return
