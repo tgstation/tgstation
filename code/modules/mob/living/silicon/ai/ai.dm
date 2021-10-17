@@ -30,7 +30,7 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
-	// Emergency power if the AI's APC is off.
+	/// Emergency power if the AI's APC is off.
 	var/battery = 200
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
@@ -38,19 +38,19 @@
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	//Default is assigned when AI is created.
+	/// Default is assigned when AI is created.
 	var/icon/holo_icon
-	// The appearance override of an AI hologram, used instead of holo_icon in some cases.
+	/// The appearance override of an AI hologram, used instead of holo_icon in some cases.
 	var/mutable_appearance/holo_appearance
-	// For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
+	/// For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
 	var/obj/vehicle/sealed/mecha/controlled_mech
-	// Determines if a carded AI can speak with its built in radio or not.
+	/// Determines if a carded AI can speak with its built in radio or not.
 	var/radio_enabled = TRUE
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
-	///Used as a fake multitoool in tcomms machinery
+	/// Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
-	// This is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	/// This is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/tracking = FALSE
 	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
 
@@ -58,14 +58,19 @@
 	var/datum/module_picker/malf_picker
 	var/list/datum/ai_module/current_modules = list()
 	var/can_dominate_mechs = FALSE
-	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
+	///1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
+	var/shunted = FALSE
 
-	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
-	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
+	/// Set to 1 to stop AI from interacting via Click()
+	var/control_disabled = FALSE
+	/// More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
+	var/malfhacking = FALSE
+	/// Cooldown var for malf modules, stores a worldtime + cooldown
+	var/malf_cooldown = 0
 
 	var/obj/machinery/power/apc/malfhack
-	var/explosive = FALSE //does the AI explode when it dies?
+	/// Does the AI explode when it dies?
+	var/explosive = FALSE
 
 	var/mob/living/silicon/ai/parent
 	var/camera_light_on = FALSE
@@ -75,11 +80,16 @@
 
 	var/last_paper_seen = null
 	var/can_shunt = TRUE
-	var/last_announcement = "" // For AI VOX, if enabled
-	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = FALSE //Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0 //time of next call bot command
-	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
+	/// For AI VOX, if enabled
+	var/last_announcement = ""
+	/// Holds the turf of the currently selected waypoint.
+	var/turf/waypoint
+	/// Waypoint mode is for selecting a turf via clicking.
+	var/waypoint_mode = FALSE
+	/// Time of next call bot command
+	var/call_bot_cooldown = 0
+	/// Ref of the AI's APC, used when the AI has no power in order to access their APC.
+	var/obj/machinery/power/apc/apc_override
 	var/nuking = FALSE
 	var/obj/machinery/doomsday_device/doomsday_device
 
@@ -87,9 +97,11 @@
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
-
-	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
-	var/mob/living/silicon/robot/deployed_shell = null //For shell control
+	
+	/// For exosuit control
+	var/obj/structure/ai_core/deactivated/linked_core
+	/// For shell control
+	var/mob/living/silicon/robot/deployed_shell = null
 	var/datum/action/innate/deploy_shell/deploy_action = new
 	var/datum/action/innate/deploy_last_shell/redeploy_action = new
 	var/datum/action/innate/choose_modules/modules_action
@@ -108,7 +120,7 @@
 	var/datum/robot_control/robot_control
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
-	///remember AI's last location
+	/// Remember AI's last location
 	var/atom/lastloc
 	interaction_range = null
 
