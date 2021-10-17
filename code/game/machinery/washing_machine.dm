@@ -127,6 +127,31 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_SYNDICATE = /obj/item/bedsheet/syndie,
 		DYE_CENTCOM = /obj/item/bedsheet/centcom
 	),
+		DYE_REGISTRY_DOUBLE_BEDSHEET = list(
+		DYE_RED = /obj/item/bedsheet/double/red,
+		DYE_ORANGE = /obj/item/bedsheet/double/orange,
+		DYE_YELLOW = /obj/item/bedsheet/double/yellow,
+		DYE_GREEN = /obj/item/bedsheet/double/green,
+		DYE_BLUE = /obj/item/bedsheet/double/blue,
+		DYE_PURPLE = /obj/item/bedsheet/double/purple,
+		DYE_BLACK = /obj/item/bedsheet/double/black,
+		DYE_WHITE = /obj/item/bedsheet/double,
+		DYE_RAINBOW = /obj/item/bedsheet/double/rainbow,
+		DYE_MIME = /obj/item/bedsheet/double/mime,
+		DYE_CLOWN = /obj/item/bedsheet/double/clown,
+		DYE_CHAP = /obj/item/bedsheet/double/chaplain,
+		DYE_QM = /obj/item/bedsheet/double/qm,
+		DYE_LAW = /obj/item/bedsheet/double/black,
+		DYE_CAPTAIN = /obj/item/bedsheet/double/captain,
+		DYE_HOP = /obj/item/bedsheet/double/hop,
+		DYE_HOS = /obj/item/bedsheet/double/hos,
+		DYE_CE = /obj/item/bedsheet/double/ce,
+		DYE_RD = /obj/item/bedsheet/double/rd,
+		DYE_CMO = /obj/item/bedsheet/double/cmo,
+		DYE_COSMIC = /obj/item/bedsheet/double/cosmos,
+		DYE_SYNDICATE = /obj/item/bedsheet/double/syndie,
+		DYE_CENTCOM = /obj/item/bedsheet/double/centcom
+	),
 	DYE_LAWYER_SPECIAL = list(
 		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
 		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
