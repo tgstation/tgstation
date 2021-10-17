@@ -30,22 +30,28 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
-	var/battery = 200 //emergency power if the AI's APC is off
+	// Emergency power if the AI's APC is off.
+	var/battery = 200
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
 	var/requires_power = POWER_REQ_ALL
 	var/can_be_carded = TRUE
-	var/icon/holo_icon //Default is assigned when AI is created.
-	var/mutable_appearance/holo_appearance // appearance override of the AI hologram, used instead of holo_icon in some cases.
-	var/obj/vehicle/sealed/mecha/controlled_mech //For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
-	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
+	//Default is assigned when AI is created.
+	var/icon/holo_icon
+	// The appearance override of an AI hologram, used instead of holo_icon in some cases.
+	var/mutable_appearance/holo_appearance
+	// For controlled_mech a mech, to determine whether to relaymove or use the AI eye.
+	var/obj/vehicle/sealed/mecha/controlled_mech
+	// Determines if a carded AI can speak with its built in radio or not.
+	var/radio_enabled = TRUE
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	///Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
 	var/mob/living/simple_animal/bot/Bot
-	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	// This is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
+	var/tracking = FALSE
 	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
 
 	//MALFUNCTION
