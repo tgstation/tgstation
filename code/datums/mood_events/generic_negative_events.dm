@@ -346,3 +346,8 @@
 	description = "<span class='boldwarning'>I can hardly breathe with all this HERESY going on!</span>\n"
 	mood_change = -5
 	timeout = 5 MINUTES
+
+/datum/mood_event/soda_spill
+	description = "<span class='warning'>Cool! That's fine, I wanted to wear that soda, not drink it...</span>\n"
+	mood_change = -2
+	timeout = 1 MINUTES
