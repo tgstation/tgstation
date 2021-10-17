@@ -878,7 +878,7 @@
 	pixel_y = 6
 	},
 /obj/item/hatchet,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)
