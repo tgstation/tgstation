@@ -9,7 +9,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	clothing_flags = SNUG_FIT
+	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 
@@ -19,7 +19,7 @@
 	var/obj/item/flashlight/seclite/attached_light
 	var/datum/action/item_action/toggle_helmet_flashlight/alight
 
-/obj/item/clothing/head/helmet/Initialize()
+/obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
 	if(attached_light)
 		alight = new(src)
@@ -106,7 +106,7 @@
 	can_flashlight = TRUE
 	dog_fashion = null
 
-/obj/item/clothing/head/helmet/marine/Initialize()
+/obj/item/clothing/head/helmet/marine/Initialize(mapload)
 	set_attached_light(new /obj/item/flashlight/seclite)
 	update_helmlight()
 	update_appearance()
@@ -189,7 +189,7 @@
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
 
-/obj/item/clothing/head/helmet/justice/Initialize()
+/obj/item/clothing/head/helmet/justice/Initialize(mapload)
 	. = ..()
 	weewooloop = new(src, FALSE, FALSE)
 
@@ -221,7 +221,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	clothing_flags = STOPSPRESSUREDAMAGE
+	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
@@ -349,7 +349,7 @@
 	icon_state = "knight_greyscale"
 	inhand_icon_state = "knight_greyscale"
 	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, RAD = 10, FIRE = 40, ACID = 40)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
@@ -406,7 +406,7 @@
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2helmet"
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, RAD = 50, FIRE = 65, ACID = 40, WOUND = 15)
-	material_flags = MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -423,7 +423,7 @@
 	var/polling = FALSE///if the helmet is currently polling for targets (special code for removal)
 	var/light_colors = 1 ///which icon state color this is (red, blue, yellow)
 
-/obj/item/clothing/head/helmet/monkey_sentience/Initialize()
+/obj/item/clothing/head/helmet/monkey_sentience/Initialize(mapload)
 	. = ..()
 	light_colors = rand(1,3)
 	update_appearance()

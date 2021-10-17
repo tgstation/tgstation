@@ -269,7 +269,7 @@
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/south,
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
+/obj/effect/spawner/random/exotic/ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "aV" = (
@@ -454,7 +454,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "bq" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "br" = (

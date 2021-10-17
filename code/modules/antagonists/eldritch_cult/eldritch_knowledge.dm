@@ -146,7 +146,7 @@
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
 		fingerprints |= requirements.return_fingerprints()
-	listclearnulls(fingerprints)
+	list_clear_nulls(fingerprints)
 	if(fingerprints.len == 0)
 		return FALSE
 	return TRUE
@@ -164,7 +164,7 @@
 		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
-	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
+	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sort_list(compiled_list, /proc/cmp_mob_realname_dsc)
 	if(!chosen_mob)
 		return FALSE
 	curse(compiled_list[chosen_mob])

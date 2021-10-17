@@ -13,6 +13,9 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return
 	if(alternate_appearances && alternate_appearances[key])
 		return
+	if(!ispath(type, /datum/atom_hud/alternate_appearance))
+		CRASH("Invalid type passed in: [type]")
+
 	var/list/arguments = args.Copy(2)
 	return new type(arglist(arguments))
 

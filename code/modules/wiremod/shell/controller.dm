@@ -15,7 +15,7 @@
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
-/obj/item/controller/Initialize()
+/obj/item/controller/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/controller()
@@ -33,8 +33,7 @@
 	/// The entity output
 	var/datum/port/output/entity
 
-/obj/item/circuit_component/controller/Initialize()
-	. = ..()
+/obj/item/circuit_component/controller/populate_ports()
 	entity = add_output_port("User", PORT_TYPE_ATOM)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 	alt = add_output_port("Alternate Signal", PORT_TYPE_SIGNAL)

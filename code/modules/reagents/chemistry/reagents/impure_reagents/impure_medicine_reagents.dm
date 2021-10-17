@@ -544,7 +544,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	remove_buffs(owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
-		explosion(owner, light_impact_range = 1)
+		explosion(owner, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
 		owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return ..()
@@ -557,7 +557,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 		owner.stat = DEAD
 		return ..()
-	explosion(owner, light_impact_range = 1)
+	explosion(owner, light_impact_range = 1, explosion_cause = src)
 	qdel(heart)
 	owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return..()
@@ -590,7 +590,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/carbon = owner
 	if(!carbon.dna)
 		return
-	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, PIGLATIN, NERVOUS, MUT_MUTE)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
 		if(carbon.dna.get_mutation(option))

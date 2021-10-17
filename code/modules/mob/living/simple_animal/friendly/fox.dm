@@ -31,7 +31,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/fox/Initialize()
+/mob/living/simple_animal/pet/fox/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
 

@@ -14,7 +14,7 @@
 	///List of ckeys containing players who have recently activated the device, players on this list are prohibited from activating the device untill their residue decays.
 	var/list/ectoplasmic_residues = list()
 
-/obj/machinery/ecto_sniffer/Initialize()
+/obj/machinery/ecto_sniffer/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/ecto_sniffer(src)
 
@@ -53,7 +53,7 @@
 /obj/machinery/ecto_sniffer/update_overlays()
 	. = ..()
 	if(is_operational && on)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask")
+		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", alpha = src.alpha)
 
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 15)
