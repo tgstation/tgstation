@@ -30,6 +30,10 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/setup_visuals)
 
+/mob/living/simple_animal/hostile/zombie/Destroy()
+	QDEL_NULL(corpse)
+	. = ..()
+
 /mob/living/simple_animal/hostile/zombie/proc/setup_visuals()
 	var/datum/job/job = SSjob.GetJob(zombiejob)
 
@@ -56,5 +60,7 @@
 
 /mob/living/simple_animal/hostile/zombie/drop_loot()
 	. = ..()
+	if(!corpse)
+		return
 	corpse.forceMove(drop_location())
 	corpse.create()

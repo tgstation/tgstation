@@ -170,7 +170,7 @@
 	if(broadcasting && on) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
 		become_hearing_sensitive(INNATE_TRAIT)
 	else if(!broadcasting)
-		REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, INNATE_TRAIT)
+		lose_hearing_sensitivity(INNATE_TRAIT)
 
 /obj/item/radio/proc/set_on(new_on)
 
@@ -179,7 +179,7 @@
 	if(on && broadcasting)
 		become_hearing_sensitive(INNATE_TRAIT)
 	else
-		REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, INNATE_TRAIT)
+		lose_hearing_sensitivity(INNATE_TRAIT)
 
 	if(on && listening)
 		add_radio(src, frequency)

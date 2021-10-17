@@ -59,7 +59,9 @@
 		if(current_area)
 			exit_area(source, current_area)
 		beauty_counter -= source
-		REMOVE_TRAIT(source, TRAIT_AREA_SENSITIVE, BEAUTY_ELEMENT_TRAIT)
+		var/atom/movable/movable_source = source
+		if(istype(movable_source))
+			movable_source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)
 	else //lower the 'counter' down by one, update the area, and call parent if it's reached zero.
 		beauty_counter[source]--
 		if(current_area && !current_area.outdoors)
@@ -69,4 +71,6 @@
 			. = ..()
 			UnregisterSignal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
 			beauty_counter -= source
-			REMOVE_TRAIT(source, TRAIT_AREA_SENSITIVE, BEAUTY_ELEMENT_TRAIT)
+			var/atom/movable/movable_source = source
+			if(istype(movable_source))
+				movable_source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)

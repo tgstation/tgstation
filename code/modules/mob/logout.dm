@@ -4,6 +4,7 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	remove_from_player_list()
+	clear_client_in_contents()
 	..()
 
 	if(loc)
@@ -14,6 +15,6 @@
 			var/datum/callback/CB = foo
 			CB.Invoke()
 
-		clear_client_in_contents(client)
+		clear_important_client_contents(client)
 
 	return TRUE

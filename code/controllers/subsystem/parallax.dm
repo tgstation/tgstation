@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(parallax)
 		if(!istype(movable_eye))
 			continue
 
-		//for (movable_eye; isloc(movable_eye.loc) && !isturf(movable_eye.loc); movable_eye = movable_eye.loc);
+		for (movable_eye; isloc(movable_eye.loc) && !isturf(movable_eye.loc); movable_eye = movable_eye.loc);
 		//get the last movable holding the mobs eye
 
 		if(movable_eye == processing_client.movingmob)
@@ -49,14 +49,9 @@ SUBSYSTEM_DEF(parallax)
 			continue
 
 		//eye and the last recorded eye are different, and the last recorded eye isnt just the clients mob
-		if(processing_client.movingmob && processing_client.movingmob != processing_client.mob)
-			if(LAZYACCESSASSOC(processing_client.movingmob.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, processing_client.mob))
-				processing_client.movingmob.clear_client_in_contents(processing_client)
-
-		//we only care if client.eye has changed since we last fired
-
-		if(!LAZYACCESSASSOC(movable_eye.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, processing_client.mob))
-			movable_eye.enable_client_mobs_in_contents(processing_client)
+		if(!isnull(processing_client.movingmob))
+			LAZYREMOVE(processing_client.movingmob.client_mobs_in_contents, processing_client.mob)
+		LAZYADD(movable_eye.client_mobs_in_contents, processing_client.mob)
 
 		processing_client.movingmob = movable_eye
 		if (MC_TICK_CHECK)

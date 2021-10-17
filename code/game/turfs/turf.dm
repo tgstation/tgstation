@@ -351,21 +351,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return (mover.movement_type & PHASING)
 	return TRUE
 
-/turf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-
-	if(!arrived.important_recursive_contents || !(arrived.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || arrived.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
-		return
-
-	var/turf/old_turf = get_turf(old_loc)
-
-	if(old_turf?.z == z && CEILING(old_turf.x / SPATIAL_GRID_CELLSIZE, 1) == CEILING(x / SPATIAL_GRID_CELLSIZE, 1) && CEILING(old_turf.y / SPATIAL_GRID_CELLSIZE, 1) == CEILING(y / SPATIAL_GRID_CELLSIZE, 1))
-		return //both the old location and the new one are in the same grid cell
-
-	//this is turf/Entered so we know both arrived and us have nonzero coords but we dont know if old_loc does
-
-	SSspatial_grid.enter_cell(arrived, src)
-
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	..()
 	//melting
@@ -375,21 +360,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			O.make_unfrozen()
 	if(!arrived.zfalling)
 		zFall(arrived)
-
-//handles updating the spatial grid
-/turf/Exited(atom/movable/gone, direction)
-	. = ..()
-
-	if(!gone.important_recursive_contents || !(gone.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || gone.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
-		return
-
-	var/turf/gone_turf = get_turf(gone)
-
-	//this is turf/Exited so we know we have nonzero coords but we dont know if gone has nonzero coords
-	if(gone_turf?.z == z && ROUND_UP(gone_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE) == ROUND_UP(x * INVERSE_SPATIAL_GRID_CELLSIZE) && ROUND_UP(gone_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE) == ROUND_UP(y * INVERSE_SPATIAL_GRID_CELLSIZE))
-		return //both the old location and the new one are in the same grid cell
-
-	SSspatial_grid.exit_cell(gone, src)
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)

@@ -515,9 +515,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			send2adminchat("Server", "[cheesy_message] (No admins online)")
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 
-	mob?.clear_client_in_contents(src)
-	if(movingmob && LAZYACCESSASSOC(movingmob.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, mob))
-		movingmob.clear_client_in_contents(src)
+	if(movingmob != null)
+		LAZYREMOVE(movingmob.client_mobs_in_contents, mob)
+		movingmob = null
 
 	active_mousedown_item = null
 	SSambience.remove_ambience_client(src)
