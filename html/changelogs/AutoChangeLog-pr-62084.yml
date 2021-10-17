@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The \"don't allow any organics to escape on the emergency shuttle alive\" objective no longer counts inorganic species like golems, plasmamen, androids, etc."
-  - qol: "Some malf AI objectives have had their descriptions updated to reflect them only caring about player-controlled creatures."

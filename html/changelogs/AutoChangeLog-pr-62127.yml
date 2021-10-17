@@ -1,4 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "Players with the monkified mutation now have a generic monkey name as opposed to their actual name again."

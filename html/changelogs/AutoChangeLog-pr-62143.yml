@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Fixed supermatter lightning bolt target selection. Previously, two grounding rods were always* safe. Now, one grounding rod is always* safe."
