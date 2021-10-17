@@ -254,3 +254,9 @@
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
 	custom_price = PAYCHECK_MINIMAL
+
+/obj/item/clothing/gloves/kim
+	name = "aerostatic gloves"
+	desc = "Breathable red gloves for expert handling of a pen and notebook."
+	icon_state = "aerostatic_gloves"
+	inhand_icon_state = "aerostatic_gloves"

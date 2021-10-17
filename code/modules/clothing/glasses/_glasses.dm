@@ -577,6 +577,12 @@
 	icon_state = "phantom_glasses"
 	inhand_icon_state = "phantom_glasses"
 
+/obj/item/clothing/glasses/regular/kim
+	name = "binoclard lenses"
+	desc = "Shows you know how to sew a lapel and center a back vent."
+	icon_state = "binoclard_lenses"
+	inhand_icon_state = "binoclard_lenses"
+
 /obj/item/clothing/glasses/salesman
 	name = "colored glasses"
 	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."

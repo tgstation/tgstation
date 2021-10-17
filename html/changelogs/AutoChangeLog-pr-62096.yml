@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Secways will now say it's broken, rather than it's component."

@@ -1,0 +1,8 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - refactor: "Radiation Collectors, Tesla Coils, and Grounding Rods are now subtypes of a common energy_accumulator type. This centralizes logic for smoothing energy release; converting between Joules, Watts, and internal energy units; and ensures that all such accumulators display and generate power along the same smoothing curve."
+  - bugfix: "Tesla Coils no longer generate power using half the smoothing that Radiation Collectors used. This was due to a mistake in handling delta_time."
+  - code_imp: "Removed many magic numbers from power generation code."
+  - qol: "Tesla Coils will now display energy stored in Joules and power being produced in Watts, much like Radiation Collectors did."
+  - qol: "Grounding Rods will now display recent energy they've absorbed and the sustainable power that this energy could be producing. It should now be very obvious if you could use more Tesla Coils."
