@@ -53799,8 +53799,6 @@
 /area/security/warden)
 "yac" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/cable/multilayer/multiz,
-/obj/structure/cable/multilayer/multiz,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/port/aft)
