@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof)
 	var/list/filter_result
 	var/list/soft_filter_result
-	if(client && !forced)
+	if(client && !forced && !filterproof)
 		//The filter doesn't act on the sanitized message, but the raw message.
 		filter_result = is_ic_filtered(message)
 		soft_filter_result = is_soft_ic_filtered(message)
@@ -105,10 +105,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!message || message == "")
 		return
 
-	if(!filterproof)
-		filterproof = FALSE;
-
-	if(filter_result)
+	if(filter_result  && !filterproof)
 		//The filter warning message shows the sanitized message though.
 		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
 		to_chat(src, span_warning("\"[message]\""))
@@ -116,7 +113,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
 
-	if(soft_filter_result  && filterproof == FALSE)
+	if(soft_filter_result && !filterproof)
 		//desc
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
