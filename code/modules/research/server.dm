@@ -201,11 +201,11 @@
 
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master
+	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 	var/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/source_code_hdd
 	var/deconstruction_state = HDD_PANEL_CLOSED
 	var/front_panel_screws = 4
 	var/hdd_wires = 6
-	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 
 /obj/machinery/rnd/server/master/Initialize(mapload)
 	. = ..()
