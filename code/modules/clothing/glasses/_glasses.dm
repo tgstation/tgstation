@@ -606,6 +606,7 @@
 	desc = initial(desc)
 
 /obj/item/clothing/glasses/salesman/proc/moodshift(atom/movable/source, amount)
+	SIGNAL_HANDLER
 	if(amount < SANITY_UNSTABLE)	
 		icon_state = "salesman_fzz"
 		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
