@@ -13,31 +13,6 @@
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
-///The list of gases that have an effect in the explosion.
-var/list/fuel_gases = list(
-	/datum/gas/oxygen,
-	/datum/gas/plasma,
-	/datum/gas/hydrogen,
-	/datum/gas/tritium,
-	/datum/gas/antinoblium,
-)
-///The explosion modifiers of the gases. From devastation to flash range.
-var/list/gas_explosion_modifiers = list(
-	/datum/gas/oxygen = list(0.1, 0.2, 1.5, 1.5),
-	/datum/gas/plasma = list(0.75, 0.6, 0.5, 0.5),
-	/datum/gas/hydrogen = list(0.75, 0.75, 2, 2),
-	/datum/gas/tritium = list(1, 1, 1, 1),
-	/datum/gas/antinoblium = list(4, 0, 0, 0),
-)
-///The composition of gases that effect the explosion.
-var/list/gas_comp = list(
-	/datum/gas/oxygen = 0,
-	/datum/gas/plasma = 0,
-	/datum/gas/hydrogen = 0,
-	/datum/gas/tritium = 0,
-	/datum/gas/antinoblium = 0,
-)
-
 /obj/item/onetankbomb/IsSpecialAssembly()
 	return TRUE
 
@@ -165,6 +140,30 @@ var/list/gas_comp = list(
 
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
 	START_PROCESSING(SSobj, src)
+	///The list of gases that have an effect in the explosion.
+	var/list/fuel_gases = list(
+		/datum/gas/oxygen,
+		/datum/gas/plasma,
+		/datum/gas/hydrogen,
+		/datum/gas/tritium,
+		/datum/gas/antinoblium,
+	)
+	///The explosion modifiers of the gases. From devastation to flash range.
+	var/list/gas_explosion_modifiers = list(
+		/datum/gas/oxygen = list(0.1, 0.2, 1.5, 1.5),
+		/datum/gas/plasma = list(0.75, 0.6, 0.5, 0.5),
+		/datum/gas/hydrogen = list(0.75, 0.75, 2, 2),
+		/datum/gas/tritium = list(1, 1, 1, 1),
+		/datum/gas/antinoblium = list(4, 0, 0, 0),
+	)
+	///The composition of gases that effect the explosion.
+	var/list/gas_comp = list(
+		/datum/gas/oxygen = 0,
+		/datum/gas/plasma = 0,
+		/datum/gas/hydrogen = 0,
+		/datum/gas/tritium = 0,
+		/datum/gas/antinoblium = 0,
+	)
 	var/datum/gas_mixture/our_mix = return_air()
 	var/explosion_modifier = list(0, 0, 0, 0)
 	for(var/gas_id in fuel_gases)
@@ -187,7 +186,7 @@ var/list/gas_comp = list(
 	var/turf/ground_zero = get_turf(loc)
 
 	if(bomb_mixture.temperature >= (T0C + 100) && strength >= 0.2)
-		explosion(ground_zero, devastation_range = round(strength * explosion_modifier[1], 1), heavy_impact_range = round(strength * 2 * explosion_modifier[2], 1), light_impact_range = round(strength * 4 * explosion_modifier[3], 1), flash_range = round(strength * 6 * explosion_modifier[4], 1))
+		explosion(ground_zero, devastation_range = round(strength * explosion_modifier[1], 1), heavy_impact_range = round(strength * 2 * explosion_modifier[2], 1), light_impact_range = round(strength * 4 * explosion_modifier[3], 1), flash_range = round(strength * 6 * explosion_modifier[4], 1), ignorecap = TRUE)
 	else
 		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
