@@ -98,7 +98,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(client && !forced && !filterproof)
 		//The filter doesn't act on the sanitized message, but the raw message.
 		filter_result = is_ic_filtered(message)
-		soft_filter_result = is_soft_ic_filtered(message)
+		if(!filter_result)
+			soft_filter_result = is_soft_ic_filtered(message)
 
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -114,7 +115,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		return
 
 	if(soft_filter_result && !filterproof)
-		//desc
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
 			return
