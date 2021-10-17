@@ -1,20 +1,20 @@
 {
-	"changshan": [
+	"traditional_suit": [
 		{
 			"type": "icon_state",
-			"icon_state": "changshan",
+			"icon_state": "traditional_suit",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "changshan_pattern",
+			"icon_state": "traditional_suit_pattern",
 			"blend_mode": "overlay",
 			"color_ids": [ 2 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "changshan_pants",
+			"icon_state": "traditional_suit_pants",
 			"blend_mode": "overlay"
 		}
 	]

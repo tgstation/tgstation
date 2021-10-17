@@ -146,13 +146,13 @@
 	icon_state = "tuxedo"
 	inhand_icon_state = "tuxedo"
 
-/obj/item/clothing/under/suit/changshan
-	name = "changshan"
-	desc = "A gorgeously embroidered silk shirt."
-	icon_state = "changshan"
+/obj/item/clothing/under/suit/traditional_suit
+	name = "traditional suit"
+	desc = "An embroidered silk shirt paired with formal black pants."
+	icon_state = "traditional_suit"
 	inhand_icon_state = "lawyer_red"
 	body_parts_covered = CHEST|GROIN|LEGS
-	greyscale_config = /datum/greyscale_config/changshan
-	greyscale_config_worn = /datum/greyscale_config/changshan/worn
+	greyscale_config = /datum/greyscale_config/traditional_suit
+	greyscale_config_worn = /datum/greyscale_config/traditional_suit/worn
 	greyscale_colors = "#CB0808#F3D16B"
 	flags_1 = IS_PLAYER_COLORABLE_1

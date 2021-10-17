@@ -413,22 +413,22 @@
 	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'
 
-/datum/greyscale_config/changshan
-	name = "Changshan"
+/datum/greyscale_config/traditional_suit
+	name = "Traditional Suit"
 	icon_file = 'icons/obj/clothing/under/suits.dmi'
-	json_config = 'code/datums/greyscale/json_configs/changshan.json'
+	json_config = 'code/datums/greyscale/json_configs/traditional_suit.json'
 
-/datum/greyscale_config/cheongsam
-	name = "Cheongsam"
+/datum/greyscale_config/traditional_dress
+	name = "Traditional Dress"
 	icon_file = 'icons/obj/clothing/under/dress.dmi'
-	json_config = 'code/datums/greyscale/json_configs/cheongsam.json'
+	json_config = 'code/datums/greyscale/json_configs/traditional_dress.json'
 
-/datum/greyscale_config/changshan/worn
-	name = "Worn Changshan"
+/datum/greyscale_config/traditional_suit/worn
+	name = "Worn Traditional Suit"
 	icon_file = 'icons/mob/clothing/under/suits.dmi'
-	json_config = 'code/datums/greyscale/json_configs/changshan_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/traditional_suit_worn.json'
 
-/datum/greyscale_config/cheongsam/worn
-	name = "Worn Cheongsam"
+/datum/greyscale_config/traditional_dress/worn
+	name = "Worn Traditional Dress"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
-	json_config = 'code/datums/greyscale/json_configs/cheongsam_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/traditional_dress_worn.json'

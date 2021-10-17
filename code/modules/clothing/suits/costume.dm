@@ -363,6 +363,34 @@
 	icon_state = "clockwork_cuirass_old"
 	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
 
+/obj/item/clothing/suit/changshan_red
+	name = "red changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan_red"
+	inhand_icon_state = "changshan_red"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+/obj/item/clothing/suit/changshan_blue
+	name = "blue changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan_blue"
+	inhand_icon_state = "changshan_blue"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+/obj/item/clothing/suit/cheongsam_red
+	name = "red cheongsam"
+	desc = "A gorgeously embroidered silk dress."
+	icon_state = "cheongsam_red"
+	inhand_icon_state = "cheongsam_red"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+/obj/item/clothing/suit/cheongsam_blue
+	name = "blue cheongsam"
+	desc = "A gorgeously embroidered silk dress."
+	icon_state = "cheongsam_blue"
+	inhand_icon_state = "cheongsam_blue"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"
 	desc = "Wearing this makes you feel more attuned with the nature of the universe... as well as a bit more irresponsible. "
