@@ -27151,7 +27151,7 @@
 "cYo" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = "n2"
+	filter_type = list(/datum/gas/nitrogen)
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
