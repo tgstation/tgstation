@@ -718,17 +718,19 @@
 	if(!target)
 		return
 
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
-	for(var/mob/living/iter_mob in view(src, 7))
-		if(iter_mob != target)
-			SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
+	if(ismob(target))
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
+		for(var/mob/living/iter_mob in view(src, 7))
+			if(iter_mob != target)
+				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 
 	playsound(src, 'sound/effects/can_pop.ogg', 80, TRUE)
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
 	spillable = TRUE
 	reagents.flags |= OPENCONTAINER
-	try_splash(target)
+	reagents.expose(target, TOUCH)
+	reagents.clear_reagents()
 	throwforce = 0
 
 /obj/item/reagent_containers/food/drinks/soda_cans/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
