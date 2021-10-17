@@ -1062,6 +1062,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
 			matter_power += 200
+		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
+			damage += rand(-300, 300) // HONK
+			damage = max(damage, 0)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
