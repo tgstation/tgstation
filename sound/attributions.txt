@@ -19,3 +19,6 @@ bbc.co.uk - (c) copyright 2018 BBC
 
 kiss sound: https://freesound.org/people/stereostereo/sounds/117355/
 champagne_pop.ogg is credited to ultradust on freesound https://freesound.org/people/ultradust/sounds/166923/
+
+can_open.ogg adapted from https://freesound.org/people/MaxDemianAGL/sounds/130031/
+can_shake.ogg adapted from https://freesound.org/people/mcmast/sounds/456703/
