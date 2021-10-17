@@ -274,6 +274,9 @@ Buildable meters
 	return FALSE
 
 /obj/item/pipe/proc/check_separation(obj/machinery/atmospherics/machine)
+	var/our_init_dirs = SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)
+	if(machine.get_init_directions() != REVERSE_DIR(our_init_dirs) && machine.get_init_directions() != our_init_dirs)
+		return FALSE
 	if((machine.piping_layer == PIPING_LAYER_MIN && piping_layer == PIPING_LAYER_MAX) || (machine.piping_layer == PIPING_LAYER_MAX && piping_layer == PIPING_LAYER_MIN))
 		return TRUE
 	return FALSE

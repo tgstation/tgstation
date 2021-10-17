@@ -80,7 +80,7 @@
 
 	set_anchored(TRUE) //Prevent movement
 	pixel_x = new_port.pixel_x
-	pixel_y = new_port.pixel_y
+	pixel_y = new_port.pixel_y + 5
 
 	SSair.start_processing_machine(src)
 	update_appearance()
@@ -171,7 +171,14 @@
 		update_appearance()
 		change_density(TRUE)
 		return TRUE
-	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+
+	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port
+	for(var/obj/machinery/atmospherics/components/unary/portables_connector/port in loc)
+		if(port.connected_device)
+			continue
+		possible_port = port
+		break //found the port, let's get out of here
+
 	if(!possible_port)
 		to_chat(user, span_notice("Nothing happens."))
 		return FALSE
