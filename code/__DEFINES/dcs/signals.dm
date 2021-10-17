@@ -215,15 +215,6 @@
 #define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
-///from proc/get_rad_contents(): ()
-#define COMSIG_ATOM_RAD_PROBE "atom_rad_probe"
-	#define COMPONENT_BLOCK_RADIATION (1<<0)
-///from base of datum/radiation_wave/radiate(): (strength)
-#define COMSIG_ATOM_RAD_CONTAMINATING "atom_rad_contam"
-	#define COMPONENT_BLOCK_CONTAMINATION (1<<0)
-///from base of datum/radiation_wave/check_obstructions(): (datum/radiation_wave, width)
-#define COMSIG_ATOM_RAD_WAVE_PASSING "atom_rad_wave_pass"
-	#define COMPONENT_RAD_WAVE_HANDLED (1<<0)
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
 	#define COMPONENT_ALLOW_REACH (1<<0)

@@ -22,7 +22,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	density = TRUE
 	anchored = TRUE
 	layer = MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE

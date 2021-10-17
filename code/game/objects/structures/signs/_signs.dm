@@ -9,7 +9,6 @@
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE

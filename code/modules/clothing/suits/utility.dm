@@ -129,7 +129,6 @@
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-	flags_1 = RAD_PROTECT_CONTENTS_1
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -147,7 +146,6 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
-	flags_1 = RAD_PROTECT_CONTENTS_1
 
 /obj/item/clothing/suit/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()

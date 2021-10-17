@@ -17,7 +17,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2

@@ -1227,7 +1227,6 @@
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
-	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	if(greyscale_colors)
@@ -1274,11 +1273,6 @@
 
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
 		usr.client.cmd_admin_emp(src)
-
-	if(href_list[VV_HK_RADIATE] && check_rights(R_FUN))
-		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
-		if(!isnull(strength))
-			AddComponent(/datum/component/radioactive, strength, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
 		usr.client.cmd_show_hiddenprints(src)

@@ -42,10 +42,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ADMIN_SPAWNED_1 (1<<10)
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<11)
-/// should the contents of this atom be acted upon
-#define RAD_PROTECT_CONTENTS_1 (1<<12)
-/// should this object be allowed to be contaminated
-#define RAD_NO_CONTAMINATE_1 (1<<13)
 /// Should this object be paintable with very dark colors?
 #define ALLOW_DARK_PAINTS_1 (1<<14)
 /// Should this object be unpaintable?

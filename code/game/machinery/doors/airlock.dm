@@ -139,7 +139,7 @@
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
 
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1 | HTML_USE_INITAL_ICON_1
+	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	network_id = NETWORK_DOOR_AIRLOCKS
