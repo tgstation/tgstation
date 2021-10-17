@@ -3,8 +3,8 @@ import { Cargo } from "../departments";
 
 const ShaftMiner: Job = {
   name: "Shaft Miner",
-  description: "Mine ores and process them into useful materials. \
-    Kill hostile wildlife. Go on an adventure in mysterious ruins.",
+  description: "Travel to strange lands. Mine ores. \
+    Meet strange creatures. Kill them for their gold.",
   department: Cargo,
 };
 

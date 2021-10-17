@@ -478,3 +478,78 @@
       to 6 characters
   thatoneplebeian:
   - refactor: refactored drowsiness code
+2021-10-17:
+  ATHATH:
+  - bugfix: The "don't allow any organics to escape on the emergency shuttle alive"
+      objective no longer counts inorganic species like golems, plasmamen, androids,
+      etc.
+  - qol: Some malf AI objectives have had their descriptions updated to reflect them
+      only caring about player-controlled creatures.
+  Ghommie:
+  - bugfix: Fixes the mind name of aliens not being updated when evolving (for real
+      this time)
+  - expansion: Added a trigonometry circuit component.
+  - bugfix: Pets no longer enjoy being shoved around.
+  Guillaume Prata:
+  - imageadd: Fire extinguishers now have a worn sprite when they are stored on your
+      Firesuit.
+  - imageadd: Atmos Optical glasses have a new icon for it's connectable mode.
+  - balance: Atmospheric Technicians will have external airlock access by default
+      now instead of only on skeleton crew.
+  Horatio22 borrowed Iamgoofball and Surrealaser , spriter d4n0w4r:
+  - imageadd: added 2 new outfits to the detective autodrobe
+  IndieanaJones:
+  - bugfix: Monkeys can now open worn backpacks by clicking on them.
+  - bugfix: Players with the monkified mutation now have a generic monkey name as
+      opposed to their actual name again.
+  JohnFulpWillard:
+  - bugfix: Secways will now say it's broken, rather than it's component.
+  Krysonism:
+  - balance: Growing vats can now be set to regrow the sample upon completion.
+  - balance: Increased the volume of growing vats from 200 to 300u.
+  LemonInTheDark:
+  - bugfix: Non wallsocket lights will be properly colored again. Whoops
+  Melbert:
+  - bugfix: Icebox chapel morgue slabs are now all the right direction
+  Mickyan:
+  - qol: While holding a spraycan you may right click on existing graffiti or colored
+      objects to set the spraycan to match that color
+  PositiveEntropy, EricZilla:
+  - imageadd: Resprites pinpointers!
+  RandomGamer123:
+  - bugfix: Admins who aghost won't be dragged back to their body when someone attempts
+      to defib them.
+  Sealed101:
+  - bugfix: fixes combat hypospray locking itself out from 10u transfers to 5u when
+      used in-hand
+  SpaceDragon00:
+  - bugfix: Organs will now consistently "Fail" once they have reached max damage
+  YakumoChen:
+  - spellcheck: Gives shaft miner a more accurate job description
+  esainane:
+  - refactor: Radiation Collectors, Tesla Coils, and Grounding Rods are now subtypes
+      of a common energy_accumulator type. This centralizes logic for smoothing energy
+      release; converting between Joules, Watts, and internal energy units; and ensures
+      that all such accumulators display and generate power along the same smoothing
+      curve.
+  - bugfix: Tesla Coils no longer generate power using half the smoothing that Radiation
+      Collectors used. This was due to a mistake in handling delta_time.
+  - code_imp: Removed many magic numbers from power generation code.
+  - qol: Tesla Coils will now display energy stored in Joules and power being produced
+      in Watts, much like Radiation Collectors did.
+  - qol: Grounding Rods will now display recent energy they've absorbed and the sustainable
+      power that this energy could be producing. It should now be very obvious if
+      you could use more Tesla Coils.
+  - bugfix: Fixed supermatter lightning bolt target selection. Previously, two grounding
+      rods were always* safe. Now, one grounding rod is always* safe.
+  - qol: Roller Beds now come with an examine hint for how to roll them up.
+  lovegreenstuff:
+  - bugfix: probital now works properly on ingest. you now get mitogen again
+  magatsuchi:
+  - rscadd: added ability to change hologram appearance to custom character
+  tralezab:
+  - rscadd: Titlescreens are now widescreen'd up.
+  - qol: The titlescreen is no longer described as "Effectively impervious to conventional
+      methods of destruction." and only the splash screen can be interacted with
+  - bugfix: you can no longer exploit the pink crossbreeding power to strip factions
+      from mobs
