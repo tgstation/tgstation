@@ -257,6 +257,12 @@
 	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
 	cost = 1
 
+/datum/spellbook_entry/bananiumcointoss
+	name = "Bananium Clown Coin Toss"
+	desc = "Throw a slippery coin that creates a trail of lube after firing the coin."
+	spell_type = /obj/effect/proc_holder/spell/aimed/cointoss/bananium
+	cost = 1
+
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
 	. = ..()
 	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
@@ -385,6 +391,12 @@
 	item_path = /obj/item/gun/magic/staff/healing
 	cost = 1
 	category = "Defensive"
+
+/datum/spellbook_entry/item/staffmoney
+	name = "Staff of Money"
+	desc = "A fast charging low capacity staff that creates money used by clown planet."
+	item_path = /obj/item/gun/magic/staff/money
+	cost = 2
 
 /datum/spellbook_entry/item/lockerstaff
 	name = "Staff of the Locker"

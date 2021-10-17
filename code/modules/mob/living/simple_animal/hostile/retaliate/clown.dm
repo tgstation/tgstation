@@ -490,6 +490,7 @@
 	cointoss_b = new /obj/effect/proc_holder/spell/aimed/cointoss/bananium
 	cointoss_b.player_lock = 0
 	cointoss_b.charge_max = 600
+	cointoss_b.charge_counter = 600
 	AddSpell(cointoss_b)
 
 /mob/living/simple_animal/hostile/retaliate/clown/crook/boss
