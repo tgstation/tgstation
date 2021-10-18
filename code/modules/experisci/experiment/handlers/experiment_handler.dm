@@ -195,6 +195,10 @@
 	var/atom/movable/experi_parent = parent
 	experi_parent.say(message)
 
+/datum/component/experiment_handler/proc/dispense_reward(mob/user)
+	var/user_turf = get_turf(user)
+	new selected_experiment.reward(user_turf)
+	announce_message("Thank you for your cooperation. Dispensing reward...")
 /**
  * Attempts to perform the selected experiment given some arguments
  */

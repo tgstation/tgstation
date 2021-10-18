@@ -22,6 +22,8 @@
 	/// A textual hint shown on the UI in a tooltip to help a user determine how to perform
 	/// the experiment
 	var/performance_hint
+	///Experiment completion reward, default = /obj/item/coupon
+	var/reward = /obj/item/coupon
 
 /**
  * Performs any necessary initialization of tags and other variables
@@ -84,5 +86,6 @@
 /datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler)
 	completed = TRUE
 	experiment_handler.announce_message_to_all("The [name] has been completed!")
+	experiment_handler.dispense_reward(usr)
 	experiment_handler.selected_experiment = null
 	experiment_handler.linked_web.complete_experiment(src)

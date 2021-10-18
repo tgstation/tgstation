@@ -11,6 +11,10 @@
 	var/discount_pct_off = 0.05
 	var/obj/machinery/computer/cargo/inserted_console
 
+/obj/item/coupon/New()
+	. = ..()
+	generate()
+
 /// Choose what our prize is :D
 /obj/item/coupon/proc/generate(rig_omen=FALSE)
 	discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
