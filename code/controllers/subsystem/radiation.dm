@@ -29,7 +29,10 @@ SUBSYSTEM_DEF(radiation)
 		if (!CAN_IRRADIATE(target))
 			continue
 
-		if (HAS_TRAIT(target, TRAIT_RADIATION_PROTECTED))
+		if (HAS_TRAIT(target, TRAIT_IRRADIATED))
+			continue
+
+		if (HAS_TRAIT(target, TRAIT_RADIMMUNE))
 			continue
 
 		// MOTHBLOCKS TODO: Minimum timer
@@ -55,6 +58,6 @@ SUBSYSTEM_DEF(radiation)
 		if (!prob(pulse_information.chance))
 			continue
 
-		// MOTHBLOCKS TODO: Rad protected clothes, done through an element that hijacks a signal
+		// MOTHBLOCKS TODO: Rad protected clothes, done through an element that hijacks a signal, or TRAIT_RADIMMUNE
 
 		target.AddComponent(/datum/component/irradiated)

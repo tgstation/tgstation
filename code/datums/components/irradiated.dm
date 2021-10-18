@@ -11,6 +11,7 @@
 #define RADIATION_CLEAN_IMMUNITY_TIME (SSMACHINES_DT + (1 SECONDS))
 
 // MOTHBLOCKS TODO: Random minor effects, like non-stun vomits and balding given enough time
+// Might just need to handle_mutations_and_radiation?
 
 /// This atom is irradiated, and will glow green.
 /// Humans will take toxin damage until all their toxin damage is cleared.
@@ -28,7 +29,12 @@
 	if (!CAN_IRRADIATE(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	ADD_TRAIT(parent, TRAIT_RADIATION_PROTECTED, "[type]")
+	// This isn't incompatible, it's just wrong
+	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
+		qdel(src)
+		return
+
+	ADD_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
 
 	create_glow()
 
@@ -37,7 +43,7 @@
 		human_parent.apply_damage(RADIATION_IMMEDIATE_TOX_DAMAGE, TOX)
 		START_PROCESSING(SSobj, src)
 
-		COOLDOWN_START(src, last_tox_damage)
+		COOLDOWN_START(src, last_tox_damage, RADIATION_TOX_INTERVAL)
 
 		start_burn_splotch_timer()
 
@@ -58,7 +64,7 @@
 	if (istype(human_parent))
 		human_parent.clear_alert("irradiated")
 
-	REMOVE_TRAIT(parent, TRAIT_RADIATION_PROTECTED, "[type]")
+	REMOVE_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
 
 	deltimer(burn_splotch_timer_id)
 	STOP_PROCESSING(SSobj, src)
@@ -67,6 +73,10 @@
 
 /datum/component/irradiated/process(delta_time)
 	if (!ishuman(parent))
+		return PROCESS_KILL
+
+	if (HAS_TRAIT(parent, TRAIT_RADIMMUNE))
+		qdel(src)
 		return PROCESS_KILL
 
 	var/mob/living/carbon/human/human_parent = parent
@@ -81,6 +91,9 @@
 
 /datum/component/irradiated/proc/should_halt_effects(mob/living/carbon/human/target)
 	if (IS_IN_STASIS(target))
+		return TRUE
+
+	if (HAS_TRAIT(target, TRAIT_HALT_RADIATION_EFFECTS))
 		return TRUE
 
 	if (!COOLDOWN_FINISHED(src, clean_cooldown))

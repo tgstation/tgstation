@@ -7,7 +7,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_MEDICAL 1
 #define PDA_SCANNER_FORENSICS 2 //unused
 #define PDA_SCANNER_REAGENT 3
-#define PDA_SCANNER_HALOGEN 4
 #define PDA_SCANNER_GAS 5
 #define PDA_SPAM_DELAY     2 MINUTES
 
@@ -321,8 +320,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=53'>[PDAIMG(notes)]Newscaster Access </a></li>"
 					if (cartridge.access & CART_REAGENT_SCANNER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'>[PDAIMG(reagent)][scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
-					if (cartridge.access & CART_ENGINE)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Halogen Counter'>[PDAIMG(reagent)][scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
 					if (cartridge.access & CART_ATMOS)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'>[PDAIMG(reagent)][scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access & CART_REMOTE_DOOR)
@@ -566,13 +563,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_REAGENT_SCANNER))
 					scanmode = PDA_SCANNER_REAGENT
-			if("Halogen Counter")
-				if(scanmode == PDA_SCANNER_HALOGEN)
-					scanmode = PDA_SCANNER_NONE
-				else if((!isnull(cartridge)) && (cartridge.access & CART_ENGINE))
-					scanmode = PDA_SCANNER_HALOGEN
-				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -1096,15 +1086,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
-			if(PDA_SCANNER_HALOGEN)
-				C.visible_message(span_notice("[user] analyzes [C]'s radiation levels."))
-
-				user.show_message(span_notice("Analyzing Results for [C]:"))
-				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
-				else
-					user.show_message(span_notice("No radiation detected."))
-
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -1281,6 +1262,5 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_MEDICAL
 #undef PDA_SCANNER_FORENSICS
 #undef PDA_SCANNER_REAGENT
-#undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
 #undef PDA_SPAM_DELAY

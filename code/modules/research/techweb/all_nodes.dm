@@ -1262,7 +1262,6 @@
 		"laserscalpel",
 		"mechanicalpinches",
 		"searingtool",
-		"wirebrush_adv",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)

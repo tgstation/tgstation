@@ -201,7 +201,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	H.radiation = 0
+	qdel(H.GetComponent(/datum/component/irradiated))
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"

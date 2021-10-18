@@ -752,7 +752,6 @@
 	remove_CC()
 	set_disgust(0)
 	losebreath = 0
-	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)

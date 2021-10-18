@@ -299,7 +299,7 @@
 
 /datum/reagent/medicine/c2/seiver //a bit of a gray joke
 	name = "Seiver"
-	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
+	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will remove amounts of toxins, while coder temperatures will heal larger amounts of toxins only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
 	inverse_chem_val = 0.3
 	ph = 3.7

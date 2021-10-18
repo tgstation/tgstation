@@ -84,7 +84,6 @@
 	return
 
 /mob/living/proc/handle_mutations_and_radiation(delta_time, times_fired)
-	radiation = 0 //so radiation don't accumulate in simple animals
 	return
 
 /mob/living/proc/handle_diseases(delta_time, times_fired)

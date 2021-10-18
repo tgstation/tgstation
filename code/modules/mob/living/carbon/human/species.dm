@@ -1220,11 +1220,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * - times_fired: The number of times SSmobs has fired
  */
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
-	if(HAS_TRAIT(source, TRAIT_RADIMMUNE))
-		source.radiation = 0
-		return TRUE
-
 	. = FALSE
+
+	// MOTHBLOCKS TODO: Replace this with time since irradiated, which will be passed by the irradiated component itself
 	var/radiation = source.radiation
 	if(radiation > RAD_MOB_KNOCKDOWN && DT_PROB(RAD_MOB_KNOCKDOWN_PROB, delta_time))
 		if(!source.IsParalyzed())
