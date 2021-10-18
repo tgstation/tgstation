@@ -1514,9 +1514,9 @@
 #define COMSIG_TICKER_ROUND_STARTING "comsig_ticker_round_starting"
 //spatial grid signals
 ///Called from base of /turf/Entered: (/atom/movable)
-#define SPATIAL_GRID_CELL_ENTERED(x_index, y_index, z_index, type) "spatial_grid_cell_entered_[x_index]_[y_index]_[z_index]_[type]"
+#define SPATIAL_GRID_CELL_ENTERED(contents_type) "spatial_grid_cell_entered_[contents_type]"
 ///Called from base of /turf/Exited: (/atom/movable)
-#define SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, type) "spatial_grid_cell_exited_[x_index]_[y_index]_[z_index]_[type]"
+#define SPATIAL_GRID_CELL_EXITED(contents_type) "spatial_grid_cell_exited_[contents_type]"
 
 #define COMSIG_GREYSCALE_CONFIG_REFRESHED "greyscale_config_refreshed"
 

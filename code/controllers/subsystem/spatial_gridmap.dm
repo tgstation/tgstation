@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	waiting_to_add_by_type[type] += waiting_movable
 
-/datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)//TODOKYLER: make exclusive_type a list
+/datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)
 	if(exclusive_type)
 		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
 
@@ -162,10 +162,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!target_turf)
 		return
 
-	var/list/grid = grids_by_z_level[target_turf.z]
-
-	var/datum/spatial_grid_cell/cell_to_return = grid[ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)][ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)]
-	return cell_to_return
+	return grids_by_z_level[target_turf.z][ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)][ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)]
 
 ///get all grid cells intersecting the bounding box around center with sides of length 2 * range
 /datum/controller/subsystem/spatial_grid/proc/get_cells_in_range(atom/center, range)
@@ -211,12 +208,12 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 		intersecting_cell.client_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
 
-		SEND_SIGNAL(src, SPATIAL_GRID_CELL_ENTERED(x_index, y_index, z_index, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_CLIENT_MOBS), new_target)
 
 	if(new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
 		intersecting_cell.hearing_contents |= new_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
-		SEND_SIGNAL(src, SPATIAL_GRID_CELL_ENTERED(x_index, y_index, z_index, RECURSIVE_CONTENTS_HEARING_SENSITIVE), new_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(RECURSIVE_CONTENTS_HEARING_SENSITIVE), new_target)
 
 /**
  * find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
@@ -244,19 +241,19 @@ SUBSYSTEM_DEF(spatial_grid)
 			if(RECURSIVE_CONTENTS_HEARING_SENSITIVE)
 				intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
-		SEND_SIGNAL(src, SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, exclusive_type), old_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
 		return
 
 	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS])
 		intersecting_cell.client_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]
 
-		SEND_SIGNAL(src, SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target)
 
 	if(old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
 
 		intersecting_cell.hearing_contents -= old_target.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 
-		SEND_SIGNAL(src, SPATIAL_GRID_CELL_EXITED(x_index, y_index, z_index, RECURSIVE_CONTENTS_HEARING_SENSITIVE), old_target)
+		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(RECURSIVE_CONTENTS_HEARING_SENSITIVE), old_target)
 
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
