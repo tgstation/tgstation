@@ -576,3 +576,9 @@
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
 	inhand_icon_state = "phantom_glasses"
+
+/obj/item/clothing/glasses/regular/kim
+	name = "binoclard lenses"
+	desc = "Shows you know how to sew a lapel and center a back vent."
+	icon_state = "binoclard_lenses"
+	inhand_icon_state = "binoclard_lenses"
