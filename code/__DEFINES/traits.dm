@@ -747,8 +747,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
 
+// Radiation defines
+
 /// Marks that this object is irradiated
 #define TRAIT_IRRADIATED "iraddiated"
 
 /// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
 #define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
+
+/// This clothing protects the user from radiation.
+/// This should not be used on clothing_traits, but should be applied to the clothing itself.
+#define TRAIT_RADIATION_PROTECTED_CLOTHING "radiation_protected_clothing"

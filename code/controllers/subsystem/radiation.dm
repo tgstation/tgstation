@@ -65,6 +65,9 @@ SUBSYSTEM_DEF(radiation)
 /datum/controller/subsystem/radiation/proc/irradiate_after_basic_checks(atom/target)
 	PRIVATE_PROC(TRUE)
 
+	if (ishuman(target) && wearing_rad_protected_clothing(target))
+		return
+
 	target.AddComponent(/datum/component/irradiated)
 
 /datum/controller/subsystem/radiation/proc/can_irradiate_basic(atom/target)
@@ -76,5 +79,14 @@ SUBSYSTEM_DEF(radiation)
 
 	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))
 		return FALSE
+
+	return TRUE
+
+/// Returns whether or not the human is covered head to toe in rad-protected clothing.
+/datum/controller/subsystem/radiation/proc/wearing_rad_protected_clothing(mob/living/carbon/human/human)
+	for (var/obj/item/bodypart/limb as anything in human.bodyparts)
+		for (var/obj/item/clothing as anything in human.clothingonpart(limb))
+			if (!HAS_TRAIT(clothing, TRAIT_RADIATION_PROTECTED_CLOTHING))
+				return FALSE
 
 	return TRUE
