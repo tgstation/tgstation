@@ -371,11 +371,11 @@
 	var/carpet_damage = 5
 	var/heal_amount = 3
 
-/turf/open/floor/carpet/money/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/turf/open/floor/carpet/money/Entered(mob/arrived, atom/old_loc, list/atom/old_locs)
 	if(honk_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/floor/carpet/money/Exited(atom/movable/gone, direction)
+/turf/open/floor/carpet/money/Exited(mob/gone, direction)
 	. = ..()
 	if(isliving(gone))
 		var/mob/living/L = gone
@@ -386,31 +386,31 @@
 	if(!honk_stuff(null, delta_time))
 		STOP_PROCESSING(SSobj, src)
 
-/turf/open/floor/carpet/money/proc/honk_stuff(atom/movable/to_honk, delta_time = 1)
+/turf/open/floor/carpet/money/proc/honk_stuff(mob/to_honk, delta_time = 1)
 
 	var/thing_to_check = src
 	if (to_honk)
 		thing_to_check = list(to_honk)
-	for(var/atom/movable/honky_target as anything in thing_to_check)
+	for(var/mob/honky_target as anything in thing_to_check)
 		if(!do_honky(honky_target, delta_time))
 			continue
 		. = TRUE
 
 	if (to_honk)
 		thing_to_check = list(to_honk)
-	for(var/atom/movable/honky_target as anything in thing_to_check)
+	for(var/mob/honky_target as anything in thing_to_check)
 		if(!do_heal(honky_target, delta_time))
 			continue
 		. = TRUE
 
-/turf/open/floor/carpet/money/proc/do_honky(atom/movable/honky_target, delta_time = 1)
+/turf/open/floor/carpet/money/proc/do_honky(mob/honky_target, delta_time = 1)
 	. = TRUE
 	var/mob/living/carbon/damage_non_clown_mobs = honky_target
 	ADD_TRAIT(damage_non_clown_mobs, TRAIT_CLOWN_CARPET, TURF_TRAIT)
 	damage_non_clown_mobs.adjustBruteLoss(carpet_damage * delta_time)
 	damage_non_clown_mobs.adjustStaminaLoss(carpet_damage * 2 * delta_time)
 
-/turf/open/floor/carpet/money/proc/do_heal(atom/movable/honky_target, delta_time = 1)
+/turf/open/floor/carpet/money/proc/do_heal(mob/honky_target, delta_time = 1)
 	. = TRUE
 	var/mob/living/simple_animal/hostile/retaliate/clown/heal_clown_mobs = honky_target
 	ADD_TRAIT(heal_clown_mobs, TRAIT_CLOWN_CARPET, TURF_TRAIT)
