@@ -123,18 +123,19 @@
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return
-	var/turf/open/floor/F = random_location
-	var/area/destination_area = F.loc
+	var/turf/open/floor/floor_turf = random_location
+	var/area/destination_area = floor_turf.loc
 
 	if(no_teleport && (destination_area.area_flags & NOTELEPORT))
 		return
-	if(!F.air)
+
+	var/datum/gas_mixture/floor_gas_mixture = floor_turf.air
+	if(!floor_gas_mixture)
 		return
 
-	var/datum/gas_mixture/A = F.air
-	var/list/A_gases = A.gases
+	var/list/floor_gases = floor_gas_mixture.gases
 	var/trace_gases
-	for(var/id in A_gases)
+	for(var/id in floor_gases)
 		if(id in GLOB.hardcoded_gases)
 			continue
 		trace_gases = TRUE
@@ -143,30 +144,30 @@
 	// Can most things breathe?
 	if(trace_gases)
 		return
-	if(!(A_gases[/datum/gas/oxygen] && A_gases[/datum/gas/oxygen][MOLES] >= 16))
+	if(!(floor_gases[/datum/gas/oxygen] && floor_gases[/datum/gas/oxygen][MOLES] >= 16))
 		return
-	if(A_gases[/datum/gas/plasma])
+	if(floor_gases[/datum/gas/plasma])
 		return
-	if(A_gases[/datum/gas/carbon_dioxide] && A_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
+	if(floor_gases[/datum/gas/carbon_dioxide] && floor_gases[/datum/gas/carbon_dioxide][MOLES] >= 10)
 		return
 
 	// Aim for goldilocks temperatures and pressure
-	if((A.temperature <= 270) || (A.temperature >= 360))
+	if((floor_gas_mixture.temperature <= 270) || (floor_gas_mixture.temperature >= 360))
 		return
-	var/pressure = A.return_pressure()
+	var/pressure = floor_gas_mixture.return_pressure()
 	if((pressure <= 20) || (pressure >= 550))
 		return
 
 	if(extended_safety_checks)
-		if(islava(F)) //chasms aren't /floor, and so are pre-filtered
-			var/turf/open/lava/L = F
-			if(!L.is_safe())
+		if(islava(floor_turf)) //chasms aren't /floor, and so are pre-filtered
+			var/turf/open/lava/lava_turf = floor_turf // Cyberboss: okay, this makes no sense and I don't understand the above comment, but I'm too lazy to check history to see what it's supposed to do right now
+			if(!lava_turf.is_safe())
 				return
 
 	// Check that we're not warping onto a table or window
 	if(!dense_atoms)
 		var/density_found = FALSE
-		for(var/atom/movable/found_movable in F)
+		for(var/atom/movable/found_movable in floor_turf)
 			if(found_movable.density)
 				density_found = TRUE
 				break
