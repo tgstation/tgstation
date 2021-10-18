@@ -66,26 +66,13 @@
 
 	var/message_prompt = "Message:"
 
-	if(AH?.opening_responders && length(AH._interactions) == 1)
+	if(AH?.opening_responders && length(AH.ticket_interactions) == 1)
 		SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
-		message_prompt += "\n\n**This ticket is already being responded to by: "
-		var/num_of_responders = length(AH.opening_responders)
-		var/admins_counted = 0
-
-		for(var/client/iter_responder as anything in AH.opening_responders)
-			admins_counted++
-			message_prompt += "[iter_responder?.key]"
-			switch(num_of_responders - admins_counted)
-				if(0)
-				if(1)
-					message_prompt += " and "
-				else
-					message_prompt += ", "
-		message_prompt += "**"
+		message_prompt += "\n\n**This ticket is already being responded to by: [english_list(AH.opening_responders)]**"
 
 	if(AH)
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-		if(length(AH._interactions) == 1) // add the admin who is currently responding to the list of people responding
+		if(length(AH.ticket_interactions) == 1) // add the admin who is currently responding to the list of people responding
 			LAZYADD(AH.opening_responders, src)
 
 	var/msg = input(src, message_prompt, "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
