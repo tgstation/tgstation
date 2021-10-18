@@ -140,53 +140,115 @@
 
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
 	START_PROCESSING(SSobj, src)
-	///The list of gases that have an effect in the explosion.
+	///The list of fuel gases.
 	var/list/fuel_gases = list(
-		/datum/gas/oxygen,
 		/datum/gas/plasma,
 		/datum/gas/hydrogen,
 		/datum/gas/tritium,
 		/datum/gas/antinoblium,
 	)
-	///The explosion modifiers of the gases. From devastation to flash range.
-	var/list/gas_explosion_modifiers = list(
-		/datum/gas/oxygen = list(0.1, 0.2, 1.5, 1.5),
-		/datum/gas/plasma = list(0.75, 0.6, 0.5, 0.5),
-		/datum/gas/hydrogen = list(0.75, 0.75, 2, 2),
-		/datum/gas/tritium = list(1, 1, 1, 1),
-		/datum/gas/antinoblium = list(4, 0, 0, 0),
+	///The list of oxi gases.
+	var/list/oxi_gases = list(
+		/datum/gas/oxygen,
+		/datum/gas/nitrous_oxide,
+		/datum/gas/nitryl,
 	)
-	///The composition of gases that effect the explosion.
+	///All gases that have an interaction.
+	var/list/combined_gases = list(
+		/datum/gas/plasma,
+		/datum/gas/hydrogen,
+		/datum/gas/tritium,
+		/datum/gas/antinoblium,
+		/datum/gas/oxygen,
+		/datum/gas/nitrous_oxide,
+		/datum/gas/nitryl,
+	)
+	//Base modifier multiplies the strength. Devastation, high_impact, low_impact, and flash multiply their respective impact ranges in the explosion. Weight determines what the most efficient oxi to fuel ratio would be. The weight applies for oxi or fuel depending on the gas. Effective temperature determines what would be the most efficient temperature for the gas.
+	//Do not set the value for weight too high, as a variable will be used by a calculation that can generate really massive numbers. Check gas_efficiency to see what values would be appropriate.
+	///The modifiers of the gases. [1: base modifier, 2: devastation, 3: high_impact, 4: low_impact, 5: flash, 6: weight, 7: effective temperature].
+	var/list/gas_modifiers = list(
+		/datum/gas/oxygen = list(1, 0.1, 0.2, 1.5, 1.5, 2, T0C),
+		/datum/gas/nitrous_oxide = list(0.9, 1.2, 1, 0.4, 0.4, 4, 3 * T0C),
+		/datum/gas/nitryl = list(2, 0.1, 0.125, 0.15, 0.175, 1, 4 * TCMB),
+		/datum/gas/plasma = list(0.6, 1.2, 1, 0.9, 0.9, 1, T0C + 100),
+		/datum/gas/hydrogen = list(0.9, 7.5, 7.5, 20, 20, 0.2, 8 * TCMB),
+		/datum/gas/tritium = list(1, 10, 10, 10, 10, 0.24, 4 * TCMB),
+		/datum/gas/antinoblium = list(1.2, 8, 0, 0, 0, 8, TCMB),
+	)
+	///The composition of gases relative to oxi.
+	var/list/oxi_comp = list(
+		/datum/gas/oxygen = 0,
+		/datum/gas/nitrous_oxide = 0,
+		/datum/gas/nitryl = 0,
+	)
+	///The composition of gases relative to fuel.
+	var/list/fuel_comp = list(
+		/datum/gas/plasma = 0,
+		/datum/gas/hydrogen = 0,
+		/datum/gas/tritium = 0,
+		/datum/gas/antinoblium = 0,
+	)
+	///The composition of gases.
 	var/list/gas_comp = list(
 		/datum/gas/oxygen = 0,
+		/datum/gas/nitrous_oxide = 0,
+		/datum/gas/nitryl = 0,
 		/datum/gas/plasma = 0,
 		/datum/gas/hydrogen = 0,
 		/datum/gas/tritium = 0,
 		/datum/gas/antinoblium = 0,
 	)
 	var/datum/gas_mixture/our_mix = return_air()
-	var/explosion_modifier = list(0, 0, 0, 0)
-	for(var/gas_id in fuel_gases)
+	///The modifier of the explosion. [1: base modifier, 2: devastation, 3: high_impact, 4: low_impact, 5: flash, 6: weight, 7: effective temperature].
+	var/explosion_modifier = list(0, 0, 0, 0, 0, 0, 0)
+	for(var/gas_id in combined_gases)
 		our_mix.assert_gas(gas_id)
 
-	var/fuel_moles = our_mix.total_moles()
-	if(fuel_moles == 0)
+	///Total moles of fuel.
+	var/fuel_moles = 0
+	///Total moles of oxi.
+	var/oxi_moles = 0
+	///Total moles of fuel and oxi.
+	var/combined_moles = 0
+	for(var/gas_id in fuel_gases)
+		fuel_moles += our_mix.gases[gas_id][MOLES]
+	for(var/gas_id in oxi_gases)
+		oxi_moles += our_mix.gases[gas_id][MOLES]
+	combined_moles = fuel_moles + oxi_moles
+	if(fuel_moles == 0 || oxi_moles == 0)
 		return
 	for(var/gas_id in fuel_gases)
-		gas_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / fuel_moles, 0, 1) //Composition of fuels.
-
-	for(var/gas_id in gas_explosion_modifiers)
-		for(var/i = 1 to 4)
-			explosion_modifier[i] += gas_explosion_modifiers[gas_id][i] * gas_comp[gas_id] //Calculate modifiers.
-	for(var/i = 1 to 4)
-		explosion_modifier[i] += (1 - (T0C + 100) / our_mix.temperature) * (0.9 - explosion_modifier[i]) //When temperature is above 373.15K, converge the modifiers to 0.9.
+		fuel_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / fuel_moles, 0, 1) //Composition of fuels.
+	for(var/gas_id in oxi_gases)
+		oxi_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / oxi_moles, 0, 1) //Composition of oxi gases.
+	for(var/gas_id in combined_gases)
+		gas_comp[gas_id] = clamp(our_mix.gases[gas_id][MOLES] / combined_moles, 0, 1) //Composition of gases.
+	for(var/gas_id in gas_modifiers)
+		for(var/i = 1 to 7)
+			explosion_modifier[i] += gas_modifiers[gas_id][i] * gas_comp[gas_id] //Calculate modifiers.
+	///Composition of oxi.
+	var/oxi_gas_comp = oxi_moles / combined_moles
+	///Composition of fuel.
+	var/fuel_gas_comp = fuel_moles / combined_moles
+	///Weight of oxi.
+	var/oxi_weight = 0
+	///Weight of fuel.
+	var/fuel_weight = 0
+	for(var/gas_id in oxi_gases)
+		oxi_weight += gas_modifiers[gas_id][6] * oxi_comp[gas_id]
+	for(var/gas_id in fuel_gases)
+		fuel_weight += gas_modifiers[gas_id][6] * fuel_comp[gas_id]
 	our_mix.garbage_collect()
 	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
-	var/strength = fuel_moles * bomb_mixture.temperature / 10000
+	///Efficiency of reaction. Maximum possible efficiency is 1. Temperature or oxi/fuel compositions going off their target will lower this.
+	var/gas_efficiency = oxi_gas_comp ** oxi_weight * fuel_gas_comp ** fuel_weight * ((oxi_weight + fuel_weight) ** (oxi_weight + fuel_weight)) / (oxi_weight ** oxi_weight * fuel_weight ** fuel_weight) * bomb_mixture.temperature / (bomb_mixture.temperature + (bomb_mixture.temperature * sqrt(INVERSE(explosion_modifier[7])) - sqrt(explosion_modifier[7])) ** 2)
+	///Increases range of the explosion.
+	var/strength = gas_efficiency * explosion_modifier[1] * combined_moles * bomb_mixture.temperature / 5000
+	///Location of explosion.
 	var/turf/ground_zero = get_turf(loc)
 
-	if(bomb_mixture.temperature >= (T0C + 100) && strength >= 0.2)
-		explosion(ground_zero, devastation_range = round(strength * explosion_modifier[1], 1), heavy_impact_range = round(strength * 2 * explosion_modifier[2], 1), light_impact_range = round(strength * 4 * explosion_modifier[3], 1), flash_range = round(strength * 6 * explosion_modifier[4], 1), ignorecap = TRUE, explosion_cause = src)
+	if(strength >= 0.2)
+		explosion(ground_zero, devastation_range = round(sqrt(strength * explosion_modifier[2]), 1), heavy_impact_range = round(sqrt(strength * explosion_modifier[3]) * 2, 1), light_impact_range = round(sqrt(strength * explosion_modifier[4]) * 4, 1), flash_range = round(sqrt(strength * explosion_modifier[5]) * 8, 1), ignorecap = TRUE, explosion_cause = src)
 	else
 		ground_zero.assume_air(bomb_mixture)
 		ground_zero.hotspot_expose(1000, 125)
