@@ -23,14 +23,9 @@
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,allow_numbers=FALSE)
-	if(is_ic_filtered(t))
+	if(is_ic_filtered(t) || is_soft_ic_filtered(t))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
-	var/list/soft_filter_result = is_soft_ooc_filtered(t)
-	if(soft_filter_result)
-		if(tgui_alert(usr,"This name contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use this name?", "Soft Blocked Name", list("Yes", "No")) != "Yes")
-			return
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be setting a name to a disallowed term")
 	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
 	if(!r)
 		tgui_alert(usr, "Invalid name.")
