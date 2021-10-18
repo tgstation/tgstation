@@ -113,8 +113,8 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
 
-#define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)
-#define BOUNDING_BOX_MAX(center_coord) min(ROUND_UP((center_coord + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+#define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) / SPATIAL_GRID_CELLSIZE), 1)
+#define BOUNDING_BOX_MAX(center_coord) min(ROUND_UP((center_coord + range) / SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
 
 /**
  * https://en.wikipedia.org/wiki/Range_searching#Orthogonal_range_searching
@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/grid = grids_by_z_level[target_turf.z]
 
-	var/datum/spatial_grid_cell/cell_to_return = grid[ROUND_UP(target_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE)][ROUND_UP(target_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE)]
+	var/datum/spatial_grid_cell/cell_to_return = grid[ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)][ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)]
 	return cell_to_return
 
 ///get all grid cells intersecting the bounding box around center with sides of length 2 * range
@@ -176,15 +176,15 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/intersecting_grid_cells = list()
 
-	var/static/grid_cells_per_axis = world.maxx * INVERSE_SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
+	var/static/grid_cells_per_axis = world.maxx / SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
 
 	//the minimum x and y cell indexes to test
-	var/min_x = max(ROUND_UP((center_x - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)
-	var/min_y = max(ROUND_UP((center_y - range) * INVERSE_SPATIAL_GRID_CELLSIZE), 1)//calculating these indices only takes around 2 microseconds
+	var/min_x = max(ROUND_UP((center_x - range) / SPATIAL_GRID_CELLSIZE), 1)
+	var/min_y = max(ROUND_UP((center_y - range) / SPATIAL_GRID_CELLSIZE), 1)//calculating these indices only takes around 2 microseconds
 
 	//the maximum x and y cell indexes to test
-	var/max_x = min(ROUND_UP((center_x + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
-	var/max_y = min(ROUND_UP((center_y + range) * INVERSE_SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+	var/max_x = min(ROUND_UP((center_x + range) / SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+	var/max_y = min(ROUND_UP((center_y + range) / SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
 
 	var/list/grid_level = grids_by_z_level[center_turf.z]
 
@@ -202,8 +202,8 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!target_turf || !new_target?.important_recursive_contents)
 		CRASH("/datum/controller/subsystem/spatial_grid/proc/enter_cell() was given null arguments or a new_target without important_recursive_contents!")
 
-	var/x_index = ROUND_UP(target_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE)
-	var/y_index = ROUND_UP(target_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE)
+	var/x_index = ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)
+	var/y_index = ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)
 	var/z_index = target_turf.z
 
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
@@ -229,8 +229,8 @@ SUBSYSTEM_DEF(spatial_grid)
 	if(!target_turf || !old_target?.important_recursive_contents)
 		CRASH("/datum/controller/subsystem/spatial_grid/proc/exit_cell() was given null arguments or a new_target without important_recursive_contents!")
 
-	var/x_index = ROUND_UP(target_turf.x * INVERSE_SPATIAL_GRID_CELLSIZE)
-	var/y_index = ROUND_UP(target_turf.y * INVERSE_SPATIAL_GRID_CELLSIZE)
+	var/x_index = ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)
+	var/y_index = ROUND_UP(target_turf.y / SPATIAL_GRID_CELLSIZE)
 	var/z_index = target_turf.z
 
 	var/list/grid = grids_by_z_level[z_index]

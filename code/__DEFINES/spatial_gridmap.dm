@@ -1,10 +1,7 @@
 ///each cell in a spatial_grid is this many turfs in length and width
 #define SPATIAL_GRID_CELLSIZE 15
-//the inverse of the above, because i heard that multiplication is *slightly* faster than division
-//and thats like the one assumption i didnt test at all :trollface:
-#define INVERSE_SPATIAL_GRID_CELLSIZE (1 / SPATIAL_GRID_CELLSIZE)
 
-#define SPATIAL_GRID_CELLS_PER_SIDE ROUND_UP(world.maxx * INVERSE_SPATIAL_GRID_CELLSIZE)
+#define SPATIAL_GRID_CELLS_PER_SIDE ROUND_UP(world.maxx / SPATIAL_GRID_CELLSIZE)
 
 #define SPATIAL_GRID_CHANNELS 2
 
