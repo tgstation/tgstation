@@ -214,7 +214,7 @@
 	return
 
 /**
- * Returns a list of movable atoms that are hearing sensitive with in view_radius and line of sight of source
+ * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight of source
  * the majority of the work is passed off to the spatial grid if view_radius > 0
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area

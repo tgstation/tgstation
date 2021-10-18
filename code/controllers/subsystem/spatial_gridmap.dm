@@ -56,6 +56,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	. = ..()
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
 		propogate_spatial_grid_to_new_z(null, z_level)
+		CHECK_TICK_HIGH_PRIORITY
 
 	//for anything waiting to be let in
 	for(var/channel_type in waiting_to_add_by_type)
