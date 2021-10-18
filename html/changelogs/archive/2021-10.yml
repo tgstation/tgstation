@@ -553,3 +553,23 @@
       methods of destruction." and only the splash screen can be interacted with
   - bugfix: you can no longer exploit the pink crossbreeding power to strip factions
       from mobs
+2021-10-18:
+  Ghommie:
+  - bugfix: Fixed the join/ready buttons not reverting if the game fails to setup.
+  Pickle-Coding:
+  - admin: Assembly bomb creation is now logged in Kelvin.
+  RandomGamer123:
+  - spellcheck: Fixed capitalisation errors in hypernoblium crystal usage messages.
+  Sealed101:
+  - bugfix: fixed abductor and advanced tools' recycling results being heavily diminished
+      or taken from their basic counterparts
+  SuperNovaa41:
+  - balance: The Goon Source code item is now invulnerable to deletion (aside from
+      ninja intervention), similar to every other high risk item.
+  esainane:
+  - rscadd: When all else fails, dusting a Clown can alter the Supermatter's containment
+      field. It might make the situation better. It might not. Who knows, HONK
+  magatsuchi:
+  - spellcheck: fixed a single bracket typo
+  tralezab:
+  - bugfix: fixes an error in department officers spawning with wallets
