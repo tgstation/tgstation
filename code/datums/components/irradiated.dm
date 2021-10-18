@@ -1,7 +1,7 @@
 #define RADIATION_IMMEDIATE_TOX_DAMAGE 10
 
 #define RADIATION_TOX_DAMAGE_PER_INTERVAL 2
-#define RADIATION_TOX_INTERVAL 25
+#define RADIATION_TOX_INTERVAL (25 SECONDS)
 
 #define RADIATION_BURN_SPLOTCH_DAMAGE 11
 #define RADIATION_BURN_INTERVAL_MIN (30 SECONDS)
@@ -9,6 +9,8 @@
 
 // Showers process on SSmachines
 #define RADIATION_CLEAN_IMMUNITY_TIME (SSMACHINES_DT + (1 SECONDS))
+
+// MOTHBLOCKS TODO: Random minor effects, like non-stun vomits and balding given enough time
 
 /// This atom is irradiated, and will glow green.
 /// Humans will take toxin damage until all their toxin damage is cleared.
@@ -34,7 +36,11 @@
 		human_parent.apply_damage(RADIATION_IMMEDIATE_TOX_DAMAGE, TOX)
 		START_PROCESSING(SSobj, src)
 
+		COOLDOWN_START(src, last_tox_damage)
+
 		start_burn_splotch_timer()
+
+		human_parent.throw_alert("irradiated", /atom/movable/screen/alert/irradiated)
 
 /datum/component/irradiated/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
@@ -46,6 +52,10 @@
 	var/atom/movable/parent_movable = parent
 	if (istype(parent_movable))
 		parent_movable.remove_filter("rad_glow")
+
+	var/mob/living/carbon/human/human_parent = parent
+	if (istype(human_parent))
+		human_parent.clear_alert("irradiated")
 
 	REMOVE_TRAIT(parent, TRAIT_RADIATION_PROTECTED, "[type]")
 
@@ -72,7 +82,7 @@
 	if (IS_IN_STASIS(target))
 		return TRUE
 
-	if (COOLDOWN_FINISHED(src, clean_cooldown))
+	if (!COOLDOWN_FINISHED(src, clean_cooldown))
 		return TRUE
 
 	return FALSE
@@ -143,6 +153,11 @@
 		return COMPONENT_CLEANED
 
 	COOLDOWN_START(src, clean_cooldown, RADIATION_CLEAN_IMMUNITY_TIME)
+
+/atom/movable/screen/alert/irradiated
+	name = "Irradiated"
+	desc = "You're irradiated! Heal your toxins quick, and stand under a shower to halt the incoming damage."
+	icon_state = "irradiated"
 
 #undef RADIATION_BURN_SPLOTCH_DAMAGE
 #undef RADIATION_BURN_INTERVAL_MIN
