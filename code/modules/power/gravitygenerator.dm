@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		shake_everyone()
 
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
-// Also emit radiation and handle the overlays.
+// MOTHBLOCKS TODO: Instead of radiation, maybe force the heavy gravity?
 /obj/machinery/gravity_generator/main/process()
 	if(machine_stat & BROKEN)
 		return
@@ -337,8 +337,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
 			updateDialog()
-			if(prob(25)) // To help stop "Your clothes feel warm." spam.
-				pulse_radiation()
 
 			var/overlay_state = null
 			switch(charge_count)
@@ -359,10 +357,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 					if(overlay_state)
 						middle.add_overlay(overlay_state)
 					current_overlay = overlay_state
-
-
-/obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	radiation_pulse(src, 200)
 
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
@@ -414,8 +408,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	name = "paper- 'Generate your own gravity!'"
 	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
-	energy and you have yourself gravity! You can turn the machine on or off when required but you must remember that the generator
-	will EMIT RADIATION when charging or discharging, you can tell it is charging or discharging by the noise it makes, so please WEAR PROTECTIVE CLOTHING.</p>
+	energy and you have yourself gravity! You can turn the machine on or off when required.</p>
 	<br>
 	<h3>It blew up!</h3>
 	<p>Don't panic! The gravity generator was designed to be easily repaired. If, somehow, the sturdy framework did not survive then

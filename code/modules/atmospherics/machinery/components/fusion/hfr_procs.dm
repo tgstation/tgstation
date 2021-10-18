@@ -489,12 +489,14 @@
 		)
 
 	if(rad_pulse)
-		radiation_pulse(
-			source = loc,
-			intensity = rad_pulse_strength,
-			range_modifier = rad_pulse_size,
-			log = TRUE
-			)
+		pass()
+		// MOTHBLOCKS TODO: HFR???
+		// radiation_pulse(
+		// 	source = loc,
+		// 	intensity = rad_pulse_strength,
+		// 	range_modifier = rad_pulse_size,
+		// 	log = TRUE
+		// 	)
 
 	if(em_pulse)
 		empulse(
@@ -524,7 +526,8 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(radiation)
 	rad_power = clamp(radiation / 1e5, 0, FUSION_RAD_MAX)
-	radiation_pulse(loc, rad_power)
+	// MOTHBLOCKS TODO: What is rad_power? HFR
+	// radiation_pulse(loc, rad_power)
 
 /*
  * HFR cracking related procs

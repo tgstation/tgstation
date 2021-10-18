@@ -66,3 +66,12 @@ Ask ninjanomnom if they're around
 
 #define RAD_GEIGER_RC 4 // RC-constant for the LP filter for geiger counters. See #define LPFILTER for more info.
 #define RAD_GEIGER_GRACE_PERIOD 4                   // How many seconds after we last detect a radiation pulse until we stop blipping
+
+/// The default chance something can be irradiated
+#define DEFAULT_RADIATION_CHANCE 10
+
+/// The default chance for uranium structures to irradiate
+#define URANIUM_IRRADIATION_CHANCE DEFAULT_RADIATION_CHANCE
+
+/// The minimum exposure time before uranium structures can irradiate
+#define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)

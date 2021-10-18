@@ -167,7 +167,9 @@
 
 	if(burned_fuel)
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
-			radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
+			// MOTHBLOCKS TODO: How do I into trit?
+			// radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
+			pass()
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -861,7 +863,8 @@
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 	if(cached_gases[/datum/gas/bz][MOLES] < 30)
-		radiation_pulse(location, consumed_amount * 20, 2.5, TRUE, FALSE)
+		// MOTHBLOCKS TODO: How do I into proto-nitrate BZ response? Doesn't look necessary...
+		// radiation_pulse(location, consumed_amount * 20, 2.5, TRUE, FALSE)
 		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 	else
 		for(var/mob/living/carbon/L in location)

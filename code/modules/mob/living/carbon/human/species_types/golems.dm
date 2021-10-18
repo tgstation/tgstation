@@ -378,7 +378,7 @@
 	if(!COOLDOWN_FINISHED(src, radiation_emission_cooldown))
 		return
 	else
-		radiation_pulse(H, 50)
+		radiation_pulse(H, range = 1, threshold = RAD_VERY_LIGHT_INSULATION, chance = 3)
 		COOLDOWN_START(src, radiation_emission_cooldown, 2 SECONDS)
 
 /datum/species/golem/uranium/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
