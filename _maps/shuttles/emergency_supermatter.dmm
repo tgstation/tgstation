@@ -136,7 +136,7 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/machinery/door/airlock/external/ruin{
-	ruin{name = "Emergency Launch Catwalk";
+	name = "Emergency Launch Catwalk";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
