@@ -379,3 +379,12 @@
 		finish_action(controller, FALSE)
 	controller.blackboard[target_key] = pick(possible_targets)
 	finish_action(controller, TRUE)
+
+/datum/ai_behavior/perform_datum_emote
+
+/datum/ai_behavior/perform_datum_emote/perform(delta_time, datum/ai_controller/controller, emote_key)
+	var/mob/living/living_pawn = controller.pawn
+	if(!istype(living_pawn))
+		return
+	living_pawn.emote(emote_key)
+	finish_action(controller, TRUE)
