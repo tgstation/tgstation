@@ -113,7 +113,7 @@
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES
 
-/obj/item/food/pie/plump_pie/Initialize()
+/obj/item/food/pie/plump_pie/Initialize(mapload)
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"

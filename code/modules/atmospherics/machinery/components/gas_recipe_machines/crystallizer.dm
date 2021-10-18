@@ -31,7 +31,7 @@
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
-/obj/machinery/atmospherics/components/binary/crystallizer/Initialize()
+/obj/machinery/atmospherics/components/binary/crystallizer/Initialize(mapload)
 	. = ..()
 	internal = new
 
@@ -49,7 +49,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	SetInitDirections()
+	set_init_directions()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
 	if(node1)
@@ -62,19 +62,19 @@
 		nodes[2] = null
 
 	if(parents[1])
-		nullifyPipenet(parents[1])
+		nullify_pipenet(parents[1])
 	if(parents[2])
-		nullifyPipenet(parents[2])
+		nullify_pipenet(parents[2])
 
-	atmosinit()
+	atmos_init()
 	node1 = nodes[1]
 	if(node1)
-		node1.atmosinit()
-		node1.addMember(src)
+		node1.atmos_init()
+		node1.add_member(src)
 	node2 = nodes[2]
 	if(node2)
-		node2.atmosinit()
-		node2.addMember(src)
+		node2.atmos_init()
+		node2.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 

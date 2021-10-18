@@ -32,6 +32,9 @@ multiple modular subtrees with behaviors
 	///All subtrees this AI has available, will run them in order, so make sure they're in the order you want them to run. On initialization of this type, it will start as a typepath(s) and get converted to references of ai_subtrees found in SSai_controllers when init_subtrees() is called
 	var/list/planning_subtrees
 
+	///The idle behavior this AI performs when it has no actions.
+	var/datum/idle_behavior/idle_behavior = null
+
 	// Movement related things here
 	///Reference to the movement datum we use. Is a type on initialize but becomes a ref afterwards.
 	var/datum/ai_movement/ai_movement = /datum/ai_movement/dumb
@@ -51,6 +54,9 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/New(atom/new_pawn)
 	change_ai_movement_type(ai_movement)
 	init_subtrees()
+
+	if(idle_behavior)
+		idle_behavior = new idle_behavior()
 
 	PossessPawn(new_pawn)
 
@@ -130,8 +136,8 @@ multiple modular subtrees with behaviors
 		walk(pawn, 0) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
-	if(!LAZYLEN(current_behaviors))
-		PerformIdleBehavior(delta_time) //Do some stupid shit while we have nothing to do
+	if(!LAZYLEN(current_behaviors) && idle_behavior)
+		idle_behavior.perform_idle_behavior(delta_time, src) //Do some stupid shit while we have nothing to do
 		return
 
 	if(current_movement_target && get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
@@ -173,10 +179,6 @@ multiple modular subtrees with behaviors
 				continue
 			ProcessBehavior(action_delta_time, current_behavior)
 			return
-
-///Perform some dumb idle behavior.
-/datum/ai_controller/proc/PerformIdleBehavior(delta_time)
-	return
 
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(delta_time)

@@ -162,6 +162,69 @@
 		corners = list()
 	QDEL_NULL(soundloop)
 
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/assert_gases()
+	//Assert the gases that will be used/created during the process
+
+	internal_fusion.assert_gas(/datum/gas/antinoblium)
+
+	moderator_internal.assert_gases(arglist(GLOB.meta_gas_info))
+
+	if (!selected_fuel)
+		return
+
+	internal_fusion.assert_gases(arglist(selected_fuel.requirements | selected_fuel.primary_products))
+
+/**
+ * Updates all related pipenets from all connected components
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_pipenets()
+	update_parents()
+	linked_input.update_parents()
+	linked_output.update_parents()
+	linked_moderator.update_parents()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status()
+	fusion_temperature = internal_fusion.temperature
+	moderator_temperature = moderator_internal.temperature
+	coolant_temperature = airs[1].temperature
+	output_temperature = linked_output.airs[1].temperature
+
+	//Set the power level of the fusion process
+	switch(fusion_temperature)
+		if(-INFINITY to 500)
+			power_level = 0
+		if(500 to 1e3)
+			power_level = 1
+		if(1e3 to 1e4)
+			power_level = 2
+		if(1e4 to 1e5)
+			power_level = 3
+		if(1e5 to 1e6)
+			power_level = 4
+		if(1e6 to 1e7)
+			power_level = 5
+		else
+			power_level = 6
+
+/**
+ * Infrequently plays accent sounds, and adjusts main loop parameters
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
+	// We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
+	if(last_accent_sound < world.time && prob(20))
+		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
+		if(critical_threshold_proximity >= 300)
+			playsound(src, "hypertorusmelting", max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+		else
+			playsound(src, "hypertoruscalm", max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+		var/next_sound = round((100 - aggression) * 5) + 5
+		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
+
+	var/ambient_hum = 1
+	if (check_fuel())
+		ambient_hum = power_level + 1
+	soundloop.volume = clamp(ambient_hum * 8, 0, 50)
+
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
  * Getter for fusion fuel moles
@@ -171,14 +234,11 @@
 		return FALSE
 	if(!internal_fusion.total_moles())
 		return FALSE
-	var/gas_check = 0
 	for(var/gas_type in selected_fuel.requirements)
 		internal_fusion.assert_gas(gas_type)
-		if(internal_fusion.gases[gas_type][MOLES] >= FUSION_MOLE_THRESHOLD)
-			gas_check++
-	if(gas_check == length(selected_fuel.requirements))
-		return TRUE
-	return FALSE
+		if(internal_fusion.gases[gas_type][MOLES] < FUSION_MOLE_THRESHOLD)
+			return FALSE
+	return TRUE
 
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
@@ -188,7 +248,8 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return FALSE
 	if(use_power == ACTIVE_POWER_USE)
-		active_power_usage = ((power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+		update_mode_power_usage(ACTIVE_POWER_USE, (power_level + 1) * MIN_POWER_USAGE) //Max around 350 KW
+
 	return TRUE
 
 ///Checks if the gases in the input are the ones needed by the recipe
@@ -293,6 +354,10 @@
 		return
 	final_countdown = TRUE
 
+	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
+	if(critical)
+		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
+				Get as far away as possible from the reactor or find a way to shut it down.", "Alert")
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in HYPERTORUS_COUNTDOWN_TIME to 0 step -10)
@@ -304,6 +369,8 @@
 			sleep(10)
 			continue
 		else if(i > 50)
+			if(i == 10 SECONDS && critical)
+				sound_to_playing_players('sound/machines/hypertorus/HFR_critical_explosion.ogg')
 			speaking = "[DisplayTimeText(i, TRUE)] remain before total integrity failure."
 		else
 			speaking = "[i*0.1]..."
@@ -317,10 +384,76 @@
  * Create the explosion + the gas emission before deleting the machine core.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/meltdown()
-	explosion(src, light_impact_range = power_level * 5, flash_range = power_level * 6, adminlog = TRUE, ignorecap = TRUE)
-	radiation_pulse(loc, power_level * 7000, (1 / (power_level + 5)), TRUE)
-	empulse(loc, power_level * 5, power_level * 7, TRUE)
-	var/list/around_turfs = circlerangeturfs(src, power_level * 5)
+	var/flash_explosion = 0
+	var/light_impact_explosion = 0
+	var/heavy_impact_explosion = 0
+	var/devastating_explosion = 0
+	var/em_pulse = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_EMP
+	var/rad_pulse = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_RADIATION_PULSE
+	var/emp_light_size = 0
+	var/emp_heavy_size = 0
+	var/rad_pulse_size = 0
+	var/rad_pulse_strength = 0
+	var/gas_spread = 0
+	var/gas_pockets = 0
+	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BASE_EXPLOSION)
+		flash_explosion = power_level * 3
+		light_impact_explosion = power_level * 2
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MEDIUM_EXPLOSION)
+		flash_explosion = power_level * 6
+		light_impact_explosion = power_level * 5
+		heavy_impact_explosion = power_level * 0.5
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_DEVASTATING_EXPLOSION)
+		flash_explosion = power_level * 8
+		light_impact_explosion = power_level * 7
+		heavy_impact_explosion = power_level * 2
+		devastating_explosion = power_level
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MINIMUM_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 3
+			emp_heavy_size = power_level * 1
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 1))
+			rad_pulse_strength = power_level * 3000
+		gas_pockets = 5
+		gas_spread = power_level * 2
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MEDIUM_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 5
+			emp_heavy_size = power_level * 3
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 3))
+			rad_pulse_strength = power_level * 5000
+		gas_pockets = 7
+		gas_spread = power_level * 4
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_BIG_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 7
+			emp_heavy_size = power_level * 5
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 5))
+			rad_pulse_strength = power_level * 7000
+		gas_pockets = 10
+		gas_spread = power_level * 6
+
+	if(selected_fuel.meltdown_flags & HYPERTORUS_FLAG_MASSIVE_SPREAD)
+		if(em_pulse)
+			emp_light_size = power_level * 9
+			emp_heavy_size = power_level * 7
+		if(rad_pulse)
+			rad_pulse_size = (1 / (power_level + 7))
+			rad_pulse_strength = power_level * 9000
+		gas_pockets = 15
+		gas_spread = power_level * 8
+
+	var/list/around_turfs = circle_range_turfs(src, gas_spread)
 	for(var/turf/turf as anything in around_turfs)
 		if(isclosedturf(turf) || isspaceturf(turf))
 			around_turfs -= turf
@@ -329,8 +462,8 @@
 	if(internal_fusion.total_moles() > 0)
 		remove_fusion = internal_fusion.remove_ratio(0.2)
 		var/datum/gas_mixture/remove
-		for(var/i in 1 to 10)
-			remove = remove_fusion.remove_ratio(0.1)
+		for(var/i in 1 to gas_pockets)
+			remove = remove_fusion.remove_ratio(1/gas_pockets)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
 		loc.assume_air(internal_fusion)
@@ -338,12 +471,64 @@
 	if(moderator_internal.total_moles() > 0)
 		remove_moderator = moderator_internal.remove_ratio(0.2)
 		var/datum/gas_mixture/remove
-		for(var/i in 1 to 10)
-			remove = remove_moderator.remove_ratio(0.1)
+		for(var/i in 1 to gas_pockets)
+			remove = remove_moderator.remove_ratio(1/gas_pockets)
 			var/turf/local = pick(around_turfs)
 			local.assume_air(remove)
 		loc.assume_air(moderator_internal)
+
+	//Max explosion ranges: devastation = 12, heavy = 24, light = 42
+	explosion(
+		origin = src,
+		devastation_range = critical ? devastating_explosion * 2 : devastating_explosion,
+		heavy_impact_range = critical ?  heavy_impact_explosion * 2 : heavy_impact_explosion,
+		light_impact_range = light_impact_explosion,
+		flash_range = flash_explosion,
+		adminlog = TRUE,
+		ignorecap = TRUE
+		)
+
+	if(rad_pulse)
+		radiation_pulse(
+			source = loc,
+			intensity = rad_pulse_strength,
+			range_modifier = rad_pulse_size,
+			log = TRUE
+			)
+
+	if(em_pulse)
+		empulse(
+			epicenter = loc,
+			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
+			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
+			log = TRUE
+			)
+
 	qdel(src)
+
+/**
+ * Induce hallucinations in nearby humans.
+ *
+ * force will make hallucinations ignore meson protection.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
+	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
+		if(!force && istype(human.glasses, /obj/item/clothing/glasses/meson))
+			continue
+		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
+		human.hallucination += strength * distance_root * delta_time
+		human.hallucination = clamp(human.hallucination, 0, 200)
+
+/**
+ * Emit radiation
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(radiation)
+	rad_power = clamp(radiation / 1e5, 0, FUSION_RAD_MAX)
+	radiation_pulse(loc, rad_power)
+
+/*
+ * HFR cracking related procs
+ */
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
@@ -363,3 +548,53 @@
 	if(!origin_turf)
 		return
 	origin_turf.assume_air(remove_mixture)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(delta_time)
+	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
+	if (cracked_part)
+		// We have an existing crack
+		var/leak_rate
+		if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+			// Not high pressure, but can still leak
+			if (!prob(HYPERTORUS_WEAK_SPILL_CHANCE))
+				return
+			leak_rate = HYPERTORUS_WEAK_SPILL_RATE
+		else if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+			// Lots of gas in here, out we go
+			leak_rate = HYPERTORUS_MEDIUM_SPILL_RATE
+		else
+			// Gotta go fast
+			leak_rate = HYPERTORUS_STRONG_SPILL_RATE
+		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** delta_time)
+		return
+
+	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
+		return
+	cracked_part = create_crack()
+	// See if we do anything in the initial rupture
+	if (moderator_internal.return_pressure() < HYPERTORUS_MEDIUM_SPILL_PRESSURE)
+		return
+	if (moderator_internal.return_pressure() < HYPERTORUS_STRONG_SPILL_PRESSURE)
+		// Medium explosion on initial rupture
+		explosion(
+			origin = cracked_part,
+			devastation_range = 0,
+			heavy_impact_range = 0,
+			light_impact_range = 1,
+			flame_range = 3,
+			flash_range = 3
+			)
+		spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_MEDIUM_SPILL_INITIAL)
+		return
+	// Enough pressure for a strong explosion. Oh dear, oh dear.
+	explosion(
+		origin = cracked_part,
+		devastation_range = 0,
+		heavy_impact_range = 1,
+		light_impact_range = 3,
+		flame_range = 5,
+		flash_range = 5
+		)
+	spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
+	return
+

@@ -135,7 +135,7 @@
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustStaminaLoss(3 * REM * delta_time, 0)
 	if(M.getStaminaLoss() >= 80)
-		M.drowsyness += 1 * REM * delta_time
+		M.adjust_drowsyness(1 * REM * delta_time)
 	if(M.getStaminaLoss() >= 100)
 		to_chat(M,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		M.adjustStaminaLoss(-100, TRUE)
@@ -144,7 +144,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
-	if(!(methods & INGEST) || !iscarbon(A))
+	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/stomach)) )
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
@@ -282,7 +282,7 @@
 	M.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity())
 	M.adjustStaminaLoss(2 * REM * delta_time)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
-		M.drowsyness += 10
+		M.adjust_drowsyness(10)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)
@@ -514,13 +514,13 @@
 	failed_chem = null //We don't want to accidentally crash it out (see reaction)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
+/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
-	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
+	user.balloon_alert(user, "your heart beats with a great force")
+	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
+	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
+	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time)
@@ -549,11 +549,12 @@
 		volume = 0
 	. = ..()
 
-/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
-	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
+/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
+	user.balloon_alert(user, "your heart relaxes")
+	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)

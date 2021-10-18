@@ -705,7 +705,7 @@ const TechNode = (props, context) => {
               {techProgress}
             </Flex.Item>
           )}
-          {required_experiments?.length > 0 && (
+          {required_experiments.length > 0 && (
             <Flex.Item grow={1} basis={0}>
               {experimentProgress}
             </Flex.Item>
@@ -720,14 +720,12 @@ const TechNode = (props, context) => {
           <Button
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
-            // Uncomment these only when tooltip performance is improved.
-            // Reason for removal: Causes massive performance decreases
-            // tooltip={design_cache[k].name}
-            // tooltipPosition={i % 15 < 7 ? "right" : "left"}
+            tooltip={design_cache[k].name}
+            tooltipPosition={i % 15 < 7 ? "right" : "left"}
           />
         ))}
       </Box>
-      {required_experiments?.length > 0 && (
+      {required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
           title="Required Experiments">

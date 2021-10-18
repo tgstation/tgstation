@@ -48,6 +48,11 @@
 	id = "comp_arithmetic"
 	build_path = /obj/item/circuit_component/arithmetic
 
+/datum/design/component/trigonometry
+	name = "Trigonometry Component"
+	id = "comp_trigonometry"
+	build_path = /obj/item/circuit_component/trigonometry
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
@@ -72,6 +77,11 @@
 	name = "Index Component"
 	id = "comp_index"
 	build_path = /obj/item/circuit_component/index
+
+/datum/design/component/index_assoc
+	name = "Index Associative List Component"
+	id = "comp_index_assoc"
+	build_path = /obj/item/circuit_component/index/assoc_string
 
 /datum/design/component/length
 	name = "Length Component"
@@ -102,6 +112,11 @@
 	name = "Speech Component"
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
+
+/datum/design/component/timepiece
+	name = "Timepiece Component"
+	id = "comp_timepiece"
+	build_path = /obj/item/circuit_component/timepiece
 
 /datum/design/component/tostring
 	name = "To String Component"
@@ -253,6 +268,16 @@
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
 
+/datum/design/component/printer
+	name = "Printer Component"
+	id = "comp_printer"
+	build_path = /obj/item/circuit_component/printer
+
+/datum/design/component/pinpointer
+	name = "Proximity Pinpointer Component"
+	id = "comp_pinpointer"
+	build_path = /obj/item/circuit_component/pinpointer
+
 /datum/design/component/bci
 	category = list("Circuitry", "BCI Components")
 
@@ -281,6 +306,17 @@
 	id = "comp_counter_overlay"
 	build_path = /obj/item/circuit_component/counter_overlay
 
+/datum/design/component/foreach
+	name = "For Each Component"
+	id = "comp_foreach"
+	build_path = /obj/item/circuit_component/foreach
+
+/datum/design/component/filter_list
+	name = "Filter List Component"
+	id = "comp_filter_list"
+	build_path = /obj/item/circuit_component/filter_list
+
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."
@@ -306,6 +342,15 @@
 	build_path = /obj/item/wiremod_scanner
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	materials = list(/datum/material/glass = 2000, /datum/material/iron = 7000)
+	category = list("Circuitry", "Shells")
+
+/datum/design/gun_shell
+	name = "Gun Shell"
+	desc = "A handheld shell that can fire projectiles to output entities."
+	id = "gun_shell"
+	build_path = /obj/item/gun/energy/wiremod_gun
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 10000, /datum/material/plasma = 100)
 	category = list("Circuitry", "Shells")
 
 /datum/design/bot_shell
@@ -361,6 +406,18 @@
 		/datum/material/iron = 15000,
 	)
 	build_path = /obj/item/shell/airlock
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/dispenser_shell
+	name = "Dispenser Shell"
+	desc = "A dispenser shell that can dispense items."
+	id = "dispenser_shell"
+	materials = list(
+		/datum/material/glass = 5000,
+		/datum/material/iron = 15000,
+	)
+	build_path = /obj/item/shell/dispenser
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 

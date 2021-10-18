@@ -245,6 +245,14 @@
 	name = "\improper DNA injector (Wacky)"
 	add_mutations = list(WACKY)
 
+/obj/item/dnainjector/piglatinmut
+	name = "\improper DNA injector (Pig Latin)"
+	add_mutations = list(PIGLATIN)
+
+/obj/item/dnainjector/antipiglatin
+	name = "\improper DNA injector (Anti-Pig Latin)"
+	remove_mutations = list(PIGLATIN)
+
 /obj/item/dnainjector/antimute
 	name = "\improper DNA injector (Anti-Mute)"
 	remove_mutations = list(MUT_MUTE)
