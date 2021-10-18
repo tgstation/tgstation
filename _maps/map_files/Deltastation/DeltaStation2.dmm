@@ -17553,7 +17553,7 @@
 "cvh" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = "n2"
+	filter_type = list(/datum/gas/nitrogen)
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/yellow{

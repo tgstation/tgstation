@@ -50632,7 +50632,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "n2"
+	filter_type = list(/datum/gas/nitrogen)
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)

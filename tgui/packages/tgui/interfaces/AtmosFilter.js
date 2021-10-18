@@ -5,10 +5,10 @@ import { Window } from '../layouts';
 
 export const AtmosFilter = (props, context) => {
   const { act, data } = useBackend(context);
-  const filterTypes = data.filter_types || [];
+  const filter_types = data.filter_types || [];
   return (
     <Window
-      width={390}
+      width={420}
       height={221}>
       <Window.Content>
         <Section>
@@ -40,14 +40,15 @@ export const AtmosFilter = (props, context) => {
                   rate: 'max',
                 })} />
             </LabeledList.Item>
-            <LabeledList.Item label="Filter">
-              {filterTypes.map(filter => (
+            <LabeledList.Item label="Filters">
+              {filter_types.map(filter => (
                 <Button
                   key={filter.id}
-                  selected={filter.selected}
-                  content={getGasLabel(filter.id, filter.name)}
-                  onClick={() => act('filter', {
-                    mode: filter.id,
+                  icon={filter.enabled ? 'check-square-o' : 'square-o'}
+                  content={getGasLabel(filter.gas_id, filter.gas_name)}
+                  selected={filter.enabled}
+                  onClick={() => act('toggle_filter', {
+                    val: filter.gas_id,
                   })} />
               ))}
             </LabeledList.Item>
