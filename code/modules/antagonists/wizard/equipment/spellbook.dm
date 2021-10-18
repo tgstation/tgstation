@@ -396,7 +396,6 @@
 	name = "Staff of Money"
 	desc = "A fast charging low capacity staff that creates money used by clown planet."
 	item_path = /obj/item/gun/magic/staff/money
-	cost = 2
 
 /datum/spellbook_entry/item/lockerstaff
 	name = "Staff of the Locker"

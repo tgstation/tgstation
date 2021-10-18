@@ -375,8 +375,6 @@
 	if(honk_stuff(arrived))
 		START_PROCESSING(SSobj, src)
 
-#define ismoney_carpet(A) (istype(A, /turf/open/floor/carpet/money))
-
 /turf/open/floor/carpet/money/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isliving(gone))
