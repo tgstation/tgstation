@@ -981,7 +981,7 @@
 /area/awaymission/academy)
 "eA" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},

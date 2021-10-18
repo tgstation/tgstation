@@ -52,8 +52,8 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "fa" = (
-/obj/machinery/door/airlock/external{
-	name = "Engine Maintenance Access"
+/obj/machinery/door/airlock/external/ruin{
+	ruin{name = "Engine Maintenance Access"
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -581,8 +581,8 @@
 /turf/open/floor/wood,
 /area/shuttle/escape/simulation)
 "Aw" = (
-/obj/machinery/door/airlock/external{
-	name = "Engine Maintenance Access";
+/obj/machinery/door/airlock/external/ruin{
+	ruin{name = "Engine Maintenance Access";
 	req_access_txt = "19"
 	},
 /turf/open/floor/mineral/titanium/white,

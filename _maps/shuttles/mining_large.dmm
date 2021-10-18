@@ -399,8 +399,8 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "D" = (
-/obj/machinery/door/airlock/external{
-	name = "Mining Shuttle External Airlock"
+/obj/machinery/door/airlock/external/ruin{
+	ruin{name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
@@ -438,8 +438,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "J" = (
-/obj/machinery/door/airlock/external{
-	name = "Mining Shuttle External Airlock"
+/obj/machinery/door/airlock/external/ruin{
+	ruin{name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
