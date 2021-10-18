@@ -98,7 +98,7 @@
 	inhand_icon_state = "plaid_green"
 
 /obj/item/clothing/under/dress/traditional_dress
-	name = "traditional_dress"
+	name = "traditional dress"
 	desc = "A gorgeously embroidered silk dress."
 	icon_state = "traditional_dress"
 	inhand_icon_state = "lawyer_red"
