@@ -11,7 +11,7 @@
 
 	///Rate of transfer of the gases to the outputs
 	var/transfer_rate = MAX_TRANSFER_RATE
-	///What gas are we filtering
+	///What gases are we filtering, by typepath
 	var/list/filter_type = list()
 	///Frequency id for connecting to the NTNet
 	var/frequency = 0
@@ -151,7 +151,16 @@
 				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("toggle_filter")
+			if(!gas_id2path(params["val"]))
+				return TRUE
 			filter_type ^= gas_id2path(params["val"])
+			var/change
+			if(gas_id2path(params["val"]) in filter_type)
+				change = "added"
+			else
+				change = "removed"
+			var/gas_name = GLOB.meta_gas_info[gas_id2path(params["val"])][META_GAS_NAME]
+			investigate_log("[key_name(usr)] [change] [gas_name] from the filter type.", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_appearance()
 
