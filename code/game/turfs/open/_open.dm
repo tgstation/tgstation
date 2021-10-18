@@ -259,29 +259,3 @@
 
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
-
-/turf/open/rad_act(strength)
-	. = ..()
-	var/gas_change = FALSE
-	var/list/cached_gases = air.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air.temperature <= PLUOXIUM_TEMP_CAP)
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
-		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, air)
-		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
-		strength -= pulse_strength
-
-	if(cached_gases[/datum/gas/hydrogen])
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, air)
-		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
-		strength -= pulse_strength
-
-	if(gas_change)
-		air.garbage_collect()
-		air_update_turf(FALSE, FALSE)
-

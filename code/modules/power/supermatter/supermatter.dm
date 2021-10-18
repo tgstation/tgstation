@@ -399,6 +399,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/explode()
+
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || victim.z != z)
 			continue
@@ -406,8 +407,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Hilariously enough, running into a closet should make you get hit the hardest.
 			var/mob/living/carbon/human/human = victim
 			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1)) ) )
-		var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(victim, src) + 1) )
-		victim.rad_act(rads)
+
+		if (get_dist(victim, src) <= DETONATION_RADIATION_RANGE)
+			SSradiation.irradiate(victim)
 
 	var/turf/local_turf = get_turf(src)
 	for(var/mob/victim as anything in GLOB.player_list)
@@ -718,9 +720,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		seen_by_sm.hallucination += power * hallucination_power * dist
 		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
-	for(var/mob/living/in_range_living in range(src, round((power * 0.01) ** 0.25)))
-		var/rad_amount = (power * 0.1) * sqrt(1 / max(get_dist(in_range_living, src), 1))
-		in_range_living.rad_act(rad_amount)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2

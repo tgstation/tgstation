@@ -3280,7 +3280,6 @@
 #include "code\modules\power\lighting\light_mapping_helpers.dm"
 #include "code\modules\power\lighting\light_wallframes.dm"
 #include "code\modules\power\singularity\boh_tear.dm"
-#include "code\modules\power\singularity\collector.dm"
 #include "code\modules\power\singularity\containment_field.dm"
 #include "code\modules\power\singularity\emitter.dm"
 #include "code\modules\power\singularity\field_generator.dm"

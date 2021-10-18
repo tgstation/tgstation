@@ -119,13 +119,11 @@
 	cooldown_message = "<span class='danger'>The reactive teleport system is still recharging! It fails to activate!</span>"
 	reactivearmor_cooldown_duration = 10 SECONDS
 	var/tele_range = 6
-	var/rad_amount= 15
 
 /obj/item/clothing/suit/armor/reactive/teleport/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text]!"))
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
-	owner.rad_act(rad_amount)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -135,7 +133,6 @@
 	playsound(get_turf(owner),'sound/machines/buzz-sigh.ogg', 50, TRUE)
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
 	do_teleport(src, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
-	owner.rad_act(rad_amount)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return FALSE //you didn't actually evade the attack now did you
 

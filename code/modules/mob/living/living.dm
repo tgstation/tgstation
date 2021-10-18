@@ -1359,19 +1359,6 @@
 		G.Recall()
 		to_chat(G, span_holoparasite("Your summoner has changed form!"))
 
-/mob/living/rad_act(amount)
-	. = ..()
-
-	if(!amount || (amount < RAD_MOB_SKIN_PROTECTION) || HAS_TRAIT(src, TRAIT_RADIMMUNE))
-		return
-
-	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
-
-	var/blocked = getarmor(null, RAD)
-
-	if(amount > RAD_BURN_THRESHOLD)
-		apply_damage(RAD_BURN_CURVE(amount), BURN, null, blocked)
-
 /mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	. = ..()
 	if(.)

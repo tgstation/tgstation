@@ -116,13 +116,6 @@
 	loop.last_radiation = radiation_count
 	loop.start()
 
-/obj/item/geiger_counter/rad_act(amount)
-	. = ..()
-	if(amount <= RAD_BACKGROUND_RADIATION || !scanning)
-		return
-	current_tick_amount += amount
-	update_appearance()
-
 /obj/item/geiger_counter/attack_self(mob/user)
 	scanning = !scanning
 	update_appearance()
@@ -135,8 +128,9 @@
 			user.visible_message(span_notice("[user] scans [target] with [src]."), span_notice("You scan [target]'s radiation levels with [src]..."))
 			addtimer(CALLBACK(src, .proc/scan, target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
 		else
+			// MOTHBLOCKS TODO: Emagged geiger counters
 			user.visible_message(span_notice("[user] scans [target] with [src]."), span_danger("You project [src]'s stored radiation into [target]!"))
-			target.rad_act(radiation_count)
+			// target.rad_act(radiation_count)
 			radiation_count = 0
 		return TRUE
 
@@ -192,33 +186,8 @@
 	obj_flags |= EMAGGED
 
 
-
+// MOTHBLOCKS TODO: Cyborg geiger counters
 /obj/item/geiger_counter/cyborg
-	var/mob/listeningTo
-
-/obj/item/geiger_counter/cyborg/cyborg_unequip(mob/user)
-	if(!scanning)
-		return
-	scanning = FALSE
-	update_appearance()
-
-/obj/item/geiger_counter/cyborg/equipped(mob/user)
-	. = ..()
-	if(listeningTo == user)
-		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
-	RegisterSignal(user, COMSIG_ATOM_RAD_ACT, .proc/redirect_rad_act)
-	listeningTo = user
-
-/obj/item/geiger_counter/cyborg/proc/redirect_rad_act(datum/source, amount)
-	SIGNAL_HANDLER
-	rad_act(amount)
-
-/obj/item/geiger_counter/cyborg/dropped()
-	. = ..()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_ATOM_RAD_ACT)
 
 #undef RAD_LEVEL_NORMAL
 #undef RAD_LEVEL_MODERATE

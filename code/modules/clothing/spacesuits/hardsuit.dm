@@ -20,24 +20,12 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	var/current_tick_amount = 0
-	var/radiation_count = 0
-	var/grace = RAD_GEIGER_GRACE_PERIOD
-	var/datum/looping_sound/geiger/soundloop
-
-/obj/item/clothing/head/helmet/space/hardsuit/Initialize(mapload)
-	. = ..()
-	soundloop = new(src, FALSE, TRUE)
-	soundloop.volume = 5
-	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
 	. = ..()
 	if(!QDELETED(suit))
 		qdel(suit)
 	suit = null
-	QDEL_NULL(soundloop)
-	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	on = !on
@@ -52,7 +40,6 @@
 	..()
 	if(suit)
 		suit.RemoveHelmet()
-		soundloop.stop(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_HEAD)
@@ -63,36 +50,13 @@
 	if(slot != ITEM_SLOT_HEAD)
 		if(suit)
 			suit.RemoveHelmet()
-			soundloop.stop(user)
 		else
 			qdel(src)
-	else
-		soundloop.start(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
 		wearer.show_message("[icon2html(src, wearer)]<b>[span_robot("[msg]")]</b>", MSG_VISUAL)
-
-/obj/item/clothing/head/helmet/space/hardsuit/rad_act(amount)
-	. = ..()
-	if(amount <= RAD_BACKGROUND_RADIATION)
-		return
-	current_tick_amount += amount
-
-/obj/item/clothing/head/helmet/space/hardsuit/process(delta_time)
-	radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
-
-	if(current_tick_amount)
-		grace = RAD_GEIGER_GRACE_PERIOD
-	else
-		grace -= delta_time
-		if(grace <= 0)
-			radiation_count = 0
-
-	current_tick_amount = 0
-
-	soundloop.last_radiation = radiation_count
 
 /obj/item/clothing/head/helmet/space/hardsuit/emp_act(severity)
 	. = ..()
@@ -437,10 +401,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
-
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug/Initialize(mapload)
-	. = ..()
-	soundloop.volume = 0
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/admin
 	name = "jannie hardsuit helmet"

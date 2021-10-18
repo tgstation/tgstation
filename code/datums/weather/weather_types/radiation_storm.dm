@@ -43,7 +43,6 @@
 						else
 							H.easy_random_mutate(POSITIVE)
 						H.domutcheck()
-		L.rad_act(20)
 
 /datum/weather/rad_storm/end()
 	if(..())

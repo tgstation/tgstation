@@ -943,14 +943,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card)
 
 /**
- * Respond to a radioactive wave hitting this atom
- *
- * Default behaviour is to send [COMSIG_ATOM_RAD_ACT] and return
- */
-/atom/proc/rad_act(strength)
-	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
-
-/**
  * Respond to narsie eating our atom
  *
  * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
