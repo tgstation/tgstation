@@ -54,7 +54,22 @@
 
 /obj/projectile/bullet/coin_b/Initialize()
 	. = ..()
-	AddElement(/datum/element/bullet_lube_trail)
+	AddElement(/datum/element/bullet_trail)
+
+/datum/element/bullet_trail
+	element_flags = ELEMENT_DETACH
+
+/datum/element/bullet_trail/Attach(datum/target)
+	. = ..()
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/lubricate)
+
+/datum/element/bullet_trail/proc/lubricate(atom/movable/coin_b)
+	SIGNAL_HANDLER
+
+	var/turf/open/OT = get_turf(coin_b)
+	if(istype(OT))
+		OT.MakeSlippery(TURF_WET_LUBE, 20)
+		return TRUE
 
 // Mime
 
