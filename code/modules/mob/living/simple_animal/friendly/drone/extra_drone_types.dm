@@ -29,7 +29,6 @@
 	default_storage = /obj/item/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	hacked = TRUE
-	shy = FALSE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize(mapload)
@@ -103,7 +102,6 @@
 
 /mob/living/simple_animal/drone/classic
 	name = "classic drone shell"
-	shy = FALSE
 	default_storage = /obj/item/storage/backpack/duffelbag/drone
 
 /obj/effect/mob_spawn/drone/derelict
@@ -135,7 +133,6 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
-	shy = FALSE
 
 /mob/living/simple_animal/drone/derelict/Initialize(mapload)
 	. = ..()

@@ -87,7 +87,6 @@
 	/// Hacked state, see [/mob/living/simple_animal/drone/proc/update_drone_hack]
 	var/hacked = FALSE
 	/// If we have laws to minimize bothering others. Enables or disables drone laws enforcement components (use [/mob/living/simple_animal/drone/proc/set_shy] to set)
-	var/shy = TRUE
 	/// Flavor text announced to drones on [/mob/proc/Login]
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
@@ -122,37 +121,6 @@
 		/obj/machinery/computer/teleporter,
 	)
 	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
-	var/list/drone_machinery_blacklist_compiled
-	/// whitelisted drone items, direct
-	var/list/drone_item_whitelist_flat = list(
-		/obj/item/chisel,
-		/obj/item/crowbar/drone,
-		/obj/item/screwdriver/drone,
-		/obj/item/wrench/drone,
-		/obj/item/weldingtool/drone,
-		/obj/item/wirecutters/drone,
-	)
-	/// whitelisted drone items, recursive/includes descendants
-	var/list/drone_item_whitelist_recursive = list(
-		/obj/item/airlock_painter,
-		/obj/item/circuitboard,
-		/obj/item/conveyor_switch_construct,
-		/obj/item/electronics,
-		/obj/item/light,
-		/obj/item/pipe_meter,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/circuit_stack,
-		/obj/item/stack/conveyor,
-		/obj/item/stack/pipe_cleaner_coil,
-		/obj/item/stack/rods,
-		/obj/item/stack/sheet,
-		/obj/item/stack/tile,
-		/obj/item/stock_parts,
-		/obj/item/toner,
-		/obj/item/wallframe,
-		/obj/item/clothing/head,
-		/obj/item/clothing/mask,
-	)
 
 /mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
@@ -172,14 +140,14 @@
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-	shy_update()
-
 	alert_drones(DRONE_NET_CONNECT)
 
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_CLUMSY , INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
@@ -315,36 +283,6 @@
 	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
 		to_chat(src, span_warning("Using [machine] could break your laws."))
 		return COMPONENT_CANT_INTERACT_WIRES
-
-
-/mob/living/simple_animal/drone/proc/set_shy(new_shy)
-	shy = new_shy
-	shy_update()
-
-/mob/living/simple_animal/drone/proc/shy_update()
-	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
-
-	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
-	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
-	drone_machinery_blacklist_compiled = drone_bad_machinery - drone_good_machinery
-
-	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
-	if(shy)
-		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, not_shy_of, 4, "Your laws prevent this action near %TARGET.", TRUE)
-		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technoshy, 5 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
-		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
-		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
-		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
-	else
-		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		qdel(GetComponent(/datum/component/shy))
-		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technoshy))
-		qdel(GetComponent(/datum/component/itempicky))
-		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

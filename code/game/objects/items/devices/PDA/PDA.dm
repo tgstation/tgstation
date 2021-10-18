@@ -599,9 +599,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 			if("Drone Access")
 				var/mob/living/simple_animal/drone/drone_user = U
-				if(isdrone(U) && drone_user.shy)
-					to_chat(U, span_warning("Your laws prevent this action."))
-					return
 				var/new_state = text2num(href_list["drone_blacklist"])
 				GLOB.drone_machine_blacklist_enabled = new_state
 				if(!silent)
