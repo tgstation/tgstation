@@ -385,6 +385,7 @@
 
 	return ..()
 
+/// Access free external airlock
 /obj/machinery/door/airlock/external/ruin
 	req_access = null
 
@@ -392,6 +393,7 @@
 	opacity = FALSE
 	glass = TRUE
 
+/// Access free external glass airlock
 /obj/machinery/door/airlock/external/glass/ruin
 	req_access = null
 
