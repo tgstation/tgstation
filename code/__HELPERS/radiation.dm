@@ -1,8 +1,11 @@
+/// Whether or not it's possible for this atom to be irradiated
+#define CAN_IRRADIATE(atom) (ishuman(##atom) || isitem(##atom))
+
 /// Sends out a pulse of radiation, eminating from the source.
 /// Radiation is performed by collecting all radiatables within the max range (0 means source only, 1 means adjacent, etc),
 /// then makes their way towards them. A number, starting at 1, is multiplied
 /// by the insulation amounts of whatever is in the way (for example, walls lowering it down).
-/// If this number hits below the threshold, then the target can no longer be irradiated.
+/// If this number hits equal or below the threshold, then the target can no longer be irradiated.
 /// If the number is above the threshold, then the chance is the chance that the target will be irradiated.
 /// As a consumer, this means that max_range going up usually means you want to lower the threshold too,
 /// as well as the other way around.

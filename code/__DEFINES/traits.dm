@@ -746,3 +746,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+
+/// While this object is normally radiatable, it should be ignored while this trait is active
+#define TRAIT_RADIATION_PROTECTED "radiation_protected"
