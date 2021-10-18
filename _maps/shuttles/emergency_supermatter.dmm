@@ -137,7 +137,7 @@
 "aL" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Launch Catwalk";
-	req_access_txt = "10;13"
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
