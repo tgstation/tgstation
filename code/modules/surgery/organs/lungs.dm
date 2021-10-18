@@ -259,7 +259,6 @@
 			breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
 			breath_gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
 			breath_gases[/datum/gas/water_vapor][MOLES] -= gas_breathed
-			gas_breathed = 0
 
 	// N2O
 
@@ -623,7 +622,7 @@
 
 /obj/item/organ/lungs/ethereal
 	name = "aeration reticulum"
-	desc = "This exotic lung resembles aerogel in weight and texture."
+	desc = "These exotic lungs seem crunchier than most."
 	icon_state = "lungs_ethereal"
 	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
 	heat_level_2_threshold = 473
