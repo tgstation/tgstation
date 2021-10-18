@@ -115,6 +115,7 @@
 /obj/item/food/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "spiderleg"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/toxin = 2)
 	tastes = list("cobwebs" = 1)
@@ -136,6 +137,7 @@
 /obj/item/food/bearsteak
 	name = "Filet migrawr"
 	desc = "Because eating bear wasn't manly enough."
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "bearsteak"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/consumable/ethanol/manly_dorf = 5)
 	tastes = list("meat" = 1, "salmon" = 1)
@@ -146,6 +148,7 @@
 /obj/item/food/raw_meatball
 	name = "raw meatball"
 	desc = "A great meal all round. Not a cord of wood. Kinda raw"
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "raw_meatball"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
@@ -187,6 +190,7 @@
 /obj/item/food/meatball
 	name = "meatball"
 	desc = "A great meal all round. Not a cord of wood."
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "meatball"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
@@ -218,6 +222,7 @@
 /obj/item/food/raw_patty
 	name = "raw patty"
 	desc = "I'm.....NOT REAAADDYY."
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "raw_patty"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
@@ -254,6 +259,7 @@
 /obj/item/food/patty
 	name = "patty"
 	desc = "The nanotrasen patty is the patty for you and me!"
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "patty"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
@@ -286,6 +292,7 @@
 /obj/item/food/raw_sausage
 	name = "raw sausage"
 	desc = "A piece of mixed, long meat, but then raw"
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "raw_sausage"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1)
@@ -299,6 +306,7 @@
 /obj/item/food/sausage
 	name = "sausage"
 	desc = "A piece of mixed, long meat."
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "sausage"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1)
@@ -317,11 +325,13 @@
 /obj/item/food/american_sausage
 	name = "american sausage"
 	desc = "Snip."
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "american_sausage"
 
 /obj/item/food/salami
 	name = "salami"
 	desc = "A slice of cured salami."
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "salami"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("meat" = 1, "smoke" = 1)
@@ -454,6 +464,7 @@
 /obj/item/food/boiledspiderleg
 	name = "boiled spider leg"
 	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
+	icon = 'icons/obj/food/meats.dmi'
 	icon_state = "spiderlegcooked"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1, "cobwebs" = 1)
@@ -605,6 +616,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 12, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/capsaicin = 3)
 
 /obj/item/food/meat
+	icon = 'icons/obj/food/meats.dmi'
 	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
 	var/subjectname = ""
 	var/subjectjob = null
@@ -948,6 +960,22 @@
 /obj/item/food/meat/slab/chicken/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
+
+/obj/item/food/meat/slab/pigeon
+	name = "pigeon meat"
+	icon_state = "pigeonmeat"
+	desc = "A tender little pigeon breast. While many crewmembers consider pigeons to be filthy creatures, the mime has been very vocal about the bird's culinary merits!"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8)
+	tastes = list("gamey chicken" = 2, "rich poultry" = 1)
+
+/obj/item/food/meat/slab/pigeon/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/pigeon, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
+/obj/item/food/meat/slab/pigeon/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PIGEON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 /obj/item/food/meat/steak
@@ -1044,6 +1072,11 @@
 	desc = "A synthetic meat steak. It doesn't look quite right, now does it?"
 	icon_state = "meatsteak_old"
 	tastes = list("meat" = 4, "cryoxandone" = 1)
+
+/obj/item/food/meat/steak/pigeon
+	name = "roast pigeon"
+	icon_state = "birdsteak"
+	tastes = list("gamey chicken" = 2, "rich poultry" = 1)
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
