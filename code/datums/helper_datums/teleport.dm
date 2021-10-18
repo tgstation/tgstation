@@ -125,7 +125,7 @@
 	var/turf/open/floor/F = random_location
 	var/area/destination_area = F.loc
 
-	if(no_teleport && destination_area.area_flags & NOTELEPORT)
+	if(no_teleport && (destination_area.area_flags & NOTELEPORT))
 		return
 	if(!F.air)
 		return
