@@ -376,7 +376,6 @@
 		START_PROCESSING(SSobj, src)
 
 #define ismoney_carpet(A) (istype(A, /turf/open/floor/carpet/money))
-#define TRAIT_CLOWN_CARPET "clown_carpet_healing"
 
 /turf/open/floor/carpet/money/Exited(atom/movable/gone, direction)
 	. = ..()
