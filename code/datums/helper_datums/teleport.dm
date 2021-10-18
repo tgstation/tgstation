@@ -120,6 +120,7 @@
 
 /// Checks if a given turf is a "safe" location
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = TRUE, no_teleport = FALSE)
+	. = FALSE
 	if(!isfloorturf(random_location))
 		return
 	var/turf/open/floor/F = random_location
