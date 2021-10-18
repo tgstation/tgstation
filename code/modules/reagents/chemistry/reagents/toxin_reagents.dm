@@ -60,7 +60,7 @@
 		exposed_mob.domutcheck()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.apply_effect(5 * REM * delta_time, EFFECT_IRRADIATE, 0)
+	C.adjustToxLoss(0.5 * delta_time * REM)
 	return ..()
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
