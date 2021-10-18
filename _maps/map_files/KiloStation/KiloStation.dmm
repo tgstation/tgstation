@@ -1322,7 +1322,8 @@
 /area/science/xenobiology)
 "afX" = (
 /obj/machinery/door/airlock/external{
-	name = "Science Escape Pod"
+	name = "Science Escape Pod";
+	space_dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -3178,7 +3179,7 @@
 "any" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4069,7 +4070,7 @@
 "asd" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -7085,7 +7086,8 @@
 /area/maintenance/starboard)
 "aKn" = (
 /obj/machinery/door/airlock/external{
-	name = "Cargo Escape Pod"
+	name = "Cargo Escape Pod";
+	space_dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -13003,7 +13005,8 @@
 /area/science/xenobiology)
 "bmI" = (
 /obj/machinery/door/airlock/external{
-	name = "Medical Escape Pod"
+	name = "Medical Escape Pod";
+	space_dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -13611,8 +13614,7 @@
 /area/maintenance/central)
 "bqZ" = (
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -17529,7 +17531,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Brig Shuttle Airlock";
-	req_one_access_txt = "63"
+	req_access = null;
+	req_one_access_txt = "63";
+	space_dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -18482,7 +18486,8 @@
 "bXe" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	name = "Departure Shuttle Airlock"
+	name = "Departure Shuttle Airlock";
+	space_dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -22877,7 +22882,8 @@
 /area/maintenance/port/fore)
 "crD" = (
 /obj/machinery/door/airlock/external{
-	name = "Security Escape Pod"
+	name = "Security Escape Pod";
+	space_dir = 2
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/port/aft)
@@ -23442,7 +23448,7 @@
 "cuU" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -24918,8 +24924,7 @@
 /area/hallway/secondary/entry)
 "cCj" = (
 /obj/machinery/door/airlock/external{
-	name = "Arrival Shuttle Airlock";
-	safety_mode = 1
+	name = "Arrival Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/navbeacon/wayfinding,
@@ -24927,7 +24932,8 @@
 /area/hallway/secondary/entry)
 "cCk" = (
 /obj/machinery/door/airlock/external{
-	name = "Arrival Shuttle Airlock"
+	name = "Arrival Shuttle Airlock";
+	space_dir = 2
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -24937,7 +24943,7 @@
 "cCm" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Shuttle Airlock";
-	safety_mode = 1
+	space_dir = 2
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -25674,7 +25680,7 @@
 "cGF" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -30415,8 +30421,7 @@
 /area/maintenance/starboard)
 "ent" = (
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -32105,8 +32110,7 @@
 "eTq" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -35411,7 +35415,7 @@
 "giw" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -44028,8 +44032,7 @@
 /area/medical/medbay/central)
 "jvE" = (
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -46299,7 +46302,7 @@
 "kpd" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -46960,7 +46963,7 @@
 "kzO" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -51070,8 +51073,7 @@
 /area/maintenance/starboard)
 "lYT" = (
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -51302,7 +51304,7 @@
 "mfe" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -54981,6 +54983,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Brig Shuttle Airlock";
+	req_access = null;
 	req_one_access_txt = "63"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67317,8 +67320,7 @@
 /area/service/bar/atrium)
 "rZF" = (
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8

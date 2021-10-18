@@ -394,8 +394,7 @@
 "abH" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -419,7 +418,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod 1";
-	safety_mode = 1
+	space_dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -431,7 +430,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod 2";
-	safety_mode = 1
+	space_dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -503,8 +502,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
@@ -683,7 +681,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -706,7 +704,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -1035,7 +1033,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	safety_mode = 1
+	space_dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1704,7 +1702,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	safety_mode = 1
+	space_dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1788,8 +1786,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Docking Port";
-	safety_mode = 1
+	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -6798,7 +6795,8 @@
 /area/security/prison)
 "bbu" = (
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod 3"
+	name = "Escape Pod 3";
+	space_dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8104,8 +8102,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -18753,8 +18750,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -18770,8 +18766,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -27732,7 +27727,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -27755,7 +27750,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -30164,8 +30159,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -30185,8 +30179,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -32745,7 +32738,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -32768,7 +32761,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
-	req_access_txt = "10; 13"
+	req_access_txt = "10"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -33659,7 +33652,8 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	req_access_txt = "63"
+	req_access_txt = "63";
+	space_dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -33689,8 +33683,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -34001,8 +33994,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -35182,7 +35174,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	safety_mode = 1
+	space_dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -35637,8 +35629,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Docking Port";
-	safety_mode = 1
+	name = "External Docking Port"
 	},
 /obj/machinery/navbeacon/wayfinding{
 	location = "Escape"
@@ -42355,8 +42346,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Docking Port";
-	safety_mode = 1
+	name = "External Docking Port"
 	},
 /obj/machinery/navbeacon/wayfinding,
 /obj/effect/turf_decal/stripes/line{
@@ -51293,8 +51283,7 @@
 /area/command/heads_quarters/hop)
 "jqI" = (
 /obj/machinery/door/airlock/external{
-	name = "Observatory";
-	req_access_txt = "13"
+	name = "Observatory"
 	},
 /turf/open/floor/plating,
 /area/maintenance/space_hut/observatory)
@@ -52725,7 +52714,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	safety_mode = 1
+	space_dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -57298,7 +57287,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	safety_mode = 1
+	space_dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -68425,8 +68414,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "External Airlock";
-	req_access_txt = "13"
+	name = "External Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -75363,7 +75351,7 @@
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port";
-	safety_mode = 1
+	space_dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -80396,22 +80384,6 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/sorting)
-"rKN" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "External Docking Port";
-	safety_mode = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/hallway/secondary/exit/departure_lounge)
 "rKW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -80582,8 +80554,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Observatory";
-	req_access_txt = "13"
+	name = "Observatory"
 	},
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
@@ -84638,6 +84609,21 @@
 	},
 /turf/open/floor/iron,
 /area/medical/morgue)
+"sWL" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "sXa" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -96301,8 +96287,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "Observatory";
-	req_access_txt = "13"
+	name = "Observatory"
 	},
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
@@ -138559,14 +138544,14 @@ aaO
 abf
 ads
 aaO
-qkG
+aec
 aaO
 aeV
 afw
 afT
 agk
 aaO
-eAM
+aej
 aaO
 adq
 abf
@@ -139587,14 +139572,14 @@ aaO
 abf
 adq
 aaO
-aee
+sWL
 aaO
 aeX
 izP
 izP
 agl
 aaO
-aee
+sWL
 aaO
 ads
 abf
@@ -142569,7 +142554,7 @@ dSU
 dSU
 eJt
 dZr
-rKN
+dYI
 dSU
 dSU
 ecc
@@ -143185,7 +143170,7 @@ aaO
 abf
 ads
 aaO
-eAM
+aej
 aaO
 mPE
 xWT
