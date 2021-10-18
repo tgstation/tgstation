@@ -1,0 +1,7 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Prying open one of a pair of cycle-linked airlocks will now always close the other (if it is powered)."
+  - expansion: "Arrivals, escape, and pod airlocks now restrict those without access from exiting directly to space. Use is unrestricted when entering the station or a shuttle is docked.
+tweak: Shuttle departures will now force exterior airlocks closed on both the shuttle and docking bay. The lives of your fellow crew members are more important than your tardiness and limbs, employee!"
+  - bugfix: "Fixed the numbering of escape pods in certain maps."
