@@ -11676,7 +11676,7 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "cyP" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/pew/left,
 /turf/open/floor/iron/chapel{
 	dir = 8
 	},
@@ -15013,13 +15013,13 @@
 /area/security/prison)
 "dmF" = (
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /mob/living/simple_animal/bot/cleanbot{
 	auto_patrol = 1;
 	icon_state = "cleanbot1";
 	name = "Mopficcer Sweepsky"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
@@ -55411,7 +55411,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/medical/medbay/central)
 "rHb" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/pew/right,
 /turf/open/floor/iron/chapel{
 	dir = 4
 	},
@@ -56018,8 +56018,8 @@
 /turf/closed/wall,
 /area/command/teleporter)
 "rTh" = (
-/obj/structure/chair/stool/directional/north,
 /obj/effect/landmark/event_spawn,
+/obj/structure/chair/pew/left,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -63843,7 +63843,7 @@
 /turf/closed/wall,
 /area/medical/pharmacy)
 "uHH" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/pew/left,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},
@@ -67255,7 +67255,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/main)
 "vRX" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/pew/right,
 /turf/open/floor/iron/chapel,
 /area/service/chapel)
 "vRZ" = (
