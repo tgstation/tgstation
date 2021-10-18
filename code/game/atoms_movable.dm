@@ -188,7 +188,7 @@
  * The core multi-z movement proc. Used to move a movable through z levels.
  * If target is null, it'll be determined by the can_z_move proc, which can potentially return null if
  * conditions aren't met (see z_move_flags defines in __DEFINES/movement.dm for info) or if dir isn't set.
- * Bare in mind you don't need to set both target and dir when calling this proc, but at least one or two.
+ * Bear in mind you don't need to set both target and dir when calling this proc, but at least one or two.
  * This will set the currently_z_moving to CURRENTLY_Z_MOVING_GENERIC if unset, and then clear it after
  * Forcemove().
  *
@@ -202,7 +202,7 @@
 	if(!target)
 		target = can_z_move(dir, get_turf(src), null, z_move_flags)
 		if(!target)
-			currently_z_moving = FALSE
+			set_currently_z_moving(FALSE, TRUE)
 			return FALSE
 
 	var/list/moving_movs = get_z_move_affected(z_move_flags)
@@ -210,7 +210,7 @@
 	for(var/atom/movable/movable as anything in moving_movs)
 		movable.currently_z_moving = currently_z_moving || CURRENTLY_Z_MOVING_GENERIC
 		movable.forceMove(target)
-		movable.currently_z_moving = FALSE
+		movable.set_currently_z_moving(FALSE, TRUE)
 	// This is run after ALL movables have been moved, so pulls don't get broken unless they are actually out of range.
 	if(z_move_flags & ZMOVE_CHECK_PULLS)
 		for(var/atom/movable/moved_mov as anything in moving_movs)
@@ -588,7 +588,7 @@
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
-		currently_z_moving = FALSE
+		set_currently_z_moving(FALSE, TRUE)
 		return
 
 	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
@@ -626,7 +626,7 @@
 	if(. && currently_z_moving == CURRENTLY_Z_FALLING_FROM_MOVE && loc == newloc)
 		var/turf/pitfall = get_turf(src)
 		pitfall.zFall(src, falling_from_move = TRUE)
-	currently_z_moving = FALSE
+	set_currently_z_moving(FALSE, TRUE)
 
 /// Called when src is being moved to a target turf because another movable (puller) is moving around.
 /atom/movable/proc/move_from_pull(atom/movable/puller, turf/target_turf, glide_size_override)
@@ -785,10 +785,14 @@
 	anchored = anchorvalue
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_ANCHORED, anchorvalue)
 
-/atom/movable/proc/set_currently_z_moving(value)
-	var/old_value = currently_z_moving
-	currently_z_moving = max(currently_z_moving, value)
-	return currently_z_moving > old_value
+/// Sets the currently_z_moving variable to a new value. Used to allow some zMovement sources to have precedence over others.
+/atom/movable/proc/set_currently_z_moving(new_z_moving_value, forced = FALSE)
+	if(forced)
+		currently_z_moving = new_z_moving_value
+		return TRUE
+	var/old_z_moving_value = currently_z_moving
+	currently_z_moving = max(currently_z_moving, new_z_moving_value)
+	return currently_z_moving > old_z_moving_value
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE

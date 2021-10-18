@@ -130,9 +130,12 @@
 
 	vehicle_moved(source, null, new_dir)
 
-/// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
-/datum/component/riding/proc/ride_check(mob/living/rider)
-	return
+/**
+ * Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard.
+ * If not and if consequences is TRUE, well, there'll be consequences.
+ */
+/datum/component/riding/proc/ride_check(mob/living/rider, consequences = TRUE)
+	return TRUE
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
@@ -250,4 +253,5 @@
 
 /// Extra checks before buckled.can_z_move can be called in mob/living/can_z_move()
 /datum/component/riding/proc/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	SIGNAL_HANDLER
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE

@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/// Recursive proc that precipitates a movable (plus whatever buckled to it) to lower z levels if possible.
+/// Precipitates a movable (plus whatever buckled to it) to lower z levels if possible and then calls zImpact()
 /turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, falling_from_move = FALSE)
 	var/turf/target = get_step_multiz(src, DOWN)
 	if(!target)
@@ -267,17 +267,17 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!falling_from_move && falling.currently_z_moving)
 		return
 	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
-		falling.currently_z_moving = FALSE
+		falling.set_currently_z_moving(FALSE, TRUE)
 		return FALSE
 
 	// So it doesn't trigger other zFall calls. Cleared on zMove.
-	falling.currently_z_moving = CURRENTLY_Z_FALLING
+	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
 
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)
 	return TRUE
 
-///Called each time the target falls down a z level, possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
+///Called each time the target falls down a z level possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
 /turf/proc/zImpact(atom/movable/falling, levels = 1, turf/prev_turf)
 	var/flags = NONE
 	var/list/falling_movables = falling.get_z_move_affected()
