@@ -355,7 +355,6 @@
 /area/shuttle/escape)
 "du" = (
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dF" = (
@@ -684,7 +683,6 @@ ruin,
 /area/shuttle/escape)
 "hN" = (
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -782,7 +780,6 @@ ruin,
 /area/shuttle/escape)
 "iT" = (
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -917,7 +914,6 @@ ruin,
 	dir = 8
 	},
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "kq" = (
@@ -1007,7 +1003,6 @@ ruin,
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "lj" = (
@@ -1403,7 +1398,6 @@ ruin,
 /area/shuttle/escape)
 "qx" = (
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -2242,7 +2236,7 @@ ruin,
 /area/shuttle/escape)
 "zw" = (
 /obj/machinery/door/airlock/external/ruin{
-	ruin{name = "Pod Docking Bay"
+	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -2520,7 +2514,6 @@ ruin,
 /area/shuttle/escape)
 "DS" = (
 /obj/machinery/door/airlock/external/ruin,
-ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -4096,7 +4089,7 @@ ruin,
 /area/shuttle/escape)
 "UQ" = (
 /obj/machinery/door/airlock/external/ruin{
-	ruin{name = "Pod Docking Bay"
+	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -4232,7 +4225,7 @@ ruin,
 /area/shuttle/escape)
 "Wh" = (
 /obj/machinery/door/airlock/external/ruin{
-	ruin{name = "Dock Access"
+	name = "Dock Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
