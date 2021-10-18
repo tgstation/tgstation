@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - admin: "As an admin, if you start replying to a freshly submitted ticket that another admin is already replying to, you'll get a notice that someone already has it open when you get the prompt. Nice to let you know someone else is handling it, so you can coordinate replies better!"
