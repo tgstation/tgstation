@@ -121,7 +121,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	// MOTHBLOCKS TODO
+	// MOTHBLOCKS TODO: Insulated ore bags
 	// AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE

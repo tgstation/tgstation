@@ -20,7 +20,7 @@
 
 /obj/structure/ore_box/ComponentInitialize()
 	. = ..()
-	// MOTHBLOCKS TODO
+	// MOTHBLOCKS TODO: Insulated ore boxes and such
 	// AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
