@@ -236,7 +236,7 @@
 			if(mapload) // Yea, it's a mapping issue. Blame mappers.
 				stack_trace("Closet storage capacity exceeded on [type] at [get_area(src)], coordinates [x], [y], [z].")
 			break
-	for(var/i in reverse_range(L.get_all_contents()))
+	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
 		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
