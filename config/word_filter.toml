@@ -1,6 +1,5 @@
 # This configuration file forms the in-game chat filter.
 # Values are stored as "word" = "reason for being banned".
-# Values should be in lowercase to prevent errors down the line.
 # Soft filter reasons should be kept short or the tgui gets messy.
 
 # Anything in here will be blocked from IC interactions, dead chat, and OOC

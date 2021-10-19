@@ -221,7 +221,7 @@
 			return //(not case sensitive)
 
 	// Protects against names containing IC chat prohibited words.
-	if(is_ic_filtered(t_out))
+	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
 		return
 
 	return t_out
