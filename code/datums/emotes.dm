@@ -272,7 +272,7 @@
  * Returns a bool about whether or not the user should play a sound when performing the emote.
  */
 /datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
-	if(!only_forced_audio || !intentional)
+	if(only_forced_audio && intentional)
 		return FALSE
 	return TRUE
 
