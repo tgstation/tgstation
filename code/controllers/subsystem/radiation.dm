@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(radiation)
 	var/list/cached_rad_insulations = list()
 
 	for (var/atom/movable/target in range(pulse_information.max_range, source))
-		if (!can_irradiate_basic(source))
+		if (!can_irradiate_basic(target))
 			continue
 
 		// MOTHBLOCKS TODO: Minimum timer
@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(radiation)
 		if (!prob(pulse_information.chance))
 			continue
 
-		irradiate_after_basic_checks(source)
+		irradiate_after_basic_checks(target)
 
 // MOTHBLOCKS TODO: Rad protected clothes, done through an element that hijacks a signal, or TRAIT_RADIMMUNE
 /// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
@@ -85,8 +85,14 @@ SUBSYSTEM_DEF(radiation)
 /// Returns whether or not the human is covered head to toe in rad-protected clothing.
 /datum/controller/subsystem/radiation/proc/wearing_rad_protected_clothing(mob/living/carbon/human/human)
 	for (var/obj/item/bodypart/limb as anything in human.bodyparts)
+		var/protected = FALSE
+
 		for (var/obj/item/clothing as anything in human.clothingonpart(limb))
-			if (!HAS_TRAIT(clothing, TRAIT_RADIATION_PROTECTED_CLOTHING))
-				return FALSE
+			if (HAS_TRAIT(clothing, TRAIT_RADIATION_PROTECTED_CLOTHING))
+				protected = TRUE
+				break
+
+		if (!protected)
+			return FALSE
 
 	return TRUE
