@@ -15,6 +15,9 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "mvalve"
 	custom_reconcilation = TRUE
+
+	RPD_tooltip = "A pipe with a valve that can be used to disable flow of gas through it."
+
 	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()
 	var/valve_type = MANUAL_VALVE
 	///Bool to stop interactions while the opening/closing animation is going
@@ -81,6 +84,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "dvalve"
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_OPEN | INTERACT_MACHINE_OPEN_SILICON
+
+	RPD_tooltip = "A digital version of the manual valve. Can be controlled by silicons from distance."
 
 /obj/machinery/atmospherics/components/binary/valve/digital/Initialize(mapload)
 	. = ..()

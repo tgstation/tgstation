@@ -14,6 +14,8 @@
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "he_manifold4w"
 
+	RPD_tooltip = "Four way manifold made of H/E pipes."
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w/set_init_directions()
 	initialize_directions = initial(initialize_directions)
 

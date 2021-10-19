@@ -9,6 +9,8 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
+	RPD_tooltip = "Has one input and two outputs. Choose the gases to be moved to the lateral output."
+
 	///Rate of transfer of the gases to the outputs
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///What gases are we filtering, by typepath

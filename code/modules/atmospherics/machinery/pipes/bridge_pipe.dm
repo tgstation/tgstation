@@ -13,6 +13,8 @@
 	construction_type = /obj/item/pipe/binary
 	pipe_state = "bridge_center"
 
+	RPD_tooltip = "Can be placed on top of smart pipes to connect pipenets."
+
 /obj/machinery/atmospherics/pipe/bridge_pipe/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)

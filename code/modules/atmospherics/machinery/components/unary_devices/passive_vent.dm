@@ -12,6 +12,8 @@
 	pipe_state = "pvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	RPD_tooltip = "Acts like an open valve between the pipenet and the environment."
+
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)

@@ -19,6 +19,9 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 	vent_movement = NONE
+
+	RPD_tooltip = "A stronger version of the pressure pump, moves gases based on volume up to ~9000 kPa"
+
 	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked

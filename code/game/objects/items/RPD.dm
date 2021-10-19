@@ -20,23 +20,25 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Bridge Pipe", /obj/machinery/atmospherics/pipe/bridge_pipe, TRUE),
 		new /datum/pipe_info/pipe("Multi-Deck Adapter", /obj/machinery/atmospherics/pipe/multiz, FALSE),
 	),
-	"Devices" = list(
+	"Basic Devices" = list(
 		new /datum/pipe_info/pipe("Connector", /obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
 		new /datum/pipe_info/pipe("Gas Pump", /obj/machinery/atmospherics/components/binary/pump, TRUE),
-		new /datum/pipe_info/pipe("Volume Pump", /obj/machinery/atmospherics/components/binary/volume_pump, TRUE),
 		new /datum/pipe_info/pipe("Gas Filter", /obj/machinery/atmospherics/components/trinary/filter, TRUE),
 		new /datum/pipe_info/pipe("Gas Mixer", /obj/machinery/atmospherics/components/trinary/mixer, TRUE),
-		new /datum/pipe_info/pipe("Passive Gate", /obj/machinery/atmospherics/components/binary/passive_gate, TRUE),
 		new /datum/pipe_info/pipe("Injector", /obj/machinery/atmospherics/components/unary/outlet_injector, TRUE),
 		new /datum/pipe_info/pipe("Scrubber", /obj/machinery/atmospherics/components/unary/vent_scrubber, TRUE),
 		new /datum/pipe_info/pipe("Unary Vent", /obj/machinery/atmospherics/components/unary/vent_pump, TRUE),
 		new /datum/pipe_info/pipe("Passive Vent", /obj/machinery/atmospherics/components/unary/passive_vent, TRUE),
 		new /datum/pipe_info/pipe("Manual Valve", /obj/machinery/atmospherics/components/binary/valve, TRUE),
+		new /datum/pipe_info/meter("Meter"),
+	),
+	"Advanced Devices" = list(
+		new /datum/pipe_info/pipe("Volume Pump", /obj/machinery/atmospherics/components/binary/volume_pump, TRUE),
 		new /datum/pipe_info/pipe("Digital Valve", /obj/machinery/atmospherics/components/binary/valve/digital, TRUE),
+		new /datum/pipe_info/pipe("Passive Gate", /obj/machinery/atmospherics/components/binary/passive_gate, TRUE),
 		new /datum/pipe_info/pipe("Pressure Valve", /obj/machinery/atmospherics/components/binary/pressure_valve, TRUE),
 		new /datum/pipe_info/pipe("Temperature Gate", /obj/machinery/atmospherics/components/binary/temperature_gate, TRUE),
 		new /datum/pipe_info/pipe("Temperature Pump", /obj/machinery/atmospherics/components/binary/temperature_pump, TRUE),
-		new /datum/pipe_info/meter("Meter"),
 	),
 	"Heat Exchange" = list(
 		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/heat_exchanging/simple, FALSE),
@@ -84,6 +86,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/id = -1
 	var/dirtype = PIPE_BENDABLE
 	var/all_layers
+	var/RPD_tooltip
 
 /datum/pipe_info/proc/Render(dispenser)
 	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
@@ -145,6 +148,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	icon_state = initial(path.pipe_state)
 	var/obj/item/pipe/c = initial(path.construction_type)
 	dirtype = initial(c.RPD_type)
+	RPD_tooltip = initial(path.RPD_tooltip)
 
 /datum/pipe_info/pipe/Params()
 	return "makepipe=[id]&type=[dirtype]"
@@ -155,6 +159,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /datum/pipe_info/meter/New(label)
 	name = label
+	RPD_tooltip = initial(path.RPD_tooltip)
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=[id]&type=[dirtype]"
@@ -361,7 +366,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/list/r = list()
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers, "RPD_tooltip" = info.RPD_tooltip))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)

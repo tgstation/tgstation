@@ -15,6 +15,8 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "junction"
 
+	RPD_tooltip = "Junction to bridge regular pipes to the H/E pipes."
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)

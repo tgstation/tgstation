@@ -20,6 +20,8 @@
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	RPD_tooltip = "Vent pump that can be programmed to reach a set pressure in the environment or the inside of its pipe."
+
 	///Direction of pumping the gas (RELEASING or SIPHONING)
 	var/pump_direction = RELEASING
 	///Should we check internal pressure, external pressure, both or none? (EXT_BOUND, INT_BOUND, NO_BOUND)

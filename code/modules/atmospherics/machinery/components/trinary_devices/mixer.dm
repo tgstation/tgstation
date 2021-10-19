@@ -9,6 +9,8 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "mixer"
 
+	RPD_tooltip = "Has two input ports and one output. Choose the ratio between the two inputs to output."
+
 	///Output pressure target
 	var/target_pressure = ONE_ATMOSPHERE
 	///Ratio between the node 1 and 2, determines the amount of gas transfered, sums up to 1

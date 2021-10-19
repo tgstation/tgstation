@@ -58,6 +58,9 @@
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
+	///Message in the RPD UI tooltips
+	var/RPD_tooltip = "If you see this, tell a c*der about it."
+
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
 	update_name()

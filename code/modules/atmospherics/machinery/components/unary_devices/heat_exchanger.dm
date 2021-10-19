@@ -13,6 +13,8 @@
 	var/datum/weakref/partner_ref = null
 	var/update_cycle
 
+	RPD_tooltip = "Place two of these facing each other to equalize the temperature between the two pipenets."
+
 	pipe_state = "heunary"
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/layer2

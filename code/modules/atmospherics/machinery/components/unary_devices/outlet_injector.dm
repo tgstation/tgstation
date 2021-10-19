@@ -12,6 +12,8 @@
 	pipe_state = "injector"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
+	RPD_tooltip = "Pressurize the atmosphere forcefully, only able to control the flow of the gases."
+
 	///Variable used for radio frequency injection
 	var/injecting = FALSE
 	///Rate of operation of the device

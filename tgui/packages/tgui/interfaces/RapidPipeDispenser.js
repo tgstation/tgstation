@@ -16,7 +16,8 @@ const ICON_BY_CATEGORY_NAME = {
   'Transit Tubes': 'bus',
   'Pipes': 'grip-lines',
   'Disposal Pipes': 'grip-lines',
-  'Devices': 'microchip',
+  'Basic Devices': 'microchip',
+  'Advanced Devices': 'microchip',
   'Heat Exchange': 'thermometer-half',
   'Station Equipment': 'microchip',
 };
@@ -190,6 +191,8 @@ const PipeTypeSection = (props, context) => {
           checked={recipe.selected}
           content={recipe.pipe_name}
           title={recipe.pipe_name}
+          tooltipPosition="bottom"
+          tooltip={recipe.RPD_tooltip}
           onClick={() => act('pipe_type', {
             pipe_type: recipe.pipe_index,
             category: shownCategory.cat_name,
@@ -273,8 +276,8 @@ export const RapidPipeDispenser = (props, context) => {
   } = data;
   return (
     <Window
-      width={450}
-      height={575}>
+      width={525}
+      height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
