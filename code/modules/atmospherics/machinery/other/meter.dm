@@ -18,8 +18,6 @@
 	var/atom/target
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
-	///Message in the RPD UI tooltips
-	var/RPD_tooltip = "Place on top of a pipe to easily read the pressure/temperature of its contents."
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE

@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /datum/pipe_info/meter/New(label)
 	name = label
-	RPD_tooltip = initial(path.RPD_tooltip)
+	RPD_tooltip = "Place on top of a pipe to easily read the pressure/temperature of its contents."
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=[id]&type=[dirtype]"
