@@ -4,7 +4,7 @@ This is a step by step guide for making an AI Controller for your atom. It teach
 
 ### Note on examples used
 
-At the moment the quality of ai datums has some dubious quality all around the place, and I wanted to show the best examples. So while I walk through this with the basic cow ai as an example, I do swap to other datums involving items, generic instrument planning, and some other stuff to help explain singular concepts. I make it clear later in the guide when I'm getting back to following along with filling out the cow ai, so watch out for that.
+At the moment the quality of ai datums has some dubious code lying all around, and I wanted to show the best examples. So while I walk through this with the basic cow ai as an example, I do swap to other datums involving items, generic instrument planning, and some other stuff to help explain singular concepts. I make it clear later in the guide when I'm getting back to following along with filling out the cow ai, so watch out for that.
 
 ## Starting out
 
