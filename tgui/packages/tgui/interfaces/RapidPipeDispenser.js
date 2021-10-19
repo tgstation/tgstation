@@ -276,7 +276,7 @@ export const RapidPipeDispenser = (props, context) => {
   } = data;
   return (
     <Window
-      width={525}
+      width={535}
       height={500}>
       <Window.Content>
         <Stack fill vertical>
