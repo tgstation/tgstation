@@ -573,3 +573,37 @@
   - spellcheck: fixed a single bracket typo
   tralezab:
   - bugfix: fixes an error in department officers spawning with wallets
+2021-10-19:
+  Cyberboss:
+  - bugfix: Prying open one of a pair of cycle-linked airlocks will now always close
+      the other (if it is powered).
+  - expansion: 'Arrivals, escape, and pod airlocks now restrict those without access
+      from exiting directly to space. Use is unrestricted when entering the station
+      or a shuttle is docked. tweak: Shuttle departures will now force exterior airlocks
+      closed on both the shuttle and docking bay. The lives of your fellow crew members
+      are more important than your tardiness and limbs, employee!'
+  - bugfix: Fixed the numbering of escape pods in certain maps.
+  Ebin-Halcyon:
+  - balance: Syndicate masks are now fire + acid proof
+  Ghilker:
+  - qol: filters can now filter multiple gases at once
+  Ghommie:
+  - expansion: Meta and Delta chapels now have pews in lieu of stools or chairs.
+  MeyHaZah, Onule, Fikou:
+  - imageadd: mining gear resprite
+  Mothblocks:
+  - rscadd: Emagging the communications console will now let you purchase dangerous
+      shuttles. The Gigafactral and the Monastery were moved over (and made cheaper),
+      while the Disco Inferno and Oh, Hi Daniel make a return.
+  Ryll/Shaps:
+  - admin: As an admin, if you start replying to a freshly submitted ticket that another
+      admin is already replying to, you'll get a notice that someone already has it
+      open when you get the prompt. Nice to let you know someone else is handling
+      it, so you can coordinate replies better!
+  That REALLY Good Soda Flavor:
+  - refactor: Rolling paper will now use the customizable reagent holder component.
+      This cleans up the code and expands the possibilities for using the component
+      by adding support for dried items.
+  esainane:
+  - bugfix: Removed a scrubbers pipe that didn't lead anywhere near Upper Hydroponics
+      on Tram.
