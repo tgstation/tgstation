@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - expansion: "Nearsighter quirk now lets you pick the look of your prescription glasses from the character preference menu"
+  - imageadd: "Added thin prescription glasses"
