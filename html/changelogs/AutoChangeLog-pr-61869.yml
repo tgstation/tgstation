@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - server: "Dynamic now has an extra configuration value, max_threat_level. Defaults to 100 threat."

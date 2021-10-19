@@ -25,7 +25,7 @@
 	ME.attach(src)
 
 /obj/vehicle/sealed/mecha/working/clarke/Destroy()
-	box.dump_box_contents()
+	INVOKE_ASYNC(box, /obj/structure/ore_box/proc/dump_box_contents)
 	return ..()
 
 /obj/vehicle/sealed/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)

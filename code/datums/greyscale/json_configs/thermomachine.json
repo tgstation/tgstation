@@ -1,5 +1,5 @@
 {
-	"thermo_0": [
+	"thermo_base": [
 		{
 			"type": "icon_state",
 			"icon_state": "temp_meter",

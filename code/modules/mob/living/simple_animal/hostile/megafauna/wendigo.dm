@@ -235,7 +235,7 @@ Difficulty: Hard
 				SLEEP_CHECK_DEATH(6 - WENDIGO_ENRAGED * 2)
 		if("Spiral")
 			var/shots_spiral = WENDIGO_SPIRAL_SHOTCOUNT
-			var/angle_to_target = Get_Angle(src, target)
+			var/angle_to_target = get_angle(src, target)
 			var/spiral_direction = pick(-1, 1)
 			for(var/shot in 1 to shots_spiral)
 				var/shots_per_tick = 5 - WENDIGO_ENRAGED * 3

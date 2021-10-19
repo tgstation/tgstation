@@ -48,7 +48,7 @@
 			for(var/turf/T in turflist)
 				if(accessible[T])
 					continue
-				for(var/thing in T.GetAtmosAdjacentTurfs(alldir = TRUE))
+				for(var/thing in T.get_atmos_adjacent_turfs(alldir = TRUE))
 					var/turf/NT = thing
 					if(!(NT in accessible))
 						continue
@@ -58,7 +58,7 @@
 					break
 		var/list/reactable = accessible
 		for(var/turf/T in accessible)
-			for(var/atom/A in T.GetAllContents())
+			for(var/atom/A in T.get_all_contents())
 				if(!(A in viewable))
 					continue
 				reactable |= A

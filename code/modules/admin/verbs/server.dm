@@ -6,12 +6,7 @@
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
 	var/new_are = !CONFIG_GET(flag/allow_random_events)
 	CONFIG_SET(flag/allow_random_events, new_are)
-	if(new_are)
-		to_chat(usr, "Random events enabled", confidential = TRUE)
-		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
-	else
-		to_chat(usr, "Random events disabled", confidential = TRUE)
-		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
+	message_admins("[key_name_admin(usr)] has [new_are ? "enabled" : "disabled"] random events.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Random Events", "[new_are ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_hub()
