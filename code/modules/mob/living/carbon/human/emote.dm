@@ -89,9 +89,9 @@
 	vary = FALSE
 
 /datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
-	if(!ismonkey(user) && intentional)
-		return FALSE
-	return TRUE
+	if(ismonkey(user))
+		return TRUE
+	return ..()
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
