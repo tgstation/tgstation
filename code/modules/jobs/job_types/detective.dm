@@ -81,10 +81,9 @@
 		if(detective_job.current_positions < 2) //if no other detective
 			return
 
-	var/list/detective_turfs = get_area_turfs(/area/security/detectives_office)
-	for(var/turf/T in detective_turfs)
-		for(var/obj/structure/closet/secure_closet/detective/detective_closet in T)
-			if(!QDELETED(detective_closet))
+	if(GLOB.detequipment.len)
+		for(var/obj/structure/closet/secure_closet/detective/detective_closet in GLOB.detequipment)
+			if(!QDELETED(detective_closet) && istype(get_area(detective_closet), /area/security/detectives_office))
 				detective_closet.close()
 				if(!detective_closet.opened && !detective_closet.broken)
 					detective_closet.locked = TRUE

@@ -183,6 +183,10 @@
 	open_sound = 'sound/machines/wooden_closet_open.ogg'
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 
+/obj/structure/closet/secure_closet/detective/Initialize(mapload)
+	. = ..()
+	GLOB.detequipment += src
+
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
 	new /obj/item/storage/box/evidence(src)
