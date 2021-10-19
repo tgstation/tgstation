@@ -54,7 +54,6 @@ SUBSYSTEM_DEF(radiation)
 
 		irradiate_after_basic_checks(target)
 
-// MOTHBLOCKS TODO: Rad protected clothes, done through an element that hijacks a signal, or TRAIT_RADIMMUNE
 /// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
 /datum/controller/subsystem/radiation/proc/irradiate(atom/target)
 	if (!can_irradiate_basic(target))
@@ -70,6 +69,8 @@ SUBSYSTEM_DEF(radiation)
 
 	target.AddComponent(/datum/component/irradiated)
 
+/// Returns whether or not the target can be irradiated by any means.
+/// Does not check for clothing.
 /datum/controller/subsystem/radiation/proc/can_irradiate_basic(atom/target)
 	if (!CAN_IRRADIATE(target))
 		return FALSE
