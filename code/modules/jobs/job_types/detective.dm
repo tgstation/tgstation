@@ -75,3 +75,41 @@
 
 	if(visualsOnly)
 		return
+
+	var/list/jobs = SSjob.joinable_occupations.Copy()
+	for(var/datum/job/detective/detective_job in jobs)
+		if(detective_job.current_positions < 2) //if no other detective
+			to_chat(world, "There is no other detective! Returning.")
+			return
+
+	var/list/detective_turfs = get_area_turfs(/area/security/detectives_office)
+	for(var/turf/T in detective_turfs)
+		to_chat(world, "Iterating through detective turfs.")
+		for(var/obj/structure/closet/secure_closet/detective/detective_closet in T)
+			to_chat(world, "Found detective closet.")
+			if(!QDELETED(detective_closet))
+				to_chat(world, "Detective closet not qdeleted.")
+				detective_closet.close()
+				if(!detective_closet.opened && !detective_closet.broken)
+					to_chat(world, "Detective closet closed and not broken.")
+					detective_closet.locked = TRUE
+					detective_closet.update_appearance()
+					to_chat(world, "Detective closet locked is [detective_closet.locked].")
+					new /obj/item/storage/belt/holster/detective/full(detective_closet)
+					new /obj/item/clothing/glasses/sunglasses(detective_closet)
+					to_chat(world, "Spawned gun and shades in [detective_closet]! Returning.")
+					return
+
+	to_chat(world, "Did not find detective closet or detective closet wouldn't close or lock!")
+
+	var/obj/item/gun_belt = new /obj/item/storage/belt/holster/detective/full(H.loc)
+	var/obj/item/cool_shades = new /obj/item/clothing/glasses/sunglasses(H.loc)
+	to_chat(world, "Spawned gun and shades at [H]'s loc ([H.loc]).")
+	H.put_in_hands(gun_belt)
+	H.put_in_hands(cool_shades)
+	to_chat(world, "Put gun and shades in [H]'s hands.")
+	H.equip_to_slot_if_possible(cool_shades, ITEM_SLOT_EYES, initial=TRUE)
+	to_chat(world, "Equipped shades to [H]'s eyes.")
+	H.equip_to_slot_if_possible(gun_belt, ITEM_SLOT_SUITSTORE, initial=TRUE)
+	to_chat(world, "Equipped gun to [H]'s suit storage.")
+	H.update_inv_hands()
