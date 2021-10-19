@@ -170,6 +170,7 @@
 	species_exception = list(/datum/species/golem/bananium)
 	var/list/clownmask_designs = list()
 
+
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
@@ -205,6 +206,14 @@
 		update_action_buttons()
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
+
+/obj/item/clothing/mask/clown_hat/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		return
+	if(!islizard(loc))
+		return
+	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
@@ -261,6 +270,14 @@
 		update_action_buttons()
 		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
 		return TRUE
+
+/obj/item/clothing/mask/mime/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		return
+	if(!islizard(loc))
+		return
+	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"

@@ -14,3 +14,11 @@
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
+
+/obj/item/clothing/mask/surgical/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		return
+	if(!islizard(loc))
+		return
+	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'

@@ -29,6 +29,15 @@
 	. = ..()
 	. += span_notice("Alt-click [src] to adjust it.")
 
+//Code for lizard masks. Snouts clip through otherwise.
+/obj/item/clothing/mask/breath/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		return
+	if(!islizard(loc))
+		return
+	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
+
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"
@@ -36,3 +45,11 @@
 	inhand_icon_state = "m_mask"
 	permeability_coefficient = 0.01
 	equip_delay_other = 10
+
+/obj/item/clothing/mask/breath/medical/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		return
+	if(!islizard(loc))
+		return
+	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
