@@ -86,7 +86,13 @@
 	key_third_person = "screeches"
 	message = "screeches."
 	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = FALSE
 	vary = FALSE
+
+/datum/emote/living/carbon/human/scream/screech/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(!ismonkey(user) && intentional)
+		return FALSE
+	return ..()
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
