@@ -437,7 +437,11 @@ Example config:
 		DelayedMessageAdmins(message)
 		return list()
 
-	return banned_words
+	var/list/formatted_banned_words = list()
+
+	for (var/banned_word in banned_words)
+		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
+	return formatted_banned_words
 
 /datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
 	if (isnull(banned_words) || banned_words.len == 0)
