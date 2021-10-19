@@ -154,8 +154,8 @@
 /obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
-	user.visible_message(span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"), \
-		span_danger("An unnatural hunger consumes you. You raise [src] your mouth and devour it!"))
+	user.visible_message(span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it ferociously!"), \
+		span_danger("An unnatural hunger consumes you. You raise [src] and devour it!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
