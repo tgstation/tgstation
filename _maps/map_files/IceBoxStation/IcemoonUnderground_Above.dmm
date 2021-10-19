@@ -347,19 +347,6 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
-"bE" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "maintenance external airlock";
-	opacity = 0
-	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "maintenance external airlock";
-	opacity = 0
-	},
-/turf/open/floor/iron/smooth,
-/area/engineering/lobby)
 "bF" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -1245,18 +1232,12 @@
 /area/medical/chemistry)
 "fR" = (
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
-	color = "#0000ff";
-	dir = 8;
-	name = "Supply multi deck pipe adapter"
+/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
-	color = "#ff0000";
-	dir = 8;
-	name = "Scrubbers multi deck pipe adapter"
-	},
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "fT" = (
 /turf/open/floor/plating,
@@ -2023,10 +2004,6 @@
 "iy" = (
 /turf/open/openspace,
 /area/mine/eva)
-"iz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/engineering/lobby)
 "iB" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2479,11 +2456,19 @@
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "kC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	color = "#0000ff";
+	dir = 4;
+	name = "Supply multi deck pipe adapter"
 	},
-/turf/open/floor/iron/smooth,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	color = "#ff0000";
+	dir = 4;
+	name = "Scrubbers multi deck pipe adapter"
+	},
+/obj/effect/turf_decal/stripes/box,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/engineering/lobby)
 "kF" = (
 /obj/machinery/computer/slot_machine{
@@ -2821,7 +2806,7 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "ma" = (
-/obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "mb" = (
@@ -2911,6 +2896,7 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "mB" = (
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "mC" = (
@@ -3450,6 +3436,14 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"oW" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "oX" = (
 /obj/machinery/button/door/directional/west{
 	id = "xenobio4";
@@ -3793,6 +3787,10 @@
 /area/science/xenobiology)
 "ql" = (
 /obj/machinery/firealarm/directional/south,
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "qm" = (
@@ -4722,6 +4720,23 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
+"tN" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "maintenance external airlock";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "engineering external airlock";
+	opacity = 0;
+	req_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "tO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
@@ -4956,6 +4971,18 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar)
+"uH" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "engineering external airlock";
+	opacity = 0;
+	req_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/engineering/lobby)
 "uI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5082,10 +5109,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"vo" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "vs" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -5638,6 +5661,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
+"xE" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/engineering/lobby)
 "xH" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -9436,11 +9463,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/medical/chemistry)
 "MP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable/multilayer/multiz,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
 /area/engineering/lobby)
 "MQ" = (
 /obj/structure/stairs/east,
@@ -10113,9 +10138,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"Pq" = (
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/unexplored/rivers)
 "Ps" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -10218,17 +10240,6 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"PJ" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "maintenance external airlock";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/engineering/lobby)
 "PK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10786,6 +10797,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored/rivers)
+"Sf" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engineering/lobby)
 "Sg" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -10813,6 +10829,9 @@
 "Si" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
@@ -12037,10 +12056,6 @@
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"WU" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "WX" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
@@ -12091,8 +12106,8 @@
 /area/cargo/warehouse)
 "Xi" = (
 /obj/structure/ladder,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth_large,
 /area/engineering/lobby)
 "Xk" = (
 /obj/structure/chair{
@@ -12531,6 +12546,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
+"YJ" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/engineering/lobby)
 "YK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/item/radio/intercom/directional/north,
@@ -43366,7 +43385,7 @@ ak
 ak
 ak
 ak
-Pq
+mO
 mO
 mO
 mO
@@ -43623,13 +43642,13 @@ ak
 ak
 ak
 ak
-ak
 mO
 mO
 mO
 mO
-ak
-ak
+mO
+mO
+mO
 ak
 ak
 ak
@@ -43881,11 +43900,11 @@ ak
 ak
 ak
 Fp
-Fp
 mO
 mO
 mO
-Fp
+mO
+mO
 Fp
 ak
 ak
@@ -44138,11 +44157,11 @@ ak
 ak
 Fp
 Fp
-cu
-iz
-iz
-iz
-cu
+Sf
+Sf
+Sf
+Sf
+Sf
 Fp
 ak
 ak
@@ -44396,12 +44415,12 @@ Fp
 Fp
 Fp
 cu
-mB
+oW
 mB
 ql
 cu
 Fp
-ak
+Fp
 ak
 ak
 ak
@@ -44652,13 +44671,13 @@ Fp
 VW
 PG
 Fp
-iz
+Sf
 kC
 Xi
 MP
-cu
+Sf
 Fp
-ak
+Fp
 ak
 ak
 ak
@@ -44914,7 +44933,7 @@ fR
 ma
 Si
 cu
-ak
+Fp
 ak
 ak
 ak
@@ -45168,8 +45187,8 @@ Fp
 Fp
 cu
 cu
+tN
 cu
-bE
 cu
 ak
 ak
@@ -45424,10 +45443,10 @@ Fp
 Fp
 PG
 Fp
-Fp
 cu
 Js
 cu
+Fp
 ak
 ak
 ak
@@ -45681,10 +45700,10 @@ Fp
 Fp
 Fp
 VW
+cu
+uH
+cu
 Fp
-cu
-PJ
-cu
 ak
 ak
 ak
@@ -45938,10 +45957,10 @@ ak
 ak
 ak
 Sn
-Fp
-vo
+YJ
 PG
-WU
+xE
+Fp
 ak
 ak
 ak
