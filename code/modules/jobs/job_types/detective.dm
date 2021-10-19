@@ -41,6 +41,30 @@
 	rpg_title = "Thiefcatcher"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
+/datum/job/detective/proc/after_latejoin_spawn(mob/living/spawning)
+	if(current_positions < 2) //if no other detective
+		return
+
+	var/mob/living/carbon/human/spawner = spawning
+
+	if(GLOB.detequipment.len)
+		for(var/obj/structure/closet/secure_closet/detective/detective_closet in GLOB.detequipment)
+			if(!QDELETED(detective_closet) && istype(get_area(detective_closet), /area/security/detectives_office))
+				detective_closet.close()
+				if(!detective_closet.opened && !detective_closet.broken)
+					detective_closet.locked = TRUE
+					detective_closet.update_appearance()
+					new /obj/item/storage/belt/holster/detective/full(detective_closet)
+					new /obj/item/clothing/glasses/sunglasses(detective_closet)
+					return
+
+	var/obj/item/gun_belt = new /obj/item/storage/belt/holster/detective/full(spawner.loc)
+	var/obj/item/cool_shades = new /obj/item/clothing/glasses/sunglasses(spawner.loc)
+	spawner.put_in_hands(gun_belt)
+	spawner.put_in_hands(cool_shades)
+	spawner.equip_to_slot_if_possible(cool_shades, ITEM_SLOT_EYES, initial=TRUE)
+	spawner.equip_to_slot_if_possible(gun_belt, ITEM_SLOT_SUITSTORE, initial=TRUE)
+	spawner.update_inv_hands()
 
 /datum/outfit/job/detective
 	name = "Detective"
@@ -76,26 +100,3 @@
 	if(visualsOnly)
 		return
 
-	var/list/jobs = SSjob.joinable_occupations.Copy()
-	for(var/datum/job/detective/detective_job in jobs)
-		if(detective_job.current_positions < 2) //if no other detective
-			return
-
-	if(GLOB.detequipment.len)
-		for(var/obj/structure/closet/secure_closet/detective/detective_closet in GLOB.detequipment)
-			if(!QDELETED(detective_closet) && istype(get_area(detective_closet), /area/security/detectives_office))
-				detective_closet.close()
-				if(!detective_closet.opened && !detective_closet.broken)
-					detective_closet.locked = TRUE
-					detective_closet.update_appearance()
-					new /obj/item/storage/belt/holster/detective/full(detective_closet)
-					new /obj/item/clothing/glasses/sunglasses(detective_closet)
-					return
-
-	var/obj/item/gun_belt = new /obj/item/storage/belt/holster/detective/full(H.loc)
-	var/obj/item/cool_shades = new /obj/item/clothing/glasses/sunglasses(H.loc)
-	H.put_in_hands(gun_belt)
-	H.put_in_hands(cool_shades)
-	H.equip_to_slot_if_possible(cool_shades, ITEM_SLOT_EYES, initial=TRUE)
-	H.equip_to_slot_if_possible(gun_belt, ITEM_SLOT_SUITSTORE, initial=TRUE)
-	H.update_inv_hands()
