@@ -187,6 +187,10 @@
 	. = ..()
 	GLOB.detequipment += src
 
+/obj/structure/closet/secure_closet/detective/Destroy()
+    GLOB.detequipment -= src
+    return ..()
+
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
 	new /obj/item/storage/box/evidence(src)
