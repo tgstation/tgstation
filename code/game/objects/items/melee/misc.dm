@@ -395,6 +395,7 @@
 			to_chat(user, span_notice("You extend [src] towards [target]."))
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 			finish_roasting(user, target)
+			return
 		else
 			return
 		finish_roasting(user, target)
@@ -410,6 +411,7 @@
 	else
 		QDEL_NULL(beam)
 		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		to_chat(user, span_notice("You put [src] away."))
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
