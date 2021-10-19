@@ -347,6 +347,19 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
+"bE" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "maintenance external airlock";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "maintenance external airlock";
+	opacity = 0
+	},
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "bF" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -503,6 +516,9 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"cu" = (
+/turf/closed/wall/r_wall,
+/area/engineering/lobby)
 "cv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Crematorium Maintenance";
@@ -1227,6 +1243,21 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
+"fR" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	color = "#0000ff";
+	dir = 8;
+	name = "Supply multi deck pipe adapter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	color = "#ff0000";
+	dir = 8;
+	name = "Scrubbers multi deck pipe adapter"
+	},
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating,
+/area/engineering/lobby)
 "fT" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -1992,6 +2023,10 @@
 "iy" = (
 /turf/open/openspace,
 /area/mine/eva)
+"iz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engineering/lobby)
 "iB" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2443,6 +2478,13 @@
 /obj/item/gps/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
+"kC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "kF" = (
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
@@ -2778,6 +2820,10 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"ma" = (
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "mb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -2864,6 +2910,9 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/service/bar)
+"mB" = (
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "mC" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3742,6 +3791,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"ql" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5029,6 +5082,10 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"vo" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "vs" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -8498,6 +8555,13 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"Js" = (
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating/snowed/icemoon,
+/area/engineering/lobby)
 "Ju" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -9371,6 +9435,13 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/medical/chemistry)
+"MP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "MQ" = (
 /obj/structure/stairs/east,
 /obj/structure/railing{
@@ -10042,6 +10113,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
+"Pq" = (
+/turf/open/openspace/icemoon/keep_below,
+/area/icemoon/underground/unexplored/rivers)
 "Ps" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -10144,6 +10218,17 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"PJ" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "maintenance external airlock";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/engineering/lobby)
 "PK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10725,6 +10810,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
+"Si" = (
+/obj/structure/sign/warning/vacuum{
+	pixel_y = -32
+	},
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "Sj" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -10754,6 +10845,12 @@
 /obj/structure/closet/crate,
 /turf/open/floor/iron,
 /area/cargo/storage)
+"Sn" = (
+/obj/structure/marker_beacon/burgundy{
+	name = "landing marker"
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "Sq" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "gulag1";
@@ -11940,6 +12037,10 @@
 /obj/structure/sign/warning/electricshock,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"WU" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "WX" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
@@ -11988,6 +12089,11 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
+"Xi" = (
+/obj/structure/ladder,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/smooth,
+/area/engineering/lobby)
 "Xk" = (
 /obj/structure/chair{
 	dir = 4
@@ -42748,8 +42854,8 @@ ak
 ak
 ak
 ak
-ak
-ak
+mO
+mO
 ak
 ak
 ak
@@ -43002,13 +43108,13 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+mO
+mO
+mO
+mO
+mO
+mO
+mO
 ak
 ak
 ak
@@ -43260,12 +43366,12 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
+Pq
+mO
+mO
+mO
+mO
+mO
 ak
 ak
 ak
@@ -43518,10 +43624,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+mO
+mO
+mO
+mO
 ak
 ak
 ak
@@ -43774,13 +43880,13 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+mO
+mO
+mO
+Fp
+Fp
 ak
 ak
 ak
@@ -44030,14 +44136,14 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+cu
+iz
+iz
+iz
+cu
+Fp
 ak
 ak
 ak
@@ -44286,15 +44392,15 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+Fp
+cu
+mB
+mB
+ql
+cu
+Fp
 ak
 ak
 ak
@@ -44544,14 +44650,14 @@ ak
 ak
 Fp
 VW
+PG
 Fp
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+iz
+kC
+Xi
+MP
+cu
+Fp
 ak
 ak
 ak
@@ -44802,12 +44908,12 @@ Fp
 Fp
 Fp
 Fp
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+cu
+fR
+ma
+Si
+cu
 ak
 ak
 ak
@@ -45058,13 +45164,13 @@ Fp
 Fp
 PG
 Fp
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+cu
+cu
+cu
+bE
+cu
 ak
 ak
 ak
@@ -45315,13 +45421,13 @@ tD
 Fp
 Fp
 Fp
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+PG
+Fp
+Fp
+cu
+Js
+cu
 ak
 ak
 ak
@@ -45572,13 +45678,13 @@ tD
 Fp
 VW
 Fp
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Fp
+Fp
+VW
+Fp
+cu
+PJ
+cu
 ak
 ak
 ak
@@ -45831,11 +45937,11 @@ Fp
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
+Sn
+Fp
+vo
+PG
+WU
 ak
 ak
 ak
@@ -46089,9 +46195,9 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
+Fp
+PG
+Fp
 ak
 ak
 ak
