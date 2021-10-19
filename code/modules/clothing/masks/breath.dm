@@ -29,12 +29,15 @@
 	. = ..()
 	. += span_notice("Alt-click [src] to adjust it.")
 
-//Code for lizard masks. Snouts clip through otherwise.
+//Code for lizard masks. Snouts clip through otherwise. Checks if they have the snout organ.
 /obj/item/clothing/mask/breath/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
 		return
-	if(!islizard(loc))
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/carbon_loc = loc
+	if(!locate(/obj/item/organ/external/snout) in carbon_loc.internal_organs)
 		return
 	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
 
@@ -50,6 +53,9 @@
 	. = ..()
 	if(isinhands)
 		return
-	if(!islizard(loc))
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/carbon_loc = loc
+	if(!locate(/obj/item/organ/external/snout) in carbon_loc.internal_organs)
 		return
 	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'

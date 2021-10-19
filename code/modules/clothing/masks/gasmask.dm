@@ -207,11 +207,14 @@
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
 
-/obj/item/clothing/mask/clown_hat/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/mask/gas/clown_hat/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
 		return
-	if(!islizard(loc))
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/carbon_loc = loc
+	if(!locate(/obj/item/organ/external/snout) in carbon_loc.internal_organs)
 		return
 	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
 
@@ -271,11 +274,14 @@
 		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
 		return TRUE
 
-/obj/item/clothing/mask/mime/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/mask/gas/mime/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(isinhands)
 		return
-	if(!islizard(loc))
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/carbon_loc = loc
+	if(!locate(/obj/item/organ/external/snout) in carbon_loc.internal_organs)
 		return
 	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
 

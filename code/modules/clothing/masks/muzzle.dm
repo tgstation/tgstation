@@ -16,6 +16,17 @@
 			return
 	..()
 
+/obj/item/clothing/mask/muzzle/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(isinhands)
+		return
+	if(!iscarbon(loc))
+		return
+	var/mob/living/carbon/carbon_loc = loc
+	if(!locate(/obj/item/organ/external/snout) in carbon_loc.internal_organs)
+		return
+	standing.icon = 'icons/mob/clothing/mutants/mask.dmi'
+
 /obj/item/clothing/mask/muzzle/breath
 	name = "surgery mask"
 	desc = "To silence those pesky patients before putting them under."
