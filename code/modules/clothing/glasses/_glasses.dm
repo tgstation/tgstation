@@ -255,6 +255,11 @@
 	. = ..()
 	vision_correction = TRUE
 
+/obj/item/clothing/glasses/regular/thin
+	name = "thin prescription glasses"
+	desc = "More expensive, more fragile and much less practical, but oh so fashionable."
+	icon_state = "glasses_thin"
+
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
 	desc = "Also known as Virginity Protectors."
