@@ -30,7 +30,7 @@
 	var/burnt_out = FALSE     //Is the flash burnt out?
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
-	var/cooldown = (4 SECONDS)
+	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
 /obj/item/assembly/flash/ComponentInitialize()
