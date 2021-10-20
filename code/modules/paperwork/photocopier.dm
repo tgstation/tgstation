@@ -64,8 +64,12 @@
 	
 	var/json = file2text("config/blanks.json")
 	var/list/blanks = json_decode(json)
-	data["blanks"] = blanks
-	data["category"] = category
+	if (blanks != null)
+		data["blanks"] = blanks
+		data["category"] = category
+		data["forms_exist"] = TRUE
+	else
+		data["forms_exist"] = FALSE
 	
 	if(photo_copy)
 		data["is_photo"] = TRUE
