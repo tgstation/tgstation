@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(radiation)
 	name = "Radiation"
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_NO_INIT
 
 	wait = 0.5 SECONDS
 
@@ -46,6 +46,12 @@ SUBSYSTEM_DEF(radiation)
 			if (current_insulation <= pulse_information.threshold)
 				break
 
+		SEND_SIGNAL(target, COMSIG_PRE_POTENTIAL_IRRADIATION, pulse_information, current_insulation)
+
+		// Check a second time, because of TRAIT_BYPASS_EARLY_IRRADIATED_CHECK
+		if (HAS_TRAIT(target, TRAIT_IRRADIATED))
+			continue
+
 		if (current_insulation <= pulse_information.threshold)
 			continue
 
@@ -78,7 +84,7 @@ SUBSYSTEM_DEF(radiation)
 	if (!CAN_IRRADIATE(target))
 		return FALSE
 
-	if (HAS_TRAIT(target, TRAIT_IRRADIATED))
+	if (HAS_TRAIT(target, TRAIT_IRRADIATED) && !HAS_TRAIT(target, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK))
 		return FALSE
 
 	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))

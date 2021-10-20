@@ -42,3 +42,25 @@
 	var/threshold
 	var/chance
 	var/minimum_exposure_time
+
+#define MEDIUM_RADIATION_THRESHOLD_RANGE 0.5
+#define EXTREME_RADIATION_CHANCE 30
+
+/// Gets the perceived "danger" of radiation pulse, given the threshold to the target.
+/// Returns a RADIATION_DANGER_* define, see [code/__DEFINES/radiation.dm]
+/proc/get_perceived_radiation_danger(datum/radiation_pulse_information/pulse_information, insulation_to_target)
+	if (insulation_to_target > pulse_information.threshold)
+		// We could get irradiated! The only thing stopping us now is chance, so scale based on that.
+		if (pulse_information.chance >= EXTREME_RADIATION_CHANCE)
+			return PERCEIVED_RADIATION_DANGER_EXTREME
+		else
+			return PERCEIVED_RADIATION_DANGER_HIGH
+	else
+		// We're out of the threshold from being irradiated, but by how much?
+		if (insulation_to_target / pulse_information.threshold <= MEDIUM_RADIATION_THRESHOLD_RANGE)
+			return PERCEIVED_RADIATION_DANGER_MEDIUM
+		else
+			return PERCEIVED_RADIATION_DANGER_LOW
+
+#undef MEDIUM_RADIATION_THRESHOLD_RANGE
+#undef EXTREME_RADIATION_CHANCE

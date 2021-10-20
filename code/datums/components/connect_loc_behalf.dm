@@ -1,6 +1,6 @@
 /// This component behaves similar to connect_loc, hooking into a signal on a tracked object's turf
 /// It has the ability to react to that signal on behalf of a seperate listener however
-/// This has great use, primarially for components, but it carries with it some overhead
+/// This has great use, primarily for components, but it carries with it some overhead
 /// So we do it seperately as it needs to hold state which is very likely to lead to bugs if it remains as an element.
 /datum/component/connect_loc_behalf
 	dupe_mode = COMPONENT_DUPE_UNIQUE

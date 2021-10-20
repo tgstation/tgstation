@@ -52,9 +52,13 @@
 
 /datum/component/irradiated/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
+	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, .proc/on_geiger_counter_scan)
 
 /datum/component/irradiated/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
+	UnregisterSignal(parent, list(
+		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_GEIGER_COUNTER_SCAN,
+	))
 
 /datum/component/irradiated/Destroy(force, silent)
 	var/atom/movable/parent_movable = parent
@@ -171,6 +175,18 @@
 		return COMPONENT_CLEANED
 
 	COOLDOWN_START(src, clean_cooldown, RADIATION_CLEAN_IMMUNITY_TIME)
+
+/datum/component/irradiated/proc/on_geiger_counter_scan(datum/source, mob/user, obj/item/geiger_counter/geiger_counter)
+	SIGNAL_HANDLER
+
+	if (isliving(source))
+		var/mob/living/living_source = source
+		to_chat(user, span_boldannounce("[icon2html(geiger_counter, user)] Subject is irradiated. Contamination traces back to roughly [DisplayTimeText(world.time - beginning_of_irradiation, 5)] ago. Current toxin levels: [living_source.getToxLoss()]."))
+	else
+		// In case the green wasn't obvious enough...
+		to_chat(user, span_boldannounce("[icon2html(geiger_counter, user)] Target is irradiated."))
+
+	return COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL
 
 /atom/movable/screen/alert/irradiated
 	name = "Irradiated"

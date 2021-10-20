@@ -758,3 +758,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This clothing protects the user from radiation.
 /// This should not be used on clothing_traits, but should be applied to the clothing itself.
 #define TRAIT_RADIATION_PROTECTED_CLOTHING "radiation_protected_clothing"
+
+/// Whether or not this item will allow the radiation SS to go through standard
+/// radiation processing as if this wasn't already irradiated.
+/// Basically, without this, COMSIG_PRE_POTENTIAL_IRRADIATION won't fire once the object is irradiated.
+#define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"

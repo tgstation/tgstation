@@ -42,3 +42,13 @@ Ask Mothblocks if they're around
 
 /// The minimum exposure time before uranium structures can irradiate
 #define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)
+
+/// Return values of [proc/get_perceived_radiation_danger]
+// If you change these, update /datum/looping_sound/geiger as well.
+#define PERCEIVED_RADIATION_DANGER_LOW 1
+#define PERCEIVED_RADIATION_DANGER_MEDIUM 2
+#define PERCEIVED_RADIATION_DANGER_HIGH 3
+#define PERCEIVED_RADIATION_DANGER_EXTREME 4
+
+/// The time before geiger counters reset back to normal without any radiation pulses
+#define TIME_WITHOUT_RADIATION_BEFORE_RESET (5 SECONDS)

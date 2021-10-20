@@ -196,6 +196,14 @@
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 
+/obj/item/clothing/suit/space/hardsuit/engine/equipped(mob/user, slot)
+	. = ..()
+	AddComponent(/datum/component/geiger_sound)
+
+/obj/item/clothing/suit/space/hardsuit/engine/dropped()
+	. = ..()
+	qdel(GetComponent(/datum/component/geiger_sound))
+
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit helmet"
