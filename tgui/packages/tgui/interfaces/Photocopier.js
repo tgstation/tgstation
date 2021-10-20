@@ -9,7 +9,7 @@ export const Photocopier = (props, context) => {
     isAI,
     has_toner,
     has_item,
-    forms_exist
+    forms_exist,
   } = data;
 
   return (
@@ -32,7 +32,8 @@ export const Photocopier = (props, context) => {
         ) : (
           <Section title="Blanks">
             <Box color="average">
-              "There is no list of forms on your station's local network. Please contact your system administrator."
+              'There is no list of forms on your station\'s local network.'
+			  'Please contact your system administrator.'
             </Box>
           </Section>  
         )},
@@ -178,7 +179,7 @@ const Blanks = (props, context) => {
   const {
     blanks,
     category,
-	has_toner,
+    has_toner,
   } = data;
 
   const sortBlanks = sortBy(
@@ -215,7 +216,7 @@ const Blanks = (props, context) => {
           <Button key={blank.path}
             content={blank.code}
             tooltip={blank.name}
-			disabled={!has_toner}
+            disabled={!has_toner}
             onClick={() => act("print_blank", {
               name: blank.name,
               info: blank.info,
