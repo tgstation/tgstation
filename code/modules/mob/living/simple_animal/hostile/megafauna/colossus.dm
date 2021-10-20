@@ -65,6 +65,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
 	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots()
 	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe()
 	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast()
@@ -75,7 +76,7 @@
 	dir_shots.Grant(src)
 	RegisterSignal(src, COMSIG_SPIRAL_ATTACK_START, .proc/start_spiral_attack)
 	RegisterSignal(src, COMSIG_SPIRAL_ATTACK_FINISHED, .proc/finished_spiral_attack)
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, ROUNDSTART_TRAIT) //we don't want this guy to float, messes up his animations.
+
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)

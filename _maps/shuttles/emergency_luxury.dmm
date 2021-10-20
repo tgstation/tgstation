@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape/luxury)
 "ac" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Economy-Class"
 	},
 /turf/open/floor/iron,
@@ -56,7 +56,7 @@
 "aj" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "ak" = (
@@ -325,13 +325,13 @@
 "bf" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/lootdrop/maintenance/six,
+/obj/effect/spawner/random/maintenance/six,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bg" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/turf_decal/loading_area,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bi" = (
@@ -366,13 +366,13 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bo" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/engineering,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bp" = (
@@ -440,7 +440,7 @@
 /obj/structure/closet/crate/large,
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bz" = (
@@ -459,7 +459,7 @@
 	icon_state = "crateopen"
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "bB" = (
@@ -627,7 +627,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/large,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cd" = (
@@ -805,7 +805,7 @@
 /area/shuttle/escape/luxury)
 "cC" = (
 /obj/structure/grille/broken,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cD" = (
@@ -878,7 +878,7 @@
 	pixel_y = 6
 	},
 /obj/item/hatchet,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape/luxury)

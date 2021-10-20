@@ -981,7 +981,7 @@
 /area/awaymission/academy)
 "eA" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1291,7 +1291,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "fH" = (
-/obj/machinery/power/shieldwallgen,
+/obj/machinery/power/shieldwallgen/unlocked,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -2429,7 +2429,7 @@
 /area/awaymission/academy/academycellar)
 "kT" = (
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
 /obj/item/candle/infinite,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)

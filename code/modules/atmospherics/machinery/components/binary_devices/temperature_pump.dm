@@ -44,16 +44,16 @@
 
 	var/coolant_temperature_delta = remove_input.temperature - remove_output.temperature
 
-	if(coolant_temperature_delta > 0 && remove_input.temperature < 1e8)
+	if(coolant_temperature_delta > 0)
 		var/input_capacity = remove_input.heat_capacity()
-		var/output_capacity = air_output.heat_capacity()
+		var/output_capacity = remove_output.heat_capacity()
 
 		var/cooling_heat_amount = (heat_transfer_rate * 0.01) * coolant_temperature_delta * (input_capacity * output_capacity / (input_capacity + output_capacity))
 		remove_input.temperature = max(remove_input.temperature - (cooling_heat_amount / input_capacity), TCMB)
 		remove_output.temperature = max(remove_output.temperature + (cooling_heat_amount / output_capacity), TCMB)
 		update_parents()
 
-	var/power_usage = (remove_input.temperature * 1.5 + idle_power_usage) ** (0.75 - (3e7 / max(3e7, remove_input.temperature)))
+	var/power_usage = 200
 
 	air_input.merge(remove_input)
 	air_output.merge(remove_output)

@@ -25,7 +25,7 @@
 	///Check if the machine is cracked open
 	var/cracked = FALSE
 
-/obj/machinery/atmospherics/components/unary/hypertorus/Initialize()
+/obj/machinery/atmospherics/components/unary/hypertorus/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 
@@ -57,18 +57,18 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
 	if(.)
-		SetInitDirections()
+		set_init_directions()
 		var/obj/machinery/atmospherics/node = nodes[1]
 		if(node)
 			node.disconnect(src)
 			nodes[1] = null
 			if(parents[1])
-				nullifyPipenet(parents[1])
-		atmosinit()
+				nullify_pipenet(parents[1])
+		atmos_init()
 		node = nodes[1]
 		if(node)
-			node.atmosinit()
-			node.addMember(src)
+			node.atmos_init()
+			node.add_member(src)
 		SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
@@ -335,12 +335,12 @@
 		if("fuel_injection_rate")
 			var/fuel_injection_rate = text2num(params["fuel_injection_rate"])
 			if(fuel_injection_rate != null)
-				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 5, 1500)
+				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 0.5, 150)
 				. = TRUE
 		if("moderator_injection_rate")
 			var/moderator_injection_rate = text2num(params["moderator_injection_rate"])
 			if(moderator_injection_rate != null)
-				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 5, 1500)
+				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 0.5, 150)
 				. = TRUE
 		if("current_damper")
 			var/current_damper = text2num(params["current_damper"])

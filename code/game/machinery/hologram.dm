@@ -79,7 +79,7 @@ Possible to do for anyone motivated enough:
 	/// If we are currently calling another holopad
 	var/calling = FALSE
 
-/obj/machinery/holopad/Initialize()
+/obj/machinery/holopad/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
 
@@ -88,7 +88,7 @@ Possible to do for anyone motivated enough:
 	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
 
-/obj/machinery/holopad/secure/Initialize()
+/obj/machinery/holopad/secure/Initialize(mapload)
 	. = ..()
 	var/obj/item/circuitboard/machine/holopad/board = circuit
 	board.secure = TRUE
@@ -147,7 +147,7 @@ Possible to do for anyone motivated enough:
 	if(!replay_mode && (disk?.record))
 		replay_start()
 
-/obj/machinery/holopad/Initialize()
+/obj/machinery/holopad/Initialize(mapload)
 	. = ..()
 	if(on_network)
 		holopads += src
@@ -295,7 +295,7 @@ Possible to do for anyone motivated enough:
 					if(A)
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
-				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sortNames(callnames))
+				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
 				if(QDELETED(usr) || !result || outgoing_call)
 					return
 				if(usr.loc == loc)
@@ -478,7 +478,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad == src)
-			if(speaker == HC.hologram && HC.user.client?.prefs.chat_on_map)
+			if(speaker == HC.hologram && HC.user.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 				HC.user.create_chat_message(speaker, message_language, raw_message, spans)
 			else
 				HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)

@@ -1,0 +1,716 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aD" = (
+/obj/structure/fence/cut/medium,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"aU" = (
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers)
+"bh" = (
+/mob/living/simple_animal/hostile/asteroid/wolf,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"cv" = (
+/obj/structure/flora/rock/pile/icy,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/ruin/powered/shuttle)
+"cH" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/radio/intercom,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"cO" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/unexplored/rivers)
+"dq" = (
+/obj/structure/flora/tree/dead,
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"el" = (
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"eC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external/glass/ruin,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"gz" = (
+/turf/closed/wall/ice,
+/area/ruin/powered/shuttle)
+"gH" = (
+/obj/structure/fence/end{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"hY" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored/rivers)
+"kr" = (
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"oj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/iron/grimy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"oD" = (
+/mob/living/simple_animal/hostile/asteroid/wolf,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"oT" = (
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"qS" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"rd" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"rm" = (
+/obj/structure/table/reinforced/rglass,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"rn" = (
+/mob/living/simple_animal/hostile/asteroid/wolf,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"rS" = (
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/green,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"st" = (
+/obj/machinery/door/airlock/public,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"sM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"te" = (
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"th" = (
+/obj/structure/fence/end{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"uz" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"vh" = (
+/obj/item/chair/plastic,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"wg" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"wJ" = (
+/obj/structure/sink{
+	pixel_y = 20
+	},
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"wP" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"yl" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"yF" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/item/clothing/gloves/color/plasmaman,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"yW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/stack/cable_coil/five,
+/obj/item/wirecutters,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"zi" = (
+/obj/machinery/suit_storage_unit,
+/obj/item/tank/internals/plasmaman/belt/full,
+/obj/item/clothing/suit/space/eva/plasmaman,
+/obj/item/clothing/head/helmet/space/plasmaman,
+/obj/item/clothing/mask/breath,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"zk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/tank_holder/extinguisher{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"zz" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"AY" = (
+/obj/structure/fence/corner{
+	dir = 6
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"Cr" = (
+/obj/structure/table/reinforced/rglass,
+/obj/item/pen/red{
+	pixel_x = -17;
+	pixel_y = 4
+	},
+/obj/item/toy/crayon/spraycan,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Cu" = (
+/obj/structure/fence/cut/large,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"CH" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"Et" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/button/door/directional/north{
+	id = "ice_comms_car";
+	name = "Garage Door Button";
+	pixel_x = -23;
+	pixel_y = 22;
+	req_access_txt = "47"
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"FK" = (
+/mob/living/simple_animal/hostile/asteroid/wolf,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/shuttle)
+"FP" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"Gl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/dresser,
+/obj/machinery/light/small/broken/directional/west,
+/turf/open/floor/iron/grimy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"GH" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"GQ" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/grille,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"HT" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Jh" = (
+/obj/structure/fence,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"Js" = (
+/obj/structure/fence,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Jt" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"Kh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/crowbar/large/heavy,
+/obj/machinery/light/small/built/directional/south,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"Kr" = (
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/shuttle)
+"Ly" = (
+/obj/structure/fence/end{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"MS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/iron/grimy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"NO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/grimy{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Oi" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"OM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/rack,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"Qj" = (
+/obj/effect/turf_decal/box/corners,
+/obj/item/plate/oven_tray{
+	color = "#858585";
+	desc = "A convenient place to put all your loose ends!";
+	name = "Mechanic's Tray";
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/screwdriver,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"RK" = (
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	id = "ice_comms_car";
+	name = "Garage Door"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/ruin/powered/shuttle)
+"SK" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"SR" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/shuttle)
+"Tz" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"TG" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Ux" = (
+/obj/structure/grille,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"Vq" = (
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+"VN" = (
+/obj/structure/frame/computer{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Ws" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/item/clothing/under/plasmaman,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Zd" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/grille,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
+
+(1,1,1) = {"
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+TG
+qS
+Tz
+aU
+aU
+aU
+aU
+aU
+"}
+(2,1,1) = {"
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+qS
+Tz
+qS
+qS
+qS
+el
+qS
+aU
+aU
+aU
+"}
+(3,1,1) = {"
+aU
+aU
+aU
+aU
+qS
+qS
+qS
+qS
+qS
+el
+qS
+qS
+qS
+qS
+aU
+aU
+aU
+"}
+(4,1,1) = {"
+aU
+aU
+aU
+qS
+TG
+gz
+FP
+Ux
+Jt
+sM
+gz
+yl
+TG
+aU
+aU
+aU
+aU
+"}
+(5,1,1) = {"
+aU
+aU
+qS
+gz
+gz
+gz
+rd
+cH
+cH
+rm
+gz
+Zd
+gz
+Cu
+Ly
+aU
+aU
+"}
+(6,1,1) = {"
+aU
+qS
+TG
+CH
+Gl
+gz
+Cr
+oT
+vh
+VN
+gz
+uz
+gz
+Kr
+wP
+qS
+aU
+"}
+(7,1,1) = {"
+aU
+qS
+qS
+GH
+NO
+MS
+oT
+oD
+oT
+oT
+eC
+kr
+SK
+wP
+qS
+wP
+qS
+"}
+(8,1,1) = {"
+aU
+qS
+qS
+GQ
+oj
+gz
+wJ
+HT
+yF
+Ws
+gz
+zi
+gz
+cv
+wP
+aU
+aU
+"}
+(9,1,1) = {"
+aU
+TG
+el
+gz
+gz
+gz
+st
+gz
+gz
+gz
+gz
+Zd
+gz
+Js
+Ly
+aU
+aU
+"}
+(10,1,1) = {"
+aU
+dq
+gz
+gz
+zz
+zk
+Et
+gz
+SR
+wP
+bh
+qS
+th
+yl
+aU
+aU
+aU
+"}
+(11,1,1) = {"
+aU
+aU
+gz
+Oi
+te
+Vq
+te
+RK
+wP
+wP
+el
+wP
+qS
+hY
+cO
+aU
+aU
+"}
+(12,1,1) = {"
+aU
+aU
+gz
+wg
+rn
+Qj
+te
+RK
+wP
+qS
+wP
+wP
+wP
+hY
+hY
+cO
+aU
+"}
+(13,1,1) = {"
+aU
+aU
+gz
+gz
+OM
+yW
+Kh
+gz
+FK
+wP
+qS
+wP
+gH
+aU
+aU
+aU
+aU
+"}
+(14,1,1) = {"
+aU
+aU
+aU
+gz
+gz
+gz
+gz
+gz
+aD
+Jh
+Jh
+Cu
+AY
+aU
+aU
+aU
+aU
+"}
+(15,1,1) = {"
+aU
+aU
+aU
+aU
+aU
+el
+rS
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+"}

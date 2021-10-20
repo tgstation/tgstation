@@ -62,6 +62,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
 	miner_saw = new(src)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	dash = new /datum/action/cooldown/mob_cooldown/dash()
 	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
 	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()

@@ -12,7 +12,7 @@
 	//TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
-/obj/machinery/abductor/gland_dispenser/Initialize()
+/obj/machinery/abductor/gland_dispenser/Initialize(mapload)
 	. = ..()
 	gland_types = subtypesof(/obj/item/organ/heart/gland)
 	gland_types = shuffle(gland_types)

@@ -21,7 +21,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_3)
 "j" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
 "k" = (

@@ -14,7 +14,7 @@
 	var/random_appearance
 
 /datum/smite/custom_imaginary_friend/configure(client/user)
-	friend_candidate_client = tgui_input_list(user, "Pick the player to put in control.", "New Imaginary Friend", sortList(GLOB.clients))
+	friend_candidate_client = tgui_input_list(user, "Pick the player to put in control.", "New Imaginary Friend", sort_list(GLOB.clients))
 
 	if(QDELETED(friend_candidate_client))
 		to_chat(user, span_notice("Selected player no longer has a client, aborting."))
@@ -28,7 +28,7 @@
 		return FALSE
 
 	if(friend_candidate_client.prefs)
-		random_appearance = tgui_alert(user, "Do you want the imaginary friend to look like and be named after [friend_candidate_client]'s current preferences ([friend_candidate_client.prefs.real_name])?", "Imaginary Friend Appearance?", list("Look-a-like", "Random")) == "Random"
+		random_appearance = tgui_alert(user, "Do you want the imaginary friend to look like and be named after [friend_candidate_client]'s current preferences ([friend_candidate_client.prefs.read_preference(/datum/preference/name/real_name)])?", "Imaginary Friend Appearance?", list("Look-a-like", "Random")) == "Random"
 	else
 		random_appearance = TRUE
 

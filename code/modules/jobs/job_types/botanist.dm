@@ -26,12 +26,12 @@
 		/obj/item/reagent_containers/glass/bottle/saltpetre = 20,
 		/obj/item/reagent_containers/glass/bottle/diethylamine = 20,
 		/obj/item/gun/energy/floragun = 10,
-		/obj/effect/spawner/lootdrop/space/rareseed = 5,// These are strong, rare seeds, so use sparingly.
+		/obj/effect/spawner/random/food_or_drink/seed_rare = 5,// These are strong, rare seeds, so use sparingly.
 		/obj/item/food/monkeycube/bee = 2
 	)
 
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
-
+	rpg_title = "Gardener"
 
 /datum/outfit/job/botanist
 	name = "Botanist"

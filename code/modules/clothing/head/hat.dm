@@ -171,17 +171,30 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	var/earflaps = TRUE
 	cold_protection = HEAD
+	///Sprite visible when the ushanka flaps are folded up.
+	var/upsprite = "ushankaup"
+	///Sprite visible when the ushanka flaps are folded down.
+	var/downsprite = "ushankadown"
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
 	dog_fashion = /datum/dog_fashion/head/ushanka
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(earflaps)
-		icon_state = "ushankaup"
-		inhand_icon_state = "ushankaup"
+		icon_state = upsprite
+		inhand_icon_state = upsprite
 		to_chat(user, span_notice("You raise the ear flaps on the ushanka."))
 	else
-		icon_state = "ushankadown"
-		inhand_icon_state = "ushankadown"
+		icon_state = downsprite
+		inhand_icon_state = downsprite
 		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
 	earflaps = !earflaps
+
+
+/obj/item/clothing/head/ushanka/soviet
+	name = "soviet ushanka"
+	desc = "For the union!"
+	icon_state = "sovietushankadown"
+	inhand_icon_state = "sovietushankadown"
+	upsprite = "sovietushankaup"
+	downsprite = "sovietushankadown"

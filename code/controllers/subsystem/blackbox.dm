@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE //time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
-							"explosion" = 2,
+							"explosion" = 3,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2,
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(blackbox)
 //no touchie
 /datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return debug_variable(var_name, deepCopyList(feedback), 0, src)
+		return debug_variable(var_name, deep_copy_list(feedback), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)

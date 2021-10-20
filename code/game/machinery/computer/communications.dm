@@ -40,6 +40,9 @@
 	/// Used to clear the modal to change alert level
 	var/alert_level_tick = 0
 
+	/// The timer ID for sending the next cross-comms message
+	var/send_cross_comms_message_timer
+
 	/// The last lines used for changing the status display
 	var/static/last_status_display
 
@@ -50,7 +53,7 @@
 	///when was emergency access last toggled
 	var/last_toggled
 
-/obj/machinery/computer/communications/Initialize()
+/obj/machinery/computer/communications/Initialize(mapload)
 	. = ..()
 	GLOB.shuttle_caller_list += src
 	AddComponent(/datum/component/gps, "Secured Communications Signal")
@@ -226,7 +229,10 @@
 			SSshuttle.existing_shuttle = SSshuttle.emergency
 			SSshuttle.action_load(shuttle, replace = TRUE)
 			bank_account.adjust_money(-shuttle.credit_cost)
-			minor_announce("[usr.real_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+
+			var/purchaser_name = (obj_flags & EMAGGED) ? scramble_message_replace_chars("AUTHENTICATION FAILURE: CVE-2018-17107", 60) : usr.real_name
+			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] credits.[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+
 			message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [shuttle.name].")
 			log_shuttle("[key_name(usr)] has purchased [shuttle.name].")
 			SSblackbox.record_feedback("text", "shuttle_purchase", 1, shuttle.name)
@@ -271,18 +277,19 @@
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			var/destination = params["destination"]
-			var/list/payload = list()
 
-			var/network_name = CONFIG_GET(string/cross_comms_network)
-			if (network_name)
-				payload["network"] = network_name
-			payload["sender_ckey"] = usr.ckey
+			log_game("[key_name(usr)] is about to send the following message to [destination]: [message]")
+			to_chat(
+				GLOB.admins,
+				span_adminnotice( \
+					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
+					the following message to <b>[destination]</b> (will autoapprove in [DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
+					[html_encode(message)]" \
+				)
+			)
 
-			send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
-			minor_announce(message, title = "Outgoing message to allied station")
-			usr.log_talk(message, LOG_SAY, tag = "message to the other server")
-			message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
-			deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, .proc/send_cross_comms_message, usr, destination, message), CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -394,6 +401,22 @@
 	last_toggled = world.time
 	return FALSE //if we are not in cooldown, allow using the button
 
+/obj/machinery/computer/communications/proc/send_cross_comms_message(mob/user, destination, message)
+	send_cross_comms_message_timer = null
+
+	var/list/payload = list()
+
+	var/network_name = CONFIG_GET(string/cross_comms_network)
+	if (network_name)
+		payload["network"] = network_name
+	payload["sender_ckey"] = usr.ckey
+
+	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
+	minor_announce(message, title = "Outgoing message to allied station")
+	usr.log_talk(message, LOG_SAY, tag = "message to the other server")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
+	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
 		"authenticated" = FALSE,
@@ -502,20 +525,11 @@
 					if (!can_purchase_this_shuttle(shuttle_template))
 						continue
 
-					var/has_access = FALSE
-
-					for (var/purchase_access in shuttle_template.who_can_purchase)
-						if (purchase_access in authorize_access)
-							has_access = TRUE
-							break
-
-					if (!has_access)
-						continue
-
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
 						"creditCost" = shuttle_template.credit_cost,
+						"emagOnly" = shuttle_template.emag_only,
 						"prerequisites" = shuttle_template.prerequisites,
 						"ref" = REF(shuttle_template),
 					))
@@ -540,6 +554,29 @@
 		"maxStatusLineLength" = MAX_STATUS_LINE_LENGTH,
 		"maxMessageLength" = MAX_MESSAGE_LEN,
 	)
+
+/obj/machinery/computer/communications/Topic(href, href_list)
+	. = ..()
+	if (.)
+		return
+
+	if (href_list["reject_cross_comms_message"])
+		if (!usr.client?.holder)
+			log_game("[key_name(usr)] tried to reject a cross-comms message without being an admin.")
+			message_admins("[key_name(usr)] tried to reject a cross-comms message without being an admin.")
+			return
+
+		if (isnull(send_cross_comms_message_timer))
+			to_chat(usr, span_warning("It's too late!"))
+			return
+
+		deltimer(send_cross_comms_message_timer)
+		send_cross_comms_message_timer = null
+
+		log_admin("[key_name(usr)] has cancelled the outgoing cross-comms message.")
+		message_admins("[key_name(usr)] has cancelled the outgoing cross-comms message.")
+
+		return TRUE
 
 /// Returns whether or not the communications console can communicate with the station
 /obj/machinery/computer/communications/proc/has_communication()
@@ -584,6 +621,9 @@
 /obj/machinery/computer/communications/proc/can_purchase_this_shuttle(datum/map_template/shuttle/shuttle_template)
 	if (isnull(shuttle_template.who_can_purchase))
 		return FALSE
+
+	if (shuttle_template.emag_only)
+		return !!(obj_flags & EMAGGED)
 
 	for (var/access in authorize_access)
 		if (access in shuttle_template.who_can_purchase)

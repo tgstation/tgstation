@@ -1,0 +1,422 @@
+{
+	"happy":[
+		"chuckles",
+		"has a huge grin",
+		"has a twisted grin like a maniac",
+		"is silently working away like a pro",
+		"looks determined",
+		"seems cheerful about it all",
+		"seems confident",
+		"whistles to themselves"
+	],
+	"neutral":[
+		"appears clueless",
+		"is darting their eyes around",
+		"is impatient",
+		"is uninterested",
+		"looks around cautiously",
+		"seems a bit sleepy",
+		"seems okay",
+		"works diligently"
+	],
+	"sad":[
+		"appears crushed",
+		"has dried tears on their face",
+		"is complaining loudly",
+		"is having a temper tantrum",
+		"is whiney about it all",
+		"looks angry",
+		"seems sad"
+	],
+	"where":[
+		"in %WHERE.",
+		"while in %WHERE."
+	],
+	"styles":[
+		"The %STORY_TYPE has a generic style"
+	],
+	"engraving_styles":[
+		"The engraving has a cubist style.",
+		"The engraving has a minimalist style.",
+		"The engraving has a surrealist style."
+	],
+	"engraving_forewords":[
+		"The engraving depicts",
+		"Embedded in the wall is a story of",
+		"In the engraving you can see the tale of",
+		"On the wall, you see",
+		"This piece depicts"
+	],
+	"engraving_somethings":[
+		"%PROTAGONIST can also be seen cringing at the sight of a %SOMETHING.",
+		"in the meantime, %CREWMEMBER is being arrested, clutching a %SOMETHING.",
+		"%CREWMEMBER is doing a sick ass backflip in the meantime!",
+		"%PROTAGONIST also appears to be locked inside of an escape pod.",
+		"A classic easter egg can be found in way of a %SOMETHING",
+		"%PROTAGONIST can also be seen secretly admiring a %SOMETHING.",
+		"%MEMORIZER is also shown floating slightly above the ground.",
+		"also depicted is %CREWMEMBER standing on top of a soapbox.",
+		"depicted also is %MEMORIZER, having an intellectual talk with a %SOMETHING.",
+		"in the middle a %SOMETHING is being worshipped by %MEMORIZER.",
+		"there is also a %SOMETHING etched in the corner. It was done so crudely you'd think a three-year-old did it.",
+		"%PROTAGONIST has a cartoony thought bubble in the engraving.",
+		"%MEMORIZER is lying on the floor, defeated by a %SOMETHING.",
+		"A %SOMETHING stands in the background.",
+		"A crowd can be seen cheering in the background.",
+		"A heavily pixelated %SOMETHING is sitting there, ominously.",
+		"it is engraved as a political comic, with %SOMETHING saying a snarky line in the bottom left.",
+		"A weeping statue of liberty can be seen in the corner",
+		"The bottom left has been signed by the author, %MEMORIZER",
+		"The engraving has repeating text behind the foreground.",
+		"The top part is dominated by a %SOMETHING.",
+		"There is a circle of danging %SOMETHINGs.",
+		"There is a tiny %SOMETHING in the corner.",
+		"%CREWMEMBER is watching, laughing at %PROTAGONIST.",
+		"%CREWMEMBER is watching, crying at the situation.",
+		"%CREWMEMBER is shocked by the situation.",
+		"%CREWMEMBER is berating %PROTAGONIST over the ordeal.",
+		"For some reason, %CREWMEMBER is also there."
+	],
+	"changeling_absorb_forewords":[
+		"A story of the past reveals itself, speaking of",
+		"Deeply tangled in their mind is a memory of",
+		"You unravel a story about",
+		"Your mental spines begin unravelling a story of"
+	],
+	"changeling_absorb_somethings":[
+		"You continue to peel away the story.",
+		"Your mental spines dive deeper into the memory."
+	],
+	"tattoo_forewords":[
+		"This tattoo's story is of",
+		"Inked into the skin is a story of",
+		"On the tattoo is a tale of",
+		"The tattoo depicts"
+	],
+	"tattoo_somethings":[
+		"%CREWMEMBER looms over the tattoo.",
+		"%SOMETHINGs border around the main work.",
+		"A car is driving across the tattoo.",
+		"A chinese dragon swirls around the tattoo.",
+		"A cobra stares out from the tattoo.",
+		"A frankenstein is coming to life in the tattoo.",
+		"A giant \"CHELP\" is in the background of the tattoo.",
+		"A monthperson is zipping a jumpsuit over their head in the background.",
+		"A rainbow is at the top of the tattoo.",
+		"A space kraken is holding the tattoo.",
+		"A tarantula is fighting a %CREWMEMBER on the tattoo.",
+		"A two headed space eagle soars across the tattoo.",
+		"An inked anchor weighs down the tattoo.",
+		"Holy shit, is that a %SOMETHING?",
+		"Some space politician is dancing on the side of the tattoo.",
+		"The tattoo has a drawing of a %SOMETHING that says \"I LOST THE BET\".",
+		"The tattoo has a giant flaming skull.",
+		"The tattoo has a little dish with a %SOMETHING on it.",
+		"The tattoo has weird philosophical quotes.",
+		"The tattoo is bordered by a swirling space dragon.",
+		"The tattoo says something in nekomimetic."
+	],
+	"tattoo_styles":[
+		"The tattoo is in a mad max style.",
+		"The tattoo is styled to look cyberpunk.",
+		"The tattoo looks cartoony.",
+		"The tattoo looks like it was done by an ameteur.",
+		"The tattoo looks professional.",
+		"This tattoo is Nanotrasen approved",
+		"This tattoo is Syndicate approved"
+	],
+	"allergy_names":[
+		"The %ALLERGY_TYPE allergy of %PROTAGONIST."
+	],
+	"allergy_starts":[
+		"%PROTAGONIST sneezing after coming into contact with %ALLERGY_TYPE."
+	],
+	"allergy_moods":[
+		"%MEMORIZER %MOOD as they wipe their nose."
+	],
+	"account_names":[
+		"The bank ID of %PROTAGONIST, %ACCOUNT_ID."
+	],
+	"account_starts":[
+		"%PROTAGONIST flexing their last brain cells, proudly showing their lucky numbers %ACCOUNT_ID.",
+		"%ACCOUNT_ID. The numbers mason, what do they mean!?"
+	],
+	"account_moods":[
+		"%PROTAGONIST %MOOD as they try to keep their drool in.",
+		"%PROTAGONIST %MOOD and runs from their wrangler."
+	],
+	"surgery_names":[
+		"The %SURGERY_TYPE of %DEUTERAGONIST by %PROTAGONIST."
+	],
+	"surgery_starts":[
+		"%PROTAGONIST carefully performing %SURGERY_TYPE on %DEUTERAGONIST",
+		"%PROTAGONIST using a bone saw on %DEUTERAGONIST",
+		"%DEUTERAGONIST being operated on by %PROTAGONIST"
+	],
+	"surgery_moods":[
+		"%PROTAGONIST %MOOD after finishing %SURGERY_TYPE.",
+		"%PROTAGONIST %MOOD as a blood splatter lands on %PROTAGONIST's face.",
+		"%PROTAGONIST %MOOD as the %SURGERY_TYPE continues.",
+		"%PROTAGONIST %MOOD as they pick apart %DEUTERAGONIST.",
+		"%PROTAGONIST %MOOD as they tear into %DEUTERAGONIST."
+	],
+	"bomb_names":[
+		"The arming of %BOMB_TYPE by %PROTAGONIST."
+	],
+	"bomb_starts":[
+		"%PROTAGONIST pressing an ominous button, causing %BOMB_TYPE to begin beeping",
+		"%PROTAGONIST slapping down a %BOMB_TYPE",
+		"%BOMB_TYPE being armed by %PROTAGONIST"
+	],
+	"bomb_moods":[
+		"%PROTAGONIST %MOOD and begins to walk away from %BOMB_TYPE.",
+		"%PROTAGONIST %MOOD as %BOMB_TYPE begins to tick.",
+		"%PROTAGONIST %MOOD with %BOMB_TYPE winding down.",
+		"beep... beep... %PROTAGONIST %MOOD."
+	],
+	"bomb_happy":[
+		"feels too cool to look at %BOMB_TYPE"
+	],
+	"highfive_names":[
+		"The %HIGHFIVE_TYPE between %PROTAGONIST and %DEUTERAGONIST."
+	],
+	"highfive_starts":[
+		"%PROTAGONIST and %DEUTERAGONIST having a a legendary %HIGHFIVE_TYPE",
+		"%PROTAGONIST giving %DEUTERAGONIST a %HIGHFIVE_TYPE",
+		"%PROTAGONIST and %DEUTERAGONIST giving each other a %HIGHFIVE_TYPE"
+	],
+	"highfive_moods":[
+		"%PROTAGONIST %MOOD as the %HIGHFIVE_TYPE connects.",
+		"%PROTAGONIST %MOOD at all the compatriotism going on.",
+		"What a %HIGHFIVE_TYPE! %PROTAGONIST %MOOD.",
+		"Wow! %PROTAGONIST %MOOD!"
+	],
+	"borged_names":[
+		"The borging of %PROTAGONIST."
+	],
+	"borged_starts":[
+		"%PROTAGONIST havign their brain put into a robot",
+		"%PROTAGONIST getting turned into a bucket of bolts"
+	],
+	"borged_moods":[
+		"There shouldn't be any; you're a brain at this point!"
+	],
+	"death_names":[
+		"The death of %PROTAGONIST."
+	],
+	"death_starts":[
+		"%PROTAGONIST's heart stopping",
+		"%PROTAGONIST having perished",
+		"the death of %PROTAGONIST",
+		"%PROTAGONIST seizing up and falling limp, their eyes appearing dead and lifeless"
+	],
+	"death_moods":[
+		"There shouldn't be any; this is set to be a moodless memory!"
+	],
+	"creampied_names":[
+		"The creaming of %PROTAGONIST."
+	],
+	"creampied_starts":[
+		"%PROTAGONIST's face being covered in cream",
+		"%PROTAGONIST getting creampied"
+	],
+	"creampied_moods":[
+		"%PROTAGONIST %MOOD as the cream drips off their face",
+		"%PROTAGONIST %MOOD because of their now expanded laundry task.",
+		"%PROTAGONIST %MOOD as they lick off some of the pie"
+	],
+	"slipped_names":[
+		"The slipping of %PROTAGONIST."
+	],
+	"slipped_starts":[
+		"%PROTAGONIST tumbling right over a %WHAT_BY",
+		"%PROTAGONIST not being able to keep standing when faced with a %WHAT_BY",
+		"the perilous %WHAT_BY which took %PROTAGONIST down a notch"
+	],
+	"slipped_moods":[
+		"%PROTAGONIST %MOOD as they crawl up from the ground.",
+		"%PROTAGONIST %MOOD while on the ground."
+	],
+	"slipped_sad":[
+		"doesn't even want to get up and looks depressed"
+	],
+	"spaghetti_spilled_names":[
+		"%PROTAGONIST's spaghetti blunder."
+	],
+	"spaghetti_spilled_starts":[
+		"%PROTAGONIST's spaghetti pouring out of their pockets",
+		"%PROTAGONIST's pockets not being able to contain their spaghetti"
+	],
+	"spaghetti_spilled_moods":[
+		"%PROTAGONIST %MOOD as the spaghetti poured out.",
+		"%PROTAGONIST %MOOD as they try to pick up the scraps."
+	],
+	"kiss_names":[
+		"the kiss blown to %PROTAGONIST"
+	],
+	"kiss_starts":[
+		"%PROTAGONIST's receiving a blown kiss from %KISSER",
+		"%KISSER blowing a kiss to %PROTAGONIST"
+	],
+	"kiss_moods":[
+		"%PROTAGONIST %MOOD as the kiss lands on their cheek.",
+		"%PROTAGONIST %MOOD as it happen."
+	],
+	"quirk_drug_names":[
+		"%PROTAGONIST's smoking problem."
+	],
+	"quirk_drug_starts":[
+		"%PROTAGONIST fiending for some %FAV_BRAND ciggies.",
+		"%FAV_BRAND cigarettes being plundered by %PROTAGONIST.",
+		"%PROTAGONIST buying a box of %FAV_BRAND nicotine sticks."
+	],
+	"quirk_drug_moods":[
+		"%MEMORIZER %MOOD as they light another up."
+	],
+	"meal_names":[
+		"A delicious %FOOD %PROTAGONIST ate"
+	],
+	"meal_starts":[
+		"%PROTAGONIST enjoying an incredibly good %FOOD",
+		"%PROTAGONIST producing a slice of life anime reaction to eating %FOOD",
+		"%FOOD leaving a long lasting impression on %PROTAGONIST",
+		"%FOOD changing %PROTAGONIST's outlook on food",
+		"%FOOD is leaving %PROTAGONIST round and full"
+	],
+	"meal_moods":[
+		"%PROTAGONIST %MOOD as they take another bite."
+	],
+	"drink_names":[
+		"a delicious %DRINK %PROTAGONIST consumed"
+	],
+	"drink_starts":[
+		"%PROTAGONIST enjoying an incredibly good %DRINK",
+		"%PROTAGONIST slurping some tasty %DRINK",
+		"%DRINK leaving a long lasting impression on %PROTAGONIST",
+		"%DRINK changing %PROTAGONIST's outlook on classy drinking"
+	],
+	"drink_moods":[
+		"%PROTAGONIST %MOOD as they take another sip."
+	],
+	"fire_names":[
+		"The burning of %PROTAGONIST."
+	],
+	"fire_starts":[
+		"%PROTAGONIST bursting into flames",
+		"%PROTAGONIST turning into a human torch",
+		"the fire that engulfed %PROTAGONIST"
+	],
+	"fire_moods":[
+		"%PROTAGONIST %MOOD as their skin melts."
+	],
+	"dismembered_names":[
+		"The loss of %PROTAGONIST's %LOST_LIMB."
+	],
+	"dismembered_starts":[
+		"%PROTAGONIST's %LOST_LIMB flinging away",
+		"%PROTAGONIST's %LOST_LIMB being shot into the abyss",
+		"%PROTAGONIST becoming eligble for handicapped parking"
+	],
+	"dismembered_moods":[
+		"%PROTAGONIST %MOOD after losing %LOST_LIMB.",
+		"Without %LOST_LIMB, %PROTAGONIST %MOOD."
+	],
+	"pet_dead_names":[
+		"The death of %DEUTERAGONIST."
+	],
+	"pet_dead_starts":[
+		"honoring %DEUTERAGONIST, the station's pet",
+		"%DEUTERAGONIST's funeral, which is attended by a group of crewmembers",
+		"a shallow hole, with %PROPER %DEUTERAGONIST inside"
+	],
+	"pet_dead_moods":[
+		"%PROTAGONIST %MOOD without %DEUTERAGONIST.",
+		"Without %DEUTERAGONIST, %PROTAGONIST %MOOD."
+	],
+	"won_revolution_names":[
+		"The revolution of %STATION_NAME by %PROTAGONIST."
+	],
+	"won_revolution_starts":[
+		"%PROTAGONIST raising the flag of the revolution over the corpses of the former dictators",
+		"a flag waving above a pile of corpses with %PROTAGONIST standing over it",
+		"a statue of the former captain toppled over, with %PROTAGONIST next to it",
+		"a poster that says %STATION_NAME with a cross in it, hailing in a new era"
+	],
+	"won_revolution_moods":[
+		"%PROTAGONIST %MOOD at the fall of %STATION_NAME.",
+		"%PROTAGONIST %MOOD at the idea of the new era."
+	],
+	"received_medal_names":[
+		"The award ceremony of %MEDAL_TYPE to %PROTAGONIST."
+	],
+	"received_medal_starts":[
+		"%PROTAGONIST receiving a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\"",
+		"%PROTAGONIST accepting a %MEDAL_TYPE inscribed with \"%MEDAL_REASON\" from %DEUTERAGONIST",
+		"a %MEDAL_TYPE with the inscription \"%MEDAL_REASON\" being awarded to %PROTAGONIST by %DEUTERAGONIST"
+	],
+	"received_medal_moods":[
+		"%PROTAGONIST %MOOD as they receive their medal.",
+		"%PROTAGONIST %MOOD with their newly received award."
+	],
+	"megafauna_kill_names":[
+		"The slaughter of %DEUTERAGONIST."
+	],
+	"megafauna_kill_starts":[
+		"%PROTAGONIST standing with the head of %DEUTERAGONIST in their hand",
+		"%PROTAGONIST performing the final strike on %DEUTERAGONIST, taking it down",
+		"the killing of %DEUTERAGONIST, the dangerous megafauna, by %PROTAGONIST"
+	],
+	"megafauna_kill_moods":[
+		"%PROTAGONIST %MOOD as the blood lust fades from their eyes.",
+		"%PROTAGONIST %MOOD as they search the corpse for valuables."
+	],
+	"held_at_gunpoint_names":[
+		"%PROTAGONIST being held at gunpoint."
+	],
+	"held_at_gunpoint_starts":[
+		"%PROTAGONIST with a %WHAT_BY pressed to their skull by %DEUTERAGONIST",
+		"%DEUTERAGONIST whipping out a %WHAT_BY and pointing it at %PROTAGONIST"
+	],
+	"held_at_gunpoint_moods":[
+		"%PROTAGONIST %MOOD as they are faced with the situation.",
+		"%PROTAGONIST %MOOD as they stare down %WHAT_BY's barrel."
+	],
+	"gibbed_names":[
+		"%PROTAGONIST exploding into bits."
+	],
+	"gibbed_starts":[
+		"%PROTAGONIST exploding into little fleshy bits",
+		"%PROTAGONIST becoming flesh paste in the blink of an eye"
+	],
+	"vending_crushed_names":[
+		"%PROTAGONIST being crushed by a %WHAT_BY."
+	],
+	"vending_crushed_starts":[
+		"%PROTAGONIST being crushed by the a %WHAT_BY",
+		"the %WHAT_BY that crashed on top of %PROTAGONIST",
+		"the fall of a %WHAT_BY onto %PROTAGONIST"
+	],
+	"vending_crushed_moods":[
+		"%PROTAGONIST %MOOD as they lie under the machine.",
+		"%PROTAGONIST %MOOD as a goodie falls out of the %WHAT_BY."
+	],
+	"supermatter_dusted_names":[
+		"The dusting of %PROTAGONIST by the %WHAT_BY."
+	],
+	"supermatter_dusted_starts":[
+		"%PROTAGONIST turning into a pile of bones after touching the %WHAT_BY",
+		"The %WHAT_BY turning %PROTAGONIST into ash",
+		"The dusting of %PROTAGONIST after they got too close to the %WHAT_BY"
+	],
+	"supermatter_dusted_moods":[
+		"%PROTAGONIST %MOOD as they faded way.",
+		"%PROTAGONIST %MOOD as they are reduced to atoms."
+	],
+	"nuke_code_names":[
+		"%PROTAGONIST learns the detonation codes for a nuclear weapon, %NUKE_CODE."
+		],
+	"nuke_code_starts":[
+		"The number %NUKE_CODE written on a sticky note with the words \"FOR SYNDICATE EYES ONLY\" scrawled next to it.",
+		"A piece of paper with the number %NUKE_CODE being handed to %PROTAGONIST from a figure in a blood-red hardsuit."
+	]
+}

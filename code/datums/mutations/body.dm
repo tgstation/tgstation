@@ -182,16 +182,20 @@
 	time_coeff = 2
 	locked = TRUE //Species specific, keep out of actual gene pool
 	var/datum/species/original_species = /datum/species/human
+	var/original_name
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	if(!ismonkey(owner))
 		original_species = owner.dna.species.type
+		original_name = owner.real_name
+		owner.fully_replace_character_name(null, "monkey ([rand(1,999)])")
 	. = owner.monkeyize()
 
 /datum/mutation/human/race/on_losing(mob/living/carbon/human/owner)
 	if(owner && owner.stat != DEAD && (owner.dna.mutations.Remove(src)) && ismonkey(owner))
+		owner.fully_replace_character_name(null, original_name)
 		. = owner.humanize(original_species)
 
 /datum/mutation/human/glow
@@ -454,7 +458,7 @@
 	for(var/obj/item/organ/I in organs)
 		qdel(I)
 
-	explosion(owner, light_impact_range = 2, adminlog = TRUE)
+	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/H in view(2,owner))
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)

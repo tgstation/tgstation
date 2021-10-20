@@ -64,4 +64,4 @@
 				to_chat(C, span_hypnophrase("The light is so pretty..."))
 				C.add_confusion(min(C.get_confusion() + 10, 20))
 				C.dizziness += min(C.dizziness + 10, 20)
-				C.drowsyness += min(C.drowsyness + 10, 20)
+				C.adjust_drowsyness(min(C.drowsyness + 10, 20))

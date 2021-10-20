@@ -22,7 +22,7 @@
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 
-/obj/vehicle/sealed/car/clowncar/Initialize()
+/obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -219,10 +219,13 @@
 		driver.update_mouse_pointer()
 
 ///Fires the cannon where the user clicks
-/obj/vehicle/sealed/car/clowncar/proc/fire_cannon_at(mob/user, atom/A, params)
+/obj/vehicle/sealed/car/clowncar/proc/fire_cannon_at(mob/user, atom/A, list/modifiers)
 	SIGNAL_HANDLER
 	if(cannonmode != CLOWN_CANNON_READY || !length(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED)))
-		return NONE
+		return
+	//The driver can still examine things and interact with his inventory.
+	if(modifiers[SHIFT_CLICK] || !isturf(A.loc))
+		return
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 	mob_exit(unlucky_sod, TRUE)
 	flick("clowncar_recoil", src)

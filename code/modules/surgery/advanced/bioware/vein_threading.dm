@@ -21,11 +21,13 @@
 	display_results(user, target, span_notice("You start weaving [target]'s circulatory system."),
 		span_notice("[user] starts weaving [target]'s circulatory system."),
 		span_notice("[user] starts manipulating [target]'s circulatory system."))
+	display_pain(target, "Your entire body burns in agony!")
 
 /datum/surgery_step/thread_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, span_notice("You weave [target]'s circulatory system into a resistant mesh!"),
 		span_notice("[user] weaves [target]'s circulatory system into a resistant mesh!"),
 		span_notice("[user] finishes manipulating [target]'s circulatory system."))
+	display_pain(target, "You can feel your blood pumping through reinforced veins!")
 	new /datum/bioware/threaded_veins(target)
 	return ..()
 

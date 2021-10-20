@@ -5,7 +5,7 @@
 	icon_screen = "command"
 	time_to_screwdrive = 60
 
-/obj/machinery/computer/upload/Initialize()
+/obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Upload")
 

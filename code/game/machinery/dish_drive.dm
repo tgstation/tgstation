@@ -26,7 +26,7 @@
 	var/transmit_enabled = TRUE
 	var/list/dish_drive_contents
 
-/obj/machinery/dish_drive/Initialize()
+/obj/machinery/dish_drive/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 

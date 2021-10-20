@@ -5,15 +5,23 @@
 	if (owner?.client?.interviewee)
 		return
 	var/list/buttons = subtypesof(/atom/movable/screen/lobby)
-	for(var/button in buttons)
-		var/atom/movable/screen/lobbyscreen = new button()
+	for(var/button_type in buttons)
+		var/atom/movable/screen/lobby/lobbyscreen = new button_type()
+		lobbyscreen.SlowInit()
 		lobbyscreen.hud = src
 		static_inventory += lobbyscreen
+		if(istype(lobbyscreen, /atom/movable/screen/lobby/button))
+			var/atom/movable/screen/lobby/button/lobby_button = lobbyscreen
+			lobby_button.owner = REF(owner)
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
 	layer = LOBBY_BUTTON_LAYER
 	screen_loc = "TOP,CENTER"
+
+/// Run sleeping actions after initialize
+/atom/movable/screen/lobby/proc/SlowInit()
+	return
 
 /atom/movable/screen/lobby/background
 	layer = LOBBY_BACKGROUND_LAYER
@@ -26,9 +34,15 @@
 	var/enabled = TRUE
 	///Is the button currently being hovered over with the mouse?
 	var/highlighted = FALSE
+	/// The ref of the mob that owns this button. Only the owner can click on it.
+	var/owner
 
 /atom/movable/screen/lobby/button/Click(location, control, params)
+	if(owner != REF(usr))
+		return
+
 	. = ..()
+
 	if(!enabled)
 		return
 	flick("[base_icon_state]_pressed", src)
@@ -36,11 +50,17 @@
 	return TRUE
 
 /atom/movable/screen/lobby/button/MouseEntered(location,control,params)
+	if(owner != REF(usr))
+		return
+
 	. = ..()
 	highlighted = TRUE
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/button/MouseExited()
+	if(owner != REF(usr))
+		return
+
 	. = ..()
 	highlighted = FALSE
 	update_appearance(UPDATE_ICON)
@@ -73,7 +93,11 @@
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client.prefs.ShowChoices(hud.mymob)
+
+	var/datum/preferences/preferences = hud.mymob.client.prefs
+	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
+	preferences.update_static_data(usr)
+	preferences.ui_interact(usr)
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
@@ -85,15 +109,26 @@
 
 /atom/movable/screen/lobby/button/ready/Initialize(mapload)
 	. = ..()
-	if(SSticker.current_state > GAME_STATE_PREGAME)
-		set_button_status(FALSE)
-	else
-		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/hide_ready_button)
+	switch(SSticker.current_state)
+		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
+			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/hide_ready_button)
+		if(GAME_STATE_SETTING_UP)
+			set_button_status(FALSE)
+			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/show_ready_button)
+		else
+			set_button_status(FALSE)
 
 /atom/movable/screen/lobby/button/ready/proc/hide_ready_button()
 	SIGNAL_HANDLER
 	set_button_status(FALSE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/show_ready_button)
+
+/atom/movable/screen/lobby/button/ready/proc/show_ready_button()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/hide_ready_button)
 
 /atom/movable/screen/lobby/button/ready/Click(location, control, params)
 	. = ..()
@@ -119,10 +154,14 @@
 
 /atom/movable/screen/lobby/button/join/Initialize(mapload)
 	. = ..()
-	if(SSticker.current_state > GAME_STATE_PREGAME)
-		set_button_status(TRUE)
-	else
-		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/show_join_button)
+	switch(SSticker.current_state)
+		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
+			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/show_join_button)
+		if(GAME_STATE_SETTING_UP)
+			set_button_status(TRUE)
+			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/hide_join_button)
+		else
+			set_button_status(TRUE)
 
 /atom/movable/screen/lobby/button/join/Click(location, control, params)
 	. = ..()
@@ -157,10 +196,17 @@
 		return
 	new_player.LateChoices()
 
-/atom/movable/screen/lobby/button/join/proc/show_join_button(status)
+/atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/hide_join_button)
+
+/atom/movable/screen/lobby/button/join/proc/hide_join_button()
+	SIGNAL_HANDLER
+	set_button_status(FALSE)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/show_join_button)
 
 /atom/movable/screen/lobby/button/observe
 	screen_loc = "TOP:-40,CENTER:-54"
@@ -189,21 +235,21 @@
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, .proc/enable_observing)
 
-
-/* This is here for a future settings menu that will come with the prefs rework, if this is not in by 2022 kill mothblocks.
 /atom/movable/screen/lobby/button/settings
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "settings"
 	base_icon_state = "settings"
-	screen_loc = "TOP:-122,CENTER:+58"
+	screen_loc = "TOP:-122,CENTER:+30"
 
 /atom/movable/screen/lobby/button/settings/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
-	hud.mymob.client.prefs.ShowChoices(hud.mymob)
-*/
 
+	var/datum/preferences/preferences = hud.mymob.client.prefs
+	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
+	preferences.update_static_data(usr)
+	preferences.ui_interact(usr)
 
 /atom/movable/screen/lobby/button/changelog_button
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
@@ -216,7 +262,7 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "crew_manifest"
 	base_icon_state = "crew_manifest"
-	screen_loc = "TOP:-122,CENTER:+30"
+	screen_loc = "TOP:-122,CENTER:+2"
 
 /atom/movable/screen/lobby/button/crew_manifest/Click(location, control, params)
 	. = ..()
@@ -233,17 +279,16 @@
 	icon = 'icons/hud/lobby/bottom_buttons.dmi'
 	icon_state = "poll"
 	base_icon_state = "poll"
-	screen_loc = "TOP:-122,CENTER:+2"
+	screen_loc = "TOP:-122,CENTER:-26"
 
 	var/new_poll = FALSE
 
-///Need to use New due to init
-/atom/movable/screen/lobby/button/poll/New(loc, ...)
+/atom/movable/screen/lobby/button/poll/SlowInit(mapload)
 	. = ..()
-	if(!usr) //
+	if(!usr)
 		return
 	var/mob/dead/new_player/new_player = usr
-	if(IsGuestKey(new_player.key))
+	if(is_guest_key(new_player.key))
 		set_button_status(FALSE)
 		return
 	if(!SSdbcore.Connect())

@@ -29,7 +29,7 @@
 		} else { \
 			_S = sources\
 		}; \
-		if (_L && _L[trait]) { \
+		if (_L?[trait]) { \
 			for (var/_T in _L[trait]) { \
 				if ((!_S && (_T != ROUNDSTART_TRAIT)) || (_T in _S)) { \
 					_L[trait] -= _T \
@@ -53,7 +53,7 @@
 		} else { \
 			_sources_list = sources\
 		}; \
-		if (_traits_list && _traits_list[trait]) { \
+		if (_traits_list?[trait]) { \
 			for (var/_trait_source in _traits_list[trait]) { \
 				if (!(_trait_source in _sources_list)) { \
 					_traits_list[trait] -= _trait_source \
@@ -109,15 +109,10 @@
 		}\
 	} while (0)
 
-#define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
-#define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
-#define HAS_TRAIT_FROM_ONLY(target, trait, source) (\
-	target.status_traits ?\
-		(target.status_traits[trait] ?\
-			((source in target.status_traits[trait]) && (length(target.status_traits) == 1))\
-			: FALSE)\
-		: FALSE)
-#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
+#define HAS_TRAIT(target, trait) (target.status_traits?[trait] ? TRUE : FALSE)
+#define HAS_TRAIT_FROM(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]))
+#define HAS_TRAIT_FROM_ONLY(target, trait, source) (target.status_traits?[trait] && (source in target.status_traits[trait]) && (length(target.status_traits[trait]) == 1))
+#define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits?[trait] && (length(target.status_traits[trait] - source) > 0))
 
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
@@ -312,6 +307,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ANTENNAE "antennae"
 /// Blowing kisses actually does damage to the victim
 #define TRAIT_KISS_OF_DEATH "kiss_of_death"
+/// Used to activate french kissing
+#define TRAIT_GARLIC_BREATH "kiss_of_garlic_death"
 /// Used on limbs in the process of turning a human into a plasmaman while in plasma lava
 #define TRAIT_PLASMABURNT "plasma_burnt"
 /// Addictions don't tick down, basically they're permanently addicted
@@ -328,6 +325,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BYPASS_MEASURES "bypass_lagswitch_measures"
 /// Someone can safely be attacked with honorbound with ONLY a combat mode check, the trait is assuring holding a weapon and hitting won't hurt them..
 #define TRAIT_ALLOWED_HONORBOUND_ATTACK "allowed_honorbound_attack"
+/// The user is sparring
+#define TRAIT_SPARRING "sparring"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -361,6 +360,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied to [/datum/mind] to stop someone from using the cursed hot springs to polymorph more than once.
 #define TRAIT_HOT_SPRING_CURSED "hot_spring_cursed"
+
+/// If something has been engraved/cannot be engraved
+#define TRAIT_NOT_ENGRAVABLE "not_engravable"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -473,8 +475,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NIGHT_VISION "night_vision"
 #define TRAIT_LIGHT_STEP "light_step"
 #define TRAIT_SPIRITUAL "spiritual"
-#define TRAIT_FAN_CLOWN "fan_clown"
-#define TRAIT_FAN_MIME "fan_mime"
+#define TRAIT_CLOWN_ENJOYER "clown_enjoyer"
+#define TRAIT_MIME_FAN "mime_fan"
 #define TRAIT_VORACIOUS "voracious"
 #define TRAIT_SELF_AWARE "self_aware"
 #define TRAIT_FREERUNNING "freerunning"
@@ -495,6 +497,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_INTROVERT "introvert"
 #define TRAIT_ANXIOUS "anxious"
 #define TRAIT_INSANITY "insanity"
+/// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
+#define TRAIT_SHIFTY_EYES "shifty_eyes"
 
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
@@ -522,9 +526,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_MMI "component_mmi"
+/// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
+#define TRAIT_COMPONENT_PRINTER "component_printer"
 
 /// If present on a [/mob/living/carbon], will make them appear to have a medium level disease on health HUDs.
 #define TRAIT_DISEASELIKE_SEVERITY_MEDIUM "diseaselike_severity_medium"
+
+/// trait denoting someone will crawl faster in soft crit
+#define TRAIT_TENACIOUS "tenacious"
+
+/// trait denoting someone will sometimes recover out of crit
+#define TRAIT_UNBREAKABLE "unbreakable"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -541,6 +553,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
+#define FLIGHTPOTION_TRAIT "flightpotion"
 /// Trait inherited by experimental surgeries
 #define EXPERIMENTAL_SURGERY_TRAIT "experimental_surgery"
 #define DISEASE_TRAIT "disease"
@@ -730,3 +743,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// Traits granted to items due to their chameleon properties.
 #define CHAMELEON_ITEM_TRAIT "chameleon_item_trait"
+
+/// This human wants to see the color of their glasses, for some reason
+#define TRAIT_SEE_GLASS_COLORS "see_glass_colors"

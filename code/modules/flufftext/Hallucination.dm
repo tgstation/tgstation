@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(world.time < next_hallucination)
 		return
 
-	var/halpick = pickweight(GLOB.hallucination_list)
+	var/halpick = pick_weight(GLOB.hallucination_list)
 	new halpick(src, FALSE)
 
 	next_hallucination = world.time + rand(100, 600)
@@ -862,10 +862,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	feedback_details += "Type: [is_radio ? "Radio" : "Talk"], Source: [person.real_name], Message: [message]"
 
 	// Display message
-	if (!is_radio && !target.client?.prefs.chat_on_map)
+	if (!is_radio && !target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, speech_overlay, list(target.client), 30)
-	if (target.client?.prefs.chat_on_map)
+	if (target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		target.create_chat_message(person, understood_language, chosen, spans)
 	to_chat(target, message)
 	qdel(src)
@@ -1375,7 +1375,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/danger/anomaly
 	name = "flux wave anomaly"
 
-/obj/effect/hallucination/danger/anomaly/Initialize()
+/obj/effect/hallucination/danger/anomaly/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	var/static/list/loc_connections = list(

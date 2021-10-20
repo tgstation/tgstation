@@ -163,6 +163,9 @@
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
 	antag_hud_name = "rev_head"
+
+	preview_outfit = /datum/outfit/revolutionary
+
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
@@ -180,6 +183,37 @@
 
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
+
+/datum/antagonist/rev/head/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(preview_outfit)
+
+	final_icon.Blend(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
+	final_icon.Blend(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
+
+	// Apply the rev head HUD, but scale up the preview icon a bit beforehand.
+	// Otherwise, the R gets cut off.
+	final_icon.Scale(64, 64)
+
+	var/icon/rev_head_icon = icon('icons/mob/hud.dmi', "rev_head")
+	rev_head_icon.Scale(48, 48)
+	rev_head_icon.Crop(1, 1, 64, 64)
+	rev_head_icon.Shift(EAST, 10)
+	rev_head_icon.Shift(NORTH, 16)
+	final_icon.Blend(rev_head_icon, ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
+
+/datum/antagonist/rev/head/proc/make_assistant_icon(hairstyle)
+	var/mob/living/carbon/human/dummy/consistent/assistant = new
+	assistant.hairstyle = hairstyle
+	assistant.update_hair()
+
+	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
+	assistant_icon.ChangeOpacity(0.5)
+
+	qdel(assistant)
+
+	return assistant_icon
 
 /datum/antagonist/rev/proc/can_be_converted(mob/living/candidate)
 	if(!candidate.mind)
@@ -395,6 +429,7 @@
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
+				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
 				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
 					charter_given = TRUE
 					podspawn(list(
@@ -557,6 +592,15 @@
 			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 	heads_report += "</table>"
 	return common_part + heads_report
+
+/datum/outfit/revolutionary
+	name = "Revolutionary (Preview only)"
+
+	uniform = /obj/item/clothing/under/costume/soviet
+	head = /obj/item/clothing/head/ushanka
+	gloves = /obj/item/clothing/gloves/color/black
+	l_hand = /obj/item/spear
+	r_hand = /obj/item/assembly/flash
 
 #undef DECONVERTER_STATION_WIN
 #undef DECONVERTER_REVS_WIN

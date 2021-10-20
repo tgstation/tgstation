@@ -84,6 +84,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	triple_charge = new /datum/action/cooldown/mob_cooldown/charge/triple_charge()
 	hallucination_charge = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge()
 	hallucination_charge_surround = new /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/hallucination_surround()
