@@ -79,10 +79,15 @@
 #define VIBE_BOT (1<<8)
 
 //AI notification defines
+///Alert when a new Cyborg is created.
 #define NEW_BORG 1
+///Alert when a Cyborg selects a model.
 #define NEW_MODEL 2
+///Alert when a Cyborg changes their name.
 #define RENAME 3
+///Alert when an AI disconnects themselves from their shell.
 #define AI_SHELL 4
+///Alert when a Cyborg gets disconnected from their AI.
 #define DISCONNECT 5
 
 //Assembly defines
@@ -103,9 +108,12 @@
 ///All modules slots are disabled.
 #define BORG_MODULE_ALL_DISABLED (1<<2)
 
-/// Defines for borg module selection
+//Cyborg module selection
+///First Borg module slot.
 #define BORG_CHOOSE_MODULE_ONE 1
+///Second Borg module slot.
 #define BORG_CHOOSE_MODULE_TWO 2
+///Third Borg module slot.
 #define BORG_CHOOSE_MODULE_THREE 3
 
 #define SKIN_ICON "skin_icon"
