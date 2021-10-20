@@ -84989,6 +84989,7 @@
 	req_one_access_txt = "25;28"
 	},
 /obj/structure/disposalpipe/segment,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "teC" = (
@@ -86196,21 +86197,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/toilet/restrooms)
-"tyZ" = (
-/obj/machinery/deepfryer,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/mob/living/carbon/human/species/monkey/punpun,
-/turf/open/floor/iron,
-/area/service/kitchen)
 "tzb" = (
 /obj/machinery/meter{
 	name = "Mixed Air Tank Out"
@@ -139625,7 +139611,7 @@ ofO
 taj
 nbw
 reI
-tyZ
+lwm
 fGQ
 qrQ
 mfN
