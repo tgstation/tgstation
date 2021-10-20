@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "Pacifists can now fire the circuit gun."
