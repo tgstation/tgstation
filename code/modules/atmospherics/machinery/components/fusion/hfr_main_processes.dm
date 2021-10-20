@@ -403,7 +403,7 @@
 
 	check_gravity_pulse(delta_time)
 
-	emit_rads(radiation)
+	emit_rads()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
 	// Don't evaporate if the reaction is dead
