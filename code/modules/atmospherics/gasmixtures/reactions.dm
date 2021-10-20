@@ -857,8 +857,6 @@
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 	if(cached_gases[/datum/gas/bz][MOLES] < 30)
-		// MOTHBLOCKS TODO: How do I into proto-nitrate BZ response? Doesn't look necessary...
-		// radiation_pulse(location, consumed_amount * 20, 2.5, TRUE, FALSE)
 		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 	else
 		for(var/mob/living/carbon/L in location)
