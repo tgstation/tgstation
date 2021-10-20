@@ -15,11 +15,16 @@
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
 	reflect_sect_in_icons()
+	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
+
+/obj/structure/altar_of_gods/Destroy()
+	GLOB.chaplain_altars -= src
+	return ..()
 
 /obj/structure/altar_of_gods/update_overlays()
 	. = ..()
