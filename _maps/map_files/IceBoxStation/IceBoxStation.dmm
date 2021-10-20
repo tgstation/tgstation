@@ -875,7 +875,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/starboard/fore)
 "aeY" = (
 /obj/machinery/door/window/southleft{
@@ -4685,7 +4685,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/starboard/fore)
 "aHM" = (
 /obj/structure/cable,
@@ -11606,7 +11606,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/starboard/fore)
 "cfV" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -30694,7 +30694,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/starboard/fore)
 "lUq" = (
 /obj/machinery/firealarm/directional/south,
