@@ -31748,11 +31748,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/binary/valve/digital/on{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/binary/pressure_valve/on{
 	dir = 4;
 	name = "Output Release"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "mEr" = (
@@ -42308,8 +42308,8 @@
 	},
 /area/science/research)
 "sfD" = (
-/obj/machinery/atmospherics/components/binary/pump/off{
-	name = Waste Release"
+/obj/machinery/atmospherics/components/binary/pressure_valve/on{
+	name = "Waste Release"
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
