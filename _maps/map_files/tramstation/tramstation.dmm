@@ -16399,11 +16399,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/service/janitor)
-"dMl" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
 "dMo" = (
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 2
@@ -23354,11 +23349,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
-"grQ" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/airless,
-/area/engineering/supermatter/room)
 "grY" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -32093,12 +32083,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "jHT" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
-	dir = 1
-	},
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/mine/explored)
@@ -34822,11 +34812,11 @@
 /area/science/research)
 "kIO" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/engineering/supermatter/room)
+/area/mine/explored)
 "kIT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -43687,12 +43677,9 @@
 /area/engineering/supermatter)
 "ouV" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump";
-	target_pressure = 4500
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/area/mine/explored)
 "ova" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -68495,11 +68482,11 @@
 /area/engineering/supermatter/room)
 "ybC" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/area/mine/explored)
 "ybE" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -101573,8 +101560,8 @@ dhe
 dhe
 dhe
 dhe
-grQ
-grQ
+ouV
+ouV
 kIO
 dhe
 dhe
@@ -108767,10 +108754,10 @@ hqn
 nTf
 nqo
 ouV
-dMl
-dMl
-dMl
-dMl
+ouV
+ouV
+ouV
+ouV
 aBM
 ajc
 aBM

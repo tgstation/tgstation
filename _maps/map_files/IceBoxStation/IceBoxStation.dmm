@@ -9778,23 +9778,17 @@
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/disposal/incinerator)
+/area/icemoon/surface/outdoors)
 "bJN" = (
 /turf/closed/wall,
 /area/science/xenobiology)
 "bJP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/disposal/incinerator)
+/area/icemoon/surface/outdoors)
 "bJS" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/plating/icemoon,
-/area/maintenance/disposal/incinerator)
-"bJV" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/disposal/incinerator)
 "bJW" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
@@ -25558,11 +25552,11 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "jeE" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/supermatter/room)
+/area/icemoon/surface/outdoors)
 "jeJ" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -30163,7 +30157,7 @@
 "lGj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/supermatter/room)
+/area/icemoon/surface/outdoors)
 "lGm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -91727,7 +91721,7 @@ bJP
 bJP
 bJP
 bJP
-bJV
+jeE
 boP
 boP
 boP
