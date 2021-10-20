@@ -246,11 +246,6 @@
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
-	//TRITIUM
-	if(breath_gases[/datum/gas/tritium])
-		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
-		radiation += tritium_partialpressure/10
-
 	//NITRYL
 	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
