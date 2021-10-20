@@ -103,7 +103,6 @@
 	if (scanning)
 		update_appearance(UPDATE_ICON)
 
-// MOTHBLOCKS TODO: Geiger counters
 /obj/item/geiger_counter/proc/scan(atom/target, mob/user)
 	if (SEND_SIGNAL(target, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
 		return
