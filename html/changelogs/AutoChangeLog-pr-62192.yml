@@ -1,0 +1,4 @@
+author: "MentalCow"
+delete-after: True
+changes: 
+  - bugfix: "Security Plasmamen spawn with their suit sensors set to Maximum"
