@@ -1,0 +1,2 @@
+/obj/item/melee/baton/security/cattleprod/teleprod : /obj/item/melee/baton/cattleprod/teleprod
+/obj/item/melee/baton/security/cattleprod : /obj/item/melee/baton/cattleprod

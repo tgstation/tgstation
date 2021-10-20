@@ -554,7 +554,7 @@
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
 //Makeshift stun baton. Replacement for stun gloves.
-/obj/item/melee/baton/security/cattleprod
+/obj/item/melee/baton/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton. Left click to stun, right click to harm."
 	icon_state = "stunprod"
@@ -571,15 +571,15 @@
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
-/obj/item/melee/baton/security/cattleprod/Initialize(mapload)
+/obj/item/melee/baton/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
+/obj/item/melee/baton/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
 	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
 		if(!cell)
 			var/obj/item/stack/ore/bluespace_crystal/crystal = item
-			var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
+			var/obj/item/melee/baton/cattleprod/teleprod/prod = new
 			remove_item_from_storage(user)
 			qdel(src)
 			crystal.use(1)
@@ -590,12 +590,12 @@
 	else
 		return ..()
 
-/obj/item/melee/baton/security/cattleprod/baton_effect()
+/obj/item/melee/baton/cattleprod/baton_effect()
 	if(!sparkler.activate())
 		return BATON_ATTACK_DONE
 	return ..()
 
-/obj/item/melee/baton/security/cattleprod/Destroy()
+/obj/item/melee/baton/cattleprod/Destroy()
 	if(sparkler)
 		QDEL_NULL(sparkler)
 	return ..()
@@ -635,7 +635,7 @@
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
-/obj/item/melee/baton/security/cattleprod/teleprod
+/obj/item/melee/baton/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
 	w_class = WEIGHT_CLASS_NORMAL
@@ -643,13 +643,13 @@
 	inhand_icon_state = "teleprod"
 	slot_flags = null
 
-/obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
+/obj/item/melee/baton/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
 	do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/obj/item/melee/baton/security/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
+/obj/item/melee/baton/cattleprod/teleprod/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	. = ..()
 	if(!. || target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return

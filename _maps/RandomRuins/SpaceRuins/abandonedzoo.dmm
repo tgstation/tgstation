@@ -604,7 +604,7 @@
 	name = "Worn-out APC";
 	pixel_x = -25
 	},
-/obj/item/melee/baton/security/cattleprod,
+/obj/item/melee/baton/cattleprod,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "Mb" = (
