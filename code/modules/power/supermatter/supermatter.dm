@@ -185,7 +185,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///If you're varediting these, call update_constants() to update the derived values
 
 	///What is the maximum multiplier reachable from having low pressure?
-	var/pressure_bonus_max_multiplier = 1.5
+	var/pressure_bonus_max_multiplier = 0.5
 	///At what environmental pressure, in kPa, should we start giving a pressure bonus?
 	var/pressure_bonus_max_pressure = 100
 	///How steeply angled is the pressure bonus curve? Higher values means more of the bonus is available at higher pressures.
@@ -194,8 +194,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	///These values are calculated from the above in update_constants() and immediately overwritten
 	///These are here to 1) give you an idea of what to expect 2) provide a somewhat sane fallback if something breaks
-	var/pressure_bonus_derived_constant = 0.66
-	var/pressure_bonus_derived_steepness = 0.0001
+	var/pressure_bonus_derived_constant = 0.63
+	var/pressure_bonus_derived_steepness = 0.0333
 
 
 	///Our internal radio
