@@ -14,7 +14,7 @@
 		/datum/eldritch_knowledge/base_void
 	)
 	next_knowledge = list(/datum/eldritch_knowledge/flesh_grasp)
-	required_atoms = list(/obj/item/kitchen/knife, /obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/knife, /obj/effect/decal/cleanable/blood)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	cost = 1
 	route = PATH_FLESH

@@ -53,7 +53,10 @@
 		if(islist(entry_ports[index].value) && get_list_count(entry_ports[index].value, max_list_count) >= max_list_count)
 			visible_message("[src] begins to overheat!")
 			return
-		new_literal += list(key_ports[index].value = entry_ports[index].value)
+		var/value_to_add = entry_ports[index].value
+		if(is_proper_datum(value_to_add))
+			value_to_add = WEAKREF(value_to_add)
+		new_literal[key_ports[index].value] = entry_ports[index].value
 
 	list_output.set_output(new_literal)
 

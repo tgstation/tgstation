@@ -414,3 +414,210 @@
   - bugfix: Syringe/Hypospray failure messages now reflect the proper body part.
   Wayland-Smithy:
   - bugfix: Fixed base lighting appearance inheritance.
+2021-10-14:
+  FA120:
+  - bugfix: list literal can now contain tables,like they are supposed to
+  Guillaume Prata:
+  - imageadd: Engineering clothes have working reflective stripes now. Easier for
+      someone to find your corpse in maints, harder for you to hide in the dark to
+      do bad things.
+  Melbert:
+  - bugfix: You no longer see yourself in everything you double examine
+  Seris02:
+  - bugfix: regal rat can now eat cheese + runtime fixes for its signal
+  SomethingFish:
+  - expansion: Adds a BLT sandwich as a new food to the game.
+  Watermelon914:
+  - bugfix: Fixes filter list component not being a filter list component
+2021-10-15:
+  ArcaneMusic:
+  - expansion: Venom swells your mob when stung.
+  Coconutwarrior97:
+  - bugfix: Fixes the holoparas breaking their users glasses when manifesting bug.
+  - bugfix: Lavaproof borg upgrade for miner borgs now works properly.
+  LemonInTheDark:
+  - bugfix: Fixes openspace not working if the floor below has been changed
+  MMMiracles:
+  - rscadd: Tramstation's maintenance now has new catwalk tiles covering the various
+      piping/wiring throughout.
+  - bugfix: Tramstation's powernet should be slightly more resistant to bouts of power
+      outages caused by rogue syndicate mice operatives.
+  - bugfix: Patched up a few missed spots involving pipe/wiring for departments like
+      Botany/Courtroom.
+  Maurukas:
+  - balance: The super matter crystal can no longer be immediately delaminated by
+      firing a gun into it, only brought close to the delamination threshold.
+  Melbert:
+  - rscadd: 'Icebox: Science RND and Genetics remap!'
+  RandomGamer123:
+  - bugfix: Leftover plasma tanks formerly intended for radiation collectors have
+      been removed.
+  Ryll/Shaps:
+  - rscadd: Added new quirk, "Shifty Eyes", which rarely causes people who examine
+      you while standing closeby to think that you both made eye contact, even when
+      you didn't.
+  - balance: The time window for making eye contact with someone else has been extended
+      from  examining each other within 1 second to within 2 seconds.
+  - spellcheck: Fixed incorrect "the"'s being inserted before the names of improper
+      nouns in item stripping code.
+  SuperNovaa41:
+  - spellcheck: No more phantom hand grabbing.
+  - bugfix: Pipes now properly fulfill your nicotine cravings.
+  Zytolg:
+  - bugfix: The Nanotrasen Materials Reclamation Program has recycled the spare firelock
+      trapped in the Cargo Offices east windows.
+2021-10-16:
+  Gandalf2k15:
+  - qol: Added the dyekit functions to the character preferences menu.
+  Ghommie:
+  - bugfix: Fixed monkeys having the wrong on fire overlay when ablaze.
+  Seris02:
+  - bugfix: quantum pads and other things with fault do_teleport calls no longer cause
+      runtimes
+  - code_imp: removes color_legacy prefs and changes sanitize_hexcolor()'s default
+      to 6 characters
+  thatoneplebeian:
+  - refactor: refactored drowsiness code
+2021-10-17:
+  ATHATH:
+  - bugfix: The "don't allow any organics to escape on the emergency shuttle alive"
+      objective no longer counts inorganic species like golems, plasmamen, androids,
+      etc.
+  - qol: Some malf AI objectives have had their descriptions updated to reflect them
+      only caring about player-controlled creatures.
+  Ghommie:
+  - bugfix: Fixes the mind name of aliens not being updated when evolving (for real
+      this time)
+  - expansion: Added a trigonometry circuit component.
+  - bugfix: Pets no longer enjoy being shoved around.
+  Guillaume Prata:
+  - imageadd: Fire extinguishers now have a worn sprite when they are stored on your
+      Firesuit.
+  - imageadd: Atmos Optical glasses have a new icon for it's connectable mode.
+  - balance: Atmospheric Technicians will have external airlock access by default
+      now instead of only on skeleton crew.
+  Horatio22 borrowed Iamgoofball and Surrealaser , spriter d4n0w4r:
+  - imageadd: added 2 new outfits to the detective autodrobe
+  IndieanaJones:
+  - bugfix: Monkeys can now open worn backpacks by clicking on them.
+  - bugfix: Players with the monkified mutation now have a generic monkey name as
+      opposed to their actual name again.
+  JohnFulpWillard:
+  - bugfix: Secways will now say it's broken, rather than it's component.
+  Krysonism:
+  - balance: Growing vats can now be set to regrow the sample upon completion.
+  - balance: Increased the volume of growing vats from 200 to 300u.
+  LemonInTheDark:
+  - bugfix: Non wallsocket lights will be properly colored again. Whoops
+  Melbert:
+  - bugfix: Icebox chapel morgue slabs are now all the right direction
+  Mickyan:
+  - qol: While holding a spraycan you may right click on existing graffiti or colored
+      objects to set the spraycan to match that color
+  PositiveEntropy, EricZilla:
+  - imageadd: Resprites pinpointers!
+  RandomGamer123:
+  - bugfix: Admins who aghost won't be dragged back to their body when someone attempts
+      to defib them.
+  Sealed101:
+  - bugfix: fixes combat hypospray locking itself out from 10u transfers to 5u when
+      used in-hand
+  SpaceDragon00:
+  - bugfix: Organs will now consistently "Fail" once they have reached max damage
+  YakumoChen:
+  - spellcheck: Gives shaft miner a more accurate job description
+  esainane:
+  - refactor: Radiation Collectors, Tesla Coils, and Grounding Rods are now subtypes
+      of a common energy_accumulator type. This centralizes logic for smoothing energy
+      release; converting between Joules, Watts, and internal energy units; and ensures
+      that all such accumulators display and generate power along the same smoothing
+      curve.
+  - bugfix: Tesla Coils no longer generate power using half the smoothing that Radiation
+      Collectors used. This was due to a mistake in handling delta_time.
+  - code_imp: Removed many magic numbers from power generation code.
+  - qol: Tesla Coils will now display energy stored in Joules and power being produced
+      in Watts, much like Radiation Collectors did.
+  - qol: Grounding Rods will now display recent energy they've absorbed and the sustainable
+      power that this energy could be producing. It should now be very obvious if
+      you could use more Tesla Coils.
+  - bugfix: Fixed supermatter lightning bolt target selection. Previously, two grounding
+      rods were always* safe. Now, one grounding rod is always* safe.
+  - qol: Roller Beds now come with an examine hint for how to roll them up.
+  lovegreenstuff:
+  - bugfix: probital now works properly on ingest. you now get mitogen again
+  magatsuchi:
+  - rscadd: added ability to change hologram appearance to custom character
+  tralezab:
+  - rscadd: Titlescreens are now widescreen'd up.
+  - qol: The titlescreen is no longer described as "Effectively impervious to conventional
+      methods of destruction." and only the splash screen can be interacted with
+  - bugfix: you can no longer exploit the pink crossbreeding power to strip factions
+      from mobs
+2021-10-18:
+  Ghommie:
+  - bugfix: Fixed the join/ready buttons not reverting if the game fails to setup.
+  Pickle-Coding:
+  - admin: Assembly bomb creation is now logged in Kelvin.
+  RandomGamer123:
+  - spellcheck: Fixed capitalisation errors in hypernoblium crystal usage messages.
+  Sealed101:
+  - bugfix: fixed abductor and advanced tools' recycling results being heavily diminished
+      or taken from their basic counterparts
+  SuperNovaa41:
+  - balance: The Goon Source code item is now invulnerable to deletion (aside from
+      ninja intervention), similar to every other high risk item.
+  esainane:
+  - rscadd: When all else fails, dusting a Clown can alter the Supermatter's containment
+      field. It might make the situation better. It might not. Who knows, HONK
+  magatsuchi:
+  - spellcheck: fixed a single bracket typo
+  tralezab:
+  - bugfix: fixes an error in department officers spawning with wallets
+2021-10-19:
+  Cyberboss:
+  - bugfix: Prying open one of a pair of cycle-linked airlocks will now always close
+      the other (if it is powered).
+  - expansion: 'Arrivals, escape, and pod airlocks now restrict those without access
+      from exiting directly to space. Use is unrestricted when entering the station
+      or a shuttle is docked. tweak: Shuttle departures will now force exterior airlocks
+      closed on both the shuttle and docking bay. The lives of your fellow crew members
+      are more important than your tardiness and limbs, employee!'
+  - bugfix: Fixed the numbering of escape pods in certain maps.
+  Ebin-Halcyon:
+  - balance: Syndicate masks are now fire + acid proof
+  Ghilker:
+  - qol: filters can now filter multiple gases at once
+  Ghommie:
+  - expansion: Meta and Delta chapels now have pews in lieu of stools or chairs.
+  MeyHaZah, Onule, Fikou:
+  - imageadd: mining gear resprite
+  Mothblocks:
+  - rscadd: Emagging the communications console will now let you purchase dangerous
+      shuttles. The Gigafactral and the Monastery were moved over (and made cheaper),
+      while the Disco Inferno and Oh, Hi Daniel make a return.
+  Ryll/Shaps:
+  - admin: As an admin, if you start replying to a freshly submitted ticket that another
+      admin is already replying to, you'll get a notice that someone already has it
+      open when you get the prompt. Nice to let you know someone else is handling
+      it, so you can coordinate replies better!
+  That REALLY Good Soda Flavor:
+  - refactor: Rolling paper will now use the customizable reagent holder component.
+      This cleans up the code and expands the possibilities for using the component
+      by adding support for dried items.
+  esainane:
+  - bugfix: Removed a scrubbers pipe that didn't lead anywhere near Upper Hydroponics
+      on Tram.
+2021-10-20:
+  Ghommie:
+  - bugfix: Fixed maintenance drones being unable to examinate things they currently
+      can't interact with throgh shift-click.
+  - bugfix: Fixed clown car drivers being unable to examinate things or interacting
+      with their inventory while the car is in cannon mode.
+  - bugfix: Fixed honorbound people being unable to pull, examinate and alt-click
+      other living mobs while holding an item that could be used as a melee weapon.
+  - bugfix: Fixed mechas firing their weapons or using their tools when the pilot
+      is examinating things through shift-click.
+  Mickyan:
+  - expansion: Nearsighter quirk now lets you pick the look of your prescription glasses
+      from the character preference menu
+  - imageadd: Added thin prescription glasses

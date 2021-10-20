@@ -135,9 +135,9 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aL" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Emergency Launch Catwalk";
-	req_access_txt = "10;13"
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
