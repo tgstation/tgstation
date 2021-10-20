@@ -62,12 +62,12 @@
 				blocked = TRUE
 		if(!blocked)
 			L.visible_message(span_danger("[src] charges on [L]!"), span_userdanger("[src] charges into you!"))
-			L.Knockdown(knockdown_time)
+			L.Knockdown(6)
 		else
-			Stun((knockdown_time * 2), ignore_canstun = TRUE)
+			Stun(6, ignore_canstun = TRUE)
 	else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))
 		visible_message(span_danger("[src] smashes into [hit_atom]!"))
-		Stun((knockdown_time * 2), ignore_canstun = TRUE)
+		Stun(6, ignore_canstun = TRUE)
 	update_icons()
 	return COMPONENT_OVERRIDE_CHARGE_BUMP
 
