@@ -30,7 +30,7 @@
 	var/burnt_out = FALSE     //Is the flash burnt out?
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
-	var/cooldown = 0
+	var/cooldown = (4 SECONDS)
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
 /obj/item/assembly/flash/ComponentInitialize()
@@ -257,6 +257,7 @@
 			return
 		flashed_borgo.adjust_blurriness(20)
 		flashed_borgo.adjust_blindness(10)
+		flashed_borgo.adjustStaminaLoss(45) // 3 hit stun w/ Flashes since you can flash faster than a stun baton can
 		var/diff = 15 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 		flashed_borgo.add_confusion(min(15, diff))
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))

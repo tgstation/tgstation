@@ -3,6 +3,8 @@
 		return
 
 	..()
+	if(staminaloss > 0 && stam_regen_start_time <= world.time)
+		setStaminaLoss(0, TRUE)
 	handle_robot_hud_updates()
 	handle_robot_cell(delta_time, times_fired)
 

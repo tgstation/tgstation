@@ -1171,7 +1171,16 @@
 	return TRUE
 
 /mob/living/proc/update_stamina()
-	return
+	var/stam = getStaminaLoss()
+	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold && !stat)
+		enter_stamcrit()
+	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
+		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
+		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
+	else
+		return
+	update_health_hud()
 
 /mob/living/carbon/alien/update_stamina()
 	return

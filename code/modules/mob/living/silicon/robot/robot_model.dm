@@ -430,7 +430,7 @@
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
 	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(/obj/item/melee/baton/security/loaded)
 	cyborg_base_icon = "miner"
 	model_select_icon = "miner"
 	hat_offset = 0

@@ -44,6 +44,8 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 	var/obj/item/pda/ai/aiPDA
+	///used to halt stamina regen temporarily
+	var/stam_regen_start_time = 0
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()

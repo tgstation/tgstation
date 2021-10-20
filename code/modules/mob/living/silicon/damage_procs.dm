@@ -9,6 +9,10 @@
 			adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			adjustFireLoss(damage_amount, forced = forced)
+		if(STAMINA)
+			adjustStaminaLoss(damage_amount, forced = forced)
+			if(damage_amount > DAMAGE_PRECISION)
+				stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
 	return 1
 
 
@@ -27,14 +31,20 @@
 /mob/living/silicon/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	return FALSE
 
-/mob/living/silicon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE) //immune to stamina damage.
-	return FALSE
-
-/mob/living/silicon/setStaminaLoss(amount, updating_health = TRUE)
-	return FALSE
-
 /mob/living/silicon/adjustOrganLoss(slot, amount, maximum = 500) //immune to organ damage (no organs, duh)
 	return FALSE
+
+/mob/living/silicon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
+	staminaloss = max(0, min(150, staminaloss + amount))
+	update_stamina()
+	if(updating_health)
+		updatehealth()
+
+/mob/living/silicon/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
+	staminaloss = max(0, min(150, amount))
+	update_stamina()
+	if(updating_health)
+		updatehealth()
 
 /mob/living/silicon/setOrganLoss(slot, amount)
 	return FALSE

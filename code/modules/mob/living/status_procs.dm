@@ -183,8 +183,8 @@
 		return I
 
 ///////////////////////////////// PARALYZED //////////////////////////////////
-/mob/living/proc/IsParalyzed() //If we're paralyzed
-	return has_status_effect(STATUS_EFFECT_PARALYZED)
+/mob/living/proc/IsParalyzed(include_stamcrit = TRUE) //If we're paralyzed
+	return has_status_effect(STATUS_EFFECT_PARALYZED) || (include_stamcrit && HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 
 /mob/living/proc/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed(FALSE)
@@ -240,6 +240,21 @@
 		else if(amount > 0)
 			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount)
 		return P
+
+
+/mob/living/proc/enter_stamcrit()
+	if(!(status_flags & CANKNOCKDOWN) || HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+		return
+	if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA)) //Already in stamcrit
+		return
+	if(absorb_stun(0)) //continuous effect, so we don't want it to increment the stuns absorbed.
+		return
+	to_chat(src, span_notice("You're too exhausted to keep going..."))
+	ADD_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
+	ADD_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
+	ADD_TRAIT(src, TRAIT_FLOORED, STAMINA)
+	if(getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
+		adjustStaminaLoss(30, FALSE)
 
 //Blanket
 /mob/living/proc/AllImmobility(amount)

@@ -1023,3 +1023,9 @@
 	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
 
 	.[ai_job_ref.title] = minutes
+
+/mob/living/silicon/ai/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE) //immune to stamina damage.
+	return FALSE
+
+/mob/living/silicon/ai/setStaminaLoss(amount, updating_health = TRUE)
+	return FALSE

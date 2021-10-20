@@ -140,13 +140,11 @@
 	if(iscyborg(target))
 		if(!affect_cyborg)
 			return FALSE
-		target.flash_act(affect_silicon = TRUE)
-		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
-		target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_non_cyborg(target, user)
+	target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+	target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override) * (trait_check ? 0.1 : 1))
 	return TRUE
 
 /// Description for trying to stun when still on cooldown.
@@ -202,19 +200,16 @@
 
 	if(iscyborg(user))
 		if(affect_cyborg)
-			user.flash_act(affect_silicon = TRUE)
-			user.Paralyze(clumsy_knockdown_time)
 			additional_effects_cyborg(user, user) // user is the target here
-			if(on_stun_sound)
-				playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
 		else
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
-		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
 		additional_effects_non_cyborg(user, user) // user is the target here
-		if(on_stun_sound)
-			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+	user.Knockdown(clumsy_knockdown_time)
+	user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+	if(on_stun_sound)
+		playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)
+
 
 	user.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
 
@@ -351,7 +346,7 @@
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
-
+	affect_cyborg = TRUE
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
@@ -570,6 +565,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
+	affect_cyborg = TRUE
+
 
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
