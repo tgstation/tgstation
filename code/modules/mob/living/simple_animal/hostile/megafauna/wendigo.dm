@@ -71,7 +71,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
