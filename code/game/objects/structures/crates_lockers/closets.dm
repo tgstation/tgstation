@@ -234,7 +234,7 @@
 	for(var/atom/movable/AM in location)
 		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
 			if(mapload) // Yea, it's a mapping issue. Blame mappers.
-				stack_trace("Closet storage capacity exceeded on [type] at [get_area(src)], coordinates [x], [y], [z].")
+				WARNING("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
 	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
@@ -265,8 +265,7 @@
 	if(length(contents) >= storage_capacity)
 		if(!mapload)
 			return LOCKER_FULL
-		//For maploading, we only return LOCKER_FULL if the movable was otherwise insertable.
-		//This avoid stack_trace() calls caused by false flags.
+		//For maploading, we only return LOCKER_FULL if the movable was otherwise insertable. This way we can avoid logging false flags.
 		return insertion_allowed(inserted) ? LOCKER_FULL : FALSE
 	if(!insertion_allowed(inserted))
 		return FALSE
