@@ -1,7 +1,10 @@
+#define GORILLA_MUTATION_CHANCE_PER_SECOND 0.25
+#define GORILLA_MUTATION_MINIMUM_DAMAGE 2500
+
 /// Genetic damage, given by DNA consoles, will start to deal toxin damage
 /// past a certain threshold, and will go down consistently.
 /// Adding multiple of this component will increase the total damage.
-// MOTHBLOCKS TODO: Gorillize
+/// Can turn monkeys into gorillas.
 /datum/component/genetic_damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -40,6 +43,12 @@
 	total_damage += old_component.total_damage
 
 /datum/component/genetic_damage/process(delta_time)
+	if (ismonkey(parent) && total_damage >= GORILLA_MUTATION_MINIMUM_DAMAGE && DT_PROB(GORILLA_MUTATION_CHANCE_PER_SECOND, delta_time))
+		var/mob/living/carbon/carbon_parent = parent
+		carbon_parent.gorillize()
+		qdel(src)
+		return PROCESS_KILL
+
 	if (total_damage >= minimum_before_damage)
 		var/mob/living/living_mob = parent
 		living_mob.adjustToxLoss(toxin_damage_per_second * delta_time)
@@ -58,3 +67,6 @@
 		render_list += "<span class='alert ml-1'>Severe genetic damage detected.</span>\n"
 	else
 		render_list += "<span class='alert ml-1'>Minor genetic damage detected.</span>\n"
+
+#undef GORILLA_MUTATION_CHANCE_PER_SECOND
+#undef GORILLA_MUTATION_MINIMUM_DAMAGE
