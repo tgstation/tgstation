@@ -185,14 +185,41 @@ export const HypertorusTemperatures = (props, context) => {
     );
   };
 
+  // Make sure that our labels are legible before displaying them.
+  // If two axis labels are too close to one another, don't show them.
+  const clutter_threshold = 20;
+  const label_legible = (l, r) =>
+    Math.abs(value_to_y(l) - value_to_y(r)) > clutter_threshold;
+
+  const show_min = label_legible(prev_power_level_temperature, minTemperature)
+    || power_level === 0;
+  const show_max = label_legible(next_power_level_temperature, maxTemperature);
+
   return (
     <Section title="Gas Monitoring" minWidth="400px">
       <Box overflowY="hidden" className="hypertorus-temperatures__container">
         <Box className="hypertorus-temperatures__y-axis-marks">
-          {(power_level === 0 || Math.abs(value_to_y(prev_power_level_temperature) - value_to_y(minTemperature)) > 20) && (<TemperatureLabel key="min_temp" value={minTemperature} force />)}
-          <TemperatureLabel key="prev_fusion_temp" icon="chevron-down" tooltip="Previous Fusion Level" value={prev_power_level_temperature} />
-          <TemperatureLabel key="next_fusion_temp" icon="chevron-up" tooltip="Next Fusion Level" value={next_power_level_temperature} />
-          {Math.abs(value_to_y(next_power_level_temperature) - value_to_y(maxTemperature)) > 20 && (<TemperatureLabel key="max_temp" value={maxTemperature} />)}
+          {show_min && (
+            <TemperatureLabel key="min_temp"
+              value={minTemperature}
+              force
+            />
+          )}
+          <TemperatureLabel key="prev_fusion_temp"
+            icon="chevron-down"
+            tooltip="Previous Fusion Level"
+            value={prev_power_level_temperature}
+          />
+          <TemperatureLabel key="next_fusion_temp"
+            icon="chevron-up"
+            tooltip="Next Fusion Level"
+            value={next_power_level_temperature}
+          />
+          {show_max && (
+            <TemperatureLabel key="max_temp"
+              value={maxTemperature}
+            />
+          )}
         </Box>
         <Box className="hypertorus-temperatures__y-axis">
           <Box className="hypertorus-temperatures__x-axis" />
