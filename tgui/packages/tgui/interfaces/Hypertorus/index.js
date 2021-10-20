@@ -1,5 +1,5 @@
 import { useBackend } from 'tgui/backend';
-import { Button, Collapsible, Section, Stack } from 'tgui/components';
+import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
 import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 import { HypertorusGases } from './Gases';
@@ -50,29 +50,51 @@ const HypertorusMainControls = (props, context) => {
 
 const HypertorusLayout = () => {
   return (
-    <div className="hypertorus-layout">
-      <HypertorusMainControls />
-      <Stack>
-        <Stack.Item grow>
-          <HypertorusGases />
-        </Stack.Item>
-        <Stack.Item>
-          <HypertorusTemperatures />
-        </Stack.Item>
-      </Stack>
-      <HypertorusParameters />
-      <HypertorusSecondaryControls />
-      <HypertorusWasteRemove />
-    </div>
+    <Flex className="hypertorus-layout" wrap>
+      <Flex.Item grow width="100%">
+        <HypertorusMainControls />
+      </Flex.Item>
+      <Flex.Item grow="20" width="350px" minWidth="280px">
+        <HypertorusGases />
+      </Flex.Item>
+      <Flex.Item grow width="420px" overflowX="auto">
+        <HypertorusTemperatures />
+      </Flex.Item>
+      <Flex.Item grow="4" width="580px">
+        <Flex className="hypertorus-layout" wrap>
+          <Flex.Item grow width="860px">
+            <HypertorusParameters />
+          </Flex.Item>
+          <Flex.Item grow width="580px">
+            <HypertorusSecondaryControls />
+          </Flex.Item>
+        </Flex>
+      </Flex.Item>
+      <Flex.Item grow width="100%">
+        <HypertorusWasteRemove />
+      </Flex.Item>
+    </Flex>
   );
 };
 
 export const Hypertorus = (props, context) => {
+  // The HFR has a ridiculous amount of knobs and information.
+  // Ideally we'd display a large window for it all...
+  const idealWidth = 850, idealHeight = 980;
+
+  // ...but we should check for small screens, to play nicely with eg laptops.
+  const winWidth  = window.screen.availWidth,
+        winHeight = window.screen.availHeight;
+
+  // Make sure we don't start larger than 50%/80% of screen width/height.
+  const width = Math.min(idealWidth, winWidth * 0.5);
+  const height = Math.min(idealHeight, winHeight * 0.8);
+
   return (
     <Window
       title="Hypertorus Fusion Reactor control panel"
-      width={850}
-      height={980}>
+      width={width}
+      height={height}>
       <Window.Content scrollable>
         <HypertorusLayout />
       </Window.Content>

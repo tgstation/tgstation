@@ -196,8 +196,8 @@ export const HypertorusTemperatures = (props, context) => {
   const show_max = label_legible(next_power_level_temperature, maxTemperature);
 
   return (
-    <Section title="Gas Monitoring" minWidth="400px">
-      <Box overflowY="hidden" className="hypertorus-temperatures__container">
+    <Section title="Gas Monitoring">
+      <Box className="hypertorus-temperatures__container">
         <Box className="hypertorus-temperatures__y-axis-marks">
           {show_min && (
             <TemperatureLabel key="min_temp"

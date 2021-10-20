@@ -2,8 +2,13 @@
 
 /// Index @{
 
+.hypertorus-layout {
+  margin-right: -0.5em;
+};
+
 .hypertorus-layout > * {
   margin-bottom: 0.5em;
+  margin-right: 0.5em;
 };
 
 /// @}
@@ -68,6 +73,7 @@ $yAxisMargin: $yAxisLabelWidth + $yAxisIconWidth + $yAxisIconPadding * 2;
 .hypertorus-temperatures__container {
   position: relative;
   margin-right: 10px;
+  overflow-y: hidden;
 }
 
 .hypertorus-temperatures__y-axis-marks {

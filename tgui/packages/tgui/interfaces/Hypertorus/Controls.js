@@ -93,7 +93,7 @@ export const HypertorusSecondaryControls = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Section title="Reactor Control">
-      <LabeledControls justify="space-around">
+      <LabeledControls justify="space-around" wrap>
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
             color={data.heating_conductor > 50 && data.heat_output > 0 && "yellow"}

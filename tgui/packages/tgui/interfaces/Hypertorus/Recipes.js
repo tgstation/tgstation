@@ -138,82 +138,84 @@ export const HypertorusRecipes = props => {
     ...rest
   } = props;
   return (
-    <Table>
-      <MemoRow header>
-        <Table.Cell />
-        <Table.Cell colspan="2">Fuel</Table.Cell>
-        <Table.Cell colspan="2">Fusion Byproducts</Table.Cell>
-        <Table.Cell colspan="6">Produced gases</Table.Cell>
-        <Table.Cell colspan="6">Effects</Table.Cell>
-      </MemoRow>
-      <MemoRow header>
-        <Table.Cell />
-        <Table.Cell>Primary</Table.Cell>
-        <Table.Cell>Secondary</Table.Cell>
-        <Table.Cell colspan="2" />
-        <Table.Cell>Tier 1</Table.Cell>
-        <Table.Cell>Tier 2</Table.Cell>
-        <Table.Cell>Tier 3</Table.Cell>
-        <Table.Cell>Tier 4</Table.Cell>
-        <Table.Cell>Tier 5</Table.Cell>
-        <Table.Cell>Tier 6</Table.Cell>
-        {
-          // Lay out our pictographic headers for effects.
-          recipe_effect_structure.map(item => (
-            <Table.Cell key={item.param} color="label">
-              <Tooltip content={item.label}>
-                {typeof(item.icon) === "string" ? (
-                  <Icon className="hypertorus-recipes__icon" name={item.icon} />
-                ) : (
-                  <Icon.Stack className="hypertorus-recipes__icon">
-                    {item.icon.map(icon => (
-                      <Icon key={icon} name={icon} />
-                    ))}
-                  </Icon.Stack>
-                )}
-              </Tooltip>
-            </Table.Cell>
-          ))
-        }
-      </MemoRow>
-      {selectable_fuels.filter(d => d.id).map((recipe, index) => {
-        const active = recipe.id === selected_fuel_id;
-        return (
-          <MemoRow key={recipe.id} active={active}>
-            <Table.Cell>
-              <Button
-                icon={recipe.id === selected_fuel_id ? "times" : "power-off"}
-                disabled={!enable_recipe_selection}
-                key={recipe.id}
-                selected={recipe.id === selected_fuel_id}
-                onClick={onRecipe.bind(null, recipe.id)}
-              />
-            </Table.Cell>
-            <GasCellItem gasid={recipe.requirements[0]} />
-            <GasCellItem gasid={recipe.requirements[1]} />
-            <GasCellItem gasid={recipe.fusion_byproducts[0]} />
-            <GasCellItem gasid={recipe.fusion_byproducts[1]} />
-            {recipe.product_gases.map(gasid => (
-              <GasCellItem key={gasid} gasid={gasid} />
-            ))}
-            {
-              recipe_effect_structure.map(item => {
-                const value = recipe[item.param];
-                // Note that the minus icon is wider than the arrow icons,
-                // so we set the width to work with both without jumping.
-                return (
-                  <Table.Cell key={item.param}>
-                    <Tooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
-                      <Icon className="hypertorus-recipes__icon" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
-                    </Tooltip>
-                  </Table.Cell>
-                );
-              })
-            }
-          </MemoRow>
-        );
-      })}
-    </Table>
+    <Box overflowX="auto">
+      <Table>
+        <MemoRow header>
+          <Table.Cell />
+          <Table.Cell colspan="2">Fuel</Table.Cell>
+          <Table.Cell colspan="2">Fusion Byproducts</Table.Cell>
+          <Table.Cell colspan="6">Produced gases</Table.Cell>
+          <Table.Cell colspan="6">Effects</Table.Cell>
+        </MemoRow>
+        <MemoRow header>
+          <Table.Cell />
+          <Table.Cell>Primary</Table.Cell>
+          <Table.Cell>Secondary</Table.Cell>
+          <Table.Cell colspan="2" />
+          <Table.Cell>Tier 1</Table.Cell>
+          <Table.Cell>Tier 2</Table.Cell>
+          <Table.Cell>Tier 3</Table.Cell>
+          <Table.Cell>Tier 4</Table.Cell>
+          <Table.Cell>Tier 5</Table.Cell>
+          <Table.Cell>Tier 6</Table.Cell>
+          {
+            // Lay out our pictographic headers for effects.
+            recipe_effect_structure.map(item => (
+              <Table.Cell key={item.param} color="label">
+                <Tooltip content={item.label}>
+                  {typeof(item.icon) === "string" ? (
+                    <Icon className="hypertorus-recipes__icon" name={item.icon} />
+                  ) : (
+                    <Icon.Stack className="hypertorus-recipes__icon">
+                      {item.icon.map(icon => (
+                        <Icon key={icon} name={icon} />
+                      ))}
+                    </Icon.Stack>
+                  )}
+                </Tooltip>
+              </Table.Cell>
+            ))
+          }
+        </MemoRow>
+        {selectable_fuels.filter(d => d.id).map((recipe, index) => {
+          const active = recipe.id === selected_fuel_id;
+          return (
+            <MemoRow key={recipe.id} active={active}>
+              <Table.Cell>
+                <Button
+                  icon={recipe.id === selected_fuel_id ? "times" : "power-off"}
+                  disabled={!enable_recipe_selection}
+                  key={recipe.id}
+                  selected={recipe.id === selected_fuel_id}
+                  onClick={onRecipe.bind(null, recipe.id)}
+                />
+              </Table.Cell>
+              <GasCellItem gasid={recipe.requirements[0]} />
+              <GasCellItem gasid={recipe.requirements[1]} />
+              <GasCellItem gasid={recipe.fusion_byproducts[0]} />
+              <GasCellItem gasid={recipe.fusion_byproducts[1]} />
+              {recipe.product_gases.map(gasid => (
+                <GasCellItem key={gasid} gasid={gasid} />
+              ))}
+              {
+                recipe_effect_structure.map(item => {
+                  const value = recipe[item.param];
+                  // Note that the minus icon is wider than the arrow icons,
+                  // so we set the width to work with both without jumping.
+                  return (
+                    <Table.Cell key={item.param}>
+                      <Tooltip content={(item.tooltip || (v => "x"+v))(value, rest)}>
+                        <Icon className="hypertorus-recipes__icon" name={effect_to_icon(value, item.scale, item.override_base || 1)} />
+                      </Tooltip>
+                    </Table.Cell>
+                  );
+                })
+              }
+            </MemoRow>
+          );
+        })}
+      </Table>
+    </Box>
   );
 };
 
