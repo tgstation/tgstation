@@ -50,7 +50,7 @@ const HypertorusMainControls = (props, context) => {
 
 const HypertorusLayout = () => {
   return (
-    <span class="hypertorus-layout">
+    <div className="hypertorus-layout">
       <HypertorusMainControls />
       <Stack>
         <Stack.Item grow>
@@ -63,7 +63,7 @@ const HypertorusLayout = () => {
       <HypertorusParameters />
       <HypertorusSecondaryControls />
       <HypertorusWasteRemove />
-    </span>
+    </div>
   );
 };
 
