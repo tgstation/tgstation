@@ -7,6 +7,16 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
 
+/obj/item/gun/magic/staff/check_botched(mob/living/user, params)
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) && !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
+		return !on_intruder_use(user)
+	return ..()
+
+/// Called when someone who isn't a wizard or magician uses this staff.
+/// Return TRUE to allow usage.
+/obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user)
+	return TRUE
+
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
@@ -15,6 +25,12 @@
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
 	school = SCHOOL_TRANSMUTATION
+
+/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user)
+	balloon_alert(user, ".. wabbajack")
+	user.dropItemToGround(src, TRUE)
+	process_fire(user, user, FALSE)
+	return FALSE
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
@@ -33,6 +49,12 @@
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
 	school = SCHOOL_RESTORATION
+
+/obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user)
+	balloon_alert(user, "bzzzt!")
+	user.dropItemToGround(src, TRUE)
+	lightningbolt(user)
+	return FALSE
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -57,6 +79,12 @@
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
 	. = ..()
+
+/obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
+	balloon_alert(user, "chaos")
+	user.dropItemToGround(src, TRUE)
+	process_fire(user, user, FALSE)
+	return FALSE
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
@@ -97,6 +125,10 @@
 	sharpness = SHARP_EDGED
 	max_charges = 4
 	school = SCHOOL_EVOCATION
+
+// Spellblade is just a melee weapon to non-wizards
+/obj/item/gun/magic/staff/spellblade/on_intruder_use(mob/living/user)
+	return FALSE
 
 /obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
