@@ -231,8 +231,8 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
   const { act } = useBackend(context);
   const fake_settlers = ["John", "William", "Alice", "Tom"];
   return (
-    <Stack vertical fill>
-      <Stack.Item grow>
+    <Stack vertical>
+      <Stack.Item>
         <Section
           color="label"
           title="Objective"
@@ -251,8 +251,8 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Status Example" fill>
-          <Stack mb={-1} fill>
+        <Section title="Status Example">
+          <Stack mb={-1}>
             <Stack.Item basis={70} grow mb={-0.5}>
               {fake_settlers?.map(settler => (
                 <Stack key={settler}>
@@ -274,7 +274,7 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
               ))}
             </Stack.Item>
             <Divider vertical />
-            <Stack.Item grow>
+            <Stack.Item>
               This is the status panel for your pioneers. Each one requires
               1 food every time you continue
               towards <span style={goodstyle}>Orion</span>.
@@ -288,8 +288,8 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <Section fill title="Resources">
-          <Stack fill>
+        <Section title="Resources">
+          <Stack>
             <Stack.Item grow mt={-1}>
               If you want to make it to <span style={goodstyle}>Orion</span>,
               you&apos;ll need to manage your resources:
@@ -306,35 +306,35 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
             <Divider vertical />
             <Stack.Item>
               <Stack vertical fill>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="hamburger"
                     content={"Food Left: 80"}
                     color="green" />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="gas-pump"
                     content={"Fuel Left: 60"}
                     color="olive" />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="wrench"
                     content={"Hull Parts: 1"}
                     color="average" />
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item>
                   <Button
                     fluid
                     icon="server"
                     content={"Electronics: 1"}
                     color="blue" />
                 </Stack.Item>
-                <Stack.Item mb={-0.3} grow>
+                <Stack.Item mb={-0.3}>
                   <Button
                     fluid
                     icon="rocket"
