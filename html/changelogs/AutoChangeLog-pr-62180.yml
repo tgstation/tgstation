@@ -1,7 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed maintenance drones being unable to examinate things they currently can't interact with throgh shift-click."
-  - bugfix: "Fixed clown car drivers being unable to examinate things or interacting with their inventory while the car is in cannon mode."
-  - bugfix: "Fixed honorbound people being unable to pull, examinate and alt-click other living mobs while holding an item that could be used as a melee weapon."
-  - bugfix: "Fixed mechas firing their weapons or using their tools when the pilot is examinating things through shift-click."
