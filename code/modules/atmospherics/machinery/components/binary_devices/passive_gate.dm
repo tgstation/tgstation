@@ -17,7 +17,7 @@ Passive gate is similar to the regular pump except:
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
 
-	RPD_tooltip = "A one-way air valve that does not require power. Passes gas when the output pressure is lower than the target pressure."
+	RPD_tooltip = "A one-way air valve that does not require power. Passes gas when the input pressure is higher than the output and the output pressure is lower than the designated value."
 
 	///Set the target pressure the component should arrive to
 	var/target_pressure = ONE_ATMOSPHERE

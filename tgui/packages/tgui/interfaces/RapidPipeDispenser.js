@@ -175,7 +175,7 @@ const PipeTypeSection = (props, context) => {
         {categories.map((category, i) => (
           <Tabs.Tab
             fluid
-            key={category.cat_name}
+            key={category.cat_name + "ADAS"}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
             onClick={() => setCategoryName(category.cat_name)}>
@@ -234,7 +234,7 @@ const SmartPipeBlockSection = (props, context) => {
             </Stack.Item>
           </Stack>
         </Stack.Item>
-        <Stack.Item basis={1.5}>
+        <Stack.Item basis={2}>
           <Stack fill>
             <Stack.Item>
               <Button icon="arrow-left"
@@ -257,13 +257,15 @@ const SmartPipeBlockSection = (props, context) => {
             </Stack.Item>
           </Stack>
         </Stack.Item>
-        <Stack.Item grow>
-          <Button icon="arrow-down"
-            selected={init_directions["south"]}
-            onClick={() => act('init_dir_setting', {
-              dir_flag: "south",
-            })} />
-        </Stack.Item>
+        <Stack>
+          <Stack.Item grow>
+            <Button icon="arrow-down"
+              selected={init_directions["south"]}
+              onClick={() => act('init_dir_setting', {
+                dir_flag: "south",
+              })} />
+          </Stack.Item>
+        </Stack>
       </Stack>
     </Section>
   );
@@ -276,8 +278,8 @@ export const RapidPipeDispenser = (props, context) => {
   } = data;
   return (
     <Window
-      width={535}
-      height={500}>
+      width={580}
+      height={575}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
