@@ -1,0 +1,5 @@
+author: "Coconutwarrior97"
+delete-after: True
+changes: 
+  - rscadd: "Adds a hydroponics airlock type, and replaces old medical hydroponics doors with the newer airlock type."
+  - bugfix: "Fixes an issue where people with the doctor phobia were afraid of hydroponics doors."
