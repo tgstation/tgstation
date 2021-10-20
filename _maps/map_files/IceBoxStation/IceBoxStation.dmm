@@ -14339,7 +14339,7 @@
 /area/engineering/atmos)
 "dnZ" = (
 /obj/structure/table,
-/obj/item/implant/radio,
+/obj/item/radio/off,
 /turf/open/floor/iron/cafeteria,
 /area/hallway/secondary/exit/departure_lounge)
 "doe" = (
