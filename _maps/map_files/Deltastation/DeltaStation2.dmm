@@ -74,14 +74,14 @@
 	name = "lavaland"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aat" = (
 /obj/docking_port/stationary/random{
 	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "aav" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral{
@@ -221,10 +221,17 @@
 /area/hallway/secondary/entry)
 "aaP" = (
 /turf/closed/wall/mineral/plastitanium,
-/area/hallway/secondary/entry)
+/area/space)
 "aaS" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/construction/mining/aux_base)
+/obj/docking_port/stationary{
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
+	},
+/turf/open/space/basic,
+/area/space)
 "abe" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/end{
@@ -272,16 +279,18 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "abs" = (
-/obj/docking_port/stationary{
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 1";
+	space_dir = 1
 	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/space/basic,
-/area/space)
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "aby" = (
 /obj/machinery/turretid{
 	icon_state = "control_stun";
@@ -422,6 +431,9 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -6506,8 +6518,16 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "aXU" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/security/prison)
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 1;
+	height = 4;
+	name = "escape pod loader";
+	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
+	width = 3
+	},
+/turf/open/space/basic,
+/area/space)
 "aXX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -6804,20 +6824,27 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/security/prison)
 "bbv" = (
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	name = "escape pod loader";
-	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
-	width = 3
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 3";
+	space_dir = 4
 	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/space/basic,
-/area/space)
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/security/prison)
 "bbw" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -101675,10 +101702,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"xZM" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/space/basic,
-/area/space)
 "xZR" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
@@ -138532,8 +138555,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaP
+abf
 abf
 abf
 abf
@@ -138792,7 +138815,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaO
 abE
 aaO
 aca
@@ -139044,11 +139067,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aas
+mIc
 aaa
 aaa
-aaa
+aaS
 abs
 abF
 abP
@@ -139306,7 +139329,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaO
 abG
 aaO
 acc
@@ -139560,8 +139583,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaP
+abf
 abf
 abf
 abf
@@ -143158,8 +143181,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaP
+abf
 abf
 abf
 abf
@@ -143418,7 +143441,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaO
 abE
 aaO
 aca
@@ -143670,12 +143693,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aat
+mIc
 aaa
 aaa
-aaa
-abs
+aaS
+abQ
 abF
 abQ
 acb
@@ -143932,7 +143955,7 @@ aaa
 aaa
 aaa
 aaa
-xZM
+aaO
 abG
 aaO
 acc
@@ -144186,8 +144209,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaS
+aaP
+abi
 abi
 abi
 abi
@@ -160695,9 +160718,9 @@ aaa
 xTK
 aad
 aKV
-xZM
+aZL
 bbv
-xZM
+aZL
 aKV
 qYo
 qYo
@@ -160953,7 +160976,7 @@ xTK
 aad
 aKV
 aaa
-aaa
+aXU
 aaa
 aKV
 aaa
@@ -161208,11 +161231,11 @@ aaa
 aaa
 aaa
 aaa
-aXU
+aKV
 aaa
 aaa
 aaa
-aXU
+aKV
 aaa
 aaa
 aaa
@@ -161465,11 +161488,11 @@ aaa
 aaa
 aaa
 aaa
+aaP
 aaa
 aaa
 aaa
-aaa
-aaa
+aaP
 aaa
 aaa
 aaa
@@ -161724,7 +161747,7 @@ aaa
 aaa
 aaa
 aaa
-bbz
+aaa
 aaa
 aaa
 aaa
@@ -161981,7 +162004,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bbz
 aaa
 aaa
 aaa
