@@ -565,13 +565,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	cell_hit_cost = 2000
-	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
-	var/throw_stun_chance = 35
+	var/throw_stun_chance = 10
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
 	var/cell_hit_cost = 1000
