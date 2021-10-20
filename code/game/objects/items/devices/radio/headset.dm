@@ -63,11 +63,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human_loc = loc
 		if(human_loc.ears == src)
-			set_on(TRUE)
-	else if(isAI(loc))
-		set_on(TRUE)
+			set_listening(TRUE)//TODOKYLER: this is dumb and there needs to be traits to dileneate whether to shut off because of one thing or stay on because another thing overrides it
+	else if(ismob(loc))
+		set_listening(TRUE)
 	else
-		set_on(FALSE)
+		set_listening(FALSE)
 
 /obj/item/radio/headset/Moved(atom/OldLoc, Dir)
 	. = ..()

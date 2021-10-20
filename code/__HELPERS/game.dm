@@ -248,7 +248,7 @@
 		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
 		//maybe in the future a high volume algorithm would be worth it
 		var/turf/inbetween_turf = center_turf
-		while(TRUE)
+		while(inbetween_turf.z == target_turf.z)//multiz not allowed fuck off
 			inbetween_turf = get_step(inbetween_turf, get_dir(inbetween_turf, target_turf))
 
 			if(inbetween_turf == target_turf)//we've gotten to target's turf without returning due to turf opacity, so we must be able to see target
