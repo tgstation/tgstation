@@ -35,8 +35,8 @@ export const SUBJECT_UNCONSCIOUS = 2;
 export const SUBJECT_DEAD = 3;
 export const SUBJECT_TRANSFORMING = 4;
 
-export const RADIATION_STRENGTH_MAX = 15;
-export const RADIATION_DURATION_MAX = 30;
+export const PULSE_STRENGTH_MAX = 15;
+export const PULSE_DURATION_MAX = 30;
 
 // __DEFINES/DNA.dm - Mutation "Quality"
 const POSITIVE = 1;

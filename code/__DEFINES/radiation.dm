@@ -23,9 +23,6 @@ Ask ninjanomnom if they're around
 #define RAD_BURN_LOG_GRADIENT 10000
 #define RAD_BURN_CURVE(X) log(1+((X-RAD_BURN_THRESHOLD)/RAD_BURN_LOG_GRADIENT))/log(RAD_BURN_LOG_BASE)
 
-/// How much stored radiation in a mob with no ill effects
-#define RAD_MOB_SAFE 500
-
 /// How much stored radiation to check for hair loss
 #define RAD_MOB_HAIRLOSS 800
 /// Chance of you hair starting to fall out every second when over threshold

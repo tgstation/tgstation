@@ -6,7 +6,7 @@ const DnaScannerButtons = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     hasDelayedAction,
-    isPulsingRads,
+    isPulsing,
     isScannerConnected,
     isScrambleReady,
     isViableSubject,
@@ -30,7 +30,7 @@ const DnaScannerButtons = (props, context) => {
       )}
       {!!isViableSubject && (
         <Button
-          disabled={!isScrambleReady || isPulsingRads}
+          disabled={!isScrambleReady || isPulsing}
           onClick={() => act('scramble_dna')}>
           Scramble DNA
           {!isScrambleReady && ` (${scrambleSeconds}s)`}
@@ -93,7 +93,7 @@ const DnaScannerContent = (props, context) => {
     isScannerConnected,
     isViableSubject,
     subjectHealth,
-    subjectRads,
+    subjectDamage,
     subjectStatus,
   } = data;
   if (!isScannerConnected) {
@@ -134,9 +134,9 @@ const DnaScannerContent = (props, context) => {
           {subjectHealth}%
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label="Radiation">
+      <LabeledList.Item label="Genetic Damage">
         <ProgressBar
-          value={subjectRads}
+          value={subjectDamage}
           minValue={0}
           maxValue={100}
           ranges={{
@@ -145,7 +145,7 @@ const DnaScannerContent = (props, context) => {
             good: [0, 30],
             olive: [-Infinity, 0],
           }}>
-          {subjectRads}%
+          {subjectDamage}%
         </ProgressBar>
       </LabeledList.Item>
     </LabeledList>
