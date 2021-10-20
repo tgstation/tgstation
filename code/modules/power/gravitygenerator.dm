@@ -26,7 +26,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+	var/datum/proximity_monitor/advanced/gravity/gravity_field
+
 	var/sprite_number = 0
+
 	///Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
@@ -36,6 +40,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/Destroy()
 	. = ..()
+
+	QDEL_NULL(gravity_field)
 	QDEL_NULL(soundloop)
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
@@ -304,12 +310,14 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				alert = TRUE
 				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
 				message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
+			gravity_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 2, "host" = src, "gravity_value" = 6))
 		else
 			soundloop.stop()
 			if(gravity_in_level() == TRUE)
 				alert = TRUE
 				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
 				message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
+			QDEL_NULL(gravity_field)
 
 	update_appearance()
 	update_list()
@@ -408,7 +416,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	name = "paper- 'Generate your own gravity!'"
 	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
-	energy and you have yourself gravity! You can turn the machine on or off when required.</p>
+	energy and you have yourself gravity! You can turn the machine on or off when required.
+	The generator produces a very harmful amount of gravity when enabled, so don't stay close for too long.</p>
 	<br>
 	<h3>It blew up!</h3>
 	<p>Don't panic! The gravity generator was designed to be easily repaired. If, somehow, the sturdy framework did not survive then
