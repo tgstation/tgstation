@@ -325,14 +325,15 @@
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
+	// MOTHBLOCKS TODO: Seiver
 	if(radcalc > 0)
 		//no cost percent healing if you are SUPER cold (on top of cost healing)
-		if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
-			M.radiation = round(M.radiation * (0.75**(REM * delta_time)))
-		else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
-			M.radiation = round(M.radiation * (0.90**(REM * delta_time)))
-		M.radiation -= radcalc * normalise_creation_purity()
-		healypoints += (radcalc / 5)
+		// if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
+		// 	M.radiation = round(M.radiation * (0.75**(REM * delta_time)))
+		// else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
+		// 	M.radiation = round(M.radiation * (0.90**(REM * delta_time)))
+		// M.radiation -= radcalc * normalise_creation_purity()
+		// healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
 	healypoints = round(healypoints, 0.1)

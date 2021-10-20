@@ -43,7 +43,7 @@
 
 		if(stat != DEAD)
 			//Mutations and radiation
-			handle_mutations_and_radiation(delta_time, times_fired)
+			handle_mutations(delta_time, times_fired)
 
 		if(stat != DEAD)
 			//Breathing, if applicable
@@ -83,7 +83,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, delta_time, times_fired)
 	return
 
-/mob/living/proc/handle_mutations_and_radiation(delta_time, times_fired)
+/mob/living/proc/handle_mutations(delta_time, times_fired)
 	return
 
 /mob/living/proc/handle_diseases(delta_time, times_fired)

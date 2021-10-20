@@ -24,22 +24,22 @@ Ask ninjanomnom if they're around
 #define RAD_BURN_CURVE(X) log(1+((X-RAD_BURN_THRESHOLD)/RAD_BURN_LOG_GRADIENT))/log(RAD_BURN_LOG_BASE)
 
 /// How much stored radiation to check for hair loss
-#define RAD_MOB_HAIRLOSS 800
+#define RAD_MOB_HAIRLOSS (1 MINUTES)
 /// Chance of you hair starting to fall out every second when over threshold
 #define RAD_MOB_HAIRLOSS_PROB 7.5
 
 /// How much stored radiation to check for mutation
-#define RAD_MOB_MUTATE 1250
+#define RAD_MOB_MUTATE (2 MINUTES)
 /// Chance of randomly mutating every second when over threshold
 #define RAD_MOB_MUTATE_PROB 0.5
 
-/// The amount of radiation to check for vomitting
-#define RAD_MOB_VOMIT 2000
+/// The time since irradiated before checking for vomitting
+#define RAD_MOB_VOMIT (2 MINUTES)
 /// Chance per second of vomitting
 #define RAD_MOB_VOMIT_PROB 0.5
 
 /// How much stored radiation to check for stunning
-#define RAD_MOB_KNOCKDOWN 2000
+#define RAD_MOB_KNOCKDOWN (2 MINUTES)
 /// Chance of knockdown per second when over threshold
 #define RAD_MOB_KNOCKDOWN_PROB 0.5
 /// Amount of knockdown when it occurs

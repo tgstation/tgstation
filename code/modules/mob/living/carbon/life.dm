@@ -376,7 +376,7 @@
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 
-/mob/living/carbon/handle_mutations_and_radiation(delta_time, times_fired)
+/mob/living/carbon/handle_mutations(time_since_irradiated, delta_time, times_fired)
 	if(!dna?.temporary_mutations.len)
 		return
 

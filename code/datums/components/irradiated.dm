@@ -20,6 +20,8 @@
 /datum/component/irradiated
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+	var/beginning_of_irradiation
+
 	var/burn_splotch_timer_id
 
 	COOLDOWN_DECLARE(clean_cooldown)
@@ -37,6 +39,8 @@
 	ADD_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
 
 	create_glow()
+
+	beginning_of_irradiation = world.time
 
 	if (ishuman(parent))
 		var/mob/living/carbon/human/human_parent = parent
@@ -86,6 +90,9 @@
 
 	if (should_halt_effects(parent))
 		return
+
+	if (human_parent.stat > DEAD)
+		human_parent.dna?.species?.handle_radiation(human_parent, world.time - beginning_of_irradiation, delta_time)
 
 	process_tox_damage(human_parent, delta_time)
 
