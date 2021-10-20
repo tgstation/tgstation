@@ -587,3 +587,36 @@
 	desc = "Shows you know how to sew a lapel and center a back vent."
 	icon_state = "binoclard_lenses"
 	inhand_icon_state = "binoclard_lenses"
+
+/obj/item/clothing/glasses/salesman
+	name = "colored glasses"
+	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."
+	icon_state = "salesman"
+	inhand_icon_state = "salesman"
+	///Tells us who the current wearer([BIGSHOT]) is.
+	var/mob/living/carbon/human/bigshot
+
+/obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot != ITEM_SLOT_EYES)
+		return
+	bigshot = user
+	RegisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)
+
+/obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
+	..()
+	UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
+	bigshot = initial(bigshot)
+	icon_state = initial(icon_state)
+	desc = initial(desc)
+
+/obj/item/clothing/glasses/salesman/proc/moodshift(atom/movable/source, amount)
+	SIGNAL_HANDLER
+	if(amount < SANITY_UNSTABLE)	
+		icon_state = "salesman_fzz"
+		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
+		bigshot.update_inv_glasses()
+	else
+		icon_state = initial(icon_state)
+		desc = initial(desc)
+		bigshot.update_inv_glasses()
