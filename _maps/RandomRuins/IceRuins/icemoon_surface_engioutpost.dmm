@@ -756,15 +756,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
-"dc" = (
-/obj/machinery/power/energy_accumulator/rad_collector,
-/obj/structure/cable,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dd" = (
-/obj/machinery/power/energy_accumulator/rad_collector,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
 "de" = (
 /obj/machinery/rnd/production/circuit_imprinter/offstation,
 /turf/open/floor/iron/icemoon,
@@ -1069,7 +1060,7 @@ aa
 af
 cE
 ag
-dc
+ag
 al
 ae
 aa
@@ -1111,7 +1102,7 @@ aa
 af
 af
 ag
-dc
+ag
 dp
 ae
 aa
@@ -1132,7 +1123,7 @@ aa
 af
 ab
 ag
-dd
+al
 dq
 ak
 aa
@@ -1153,7 +1144,7 @@ aa
 af
 cE
 ag
-dc
+ag
 al
 ak
 aa
