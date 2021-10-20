@@ -9786,10 +9786,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
-"bJv" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
 "bJL" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -90962,8 +90958,8 @@ dhe
 dhe
 dhe
 dhe
-bJv
-bJv
+dhe
+dhe
 dhe
 oXC
 dhe
@@ -91219,8 +91215,8 @@ dhe
 dhe
 dhe
 dhe
-bJv
-bJv
+dhe
+dhe
 dhe
 dhe
 dhe
