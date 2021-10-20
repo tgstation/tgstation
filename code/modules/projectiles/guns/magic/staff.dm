@@ -29,7 +29,7 @@
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user)
 	user.dropItemToGround(src, TRUE)
 	var/mob/new_body = user.wabbajack("animal")
-	balloon_alert(new_body, ".. wabbajack")
+	balloon_alert(new_body, "wabbajack, wabbajack!")
 	return FALSE
 
 /obj/item/gun/magic/staff/animate
@@ -51,7 +51,6 @@
 	school = SCHOOL_RESTORATION
 
 /obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user)
-	balloon_alert(user, "bzzzt!")
 	user.dropItemToGround(src, TRUE)
 	lightningbolt(user)
 	return FALSE
@@ -81,7 +80,7 @@
 	. = ..()
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
-	balloon_alert(user, "chaos")
+	balloon_alert(user, "chaos!")
 	user.dropItemToGround(src, TRUE)
 	process_fire(user, user, FALSE)
 	return FALSE
