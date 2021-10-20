@@ -10,9 +10,6 @@
 // Showers process on SSmachines
 #define RADIATION_CLEAN_IMMUNITY_TIME (SSMACHINES_DT + (1 SECONDS))
 
-// MOTHBLOCKS TODO: Random minor effects, like non-stun vomits and balding given enough time
-// Might just need to handle_mutations_and_radiation?
-
 /// This atom is irradiated, and will glow green.
 /// Humans will take toxin damage until all their toxin damage is cleared.
 /// Items will attempt to irradiate whoever is holding them, as well as whatever they are inside.

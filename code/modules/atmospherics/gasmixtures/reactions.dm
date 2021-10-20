@@ -165,12 +165,6 @@
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		cached_results["fire"] += burned_fuel * 10
 
-	if(burned_fuel)
-		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
-			// MOTHBLOCKS TODO: How do I into trit?
-			// radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
-			pass()
-
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
