@@ -15,18 +15,18 @@
 
 /datum/looping_sound/geiger/get_sound(starttime)
 	var/danger
-	switch(last_radiation)
-		if(RAD_BACKGROUND_RADIATION to RAD_GEIGER_LOW)
-			danger = 1
-		if(RAD_GEIGER_LOW to RAD_GEIGER_MEDIUM)
-			danger = 2
-		if(RAD_GEIGER_MEDIUM to RAD_GEIGER_HIGH)
-			danger = 3
-		if(RAD_GEIGER_HIGH to INFINITY)
-			danger = 4
-		else
-			return null
-	return ..(starttime, mid_sounds[danger])
+	// switch(last_radiation)
+	// 	if(RAD_BACKGROUND_RADIATION to RAD_GEIGER_LOW)
+	// 		danger = 1
+	// 	if(RAD_GEIGER_LOW to RAD_GEIGER_MEDIUM)
+	// 		danger = 2
+	// 	if(RAD_GEIGER_MEDIUM to RAD_GEIGER_HIGH)
+	// 		danger = 3
+	// 	if(RAD_GEIGER_HIGH to INFINITY)
+	// 		danger = 4
+	// 	else
+	// 		return null
+	// return ..(starttime, mid_sounds[danger])
 
 /datum/looping_sound/geiger/stop()
 	. = ..()
