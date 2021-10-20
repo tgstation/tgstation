@@ -143,7 +143,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "aw" = (
 /obj/effect/turf_decal/stripes/line{
@@ -318,7 +318,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/multitool,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "bj" = (
 /obj/structure/table/reinforced,
@@ -337,7 +337,7 @@
 /area/centcom/ferry)
 "bo" = (
 /obj/machinery/gibber,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "bp" = (
 /obj/item/trash/sosjerky,
@@ -716,7 +716,7 @@
 /area/centcom/holding)
 "cQ" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "da" = (
 /obj/machinery/light/directional/north,
@@ -1452,7 +1452,7 @@
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "ge" = (
 /obj/machinery/defibrillator_mount/directional/south,
@@ -1591,7 +1591,7 @@
 /area/tdome/arena)
 "gS" = (
 /obj/machinery/processor,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "gV" = (
 /mob/living/simple_animal/bot/medbot{
@@ -1688,7 +1688,7 @@
 /area/centcom/holding)
 "hk" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "hl" = (
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -1892,12 +1892,12 @@
 "ie" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/rcl/pre_loaded,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "ik" = (
 /obj/structure/kitchenspike,
 /obj/item/gun/magic/hook,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "il" = (
 /turf/closed/indestructible/riveted,
@@ -6752,7 +6752,7 @@
 /area/syndicate_mothership/control)
 "uM" = (
 /obj/machinery/icecream_vat,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "uO" = (
 /obj/machinery/door/airlock/centcom{
@@ -7586,7 +7586,7 @@
 /area/wizard_station)
 "wR" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "wT" = (
 /obj/structure/table/wood,
@@ -13656,7 +13656,7 @@
 "Mn" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/crayons,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "Mt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -13957,7 +13957,7 @@
 /area/centcom/supplypod)
 "NS" = (
 /obj/machinery/autolathe,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
@@ -13986,7 +13986,7 @@
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
 /obj/item/food/meat/slab/monkey,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "NX" = (
 /obj/machinery/light/directional/west,
@@ -14275,7 +14275,7 @@
 	pixel_y = -3
 	},
 /obj/machinery/duct,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "Pf" = (
 /obj/item/kirbyplants{
@@ -14324,7 +14324,7 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/four)
 "Pn" = (
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "Pq" = (
 /obj/structure/filingcabinet/filingcabinet,
@@ -14532,7 +14532,7 @@
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "Ql" = (
 /obj/machinery/light/small/directional/west,
@@ -14561,7 +14561,7 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "Qt" = (
 /obj/item/flashlight/lantern,
@@ -14595,7 +14595,7 @@
 	},
 /obj/item/reagent_containers/glass/bucket,
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "QD" = (
 /obj/structure/closet,
@@ -14863,7 +14863,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/west,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "RI" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -15128,7 +15128,7 @@
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
 /obj/item/food/meat/slab/synthmeat,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "SN" = (
 /obj/structure/window/reinforced{
@@ -15236,7 +15236,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper_bin,
 /obj/item/pen/fountain,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "Th" = (
 /obj/structure/table/wood,
@@ -15291,7 +15291,7 @@
 	layer = 5
 	},
 /obj/item/food/grown/redbeet,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "To" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -15430,7 +15430,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/duct,
 /obj/item/clothing/suit/apron,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "TT" = (
 /obj/structure/table/reinforced,
@@ -15630,7 +15630,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/easel,
 /obj/item/canvas/twentythree_twentythree,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "UG" = (
 /obj/machinery/light/small/directional/south,
@@ -16312,7 +16312,7 @@
 /area/centcom/admin)
 "XA" = (
 /obj/machinery/photocopier,
-/turf/open/floor/plating/catwalk_floor,
+/turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "XD" = (
 /obj/effect/turf_decal/tile/brown,
