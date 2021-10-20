@@ -13958,12 +13958,12 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "cTH" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/engineering/atmos)
+/area/space/nearstation)
 "cTK" = (
 /obj/structure/railing{
 	dir = 8

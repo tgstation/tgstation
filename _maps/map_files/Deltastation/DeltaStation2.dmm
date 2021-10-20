@@ -43805,13 +43805,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
-"hgm" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
-	dir = 8
-	},
-/turf/open/space,
-/area/engineering/atmos/upper)
 "hgo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -82092,12 +82085,12 @@
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "slH" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
+/obj/structure/lattice,
 /turf/open/space,
-/area/engineering/atmos)
+/area/space/nearstation)
 "slQ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -130860,8 +130853,8 @@ aaa
 aaa
 aad
 aaa
-hgm
-hgm
+slH
+slH
 iqM
 lef
 rMV

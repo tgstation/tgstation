@@ -44095,11 +44095,11 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "sOq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/atmos)
+/area/icemoon/surface/outdoors)
 "sOs" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,

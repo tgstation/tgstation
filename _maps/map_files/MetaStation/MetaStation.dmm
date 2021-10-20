@@ -67051,12 +67051,12 @@
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
 "vNT" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
 /turf/open/space,
-/area/engineering/atmos)
+/area/space/nearstation)
 "vNU" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet,
