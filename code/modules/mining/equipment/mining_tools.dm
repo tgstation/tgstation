@@ -66,6 +66,8 @@
 /obj/item/pickaxe/drill
 	name = "mining drill"
 	icon_state = "handdrill"
+	inhand_icon_state = "handdrill"
+	worn_icon_state = "handdrill"
 	slot_flags = ITEM_SLOT_BELT
 	toolspeed = 0.6 //available from roundstart, faster than a pickaxe.
 	usesound = 'sound/weapons/drill.ogg'
@@ -84,6 +86,8 @@
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
+	inhand_icon_state = "diamonddrill"
+	worn_icon_state = "diamonddrill"
 	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
 
