@@ -257,7 +257,7 @@
 			return
 		flashed_borgo.adjust_blurriness(20)
 		flashed_borgo.adjust_blindness(10)
-		flashed_borgo.adjustStaminaLoss(45) // 3 hit stun w/ Flashes since you can flash faster than a stun baton can
+		flashed_borgo.apply_damage(60, STAMINA) // 2 hit stun w/ Flashes
 		var/diff = 15 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
 		flashed_borgo.add_confusion(min(15, diff))
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
