@@ -61,9 +61,6 @@
 
 	var/zfalling = FALSE
 
-	///Last location of the atom for demo recording purposes
-	var/atom/demo_last_loc
-
 	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
 	var/blocks_emissive = FALSE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
@@ -117,8 +114,8 @@
 
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
-		if(((CanAtmosPass == ATMOS_PASS_DENSITY && density) || CanAtmosPass == ATMOS_PASS_NO) && isturf(loc))
-			CanAtmosPass = ATMOS_PASS_YES
+		if(((can_atmos_pass == ATMOS_PASS_DENSITY && density) || can_atmos_pass == ATMOS_PASS_NO) && isturf(loc))
+			can_atmos_pass = ATMOS_PASS_YES
 			air_update_turf(TRUE, FALSE)
 		loc.handle_atom_del(src)
 

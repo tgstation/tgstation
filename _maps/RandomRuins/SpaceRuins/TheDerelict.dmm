@@ -57,7 +57,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
 "au" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
 /obj/structure/cable,
@@ -99,13 +99,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aL" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Air Bridge Access"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aM" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Air Bridge Access"
 	},
 /turf/open/floor/plating,
@@ -145,7 +145,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "aV" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
 /turf/open/floor/plating,
@@ -401,7 +401,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ca" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "cd" = (
@@ -1603,7 +1603,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
 "hB" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
 /turf/open/floor/plating/airless,
@@ -2154,7 +2154,7 @@
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "jU" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Arrivals Docking Bay 1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2581,7 +2581,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "lZ" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -2966,7 +2966,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "nD" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
 	},
 /turf/open/floor/plating/airless,
@@ -3118,7 +3118,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "ok" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
@@ -3358,7 +3358,7 @@
 	},
 /area/ruin/space/derelict/bridge/ai_upload)
 "DE" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3505,7 +3505,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "Le" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Arrivals Docking Bay 1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

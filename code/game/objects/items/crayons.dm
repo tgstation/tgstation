@@ -722,7 +722,7 @@
 		. += "It has [charges_left] use\s left."
 	else
 		. += "It is empty."
-	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].")
+	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -800,6 +800,13 @@
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.icon = style_list_icons[choice]
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.color)
+		paint_color = target.color
+		to_chat(user, span_notice("You adjust the color of [src] to match [target]."))
+		update_appearance()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	else
+		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 

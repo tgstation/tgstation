@@ -54,9 +54,9 @@
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()
 	. = ..()
-	. += getpipeimage(icon, "pipe", dir, , piping_layer)
+	. += get_pipe_image(icon, "pipe", dir, , piping_layer)
 	if(showpipe)
-		. += getpipeimage(icon, "pipe", initialize_directions)
+		. += get_pipe_image(icon, "pipe", initialize_directions)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/process_atmos()
 	if(!is_operational || !on || !nodes[1])  //if it has no power or its switched off, dont process atmos
@@ -86,20 +86,20 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/default_change_direction_wrench(mob/user, obj/item/item)
 	if(!..())
 		return FALSE
-	SetInitDirections()
+	set_init_directions()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
 			node.disconnect(src)
 		nodes[1] = null
 	if(parents[1])
-		nullifyPipenet(parents[1])
+		nullify_pipenet(parents[1])
 
-	atmosinit()
+	atmos_init()
 	node = nodes[1]
 	if(node)
-		node.atmosinit()
-		node.addMember(src)
+		node.atmos_init()
+		node.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 

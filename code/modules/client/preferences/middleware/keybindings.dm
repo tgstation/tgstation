@@ -24,7 +24,7 @@
 	)
 
 /datum/preference_middleware/keybindings/proc/reset_all_keybinds(list/params, mob/user)
-	preferences.key_bindings = deepCopyList(GLOB.default_hotkeys)
+	preferences.key_bindings = deep_copy_list(GLOB.default_hotkeys)
 	preferences.key_bindings_by_key = preferences.get_key_bindings_by_key(preferences.key_bindings)
 	preferences.update_static_data(user)
 

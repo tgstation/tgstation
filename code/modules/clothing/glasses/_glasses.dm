@@ -226,6 +226,8 @@
 	SIGNAL_HANDLER
 	if(damaged_clothes == CLOTHING_SHREDDED)
 		return
+	if(item_flags & IN_INVENTORY)
+		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
 		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
@@ -252,6 +254,11 @@
 /obj/item/clothing/glasses/regular/repair()
 	. = ..()
 	vision_correction = TRUE
+
+/obj/item/clothing/glasses/regular/thin
+	name = "thin prescription glasses"
+	desc = "More expensive, more fragile and much less practical, but oh so fashionable."
+	icon_state = "glasses_thin"
 
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
@@ -399,7 +406,7 @@
 /obj/item/clothing/glasses/blindfold/white/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user) && !colored_before)
-		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		add_atom_colour(user.eye_color, FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
 /obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
@@ -410,7 +417,7 @@
 	var/mob/living/carbon/human/H = loc
 	var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 	M.appearance_flags |= RESET_COLOR
-	M.color = "#[H.eye_color]"
+	M.color = H.eye_color
 	. += M
 
 /obj/item/clothing/glasses/sunglasses/big
@@ -574,3 +581,9 @@
 	desc = "Lookin' cool."
 	icon_state = "phantom_glasses"
 	inhand_icon_state = "phantom_glasses"
+
+/obj/item/clothing/glasses/regular/kim
+	name = "binoclard lenses"
+	desc = "Shows you know how to sew a lapel and center a back vent."
+	icon_state = "binoclard_lenses"
+	inhand_icon_state = "binoclard_lenses"

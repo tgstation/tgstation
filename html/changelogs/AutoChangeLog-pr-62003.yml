@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "fixes unpowered space ruins actually being powered"
-  - expansion: "more secret away mission stuff"

@@ -287,9 +287,21 @@
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
 	hardcore_value = 5
+	var/glasses
 
 /datum/quirk/item_quirk/nearsighted/add_unique()
-	give_item_to_holder(/obj/item/clothing/glasses/regular, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	glasses = glasses || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/glasses)
+	switch(glasses)
+		if ("Thin")
+			glasses = /obj/item/clothing/glasses/regular/thin
+		if ("Circle")
+			glasses = /obj/item/clothing/glasses/regular/circle
+		if ("Hipster")
+			glasses = /obj/item/clothing/glasses/regular/hipster
+		else
+			glasses = /obj/item/clothing/glasses/regular
+
+	give_item_to_holder(glasses, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/nearsighted/add()
 	quirk_holder.become_nearsighted(QUIRK_TRAIT)

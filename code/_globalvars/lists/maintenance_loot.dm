@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//tools
 		/obj/item/weldingtool/hugetank = 1,
-		/obj/item/kitchen/knife = 1,
+		/obj/item/knife/kitchen = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/shield/riot/buckler = 1,
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,

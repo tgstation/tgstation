@@ -148,7 +148,7 @@
 		if(!connection_images[smart])
 			connection_images[smart] = list()
 		for(var/direction in GLOB.cardinals)
-			if(!(smart.GetInitDirections() & direction))
+			if(!(smart.get_init_directions() & direction))
 				continue
 			if(!connection_images[smart][dir2text(direction)])
 				var/image/arrow
