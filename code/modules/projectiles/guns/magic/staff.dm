@@ -27,9 +27,9 @@
 	school = SCHOOL_TRANSMUTATION
 
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user)
-	balloon_alert(user, ".. wabbajack")
 	user.dropItemToGround(src, TRUE)
-	process_fire(user, user, FALSE)
+	var/mob/new_body = user.wabbajack("animal")
+	balloon_alert(new_body, ".. wabbajack")
 	return FALSE
 
 /obj/item/gun/magic/staff/animate
