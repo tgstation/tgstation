@@ -8,10 +8,14 @@
 	var/charge_delay = 0.3 SECONDS
 	/// The amount of turfs we move past the target
 	var/charge_past = 2
+	/// The maximum distance we can charge
+	var/charge_distance = 50
 	/// The sleep time before moving in deciseconds while charging
 	var/charge_speed = 0.5
 	/// The damage the charger does when bumping into something
 	var/charge_damage = 30
+	/// Bitflags for indications of charging
+	var/charge_indicator = TRUE
 	/// If we destroy objects while charging
 	var/destroy_objects = TRUE
 	/// Associative boolean list of chargers that are currently charging
@@ -19,12 +23,14 @@
 	/// Associative direction list of chargers that lets our move signal know how we are supposed to move
 	var/list/next_move_allowed = list()
 
-/datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, speed, damage, destroy)
+/datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, distance, speed, damage, destroy)
 	. = ..()
 	if(delay)
 		charge_delay = delay
 	if(past)
 		charge_past = past
+	if(distance)
+		charge_distance = distance
 	if(speed)
 		charge_speed = speed
 	if(damage)
@@ -51,17 +57,20 @@
 	var/turf/T = get_ranged_target_turf(chargeturf, charger.dir, past)
 	if(!T)
 		return
-	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
+	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
+	if(charge_indicator)
+		new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	charging[charger] = TRUE
 	DestroySurroundings(charger)
 	charger.setDir(get_dir(charger, target_atom))
-	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	if(charge_indicator)
+		var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
+		animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay, charger)
-	var/distance = get_dist(charger, T)
+	var/distance = min(get_dist(charger, T), charge_distance)
 	for(var/i in 1 to distance)
 		// Prevents movement from the user during the charge
 		SLEEP_CHECK_DEATH(charge_speed, charger)
@@ -124,6 +133,8 @@
 		hit_target(source, A, charge_damage)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/A, damage_dealt)
+	if(SEND_SIGNAL(owner, COMSIG_BUMPED_CHARGE, A) & COMPONENT_OVERRIDE_CHARGE_BUMP)
+		return
 	if(!isliving(A))
 		return
 	var/mob/living/L = A

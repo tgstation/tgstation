@@ -1471,6 +1471,9 @@
 
 //Mob ability signals
 #define COMSIG_BLOOD_WARP "mob_ability_blood_warp"
+#define COMSIG_STARTED_CHARGE "mob_ability_charge_started"
+#define COMSIG_BUMPED_CHARGE "mob_ability_charge_bumped"
+	#define COMPONENT_OVERRIDE_CHARGE_BUMP (1<<0)
 #define COMSIG_FINISHED_CHARGE "mob_ability_charge_finished"
 #define COMSIG_PROJECTILE_FIRING_STARTED "mob_ability_started_projectile"
 #define COMSIG_PROJECTILE_FIRING_FINISHED "mob_ability_fired_projectile"
