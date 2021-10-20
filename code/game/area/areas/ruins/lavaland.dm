@@ -44,7 +44,7 @@
 	name = "\improper Elephant Graveyard"
 	icon_state = "green"
 
-/area/ruin/powered/syndicate_lava_base
+/area/ruin/syndicate_lava_base
 	name = "\improper Secret Base"
 	icon_state = "dk_yellow"
 	ambience_index = AMBIENCE_DANGER
