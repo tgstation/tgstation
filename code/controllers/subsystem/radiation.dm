@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(radiation)
 
 		var/current_insulation = 1
 
-		for (var/turf/turf_in_between in get_line(source, target))
+		for (var/turf/turf_in_between in get_line(source, target) - get_turf(source))
 			var/insulation = cached_rad_insulations[turf_in_between]
 			if (isnull(insulation))
 				insulation = turf_in_between.rad_insulation

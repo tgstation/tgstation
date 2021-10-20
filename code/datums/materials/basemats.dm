@@ -99,12 +99,21 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	// MOTHBLOCKS TODO: Radiation on uranium
-	// source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going. amount / 50 means 40 radiation per sheet.
+
+	// Uranium structures should irradiate, but not items, because item irradiation is a lot more annoying.
+	// For example, consider picking up uranium as a miner.
+	if (isitem(source))
+		return
+
+	source.AddElement(/datum/element/radioactive)
 
 /datum/material/uranium/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	// qdel(source.GetComponent(/datum/component/radioactive))
+
+	if (isitem(source))
+		return
+
+	source.RemoveElement(/datum/element/radioactive)
 
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))

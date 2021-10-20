@@ -449,7 +449,7 @@
 			emp_heavy_size = power_level * 7
 		if(rad_pulse)
 			rad_pulse_size = 15
-			rad_pulse_strength = 0.05
+			rad_pulse_threshold = 0.05
 		gas_pockets = 15
 		gas_spread = power_level * 8
 

@@ -7,8 +7,9 @@
 
 /datum/proximity_monitor/advanced/gravity/setup_field_turf(turf/T)
 	. = ..()
-	T.AddElement(/datum/element/forced_gravity, gravity_value)
-	modified_turfs[T] = gravity_value
+
+	if (!isnull(modified_turfs[T]))
+		T.AddElement(/datum/element/forced_gravity, gravity_value)
 
 /datum/proximity_monitor/advanced/gravity/cleanup_field_turf(turf/T)
 	. = ..()
