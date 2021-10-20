@@ -1,7 +1,0 @@
-#define BLANK_CATEGORY_COMMAND "Command Department"
-#define BLANK_CATEGORY_SECURITY "Security Department"
-#define BLANK_CATEGORY_ENGINEERING "Engineering Department"
-#define BLANK_CATEGORY_RESEARCH "Research Department"
-#define BLANK_CATEGORY_MEDICAL "Medical Department"
-#define BLANK_CATEGORY_SUPPLY "Supply Department"
-#define BLANK_CATEGORY_OTHER "Other"

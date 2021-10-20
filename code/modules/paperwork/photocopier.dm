@@ -62,15 +62,8 @@
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
 	
-	var/list/blanks = list()
-	for(var/obj/item/paper/blank/paper_type as anything in subtypesof(/obj/item/paper/blank))
-		var/blank[0]
-		blank["path"] = paper_type
-		blank["code"] = initial(paper_type.code)
-		blank["category"] = initial(paper_type.category)
-		blank["name"] = initial(paper_type.name)
-		blank["info"] = initial(paper_type.info)
-		blanks[++blanks.len] = blank
+	var/json = file2text("config/blanks.json")
+	var/list/blanks = json_decode(json)
 	data["blanks"] = blanks
 	data["category"] = category
 	
@@ -180,16 +173,21 @@
 			return TRUE
 		// Called when you press print blank
 		if("print_blank")
-			var/blankpath = params["path"]
+			var/obj/item/paper/printblank = new /obj/item/paper (loc)
+			var/printname = params["name"]
+			var/list/printinfo
+			for(var/infoline as anything in params["info"])
+				printinfo += infoline
+			printblank.name = printname
+			printblank.info = printinfo
 			if(busy)
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return FALSE
 			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
 				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
 				return FALSE
-			var/obj/item/paper/blank/paper = new blankpath (loc)
 			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
-			return paper
+			return printblank
 
 /**
  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.

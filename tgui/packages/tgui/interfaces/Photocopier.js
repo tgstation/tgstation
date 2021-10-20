@@ -214,7 +214,8 @@ const Blanks = (props, context) => {
             content={blank.code}
             tooltip={blank.name}
             onClick={() => act("print_blank", {
-              path: blank.path,
+			  name: blank.name,
+			  info: blank.info
             })}
           />
         ))}
