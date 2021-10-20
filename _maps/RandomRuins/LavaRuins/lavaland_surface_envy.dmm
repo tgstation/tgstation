@@ -12,22 +12,14 @@
 /turf/closed/wall/rust,
 /area/ruin/unpowered)
 "e" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "f" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = 28
+/obj/structure/mirror/directional/east{
+	icon_state = "mirror_broke"
 	},
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -35,12 +27,7 @@
 /area/ruin/unpowered)
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "h" = (
@@ -55,31 +42,20 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "k" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_y = 28
+/obj/structure/mirror/directional/north{
+	icon_state = "mirror_broke"
 	},
-/obj/item/kitchen/knife/envy,
+/obj/item/knife/envy,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = 28
+/obj/structure/mirror/directional/east{
+	icon_state = "mirror_broke"
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "m" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "n" = (
@@ -88,12 +64,7 @@
 	},
 /area/ruin/unpowered)
 "o" = (
-/obj/structure/mirror{
-	broken = 1;
-	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
-	icon_state = "mirror_broke";
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},

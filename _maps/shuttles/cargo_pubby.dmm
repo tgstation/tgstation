@@ -4,14 +4,12 @@
 /area/shuttle/supply)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "ShuttleLoad"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "e" = (
 /obj/effect/decal/cleanable/dirt,
@@ -19,28 +17,26 @@
 	dir = 4;
 	id = "ShuttleLoad"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "f" = (
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "ShuttleLoad"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "g" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/west{
 	id = "cargoload";
-	name = "Loading Doors";
-	pixel_x = -24;
-	pixel_y = -8
+	name = "Loading Doors"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "j" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "k" = (
 /obj/machinery/door/poddoor{
@@ -55,23 +51,19 @@
 /area/shuttle/supply)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 4
 	},
 /area/shuttle/supply)
 "o" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/chapel{
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/shuttle/supply)
 "q" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -80,21 +72,19 @@
 "s" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/shuttle/supply)
 "t" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/west{
 	id = "cargounload";
-	name = "Loading Doors";
-	pixel_x = -24;
-	pixel_y = 8
+	name = "Loading Doors"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "w" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/shuttle/supply)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
@@ -102,14 +92,14 @@
 	dir = 8;
 	id = "ShuttleUnload"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "y" = (
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "ShuttleUnload"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "z" = (
 /obj/structure/window/reinforced{
@@ -158,15 +148,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "K" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/shuttle/supply)
 "N" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/chapel{
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/chapel{
 	dir = 1
 	},
 /area/shuttle/supply)
@@ -180,13 +168,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/shuttle/supply)
 "U" = (
-/turf/open/floor/plasteel/chapel,
+/turf/open/floor/iron/chapel,
 /area/shuttle/supply)
 "X" = (
-/turf/open/floor/plasteel/chapel{
+/turf/open/floor/iron/chapel{
 	dir = 8
 	},
 /area/shuttle/supply)

@@ -21,11 +21,13 @@ require only minor tweaks.
 */
 
 // helpers for modifying jobs, used in various job_changes.dm files
-#define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
-#define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
-#define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
+
+#define MAP_CURRENT_VERSION 1
 
 #define SPACERUIN_MAP_EDGE_PAD 15
+
+/// Special map path value for custom adminloaded stations.
+#define CUSTOM_MAP_PATH "custom"
 
 // traits
 // boolean - marks a level as having that property if present
@@ -43,7 +45,16 @@ require only minor tweaks.
 // boolean - weather types that occur on the level
 #define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
 #define ZTRAIT_ASHSTORM "Weather_Ashstorm"
-#define ZTRAIT_ACIDRAIN "Weather_Acidrain"
+#define ZTRAIT_VOIDSTORM "Weather_Voidstorm"
+
+/// boolean - does this z prevent ghosts from observing it
+#define ZTRAIT_SECRET "Secret"
+
+/// boolean - does this z prevent phasing
+#define ZTRAIT_NOPHASE "No Phase"
+
+/// boolean - does this z prevent xray/meson/thermal vision
+#define ZTRAIT_NOXRAY "No X-Ray"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
@@ -57,26 +68,34 @@ require only minor tweaks.
 
 // enum - how space transitions should affect this level
 #define ZTRAIT_LINKAGE "Linkage"
-    // UNAFFECTED if absent - no space transitions
-    #define UNAFFECTED null
-    // SELFLOOPING - space transitions always self-loop
-    #define SELFLOOPING "Self"
-    // CROSSLINKED - mixed in with the cross-linked space pool
-    #define CROSSLINKED "Cross"
+	// UNAFFECTED if absent - no space transitions
+	#define UNAFFECTED null
+	// SELFLOOPING - space transitions always self-loop
+	#define SELFLOOPING "Self"
+	// CROSSLINKED - mixed in with the cross-linked space pool
+	#define CROSSLINKED "Cross"
 
 // string - type path of the z-level's baseturf (defaults to space)
 #define ZTRAIT_BASETURF "Baseturf"
 
 // default trait definitions, used by SSmapping
-#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
+///Z level traits for CentCom
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE)
+///Z level traits for Space Station 13
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
+///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
-    ZTRAIT_MINING = TRUE, \
-    ZTRAIT_ASHSTORM = TRUE, \
-    ZTRAIT_LAVA_RUINS = TRUE, \
-    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+	ZTRAIT_MINING = TRUE, \
+	ZTRAIT_ASHSTORM = TRUE, \
+	ZTRAIT_LAVA_RUINS = TRUE, \
+	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+///Z level traits for Away Missions
+#define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
+///Z level traits for Secret Away Missions
+#define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
@@ -84,7 +103,7 @@ require only minor tweaks.
 
 // must correspond to _basemap.dm for things to work correctly
 #define DEFAULT_MAP_TRAITS list(\
-    DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
+	DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
 )
 
 // Camera lock flags
@@ -93,7 +112,7 @@ require only minor tweaks.
 #define CAMERA_LOCK_CENTCOM 4
 
 //Reserved/Transit turf type
-#define RESERVED_TURF_TYPE /turf/open/space/basic			//What the turf is when not being used
+#define RESERVED_TURF_TYPE /turf/open/space/basic //What the turf is when not being used
 
 //Ruin Generation
 

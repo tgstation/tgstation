@@ -29,11 +29,11 @@
 	var/initialized = FALSE
 
 	/// Set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
-	///		use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
+	/// use the [SS_NO_FIRE] flag instead for systems that never fire to keep it from even being added to list that is checked every tick
 	var/can_fire = TRUE
 
 	///Bitmap of what game states can this subsystem fire at. See [RUNLEVELS_DEFAULT] for more details.
-	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
+	var/runlevels = RUNLEVELS_DEFAULT //points of the game at which the SS can fire
 
 	/*
 	 * The following variables are managed by the MC and should not be modified directly.
@@ -68,6 +68,9 @@
 
 	/// Tracks the amount of completed runs for the subsystem
 	var/times_fired = 0
+
+	/// How many fires have we been requested to postpone
+	var/postponed_fires = 0
 
 	/// Time the subsystem entered the queue, (for timing and priority reasons)
 	var/queued_time = 0
@@ -122,12 +125,38 @@
 	dequeue()
 	can_fire = 0
 	flags |= SS_NO_FIRE
-	Master.subsystems -= src
+	if (Master)
+		Master.subsystems -= src
 	return ..()
 
+
+/** Update next_fire for the next run.
+ *  reset_time (bool) - Ignore things that would normally alter the next fire, like tick_overrun, and last_fire. (also resets postpone)
+ */
+/datum/controller/subsystem/proc/update_nextfire(reset_time = FALSE)
+	var/queue_node_flags = flags
+
+	if (reset_time)
+		postponed_fires = 0
+		if (queue_node_flags & SS_TICKER)
+			next_fire = world.time + (world.tick_lag * wait)
+		else
+			next_fire = world.time + wait
+		return
+
+	if (queue_node_flags & SS_TICKER)
+		next_fire = world.time + (world.tick_lag * wait)
+	else if (queue_node_flags & SS_POST_FIRE_TIMING)
+		next_fire = world.time + wait + (world.tick_lag * (tick_overrun/100))
+	else if (queue_node_flags & SS_KEEP_TIMING)
+		next_fire += wait
+	else
+		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
+
+
 //Queue it to run.
-//	(we loop thru a linked list until we get to the end or find the right point)
-//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
+// (we loop thru a linked list until we get to the end or find the right point)
+// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
@@ -191,9 +220,9 @@
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
 		queue_prev.queue_next = queue_next
-	if (src == Master.queue_tail)
+	if (Master && (src == Master.queue_tail))
 		Master.queue_tail = queue_prev
-	if (src == Master.queue_head)
+	if (Master && (src == Master.queue_head))
 		Master.queue_head = queue_next
 	queued_time = 0
 	if (state == SS_QUEUED)
@@ -214,9 +243,10 @@
 //used to initialize the subsystem AFTER the map has loaded
 /datum/controller/subsystem/Initialize(start_timeofday)
 	initialized = TRUE
+	SEND_SIGNAL(src, COMSIG_SUBSYSTEM_POST_INITIALIZE, start_timeofday)
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] second[time == 1 ? "" : "s"]!"
-	to_chat(world, "<span class='boldannounce'>[msg]</span>")
+	to_chat(world, span_boldannounce("[msg]"))
 	log_world(msg)
 	return time
 
@@ -240,11 +270,10 @@
 		if (SS_IDLE)
 			. = "  "
 
-//could be used to postpone a costly subsystem for (default one) var/cycles, cycles
-//for instance, during cpu intensive operations like explosions
+/// Causes the next "cycle" fires to be missed. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
 /datum/controller/subsystem/proc/postpone(cycles = 1)
-	if(next_fire - world.time < wait)
-		next_fire += (wait*cycles)
+	if (can_fire && cycles >= 1)
+		postponed_fires += cycles
 
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
@@ -255,7 +284,7 @@
 		if (NAMEOF(src, can_fire))
 			//this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
 			if (var_value)
-				next_fire = world.time + wait
+				update_nextfire(reset_time = TRUE)
 		if (NAMEOF(src, queued_priority)) //editing this breaks things.
 			return FALSE
 	. = ..()

@@ -1,0 +1,73 @@
+2013-01-02:
+  Erro:
+  - tweak: Examining humans now works a bit differently. Some external suits and helmets
+      can hide certain pieces of clothing so you don't see them when examining. Glasses
+      are also now displayed when examining.
+  - tweak: The job selection screen has been changed a little to hopefully make making
+      changes there easier.
+2013-01-07:
+  Erro:
+  - tweak: Examining humans now works a bit differently. Some external suits and helmets
+      can hide certain pieces of clothing so you don't see them when examining. Glasses
+      are also now displayed when examining.
+  - tweak: The job selection screen has been changed a little to hopefully make making
+      changes there easier.
+2013-01-08:
+  Erro:
+  - tweak: Examining humans now works a bit differently. Some external suits and helmets
+      can hide certain pieces of clothing so you don't see them when examining. Glasses
+      are also now displayed when examining.
+  - tweak: The job selection screen has been changed a little to hopefully make making
+      changes there easier.
+2013-01-09:
+  Erro:
+  - tweak: Examining humans now works a bit differently. Some external suits and helmets
+      can hide certain pieces of clothing so you don't see them when examining. Glasses
+      are also now displayed when examining.
+  - tweak: The job selection screen has been changed a little to hopefully make making
+      changes there easier.
+2013-01-11:
+  Giacom:
+  - tweak: Plasma (Air) will give the breather the plasma reagent, for a toxic effect,
+      instead of just straight damage.
+  - bugfix: The agent card will now work inside PDAs/Wallets; meaning the AI won't
+      be able to track you.
+2013-01-12:
+  Giacom:
+  - tweak: Staff of animation mimics will no longer care whether you are holding the
+      staff or not, they will never attack their creator.
+  - tweak: Brainrot will only need alkysine to be cured.
+  - rscadd: New spider infestation event based on Cael's spiders. The announcement
+      will be the same as alien infestations.
+2013-01-13:
+  Directed by S0ldi3rKr4s0 and produced by PeteTheGoat:
+  - rscadd: /tg/station 13 Presents Curse of the Horseman.
+2013-01-16:
+  Cheridan: &id001
+  - tweak: Chickens will now lay a certain number of eggs after being fed wheat, rather
+      than just laying them whenever they felt like it. No more chickensplosions.
+2013-01-20:
+  Cheridan: *id001
+2013-01-25:
+  Errorage:
+  - rscadd: All the equipment you spawn with will now contain your fingerprints, giving
+      the detective more ability to tell where items came from and if a crewmember
+      has changed clothing.
+2013-01-26:
+  Pete:
+  - rscadd: Added hugging and kicking. I also updated the text styles for clicking
+      on humans in most intents, but they should be pretty much the same.
+2013-01-27:
+  Cheridan:
+  - rscadd: The plant bags in Hydroponics lockers have been replaced with upgraded
+      models with seed-extraction tech. Activate with via right-click menu or Objects
+      verb tab.
+  - rscadd: 'Obtaining grass tiles works a bit different now: grass is harvested as
+      a normal plant item, clicking on it in-hand produces the tile.'
+2013-01-31:
+  Kor "Even in death I still code" Phaeron:
+  - rscadd: Four new slime types with their own reactions and two new reactions for
+      old slimes.
+  - rscadd: Put a suit of reactive teleport armour back in the RD's office.
+  - tweak: Chemistry now has two dispensers (with half charge each) so both chemists
+      can actually work at the same time.

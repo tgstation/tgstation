@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 			type_or_datum = new type_or_datum
 	var/datum/actionspeed_modifier/existing = LAZYACCESS(actionspeed_modification, type_or_datum.id)
 	if(existing)
-		if(existing == type_or_datum)		//same thing don't need to touch
+		if(existing == type_or_datum) //same thing don't need to touch
 			return TRUE
 		remove_actionspeed_modifier(existing, FALSE)
 	if(length(actionspeed_modification))
@@ -79,10 +79,10 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 /mob/proc/remove_actionspeed_modifier(datum/actionspeed_modifier/type_id_datum, update = TRUE)
 	var/key
 	if(ispath(type_id_datum))
-		key = initial(type_id_datum.id) || "[type_id_datum]"		//id if set, path set to string if not.
-	else if(!istext(type_id_datum))		//if it isn't text it has to be a datum, as it isn't a type.
+		key = initial(type_id_datum.id) || "[type_id_datum]" //id if set, path set to string if not.
+	else if(!istext(type_id_datum)) //if it isn't text it has to be a datum, as it isn't a type.
 		key = type_id_datum.id
-	else								//assume it's an id
+	else //assume it's an id
 		key = type_id_datum
 	if(!LAZYACCESS(actionspeed_modification, key))
 		return FALSE
@@ -171,5 +171,5 @@ GLOBAL_LIST_EMPTY(actionspeed_modification_cache)
 		. -= id
 
 /// Checks if a action speed modifier is valid and not missing any data
-/proc/actionspeed_data_null_check(datum/actionspeed_modifier/M)		//Determines if a data list is not meaningful and should be discarded.
+/proc/actionspeed_data_null_check(datum/actionspeed_modifier/M) //Determines if a data list is not meaningful and should be discarded.
 	. = !(M.multiplicative_slowdown)

@@ -1,0 +1,7 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an issue where the unbanning panel would give inaccurate information about the ban in the unban confirmation prompts."
+  - bugfix: "Fixed an issue where clicking the X to close out the confirmation popup on the unbanning panel acted as if you'd pressed Yes."
+  - admin: "Added a reban button to the unbanning panel. This allows an admin to quickly and easily re-apply a ban they've removed and replaces the unban button when a ban has been removed. As a result, accidentally removing the wrong ban no longer requires the admin to place a second brand new ban on top of the old one."
+  - admin: "Editing the IP, ckey or CID of a server ban will now kick any players matching the edited ban's new details."

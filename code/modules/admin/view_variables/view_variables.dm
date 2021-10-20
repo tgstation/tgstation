@@ -4,8 +4,8 @@
 	//set src in world
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
-	if(!usr.client || !usr.client.holder)		//This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
-		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>", confidential = TRUE)
+	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
+		to_chat(usr, span_danger("You need to be an administrator to access this."), confidential = TRUE)
 		return
 
 	if(!D)
@@ -62,7 +62,6 @@
 			"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
 			"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
 			"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
-			"View References" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_VIEW_REFERENCES),
 			"---"
 			)
 		for(var/i in 1 to length(dropdownoptions))
@@ -88,7 +87,7 @@
 				value = L[key]
 			variable_html += debug_variable(i, value, 0, L)
 	else
-		names = sortList(names)
+		names = sort_list(names)
 		for(var/V in names)
 			if(D.can_vv_get(V))
 				variable_html += D.vv_get_var(V)

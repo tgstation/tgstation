@@ -43,9 +43,7 @@
 "i" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "j" = (
@@ -62,9 +60,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "m" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "n" = (
@@ -90,15 +86,14 @@
 /obj/machinery/door/poddoor{
 	id = "goonwizship1"
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "goonwizship1";
-	name = "Strange Ship Door Button";
-	pixel_y = 32
+	name = "Strange Ship Door Button"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "t" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "u" = (
@@ -118,7 +113,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "x" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)
 "y" = (
@@ -141,7 +136,7 @@
 	},
 /area/ruin/space/has_grav/powered/authorship)
 "C" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/bed,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/powered/authorship)

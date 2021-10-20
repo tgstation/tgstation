@@ -1,6 +1,7 @@
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
+	category = PROGRAM_CATEGORY_CREW
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_icon_state = "radarntos"
 	requires_ntnet = TRUE
@@ -15,7 +16,7 @@
 	var/atom/selected
 	///Used to store when the next scan is available. Updated by the scan() proc.
 	var/next_scan = 0
-	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_icon() calls
+	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_appearance() calls
 	var/last_icon_state = ""
 	///Used by the tgui interface, themed NT or Syndicate.
 	var/arrowstyle = "ntosradarpointer.png"
@@ -74,13 +75,13 @@
 			scan()
 
 /**
-  *Updates tracking information of the selected target.
-  *
-  *The track() proc updates the entire set of information about the location
-  *of the target, including whether the Ntos window should use a pinpointer
-  *crosshair over the up/down arrows, or none in favor of a rotating arrow
-  *for far away targets. This information is returned in the form of a list.
-  *
+ *Updates tracking information of the selected target.
+ *
+ *The track() proc updates the entire set of information about the location
+ *of the target, including whether the Ntos window should use a pinpointer
+ *crosshair over the up/down arrows, or none in favor of a rotating arrow
+ *for far away targets. This information is returned in the form of a list.
+ *
 */
 /datum/computer_file/program/radar/proc/track()
 	var/atom/movable/signal = find_atom()
@@ -97,7 +98,7 @@
 
 	if(get_dist_euclidian(here_turf, target_turf) > 24)
 		userot = TRUE
-		rot = round(Get_Angle(here_turf, target_turf))
+		rot = round(get_angle(here_turf, target_turf))
 	else
 		if(target_turf.z > here_turf.z)
 			pointer="caret-up"
@@ -116,13 +117,13 @@
 	return trackinfo
 
 /**
-  *
-  *Checks the trackability of the selected target.
-  *
-  *If the target is on the computer's Z level, or both are on station Z
-  *levels, and the target isn't untrackable, return TRUE.
-  *Arguments:
-  **arg1 is the atom being evaluated.
+ *
+ *Checks the trackability of the selected target.
+ *
+ *If the target is on the computer's Z level, or both are on station Z
+ *levels, and the target isn't untrackable, return TRUE.
+ *Arguments:
+ **arg1 is the atom being evaluated.
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
 	if(!signal || !computer)
@@ -134,30 +135,30 @@
 	return (there.z == here.z) || (is_station_level(here.z) && is_station_level(there.z))
 
 /**
-  *
-  *Runs a scan of all the trackable atoms.
-  *
-  *Checks each entry in the GLOB of the specific trackable atoms against
-  *the track() proc, and fill the objects list with lists containing the
-  *atoms' names and REFs. The objects list is handed to the tgui screen
-  *for displaying to, and being selected by, the user. A two second
-  *sleep is used to delay the scan, both for thematical reasons as well
-  *as to limit the load players may place on the server using these
-  *somewhat costly loops.
+ *
+ *Runs a scan of all the trackable atoms.
+ *
+ *Checks each entry in the GLOB of the specific trackable atoms against
+ *the track() proc, and fill the objects list with lists containing the
+ *atoms' names and REFs. The objects list is handed to the tgui screen
+ *for displaying to, and being selected by, the user. A two second
+ *sleep is used to delay the scan, both for thematical reasons as well
+ *as to limit the load players may place on the server using these
+ *somewhat costly loops.
 */
 /datum/computer_file/program/radar/proc/scan()
 	return
 
 /**
-  *
-  *Finds the atom in the appropriate list that the `selected` var indicates
-  *
-  *The `selected` var holds a REF, which is a string. A mob REF may be
-  *something like "mob_209". In order to find the actual atom, we need
-  *to search the appropriate list for the REF string. This is dependant
-  *on the program (Lifeline uses GLOB.human_list, while Fission360 uses
-  *GLOB.poi_list), but the result will be the same; evaluate the string and
-  *return an atom reference.
+ *
+ *Finds the atom in the appropriate list that the `selected` var indicates
+ *
+ *The `selected` var holds a REF, which is a string. A mob REF may be
+ *something like "mob_209". In order to find the actual atom, we need
+ *to search the appropriate list for the REF string. This is dependant
+ *on the program (Lifeline uses GLOB.human_list, while Fission360 uses
+ *GLOB.poi_list), but the result will be the same; evaluate the string and
+ *return an atom reference.
 */
 /datum/computer_file/program/radar/proc/find_atom()
 	return
@@ -174,7 +175,7 @@
 	if(!trackable(signal))
 		program_icon_state = "[initial(program_icon_state)]lost"
 		if(last_icon_state != program_icon_state)
-			computer.update_icon()
+			computer.update_appearance()
 			last_icon_state = program_icon_state
 		return
 
@@ -192,7 +193,7 @@
 			program_icon_state = "[initial(program_icon_state)]far"
 
 	if(last_icon_state != program_icon_state)
-		computer.update_icon()
+		computer.update_appearance()
 		last_icon_state = program_icon_state
 	computer.setDir(get_dir(here_turf, target_turf))
 
@@ -241,13 +242,12 @@
 /datum/computer_file/program/radar/lifeline/trackable(mob/living/carbon/human/humanoid)
 	if(!humanoid || !istype(humanoid))
 		return FALSE
-	if(..() && istype(humanoid.w_uniform, /obj/item/clothing/under))
-
-		var/obj/item/clothing/under/uniform = humanoid.w_uniform
-		if(!uniform.has_sensor || (uniform.sensor_mode < SENSOR_COORDS)) // Suit sensors must be on maximum.
-			return FALSE
-
-		return TRUE
+	if(..())
+		if (istype(humanoid.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/uniform = humanoid.w_uniform
+			if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
+				return TRUE
+	return FALSE
 
 ////////////////////////
 //Nuke Disk Finder App//
@@ -257,6 +257,7 @@
 /datum/computer_file/program/radar/fission360
 	filename = "fission360"
 	filedesc = "Fission360"
+	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
 	requires_ntnet = FALSE
@@ -269,7 +270,7 @@
 	pointercolor = "red"
 
 /datum/computer_file/program/radar/fission360/find_atom()
-	return locate(selected) in GLOB.poi_list
+	return SSpoints_of_interest.get_poi_atom_by_ref(selected)
 
 /datum/computer_file/program/radar/fission360/scan()
 	if(world.time < next_scan)
@@ -284,7 +285,7 @@
 			name = nuke.name,
 			)
 		objects += list(nukeinfo)
-	var/obj/item/disk/nuclear/disk = locate() in GLOB.poi_list
+	var/obj/item/disk/nuclear/disk = locate() in SSpoints_of_interest.real_nuclear_disks
 	var/list/nukeinfo = list(
 		ref = REF(disk),
 		name = "Nuke Auth. Disk",

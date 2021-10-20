@@ -34,6 +34,12 @@
 	mood_change = 3
 	timeout = 8 MINUTES
 
+/datum/mood_event/maintenance_adaptation
+	mood_change = 8
+
+/datum/mood_event/maintenance_adaptation/add_effects()
+	description = "<span class='nicegreen'>[GLOB.deity] has helped me adapt to the maintenance shafts!</span>\n"
+
 /datum/mood_event/book_nerd
 	description = "<span class='nicegreen'>I have recently read a book.</span>\n"
 	mood_change = 1
@@ -102,7 +108,7 @@
 	hidden = TRUE
 
 /datum/mood_event/heretics
-	description = "<span class='nicegreen'>THE HIGHER I RISE , THE MORE I SEE.</span>\n"
+	description = "<span class='nicegreen'>THE HIGHER I RISE, THE MORE I SEE.</span>\n"
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
@@ -110,11 +116,11 @@
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
 
-/datum/mood_event/fan_clown_pin
+/datum/mood_event/clown_enjoyer_pin
 	description = "<span class='nicegreen'>I love showing off my clown pin!</span>\n"
 	mood_change = 1
 
-/datum/mood_event/fan_mime_pin
+/datum/mood_event/mime_fan_pin
 	description = "<span class='nicegreen'>I love showing off my mime pin!</span>\n"
 	mood_change = 1
 
@@ -138,7 +144,7 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/religiously_comforted
-	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>\n"
+	description = "<span class='nicegreen'>I feel comforted by the presence of a holy person.</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
@@ -147,7 +153,7 @@
 	mood_change = 5
 
 /datum/mood_event/sacrifice_good
-	description ="<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
+	description = "<span class='nicegreen'>The gods are pleased with this offering!</span>\n"
 	mood_change = 5
 	timeout = 3 MINUTES
 
@@ -180,13 +186,6 @@
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 10
 
-/datum/mood_event/nanite_happiness
-	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
-	mood_change = 7
-
-/datum/mood_event/nanite_happiness/add_effects(message)
-	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"
-
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
@@ -201,5 +200,56 @@
 
 /datum/mood_event/holy_consumption
 	description = "<span class='nicegreen'>Truly, that was the food of the Divine!</span>\n"
-	mood_change = 5
+	mood_change = 1 // 1 + 5 from it being liked food makes it as good as jolly
 	timeout = 3 MINUTES
+
+/datum/mood_event/high_five
+	description = "<span class='nicegreen'>I love getting high fives!</span>\n"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/high_ten
+	description = "<span class='nicegreen'>AMAZING! A HIGH-TEN!</span>\n"
+	mood_change = 3
+	timeout = 45 SECONDS
+
+/datum/mood_event/down_low
+	description = "<span class='nicegreen'>HA! What a rube, they never stood a chance...</span>\n"
+	mood_change = 4
+	timeout = 90 SECONDS
+
+/datum/mood_event/aquarium_positive
+	description = "<span class='nicegreen'>Watching fish in an aquarium is calming.</span>\n"
+	mood_change = 3
+	timeout = 90 SECONDS
+
+/datum/mood_event/gondola
+	description = "<span class='nicegreen'>I feel at peace and feel no need to make any sudden or rash actions.</span>\n"
+	mood_change = 6
+
+/datum/mood_event/kiss
+	description = "<span class='nicegreen'>Someone blew a kiss at me, I must be a real catch!</span>\n"
+	mood_change = 1.5
+	timeout = 2 MINUTES
+
+/datum/mood_event/kiss/add_effects(mob/beau, direct)
+	if(!beau)
+		return
+	if(direct)
+		description = "<span class='nicegreen'>[beau.name] gave me a kiss, ahh!!</span>\n"
+	else
+		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"
+
+/datum/mood_event/honorbound
+	description = "<span class='nicegreen'>Following my honorbound code is fulfilling!</span>\n"
+	mood_change = 4
+
+/datum/mood_event/et_pieces
+	description = "<span class='abductor'>Mmm... I love peanut butter...</span>\n"
+	mood_change = 50
+	timeout = 10 MINUTES
+
+/datum/mood_event/memories_of_home
+	description = "<span class='nicegreen'>This taste seems oddly nostalgic...</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES

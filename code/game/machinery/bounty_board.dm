@@ -1,9 +1,9 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
 GLOBAL_LIST_EMPTY(request_list)
 /**
-  * A machine that acts basically like a quest board.
-  * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
-  */
+ * A machine that acts basically like a quest board.
+ * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
+ */
 /obj/machinery/bounty_board
 	name = "bounty board"
 	desc = "Allows you to place requests for goods and services across the station, as well as pay those who actually did it."
@@ -18,6 +18,22 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/bounty_value = 1
 	///Text of the currently written bounty
 	var/bounty_text = ""
+
+/obj/machinery/bounty_board/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/bounty_board/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/bounty_board/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/bounty_board/directional/west
+	dir = EAST
+	pixel_x = -32
 
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
@@ -41,16 +57,16 @@ GLOBAL_LIST_EMPTY(request_list)
 		to_chat(user, "There's no account assigned with this ID.")
 		return TRUE
 	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			if(machine_stat & BROKEN)
-				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
-				new /obj/item/stack/sheet/metal(loc, 3)
+				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
+				new /obj/item/stack/sheet/iron(loc, 3)
 				new /obj/item/shard(loc)
 			else
-				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
 				new /obj/item/wallframe/bounty_board(loc)
 			qdel(src)
 
@@ -72,7 +88,10 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
-	var/obj/item/card/id/id_card = user.get_idcard()
+	var/obj/item/card/id/id_card
+	if(isliving(user))
+		var/mob/living/L = user
+		id_card = L.get_idcard()
 	if(id_card?.registered_account)
 		current_user = id_card.registered_account
 	if(current_user)
@@ -163,9 +182,9 @@ GLOBAL_LIST_EMPTY(request_list)
 	result_path = /obj/machinery/bounty_board
 
 /**
-  * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
-  * All of this is passed to the Request Console UI in order to present in organized way.
-  */
+ * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
+ * All of this is passed to the Request Console UI in order to present in organized way.
+ */
 /datum/station_request
 	///Name of the Request Owner.
 	var/owner

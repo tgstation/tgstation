@@ -8,8 +8,8 @@
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
-/obj/machinery/pipedispenser/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/machinery/pipedispenser/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/machinery/pipedispenser/ui_interact(mob/user)
 	. = ..()
@@ -47,7 +47,7 @@
 				return
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (loc, p_type, p_dir)
-			P.setPipingLayer(piping_layer)
+			P.set_piping_layer(piping_layer)
 			P.add_fingerprint(usr)
 			wait = world.time + 10
 	if(href_list["makemeter"])
@@ -63,7 +63,7 @@
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, "<span class='notice'>You put [W] back into [src].</span>")
+		to_chat(usr, span_notice("You put [W] back into [src]."))
 		qdel(W)
 		return
 	else
@@ -142,13 +142,13 @@
 			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
-				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
+				to_chat(usr, span_warning("There's not enough room to build that here!"))
 				qdel(C)
 				return
 			if(href_list["dir"])
 				C.setDir(text2num(href_list["dir"]))
 			C.add_fingerprint(usr)
-			C.update_icon()
+			C.update_appearance()
 			wait = world.time + 15
 	return
 

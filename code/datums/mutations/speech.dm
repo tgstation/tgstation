@@ -7,8 +7,8 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
-/datum/mutation/human/nervousness/on_life()
-	if(prob(10))
+/datum/mutation/human/nervousness/on_life(delta_time, times_fired)
+	if(DT_PROB(5, delta_time))
 		owner.stuttering = max(10, owner.stuttering)
 
 
@@ -16,7 +16,7 @@
 	name = "Wacky"
 	desc = "You are not a clown. You are the entire circus."
 	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
+	text_gain_indication = "<span class='sans'><span class='infoplain'>You feel an off sensation in your voicebox.</span></span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
@@ -116,33 +116,25 @@
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = " [message] "
-		message = replacetext(message," looking at  ","  gawpin' at ")
-		message = replacetext(message," great "," bangin' ")
-		message = replacetext(message," man "," mate ")
-		message = replacetext(message," friend ",pick(" mate "," bruv "," bledrin "))
-		message = replacetext(message," what "," wot ")
-		message = replacetext(message," drink "," wet ")
-		message = replacetext(message," get "," giz ")
-		message = replacetext(message," what "," wot ")
-		message = replacetext(message," no thanks "," wuddent fukken do one ")
-		message = replacetext(message," i don't know "," wot mate ")
-		message = replacetext(message," no "," naw ")
-		message = replacetext(message," robust "," chin ")
-		message = replacetext(message,"  hi  "," how what how ")
-		message = replacetext(message," hello "," sup bruv ")
-		message = replacetext(message," kill "," bang ")
-		message = replacetext(message," murder "," bang ")
-		message = replacetext(message," windows "," windies ")
-		message = replacetext(message," window "," windy ")
-		message = replacetext(message," break "," do ")
-		message = replacetext(message," your "," yer ")
-		message = replacetext(message," security "," coppers ")
-		speech_args[SPEECH_MESSAGE] = trim(message)
+/datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
+	SIGNAL_HANDLER
 
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		message = " [message]"
+		var/list/chav_words = strings("chav_replacement.json", "chav")
+
+		for(var/key in chav_words)
+			var/value = chav_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+			message = replacetextEx(message, " [key]", " [value]")
+		if(prob(30))
+			message += ", mate"
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 /datum/mutation/human/elvis
 	name = "Elvis"
@@ -152,15 +144,15 @@
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
-/datum/mutation/human/elvis/on_life()
+/datum/mutation/human/elvis/on_life(delta_time, times_fired)
 	switch(pick(1,2))
 		if(1)
-			if(prob(15))
+			if(DT_PROB(7.5, delta_time))
 				var/list/dancetypes = list("swinging", "fancy", "stylish", "20'th century", "jivin'", "rock and roller", "cool", "salacious", "bashing", "smashing")
 				var/dancemoves = pick(dancetypes)
 				owner.visible_message("<b>[owner]</b> busts out some [dancemoves] moves!")
 		if(2)
-			if(prob(15))
+			if(DT_PROB(7.5, delta_time))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
 /datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
@@ -208,3 +200,67 @@
 	..()
 	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
+
+/datum/mutation/human/medieval
+	name = "Medieval"
+	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old world Europe."
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='notice'>You feel like seeking the holy grail!</span>"
+	text_lose_indication = "<span class='notice'>You no longer feel like seeking anything.</span>"
+
+/datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/medieval/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		message = " [message] "
+		var/list/medieval_words = strings("medieval_replacement.json", "medieval")
+		var/list/startings = strings("medieval_replacement.json", "startings")
+		for(var/key in medieval_words)
+			var/value = medieval_words[key]
+			if(islist(value))
+				value = pick(value)
+			if(uppertext(key) == key)
+				value = uppertext(value)
+			if(capitalize(key) == key)
+				value = capitalize(value)
+			message = replacetextEx(message,regex("\b[REGEX_QUOTE(key)]\b","ig"), value)
+		message = trim(message)
+		var/chosen_starting = pick(startings)
+		message = "[chosen_starting] [message]"
+
+		speech_args[SPEECH_MESSAGE] = message
+
+/datum/mutation/human/piglatin
+	name = "Pig Latin"
+	desc = "Historians say back in the 2020's humanity spoke entirely in this mystical language."
+	quality = MINOR_NEGATIVE
+	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
+	text_lose_indication = span_notice("The off sensation passes.")
+
+/datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/piglatin/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/spoken_message = speech_args[SPEECH_MESSAGE]
+	spoken_message = piglatin_sentence(spoken_message)
+	speech_args[SPEECH_MESSAGE] = spoken_message

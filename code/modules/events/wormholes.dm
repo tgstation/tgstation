@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 		wormholes += new /obj/effect/portal/wormhole(T, 0, null, FALSE)
 
 /datum/round_event/wormholes/announce(fake)
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/ai/spanomalies.ogg')
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 	GLOB.all_wormholes -= src
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
-	if(iseffect(M))	//sparks don't teleport
+	if(iseffect(M)) //sparks don't teleport
 		return
 	if(M.anchored)
 		if(!(ismecha(M) && mech_sized))
@@ -74,4 +74,4 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 				hard_target = P.loc
 		if(!hard_target)
 			return
-		do_teleport(M, hard_target, 1, 1, 0, 0, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon
+		do_teleport(M, hard_target, 1, null, null, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon

@@ -16,7 +16,7 @@
 	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = FALSE
 
-/obj/item/electropack/Initialize()
+/obj/item/electropack/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
 
@@ -25,15 +25,15 @@
 	return ..()
 
 /obj/item/electropack/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (FIRELOSS)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/electropack/attack_hand(mob/user)
+/obj/item/electropack/attack_hand(mob/user, list/modifiers)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
+			to_chat(user, span_warning("You need help taking this off!"))
 			return
 	return ..()
 
@@ -43,14 +43,14 @@
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
-			to_chat(user, "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>")
+			to_chat(user, span_warning("[W] is stuck to your hand, you cannot attach it to [src]!"))
 			return
 		W.master = A
-		A.part1 = W
+		A.helmet_part = W
 
 		user.transferItemToLoc(src, A, TRUE)
 		master = A
-		A.part2 = src
+		A.electropack_part = src
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
@@ -60,7 +60,6 @@
 /obj/item/electropack/receive_signal(datum/signal/signal)
 	if(!signal || signal.data["code"] != code)
 		return
-
 	if(isliving(loc) && on)
 		if(shock_cooldown)
 			return
@@ -69,7 +68,7 @@
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 
-		to_chat(L, "<span class='danger'>You feel a sharp shock!</span>")
+		to_chat(L, span_danger("You feel a sharp shock!"))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, L)
 		s.start()
@@ -77,6 +76,9 @@
 		L.Paralyze(100)
 
 	if(master)
+		if(isassembly(master))
+			var/obj/item/assembly/master_as_assembly = master
+			master_as_assembly.pulsed()
 		master.receive_signal()
 
 /obj/item/electropack/proc/set_frequency(new_frequency)

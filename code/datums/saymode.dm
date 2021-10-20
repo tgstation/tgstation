@@ -9,59 +9,6 @@
 /datum/saymode/proc/handle_message(mob/living/user, message, datum/language/language)
 	return TRUE
 
-
-/datum/saymode/changeling
-	key = MODE_KEY_CHANGELING
-	mode = MODE_CHANGELING
-
-/datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
-	switch(user.lingcheck())
-		if(LINGHIVE_LINK)
-			var/msg = "<span class='changeling'><b>[user.mind]:</b> [message]</span>"
-			for(var/_M in GLOB.player_list)
-				var/mob/M = _M
-				if(M in GLOB.dead_mob_list)
-					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link] [msg]")
-				else
-					switch(M.lingcheck())
-						if (LINGHIVE_LING)
-							var/mob/living/L = M
-							if (!HAS_TRAIT(L, CHANGELING_HIVEMIND_MUTE))
-								to_chat(M, msg)
-						if(LINGHIVE_LINK)
-							to_chat(M, msg)
-						if(LINGHIVE_OUTSIDER)
-							if(prob(40))
-								to_chat(M, "<span class='changeling'>We can faintly sense an outsider trying to communicate through the hivemind...</span>")
-		if(LINGHIVE_LING)
-			if (HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
-				to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
-				return FALSE
-			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-			var/msg = "<span class='changeling'><b>[changeling.changelingID]:</b> [message]</span>"
-			user.log_talk(message, LOG_SAY, tag="changeling [changeling.changelingID]")
-			for(var/_M in GLOB.player_list)
-				var/mob/M = _M
-				if(M in GLOB.dead_mob_list)
-					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, "[link] [msg]")
-				else
-					switch(M.lingcheck())
-						if(LINGHIVE_LINK)
-							to_chat(M, msg)
-						if(LINGHIVE_LING)
-							var/mob/living/L = M
-							if (!HAS_TRAIT(L, CHANGELING_HIVEMIND_MUTE))
-								to_chat(M, msg)
-						if(LINGHIVE_OUTSIDER)
-							if(prob(40))
-								to_chat(M, "<span class='changeling'>We can faintly sense another of our kind trying to communicate through the hivemind...</span>")
-		if(LINGHIVE_OUTSIDER)
-			to_chat(user, "<span class='changeling'>Our senses have not evolved enough to be able to communicate this way...</span>")
-	return FALSE
-
-
 /datum/saymode/xeno
 	key = "a"
 	mode = MODE_ALIEN
@@ -121,30 +68,31 @@
 	mode = MODE_MONKEY
 
 /datum/saymode/monkey/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mind = user.mind
+	var/datum/mind/mind = user.mind
 	if(!mind)
 		return TRUE
-	if(is_monkey_leader(mind) || (ismonkey(user) && is_monkey(mind)))
-		user.log_talk(message, LOG_SAY, tag="monkey")
+	if(IS_MONKEY_LEADER(mind) || (ismonkey(user) && IS_INFECTED_MONKEY(mind)))
+		user.log_talk(message, LOG_SAY, tag=SPECIES_MONKEY)
 		if(prob(75) && ismonkey(user))
-			user.visible_message("<span class='notice'>\The [user] chimpers.</span>")
-		var/msg = "<span class='[is_monkey_leader(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[is_monkey_leader(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
+			user.visible_message(span_notice("\The [user] chimpers."))
+		var/msg = "<span class='[IS_MONKEY_LEADER(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[IS_MONKEY_LEADER(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
 		for(var/_M in GLOB.mob_list)
 			var/mob/M = _M
 			if(M in GLOB.dead_mob_list)
 				var/link = FOLLOW_LINK(M, user)
 				to_chat(M, "[link] [msg]")
-			if((is_monkey_leader(M.mind) || ismonkey(M)) && (M.mind in SSticker.mode.ape_infectees))
+			if((IS_MONKEY_LEADER(M.mind) || ismonkey(M)) && IS_INFECTED_MONKEY(M.mind))
 				to_chat(M, msg)
 		return FALSE
 
 /datum/saymode/mafia
 	key = "j"
+	mode = MODE_MAFIA
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
 	var/datum/mafia_controller/MF = GLOB.mafia_game
 	var/datum/mafia_role/R = MF.player_role_lookup[user]
 	if(!R || R.team != "mafia")
 		return TRUE
-	MF.send_message("<span class='changeling'><b>[R.body.real_name]:</b> [message]</span>","mafia")
+	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"),"mafia")
 	return FALSE

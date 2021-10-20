@@ -56,7 +56,7 @@
 
 	var/num_lines = 0
 	msg += "<table style='width: 100%; table-layout: fixed'><tr>"
-	for(var/line in sortList(Lines))
+	for(var/line in sort_list(Lines))
 		msg += "<td>[line]</td>"
 
 		num_lines += 1
@@ -66,7 +66,7 @@
 	msg += "</tr></table>"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	to_chat(src, msg)
+	to_chat(src, "<span class='infoplain'>[msg]</span>")
 
 /client/verb/adminwho()
 	set category = "Admin"
@@ -96,7 +96,7 @@
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-		msg += "<span class='info'>Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game adminhelp anyways and an admin will see it and respond.</span>"
+		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game adminhelp anyways and an admin will see it and respond.")
 	to_chat(src, msg)
 
 #undef DEFAULT_WHO_CELLS_PER_ROW

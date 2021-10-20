@@ -1,3 +1,11 @@
+
+/**
+ * For FTP requests. (i.e. downloading runtime logs.)
+ *
+ * However it'd be ok to use for accessing attack logs and such too, which are even laggier.
+ */
+GLOBAL_VAR_INIT(fileaccess_timer, 0)
+
 /client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
@@ -13,7 +21,7 @@
 		if(path != root)
 			choices.Insert(1,"/")
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sortList(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
 		switch(choice)
 			if(null)
 				return
@@ -22,7 +30,7 @@
 				continue
 		path += choice
 
-		if(copytext_char(path, -1) != "/")		//didn't choose a directory, no need to iterate again
+		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
 			break
 	var/extensions
 	for(var/i in valid_extensions)
@@ -36,13 +44,13 @@
 
 	return path
 
-#define FTPDELAY 200	//200 tick delay to discourage spam
-#define ADMIN_FTPDELAY_MODIFIER 0.5		//Admins get to spam files faster since we ~trust~ them!
-/*	This proc is a failsafe to prevent spamming of file requests.
+#define FTPDELAY 200 //200 tick delay to discourage spam
+#define ADMIN_FTPDELAY_MODIFIER 0.5 //Admins get to spam files faster since we ~trust~ them!
+/* This proc is a failsafe to prevent spamming of file requests.
 	It is just a timer that only permits a download every [FTPDELAY] ticks.
 	This can be changed by modifying FTPDELAY's value above.
 
-	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB!	*/
+	PLEASE USE RESPONSIBLY, Some log files can reach sizes of 4MB! */
 /client/proc/file_spam_check()
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)
@@ -84,7 +92,7 @@
 	var/static/notch = 0
 	// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
 	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
-	notch = WRAP(notch+1, 0, 2^15)
+	notch = WRAP(notch+1, 0, 2**15)
 	fcopy(file, filename)
 	. = md5filepath(filename)
 	fdel(filename)

@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		return
 
 	declaring_war = TRUE
-	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", "Yes", "No")
+	var/are_you_sure = tgui_alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", list("Yes", "No"))
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/war_declaration = "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
 
 	declaring_war = TRUE
-	var/custom_threat = alert(user, "Do you want to customize your declaration?", "Customize?", "Yes", "No")
+	var/custom_threat = tgui_alert(user, "Do you want to customize your declaration?", "Customize?", list("Yes", "No"))
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(!check_allowed(user) || !war_declaration)
 		return
 
-	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/alarm.ogg')
+	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/alarm.ogg',  has_important_message = TRUE)
 
 	to_chat(user, "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
 
@@ -70,23 +70,23 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 ///Admin only proc to bypass checks and force a war declaration. Button on antag panel.
 /obj/item/nuclear_challenge/proc/force_war()
-	var/are_you_sure = alert(usr, "Are you sure you wish to force a war declaration?", "Declare war?", "Yes", "No")
+	var/are_you_sure = tgui_alert(usr, "Are you sure you wish to force a war declaration?", "Declare war?", list("Yes", "No"))
 
 	if(are_you_sure != "Yes")
 		return
 
 	var/war_declaration = "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
 
-	var/custom_threat = alert(usr, "Do you want to customize the declaration?", "Customize?", "Yes", "No")
+	var/custom_threat = tgui_alert(usr, "Do you want to customize the declaration?", "Customize?", list("Yes", "No"))
 
 	if(custom_threat == "Yes")
 		war_declaration = stripped_input(usr, "Insert your custom declaration", "Declaration")
 
 	if(!war_declaration)
-		to_chat(usr, "<span class='warning'>Invalid war declaration.</span>")
+		to_chat(usr, span_warning("Invalid war declaration."))
 		return
 
-	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/alarm.ogg')
+	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/alarm.ogg', has_important_message = TRUE)
 
 	for(var/V in GLOB.syndicate_shuttle_boards)
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	for (var/mob/living/L in orphans)
 		var/TC = new /obj/item/stack/telecrystal(L.drop_location(), tc_per_nukie)
-		to_chat(L, "<span class='warning'>Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"].</span>")
+		to_chat(L, span_warning("Your uplink could not be found so your share of the team's bonus telecrystals has been bluespaced to your [L.put_in_hands(TC) ? "hands" : "feet"]."))
 		tc_to_distribute -= tc_per_nukie
 
 	if (tc_to_distribute > 0) // What shall we do with the remainder...
@@ -131,27 +131,27 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 			if (C.stat != DEAD)
 				var/obj/item/stack/telecrystal/TC = new(C.drop_location(), tc_to_distribute)
 				TC.throw_at(get_step(C, C.dir), 3, 3)
-				C.visible_message("<span class='notice'>[C] coughs up a half-digested telecrystal</span>","<span class='notice'>You cough up a half-digested telecrystal!</span>")
+				C.visible_message(span_notice("[C] coughs up a half-digested telecrystal"),span_notice("You cough up a half-digested telecrystal!"))
 				break
 
 
 /obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
-		to_chat(user, "<span class='boldwarning'>You are already in the process of declaring war! Make your mind up.</span>")
+		to_chat(user, span_boldwarning("You are already in the process of declaring war! Make your mind up."))
 		return FALSE
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
-		to_chat(user, "<span class='boldwarning'>The enemy crew is too small to be worth declaring war on.</span>")
+		to_chat(user, span_boldwarning("The enemy crew is too small to be worth declaring war on."))
 		return FALSE
 	if(!user.onSyndieBase())
-		to_chat(user, "<span class='boldwarning'>You have to be at your base to use this.</span>")
+		to_chat(user, span_boldwarning("You have to be at your base to use this."))
 		return FALSE
 	if(world.time-SSticker.round_start_time > CHALLENGE_TIME_LIMIT)
-		to_chat(user, "<span class='boldwarning'>It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.</span>")
+		to_chat(user, span_boldwarning("It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."))
 		return FALSE
 	for(var/V in GLOB.syndicate_shuttle_boards)
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		if(board.moved)
-			to_chat(user, "<span class='boldwarning'>The shuttle has already been moved! You have forfeit the right to declare war.</span>")
+			to_chat(user, span_boldwarning("The shuttle has already been moved! You have forfeit the right to declare war."))
 			return FALSE
 	return TRUE
 

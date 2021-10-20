@@ -1,0 +1,12 @@
+# Interview welcome message displayed at the top of all interview questionnaires
+# Should help to describe why the questionnaire is being given to the interviewee
+# You can include links using markdown-style link notation, like [our rules](https://tgstation13.org/wiki/Rules)
+INTERVIEW_WELCOME_MSG Welcome to our server. As you have not played here before, or played very little, we'll need you to answer a few questions below. After you submit your answers they will be reviewed and you may be asked further questions before being allowed to play. Please be patient as there may be others ahead of you.
+
+# Interview questions are listed here, in the order that they will be displayed in-game.
+# You can include links using markdown-style link notation, like [our rules](https://tgstation13.org/wiki/Rules)
+INTERVIEW_QUESTIONS Why have you joined the server today?
+INTERVIEW_QUESTIONS Have you played space-station 13 before? If so, on what servers?
+INTERVIEW_QUESTIONS Do you know anybody on the server today? If so, who?
+INTERVIEW_QUESTIONS Have you read and understood our [rules](https://tgstation13.org/wiki/Rules)?
+INTERVIEW_QUESTIONS Do you have any additional comments or questions?

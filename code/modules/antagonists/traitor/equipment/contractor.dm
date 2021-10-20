@@ -6,7 +6,7 @@
 	show_in_roundend = FALSE /// We're already adding them in to the contractor's roundend.
 	give_objectives = TRUE /// We give them their own custom objective.
 	show_in_antagpanel = FALSE /// Not a proper/full antag.
-	should_equip = FALSE /// Don't give them an uplink.
+	give_uplink = FALSE /// Don't give them an uplink.
 
 	var/datum/team/contractor_team/contractor_team
 
@@ -22,7 +22,7 @@
 
 	generic_objective.completed = TRUE
 
-	add_objective(generic_objective)
+	objectives += generic_objective
 
 /datum/contractor_hub
 	var/contract_rep = 0
@@ -163,15 +163,15 @@
 	. = ..()
 
 	if (.)
-		to_chat(user, "<span class='notice'>The uplink vibrates quietly, connecting to nearby agents...</span>")
+		to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
+		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
 
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/C = pick(candidates)
 			spawn_contractor_partner(user, C.key)
 		else
-			to_chat(user, "<span class='notice'>No available agents at this time, please try again later.</span>")
+			to_chat(user, span_notice("No available agents at this time, please try again later."))
 
 			// refund and add the limit back.
 			limited += 1
@@ -188,8 +188,9 @@
 	mask = /obj/item/clothing/mask/cigarette/syndicate
 	shoes = /obj/item/clothing/shoes/chameleon/noslip
 	ears = /obj/item/radio/headset/chameleon
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/advanced/chameleon
 	r_hand = /obj/item/storage/toolbox/syndicate
+	id_trim = /datum/id_trim/chameleon/operative
 
 	backpack_contents = list(/obj/item/storage/box/survival, /obj/item/implanter/uplink, /obj/item/clothing/mask/chameleon,
 							/obj/item/storage/fancy/cigarettes/cigpack_syndicate, /obj/item/lighter)
@@ -207,9 +208,7 @@
 
 	partner_outfit.equip(partner)
 
-	var/obj/structure/closet/supplypod/arrival_pod = new()
-
-	arrival_pod.style = STYLE_SYNDICATE
+	var/obj/structure/closet/supplypod/arrival_pod = new(null, STYLE_SYNDICATE)
 	arrival_pod.explosionSize = list(0,0,0,1)
 	arrival_pod.bluespace = TRUE
 
@@ -224,10 +223,10 @@
 
 	/// We give a reference to the mind that'll be the support unit
 	partner_mind = partner.mind
-	partner_mind.make_Contractor_Support()
+	partner_mind.make_contractor_support()
 
-	to_chat(partner_mind.current, "\n<span class='alertwarning'>[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.</span>")
-	to_chat(partner_mind.current, "<span class='alertwarning'>Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.</span>\n\n")
+	to_chat(partner_mind.current, "\n[span_alertwarning("[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.")]")
+	to_chat(partner_mind.current, "[span_alertwarning("Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.")]\n\n")
 
 	new /obj/effect/pod_landingzone(free_location, arrival_pod)
 
@@ -243,7 +242,7 @@
 
 	if (.)
 		power_fail(35, 50)
-		priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
+		priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
 
 // Subtract cost, and spawn if it's an item.
 /datum/contractor_item/proc/handle_purchase(datum/contractor_hub/hub, mob/living/user)
@@ -266,9 +265,9 @@
 		var/atom/item_to_create = new item(get_turf(user))
 
 		if(user.put_in_hands(item_to_create))
-			to_chat(user, "<span class='notice'>Your purchase materializes into your hands!</span>")
+			to_chat(user, span_notice("Your purchase materializes into your hands!"))
 		else
-			to_chat(user, "<span class='notice'>Your purchase materializes onto the floor.</span>")
+			to_chat(user, span_notice("Your purchase materializes onto the floor."))
 
 		return item_to_create
 	return TRUE
@@ -277,6 +276,7 @@
 	name = "contractor pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals. Ignores suit sensors, but is much less accurate."
 	icon_state = "pinpointer_syndicate"
+	worn_icon_state = "pinpointer_black"
 	minimum_range = 25
 	has_owner = TRUE
 	ignore_suit_sensor_level = TRUE

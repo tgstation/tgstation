@@ -13,7 +13,7 @@
 	light_range = 1
 	light_power = 1
 	light_color = COLOR_SOFT_RED
-	ricochets_max = 50	//Honk!
+	ricochets_max = 50 //Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
 	wound_bonus = -20
@@ -34,7 +34,7 @@
 	damage = 25
 	speed = 0.6 // higher power = faster, that's how light works right
 
-/obj/projectile/beam/laser/hellfire/Initialize()
+/obj/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
 	transform *= 2
 
@@ -77,7 +77,7 @@
 	damage = 15
 	irradiate = 300
 	range = 15
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
@@ -119,17 +119,18 @@
 			SSexplosions.medturf += target
 
 /obj/projectile/beam/pulse/shotgun
-	damage = 40
+	damage = 30
 
 /obj/projectile/beam/pulse/heavy
 	name = "heavy pulse laser"
 	icon_state = "pulse1_bl"
-	var/life = 20
+	projectile_piercing = ALL
+	var/pierce_hits = 2
 
 /obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
-	life -= 10
-	if(life > 0)
-		. = BULLET_ACT_FORCE_PIERCE
+	if(pierce_hits <= 0)
+		projectile_piercing = NONE
+	pierce_hits -= 1
 	..()
 
 /obj/projectile/beam/emitter
@@ -143,6 +144,22 @@
 
 /obj/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss
+
+/obj/projectile/beam/emitter/hitscan
+	hitscan = TRUE
+	muzzle_type = /obj/effect/projectile/muzzle/laser/emitter
+	tracer_type = /obj/effect/projectile/tracer/laser/emitter
+	impact_type = /obj/effect/projectile/impact/laser/emitter
+	impact_effect_type = null
+	hitscan_light_intensity = 3
+	hitscan_light_range = 0.75
+	hitscan_light_color_override = COLOR_LIME
+	muzzle_flash_intensity = 6
+	muzzle_flash_range = 2
+	muzzle_flash_color_override = COLOR_LIME
+	impact_light_intensity = 7
+	impact_light_range = 2.5
+	impact_light_color_override = COLOR_LIME
 
 /obj/projectile/beam/lasertag
 	name = "laser tag beam"
@@ -184,31 +201,6 @@
 
 /obj/projectile/beam/lasertag/bluetag/hitscan
 	hitscan = TRUE
-
-/obj/projectile/beam/instakill
-	name = "instagib laser"
-	icon_state = "purple_laser"
-	damage = 200
-	damage_type = BURN
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	light_color = LIGHT_COLOR_PURPLE
-
-/obj/projectile/beam/instakill/blue
-	icon_state = "blue_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
-	light_color = LIGHT_COLOR_BLUE
-
-/obj/projectile/beam/instakill/red
-	icon_state = "red_laser"
-	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = COLOR_SOFT_RED
-
-/obj/projectile/beam/instakill/on_hit(atom/target)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
-		M.gib()
 
 //a shrink ray that shrinks stuff, which grows back after a short while.
 /obj/projectile/beam/shrink

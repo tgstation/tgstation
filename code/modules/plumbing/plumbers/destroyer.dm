@@ -5,9 +5,9 @@
 	///we remove 5 reagents per second
 	var/disposal_rate = 5
 
-/obj/machinery/plumbing/disposer/Initialize(mapload, bolt)
+/obj/machinery/plumbing/disposer/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/disposer/process(delta_time)
 	if(machine_stat & NOPOWER)

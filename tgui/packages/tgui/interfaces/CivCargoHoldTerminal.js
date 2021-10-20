@@ -1,6 +1,5 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
+import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const CivCargoHoldTerminal = (props, context) => {
@@ -11,13 +10,12 @@ export const CivCargoHoldTerminal = (props, context) => {
     status_report,
     id_inserted,
     id_bounty_info,
-    id_bounty_value,
-    id_bounty_num,
+    picking,
   } = data;
   const in_text = "Welcome valued employee.";
   const out_text = "To begin, insert your ID into the console.";
   return (
-    <Window resizable
+    <Window
       width={500}
       height={375}>
       <Window.Content scrollable>
@@ -27,7 +25,34 @@ export const CivCargoHoldTerminal = (props, context) => {
               color={!id_inserted ? 'default': 'blue'}>
               {id_inserted ? in_text : out_text}
             </NoticeBox>
-            <Section title="Cargo Pad">
+            <Section
+              title="Cargo Pad"
+              buttons={(
+                <>
+                  <Button
+                    icon={"sync"}
+                    tooltip={"Check Contents"}
+                    disabled={!pad || !id_inserted}
+                    onClick={() => act('recalc')} />
+                  <Button
+                    icon={sending ? 'times' : 'arrow-up'}
+                    tooltip={sending ? "Stop Sending" : "Send Goods"}
+                    selected={sending}
+                    disabled={!pad || !id_inserted}
+                    onClick={() => act(sending ? 'stop' : 'send')} />
+                  <Button
+                    icon={id_bounty_info ? 'recycle' : 'pen'}
+                    color={id_bounty_info ? 'green' : 'default'}
+                    tooltip={id_bounty_info ? "Replace Bounty" : "New Bounty"}
+                    disabled={!id_inserted}
+                    onClick={() => act('bounty')} />
+                  <Button
+                    icon={'download'}
+                    content={"Eject ID"}
+                    disabled={!id_inserted}
+                    onClick={() => act('eject')} />
+                </>
+              )}>
               <LabeledList>
                 <LabeledList.Item
                   label="Status"
@@ -39,37 +64,7 @@ export const CivCargoHoldTerminal = (props, context) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
-            <BountyTextBox />
-          </Flex.Item>
-          <Flex.Item m={1}>
-            <Fragment>
-              <Button
-                fluid
-                icon={"sync"}
-                content={"Check Contents"}
-                disabled={!pad || !id_inserted}
-                onClick={() => act('recalc')} />
-              <Button
-                fluid
-                icon={sending ? 'times' : 'arrow-up'}
-                content={sending ? "Stop Sending" : "Send Goods"}
-                selected={sending}
-                disabled={!pad || !id_inserted}
-                onClick={() => act(sending ? 'stop' : 'send')} />
-              <Button
-                fluid
-                icon={id_bounty_info ? 'recycle' : 'pen'}
-                color={id_bounty_info ? 'green' : 'default'}
-                content={id_bounty_info ? "Replace Bounty" : "New Bounty"}
-                disabled={!id_inserted}
-                onClick={() => act('bounty')} />
-              <Button
-                fluid
-                icon={'download'}
-                content={"Eject"}
-                disabled={!id_inserted}
-                onClick={() => act('eject')} />
-            </Fragment>
+            {picking ? <BountyPickBox /> : <BountyTextBox />}
           </Flex.Item>
         </Flex>
       </Window.Content>
@@ -98,6 +93,65 @@ const BountyTextBox = (props, context) => {
           {id_bounty_info ? id_bounty_value : "N/A"}
         </LabeledList.Item>
       </LabeledList>
+    </Section>
+  );
+};
+
+const BountyPickBox = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    id_bounty_names,
+    id_bounty_values,
+  } = data;
+  return (
+    <Section
+      title="Please Select a Bounty:"
+      textAlign="center">
+      <Flex width="100%" wrap>
+        <Flex.Item
+          shrink={0}
+          grow={0.5}>
+          <Button
+            fluid
+            icon="check"
+            color="green"
+            content={id_bounty_names[0]}
+            onClick={() => act('pick', { 'value': 1 })}>
+            <Box fontSize="14px">
+              Payout: {id_bounty_values[0]}
+            </Box>
+          </Button>
+        </Flex.Item>
+        <Flex.Item
+          shrink={0}
+          grow={0.5}
+          px={1}>
+          <Button
+            fluid
+            icon="check"
+            color="green"
+            content={id_bounty_names[1]}
+            onClick={() => act('pick', { 'value': 2 })}>
+            <Box fontSize="14px">
+              Payout: {id_bounty_values[1]}
+            </Box>
+          </Button>
+        </Flex.Item>
+        <Flex.Item
+          shrink={0}
+          grow={0.5}>
+          <Button
+            fluid
+            icon="check"
+            color="green"
+            content={id_bounty_names[2]}
+            onClick={() => act('pick', { 'value': 3 })}>
+            <Box fontSize="14px">
+              Payout: {id_bounty_values[2]}
+            </Box>
+          </Button>
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };

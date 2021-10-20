@@ -11,7 +11,13 @@
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
 	if(id)
-		. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+		. += span_notice("Its channel ID is '[id]'.")
+
+/obj/item/assembly/control/multitool_act(mob/living/user)
+	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
+	if(change_id)
+		id = clamp(round(change_id, 1), 1, 100)
+		to_chat(user, span_notice("You change the ID to [id]."))
 
 /obj/item/assembly/control/activate()
 	var/openclose
@@ -25,6 +31,27 @@
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
+/obj/item/assembly/control/curtain
+	name = "curtain controller"
+	desc = "A small electronic device able to control a mechanical curtain remotely."
+
+/obj/item/assembly/control/curtain/examine(mob/user)
+	. = ..()
+	if(id)
+		. += span_notice("Its channel ID is '[id]'.")
+
+/obj/item/assembly/control/curtain/activate()
+	var/openclose
+	if(cooldown)
+		return
+	cooldown = TRUE
+	for(var/obj/structure/curtain/cloth/fancy/mechanical/M in GLOB.curtains)
+		if(M.id == src.id)
+			if(openclose == null || !sync_doors)
+				openclose = M.density
+			INVOKE_ASYNC(M, openclose ? /obj/structure/curtain/cloth/fancy/mechanical.proc/open : /obj/structure/curtain/cloth/fancy/mechanical.proc/close)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 5)
+
 
 /obj/item/assembly/control/airlock
 	name = "airlock controller"
@@ -32,7 +59,7 @@
 	id = "badmin" // Set it to null for MEGAFUN.
 	var/specialfunctions = OPEN
 	/*
-	Bitflag, 	1= open (OPEN)
+	Bitflag, 1= open (OPEN)
 				2= idscan (IDSCAN)
 				4= bolts (BOLTS)
 				8= shock (SHOCK)
@@ -56,7 +83,7 @@
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
 					D.locked = !D.locked
-					D.update_icon()
+					D.update_appearance()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
 					D.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
@@ -169,8 +196,13 @@
 		return
 	lift.visible_message("<span class='notice'>[src] clinks and whirrs into automated motion, locking controls.</span")
 	lift.lift_master_datum.set_controls(LOCKED)
-	var/difference = abs(z - lift.z)
-	var/direction = lift.z > z ? UP : DOWN
+	///The z level to which the elevator should travel
+	var/targetZ = (abs(loc.z)) //The target Z (where the elevator should move to) is not our z level (we are just some assembly in nullspace) but actually the Z level of whatever we are contained in (e.g. elevator button)
+	///The amount of z levels between the our and targetZ
+	var/difference = abs(targetZ - lift.z)
+	///Direction (up/down) needed to go to reach targetZ
+	var/direction = lift.z < targetZ ? UP : DOWN
+	///How long it will/should take us to reach the target Z level
 	var/travel_duration = FLOOR_TRAVEL_TIME * difference //100 / 2 floors up = 50 seconds on every floor, will always reach destination in the same time
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), travel_duration)
 	for(var/i in 1 to difference)
@@ -182,3 +214,51 @@
 	lift.lift_master_datum.set_controls(UNLOCKED)
 
 #undef FLOOR_TRAVEL_TIME
+
+/obj/item/assembly/control/tram
+	name = "tram call button"
+	desc = "A small device used to bring trams to you."
+	///for finding the landmark initially - should be the exact same as the landmark's destination id.
+	var/initial_id
+	///this is our destination's landmark, so we only have to find it the first time.
+	var/datum/weakref/to_where
+
+/obj/item/assembly/control/tram/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/assembly/control/tram/LateInitialize()
+	. = ..()
+	//find where the tram needs to go to (our destination). only needs to happen the first time
+	for(var/obj/effect/landmark/tram/our_destination as anything in GLOB.tram_landmarks)
+		if(our_destination.destination_id == initial_id)
+			to_where = WEAKREF(our_destination)
+			break
+
+/obj/item/assembly/control/tram/Destroy()
+	to_where = null
+	return ..()
+
+/obj/item/assembly/control/tram/activate()
+	if(cooldown)
+		return
+	cooldown = TRUE
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 2 SECONDS)
+	var/obj/structure/industrial_lift/tram/tram_part = GLOB.central_tram
+	if(!tram_part)
+		say("The tram is not responding to call signals. Please send a technician to repair the internals of the tram.")
+		return
+	if(tram_part.travelling) //in use
+		say("The tram is already travelling to [tram_part.from_where].")
+		return
+	if(!to_where)
+		return
+	var/obj/effect/landmark/tram/current_location = to_where.resolve()
+	if(!current_location)
+		return
+	if(tram_part.from_where == current_location) //already here
+		say("The tram is already here. Please board the tram and select a destination.")
+		return
+
+	say("The tram has been called to [current_location.name]. Please wait for its arrival.")
+	tram_part.tram_travel(current_location)

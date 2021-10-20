@@ -17,18 +17,19 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attack_verb_continuous = "staves"
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	speak_emote = list("chants")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
 	turns_per_move = 5
-	gold_core_spawnable = HOSTILE_SPAWN
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	faction = list(ROLE_WIZARD)
 	footstep_type = FOOTSTEP_MOB_SHOE
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(/obj/effect/decal/remains/human)
 	del_on_death = TRUE
 

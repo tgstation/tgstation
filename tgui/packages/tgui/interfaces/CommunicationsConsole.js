@@ -1,8 +1,9 @@
 import { sortBy } from "common/collections";
 import { capitalize } from "common/string";
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Flex, Input, Modal, Section, Table, TextArea } from "../components";
+import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from "../components";
 import { Window } from "../layouts";
+import { sanitizeText } from "../sanitize";
 
 const STATE_BUYING_SHUTTLE = "buying_shuttle";
 const STATE_CHANGING_STATUS = "changing_status";
@@ -12,7 +13,13 @@ const STATE_MESSAGES = "messages";
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = "SWIPE_NEEDED";
 
-const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
+const EMAG_SHUTTLE_NOTICE
+  = "This shuttle is deemed significantly dangerous to the crew, and is only supplied by the Syndicate.";
+
+const sortShuttles = sortBy(
+  shuttle => !shuttle.emagOnly,
+  shuttle => shuttle.creditCost
+);
 
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
@@ -105,6 +112,40 @@ const MessageModal = (props, context) => {
   );
 };
 
+const NoConnectionModal = () => {
+  return (
+    <Dimmer>
+      <Flex direction="column" textAlign="center" width="300px">
+        <Flex.Item>
+          <Icon
+            color="red"
+            name="wifi"
+            size={10}
+          />
+
+          <Blink>
+            <div
+              style={{
+                background: "#db2828",
+                bottom: "60%",
+                left: "25%",
+                height: "10px",
+                position: "relative",
+                transform: "rotate(45deg)",
+                width: "150px",
+              }}
+            />
+          </Blink>
+        </Flex.Item>
+
+        <Flex.Item fontSize="16px">
+          A connection to the station cannot be established.
+        </Flex.Item>
+      </Flex>
+    </Dimmer>
+  );
+};
+
 const PageBuyingShuttle = (props, context) => {
   const { act, data } = useBackend(context);
 
@@ -122,7 +163,7 @@ const PageBuyingShuttle = (props, context) => {
         Budget: <b>{data.budget.toLocaleString()}</b> credits
       </Section>
 
-      {sortByCreditCost(data.shuttles).map(shuttle => (
+      {sortShuttles(data.shuttles).map(shuttle => (
         <Section
           title={(
             <span
@@ -137,6 +178,7 @@ const PageBuyingShuttle = (props, context) => {
           buttons={(
             <Button
               content={`${shuttle.creditCost.toLocaleString()} credits`}
+              color={shuttle.emagOnly ? "red" : "default"}
               disabled={data.budget < shuttle.creditCost}
               onClick={() => act("purchaseShuttle", {
                 shuttle: shuttle.ref,
@@ -144,7 +186,7 @@ const PageBuyingShuttle = (props, context) => {
               tooltip={
                 data.budget < shuttle.creditCost
                   ? `You need ${shuttle.creditCost - data.budget} more credits.`
-                  : undefined
+                  : (shuttle.emagOnly ? EMAG_SHUTTLE_NOTICE : undefined)
               }
               tooltipPosition="left"
             />
@@ -264,6 +306,7 @@ const PageMain = (props, context) => {
   const {
     alertLevel,
     alertLevelTick,
+    aprilFools,
     callShuttleReasonMinLength,
     canBuyShuttles,
     canMakeAnnouncement,
@@ -301,37 +344,36 @@ const PageMain = (props, context) => {
   return (
     <Box>
       <Section title="Emergency Shuttle">
-        {
-          shuttleCalled
-            ? <Button.Confirm
-              icon="space-shuttle"
-              content="Recall Emergency Shuttle"
-              color="bad"
-              disabled={!canRecallShuttles || !shuttleRecallable}
-              tooltip={(
-                canRecallShuttles && (
-                  !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
-                ) || (
-                  "You do not have permission to recall the emergency shuttle."
-                )
-              )}
-              tooltipPosition="bottom-right"
-              onClick={() => act("recallShuttle")}
-            />
-            : <Button
-              icon="space-shuttle"
-              content="Call Emergency Shuttle"
-              disabled={shuttleCanEvacOrFailReason !== 1}
-              tooltip={
-                shuttleCanEvacOrFailReason !== 1
-                  ? shuttleCanEvacOrFailReason
-                  : undefined
-              }
-              tooltipPosition="bottom-right"
-              onClick={() => setCallingShuttle(true)}
-            />
-        }
-
+        {shuttleCalled && (
+          <Button.Confirm
+            icon="space-shuttle"
+            content="Recall Emergency Shuttle"
+            color="bad"
+            disabled={!canRecallShuttles || !shuttleRecallable}
+            tooltip={(
+              canRecallShuttles && (
+                !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
+              ) || (
+                "You do not have permission to recall the emergency shuttle."
+              )
+            )}
+            tooltipPosition="bottom-end"
+            onClick={() => act("recallShuttle")}
+          />
+        ) || (
+          <Button
+            icon="space-shuttle"
+            content="Call Emergency Shuttle"
+            disabled={shuttleCanEvacOrFailReason !== 1}
+            tooltip={
+              shuttleCanEvacOrFailReason !== 1
+                ? shuttleCanEvacOrFailReason
+                : undefined
+            }
+            tooltipPosition="bottom-end"
+            onClick={() => setCallingShuttle(true)}
+          />
+        )}
         {!!shuttleCalledPreviously && (
           shuttleLastCalled && (
             <Box>
@@ -377,6 +419,12 @@ const PageMain = (props, context) => {
             icon="bullhorn"
             content="Make Priority Announcement"
             onClick={() => act("makePriorityAnnouncement")}
+          />}
+
+          {!!aprilFools && !!canMakeAnnouncement && <Button
+            icon="bullhorn"
+            content="Call Emergency Meeting"
+            onClick={() => act("emergency_meeting")}
           />}
 
           {!!canToggleEmergencyAccess && <Button.Confirm
@@ -600,7 +648,7 @@ const PageMessages = (props, context) => {
               color={message.answered === answerIndex + 1 ? "good" : undefined}
               key={answerIndex}
               onClick={message.answered ? undefined : () => act("answerMessage", {
-                message: messageIndex + 1,
+                message: parseInt(messageIndex, 10) + 1,
                 answer: answerIndex + 1,
               })}
             />
@@ -608,6 +656,10 @@ const PageMessages = (props, context) => {
         </Box>
       );
     }
+
+    const textHtml = {
+      __html: sanitizeText(message.content),
+    };
 
     messageElements.push((
       <Section
@@ -623,7 +675,8 @@ const PageMessages = (props, context) => {
             })}
           />
         )}>
-        <Box>{message.content}</Box>
+        <Box
+          dangerouslySetInnerHTML={textHtml} />
 
         {answers}
       </Section>
@@ -642,28 +695,46 @@ export const CommunicationsConsole = (props, context) => {
     authorizeName,
     canLogOut,
     emagged,
+    hasConnection,
     page,
+    canRequestSafeCode,
+    safeCodeDeliveryWait,
+    safeCodeDeliveryArea,
   } = data;
 
   return (
     <Window
       width={400}
       height={650}
-      theme={emagged ? "syndicate" : undefined}
-      resizable>
+      theme={emagged ? "syndicate" : undefined}>
       <Window.Content scrollable>
-        {(canLogOut || !authenticated)
-          ? (
-            <Section title="Authentication">
-              <Button
-                icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
-                content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
-                color={authenticated ? "bad" : "good"}
-                onClick={() => act("toggleAuthentication")}
-              />
-            </Section>
-          )
-          : null}
+        {!hasConnection && <NoConnectionModal />}
+
+        {(canLogOut || !authenticated) && (
+          <Section title="Authentication">
+            <Button
+              icon={authenticated ? "sign-out-alt" : "sign-in-alt"}
+              content={authenticated ? `Log Out${authorizeName ? ` (${authorizeName})` : ""}` : "Log In"}
+              color={authenticated ? "bad" : "good"}
+              onClick={() => act("toggleAuthentication")}
+            />
+          </Section>
+        )}
+
+        {(!!canRequestSafeCode && (
+          <Section title="Emergency Safe Code">
+            <Button
+              icon="key"
+              content="Request Safe Code"
+              color="good"
+              onClick={() => act("requestSafeCodes")} />
+          </Section>
+        )) || (!!safeCodeDeliveryWait && (
+          <Section title="Emergency Safe Code Delivery">
+            {`Drop pod to ${safeCodeDeliveryArea} in \
+            ${Math.round(safeCodeDeliveryWait/10)}s`}
+          </Section>
+        ))}
 
         {!!authenticated && (
           page === STATE_BUYING_SHUTTLE && <PageBuyingShuttle />

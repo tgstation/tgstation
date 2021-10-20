@@ -21,10 +21,8 @@ new /datum/disease_ability/symptom/medium/visionloss,
 new /datum/disease_ability/symptom/medium/deafness,
 new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/medium/fever,
-new /datum/disease_ability/symptom/medium/shivering,
+new /datum/disease_ability/symptom/medium/chills,
 new /datum/disease_ability/symptom/medium/headache,
-new /datum/disease_ability/symptom/medium/nano_boost,
-new /datum/disease_ability/symptom/medium/nano_destroy,
 new /datum/disease_ability/symptom/medium/viraladaptation,
 new /datum/disease_ability/symptom/medium/viralevolution,
 new /datum/disease_ability/symptom/medium/disfiguration,
@@ -76,7 +74,7 @@ new /datum/disease_ability/symptom/powerful/youth
 			resistance += initial(S.resistance)
 			stage_speed += initial(S.stage_speed)
 			transmittable += initial(S.transmittable)
-			threshold_block += initial(S.threshold_descs) 
+			threshold_block += initial(S.threshold_descs)
 			stat_block = "Resistance: [resistance]<br>Stealth: [stealth]<br>Stage Speed: [stage_speed]<br>Transmissibility: [transmittable]<br><br>"
 			if(symptoms.len == 1) //lazy boy's dream
 				name = initial(S.name)
@@ -94,7 +92,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/proc/Buy(mob/camera/disease/D, silent = FALSE, trigger_cooldown = TRUE)
 	if(!silent)
-		to_chat(D, "<span class='notice'>Purchased [name].</span>")
+		to_chat(D, span_notice("Purchased [name]."))
 	D.points -= cost
 	D.unpurchased_abilities -= src
 	if(trigger_cooldown)
@@ -123,7 +121,7 @@ new /datum/disease_ability/symptom/powerful/youth
 
 /datum/disease_ability/proc/Refund(mob/camera/disease/D, silent = FALSE, trigger_cooldown = TRUE)
 	if(!silent)
-		to_chat(D, "<span class='notice'>Refunded [name].</span>")
+		to_chat(D, span_notice("Refunded [name]."))
 	D.points += cost
 	D.unpurchased_abilities[src] = TRUE
 	if(trigger_cooldown)
@@ -180,9 +178,9 @@ new /datum/disease_ability/symptom/powerful/youth
 	if(!L)
 		return FALSE
 	if(L.stat != CONSCIOUS)
-		to_chat(D, "<span class='warning'>Your host must be conscious to cough.</span>")
+		to_chat(D, span_warning("Your host must be conscious to cough."))
 		return FALSE
-	to_chat(D, "<span class='notice'>You force [L.real_name] to cough.</span>")
+	to_chat(D, span_notice("You force [L.real_name] to cough."))
 	L.emote("cough")
 	if(L.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
@@ -214,15 +212,15 @@ new /datum/disease_ability/symptom/powerful/youth
 	if(!L)
 		return FALSE
 	if(L.stat != CONSCIOUS)
-		to_chat(D, "<span class='warning'>Your host must be conscious to sneeze.</span>")
+		to_chat(D, span_warning("Your host must be conscious to sneeze."))
 		return FALSE
-	to_chat(D, "<span class='notice'>You force [L.real_name] to sneeze.</span>")
+	to_chat(D, span_notice("You force [L.real_name] to sneeze."))
 	L.emote("sneeze")
 	if(L.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
 
 		for(var/mob/living/M in oview(4, SD.affected_mob))
-			if(is_A_facing_B(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
+			if(is_source_facing_target(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
 				M.AirborneContractDisease(SD, TRUE)
 
 	StartCooldown()
@@ -356,17 +354,11 @@ new /datum/disease_ability/symptom/powerful/youth
 /datum/disease_ability/symptom/medium/fever
 	symptoms = list(/datum/symptom/fever)
 
-/datum/disease_ability/symptom/medium/shivering
-	symptoms = list(/datum/symptom/shivering)
+/datum/disease_ability/symptom/medium/chills
+	symptoms = list(/datum/symptom/chills)
 
 /datum/disease_ability/symptom/medium/headache
 	symptoms = list(/datum/symptom/headache)
-
-/datum/disease_ability/symptom/medium/nano_boost
-	symptoms = list(/datum/symptom/nano_boost)
-
-/datum/disease_ability/symptom/medium/nano_destroy
-	symptoms = list(/datum/symptom/nano_destroy)
 
 /datum/disease_ability/symptom/medium/viraladaptation
 	symptoms = list(/datum/symptom/viraladaptation)

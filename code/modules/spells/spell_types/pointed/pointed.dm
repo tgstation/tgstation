@@ -17,14 +17,14 @@
 		return
 	var/msg
 	if(!can_cast(user))
-		msg = "<span class='warning'>You can no longer cast [name]!</span>"
+		msg = span_warning("You can no longer cast [name]!")
 		remove_ranged_ability(msg)
 		return
 	if(active)
-		msg = "<span class='notice'>[deactive_msg]</span>"
+		msg = span_notice("[deactive_msg]")
 		remove_ranged_ability(msg)
 	else
-		msg = "<span class='notice'>[active_msg] <B>Left-click to activate spell on a target!</B></span>"
+		msg = span_notice("[active_msg] <B>Left-click to activate spell on a target!</B>")
 		add_ranged_ability(user, msg, TRUE)
 
 /obj/effect/proc_holder/spell/pointed/on_lose(mob/living/user)
@@ -39,30 +39,29 @@
 	on_activation(user)
 
 /**
-  * on_activation: What happens upon pointed spell activation.
-  *
-  * Arguments:
-  * * user The mob interacting owning the spell.
-  */
+ * on_activation: What happens upon pointed spell activation.
+ *
+ * Arguments:
+ * * user The mob interacting owning the spell.
+ */
 /obj/effect/proc_holder/spell/pointed/proc/on_activation(mob/user)
 	return
 
 /**
-  * on_activation: What happens upon pointed spell deactivation.
-  *
-  * Arguments:
-  * * user The mob interacting owning the spell.
-  */
+ * on_activation: What happens upon pointed spell deactivation.
+ *
+ * Arguments:
+ * * user The mob interacting owning the spell.
+ */
 /obj/effect/proc_holder/spell/pointed/proc/on_deactivation(mob/user)
 	return
 
 /obj/effect/proc_holder/spell/pointed/update_icon()
 	if(!action)
 		return
-	if(active)
-		action.button_icon_state = "[action_icon_state]1"
-	else
-		action.button_icon_state = "[action_icon_state]"
+
+	. = ..()
+	action.button_icon_state = "[action_icon_state][active ? 1 : null]"
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
@@ -84,21 +83,21 @@
 	return TRUE // Do not do any underlying actions after the spell cast
 
 /**
-  * intercept_check: Specific spell checks for InterceptClickOn() targets.
-  *
-  * Arguments:
-  * * user The mob using the ranged spell via intercept.
-  * * target The atom that is being targeted by the spell via intercept.
-  * * silent If the checks should produce not any feedback messages for the user.
-  */
+ * intercept_check: Specific spell checks for InterceptClickOn() targets.
+ *
+ * Arguments:
+ * * user The mob using the ranged spell via intercept.
+ * * target The atom that is being targeted by the spell via intercept.
+ * * silent If the checks should produce not any feedback messages for the user.
+ */
 /obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target, silent = FALSE)
 	if(!self_castable && target == user)
 		if(!silent)
-			to_chat(user, "<span class='warning'>You cannot cast the spell on yourself!</span>")
+			to_chat(user, span_warning("You cannot cast the spell on yourself!"))
 		return FALSE
 	if(!(target in view_or_range(range, user, selection_type)))
 		if(!silent)
-			to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
+			to_chat(user, span_warning("[target.p_theyre(TRUE)] too far away!"))
 		return FALSE
 	if(!can_target(target, user, silent))
 		return FALSE

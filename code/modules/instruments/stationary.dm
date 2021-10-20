@@ -20,7 +20,7 @@
 		return TRUE
 	if(!user)
 		return FALSE
-	return !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)		//can play with TK and while resting because fun.
+	return !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE) //can play with TK and while resting because fun.
 
 /obj/structure/musician/ui_interact(mob/user)
 	. = ..()

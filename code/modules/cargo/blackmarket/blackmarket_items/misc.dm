@@ -1,6 +1,26 @@
 /datum/blackmarket_item/misc
 	category = "Miscellaneous"
 
+/datum/blackmarket_item/misc/Clear_PDA
+	name = "Clear PDA"
+	desc = "Show off your style with this limited edition clear PDA!."
+	item = /obj/item/pda/clear
+
+	price_min = 250
+	price_max = 600
+	stock_max = 2
+	availability_prob = 50
+
+/datum/blackmarket_item/misc/jade_Lantern
+	name = "Jade Lantern"
+	desc = "Found in a box labeled 'Danger: Radioactive'. Probably safe."
+	item = /obj/item/flashlight/lantern/jade
+
+	price_min = 150
+	price_max = 500
+	stock_max = 2
+	availability_prob = 45
+
 /datum/blackmarket_item/misc/cap_gun
 	name = "Cap Gun"
 	desc = "Prank your friends with this harmless gun! Harmlessness guranteed."

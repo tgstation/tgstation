@@ -149,6 +149,30 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/savannah_ivanov_main
+	name = "\"Savannah-Ivanov\" Central Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Central Control module."
+	id = "savannah_ivanov_main"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_peri
+	name = "\"Savannah-Ivanov\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Peripheral Control module."
+	id = "savannah_ivanov_peri"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/savannah_ivanov_targ
+	name = "\"Savannah-Ivanov\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Savannah-Ivanov\" Weapons & Targeting Control module."
+	id = "savannah_ivanov_targ"
+	build_path = /obj/item/circuitboard/mecha/savannah_ivanov/targeting
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
@@ -167,7 +191,7 @@
 	name = "LBX AC 10 Scattershot Ammunition"
 	desc = "Ammunition for the LBX AC 10 exosuit weapon."
 	id = "mech_scattershot_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/scattershot
 	materials = list(/datum/material/iron=6000)
 	construction_time = 20
@@ -188,7 +212,7 @@
 	name = "FNX-99 Carbine Ammunition"
 	desc = "Ammunition for the FNX-99 \"Hades\" Carbine."
 	id = "mech_carbine_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/incendiary
 	materials = list(/datum/material/iron=6000)
 	construction_time = 20
@@ -259,7 +283,7 @@
 	name = "SGL-6 Grenade Launcher Ammunition"
 	desc = "Ammunition for the SGL-6 Grenade Launcher."
 	id = "mech_grenade_launcher_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/flashbang
 	materials = list(/datum/material/iron=4000,/datum/material/gold=500,/datum/material/iron=500)
 	construction_time = 20
@@ -280,7 +304,7 @@
 	name = "SRM-8 Missile Rack Ammunition"
 	desc = "Ammunition for the SRM-8 Missile Rack."
 	id = "mech_missile_rack_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/missiles_br
 	materials = list(/datum/material/iron=8000,/datum/material/gold=500,/datum/material/iron=500)
 	construction_time = 20
@@ -301,7 +325,7 @@
 	name = "SOB-3 Clusterbang Launcher Ammunition"
 	desc = "Ammunition for the SOB-3 Clusterbang Launcher"
 	id = "clusterbang_launcher_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/clusterbang
 	materials = list(/datum/material/iron=6000,/datum/material/gold=1500,/datum/material/uranium=1500)
 	construction_time = 20
@@ -428,6 +452,16 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
+/datum/design/mecha_kineticgun
+	name = "Exosuit Mining (Proto-kinetic Accelerator)"
+	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
+	id = "mecha_kineticgun"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
 /datum/design/mech_lmg
 	name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
@@ -442,7 +476,7 @@
 	name = "Ultra AC 2 Ammunition"
 	desc = "Ammunition for the Ultra AC 2 LMG"
 	id = "mech_lmg_ammo"
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	build_path = /obj/item/mecha_ammo/lmg
 	materials = list(/datum/material/iron=4000)
 	construction_time = 20

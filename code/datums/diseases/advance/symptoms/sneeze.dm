@@ -36,17 +36,19 @@ Bonus
 	)
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
-	if(A.properties["transmittable"] >= 9) //longer spread range
+	if(A.totalTransmittable() >= 9) //longer spread range
 		spread_range = 6
-	if(A.properties["stealth"] >= 4)
+	if(A.totalStealth() >= 4)
 		suppress_warning = TRUE
-	if(A.properties["stage_rate"] >= 17) //Yep, stage speed 17, not stage speed 7. This is a big boy threshold (effect), like the language-scrambling transmission one for the voice change symptom.
+	if(A.totalStageSpeed() >= 17) //Yep, stage speed 17, not stage speed 7. This is a big boy threshold (effect), like the language-scrambling transmission one for the voice change symptom.
 		cartoon_sneezing = TRUE //for a really fun time, distribute a disease with this threshold met while the gravity generator is down
 
 /datum/symptom/sneeze/Activate(datum/disease/advance/A)
-	if(!..())
+	. = ..()
+	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
@@ -57,7 +59,7 @@ Bonus
 			M.emote("sneeze")
 			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 				for(var/mob/living/L in oview(spread_range, M))
-					if(is_A_facing_B(M, L) && disease_air_spread_walk(get_turf(M), get_turf(L)))
+					if(is_source_facing_target(M, L) && disease_air_spread_walk(get_turf(M), get_turf(L)))
 						L.AirborneContractDisease(A, TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you

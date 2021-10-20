@@ -5,7 +5,7 @@
 	desc = "A 12 gauge lead slug."
 	icon_state = "blshell"
 	worn_icon_state = "shell"
-	caliber = "shotgun"
+	caliber = CALIBER_SHOTGUN
 	custom_materials = list(/datum/material/iron=4000)
 	projectile_type = /obj/projectile/bullet/shotgun_slug
 
@@ -134,7 +134,7 @@
 	projectile_type = /obj/projectile/bullet/dart
 	var/reagent_amount = 30
 
-/obj/item/ammo_casing/shotgun/dart/Initialize()
+/obj/item/ammo_casing/shotgun/dart/Initialize(mapload)
 	. = ..()
 	create_reagents(reagent_amount, OPENCONTAINER)
 
@@ -144,7 +144,7 @@
 /obj/item/ammo_casing/shotgun/dart/bioterror
 	desc = "A shotgun dart filled with deadly toxins."
 
-/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
+/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/consumable/ethanol/neurotoxin, 6)
 	reagents.add_reagent(/datum/reagent/toxin/spore, 6)

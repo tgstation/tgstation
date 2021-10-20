@@ -17,17 +17,20 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = TRUE
+	density = TRUE // dense for receiving bumbs
+	layer = HIGH_OBJ_LAYER
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
-	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
-	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
-	var/atmos_link = FALSE			//Link source/destination atmos.
-	var/turf/open/atmos_source		//Atmos link source
-	var/turf/open/atmos_destination	//Atmos link destination
+	var/turf/hard_target //For when a portal needs a hard target and isn't to be linked.
+	var/atmos_link = FALSE //Link source/destination atmos.
+	var/turf/open/atmos_source //Atmos link source
+	var/turf/open/atmos_destination //Atmos link destination
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
+	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
 
 /obj/effect/portal/anom
@@ -44,32 +47,32 @@
 			return FALSE
 	return ..()
 
+/obj/effect/portal/newtonian_move() // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+	return TRUE
+
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
-	if(force_stop)
-		return ..()
-	if(isobserver(AM))
-		return ..()
-	if(linked && (get_turf(oldloc) == get_turf(linked)))
-		return ..()
-	if(!teleport(AM))
-		return ..()
+/obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
+		return TRUE
 
-/obj/effect/portal/attack_tk(mob/user)
-	return
+/obj/effect/portal/Bumped(atom/movable/bumper)
+	teleport(bumper)
 
-/obj/effect/portal/attack_hand(mob/user)
+/obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(get_turf(user) == get_turf(src))
-		teleport(user)
 	if(Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
+
+/obj/effect/portal/attack_robot(mob/living/user)
+	if(Adjacent(user))
+		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
@@ -97,6 +100,7 @@
 	if(atmos_link)
 		link_atmos()
 
+//This proc breaks as soon as atmos turfs are reacalculated, someone fix it
 /obj/effect/portal/proc/link_atmos()
 	if(atmos_source || atmos_destination)
 		unlink_atmos()
@@ -116,23 +120,23 @@
 		return FALSE
 	LAZYINITLIST(atmos_source.atmos_adjacent_turfs)
 	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
-	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source])	//Already linked!
+	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source]) //Already linked!
 		return FALSE
 	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
 	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
-	atmos_source.air_update_turf(FALSE)
-	atmos_destination.air_update_turf(FALSE)
+	atmos_source.air_update_turf(FALSE, FALSE)
+	atmos_destination.air_update_turf(FALSE, FALSE)
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
 		if(istype(atmos_destination))
 			LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
-			atmos_source.ImmediateCalculateAdjacentTurfs() //Just in case they were next to each other
+			atmos_source.immediate_calculate_adjacent_turfs() //Just in case they were next to each other
 		atmos_source = null
 	if(istype(atmos_destination))
 		if(istype(atmos_source))
 			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
-			atmos_destination.ImmediateCalculateAdjacentTurfs()
+			atmos_destination.immediate_calculate_adjacent_turfs()
 		atmos_destination = null
 
 /obj/effect/portal/Destroy()

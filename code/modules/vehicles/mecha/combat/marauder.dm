@@ -2,6 +2,7 @@
 	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations."
 	name = "\improper Marauder"
 	icon_state = "marauder"
+	base_icon_state = "marauder"
 	movedelay = 5
 	max_integrity = 500
 	deflect_chance = 25
@@ -11,7 +12,7 @@
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
-	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS
+	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 	internal_damage_threshold = 25
 	force = 45
 	max_equip = 5
@@ -22,7 +23,7 @@
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_smoke)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_zoom)
 
-/obj/vehicle/sealed/mecha/combat/marauder/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)
@@ -40,6 +41,7 @@
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
 	name = "\improper Seraph"
 	icon_state = "seraph"
+	base_icon_state = "seraph"
 	operation_req_access = list(ACCESS_CENT_SPECOPS)
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
 	movedelay = 3
@@ -49,7 +51,7 @@
 	force = 55
 	max_equip = 6
 
-/obj/vehicle/sealed/mecha/combat/marauder/seraph/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/seraph/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)
@@ -69,18 +71,19 @@
 	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
 	name = "\improper Mauler"
 	icon_state = "mauler"
+	base_icon_state = "mauler"
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
 	max_equip = 6
 	destruction_sleep_duration = 20
 
-/obj/vehicle/sealed/mecha/combat/marauder/mauler/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/mauler/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)
 
-/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
 	ME.attach(src)

@@ -16,8 +16,8 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 
-/datum/mutation/human/chameleon/on_life()
-	owner.alpha = max(0, owner.alpha - 25)
+/datum/mutation/human/chameleon/on_life(delta_time, times_fired)
+	owner.alpha = max(owner.alpha - (12.5 * delta_time), 0)
 
 /datum/mutation/human/chameleon/proc/on_move()
 	SIGNAL_HANDLER
@@ -35,4 +35,4 @@
 	if(..())
 		return
 	owner.alpha = 255
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EARLY_UNARMED_ATTACK))

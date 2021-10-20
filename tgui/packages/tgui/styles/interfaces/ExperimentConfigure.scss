@@ -1,0 +1,85 @@
+.ExperimentTechwebServer__Web,
+.ExperimentConfigure__ExperimentPanel {
+  background: #000000;
+  border: 1px solid #40628a;
+  margin: 3px 0;
+}
+
+.ExperimentTechwebServer__WebHeader {
+  background: #40628a;
+  padding: 2px;
+}
+
+.ExperimentTechwebServer__WebName {
+  font-size: 18px;
+}
+
+.ExperimentTechwebServer__WebContent {
+  padding: 4px;
+}
+
+.ExperimentTechwebServer__WebContent > .LabeledList {
+  margin: 0.25rem 0.25rem 0.25rem 1rem;
+}
+
+.ExperimentConfigure__ExperimentName {
+  font-weight: bold;
+  border-radius: 0;
+}
+
+.ExperimentConfigure__ExperimentContent {
+  padding: 0.25rem 1.5rem 0.25rem 0.25rem;
+}
+
+.ExperimentStage__Indicator {
+  font-weight: bold;
+  margin-right: 1rem;
+  text-align: center;
+}
+
+.ExperimentStage__StageContainer.complete .ExperimentStage__Description {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.ExperimentStage__StageContainer {
+  margin-bottom: 5px;
+}
+
+.ExperimentStage__Table {
+  border-collapse: separate;
+  border-spacing: 0.25rem 0.25rem;
+}
+
+.ExperimentConfigure__PerformExperiment {
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.ExperimentConfigure__ExperimentsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ExperimentConfigure__ExperimentsContainer > :last-child {
+  flex: 1;
+  overflow-y: auto;
+}
+
+// Required for the time being otherwise we'll end up coloring the tooltip
+// by accident when we color the tag.
+.ExperimentConfigure__TagContainer {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.ExperimentConfigure__PerformanceHint * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  color: rgba(255, 255, 255, 0.5);
+}

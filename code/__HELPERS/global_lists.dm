@@ -28,22 +28,27 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
-	sortList(GLOB.species_list, /proc/cmp_typepaths_asc)
+	sort_list(GLOB.species_list, /proc/cmp_typepaths_asc)
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
 		GLOB.surgeries_list += new path()
-	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
+	sort_list(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
+
+	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
+		var/datum/sprite_accessory/hair_gradient/H = new path()
+		GLOB.hair_gradients_list[H.name] = H
 
 	// Keybindings
 	init_keybindings()
@@ -52,11 +57,13 @@
 
 	init_crafting_recipes(GLOB.crafting_recipes)
 
+	init_subtypes_w_path_keys(/obj/projectile, GLOB.proj_by_path_key)
+
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)
 	for(var/path in subtypesof(/datum/crafting_recipe))
 		var/datum/crafting_recipe/recipe = new path()
-		recipe.reqs = sortList(recipe.reqs, /proc/cmp_crafting_req_priority)
+		recipe.reqs = sort_list(recipe.reqs, /proc/cmp_crafting_req_priority)
 		crafting_recipes += recipe
 	return crafting_recipes
 
@@ -78,3 +85,52 @@
 			L+= path
 		return L
 
+/// Functions like init_subtypes, but uses the subtype's path as a key for easy access
+/proc/init_subtypes_w_path_keys(prototype, list/L)
+	if(!istype(L))
+		L = list()
+	for(var/path as anything in subtypesof(prototype))
+		L[path] = new path()
+	return L
+
+/**
+ * Checks if that loc and dir has an item on the wall
+**/
+GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
+	/obj/item/radio/intercom,
+	/obj/item/storage/secure/safe,
+	/obj/machinery/airalarm,
+	/obj/machinery/bounty_board,
+	/obj/machinery/button,
+	/obj/machinery/computer/security/telescreen,
+	/obj/machinery/computer/security/telescreen/entertainment,
+	/obj/machinery/door_timer,
+	/obj/machinery/embedded_controller/radio/simple_vent_controller,
+	/obj/machinery/firealarm,
+	/obj/machinery/flasher,
+	/obj/machinery/keycard_auth,
+	/obj/machinery/light_switch,
+	/obj/machinery/newscaster,
+	/obj/machinery/power/apc,
+	/obj/machinery/requests_console,
+	/obj/machinery/status_display,
+	/obj/structure/extinguisher_cabinet,
+	/obj/structure/fireaxecabinet,
+	/obj/structure/mirror,
+	/obj/structure/noticeboard,
+	/obj/structure/reagent_dispensers/peppertank,
+	/obj/structure/sign,
+	/obj/structure/sign/picture_frame
+	)))
+
+GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
+	/obj/machinery/camera,
+	/obj/machinery/light,
+	/obj/structure/camera_assembly,
+	/obj/structure/light_construct
+	)))
+
+GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
+	/obj/machinery/light,
+	/obj/structure/light_construct
+	)))

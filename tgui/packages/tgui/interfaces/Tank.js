@@ -1,28 +1,50 @@
+import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
+import { Button, LabeledControls, NumberInput, RoundGauge, Section } from '../components';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
+
+const formatPressure = value => {
+  if (value < 10000) {
+    return toFixed(value) + ' kPa';
+  }
+  return formatSiUnit(value * 1000, 1, 'Pa');
+};
 
 export const Tank = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    defaultReleasePressure,
+    minReleasePressure,
+    maxReleasePressure,
+    leakPressure,
+    fragmentPressure,
+    tankPressure,
+    releasePressure,
+    connected,
+  } = data;
   return (
     <Window
-      width={400}
+      width={275}
       height={120}>
       <Window.Content>
         <Section>
-          <LabeledList>
-            <LabeledList.Item label="Pressure">
-              <ProgressBar
-                value={data.tankPressure / 1013}
+          <LabeledControls>
+            <LabeledControls.Item label="Pressure">
+              <RoundGauge
+                value={tankPressure}
+                minValue={0}
+                maxValue={fragmentPressure * 1.15}
+                alertAfter={leakPressure}
                 ranges={{
-                  good: [0.35, Infinity],
-                  average: [0.15, 0.35],
-                  bad: [-Infinity, 0.15],
-                }}>
-                {data.tankPressure + ' kPa'}
-              </ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item label="Pressure Regulator">
+                  "good": [0, leakPressure],
+                  "average": [leakPressure, fragmentPressure],
+                  "bad": [fragmentPressure, fragmentPressure * 1.15],
+                }}
+                format={formatPressure}
+                size={2} />
+            </LabeledControls.Item>
+            <LabeledControls.Item label="Pressure Regulator">
               <Button
                 icon="fast-backward"
                 disabled={data.ReleasePressure === data.minReleasePressure}
@@ -52,8 +74,8 @@ export const Tank = (props, context) => {
                 onClick={() => act('pressure', {
                   pressure: 'reset',
                 })} />
-            </LabeledList.Item>
-          </LabeledList>
+            </LabeledControls.Item>
+          </LabeledControls>
         </Section>
       </Window.Content>
     </Window>

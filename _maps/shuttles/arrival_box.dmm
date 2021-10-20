@@ -12,7 +12,7 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "e" = (
@@ -24,10 +24,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/effect/spawner/randomarcade,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/effect/spawner/random/entertainment/arcade,
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "h" = (
@@ -47,14 +45,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "l" = (
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 30
+/obj/machinery/requests_console/directional/north{
+	department = "Arrival shuttle"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "m" = (
@@ -72,20 +66,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"o" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/arrival)
 "p" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "q" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "r" = (
@@ -123,9 +110,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "x" = (
@@ -133,15 +118,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "y" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "z" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/machinery/light,
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "A" = (
@@ -157,7 +139,7 @@
 (1,1,1) = {"
 a
 b
-o
+d
 d
 d
 b

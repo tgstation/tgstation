@@ -5,6 +5,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
+	base_icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/ask_role = "" ///Can be set to tell ghosts what the brain will be used for
 	var/next_ask ///World time tick when ghost polling will be available again
@@ -20,7 +21,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	///Message sent as a visible message on failure
 	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
 	///Role assigned to the newly created mind
-	var/new_role = "Positronic Brain"
+	var/posibrain_job_path = /datum/job/positronic_brain
 	///Visible message sent when a player possesses the brain
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	///Examine message when the posibrain has no mob
@@ -29,6 +30,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names ///One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names
 	var/picked_name ///Picked posibrain name
+	var/can_enter = TRUE ///Boolean so that a player can't re-enter a posibrain if they ghosted
 
 /obj/item/mmi/posibrain/Topic(href, href_list)
 	if(href_list["activate"])
@@ -47,9 +49,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
-		to_chat(user, "<span class='warning'>Central Command has temporarily outlawed posibrain sentience in this sector...</span>")
+		to_chat(user, span_warning("Central Command has temporarily outlawed posibrain sentience in this sector..."))
 	if(is_occupied())
-		to_chat(user, "<span class='warning'>This [name] is already active!</span>")
+		to_chat(user, span_warning("This [name] is already active!"))
 		return
 	if(next_ask > world.time)
 		to_chat(user, recharge_message)
@@ -59,7 +61,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	ping_ghosts("requested", FALSE)
 	next_ask = world.time + askDelay
 	searching = TRUE
-	update_icon()
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/check_success), askDelay)
 
 /obj/item/mmi/posibrain/AltClick(mob/living/user)
@@ -69,13 +71,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(input_seed)
-		to_chat(user, "<span class='notice'>You set the personality seed to \"[input_seed]\".</span>")
+		to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
 		ask_role = input_seed
-		update_icon()
+		update_appearance()
 
 /obj/item/mmi/posibrain/proc/check_success()
 	searching = FALSE
-	update_icon()
+	update_appearance()
 	if(QDELETED(brainmob))
 		return
 	if(brainmob.client)
@@ -101,13 +103,15 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
+	if(!can_enter)
+		return
 	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
 		return
 	if(user.suiciding) //if they suicided, they're out forever.
-		to_chat(user, "<span class='warning'>[src] fizzles slightly. Sadly it doesn't take those who suicided!</span>")
+		to_chat(user, span_warning("[src] fizzles slightly. Sadly it doesn't take those who suicided!"))
 		return
-	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be revived, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || QDELETED(src))
+	var/posi_ask = tgui_alert(usr,"Become a [name]? (Warning, You can no longer be revived, and all past lives will be forgotten!)","Are you positive?",list("Yes","No"))
+	if(posi_ask != "Yes" || QDELETED(src))
 		return
 	if(brainmob.suiciding) //clear suicide status if the old occupant suicided.
 		brainmob.set_suicide(FALSE)
@@ -124,20 +128,20 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	brainmob.timeofhostdeath = C.timeofdeath
 	brainmob.set_stat(CONSCIOUS)
 	if(brainmob.mind)
-		brainmob.mind.assigned_role = new_role
+		brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
 	if(C.mind)
 		C.mind.transfer_to(brainmob)
 
-	brainmob.mind.remove_all_antag()
+	brainmob.mind.remove_all_antag_datums()
 	brainmob.mind.wipe_memory()
-	update_icon()
+	update_appearance()
 
 ///Moves the candidate from the ghost to the posibrain
 /obj/item/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(QDELETED(brainmob))
 		return
 	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		to_chat(candidate, "<span class='warning'>This [name] was taken over before you could get to it! Perhaps it might be available later?</span>")
+		to_chat(candidate, span_warning("This [name] was taken over before you could get to it! Perhaps it might be available later?"))
 		return FALSE
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
@@ -147,11 +151,12 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)
-	brainmob.mind.assigned_role = new_role
+	brainmob.mind.set_assigned_role(SSjob.GetJobType(posibrain_job_path))
 	brainmob.set_stat(CONSCIOUS)
 
 	visible_message(new_mob_message)
 	check_success()
+	can_enter = FALSE
 	return TRUE
 
 
@@ -163,14 +168,14 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 				if(!brainmob.client)
 					. += "It appears to be in stand-by mode." //afk
 			if(DEAD)
-				. += "<span class='deadsay'>It appears to be completely inactive.</span>"
+				. += span_deadsay("It appears to be completely inactive.")
 	else
 		. += "[dead_message]"
 		if(ask_role)
-			. += "<span class='notice'>Current consciousness seed: \"[ask_role]\"</span>"
-		. += "<span class='boldnotice'>Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.</span>"
+			. += span_notice("Current consciousness seed: \"[ask_role]\"")
+		. += span_boldnotice("Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.")
 
-/obj/item/mmi/posibrain/Initialize()
+/obj/item/mmi/posibrain/Initialize(mapload)
 	. = ..()
 	set_brainmob(new /mob/living/brain(src))
 	var/new_name
@@ -191,12 +196,15 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 
 /obj/item/mmi/posibrain/update_icon_state()
+	. = ..()
 	if(searching)
-		icon_state = "[initial(icon_state)]-searching"
-	else if(brainmob?.key)
-		icon_state = "[initial(icon_state)]-occupied"
-	else
-		icon_state = initial(icon_state)
+		icon_state = "[base_icon_state]-searching"
+		return
+	if(brainmob?.key)
+		icon_state = "[base_icon_state]-occupied"
+		return
+	icon_state = "[base_icon_state]"
+	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
 	return

@@ -10,7 +10,7 @@ import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
-import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
 import { setupGlobalEvents } from 'tgui/events';
 import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
@@ -92,6 +92,13 @@ const setupApp = () => {
     'is-disabled': false,
     'pos': '0x0',
     'size': '0x0',
+  });
+
+  // Resize the panel to match the non-browser output
+  Byond.winget('output').then(output => {
+    Byond.winset('browseroutput', {
+      'size': output.size,
+    });
   });
 
   // Enable hot module reloading

@@ -19,7 +19,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return
 
-/obj/item/slimecross/industrial/Initialize()
+/obj/item/slimecross/industrial/Initialize(mapload)
 	. = ..()
 	create_reagents(100, INJECTABLE | DRAWABLE)
 	START_PROCESSING(SSobj,src)
@@ -77,9 +77,9 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/metal
 	colour = "metal"
-	effect_desc = "Produces metal sheets."
+	effect_desc = "Produces iron sheets."
 	plasmarequired = 3
-	itempath = /obj/item/stack/sheet/metal/ten
+	itempath = /obj/item/stack/sheet/iron/ten
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"

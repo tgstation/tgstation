@@ -12,27 +12,72 @@
 #define SD_MESSAGE 2  // 2 = Arbitrary message(s)
 #define SD_PICTURE 3  // 3 = alert picture
 
-#define SD_AI_EMOTE 1  // 1 = AI emoticon
-#define SD_AI_BSOD 2  // 2 = Blue screen of death
-
 /// Status display which can show images and scrolling text.
 /obj/machinery/status_display
 	name = "status display"
 	desc = null
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
+	base_icon_state = "unanchoredstatusdisplay"
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
+	layer = ABOVE_WINDOW_LAYER
 
 	maptext_height = 26
 	maptext_width = 32
 	maptext_y = -1
 
-	var/message1 = ""	// message line 1
-	var/message2 = ""	// message line 2
-	var/index1			// display index for scrolling messages or 0 if non-scrolling
+	var/message1 = "" // message line 1
+	var/message2 = "" // message line 2
+	var/index1 // display index for scrolling messages or 0 if non-scrolling
 	var/index2
+
+/obj/item/wallframe/status_display
+	name = "status display frame"
+	desc = "Used to build status displays, just secure to the wall."
+	icon_state = "unanchoredstatusdisplay"
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	result_path = /obj/machinery/status_display
+
+/obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 6 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		deconstruct()
+		return TRUE
+
+/obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "it doesn't need repairs!")
+		return TRUE
+	user.balloon_alert_to_viewers("repairing display...", "repairing...")
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+		return TRUE
+	balloon_alert(user, "repaired")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
+	return TRUE
+
+/obj/machinery/status_display/deconstruct(disassembled = TRUE)
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(!disassembled)
+		new /obj/item/stack/sheet/iron(drop_location(), 2)
+		new /obj/item/shard(drop_location())
+		new /obj/item/shard(drop_location())
+	else
+		new /obj/item/wallframe/status_display(drop_location())
+	qdel(src)
 
 /// Immediately blank the display.
 /obj/machinery/status_display/proc/remove_display()
@@ -160,7 +205,33 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
-/obj/machinery/status_display/evac/Initialize()
+
+/obj/machinery/status_display/evac/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/status_display/evac/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/status_display/evac/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/status_display/evac/directional/west
+	dir = EAST
+	pixel_x = -32
+
+//makes it go on the wall when built
+/obj/machinery/status_display/Initialize(mapload, ndir, building)
+	. = ..()
+	if(building)
+		setDir(ndir)
+		pixel_x = NSCOMPONENT(dir) ? 0 : (dir == EAST ? -world.icon_size : world.icon_size)
+		pixel_y = NSCOMPONENT(dir) ? (dir == NORTH ? -world.icon_size : world.icon_size) : 0
+	update_appearance()
+
+/obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
 	// register for radio system
 	SSradio.add_object(src, frequency)
@@ -303,10 +374,45 @@
 	name = "\improper AI display"
 	desc = "A small screen which the AI can use to present itself."
 
-	var/mode = SD_BLANK
-	var/emotion = "Neutral"
+	var/emotion = AI_EMOTION_BLANK
 
-/obj/machinery/status_display/ai/Initialize()
+	/// A mapping between AI_EMOTION_* string constants, which also double as user readable descriptions, and the name of the iconfile.
+	var/static/list/emotion_map = list(
+		AI_EMOTION_BLANK = "ai_off",
+		AI_EMOTION_VERY_HAPPY = "ai_veryhappy",
+		AI_EMOTION_HAPPY = "ai_happy",
+		AI_EMOTION_NEUTRAL = "ai_neutral",
+		AI_EMOTION_UNSURE = "ai_unsure",
+		AI_EMOTION_CONFUSED = "ai_confused",
+		AI_EMOTION_SAD = "ai_sad",
+		AI_EMOTION_BSOD = "ai_bsod",
+		AI_EMOTION_PROBLEMS = "ai_trollface",
+		AI_EMOTION_AWESOME = "ai_awesome",
+		AI_EMOTION_DORFY = "ai_urist",
+		AI_EMOTION_THINKING = "ai_thinking",
+		AI_EMOTION_FACEPALM = "ai_facepalm",
+		AI_EMOTION_FRIEND_COMPUTER = "ai_friend",
+		AI_EMOTION_BLUE_GLOW = "ai_sal",
+		AI_EMOTION_RED_GLOW = "ai_hal",
+	)
+
+/obj/machinery/status_display/ai/directional/north
+	dir = SOUTH
+	pixel_y = 32
+
+/obj/machinery/status_display/ai/directional/south
+	dir = NORTH
+	pixel_y = -32
+
+/obj/machinery/status_display/ai/directional/east
+	dir = WEST
+	pixel_x = 32
+
+/obj/machinery/status_display/ai/directional/west
+	dir = EAST
+	pixel_x = -32
+
+/obj/machinery/status_display/ai/Initialize(mapload)
 	. = ..()
 	GLOB.ai_status_displays.Add(src)
 
@@ -315,54 +421,27 @@
 	. = ..()
 
 /obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
-	if(isAI(user))
-		user.ai_statuschange()
+	if(!isAI(user))
+		return
+	var/list/choices = list()
+	for(var/emotion_const in emotion_map)
+		var/icon_state = emotion_map[emotion_const]
+		choices[emotion_const] = image(icon = 'icons/obj/status_display.dmi', icon_state = icon_state)
+
+	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
+	for(var/_emote in typesof(/datum/emote/ai/emotion_display))
+		var/datum/emote/ai/emotion_display/emote = _emote
+		if(initial(emote.emotion) == emotion_result)
+			user.emote(initial(emote.key))
+			break
 
 /obj/machinery/status_display/ai/process()
-	if(mode == SD_BLANK || (machine_stat & NOPOWER))
+	if(machine_stat & NOPOWER)
 		remove_display()
 		return PROCESS_KILL
 
-	if(mode == SD_AI_EMOTE)
-		switch(emotion)
-			if("Very Happy")
-				set_picture("ai_veryhappy")
-			if("Happy")
-				set_picture("ai_happy")
-			if("Neutral")
-				set_picture("ai_neutral")
-			if("Unsure")
-				set_picture("ai_unsure")
-			if("Confused")
-				set_picture("ai_confused")
-			if("Sad")
-				set_picture("ai_sad")
-			if("BSOD")
-				set_picture("ai_bsod")
-			if("Blank")
-				set_picture("ai_off")
-			if("Problems?")
-				set_picture("ai_trollface")
-			if("Awesome")
-				set_picture("ai_awesome")
-			if("Dorfy")
-				set_picture("ai_urist")
-			if("Thinking")
-				set_picture("ai_thinking")
-			if("Facepalm")
-				set_picture("ai_facepalm")
-			if("Friend Computer")
-				set_picture("ai_friend")
-			if("Blue Glow")
-				set_picture("ai_sal")
-			if("Red Glow")
-				set_picture("ai_hal")
-		return PROCESS_KILL
-
-	if(mode == SD_AI_BSOD)
-		set_picture("ai_bsod")
-		return PROCESS_KILL
-
+	set_picture(emotion_map[emotion])
+	return PROCESS_KILL
 
 #undef CHARS_PER_LINE
 #undef FONT_SIZE

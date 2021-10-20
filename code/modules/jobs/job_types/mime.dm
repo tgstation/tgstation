@@ -1,23 +1,45 @@
 /datum/job/mime
 	title = "Mime"
 	department_head = list("Head of Personnel")
-	faction = "Station"
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/mime
+	plasmaman_outfit = /datum/outfit/plasmaman/mime
 
-	access = list(ACCESS_THEATRE)
-	minimal_access = list(ACCESS_THEATRE)
 	paycheck = PAYCHECK_MINIMAL
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_MIME
+	departments_list = list(
+		/datum/job_department/service,
+		)
 
-/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.apply_pref_name("mime", M.client)
+	family_heirlooms = list(/obj/item/food/baguette)
+
+	mail_goodies = list(
+		/obj/item/food/baguette = 15,
+		/obj/item/food/cheese/wheel = 10,
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
+		/obj/item/book/mimery = 1,
+	)
+	rpg_title = "Fool"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
+	voice_of_god_power = 0.5 //Why are you speaking
+	voice_of_god_silence_power = 3
+
+
+/datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	if(!ishuman(spawned))
+		return
+	spawned.apply_pref_name(/datum/preference/name/mime, player_client)
+
 
 /datum/outfit/job/mime
 	name = "Mime"
@@ -40,6 +62,8 @@
 	satchel = /obj/item/storage/backpack/mime
 
 	chameleon_extras = /obj/item/stamp/mime
+
+	id_trim = /datum/id_trim/job/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -75,15 +99,15 @@
 			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
 		else
 			return
-	to_chat(user, "<span class='warning'>The book disappears into thin air.</span>")
+	to_chat(user, span_warning("The book disappears into thin air."))
 	qdel(src)
 
 /**
-  * Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The human mob interacting with the menu
-  */
+ * Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The human mob interacting with the menu
+ */
 /obj/item/book/mimery/proc/check_menu(mob/living/carbon/human/user)
 	if(!istype(user))
 		return FALSE

@@ -12,7 +12,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "e" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
@@ -40,11 +40,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "i" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "j" = (
@@ -59,9 +58,7 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/item/crowbar,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "l" = (
@@ -90,9 +87,7 @@
 "o" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "p" = (
@@ -193,9 +188,7 @@
 /obj/item/radio{
 	pixel_y = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "w" = (
@@ -210,7 +203,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 

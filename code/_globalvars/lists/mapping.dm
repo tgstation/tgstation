@@ -12,29 +12,30 @@ GLOBAL_LIST_INIT(alldirs_multiz, list(
 	DOWN, DOWN|NORTH, DOWN|SOUTH, DOWN|EAST, DOWN|WEST, DOWN|NORTHEAST, DOWN|NORTHWEST, DOWN|SOUTHEAST, DOWN|SOUTHWEST))
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 
-GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
-GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
-GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security spawns
-GLOBAL_LIST_EMPTY(generic_event_spawns)			//handles clockwork portal+eminence teleport destinations
-GLOBAL_LIST_EMPTY(jobspawn_overrides)			//These will take precedence over normal spawnpoints if created.
+GLOBAL_LIST_EMPTY(landmarks_list) //list of all landmarks created
+GLOBAL_LIST_EMPTY(start_landmarks_list) //list of all spawn points created
+GLOBAL_LIST_EMPTY(department_security_spawns) //list of all department security spawns
+GLOBAL_LIST_EMPTY(generic_event_spawns) //handles clockwork portal+eminence teleport destinations
+GLOBAL_LIST_EMPTY(jobspawn_overrides) //These will take precedence over normal spawnpoints if created.
 
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
-GLOBAL_LIST_EMPTY(prisonwarp)	//admin prisoners go to these
-GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here (ninja energy net)
+GLOBAL_LIST_EMPTY(prisonwarp) //admin prisoners go to these
+GLOBAL_LIST_EMPTY(holdingfacility) //captured people go here (ninja energy net)
 GLOBAL_LIST_EMPTY(xeno_spawn)//aliens, morphs and nightmares spawn at these
 GLOBAL_LIST_EMPTY(tdome1)
 GLOBAL_LIST_EMPTY(tdome2)
 GLOBAL_LIST_EMPTY(tdomeobserve)
 GLOBAL_LIST_EMPTY(tdomeadmin)
-GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
+GLOBAL_LIST_EMPTY(prisonwarped) //list of players already warped
 GLOBAL_LIST_EMPTY(blobstart) //stationloving objects, blobs, santa
 GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the number of sec players
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
+GLOBAL_LIST_EMPTY(bar_areas)
 
 //away missions
 GLOBAL_LIST_EMPTY(vr_spawnpoints)
@@ -45,3 +46,6 @@ GLOBAL_LIST_EMPTY(sortedAreas)
 GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
+
+/// Global list of megafauna spawns on cave gen
+GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 6))

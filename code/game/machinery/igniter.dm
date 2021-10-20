@@ -3,6 +3,7 @@
 	desc = "It's useful for igniting plasma."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter0"
+	base_icon_state = "igniter"
 	plane = FLOOR_PLANE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
@@ -13,8 +14,8 @@
 	var/id = null
 	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/igniter/incinerator_atmos
 	id = INCINERATOR_ATMOS_IGNITER
@@ -26,7 +27,7 @@
 	on = TRUE
 	icon_state = "igniter1"
 
-/obj/machinery/igniter/attack_hand(mob/user)
+/obj/machinery/igniter/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -34,24 +35,22 @@
 
 	use_power(50)
 	on = !( on )
-	update_icon()
+	update_appearance()
 
-/obj/machinery/igniter/process()	//ugh why is this even in process()?
+/obj/machinery/igniter/process() //ugh why is this even in process()?
 	if (on && !(machine_stat & NOPOWER) )
 		var/turf/location = loc
 		if (isturf(location))
 			location.hotspot_expose(1000,500,1)
 	return 1
 
-/obj/machinery/igniter/Initialize()
+/obj/machinery/igniter/Initialize(mapload)
 	. = ..()
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/update_icon_state()
-	if(machine_stat & NOPOWER)
-		icon_state = "igniter0"
-	else
-		icon_state = "igniter[on]"
+	icon_state = "[base_icon_state][(machine_stat & NOPOWER) ? 0 : on]"
+	return ..()
 
 /obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	id = "[port.id]_[id]"
@@ -63,16 +62,33 @@
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
+	base_icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/disable = 0
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/sparker/directional/north
+	dir = SOUTH
+	pixel_y = 26
 
-/obj/machinery/sparker/Initialize()
+/obj/machinery/sparker/directional/south
+	dir = NORTH
+	pixel_y = -26
+
+/obj/machinery/sparker/directional/east
+	dir = WEST
+	pixel_x = 26
+
+/obj/machinery/sparker/directional/west
+	dir = EAST
+	pixel_x = -26
+
+/obj/machinery/sparker/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
+
+/obj/machinery/sparker/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -84,11 +100,10 @@
 
 /obj/machinery/sparker/update_icon_state()
 	if(disable)
-		icon_state = "[initial(icon_state)]-d"
-	else if(powered())
-		icon_state = "[initial(icon_state)]"
-	else
-		icon_state = "[initial(icon_state)]-p"
+		icon_state = "[base_icon_state]-d"
+		return ..()
+	icon_state = "[base_icon_state][powered() ? null : "-p"]"
+	return ..()
 
 /obj/machinery/sparker/powered()
 	if(disable)
@@ -100,10 +115,10 @@
 		add_fingerprint(user)
 		disable = !disable
 		if (disable)
-			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
+			user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
 		if (!disable)
-			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
-		update_icon()
+			user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
+		update_appearance()
 	else
 		return ..()
 

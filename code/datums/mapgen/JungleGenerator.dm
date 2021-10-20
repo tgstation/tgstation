@@ -33,7 +33,7 @@
 	var/perlin_zoom = 65
 
 ///Seeds the rust-g perlin noise with a random number.
-/datum/map_generator/jungle_generator/generate_terrain(var/list/turfs)
+/datum/map_generator/jungle_generator/generate_terrain(list/turfs)
 	. = ..()
 	var/height_seed = rand(0, 50000)
 	var/humidity_seed = rand(0, 50000)
@@ -87,5 +87,7 @@
 
 /area/mine/planetgeneration
 	name = "planet generation area"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+
 	map_generator = /datum/map_generator/jungle_generator

@@ -6,7 +6,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/mineral/random/high_chance,

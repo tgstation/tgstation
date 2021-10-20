@@ -10,12 +10,21 @@
 export const captureExternalLinks = () => {
   // Subscribe to all document clicks
   document.addEventListener('click', e => {
-    const tagName = String(e.target.tagName).toLowerCase();
-    const hrefAttr = e.target.getAttribute('href') || '';
-    // Must be a link
-    if (tagName !== 'a') {
-      return;
+    /** @type {HTMLElement} */
+    let target = e.target;
+    // Recurse down the tree to find a valid link
+    while (true) {
+      // Reached the end, bail.
+      if (!target || target === document.body) {
+        return;
+      }
+      const tagName = String(target.tagName).toLowerCase();
+      if (tagName === 'a') {
+        break;
+      }
+      target = target.parentElement;
     }
+    const hrefAttr = target.getAttribute('href') || '';
     // Leave BYOND links alone
     const isByondLink = hrefAttr.charAt(0) === '?'
       || hrefAttr.startsWith('byond://');

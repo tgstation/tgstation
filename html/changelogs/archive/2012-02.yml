@@ -1,0 +1,166 @@
+2012-02-04:
+  Erro:
+  - tweak: Examining humans now works a bit differently. Some external suits and helmets
+      can hide certain pieces of clothing so you don't see them when examining. Glasses
+      are also now displayed when examining.
+  - tweak: The job selection screen has been changed a little to hopefully make making
+      changes there easier.
+2012-02-07:
+  Giacom:
+  - rscadd: 'The return of the Nanotrasen Scripting Language! (NTSL) If you haven''t
+      heard of NTSL, it is a scripting language within a game for telecomms. Yes,
+      you can create scripts to interact with the radio! For more information, head
+      here: http://wiki.nanotrasen.com/index.php?title=NT_Script But before you do,
+      if you are not an antag, do not create bad scripts which hinders communication.'
+  - rscadd: Cameras, mulebots, APCs, radios and cyborgs can have signallers attached
+      to their wires, like airlocks!
+  - rscadd: Cameras have non-randomized wires and the power wire when pulsed will
+      now toggle the camera on and off.
+  - rscadd: Cyborgs have a new wire, the lockdown wire! It will disable/enable the
+      lockdown of a Cyborg when pulsed.
+  - rscadd: The traffic control computer (or more commonly known as the computer which
+      lets you add NTSL scripts) will now have a user log, which will log all user
+      activity. Other users can then view that log and see who has been uploading
+      naughty scripts!
+  - rscadd: NTSL has two new functions! time() and timestamp(format) will help you
+      increase the range of types of scripts you can make, especially time(); since
+      you can then make the scripts know the different between each execution by storing
+      the results in memory.
+  - rscadd: Two new advance disease symptoms! Their names are "Longevity" and "Anti-Bodies
+      Metabolism". Have fun experimenting with them!
+2012-02-08:
+  ConstantA a.k.a. panurgomatic on google code:
+  - rscadd: Added Exosuit Jetpack
+  - rscadd: Added Exosuit Nuclear Reactor (runs of normal, everyday uranium, maybe
+      I'll switch it to run on enriched) - requires research (level 3 in Materials,
+      Power Manipulation and Engineering)
+  - imageadd: Added Ripley construction steps sprites (courtesy of <b>WJohnston</b>
+      - man, you're awesome)
+  - tweak: Exosuit Sleeper can now inject occupant with reagents taken from Syringe
+      Gun
+  - tweak: Exosuit Cable Layer will now auto-dismantle floors
+  - tweak: Exosuit Heavy Lazer cooldown increased, Scattershot now fires medium calibre
+      ammo (less damage)
+  - tweak: Exosuit wreckage can be pulled
+  - wip: EMP now drains half of current exosuit cell charge, not half of maximum charge.
+  - bugfix: Fixed several possible exosuit equipment runtimes
+  - wip: Introduced new markup to changelog. Javascript is extremely slow (in byond
+      embedded browser) for some reason.
+2012-02-09:
+  Erro:
+  - tweak: Engineering and security lockers now spawn with their respective backpacks
+      in them so job-changers can look as they should. HoS locker now also contains
+      an armored vest, for the convenience of the HoS who wants to play with one.
+  - tweak: Slightly changed the spawn order of items in the CE and HoS lockers to
+      make starting up a hint less tedious.
+2012-02-10:
+  Ikarrus:
+  - rscadd: 'Implants can now be surgically removed. Hint: They''re inside the skull.'
+  Quarxink:
+  - rscadd: 'Added a new toy: Water balloons. They can be filled with any reagent
+      and when thrown apply the reagents to the tile and everything on it.'
+2012-02-11:
+  Kor:
+  - rscadd: 'A new passive mob ability: Relentless. Relentless mobs cannot be shoved
+      (though may still swap places with help intent)'
+  - rscadd: Alien Queens, Juggernaut constructs, and Medical Borgs are all Relentless.
+      Maybe the medborg can actually drag people to medbay on time now
+  - rscadd: Two constructs, the Juggernaut and the Wraith are now available for wizards
+      and cultists to use soul stones with
+  - rscadd: A new highly destructive artefact, Veil Render, is now available for wizards
+  - rscadd: A new one time use global spell, Summon Guns, is now available for wizards.
+  - tweak: DEEPSTRIKING! There is now a partially constructed teleporter on the nuke
+      shuttle, and for a large sum of telecrystals they may purchase the circuitboard
+      needed to complete it.
+  - tweak: The Chaplain is immune to cult stun, blind, deafen, and blood boil
+2012-02-12:
+  Pete:
+  - tweak: Updated fitness, athletic shorts are now available!
+2012-02-13:
+  Kor:
+  - rscadd: A new item, the null rod, protects the one bearing it from cult magic.
+      One starts in the chaplains office, and this replaces the job based immunity
+      he had. The null rod also is capable of dispelling runes upon hitting them (the
+      bible can no longer do this)
+  - rscadd: Shooting fuel tanks with lasers or bullets now causes them to explode
+  - rscadd: A construct shell is now waiting to be found in space.
+  - tweak: Chaplains can no longer self heal with the bible
+  - bugfix: Simple animals, including constructs, can now attack mechs and critters
+2012-02-14:
+  Carn:
+  - rscadd: Spacevines added to the random events.
+  - bugfix: The bug where doors kept opening when a borg tried to close them at close
+      range is now fixed.
+2012-02-15:
+  Kor:
+  - tweak: Terrorists Win! Desert Eagles and Riot Shields now spawn on the syndicate
+      shuttle, replacing the c20r
+  - tweak: The Detectives gun still uses .38, but they're now fully lethal bullets.
+      Go ahead, make his day.
+  - tweak: The Veil Render has been nerfed, the Nar-Sie it spawns will not pull anchored
+      objects. This is a temporary measure, more nerfs/reworking to come
+2012-02-16:
+  Smoke Carter:
+  - rscadd: Newscasters now alert people of new feeds and wanted-alerts simultaneously.
+2012-02-18:
+  Sieve:
+  - bugfix: Stopped the unholy Radium/Uranium/Carbon smoke that crashed the server.
+      And for anyone that did this, you are a horrible person
+  - bugfix: Cleanbots clean dirt
+  - tweak: Cleanbots automatically patrol on construction
+  - rscdel: Removed silicate because it is not useful enough for how much lag it caused
+2012-02-19:
+  KorPhaeron:
+  - imageadd: 'A new construct type: Artificer. It is capable of constructing defenses,
+      repairing fellow constructs, and summoning raw materials to construct further
+      constructs'
+  - bugfix: Simple animals (constructs, Ian, etc) can now see their health in the
+      Status tab
+  - tweak: Detective's revolver is non-lethal again. Was fun while it lasted
+2012-02-21:
+  Skaer:
+  - rscadd: The armoury now includes a box of spare Sec cartridges.
+2012-02-22:
+  coolity:
+  - imageadd: New sprites for HoS and Captain lockers.
+  - imageadd: New sprites for the orebox.
+2012-02-23:
+  LastyScratch:
+  - soundadd: Glass airlocks now make a different sound than regular airlocks.
+  - soundadd: in 1997 nanotrasen's first AI malfunctioned
+  - bugfix: "Toggle ambience probably works now!\n\t\t"
+  - rscadd: "Runtime is <s>dead</s>.\n\t\t"
+  - tweak: The Research Director's consoles were moved into the <b>completely empty</b>
+      cage in the back of his office.
+2012-02-24:
+  PolymorphBlue:
+  - rscadd: Headsets are now modular!  Use a screwdriver on them to pop out their
+      encrpytion keys, and use a key on one to put it in.  A headset can hold two
+      keys.  Normal headsets start with 1 key, department headsets with two.  The
+      standard chip does nothing, and is not required for listening to the common
+      radio.
+  - bugfix: 'Binary translators made into a encrpytion key, and fixed.  They now broadcast
+      to AIs properly.  '
+2012-02-25:
+  Doohl:
+  - rscadd: Telecommunications has been refined, with many new features and modules
+      implemented.
+  - experiment: <b>NTSL (Nanotrasen Scripting Language) is ONLINE!</b> This is a brand
+      new, fully operational scripting language embedded within SS13 itself. The intended
+      purpose is to eventually expand this scripting language to Robotics and possibly
+      other jobs, but for now you may play with the TCS (Traffic Control Systems)
+      implementation of NTSL in the Telecommunications Satellite. Recommended you
+      read the NT Script wiki page for information on how to use the language itself.
+      Other than that, there's not a lot of documentation.
+  - bugfix: Radio systems have been further optimized, bugfixed, etc. Should be more
+      stable.
+  - tweak: Intercoms now require power to work.
+2012-02-26:
+  Doohl:
+  - bugfix: <b><font color="red"><font size="3">The insane crashing has finally been
+      fixed!</font></font></b>
+2012-02-29:
+  SkyMarshal:
+  - rscadd: BS12 Hallucination and Dreaming port
+  muskets:
+  - rscadd: Integrated BS12's improved uplink code

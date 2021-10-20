@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift
 	name = "Shapechange"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
+	school = SCHOOL_TRANSMUTATION
 	clothes_req = FALSE
 	human_req = FALSE
 	charge_max = 200
@@ -21,13 +22,12 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
-		/mob/living/simple_animal/hostile/construct/juggernaut)
+		/mob/living/simple_animal/hostile/giant_spider/viper/wizard,\
+		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	if(src in user.mob_spell_list)
 		LAZYREMOVE(user.mob_spell_list, src)
-		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
 	if(user.buckled)
 		user.buckled.unbuckle_mob(src,force=TRUE)
@@ -40,7 +40,7 @@
 				animal_list[initial(animal.name)] = path
 				var/image/animal_image = image(icon = initial(animal.icon), icon_state = initial(animal.icon_state))
 				display_animals += list(initial(animal.name) = animal_image)
-			sortList(display_animals)
+			sort_list(display_animals)
 			var/new_shapeshift_type = show_radial_menu(M, M, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 			if(shapeshift_type)
 				return
@@ -54,35 +54,43 @@
 			M = Restore(M)
 		else
 			M = Shapeshift(M)
-		if(M.movement_type & (VENTCRAWLING))
-			if(!M.ventcrawler) //you're shapeshifting into something that can't fit into a vent
-				var/obj/machinery/atmospherics/pipeyoudiein = M.loc
-				var/datum/pipeline/ourpipeline
-				var/pipenets = pipeyoudiein.returnPipenets()
-				if(islist(pipenets))
-					ourpipeline = pipenets[1]
-				else
-					ourpipeline = pipenets
+		// Are we currently ventcrawling?
+		if(!(M.movement_type & VENTCRAWLING))
+			return
 
-				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
-				var/gibtype = /obj/effect/gibspawner/generic
-				if(isalien(M))
-					gibtype = /obj/effect/gibspawner/xeno
-				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
-					if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
-						new gibtype(get_turf(possiblevent))
-						playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
-				priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
-				M.death()
-				qdel(M)
-				return
+		// Can our new form support ventcrawling?
+		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+		if(ventcrawler)
+			return
+
+		//you're shapeshifting into something that can't fit into a vent
+
+		var/obj/machinery/atmospherics/pipeyoudiein = M.loc
+		var/datum/pipeline/ourpipeline
+		var/pipenets = pipeyoudiein.return_pipenets()
+		if(islist(pipenets))
+			ourpipeline = pipenets[1]
+		else
+			ourpipeline = pipenets
+
+		to_chat(M, span_userdanger("Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!"))
+		var/gibtype = /obj/effect/gibspawner/generic
+		if(isalien(M))
+			gibtype = /obj/effect/gibspawner/xeno
+		for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
+			if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
+				new gibtype(get_turf(possiblevent))
+				playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
+		priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
+		M.death()
+		qdel(M)
 
 /**
-  * check_menu: Checks if we are allowed to interact with a radial menu
-  *
-  * Arguments:
-  * * user The mob interacting with a menu
-  */
+ * check_menu: Checks if we are allowed to interact with a radial menu
+ *
+ * Arguments:
+ * * user The mob interacting with a menu
+ */
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -93,7 +101,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
-		to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
+		to_chat(caster, span_warning("You're already shapeshifted!"))
 		return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
@@ -137,7 +145,8 @@
 	source = _source
 	shape = loc
 	if(!istype(shape))
-		CRASH("shapeshift holder created outside mob/living")
+		stack_trace("shapeshift holder created outside mob/living")
+		return INITIALIZE_HINT_QDEL
 	stored = caster
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
@@ -150,11 +159,12 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND);
 		shape.blood_volume = stored.blood_volume;
 
-	stored.RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/shape_death)
-	stored.RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
-	shape.RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DEATH), .proc/shape_death)
+	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/shape_death)
+	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
 
 /obj/shapeshift_holder/Destroy()
+	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
+	// because restore() qdel'd src.
 	if(!restoring)
 		restore()
 	stored = null
@@ -163,15 +173,15 @@
 
 /obj/shapeshift_holder/Moved()
 	. = ..()
-	if(!restoring || QDELETED(src))
+	if(!restoring && !QDELETED(src))
 		restore()
 
 /obj/shapeshift_holder/handle_atom_del(atom/A)
 	if(A == stored && !restoring)
 		restore()
 
-/obj/shapeshift_holder/Exited(atom/movable/AM)
-	if(AM == stored && !restoring)
+/obj/shapeshift_holder/Exited(atom/movable/gone, direction)
+	if(stored == gone && !restoring)
 		restore()
 
 /obj/shapeshift_holder/proc/caster_death()
@@ -192,6 +202,10 @@
 		restore()
 
 /obj/shapeshift_holder/proc/restore(death=FALSE)
+	// Destroy() calls this proc if it hasn't been called. Unregistering here prevents multiple qdel loops
+	// when caster and shape both die at the same time.
+	UnregisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	restoring = TRUE
 	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
@@ -208,5 +222,10 @@
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE, wound_bonus=CANT_WOUND)
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
-	QDEL_NULL(shape)
+
+	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
+	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
+	if(!QDELETED(shape))
+		QDEL_NULL(shape)
+
 	qdel(src)

@@ -1,6 +1,6 @@
 /obj/effect/projectile
 	name = "pew"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "nothing"
 	layer = ABOVE_MOB_LAYER
 	anchored = TRUE
@@ -38,6 +38,7 @@
 
 /obj/effect/projectile/proc/apply_vars(angle_override, p_x = 0, p_y = 0, color_override, scaling = 1, new_loc, increment = 0)
 	var/mutable_appearance/look = new(src)
+	look.plane = plane
 	look.pixel_x = p_x
 	look.pixel_y = p_y
 	if(color_override)
@@ -45,7 +46,7 @@
 	appearance = look
 	scale_to(1,scaling, FALSE)
 	turn_to(angle_override, FALSE)
-	if(!isnull(new_loc))	//If you want to null it just delete it...
+	if(!isnull(new_loc)) //If you want to null it just delete it...
 		forceMove(new_loc)
 	for(var/i in 1 to increment)
 		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)

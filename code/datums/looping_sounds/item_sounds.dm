@@ -1,4 +1,4 @@
-#define RAD_GEIGER_LOW 100							// Geiger counter sound thresholds
+#define RAD_GEIGER_LOW 100 // Geiger counter sound thresholds
 #define RAD_GEIGER_MEDIUM 500
 #define RAD_GEIGER_HIGH 1000
 
@@ -51,3 +51,8 @@
 	mid_sounds = list('sound/items/weeoo1.ogg')
 	mid_length = 15
 	volume = 20
+
+/datum/looping_sound/tape_recorder_hiss
+	mid_sounds = list('sound/items/taperecorder/taperecorder_hiss_mid.ogg')
+	start_sound = list('sound/items/taperecorder/taperecorder_hiss_start.ogg')
+	volume = 10
