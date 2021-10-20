@@ -303,6 +303,8 @@
 							span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
 			log_combat(src, target, "shoved", "knocking them down")
+<<<<<<< HEAD
+=======
 		else if(target_table)
 			target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 			target.visible_message(span_danger("[name] shoves [target.name] onto \the [target_table]!"),
@@ -325,6 +327,7 @@
 							span_userdanger("You're shoved into \the [target_disposal_bin] by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name] into \the [target_disposal_bin]!"))
 			log_combat(src, target, "shoved", "into [target_disposal_bin] (disposal bin)")
+>>>>>>> upstream/master
 	else
 		target.visible_message(span_danger("[name] shoves [target.name]!"),
 						span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
