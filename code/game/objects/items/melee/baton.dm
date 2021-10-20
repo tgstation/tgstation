@@ -566,7 +566,6 @@
 	force = 3
 	throwforce = 5
 	slot_flags = ITEM_SLOT_BACK
-	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler
 
 	var/throw_stun_chance = 10
