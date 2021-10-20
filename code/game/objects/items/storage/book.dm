@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		user.Unconscious(40 SECONDS)
 		return
 
-	if (!user.mind && !user.mind.holy_role)
+	if (!user.mind || !user.mind.holy_role)
 		to_chat(user, span_danger("The book sizzles in your hands."))
 		user.take_bodypart_damage(0, 10)
 		return
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			B.name = name
 			B.icon_state = icon_state
 			B.inhand_icon_state = inhand_icon_state
-	
+
 	if(istype(bible_smacked, /obj/item/cult_bastard) && !IS_CULTIST(user))
 		var/obj/item/cult_bastard/sword = bible_smacked
 		to_chat(user, span_notice("You begin to exorcise [sword]."))
