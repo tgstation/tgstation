@@ -325,7 +325,7 @@
 		/obj/item/stack/tile/iron/base/cyborg,
 		/obj/item/stack/cable_coil)
 	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(/obj/item/melee/baton/security/loaded)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
 	magpulsing = TRUE

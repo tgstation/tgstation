@@ -255,9 +255,10 @@
 		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
 			return
-		flashed_borgo.Paralyze(rand(80,120))
-		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
-		flashed_borgo.add_confusion(min(5, diff))
+		flashed_borgo.adjust_blurriness(20)
+		flashed_borgo.adjust_blindness(10)
+		var/diff = 15 * CONFUSION_STACK_MAX_MULTIPLIER - M.get_confusion()
+		flashed_borgo.add_confusion(min(15, diff))
 		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
 		return
 
