@@ -8,9 +8,8 @@ import { HelpDummy, HoverHelp } from './helpers';
  * for generalizing and refactoring.
  */
 
-const ComboKnob = props => {
+const ComboKnob = (props, context) => {
   const {
-    act,
     color=false,
     defaultValue,
     icon,
@@ -23,10 +22,14 @@ const ComboKnob = props => {
     value,
     ...rest
   } = props;
+
+  const { act, data } = useBackend(context);
+
   const iconProps = {};
   if (flipIcon) {
     iconProps.rotation = 180;
   }
+
   const icon_element = icon && (<Icon
     position="absolute"
     top="16px"
@@ -36,6 +39,7 @@ const ComboKnob = props => {
     name={icon}
     {...iconProps}
   />);
+
   return (
     <Box
       position="relative"
@@ -92,7 +96,6 @@ export const HypertorusSecondaryControls = (props, context) => {
       <LabeledControls justify="space-around">
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
-            act={act}
             color={data.heating_conductor > 50 && data.heat_output > 0 && "yellow"}
             value={parseFloat(data.heating_conductor)}
             unit="J/cm"
@@ -106,7 +109,6 @@ export const HypertorusSecondaryControls = (props, context) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Cooling Volume">
           <ComboKnob
-            act={act}
             value={parseFloat(data.cooling_volume)}
             unit="L"
             minValue={50}
@@ -120,7 +122,6 @@ export const HypertorusSecondaryControls = (props, context) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Magnetic Constrictor">
           <ComboKnob
-            act={act}
             value={parseFloat(data.magnetic_constrictor)}
             unit="m³/T"
             minValue={50}
@@ -134,7 +135,6 @@ export const HypertorusSecondaryControls = (props, context) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Current Damper">
           <ComboKnob
-            act={act}
             color={data.current_damper && "yellow"}
             value={parseFloat(data.current_damper)}
             unit="W"
