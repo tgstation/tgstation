@@ -297,12 +297,9 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/curator
 	name = "curator's plasma envirosuit helmet"
-	desc = "A slight modification on a traditional voidsuit helmet, this helmet was Nanotrasen's first solution to the *logistical problems* that come with employing plasmamen. Despite their limitations, these helmets still see use by historians and old-school plasmamen alike."
-	icon_state = "prototype_envirohelm"
-	inhand_icon_state = "prototype_envirohelm"
-	actions_types = list(/datum/action/item_action/toggle_welding_screen/plasmaman)
-	smile_state = "prototype_smile"
-	visor_icon = "prototype_envisor"
+	desc = "An envirohelm to protect the enlightened plasmamen from oxygen-rich atmospheres."
+	icon_state = "curator_envirohelm"
+	inhand_icon_state = "curator_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/botany
 	name = "botany plasma envirosuit helmet"

@@ -137,7 +137,7 @@
 	name = "Curator Plasmaman"
 
 	uniform = /obj/item/clothing/under/plasmaman/curator
-	gloves = /obj/item/clothing/gloves/color/plasmaman/prototype
+	gloves = /obj/item/clothing/gloves/color/plasmaman/white
 	head = /obj/item/clothing/head/helmet/space/plasmaman/curator
 
 /datum/outfit/plasmaman/botany
