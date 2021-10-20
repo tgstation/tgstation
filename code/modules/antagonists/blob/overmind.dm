@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	icon_state = "marker"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_on_shuttle = 1
+	sight = SEE_SELF | SEE_TURFS
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER

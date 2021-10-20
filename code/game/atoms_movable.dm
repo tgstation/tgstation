@@ -58,6 +58,8 @@
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
 	var/can_be_z_moved = TRUE
+	/// If TRUE can be pushed off of for movement in zero gravity regardless of density or passflags
+	var/is_spacemove_backup = FALSE
 
 	var/zfalling = FALSE
 
