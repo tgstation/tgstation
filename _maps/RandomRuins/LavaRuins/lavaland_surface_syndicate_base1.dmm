@@ -1632,7 +1632,7 @@
 /turf/open/floor/iron,
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gd" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
@@ -1659,7 +1659,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gh" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2240,7 +2240,7 @@
 	},
 /area/ruin/unpowered/syndicate_lava_base/virology)
 "hw" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
@@ -2472,7 +2472,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hX" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2482,7 +2482,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hY" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4233,7 +4233,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "lT" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -4617,7 +4617,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/unpowered/syndicate_lava_base/telecomms)
 "mS" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
@@ -5737,7 +5737,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "EZ" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/structure/fans/tiny,
@@ -5860,7 +5860,7 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "St" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

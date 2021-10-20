@@ -64,9 +64,19 @@
 
 	var/datum/admin_help/AH = C.current_ticket
 
+	var/message_prompt = "Message:"
+
+	if(AH?.opening_responders && length(AH.ticket_interactions) == 1)
+		SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
+		message_prompt += "\n\n**This ticket is already being responded to by: [english_list(AH.opening_responders)]**"
+
 	if(AH)
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+		if(length(AH.ticket_interactions) == 1) // add the admin who is currently responding to the list of people responding
+			LAZYADD(AH.opening_responders, src)
+
+	var/msg = input(src, message_prompt, "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+	LAZYREMOVE(AH.opening_responders, src)
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return

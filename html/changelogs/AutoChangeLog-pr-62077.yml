@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixes combat hypospray locking itself out from 10u transfers to 5u when used in-hand"

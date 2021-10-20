@@ -37,7 +37,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ak" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate2)
 "al" = (
@@ -117,7 +117,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aE" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate3)
 "aG" = (
@@ -207,7 +207,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "bb" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate1)
 "bc" = (
@@ -339,7 +339,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
 "bJ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "bK" = (
@@ -1243,7 +1243,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "fl" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate4)
 "fm" = (
@@ -2060,7 +2060,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate7)
 "hU" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
 "hV" = (
@@ -2238,7 +2238,7 @@
 /turf/closed/mineral/bananium,
 /area/space/nearstation)
 "iF" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iG" = (
@@ -2278,7 +2278,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "iT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate5)
 "iW" = (
@@ -2314,7 +2314,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate6)
 "jf" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate6)
 "ji" = (
