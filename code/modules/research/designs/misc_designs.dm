@@ -571,6 +571,7 @@
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/zipties
 	name = "Zipties"
@@ -687,4 +688,14 @@
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/holosign_creator/robot_seat/bar
 	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/oven_tray
+	name = "Oven Tray"
+	desc = "Gotta shove something in!"
+	id = "oven_tray"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/plate/oven_tray
+	category = list("initial","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

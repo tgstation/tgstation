@@ -37,6 +37,9 @@
 #define UNIT_TEST_FAILED 1
 #define UNIT_TEST_SKIPPED 2
 
+#define TEST_DEFAULT 1
+#define TEST_DEL_WORLD INFINITY
+
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
@@ -47,12 +50,13 @@
 #include "breath.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
+#include "chat_filter.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "connect_loc.dm"
 #include "confusion.dm"
 #include "crayons.dm"
-#include "deletions.dm"
+#include "create_and_destroy.dm"
 #include "designs.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
@@ -62,7 +66,7 @@
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
-#include "initialize_sanity.dm"
+#include "hydroponics_self_mutations.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
@@ -72,7 +76,9 @@
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
+#include "preferences.dm"
 #include "projectiles.dm"
+#include "quirks.dm"
 #include "rcd.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"

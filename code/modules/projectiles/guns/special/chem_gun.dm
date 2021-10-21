@@ -17,7 +17,7 @@
 	var/max_syringes = 4
 	var/last_synth = 0
 
-/obj/item/gun/chem/Initialize()
+/obj/item/gun/chem/Initialize(mapload)
 	. = ..()
 	chambered = new /obj/item/ammo_casing/chemgun(src)
 	START_PROCESSING(SSobj, src)
@@ -30,7 +30,7 @@
 /obj/item/gun/chem/can_shoot()
 	return syringes_left
 
-/obj/item/gun/chem/process_chamber()
+/obj/item/gun/chem/handle_chamber()
 	if(chambered && !chambered.loaded_projectile && syringes_left)
 		chambered.newshot()
 

@@ -70,7 +70,8 @@
 /////////////////////////////////
 /obj/effect/payload_spawner/Initialize(mapload, type, numspawned)
 	..()
-	spawn_payload(type, numspawned)
+	if(type && isnum(numspawned))
+		spawn_payload(type, numspawned)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/payload_spawner/proc/spawn_payload(type, numspawned)
@@ -174,7 +175,7 @@
 /obj/item/grenade/clusterbuster/random
 	icon_state = "random_clusterbang"
 
-/obj/item/grenade/clusterbuster/random/Initialize()
+/obj/item/grenade/clusterbuster/random/Initialize(mapload)
 	..()
 	var/real_type = pick(subtypesof(/obj/item/grenade/clusterbuster))
 	new real_type(loc)

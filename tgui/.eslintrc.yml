@@ -12,6 +12,7 @@ env:
 plugins:
   - radar
   - react
+  - unused-imports
 settings:
   react:
     version: '16.10'
@@ -668,7 +669,7 @@ rules:
   # react/sort-prop-types: error
   ## Enforce the state initialization style to be either in a constructor or
   ## with a class property
-  react/state-in-constructor: error
+  # react/state-in-constructor: error
   ## Enforces where React component static properties should be positioned.
   # react/static-property-placement: error
   ## Enforce style prop value being an object
@@ -756,3 +757,6 @@ rules:
   react/jsx-uses-vars: error
   ## Prevent missing parentheses around multilines JSX (fixable)
   react/jsx-wrap-multilines: error
+  ## Prevents the use of unused imports.
+  ## This could be done by enabling no-unused-vars, but we're doing this for now
+  unused-imports/no-unused-imports: error

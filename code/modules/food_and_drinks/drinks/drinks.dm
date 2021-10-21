@@ -308,7 +308,7 @@
 	var/flip_chance = 10
 	custom_price = PAYCHECK_PRISONER * 0.8
 
-/obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
+/obj/item/reagent_containers/food/drinks/waterbottle/Initialize(mapload)
 	. = ..()
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
 	if(cap_on)
@@ -421,7 +421,7 @@
 	desc = "A bottle quite similar to a water bottle, but with some words scribbled on with a marker. It seems to be radiating some kind of energy."
 	flip_chance = 100 // FLIPP
 
-/obj/item/reagent_containers/food/drinks/waterbottle/relic/Initialize()
+/obj/item/reagent_containers/food/drinks/waterbottle/relic/Initialize(mapload)
 	var/reagent_id = get_random_reagent_id()
 	var/datum/reagent/random_reagent = new reagent_id
 	list_reagents = list(random_reagent.type = 50)
@@ -429,30 +429,6 @@
 	desc +=  span_notice("The writing reads '[random_reagent.name]'.")
 	update_appearance()
 
-/obj/item/reagent_containers/food/drinks/beer
-	name = "space beer"
-	desc = "Beer. In space."
-	icon_state = "beer"
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
-	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
-
-/obj/item/reagent_containers/food/drinks/beer/almost_empty
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
-
-/obj/item/reagent_containers/food/drinks/beer/light
-	name = "Carp Lite"
-	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
-
-/obj/item/reagent_containers/food/drinks/ale
-	name = "Magm-Ale"
-	desc = "A true dorf's drink of choice."
-	icon_state = "alebottle"
-	inhand_icon_state = "beer"
-	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
-	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
@@ -598,12 +574,14 @@
 	/// Allows the lean sprite to display upon crafting
 	var/random_sprite = TRUE
 
-/obj/item/reagent_containers/food/drinks/colocup/Initialize()
+/obj/item/reagent_containers/food/drinks/colocup/Initialize(mapload)
 	.=..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	if (random_sprite)
 		icon_state = "colocup[rand(0, 6)]"
+		if (icon_state == "colocup6")
+			desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -660,7 +638,7 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.9
 	obj_flags = CAN_BE_HIT
 
-/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()
+/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize(mapload)
 	..()
 	var/T = pick(subtypesof(/obj/item/reagent_containers/food/drinks/soda_cans) - /obj/item/reagent_containers/food/drinks/soda_cans/random)
 	new T(loc)
@@ -755,7 +733,7 @@
 	list_reagents = list(/datum/reagent/consumable/lemon_lime = 30)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize(mapload)
 	. = ..()
 	name = "lemon-lime soda"
 

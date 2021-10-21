@@ -38,7 +38,7 @@
 	/// List of available condibottle styles for UI
 	var/list/condi_styles
 
-/obj/machinery/chem_master/Initialize()
+/obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
 
 	//Calculate the span tags and ids fo all the available pill icons

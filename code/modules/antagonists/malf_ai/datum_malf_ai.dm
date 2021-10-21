@@ -11,7 +11,6 @@
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
-	var/should_equip = TRUE
 
 /datum/antagonist/malf_ai/on_gain()
 	if(owner.current && !isAI(owner.current))
@@ -186,5 +185,15 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
+
+/datum/antagonist/malf_ai/get_preview_icon()
+	var/icon/malf_ai_icon = icon('icons/mob/ai.dmi', "ai-red")
+
+	// Crop out the borders of the AI, just the face
+	malf_ai_icon.Crop(5, 27, 28, 6)
+
+	malf_ai_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return malf_ai_icon
 
 #undef PROB_SPECIAL

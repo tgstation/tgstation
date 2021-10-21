@@ -19,7 +19,7 @@
 	var/obj/item/card/id/inserted_scan_id
 	circuit = /obj/item/circuitboard/computer/bountypad
 
-/obj/machinery/computer/piratepad_control/civilian/Initialize()
+/obj/machinery/computer/piratepad_control/civilian/Initialize(mapload)
 	. = ..()
 	pad = /obj/machinery/piratepad/civilian
 
@@ -129,7 +129,7 @@
 	pot_acc.bounties = crumbs
 
 /obj/machinery/computer/piratepad_control/civilian/proc/pick_bounty(choice)
-	if(!inserted_scan_id?.registered_account)
+	if(!inserted_scan_id || !inserted_scan_id.registered_account || !inserted_scan_id.registered_account.bounties || !inserted_scan_id.registered_account.bounties[choice])
 		playsound(loc, 'sound/machines/synth_no.ogg', 40 , TRUE)
 		return
 	inserted_scan_id.registered_account.civilian_bounty = inserted_scan_id.registered_account.bounties[choice]
@@ -273,7 +273,7 @@
 	///The key our internal radio uses.
 	var/radio_key = /obj/item/encryptionkey/headset_cargo
 
-/obj/item/bounty_cube/Initialize()
+/obj/item/bounty_cube/Initialize(mapload)
 	. = ..()
 	radio = new(src)
 	radio.keyslot = new radio_key

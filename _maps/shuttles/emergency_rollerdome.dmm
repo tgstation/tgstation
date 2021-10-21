@@ -15,7 +15,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "cP" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "dJ" = (
@@ -53,7 +53,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "ns" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/effect/fun_balloon/sentience/emergency_shuttle{
 	group_name = "snack bar drone at Uncle Pete's Rollerdome"
 	},
@@ -111,7 +111,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "uN" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/storage/bag/tray,
 /turf/open/floor/wood,
 /area/shuttle/escape)
@@ -125,7 +125,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "wn" = (
@@ -178,7 +178,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "Dh" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "DR" = (
@@ -196,7 +196,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HA" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "HS" = (
@@ -226,7 +226,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ox" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/pizzabox/meat,
 /obj/item/pizzabox/meat,
 /obj/item/pizzabox/meat,
@@ -285,10 +285,10 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Wg" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/storage/bag/tray,
 /obj/item/food/cake/birthday,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Yr" = (
@@ -299,7 +299,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Zo" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ZN" = (

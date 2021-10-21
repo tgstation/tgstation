@@ -372,6 +372,9 @@
 
 /obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/combat/mecha)
 	. = ..()
+	if(!mecha)
+		stack_trace("Skyfall landing zone created without mecha")
+		return INITIALIZE_HINT_QDEL
 	src.mecha = mecha
 	animate(src, alpha = 255, TOTAL_SKYFALL_LEAP_TIME/2, easing = CIRCULAR_EASING|EASE_OUT)
 	RegisterSignal(mecha, COMSIG_MOVABLE_MOVED, .proc/follow)

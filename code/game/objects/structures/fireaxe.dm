@@ -28,7 +28,7 @@
 	dir = EAST
 	pixel_x = -32
 
-/obj/structure/fireaxecabinet/Initialize()
+/obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
 	fireaxe = new
 	update_appearance()

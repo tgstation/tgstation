@@ -18,7 +18,7 @@
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 	new /obj/item/clothing/head/caphat(src)
 	new /obj/item/clothing/under/rank/captain/parade(src)
-	new /obj/item/clothing/suit/toggle/captains_parade(src)
+	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
 	new /obj/item/clothing/head/caphat/parade(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/head/crown/fancy(src)
@@ -72,7 +72,7 @@
 /obj/structure/closet/secure_closet/hos/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/hos(src)
-	new /obj/item/clothing/suit/toggle/armor/hos/hos_formal(src)
+	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
 	new /obj/item/cartridge/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
@@ -179,6 +179,7 @@
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	door_anim_time = 0 // no animation
 	open_sound = 'sound/machines/wooden_closet_open.ogg'
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 

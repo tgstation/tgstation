@@ -3,7 +3,6 @@
 	icon_state = "window_normal"
 	base_icon_state = "window_normal"
 	frill_icon = 'icons/effects/frills/windows/window_normal_frill.dmi'
-	shard_type = /obj/item/shard
 	max_integrity = 50
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -11,7 +10,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
-	anchored = TRUE
 
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
@@ -21,7 +19,6 @@
 	icon_state = "window_plasma-0"
 	base_icon_state = "window_plasma"
 	frill_icon = 'icons/effects/frills/windows/window_plasma_frill.dmi'
-	shard_type = /obj/item/shard/plasma
 	max_integrity = 300
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -33,12 +30,11 @@
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced/fulltile
+/obj/structure/window/reinforced/plasma/fulltile
 	icon = 'icons/turf/walls/low_walls/windows/window_plasma_reinforced.dmi'
 	icon_state = "window_plasma_reinforced-0"
 	base_icon_state = "window_plasma_reinforced"
 	frill_icon = 'icons/effects/frills/windows/window_reinforced_plasma_frill.dmi'
-	shard_type = /obj/item/shard/plasma
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
@@ -48,7 +44,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
-/obj/structure/window/plasma/reinforced/fulltile/unanchored
+/obj/structure/window/reinforced/plasma/fulltile/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
@@ -57,7 +53,6 @@
 	icon_state = "window_reinforced-0"
 	base_icon_state = "window_reinforced"
 	frill_icon = 'icons/effects/frills/windows/window_reinforced_frill.dmi'
-	shard_type = /obj/item/shard
 	max_integrity = 150
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -91,16 +86,17 @@
 	max_integrity = 150
 	glass_amount = 2
 
-/obj/structure/window/shuttle
+//there is a sub shuttle window in survival_pod.dm for mining pods
+/obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/turf/walls/low_walls/windows/window_titanium.dmi'
 	icon_state = "window_titanium-0"
 	base_icon_state = "window_titanium"
 	frill_icon = 'icons/effects/frills/windows/window_titanium_frill.dmi'
-	shard_type = /obj/item/shard
 	max_integrity = 150
 	wtype = "shuttle"
+	reinf = TRUE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
@@ -114,23 +110,22 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 
-/obj/structure/window/shuttle/narsie_act()
+/obj/structure/window/reinforced/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/shuttle/tinted
+/obj/structure/window/reinforced/shuttle/tinted
 	opacity = TRUE
 
-/obj/structure/window/shuttle/unanchored
+/obj/structure/window/reinforced/shuttle/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced/plastitanium
+/obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
-	desc = "A durable looking window made of an alloy of plasma and titanium."
+	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/turf/walls/low_walls/windows/window_plastitanium.dmi'
 	icon_state = "window_plastitanium-0"
 	base_icon_state = "window_plastitanium"
 	frill_icon = 'icons/effects/frills/windows/window_plastitanium_frill.dmi'
-	shard_type = /obj/item/shard/plasma
 	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
@@ -146,7 +141,7 @@
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION
 
-/obj/structure/window/plasma/reinforced/plastitanium/unanchored
+/obj/structure/window/reinforced/plasma/plastitanium/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
@@ -167,7 +162,7 @@
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
 	decon_speed = 10
-	CanAtmosPass = ATMOS_PASS_YES
+	can_atmos_pass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 	knocksound = "pageturn"
@@ -177,7 +172,7 @@
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 
-/obj/structure/window/paperframe/Initialize()
+/obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -241,3 +236,6 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	max_integrity = 50
 	glass_amount = 2
+
+/obj/structure/window/bronze/fulltile/unanchored
+	anchored = FALSE

@@ -42,6 +42,7 @@
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
 		if (FOOD_AMAZING)
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
@@ -408,39 +409,6 @@
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/drug/mushroomhallucinogen
-	name = "Mushroom Hallucinogen"
-	description = "A strong hallucinogenic drug derived from certain species of mushroom."
-	color = "#E700E7" // rgb: 231, 0, 231
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
-	taste_description = "mushroom"
-	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 12)
-
-/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(!M.slurring)
-		M.slurring = 1 * REM * delta_time
-	switch(current_cycle)
-		if(1 to 5)
-			M.Dizzy(5 * REM * delta_time)
-			M.set_drugginess(30 * REM * delta_time)
-			if(DT_PROB(5, delta_time))
-				M.emote(pick("twitch","giggle"))
-		if(5 to 10)
-			M.Jitter(10 * REM * delta_time)
-			M.Dizzy(10 * REM * delta_time)
-			M.set_drugginess(35 * REM * delta_time)
-			if(DT_PROB(10, delta_time))
-				M.emote(pick("twitch","giggle"))
-		if (10 to INFINITY)
-			M.Jitter(20 * REM * delta_time)
-			M.Dizzy(20 * REM * delta_time)
-			M.set_drugginess(40 * REM * delta_time)
-			if(DT_PROB(16, delta_time))
-				M.emote(pick("twitch","giggle"))
-	..()
-
 /datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
 	name = "Garlic Juice"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
@@ -448,6 +416,14 @@
 	taste_description = "garlic"
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/garlic/on_mob_add(mob/living/L, amount)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_GARLIC_BREATH, type)
+
+/datum/reagent/consumable/garlic/on_mob_delete(mob/living/L)
+	. = ..()
+	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
 
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
@@ -680,6 +656,13 @@
 	taste_description = "rancid fungus"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/eggrot
+	name = "Rotten Eggyolk"
+	description = "It smells absolutely dreadful."
+	color ="#708a88"
+	taste_description = "rotten eggs"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"
 	description = "A blinding substance extracted from certain onions."
@@ -827,7 +810,7 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM * 20)
+		stomach.adjust_charge(reac_volume * 30)
 
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isethereal(M))

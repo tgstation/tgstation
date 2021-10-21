@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Contractor pods won't land on groundless turfs such as chasms, lava or open space anymore."

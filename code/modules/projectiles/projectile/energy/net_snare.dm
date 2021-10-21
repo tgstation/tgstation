@@ -6,7 +6,7 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/projectile/energy/net/Initialize()
+/obj/projectile/energy/net/Initialize(mapload)
 	. = ..()
 	SpinAnimation()
 
@@ -29,11 +29,11 @@
 	light_range = 3
 	anchored = TRUE
 
-/obj/effect/nettingportal/Initialize()
+/obj/effect/nettingportal/Initialize(mapload)
 	. = ..()
 	var/obj/item/beacon/teletarget = null
 	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
-		var/atom/target = com.target_ref.resolve()
+		var/atom/target = com.target_ref?.resolve()
 		if(target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				teletarget = target

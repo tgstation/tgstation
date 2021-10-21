@@ -169,7 +169,7 @@
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
 
-/obj/item/disk/data/Initialize()
+/obj/item/disk/data/Initialize(mapload)
 	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
 	add_overlay("datadisk_gene")

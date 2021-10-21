@@ -8,20 +8,21 @@
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	hide = TRUE
-
+	layer = GAS_SCRUBBER_LAYER
+	pipe_state = "injector"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/injecting = 0
-
+	///Variable used for radio frequency injection
+	var/injecting = FALSE
+	///Rate of operation of the device
 	var/volume_rate = 50
 
+	///Frequency id for connecting to the NTNet
 	var/frequency = 0
-	var/id = null
+	///Reference to the radio datum
 	var/datum/radio_frequency/radio_connection
-
-	layer = GAS_SCRUBBER_LAYER
-
-	pipe_state = "injector"
+	///Id of the radio connection
+	var/id = null
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -46,7 +47,7 @@
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
-		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions, pipe_color))
+		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
@@ -120,7 +121,7 @@
 	))
 	radio_connection.post_signal(src, signal)
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos_init()
 	set_frequency(frequency)
 	broadcast_status()
 	..()
@@ -226,9 +227,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste
 	name = "engine outlet injector"
 	id = ATMOS_GAS_MONITOR_WASTE_ENGINE
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxin_input
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input
 	name = "plasma tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_TOX
+	id = ATMOS_GAS_MONITOR_INPUT_PLAS
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/oxygen_input
 	name = "oxygen tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_O2
@@ -298,6 +299,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input
 	name = "incinerator chamber input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_INCINERATOR
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input
-	name = "toxins mixing input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_TOXINS_LAB
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/ordnance_mixing_input
+	name = "ordnance mixing input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_ORDNANCE_LAB

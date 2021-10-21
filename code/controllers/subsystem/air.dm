@@ -199,6 +199,23 @@ SUBSYSTEM_DEF(air)
 	currentpart = SSAIR_PIPENETS
 	SStgui.update_uis(SSair) //Lightning fast debugging motherfucker
 
+/datum/controller/subsystem/air/Recover()
+	excited_groups = SSair.excited_groups
+	active_turfs = SSair.active_turfs
+	hotspots = SSair.hotspots
+	networks = SSair.networks
+	rebuild_queue = SSair.rebuild_queue
+	expansion_queue = SSair.expansion_queue
+	atmos_machinery = SSair.atmos_machinery
+	pipe_init_dirs_cache = SSair.pipe_init_dirs_cache
+	gas_reactions = SSair.gas_reactions
+	atmos_gen = SSair.atmos_gen
+	planetary = SSair.planetary
+	active_super_conductivity = SSair.active_super_conductivity
+	high_pressure_delta = SSair.high_pressure_delta
+	atom_process = SSair.atom_process
+	currentrun = SSair.currentrun
+	queued_for_activation = SSair.queued_for_activation
 
 /datum/controller/subsystem/air/proc/process_pipenets(resumed = FALSE)
 	if (!resumed)
@@ -339,10 +356,7 @@ SUBSYSTEM_DEF(air)
 			currentrun.len--
 			if (!remake)
 				continue
-			var/list/targets = remake.get_rebuild_targets()
-			remake.rebuilding = FALSE //It's allowed to renter the queue now
-			for(var/datum/pipeline/build_off as anything in targets)
-				build_off.build_pipeline(remake) //This'll add to the expansion queue
+			remake.rebuild_pipes()
 			if (MC_TICK_CHECK)
 				return
 
@@ -372,8 +386,8 @@ SUBSYSTEM_DEF(air)
 			continue
 		for(var/obj/machinery/atmospherics/considered_device in result)
 			if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
-				considered_device.setPipenet(net, borderline)
-				net.addMachineryMember(considered_device)
+				considered_device.set_pipenet(net, borderline)
+				net.add_machinery_member(considered_device)
 				continue
 			var/obj/machinery/atmospherics/pipe/item = considered_device
 			if(net.members.Find(item))
@@ -541,7 +555,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		AM.atmosinit()
+		AM.atmos_init()
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
@@ -569,7 +583,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	var/obj/machinery/atmospherics/AM
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		AM.atmosinit()
+		AM.atmos_init()
 		CHECK_TICK
 
 	for(var/A in 1 to atmos_machines.len)
@@ -590,7 +604,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	if(!pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"])
 		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
-		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.GetInitDirections()
+		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.get_init_directions()
 		qdel(temp)
 
 	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]

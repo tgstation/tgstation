@@ -40,7 +40,7 @@
 /obj/machinery/deployable_turret/Destroy()
 	target = null
 	target_turf = null
-	..()
+	return ..()
 
 /// Undeploying, for when you want to move your big dakka around
 /obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
@@ -223,7 +223,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/deployable_turret/turret
 
-/obj/item/gun_control/Initialize()
+/obj/item/gun_control/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	turret = loc
@@ -232,7 +232,7 @@
 
 /obj/item/gun_control/Destroy()
 	turret = null
-	..()
+	return ..()
 
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE

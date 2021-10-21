@@ -41,7 +41,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "h" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "i" = (
@@ -259,7 +259,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "y" = (
@@ -267,7 +267,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/arrival)
 "z" = (
@@ -297,7 +297,7 @@
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/arrival)

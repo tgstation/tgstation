@@ -270,6 +270,11 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
 
-/obj/item/clothing/neck/beads/Initialize()
+/obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/tie/disco
+	name = "horrific necktie"
+	icon_state = "eldritch_tie"
+	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."

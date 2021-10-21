@@ -61,7 +61,7 @@ Difficulty: Hard
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
 	var/enrage_till = 0
-	var/enrage_time = 70
+	var/enrage_time = 7 SECONDS
 	var/revving_charge = FALSE
 	gps_name = "Bloody Signal"
 	achievement_type = /datum/award/achievement/boss/bubblegum_kill
@@ -76,6 +76,10 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/blood_warp)
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list("mining", "boss", "hell")
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /datum/action/innate/megafauna_attack/triple_charge
 	name = "Triple Charge"
@@ -105,13 +109,20 @@ Difficulty: Hard
 	chosen_message = "<span class='colossus'>You are now warping to blood around your clicked position.</span>"
 	chosen_attack_num = 4
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
+	. = ..()
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE])
+		enrage_till = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE]
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE])
+		enrage_till += cooldown_updates[COOLDOWN_UPDATE_ADD_ENRAGE]
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	if(charging)
 		return
 
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
-	ranged_cooldown = world.time + 50
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 5 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -140,18 +151,18 @@ Difficulty: Hard
 	charge(delay = 6)
 	charge(delay = 4)
 	charge(delay = 2)
-	SetRecoveryTime(15)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1.5 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge()
 	if(!BUBBLEGUM_SMASH || prob(33))
 		hallucination_charge_around(times = 6, delay = 8)
-		SetRecoveryTime(10)
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1 SECONDS))
 	else
 		hallucination_charge_around(times = 4, delay = 9)
 		hallucination_charge_around(times = 4, delay = 8)
 		hallucination_charge_around(times = 4, delay = 7)
 		triple_charge()
-		SetRecoveryTime(20)
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 2 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
 	for(var/i = 1 to 5)
@@ -160,7 +171,7 @@ Difficulty: Hard
 			charge(delay = 6)
 		else
 			SLEEP_CHECK_DEATH(6)
-	SetRecoveryTime(20)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 2 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(atom/chargeat = target, delay = 3, chargepast = 2)
 	if(!chargeat)
@@ -342,7 +353,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
 	if(!BUBBLEGUM_CAN_ENRAGE)
 		return FALSE
-	enrage_till = world.time + enrage_time
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_ENRAGE = enrage_time))
 	update_approach()
 	change_move_delay(3.75)
 	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
@@ -428,7 +439,7 @@ Difficulty: Hard
 	if(!charging)
 		. = ..()
 		if(.)
-			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
+			update_cooldowns(list(COOLDOWN_UPDATE_ADD_MELEE = 2 SECONDS)) // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
 	if(BUBBLEGUM_IS_ENRAGED)
@@ -534,7 +545,7 @@ Difficulty: Hard
 	deathsound = 'sound/effects/splat.ogg'
 	true_spawn = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize(mapload)
 	. = ..()
 	toggle_ai(AI_OFF)
 

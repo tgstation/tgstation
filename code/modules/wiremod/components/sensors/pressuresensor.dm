@@ -12,14 +12,10 @@
 	/// The result from the output
 	var/datum/port/output/result
 
-/obj/item/circuit_component/pressuresensor/Initialize()
-	. = ..()
+/obj/item/circuit_component/pressuresensor/populate_ports()
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/pressuresensor/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 	//Get current turf
 	var/turf/location = get_turf(src)
 	if(!location)

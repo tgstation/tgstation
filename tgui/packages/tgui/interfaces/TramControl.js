@@ -1,4 +1,3 @@
-import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -87,7 +86,7 @@ export const TramControl = (props, context) => {
       if (!tram_location) return "bad";
       const here = dest.name === tram_location;
       const selected = transitIndex === destinations.indexOf(dest);
-      return !tram_location ? "bad" : here ? "blue" : selected ? "green" : "transparent";
+      return here ? "blue" : selected ? "green" : "transparent";
     };
     return (
       <Stack vertical>

@@ -20,7 +20,7 @@ Difficulty: Extremely Hard
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	movement_type = GROUND
-	weather_immunities = list(WEATHER_SNOW)
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 100
 	melee_damage_lower = 10
@@ -52,12 +52,13 @@ Difficulty: Extremely Hard
 	/// If the demonic frost miner is currently transforming to its enraged state
 	var/enraging = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
-	AddComponent(/datum/component/knockback, 7, FALSE, TRUE)
-	AddComponent(/datum/component/lifesteal, 50)
+	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
+	AddElement(/datum/element/lifesteal, 50)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /datum/action/innate/megafauna_attack/frost_orbs
 	name = "Fire Frost Orbs"
@@ -83,7 +84,7 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
 	projectile_speed_multiplier = 1 - enraged * 0.5
-	SetRecoveryTime(100, 100)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
 
 	if(client)
 		switch(chosen_attack)
@@ -115,7 +116,7 @@ Difficulty: Extremely Hard
 			else
 				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
 
-/obj/projectile/frost_orb
+/obj/projectile/colossus/frost_orb
 	name = "frost orb"
 	icon_state = "ice_1"
 	damage = 20
@@ -124,20 +125,21 @@ Difficulty: Extremely Hard
 	homing_turn_speed = 30
 	damage_type = BURN
 
-/obj/projectile/frost_orb/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
 
-/obj/projectile/snowball
+/obj/projectile/colossus/snowball
 	name = "machine-gun snowball"
 	icon_state = "nuclear_particle"
 	damage = 5
 	armour_penetration = 100
 	speed = 3
 	damage_type = BRUTE
+	explode_hit_objects = FALSE
 
-/obj/projectile/ice_blast
+/obj/projectile/colossus/ice_blast
 	name = "ice blast"
 	icon_state = "ice_2"
 	damage = 15
@@ -145,7 +147,7 @@ Difficulty: Extremely Hard
 	speed = 3
 	damage_type = BRUTE
 
-/obj/projectile/ice_blast/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
@@ -176,26 +178,26 @@ Difficulty: Extremely Hard
 		var/turf/endloc = get_turf(target)
 		if(!endloc)
 			break
-		var/obj/projectile/frost_orb/P = new(startloc)
+		var/obj/projectile/colossus/frost_orb/P = new(startloc)
 		P.preparePixelProjectile(endloc, startloc)
 		P.firer = src
 		if(target)
 			P.original = target
 		P.set_homing_target(target)
 		P.fire(rand(0, 360))
-		addtimer(CALLBACK(P, /obj/projectile/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
+		addtimer(CALLBACK(P, /obj/projectile/colossus/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
 		SLEEP_CHECK_DEATH(added_delay)
-	SetRecoveryTime(40, 60)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 4 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 6 SECONDS))
 
 /// Called when the orb is exploding, shoots out projectiles
-/obj/projectile/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
+/obj/projectile/colossus/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
 	for(var/i in 0 to 5)
 		var/angle = i * 60
 		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(original)
 		if(!startloc || !endloc)
 			break
-		var/obj/projectile/ice_blast/P = new(startloc)
+		var/obj/projectile/colossus/ice_blast/P = new(startloc)
 		P.speed *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, angle + rand(-10, 10))
 		P.firer = firer
@@ -211,7 +213,7 @@ Difficulty: Extremely Hard
 		var/turf/endloc = get_turf(target)
 		if(!endloc)
 			break
-		var/obj/projectile/P = new /obj/projectile/snowball(startloc)
+		var/obj/projectile/P = new /obj/projectile/colossus/snowball(startloc)
 		P.speed *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
 		P.firer = src
@@ -219,7 +221,7 @@ Difficulty: Extremely Hard
 			P.original = target
 		P.fire()
 		SLEEP_CHECK_DEATH(1)
-	SetRecoveryTime(15, 15)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1.5 SECONDS))
 
 /// Shoots out ice blasts in a shotgun like pattern
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
@@ -230,7 +232,7 @@ Difficulty: Extremely Hard
 			var/turf/endloc = get_turf(target)
 			if(!endloc)
 				break
-			var/obj/projectile/P = new /obj/projectile/ice_blast(startloc)
+			var/obj/projectile/P = new /obj/projectile/colossus/ice_blast(startloc)
 			P.speed *= projectile_speed_multiplier
 			P.preparePixelProjectile(endloc, startloc, null, spread)
 			P.firer = src
@@ -238,7 +240,7 @@ Difficulty: Extremely Hard
 				P.original = target
 			P.fire()
 		SLEEP_CHECK_DEATH(8)
-	SetRecoveryTime(15, 20)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
 
 /// Checks if the demonic frost miner is ready to be enraged
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
@@ -246,7 +248,7 @@ Difficulty: Extremely Hard
 		return
 	if(health > maxHealth*0.25)
 		return
-	SetRecoveryTime(80, 80)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 8 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 8 SECONDS))
 	adjustHealth(-maxHealth)
 	enraged = TRUE
 	enraging = TRUE
@@ -325,7 +327,7 @@ Difficulty: Extremely Hard
 	var/change_turf = /turf/open/floor/plating/ice/icemoon/no_planet_atmos
 	var/duration = 6 SECONDS
 
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
 
@@ -362,10 +364,10 @@ Difficulty: Extremely Hard
 	desc = "Cracks rocks at an inhuman speed, as well as being enhanced for combat purposes."
 	toolspeed = 0
 
-/obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
+/obj/item/pickaxe/drill/jackhammer/demonic/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/knockback, 4, TRUE, FALSE)
-	AddComponent(/datum/component/lifesteal, 5)
+	AddElement(/datum/element/knockback, 4, TRUE, FALSE)
+	AddElement(/datum/element/lifesteal, 5)
 
 /obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
 	var/turf/T = get_turf(target)

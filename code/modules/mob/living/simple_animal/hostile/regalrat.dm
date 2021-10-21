@@ -30,7 +30,7 @@
 	///The Spell that the rat uses to recruit/convert more rats.
 	var/datum/action/cooldown/riot
 
-/mob/living/simple_animal/hostile/regalrat/Initialize()
+/mob/living/simple_animal/hostile/regalrat/Initialize(mapload)
 	. = ..()
 	domain = new /datum/action/cooldown/domain
 	riot = new /datum/action/cooldown/riot
@@ -46,7 +46,7 @@
 	QDEL_NULL(riot)
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be their crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Royal Rat, cheesey be their crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
@@ -101,7 +101,7 @@
 	if (QDELETED(target))
 		return
 
-	if (target.reagents && target.is_injectable(src, allowmobs = TRUE))
+	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
 		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
@@ -125,7 +125,7 @@
 	else
 		to_chat(src, span_warning("You feel fine, no need to eat anything!"))
 
-/mob/living/simple_animal/hostile/regalrat/controlled/Initialize()
+/mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/get_player)
 	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
@@ -227,7 +227,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
 
-/mob/living/simple_animal/hostile/rat/Initialize()
+/mob/living/simple_animal/hostile/rat/Initialize(mapload)
 	. = ..()
 	SSmobs.cheeserats += src
 
