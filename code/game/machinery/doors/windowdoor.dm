@@ -302,7 +302,7 @@
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
 
-/obj/machinery/door/window/try_to_activate_door(mob/user)
+/obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
 	if (..())
 		autoclose = FALSE
 

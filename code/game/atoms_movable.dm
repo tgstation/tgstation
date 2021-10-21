@@ -6,7 +6,6 @@
 	///how many times a this movable had movement procs called on it since Moved() was last called
 	var/move_stacks = 0
 	var/last_move = null
-	var/last_move_time = 0
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -60,9 +59,6 @@
 	var/can_be_z_moved = TRUE
 
 	var/zfalling = FALSE
-
-	///Last location of the atom for demo recording purposes
-	var/atom/demo_last_loc
 
 	/// Either FALSE, [EMISSIVE_BLOCK_GENERIC], or [EMISSIVE_BLOCK_UNIQUE]
 	var/blocks_emissive = FALSE

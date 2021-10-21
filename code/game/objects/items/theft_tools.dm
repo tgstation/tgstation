@@ -137,6 +137,7 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "something_awful"
 	max_capacity = 512
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 // STEALING SUPERMATTER
 

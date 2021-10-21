@@ -3287,7 +3287,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "kJ" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4262,7 +4262,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "sN" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

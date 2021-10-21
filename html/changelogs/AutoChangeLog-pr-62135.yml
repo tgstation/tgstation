@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - imageadd: "Fire extinguishers now have a worn sprite when they are stored on your Firesuit."

@@ -219,16 +219,19 @@
 		driver.update_mouse_pointer()
 
 ///Fires the cannon where the user clicks
-/obj/vehicle/sealed/car/clowncar/proc/fire_cannon_at(mob/user, atom/A, params)
+/obj/vehicle/sealed/car/clowncar/proc/fire_cannon_at(mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 	if(cannonmode != CLOWN_CANNON_READY || !length(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED)))
-		return NONE
+		return
+	//The driver can still examine things and interact with his inventory.
+	if(modifiers[SHIFT_CLICK] || (ismovable(target) && !isturf(target.loc)))
+		return
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 	mob_exit(unlucky_sod, TRUE)
 	flick("clowncar_recoil", src)
 	playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
-	unlucky_sod.throw_at(A, 10, 2)
-	log_combat(user, unlucky_sod, "fired", src, "towards [A]") //this doesn't catch if the mob hits something between the car and the target
+	unlucky_sod.throw_at(target, 10, 2)
+	log_combat(user, unlucky_sod, "fired", src, "towards [target]") //this doesn't catch if the mob hits something between the car and the target
 	return COMSIG_MOB_CANCEL_CLICKON
 
 ///Increments the thanks counter every time someone thats been kidnapped thanks the driver
