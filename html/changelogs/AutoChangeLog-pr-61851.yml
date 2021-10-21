@@ -1,6 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Admins can now stop animations on an object as well as decide if it starts parallel or not."
-  - bugfix: "Fixed animating filters in steps not working at all."
-  - qol: "Gave instantly executing ports special datatypes to distinguish what ports cause instant execution"

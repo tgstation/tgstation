@@ -468,7 +468,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return TRUE
 
 			if(params["marked_atom"])
-				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
+				if(!(port.datatype_handler.datatype_flags & DATATYPE_FLAG_ALLOW_ATOM_INPUT))
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
 				// Let's admins upload marked datums to an entity port.

@@ -73,6 +73,11 @@
 	if(.)
 		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
+/obj/item/implant/explosive/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(.)
+		UnregisterSignal(target, COMSIG_LIVING_DEATH)
+
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)

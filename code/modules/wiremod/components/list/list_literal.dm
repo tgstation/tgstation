@@ -102,7 +102,10 @@
 		if(islist(value) && get_list_count(value, max_list_count) >= max_list_count)
 			visible_message("[src] begins to overheat!")
 			return
-		new_literal += list(value)
+		if(is_proper_datum(value))
+			new_literal += WEAKREF(value)
+		else
+			new_literal += list(value)
 
 	list_output.set_output(new_literal)
 
@@ -112,10 +115,10 @@
 	var/lists = 1
 	while(length(lists_to_check))
 		var/list/list_to_iterate = lists_to_check[length(lists_to_check)]
+		lists_to_check.len--
 		for(var/list/list_data in list_to_iterate)
 			lists_to_check += list(list_data)
 			lists += 1
-		lists_to_check.len--
 		if(lists > max_list_count)
 			return lists
 	return lists

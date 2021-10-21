@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the contents of certain coded or mapped closets exceeding their storage capacity, like the HoS closet on Delta, which had redundant grey HoS jumpsuit, trenchcoat and beret, or the mixed wardrobe closet with its duplicate bandanas, jacket and green jumpsuits,"

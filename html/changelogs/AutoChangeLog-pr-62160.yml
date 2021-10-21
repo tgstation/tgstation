@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "480x480 titlescreens now load up centered as intended from the widescreen title changes"

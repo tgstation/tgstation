@@ -6,7 +6,7 @@
 /obj/structure/dispenser_bot
 	name = "dispenser"
 	icon = 'icons/obj/wiremod.dmi'
-	icon_state = "setup_large"
+	icon_state = "setup_drone_arms"
 
 	density = FALSE
 	light_system = MOVABLE_LIGHT

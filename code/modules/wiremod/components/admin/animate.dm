@@ -64,12 +64,19 @@
 		return
 
 	var/atom/target_atom = target.value
+	if(!isatom(target_atom))
+		return
+
 	var/target_for_animation = target_atom
 	if(atom_or_filter.value == COMP_ANIMATE_FILTER)
 		target_for_animation = target_atom.get_filter(filter_target.value)
 
 	if(!target_for_animation)
 		return
+
+	if(!isatom(target_atom))
+		return
+	target_atom.datum_flags |= DF_VAR_EDITED
 
 	var/extra_flags = NONE
 	if(parallel.value)

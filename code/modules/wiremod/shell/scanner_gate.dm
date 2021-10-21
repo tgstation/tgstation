@@ -76,4 +76,5 @@
  * * new_value - A boolean that determines if the circuit is locked or not.
  **/
 /obj/item/circuit_component/scanner_gate/proc/on_set_locked(datum/source, new_value)
+	SIGNAL_HANDLER
 	attached_gate.locked = new_value
