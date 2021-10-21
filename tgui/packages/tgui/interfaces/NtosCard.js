@@ -30,7 +30,9 @@ export const NtosCardContent = (props, context) => {
     accessFlagNames,
     showBasic,
     templates = {},
-  } = data; 
+    commonFlag,
+    trimCommonWildcardOverrides = [],
+  } = data;
 
   if (!have_id_slot) {
     return (
@@ -43,6 +45,10 @@ export const NtosCardContent = (props, context) => {
   const [
     selectedTab,
   ] = useSharedState(context, "selectedTab", "login");
+
+  trimCommonWildcardOverrides.forEach(access => {
+    accessFlags[access] = commonFlag;
+  });
 
   return (
     <>

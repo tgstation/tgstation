@@ -11,3 +11,6 @@
 	var/list/access = list()
 	/// Accesses that this trim unlocks on a card that require wildcard slots to apply. If a card cannot accept all a trim's wildcard accesses, the card is incompatible with the trim.
 	var/list/wildcard_access = list()
+
+/datum/id_trim/proc/get_common_wildcard_overrides()
+	return list()
