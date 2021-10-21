@@ -25,8 +25,8 @@
 	name = "perform lobotomy"
 	implements = list(
 		TOOL_SCALPEL = 85,
-		/obj/item/melee/transforming/energy/sword = 55,
-		/obj/item/kitchen/knife = 35,
+		/obj/item/melee/energy/sword = 55,
+		/obj/item/knife = 35,
 		/obj/item/shard = 25,
 		/obj/item = 20)
 	time = 100
@@ -40,11 +40,14 @@
 	display_results(user, target, span_notice("You begin to perform a lobotomy on [target]'s brain..."),
 		span_notice("[user] begins to perform a lobotomy on [target]'s brain."),
 		span_notice("[user] begins to perform surgery on [target]'s brain."))
+	display_pain(target, "Your head pounds with unimaginable pain!")
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, span_notice("You succeed in lobotomizing [target]."),
 			span_notice("[user] successfully lobotomizes [target]!"),
 			span_notice("[user] completes the surgery on [target]'s brain."))
+	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!")
+
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
@@ -66,6 +69,7 @@
 		display_results(user, target, span_warning("You remove the wrong part, causing more damage!"),
 			span_notice("[user] successfully lobotomizes [target]!"),
 			span_notice("[user] completes the surgery on [target]'s brain."))
+		display_pain(target, "The pain in your head only seems to get worse!")
 		target_brain.applyOrganDamage(80)
 		switch(rand(1,3))
 			if(1)

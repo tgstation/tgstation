@@ -3,13 +3,13 @@
 /atom/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(!uses_integrity)
 		CRASH("[src] had /atom/proc/take_damage() called on it without it being a type that has uses_integrity = TRUE!")
-
 	if(QDELETED(src))
-		stack_trace("[src] taking damage after deletion")
-		return
+		CRASH("[src] taking damage after deletion")
+	if(atom_integrity <= 0)
+		CRASH("[src] taking damage while having <= 0 integrity")
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	if((resistance_flags & INDESTRUCTIBLE) || atom_integrity <= 0)
+	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	damage_amount = run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 	if(damage_amount < DAMAGE_PRECISION)
@@ -60,6 +60,8 @@
 
 ///returns the damage value of the attack after processing the atom's various armor protections
 /atom/proc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
+	if(!uses_integrity)
+		CRASH("/atom/proc/run_atom_armor was called on [src] without being implemented as a type that uses integrity!")
 	if(damage_flag == MELEE && damage_amount < damage_deflection)
 		return 0
 	switch(damage_type)
@@ -87,7 +89,7 @@
 
 ///Called to get the damage that hulks will deal to the atom.
 /atom/proc/hulk_damage()
-	return 150 //the damage hulks do on punches to this atomect, is affected by melee armor
+	return 150 //the damage hulks do on punches to this atom, is affected by melee armor
 
 /atom/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
 	if(!uses_integrity)
@@ -112,6 +114,8 @@
 
 ///changes max_integrity while retaining current health percentage, returns TRUE if the atom got broken.
 /atom/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE)
+	if(!uses_integrity)
+		CRASH("/atom/proc/modify_max_integrity() was called on [src] when it doesnt use integrity!")
 	var/current_integrity = atom_integrity
 	var/current_max = max_integrity
 

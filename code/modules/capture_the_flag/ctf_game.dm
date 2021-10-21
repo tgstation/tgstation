@@ -6,7 +6,6 @@
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
-#define CTF_REQUIRED_PLAYERS 4
 
 /obj/item/ctf
 	name = "banner"
@@ -36,7 +35,7 @@
 	QDEL_NULL(reset)
 	return ..()
 
-/obj/item/ctf/Initialize()
+/obj/item/ctf/Initialize(mapload)
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
@@ -51,6 +50,7 @@
 
 /obj/item/ctf/proc/reset_flag(capture = FALSE)
 	SIGNAL_HANDLER
+	STOP_PROCESSING(SSobj, src)
 
 	var/turf/our_turf = get_turf(src.reset)
 	if(!our_turf)
@@ -61,7 +61,6 @@
 		if(istype(mob_area, game_area))
 			if(!capture)
 				to_chat(M, span_userdanger("[src] has been returned to the base!"))
-	STOP_PROCESSING(SSobj, src)
 	return TRUE //so if called by a signal, it doesn't delete
 
 //working with attack hand feels like taking my brain and putting it through an industrial pill press so i'm gonna be a bit liberal with the comments
@@ -234,9 +233,9 @@
 	/// This variable is needed because of ctf shitcode + we need to make sure we're deleting the current ctf landmark that spawned us in and not a new one.
 	var/obj/effect/landmark/ctf/ctf_landmark
 
-/obj/machinery/capture_the_flag/Initialize()
+/obj/machinery/capture_the_flag/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	ctf_landmark = GLOB.ctf_spawner
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -381,7 +380,7 @@
 			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
 			display_classes[key] = option
 
-		sortList(display_classes)
+		sort_list(display_classes)
 		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
 		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob) || src.ctf_enabled == FALSE || !(new_team_member.ckey in src.team_members))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
@@ -638,4 +637,3 @@
 #undef FLAG_RETURN_TIME
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN
-#undef CTF_REQUIRED_PLAYERS

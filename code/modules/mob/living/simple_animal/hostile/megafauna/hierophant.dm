@@ -56,7 +56,7 @@ Difficulty: Hard
 	speed = 10
 	move_to_delay = 10
 	ranged = TRUE
-	ranged_cooldown_time = 40
+	ranged_cooldown_time = 4 SECONDS
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
@@ -75,9 +75,11 @@ Difficulty: Hard
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
 	var/chaser_speed = 3 //how fast chasers are currently
-	var/chaser_cooldown = 101 //base cooldown/cooldown var between spawning chasers
-	var/major_attack_cooldown = 60 //base cooldown for major attacks
-	var/arena_cooldown = 200 //base cooldown/cooldown var for creating an arena
+	var/major_attack_cooldown = 6 SECONDS //base cooldown for major attacks
+	var/chaser_cooldown_time = 10.1 SECONDS //base cooldown for spawning chasers
+	var/chaser_cooldown = 0
+	var/arena_cooldown_time = 20 SECONDS //base cooldown for making arenas
+	var/arena_cooldown = 0
 	var/blinking = FALSE //if we're doing something that requires us to stand still and not attack
 	var/obj/effect/hierophant/spawned_beacon //the beacon we teleport back to
 	var/timeout_time = 15 //after this many Life() ticks with no target, we return to our beacon
@@ -85,7 +87,7 @@ Difficulty: Hard
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
+/mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon = new(loc)
 
@@ -121,6 +123,17 @@ Difficulty: Hard
 	chosen_message = "<span class='colossus'>You are now repeatedly blinking at your target.</span>"
 	chosen_attack_num = 4
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
+	. = ..()
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_CHASER])
+		chaser_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_CHASER]
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER])
+		chaser_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_CHASER]
+	if(cooldown_updates[COOLDOWN_UPDATE_SET_ARENA])
+		arena_cooldown = world.time + cooldown_updates[COOLDOWN_UPDATE_SET_ARENA]
+	if(cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA])
+		arena_cooldown += cooldown_updates[COOLDOWN_UPDATE_ADD_ARENA]
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/OpenFire()
 	if(blinking)
 		return
@@ -130,7 +143,7 @@ Difficulty: Hard
 	var/cross_counter = 1 + round(anger_modifier * 0.12)
 
 	arena_trap(target)
-	ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75) //scale cooldown lower with high anger.
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75)), ignore_staggered = TRUE) //scale cooldown lower with high anger.
 
 	var/target_slowness = 0
 	var/mob/living/L
@@ -182,7 +195,7 @@ Difficulty: Hard
 
 	if(chaser_cooldown < world.time) //if chasers are off cooldown, fire some!
 		var/obj/effect/temp_visual/hierophant/chaser/C = new /obj/effect/temp_visual/hierophant/chaser(loc, src, target, chaser_speed, FALSE)
-		chaser_cooldown = world.time + initial(chaser_cooldown)
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 		if((prob(anger_modifier) || target.Adjacent(src)) && target != src)
 			var/obj/effect/temp_visual/hierophant/chaser/OC = new(loc, src, target, chaser_speed * 1.5, FALSE)
 			OC.moving = 4
@@ -202,7 +215,7 @@ Difficulty: Hard
 		INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/blink_spam(blink_counter, target_slowness, cross_counter)
-	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
 	if(health < maxHealth * 0.5 && blink_counter > 1)
 		visible_message(span_hierophant("\"Mx ampp rsx iwgeti.\""))
 		var/oldcolor = color
@@ -224,7 +237,7 @@ Difficulty: Hard
 		blink(target)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/cross_blast_spam(blink_counter, target_slowness, cross_counter)
-	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
 	visible_message(span_hierophant("\"Piezi mx rsalivi xs vyr.\""))
 	blinking = TRUE
 	var/oldcolor = color
@@ -244,7 +257,7 @@ Difficulty: Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/chaser_swarm(blink_counter, target_slowness, cross_counter)
-	ranged_cooldown = world.time + max(5, major_attack_cooldown - anger_modifier * 0.75)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = max(0.5 SECONDS, major_attack_cooldown - anger_modifier * 0.75)))
 	visible_message(span_hierophant("\"Mx gerrsx lmhi.\""))
 	blinking = TRUE
 	var/oldcolor = color
@@ -264,7 +277,7 @@ Difficulty: Hard
 		C.moving = 3
 		C.moving_dir = pick_n_take(cardinal_copy)
 		SLEEP_CHECK_DEATH(8 + target_slowness)
-	chaser_cooldown = world.time + initial(chaser_cooldown)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_CHASER = chaser_cooldown_time))
 	animate(src, color = oldcolor, time = 8)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 	SLEEP_CHECK_DEATH(8)
@@ -301,7 +314,7 @@ Difficulty: Hard
 		return
 	if((istype(get_area(T), /area/ruin/unpowered/hierophant) || istype(get_area(src), /area/ruin/unpowered/hierophant)) && victim != src)
 		return
-	arena_cooldown = world.time + initial(arena_cooldown)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_ARENA = arena_cooldown_time))
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/arena_squares, T, d)
 	for(var/t in RANGE_TURFS(11, T))
@@ -451,7 +464,7 @@ Difficulty: Hard
 			if(L.stat != DEAD)
 				if(ranged_cooldown <= world.time)
 					calculate_rage()
-					ranged_cooldown = world.time + max(5, ranged_cooldown_time - anger_modifier * 0.75)
+					update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = max(0.5 SECONDS, ranged_cooldown_time - anger_modifier * 0.75)), ignore_staggered = TRUE)
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src))
 				else
 					burst_range = 3

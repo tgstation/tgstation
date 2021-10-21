@@ -3,6 +3,9 @@
 	var/client/cl
 
 /obj/effect/buildmode_line/New(client/C, atom/atom_a, atom/atom_b, linename)
+	if(!C || !atom_a || !atom_b)
+		stack_trace("Buildmode effect created with odd inputs")
+		return
 	name = linename
 	abstract_move(get_turf(atom_a))
 	I = image('icons/misc/mark.dmi', src, "line", 19.0)

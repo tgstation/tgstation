@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
  * The first matching command (from a list of static datums) the listeners must obey,
  * and the return value of this proc the cooldown variable of the command dictates. (only relevant for things with cooldowns i guess)
  */
-/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, message_admins = TRUE)
+/proc/voice_of_god(message, mob/living/user, list/span_list, base_multiplier = 1, include_speaker = FALSE, forced = null)
 	var/log_message = uppertext(message)
 	var/is_cultie = IS_CULTIST(user)
 	if(LAZYLEN(span_list) && is_cultie)
@@ -90,9 +90,9 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 			. = command.execute(listeners, user, power_multiplier, message) || command.cooldown
 			break
 
-	if(message_admins)
+	if(!forced)
 		message_admins("[ADMIN_LOOKUPFLW(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
-	log_game("[key_name(user)] has said '[log_message]' with a Voice of God, affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
+	log_game("[key_name(user)] has said '[log_message]' with a Voice of God[forced ? " forced by [forced]" : ""], affecting [english_list(listeners)], with a power multiplier of [power_multiplier].")
 	SSblackbox.record_feedback("tally", "voice_of_god", 1, log_message)
 
 /// Voice of god command datums that are used in [/proc/voice_of_god()]
@@ -120,13 +120,22 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	return
 
 /// This command knocks the listeners down.
-/datum/voice_of_god_command/paralyze
-	trigger = "drop|fall|trip|knockdown|stop|wait|stand\\s*still|hold\\s*on|halt"
+/datum/voice_of_god_command/knockdown
+	trigger = "drop|fall|trip|knockdown"
 	cooldown = COOLDOWN_STUN
 
-/datum/voice_of_god_command/paralyze/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+/datum/voice_of_god_command/knockdown/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
 		target.Knockdown(4 SECONDS * power_multiplier)
+
+/// This command stops the listeners from moving.
+/datum/voice_of_god_command/immobilize
+	trigger = "stop|wait|stand\\s*still|hold\\s*on|halt"
+	cooldown = COOLDOWN_STUN
+
+/datum/voice_of_god_command/immobilize/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
+	for(var/mob/living/target as anything in listeners)
+		target.Immobilize(4 SECONDS * power_multiplier)
 
 /// This command makes carbon listeners throw up like Mr. Creosote.
 /datum/voice_of_god_command/vomit

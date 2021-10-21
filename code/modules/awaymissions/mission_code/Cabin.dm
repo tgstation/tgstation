@@ -4,12 +4,12 @@
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	static_lighting = TRUE
 
 /area/awaymission/cabin/snowforest
 	name = "Snow Forest"
 	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 
 /area/awaymission/cabin/snowforest/sovietsurface
 	name = "Snow Forest"
@@ -20,7 +20,7 @@
 	name = "Lumbermill"
 	icon_state = "away3"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 
 /area/awaymission/cabin/caves/sovietcave
 	name = "Soviet Bunker"
@@ -29,7 +29,7 @@
 /area/awaymission/cabin/caves
 	name = "North Snowdin Caves"
 	icon_state = "awaycontent15"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 
 /area/awaymission/cabin/caves/mountain
 	name = "North Snowdin Mountains"
@@ -41,9 +41,9 @@
 	icon = 'icons/obj/fireplace.dmi'
 	icon_state = "firepit-active"
 	density = FALSE
-	var/active = 1
+	var/active = TRUE
 
-/obj/structure/firepit/Initialize()
+/obj/structure/firepit/Initialize(mapload)
 	. = ..()
 	toggleFirepit()
 

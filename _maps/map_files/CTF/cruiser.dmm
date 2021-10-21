@@ -59,30 +59,9 @@
 	},
 /turf/open/floor/pod/light,
 /area/ctf)
-"cK" = (
-/obj/structure/window/shuttle{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
-/turf/open/floor/plating,
-/area/ctf)
 "cO" = (
 /obj/item/ctf/green,
 /turf/open/floor/circuit/green/anim,
-/area/ctf)
-"dq" = (
-/obj/structure/window/shuttle{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
-/obj/structure/window/shuttle{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
-/turf/open/floor/plating,
 /area/ctf)
 "ds" = (
 /obj/effect/turf_decal/tile/red{
@@ -466,6 +445,18 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
+/area/ctf)
+"zc" = (
+/obj/structure/window/reinforced/shuttle,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/structure/window/reinforced/shuttle{
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
+/turf/open/floor/plating,
 /area/ctf)
 "zg" = (
 /obj/effect/turf_decal/tile/green{
@@ -976,6 +967,24 @@
 	},
 /turf/open/floor/pod/dark,
 /area/ctf)
+"Vk" = (
+/obj/structure/window/reinforced/shuttle,
+/obj/structure/window/reinforced/shuttle,
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/structure/window/reinforced/shuttle{
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
+/obj/structure/window/reinforced/shuttle{
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
+/turf/open/floor/plating,
+/area/ctf)
 "Vl" = (
 /obj/effect/turf_decal/siding/purple/corner,
 /turf/open/floor/mineral/titanium/purple,
@@ -1322,13 +1331,13 @@ fU
 fU
 fU
 fU
-cK
-cK
-cK
-cK
-cK
-cK
-cK
+zc
+zc
+zc
+zc
+zc
+zc
+zc
 fU
 fU
 fU
@@ -1949,15 +1958,15 @@ hc
 hc
 hc
 fU
-cK
-cK
+zc
+zc
 fU
 Cb
 Cb
 Cb
 fU
-cK
-cK
+zc
+zc
 fU
 hc
 hc
@@ -2035,7 +2044,7 @@ Na
 ck
 hc
 hc
-cK
+zc
 RV
 RV
 sz
@@ -2047,7 +2056,7 @@ sz
 sz
 RV
 RV
-cK
+zc
 hc
 hc
 hc
@@ -2079,7 +2088,7 @@ Na
 hc
 hc
 hc
-cK
+zc
 RV
 sz
 sz
@@ -2091,7 +2100,7 @@ sz
 sz
 sz
 RV
-cK
+zc
 hc
 hc
 hc
@@ -2123,7 +2132,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 sz
 sz
 sz
@@ -2135,7 +2144,7 @@ CU
 sz
 sz
 sz
-cK
+zc
 hc
 hc
 hc
@@ -2299,7 +2308,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 sz
 sz
 sz
@@ -2311,7 +2320,7 @@ nV
 sz
 sz
 sz
-cK
+zc
 hc
 hc
 hc
@@ -2343,7 +2352,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 RV
 sz
 sz
@@ -2355,7 +2364,7 @@ sz
 sz
 sz
 RV
-cK
+zc
 hc
 hc
 hc
@@ -2387,7 +2396,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 RV
 RV
 sz
@@ -2399,7 +2408,7 @@ sz
 sz
 RV
 RV
-cK
+zc
 hc
 hc
 hc
@@ -2477,15 +2486,15 @@ hc
 hc
 hc
 fU
-cK
-cK
+zc
+zc
 fU
 Cb
 Cb
 Cb
 fU
-cK
-cK
+zc
+zc
 fU
 hc
 hc
@@ -2557,12 +2566,12 @@ hc
 hc
 hc
 fU
-cK
-cK
-cK
-cK
-cK
-cK
+zc
+zc
+zc
+zc
+zc
+zc
 fU
 hc
 hc
@@ -2596,10 +2605,10 @@ hc
 hc
 hc
 fU
-cK
-cK
-cK
-cK
+zc
+zc
+zc
+zc
 fU
 rB
 rB
@@ -2636,9 +2645,9 @@ Cb
 Cb
 Cb
 fU
-cK
-cK
-cK
+zc
+zc
+zc
 fU
 rB
 rB
@@ -2757,8 +2766,8 @@ hW
 Qe
 "}
 (40,1,1) = {"
-cK
-cK
+zc
+zc
 fU
 es
 fU
@@ -2801,7 +2810,7 @@ rR
 hc
 "}
 (41,1,1) = {"
-cK
+zc
 Tb
 Tb
 rB
@@ -2845,7 +2854,7 @@ hW
 hc
 "}
 (42,1,1) = {"
-cK
+zc
 Zk
 Qt
 Qt
@@ -2889,7 +2898,7 @@ hW
 fa
 "}
 (43,1,1) = {"
-cK
+zc
 uz
 eM
 Qt
@@ -2933,7 +2942,7 @@ hW
 Qe
 "}
 (44,1,1) = {"
-cK
+zc
 Zk
 Qt
 Qt
@@ -2977,7 +2986,7 @@ hW
 Qe
 "}
 (45,1,1) = {"
-cK
+zc
 Tb
 Tb
 JP
@@ -3021,8 +3030,8 @@ rR
 hc
 "}
 (46,1,1) = {"
-cK
-cK
+zc
+zc
 fU
 nx
 fU
@@ -3164,9 +3173,9 @@ Cb
 Cb
 Cb
 fU
-cK
-cK
-cK
+zc
+zc
+zc
 fU
 JP
 JP
@@ -3212,10 +3221,10 @@ hc
 hc
 hc
 fU
-cK
-cK
-cK
-cK
+zc
+zc
+zc
+zc
 fU
 JP
 JP
@@ -3261,12 +3270,12 @@ hc
 hc
 hc
 fU
-cK
-cK
-dq
-cK
-cK
-cK
+zc
+zc
+Vk
+zc
+zc
+zc
 fU
 hc
 hc
@@ -3357,15 +3366,15 @@ hc
 hc
 hc
 fU
-cK
-cK
+zc
+zc
 fU
 Cb
 Cb
 Cb
 fU
-cK
-cK
+zc
+zc
 fU
 hc
 hc
@@ -3443,7 +3452,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 RV
 RV
 sz
@@ -3455,7 +3464,7 @@ sz
 sz
 RV
 RV
-cK
+zc
 hc
 hc
 hc
@@ -3487,7 +3496,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 RV
 sz
 sz
@@ -3499,7 +3508,7 @@ sz
 sz
 sz
 RV
-cK
+zc
 hc
 hc
 hc
@@ -3531,7 +3540,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 sz
 sz
 sz
@@ -3543,7 +3552,7 @@ CU
 sz
 sz
 sz
-cK
+zc
 hc
 hc
 hc
@@ -3707,7 +3716,7 @@ hc
 hc
 hc
 hc
-cK
+zc
 sz
 sz
 sz
@@ -3719,7 +3728,7 @@ nV
 sz
 sz
 sz
-cK
+zc
 hc
 hc
 hc
@@ -3751,7 +3760,7 @@ Na
 hc
 hc
 hc
-cK
+zc
 RV
 sz
 sz
@@ -3763,7 +3772,7 @@ sz
 sz
 sz
 RV
-cK
+zc
 hc
 hc
 hc
@@ -3795,7 +3804,7 @@ Na
 ck
 hc
 hc
-cK
+zc
 RV
 RV
 sz
@@ -3807,7 +3816,7 @@ sz
 sz
 RV
 RV
-cK
+zc
 hc
 hc
 hc
@@ -3885,15 +3894,15 @@ hc
 hc
 hc
 fU
-cK
-cK
+zc
+zc
 fU
 Cb
 Cb
 Cb
 fU
-cK
-cK
+zc
+zc
 fU
 hc
 hc
@@ -4490,13 +4499,13 @@ fU
 fU
 fU
 fU
-cK
-cK
-cK
-cK
-cK
-cK
-cK
+zc
+zc
+zc
+zc
+zc
+zc
+zc
 fU
 fU
 fU

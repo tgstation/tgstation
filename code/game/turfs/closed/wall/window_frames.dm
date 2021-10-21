@@ -62,25 +62,25 @@
 
 	//window_type isnt a window typepath, so check if its a material typepath
 	if(ispath(window_type, /obj/item/stack/sheet/glass))
-		our_window = new/obj/structure/window/fulltile(src)
+		our_window = new /obj/structure/window/fulltile(src)
 
 	if(ispath(window_type, /obj/item/stack/sheet/rglass))
-		our_window = new/obj/structure/window/reinforced/fulltile(src)
+		our_window = new /obj/structure/window/reinforced/fulltile(src)
 
 	if(ispath(window_type, /obj/item/stack/sheet/plasmaglass))
-		our_window = new/obj/structure/window/plasma/fulltile(src)
+		our_window = new /obj/structure/window/plasma/fulltile(src)
 
 	if(ispath(window_type, /obj/item/stack/sheet/plasmarglass))
-		our_window = new/obj/structure/window/plasma/reinforced/fulltile(src)
+		our_window = new /obj/structure/window/reinforced/plasma/fulltile(src)
 
 	if(ispath(window_type, /obj/item/stack/sheet/titaniumglass))
-		our_window = new/obj/structure/window/shuttle(src)
+		our_window = new /obj/structure/window/reinforced/shuttle(src)
 
 	if(ispath(window_type, /obj/item/stack/sheet/plastitaniumglass))
-		our_window = new/obj/structure/window/plasma/reinforced/plastitanium(src)
+		our_window = new /obj/structure/window/reinforced/plasma/plastitanium(src)
 
 	if(ispath(window_type, /obj/item/stack/sheet/paperframes))
-		our_window = new/obj/structure/window/paperframe(src)
+		our_window = new /obj/structure/window/paperframe(src)
 
 	if(!start_anchored)
 		our_window.set_anchored(FALSE)

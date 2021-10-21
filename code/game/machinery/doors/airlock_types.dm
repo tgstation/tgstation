@@ -24,6 +24,10 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
 	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#6d6565#ffffff"
 
+/obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
+	icon = 'icons/obj/doors/airlocks/station/medical.dmi'	 //Uses same icon as /medical, maybe update it with its own unique icon one day?
+	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
+
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
@@ -119,6 +123,10 @@
 	opacity = FALSE
 	glass = TRUE
 
+/obj/machinery/door/airlock/hydroponics/glass //Uses same icon as medical/glass, maybe update it with its own unique icon one day?
+	opacity = FALSE
+	glass = TRUE
+
 /obj/machinery/door/airlock/research/glass
 	opacity = FALSE
 	glass = TRUE
@@ -127,15 +135,15 @@
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
-	req_access = list(ACCESS_TOXINS)
+	req_access = list(ACCESS_ORDNANCE)
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
 	name = "Mixing Room Interior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_INTERIOR
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior
 	name = "Mixing Room Exterior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/mining/glass
 	opacity = FALSE
@@ -261,7 +269,7 @@
 	DA.update_name()
 	qdel(src)
 
-/obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
+/obj/machinery/door/airlock/plasma/block_superconductivity() //we don't stop the heat~
 	return 0
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
@@ -378,10 +386,61 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 	greyscale_config = null
 	greyscale_colors = null
+	req_access = list(ACCESS_EXTERNAL_AIRLOCKS)
+
+	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
+	var/space_dir = null
+
+/obj/machinery/door/airlock/external/Initialize(mapload, ...)
+	// default setting is for mapping only, let overrides work
+	if(!mapload || req_access_txt || req_one_access_txt)
+		req_access = null
+
+	return ..()
+
+/obj/machinery/door/airlock/external/LateInitialize()
+	. = ..()
+	if(space_dir)
+		unres_sides |= space_dir
+
+/obj/machinery/door/airlock/external/examine(mob/user)
+	. = ..()
+	if(space_dir)
+		. += span_notice("It has labels indicating that it has an emergency mechanism to open from the [dir2text(space_dir)] side with <b>just your hands</b> even if there's no power.")
+
+/obj/machinery/door/airlock/external/cyclelinkairlock()
+	. = ..()
+	var/obj/machinery/door/airlock/external/cycle_linked_external_airlock = cyclelinkedairlock
+	if(istype(cycle_linked_external_airlock))
+		cycle_linked_external_airlock.space_dir |= space_dir
+		space_dir |= cycle_linked_external_airlock.space_dir
+
+/obj/machinery/door/airlock/external/try_safety_unlock(mob/user)
+	if(space_dir && density)
+		if(!hasPower())
+			to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
+			if(do_after(user, 15 SECONDS, target = src))
+				try_to_crowbar(null, user, TRUE)
+				return TRUE
+		else
+			// always open from the space side
+			// get_dir(src, user) & space_dir, checked in unresricted_sides
+			var/should_safety_open = shuttledocked || cyclelinkedairlock?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
+			return try_to_activate_door(user, should_safety_open)
+
+	return ..()
+
+/// Access free external airlock
+/obj/machinery/door/airlock/external/ruin
+	req_access = null
 
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
 	glass = TRUE
+
+/// Access free external glass airlock
+/obj/machinery/door/airlock/external/glass/ruin
+	req_access = null
 
 //////////////////////////////////
 /*
@@ -510,7 +569,7 @@
 	var/friendly = FALSE
 	var/stealthy = FALSE
 
-/obj/machinery/door/airlock/cult/Initialize()
+/obj/machinery/door/airlock/cult/Initialize(mapload)
 	. = ..()
 	new openingoverlaytype(loc)
 

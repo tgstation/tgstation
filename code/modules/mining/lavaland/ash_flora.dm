@@ -24,7 +24,7 @@
 	var/regrowth_time_high = 16 MINUTES
 	var/number_of_variants = 4
 
-/obj/structure/flora/ash/Initialize()
+/obj/structure/flora/ash/Initialize(mapload)
 	. = ..()
 	base_icon = "[icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon
@@ -144,7 +144,7 @@
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caltrop, min_damage = 3, max_damage = 6, probability = 70)
+	AddComponent(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
 
 /obj/structure/flora/ash/seraka
 	icon_state = "seraka_mushroom"
@@ -194,7 +194,7 @@
 	seed = /obj/item/seeds/lavaland/polypore
 	wine_power = 20
 
-/obj/item/food/grown/ash_flora/Initialize()
+/obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-4, 4)
 	pixel_y = base_pixel_y + rand(-4, 4)
@@ -251,7 +251,6 @@
 	growthstages = 3
 	rarity = 20
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
-	resistance_flags = FIRE_PROOF
 	species = "polypore" // silence unit test
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	graft_gene = /datum/plant_gene/trait/fire_resistance

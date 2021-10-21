@@ -15,7 +15,7 @@
 	/// Countdown timer for the mass driver's delayed launch functionality.
 	COOLDOWN_DECLARE(massdriver_countdown)
 
-/obj/machinery/computer/pod/Initialize()
+/obj/machinery/computer/pod/Initialize(mapload)
 	. = ..()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
@@ -147,11 +147,11 @@
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver
-	id = MASSDRIVER_TOXINS
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver
+	id = MASSDRIVER_ORDNANCE
 
 //for maps where pod doors are outside of the standard 4 tile controller detection range (ie Pubbystation)
-/obj/machinery/computer/pod/old/mass_driver_controller/toxinsdriver/longrange
+/obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver/longrange
 	range = 6
 
 /obj/machinery/computer/pod/old/mass_driver_controller/chapelgun

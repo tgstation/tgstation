@@ -11,7 +11,7 @@
 	var/static/recycleable_circuits = typecacheof(list(/obj/item/electronics/firelock, /obj/item/electronics/airalarm, /obj/item/electronics/firealarm, \
 	/obj/item/electronics/apc))//A typecache of circuits consumable for material
 
-/obj/item/electroadaptive_pseudocircuit/Initialize()
+/obj/item/electroadaptive_pseudocircuit/Initialize(mapload)
 	. = ..()
 	maptext = MAPTEXT(circuits)
 
@@ -29,7 +29,7 @@
 		to_chat(R, span_warning("You need a power cell installed for that."))
 		return
 	if(!R.cell.use(circuit_cost))
-		to_chat(R, span_warning("You don't have the energy for that (you need [DisplayEnergy(circuit_cost)].)"))
+		to_chat(R, span_warning("You don't have the energy for that (you need [display_energy(circuit_cost)].)"))
 		return
 	if(recharging)
 		to_chat(R, span_warning("[src] needs some time to recharge first."))

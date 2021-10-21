@@ -649,13 +649,6 @@
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/iron,
 /area/ctf)
-"mf" = (
-/obj/effect/spawner/randomarcade{
-	dir = 4;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
-/area/ctf)
 "mj" = (
 /turf/open/floor/plating/grass,
 /area/ctf)
@@ -977,17 +970,6 @@
 	},
 /turf/open/floor/plating/grass,
 /area/ctf)
-"sZ" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/structure/table/wood{
-	resistance_flags = 64
-	},
-/turf/open/floor/iron,
-/area/ctf)
 "td" = (
 /turf/closed/wall/mineral/iron,
 /area/ctf)
@@ -1253,13 +1235,6 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
-/area/ctf)
-"yi" = (
-/obj/effect/spawner/randomarcade{
-	dir = 8;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
 /area/ctf)
 "yp" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -1636,15 +1611,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"Ek" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/structure/table/reinforced/ctf,
-/turf/open/floor/iron,
-/area/ctf)
 "El" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/ctf,
@@ -1889,6 +1855,13 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"Ja" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "Jc" = (
 /obj/effect/turf_decal/trimline/red/line,
 /obj/effect/decal/cleanable/shreds,
@@ -2021,14 +1994,6 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron/dark,
-/area/ctf)
-"Lr" = (
-/obj/structure/window/reinforced/fulltile{
-	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
-	},
-/turf/open/floor/plating,
 /area/ctf)
 "Lz" = (
 /obj/effect/turf_decal/trimline/red/line,
@@ -2188,6 +2153,14 @@
 	pixel_x = -32
 	},
 /turf/open/floor/eighties,
+/area/ctf)
+"OG" = (
+/obj/structure/window/reinforced/fulltile{
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
+/turf/open/floor/plating,
 /area/ctf)
 "OO" = (
 /obj/effect/turf_decal/siding/white{
@@ -2396,6 +2369,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
+"TB" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "TD" = (
 /obj/effect/turf_decal/trimline/blue/line,
 /turf/open/floor/iron,
@@ -2503,6 +2483,15 @@
 	},
 /turf/open/floor/carpet/blue,
 /area/ctf)
+"VB" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/iron,
+/area/ctf)
 "VD" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Bar";
@@ -2518,6 +2507,17 @@
 /obj/effect/turf_decal/delivery/red,
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/closet/crate/large{
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
+/area/ctf)
+"VL" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/structure/table/wood{
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
@@ -3254,7 +3254,7 @@ td
 td
 td
 td
-Lr
+OG
 kh
 td
 BH
@@ -3312,7 +3312,7 @@ rk
 rk
 ey
 ql
-Lr
+OG
 Ad
 TD
 jC
@@ -3350,7 +3350,7 @@ us
 Da
 Xm
 ql
-Lr
+OG
 Ad
 TD
 jC
@@ -3383,7 +3383,7 @@ Te
 td
 El
 BH
-Lr
+OG
 Fm
 Da
 lT
@@ -3421,7 +3421,7 @@ Te
 td
 El
 BH
-Lr
+OG
 FW
 Da
 oC
@@ -3459,7 +3459,7 @@ Te
 td
 El
 BH
-Lr
+OG
 Vw
 Da
 Jg
@@ -3475,7 +3475,7 @@ jD
 YD
 Ad
 xq
-Lr
+OG
 LP
 jS
 jS
@@ -3502,7 +3502,7 @@ Da
 Da
 Sg
 ql
-Lr
+OG
 Ad
 TD
 jC
@@ -3540,7 +3540,7 @@ Fw
 Fw
 vo
 ql
-Lr
+OG
 Ad
 xq
 jC
@@ -3725,10 +3725,10 @@ Ag
 BH
 td
 Bh
-mf
-yi
-mf
-yi
+Ja
+TB
+Ja
+TB
 QC
 oq
 mB
@@ -3761,7 +3761,7 @@ Te
 td
 El
 BH
-Lr
+OG
 Ug
 hU
 ql
@@ -3799,7 +3799,7 @@ Te
 td
 BH
 BH
-Lr
+OG
 Ug
 ql
 ql
@@ -3837,14 +3837,14 @@ Te
 td
 xs
 BH
-Lr
+OG
 Ug
 ql
 go
 ql
 go
 QC
-Lr
+OG
 Ad
 lW
 nQ
@@ -3862,7 +3862,7 @@ jS
 jS
 jS
 TD
-Lr
+OG
 BH
 BH
 td
@@ -3877,12 +3877,12 @@ xs
 BH
 td
 Bh
-mf
-yi
-mf
-yi
+Ja
+TB
+Ja
+TB
 QC
-Lr
+OG
 Ad
 Uf
 aq
@@ -3900,7 +3900,7 @@ Av
 Av
 mC
 TD
-Lr
+OG
 BH
 BH
 td
@@ -4052,7 +4052,7 @@ UQ
 xk
 xK
 TD
-Lr
+OG
 BH
 BH
 td
@@ -4090,7 +4090,7 @@ Wk
 st
 xK
 da
-Lr
+OG
 BH
 BH
 td
@@ -4180,9 +4180,9 @@ td
 BH
 El
 td
-Ek
+VB
 dO
-sZ
+VL
 Dm
 ql
 go
@@ -4224,7 +4224,7 @@ RU
 Dm
 Ie
 iv
-Lr
+OG
 Kh
 Tq
 PX
@@ -4242,7 +4242,7 @@ jX
 jX
 AW
 da
-Lr
+OG
 BH
 BH
 td
@@ -4255,14 +4255,14 @@ Te
 td
 BH
 xs
-Lr
+OG
 Ux
 dO
-sZ
+VL
 Dm
 ql
 EJ
-Lr
+OG
 ru
 da
 jC
@@ -4280,7 +4280,7 @@ jS
 jS
 jS
 da
-Lr
+OG
 BH
 xs
 td
@@ -4293,7 +4293,7 @@ Te
 td
 BH
 BH
-Lr
+OG
 nT
 dO
 bd
@@ -4331,10 +4331,10 @@ Te
 td
 El
 BH
-Lr
+OG
 nT
 dO
-sZ
+VL
 Dm
 ql
 en
@@ -4566,7 +4566,7 @@ ag
 ag
 hb
 ql
-Lr
+OG
 vS
 Jc
 jC
@@ -4604,7 +4604,7 @@ SQ
 SQ
 gv
 ql
-Lr
+OG
 vS
 da
 jC
@@ -4637,7 +4637,7 @@ Te
 td
 El
 BH
-Lr
+OG
 bF
 SQ
 iz
@@ -4653,7 +4653,7 @@ jD
 De
 vS
 da
-Lr
+OG
 Pc
 jS
 jS
@@ -4675,7 +4675,7 @@ Te
 td
 El
 BH
-Lr
+OG
 wU
 SQ
 oG
@@ -4713,7 +4713,7 @@ Te
 td
 El
 BH
-Lr
+OG
 Jo
 SQ
 hy
@@ -4756,7 +4756,7 @@ dm
 SQ
 lC
 ql
-Lr
+OG
 vS
 da
 jC
@@ -4794,7 +4794,7 @@ MU
 MU
 Nm
 ql
-Lr
+OG
 jQ
 da
 jC
@@ -4888,7 +4888,7 @@ td
 td
 td
 td
-Lr
+OG
 ar
 td
 BH

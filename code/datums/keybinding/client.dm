@@ -55,9 +55,9 @@
 
 /datum/keybinding/client/toggle_frills_over_floors/down(client/user)
 	. = ..()
-	if(. || !user.prefs)
+	if(. || !user)
 		return
-	user.prefs.frills_over_floors = !user.prefs.frills_over_floors
+	user.frills_over_floors = !user.frills_over_floors
 	if(length(user?.screen))
 		var/atom/movable/screen/plane_master/frill/frill = locate(/atom/movable/screen/plane_master/frill) in user.screen
 		frill.backdrop(user.mob)

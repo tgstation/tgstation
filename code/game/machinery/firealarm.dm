@@ -81,17 +81,19 @@
 	if(!detecting || !area.fire)
 		. += "fire_allgood"
 		. += mutable_appearance(icon, "fire_allgood")
-		. += emissive_appearance(icon, "fire_allgood")
+		. += emissive_appearance(icon, "fire_allgood", alpha = src.alpha)
 	else if(obj_flags & EMAGGED)
 		. += "fire_emagged"
-		. +=  mutable_appearance(icon, "fire_emagged", layer, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_emagged")
+		. += emissive_appearance(icon, "fire_emagged", alpha = src.alpha)
 	else if(cold_alarm)
 		. += "fire_cold"
-		. +=  mutable_appearance(icon, "fire_cold", layer, EMISSIVE_PLANE, dir)
+		. += mutable_appearance(icon, "fire_cold")
+		. += emissive_appearance(icon, "fire_cold", alpha = src.alpha)
 	else
 		. += "fire_hot"
-		. +=  mutable_appearance(icon, "fire_hot", layer, EMISSIVE_PLANE, dir)
-
+		. += mutable_appearance(icon, "fire_hot")
+		. += emissive_appearance(icon, "fire_hot", alpha = src.alpha)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -171,7 +173,8 @@
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
-		return ..()
+		return
+	. = ..()
 	add_fingerprint(user)
 	var/area/area = get_area(src)
 	if(area.fire)

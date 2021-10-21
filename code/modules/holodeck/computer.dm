@@ -203,24 +203,10 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 	spawning_simulation = TRUE
 	active = (map_id != offline_program)
-	use_power = active + IDLE_POWER_USE
+	update_use_power(active + IDLE_POWER_USE)
 	program = map_id
 
-	//clear the items from the previous program
-	for(var/holo_atom in spawned)
-		derez(holo_atom)
-
-	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
-		effects -= holo_effect
-		holo_effect.deactivate(src)
-
-	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
-	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
-	for(var/turf/closed/holo_turf in linked)
-		for(var/baseturf in holo_turf.baseturfs)
-			if(ispath(baseturf, /turf/open/floor/holofloor))
-				holo_turf.baseturfs -= baseturf
-				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
+	clear_projection()
 
 	template = SSmapping.holodeck_templates[map_id]
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
@@ -237,6 +223,34 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 
 	nerf(!(obj_flags & EMAGGED))
 	finish_spawn()
+
+///To be used on destroy, mainly to prevent sleeping inside well, destroy. Missing a lot of the things contained in load_program
+/obj/machinery/computer/holodeck/proc/reset_to_default()
+	if (program == offline_program)
+		return
+
+	program = offline_program
+	clear_projection()
+
+	template = SSmapping.holodeck_templates[offline_program]
+	INVOKE_ASYNC(template, /datum/map_template/proc/load, bottom_left) //this is what actually loads the holodeck simulation into the map
+
+/obj/machinery/computer/holodeck/proc/clear_projection()
+	//clear the items from the previous program
+	for(var/holo_atom in spawned)
+		derez(holo_atom)
+
+	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
+		effects -= holo_effect
+		holo_effect.deactivate(src)
+
+	//makes sure that any time a holoturf is inside a baseturf list (e.g. if someone put a wall over it) its set to the OFFLINE turf
+	//so that you cant bring turfs from previous programs into other ones (like putting the plasma burn turf into lounge for example)
+	for(var/turf/closed/holo_turf in linked)
+		for(var/baseturf in holo_turf.baseturfs)
+			if(ispath(baseturf, /turf/open/floor/holofloor))
+				holo_turf.baseturfs -= baseturf
+				holo_turf.baseturfs += /turf/open/floor/holofloor/plating
 
 ///finalizes objects in the spawned list
 /obj/machinery/computer/holodeck/proc/finish_spawn()
@@ -326,7 +340,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 				derez(item)
 	for(var/obj/effect/holodeck_effect/holo_effect as anything in effects)
 		holo_effect.tick()
-	active_power_usage = 50 + spawned.len * 3 + effects.len * 5
+	update_mode_power_usage(ACTIVE_POWER_USE, 50 + spawned.len * 3 + effects.len * 5)
 
 /obj/machinery/computer/holodeck/proc/toggle_power(toggleOn = FALSE)
 	if(active == toggleOn)
@@ -393,7 +407,7 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	return ..()
 
 /obj/machinery/computer/holodeck/Destroy()
-	emergency_shutdown()
+	reset_to_default()
 	if(linked)
 		linked.linked = null
 		linked.power_usage = list(AREA_USAGE_LEN)

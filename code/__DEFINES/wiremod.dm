@@ -1,8 +1,8 @@
 /// Helper define that can only be used in /obj/item/circuit_component/input_received()
-#define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.input_value && trigger == port)
+#define COMPONENT_TRIGGERED_BY(trigger, port) (trigger.value && trigger == port)
 
-/// Define to automatically handle calling the output port. Will not call the output port if the input_received proc returns TRUE.
-#define TRIGGER_CIRCUIT_COMPONENT(component, port) if(!component.input_received(port) && (component.circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)) component.trigger_output.set_output(COMPONENT_SIGNAL)
+/// Define to be placed at any proc that is triggered by a port.
+#define CIRCUIT_TRIGGER SHOULD_NOT_SLEEP(TRUE)
 
 // Port defines
 
@@ -22,16 +22,29 @@
 #define PORT_TYPE_NUMBER "number"
 /// Signal datatype
 #define PORT_TYPE_SIGNAL "signal"
-/// List datatype
-#define PORT_TYPE_LIST "list"
+/// Signal datatype, with a slight variation in name to suggest it causes instant execution. Can only be an output port.
+#define PORT_TYPE_INSTANT_SIGNAL "instant signal"
+/// Signal datatype, with a slight variation in name to suggest that it can be used to respond to instant execution.
+#define PORT_TYPE_RESPONSE_SIGNAL "response signal"
 /// Table datatype. Derivative of list, contains other lists with matching columns.
 #define PORT_TYPE_TABLE "table"
 /// Options datatype. Derivative of string.
 #define PORT_TYPE_OPTION "option"
 
+// Composite datatypes
+#define PORT_COMPOSITE_TYPE_LIST "list"
+/// List datatype
+#define PORT_TYPE_LIST(datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_LIST, datatype)
+
+#define PORT_COMPOSITE_TYPE_ASSOC_LIST "assoc list"
+/// Associative List datatype. Derivative of list.
+#define PORT_TYPE_ASSOC_LIST(key_datatype, datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_ASSOC_LIST, key_datatype, datatype)
+
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
+/// Datum datatype
+#define PORT_TYPE_DATUM "datum"
 
 
 /// The maximum range between a port and an atom
@@ -61,64 +74,8 @@
 #define COMP_COMPARISON_GREATER_THAN_OR_EQUAL ">="
 #define COMP_COMPARISON_LESS_THAN_OR_EQUAL "<="
 
-// Delay defines
-/// The minimum delay value that the delay component can have.
-#define COMP_DELAY_MIN_VALUE 0.1
-
-// Logic defines
-#define COMP_LOGIC_AND "AND"
-#define COMP_LOGIC_OR "OR"
-#define COMP_LOGIC_XOR "XOR"
-
-// Arithmetic defines
-#define COMP_ARITHMETIC_ADD "Add"
-#define COMP_ARITHMETIC_SUBTRACT "Subtract"
-#define COMP_ARITHMETIC_MULTIPLY "Multiply"
-#define COMP_ARITHMETIC_DIVIDE "Divide"
-#define COMP_ARITHMETIC_MIN "Minimum"
-#define COMP_ARITHMETIC_MAX "Maximum"
-
-// Text defines
-#define COMP_TEXT_LOWER "To Lower"
-#define COMP_TEXT_UPPER "To Upper"
-
-// Typecheck component
-#define COMP_TYPECHECK_MOB "organism"
-#define COMP_TYPECHECK_HUMAN "humanoid"
-
 // Clock component
 #define COMP_CLOCK_DELAY 0.9 SECONDS
-
-// Radio component
-#define COMP_RADIO_PUBLIC "public"
-#define COMP_RADIO_PRIVATE "private"
-
-// Sound component
-#define COMP_SOUND_BUZZ "Buzz"
-#define COMP_SOUND_BUZZ_TWO "Buzz Twice"
-#define COMP_SOUND_CHIME "Chime"
-#define COMP_SOUND_HONK "Honk"
-#define COMP_SOUND_PING "Ping"
-#define COMP_SOUND_SAD "Sad Trombone"
-#define COMP_SOUND_WARN "Warn"
-#define COMP_SOUND_SLOWCLAP "Slow Clap"
-
-// Security Arrest Console
-#define COMP_STATE_ARREST "*Arrest*"
-#define COMP_STATE_PRISONER "Incarcerated"
-#define COMP_STATE_PAROL "Paroled"
-#define COMP_STATE_DISCHARGED "Discharged"
-#define COMP_STATE_NONE "None"
-
-#define COMP_SECURITY_ARREST_AMOUNT_TO_FLAG 10
-
-// Proccall component
-#define COMP_PROC_GLOBAL "Global"
-#define COMP_PROC_OBJECT "Object"
-
-// Bar overlay component
-#define COMP_BAR_OVERLAY_VERTICAL "Vertical"
-#define COMP_BAR_OVERLAY_HORIZONTAL "Horizontal"
 
 // Shells
 
@@ -154,9 +111,17 @@
 #define CIRCUIT_FLAG_ADMIN (1<<3)
 /// This circuit component does not show in the menu.
 #define CIRCUIT_FLAG_HIDDEN (1<<4)
+/// This circuit component has been marked as a component that has instant execution and will show up in the UI as so. This will only cause a visual change.
+#define CIRCUIT_FLAG_INSTANT (1<<5)
+/// This circuit component can't be loaded in module component. Saves us some headaches.
+#define CIRCUIT_FLAG_REFUSE_MODULE (1<<6)
 
 // Datatype flags
 /// The datatype supports manual inputs
 #define DATATYPE_FLAG_ALLOW_MANUAL_INPUT (1<<0)
 /// The datatype won't update the value when it is connected to the port
 #define DATATYPE_FLAG_AVOID_VALUE_UPDATE (1<<1)
+/// Allows the datatype to take entity values from the circuit multitool.
+#define DATATYPE_FLAG_ALLOW_ATOM_INPUT (1<<2)
+/// The datatype has been generated and is an existing composite datatype
+#define DATATYPE_FLAG_COMPOSITE (1<<3)

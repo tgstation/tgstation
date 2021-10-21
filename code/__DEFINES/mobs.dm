@@ -5,7 +5,6 @@
 //Ready states at roundstart for mob/dead/new_player
 #define PLAYER_NOT_READY 0
 #define PLAYER_READY_TO_PLAY 1
-#define PLAYER_READY_TO_OBSERVE 2
 
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
@@ -63,6 +62,13 @@
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
+
+
+///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
+#define HUMAN_BODY (1 << 0)
+#define MONKEY_BODY (1 << 1)
+#define ALIEN_BODY (1 << 2)
+#define LARVA_BODY (1 << 3)
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines
@@ -281,9 +287,26 @@
 //ED209's ignore monkeys
 #define JUDGE_IGNOREMONKEYS (1<<4)
 
-#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
-
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+
+#define COOLDOWN_UPDATE_SET_MELEE "set_melee"
+#define COOLDOWN_UPDATE_ADD_MELEE "add_melee"
+#define COOLDOWN_UPDATE_SET_RANGED "set_ranged"
+#define COOLDOWN_UPDATE_ADD_RANGED "add_ranged"
+#define COOLDOWN_UPDATE_SET_ENRAGE "set_enrage"
+#define COOLDOWN_UPDATE_ADD_ENRAGE "add_enrage"
+#define COOLDOWN_UPDATE_SET_SPAWN "set_spawn"
+#define COOLDOWN_UPDATE_ADD_SPAWN "add_spawn"
+#define COOLDOWN_UPDATE_SET_HELP "set_help"
+#define COOLDOWN_UPDATE_ADD_HELP "add_help"
+#define COOLDOWN_UPDATE_SET_DASH "set_dash"
+#define COOLDOWN_UPDATE_ADD_DASH "add_dash"
+#define COOLDOWN_UPDATE_SET_TRANSFORM "set_transform"
+#define COOLDOWN_UPDATE_ADD_TRANSFORM "add_transform"
+#define COOLDOWN_UPDATE_SET_CHASER "set_chaser"
+#define COOLDOWN_UPDATE_ADD_CHASER "add_chaser"
+#define COOLDOWN_UPDATE_SET_ARENA "set_arena"
+#define COOLDOWN_UPDATE_ADD_ARENA "add_arena"
 
 // Offsets defines
 
@@ -373,6 +396,7 @@
 #define DEFIB_FAIL_FAILING_BRAIN (1<<6)
 #define DEFIB_FAIL_NO_BRAIN (1<<7)
 #define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
+#define DEFIB_NOGRAB_AGHOST (1<<9)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
 #define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
@@ -384,10 +408,17 @@
 #define DOING_INTERACTION_WITH_TARGET(user, target) (LAZYACCESS(user.do_afters, target))
 #define DOING_INTERACTION_WITH_TARGET_LIMIT(user, target, max_interaction_count) ((LAZYACCESS(user.do_afters, target) || 0) >= max_interaction_count)
 
+// recent examine defines
+/// How long it takes for an examined atom to be removed from recent_examines. Should be the max of the below time windows
+#define RECENT_EXAMINE_MAX_WINDOW 2 SECONDS
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
-#define EXAMINE_MORE_TIME 1 SECONDS
+#define EXAMINE_MORE_WINDOW 1 SECONDS
+/// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
+#define EYE_CONTACT_WINDOW 2 SECONDS
+
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5
+
 
 #define SILENCE_RANGED_MESSAGE (1<<0)
 

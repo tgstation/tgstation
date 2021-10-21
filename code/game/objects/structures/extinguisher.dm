@@ -150,7 +150,6 @@
 			stored_extinguisher = null
 		update_appearance()
 
-
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)

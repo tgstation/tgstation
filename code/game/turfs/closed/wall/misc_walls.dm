@@ -5,13 +5,14 @@
 	frill_icon = 'icons/effects/frills/wall_cult_frill.dmi'
 	icon_state = "cult_wall-0"
 	base_icon_state = "cult_wall"
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/cult
 
-/turf/closed/wall/mineral/cult/Initialize()
+/turf/closed/wall/mineral/cult/Initialize(mapload)
 	new /obj/effect/temp_visual/cult/turf(src)
 	. = ..()
 
@@ -44,6 +45,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rockvault"
 	base_icon_state = "rockvault"
+	turf_flags = NONE
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
@@ -68,6 +70,7 @@
 	icon_state = "icedmetal_wall-0"
 	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
@@ -119,6 +122,7 @@
 	frill_icon = 'icons/effects/frills/wall_clockwork_frill.dmi'
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2

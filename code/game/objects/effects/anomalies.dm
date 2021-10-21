@@ -26,7 +26,7 @@
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
 
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
@@ -95,12 +95,22 @@
 
 ///////////////////////
 
+/atom/movable/warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/light_overlays/light_352.dmi'
+	icon_state = "light"
+	pixel_x = -176
+	pixel_y = -176
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "shield2"
 	density = FALSE
-	var/boing = 0
 	aSignal = /obj/item/assembly/signaler/anomaly/grav
+	var/boing = 0
+	///Warp effect holder for displacement filter to "pulse" the anomaly
+	var/atom/movable/warp_effect/warp
 
 /obj/effect/anomaly/grav/Initialize(mapload, new_lifespan, drops_core)
 	. = ..()
@@ -109,7 +119,15 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/effect/anomaly/grav/anomalyEffect()
+	warp = new(src)
+	vis_contents += warp
+
+/obj/effect/anomaly/grav/Destroy()
+	vis_contents -= warp
+	warp = null
+	return ..()
+
+/obj/effect/anomaly/grav/anomalyEffect(delta_time)
 	..()
 	boing = 1
 	for(var/obj/O in orange(4, src))
@@ -129,6 +147,10 @@
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
+
+	//anomaly quickly contracts then slowly expands it's ring
+	animate(warp, time = delta_time*3, transform = matrix().Scale(0.5,0.5))
+	animate(time = delta_time*7, transform = matrix())
 
 /obj/effect/anomaly/grav/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -261,6 +283,8 @@
 			for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
 				if(istype(A, /obj/item/beacon))
 					continue // don't teleport beacons because that's just insanely stupid
+				if(iscameramob(A))
+					continue // Don't mess with AI eye, blob eye, xenobio or advanced cameras
 				if(A.anchored)
 					continue
 
@@ -322,7 +346,7 @@
 	var/datum/action/innate/slime/reproduce/A = new
 	A.Grant(S)
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, 100, S, POLL_IGNORE_PYROSLIME)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, 10 SECONDS, S, POLL_IGNORE_PYROSLIME)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key

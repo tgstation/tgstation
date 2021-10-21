@@ -28,7 +28,7 @@
 /obj/item/gun/ballistic/automatic/pistol/toy/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol/riot
 
-/obj/item/gun/ballistic/automatic/pistol/riot/Initialize()
+/obj/item/gun/ballistic/automatic/pistol/riot/Initialize(mapload)
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	return ..()
 
@@ -46,8 +46,8 @@
 	pb_knockback = 0
 	gun_flags = TOY_FIREARM_OVERLAY
 
-/obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
-	..()
+/obj/item/gun/ballistic/shotgun/toy/handle_chamber()
+	. = ..()
 	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 

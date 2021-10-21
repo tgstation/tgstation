@@ -244,7 +244,7 @@ There appears to be a small amount of surface corrosion. It doesn't look like it
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
 	max_integrity = 300
 
-/obj/item/storage/secure/safe/caps_spare/Initialize()
+/obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
 
 	l_code = SSid_access.spare_id_safe_code
