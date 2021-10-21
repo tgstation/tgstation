@@ -871,12 +871,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/security/prison)
-"aeR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/catwalk_floor,
-/area/maintenance/starboard/fore)
 "aeY" = (
 /obj/machinery/door/window/southleft{
 	name = "Armory";
@@ -4680,13 +4674,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/checkpoint/auxiliary)
-"aHG" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/maintenance/starboard/fore)
 "aHM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11599,15 +11586,6 @@
 "cfw" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/port/aft)
-"cfP" = (
-/obj/effect/landmark/blobstart,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
-/area/maintenance/starboard/fore)
 "cfV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -14780,6 +14758,12 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/aft)
+"diY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/fore)
 "dju" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
@@ -14888,11 +14872,6 @@
 /obj/item/storage/box,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"dnZ" = (
-/obj/structure/table,
-/obj/item/implant/radio,
-/turf/open/floor/iron/cafeteria,
-/area/hallway/secondary/exit/departure_lounge)
 "doe" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -14904,6 +14883,18 @@
 /obj/structure/light_construct/directional/east,
 /turf/open/floor/iron,
 /area/construction)
+"doQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/fore)
 "dpu" = (
 /obj/structure/cable,
 /turf/open/floor/iron/smooth_half,
@@ -17533,6 +17524,11 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
+"eTB" = (
+/obj/structure/table,
+/obj/item/radio/off,
+/turf/open/floor/iron/cafeteria,
+/area/hallway/secondary/exit/departure_lounge)
 "eTD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30684,18 +30680,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
-"lUp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/turf/open/floor/catwalk_floor,
-/area/maintenance/starboard/fore)
 "lUq" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/red{
@@ -31886,18 +31870,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"mAv" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Hydroponics";
-	req_one_access_txt = "35;28"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/service/hydroponics)
 "mAy" = (
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /obj/machinery/button/door/directional/north{
@@ -32174,16 +32146,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"mFN" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Hydroponics";
-	req_one_access_txt = "35;28"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/service/hydroponics)
 "mFW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -35723,6 +35685,19 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/cargo/qm)
+"otb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_access_txt = null;
+	req_one_access = "35;28"
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/service/hydroponics)
 "otz" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -41991,6 +41966,13 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
+"rOh" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/fore)
 "rOo" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -42285,6 +42267,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/execution/transfer)
+"rWH" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_access_txt = null;
+	req_one_access = "35;28"
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/service/hydroponics)
 "rWL" = (
 /obj/machinery/computer/bank_machine,
 /obj/effect/turf_decal/bot_white,
@@ -44203,6 +44196,15 @@
 /obj/item/beacon,
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"sRM" = (
+/obj/effect/landmark/blobstart,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/fore)
 "sRN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -87802,8 +87804,8 @@ eIL
 rqA
 eIL
 iBJ
-mAv
-mFN
+otb
+rWH
 pZC
 pZC
 iBJ
@@ -98072,7 +98074,7 @@ alP
 mdr
 alP
 pGB
-aeR
+diY
 gjM
 alP
 dwp
@@ -98329,7 +98331,7 @@ alP
 rCp
 alP
 ovw
-cfP
+sRM
 kgs
 alP
 dwp
@@ -98586,8 +98588,8 @@ alP
 awJ
 alP
 jaf
-lUp
-aHG
+doQ
+rOh
 kFm
 mIB
 alP
@@ -103999,7 +104001,7 @@ rbC
 sdJ
 reL
 xze
-dnZ
+eTB
 qoF
 bpj
 ghw

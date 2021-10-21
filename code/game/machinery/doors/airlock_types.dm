@@ -20,6 +20,10 @@
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
 
+/obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
+	icon = 'icons/obj/doors/airlocks/station/medical.dmi'	 //Uses same icon as /medical, maybe update it with its own unique icon one day?
+	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
+
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -99,6 +103,10 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/medical/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/hydroponics/glass //Uses same icon as medical/glass, maybe update it with its own unique icon one day?
 	opacity = FALSE
 	glass = TRUE
 
