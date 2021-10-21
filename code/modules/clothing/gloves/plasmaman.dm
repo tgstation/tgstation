@@ -68,11 +68,6 @@
 	permeability_coefficient = 0.05
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 95, ACID = 95)
 
-/obj/item/clothing/gloves/color/plasmaman/prototype
-	name = "prototype envirogloves"
-	icon_state = "protoplasma"
-	inhand_icon_state = "protoplasma"
-
 /obj/item/clothing/gloves/color/plasmaman/clown
 	name = "clown envirogloves"
 	icon_state = "clownplasma"
