@@ -89700,9 +89700,6 @@
 /area/service/theater/abandoned)
 "uyO" = (
 /obj/structure/closet/secure_closet/hos,
-/obj/item/clothing/head/hos/beret,
-/obj/item/clothing/suit/armor/hos/trenchcoat,
-/obj/item/clothing/under/rank/security/head_of_security/grey,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
