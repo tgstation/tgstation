@@ -37,10 +37,16 @@
 	allow_intruder_use = TRUE
 
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user)
-	user.dropItemToGround(src, TRUE)
-	var/mob/new_body = user.wabbajack("animal")
-	balloon_alert(new_body, "wabbajack, wabbajack!")
+	tgui_alert_async(user, "Are you sure you want to use this? It will be used on yourself!", "Warning!", buttons = list("Yes", "No"), callback = CALLBACK(src, .proc/on_tgui_submit, user, user.client))
 	return FALSE
+
+/obj/item/gun/magic/staff/change/proc/on_tgui_submit(mob/living/user, client/using_client, choice)
+	if(QDELETED(user) || loc != user || choice != "Yes" || user.incapacitated() || using_client != user.client)
+		return
+	user.dropItemToGround(src, TRUE)
+	var/randomize = pick("monkey","slime","humanoid","animal")
+	var/mob/new_body = user.wabbajack(randomize)
+	balloon_alert(new_body, "wabbajack, wabbajack!")
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
