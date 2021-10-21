@@ -541,28 +541,19 @@
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
-	var/obj/item/champagne_cork/popped_cork = new(user.loc)
-	popped_cork.might_of_the_sun_king = TRUE
-	var/turf/pop_target = get_edge_target_turf(popped_cork, user.dir)
-	popped_cork.throw_at(target = pop_target, thrower = user, speed = 2, range = 7, spin = FALSE)
+	var/obj/projectile/champagne_cork/popped_cork = new (get_turf(src))
+	popped_cork.firer =  user
+	popped_cork.fired_from = src
+	popped_cork.fire(angle2dir(user.dir))
 
-/obj/item/champagne_cork
+/obj/projectile/champagne_cork
 	name = "champagne cork"
-	icon = 'icons/obj/drinks.dmi'
 	icon_state = "champagne_cork"
-	force = 0
-	throwforce = 10
-	///this var determines if the cork will knockdown on impact.
-	var/might_of_the_sun_king = FALSE
-
-/obj/item/champagne_cork/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(!iscarbon(hit_atom) || !might_of_the_sun_king)
-		return
-
-	var/mob/living/carbon/champagne_victim = hit_atom
-	champagne_victim.Knockdown(20)
-	might_of_the_sun_king = FALSE
+	hitsound = 'sound/weapons/genhit.ogg'
+	ricochets_max = 1
+	ricochet_chance = 50
+	range = 7
+	knockdown = 2 SECONDS
 
 /obj/item/reagent_containers/food/drinks/bottle/blazaam
 	name = "Ginbad's Blazaam"
