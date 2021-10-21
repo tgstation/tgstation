@@ -181,19 +181,19 @@ const Blanks = (props, context) => {
     has_toner,
   } = data;
 
-  const sortBlanks = sortBy(
+  const sortedBlanks = sortBy(
     blank => blanks.category,
   )(blanks || []);
 
   const categories = [];
-  for (let blank of sortBlanks) {
+  for (let blank of sortedBlanks) {
     if (!categories.includes(blank.category)) {
       categories.push(blank.category);
     }
   }
 
   const selectedCategory = category ?? categories[0];
-  const selectCategory = sortBlanks.filter(blank => (
+  const visibleBlanks = sortedBlanks.filter(blank => (
     blank.category === selectedCategory
   ));
 
@@ -208,7 +208,7 @@ const Blanks = (props, context) => {
         })}
       />
       <Box mt={0.4}>
-        {selectCategory.map(blank => (
+        {visibleBlanks.map(blank => (
           <Button key={blank.path}
             content={blank.code}
             tooltip={blank.name}
