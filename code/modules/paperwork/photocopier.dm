@@ -62,13 +62,16 @@
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
 	
-	var/json = file2text("config/blanks.json")
-	var/list/blanks = json_decode(json)
-	if (blanks != null)
-		data["blanks"] = blanks
-		data["category"] = category
-		data["forms_exist"] = TRUE
-	else
+	try
+		var/json = file2text("config/blanks.json")
+		var/list/blanks = json_decode(json)
+		if (blanks != null)
+			data["blanks"] = blanks
+			data["category"] = category
+			data["forms_exist"] = TRUE
+		else
+			data["forms_exist"] = FALSE
+	catch()
 		data["forms_exist"] = FALSE
 	
 	if(photo_copy)

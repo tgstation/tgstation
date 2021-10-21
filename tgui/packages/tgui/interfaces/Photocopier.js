@@ -32,8 +32,7 @@ export const Photocopier = (props, context) => {
         ) : (
           <Section title="Blanks">
             <Box color="average">
-              There is no list of forms on your station\'s local network.
-			  Please contact your system administrator.
+              No forms found. Please contact your system administrator.
             </Box>
           </Section>  
         )},
