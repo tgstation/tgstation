@@ -44,7 +44,7 @@
 	if(QDELETED(user) || loc != user || choice != "Yes" || user.incapacitated() || using_client != user.client)
 		return
 	user.dropItemToGround(src, TRUE)
-	var/randomize = pick("monkey","slime","humanoid","animal")
+	var/randomize = pick("monkey","humanoid","animal")
 	var/mob/new_body = user.wabbajack(randomize)
 	balloon_alert(new_body, "wabbajack, wabbajack!")
 
