@@ -214,7 +214,7 @@
 	greyscale_colors = null
 	icon_state = "pda-library"
 	icon_alert = "pda-r-library"
-	icon_pai = "pai_off_overlay_library"
+	icon_pai = "pai_overlay_library"
 	icon_inactive_pai = "pai_off_overlay_library"
 	default_cartridge = /obj/item/cartridge/curator
 	inserted_item = /obj/item/pen/fountain
