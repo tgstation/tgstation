@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "Backup human names are once again respected when forcibly humanizing what would otherwise be a non-human head of staff."
