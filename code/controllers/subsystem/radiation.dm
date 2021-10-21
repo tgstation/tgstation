@@ -29,8 +29,6 @@ SUBSYSTEM_DEF(radiation)
 		if (!can_irradiate_basic(target))
 			continue
 
-		// MOTHBLOCKS TODO: Minimum timer
-
 		var/current_insulation = 1
 
 		for (var/turf/turf_in_between in get_line(source, target) - get_turf(source))
@@ -53,6 +51,14 @@ SUBSYSTEM_DEF(radiation)
 			continue
 
 		if (current_insulation <= pulse_information.threshold)
+			continue
+
+		var/irradiation_result = SEND_SIGNAL(target, COMSIG_PRE_POTENTIAL_IRRADIATION_WITHIN_RANGE, pulse_information)
+		if (irradiation_result & CANCEL_IRRADIATION)
+			continue
+
+		if (pulse_information.minimum_exposure_time && !(irradiation_result & SKIP_MINIMUM_EXPOSURE_TIME_CHECK))
+			target.AddComponent(/datum/component/radiation_countdown, pulse_information.minimum_exposure_time)
 			continue
 
 		if (!prob(pulse_information.chance))
