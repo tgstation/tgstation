@@ -546,14 +546,21 @@
 	popped_cork.fired_from = src
 	popped_cork.fire(angle2dir(user.dir))
 
-/obj/projectile/champagne_cork
+/obj/projectile/reusable/champagne_cork
 	name = "champagne cork"
+	icon = 'icons/obj/drinks.dmi'
 	icon_state = "champagne_cork"
 	hitsound = 'sound/weapons/genhit.ogg'
 	ricochets_max = 1
 	ricochet_chance = 50
 	range = 7
 	knockdown = 2 SECONDS
+	ammo_type = /obj/item/trash/champagne_cork
+
+/obj/item/trash/champagne_cork
+	name = "champagne cork"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "champagne_cork"
 
 /obj/item/reagent_containers/food/drinks/bottle/blazaam
 	name = "Ginbad's Blazaam"
