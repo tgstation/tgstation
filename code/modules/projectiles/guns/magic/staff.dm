@@ -6,9 +6,16 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
+	var/allow_intruder_use = FALSE
+
 
 /obj/item/gun/magic/staff/check_botched(mob/living/user, params)
-	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) && !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
+	if(allow_intruder_use)
+		return ..()
+
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
+		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
+		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion))
 		return !on_intruder_use(user)
 	return ..()
 
@@ -25,6 +32,9 @@
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
 	school = SCHOOL_TRANSMUTATION
+
+/obj/item/gun/magic/staff/change/unrestricted
+	allow_intruder_use = TRUE
 
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user)
 	user.dropItemToGround(src, TRUE)
@@ -49,6 +59,9 @@
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
 	school = SCHOOL_RESTORATION
+
+/obj/item/gun/magic/staff/healing/unrestricted
+	allow_intruder_use = TRUE
 
 /obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user)
 	user.dropItemToGround(src, TRUE)
@@ -75,11 +88,16 @@
 	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
 	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
 
+/obj/item/gun/magic/staff/chaos/unrestricted
+	allow_intruder_use = TRUE
+
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
 	. = ..()
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
+	if(prob(95)) // You have a 5% chance of hitting yourself when using the staff of chaos.
+		return TRUE
 	balloon_alert(user, "chaos!")
 	user.dropItemToGround(src, TRUE)
 	process_fire(user, user, FALSE)
@@ -124,10 +142,6 @@
 	sharpness = SHARP_EDGED
 	max_charges = 4
 	school = SCHOOL_EVOCATION
-
-// Spellblade is just a melee weapon to non-wizards
-/obj/item/gun/magic/staff/spellblade/on_intruder_use(mob/living/user)
-	return FALSE
 
 /obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
