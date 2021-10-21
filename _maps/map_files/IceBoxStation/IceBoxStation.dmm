@@ -30124,7 +30124,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics";
-	req_one_access = null;
 	req_one_access_txt = "35;28"
 	},
 /turf/open/floor/iron/textured_half{
@@ -42426,7 +42425,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics";
-	req_one_access = null;
 	req_one_access_txt = "35;28"
 	},
 /turf/open/floor/iron/textured_half{
