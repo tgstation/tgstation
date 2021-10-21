@@ -261,7 +261,7 @@
 	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
 	for(var/atom/movable/every_single_thing as anything in target_shove_turf.contents)
-		SEND_SIGNAL(every_single_thing, COMSIG_CARBON_DISARM_COLLIDE, src, target) //Signal is being sent to the object that's being collided with, followed by the shover, and the shoved person.
+		SEND_SIGNAL(every_single_thing, COMSIG_CARBON_DISARM_COLLIDE, src, target)
 	//Thank you based whoneedsspace
 	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
 

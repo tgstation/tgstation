@@ -318,7 +318,9 @@
 /obj/structure/closet/proc/after_close(mob/living/user)
 	return
 
-
+/**
+ * Toggles a closet open or closed, to the opposite state. Does not respect locked or welded states, however.
+ */
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
 		return close(user)
@@ -619,15 +621,16 @@
 /obj/structure/closet/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_carbon(mob/living/carbon/shover, mob/living/carbon/target)
+/obj/structure/closet/proc/locker_carbon(obj/structure/closet/closet, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
-	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	//target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	if(opened)
 		target.forceMove(src)
 	if(!(locked || welded))
 		toggle()
+		say("Bro I am [opened]!")
 	update_icon()
-	target.visible_message(span_danger("[name] shoves [target.name] into \the [src]!"),
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (locker/crate)")

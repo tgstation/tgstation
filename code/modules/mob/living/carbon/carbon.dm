@@ -1285,9 +1285,10 @@
 	SIGNAL_HANDLER
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-/mob/living/carbon/proc/disarm_collision(mob/living/carbon/shover, mob/living/carbon/target, mob/living/carbon/collateral)
+//I want 1 -> 2 -> 3. I have 2->3->1
+/mob/living/carbon/proc/disarm_collision(mob/living/carbon/collateral, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
-	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN) ///This one leaves me very confused. Head empty.
+	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 	if(!collateral.is_shove_knockdown_blocked())
 		collateral.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 	target.visible_message(span_danger("[shover] shoves [target.name] into [collateral.name]!"),
