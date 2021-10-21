@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - admin: "Added a \"suppress_message_admins\" variable to SDQL spells, which prevents the spell's query from getting output to all admins' chat panels. The query will still be written to the game log."
+  - bugfix: "The SDQL spell parse error modal grows properly."
