@@ -40,6 +40,7 @@
 		UnregisterSignal(target, COMSIG_LIVING_DEATH)
 
 /obj/item/implant/chem/proc/on_death(mob/living/source)
+	SIGNAL_HANDLER
 	activate(reagents.total_volume)
 
 /obj/item/implant/chem/activate(cause)
