@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - rscadd: "makes it so lockers/crates can have access electronics removed/inserted"
