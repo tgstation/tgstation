@@ -1,5 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - bugfix: "The Lavaland Syndicate Base is now Powered again."
-  - code_imp: "repathed /unpowered Syndicate Base areas to /powered"
