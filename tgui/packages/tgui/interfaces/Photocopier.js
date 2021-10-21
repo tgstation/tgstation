@@ -1,7 +1,7 @@
-import { ProgressBar, NumberInput, Button, Section, Box, Flex, Dropdown } from '../components';
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { sortBy } from "common/collections";
+import { useBackend } from '../backend';
+import { Box, Button, Dropdown, Flex, NumberInput, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 
 export const Photocopier = (props, context) => {
   const { data } = useBackend(context);
