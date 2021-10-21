@@ -541,16 +541,19 @@
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
-	var/obj/projectile/champagne_cork/popped_cork = new (get_turf(src))
+	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
 	popped_cork.firer =  user
 	popped_cork.fired_from = src
 	popped_cork.fire(angle2dir(user.dir))
 
-/obj/projectile/reusable/champagne_cork
+/obj/projectile/bullet/reusable/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "champagne_cork"
 	hitsound = 'sound/weapons/genhit.ogg'
+	damage = 10
+	sharpness = NONE
+	impact_effect_type = null
 	ricochets_max = 1
 	ricochet_chance = 50
 	range = 7
