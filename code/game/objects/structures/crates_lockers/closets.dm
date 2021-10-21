@@ -333,9 +333,9 @@
 		if(ispath(material_drop) && material_drop_amount)
 			new material_drop(loc, material_drop_amount)
 		if (electronics)
-			var/obj/item/electronics/airlock/ae = electronics
+			var/obj/item/electronics/airlock/electronics_ref = electronics
 			electronics = null
-			ae.forceMove(drop_location())
+			electronics_ref.forceMove(drop_location())
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)
@@ -402,7 +402,7 @@
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
 			span_notice("You start to install electronics into the [src]..."))
-		if (!do_after(user, 40, target = src))
+		if (!do_after(user, 4 SECONDS, target = src))
 			return FALSE
 		if (electronics || secure)
 			return FALSE
@@ -422,23 +422,23 @@
 			span_notice("You begin to remove the electronics from the [src]..."))
 		var/had_electronics = !!electronics
 		var/was_secure = secure
-		if (!do_after(user, 40, target = src))
+		if (!do_after(user, 4 SECONDS, target = src))
 			return FALSE
 		if ((had_electronics && !electronics) || (was_secure && !secure))
 			return FALSE
-		var/obj/item/electronics/airlock/ae
+		var/obj/item/electronics/airlock/electronics_ref
 		if (!electronics)
-			ae = new /obj/item/electronics/airlock(loc)
+			electronics_ref = new /obj/item/electronics/airlock(loc)
 			gen_access()
 			if (req_one_access.len)
-				ae.one_access = 1
-				ae.accesses = req_one_access
+				electronics_ref.one_access = 1
+				electronics_ref.accesses = req_one_access
 			else
-				ae.accesses = req_access
+				electronics_ref.accesses = req_access
 		else
-			ae = electronics
+			electronics_ref = electronics
 			electronics = null
-			ae.forceMove(drop_location())
+			electronics_ref.forceMove(drop_location())
 		secure = FALSE
 		update_appearance()
 	else if(!user.combat_mode)
