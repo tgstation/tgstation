@@ -192,13 +192,10 @@ const Blanks = (props, context) => {
     }
   }
 
-  let selectCategory;
-  if (category === null) {
-    selectCategory = sortBlanks.filter(blank => 
-      blank.category === categories[0]);
-  } else {
-    selectCategory = sortBlanks.filter(blank => blank.category === category);
-  }
+  const selectedCategory = category ?? categories[0];
+  const selectCategory = sortBlanks.filter(blank => (
+    blank.category === selectedCategory
+  ));
 
   return (
     <Section title="Blanks">
