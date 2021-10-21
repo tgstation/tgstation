@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	charge_count = 0
 	breaker = FALSE
 	set_power()
-	set_state(0)
+	disable()
 	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
@@ -296,32 +296,59 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", INVESTIGATE_GRAVITY)
 	update_appearance()
 
+/obj/machinery/gravity_generator/main/proc/enable()
+	charging_state = POWER_IDLE
+	on = TRUE
+	update_use_power(ACTIVE_POWER_USE)
+
+	if (!SSticker.IsRoundInProgress())
+		return
+
+	soundloop.start()
+	if (!gravity_in_level())
+		investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
+		message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
+		shake_everyone()
+	gravity_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 2, "host" = src, "gravity_value" = 6))
+
+	complete_state_update()
+
+/obj/machinery/gravity_generator/main/proc/disable()
+	charging_state = POWER_IDLE
+	on = FALSE
+	update_use_power(IDLE_POWER_USE)
+
+	if (!SSticker.IsRoundInProgress())
+		return
+
+	soundloop.stop()
+	if (gravity_in_level())
+		investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
+		message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
+		shake_everyone()
+
+	QDEL_NULL(gravity_field)
+	complete_state_update()
+
+/obj/machinery/gravity_generator/main/proc/complete_state_update()
+	update_appearance()
+	update_list()
+	updateUsrDialog()
+
 // Set the state of the gravity.
 /obj/machinery/gravity_generator/main/proc/set_state(new_state)
-	charging_state = POWER_IDLE
+
 	on = new_state
 	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = FALSE
 	if(SSticker.IsRoundInProgress())
 		if(on) // If we turned on and the game is live.
-			soundloop.start()
-			if(gravity_in_level() == FALSE)
-				alert = TRUE
-				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
-				message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
-			gravity_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 2, "host" = src, "gravity_value" = 6))
-		else
-			soundloop.stop()
-			if(gravity_in_level() == TRUE)
-				alert = TRUE
-				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
-				message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
-			QDEL_NULL(gravity_field)
 
-	update_appearance()
-	update_list()
-	src.updateUsrDialog()
+		else
+
+
+
 	if(alert)
 		shake_everyone()
 
@@ -331,9 +358,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		return
 	if(charging_state != POWER_IDLE)
 		if(charging_state == POWER_UP && charge_count >= 100)
-			set_state(1)
+			enable()
 		else if(charging_state == POWER_DOWN && charge_count <= 0)
-			set_state(0)
+			disable()
 		else
 			if(charging_state == POWER_UP)
 				charge_count += 2
