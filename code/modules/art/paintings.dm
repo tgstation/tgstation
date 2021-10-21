@@ -194,7 +194,7 @@
 		SStgui.update_uis(src)
 
 /obj/item/canvas/nineteen_nineteen
-	name = "canvas(19x19)"
+	name = "canvas (19x19)"
 	icon_state = "19x19"
 	width = 19
 	height = 19
@@ -204,7 +204,7 @@
 	framed_offset_y = 9
 
 /obj/item/canvas/twentythree_nineteen
-	name = "canvas(23x19)"
+	name = "canvas (23x19)"
 	icon_state = "23x19"
 	width = 23
 	height = 19
@@ -214,7 +214,7 @@
 	framed_offset_y = 8
 
 /obj/item/canvas/twentythree_twentythree
-	name = "canvas(23x23)"
+	name = "canvas (23x23)"
 	icon_state = "23x23"
 	width = 23
 	height = 23

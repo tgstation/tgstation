@@ -30,8 +30,7 @@
 		/obj/item/razor=3,
 		/obj/item/canvas/nineteen_nineteen = 5,
 		/obj/item/canvas/twentythree_nineteen = 5,
-		/obj/item/canvas/twentythree_twentythree = 5,
-		/obj/item/canvas/twentyfour_twentyfour = 5
+		/obj/item/canvas/twentythree_twentythree = 5
 	)
 	contraband = list(
 		/obj/item/dice/fudge = 9,
@@ -41,6 +40,7 @@
 	premium = list(
 		/obj/item/disk/holodisk = 5,
 		/obj/item/toy/crayon/spraycan  = 3,
+		/obj/item/canvas/twentyfour_twentyfour = 5,
 		/obj/item/rcl = 2,
 		/obj/item/airlock_painter = 1,
 		/obj/item/melee/skateboard/pro = 3,
