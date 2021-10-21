@@ -103,7 +103,7 @@
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
 	if(user.anti_magic_check(TRUE, FALSE, FALSE)) // Don't let people with antimagic use the staff of chaos.
-		return TRUE
+		return FALSE
 
 	if(prob(95)) // You have a 5% chance of hitting yourself when using the staff of chaos.
 		return TRUE
