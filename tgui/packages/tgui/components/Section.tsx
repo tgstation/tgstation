@@ -46,7 +46,9 @@ export class Section extends Component<SectionProps> {
   }
 
   componentDidUpdate() {
-    if (this.props.autoScrolling && this.scrollableRef.current) {
+    if (this.scrollable
+      && this.props.autoScrolling
+      && this.scrollableRef.current) {
       this.scrollableRef.current
         .scrollTop = this.scrollableRef.current.scrollHeight;
     }

@@ -20,7 +20,7 @@
 	var/username
 	var/active_channel
 	var/list/channel_history = list()
-	var/operator_mode = FALSE // Channel operator mode
+	var/auto_scroll = TRUE // When true will force the scrollable chat to stick to the bottom
 	var/netadmin_mode = FALSE // Administrator mode (invisible to other users + bypasses passwords)
 	//A list of all the converstations we're a part of
 	var/list/datum/ntnet_conversation/conversations = list()
@@ -171,6 +171,9 @@
 			var/datum/computer_file/program/chatclient/pinged = locate(params["ref"]) in channel.active_clients + channel.offline_clients
 			channel.ping_user(src, pinged)
 			return TRUE
+		if("PRG_auto_scroll")
+			auto_scroll = !auto_scroll
+			return TRUE
 
 /datum/computer_file/program/chatclient/process_tick()
 	. = ..()
@@ -225,7 +228,7 @@
 				"id" = conv.id
 			)))
 	data["all_channels"] = all_channels
-
+	data["auto_scroll"] = auto_scroll
 	data["active_channel"] = active_channel
 	data["selfref"] = REF(src) //used to verify who is you, as usernames can be copied.
 	data["username"] = username

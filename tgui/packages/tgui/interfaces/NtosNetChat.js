@@ -66,6 +66,7 @@ export const NtosNetChat = (props, context) => {
     is_operator,
     strong,
     selfref,
+    auto_scroll,
     all_channels = [],
     clients = [],
     messages = [],
@@ -154,7 +155,7 @@ export const NtosNetChat = (props, context) => {
           <Stack.Item grow={5}>
             <Stack vertical fill>
               <Stack.Item grow>
-                <Section scrollable fill>
+                <Section scrollable autoScrolling={!!auto_scroll} fill>
                   {in_channel && (
                     authorized ? (
                       messages.map(message => (
@@ -255,6 +256,13 @@ export const NtosNetChat = (props, context) => {
                     </Section>
                   </Stack.Item>
                   <Section>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        checked={auto_scroll}
+                        onClick={() => act('PRG_auto_scroll')}>
+                        Auto scroll chat
+                      </Button.Checkbox>
+                    </Stack.Item>
                     <Stack.Item mb="8px">
                       Settings for {title}:
                     </Stack.Item>
