@@ -73,6 +73,7 @@
 	var/forcecrit = 0
 	var/num_shards = 7
 	var/list/pinned_mobs = list()
+	///Icon for the maintenance panel overlay
 	var/panel_type = "panel1"
 
 	/**
