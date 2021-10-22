@@ -215,6 +215,8 @@
 			. = "fff4e6"
 		if("orange")
 			. = "ffc905"
+		if(findtext(skin_tone,GLOB.is_color))
+			. = skin_tone
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE
