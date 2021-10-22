@@ -202,7 +202,7 @@ const Blanks = (props, context) => {
       <Dropdown
         width="100%"
         options={categories}
-        selected={category === null ? categories[0] : category}
+        selected={selectedCategory}
         onSelected={value => act("choose_category", {
           category: value,
         })}
