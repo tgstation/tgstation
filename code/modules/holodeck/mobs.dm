@@ -5,10 +5,10 @@
 /mob/living/simple_animal/holodeck_monkey
 	name = "monkey"
 	desc = "A holographic creature fond of bananas."
-	icon = 'icons/mob/monkey.dmi'
-	icon_state = "monkey1"
-	icon_living = "monkey1"
-	icon_dead = "monkey1_dead"
+	icon = 'icons/mob/human.dmi'
+	icon_state = "monkey"
+	icon_living = "monkey"
+	icon_dead = "monkey_dead"
 	speak_emote = list("chimpers")
 	emote_hear = list("chimpers.")
 	emote_see = list("scratches.", "looks around.")

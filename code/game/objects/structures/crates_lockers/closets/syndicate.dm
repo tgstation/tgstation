@@ -95,6 +95,7 @@
 
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergency storage closet for repairs."
+	storage_capacity = 60 // This is gonna be used for debug.
 
 /obj/structure/closet/syndicate/resources/everything/PopulateContents()
 	var/list/resources = list(
