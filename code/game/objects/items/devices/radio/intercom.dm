@@ -150,12 +150,16 @@
 
 /obj/item/radio/intercom/directional/north
 	pixel_y = 22
+	dir = SOUTH
 
 /obj/item/radio/intercom/directional/south
 	pixel_y = -28
+	dir = NORTH
 
 /obj/item/radio/intercom/directional/east
 	pixel_x = 28
+	dir = WEST
 
 /obj/item/radio/intercom/directional/west
 	pixel_x = -28
+	dir = EAST

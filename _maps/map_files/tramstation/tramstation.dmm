@@ -9776,20 +9776,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/reinforced/shuttle,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/caution/stand_clear/red{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -15794,6 +15780,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 3
 	},
+/obj/structure/reagent_dispensers/virusfood/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "efY" = (
@@ -17594,11 +17581,6 @@
 	},
 /area/science/breakroom)
 "eMh" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/cable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/vending/wallmed/directional/south,
 /obj/structure/cable,
@@ -26277,22 +26259,6 @@
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "hVL" = (
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = 20
-	},
-/obj/structure/cable,
-/obj/machinery/door/window{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	dir = 1;
-	icon_state = "rightsecure";
-	name = "Primary AI Core Access";
-	req_access_txt = "16"
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/machinery/flasher/directional/south{
 	id = "AI";
 	pixel_x = 20
@@ -35070,13 +35036,6 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "lnO" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/window/reinforced/shuttle,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
@@ -58009,16 +57968,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/reinforced/shuttle,
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -65071,6 +65020,7 @@
 "wKA" = (
 /obj/machinery/iv_drip,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "wKD" = (
@@ -66650,14 +66600,6 @@
 	icon_state = "plating"
 	},
 /obj/structure/window/reinforced/shuttle,
-/obj/structure/fluff/tram_rail,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
@@ -66896,20 +66838,6 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "xwo" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/window/reinforced/shuttle,
-/obj/effect/turf_decal/stripes{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/caution/stand_clear/red{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
