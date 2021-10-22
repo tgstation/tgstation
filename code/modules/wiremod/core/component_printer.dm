@@ -27,7 +27,7 @@
 		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
 			continue
 
-		current_unlocked_designs += design.build_path
+		current_unlocked_designs[design.build_path] = design.id
 
 	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
 	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
@@ -43,7 +43,7 @@
 	SIGNAL_HANDLER
 	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
 		return
-	current_unlocked_designs += added_design.build_path
+	current_unlocked_designs[added_design.build_path] = added_design.id
 
 /obj/machinery/component_printer/proc/on_removed(datum/source, datum/design/added_design, custom)
 	SIGNAL_HANDLER

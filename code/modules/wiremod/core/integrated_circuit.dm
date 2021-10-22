@@ -603,18 +603,25 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			component.ui_perform_action(ui.user, params["action_name"])
 		if("print_component")
 			var/component_path = text2path(params["component_to_print"])
-			var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
-			if(!printer)
-				balloon_alert(ui.user, "linked printer not found!")
-				return
-			var/obj/item/circuit_component/component = printer.print_component(component_path)
-			if(!component)
-				balloon_alert(ui.user, "failed to make the component!")
+			var/obj/item/circuit_component/component
+			if(!check_rights_for(ui.user.client, R_SPAWN))
+				var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+				if(!printer)
+					balloon_alert(ui.user, "linked printer not found!")
+					return
+				component = printer.print_component(component_path)
+				if(!component)
+					balloon_alert(ui.user, "failed to make the component!")
+					return
+			else
+				if(!ispath(component_path, /obj/item/circuit_component))
+					return
+				component = new component_path(drop_location())
+				component.datum_flags |= DF_VAR_EDITED
+			if(!add_component(component))
 				return
 			component.rel_x = text2num(params["rel_x"])
 			component.rel_y = text2num(params["rel_y"])
-			if(!add_component(component))
-				return
 			return TRUE
 
 #undef WITHIN_RANGE

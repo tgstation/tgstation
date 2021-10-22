@@ -70,11 +70,13 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
+      act,
     } = this.props;
 
     return (
       <Stack.Item>
         <DisplayName
+          act={act}
           port={port}
           isOutput={isOutput}
           componentId={componentId}

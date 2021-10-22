@@ -6,6 +6,7 @@
 /obj/item/circuit_component/save_shell
 	display_name = "Save Shell"
 	desc = "A component that saves a shell."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_ADMIN
 
 	/// Returns the output from the proccall
