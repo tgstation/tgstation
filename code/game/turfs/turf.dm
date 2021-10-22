@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!target)
 		return FALSE
 	var/isliving = isliving(falling)
-	if(!isobj(falling) && !isliving)
+	if(!isliving && !isobj(falling))
 		return
 	if(isliving)
 		var/mob/living/falling_living = falling

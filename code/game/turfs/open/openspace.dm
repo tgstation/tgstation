@@ -37,6 +37,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency, FALSE)
+	RegisterSignal(src, COMSIG_ATOM_CREATED, .proc/on_atom_created)
 
 /**
  * Prepares a moving movable to be precipitated if Move() is successful.
@@ -49,11 +50,27 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		//higher priority than CURRENTLY_Z_FALLING so the movable doesn't fall on Entered()
 		movable.set_currently_z_moving(CURRENTLY_Z_FALLING_FROM_MOVE)
 
-///Meant to make movables fall when forceMove()'d to this turf.
+///Makes movables fall when forceMove()'d to this turf.
 /turf/open/openspace/Entered(atom/movable/movable)
 	. = ..()
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))
 		zFall(movable, falling_from_move = TRUE)
+/**
+ * Drops movables spawned on this turf only after they are successfully initialized.
+ * so flying mobs, qdeleted movables and things that were moved somewhere else during
+ * Initialize() won't fall by accident.
+ */
+/turf/open/openspace/proc/on_atom_created(datum/source, atom/created_atom)
+	SIGNAL_HANDLER
+	if(ismovable(created_atom))
+		//Drop it only when it's finished initializing, not before.
+		addtimer(CALLBACK(src, .proc/zfall_if_on_turf, created_atom), 0 SECONDS)
+
+/turf/open/openspace/proc/zfall_if_on_turf(atom/movable/movable)
+	. = ..()
+	if(QDELETED(movable) || movable.loc != src)
+		return
+	zFall(movable)
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
