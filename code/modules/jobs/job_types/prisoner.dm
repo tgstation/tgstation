@@ -16,11 +16,11 @@
 
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (
-		/obj/effect/spawner/lootdrop/prison_contraband = 1
+		/obj/effect/spawner/random/contraband/prison = 1
 	)
 
 	family_heirlooms = list(/obj/item/pen/blue)
-
+	rpg_title = "Defeated Miniboss"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS
 
 

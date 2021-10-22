@@ -39,6 +39,7 @@ SUBSYSTEM_DEF(title)
 
 	if(splash_turf)
 		splash_turf.icon = icon
+		splash_turf.handle_generic_titlescreen_sizes()
 
 	return ..()
 

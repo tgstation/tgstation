@@ -74,7 +74,7 @@
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
-		AddElement(/datum/element/point_of_interest)
+		SSpoints_of_interest.make_point_of_interest(src)
 		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
@@ -186,7 +186,7 @@
 	var/facial_haircolor
 	var/skin_tone
 
-/obj/effect/mob_spawn/human/Initialize()
+/obj/effect/mob_spawn/human/Initialize(mapload)
 	if(ispath(outfit))
 		outfit = new outfit()
 	if(!outfit)
@@ -214,11 +214,11 @@
 	if(haircolor)
 		H.hair_color = haircolor
 	else
-		H.hair_color = random_short_color()
+		H.hair_color = "#[random_color()]"
 	if(facial_haircolor)
 		H.facial_hair_color = facial_haircolor
 	else
-		H.facial_hair_color = random_short_color()
+		H.facial_hair_color = "#[random_color()]"
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else

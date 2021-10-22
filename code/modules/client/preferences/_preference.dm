@@ -206,19 +206,22 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	// Both of these will cache savefiles, but only for a tick.
 	// This is because storing a savefile will lock it, causing later issues down the line.
+	// Do not change them to addtimer, since the timer SS might not be running at this time.
 
 	switch (savefile_identifier)
 		if (PREFERENCE_CHARACTER)
 			if (!character_savefile)
 				character_savefile = new /savefile(path)
 				character_savefile.cd = "/character[default_slot]"
-				addtimer(VARSET_CALLBACK(src, character_savefile, null), 1)
+				spawn (1)
+					character_savefile = null
 			return character_savefile
 		if (PREFERENCE_PLAYER)
 			if (!game_savefile)
 				game_savefile = new /savefile(path)
 				game_savefile.cd = "/"
-				addtimer(VARSET_CALLBACK(src, game_savefile, null), 1)
+				spawn (1)
+					game_savefile = null
 			return game_savefile
 		else
 			CRASH("Unknown savefile identifier [savefile_identifier]")
@@ -421,31 +424,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return data
 
-/// A preference that represents an RGB color of something, crunched down to 3 hex numbers.
-/// Was used heavily in the past, but doesn't provide as much range and only barely conserves space.
-/datum/preference/color_legacy
-	abstract_type = /datum/preference/color_legacy
-
-/datum/preference/color_legacy/deserialize(input, datum/preferences/preferences)
-	return sanitize_hexcolor(input)
-
-/datum/preference/color_legacy/create_default_value()
-	return random_short_color()
-
-/datum/preference/color_legacy/is_valid(value)
-	var/static/regex/is_legacy_color = regex(@"^[0-9a-fA-F]{3}$")
-	return findtext(value, is_legacy_color)
-
 /// A preference that represents an RGB color of something.
 /// Will give the value as 6 hex digits, without a hash.
 /datum/preference/color
 	abstract_type = /datum/preference/color
 
 /datum/preference/color/deserialize(input, datum/preferences/preferences)
-	return sanitize_color(input)
+	return sanitize_hexcolor(input)
 
 /datum/preference/color/create_default_value()
 	return random_color()
+
+/datum/preference/color/serialize(input)
+	return sanitize_hexcolor(input)
 
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)

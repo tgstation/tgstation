@@ -87,7 +87,7 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "az" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "aB" = (
@@ -141,7 +141,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/transport)
 "aN" = (
-/obj/machinery/power/grounding_rod{
+/obj/machinery/power/energy_accumulator/grounding_rod{
 	anchored = 1
 	},
 /turf/open/floor/mineral/titanium/blue,

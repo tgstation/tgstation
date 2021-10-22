@@ -18,7 +18,7 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/concat_list/populate_ports()
-	list_port = add_input_port("List", PORT_TYPE_LIST)
+	list_port = add_input_port("List", PORT_TYPE_LIST(PORT_TYPE_ANY))
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
 
 	output = add_output_port("Output", PORT_TYPE_STRING)

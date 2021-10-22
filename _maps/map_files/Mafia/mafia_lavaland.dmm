@@ -34,7 +34,7 @@
 	},
 /area/mafia)
 "j" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	max_integrity = 99999;
 	name = "Maintenance"
 	},

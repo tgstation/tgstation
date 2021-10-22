@@ -65,7 +65,7 @@
 	/// Do we shit flames behind us when we fire?
 	var/backblast = TRUE
 
-/obj/item/gun/ballistic/rocketlauncher/Initialize()
+/obj/item/gun/ballistic/rocketlauncher/Initialize(mapload)
 	. = ..()
 	if(backblast)
 		AddElement(/datum/element/backblast)

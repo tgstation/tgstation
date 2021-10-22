@@ -13,9 +13,9 @@
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
 
-/obj/item/cardboard_cutout/Initialize()
+/obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
-	possible_appearances = sortList(list(
+	possible_appearances = sort_list(list(
 		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),

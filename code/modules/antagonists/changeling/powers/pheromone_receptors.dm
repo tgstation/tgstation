@@ -11,6 +11,13 @@
 	dna_cost = 2
 	var/receptors_active = FALSE
 
+/datum/action/changeling/pheromone_receptors/Remove(mob/living/carbon/user)
+	if(receptors_active)
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.chem_recharge_slowdown -= 0.25
+		user.remove_status_effect(/datum/status_effect/agent_pinpointer/changeling)
+	..()
+
 /datum/action/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -48,7 +55,7 @@
 					changelings[C] = (CHANGELING_PHEROMONE_MAX_DISTANCE ** 2) - (distance ** 2)
 
 	if(changelings.len)
-		scan_target = pickweight(changelings) //Point at a 'random' changeling, biasing heavily towards closer ones.
+		scan_target = pick_weight(changelings) //Point at a 'random' changeling, biasing heavily towards closer ones.
 	else
 		scan_target = null
 

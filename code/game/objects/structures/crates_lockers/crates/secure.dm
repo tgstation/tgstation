@@ -9,22 +9,11 @@
 	var/tamperproof = 0
 	damage_deflection = 25
 
-/obj/structure/closet/crate/secure/update_overlays()
-	. = ..()
-	if(broken)
-		. += "securecrateemag"
-		return
-	if(locked)
-		. += "securecrater"
-		return
-	. += "securecrateg"
-
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()
 	else
 		return ..()
-
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
@@ -68,7 +57,7 @@
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
 	. = ..()
-	new /obj/effect/spawner/lootdrop/pizzaparty(src)
+	new /obj/effect/spawner/random/food_or_drink/pizzaparty(src)
 
 /obj/structure/closet/crate/secure/engineering
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."

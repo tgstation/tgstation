@@ -20,6 +20,7 @@
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = FALSE // so closet code knows to put the tag overlay back
+	can_install_electronics = FALSE
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
@@ -163,7 +164,7 @@
 	foldedbag_path = /obj/item/bodybag/environmental/
 	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
 
-/obj/structure/closet/body_bag/environmental/Initialize()
+/obj/structure/closet/body_bag/environmental/Initialize(mapload)
 	. = ..()
 	for(var/trait in weather_protection)
 		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
@@ -309,7 +310,7 @@
 	// The contents of the gas to be distributed to an occupant once sinched down. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
-/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize(mapload)
 	. = ..()
 	refresh_air()
 

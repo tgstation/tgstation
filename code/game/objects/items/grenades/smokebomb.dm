@@ -14,7 +14,7 @@
 	var/static/list/bruh_moment = list("Dank", "Hip", "Lit", "Based", "Robust", "Bruh", "Gamer")
 
 ///Here we generate the extremely insightful description.
-/obj/item/grenade/smokebomb/Initialize()
+/obj/item/grenade/smokebomb/Initialize(mapload)
 	. = ..()
 	desc = "The word '[pick(bruh_moment)]' is scribbled on it in crayon."
 

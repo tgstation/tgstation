@@ -420,7 +420,7 @@
 	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
 		if(istype(could_writ, /obj/item/paper/holy_writ))
 			continue
-		if(could_writ.info) //blank paper pls
+		if(could_writ.get_info_length()) //blank paper pls
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
@@ -448,7 +448,7 @@
 	show_written_words = FALSE
 
 	//info set in here because we need GLOB.deity
-/obj/item/paper/holy_writ/Initialize()
+/obj/item/paper/holy_writ/Initialize(mapload)
 	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
 	name = "[GLOB.deity]'s honorbound rules"
 	info = {"[GLOB.deity]'s honorbound rules:
@@ -614,7 +614,7 @@
 
 /datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
-		if(could_contract.info) //blank paper pls
+		if(could_contract.get_info_length()) //blank paper pls
 			continue
 		contract_target = could_contract
 		return ..()

@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/suit/toggle/labcoat = 1,
 		/obj/item/clothing/under/color/grey = 1,
 		/obj/item/clothing/gloves/color/fyellow = 1,
-		/obj/effect/spawner/lootdrop/gloves = 1,
+		/obj/effect/spawner/random/clothing/gloves = 1,
 		/obj/item/storage/wallet/random = 1,
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 
 		//light sources
 		/obj/item/flashlight = 1,
-		/obj/effect/spawner/lootdrop/glowstick = 1,
+		/obj/effect/spawner/random/decoration/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,
@@ -185,6 +185,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/ears/earmuffs = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
+		/obj/item/clothing/glasses/salesman = 1,
 		) = 8,
 
 	list(//strange objects
@@ -268,7 +269,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//tools
 		/obj/item/weldingtool/hugetank = 1,
-		/obj/item/kitchen/knife = 1,
+		/obj/item/knife/kitchen = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/shield/riot/buckler = 1,
 		/obj/item/melee/baton/security/cattleprod/teleprod = 1,

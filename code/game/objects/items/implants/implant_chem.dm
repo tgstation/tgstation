@@ -20,7 +20,7 @@
 				<b>Integrity:</b> Implant will last so long as the subject is alive."}
 	return dat
 
-/obj/item/implant/chem/Initialize()
+/obj/item/implant/chem/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	GLOB.tracked_chem_implants += src
@@ -29,11 +29,19 @@
 	GLOB.tracked_chem_implants -= src
 	return ..()
 
-/obj/item/implant/chem/trigger(emote, mob/living/source)
-	if(emote == "deathgasp")
-		if(istype(source) && !(source.stat == DEAD))
-			return
-		activate(reagents.total_volume)
+/obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	. = ..()
+	if(.)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+
+/obj/item/implant/chem/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(.)
+		UnregisterSignal(target, COMSIG_LIVING_DEATH)
+
+/obj/item/implant/chem/proc/on_death(mob/living/source)
+	SIGNAL_HANDLER
+	activate(reagents.total_volume)
 
 /obj/item/implant/chem/activate(cause)
 	. = ..()
