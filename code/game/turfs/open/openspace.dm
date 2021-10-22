@@ -67,7 +67,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		addtimer(CALLBACK(src, .proc/zfall_if_on_turf, created_atom), 0 SECONDS)
 
 /turf/open/openspace/proc/zfall_if_on_turf(atom/movable/movable)
-	. = ..()
 	if(QDELETED(movable) || movable.loc != src)
 		return
 	zFall(movable)
