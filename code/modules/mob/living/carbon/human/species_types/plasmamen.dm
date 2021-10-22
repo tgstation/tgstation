@@ -72,9 +72,13 @@
 					H.IgniteMob()
 					internal_fire = TRUE
 	else if(H.fire_stacks)
-		var/obj/item/clothing/under/plasmaman/P = H.w_uniform
-		if(istype(P))
-			P.Extinguish(H)
+		var/obj/item/clothing/suit/space/eva/plasmaman/plasma_suit = H.wear_suit
+		var/obj/item/clothing/under/plasmaman/plasma_uniform = H.w_uniform
+		if(istype(plasma_suit))
+			plasma_suit.Extinguish(H)
+			internal_fire = FALSE
+		else if(istype(plasma_uniform))
+			plasma_uniform.Extinguish(H)
 			internal_fire = FALSE
 	else
 		internal_fire = FALSE
