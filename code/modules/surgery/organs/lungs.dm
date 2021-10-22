@@ -123,7 +123,7 @@
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
 
-	//Handle subtypes' breath proccessing
+	//Handle subtypes' breath processing
 	handle_gas_override(breather,breath_gases, gas_breathed)
 
 	//-- OXY --//
@@ -431,9 +431,9 @@
 
 	return TRUE
 
+	///override this for breath handling unique to lung subtypes
 /obj/item/organ/lungs/proc/handle_gas_override(mob/living/carbon/human/breather = null, list/breath_gas = null, list/gas_breathed = null)
-	//override this for breath handling unique to the lung subtype
-		return
+	return
 
 /obj/item/organ/lungs/proc/handle_too_little_breath(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
