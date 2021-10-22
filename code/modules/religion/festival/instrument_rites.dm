@@ -173,25 +173,42 @@
 	if(!song_datum)
 		return
 	//buffed
-	var/list/has_modifiers = resolve_weakref_list(buffed_weakrefs)
-	//buffed, but not listening
+	var/list/has_modifiers = recursive_list_resolve(buffed_weakrefs)
+	//buffed, but not listening (difflist removes everyone from who is buffed who is not in hearing_mobs)
 	var/list/remove_modifiers = difflist(has_modifiers, song_datum.hearing_mobs)
+	//not buffed, but listening and valid target
+	var/list/add_modifiers = special_list_filter(difflist(song_datum.hearing_mobs.Copy(), has_modifiers), .proc/is_valid_listener)
+
+	//handle current listeners
+	for(var/mob/living/currently_listening in has_modifiers)
+		if(currently_listening in remove_modifiers)
+			continue
+		if(prob(20))
+			to_chat(currently_listening, span_warning(pick("The music is hyping you up!", "The music makes you feel amp'd up.", "This song is electric!")))
+
+	//remove old listeners
 	for(var/mob/living/not_listening in remove_modifiers)
 		to_chat(world, "removing movespeed from [not_listening]")
 		not_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
 		not_listening.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
-	for(var/mob/living/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
-			continue
-		if(listener.mind?.holy_role)
-			continue
-		if(prob(20))
-			to_chat(listener, span_warning(pick("The music is hyping you up!", "The music makes you feel amp'd up.", "This song is electric!")))
-		if(!(listener in has_modifiers))
-			to_chat(world, "adding movespeed to [listener]")
-			listener.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
-			listener.add_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
+
+	//add new listeners
+	for(var/mob/living/new_listener in add_modifiers)
+		if(!(new_listener in has_modifiers))
+			to_chat(world, "adding movespeed to [new_listener]")
+			ADD_TRAIT(new_listener, TRAIT_POWER_CHORD, STATUS_EFFECT_TRAIT)
+			new_listener.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
+			new_listener.add_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
 	buffed_weakrefs = weakref_list(song_datum.hearing_mobs)
+
+/datum/religion_rites/song_tuner/power/proc/is_valid_listener(mob/living/listener)
+	. = TRUE
+	if(HAS_TRAIT(listener, TRAIT_POWER_CHORD))
+		return FALSE
+	if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+		return FALSE
+	if(listener.mind?.holy_role)
+		return FALSE
 
 /datum/religion_rites/song_tuner/power/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
@@ -201,7 +218,7 @@
 		stomach.crystal_charge = ETHEREAL_CHARGE_FULL
 
 /datum/religion_rites/song_tuner/power/Destroy()
-	var/list/has_modifiers = resolve_weakref_list(buffed_weakrefs)
+	var/list/has_modifiers = recursive_list_resolve(buffed_weakrefs)
 	for(var/mob/living/finished_listening in has_modifiers)
 		to_chat(world, "song over. removing movespeed from [finished_listening]")
 		finished_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)

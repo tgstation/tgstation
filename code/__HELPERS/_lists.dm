@@ -655,15 +655,6 @@
 		weakref_list += WEAKREF(real)
 	return weakref_list
 
-///takes a list of weakrefs, and returns a list of resolved instances. in essence, it is the opposite of `weakref_list`
-/proc/resolve_weakref_list(list/weakref_list)
-	var/list/real_list = list()
-	for(var/datum/weakref/weakref as anything in weakref_list)
-		var/real = weakref.resolve()
-		if(real)
-			real_list += real
-	return real_list
-
 ///Returns a list with items filtered from a list that can call callback
 /proc/special_list_filter(list/list_to_filter, datum/callback/condition)
 	if(!islist(list_to_filter) || !length(list_to_filter) || !istype(condition))
