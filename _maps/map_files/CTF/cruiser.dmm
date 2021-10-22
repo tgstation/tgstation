@@ -447,10 +447,6 @@
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ctf)
 "zc" = (
-/obj/structure/window/reinforced/shuttle,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
@@ -968,11 +964,6 @@
 /turf/open/floor/pod/dark,
 /area/ctf)
 "Vk" = (
-/obj/structure/window/reinforced/shuttle,
-/obj/structure/window/reinforced/shuttle,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";

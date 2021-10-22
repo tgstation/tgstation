@@ -8011,6 +8011,9 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8030,6 +8033,9 @@
 /area/centcom/ferry)
 "yq" = (
 /obj/structure/closet/secure_closet/ert_med,
+/obj/machinery/vending/wallmed/directional/south{
+	use_power = 0
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -14581,26 +14587,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod)
-"QP" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 4
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
-/area/centcom/holding)
 "QS" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -45450,7 +45436,7 @@ eQ
 Nd
 cm
 aO
-QP
+Zf
 TX
 cj
 Qf
