@@ -175,7 +175,7 @@ const PipeTypeSection = (props, context) => {
         {categories.map((category, i) => (
           <Tabs.Tab
             fluid
-            key={category.cat_name + "ADAS"}
+            key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
             onClick={() => setCategoryName(category.cat_name)}>
