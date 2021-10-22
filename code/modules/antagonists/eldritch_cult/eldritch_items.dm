@@ -59,17 +59,6 @@
 		return FALSE
 	return ..()
 
-/obj/item/melee/sickly_blade/attack_self(mob/user)
-	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
-	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
-		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
-			to_chat(user,span_warning("As you shatter [src], you feel a gust of energy flow through your body. The Rusted Hills heard your call..."))
-		else
-			to_chat(user,span_warning("You shatter [src], but your plea goes unanswered."))
-	else
-		to_chat(user,span_warning("You shatter [src]."))
-	playsound(src, "shatter", 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
-	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -86,10 +75,6 @@
 		else
 			eldritch_knowledge_datum.on_ranged_attack_eldritch_blade(target,user,click_parameters)
 
-/obj/item/melee/sickly_blade/examine(mob/user)
-	. = ..()
-	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
-		. += span_notice("<B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B>")
 
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
