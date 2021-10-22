@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The category of the component in the UI
+	var/category = "General"
+
 	/// The colour this circuit component appears in the UI
 	var/ui_color = "blue"
 
