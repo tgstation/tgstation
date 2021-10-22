@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - bugfix: "The proc call, set var, and spawn atom circuit components will properly resolve any weakrefs passed to them through their list ports."
-  - admin: "The signal handler circuit component has two new presets, item_pre_attack_secondary and item_afterattack_secondary."
