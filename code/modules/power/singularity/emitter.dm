@@ -60,7 +60,7 @@
 	var/last_projectile_params
 
 
-/obj/machinery/power/emitter/welded/Initialize()
+/obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
 	. = ..()
 
@@ -74,7 +74,7 @@
 	welded = TRUE
 	use_power = NO_POWER_USE
 
-/obj/machinery/power/emitter/Initialize()
+/obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
@@ -130,7 +130,7 @@
 		. += span_notice("Its status display is glowing faintly.")
 	else
 		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
-		. += span_notice("Power consumption at <b>[DisplayPower(active_power_usage)]</b>.")
+		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
@@ -507,7 +507,7 @@
 	///Ticks before being able to shoot
 	var/delay = 0
 
-/obj/item/turret_control/Initialize()
+/obj/item/turret_control/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

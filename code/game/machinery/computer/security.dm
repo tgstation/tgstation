@@ -50,12 +50,12 @@
 	records = add_output_port("Security Records", PORT_TYPE_TABLE)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_data/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/computer/secure_data))
-		attached_console = parent
+	if(istype(shell, /obj/machinery/computer/secure_data))
+		attached_console = shell
 
-/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_data/unregister_usb_parent(atom/movable/shell)
 	attached_console = null
 	return ..()
 
@@ -121,12 +121,12 @@
 
 	var/obj/machinery/computer/secure_data/attached_console
 
-/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_arrest/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/computer/secure_data))
-		attached_console = parent
+	if(istype(shell, /obj/machinery/computer/secure_data))
+		attached_console = shell
 
-/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/arrest_console_arrest/unregister_usb_parent(atom/movable/shell)
 	attached_console = null
 	return ..()
 
@@ -285,7 +285,7 @@
 <th>Criminal Status</th>
 </tr>"}
 					if(!isnull(GLOB.data_core.general))
-						for(var/datum/data/record/R in sortRecord(GLOB.data_core.general, sortBy, order))
+						for(var/datum/data/record/R in sort_record(GLOB.data_core.general, sortBy, order))
 							var/crimstat = ""
 							for(var/datum/data/record/E in GLOB.data_core.security)
 								if((E.fields["name"] == R.fields["name"]) && (E.fields["id"] == R.fields["id"]))

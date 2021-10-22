@@ -12,7 +12,7 @@
 	var/panel_open = FALSE
 	var/datum/barsign/chosen_sign
 
-/obj/structure/sign/barsign/Initialize()
+/obj/structure/sign/barsign/Initialize(mapload)
 	. = ..()
 	set_sign(new /datum/barsign/hiddensigns/signoff)
 
@@ -123,7 +123,7 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sortList(get_bar_names())
+	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sort_list(get_bar_names())
 	if(!picked_name)
 		return
 	chosen_sign = set_sign_by_name(picked_name)

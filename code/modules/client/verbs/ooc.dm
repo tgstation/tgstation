@@ -31,6 +31,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
+	var/list/filter_result = is_ooc_filtered(msg)
+	if (filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
+		return
+
 	if(!msg)
 		return
 
@@ -243,7 +248,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	// Sort the list
-	players = sortList(players)
+	players = sort_list(players)
 
 	// Request the player to ignore
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in players

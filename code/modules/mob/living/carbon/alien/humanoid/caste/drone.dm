@@ -5,7 +5,7 @@
 	health = 125
 	icon_state = "aliend"
 
-/mob/living/carbon/alien/humanoid/drone/Initialize()
+/mob/living/carbon/alien/humanoid/drone/Initialize(mapload)
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	. = ..()
 

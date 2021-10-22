@@ -63,7 +63,7 @@
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
-/obj/item/pda/ai/Initialize()
+/obj/item/pda/ai/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
@@ -77,41 +77,41 @@
 	name = "virology PDA"
 	default_cartridge = /obj/item/cartridge/medical
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
-	greyscale_colors = "#e2e2e2#00cc00#789876"
+	greyscale_colors = "#e2e2e2#355FAC#789876"
 
 /obj/item/pda/engineering
 	name = "engineering PDA"
 	default_cartridge = /obj/item/cartridge/engineering
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#ceca2b#a92323#cc4242"
+	greyscale_colors = "#C5994C#69DBF3#D9D65B"
 
 /obj/item/pda/security
 	name = "security PDA"
 	default_cartridge = /obj/item/cartridge/security
-	greyscale_colors = "#cc4242#339900"
+	greyscale_colors = "#cc4242#0000cc"
 
 /obj/item/pda/detective
 	name = "detective PDA"
 	default_cartridge = /obj/item/cartridge/detective
-	greyscale_colors = "#97670e#990202"
+	greyscale_colors = "#90714F#990202"
 
 /obj/item/pda/warden
 	name = "warden PDA"
 	default_cartridge = /obj/item/cartridge/security
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#cc4242#339900#cccc00"
+	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_colors = "#cc4242#0000cc#666666"
 
 /obj/item/pda/janitor
 	name = "janitor PDA"
 	default_cartridge = /obj/item/cartridge/janitor
-	greyscale_colors = "#933ea8#a92323"
+	greyscale_colors = "#933ea8#235AB2"
 	ttone = "slip"
 
 /obj/item/pda/science
 	name = "scientist PDA"
 	default_cartridge = /obj/item/cartridge/signal/ordnance
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#e2e2e2#000099#9e00ea"
+	greyscale_colors = "#e2e2e2#000099#9F5CA5"
 	ttone = "boom"
 
 
@@ -128,12 +128,13 @@
 	name = "head of security PDA"
 	default_cartridge = /obj/item/cartridge/hos
 	greyscale_config = /datum/greyscale_config/pda/head
-	greyscale_colors = "#cc4242#339900"
+	greyscale_colors = "#cc4242#0000cc"
 
 /obj/item/pda/heads/ce
 	name = "chief engineer PDA"
 	default_cartridge = /obj/item/cartridge/ce
-	greyscale_colors = "#ceca2b#339900"
+	greyscale_config = /datum/greyscale_config/pda/stripe_thick/head
+	greyscale_colors = "#C4A56D#69DBF3#e2e2e2"
 
 /obj/item/pda/heads/cmo
 	name = "chief medical officer PDA"
@@ -146,38 +147,39 @@
 	default_cartridge = /obj/item/cartridge/rd
 	inserted_item = /obj/item/pen/fountain
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick/head
-	greyscale_colors = "#e2e2e2#000099#9e00ea"
+	greyscale_colors = "#e2e2e2#000099#9F5CA5"
 
 /obj/item/pda/captain
 	name = "captain PDA"
 	default_cartridge = /obj/item/cartridge/captain
 	inserted_item = /obj/item/pen/fountain/captain
-	greyscale_colors = "#aa9100#0060b8"
+	greyscale_config = /datum/greyscale_config/pda/captain
+	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#F5D67B"
 
-/obj/item/pda/captain/Initialize()
+/obj/item/pda/captain/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
-	greyscale_colors = "#e39751#a92323"
+	greyscale_colors = "#D6B328#6506ca"
 
 /obj/item/pda/quartermaster
 	name = "quartermaster PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
-	inserted_item = /obj/item/pen/fountain
+	inserted_item = /obj/item/pen/survival
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#e39751#a92323#a23e3e"
+	greyscale_colors = "#D6B328#6506ca#927444"
 
 /obj/item/pda/shaftminer
 	name = "shaft miner PDA"
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#af9366#8f36c6#8f36c6"
+	greyscale_colors = "#927444#D6B328#6C3BA1"
 
 /obj/item/pda/syndicate
 	default_cartridge = /obj/item/cartridge/virus/syndicate
-	greyscale_colors = "#891417#000099"
+	greyscale_colors = "#891417#80FF80"
 	name = "military PDA"
 	owner = "John Doe"
 	hidden = 1
@@ -185,25 +187,25 @@
 /obj/item/pda/chaplain
 	name = "chaplain PDA"
 	greyscale_config = /datum/greyscale_config/pda/chaplain
-	greyscale_colors = "#333333#000099"
+	greyscale_colors = "#333333#d11818"
 	ttone = "holy"
 
 /obj/item/pda/lawyer
 	name = "lawyer PDA"
 	default_cartridge = /obj/item/cartridge/lawyer
 	inserted_item = /obj/item/pen/fountain
-	greyscale_colors = "#6f6192#f7e062"
+	greyscale_colors = "#5B74A5#f7e062"
 	ttone = "objection"
 
 /obj/item/pda/botanist
 	name = "botanist PDA"
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#44843c#e29652#00cc35"
+	greyscale_colors = "#50E193#E26F41#71A7CA"
 
 /obj/item/pda/roboticist
 	name = "roboticist PDA"
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
-	greyscale_colors = "#484848#8b2400#d33725"
+	greyscale_colors = "#484848#0099cc#d33725"
 	default_cartridge = /obj/item/cartridge/roboticist
 
 /obj/item/pda/curator
@@ -240,13 +242,13 @@
 	name = "atmospherics PDA"
 	default_cartridge = /obj/item/cartridge/atmos
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#ceca2b#a92323#3c94c5"
+	greyscale_colors = "#ceca2b#00E5DA#727272"
 
 /obj/item/pda/chemist
 	name = "chemist PDA"
 	default_cartridge = /obj/item/cartridge/chemistry
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
-	greyscale_colors = "#e2e2e2#a92323#ea6400"
+	greyscale_colors = "#e2e2e2#355FAC#ea6400"
 
 /obj/item/pda/geneticist
 	name = "geneticist PDA"

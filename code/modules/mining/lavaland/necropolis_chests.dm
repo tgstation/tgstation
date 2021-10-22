@@ -5,6 +5,7 @@
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously. You need a skeleton key to open it."
@@ -12,7 +13,7 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/Initialize()
+/obj/structure/closet/crate/necropolis/tendril/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
 

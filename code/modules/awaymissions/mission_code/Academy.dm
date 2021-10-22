@@ -64,7 +64,7 @@
 /obj/singularity/academy
 	move_self = FALSE
 
-/obj/singularity/academy/Initialize()
+/obj/singularity/academy/Initialize(mapload)
 	. = ..()
 
 	var/datum/component/singularity/singularity = singularity_component.resolve()
@@ -271,7 +271,7 @@
 		if(8)
 			//Fuel tank Explosion
 			T.visible_message(span_userdanger("An explosion bursts into existence around [user]!"))
-			explosion(get_turf(user), devastation_range = -1, light_impact_range = 2, flame_range = 2)
+			explosion(get_turf(user), devastation_range = -1, light_impact_range = 2, flame_range = 2, explosion_cause = src)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold()

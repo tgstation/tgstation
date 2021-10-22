@@ -110,16 +110,6 @@
 "aw" = (
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"ax" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
-"ay" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "aA" = (
 /turf/open/floor/iron,
 /area/engineering/main)
@@ -131,7 +121,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/main)
@@ -913,7 +903,7 @@
 /turf/closed/wall,
 /area/hallway/secondary/entry)
 "di" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Labor Camp Shuttle Airlock"
 	},
 /obj/structure/fans/tiny,
@@ -1266,7 +1256,7 @@
 /turf/open/floor/plating,
 /area/cargo/storage)
 "ex" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Pod One"
 	},
 /obj/structure/fans/tiny,
@@ -1380,7 +1370,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Supply Dock Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1395,7 +1385,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Supply Dock Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1454,7 +1444,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "fb" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Departure Lounge Airlock"
 	},
 /obj/effect/turf_decal/delivery,
@@ -1573,7 +1563,7 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "fs" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Transport Airlock"
 	},
 /obj/structure/fans/tiny,
@@ -1809,7 +1799,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "gc" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Auxiliary Airlock"
 	},
 /obj/structure/fans/tiny,
@@ -2123,7 +2113,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/medical/medbay)
 "qb" = (
@@ -2518,7 +2508,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/medical/medbay)
 "Rb" = (
@@ -2625,7 +2615,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engineering/main)
@@ -6121,7 +6111,7 @@ aa
 aa
 ah
 am
-ax
+aw
 aw
 ba
 jE
@@ -6213,7 +6203,7 @@ aa
 aa
 ah
 dS
-ay
+aw
 aN
 bb
 bl
@@ -6305,7 +6295,7 @@ aa
 aa
 ah
 am
-ay
+aw
 aO
 bc
 bm

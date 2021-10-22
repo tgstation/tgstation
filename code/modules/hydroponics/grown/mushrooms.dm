@@ -205,16 +205,11 @@
 	endurance = 8
 	yield = 4
 	growthstages = 2
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/carnivory)
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = null
 	graft_gene = /datum/plant_gene/trait/carnivory
-
-/obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
-	. = ..()
-	if(!nogenes)
-		unset_mutability(/datum/plant_gene/trait/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/food/grown/mushroom/jupitercup
 	seed = /obj/item/seeds/chanter/jupitercup
@@ -272,6 +267,7 @@
 		return FALSE
 	new effect_path(user.loc, seed)
 	to_chat(user, span_notice("You plant [src]."))
+	seed = null // We pass our seed to our planted shroom, null it here
 	qdel(src)
 	return TRUE
 

@@ -2160,7 +2160,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2174,7 +2174,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "eI" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -10620,7 +10620,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "uw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -11005,7 +11005,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "vk" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -12499,7 +12499,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining External Airlock";
 	req_access_txt = "201"
 	},
@@ -12572,7 +12572,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "yf" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining External Airlock";
 	req_access_txt = "201"
 	},

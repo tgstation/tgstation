@@ -14,7 +14,7 @@ Stabilized extracts:
 	var/datum/status_effect/linked_effect
 	var/mob/living/owner
 
-/obj/item/slimecross/stabilized/Initialize()
+/obj/item/slimecross/stabilized/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -129,12 +129,12 @@ Stabilized extracts:
 					mob_spawn_pets += T
 	mob_type = pick(mob_spawn_pets)
 
-/obj/item/slimecross/stabilized/gold/Initialize()
+/obj/item/slimecross/stabilized/gold/Initialize(mapload)
 	. = ..()
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)
-	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in sortList(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name"))
+	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name"))
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(isliving(user))

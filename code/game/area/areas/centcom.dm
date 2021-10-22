@@ -26,6 +26,18 @@
 /area/centcom/ferry
 	name = "CentCom Transport Shuttle Dock"
 
+/area/centcom/briefing
+	name = "CentCom Briefing Room"
+
+/area/centcom/briefing/storage
+	name = "CentCom Briefing Room Storage"
+
+/area/centcom/admin
+	name = "CentCom Administrative Office"
+
+/area/centcom/admin/storage
+	name = "CentCom Administrative Office Storage"
+
 /area/centcom/prison
 	name = "Admin Prison"
 
@@ -40,7 +52,7 @@
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
 	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 
 /area/centcom/supplypod/pod_storage
@@ -52,7 +64,7 @@
 	icon_state = "supplypod_loading"
 	var/loading_id = ""
 
-/area/centcom/supplypod/loading/Initialize()
+/area/centcom/supplypod/loading/Initialize(mapload)
 	. = ..()
 	if(!loading_id)
 		CRASH("[type] created without a loading_id")
@@ -94,14 +106,14 @@
 	icon_state = "thunder"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	base_lighting_color = COLOR_WHITE
+
 
 /area/tdome/arena_source
 	name = "Thunderdome Arena Template"
 	icon_state = "thunder"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	base_lighting_color = COLOR_WHITE
+
 
 /area/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -139,7 +151,7 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	area_flags = UNIQUE_AREA | NOTELEPORT
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
@@ -173,7 +185,7 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE

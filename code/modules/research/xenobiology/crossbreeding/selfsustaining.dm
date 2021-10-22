@@ -15,7 +15,7 @@ Self-sustaining extracts:
 	var/effect_desc = "A self-sustaining slime extract. When used, lets you choose which reaction you want."
 
 //Just divides into the actual item.
-/obj/item/slimecross/selfsustaining/Initialize()
+/obj/item/slimecross/selfsustaining/Initialize(mapload)
 	..()
 	visible_message(span_warning("The [src] shudders, and splits into four smaller extracts."))
 	for(var/i = 0, i < 4, i++)
@@ -28,11 +28,11 @@ Self-sustaining extracts:
 		A.name = "self-sustaining " + colour + " extract"
 	return INITIALIZE_HINT_QDEL
 
-/obj/item/autoslime/Initialize()
+/obj/item/autoslime/Initialize(mapload)
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in sortList(extract.activate_reagents, /proc/cmp_typepaths_asc)
+	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in sort_list(extract.activate_reagents, /proc/cmp_typepaths_asc)
 	var/amount = 5
 	var/secondary
 

@@ -19,7 +19,7 @@
 
 
 /obj/item/circuit_component/set_variable/populate_ports()
-	entity = add_input_port("Target", PORT_TYPE_ATOM)
+	entity = add_input_port("Target", PORT_TYPE_DATUM)
 	variable_name = add_input_port("Variable Name", PORT_TYPE_STRING)
 	new_value = add_input_port("New Value", PORT_TYPE_ANY)
 
@@ -29,4 +29,9 @@
 	if(!var_name || !object)
 		return
 
-	object.vv_edit_var(var_name, new_value.value)
+	var/resolved_new_value = new_value.value
+	if(islist(resolved_new_value))
+		var/list/to_resolve = resolved_new_value
+		resolved_new_value = recursive_list_resolve(to_resolve)
+
+	object.vv_edit_var(var_name, resolved_new_value)

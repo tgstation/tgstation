@@ -23,7 +23,7 @@
 	stored_money += to_add
 	SEND_SIGNAL(src, COMSIG_MONEYBOT_ADD_MONEY, to_add)
 
-/obj/structure/money_bot/Initialize()
+/obj/structure/money_bot/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/money_bot(),
@@ -149,4 +149,5 @@
  * * new_value - A boolean that determines if the circuit is locked or not.
  **/
 /obj/item/circuit_component/money_bot/proc/on_set_locked(datum/source, new_value)
+	SIGNAL_HANDLER
 	attached_bot.locked = new_value

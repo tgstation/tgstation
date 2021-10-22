@@ -62,7 +62,7 @@
 	pixel_x = 10
 	pixel_y = 9
 
-/obj/item/canvas/Initialize()
+/obj/item/canvas/Initialize(mapload)
 	. = ..()
 	reset_grid()
 

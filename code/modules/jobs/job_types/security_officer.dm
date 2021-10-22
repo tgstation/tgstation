@@ -36,7 +36,7 @@
 		/obj/item/clothing/mask/whistle = 5,
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
-
+	rpg_title = "Guard"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
-		var/obj/item/card/id/worn_id = spawning.wear_id
+		var/obj/item/card/id/worn_id = spawning.get_idcard(hand_first = FALSE)
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
 		spawning.sec_hud_set_ID()
 
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	id_trim = /datum/id_trim/job/security_officer
 
-/obj/item/radio/headset/headset_sec/alt/department/Initialize()
+/obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			indices -= chosen
 			preferences[chosen] = null
 
-	listclearnulls(preferences)
+	list_clear_nulls(preferences)
 
 	departments -= biggest_preference
 
