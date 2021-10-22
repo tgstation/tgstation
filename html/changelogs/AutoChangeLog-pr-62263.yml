@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "CMOs will now spawn with blue shoes (Paramedic) that protect them from contracting diseases from any blood pool they step in, just like everyone else at medbay already does."
