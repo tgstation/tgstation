@@ -91,7 +91,7 @@
 		return FALSE
 
 	var/mob/living/L = mob  //Already checked for isliving earlier
-	if(L.incorporeal_move) //Move though walls
+	if(L.incorporeal_move && !is_secret_level(mob.z)) //Move though walls
 		Process_Incorpmove(direct)
 		return FALSE
 
@@ -234,7 +234,7 @@
 				if(target)
 					L.forceMove(target)
 					var/limit = 2//For only two trailing shadows.
-					for(var/turf/T in getline(mobloc, L.loc))
+					for(var/turf/T in get_line(mobloc, L.loc))
 						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
 						limit--
 						if(limit<=0)
@@ -552,6 +552,6 @@
 
 /mob/abstract_move(atom/destination)
 	var/turf/new_turf = get_turf(destination)
-	if(SSmapping.level_trait(new_turf.z, ZTRAIT_SECRET) && !client?.holder)
+	if(is_secret_level(new_turf.z) && !client?.holder)
 		return
 	return ..()

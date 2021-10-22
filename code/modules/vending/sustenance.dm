@@ -13,7 +13,7 @@
 		/obj/item/kitchen/spoon/plastic = 6,
 	)
 	contraband = list(
-		/obj/item/kitchen/knife = 6,
+		/obj/item/knife = 6,
 		/obj/item/kitchen/spoon = 6,
 		/obj/item/reagent_containers/food/drinks/coffee = 12,
 		/obj/item/tank/internals/emergency_oxygen = 6,

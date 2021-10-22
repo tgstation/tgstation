@@ -87,7 +87,7 @@
 				if(!camera_ref || !camera.c_tag)
 					continue
 				bugged_cameras[camera.c_tag] = camera_ref
-	return sortList(bugged_cameras)
+	return sort_list(bugged_cameras)
 
 
 /obj/item/camera_bug/proc/menu(list/cameras)

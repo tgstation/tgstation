@@ -48,7 +48,7 @@
 	if(!ishuman(C))
 		return
 	var/mob/living/carbon/human/ethereal = C
-	default_color = "#[ethereal.dna.features["ethcolor"]]"
+	default_color = ethereal.dna.features["ethcolor"]
 	r1 = GETREDPART(default_color)
 	g1 = GETGREENPART(default_color)
 	b1 = GETBLUEPART(default_color)

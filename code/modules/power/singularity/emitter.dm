@@ -130,7 +130,7 @@
 		. += span_notice("Its status display is glowing faintly.")
 	else
 		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
-		. += span_notice("Power consumption at <b>[DisplayPower(active_power_usage)]</b>.")
+		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()

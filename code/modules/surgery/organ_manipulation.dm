@@ -118,7 +118,7 @@
 				organs -= organ
 				organs[organ.name] = organ
 
-			target_organ = input("Remove which organ?", "Surgery", null, null) as null|anything in sortList(organs)
+			target_organ = input("Remove which organ?", "Surgery", null, null) as null|anything in sort_list(organs)
 			if(target_organ && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				target_organ = organs[target_organ]
 				if(!target_organ)

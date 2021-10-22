@@ -268,7 +268,7 @@ LINEN BINS
 
 /obj/item/bedsheet/dorms/Initialize(mapload)
 	..()
-	var/type = pickweight(list("Colors" = 80, "Special" = 20))
+	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
 	switch(type)
 		if("Colors")
 			type = pick(list(/obj/item/bedsheet,

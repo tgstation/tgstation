@@ -45,7 +45,7 @@
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
-	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, FALSE)
+	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name)
 
 /datum/brain_trauma/special/bluespace_prophet
 	name = "Bluespace Prophecy"
@@ -107,6 +107,13 @@
 /obj/effect/hallucination/simple/bluespace_stream/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 300)
+
+/obj/effect/hallucination/simple/bluespace_stream/Destroy()
+	if(!QDELETED(linked_to))
+		qdel(linked_to)
+	linked_to = null
+	seer = null
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user, list/modifiers)
@@ -203,7 +210,7 @@
 		linked = FALSE
 		return
 	to_chat(owner, span_warning("You're pulled through spacetime!"))
-	do_teleport(owner, get_turf(linked_target), null, TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(owner, get_turf(linked_target), null, channel = TELEPORT_CHANNEL_QUANTUM)
 	owner.playsound_local(owner, 'sound/magic/repulse.ogg', 100, FALSE)
 	linked_target = null
 	linked = FALSE

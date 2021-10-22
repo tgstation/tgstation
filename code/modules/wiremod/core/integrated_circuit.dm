@@ -69,6 +69,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
+	/// The current size of the circuit.
+	var/current_size = 0
+
 /obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
@@ -224,6 +227,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
 	to_add.parent = src
 	attached_components += to_add
+	current_size += to_add.circuit_size
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
 	SStgui.update_uis(src)
 
@@ -255,6 +259,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		to_remove.unregister_shell(shell)
 
 	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
+	current_size -= to_remove.circuit_size
 	attached_components -= to_remove
 	to_remove.disconnect()
 	to_remove.parent = null
@@ -309,6 +314,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				"type" = port.datatype,
 				"ref" = REF(port),
 				"color" = port.color,
+				"datatype_data" = port.datatype_ui_data(user)
 			))
 
 		component_data["name"] = component.display_name
@@ -462,7 +468,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return TRUE
 
 			if(params["marked_atom"])
-				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
+				if(!(port.datatype_handler.datatype_flags & DATATYPE_FLAG_ALLOW_ATOM_INPUT))
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
 				// Let's admins upload marked datums to an entity port.
@@ -546,7 +552,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/variable_datatype = params["variable_datatype"]
 			if(!(variable_datatype in GLOB.wiremod_basic_types))
 				return
-
+			if(params["is_list"])
+				variable_datatype = PORT_TYPE_LIST(variable_datatype)
 			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
 			. = TRUE
 		if("remove_variable")
@@ -563,19 +570,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(setter_and_getter_count >= max_setters_and_getters)
 				balloon_alert(usr, "setter and getter count at maximum capacity")
 				return
-			var/designated_type = /obj/item/circuit_component/getter
+			var/designated_type = /obj/item/circuit_component/variable/getter
 			if(params["is_setter"])
-				designated_type = /obj/item/circuit_component/setter
-			var/obj/item/circuit_component/component = new designated_type(src)
+				designated_type = /obj/item/circuit_component/variable/setter
+			var/obj/item/circuit_component/variable/component = new designated_type(src)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
-			if(params["is_setter"])
-				var/obj/item/circuit_component/setter/setter = component
-				setter.variable_name.set_input(params["variable"])
-			else
-				var/obj/item/circuit_component/getter/getter = component
-				getter.variable_name.set_input(params["variable"])
+			component.variable_name.set_input(params["variable"])
 			component.rel_x = text2num(params["rel_x"])
 			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)

@@ -102,6 +102,9 @@
 	/// String. If set to a non-empty one, it will be the key for the policy text value to show this role on spawn.
 	var/policy_index = ""
 
+	///RPG job names, for the memes
+	var/rpg_title
+
 
 /datum/job/New()
 	. = ..()
@@ -417,6 +420,7 @@
 		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
 		if (require_human)
 			set_species(/datum/species/human)
+			apply_pref_name(/datum/preference/name/backup_human, player_client)
 		if(CONFIG_GET(flag/force_random_names))
 			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
 			var/datum/species/species = new species_type

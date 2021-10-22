@@ -91,6 +91,8 @@
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
 	var/datum/mafia_controller/MF = GLOB.mafia_game
+	if (!MF)
+		return TRUE
 	var/datum/mafia_role/R = MF.player_role_lookup[user]
 	if(!R || R.team != "mafia")
 		return TRUE

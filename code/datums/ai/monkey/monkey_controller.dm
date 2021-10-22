@@ -7,9 +7,11 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/monkey_tree,
-		//the monkey tree is mostly combat related, if it isn't busy with that then it may do instrument related things
-		/datum/ai_planning_subtree/play_instrument,
+		/datum/ai_planning_subtree/generic_resist,
+		/datum/ai_planning_subtree/monkey_combat,
+		/datum/ai_planning_subtree/generic_hunger,
+		/datum/ai_planning_subtree/generic_play_instrument,
+		/datum/ai_planning_subtree/monkey_shenanigans,
 	)
 	blackboard = list(
 		BB_MONKEY_AGGRESSIVE = FALSE,
@@ -23,7 +25,6 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_CURRENT_ATTACK_TARGET = null,
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
-		BB_MONKEY_NEXT_HUNGRY = 0,
 		BB_SONG_LINES = MONKEY_SONG,
 	)
 	var/static/list/loc_connections = list(
@@ -43,8 +44,6 @@ have ways of interacting with a specific mob and control it.
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 
-	blackboard[BB_MONKEY_NEXT_HUNGRY] = world.time + rand(0, 300)
-
 	var/mob/living/living_pawn = new_pawn
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
@@ -58,7 +57,6 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_ATOM_HULK_ATTACK, .proc/on_attack_hulk)
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
-	RegisterSignal(new_pawn, COMSIG_FOOD_EATEN, .proc/on_eat)
 
 	AddComponent(/datum/component/connect_loc_behalf, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
@@ -103,11 +101,11 @@ have ways of interacting with a specific mob and control it.
 	for(var/obj/item/item in oview(2, living_pawn))
 		nearby_items += item
 
-	weapon = GetBestWeapon(nearby_items, living_pawn.held_items)
+	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
 
 	var/pickpocket = FALSE
 	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(human.held_items + weapon, living_pawn.held_items)
+		var/obj/item/held_weapon = GetBestWeapon(src, human.held_items + weapon, living_pawn.held_items)
 		if(held_weapon == weapon) // It's just the same one, not a held one
 			continue
 		pickpocket = TRUE
@@ -123,47 +121,6 @@ have ways of interacting with a specific mob and control it.
 	else
 		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
 	return TRUE
-
-/// Returns either the best weapon from the given choices or null if held weapons are better
-/datum/ai_controller/monkey/proc/GetBestWeapon(list/choices, list/held_weapons)
-	var/gun_neurons_activated = blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED]
-	var/top_force = 0
-	var/obj/item/top_force_item
-	for(var/obj/item/item as anything in held_weapons)
-		if(!item)
-			continue
-		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || blackboard[BB_MONKEY_BLACKLISTITEMS][item])
-			continue
-		if(gun_neurons_activated && istype(item, /obj/item/gun))
-			// We have a gun, why bother looking for something inferior
-			// Also yes it is intentional that monkeys dont know how to pick the best gun
-			return item
-		if(item.force > top_force)
-			top_force = item.force
-			top_force_item = item
-
-	for(var/obj/item/item as anything in choices)
-		if(!item)
-			continue
-		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || blackboard[BB_MONKEY_BLACKLISTITEMS][item])
-			continue
-		if(gun_neurons_activated && istype(item, /obj/item/gun))
-			return item
-		if(item.force <= top_force)
-			continue
-		top_force_item = item
-		top_force = item.force
-
-	return top_force_item
-
-/datum/ai_controller/monkey/proc/IsEdible(obj/item/thing)
-	if(IS_EDIBLE(thing))
-		return TRUE
-	if(istype(thing, /obj/item/reagent_containers/food/drinks/drinkingglass))
-		var/obj/item/reagent_containers/food/drinks/drinkingglass/glass = thing
-		if(glass.reagents.total_volume) // The glass has something in it, time to drink the mystery liquid!
-			return TRUE
-	return FALSE
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/L)
@@ -251,7 +208,3 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/target_del(target)
 	SIGNAL_HANDLER
 	blackboard[BB_MONKEY_BLACKLISTITEMS] -= target
-
-/datum/ai_controller/monkey/proc/on_eat(mob/living/pawn)
-	SIGNAL_HANDLER
-	blackboard[BB_MONKEY_NEXT_HUNGRY] = world.time + rand(120, 600) SECONDS

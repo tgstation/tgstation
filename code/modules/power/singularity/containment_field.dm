@@ -11,7 +11,7 @@
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE
 	interaction_flags_machine = NONE
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	///First of the generators producing the containment field
@@ -35,7 +35,7 @@
 	if(field_gen_2)
 		field_gen_2.fields -= src
 		field_gen_2 = null
-	CanAtmosPass = ATMOS_PASS_YES
+	can_atmos_pass = ATMOS_PASS_YES
 	air_update_turf(TRUE, FALSE)
 	return ..()
 

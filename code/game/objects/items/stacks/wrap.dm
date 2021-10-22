@@ -124,7 +124,7 @@
 				user.put_in_hands(P)
 			I.forceMove(P)
 			var/size = round(I.w_class)
-			P.name = "[weightclass2text(size)] parcel"
+			P.name = "[weight_class_to_text(size)] parcel"
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"

@@ -2,7 +2,7 @@
 	var/atom/A = parent
 	if(A == W) //don't put yourself into yourself.
 		return
-	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(W.GetAllContents(), typecacheof(/obj/item/storage/backpack/holding))
+	var/list/obj/item/storage/backpack/holding/matching = typecache_filter_list(W.get_all_contents(), typecacheof(/obj/item/storage/backpack/holding))
 	matching -= A
 	if(istype(W, /obj/item/storage/backpack/holding) || matching.len)
 		INVOKE_ASYNC(src, .proc/recursive_insertion, W, user)
