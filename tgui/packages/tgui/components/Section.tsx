@@ -16,6 +16,7 @@ interface SectionProps extends BoxProps {
   fill?: boolean;
   fitted?: boolean;
   scrollable?: boolean;
+  autoScrolling?: boolean;
   /** @deprecated This property no longer works, please remove it. */
   level?: boolean;
   /** @deprecated Please use `scrollable` property */
@@ -41,6 +42,13 @@ export class Section extends Component<SectionProps> {
   componentWillUnmount() {
     if (this.scrollable) {
       removeScrollableNode(this.scrollableRef.current);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.autoScrolling && this.scrollableRef.current) {
+      this.scrollableRef.current
+        .scrollTop = this.scrollableRef.current.scrollHeight;
     }
   }
 
