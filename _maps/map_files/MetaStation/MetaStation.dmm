@@ -65148,8 +65148,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics";
-	req_access_txt = null;
-	req_one_access = "35;28"
+	req_one_access_txt = "35;28"
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
