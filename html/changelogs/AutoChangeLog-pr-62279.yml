@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "Roulette Wheels now say their actions, rather than have it magically appear in the chat box of everyone nearby."
