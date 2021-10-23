@@ -557,7 +557,7 @@ export class IntegratedCircuit extends Component {
               unselectable="on"
             >
               <ComponentMenu
-                components={Object.keys(stored_designs)}
+                components={stored_designs && Object.keys(stored_designs) || []}
                 onClose={(event) => this.setState({ componentMenuOpen: false })}
                 onMouseDownComponent={this.handleMouseDownComponent}
                 showAll={is_admin}
