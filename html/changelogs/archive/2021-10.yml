@@ -713,3 +713,18 @@
   tralezab:
   - bugfix: 480x480 titlescreens now load up centered as intended from the widescreen
       title changes
+2021-10-23:
+  Guillaume Prata:
+  - qol: CMOs will now spawn with blue shoes (Paramedic) that protect them from contracting
+      diseases from any blood pool they step in, just like everyone else at medbay
+      already does.
+  Mickyan:
+  - qol: Art supplies are now also available in the library vendor in case the art
+      storage room is not present on station
+  Mooshimi:
+  - qol: 'Maintenance drone spawners have returned to robotics maintenance removed:
+      maint drone is gone from the mechfab and research tree'
+  Sealed101:
+  - bugfix: fixes mining drills showing as pickaxes when worn or held in-hand
+  Seris02:
+  - bugfix: borgs will no longer leave MMIs while cryoing
