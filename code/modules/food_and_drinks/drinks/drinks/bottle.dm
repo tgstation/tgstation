@@ -544,7 +544,7 @@
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
 	popped_cork.firer =  user
 	popped_cork.fired_from = src
-	popped_cork.fire(angle2dir(user.dir))
+	popped_cork.fire(dir2angle(user.dir))
 
 /obj/projectile/bullet/reusable/champagne_cork
 	name = "champagne cork"
