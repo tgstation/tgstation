@@ -23,7 +23,7 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
-      onPortMouseDown,
+      onPortMouseDown= Function.prototype,
     } = this.props;
     onPortMouseDown(portIndex, componentId, port, isOutput, e);
   }
@@ -34,7 +34,7 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
-      onPortMouseUp,
+      onPortMouseUp = Function.prototype,
     } = this.props;
     onPortMouseUp(portIndex, componentId, port, isOutput, e);
   }
@@ -45,7 +45,7 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
-      onPortRightClick,
+      onPortRightClick = Function.prototype,
     } = this.props;
     onPortRightClick(portIndex, componentId, port, isOutput, e);
   }
