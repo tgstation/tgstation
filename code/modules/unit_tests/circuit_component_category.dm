@@ -1,3 +1,4 @@
+/// Tests to make sure each circuit component that could potentially be available to a player has a category
 /datum/unit_test/circuit_component_category
 
 /datum/unit_test/circuit_component_category/Run()
