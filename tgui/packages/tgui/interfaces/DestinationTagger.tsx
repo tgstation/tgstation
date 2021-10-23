@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Stack, Section, Button, NoticeBox } from '../components';
+import { Stack, Section, Button } from '../components';
 
 type DestinationTaggerData = {
   locations: string[];
@@ -12,20 +12,18 @@ export const DestinationTagger = (props, context) => {
   const { locations, currentTag } = data;
 
   return (
-    <Window title="TagMaster 2.4" width={450} height={520}>
+    <Window theme="retro" title="TagMaster 2.4" width={420} height={500}>
       <Window.Content>
-        <Stack vertical>
-          <Stack.Item>
-            <NoticeBox>
-              {!currentTag
-                ? 'PLEASE SELECT A LOCATION'
-                : `CURRENT DESTINATION: ${locations[
-                  currentTag - 1
-                ].toUpperCase()}`}
-            </NoticeBox>
-          </Stack.Item>
-          <Stack.Item>
-            <Section scrollable title="Locations">
+        <Stack fill vertical>
+          <Stack.Item grow>
+            <Section
+              fill
+              scrollable
+              title={
+                !currentTag
+                  ? 'Please Select A Location'
+                  : `Current Destination: ${locations[currentTag - 1]}`
+              }>
               {locations.map((location, index) => {
                 return (
                   <Button.Checkbox
