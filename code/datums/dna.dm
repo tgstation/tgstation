@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(features_block_lengths, list(
 ///A list containing the total length of the unique identifier dna string up to a given block (excluding the block itself).
 GLOBAL_LIST(total_ui_len_by_block)
 ///Ditto but for unique features.
-GLOBAL_LIST_INIT(total_uf_len_by_block, /proc/populate_total_dna_len_by_block())
+GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 
 ///Populates both ui and uf len by block lists.
 /proc/populate_total_dna_len_by_block()
