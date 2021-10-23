@@ -23516,6 +23516,7 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "ipA" = (
+/obj/machinery/drone_dispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "ipB" = (

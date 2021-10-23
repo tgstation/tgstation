@@ -682,3 +682,49 @@
       a bad filter, somehow) are set. Instead, it will go through to the main output,
       as before, or if the main output is full, be returned back to the input, as
       if never removed.
+2021-10-22:
+  Ghommie:
+  - bugfix: Fixed the contents of certain coded or mapped closets exceeding their
+      storage capacity, like the HoS closet on Delta, which had redundant grey HoS
+      jumpsuit, trenchcoat and beret, or the mixed wardrobe closet with its duplicate
+      bandanas, jacket and green jumpsuits,
+  - bugfix: fixed implant abilities not being properly removed when the implant is
+      removed.
+  IndieanaJones:
+  - expansion: Player monkeys make a screeching noise when using the *screech emote.
+  JohnFulpWillard:
+  - bugfix: Changelings that re-adapt with pheremone receptors on, will have them
+      forcefully removed.
+  Seris02:
+  - rscadd: makes it so lockers/crates can have access electronics removed/inserted
+  Y0SH1M4S73R:
+  - bugfix: The proc call, set var, and spawn atom circuit components will properly
+      resolve any weakrefs passed to them through their list ports.
+  - admin: The signal handler circuit component has two new presets, item_pre_attack_secondary
+      and item_afterattack_secondary.
+  - bugfix: Backup human names are once again respected when forcibly humanizing what
+      would otherwise be a non-human head of staff.
+  - admin: Added a "suppress_message_admins" variable to SDQL spells, which prevents
+      the spell's query from getting output to all admins' chat panels. The query
+      will still be written to the game log.
+  - bugfix: The SDQL spell parse error modal grows properly.
+  esainane:
+  - bugfix: The Orion Trail's instructions screen is usable again.
+  tralezab:
+  - bugfix: 480x480 titlescreens now load up centered as intended from the widescreen
+      title changes
+2021-10-23:
+  Guillaume Prata:
+  - qol: CMOs will now spawn with blue shoes (Paramedic) that protect them from contracting
+      diseases from any blood pool they step in, just like everyone else at medbay
+      already does.
+  Mickyan:
+  - qol: Art supplies are now also available in the library vendor in case the art
+      storage room is not present on station
+  Mooshimi:
+  - qol: 'Maintenance drone spawners have returned to robotics maintenance removed:
+      maint drone is gone from the mechfab and research tree'
+  Sealed101:
+  - bugfix: fixes mining drills showing as pickaxes when worn or held in-hand
+  Seris02:
+  - bugfix: borgs will no longer leave MMIs while cryoing

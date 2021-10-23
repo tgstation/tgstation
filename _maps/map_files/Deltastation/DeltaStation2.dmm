@@ -58888,6 +58888,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/prison)
+"lBh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/drone_dispenser,
+/turf/open/floor/iron,
+/area/science/research/abandoned)
 "lBr" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -127608,7 +127615,7 @@ xwx
 dpZ
 uTQ
 dpY
-dxL
+lBh
 dhQ
 qYo
 qYo

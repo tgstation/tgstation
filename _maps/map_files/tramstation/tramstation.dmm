@@ -32942,6 +32942,7 @@
 	dir = 1;
 	network = list("ss13","rd")
 	},
+/obj/machinery/drone_dispenser,
 /turf/open/floor/plating,
 /area/science/research)
 "ksr" = (
