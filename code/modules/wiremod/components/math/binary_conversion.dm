@@ -6,6 +6,7 @@
 /obj/item/circuit_component/binary_decimal/binary_conversion
 	display_name = "Binary Conversion"
 	desc = "Splits a decimal number into an array of binary digits, or bits, represented as 1 or 0 and often used in boolean or binary operations like AND, OR and XOR."
+	category = "Math"
 
 /obj/item/circuit_component/binary_decimal/binary_conversion/populate_ports()
 	. = ..()
