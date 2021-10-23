@@ -40,6 +40,10 @@
 	handle_layer()
 	attempt_connect()
 
+/obj/machinery/heat_system/heat_pipe/Destroy()
+	nullify_pipeline()
+	return ..()
+
 /obj/machinery/heat_system/heat_pipe/proc/handle_layer()
 	var/offset
 	switch(pipe_layer)//it's a bitfield, but it's fine because it only works when there's one layer, and multiple layers should be handled differently
@@ -163,13 +167,17 @@
 /obj/machinery/heat_system/heat_pipe/proc/disconnect_pipe(skipanchor)
 	if(!skipanchor) //since set_anchored calls us too.
 		set_anchored(FALSE)
-	if(heat_pipeline)
-		heat_pipeline.remove_pipe(src)
+	nullify_pipeline()
 	lose_neighbours()
 	reset_connects()
 	update_appearance()
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/machinery/heat_system/heat_pipe/proc/nullify_pipeline()
+	if(heat_pipeline)
+		heat_pipeline.remove_pipe(src)
+		heat_pipeline = null
 
 /obj/machinery/heat_system/heat_pipe/wrench_act(mob/living/user, obj/item/I)
 	..()
