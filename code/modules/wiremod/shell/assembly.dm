@@ -60,7 +60,7 @@
 
 /obj/item/circuit_component/assembly_output/unregister_shell(atom/movable/shell)
 	attached_assembly = null
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/assembly_output/input_received(datum/port/input/port, list/return_values)
 	. = ..()
