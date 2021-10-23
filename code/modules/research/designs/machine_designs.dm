@@ -675,6 +675,14 @@
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
 
+/datum/design/board/accounting
+	name = "Machine Design (Washing Machine)"
+	desc = "The circuit board for a Washing Machine."
+	id = "washing_machine"
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	build_path = /obj/item/circuitboard/machine/washing_machine
+	category = list ("Misc. Machinery")
+
 //Hypertorus fusion reactor designs
 
 /datum/design/board/HFR_core

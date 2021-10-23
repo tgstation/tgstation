@@ -1152,6 +1152,14 @@
 	req_components = list(
 		/obj/item/stock_parts/card_reader = 1)
 
+/obj/item/circuitboard/machine/washing_machine
+	name = "Washing Machine (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/washing_machine
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/matter_bin = 1)
+
 //Supply
 
 /obj/item/circuitboard/machine/mining_equipment_vendor

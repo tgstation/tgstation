@@ -342,6 +342,7 @@
 		"processor",
 		"reagentgrinder",
 		"smartfridge",
+		"washing_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
