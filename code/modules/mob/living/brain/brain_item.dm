@@ -307,8 +307,7 @@
 		setOrganDamage(0)
 		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	else
-		qdel(src)
-		new /obj/effect/gibspawner/generic(brainwasher.loc)
+		setOrganDamage(BRAIN_DAMAGE_DEATH)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
