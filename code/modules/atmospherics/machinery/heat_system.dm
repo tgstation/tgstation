@@ -3,6 +3,7 @@
 
 /obj/machinery/heat_system/heat_pipe
 	name = "heat pipe"
+	desc = "test"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 
