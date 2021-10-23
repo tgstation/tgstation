@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - bugfix: "Space Heaters won't change temperature without draining it's cell charge anymore."
