@@ -59,10 +59,9 @@
 		attached_assembly = shell
 
 /obj/item/circuit_component/assembly_output/unregister_shell(atom/movable/shell)
-	. = ..()
 	attached_assembly = null
+	. = ..()
 
 /obj/item/circuit_component/assembly_output/input_received(datum/port/input/port, list/return_values)
 	. = ..()
-	if(COMPONENT_TRIGGERED_BY(signal, port))
-		attached_assembly.pulse(FALSE)
+	attached_assembly.pulse(FALSE)
