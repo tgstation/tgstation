@@ -8,20 +8,24 @@
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
 	var/allow_intruder_use = FALSE
 
-
-/obj/item/gun/magic/staff/check_botched(mob/living/user, params)
-	if(allow_intruder_use)
-		return ..()
-
+/obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
 	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
 		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
 		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion))
-		return !on_intruder_use(user)
+		return FALSE
+	return TRUE
+
+/obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
+	if(allow_intruder_use)
+		return ..()
+
+	if(!is_wizard_or_friend(user))
+		return !on_intruder_use(user, target)
 	return ..()
 
 /// Called when someone who isn't a wizard or magician uses this staff.
 /// Return TRUE to allow usage.
-/obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user)
+/obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user, atom/target)
 	return TRUE
 
 /obj/item/gun/magic/staff/change
@@ -36,13 +40,13 @@
 /obj/item/gun/magic/staff/change/unrestricted
 	allow_intruder_use = TRUE
 
-/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user)
-	tgui_alert_async(user, "Are you sure you want to use this? It will be used on yourself!", "Warning!", buttons = list("Yes", "No"), callback = CALLBACK(src, .proc/on_tgui_submit, user, user.client))
-	return FALSE
+/obj/item/gun/magic/staff/change/pickup(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
+		balloon_alert(user, "you feel weak holding this staff")
 
-/obj/item/gun/magic/staff/change/proc/on_tgui_submit(mob/living/user, client/using_client, choice)
-	if(QDELETED(user) || loc != user || choice != "Yes" || user.incapacitated() || using_client != user.client)
-		return
+/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
 	user.dropItemToGround(src, TRUE)
 	var/randomize = pick("monkey","humanoid","animal")
 	var/mob/new_body = user.wabbajack(randomize)
@@ -65,14 +69,35 @@
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
 	school = SCHOOL_RESTORATION
+	var/obj/item/gun/medbeam/healing_beam
+
+/obj/item/gun/magic/staff/healing/pickup(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
+		balloon_alert(user, "the staff feels weaker as you touch it")
+
+/obj/item/gun/magic/staff/healing/Initialize(mapload)
+	. = ..()
+	healing_beam = new(src)
+	healing_beam.mounted = TRUE
+
+/obj/item/gun/magic/staff/healing/Destroy()
+	qdel(healing_beam)
+	return ..()
 
 /obj/item/gun/magic/staff/healing/unrestricted
 	allow_intruder_use = TRUE
 
-/obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user)
-	user.dropItemToGround(src, TRUE)
-	lightningbolt(user)
+/obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user, atom/target)
+	if(target == user)
+		return FALSE
+	healing_beam.process_fire(target, user)
 	return FALSE
+
+/obj/item/gun/magic/staff/healing/dropped(mob/user)
+	healing_beam.LoseTarget()
+	return ..()
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
