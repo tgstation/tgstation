@@ -43,7 +43,6 @@
 	var/credit_absorb = TRUE // we get credit if we absorb a corpse we don't have DNA from, or if it's a corpse that's only been DNA stung previously
 
 	for(var/datum/changelingprofile/iter_profile as anything in changeling.stored_profiles)
-		credit_absorb = FALSE
 		if(iter_profile.dna.is_same_as(target.dna))
 			is_existing_profile = TRUE
 			credit_absorb = !iter_profile.true_absorb // we only get credit for the absorb if the existing DNA isn't already a true absorb
