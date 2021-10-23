@@ -42,10 +42,10 @@
 /obj/item/clothing/suit/space/eva/plasmaman/attackby(obj/item/Extinguisher, mob/user, params)
 	..()
 	if (istype(Extinguisher, /obj/item/extinguisher_refill))
-		if (extinguishes_left == 10)
+		if (extinguishes_left == initial(extinguishes_left))
 			to_chat(user, span_notice("The inbuilt extinguisher is full."))
 		else
-			extinguishes_left = 10
+			extinguishes_left = initial(extinguishes_left)
 			to_chat(user, span_notice("You refill the EVA suit's built-in extinguisher, using up the cartridge."))
 			qdel(Extinguisher)
 
