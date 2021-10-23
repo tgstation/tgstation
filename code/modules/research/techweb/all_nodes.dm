@@ -684,6 +684,7 @@
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
+		"assembly_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
