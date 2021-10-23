@@ -180,6 +180,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		AM.wash(CLEAN_WASH)
 		AM.machine_wash(src)
 
+	//if we had the ability to brainwash, remove that now
+	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
 	if(color_source)
 		qdel(color_source)
@@ -362,6 +364,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	busy = TRUE
+	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
+		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)
