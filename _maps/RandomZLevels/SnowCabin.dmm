@@ -726,7 +726,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cu" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
 /obj/machinery/light/directional/east,

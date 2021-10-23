@@ -19,6 +19,8 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Color Adapter", /obj/machinery/atmospherics/pipe/color_adapter, TRUE),
 		new /datum/pipe_info/pipe("Bridge Pipe", /obj/machinery/atmospherics/pipe/bridge_pipe, TRUE),
 		new /datum/pipe_info/pipe("Multi-Deck Adapter", /obj/machinery/atmospherics/pipe/multiz, FALSE),
+		new /datum/pipe_info/test("Heat Pipe", /obj/machinery/heat_system/heat_pipe),
+		new /datum/pipe_info/test("Heat Radiator", /obj/machinery/heat_system/heat_pipe/radiator),
 	),
 	"Devices" = list(
 		new /datum/pipe_info/pipe("Connector", /obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
@@ -158,6 +160,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=[id]&type=[dirtype]"
+
+/datum/pipe_info/test/New(label, obj/machinery/heat_system/heat_pipe/path)
+	name = label
+	id = path
+	icon_state = initial(path.icon_state)
+	dirtype = PIPE_ONEDIR
 
 /datum/pipe_info/disposal/New(label, obj/path, dt=PIPE_UNARY)
 	name = label
@@ -547,6 +555,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 						PM.setAttachLayer(piping_layer)
 						if(mode & WRENCH_MODE)
 							PM.wrench_act(user, src)
+
+				else if(recipe.type == /datum/pipe_info/test)
+					new queued_p_type(get_turf(attack_target))
+
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						to_chat(user, span_notice("You can't build this object on the layer..."))

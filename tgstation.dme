@@ -1977,6 +1977,7 @@
 #include "code\modules\atmospherics\machinery\atmosmachinery.dm"
 #include "code\modules\atmospherics\machinery\bluespace_vendor.dm"
 #include "code\modules\atmospherics\machinery\datum_pipeline.dm"
+#include "code\modules\atmospherics\machinery\heat_system.dm"
 #include "code\modules\atmospherics\machinery\components\components_base.dm"
 #include "code\modules\atmospherics\machinery\components\tank.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\binary_devices.dm"

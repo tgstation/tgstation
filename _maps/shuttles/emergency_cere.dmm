@@ -1008,7 +1008,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "cl" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

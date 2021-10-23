@@ -18,6 +18,8 @@
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
 
+	var/change_plane = TRUE
+
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
@@ -59,7 +61,8 @@
 	underlays.Cut()
 
 	color = null
-	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
+	if(change_plane)
+		plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
 		return ..()
