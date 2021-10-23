@@ -5,6 +5,15 @@
 	inhand_icon_state = "ianshirt"
 	species_exception = list(/datum/species/golem)
 
+/obj/item/clothing/suit/ianshirt/machine_wash(obj/machinery/washing_machine/WM)
+	. = ..()
+	if(wash_count <= 5)
+		transform *= TRANSFORM_USING_VARIABLE(0.8)
+		visible_message(span_notice("\the [src] appears to have shrunk down after a long machine washing."))
+	else
+		visible_message(span_notice("\the [src] appears to have imploded due to repeat washing. Tiny strands of energy from the wash-dimension linger."))
+		qdel(src)
+
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
 	desc = "A baggy shirt with vintage game character Phanic the Weasel. Why would anyone wear this?"
