@@ -93,7 +93,7 @@ export const Vending = (props, context) => {
             && (user ? (
               <Stack.Item>
                 <Section>
-                  <Stack fill>
+                  <Stack>
                     <Stack.Item>
                       <Icon name="id-card" size={3} mr={1} />
                     </Stack.Item>
@@ -148,10 +148,14 @@ const VendingRow = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
   const { product, productStock, custom } = props;
   const { onstation, department, user, jobDiscount } = data;
-  const free
-    = !onstation
+  const free = (
+    !onstation
     || product.price === 0
-    || (!product.premium && department && user);
+    || (
+      !product.premium
+      && department
+      && user
+    ));
   const discount = department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   return (
