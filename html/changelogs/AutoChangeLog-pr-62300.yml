@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "Bounty consoles will now talk to the user if they have to wait for a new bounty or is using an incorrect ID, rather than telepathically transmit messages."
