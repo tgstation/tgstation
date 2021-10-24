@@ -28,26 +28,29 @@
 /obj/item/clothing/suit/space/eva/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
+	if(!H.on_fire)
+		return
+	if(!extinguishes_left)
+		return
+	if(next_extinguish > world.time)
+		return
+	next_extinguish = world.time + extinguish_cooldown
+	extinguishes_left--
+	H.visible_message(span_warning("[H]'s EVA suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
+	H.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(H))
 
-	if(H.fire_stacks)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
 
 /obj/item/clothing/suit/space/eva/plasmaman/attackby(obj/item/Extinguisher, mob/user, params)
 	..()
-	if (istype(Extinguisher, /obj/item/extinguisher_refill))
-		if (extinguishes_left == initial(extinguishes_left))
-			to_chat(user, span_notice("The inbuilt extinguisher is full."))
-		else
-			extinguishes_left = initial(extinguishes_left)
-			to_chat(user, span_notice("You refill the EVA suit's built-in extinguisher, using up the cartridge."))
-			qdel(Extinguisher)
+	if(!istype(Extinguisher, /obj/item/extinguisher_refill))
+		return
+	if(extinguishes_left == initial(extinguishes_left))
+		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		return
+	extinguishes_left = initial(extinguishes_left)
+	to_chat(user, span_notice("You refill the EVA suit's built-in extinguisher, using up the cartridge."))
+	qdel(Extinguisher)
 
 
 //I just want the light feature of the hardsuit helmet
