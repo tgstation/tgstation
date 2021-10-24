@@ -57,15 +57,7 @@
 	return ..()
 
 /obj/Initialize(mapload)
-	//if (islist(armor))
-	//	armor = getArmor(arglist(armor))
-	//else if (!armor)
-	//	armor = getArmor()
-	//else if (!istype(armor, /datum/armor))
-	//	stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
-	//atom_integrity = max_integrity
-
-	. = ..() //Do this after, else mat datums is mad.
+	. = ..()
 
 	if (set_obj_flags)
 		var/flagslist = splittext(set_obj_flags,";")

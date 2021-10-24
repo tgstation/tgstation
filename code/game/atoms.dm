@@ -257,9 +257,6 @@
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
 
-	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
-
 	if(uses_integrity)
 		if (islist(armor))
 			armor = getArmor(arglist(armor))
@@ -268,6 +265,12 @@
 		else if (!istype(armor, /datum/armor))
 			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
 		atom_integrity = max_integrity
+
+	// apply materials properly from the default custom_materials value
+	// This MUST come after atom_integrity is set above, as if old materials get removed,
+	// atom_integrity is checked against max_integrity and can BREAK the atom.
+	// The integrity to max_integrity ratio is still preserved.
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 	InitializeAIController()
