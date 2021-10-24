@@ -36,11 +36,13 @@
 	. = ..()
 	if(!cause || !imp_in || active)
 		return 0
-	if(cause == "action_button" && !popup)
+	if(cause == "action_button")
+		if(popup)
+			return FALSE
 		popup = TRUE
 		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
 		popup = FALSE
-		if(response == "No")
+		if(response != "Yes")
 			return 0
 	heavy = round(heavy)
 	medium = round(medium)
