@@ -52,37 +52,38 @@ const AbilityList = (props, context) => {
   if (!abilities) {
     return <NoticeBox>None</NoticeBox>;
   } else {
-    return (<LabeledList>
-      {abilities.map(ability => (
-        <LabeledList.Item
-          key={ability.name}
-          className="candystripe"
-          label={ability.name}
-          buttons={(
-            <Stack>
-              <Stack.Item>
-                {ability.dna_cost}
-              </Stack.Item>
-              <Stack.Item>
-                <Icon name="dna" color={ability.owned ? "#DD66DD" : "gray"} />
-              </Stack.Item>
-              <Stack.Item>
-                <Button
-                  content={'Evolve'}
-                  disabled={ability.owned || ability.dna_cost
+    return (
+      <LabeledList>
+        {abilities.map(ability => (
+          <LabeledList.Item
+            key={ability.name}
+            className="candystripe"
+            label={ability.name}
+            buttons={(
+              <Stack>
+                <Stack.Item>
+                  {ability.dna_cost}
+                </Stack.Item>
+                <Stack.Item>
+                  <Icon name="dna" color={ability.owned ? "#DD66DD" : "gray"} />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    content={'Evolve'}
+                    disabled={ability.owned || ability.dna_cost
                     > genetic_points_remaining}
-                  onClick={() => act('evolve', {
-                    name: ability.name,
-                  })} />
-              </Stack.Item>
-            </Stack>
-          )}>
-          {ability.desc}
-          <Box color="good">
-            {ability.helptext}
-          </Box>
-        </LabeledList.Item>
-      ))}
-    </LabeledList>);
+                    onClick={() => act('evolve', {
+                      name: ability.name,
+                    })} />
+                </Stack.Item>
+              </Stack>
+            )}>
+            {ability.desc}
+            <Box color="good">
+              {ability.helptext}
+            </Box>
+          </LabeledList.Item>
+        ))}
+      </LabeledList>);
   }
 };
