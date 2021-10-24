@@ -275,7 +275,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!reagents.total_volume)
 		return
 	reagents.expose_temperature(heat, 0.05)
-
+	if(!reagents.total_volume) //may have reacted and gone to 0 after expose_temperature
+		return
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
 	if(!istype(smoker) || src != smoker.wear_mask)
@@ -569,24 +570,32 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return ..()
 
 /obj/item/clothing/mask/cigarette/pipe/process(delta_time)
-	var/turf/location = get_turf(src)
-	smoketime -= delta_time
+	if(isliving(loc))
+		var/mob/living/living_smoker = loc
+		living_smoker.IgniteMob()
+	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
+		var/datum/gas_mixture/air = return_air()
+		if(!air?.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
+			extinguish()
+			return
+
+	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
-		new /obj/effect/decal/cleanable/ash(location)
 		if(ismob(loc))
-			var/mob/living/M = loc
-			to_chat(M, span_notice("Your [name] goes out."))
+			var/mob/living/living_smoker = loc
+			to_chat(living_smoker, span_notice("Your [name] goes out."))
 			lit = FALSE
 			icon_state = icon_off
 			inhand_icon_state = icon_off
-			M.update_inv_wear_mask()
+			living_smoker.update_inv_wear_mask()
 			packeditem = FALSE
 			name = "empty [initial(name)]"
 		STOP_PROCESSING(SSobj, src)
 		return
 
 	open_flame(heat)
-	if(reagents?.total_volume) // check if it has any reagents at all
+	if(reagents?.total_volume && COOLDOWN_FINISHED(src, drag_cooldown))
+		COOLDOWN_START(src, drag_cooldown, dragtime)
 		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/thing, mob/user, params)
@@ -893,25 +902,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cig_paper"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/rollingpaper/afterattack(atom/target, mob/user, proximity)
+/obj/item/rollingpaper/Initialize(mapload)
 	. = ..()
-	if(!proximity)
-		return
-	if(!istype(target, /obj/item/food/grown))
-		return
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/clothing/mask/cigarette/rollie, CUSTOM_INGREDIENT_ICON_NOCHANGE, ingredient_type=CUSTOM_INGREDIENT_TYPE_DRYABLE, max_ingredients=2)
 
-	if(!HAS_TRAIT(target, TRAIT_DRIED))
-		to_chat(user, span_warning("You need to dry [target] first!"))
-		return
-
-	var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
-	R.chem_volume = target.reagents.maximum_volume
-	target.reagents.trans_to(R, R.chem_volume, transfered_by = user)
-	qdel(target)
-	qdel(src)
-	user.put_in_active_hand(R)
-	to_chat(user, span_notice("You roll the [target.name] into a rolling paper."))
-	R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 
 ///////////////
 //VAPE NATION//

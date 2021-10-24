@@ -221,6 +221,7 @@
 		return
 	sanity = amount
 	var/mob/living/master = parent
+	SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)

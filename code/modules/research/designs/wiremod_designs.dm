@@ -48,6 +48,11 @@
 	id = "comp_arithmetic"
 	build_path = /obj/item/circuit_component/arithmetic
 
+/datum/design/component/trigonometry
+	name = "Trigonometry Component"
+	id = "comp_trigonometry"
+	build_path = /obj/item/circuit_component/trigonometry
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
@@ -262,6 +267,11 @@
 	name = "Typecast Component"
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
+
+/datum/design/component/printer
+	name = "Printer Component"
+	id = "comp_printer"
+	build_path = /obj/item/circuit_component/printer
 
 /datum/design/component/pinpointer
 	name = "Proximity Pinpointer Component"

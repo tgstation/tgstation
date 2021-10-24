@@ -16,7 +16,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	desc = "Watch your step!"
 	icon_state = "invisible"
 	baseturfs = /turf/open/openspace
-	CanAtmosPassVertical = ATMOS_PASS_YES
+	can_atmos_pass_vertical = ATMOS_PASS_YES
 	baseturfs = /turf/open/openspace
 	intact = FALSE //this means wires go on top
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -11,7 +11,7 @@
 		/datum/eldritch_knowledge/final/rust_final
 	)
 	next_knowledge = list(/datum/eldritch_knowledge/void_grasp)
-	required_atoms = list(/obj/item/kitchen/knife)
+	required_atoms = list(/obj/item/knife)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	cost = 1
 	route = PATH_VOID
@@ -119,7 +119,7 @@
 	desc = "You can create a carving knife, which allows you to create up to 3 carvings on the floor that have various effects on nonbelievers who walk over them. They make quite a handy throwing weapon. To create the carving knife transmute a knife with a glass shard and a piece of paper."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/spell/void_phase,/datum/eldritch_knowledge/summon/raw_prophet)
-	required_atoms = list(/obj/item/kitchen/knife,/obj/item/shard,/obj/item/paper)
+	required_atoms = list(/obj/item/knife,/obj/item/shard,/obj/item/paper)
 	result_atoms = list(/obj/item/melee/rune_carver)
 
 /datum/eldritch_knowledge/crucible
