@@ -9,7 +9,7 @@
 #define CLEANBOT_STAB_ARMS 1
 
 /// If the cleanbot stabs someone while not in overdrive emag mode, the weapon's force is multiplied by this
-#define CLEANBOT_UNEMAGGED_FORCE_PENALTY 0.75
+#define CLEANBOT_UNEMAGGED_FORCE_PENALTY 0.5
 
 //Cleanbot
 /mob/living/simple_animal/bot/cleanbot
