@@ -200,10 +200,12 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_arithmetic",
+		"comp_binary_convert",
 		"comp_clock",
 		"comp_comparison",
 		"comp_concat",
 		"comp_concat_list",
+		"comp_decimal_convert",
 		"comp_delay",
 		"comp_direction",
 		"comp_filter_list",
@@ -244,6 +246,7 @@
 		"comp_timepiece",
 		"comp_tonumber",
 		"comp_tostring",
+		"comp_trigonometry",
 		"comp_typecast",
 		"comp_typecheck",
 		"compact_remote_shell",
@@ -755,16 +758,6 @@
 		"exodrone_launcher",
 		"exoscanner",
 		"exoscanner_console",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/dex_robotics
-	id = "dex_robotics"
-	display_name = "Dexterous Robotics Research"
-	description = "The fine art of opposable thumbs."
-	prereq_ids = list("adv_engi", "adv_robotics", "biotech")
-	design_ids = list(
-		"maint_drone",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

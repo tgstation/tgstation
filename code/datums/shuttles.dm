@@ -1,3 +1,5 @@
+#define EMAG_LOCKED_SHUTTLE_COST (CARGO_CRATE_VALUE * 50)
+
 /datum/map_template/shuttle
 	name = "Base Shuttle Template"
 	var/prefix = "_maps/shuttles/"
@@ -12,6 +14,8 @@
 	var/credit_cost = INFINITY
 	/// What job accesses can buy this shuttle? If null, this shuttle cannot be bought.
 	var/list/who_can_purchase = list(ACCESS_CAPTAIN)
+	/// Whether or not this shuttle is locked to emags only.
+	var/emag_only = FALSE
 	/// If set, overrides default movement_force on shuttle
 	var/list/movement_force
 
@@ -233,7 +237,8 @@
 	name = "Grand Corporate Monastery"
 	description = "Originally built for a public station, this grand edifice to religion, due to budget cuts, is now available as an escape shuttle for the right... donation. Due to its large size and callous owners, this shuttle may cause collateral damage."
 	admin_notes = "WARNING: This shuttle WILL destroy a fourth of the station, likely picking up a lot of objects with it."
-	credit_cost = CARGO_CRATE_VALUE * 250
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST * 1.8
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 5)
 
 /datum/map_template/shuttle/emergency/luxury
@@ -259,8 +264,8 @@
 	name = "Disco Inferno"
 	description = "The glorious results of centuries of plasma research done by Nanotrasen employees. This is the reason why you are here. Get on and dance like you're on fire, burn baby burn!"
 	admin_notes = "Flaming hot. The main area has a dance machine as well as plasma floor tiles that will be ignited by players every single time."
-	credit_cost = CARGO_CRATE_VALUE * 20
-	who_can_purchase = null
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
@@ -393,7 +398,8 @@
 	Outside of admin intervention, it cannot explode. \
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
-	credit_cost = CARGO_CRATE_VALUE * 200
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
@@ -402,7 +408,8 @@
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
-	who_can_purchase = null
+	emag_only = TRUE
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/goon
@@ -447,7 +454,7 @@
 	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
 	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
-	
+
 /datum/map_template/shuttle/emergency/casino
 	suffix = "casino"
 	name = "Lucky Jackpot Casino Shuttle"
@@ -709,3 +716,5 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+#undef EMAG_LOCKED_SHUTTLE_COST

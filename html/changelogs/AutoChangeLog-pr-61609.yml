@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "Titlescreens are now widescreen'd up."
-  - qol: "The titlescreen is no longer described as \"Effectively impervious to conventional methods of destruction.\" and only the splash screen can be interacted with"

@@ -274,7 +274,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/mining/large)
 "I" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -314,7 +314,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "L" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

@@ -24,7 +24,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
-/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
 	if(!action_checks(target))
 		return

@@ -2348,7 +2348,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "jr" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Supply Shuttle";
 	req_access_txt = "106"
 	},
@@ -6732,7 +6732,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
 "uJ" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
@@ -7646,7 +7646,7 @@
 /turf/open/floor/wood/large,
 /area/centcom/holding)
 "xc" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ferry Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9647,14 +9647,14 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "Dq" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
 /area/centcom/control)
 "Dr" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10095,7 +10095,7 @@
 /turf/closed/indestructible/riveted,
 /area/tdome/tdomeobserve)
 "Eq" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/tdome/tdomeobserve)
@@ -12832,7 +12832,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
 "Kj" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Backup Emergency Escape Shuttle"
 	},
 /obj/effect/turf_decal/delivery,
@@ -16284,7 +16284,7 @@
 /turf/open/floor/sepia,
 /area/centcom/holding)
 "Xy" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ferry Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{

@@ -92,3 +92,15 @@
 	inhand_icon_state = "rus_shoes"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/discoshoes
+	name = "green lizardskin shoes"
+	desc = "They may have lost some of their lustre over the years, but these green lizardskin shoes fit you perfectly."
+	icon_state = "lizardskin_shoes"
+	inhand_icon_state = "lizardskin_shoes"
+
+/obj/item/clothing/shoes/kim
+	name = "aerostatic boots"
+	desc = "A crisp, clean set of boots for working long hours on the beat."
+	icon_state = "aerostatic_boots"
+	inhand_icon_state = "aerostatic_boots"

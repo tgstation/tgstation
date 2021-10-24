@@ -40,7 +40,6 @@
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
-	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
 
 
@@ -52,8 +51,6 @@
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
 	. += span_notice("Its maintenance panel is <b>screwed</b> in place.")
-	if(safety_mode)
-		. += span_notice("It has labels indicating that it has an emergency mechanism to open it with <b>just your hands</b> if there's no power.")
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
@@ -111,11 +108,6 @@
 	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
-	if(safety_mode && !hasPower() && density)
-		to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
-		if(do_after(user, 15 SECONDS, target = src))
-			try_to_crowbar(null, user)
-			return TRUE
 	return FALSE
 
 /**
@@ -204,13 +196,12 @@
 	return ..()
 
 
-/obj/machinery/door/proc/try_to_activate_door(mob/user)
+/obj/machinery/door/proc/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED))
 		return
-	if(!requiresID())
-		user = null //so allowed(user) always succeeds
-	if(allowed(user))
+	access_bypass |= !requiresID()
+	if(access_bypass || allowed(user))
 		if(density)
 			open()
 		else
