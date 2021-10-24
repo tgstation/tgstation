@@ -48,15 +48,17 @@
 	. = ..()
 
 /// Signal to see if the mutation allows us to attack a target
-/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, params)
+/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
 	SIGNAL_HANDLER
 
-	var/obj/item/weapon = honorbound.get_active_held_item()
-	var/list/modifiers = params2list(params)
-
+	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+		return
 	if(!isliving(clickingon))
 		return
+
 	var/mob/living/clickedmob = clickingon
+	var/obj/item/weapon = honorbound.get_active_held_item()
+
 	if(!honorbound.DirectAccess(clickedmob) && !isgun(weapon))
 		return
 	if(weapon?.item_flags & NOBLUDGEON)

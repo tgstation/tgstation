@@ -11,7 +11,7 @@
 		/datum/eldritch_knowledge/base_void
 	)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
-	required_atoms = list(/obj/item/kitchen/knife, /obj/item/match)
+	required_atoms = list(/obj/item/knife, /obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	cost = 1
 	route = PATH_ASH

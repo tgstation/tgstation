@@ -59,7 +59,7 @@
 			/// Number of sheets we're adding
 			var/num_to_add = 0
 			for(var/obj/item/paper/the_paper as anything in bin.papers) // Search for the first blank sheet of paper, then toss it in
-				if(the_paper.info != "") // Uh oh, paper has words! 
+				if(the_paper.get_info_length()) // Uh oh, paper has words!
 					continue
 				if(istype(the_paper, /obj/item/paper/carbon)) // Add both the carbon, and the copy
 					var/obj/item/paper/carbon/carbon_paper = the_paper

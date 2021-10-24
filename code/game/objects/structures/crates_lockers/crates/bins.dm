@@ -7,6 +7,7 @@
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/bin/Initialize(mapload)
 	. = ..()

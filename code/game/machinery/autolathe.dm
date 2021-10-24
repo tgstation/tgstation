@@ -206,7 +206,7 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sort_list(list_to_show, /proc/cmp_typepaths_asc)
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
@@ -275,21 +275,22 @@
 	return ..()
 
 /obj/machinery/autolathe/attackby_secondary(obj/item/weapon, mob/living/user, params)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(busy)
 		balloon_alert(user, "it's busy!")
-		return TRUE
+		return
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
-		return FALSE //returning this as FALSE prevents the screwdriver from being immediately eaten by the autolathe after you screw the panel open/closed. why? don't ask me
+		return
 
 	if(machine_stat)
-		return TRUE
+		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
-		return FALSE
+		return
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(obj/item/item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
