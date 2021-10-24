@@ -1,3 +1,16 @@
+/// If a bleeding carbon attacks an overdrive emagged cleanbot with a weapon, their total bleed rate is multiplied by this and added to the taped_weapon's force for the block chance
+#define CLEANBOT_BLOCK_ITEM_BLEED_MULT 5
+/// If a bleeding carbon attacks an overdrive emagged cleanbot with their hand, their total bleed rate is multiplied by this for the parry chance (punching a knife is a bad idea!)
+#define CLEANBOT_BLOCK_HAND_BLEED_MULT 15
+
+/// If the target_parts argument is set to this for [/mob/living/simple_animal/bot/cleanbot/proc/stab_target], we try attacking the legs (default)
+#define CLEANBOT_STAB_LEGS 0
+/// If the target_parts argument is set to this for [/mob/living/simple_animal/bot/cleanbot/proc/stab_target], we try attacking the arms instead
+#define CLEANBOT_STAB_ARMS 1
+
+/// If the cleanbot stabs someone while not in overdrive emag mode, the weapon's force is multiplied by this
+#define CLEANBOT_UNEMAGGED_FORCE_PENALTY 0.75
+
 //Cleanbot
 /mob/living/simple_animal/bot/cleanbot
 	name = "\improper Cleanbot"
@@ -33,33 +46,60 @@
 	var/next_dest
 	var/next_dest_loc
 
+	/// The weapon taped to the cleanbot
 	var/obj/item/taped_weapon
+	/// The original force of the cleanbot's taped_weapon when it was attached
+	var/original_weapon_force
+	/// The original name of the cleanbot, before it became highly decorated with titles
 	var/chosen_name
-
+	/// The list of job titles this cleanbot has successfully stabbed
 	var/list/stolen_valor
 
 	var/static/list/officers = list("Captain", "Head of Personnel", "Head of Security")
 	var/static/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
 	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
 	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
-	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
+	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.", "Paramedic" = "E.M.T.")
 	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
 	var/static/list/legal = list("Lawyer" = "Esq.")
 
 	var/list/prefixes
 	var/list/suffixes
 
-	var/ascended = FALSE // if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
+	/// if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
+	var/ascended = FALSE
 
+/// If the weapon we're trying to attach is actually compatible with the cleanbot
+/mob/living/simple_animal/bot/cleanbot/proc/can_attach_weapon(obj/item/attaching_weapon)
+	if(HAS_TRAIT(attaching_weapon, TRAIT_CLEANBOT_COMPATIBLE) && attaching_weapon.force)
+		return TRUE
 
-/mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
-	if(!in_range(src, user))
+/// Where we actually attach the weapon to the cleanbot
+/mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/attaching_weapon, mob/user, forced = FALSE)
+	if(taped_weapon)
+		to_chat(user, span_warning("[src] already has \the [taped_weapon] attached to it!"))
 		return
-	to_chat(user, span_notice("You attach \the [W] to \the [src]."))
-	user.transferItemToLoc(W, src)
-	taped_weapon = W
-	add_overlay(image(icon=taped_weapon.lefthand_file,icon_state=taped_weapon.inhand_icon_state))
 
+	if(!can_attach_weapon(attaching_weapon) && !forced)
+		return
+
+	if(user)
+		if(!in_range(src, user))
+			return
+		to_chat(user, span_notice("You attach \the [attaching_weapon] to \the [src]."))
+		user.transferItemToLoc(attaching_weapon, src)
+	else
+		attaching_weapon.forceMove(src)
+
+	original_weapon_force = attaching_weapon.force
+	if(emagged != BOT_EMAGGED_OVERDRIVE)
+		attaching_weapon.force *= CLEANBOT_UNEMAGGED_FORCE_PENALTY
+
+	taped_weapon = attaching_weapon
+	add_overlay(image(icon=taped_weapon.lefthand_file,icon_state=taped_weapon.inhand_icon_state))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_move_while_armed)
+
+/// Cycle through all of our stolen titles and see which ones we're going to apply to our name
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
 
@@ -87,10 +127,58 @@
 
 	name = working_title
 
+/// When someone enters a tile we're on
+/mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
+	if(!taped_weapon || !iscarbon(AM) || !has_gravity())
+		return
+
+	stab_target(AM)
+
+/// When we enter a tile someone else is on
+/mob/living/simple_animal/bot/cleanbot/proc/on_move_while_armed(datum/source, old_loc, movement_dir, forced, old_locs)
+	SIGNAL_HANDLER
+
+	if(!taped_weapon || !has_gravity() || !isturf(loc))
+		return
+
+	for(var/mob/living/carbon/iter_carbon in loc)
+		if(iter_carbon.buckled)
+			visible_message(span_danger("[src] veers around [iter_carbon]."), span_warning("You veer around [iter_carbon]."), vision_distance = COMBAT_MESSAGE_RANGE)
+			continue
+		if(iter_carbon.body_position == LYING_DOWN)
+			visible_message(span_danger("[src] rolls over [iter_carbon]."), span_warning("You roll over [iter_carbon]."), vision_distance = COMBAT_MESSAGE_RANGE)
+			continue
+		stab_target(iter_carbon)
+
+/**
+ * This is the proc that does the actual stabbing on the target carbon. It attacks with the taped_weapon, and knocks the target down for 2 seconds
+ *
+ * Arguments:
+ * * target - Who's getting stabbed
+ * * target_parts - Are we stabbing their legs (most of the time) or their arms (for parries)
+ */
+/mob/living/simple_animal/bot/cleanbot/proc/stab_target(mob/living/carbon/stab_target, target_parts = CLEANBOT_STAB_LEGS)
+	if(!taped_weapon || !istype(stab_target) || !has_gravity())
+		return
+
+	if(target_parts == CLEANBOT_STAB_ARMS)
+		zone_selected = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	else
+		zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+
+	if(stab_target.job && !(stab_target.job in stolen_valor))
+		stolen_valor += stab_target.job
+	update_titles()
+
+	INVOKE_ASYNC(taped_weapon, /obj/item.proc/attack, stab_target, src)
+	stab_target.Knockdown(2 SECONDS)
+
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
 	if(taped_weapon)
-		. += " [span_warning("Is that \a [taped_weapon] taped to it...?")]"
+		. += "\t[span_warning("Is that \a [taped_weapon] taped to it...?")]"
 
 		if(ascended && user.stat == CONSCIOUS && user.client)
 			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
@@ -112,12 +200,12 @@
 	suffixes = list(research, medical, legal)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
-		COMSIG_ATOM_ENTERING = .proc/on_entering,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
 	if(taped_weapon)
+		taped_weapon.force = original_weapon_force
 		drop_part(taped_weapon, drop_location())
 		taped_weapon = null
 	return ..()
@@ -143,38 +231,6 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
-/mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
-
-	if(!taped_weapon || !iscarbon(target) || !has_gravity())
-		return
-
-	stab_target(AM)
-
-/mob/living/simple_animal/bot/cleanbot/proc/on_entering(datum/source, atom/destination, atom/old_loc, list/atom/old_locs)
-	SIGNAL_HANDLER
-
-	if(!taped_weapon || !has_gravity())
-		return
-
-	for(var/mob/living/carbon/iter_carbon in destination)
-		if(iter_carbon.buckled || iter_carbon.body_position == LYING_DOWN)
-			continue
-		stab_target(iter_carbon)
-
-/mob/living/simple_animal/bot/cleanbot/proc/stab_target(mob/living/carbon/target)
-	if(!taped_weapon || !istype(target) || !has_gravity())
-		return
-
-	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-
-	if(target.job && !(target.job in stolen_valor))
-		stolen_valor += target.job
-	update_titles()
-
-	INVOKE_ASYNC(taped_weapon, /obj/item.proc/attack, target, src)
-	target.Knockdown(2 SECONDS)
-
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID())
 		if(bot_core.allowed(user) && !open && !emagged)
@@ -187,30 +243,55 @@
 				to_chat(user, span_warning("Please close the access panel before locking it."))
 			else
 				to_chat(user, span_notice("\The [src] doesn't seem to respect your authority."))
-	else if(istype(W, /obj/item/kitchen/knife) && !user.combat_mode)
+		return
+
+	else if(can_attach_weapon(W) && !user.combat_mode && !taped_weapon)
 		to_chat(user, span_notice("You start attaching \the [W] to \the [src]..."))
 		if(do_after(user, 2.5 SECONDS, target = src))
 			deputize(W, user)
-	else
-		if(taped_weapon && W.force && emagged == BOT_EMAGGED_OVERDRIVE && iscarbon(user))
-			var/mob/living/carbon/carbon_user = user
-			var/user_bleed_rate = carbon_user.get_bleed_rate()
-			if(user_bleed_rate && prob(user_bleed_rate + taped_weapon.force)) // when
-				if(prob(taped_weapon.force)) // critical success for the cleanbot! it parries the attack successfully
-					visible_message(span_danger("[src] whirrs around frantically trying to clean the blood flowing from [user], accidentally parrying [user.p_their()] attack perfectly with \the [taped_weapon]!"),
-										span_userdanger("Trying to clean the blood flowing from [user], you accidentally parry [user.p_their()] attack perfectly!"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
-					stab_target(user)
+		return
 
-				else // otherwise it just blocks the attack
-					visible_message(span_danger("[src] whirrs around frantically trying to clean the blood flowing from [user], accidentally parrying [user.p_their()] attack perfectly with \the [taped_weapon]!"),
-										span_userdanger("Trying to clean the blood flowing from [user], you accidentally parry [user.p_their()] attack perfectly!"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
-				return
+	else if(taped_weapon && W.force && emagged == BOT_EMAGGED_OVERDRIVE && iscarbon(user) && in_range(user, src))
+		var/mob/living/carbon/carbon_user = user
+		var/user_bleed_rate = carbon_user.get_bleed_rate()
+		var/block_chance = (user_bleed_rate * CLEANBOT_BLOCK_ITEM_BLEED_MULT) + taped_weapon.force // with CLEANBOT_BLOCK_ITEM_BLEED_MULT = 5, a moderate slash wound adds ~10% to the block chance, a critical slash adds ~20%
+
+		if(user_bleed_rate && prob(block_chance)) // the bloodier you are, the more likely you are to get beaten by the cleanbot
+			if(prob(block_chance)) // critical success for the cleanbot! it parries the attack successfully, fighting back!
+				visible_message(span_danger("[src] whirrs around frantically trying to clean the blood spilling from [user], accidentally parrying [user.p_their()] attack perfectly with \the [taped_weapon]!"),
+									span_danger("<b>Frantically trying to clean the blood spilling from [user], you accidentally parry [user.p_their()] attack perfectly!</b>"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
+				to_chat(user, span_userdanger("You try to strike [src] with \the [W], but it expertly parries your attack with \the [taped_weapon] while trying to clean your flowing blood!"))
+				stab_target(user, CLEANBOT_STAB_ARMS)
+
+			else // otherwise it just blocks the attack
+				visible_message(span_danger("[src] spins around trying to clean the blood coming from [user], accidentally parrying [user.p_their()] attack perfectly with \the [taped_weapon]!"),
+									span_userdanger("Trying to clean the blood flowing from [user], you accidentally parry [user.p_their()] attack perfectly!"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
+				to_chat(user, span_userdanger("You try to strike [src] with \the [W], but it accidentally blocks your attack while trying to clean your flowing blood!"))
+			return
+
+	return ..()
+
+/mob/living/simple_animal/bot/cleanbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(!(taped_weapon && user.combat_mode && emagged == BOT_EMAGGED_OVERDRIVE))
 		return ..()
+
+	var/user_bleed_rate = user.get_bleed_rate()
+	var/block_chance = (user_bleed_rate * CLEANBOT_BLOCK_HAND_BLEED_MULT) // with CLEANBOT_BLOCK_HAND_BLEED_MULT = 15, a moderate slash wound adds ~30% to the block chance, a critical slash adds ~60%
+
+	if(user_bleed_rate && prob(block_chance)) // cleanbots will only parry hand attacks, and at much higher rates than item attacks. Don't punch something holding a sharp object that tracks your bleeding bodyparts!
+		visible_message(span_danger("[src] whirrs around trying to clean [user]'s flowing blood, accidentally parrying [user.p_their()] punch with \the [taped_weapon]!"),
+							span_danger("<b>Trying to clean [user]'s flowing blood, you accidentally parry [user.p_their()] punch!</b>"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
+		to_chat(user, span_userdanger("You try to punch [src], but it parries you with \the [taped_weapon] while trying to clean your flowing blood!"))
+		stab_target(user, CLEANBOT_STAB_ARMS)
+	else
+		return ..()
+
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 
 	if(emagged == BOT_EMAGGED_OVERDRIVE && user)
+		taped_weapon?.force = original_weapon_force
 		to_chat(user, span_danger("[src] buzzes and beeps."))
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)

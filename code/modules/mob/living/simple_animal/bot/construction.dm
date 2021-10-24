@@ -55,6 +55,7 @@
 			return
 		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location())
 		A.name = created_name
+		A.chosen_name = created_name // so we save it for use with titles
 		A.robot_arm = W.type
 		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))
 		qdel(W)

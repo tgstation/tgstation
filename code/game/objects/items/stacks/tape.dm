@@ -14,7 +14,10 @@
 	grind_results = list(/datum/reagent/cellulose = 5)
 	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
+	/// The embed stats offered by this type of tape
 	var/list/conferred_embed = EMBED_HARMLESS
+	/// If set, this trait will be applied to the target item on application
+	var/applied_trait
 
 /obj/item/stack/sticky_tape/afterattack(obj/item/target, mob/living/user, proximity)
 	if(!proximity)
@@ -29,27 +32,32 @@
 
 	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
 
-	if(do_after(user, 3 SECONDS, target=target))
-		use(1)
-		if(istype(target, /obj/item/clothing/gloves/fingerless))
-			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
-			to_chat(user, span_notice("You turn [target] into [O] with [src]."))
-			QDEL_NULL(target)
-			user.put_in_hands(O)
-			return
+	if(!do_after(user, 3 SECONDS, target=target))
+		return
 
-		if(target.embedding && target.embedding == conferred_embed)
-			to_chat(user, span_warning("[target] is already coated in [src]!"))
-			return
+	if(target.embedding && target.embedding == conferred_embed) // in case we somehow already wrapped it in that time
+		to_chat(user, span_warning("[target] is already coated in [src]!"))
+		return
 
-		target.embedding = conferred_embed
-		target.updateEmbedding()
-		to_chat(user, span_notice("You finish wrapping [target] with [src]."))
-		target.name = "[prefix] [target.name]"
+	use(1)
+	if(istype(target, /obj/item/clothing/gloves/fingerless))
+		var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
+		to_chat(user, span_notice("You turn [target] into [O] with [src]."))
+		QDEL_NULL(target)
+		user.put_in_hands(O)
+		return
 
-		if(istype(target, /obj/item/grenade))
-			var/obj/item/grenade/sticky_bomb = target
-			sticky_bomb.sticky = TRUE
+	if(applied_trait)
+		ADD_TRAIT(target, applied_trait, STICKY_TAPE_TRAIT)
+
+	target.embedding = conferred_embed
+	target.updateEmbedding()
+	to_chat(user, span_notice("You finish wrapping [target] with [src]."))
+	target.name = "[prefix] [target.name]"
+
+	if(istype(target, /obj/item/grenade))
+		var/obj/item/grenade/sticky_bomb = target
+		sticky_bomb.sticky = TRUE
 
 /obj/item/stack/sticky_tape/super
 	name = "super sticky tape"
@@ -78,6 +86,7 @@
 	prefix = "super pointy"
 	conferred_embed = EMBED_POINTY_SUPERIOR
 	merge_type = /obj/item/stack/sticky_tape/pointy/super
+	applied_trait = TRAIT_CLEANBOT_COMPATIBLE
 
 /obj/item/stack/sticky_tape/surgical
 	name = "surgical tape"

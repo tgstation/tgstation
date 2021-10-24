@@ -43,6 +43,7 @@
 /obj/item/kitchen/fork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	ADD_TRAIT(src, TRAIT_CLEANBOT_COMPATIBLE, INNATE_TRAIT)
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
@@ -105,6 +106,7 @@
 /obj/item/kitchen/knife/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	ADD_TRAIT(src, TRAIT_CLEANBOT_COMPATIBLE, INNATE_TRAIT)
 	set_butchering()
 
 ///Adds the butchering component, used to override stats for special cases

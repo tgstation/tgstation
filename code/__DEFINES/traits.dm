@@ -467,6 +467,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WIELDED "wielded"
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
+/// Items with this trait can be stuck to cleanbots for funsies
+#define TRAIT_CLEANBOT_COMPATIBLE "cleanbot_compatible"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -702,6 +704,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+/// Trait applied by items wrapped with sticky tape
+#define STICKY_TAPE_TRAIT "sticky-tape-trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
