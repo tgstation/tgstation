@@ -93,10 +93,6 @@
 
 	var/list/alternate_appearances
 
-
-	/// Last appearance of the atom for demo saving purposes
-	var/image/demo_last_appearance
-
 	///Light systems, both shouldn't be active at the same time.
 	var/light_system = STATIC_LIGHT
 	///Range of the light in tiles. Zero means no light.

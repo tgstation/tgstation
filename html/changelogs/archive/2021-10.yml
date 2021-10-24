@@ -553,3 +553,194 @@
       methods of destruction." and only the splash screen can be interacted with
   - bugfix: you can no longer exploit the pink crossbreeding power to strip factions
       from mobs
+2021-10-18:
+  Ghommie:
+  - bugfix: Fixed the join/ready buttons not reverting if the game fails to setup.
+  Pickle-Coding:
+  - admin: Assembly bomb creation is now logged in Kelvin.
+  RandomGamer123:
+  - spellcheck: Fixed capitalisation errors in hypernoblium crystal usage messages.
+  Sealed101:
+  - bugfix: fixed abductor and advanced tools' recycling results being heavily diminished
+      or taken from their basic counterparts
+  SuperNovaa41:
+  - balance: The Goon Source code item is now invulnerable to deletion (aside from
+      ninja intervention), similar to every other high risk item.
+  esainane:
+  - rscadd: When all else fails, dusting a Clown can alter the Supermatter's containment
+      field. It might make the situation better. It might not. Who knows, HONK
+  magatsuchi:
+  - spellcheck: fixed a single bracket typo
+  tralezab:
+  - bugfix: fixes an error in department officers spawning with wallets
+2021-10-19:
+  Cyberboss:
+  - bugfix: Prying open one of a pair of cycle-linked airlocks will now always close
+      the other (if it is powered).
+  - expansion: 'Arrivals, escape, and pod airlocks now restrict those without access
+      from exiting directly to space. Use is unrestricted when entering the station
+      or a shuttle is docked. tweak: Shuttle departures will now force exterior airlocks
+      closed on both the shuttle and docking bay. The lives of your fellow crew members
+      are more important than your tardiness and limbs, employee!'
+  - bugfix: Fixed the numbering of escape pods in certain maps.
+  Ebin-Halcyon:
+  - balance: Syndicate masks are now fire + acid proof
+  Ghilker:
+  - qol: filters can now filter multiple gases at once
+  Ghommie:
+  - expansion: Meta and Delta chapels now have pews in lieu of stools or chairs.
+  MeyHaZah, Onule, Fikou:
+  - imageadd: mining gear resprite
+  Mothblocks:
+  - rscadd: Emagging the communications console will now let you purchase dangerous
+      shuttles. The Gigafactral and the Monastery were moved over (and made cheaper),
+      while the Disco Inferno and Oh, Hi Daniel make a return.
+  Ryll/Shaps:
+  - admin: As an admin, if you start replying to a freshly submitted ticket that another
+      admin is already replying to, you'll get a notice that someone already has it
+      open when you get the prompt. Nice to let you know someone else is handling
+      it, so you can coordinate replies better!
+  That REALLY Good Soda Flavor:
+  - refactor: Rolling paper will now use the customizable reagent holder component.
+      This cleans up the code and expands the possibilities for using the component
+      by adding support for dried items.
+  esainane:
+  - bugfix: Removed a scrubbers pipe that didn't lead anywhere near Upper Hydroponics
+      on Tram.
+2021-10-20:
+  Ghommie:
+  - bugfix: Fixed maintenance drones being unable to examinate things they currently
+      can't interact with throgh shift-click.
+  - bugfix: Fixed clown car drivers being unable to examinate things or interacting
+      with their inventory while the car is in cannon mode.
+  - bugfix: Fixed honorbound people being unable to pull, examinate and alt-click
+      other living mobs while holding an item that could be used as a melee weapon.
+  - bugfix: Fixed mechas firing their weapons or using their tools when the pilot
+      is examinating things through shift-click.
+  Mickyan:
+  - expansion: Nearsighter quirk now lets you pick the look of your prescription glasses
+      from the character preference menu
+  - imageadd: Added thin prescription glasses
+2021-10-21:
+  ATHATH:
+  - bugfix: Butter bears can now attack objects, as they were intended to.
+  - bugfix: Fugu glanded butter bears can now break down walls, matching the behavior
+      of other fugu glanded mobs.
+  - bugfix: Butter bears can now deal damage with their attacks if their melee damage
+      variables (which are zero by default) become nonzero.
+  - bugfix: Butter bear attacks are now considered to be blunt instead of sharp for
+      the purposes of wounds.
+  Coconutwarrior97:
+  - rscadd: Adds a hydroponics airlock type, and replaces old medical hydroponics
+      doors with the newer airlock type.
+  - bugfix: Fixes an issue where people with the doctor phobia were afraid of hydroponics
+      doors.
+  Ghommie:
+  - balance: Moved Pun Pun away from the kitchen on Delta. It's now behind the bar
+      counter.
+  JohnFulpWillard:
+  - bugfix: da vim can now be entered again.
+  MMMiracles:
+  - rscadd: Added new pair of glasses that can be found within the trash piles of
+      maintenance.
+  - bugfix: Pacifists can now fire the circuit gun.
+  MentalCow:
+  - bugfix: Security Plasmamen spawn with their suit sensors set to Maximum
+  PositiveEntropy, AdipemDragon:
+  - imageadd: Botany tools have been resprited!
+  Sealed101:
+  - bugfix: The internal radio implant from Icebox departures has been returned to
+      it's owner's internal organs. A normal handheld radio has been left in its place.
+  - bugfix: The american sausage has become edible AND roast-stick-friendly!
+  - bugfix: Fixes advanced roasting stick griddling itself when used on a bonfire
+      with a rod griddle built over it instead of using the bonfire to roast the sausage.
+  Timberpoes:
+  - bugfix: Fixed an issue where the unbanning panel would give inaccurate information
+      about the ban in the unban confirmation prompts.
+  - bugfix: Fixed an issue where clicking the X to close out the confirmation popup
+      on the unbanning panel acted as if you'd pressed Yes.
+  - admin: Added a reban button to the unbanning panel. This allows an admin to quickly
+      and easily re-apply a ban they've removed and replaces the unban button when
+      a ban has been removed. As a result, accidentally removing the wrong ban no
+      longer requires the admin to place a second brand new ban on top of the old
+      one.
+  - admin: Editing the IP, ckey or CID of a server ban will now kick any players matching
+      the edited ban's new details.
+  Zytolg:
+  - bugfix: Tramstation is now free from oddly decaled walls.
+  - bugfix: The Lavaland Syndicate Base is now Powered again.
+  - code_imp: repathed /unpowered Syndicate Base areas to /powered
+  esainane:
+  - bugfix: Gas Filters will now always attempt to move gas, as long as at least one
+      output has space available. Any gas not able to be moved to its destination
+      is returned to the input as if it was never removed. Previously, only gases
+      for the main output port would continue to move when the other output port was
+      full.
+  - bugfix: Gas Filters again no longer leaves empty entries for gases that were filtered
+      in the main output.
+  - bugfix: Gas Filters again no longer outright destroys gas when no filters (or
+      a bad filter, somehow) are set. Instead, it will go through to the main output,
+      as before, or if the main output is full, be returned back to the input, as
+      if never removed.
+2021-10-22:
+  Ghommie:
+  - bugfix: Fixed the contents of certain coded or mapped closets exceeding their
+      storage capacity, like the HoS closet on Delta, which had redundant grey HoS
+      jumpsuit, trenchcoat and beret, or the mixed wardrobe closet with its duplicate
+      bandanas, jacket and green jumpsuits,
+  - bugfix: fixed implant abilities not being properly removed when the implant is
+      removed.
+  IndieanaJones:
+  - expansion: Player monkeys make a screeching noise when using the *screech emote.
+  JohnFulpWillard:
+  - bugfix: Changelings that re-adapt with pheremone receptors on, will have them
+      forcefully removed.
+  Seris02:
+  - rscadd: makes it so lockers/crates can have access electronics removed/inserted
+  Y0SH1M4S73R:
+  - bugfix: The proc call, set var, and spawn atom circuit components will properly
+      resolve any weakrefs passed to them through their list ports.
+  - admin: The signal handler circuit component has two new presets, item_pre_attack_secondary
+      and item_afterattack_secondary.
+  - bugfix: Backup human names are once again respected when forcibly humanizing what
+      would otherwise be a non-human head of staff.
+  - admin: Added a "suppress_message_admins" variable to SDQL spells, which prevents
+      the spell's query from getting output to all admins' chat panels. The query
+      will still be written to the game log.
+  - bugfix: The SDQL spell parse error modal grows properly.
+  esainane:
+  - bugfix: The Orion Trail's instructions screen is usable again.
+  tralezab:
+  - bugfix: 480x480 titlescreens now load up centered as intended from the widescreen
+      title changes
+2021-10-23:
+  Guillaume Prata:
+  - qol: CMOs will now spawn with blue shoes (Paramedic) that protect them from contracting
+      diseases from any blood pool they step in, just like everyone else at medbay
+      already does.
+  Mickyan:
+  - qol: Art supplies are now also available in the library vendor in case the art
+      storage room is not present on station
+  Mooshimi:
+  - qol: 'Maintenance drone spawners have returned to robotics maintenance removed:
+      maint drone is gone from the mechfab and research tree'
+  Sealed101:
+  - bugfix: fixes mining drills showing as pickaxes when worn or held in-hand
+  Seris02:
+  - bugfix: borgs will no longer leave MMIs while cryoing
+2021-10-24:
+  Coconutwarrior97:
+  - bugfix: Fixes some hydro airlocks having null in their req_access.
+  Ghommie:
+  - expansion: Added binary and decimal conversion components.
+  Guillaume Prata:
+  - bugfix: Space Heaters won't change temperature without draining it's cell charge
+      anymore.
+  JohnFulpWillard:
+  - qol: Roulette Wheels now say their actions, rather than have it magically appear
+      in the chat box of everyone nearby.
+  Mooshimi:
+  - balance: cattleprods can no longer be held in suit storage slots
+  esainane:
+  - bugfix: Members of the Science department can no longer get given the objective
+      to steal their own server's source code.

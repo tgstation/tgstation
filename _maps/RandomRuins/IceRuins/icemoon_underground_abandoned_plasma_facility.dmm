@@ -998,7 +998,7 @@
 "oF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "oM" = (
@@ -2631,7 +2631,7 @@
 /area/ruin/plasma_facility/commons)
 "Qh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
