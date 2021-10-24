@@ -257,6 +257,9 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///find the cell this movable is associated with and removes it from all lists
 /datum/controller/subsystem/spatial_grid/proc/force_remove_from_cell(atom/movable/to_remove, datum/spatial_grid_cell/input_cell)
+	if(!initialized)
+		remove_from_pre_init_queue(to_remove)//the spatial grid doesnt exist yet, so just take it out of the queue
+
 	if(!input_cell)
 		input_cell = get_cell_of(to_remove)
 		if(!input_cell)
@@ -268,6 +271,18 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
+
+	var/list/queues_containing_movable = list()
+	for(var/queue_channel in waiting_to_add_by_type)
+		var/list/queue_list = waiting_to_add_by_type[queue_channel]
+		if(to_remove in queue_list)
+			queues_containing_movable += queue_channel//just add the associative key
+			if(remove_from_cells)
+				queue_list -= to_remove
+
+	if(!initialized)
+		return queues_containing_movable
+
 	var/list/containing_cells = list()
 	for(var/list/z_level_grid as anything in grids_by_z_level)
 		for(var/list/cell_row as anything in z_level_grid)

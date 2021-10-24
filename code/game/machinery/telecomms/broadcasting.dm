@@ -187,6 +187,9 @@
 	var/spans = data["spans"]
 	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
+
+	//TODOKYLER: this causes runtimes when nulls get into this list. its probably better to make it do the typecheck
+	//leaving it as as anything for now though to help find out how nulls get into the spatial grid (probably hard deletes)
 	for(var/atom/movable/hearer as anything in receive)
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
 
