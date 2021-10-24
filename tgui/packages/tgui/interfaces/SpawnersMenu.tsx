@@ -9,8 +9,8 @@ type SpawnersMenuContext = {
 type spawner = {
   name: string;
   amount_left: number;
-  short_desc: string;
-  flavor_text: string;
+  short_desc?: string;
+  flavor_text?: string;
   important_info?: string;
 };
 
@@ -36,29 +36,31 @@ export const SpawnersMenu = (props, context) => {
                       onClick={() =>
                         act('jump', {
                           name: spawner.name,
-                        })}
+                        })
+                      }
                     />
                     <Button
                       content="Spawn"
                       onClick={() =>
                         act('spawn', {
                           name: spawner.name,
-                        })}
+                        })
+                      }
                     />
                   </>
                 }>
                 <LabeledList>
                   <LabeledList.Item
                     label="Setting"
-                    content={spawner.short_desc}
+                    content={spawner.short_desc || 'Unknown'}
                   />
                   <LabeledList.Item
                     label="Objectives"
-                    content={spawner.flavor_text}
+                    content={spawner.flavor_text || 'None'}
                   />
                   <LabeledList.Item
                     label="Conditions"
-                    content={spawner.important_info}
+                    content={spawner.important_info || 'None'}
                   />
                 </LabeledList>
               </Section>
