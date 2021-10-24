@@ -106,7 +106,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	var/final = NONE
 	if(check_records)
 		final = final|JUDGE_RECORDCHECK
-	if(emagged == 2)
+	if(emagged == BOT_EMAGGED_OVERDRIVE)
 		final = final|JUDGE_EMAGGED
 	return final
 
@@ -133,7 +133,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
+	if(emagged == BOT_EMAGGED_OVERDRIVE)
 		if(user)
 			user << span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!")
 			oldtarget_name = user.name
@@ -153,7 +153,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if (emagged <= 1)
+		if(emagged < BOT_EMAGGED_OVERDRIVE)
 			honk_attack(A)
 		else
 			if(!C.IsParalyzed() || arrest_type)
@@ -174,13 +174,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
-	if (emagged <= 1)
+	if(emagged < BOT_EMAGGED_OVERDRIVE)
 		if (!limiting_spam)
 			playsound(src, honksound, 50, TRUE, -1)
 			limiting_spam = TRUE //prevent spam
 			sensor_blink()
 			addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
-	else if (emagged == 2) //emagged honkbots will spam short and memorable sounds.
+	else if (emagged == BOT_EMAGGED_OVERDRIVE) //emagged honkbots will spam short and memorable sounds.
 		if (!limiting_spam)
 			playsound(src, "honkbot_e", 50, FALSE)
 			limiting_spam = TRUE // prevent spam
@@ -210,7 +210,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				limiting_spam = TRUE
-			if (emagged <= 1) //HONK once, then leave
+			if(emagged < BOT_EMAGGED_OVERDRIVE) //HONK once, then leave
 				var/judgement_criteria = judgement_criteria()
 				threatlevel = H.assess_threat(judgement_criteria)
 				threatlevel -= 6

@@ -193,7 +193,7 @@ Auto Patrol: []"},
 		final |= JUDGE_RECORDCHECK
 	if(weaponscheck)
 		final |= JUDGE_WEAPONCHECK
-	if(emagged == 2)
+	if(emagged == BOT_EMAGGED_OVERDRIVE)
 		final |= JUDGE_EMAGGED
 	if(ranged)
 		final |= JUDGE_IGNOREMONKEYS
@@ -232,7 +232,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
+	if(emagged == BOT_EMAGGED_OVERDRIVE)
 		if(user)
 			to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
 			oldtarget_name = user.name

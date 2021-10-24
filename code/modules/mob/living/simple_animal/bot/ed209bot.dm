@@ -60,7 +60,7 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
-	if(emagged == 2)
+	if(emagged == BOT_EMAGGED_OVERDRIVE)
 		projectile = /obj/projectile/beam
 	else
 		projectile = /obj/projectile/beam/disabler
@@ -102,8 +102,8 @@
 				var/mob/toshoot = pick(targets)
 				if(toshoot)
 					targets-=toshoot
-					if(prob(50) && emagged < 2)
-						emagged = 2
+					if(prob(50) && emagged < BOT_EMAGGED_OVERDRIVE)
+						emagged = BOT_EMAGGED_OVERDRIVE
 						set_weapon()
 						shootAt(toshoot)
 						emagged = FALSE

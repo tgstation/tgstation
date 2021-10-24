@@ -222,7 +222,7 @@
 
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
+	if(emagged == BOT_EMAGGED_OVERDRIVE)
 		declare_crit = 0
 		if(user)
 			to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
@@ -445,7 +445,7 @@
 	if(C.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
-	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
+	if(emagged == BOT_EMAGGED_OVERDRIVE) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
 	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
@@ -562,7 +562,7 @@
 					var/obj/item/storage/firstaid/FA = firstaid
 					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
 						healies *= 1.1
-					if(emagged == 2)
+					if(emagged == BOT_EMAGGED_OVERDRIVE)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 						patient.apply_damage_type((healies*1),treatment_method)
 						log_combat(src, patient, "pretended to tend wounds on", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")

@@ -33,7 +33,7 @@
 	var/next_dest
 	var/next_dest_loc
 
-	var/obj/item/weapon
+	var/obj/item/taped_weapon
 	var/chosen_name
 
 	var/list/stolen_valor
@@ -57,8 +57,8 @@
 		return
 	to_chat(user, span_notice("You attach \the [W] to \the [src]."))
 	user.transferItemToLoc(W, src)
-	weapon = W
-	add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
+	taped_weapon = W
+	add_overlay(image(icon=taped_weapon.lefthand_file,icon_state=taped_weapon.inhand_icon_state))
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
@@ -89,8 +89,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
-	if(weapon)
-		. += " [span_warning("Is that \a [weapon] taped to it...?")]"
+	if(taped_weapon)
+		. += " [span_warning("Is that \a [taped_weapon] taped to it...?")]"
 
 		if(ascended && user.stat == CONSCIOUS && user.client)
 			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
@@ -117,9 +117,9 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/bot/cleanbot/Destroy()
-	if(weapon)
-		drop_part(weapon, drop_location())
-		weapon = null
+	if(taped_weapon)
+		drop_part(taped_weapon, drop_location())
+		taped_weapon = null
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
@@ -146,7 +146,7 @@
 /mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 
-	if(!weapon || !iscarbon(target) || !has_gravity())
+	if(!taped_weapon || !iscarbon(target) || !has_gravity())
 		return
 
 	stab_target(AM)
@@ -154,7 +154,7 @@
 /mob/living/simple_animal/bot/cleanbot/proc/on_entering(datum/source, atom/destination, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(!weapon || !has_gravity())
+	if(!taped_weapon || !has_gravity())
 		return
 
 	for(var/mob/living/carbon/iter_carbon in destination)
@@ -163,7 +163,7 @@
 		stab_target(iter_carbon)
 
 /mob/living/simple_animal/bot/cleanbot/proc/stab_target(mob/living/carbon/target)
-	if(!weapon || !istype(target) || !has_gravity())
+	if(!taped_weapon || !istype(target) || !has_gravity())
 		return
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -172,7 +172,7 @@
 		stolen_valor += target.job
 	update_titles()
 
-	INVOKE_ASYNC(weapon, /obj/item.proc/attack, target, src)
+	INVOKE_ASYNC(taped_weapon, /obj/item.proc/attack, target, src)
 	target.Knockdown(2 SECONDS)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
@@ -192,17 +192,17 @@
 		if(do_after(user, 2.5 SECONDS, target = src))
 			deputize(W, user)
 	else
-		if(weapon && W.force && emagged == 2 && iscarbon(user))
+		if(taped_weapon && W.force && emagged == BOT_EMAGGED_OVERDRIVE && iscarbon(user))
 			var/mob/living/carbon/carbon_user = user
 			var/user_bleed_rate = carbon_user.get_bleed_rate()
-			if(user_bleed_rate && prob(user_bleed_rate + weapon.force)) // note weapon.force here refers to the cleanbot's weapon
-				if(prob(weapon.force)) // critical success for the cleanbot! it parries the attack successfully
-					visible_message(span_danger("[src] whirrs around frantically trying to clean the blood flowing from [user], accidentally parrying [user.p_their()] attack perfectly with \the [weapon]!"),
+			if(user_bleed_rate && prob(user_bleed_rate + taped_weapon.force)) // when
+				if(prob(taped_weapon.force)) // critical success for the cleanbot! it parries the attack successfully
+					visible_message(span_danger("[src] whirrs around frantically trying to clean the blood flowing from [user], accidentally parrying [user.p_their()] attack perfectly with \the [taped_weapon]!"),
 										span_userdanger("Trying to clean the blood flowing from [user], you accidentally parry [user.p_their()] attack perfectly!"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
 					stab_target(user)
 
 				else // otherwise it just blocks the attack
-					visible_message(span_danger("[src] whirrs around frantically trying to clean the blood flowing from [user], accidentally parrying [user.p_their()] attack perfectly with \the [weapon]!"),
+					visible_message(span_danger("[src] whirrs around frantically trying to clean the blood flowing from [user], accidentally parrying [user.p_their()] attack perfectly with \the [taped_weapon]!"),
 										span_userdanger("Trying to clean the blood flowing from [user], you accidentally parry [user.p_their()] attack perfectly!"), COMBAT_MESSAGE_RANGE, ignored_mobs = user)
 				return
 		return ..()
@@ -210,7 +210,7 @@
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 
-	if(emagged == 2 && user)
+	if(emagged == BOT_EMAGGED_OVERDRIVE && user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
@@ -228,7 +228,7 @@
 	if(mode == BOT_CLEANING)
 		return
 
-	if(emagged == 2) //Emag functions
+	if(emagged == BOT_EMAGGED_OVERDRIVE) //Emag functions
 		if(isopenturf(loc))
 
 			for(var/mob/living/carbon/victim in loc)
@@ -247,7 +247,7 @@
 		if(!process_scan(target))
 			target = null
 
-	if(!target && emagged == 2) // When emagged, target humans who slipped on the water and melt their faces off
+	if(!target && emagged == BOT_EMAGGED_OVERDRIVE) // When emagged, target humans who slipped on the water and melt their faces off
 		target = scan(/mob/living/carbon)
 
 	if(!target && pests) //Search for pests to exterminate first.
@@ -364,7 +364,7 @@
 			living_target.death()
 		living_target = null
 
-	else if(emagged == 2) //Emag functions
+	else if(emagged == BOT_EMAGGED_OVERDRIVE) //Emag functions
 		if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job

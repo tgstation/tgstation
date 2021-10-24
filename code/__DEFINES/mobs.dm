@@ -468,3 +468,10 @@
 
 //Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
+
+/// If a [/mob/living/simple_animal/bot] is not emagged
+#define BOT_NOT_EMAGGED 0
+/// If a [/mob/living/simple_animal/bot] has been emagged once and has their controls exposed
+#define BOT_EMAGGED 1
+/// If a [/mob/living/simple_animal/bot] has been emagged twice (or their safeties turned off) and had their special !FUN!ctions enabled
+#define BOT_EMAGGED_OVERDRIVE 2

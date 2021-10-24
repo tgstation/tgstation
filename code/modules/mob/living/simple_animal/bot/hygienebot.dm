@@ -223,7 +223,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	return dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
-	if((emagged == 2) && L.stat != DEAD)
+	if((emagged == BOT_EMAGGED_OVERDRIVE) && L.stat != DEAD)
 		return FALSE
 
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
