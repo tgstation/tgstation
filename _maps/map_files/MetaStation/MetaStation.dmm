@@ -1262,6 +1262,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"akl" = (
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris,
+/turf/closed/wall,
+/area/service/hydroponics)
 "ako" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -109554,7 +109558,7 @@ vaY
 chR
 nnF
 bNE
-quV
+akl
 jZd
 kCb
 kCb

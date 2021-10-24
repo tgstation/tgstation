@@ -39047,15 +39047,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/engine/cult,
 /area/service/library)
-"qqo" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/sign/departments/botany{
-	pixel_x = 32
-	},
-/turf/open/floor/iron,
-/area/hallway/primary/central)
 "qqA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -87556,7 +87547,7 @@ eIL
 rck
 wtE
 bkR
-qqo
+aLX
 sVL
 aJq
 aJq
