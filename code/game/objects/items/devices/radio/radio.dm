@@ -210,18 +210,6 @@
 		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
 		set_listening(FALSE, actual_setting = FALSE)
 
-	/* TODOKYLER: DONT FORGET THIS
-	if(on && broadcasting)
-		become_hearing_sensitive(INNATE_TRAIT)
-	else
-		lose_hearing_sensitivity(INNATE_TRAIT)
-
-	if(on && listening)
-		add_radio(src, frequency)
-		recalculateChannels()
-	else
-		remove_radio_all(src)*/
-
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
 		var/mob/living/carbon/mute = talking_movable
