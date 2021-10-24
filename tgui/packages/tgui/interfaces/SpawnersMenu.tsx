@@ -26,42 +26,45 @@ export const SpawnersMenu = (props, context) => {
               <Section
                 fill
                 // Capitalizes the spawner name
-                title={`${spawner.name.replace(/^\w/, (c) =>
+                title={spawner.name.replace(/^\w/, (c) =>
                   c.toUpperCase()
-                )} (${spawner.amount_left} left)`}
+                )}
                 buttons={
-                  <>
-                    <Button
-                      content="Jump"
-                      onClick={() =>
-                        act('jump', {
-                          name: spawner.name,
-                        })
-                      }
-                    />
-                    <Button
-                      content="Spawn"
-                      onClick={() =>
-                        act('spawn', {
-                          name: spawner.name,
-                        })
-                      }
-                    />
-                  </>
+                  <Stack>
+                    <Stack.Item fontSize="16px" color="green">
+                      {spawner.amount_left} left
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        content="Jump"
+                        onClick={() =>
+                          act('jump', {
+                            name: spawner.name,
+                          })}
+                      />
+                      <Button
+                        content="Spawn"
+                        onClick={() =>
+                          act('spawn', {
+                            name: spawner.name,
+                          })}
+                      />
+                    </Stack.Item>
+                  </Stack>
                 }>
                 <LabeledList>
                   <LabeledList.Item
-                    label="Setting"
-                    content={spawner.short_desc || 'Unknown'}
-                  />
+                    label="Origin"
+                  >{spawner.short_desc || 'Unknown'}
+                  </LabeledList.Item>
                   <LabeledList.Item
-                    label="Objectives"
-                    content={spawner.flavor_text || 'None'}
-                  />
+                    label="Directives"
+                  >{spawner.flavor_text || 'None'}
+                  </LabeledList.Item>
                   <LabeledList.Item
                     label="Conditions"
-                    content={spawner.important_info || 'None'}
-                  />
+                  >{spawner.important_info || 'None'}
+                  </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Stack.Item>
