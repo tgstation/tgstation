@@ -757,12 +757,12 @@
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "dc" = (
-/obj/machinery/power/rad_collector,
+/obj/machinery/power/energy_accumulator/rad_collector,
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "dd" = (
-/obj/machinery/power/rad_collector,
+/obj/machinery/power/energy_accumulator/rad_collector,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "de" = (

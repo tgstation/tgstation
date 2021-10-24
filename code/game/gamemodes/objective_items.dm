@@ -106,6 +106,7 @@
 	name = "the source code for Project Goon from the master R&D server mainframe."
 	targetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
 	difficulty = 10
+	excludefromjob = list("Research Director","Scientist", "Geneticist", "Roboticist")
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction

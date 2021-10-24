@@ -493,6 +493,15 @@
 					/obj/item/clothing/head/fedora = 2,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/gloves/color/latex = 2,
+					/obj/item/clothing/under/rank/security/detective/disco = 1,
+					/obj/item/clothing/suit/det_suit/disco = 1,
+					/obj/item/clothing/shoes/discoshoes = 1,
+					/obj/item/clothing/neck/tie/disco = 1,
+					/obj/item/clothing/under/rank/security/detective/kim = 1,
+					/obj/item/clothing/suit/det_suit/kim = 1,
+					/obj/item/clothing/shoes/kim = 1,
+					/obj/item/clothing/gloves/kim = 1,
+					/obj/item/clothing/glasses/regular/kim = 1,
 					/obj/item/reagent_containers/food/drinks/flask/det = 2,
 					/obj/item/storage/fancy/cigarettes = 5)
 	premium = list(/obj/item/clothing/head/flatcap = 1)

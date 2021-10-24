@@ -62,7 +62,7 @@
 		)
 	belt = /obj/item/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew
 	l_hand = /obj/item/storage/firstaid/medical
 
