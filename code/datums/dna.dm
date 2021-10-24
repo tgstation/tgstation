@@ -96,6 +96,8 @@
 		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
 			force_lose(HM)
 
+#define sanitize_shortcolor(color) sanitize_hexcolor(color, 3, include_crunch = FALSE)
+
 /datum/dna/proc/generate_unique_identity()
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
@@ -284,6 +286,8 @@
 			setblock(unique_features, blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_MONKEY_TAIL_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len))
+
+#undef sanitize_shortcolor
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)

@@ -96,7 +96,3 @@
 /// Makes sure the input color is text with a # at the start followed by 6 hexadecimal characters. Examples: "#ff1234", "#A38321", COLOR_GREEN_GRAY
 /proc/sanitize_color(color)
 	return findtext(color, GLOB.is_color) ? color : GLOB.normal_ooc_colour
-
-/// Makes sure the input color is 3 hexadecimal characters.
-/proc/sanitize_shortcolor(color)
-	return sanitize_hexcolor(color, 3, include_crunch = FALSE)
