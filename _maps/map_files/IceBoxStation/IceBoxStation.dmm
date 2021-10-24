@@ -30124,8 +30124,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics";
-	req_access_txt = null;
-	req_one_access = "35;28"
+	req_access_txt = "35;28"
 	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
@@ -39048,6 +39047,15 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/engine/cult,
 /area/service/library)
+"qqo" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/sign/departments/botany{
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 "qqA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42426,8 +42434,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hydroponics/glass{
 	name = "Hydroponics";
-	req_access_txt = null;
-	req_one_access = "35;28"
+	req_access_txt = "35;28"
 	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
@@ -87549,7 +87556,7 @@ eIL
 rck
 wtE
 bkR
-aLX
+qqo
 sVL
 aJq
 aJq
