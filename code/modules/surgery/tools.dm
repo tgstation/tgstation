@@ -170,6 +170,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
 	AddElement(/datum/element/eyestab)
+	AddTrait(src, TRAIT_CLEANBOT_COMPATIBLE, INNATE_TRAIT)
 
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
