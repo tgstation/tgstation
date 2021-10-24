@@ -55,6 +55,7 @@
 	var/burn_reduction = 0
 	//Coloring and proper item icon update
 	var/skin_tone = ""
+	var/override_skin_tone = ""
 	var/body_gender = ""
 	var/species_id = ""
 	var/should_draw_gender = FALSE
@@ -777,6 +778,7 @@
 
 		if(owner_species.use_skintones)
 			skin_tone = human_owner.skin_tone
+			override_skin_tone = human_owner.override_skin_tone
 			should_draw_greyscale = TRUE
 		else
 			skin_tone = ""
@@ -903,7 +905,9 @@
 
 	var/draw_color
 	if(should_draw_greyscale)
-		draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
+		to_chat(world,"[override_skin_tone]")
+		draw_color = mutation_color || override_skin_tone || species_color || (skin_tone && skintone2hex(skin_tone))
+		to_chat(world,"[draw_color]")
 		if(draw_color)
 			limb.color = draw_color
 			if(aux_zone)

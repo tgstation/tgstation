@@ -30,6 +30,7 @@
 	var/eye_color = "#000000"
 
 	var/skin_tone = "caucasian1" //Skin tone
+	var/override_skin_tone = "" //Overrides normal skin_tone. Used for custom skin color. Uses Hex color.
 
 	var/lip_style = null //no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"

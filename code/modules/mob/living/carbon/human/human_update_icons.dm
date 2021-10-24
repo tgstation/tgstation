@@ -582,7 +582,8 @@ generate/load female uniform sprites matching all previously decided variables
 		. += "-coloured-[dna.features["mcolor"]]"
 	else
 		. += "-not_coloured"
-
+	if(override_skin_tone)
+		. += "-override-[override_skin_tone]"
 	. += "-[body_type]"
 
 	for(var/X in bodyparts)
