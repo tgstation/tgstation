@@ -25,8 +25,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = ITEM_SLOT_EARS
-	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
+	var/obj/item/encryptionkey/keyslot2 = null
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
@@ -61,13 +61,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/proc/possibly_deactivate_in_loc()
 	if(ishuman(loc))
-		var/mob/living/carbon/human/human_loc = loc
-		if(human_loc.ears == src)
-			set_listening(TRUE)//TODOKYLER: this is dumb and there needs to be traits to dileneate whether to shut off because of one thing or stay on because another thing overrides it
-	else if(ismob(loc))
-		set_listening(TRUE)
+		set_listening(should_be_listening)
 	else
-		set_listening(FALSE)
+		set_listening(FALSE, actual_setting = FALSE)
 
 /obj/item/radio/headset/Moved(atom/OldLoc, Dir)
 	. = ..()

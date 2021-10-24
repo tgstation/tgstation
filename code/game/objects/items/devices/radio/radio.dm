@@ -17,19 +17,30 @@
 	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
 	obj_flags = USES_TGUI
 
-	///if FALSE, broadcasting and listening dont matter this radio shouldnt do anything
+	///if FALSE, broadcasting and listening dont matter and this radio shouldnt do anything
 	VAR_PRIVATE/on = TRUE
 	///the "default" radio frequency this radio is set to, listens and transmits to this frequency by default. wont work if the channel is encrypted
 	VAR_PRIVATE/frequency = FREQ_COMMON
-	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
-	var/canhear_range = 3
-	/// Tracks the number of EMPs currently stacked.
-	var/emped = 0
 
 	/// Whether the radio will transmit dialogue it hears nearby into its radio channel.
 	VAR_PRIVATE/broadcasting = FALSE
 	/// Whether the radio is currently receiving radio messages from its radio frequencies.
 	VAR_PRIVATE/listening = TRUE
+
+	//the below three vars are used to track listening and broadcasting should they be forced off for whatever reason but "supposed" to be active
+	//eg player sets the radio to listening, but an emp or whatever turns it off, its still supposed to be activated but was forced off,
+	//when it wears off it sets listening to should_be_listening
+
+	///used for tracking what broadcasting should be in the absence of things forcing it off, eg its set to broadcast but gets emp'd temporarily
+	var/should_be_broadcasting = FALSE
+	///used for tracking what listening should be in the absence of things forcing it off, eg its set to listen but gets emp'd temporarily
+	var/should_be_listening = TRUE
+
+	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
+	var/canhear_range = 3
+	/// Tracks the number of EMPs currently stacked.
+	var/emped = 0
+
 	/// If true, the transmit wire starts cut.
 	var/prison_radio = FALSE
 	/// Whether wires are accessible. Toggleable by screwdrivering.
@@ -63,9 +74,28 @@
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
 	var/list/secure_radio_connections
 
-/obj/item/radio/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return BRUTELOSS
+/obj/item/radio/Initialize(mapload)
+	wires = new /datum/wires/radio(src)
+	if(prison_radio)
+		wires.cut(WIRE_TX) // OH GOD WHY
+	secure_radio_connections = list()
+	. = ..()
+
+	for(var/ch_name in channels)
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+	set_listening(listening)
+	set_broadcasting(broadcasting)
+	set_frequency(sanitize_frequency(frequency, freerange))
+	set_on(on)
+
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+
+/obj/item/radio/Destroy()
+	remove_radio_all(src) //Just to be sure
+	QDEL_NULL(wires)
+	QDEL_NULL(keyslot)
+	return ..()
 
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
@@ -93,6 +123,7 @@
 // Used for cyborg override
 /obj/item/radio/proc/resetChannels()
 	channels = list()
+	secure_radio_connections = list()
 	translate_binary = FALSE
 	syndie = FALSE
 	independent = FALSE
@@ -100,32 +131,8 @@
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/syndicate
-	syndie = 1
+	syndie = TRUE
 	recalculateChannels()
-
-/obj/item/radio/Destroy()
-	remove_radio_all(src) //Just to be sure
-	QDEL_NULL(wires)
-	QDEL_NULL(keyslot)
-	return ..()
-
-/obj/item/radio/Initialize(mapload)
-	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
-	secure_radio_connections = new
-	. = ..()
-
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
-
-	set_listening(listening)
-	set_on(on)
-	set_frequency(sanitize_frequency(frequency, freerange))
-	set_broadcasting(broadcasting)
-
-	//become_hearing_sensitive(INNATE_TRAIT)
-	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/interact(mob/user)
 	if(unscrewed && !isAI(user))
@@ -136,24 +143,36 @@
 
 //simple getters only because i NEED to enforce complex setter use for these vars for caching purposes but VAR_PROTECTED requires getter usage as well.
 //if another decorator is made that doesnt require getters feel free to nuke these and change these vars over to that
+
+///simple getter for the on variable. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/is_on()
 	return on
 
+///simple getter for the frequency variable. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/get_frequency()
-	return on
+	return frequency
 
+///simple getter for the broadcasting variable. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/get_broadcasting()
 	return broadcasting
 
+///simple getter for the listening variable. necessary due to VAR_PROTECTED
 /obj/item/radio/proc/get_listening()
 	return listening
 
-//now for setters for the above protected var
+//now for setters for the above protected vars
 
-///setter for the listener var, adds or removes this radio from the global radio list if we are also on
-/obj/item/radio/proc/set_listening(new_listening)
+/**
+ * setter for the listener var, adds or removes this radio from the global radio list if we are also on
+ *
+ * * new_listening - the new value we want to set listening to
+ * * actual_setting - whether or not the radio is supposed to be listening, sets should_be_listening to the new listening value if true, otherwise just changes listening
+ */
+/obj/item/radio/proc/set_listening(new_listening, actual_setting = TRUE)
 
 	listening = new_listening
+	if(actual_setting)
+		should_be_listening = listening
 
 	if(listening && on)
 		recalculateChannels()
@@ -161,21 +180,37 @@
 	else if(!listening)
 		remove_radio_all(src)
 
-///setter for broadcasting that makes us not hearing sensitive if not broadcasting and hearing sensitive if broadcasting
-///hearing sensitive in this case only matters for the purposes of listening for words said in nearby tiles, talking into us directly bypasses hearing
-/obj/item/radio/proc/set_broadcasting(new_broadcasting)
+/**
+ * setter for broadcasting that makes us not hearing sensitive if not broadcasting and hearing sensitive if broadcasting
+ * hearing sensitive in this case only matters for the purposes of listening for words said in nearby tiles, talking into us directly bypasses hearing
+ *
+ * * new_broadcasting- the new value we want to set broadcasting to
+ * * actual_setting - whether or not the radio is supposed to be broadcasting, sets should_be_broadcasting to the new value if true, otherwise just changes broadcasting
+ */
+/obj/item/radio/proc/set_broadcasting(new_broadcasting, actual_setting = TRUE)
 
 	broadcasting = new_broadcasting
+	if(actual_setting)
+		should_be_broadcasting = broadcasting
 
 	if(broadcasting && on) //we dont need hearing sensitivity if we arent broadcasting, because talk_into doesnt care about hearing
 		become_hearing_sensitive(INNATE_TRAIT)
 	else if(!broadcasting)
 		lose_hearing_sensitivity(INNATE_TRAIT)
 
+///setter for the on var that sets both broadcasting and listening to off or whatever they were supposed to be
 /obj/item/radio/proc/set_on(new_on)
 
 	on = new_on
 
+	if(on)
+		set_broadcasting(should_be_broadcasting)//set them to whatever theyre supposed to be
+		set_listening(should_be_listening)
+	else
+		set_broadcasting(FALSE, actual_setting = FALSE)//fake set them to off
+		set_listening(FALSE, actual_setting = FALSE)
+
+	/* TODOKYLER: DONT FORGET THIS
 	if(on && broadcasting)
 		become_hearing_sensitive(INNATE_TRAIT)
 	else
@@ -185,7 +220,7 @@
 		add_radio(src, frequency)
 		recalculateChannels()
 	else
-		remove_radio_all(src)
+		remove_radio_all(src)*/
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
 	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
@@ -400,6 +435,10 @@
 					recalculateChannels()
 				. = TRUE
 
+/obj/item/radio/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return BRUTELOSS
+
 /obj/item/radio/examine(mob/user)
 	. = ..()
 	if (frequency && in_range(src, user))
@@ -428,8 +467,6 @@
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc)) // if the radio is turned on and on someone's person they notice
 		to_chat(loc, span_warning("\The [src] overloads."))
-	set_broadcasting(FALSE)
-	listening = FALSE
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	set_on(FALSE)
