@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The SM air alarm on MetaStation and TramStation once again starts unlocked, and can also be locked and unlocked by Engineers instead of just Atmospherics Technicians. This matches the setup on Delta, IceBox, and Kilo."
