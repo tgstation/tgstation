@@ -29,6 +29,7 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	set_butchering()
+	ADD_TRAIT(src, TRAIT_CLEANBOT_COMPATIBLE, INNATE_TRAIT)
 
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/knife/proc/set_butchering()
