@@ -190,6 +190,7 @@
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
 	worn_y_offset = 1
+	dog_fashion = /datum/dog_fashion/head/pumpkin
 
 /obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -214,6 +215,7 @@
 	inhand_icon_state = "hardhat0_blumpkin"
 	hat_type = "blumpkin"
 	light_color = "#76ff8e"
+	dog_fashion = /datum/dog_fashion/head/blumpkin
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"

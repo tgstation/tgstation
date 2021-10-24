@@ -179,3 +179,19 @@
 	name = "Festive REAL_NAME"
 	desc = "Ready to party!"
 	obj_icon_state = "festive"
+
+/datum/dog_fashion/head/pumpkin
+	name = "Headless HoP-less REAL_NAME"
+	desc = "A spooky dog spirit of a beloved pet who lost their owner."
+	obj_icon_state = "pumpkin"
+	speak = list("BOO!", "AUUUUUUU", "RAAARGH!")
+	emote_see = list("shambles around.", "yaps ominously.", "shivers.")
+	emote_hear = list("howls at the Moon.", "yaps at the crows!")
+
+/datum/dog_fashion/head/blumpkin
+	name = "Hue-less Headless HoP-less REAL_NAME"
+	desc = "An evil dog spirit of a beloved pet that haunts your treats pantries!"
+	obj_icon_state = "blumpkin"
+	speak = list("BOO!", "AUUUUUUU", "RAAARGH!")
+	emote_see = list("shambles around.", "yaps ominously.", "shivers.")
+	emote_hear = list("howls at the Moon.", "yaps at the crows!", "growls eerily!")
