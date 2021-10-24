@@ -189,6 +189,7 @@ export class ObjectComponent extends Component {
                       port={port}
                       portIndex={portIndex + 1}
                       componentId={index}
+                      act={act}
                       {...PortOptions}
                     />
                   </Stack.Item>
