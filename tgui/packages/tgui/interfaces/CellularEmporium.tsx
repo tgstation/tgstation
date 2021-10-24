@@ -69,7 +69,7 @@ const AbilityList = (props, context) => {
               <Stack.Item>
                 <Button
                   content={'Evolve'}
-                  disabled={ability.dna_cost
+                  disabled={ability.owned || ability.dna_cost
                     > genetic_points_remaining}
                   onClick={() => act('evolve', {
                     name: ability.name,
