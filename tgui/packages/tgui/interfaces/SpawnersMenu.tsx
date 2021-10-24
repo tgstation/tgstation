@@ -25,7 +25,7 @@ export const SpawnersMenu = (props, context) => {
             <Stack.Item key={spawner.name}>
               <Section
                 fill
-                /** Capitalizes the spawner name */
+                // Capitalizes the spawner name
                 title={`${spawner.name.replace(/^\w/, (c) =>
                   c.toUpperCase()
                 )} (${spawner.amount_left} left)`}
