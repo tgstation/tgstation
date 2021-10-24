@@ -1,4 +1,0 @@
-author: "Coconutwarrior97"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some hydro airlocks having null in their req_access."

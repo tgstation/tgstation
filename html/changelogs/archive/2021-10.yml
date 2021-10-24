@@ -728,3 +728,19 @@
   - bugfix: fixes mining drills showing as pickaxes when worn or held in-hand
   Seris02:
   - bugfix: borgs will no longer leave MMIs while cryoing
+2021-10-24:
+  Coconutwarrior97:
+  - bugfix: Fixes some hydro airlocks having null in their req_access.
+  Ghommie:
+  - expansion: Added binary and decimal conversion components.
+  Guillaume Prata:
+  - bugfix: Space Heaters won't change temperature without draining it's cell charge
+      anymore.
+  JohnFulpWillard:
+  - qol: Roulette Wheels now say their actions, rather than have it magically appear
+      in the chat box of everyone nearby.
+  Mooshimi:
+  - balance: cattleprods can no longer be held in suit storage slots
+  esainane:
+  - bugfix: Members of the Science department can no longer get given the objective
+      to steal their own server's source code.
