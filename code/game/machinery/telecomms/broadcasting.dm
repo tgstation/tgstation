@@ -179,7 +179,7 @@
 
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(ghost.client.prefs.chat_toggles & CHAT_GHOSTRADIO)
+		if(ghost.client.prefs?.chat_toggles & CHAT_GHOSTRADIO)
 			receive |= ghost
 
 	// Render the message and have everybody hear it.
