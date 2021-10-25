@@ -2807,6 +2807,7 @@
 /area/science/xenobiology)
 "ma" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "mb" = (
@@ -2897,6 +2898,7 @@
 /area/service/bar)
 "mB" = (
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "mC" = (
@@ -3442,6 +3444,7 @@
 	},
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/small/directional/north,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "oX" = (

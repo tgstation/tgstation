@@ -3876,6 +3876,9 @@
 /obj/machinery/button/door/directional/south{
 	id = "atmos"
 	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -10
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "ayY" = (
@@ -14828,6 +14831,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_holder/oxygen/yellow,
 /turf/open/floor/iron,
 /area/engineering/storage_shared)
 "dkZ" = (
@@ -18092,6 +18096,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 4
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 12
 	},
 /turf/open/floor/iron,
 /area/engineering/storage_shared)
@@ -25943,6 +25950,9 @@
 	pixel_x = 6;
 	pixel_y = -2
 	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 10
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "jeE" = (
@@ -29863,7 +29873,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
-/turf/open/floor/plating/snowed/smoothed,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "ldP" = (
 /obj/effect/turf_decal/stripes/line{
@@ -31469,7 +31479,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/smoothed,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "lUp" = (
 /obj/structure/disposalpipe/segment{
@@ -34359,6 +34369,9 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/north,
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -11
+	},
 /turf/open/floor/iron,
 /area/engineering/storage)
 "nmi" = (
@@ -35775,10 +35788,6 @@
 	},
 /turf/open/openspace,
 /area/science/xenobiology)
-"nWe" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/floor/plating/snowed/smoothed,
-/area/icemoon/surface/outdoors)
 "nWg" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -38656,7 +38665,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/turf/open/floor/plating/snowed/smoothed,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
 "pzE" = (
 /obj/machinery/suit_storage_unit/ce,
@@ -39612,6 +39621,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
+/obj/structure/tank_holder,
 /turf/open/floor/plating,
 /area/engineering/storage_shared)
 "pZC" = (
@@ -40864,10 +40874,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/grimy,
 /area/commons/vacant_room/office)
-"qJT" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
 "qJW" = (
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/wood,
@@ -48223,6 +48229,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
+"usv" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "usG" = (
 /obj/structure/cable,
 /obj/machinery/bounty_board/directional/north,
@@ -52562,6 +52572,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/breakroom)
+"wNb" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
 "wNj" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
@@ -80287,9 +80303,9 @@ bKr
 bLo
 bKr
 bLw
-nWe
-nWe
-nWe
+usv
+usv
+usv
 bLw
 bLo
 boP
@@ -80544,10 +80560,10 @@ bLn
 lUi
 lUi
 ldw
-nWe
-nWe
-nWe
-bLw
+usv
+usv
+usv
+usv
 bLs
 boP
 boP
@@ -80801,8 +80817,8 @@ bLn
 lUi
 lUi
 pzD
-nWe
-nWe
+usv
+usv
 bLw
 bLw
 bLo
@@ -81058,11 +81074,11 @@ bLn
 lUi
 lUi
 ldw
-nWe
-nWe
+usv
+usv
 bLw
 bLw
-bLs
+wNb
 boP
 boP
 bBM
@@ -81315,9 +81331,9 @@ uUB
 lUi
 lUi
 pzD
-nWe
-nWe
-nWe
+usv
+usv
+usv
 bLw
 bLo
 boP
@@ -81572,10 +81588,10 @@ bLn
 lUi
 lUi
 ldw
-nWe
-nWe
-nWe
-bLw
+usv
+usv
+usv
+usv
 bLs
 boP
 boP
@@ -81829,10 +81845,10 @@ lfw
 bLn
 lUi
 pzD
-nWe
-nWe
-nWe
-bLw
+usv
+usv
+usv
+usv
 bLo
 boP
 boP
@@ -88253,7 +88269,7 @@ xGd
 wCe
 wCe
 wCe
-qJT
+boP
 boP
 pjX
 boP
