@@ -8,7 +8,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
+
+	/// If there's a tile over a basic floor that can be ripped out
 	var/overfloor_placed = TRUE
+	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
 
 	// baseturfs can be either a list or a single turf type.
