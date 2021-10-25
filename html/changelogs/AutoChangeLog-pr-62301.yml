@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixes bomb implants blowing you up anyway when closing the window instead of pressing the \"No\" option"
-  - bugfix: "fixes bomb implants blowing you up when clicking the action button while the confirmation popup is still up"

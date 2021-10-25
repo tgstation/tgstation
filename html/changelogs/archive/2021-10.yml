@@ -744,3 +744,28 @@
   esainane:
   - bugfix: Members of the Science department can no longer get given the objective
       to steal their own server's source code.
+2021-10-25:
+  ArcaneMusic:
+  - bugfix: Regular/Advanced mops are now in the same categories of the auto/protolathe.
+  Coconutwarrior97:
+  - bugfix: Fixes pacifists wielding mjollnir being able to shock people.
+  JohnFulpWillard:
+  - qol: Bounty consoles will now talk to the user if they have to wait for a new
+      bounty or is using an incorrect ID, rather than telepathically transmit messages.
+  PositiveEntropy:
+  - imageadd: Resprites the defibrillator!
+  Sealed101:
+  - bugfix: fixes bomb implants blowing you up anyway when closing the window instead
+      of pressing the "No" option
+  - bugfix: fixes bomb implants blowing you up when clicking the action button while
+      the confirmation popup is still up
+  Watermelon914:
+  - balance: Makes wizard a high impact ruleset.
+  esainane:
+  - bugfix: The SM air alarm on MetaStation and TramStation once again starts unlocked,
+      and can also be locked and unlocked by Engineers instead of just Atmospherics
+      Technicians. This matches the setup on Delta, IceBox, and Kilo.
+  jlsnow301:
+  - spellcheck: Offering items to other players now has punctuation
+  tralezab:
+  - rscadd: Added a rare skillchip to maint.
