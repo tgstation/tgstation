@@ -232,15 +232,10 @@
 		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
 		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
 			to_chat(user, span_notice("You dip [src] into [target]."))
-			reagents.trans_to(target, reagents.total_volume)
 		else
 			to_chat(user, span_warning("That's a terrible idea."))
 	else
 		return ..()
-
-/obj/item/food/deadmouse/on_grind()
-	. = ..()
-	reagents.clear_reagents()
 
 /obj/item/food/deadmouse/moldy
 	name = "moldy dead mouse"
