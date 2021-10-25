@@ -1,0 +1,9 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - expansion: "Sofas now include the Bench Type. These are buildable with 2 metal plates from the crafting menu."
+  - expansion: "Beds can now be rotated (flipped), and include the Double Bed Type. Miners can also make Double Pod Beds to really feel like an Alaskan King."
+  - expansion: "Bedsheets to match! Try to share those big blankets with a lizard if you see that they're shivering!"
+  - code_imp: "Stuff that lets you interact with the benches and beds in-game, so that you too can enjoy being a king.
+sprites: Ports the Benches and Double Bed sprites from Skyrat
+sprites: Flipped Beds"
