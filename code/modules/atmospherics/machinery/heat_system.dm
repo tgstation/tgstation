@@ -242,6 +242,7 @@
 
 	var/moved_heat = 0.6 * delta_temperature * (heat_capacity * env_heat_capacity / (heat_capacity + env_heat_capacity))
 	environment.temperature += moved_heat / env_heat_capacity
+	local_turf.air_update_turf(TRUE)
 	change_pipeline_energy(-moved_heat)
 
 
