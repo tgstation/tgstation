@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "Added new quirk, \"Shifty Eyes\", which rarely causes people who examine you while standing closeby to think that you both made eye contact, even when you didn't."
-  - balance: "The time window for making eye contact with someone else has been extended from  examining each other within 1 second to within 2 seconds."

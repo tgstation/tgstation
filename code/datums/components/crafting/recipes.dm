@@ -889,7 +889,7 @@
 
 /datum/crafting_recipe/bonedagger
 	name = "Bone Dagger"
-	result = /obj/item/kitchen/knife/combat/bone
+	result = /obj/item/knife/combat/bone
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2)
 	category = CAT_PRIMAL
@@ -1120,7 +1120,7 @@
 	name = "Improvised Pickaxe"
 	reqs = list(
 		/obj/item/crowbar = 1,
-		/obj/item/kitchen/knife = 1,
+		/obj/item/knife = 1,
 		/obj/item/stack/sticky_tape = 1,
 	)
 	result = /obj/item/pickaxe/improvised

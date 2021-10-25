@@ -95,6 +95,7 @@
 	start_up(REAGENT_BLOCKER)
 
 /datum/component/rot/proc/check_for_temperature(datum/source, old_temp, new_temp)
+	SIGNAL_HANDLER
 	if(new_temp <= T0C-10)
 		rest(TEMPERATURE_BLOCKER)
 		return

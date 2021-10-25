@@ -88,6 +88,10 @@
 	var/efficiency = 0
 	///Hotter air is easier to heat up and cool down
 	var/heat_limiter_modifier = 0
+	///How much the reaction can cool itself
+	var/heat_output_max = 0
+	///How much the reaction can heat itself
+	var/heat_output_min = 0
 	///The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
 	var/heat_output = 0
 
@@ -144,10 +148,16 @@
 	var/last_accent_sound = 0
 
 	///These vars store the temperatures to be used in the GUI
+	var/fusion_temperature_archived = 0
 	var/fusion_temperature = 0
+	var/moderator_temperature_archived = 0
 	var/moderator_temperature = 0
+	var/coolant_temperature_archived = 0
 	var/coolant_temperature = 0
+	var/output_temperature_archived = 0
 	var/output_temperature = 0
+	///Time between current and _archived temperatures
+	var/temperature_period = 1
 	///Var used in the meltdown phase
 	var/final_countdown = FALSE
 

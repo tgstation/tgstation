@@ -301,6 +301,14 @@
 	// Any skillchips has been transferred over, time to empty the list.
 	LAZYCLEARLIST(skillchips)
 
+/obj/item/organ/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
+	. = ..()
+	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
+		setOrganDamage(0)
+		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
+	else
+		setOrganDamage(BRAIN_DAMAGE_DEATH)
+
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"

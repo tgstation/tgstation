@@ -54,7 +54,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 		use(1)
 		to_chat(user, span_notice("You attach wire to the [name]."))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
-		new_tile.add_fingerprint(user)
+		if (!QDELETED(new_tile))
+			new_tile.add_fingerprint(user)
 		return
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
@@ -107,7 +108,8 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 		var/obj/item/stack/rods/V = W
 		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
-			RG.add_fingerprint(user)
+			if (!QDELETED(RG))
+				RG.add_fingerprint(user)
 			var/replace = user.get_inactive_held_item()==src
 			V.use(1)
 			use(1)
@@ -333,7 +335,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		var/obj/item/stack/sheet/cloth/C = I
 		to_chat(user, span_notice("You begin to wrap the [C] around the [src]..."))
 		if(do_after(user, 35, target = src))
-			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
+			var/obj/item/knife/shiv/S = new /obj/item/knife/shiv
 			C.use(1)
 			to_chat(user, span_notice("You wrap the [C] around the [src] forming a makeshift weapon."))
 			remove_item_from_storage(src)
