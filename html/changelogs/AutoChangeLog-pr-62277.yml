@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation now has stocked the various departments with either a basic break room or basic starter food to give a growing crew what they need to stay healthy."
+  - rscadd: "Some extra public-access vendors for junkfood and cigarettes have been added to the public halls of Tramstation."
+  - rscadd: "Security now has an evidence room to store confiscated things."
