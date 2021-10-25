@@ -3786,11 +3786,11 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "ql" = (
-/obj/machinery/firealarm/directional/south,
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
 "qm" = (
@@ -4721,11 +4721,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "tN" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "maintenance external airlock";
-	opacity = 0
-	},
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "engineering external airlock";
