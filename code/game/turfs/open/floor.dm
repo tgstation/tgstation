@@ -20,6 +20,8 @@
 	heat_capacity = 10000
 	tiled_dirt = TRUE
 
+	overfloor_placed = TRUE
+
 	var/broken = FALSE
 	var/burnt = FALSE
 	var/floor_tile = null //tile that this floor drops

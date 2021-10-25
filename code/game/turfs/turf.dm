@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/turf_flags = NONE
 
 	/// If there's a tile over a basic floor that can be ripped out
-	var/overfloor_placed = TRUE
+	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
 
