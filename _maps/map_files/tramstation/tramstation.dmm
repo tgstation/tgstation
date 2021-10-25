@@ -19063,6 +19063,7 @@
 "fkQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/massdriver_trash,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "flc" = (
@@ -54324,6 +54325,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "sMM" = (
 /obj/machinery/door/poddoor/massdriver_ordnance,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "sMW" = (
