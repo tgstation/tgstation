@@ -59,7 +59,7 @@
 		/mob/living/simple_animal/hostile/gorilla,
 		/mob/living/simple_animal/parrot,
 		/mob/living/simple_animal/pet/dog/corgi,
-		/mob/living/simple_animal/crab,
+		/mob/living/basic/crab,
 		/mob/living/simple_animal/pet/dog/pug,
 		/mob/living/simple_animal/pet/cat,
 		/mob/living/simple_animal/mouse,

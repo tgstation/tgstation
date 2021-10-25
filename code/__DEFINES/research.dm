@@ -79,6 +79,10 @@
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
+#define CELL_LINE_TABLE_PIGEON "cell_line_pigeon_table"
+#define CELL_LINE_TABLE_YEASTYGLOB "cell_line_yeastyglob_table"
+#define CELL_LINE_TABLE_EVIL_CRAB "cell_line_evil_crab_table"
+#define CELL_LINE_TABLE_COBRAWORM "cell_line_cobraworm_table"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

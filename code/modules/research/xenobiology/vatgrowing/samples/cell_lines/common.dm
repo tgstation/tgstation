@@ -228,7 +228,29 @@
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/snake = 1)
 
+/datum/micro_organism/cell_line/pigeon
+	desc = "Columbid cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/consumable/nutriment)
 
+	supplementary_reagents = list(
+		/datum/reagent/flightpotion = 8,
+		/datum/reagent/consumable/rice = 3,
+		/datum/reagent/pax = 3,
+		/datum/reagent/consumable/ethanol/eggnog = 3,
+		/datum/reagent/ants = 2,
+		/datum/reagent/consumable/berryjuice = 2,
+		/datum/reagent/consumable/eggyolk = 1,
+		/datum/reagent/consumable/eggwhite = 1)
+
+	suppressive_reagents = list(
+		/datum/reagent/lead = -3,
+		/datum/reagent/consumable/eggrot = -3,
+		/datum/reagent/toxin = -1,
+		/datum/reagent/fuel/oil = -1)
+
+	resulting_atoms = list(/mob/living/basic/pigeon = 1)
 ///////////////////////////////////////////
 /// SLIMES, OOZES & BLOBS ///
 //////////////////////////////////////////

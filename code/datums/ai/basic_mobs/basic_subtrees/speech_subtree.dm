@@ -63,3 +63,8 @@
 	speech_chance = 5
 	emote_see = list("picks at the ground.", "fluffs up their feathers.")
 	datum_emote_keys = list("coo", "flap")
+
+/datum/ai_planning_subtree/random_speech/crab
+	speech_chance = 3
+	emote_hear = list("clicks.", "clacks.")
+	emote_see = list("blows bubbles.")

@@ -10,7 +10,7 @@
 	speak_emote = list("coos","moos hauntingly")
 	speed = 0
 	see_in_dark = 3
-	butcher_results = list(/obj/item/food/meat/slab/chicken/pigeon = 2)
+	butcher_results = list(/obj/item/food/meat/slab/pigeon = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -46,7 +46,64 @@
 /mob/living/basic/pigeon/is_literate()
 	return TRUE
 
-/mob/living/basic/pigeon/melee_attack(atom/target))
+/mob/living/basic/pigeon/update_overlays()
+	. = ..()
+	var/static/image/mail_overlay
+	var/static/image/paper_overlay
+	var/static/image/pen_overlay
+	var/static/image/edagger_overlay
+	var/static/image/coin_overlay
+	var/static/image/holochip_overlay
+	var/static/image/spacecash_overlay
+	var/static/image/package_overlay
+
+	if(istype(held_item, /obj/item/mail))
+		if(isnull(mail_overlay))
+			mail_overlay = icon2appearance(icon, "pigeon_mail")
+		. += mail_overlay
+
+	else if(istype(held_item, /obj/item/paper))
+		if(isnull(paper_overlay))
+			paper_overlay = icon2appearance(icon, "pigeon_paper")
+		. += paper_overlay
+
+	else if(istype(held_item, /obj/item/pen))
+		if(istype(held_item, /obj/item/pen/edagger))
+			var/obj/item/pen/edagger/held_dagger = held_item
+			if(held_dagger.extended)
+				if(isnull(edagger_overlay))
+					edagger_overlay = icon2appearance(icon, "pigeon_edagger")
+				. += edagger_overlay
+			else
+				if(isnull(pen_overlay))
+					pen_overlay = icon2appearance(icon, "pigeon_pen")
+					. += pen_overlay
+		else
+			if(isnull(pen_overlay))
+				pen_overlay = icon2appearance(icon, "pigeon_pen")
+			. += pen_overlay
+
+	else if(istype(held_item, /obj/item/coin))
+		if(isnull(coin_overlay))
+			coin_overlay = icon2appearance(icon, "pigeon_coin")
+		. += coin_overlay
+
+	else if(istype(held_item, /obj/item/holochip))
+		if(isnull(holochip_overlay))
+			holochip_overlay = icon2appearance(icon, "pigeon_holochip")
+		. += holochip_overlay
+
+	else if(istype(held_item, /obj/item/stack/spacecash))
+		if(isnull(spacecash_overlay))
+			spacecash_overlay = icon2appearance(icon, "pigeon_spacecash")
+		. += spacecash_overlay
+
+	else if(istype(held_item, /obj/item/small_delivery))
+		if(isnull(package_overlay))
+			package_overlay = icon2appearance(icon, "pigeon_package")
+		. += package_overlay
+
+/mob/living/basic/pigeon/melee_attack(atom/target)
 	if(held_item)
 		held_item.melee_attack_chain(src, target)
 		if(held_item?.loc != src) //If the item ceases to be in our possesion after attacking, we no longer have a held item.
@@ -97,6 +154,11 @@
 	dropItemToGround(held_item)
 	held_item = null
 	update_appearance()
+
+/mob/living/basic/pigeon/Destroy()
+	. = ..()
+	QDEL_NULL(coo)
+	QDEL_NULL(unload_package)
 
 /datum/ai_controller/basic_controller/pigeon
 	ai_traits = STOP_MOVING_WHEN_PULLED

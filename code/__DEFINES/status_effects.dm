@@ -122,6 +122,9 @@
 /// Doubles attack cooldowns on simplemobs and recovery time on megafauna.
 #define STATUS_EFFECT_STAGGER /datum/status_effect/stagger
 
+/// Makes you immobilized until someone stops pulling you, or the duration runs out.atom
+#define STATUS_EFFECT_IMMOBILIZING_GRAB /datum/status_effect/incapacitating/immobilized/immobilizing_grab
+
 /////////////
 // NEUTRAL //
 /////////////

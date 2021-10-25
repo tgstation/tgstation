@@ -1110,3 +1110,18 @@
 
 /datum/movespeed_modifier/freezing_blast
 	multiplicative_slowdown = 1
+
+/datum/status_effect/incapacitating/immobilized/immobilizing_grab
+	id = "immobilizing_grab"
+
+/datum/status_effect/incapacitating/immobilized/immobilizing_grab/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	RegisterSignal(new_owner, COMSIG_ATOM_NO_LONGER_PULLED, .proc/let_go)
+
+/datum/status_effect/incapacitating/immobilized/immobilizing_grab/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_ATOM_NO_LONGER_PULLED)
+
+/datum/status_effect/incapacitating/immobilized/immobilizing_grab/proc/let_go()
+	SIGNAL_HANDLER
+	owner.remove_status_effect(STATUS_EFFECT_IMMOBILIZING_GRAB)
