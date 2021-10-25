@@ -41460,7 +41460,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/book/manual/wiki/engineering_singulo_tesla,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/engineering/main)
