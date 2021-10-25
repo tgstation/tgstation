@@ -56,8 +56,6 @@
 			continue
 		heat_connections += direction
 	heat_waste = new(loc, heat_connections, FALSE)
-	heat_waste.layer = GAS_PIPE_VISIBLE_LAYER
-	heat_waste.plane = plane
 	RefreshParts()
 	update_appearance()
 
@@ -329,8 +327,6 @@
 			continue
 		heat_connections += direction
 	heat_waste = new(loc, heat_connections, FALSE)
-	heat_waste.layer = GAS_PIPE_VISIBLE_LAYER
-	heat_waste.plane = plane
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	atmos_init()
 	node1 = nodes[1]

@@ -1,5 +1,6 @@
 /obj/machinery/heat_system
 	var/heat_capacity = 500
+	var/temporary_temperature = T20C
 
 /obj/machinery/heat_system/heat_pipe
 	name = "heat pipe"
@@ -250,19 +251,62 @@
 
 
 
+
+/obj/machinery/heat_system/separation_valve
+	name = "separation valve"
+	var/open = TRUE
+	var/obj/machinery/heat_system/heat_pipe/port_1
+	var/obj/machinery/heat_system/heat_pipe/port_2
+
+/obj/machinery/heat_system/separation_valve/Initialize(mapload)
+	. = ..()
+	port_1 = new(loc, dir, FALSE)
+	port_2 = new(loc, turn(dir, 180), FALSE)
+
+	port_1.heat_pipeline.assimilate(port_2.heat_pipeline)
+
+/obj/machinery/heat_system/separation_valve/update_overlays()
+	. = ..()
+	var/mutable_appearance/radiator = mutable_appearance('icons/obj/atmospherics/components/unary_devices.dmi', "heat_radiator", layer = (src.layer+0.01))
+	. += radiator
+
+/obj/machinery/heat_system/separation_valve/CtrlClick(mob/user)
+	. = ..()
+	toggle_open()
+
+/obj/machinery/heat_system/separation_valve/proc/toggle_open()
+	if(open)
+		open = FALSE
+		port_1.heat_pipeline.destroy_network()
+		port_1.attempt_connect()
+		port_2.attempt_connect()
+		return
+	open = TRUE
+	port_1.heat_pipeline.assimilate(port_2.heat_pipeline)
+
+
+
+
+
+
+
 /datum/heat_pipeline
 	var/list/obj/machinery/heat_system/heat_pipe/heat_pipes = list()
 	var/heat_capacity
-	var/temperature = T20C
+	var/temperature
 
 /datum/heat_pipeline/proc/add_pipe(obj/machinery/heat_system/heat_pipe/heat_pipe)
 	if(!heat_pipe || (heat_pipe in heat_pipes))
 		return FALSE
 
 	heat_pipes += heat_pipe
-	heat_capacity += heat_pipe.heat_capacity
 	heat_pipe.heat_pipeline = src
-	merge_heat(heat_pipe.heat_capacity)
+	if(heat_capacity && heat_pipe.temporary_temperature)
+		merge_heat(heat_pipe.heat_capacity, heat_pipe.temporary_temperature)
+	heat_capacity += heat_pipe.heat_capacity
+	if(!temperature && heat_pipe.temporary_temperature)
+		temperature = heat_pipe.temporary_temperature
+	heat_pipe.temporary_temperature = null
 
 /datum/heat_pipeline/proc/remove_pipe(obj/machinery/heat_system/heat_pipe/heat_pipe)
 	destroy_network(FALSE)
@@ -270,23 +314,30 @@
 		addtimer(CALLBACK(pipe, /obj/machinery/heat_system/heat_pipe/proc/attempt_connect))
 	qdel(src)
 
-/datum/heat_pipeline/proc/destroy_network(delete = TRUE)
+/datum/heat_pipeline/proc/destroy_network(delete = TRUE, store_temperature = TRUE)
 	for(var/obj/machinery/heat_system/heat_pipe/heat_pipe as anything in heat_pipes)
+		if(store_temperature)
+			heat_pipe.temporary_temperature = temperature
 		heat_pipe.heat_pipeline = null
 	if(delete)
 		qdel(src)
 
 /datum/heat_pipeline/proc/assimilate(datum/heat_pipeline/other_pipeline)
+
+	if(heat_capacity && other_pipeline.temperature)
+		merge_heat(other_pipeline.heat_capacity, other_pipeline.temperature)
+
+	if(!temperature && other_pipeline.temperature)
+		temperature = other_pipeline.temperature
+
 	heat_pipes.Add(other_pipeline.heat_pipes)
 	heat_capacity += other_pipeline.heat_capacity
-
-	merge_heat(other_pipeline.heat_capacity, other_pipeline.temperature)
 
 	for(var/obj/machinery/heat_system/heat_pipe/pipe as anything in other_pipeline.heat_pipes)
 		pipe.heat_pipeline = src
 
 	other_pipeline.heat_pipes.Cut()
-	other_pipeline.destroy_network()
+	other_pipeline.destroy_network(store_temperature = FALSE)
 
 /datum/heat_pipeline/proc/merge_heat(other_heat_capacity, other_temperature)
 	if(!other_heat_capacity)
