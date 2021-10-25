@@ -20,7 +20,7 @@
 	pipe_state = "volumepump"
 	vent_movement = NONE
 
-	RPD_tooltip = "A version of the pressure pump that trades output control for improved gas flow, moves gases based on volume up to ~9000 kPa"
+	rpd_tooltip = "A version of the pressure pump that trades output control for improved gas flow, moves gases based on volume up to ~9000 kPa"
 
 	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE

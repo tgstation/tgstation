@@ -20,7 +20,7 @@
 	pipe_state = "pump"
 	vent_movement = NONE
 
-	RPD_tooltip = "Pressure based pump that moves gases from one pipenet to another."
+	rpd_tooltip = "Pressure based pump that moves gases from one pipenet to another."
 
 	///Pressure that the pump will reach when on
 	var/target_pressure = ONE_ATMOSPHERE

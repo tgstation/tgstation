@@ -17,7 +17,7 @@
 	pipe_state = "scrubber"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
-	RPD_tooltip = "Scrubber programmable to selectively filter gases."
+	rpd_tooltip = "Scrubber programmable to selectively filter gases."
 
 	///The mode of the scrubber (SCRUBBING or SIPHONING)
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing

@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
 
-	RPD_tooltip = "Smart version of old pipes, autoconnects based on color and layer."
+	rpd_tooltip = "Smart version of old pipes, autoconnects based on color and layer."
 
 	///Current active connections
 	var/connections = NONE

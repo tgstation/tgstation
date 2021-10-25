@@ -15,7 +15,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "multiz"
 
-	RPD_tooltip = "Allow pipe connection to and from another station level."
+	rpd_tooltip = "Allow pipe connection to and from another station level."
 
 	///Our central icon
 	var/mutable_appearance/center = null

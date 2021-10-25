@@ -7,7 +7,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pvalve"
 
-	RPD_tooltip = "A one way valve that allows gases through only if the input pressure is higher than the set target."
+	rpd_tooltip = "A one way valve that allows gases through only if the input pressure is higher than the set target."
 
 	///Amount of pressure needed before the valve for it to open
 	var/target_pressure = ONE_ATMOSPHERE

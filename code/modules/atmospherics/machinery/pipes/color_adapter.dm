@@ -16,7 +16,7 @@
 	paintable = FALSE
 	hide = FALSE
 
-	RPD_tooltip = "Connects two pipes with different colors."
+	rpd_tooltip = "Connects two pipes with different colors."
 
 	///cache for the icons
 	var/static/list/mutable_appearance/center_cache = list()

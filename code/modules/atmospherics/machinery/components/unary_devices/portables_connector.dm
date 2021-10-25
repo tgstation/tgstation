@@ -15,7 +15,7 @@
 	pipe_state = "connector"
 	custom_reconcilation = TRUE
 
-	RPD_tooltip = "Connector port to be used with canisters/portable pumps/portable scrubbers."
+	rpd_tooltip = "Connector port to be used with canisters/portable pumps/portable scrubbers."
 
 	///Reference to the connected device
 	var/obj/machinery/portable_atmospherics/connected_device

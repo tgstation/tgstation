@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/id = -1
 	var/dirtype = PIPE_BENDABLE
 	var/all_layers
-	var/RPD_tooltip
+	var/rpd_tooltip
 
 /datum/pipe_info/proc/Render(dispenser)
 	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	icon_state = initial(path.pipe_state)
 	var/obj/item/pipe/c = initial(path.construction_type)
 	dirtype = initial(c.RPD_type)
-	RPD_tooltip = initial(path.RPD_tooltip)
+	rpd_tooltip = initial(path.rpd_tooltip)
 
 /datum/pipe_info/pipe/Params()
 	return "makepipe=[id]&type=[dirtype]"
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /datum/pipe_info/meter/New(label)
 	name = label
-	RPD_tooltip = "Place on top of a pipe to easily read the pressure/temperature of its contents."
+	rpd_tooltip = "Place on top of a pipe to easily read the pressure/temperature of its contents."
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=[id]&type=[dirtype]"
@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/list/r = list()
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers, "RPD_tooltip" = info.RPD_tooltip))
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers, "rpd_tooltip" = info.rpd_tooltip))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)

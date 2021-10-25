@@ -8,7 +8,7 @@
 	pipe_state = "tpump"
 	vent_movement = NONE
 
-	RPD_tooltip = "A pump that moves only heat from an hotter source to a colder target."
+	rpd_tooltip = "A pump that moves only heat from an hotter source to a colder target."
 
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0

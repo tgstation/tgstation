@@ -14,7 +14,7 @@
 	construction_type = /obj/item/pipe/binary/bendable
 	pipe_state = "he"
 
-	RPD_tooltip = "Simple section of H/E pipes, can bend."
+	rpd_tooltip = "Simple section of H/E pipes, can bend."
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/set_init_directions()
 	if(ISDIAGONALDIR(dir))

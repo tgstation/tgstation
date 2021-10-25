@@ -15,7 +15,7 @@
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "he_manifold"
 
-	RPD_tooltip = "Three way manifold made of H/E pipes."
+	rpd_tooltip = "Three way manifold made of H/E pipes."
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/set_init_directions()
 	initialize_directions = ALL_CARDINALS

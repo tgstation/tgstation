@@ -13,7 +13,7 @@
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
 
-	RPD_tooltip = "Connects all piping layers coming from two opposite directions."
+	rpd_tooltip = "Connects all piping layers coming from two opposite directions."
 
 	///Reference to all the nodes in the front
 	var/list/front_nodes

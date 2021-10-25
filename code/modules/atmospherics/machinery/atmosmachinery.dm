@@ -59,7 +59,7 @@
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 
 	///Message in the RPD UI tooltips
-	var/RPD_tooltip = "If you see this, tell a c*der about it."
+	var/rpd_tooltip = "If you see this, tell a c*der about it."
 
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
