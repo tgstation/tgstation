@@ -37,7 +37,7 @@ jobs:
       run: cp ./.github/gbp.toml ./gbp-balances/.github/gbp.toml
     - name: GBP action
       if: steps.value_holder.outputs.ACTIONS_ENABLED
-      uses: Mothblocks/gbp-action@collate-changes
+      uses: tgstation/gbp-action@master
       with:
         collect: "true"
         directory: ./gbp-balances

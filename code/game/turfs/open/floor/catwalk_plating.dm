@@ -13,9 +13,6 @@
 	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/catwalk_tile
 	footstep = FOOTSTEP_CATWALK
-	barefootstep = FOOTSTEP_CATWALK
-	clawfootstep = FOOTSTEP_CATWALK
-	heavyfootstep = FOOTSTEP_CATWALK
 	var/covered = TRUE
 
 /turf/open/floor/plating/catwalk_floor/Initialize(mapload)

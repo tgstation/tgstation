@@ -81,7 +81,7 @@
 			on = FALSE
 		return PROCESS_KILL
 
-	if(!cell || cell.charge <= 0)
+	if(!cell || cell.charge <= 1)
 		on = FALSE
 		update_appearance()
 		return PROCESS_KILL

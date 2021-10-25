@@ -103,4 +103,4 @@
 
 ///small helper to clean out memories
 /datum/mind/proc/wipe_memory()
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)
