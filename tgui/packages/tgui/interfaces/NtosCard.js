@@ -3,6 +3,15 @@ import { Box, Button, Dropdown, Input, NoticeBox, NumberInput, Section, Stack, T
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
+const buildAccessFlags = (accessFlags, overrideAccess, commonFlag) => {
+  let finalAccessFlags = [...accessFlags];
+  for (const access of overrideAccess) {
+    finalAccessFlags[access] = commonFlag;
+  }
+
+  return finalAccessFlags;
+};
+
 export const NtosCard = (props, context) => {
   return (
     <NtosWindow
@@ -46,9 +55,12 @@ export const NtosCardContent = (props, context) => {
     selectedTab,
   ] = useSharedState(context, "selectedTab", "login");
 
-  trimCommonWildcardOverrides.forEach(access => {
-    accessFlags[access] = commonFlag;
-  });
+
+  const finalAccessFlags = buildAccessFlags(
+    accessFlags,
+    trimCommonWildcardOverrides,
+    commonFlag
+  );
 
   return (
     <>
@@ -89,7 +101,7 @@ export const NtosCardContent = (props, context) => {
                 wildcardFlags={wildcardFlags}
                 wildcardSlots={wildcardSlots}
                 trimAccess={trimAccess}
-                accessFlags={accessFlags}
+                accessFlags={finalAccessFlags}
                 accessFlagNames={accessFlagNames}
                 showBasic={!!showBasic}
                 extraButtons={
