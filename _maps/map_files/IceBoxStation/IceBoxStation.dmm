@@ -20098,7 +20098,7 @@
 	dir = 10
 	},
 /obj/structure/table,
-/obj/item/ai_module/core,
+/obj/item/circuitboard/aicore,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "guJ" = (
