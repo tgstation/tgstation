@@ -501,3 +501,40 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/caseless/harpoon(src)
+
+/obj/item/storage/bag/garment
+	name = "garment bag"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "garment_bag"
+	desc = "A bag for storing extra clothes and shoes."
+	slot_flags = NONE
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/garment/captain
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the captain."
+
+/obj/item/storage/bag/garment/hos
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the head of security."
+
+/obj/item/storage/bag/garment/hop
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the head of personnel."
+
+/obj/item/storage/bag/garment/research_director
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the research director."
+
+/obj/item/storage/bag/garment/chief_medical
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the chief medical officer."
+
+/obj/item/storage/bag/garment/engineering_chief
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the chief engineer."
+
+/obj/item/storage/bag/garment/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 200
+	STR.max_items = 15
+	STR.insert_preposition = "in"
+	STR.set_holdable(list(
+		/obj/item/clothing
+		))
