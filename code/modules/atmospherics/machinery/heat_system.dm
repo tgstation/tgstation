@@ -145,16 +145,19 @@
 	neighbours = list()
 
 ///add a connect direction
-/obj/machinery/heat_system/heat_pipe/proc/add_connects(new_connects) //make this a define to cut proc calls?
-	connects |= new_connects
+/obj/machinery/heat_system/heat_pipe/proc/add_connects(new_connects)
+	if(!lock_connects)
+		connects |= new_connects
 
 ///remove a connect direction
 /obj/machinery/heat_system/heat_pipe/proc/remove_connects(dead_connects)
-	connects &= ~dead_connects
+	if(!lock_connects)
+		connects &= ~dead_connects
 
 ///remove our connects
 /obj/machinery/heat_system/heat_pipe/proc/reset_connects()
-	connects = 0
+	if(!lock_connects)
+		connects = 0
 
 /obj/machinery/heat_system/heat_pipe/set_anchored(anchorvalue)
 	. = ..()
