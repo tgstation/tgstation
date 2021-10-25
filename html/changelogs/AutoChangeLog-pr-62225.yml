@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - bugfix: "fixes a slight issue with the hair color not being visible on ghosts after the legacy color removal"
