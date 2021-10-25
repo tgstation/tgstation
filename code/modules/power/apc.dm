@@ -636,7 +636,7 @@
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
 			CRASH("attackby on APC when it's not on a turf")
-		if (host_turf.intact)
+		if (host_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, span_warning("You must remove the floor plating in front of the APC first!"))
 			return
 		else if (terminal)

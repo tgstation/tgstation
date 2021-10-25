@@ -39,14 +39,14 @@
 
 			if(iswallturf(T))
 				var/turf/closed/wall/TW = T
-				if(TW.intact)
+				if(TW.overfloor_placed)
 					wall += 2
 				else
 					wall += 1
 
 			if(istype(T, /turf/closed/wall/r_wall))
 				var/turf/closed/wall/r_wall/TRW = T
-				if(TRW.intact)
+				if(TRW.overfloor_placed)
 					r_wall += 2
 				else
 					r_wall += 1

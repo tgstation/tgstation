@@ -365,12 +365,12 @@ and clear when youre done! if you dont i will use :newspaper2: on you
 	active = FALSE
 	load_program(offline_program, TRUE)
 
-///returns TRUE if the entire floor of the holodeck is intact, returns FALSE if any are broken
+///returns TRUE if all floors of the holodeck are present, returns FALSE if any are broken or removed
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/holo_floor in linked)
 		if(isspaceturf(holo_floor))
 			return FALSE
-		if(!holo_floor.intact)
+		if(!holo_floor.overfloor_placed)
 			return FALSE
 	return TRUE
 
