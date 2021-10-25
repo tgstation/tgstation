@@ -86,19 +86,19 @@
 	name = "Cook"
 	jobtype = /datum/job/cook
 
-	belt = /obj/item/pda/cook
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/cook
 	uniform = /obj/item/clothing/under/rank/civilian/chef
 	suit = /obj/item/clothing/suit/toggle/chef
+	backpack_contents = list(
+		/obj/item/choice_beacon/ingredient = 1,
+		/obj/item/sharpener = 1,
+	)
+	belt = /obj/item/pda/cook
+	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
-	backpack_contents = list(
-		/obj/item/sharpener = 1,
-		/obj/item/choice_beacon/ingredient = 1
-	)
-	skillchips = list(/obj/item/skillchip/job/chef)
 
-	id_trim = /datum/id_trim/job/cook
+	skillchips = list(/obj/item/skillchip/job/chef)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
