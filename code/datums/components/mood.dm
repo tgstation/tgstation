@@ -266,7 +266,7 @@
 	SIGNAL_HANDLER
 
 	var/datum/mood_event/the_event
-	if(!istype(type, /datum/mood_event))
+	if(!ispath(type, /datum/mood_event))
 		return
 	if(!istext(category))
 		category = REF(category)
