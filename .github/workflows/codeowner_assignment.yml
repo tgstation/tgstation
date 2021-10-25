@@ -1,11 +1,7 @@
-#Example worflow for Gamer025/CodeOwnersParser
-
 name: Codeowner Assignment
 
 # Controls when the workflow will run
-on:
-  pull_request:
-    branches: [ master ]
+on: pull_request
 
 jobs:
   assign-users:
@@ -16,6 +12,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
       - uses: actions/checkout@v2
 
+      #Parse the Codeowner file
       - name: CodeOwnersParser
         id: CodeOwnersParser
         uses: tgstation/CodeOwnersParser@v1
