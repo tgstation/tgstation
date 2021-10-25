@@ -7,14 +7,14 @@
 	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
 	var/wash_count = 0
 
-/obj/item/clothing/suit/ianshirt/machine_wash(obj/machinery/washing_machine/WM)
+/obj/item/clothing/suit/ianshirt/machine_wash(obj/machinery/washing_machine/Washer)
 	. = ..()
 	if(wash_count <= 5)
 		transform *= TRANSFORM_USING_VARIABLE(0.8, 1)
-		WM.visible_message(span_notice("\the [src] appears to have shrunk down after a long machine washing."))
+		Washer.visible_message(span_notice("\the [src] appears to have shrunk down after a long machine washing."))
 		wash_count += 1
 	else
-		WM.visible_message(span_notice("\the [src] appears to have imploded due to repeat washing. Tiny strands of energy from the wash-dimension linger."))
+		Washer.visible_message(span_notice("\the [src] appears to have imploded due to repeat washing. Tiny strands of energy from the wash-dimension linger."))
 		qdel(src)
 
 /obj/item/clothing/suit/nerdshirt
