@@ -46,13 +46,13 @@
 		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
 	//the rest are not always the same, so we need types for em
 		var/obj/effect/temp_visual/cult/rune_spawn/R2
-		if(rune_word_type)
+		if(istype(rune_word_type))
 			R2 = new rune_word_type(T, scribe_time, rune_color)
 		var/obj/effect/temp_visual/cult/rune_spawn/R3
-		if(rune_innerring_type)
+		if(istype(rune_innerring_type))
 			R3 = new rune_innerring_type(T, scribe_time, rune_color)
 		var/obj/effect/temp_visual/cult/rune_spawn/R4
-		if(rune_center_type)
+		if(istype(rune_center_type))
 			R4 = new rune_center_type(T, scribe_time, rune_color)
 
 		cooldown = base_cooldown + world.time
