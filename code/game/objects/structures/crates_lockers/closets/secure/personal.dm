@@ -55,3 +55,12 @@
 			to_chat(user, span_danger("Access Denied."))
 	else
 		return ..()
+
+/obj/structure/closet/secure_closet/personal/allowed(mob/M)
+	. = ..()
+	if (. || !ishuman(M))
+		return
+	var/mob/living/carbon/human/human = M
+	var/obj/item/card/id/I = human.wear_id?.GetID()
+	if (istype(I) && I.registered_name == registered_name)
+		return TRUE
