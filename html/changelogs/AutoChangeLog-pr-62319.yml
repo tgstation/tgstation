@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "The RD's office in IceBox once again contains an AI Core circuit."
