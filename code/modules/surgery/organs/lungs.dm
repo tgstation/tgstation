@@ -432,7 +432,7 @@
 	return TRUE
 
 ///override this for breath handling unique to lung subtypes, breath_gas is the list of gas in the breath while gas breathed is just what is being added or removed from that list, just as they are when this is called in check_breath()
-/obj/item/organ/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, list/breath_gas, var/gas_breathed)
+/obj/item/organ/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, list/breath_gas, gas_breathed)
 	return
 
 /obj/item/organ/lungs/proc/handle_too_little_breath(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, true_pp = 0)
@@ -626,7 +626,7 @@
 	heat_level_3_threshold = 1073
 
 
-/obj/item/organ/lungs/ethereal/handle_gas_override(mob/living/carbon/human/breather, list/breath_gases, var/gas_breathed)
+/obj/item/organ/lungs/ethereal/handle_gas_override(mob/living/carbon/human/breather, list/breath_gases, gas_breathed)
 	// H2O electrolysis
 	gas_breathed = breath_gases[/datum/gas/water_vapor][MOLES]
 	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
