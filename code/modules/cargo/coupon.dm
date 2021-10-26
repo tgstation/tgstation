@@ -13,7 +13,7 @@
 
 /obj/item/coupon/New()
 	. = ..()
-	generate()
+	generate() //required for use as a reward for experiments unless i find a better solution
 
 /// Choose what our prize is :D
 /obj/item/coupon/proc/generate(rig_omen=FALSE)
