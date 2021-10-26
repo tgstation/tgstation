@@ -87,6 +87,7 @@
 	name = "Mother of God"
 	description = "A recent outbreak of a blood-cult in a nearby sector necessitates the development of a large explosive. \
 		Create a large enough explosion to prove your bomb, we'll be watching."
+	reward = /obj/item/clothing/head/collectable/petehat
 
 /datum/experiment/explosion/medium
 	name = "Explosive Ordinance Experiment"

@@ -199,9 +199,13 @@
 * Plops down a reward for the user completing the experiment
 * selected_experiment.reward will use the reward var set for the active experiment
 */
-/datum/component/experiment_handler/proc/dispense_reward(mob/user)
-	var/user_turf = get_turf(user)
-	new selected_experiment.reward(user_turf)
+/datum/component/experiment_handler/proc/dispense_reward(completed_experiment)
+	var/atom/movable/experi_parent = parent
+	if(!selected_experiment)
+		selected_experiment = completed_experiment
+	var/handler_turf = get_turf(experi_parent)
+	new selected_experiment.reward(handler_turf)
+	playsound(experi_parent, 'sound/machines/ding.ogg', 25)
 	announce_message("Thank you for your cooperation. Dispensing reward...")
 
 /**
