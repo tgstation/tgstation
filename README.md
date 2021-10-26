@@ -1,21 +1,19 @@
-## /tg/station codebase
+## Harshlands SS13
 
-[![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
-[![Percentage of issues still open](https://isitmaintained.com/badge/open/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open")
-[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](https://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
-![Coverage](https://img.shields.io/badge/coverage---3%25-red.svg)
+[![CI Suite](https://github.com/Harshlands-SS13/harshlands/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/Harshlands-SS13/harshlands/actions/workflows/ci_suite.yml)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/Harshlands-SS13/harshlands.svg)](https://isitmaintained.com/project/Harshlands-SS13/harshlands "Percentage of issues still open")
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Harshlands-SS13/harshlands.svg)](https://isitmaintained.com/project/Harshlands-SS13/harshlands "Average time to resolve an issue")
+![Coverage](https://img.shields.io/codecov/c/github/Harshlands-SS13/harshlands)
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-resentment.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://user-images.githubusercontent.com/8171642/50290880-ffef5500-043a-11e9-8270-a2e5b697c86c.png) [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
+![madewith](https://raw.githubusercontent.com/ArtemisStation/artemis/master/made-with-witty-badges.svg) ![ohshit](https://raw.githubusercontent.com/ArtemisStation/artemis/master/oh-shit-the-syndicate.svg) ![edgy](https://raw.githubusercontent.com/ArtemisStation/artemis/master/edgy-roleplay.svg)
 
-* **Website:** https://www.tgstation13.org
-* **Code:** https://github.com/tgstation/tgstation
-* **Wiki:** https://tgstation13.org/wiki/Main_Page
-* **Codedocs:** https://codedocs.tgstation13.org/
-* **/tg/station Discord:** https://tgstation13.org/phpBB/viewforum.php?f=60
-* **Coderbus Discord:** https://discord.gg/Vh8TJp9
-* ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
+* **SOURCE:** https://github.com/Skyrat-SS13/Skyrat-tg
+* **WIKI:** https://github.com/Harshlands-SS13/harshlands/wiki
+* **SOURCE DOCS:** https://codedocs.tgstation13.org/
+* **DISCORD:** https://discord.gg/Fu3XNSBgVh
+* **CODERBUS:** https://discord.gg/Vh8TJp9
 
-This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
+This is Harshland's downstream fork of Skyrat, created entirely in the BYOND engine.
 
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
@@ -24,26 +22,18 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 
 [Running on the server](.github/guides/RUNNING_A_SERVER.md)
 
-[Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
-
-## :exclamation: How to compile :exclamation:
+## COMPILE
 
 On **2021-01-04** we have changed the way to compile the codebase.
 
-**The quick way**. Find `bin/server.cmd` in this folder and double click it to automatically build and host the server on port 1337.
-
-**The long way**. Find `bin/build.cmd` in this folder, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile. If it closes, it means it has finished its job. You can then [setup the server](.github/guides/RUNNING_A_SERVER.md) normally by opening `tgstation.dmb` in DreamDaemon.
-
-**Building tgstation in DreamMaker directly is now deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
+Find `BUILD.bat` here in the root folder of Harshlands, and double click it to initiate the build. It consists of multiple steps and might take around 1-5 minutes to compile. If it closes, it means it has finished its job. You can then [setup the server](.github/guides/RUNNING_A_SERVER.md) normally by opening `tgstation.dmb` in DreamDaemon.
 
 **[How to compile in VSCode and other build options](tools/build/README.md).**
 
-## Contributors
+## CONTRIBUTORS
 [Guides for Contributors](.github/CONTRIBUTING.md)
 
 [/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
-
-[Interested in some starting lore?](https://github.com/tgstation/common_core)
 
 ## LICENSE
 
