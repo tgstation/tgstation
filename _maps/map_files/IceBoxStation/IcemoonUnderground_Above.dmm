@@ -423,7 +423,12 @@
 /turf/open/floor/iron/dark/smooth_half,
 /area/service/chapel)
 "bZ" = (
-/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "ca" = (
@@ -986,7 +991,7 @@
 /area/hallway/secondary/service)
 "fm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "fo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1176,7 +1181,7 @@
 /area/mine/eva)
 "gj" = (
 /obj/structure/cable,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "gk" = (
 /obj/structure/table,
@@ -4521,7 +4526,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "tG" = (
 /obj/structure/sign/poster/random{
@@ -5788,7 +5793,7 @@
 	icon_state = "goliath";
 	name = "goliath"
 	},
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "zi" = (
 /obj/effect/turf_decal/siding/wood,
@@ -6461,7 +6466,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "BP" = (
 /obj/structure/table,
@@ -6700,7 +6705,7 @@
 /area/mine/laborcamp)
 "CL" = (
 /obj/machinery/light/floor,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "CN" = (
 /obj/structure/table,
@@ -7098,6 +7103,12 @@
 "El" = (
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
+"Eo" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/mine/laborcamp/security)
 "Er" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
@@ -7964,7 +7975,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "HB" = (
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "HD" = (
 /obj/structure/chair/stool/directional/north,
@@ -9144,7 +9155,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light/floor,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "Mk" = (
 /obj/machinery/camera{
@@ -9306,7 +9317,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "MQ" = (
 /obj/structure/stairs/east,
@@ -11448,7 +11459,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "UV" = (
 /obj/effect/turf_decal/tile/brown{
@@ -11547,7 +11558,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "Vs" = (
 /obj/effect/turf_decal/tile/bar,
@@ -12064,7 +12075,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/item/kirbyplants/random,
-/turf/open/floor/iron/white/airless,
+/turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "XJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -49302,8 +49313,8 @@ mO
 mO
 Fp
 Hd
-bZ
-bZ
+Eo
+Eo
 Hd
 Fp
 Fp
