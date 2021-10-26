@@ -70,3 +70,17 @@
 /obj/structure/chair/pew/right/post_unbuckle_mob()
 	. = ..()
 	update_rightpewarmrest()
+
+/obj/structure/chair/pew/can_user_rotate(mob/user)
+	. = ..()
+	if( . == FALSE )
+		return .
+
+	var/mob/living/LivingUser = user
+	if(istype(LivingUser))
+		var/obj/item/tool = LivingUser.get_active_held_item()
+		if(!tool || !tool.tool_behaviour || tool.tool_behaviour != TOOL_WRENCH)
+			to_chat(user, span_warning("You need to equip a wrench in your active slot to rotate the [name]"))
+			return FALSE
+		return TRUE
+	return FALSE
