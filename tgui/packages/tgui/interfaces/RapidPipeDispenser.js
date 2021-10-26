@@ -192,7 +192,7 @@ const PipeTypeSection = (props, context) => {
           content={recipe.pipe_name}
           title={recipe.pipe_name}
           tooltipPosition="bottom"
-          tooltip={recipe.RPD_tooltip}
+          tooltip={recipe.rpd_tooltip}
           onClick={() => act('pipe_type', {
             pipe_type: recipe.pipe_index,
             category: shownCategory.cat_name,
