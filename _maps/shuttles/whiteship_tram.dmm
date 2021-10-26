@@ -11,7 +11,7 @@
 /area/shuttle/abandoned/engine)
 "ad" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/docking_port/mobile{
 	dir = 2;
 	dwidth = 6;
@@ -70,7 +70,7 @@
 /area/shuttle/abandoned/engine)
 "an" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)

@@ -341,16 +341,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"aF" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "pirateportexternal"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "aG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -372,17 +362,6 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"aJ" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "pirateportexternal"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aK" = (
@@ -777,43 +756,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"bZ" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
-"ce" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/docking_port/mobile/pirate{
-	dwidth = 11;
-	height = 16;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Pirate Ship";
-	port_direction = 2;
-	width = 17
-	},
-/obj/docking_port/stationary{
-	dwidth = 11;
-	height = 16;
-	id = "pirateship_home";
-	name = "Deep Space";
-	width = 17
-	},
-/obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "dy" = (
 /obj/structure/chair/wood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -897,6 +839,14 @@
 /obj/item/wrench,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
+"ey" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "piratebridge"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "ez" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
@@ -920,10 +870,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
-/area/shuttle/pirate)
-"eR" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "fW" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -972,9 +918,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
-"ts" = (
+"rH" = (
 /obj/machinery/porta_turret/syndicate/energy/pirate,
 /turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pirate)
+"un" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "vB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1002,6 +959,10 @@
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/iron/showroomfloor,
+/area/shuttle/pirate)
+"wg" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "yi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1044,6 +1005,16 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"JF" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "JT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -1063,12 +1034,49 @@
 	},
 /turf/open/floor/pod/light,
 /area/shuttle/pirate)
+"MI" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/docking_port/mobile/pirate{
+	dwidth = 11;
+	height = 16;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Pirate Ship";
+	port_direction = 2;
+	width = 17
+	},
+/obj/docking_port/stationary{
+	dwidth = 11;
+	height = 16;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 17
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "Ni" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
+"Np" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "Oe" = (
@@ -1120,14 +1128,6 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/pirate)
-"Sq" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "piratebridge"
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/pirate)
 "Ur" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
@@ -1150,7 +1150,7 @@ aj
 aj
 aj
 aj
-ts
+rH
 af
 af
 af
@@ -1175,7 +1175,7 @@ af
 af
 "}
 (3,1,1) = {"
-eR
+wg
 aj
 aj
 aj
@@ -1199,7 +1199,7 @@ af
 af
 af
 af
-Sq
+ey
 ay
 Oe
 OL
@@ -1226,14 +1226,14 @@ aj
 aj
 aj
 aj
-ts
+rH
 "}
 (6,1,1) = {"
 af
 af
 af
-Sq
-Sq
+ey
+ey
 aj
 aj
 aj
@@ -1242,15 +1242,15 @@ aj
 aj
 Gk
 Ni
-aF
+JF
 aI
-aJ
+un
 "}
 (7,1,1) = {"
 af
 af
-Sq
-Sq
+ey
+ey
 aC
 aW
 aj
@@ -1267,7 +1267,7 @@ aj
 (8,1,1) = {"
 af
 af
-Sq
+ey
 ab
 ae
 bf
@@ -1285,7 +1285,7 @@ aH
 (9,1,1) = {"
 af
 af
-Sq
+ey
 ac
 ag
 am
@@ -1303,7 +1303,7 @@ aK
 (10,1,1) = {"
 af
 af
-Sq
+ey
 ad
 ah
 an
@@ -1321,8 +1321,8 @@ er
 (11,1,1) = {"
 af
 af
-Sq
-Sq
+ey
+ey
 al
 aB
 aj
@@ -1340,8 +1340,8 @@ aj
 af
 af
 af
-Sq
-Sq
+ey
+ey
 aj
 aj
 aj
@@ -1350,9 +1350,9 @@ aj
 aj
 ED
 aS
-bZ
+Np
 bo
-ce
+MI
 "}
 (13,1,1) = {"
 af
@@ -1370,7 +1370,7 @@ aj
 aj
 aj
 aj
-ts
+rH
 "}
 (14,1,1) = {"
 af
@@ -1379,7 +1379,7 @@ af
 af
 af
 af
-Sq
+ey
 eE
 bC
 bJ
@@ -1391,7 +1391,7 @@ aH
 af
 "}
 (15,1,1) = {"
-eR
+wg
 aj
 aj
 aj
@@ -1438,7 +1438,7 @@ aj
 aj
 aj
 aj
-ts
+rH
 af
 af
 af

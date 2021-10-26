@@ -396,7 +396,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/book/manual/wiki/engineering_singulo_tesla,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bE" = (

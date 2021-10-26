@@ -51,6 +51,7 @@
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "chat_filter.dm"
+#include "closets.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "connect_loc.dm"

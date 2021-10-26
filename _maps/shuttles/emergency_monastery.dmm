@@ -354,7 +354,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "du" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dF" = (
@@ -682,7 +682,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hN" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -779,7 +779,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -913,7 +913,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "kq" = (
@@ -1002,7 +1002,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "lj" = (
@@ -1397,7 +1397,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "qx" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -2235,7 +2235,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "zw" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -2513,7 +2513,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "DS" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -4088,7 +4088,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "UQ" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -4224,7 +4224,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Wh" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Dock Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{

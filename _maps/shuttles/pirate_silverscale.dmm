@@ -45,9 +45,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"de" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "pirateportexternal"
+"dr" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -69,6 +69,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"em" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "eK" = (
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating/airless,
@@ -83,24 +90,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"fD" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
-	dir = 8
-	},
-/turf/open/space/basic,
-/area/shuttle/pirate)
 "fN" = (
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack,
-/area/shuttle/pirate)
-"fO" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "silverbridge"
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "fT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -114,10 +107,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"gX" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/plating,
+"he" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 6
+	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "ht" = (
 /obj/machinery/door/airlock/silver,
@@ -135,43 +130,24 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
-"iG" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 5
-	},
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "iY" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"jd" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 9
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "je" = (
 /turf/template_noop,
 /area/template_noop)
-"jm" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/docking_port/stationary{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	id = "pirateship_home";
-	name = "Deep Space";
-	width = 26
-	},
-/obj/docking_port/mobile/pirate{
-	dir = 4;
-	dwidth = 13;
-	height = 3;
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Silverscale Cruiser";
-	preferred_direction = 4;
-	width = 26
-	},
-/turf/open/floor/pod/dark,
+"jo" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
 /area/shuttle/pirate)
 "jG" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -239,37 +215,11 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
-"mJ" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 6
-	},
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
 "nh" = (
 /obj/machinery/computer/monitor/secret{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"nz" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"nY" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "pirateportexternal"
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"oU" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/shuttle/pirate)
 "pU" = (
 /obj/machinery/door/airlock/silver,
@@ -288,6 +238,12 @@
 /area/shuttle/pirate)
 "rB" = (
 /turf/closed/wall/mineral/titanium,
+/area/shuttle/pirate)
+"tG" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "ue" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -339,6 +295,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
+"xs" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "xO" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 6
@@ -362,6 +322,18 @@
 	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"yw" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
+"zl" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
+/area/shuttle/pirate)
 "zB" = (
 /obj/structure/table/glass,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -374,15 +346,6 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"zQ" = (
-/obj/machinery/door/airlock/external/glass{
-	id_tag = "piratestarboardexternal"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Ae" = (
@@ -399,9 +362,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
-"At" = (
+"AE" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/space/basic,
 /area/shuttle/pirate)
 "AR" = (
 /obj/structure/toilet{
@@ -435,6 +401,22 @@
 "Ch" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
+/area/shuttle/pirate)
+"Cr" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "pirateportexternal"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"Cu" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 5
+	},
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "CH" = (
 /obj/structure/chair/sofa/corp/left{
@@ -495,6 +477,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"HD" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "silverbridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate)
 "HS" = (
 /obj/structure/musician/piano{
 	icon_state = "piano"
@@ -508,25 +497,35 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
+"Iq" = (
+/obj/machinery/door/airlock/external/glass/ruin{
+	id_tag = "piratestarboardexternal"
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	id = "pirateship_home";
+	name = "Deep Space";
+	width = 26
+	},
+/obj/docking_port/mobile/pirate{
+	dir = 4;
+	dwidth = 13;
+	height = 3;
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Silverscale Cruiser";
+	preferred_direction = 4;
+	width = 26
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
 "Is" = (
 /obj/machinery/computer/piratepad_control{
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"It" = (
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
-/area/shuttle/pirate)
-"IG" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 9
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Jc" = (
 /obj/structure/table/glass,
@@ -541,11 +540,6 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"Jf" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Jq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -586,13 +580,6 @@
 	y_offset = 5
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/pirate)
-"Ms" = (
-/obj/machinery/porta_turret/syndicate/energy/pirate,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 10
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Mu" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -666,6 +653,12 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "Qm" = (
+/turf/open/floor/pod/dark,
+/area/shuttle/pirate)
+"QI" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "QO" = (
@@ -743,6 +736,13 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
+"TL" = (
+/obj/machinery/porta_turret/syndicate/energy/pirate,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 10
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "TT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -851,7 +851,7 @@
 je
 je
 rB
-nY
+tG
 rB
 Gr
 Gr
@@ -861,7 +861,7 @@ jG
 Gr
 Gr
 rB
-jm
+Iq
 rB
 je
 je
@@ -887,7 +887,7 @@ je
 "}
 (3,1,1) = {"
 je
-fD
+AE
 rB
 jQ
 rB
@@ -901,27 +901,27 @@ Ww
 rB
 zN
 rB
-fD
+AE
 je
 "}
 (4,1,1) = {"
-IG
+jd
 rB
 rB
-de
+Cr
 rB
-fO
-fO
-fO
+HD
+HD
+HD
 rB
-fO
-fO
-fO
+HD
+HD
+HD
 rB
-zQ
+dr
 rB
 rB
-Ms
+TL
 "}
 (5,1,1) = {"
 rB
@@ -938,7 +938,7 @@ RO
 xR
 rB
 Si
-nz
+QI
 rB
 rB
 "}
@@ -1000,11 +1000,11 @@ rB
 rB
 "}
 (9,1,1) = {"
-fO
+HD
 JL
 fT
 cE
-At
+xs
 HS
 kU
 iY
@@ -1012,18 +1012,18 @@ Jc
 gg
 kU
 aA
-At
+xs
 Kq
 fT
 Gy
-fO
+HD
 "}
 (10,1,1) = {"
-fO
+HD
 Ut
 fT
 CH
-At
+xs
 hu
 am
 eU
@@ -1031,11 +1031,11 @@ Xw
 DX
 am
 dT
-At
+xs
 Ai
 fT
 Oo
-fO
+HD
 "}
 (11,1,1) = {"
 rB
@@ -1057,11 +1057,11 @@ CW
 rB
 "}
 (12,1,1) = {"
-fO
+HD
 Ai
 ue
 Aj
-gX
+jo
 lk
 am
 am
@@ -1069,18 +1069,18 @@ am
 am
 am
 ei
-gX
+jo
 Ch
 Ch
 zB
-fO
+HD
 "}
 (13,1,1) = {"
-fO
+HD
 XX
 fT
 CH
-At
+xs
 Nm
 Vw
 vz
@@ -1088,11 +1088,11 @@ Dt
 vz
 YD
 Ae
-At
+xs
 Ai
 fT
 Ig
-fO
+HD
 "}
 (14,1,1) = {"
 rB
@@ -1100,13 +1100,13 @@ rB
 pU
 rB
 rB
-fO
-fO
+HD
+HD
 Mo
 fj
 nh
-fO
-fO
+HD
+HD
 rB
 rB
 pU
@@ -1119,13 +1119,13 @@ dI
 Sv
 XB
 rB
-Jf
-fO
-fO
-fO
-fO
-fO
-It
+yw
+HD
+HD
+HD
+HD
+HD
+zl
 rB
 fN
 Sv
@@ -1137,7 +1137,7 @@ rB
 vM
 BK
 MA
-fO
+HD
 xO
 je
 je
@@ -1145,7 +1145,7 @@ je
 je
 je
 RF
-fO
+HD
 LQ
 JV
 YL
@@ -1156,7 +1156,7 @@ rB
 rB
 QO
 mI
-fO
+HD
 je
 je
 je
@@ -1164,7 +1164,7 @@ je
 je
 je
 je
-fO
+HD
 Jq
 RE
 rB
@@ -1210,7 +1210,7 @@ je
 "}
 (20,1,1) = {"
 je
-oU
+em
 rB
 ky
 rB
@@ -1224,7 +1224,7 @@ je
 rB
 AR
 rB
-oU
+em
 je
 "}
 (21,1,1) = {"
@@ -1249,7 +1249,7 @@ je
 (22,1,1) = {"
 je
 je
-iG
+Cu
 rB
 rB
 je
@@ -1261,7 +1261,7 @@ je
 je
 rB
 rB
-mJ
+he
 je
 je
 "}

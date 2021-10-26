@@ -40,35 +40,38 @@
 	name = "Station Engineer"
 	jobtype = /datum/job/station_engineer
 
-	belt = /obj/item/storage/belt/utility/full/engi
-	l_pocket = /obj/item/pda/engineering
-	ears = /obj/item/radio/headset/headset_eng
+	id_trim = /datum/id_trim/job/station_engineer
 	uniform = /obj/item/clothing/under/rank/engineering/engineer
-	shoes = /obj/item/clothing/shoes/workboots
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/advanced/engineering = 1,
+		)
+	belt = /obj/item/storage/belt/utility/full/engi
+	ears = /obj/item/radio/headset/headset_eng
 	head = /obj/item/clothing/head/hardhat
+	shoes = /obj/item/clothing/shoes/workboots
+	l_pocket = /obj/item/pda/engineering
 	r_pocket = /obj/item/t_scanner
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
 	duffelbag = /obj/item/storage/backpack/duffelbag/engineering
+
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced/engineering=1)
-
 	skillchips = list(/obj/item/skillchip/job/engineer)
-
-	id_trim = /datum/id_trim/job/station_engineer
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"
+
 	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/job/engineer/gloved/rig
 	name = "Station Engineer (Hardsuit)"
-	mask = /obj/item/clothing/mask/breath
+
 	suit = /obj/item/clothing/suit/space/hardsuit/engine
 	suit_store = /obj/item/tank/internals/oxygen
 	head = null
+	mask = /obj/item/clothing/mask/breath
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/job/engineer/gloved/gunner

@@ -102,6 +102,12 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
+"fZ" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "hh" = (
 /mob/living/simple_animal/hostile/pirate{
 	environment_smash = 0
@@ -132,6 +138,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/caravan/pirate)
+"ig" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "iF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -217,6 +229,24 @@
 	dir = 1
 	},
 /area/shuttle/caravan/pirate)
+"km" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "caravanpirate_bolt_starboard"
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
+"kF" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "caravanpirate_bolt_port"
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
 "kY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -237,12 +267,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/caravan/pirate)
-"lT" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "mr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -473,6 +497,12 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/caravan/pirate)
+"tW" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/caravan/pirate)
 "ul" = (
 /obj/structure/table,
 /obj/item/retractor,
@@ -560,12 +590,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
-"xU" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/caravan/pirate)
 "yt" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/stripes/line{
@@ -599,15 +623,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
-"zl" = (
-/obj/structure/rack,
-/obj/item/storage/bag/money/vault,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/mob/living/simple_animal/parrot/pegwing,
-/turf/open/floor/iron/dark,
-/area/shuttle/caravan/pirate)
 "zB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -629,16 +644,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
 /area/shuttle/caravan/pirate)
-"Ah" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
-	id_tag = "caravanpirate_bolt_starboard"
-	},
-/turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
 "Av" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -654,6 +659,29 @@
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/caravan/pirate)
+"Bi" = (
+/obj/machinery/door/poddoor{
+	id = "caravanpirate_bridge"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
+"By" = (
+/obj/structure/rack,
+/obj/item/storage/bag/money/vault,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/mob/living/simple_animal/parrot/pegwing,
+/turf/open/floor/iron/dark,
+/area/shuttle/caravan/pirate)
+"BC" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/machinery/door/poddoor{
+	id = "caravanpirate_bridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
 "BI" = (
 /obj/structure/table,
 /obj/machinery/light/small/directional/west,
@@ -666,13 +694,6 @@
 /obj/item/stack/cable_coil,
 /obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
-"BW" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/machinery/door/poddoor{
-	id = "caravanpirate_bridge"
-	},
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Cb" = (
@@ -688,12 +709,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
-"CI" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "DY" = (
 /obj/structure/closet/crate/secure/loot,
@@ -757,6 +772,26 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
+"FO" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "caravanpirate_bolt_port"
+	},
+/obj/docking_port/mobile{
+	callTime = 150;
+	dir = 2;
+	dwidth = 14;
+	height = 13;
+	id = "caravanpirate";
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Pirate Cutter";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 22
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
 "Gh" = (
 /obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/bot,
@@ -805,26 +840,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/white,
 /area/shuttle/caravan/pirate)
-"Jb" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
-	id_tag = "caravanpirate_bolt_port"
-	},
-/obj/docking_port/mobile{
-	callTime = 150;
-	dir = 2;
-	dwidth = 14;
-	height = 13;
-	id = "caravanpirate";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "Pirate Cutter";
-	port_direction = 8;
-	preferred_direction = 4;
-	width = 22
-	},
-/turf/open/floor/plating,
-/area/shuttle/caravan/pirate)
 "Jv" = (
 /turf/template_noop,
 /area/template_noop)
@@ -838,14 +853,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron/white,
-/area/shuttle/caravan/pirate)
-"Ku" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
-	id_tag = "caravanpirate_bolt_starboard"
-	},
-/turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Ld" = (
 /obj/machinery/suit_storage_unit/open,
@@ -895,16 +902,6 @@
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
-/area/shuttle/caravan/pirate)
-"Rz" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
-	id_tag = "caravanpirate_bolt_port"
-	},
-/turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "RC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -969,18 +966,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)
+"Vc" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "caravanpirate_bolt_starboard"
+	},
+/turf/open/floor/plating,
+/area/shuttle/caravan/pirate)
 "Wb" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/iron/dark,
-/area/shuttle/caravan/pirate)
-"Wy" = (
-/obj/machinery/door/poddoor{
-	id = "caravanpirate_bridge"
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Xq" = (
 /obj/structure/table/reinforced,
@@ -988,12 +988,6 @@
 /obj/item/melee/baton,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
-/area/shuttle/caravan/pirate)
-"XU" = (
-/obj/machinery/porta_turret/syndicate/pod/pirate{
-	dir = 6
-	},
-/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "Yo" = (
 /obj/structure/table,
@@ -1015,6 +1009,12 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/caravan/pirate)
+"Ze" = (
+/obj/machinery/porta_turret/syndicate/pod/pirate{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/caravan/pirate)
 "Zo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1071,7 +1071,7 @@ Jv
 "}
 (3,1,1) = {"
 Jv
-CI
+fZ
 af
 qX
 yt
@@ -1081,7 +1081,7 @@ RK
 FM
 jh
 af
-lT
+ig
 Jv
 "}
 (4,1,1) = {"
@@ -1145,9 +1145,9 @@ af
 oL
 "}
 (8,1,1) = {"
-Jb
+FO
 Sd
-Rz
+kF
 kl
 EK
 mI
@@ -1155,9 +1155,9 @@ af
 pZ
 pS
 fU
-Ku
+km
 Sd
-Ah
+Vc
 "}
 (9,1,1) = {"
 oL
@@ -1176,7 +1176,7 @@ oL
 "}
 (10,1,1) = {"
 Jv
-BW
+BC
 Ld
 nD
 bH
@@ -1186,7 +1186,7 @@ iX
 vd
 GQ
 Ld
-Wy
+Bi
 Jv
 "}
 (11,1,1) = {"
@@ -1237,15 +1237,15 @@ Jv
 (14,1,1) = {"
 Jv
 Jv
-xU
+Ze
 af
 xg
 qC
 pK
 Sk
-zl
+By
 af
-XU
+tW
 Jv
 Jv
 "}
@@ -1329,11 +1329,11 @@ Jv
 Jv
 Jv
 Jv
-Wy
+Bi
 oO
 EB
 bd
-BW
+BC
 Jv
 Jv
 Jv
@@ -1344,11 +1344,11 @@ Jv
 Jv
 Jv
 Jv
-BW
-BW
+BC
+BC
 fL
-BW
-BW
+BC
+BC
 Jv
 Jv
 Jv
@@ -1360,9 +1360,9 @@ Jv
 Jv
 Jv
 Jv
-BW
-BW
-BW
+BC
+BC
+BC
 Jv
 Jv
 Jv
