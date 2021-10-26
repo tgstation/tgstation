@@ -355,8 +355,8 @@
 #define REGION_ACCESS_ALL_STATION COMMON_ACCESS + COMMAND_ACCESS + PRIVATE_COMMAND_ACCESS + CAPTAIN_ACCESS
 /// Name for the General region.
 #define REGION_GENERAL "General"
-/// Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.
-#define REGION_ACCESS_GENERAL list( \
+/// Access that all members of service and other non-departmental jobs should be able to add to their standard ID cards, regardless of wildcard type.
+#define JOB_ACCESS_GENERAL list( \
 	ACCESS_KITCHEN, \
 	ACCESS_BAR, \
 	ACCESS_HYDROPONICS, \
@@ -367,10 +367,12 @@
 	ACCESS_THEATRE, \
 	ACCESS_LAWYER, \
 )
+/// Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.
+#define REGION_ACCESS_GENERAL JOB_ACCESS_GENERAL
 /// Name for the Security region.
 #define REGION_SECURITY "Security"
-/// Used to seed the accesses_by_region list in SSid_access. A list of all security regional accesses that are overseen by the HoS.
-#define REGION_ACCESS_SECURITY list( \
+/// Access that all members of security should be able to add to their standard ID cards, regardless of wildcard type.
+#define JOB_ACCESS_SECURITY list( \
 	ACCESS_SEC_DOORS, \
 	ACCESS_WEAPONS, \
 	ACCESS_SECURITY, \
@@ -379,26 +381,28 @@
 	ACCESS_FORENSICS_LOCKERS, \
 	ACCESS_COURT, \
 	ACCESS_MECH_SECURITY, \
-	ACCESS_HOS, \
 )
+/// Used to seed the accesses_by_region list in SSid_access. A list of all security regional accesses that are overseen by the HoS.
+#define REGION_ACCESS_SECURITY (JOB_ACCESS_SECURITY + list(ACCESS_HOS))
 /// Name for the Medbay region.
 #define REGION_MEDBAY "Medbay"
-/// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
-#define REGION_ACCESS_MEDBAY list( \
+/// Access that all members of medical should be able to add to their ID cards, regardless of wildcard type.
+#define JOB_ACCESS_MEDBAY list( \
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
 	ACCESS_CHEMISTRY, \
 	ACCESS_VIROLOGY, \
 	ACCESS_SURGERY, \
 	ACCESS_MECH_MEDICAL, \
-	ACCESS_CMO, \
 	ACCESS_PHARMACY, \
 	ACCESS_PSYCHOLOGY, \
 )
+/// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
+#define REGION_ACCESS_MEDBAY (JOB_ACCESS_MEDBAY + list(ACCESS_CMO))
 /// Name for the Research region.
 #define REGION_RESEARCH "Research"
-/// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
-#define REGION_ACCESS_RESEARCH list( \
+/// Access that all members of research/science should be able to add to their ID cards, regardless of wildcard type.
+#define JOB_ACCESS_RESEARCH list( \
 	ACCESS_RESEARCH, \
 	ACCESS_RND, \
 	ACCESS_ORDNANCE, \
@@ -407,14 +411,14 @@
 	ACCESS_ROBOTICS, \
 	ACCESS_XENOBIOLOGY, \
 	ACCESS_MECH_SCIENCE, \
-	ACCESS_MINISAT, \
-	ACCESS_RD, \
 	ACCESS_NETWORK, \
 )
+/// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
+#define REGION_ACCESS_RESEARCH (JOB_ACCESS_RESEARCH + list(ACCESS_MINISAT, ACCESS_RD))
 /// Name for the Engineering region.
 #define REGION_ENGINEERING "Engineering"
-/// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
-#define REGION_ACCESS_ENGINEERING list( \
+/// Access that all members of engineering should be able to add to their ID cards, regardless of wildcard type.
+#define JOB_ACCESS_ENGINEERING list( \
 	ACCESS_CONSTRUCTION, \
 	ACCESS_AUX_BASE, \
 	ACCESS_MAINT_TUNNELS, \
@@ -425,13 +429,13 @@
 	ACCESS_ATMOSPHERICS, \
 	ACCESS_MECH_ENGINE, \
 	ACCESS_TCOMSAT, \
-	ACCESS_MINISAT, \
-	ACCESS_CE, \
 )
+/// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
+#define REGION_ACCESS_ENGINEERING (JOB_ACCESS_ENGINEERING + list(ACCESS_MINISAT, ACCESS_CE))
 /// Name for the Supply region.
 #define REGION_SUPPLY "Supply"
-/// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
-#define REGION_ACCESS_SUPPLY list( \
+/// Access that all members of supply should be able to add to their ID cards, regardless of wildcard type.
+#define JOB_ACCESS_SUPPLY list( \
 	ACCESS_MAILSORTING, \
 	ACCESS_MINING, \
 	ACCESS_MINING_STATION, \
@@ -441,6 +445,8 @@
 	ACCESS_QM, \
 	ACCESS_VAULT, \
 )
+/// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
+#define REGION_ACCESS_SUPPLY JOB_ACCESS_SUPPLY
 /// Name for the Command region.
 #define REGION_COMMAND "Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all command regional accesses that are overseen by the Captain.

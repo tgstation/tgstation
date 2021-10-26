@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "DNA unique identity and unique feature strings once again generate correctly, which also means they work correctly again."

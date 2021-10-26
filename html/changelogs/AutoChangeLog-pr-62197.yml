@@ -1,0 +1,5 @@
+author: "Capsandi"
+delete-after: True
+changes: 
+  - expansion: "Ethereals have their own lungs which electrolyze water vapor now"
+  - bugfix: "Ethereals will no longer take burn damage from breathing air which they can stand in safely with internals"
