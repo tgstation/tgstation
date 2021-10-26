@@ -1,5 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Many escape pods are no longer missing cycling airlock systems."
-  - bugfix: "Air should no longer magically not pass certain areas."
