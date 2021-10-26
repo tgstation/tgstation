@@ -411,8 +411,7 @@
 			return FALSE
 		if (electronics || secure)
 			return FALSE
-		if (!user.transferItemToLoc(W, src))
-			return FALSE
+		W.moveToNullspace()
 		to_chat(user, span_notice("You install the electronics."))
 		electronics = W
 		if (electronics.one_access)
