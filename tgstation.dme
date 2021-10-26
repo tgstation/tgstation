@@ -2056,7 +2056,6 @@
 #include "code\modules\buildmode\bm_mode.dm"
 #include "code\modules\buildmode\buildmode.dm"
 #include "code\modules\buildmode\buttons.dm"
-#include "code\modules\buildmode\effects\line.dm"
 #include "code\modules\buildmode\submodes\advanced.dm"
 #include "code\modules\buildmode\submodes\area_edit.dm"
 #include "code\modules\buildmode\submodes\basic.dm"
