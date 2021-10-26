@@ -353,6 +353,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		shake_everyone()
 
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
+// MOTHBLOCKS TODO: Instead of radiation, maybe force the heavy gravity?
 /obj/machinery/gravity_generator/main/process()
 	if(machine_stat & BROKEN)
 		return

@@ -57,7 +57,7 @@ effective or pretty fucking useless.
 		icon_state = "battererburnt"
 
 /*
-		The chemoreceptic microlaser, a device disguised as a health analyzer used to make people vomit.
+		The radioactive microlaser, a device disguised as a health analyzer used to irradiate people.
 
 		The strength of the radiation is determined by the 'intensity' setting, while the delay between
 	the scan and the irradiation kicking in is determined by the wavelength.
@@ -68,68 +68,59 @@ effective or pretty fucking useless.
 		Wavelength is also slightly increased by the intensity as well.
 */
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser
-	var/use_effect = TRUE
+/obj/item/healthanalyzer/rad_laser
+	var/irradiate = TRUE
 	var/stealth = FALSE
 	var/used = FALSE // is it cooling down?
-	var/intensity = 5 // how much damage the radiation does
+	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/attack(mob/living/M, mob/living/user)
-	if(!stealth || !use_effect)
+/obj/item/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
+	if(!stealth || !irradiate)
 		..()
-	if(!use_effect)
+	if(!irradiate)
 		return
-
-	if (!ishuman(M))
-		balloon_alert(user, "must be a human!")
-
 	if(!used)
-		log_combat(user, M, "used a chemoreceptic microlaser on", src)
+		log_combat(user, M, "irradiated", src)
 		var/cooldown = get_cooldown()
 		used = TRUE
 		icon_state = "health1"
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
-		to_chat(user, span_warning("Successfully manipulated [M]."))
-		addtimer(CALLBACK(src, .proc/effect, M, intensity), (wavelength+(intensity*4))*5)
+		to_chat(user, span_warning("Successfully irradiated [M]."))
+		addtimer(CALLBACK(src, .proc/radiation_aftereffect, M, intensity), (wavelength+(intensity*4))*5)
 	else
 		to_chat(user, span_warning("The radioactive microlaser is still recharging."))
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/proc/effect(mob/living/carbon/human/victim, passed_intensity)
-	if(QDELETED(victim))
+/obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
+	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE))
 		return
-
 	if(passed_intensity >= 5)
-		victim.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
+		M.apply_effect(round(passed_intensity/0.075), EFFECT_UNCONSCIOUS) //to save you some math, this is a round(intensity * (4/3)) second long knockout
+	// MOTHBLOCKS TODO: Rad laser
+	// M.rad_act(passed_intensity*10)
 
-	for (var/index in 1 to max(1, FLOOR(passed_intensity / 2, 1)))
-		victim.vomit(stun = index > 3)
-		stoplag(1 SECONDS)
-
-	victim.vomit()
-
-/obj/item/healthanalyzer/chemoreceptic_microlaser/proc/get_cooldown()
+/obj/item/healthanalyzer/rad_laser/proc/get_cooldown()
 	return round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/attack_self(mob/user)
+/obj/item/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/interact(mob/user)
+/obj/item/healthanalyzer/rad_laser/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/ui_state(mob/user)
+/obj/item/healthanalyzer/rad_laser/ui_state(mob/user)
 	return GLOB.hands_state
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/healthanalyzer/rad_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ChemorecepticMicrolaser")
+		ui = new(user, src, "RadioactiveMicrolaser")
 		ui.open()
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/ui_data(mob/user)
+/obj/item/healthanalyzer/rad_laser/ui_data(mob/user)
 	var/list/data = list()
-	data["use_effect"] = use_effect
+	data["irradiate"] = irradiate
 	data["stealth"] = stealth
 	data["scanmode"] = scanmode
 	data["intensity"] = intensity
@@ -138,14 +129,14 @@ effective or pretty fucking useless.
 	data["cooldown"] = DisplayTimeText(get_cooldown())
 	return data
 
-/obj/item/healthanalyzer/chemoreceptic_microlaser/ui_act(action, params)
+/obj/item/healthanalyzer/rad_laser/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
 
 	switch(action)
-		if("use_effect")
-			use_effect = !use_effect
+		if("irradiate")
+			irradiate = !irradiate
 			. = TRUE
 		if("stealth")
 			stealth = !stealth
@@ -153,7 +144,7 @@ effective or pretty fucking useless.
 		if("scanmode")
 			scanmode = !scanmode
 			. = TRUE
-		if("intensity")
+		if("radintensity")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "min")
@@ -170,8 +161,8 @@ effective or pretty fucking useless.
 				. = TRUE
 			if(.)
 				target = round(target)
-				intensity = clamp(target, 1, 10)
-		if("wavelength")
+				intensity = clamp(target, 1, 20)
+		if("radwavelength")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "min")

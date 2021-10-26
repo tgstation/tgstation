@@ -1486,13 +1486,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	player_minimum = 25
 	cost = 11
 
-/datum/uplink_item/device_tools/chemoreceptic_microlaser
-	name = "Chemoreceptic Microlaser"
-	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it activates \
-			the chemoreceptor triggers in the brain, inducing vomiting which, after a short delay, can incapacitate all but the most protected \
-			of humanoids. It has two settings: intensity, which controls the power of the vomiting, \
+/datum/uplink_item/device_tools/rad_laser
+	name = "Radioactive Microlaser"
+	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
+			powerful burst of radiation, which, after a short delay, can incapacitate all but the most protected \
+			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls the delay before the effect kicks in."
-	item = /obj/item/healthanalyzer/chemoreceptic_microlaser
+	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
 
 /datum/uplink_item/device_tools/stimpack
