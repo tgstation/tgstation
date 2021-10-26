@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "Reinforced walls will now properly re-smooth when nearby reinforced walls are created or destroyed."
