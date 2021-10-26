@@ -393,7 +393,6 @@
 	var/emp_light_size = 0
 	var/emp_heavy_size = 0
 	var/rad_pulse_size = 0
-	var/rad_pulse_threshold = 0
 	var/gas_spread = 0
 	var/gas_pockets = 0
 	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
@@ -418,8 +417,7 @@
 			emp_light_size = power_level * 3
 			emp_heavy_size = power_level * 1
 		if(rad_pulse)
-			rad_pulse_size = 3
-			rad_pulse_threshold = RAD_LIGHT_INSULATION
+			rad_pulse_size = 2 * power_level + 8
 		gas_pockets = 5
 		gas_spread = power_level * 2
 
@@ -428,8 +426,7 @@
 			emp_light_size = power_level * 5
 			emp_heavy_size = power_level * 3
 		if(rad_pulse)
-			rad_pulse_size = 5
-			rad_pulse_threshold = RAD_HEAVY_INSULATION
+			rad_pulse_size = power_level + 24
 		gas_pockets = 7
 		gas_spread = power_level * 4
 
@@ -438,8 +435,7 @@
 			emp_light_size = power_level * 7
 			emp_heavy_size = power_level * 5
 		if(rad_pulse)
-			rad_pulse_size = 7
-			rad_pulse_threshold = 0.2
+			rad_pulse_size = power_level + 34
 		gas_pockets = 10
 		gas_spread = power_level * 6
 
@@ -448,8 +444,7 @@
 			emp_light_size = power_level * 9
 			emp_heavy_size = power_level * 7
 		if(rad_pulse)
-			rad_pulse_size = 15
-			rad_pulse_threshold = 0.05
+			rad_pulse_size = power_level + 44
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
@@ -492,8 +487,8 @@
 		radiation_pulse(
 			source = loc,
 			max_range = rad_pulse_size,
-			threshold = rad_pulse_threshold,
-			)
+			threshold = 0.05,
+		)
 
 	if(em_pulse)
 		empulse(
