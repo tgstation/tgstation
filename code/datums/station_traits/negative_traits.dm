@@ -249,7 +249,7 @@
 
 	new /obj/effect/decal/cleanable/blood/gibs/torso(last_location)
 
-// Abstract station trait used for station traits that modify a random event's weight or max occurrences.
+// Abstract station trait used for traits that modify a random event in some way (their weight or max occurrences).
 /datum/station_trait/random_event_weight_modifier
 	name = "Random Event Modifier"
 	report_message = "A random event has been modified this shift! Someone forgot to set this!"
@@ -261,7 +261,7 @@
 	var/event_control_path
 	/// Multiplier applied to the weight of the event.
 	var/weight_multiplier = 1
-	/// Flat modifier applied to the amount of max occurances the random event can have.
+	/// Flat modifier added to the amount of max occurances the random event can have.
 	var/max_occurrences_modifier = 0
 
 /datum/station_trait/random_event_weight_modifier/on_round_start()
