@@ -337,8 +337,11 @@
 		if(istype(C, /obj/item/seeds))
 			reagents.add_reagent(/datum/reagent/compost, seed_value)
 			qdel(C)
-		else if(istype(C, /obj/item/food/grown))
+			continue
+		if(istype(C, /obj/item/food/grown))
 			reagents.add_reagent(/datum/reagent/compost, produce_value)
 			qdel(C)
-		else //Not sure how we got here, but there's only one reasonable thing to do.
-			qdel(C)
+			continue
+		//Not sure how we got here, but there's only one reasonable thing to do.
+		qdel(C)
+		
