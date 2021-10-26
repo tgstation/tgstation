@@ -3,6 +3,7 @@
 	description = "An experiment requiring an explosion to progress"
 	exp_tag = "Explosion"
 	performance_hint = "Perform explosive experiments using the research doppler array in the ordnance lab."
+	reward_applicable = FALSE //the doppler array isn't actually selecting experiments to run
 	/// The required devastation range to complete the experiment
 	var/required_devastation = 0
 	/// The required heavy impact range to complete the experiment
