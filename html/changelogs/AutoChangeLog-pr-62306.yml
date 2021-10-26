@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Backup human names will now properly only apply when you are a nonhuman head of staff, rather than any head of staff."
