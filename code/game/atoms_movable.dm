@@ -59,7 +59,7 @@
 	var/datum/component/orbiter/orbiting
 
 	///is the mob currently ascending or descending through z levels?
-	VAR_PROTECTED/currently_z_moving
+	var/currently_z_moving
 
 	///Last location of the atom for demo recording purposes
 	var/atom/demo_last_loc
