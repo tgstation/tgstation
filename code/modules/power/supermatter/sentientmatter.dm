@@ -3,11 +3,13 @@
 	name = "Sentient Supermatter"
 	//let ghosts take it over
 	roundstart = FALSE
+	death = FALSE
+	banType = ROLE_GHOST_ROLE
 	//while you will never see this mob spawn, the point of interest will use this icon.
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter"
 	//will be shown on the ghost roles menu
-	short_desc = "Due to the infinite possibilities of an infinite plane of space, the supermatter has emerged as sentient!!"
+	short_desc = "Due to the infinite possibilities of an infinite plane of space inside the crystal, the supermatter has emerged as sentient!"
 	flavour_text = "Chat up the chief engineer. Be annoying. Complain it's way too hot. Delaminate in a fit of rage. You know, things that supermatters do! \
 	fair warning, there's not a whole lot to do as a supermatter so don't go in expecting a nail biter of a shift."
 	//semi-abstract mob we will be talking "as the supermatter" from
@@ -17,10 +19,7 @@
 
 /obj/effect/mob_spawn/sentientmatter/Initialize(mapload)
 	. = ..()
-	obj_matter = loc
-	if(!istype(obj_matter))
-		stack_trace("sentientmatter spawner was created, but not inside a supermatter!")
-		return INITIALIZE_HINT_QDEL
+	obj_matter = loc //on god respectfully, this should runtime to hell outside of a supermatter and that's GOOD
 	RegisterSignal(obj_matter, COMSIG_PARENT_QDELETING, .proc/on_obj_matter_destroyed)
 
 /obj/effect/mob_spawn/sentientmatter/Destroy()
@@ -51,12 +50,11 @@
 	. = ..()
 	src.obj_matter = obj_matter
 	RegisterSignal(obj_matter, COMSIG_PARENT_QDELETING, .proc/on_obj_matter_destroyed)
-	RegisterSignal(src, COMSIG_ATOM_RELAYMOVE, .proc/block_buckle_message)
+	RegisterSignal(obj_matter, COMSIG_ATOM_RELAYMOVE, .proc/block_buckle_message)
 
 /mob/living/simple_animal/sentientmatter/Destroy()
 	obj_matter = null
-	UnregisterSignal(obj_matter, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(src, COMSIG_ATOM_RELAYMOVE)
+	UnregisterSignal(obj_matter, list(COMSIG_PARENT_QDELETING, COMSIG_ATOM_RELAYMOVE))
 	. = ..()
 
 /mob/living/simple_animal/sentientmatter/proc/on_obj_matter_destroyed(datum/source, force)
