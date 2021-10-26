@@ -380,10 +380,7 @@
 /obj/item/soulstone/proc/init_shade(mob/living/carbon/human/dusted_victim, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
 		shade_controller = dusted_victim
-	new /obj/effect/decal/remains/human(dusted_victim.loc) //Spawns a skeleton
 	dusted_victim.stop_sound_channel(CHANNEL_HEARTBEAT)
-	dusted_victim.invisibility = INVISIBILITY_ABSTRACT
-	dusted_victim.dust_animation()
 	var/mob/living/simple_animal/shade/soulstone_spirit = new /mob/living/simple_animal/shade(src)
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [dusted_victim.real_name]"
@@ -414,6 +411,7 @@
 			to_chat(soulstone_spirit, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
 		if(message_user)
 			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [dusted_victim.real_name]'s soul has been ripped from [dusted_victim.p_their()] body and stored within [src].")
+	dusted_victim.dust()
 
 
 /obj/item/soulstone/proc/getCultGhost(mob/living/carbon/victim, mob/user)
