@@ -59,7 +59,7 @@
 	var/datum/component/orbiter/orbiting
 
 	///is the mob currently ascending or descending through z levels?
-	var/currently_z_moving = FALSE
+	VAR_PROTECTED(currently_z_moving)
 
 	///Last location of the atom for demo recording purposes
 	var/atom/demo_last_loc
@@ -600,13 +600,13 @@
 				var/pull_dir = get_dir(pulling, src)
 				var/target_turf = current_turf
 
-				// Pulling things down/up stairs. Most other zMove() calls break pulls already so this shouldn't be an issue.
-				// You may wonder why we're doing it this way and not just forcemove the pulling movable and regrab it.
+				// Pulling things down/up stairs. zMove() has flags for check_pulling and stop_pulling calls.
+				// You may wonder why we're not just forcemoving the pulling movable and regrabbing it.
 				// The answer is simple. forcemoving and regrabbing is ugly and breaks conga lines.
 				if(pulling.z != z)
 					target_turf = get_step(pulling, pull_dir)
 
-				if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || target_turf != current_turf)
+				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)
 			check_pulling()
 
@@ -623,10 +623,12 @@
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
 		. = FALSE
 
-	if(. && currently_z_moving == CURRENTLY_Z_FALLING_FROM_MOVE && loc == newloc)
-		var/turf/pitfall = get_turf(src)
-		pitfall.zFall(src, falling_from_move = TRUE)
-	set_currently_z_moving(FALSE, TRUE)
+	if(currently_z_moving)
+		if(. && loc == newloc)
+			var/turf/pitfall = get_turf(src)
+			pitfall.zFall(src, falling_from_move = TRUE)
+		else
+			set_currently_z_moving(FALSE, TRUE)
 
 /// Called when src is being moved to a target turf because another movable (puller) is moving around.
 /atom/movable/proc/move_from_pull(atom/movable/puller, turf/target_turf, glide_size_override)
