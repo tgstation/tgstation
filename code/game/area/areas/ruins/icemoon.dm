@@ -35,3 +35,9 @@
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	mood_bonus = -5
 	mood_message = "<span class='brown'>I feel like I am being watched...</span>\n"
+
+/area/ruin/bughabitat
+	name = "\improper Entemology Outreach Center"
+	icon_state = "dk_yellow"
+	mood_bonus = 1
+	mood_message = "<span class='nicegreen'>This place seems strangely serene.</span>\n"

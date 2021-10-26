@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Some special plant reagent genes now show up on the plant analyzer properly again"
