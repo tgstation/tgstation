@@ -305,7 +305,7 @@ SILICON_MAX_LAW_AMOUNT 12
 ##-------------------------------------------------------------------------------------------
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
 
-## See code/__DEFINES/DNA.dm for more options than the ones below are available.
+## See code/__DEFINES/DNA.dm for more options than the ones below.
 
 ## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
 ROUNDSTART_RACES human
