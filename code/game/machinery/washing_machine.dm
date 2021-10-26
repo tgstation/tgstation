@@ -127,6 +127,31 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_SYNDICATE = /obj/item/bedsheet/syndie,
 		DYE_CENTCOM = /obj/item/bedsheet/centcom
 	),
+		DYE_REGISTRY_DOUBLE_BEDSHEET = list(
+		DYE_RED = /obj/item/bedsheet/red/double,
+		DYE_ORANGE = /obj/item/bedsheet/orange/double,
+		DYE_YELLOW = /obj/item/bedsheet/yellow/double,
+		DYE_GREEN = /obj/item/bedsheet/green/double,
+		DYE_BLUE = /obj/item/bedsheet/blue/double,
+		DYE_PURPLE = /obj/item/bedsheet/purple/double,
+		DYE_BLACK = /obj/item/bedsheet/black/double,
+		DYE_WHITE = /obj/item/bedsheet/double,
+		DYE_RAINBOW = /obj/item/bedsheet/rainbow/double,
+		DYE_MIME = /obj/item/bedsheet/mime/double,
+		DYE_CLOWN = /obj/item/bedsheet/clown/double,
+		DYE_CHAP = /obj/item/bedsheet/chaplain/double,
+		DYE_QM = /obj/item/bedsheet/qm/double,
+		DYE_LAW = /obj/item/bedsheet/black/double,
+		DYE_CAPTAIN = /obj/item/bedsheet/captain/double,
+		DYE_HOP = /obj/item/bedsheet/hop/double,
+		DYE_HOS = /obj/item/bedsheet/hos/double,
+		DYE_CE = /obj/item/bedsheet/ce/double,
+		DYE_RD = /obj/item/bedsheet/rd/double,
+		DYE_CMO = /obj/item/bedsheet/cmo/double,
+		DYE_COSMIC = /obj/item/bedsheet/cosmos/double,
+		DYE_SYNDICATE = /obj/item/bedsheet/syndie/double,
+		DYE_CENTCOM = /obj/item/bedsheet/centcom/double
+	),
 	DYE_LAWYER_SPECIAL = list(
 		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
 		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
@@ -180,6 +205,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		AM.wash(CLEAN_WASH)
 		AM.machine_wash(src)
 
+	//if we had the ability to brainwash, remove that now
+	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	busy = FALSE
 	if(color_source)
 		qdel(color_source)
@@ -362,6 +389,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, span_warning("[src] must be cleaned up first!"))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	busy = TRUE
+	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
+		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)

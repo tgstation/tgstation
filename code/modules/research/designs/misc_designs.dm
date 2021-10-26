@@ -345,7 +345,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
 	build_path = /obj/item/mop/advanced
-	category = list("Equipment")
+	category = list("Equipment", "Tools", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/normtrash

@@ -99,7 +99,7 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(mob/user)
 	if(!can_interact(user))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	on = !on
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()

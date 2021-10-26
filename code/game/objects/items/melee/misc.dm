@@ -387,9 +387,6 @@
 	if (!extended)
 		return
 	if (is_type_in_typecache(target, ovens))
-		if (held_sausage?.roasted)
-			to_chat(user, span_warning("Your [held_sausage] has already been cooked!"))
-			return
 		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
 			to_chat(user, span_notice("You send [held_sausage] towards [target]."))
 			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
@@ -397,21 +394,24 @@
 		else if (user.Adjacent(target))
 			to_chat(user, span_notice("You extend [src] towards [target]."))
 			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+			finish_roasting(user, target)
+			return
 		else
 			return
-		if(do_after(user, 100, target = user))
-			finish_roasting(user, target)
-		else
-			QDEL_NULL(beam)
-			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		finish_roasting(user, target)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	to_chat(user, span_notice("You finish roasting [held_sausage]."))
-	playsound(src,'sound/items/welder2.ogg',50,TRUE)
-	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
-	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
-	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
-	update_appearance()
+	if(do_after(user, 100, target = user))
+		to_chat(user, span_notice("You finish roasting [held_sausage]."))
+		playsound(src,'sound/items/welder2.ogg',50,TRUE)
+		held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
+		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
+		held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+		update_appearance()
+	else
+		QDEL_NULL(beam)
+		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		to_chat(user, span_notice("You put [src] away."))
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"

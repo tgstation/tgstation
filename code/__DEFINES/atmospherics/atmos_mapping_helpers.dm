@@ -149,9 +149,6 @@
 #define ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION "distro-loop_meter"
 #define ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE "atmos-waste_loop_meter"
 
-#define ATMOS_GAS_MONITOR_WASTE_ENGINE "engine-waste_out"
-#define ATMOS_GAS_MONITOR_WASTE_ATMOS "atmos-waste_out"
-
 //AIRLOCK CONTROLLER TAGS
 
 //RnD ordnance burn chamber
