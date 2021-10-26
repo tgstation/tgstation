@@ -289,13 +289,13 @@
 	var/port_1_suffix = get_icon_suffix(dir)
 	var/port_2_suffix = get_icon_suffix(turn(dir, 180))
 	var/image/port_1_overlay = image('icons/obj/plumbing/fluid_ducts.dmi', "nduct[port_1_suffix]")
-	port_1_overlay.color = COLOR_BRIGHT_ORANGE
+	port_1_overlay.color = COLOR_GREEN
 	. += port_1_overlay
 	var/image/port_2_overlay = image('icons/obj/plumbing/fluid_ducts.dmi', "nduct[port_2_suffix]")
-	port_2_overlay.color = COLOR_BRIGHT_ORANGE
+	port_2_overlay.color = COLOR_RED
 	. += port_2_overlay
 
-/obj/machinery/heat_system/devices/separation_valve/proc/get_icon_suffix(direction)
+/obj/machinery/heat_system/devices/proc/get_icon_suffix(direction)
 	switch(direction)
 		if(NORTH)
 			. = "_n"
@@ -321,6 +321,57 @@
 	port_1.heat_pipeline.assimilate(port_2.heat_pipeline)
 
 
+
+
+/obj/machinery/heat_system/devices/one_way_valve
+	name = "one way valve"
+
+	var/obj/machinery/heat_system/heat_pipe/port_1
+	var/obj/machinery/heat_system/heat_pipe/port_2
+
+/obj/machinery/heat_system/devices/one_way_valve/Initialize(mapload)
+	. = ..()
+	port_1 = new(src, dir, FALSE)
+	port_2 = new(src, turn(dir, 180), FALSE)
+	SSair.atmos_machinery += src
+
+/obj/machinery/heat_system/devices/one_way_valve/Destroy()
+	SSair.atmos_machinery -= src
+	return ..()
+
+/obj/machinery/heat_system/devices/one_way_valve/update_overlays()
+	. = ..()
+	var/mutable_appearance/radiator = mutable_appearance('icons/obj/atmospherics/components/unary_devices.dmi', "heat_radiator", layer = (src.layer+0.01))
+	. += radiator
+
+	var/port_1_suffix = get_icon_suffix(dir)
+	var/port_2_suffix = get_icon_suffix(turn(dir, 180))
+	var/image/port_1_overlay = image('icons/obj/plumbing/fluid_ducts.dmi', "nduct[port_1_suffix]")
+	port_1_overlay.color = COLOR_GREEN
+	. += port_1_overlay
+	var/image/port_2_overlay = image('icons/obj/plumbing/fluid_ducts.dmi', "nduct[port_2_suffix]")
+	port_2_overlay.color = COLOR_RED
+	. += port_2_overlay
+
+/obj/machinery/heat_system/devices/one_way_valve/process_atmos()
+	if(!port_1.neighbours && !port_2.neighbours)
+		return
+
+	var/port_1_temperature = port_1.heat_pipeline.temperature
+	var/port_2_temperature = port_2.heat_pipeline.temperature
+
+	var/delta_temperature = port_1_temperature - port_2_temperature
+
+	if(delta_temperature <= 0)
+		return
+
+	var/port_1_heat_capacity = port_1.heat_pipeline.heat_capacity
+	var/port_2_heat_capacity = port_2.heat_pipeline.heat_capacity
+
+	var/moved_heat = 0.6 * delta_temperature * (port_1_heat_capacity * port_2_heat_capacity / (port_1_heat_capacity + port_2_heat_capacity))
+
+	port_1.change_pipeline_energy(-moved_heat)
+	port_2.change_pipeline_energy(moved_heat)
 
 
 
