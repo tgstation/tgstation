@@ -32662,12 +32662,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "ecg" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/medical/virology)
+/turf/open/space,
+/area/space/nearstation)
 "ech" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -43628,13 +43628,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
-"hgm" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
-	dir = 8
-	},
-/turf/open/space,
-/area/engineering/atmos/upper)
 "hgo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -46856,14 +46849,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "hZL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -80584,12 +80575,12 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "rOc" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/engineering/supermatter/room)
+/area/space/nearstation)
 "rOx" = (
 /obj/structure/rack,
 /obj/item/storage/belt/utility,
@@ -82066,12 +82057,12 @@
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
 "slH" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
+/obj/structure/lattice,
 /turf/open/space,
-/area/engineering/atmos)
+/area/space/nearstation)
 "slQ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -130874,8 +130865,8 @@ aaa
 aaa
 aad
 aaa
-hgm
-hgm
+slH
+slH
 iqM
 lef
 rMV

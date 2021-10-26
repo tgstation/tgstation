@@ -6609,6 +6609,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "aMX" = (
@@ -12009,6 +12010,7 @@
 /obj/structure/girder,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "cJQ" = (
@@ -12687,12 +12689,12 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "cTH" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/engineering/atmos)
+/area/space/nearstation)
 "cTK" = (
 /obj/structure/railing{
 	dir = 8
@@ -13568,6 +13570,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "djC" = (
@@ -15005,11 +15008,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
-"dMl" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
 "dMm" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -22331,11 +22329,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
-"grQ" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/airless,
-/area/engineering/supermatter/room)
 "grR" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
@@ -25613,13 +25606,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
-"hFV" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plating/airless,
-/area/mine/explored)
 "hGc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30890,6 +30876,7 @@
 "jEq" = (
 /obj/structure/disposalpipe/junction/yjunction,
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "jEz" = (
@@ -31027,13 +31014,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "jHT" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
-	dir = 1
-	},
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "jIc" = (
@@ -33767,12 +33752,12 @@
 /turf/open/floor/iron,
 /area/commons/dorms)
 "kIO" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
-/area/engineering/supermatter/room)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "kIT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -34281,6 +34266,13 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
+"kTr" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/openspace/airless/planetary,
+/area/space)
 "kTw" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -37195,6 +37187,12 @@
 /obj/structure/plasticflaps,
 /turf/open/floor/plating,
 /area/cargo/sorting)
+"mbv" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "mbB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43151,12 +43149,9 @@
 /area/engineering/supermatter)
 "ouV" = (
 /obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump";
-	target_pressure = 4500
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/area/mine/explored)
 "ovf" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 4
@@ -46123,6 +46118,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "pAe" = (
@@ -47981,6 +47977,7 @@
 "qix" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "qiB" = (
@@ -54557,6 +54554,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/checkpoint)
+"sQS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
 "sRg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -64779,6 +64780,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating/catwalk_floor,
 /area/maintenance/central/secondary)
+"wHY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
 "wIc" = (
 /obj/machinery/computer/gateway_control,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -68673,12 +68682,12 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "ybC" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "ybL" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -101922,8 +101931,8 @@ dhe
 dhe
 dhe
 dhe
-grQ
-grQ
+ouV
+ouV
 kIO
 dhe
 dhe
@@ -108863,7 +108872,7 @@ yak
 yak
 yak
 ybC
-aBM
+ajc
 ajc
 aBM
 aBM
@@ -109116,10 +109125,10 @@ oWU
 xru
 nqo
 ouV
-dMl
-dMl
-dMl
-dMl
+ouV
+ouV
+ouV
+ouV
 aBM
 ajc
 aBM
@@ -170789,7 +170798,7 @@ aMR
 qix
 qix
 qix
-hFV
+jHT
 dhe
 dhe
 dhe
@@ -171046,7 +171055,7 @@ aBM
 aBM
 aBM
 aBM
-mNq
+wHY
 dhe
 dhe
 dhe
@@ -171303,7 +171312,7 @@ dhe
 dhe
 dhe
 aBM
-mNq
+wHY
 aBM
 dhe
 dhe
@@ -171560,7 +171569,7 @@ dhe
 dhe
 dhe
 aBM
-mNq
+wHY
 aBM
 dhe
 dhe
@@ -171817,7 +171826,7 @@ dhe
 dhe
 dhe
 aBM
-mNq
+wHY
 aBM
 aBM
 aBM
@@ -172075,7 +172084,7 @@ dhe
 dhe
 aBM
 pAc
-dRX
+mbv
 djA
 aBM
 aBM
@@ -172334,8 +172343,8 @@ aBM
 aBM
 aBM
 jEq
-dRX
-dRX
+mbv
+mbv
 djA
 dhe
 dhe
@@ -172595,7 +172604,7 @@ aBM
 aBM
 pAc
 cJO
-dRX
+mbv
 djA
 aBM
 aBM
@@ -172854,11 +172863,11 @@ aBM
 lvw
 aBM
 pAc
-dRX
-dRX
-dRX
-dRX
-dRX
+mbv
+mbv
+mbv
+mbv
+mbv
 xbu
 aYr
 aYr
@@ -173115,8 +173124,8 @@ aBM
 aBM
 aBM
 aBM
-aBM
-aBM
+sQS
+kTr
 aYr
 aYr
 aYr

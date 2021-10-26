@@ -10946,11 +10946,12 @@
 /turf/open/floor/iron/showroomfloor,
 /area/maintenance/starboard/secondary)
 "cpN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/turf/open/space,
+/area/space/nearstation)
 "cpQ" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/glass/beaker{
@@ -35058,12 +35059,12 @@
 /turf/open/floor/iron,
 /area/command/gateway)
 "kuD" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/engineering/atmos)
+/area/space/nearstation)
 "kuJ" = (
 /obj/machinery/door/airlock{
 	name = "Central Emergency Storage"
@@ -35937,9 +35938,10 @@
 /turf/open/floor/carpet,
 /area/service/chapel)
 "kKv" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
-/turf/open/floor/plating/airless,
-/area/engineering/supermatter/room)
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/space/basic,
+/area/space/nearstation)
 "kKA" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/bot_white,
@@ -57620,12 +57622,12 @@
 /turf/open/floor/iron,
 /area/construction/storage_wing)
 "suP" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/medical/virology)
+/area/space/nearstation)
 "suX" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -66817,11 +66819,12 @@
 /turf/open/floor/carpet,
 /area/service/library)
 "vIJ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
-/area/science/xenobiology)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "vJt" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/west,
@@ -67071,12 +67074,12 @@
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
 "vNT" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
 /turf/open/space,
-/area/engineering/atmos)
+/area/space/nearstation)
 "vNU" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet,

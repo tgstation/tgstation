@@ -27158,13 +27158,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "daZ" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/stripes/box,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/turf/open/space/basic,
+/area/space/nearstation)
 "dbl" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -45291,7 +45290,7 @@
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible,
 /turf/open/space/basic,
-/area/maintenance/disposal/incinerator)
+/area/space/nearstation)
 "jXU" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -69646,13 +69645,12 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "sUB" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/airless,
-/area/engineering/supermatter/room)
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "sVj" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -70926,12 +70924,12 @@
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "tvH" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/engineering/atmos)
+/area/space/nearstation)
 "tvJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
