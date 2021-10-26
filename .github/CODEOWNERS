@@ -26,6 +26,11 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# Ghilker
+
+/code/__DEFINES/atmospherics/ @Ghilker
+/code/modules/atmospherics/ @Ghilker
+
 # Jordie0608
 
 /SQL/ @Jordie0608
@@ -34,7 +39,7 @@
 
 # LemonInTheDark
 
-/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/__DEFINES/atmospherics/ @LemonInTheDark
 /code/modules/atmospherics/ @LemonInTheDark
 
 # MrStonedOne
