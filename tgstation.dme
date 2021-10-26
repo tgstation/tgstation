@@ -318,6 +318,7 @@
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\_onclick\hud\screentip.dm"
+#include "code\_onclick\hud\sentientmatter.dm"
 #include "code\_onclick\hud\swarmer.dm"
 #include "code\_onclick\hud\rendering\plane_master.dm"
 #include "code\_onclick\hud\rendering\plane_master_controller.dm"

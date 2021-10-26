@@ -60,7 +60,7 @@
 	UnregisterSignal(obj_matter, list(COMSIG_PARENT_QDELETING, COMSIG_ATOM_RELAYMOVE, COMSIG_ATOM_UPDATE_OVERLAYS))
 	. = ..()
 
-/mob/living/simple_animal/update_health_hud()
+/mob/living/simple_animal/sentientmatter/update_health_hud()
 	if(!hud_used)
 		return
 	switch(obj_matter.damage) //check the sm's health instead of ours as we die when the supermatter splodes
@@ -68,12 +68,12 @@
 			hud_used.healths.icon_state = "supermatter_fine"
 		if(301 to 700)
 			hud_used.healths.icon_state = "supermatter_hurt"
-		if(701 to explosion_point)
+		if(701 to obj_matter.explosion_point)
 			hud_used.healths.icon_state = "supermatter_dying"
 
 /mob/living/simple_animal/sentientmatter/Login()
 	. = ..()
-	RegisterSignal(obj_matter, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/add_googly_eyes)
+	RegisterSignal(obj_matter, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	obj_matter.update_icon(UPDATE_OVERLAYS)
 
 /mob/living/simple_animal/sentientmatter/Logout()
@@ -85,8 +85,8 @@
 	. = ..()
 	obj_matter.dir = newdir
 
-///signal fired from the supermatter
-/datum/component/engraved/proc/on_update_overlays(atom/parent_atom, list/overlays)
+///signal fired from the supermatter, adds googly eyes
+/mob/living/simple_animal/sentientmatter/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
 
 	var/static/image/googly_eyes
