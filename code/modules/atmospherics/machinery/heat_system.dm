@@ -80,9 +80,15 @@
 	for(var/direction in GLOB.cardinals)
 		if(stop_autoconnect && !(direction & connects))
 			continue
-		for(var/obj/machinery/heat_system/heat_pipe/pipe in get_step(src, direction))
-			if(connect_network(pipe, direction))
-				add_connects(direction)
+		for(var/obj/machinery/heat_system/pipe in get_step(src, direction))
+			if(istype(pipe, /obj/machinery/heat_system/heat_pipe))
+				if(connect_network(pipe, direction))
+					add_connects(direction)
+				continue
+			if(istype(pipe, /obj/machinery/heat_system/devices))
+				for(var/obj/machinery/heat_system/heat_pipe/device_pipe in pipe)
+					if(connect_network(device_pipe, direction))
+						add_connects(direction)
 	update_appearance()
 
 /obj/machinery/heat_system/heat_pipe/proc/connect_network(obj/machinery/heat_system/heat_pipe/pipe, direction)
@@ -255,29 +261,56 @@
 
 
 
-/obj/machinery/heat_system/separation_valve
+/obj/machinery/heat_system/devices/separation_valve
 	name = "separation valve"
 	var/open = TRUE
 	var/obj/machinery/heat_system/heat_pipe/port_1
 	var/obj/machinery/heat_system/heat_pipe/port_2
 
-/obj/machinery/heat_system/separation_valve/Initialize(mapload)
+/obj/machinery/heat_system/devices/separation_valve/Initialize(mapload)
 	. = ..()
-	port_1 = new(loc, dir, FALSE)
-	port_2 = new(loc, turn(dir, 180), FALSE)
+	port_1 = new(src, dir, FALSE)
+	port_2 = new(src, turn(dir, 180), FALSE)
 
 	port_1.heat_pipeline.assimilate(port_2.heat_pipeline)
 
-/obj/machinery/heat_system/separation_valve/update_overlays()
+/obj/machinery/heat_system/devices/separation_valve/Destroy()
+	if(port_1)
+		QDEL_NULL(port_1)
+	if(port_2)
+		QDEL_NULL(port_2)
+	return ..()
+
+/obj/machinery/heat_system/devices/separation_valve/update_overlays()
 	. = ..()
 	var/mutable_appearance/radiator = mutable_appearance('icons/obj/atmospherics/components/unary_devices.dmi', "heat_radiator", layer = (src.layer+0.01))
 	. += radiator
 
-/obj/machinery/heat_system/separation_valve/CtrlClick(mob/user)
+	var/port_1_suffix = get_icon_suffix(dir)
+	var/port_2_suffix = get_icon_suffix(turn(dir, 180))
+	var/image/port_1_overlay = image('icons/obj/plumbing/fluid_ducts.dmi', "nduct[port_1_suffix]")
+	port_1_overlay.color = COLOR_BRIGHT_ORANGE
+	. += port_1_overlay
+	var/image/port_2_overlay = image('icons/obj/plumbing/fluid_ducts.dmi', "nduct[port_2_suffix]")
+	port_2_overlay.color = COLOR_BRIGHT_ORANGE
+	. += port_2_overlay
+
+/obj/machinery/heat_system/devices/separation_valve/proc/get_icon_suffix(direction)
+	switch(direction)
+		if(NORTH)
+			. = "_n"
+		if(SOUTH)
+			. = "_s"
+		if(EAST)
+			. = "_e"
+		if(WEST)
+			. = "_w"
+
+/obj/machinery/heat_system/devices/separation_valve/CtrlClick(mob/user)
 	. = ..()
 	toggle_open()
 
-/obj/machinery/heat_system/separation_valve/proc/toggle_open()
+/obj/machinery/heat_system/devices/separation_valve/proc/toggle_open()
 	if(open)
 		open = FALSE
 		port_1.heat_pipeline.destroy_network()

@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 		new /datum/pipe_info/pipe("Multi-Deck Adapter", /obj/machinery/atmospherics/pipe/multiz, FALSE),
 		new /datum/pipe_info/test("Heat Pipe", /obj/machinery/heat_system/heat_pipe),
 		new /datum/pipe_info/test("Heat Radiator", /obj/machinery/heat_system/heat_pipe/radiator),
-		new /datum/pipe_info/test("Heat Separation Valve", /obj/machinery/heat_system/separation_valve),
+		new /datum/pipe_info/test("Heat Separation Valve", /obj/machinery/heat_system/devices/separation_valve),
 	),
 	"Devices" = list(
 		new /datum/pipe_info/pipe("Connector", /obj/machinery/atmospherics/components/unary/portables_connector, TRUE),
