@@ -544,7 +544,7 @@
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
 	popped_cork.firer =  user
 	popped_cork.fired_from = src
-	popped_cork.fire(angle2dir(user.dir))
+	popped_cork.fire(angle2dir(user.dir) + rand(-30, 30))
 
 /obj/projectile/bullet/reusable/champagne_cork
 	name = "champagne cork"
@@ -554,8 +554,10 @@
 	damage = 10
 	sharpness = NONE
 	impact_effect_type = null
-	ricochets_max = 1
-	ricochet_chance = 50
+	ricochets_max = 3
+	ricochet_chance = 70
+	ricochet_decay_damage = 1
+	ricochet_incidence_leeway = 0
 	range = 7
 	knockdown = 2 SECONDS
 	ammo_type = /obj/item/trash/champagne_cork
