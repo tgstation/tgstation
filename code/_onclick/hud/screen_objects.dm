@@ -644,6 +644,12 @@
 	icon_state = "bg_revenant"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/atom/movable/screen/healths/sentientmatter
+	name = "supermatter integrity"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "supermatter_fine"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /atom/movable/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
