@@ -325,7 +325,7 @@
 		else
 			to_chat(user, span_warning("[W] is not not compostable! Try seeds or flowers instead."))
 		return
-	else if(istype(W, /obj/item/storage/bag/plants))
+	if(istype(W, /obj/item/storage/bag/plants))
 		var/obj/item/storage/bag/plants/PB = W
 		for(var/obj/item/G in PB.contents)// This check can be less than thorough because the bag has already authenticated the contents, hopefully
 			if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
