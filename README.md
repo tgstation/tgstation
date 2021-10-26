@@ -7,8 +7,8 @@
 
 ![madewith](https://raw.githubusercontent.com/ArtemisStation/artemis/master/made-with-witty-badges.svg) ![ohshit](https://raw.githubusercontent.com/ArtemisStation/artemis/master/oh-shit-the-syndicate.svg) ![edgy](https://raw.githubusercontent.com/ArtemisStation/artemis/master/edgy-roleplay.svg)
 
-* **SOURCE:** https://github.com/Skyrat-SS13/Skyrat-tg
-* **WIKI:** https://github.com/Harshlands-SS13/harshlands/wiki
+* **SOURCE:** https://github.com/tgstation/tgstation
+* **WIKI:** https://harshlands13.org/wiki
 * **SOURCE DOCS:** https://codedocs.tgstation13.org/
 * **DISCORD:** https://discord.gg/Fu3XNSBgVh
 * **CODERBUS:** https://discord.gg/Vh8TJp9
