@@ -63,7 +63,6 @@
 		attempting_awakening = FALSE
 		return
 
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
 	bound_spirit.ckey = chosen_spirit.ckey
@@ -78,9 +77,10 @@
 		bound_spirit.fully_replace_character_name(null, "The spirit of [input]")
 
 	//prevents awakening it again + new signals for a now-possessed item
-	attempting_awakening = FALSE
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, .proc/block_buckle_message)
 	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
+	attempting_awakening = FALSE
 
 ///signal fired from a mob moving inside the parent
 /datum/component/spirit_holding/proc/block_buckle_message(datum/source, mob/living/user, direction)
