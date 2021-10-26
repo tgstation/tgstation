@@ -174,8 +174,12 @@
 		return FALSE
 
 	var/wildcard_allocated
+	var/datum/id_trim/try_trim = ispath(trim) ? SSid_access.trim_singletons_by_path[trim] : trim
+
+	var/list/wildcard_overrides = try_trim?.get_common_wildcard_overrides()
+
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
+		var/wildcard_flag = (wildcard in wildcard_overrides) ? ACCESS_FLAG_COMMON : SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/flag_name in new_wildcard_limits)
 			var/limit_flags = SSid_access.wildcard_flags_by_wildcard[flag_name]
@@ -202,9 +206,13 @@
  */
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/wildcard_allocated
+
+	var/list/wildcard_overrides = trim?.get_common_wildcard_overrides()
+
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
+		var/wildcard_flag = (wildcard in wildcard_overrides) ? ACCESS_FLAG_COMMON : SSid_access.get_access_flag(wildcard)
+
 		wildcard_allocated = FALSE
 		for(var/flag_name in wildcard_slots)
 			if(flag_name == WILDCARD_NAME_FORCED)
