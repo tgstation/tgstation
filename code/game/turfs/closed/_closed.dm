@@ -88,11 +88,11 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	SStitle.splash_turf = src
 	if(SStitle.icon)
 		icon = SStitle.icon
-	handle_generic_titlescreen_sizes()
+		handle_generic_titlescreen_sizes()
 
 ///helper proc that will center the screen if the icon is changed to a generic width, to make admins have to fudge around with pixel_x less. returns null
 /turf/closed/indestructible/splashscreen/proc/handle_generic_titlescreen_sizes()
-	var/icon/size_check = icon(icon, icon_state)
+	var/icon/size_check = icon(SStitle.icon, icon_state)
 	var/width = size_check.Width()
 	if(width == 480) // 480x480 is nonwidescreen
 		pixel_x = 0

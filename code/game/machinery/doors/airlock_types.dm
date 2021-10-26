@@ -20,6 +20,10 @@
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
 
+/obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
+	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
+
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -99,6 +103,10 @@
 	normal_integrity = 400
 
 /obj/machinery/door/airlock/medical/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/hydroponics/glass //Uses same icon as medical/glass, maybe update it with its own unique icon one day?
 	opacity = FALSE
 	glass = TRUE
 
@@ -346,6 +354,13 @@
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
 
+/obj/machinery/door/airlock/external/Initialize(mapload, ...)
+	// default setting is for mapping only, let overrides work
+	if(!mapload || req_access_txt || req_one_access_txt)
+		req_access = null
+
+	return ..()
+
 /obj/machinery/door/airlock/external/LateInitialize()
 	. = ..()
 	if(space_dir)
@@ -378,9 +393,17 @@
 
 	return ..()
 
+/// Access free external airlock
+/obj/machinery/door/airlock/external/ruin
+	req_access = null
+
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
 	glass = TRUE
+
+/// Access free external glass airlock
+/obj/machinery/door/airlock/external/glass/ruin
+	req_access = null
 
 //////////////////////////////////
 /*

@@ -26,6 +26,8 @@
 
 /// Proc guarantees the account_id possesses a unique number. If it doesn't, it tries to find a unique alternative. It then adds it to the `SSeconomy.bank_accounts_by_id` global list.
 /datum/bank_account/proc/setup_unique_account_id()
+	if (!add_to_accounts)
+		return
 	if(account_id && !SSeconomy.bank_accounts_by_id["[account_id]"])
 		SSeconomy.bank_accounts_by_id["[account_id]"] = src
 		return //Already unique

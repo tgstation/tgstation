@@ -185,6 +185,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/ears/earmuffs = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
+		/obj/item/clothing/glasses/salesman = 1,
 		) = 8,
 
 	list(//strange objects
@@ -319,6 +320,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
 		/obj/item/tattoo_kit = 1,
+		/obj/item/skillchip/brainwashing = 1,
 		) = 1,
 
 ))

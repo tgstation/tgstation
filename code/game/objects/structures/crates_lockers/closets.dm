@@ -64,10 +64,13 @@
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component is dragging this, preventing opening
 	var/strong_grab = FALSE
+	///electronics for access
+	var/obj/item/electronics/airlock/electronics
+	var/can_install_electronics = TRUE
 
 /obj/structure/closet/Initialize(mapload)
 	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, .proc/take_contents), 0)
+		addtimer(CALLBACK(src, .proc/take_contents, TRUE), 0)
 	. = ..()
 	update_appearance()
 	PopulateContents()
@@ -79,6 +82,7 @@
 /obj/structure/closet/Destroy()
 	dump_contents()
 	QDEL_NULL(door_obj)
+	QDEL_NULL(electronics)
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
@@ -227,14 +231,16 @@
 	if(throwing)
 		throwing.finalize(FALSE)
 
-/obj/structure/closet/proc/take_contents()
-	var/atom/L = drop_location()
-	if(!L)
+/obj/structure/closet/proc/take_contents(mapload = FALSE)
+	var/atom/location = drop_location()
+	if(!location)
 		return
-	for(var/atom/movable/AM in L)
-		if(AM != src && insert(AM) == LOCKER_FULL) // limit reached
+	for(var/atom/movable/AM in location)
+		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
+			if(mapload) // Yea, it's a mapping issue. Blame mappers.
+				WARNING("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
-	for(var/i in reverse_range(L.get_all_contents()))
+	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
 		SEND_SIGNAL(thing, COMSIG_TRY_STORAGE_HIDE_ALL)
 
@@ -259,9 +265,12 @@
 /obj/structure/closet/proc/after_open(mob/living/user, force = FALSE)
 	return
 
-/obj/structure/closet/proc/insert(atom/movable/inserted)
+/obj/structure/closet/proc/insert(atom/movable/inserted, mapload = FALSE)
 	if(length(contents) >= storage_capacity)
-		return LOCKER_FULL
+		if(!mapload)
+			return LOCKER_FULL
+		//For maploading, we only return LOCKER_FULL if the movable was otherwise insertable. This way we can avoid logging false flags.
+		return insertion_allowed(inserted) ? LOCKER_FULL : FALSE
 	if(!insertion_allowed(inserted))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLOSET_INSERT, inserted) & COMPONENT_CLOSET_INSERT_INTERRUPT)
@@ -325,8 +334,13 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags_1 & NODECONSTRUCT_1))
-		new material_drop(loc, material_drop_amount)
+	if (!(flags_1 & NODECONSTRUCT_1))
+		if(ispath(material_drop) && material_drop_amount)
+			new material_drop(loc, material_drop_amount)
+		if (electronics)
+			var/obj/item/electronics/airlock/electronics_ref = electronics
+			electronics = null
+			electronics_ref.forceMove(drop_location())
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)
@@ -389,6 +403,49 @@
 		user.visible_message(span_notice("[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
 						span_notice("You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
 						span_hear("You hear a ratchet."))
+	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
+			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
+		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
+			span_notice("You start to install electronics into the [src]..."))
+		if (!do_after(user, 4 SECONDS, target = src))
+			return FALSE
+		if (electronics || secure)
+			return FALSE
+		if (!user.transferItemToLoc(W, src))
+			return FALSE
+		to_chat(user, span_notice("You install the electronics."))
+		electronics = W
+		if (electronics.one_access)
+			req_one_access = electronics.accesses
+		else
+			req_access = electronics.accesses
+		secure = TRUE
+		update_appearance()
+	else if (can_install_electronics && W.tool_behaviour == TOOL_SCREWDRIVER\
+			&& (secure || electronics) && !locked && (welded || !can_weld_shut))
+		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
+			span_notice("You begin to remove the electronics from the [src]..."))
+		var/had_electronics = !!electronics
+		var/was_secure = secure
+		if (!do_after(user, 4 SECONDS, target = src))
+			return FALSE
+		if ((had_electronics && !electronics) || (was_secure && !secure))
+			return FALSE
+		var/obj/item/electronics/airlock/electronics_ref
+		if (!electronics)
+			electronics_ref = new /obj/item/electronics/airlock(loc)
+			gen_access()
+			if (req_one_access.len)
+				electronics_ref.one_access = 1
+				electronics_ref.accesses = req_one_access
+			else
+				electronics_ref.accesses = req_access
+		else
+			electronics_ref = electronics
+			electronics = null
+			electronics_ref.forceMove(drop_location())
+		secure = FALSE
+		update_appearance()
 	else if(!user.combat_mode)
 		var/item_is_id = W.GetID()
 		if(!item_is_id)

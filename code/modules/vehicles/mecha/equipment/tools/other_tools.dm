@@ -13,7 +13,7 @@
 	range = MECHA_RANGED
 	var/teleport_range = 7
 
-/obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, list/modifiers)
 	var/area/ourarea = get_area(src)
 	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
@@ -35,7 +35,7 @@
 	range = MECHA_RANGED
 
 
-/obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, list/modifiers)
 	var/area/ourarea = get_area(src)
 	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
@@ -81,7 +81,7 @@
 	var/mode = GRAVSLING_MODE
 
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/action(mob/source, atom/movable/target, params)
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/action(mob/source, atom/movable/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	switch(mode)
@@ -396,7 +396,7 @@
 	if(output)
 		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"Deactivate":"Activate"]</a>"
 
-/obj/item/mecha_parts/mecha_equipment/generator/action(mob/source, atom/movable/target, params)
+/obj/item/mecha_parts/mecha_equipment/generator/action(mob/source, atom/movable/target, list/modifiers)
 	if(!chassis)
 		return
 	if(load_fuel(target, source))

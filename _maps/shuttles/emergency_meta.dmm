@@ -335,7 +335,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bf" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Emergency Recovery Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
