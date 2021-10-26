@@ -1,0 +1,8 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - qol: "Word filters now support soft filtering, allowing players to say a word only after they confirm wanting to say it after a warning."
+  - bugfix: "Deadchat is now effected by OOC word filters"
+  - bugfix: "A reason for a word being filtered will now be displayed nomatter what case the word is in"
+  - config: "Adds new config options for soft filters"
+  - admin: "Admins will get notifications when a soft filtered word is said"
