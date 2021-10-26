@@ -19,8 +19,7 @@
 // Compost when drunk..?
 /datum/reagent/compost/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER, 0)
-	. = TRUE
-	..()
+	return ..()
 
 // Left-4-Zed Tribal edition
 /datum/reagent/reactive_compost
