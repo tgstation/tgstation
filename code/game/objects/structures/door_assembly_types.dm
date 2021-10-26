@@ -63,7 +63,7 @@
 
 /obj/structure/door_assembly/door_assembly_hydro
 	name = "hydroponics airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
+	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
 	base_name = "hydroponics airlock"
 	glass_type = /obj/machinery/door/airlock/hydroponics/glass
 	airlock_type = /obj/machinery/door/airlock/hydroponics

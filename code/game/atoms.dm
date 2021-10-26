@@ -65,13 +65,6 @@
 
 	var/list/filter_data //For handling persistent filters
 
-	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
-	var/custom_price
-	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
-	var/custom_premium_price
-	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
-	var/age_restricted = FALSE
-
 	//List of datums orbiting this atom
 	var/datum/component/orbiter/orbiters
 
@@ -257,9 +250,6 @@
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
 
-	// apply materials properly from the default custom_materials value
-	set_custom_materials(custom_materials)
-
 	if(uses_integrity)
 		if (islist(armor))
 			armor = getArmor(arglist(armor))
@@ -268,6 +258,12 @@
 		else if (!istype(armor, /datum/armor))
 			stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
 		atom_integrity = max_integrity
+
+	// apply materials properly from the default custom_materials value
+	// This MUST come after atom_integrity is set above, as if old materials get removed,
+	// atom_integrity is checked against max_integrity and can BREAK the atom.
+	// The integrity to max_integrity ratio is still preserved.
+	set_custom_materials(custom_materials)
 
 	ComponentInitialize()
 	InitializeAIController()
