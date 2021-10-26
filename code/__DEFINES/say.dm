@@ -55,16 +55,17 @@
 #define MODE_SING "sing"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
-#define SPAN_ROBOT "robot"
-#define SPAN_YELL "yell"
+#define SPAN_CLOWN "clown"
+#define SPAN_COMMAND "command_headset"
 #define SPAN_ITALICS "italics"
-#define SPAN_SANS "sans"
 #define SPAN_PAPYRUS "papyrus"
 #define SPAN_REALLYBIG "reallybig"
-#define SPAN_COMMAND "command_headset"
-#define SPAN_CLOWN "clown"
+#define SPAN_ROBOT "robot"
+#define SPAN_SANS "sans"
 #define SPAN_SINGING "singing"
+#define SPAN_SUPERMATTER "supermatter"
 #define SPAN_TAPE_RECORDER "tape_recorder"
+#define SPAN_YELL "yell"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS (1<<0)

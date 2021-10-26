@@ -78,3 +78,11 @@
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
+
+/datum/station_trait/sentientmatter
+	name = "Supermatter emergence"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = TRUE
+	report_message = "When shipping the supermatter to your station, the infinite lattice fractal of crystals known as the supermatter has somehow leaped into emergence. It happens sometimes when you have any truly infinite space localized in definite area, and we're not exactly sure why..."
+	trait_to_give = STATION_TRAIT_SENTIENTMATTER

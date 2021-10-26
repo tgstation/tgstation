@@ -128,6 +128,13 @@ h1.alert, h2.alert		{color: #000000;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
+.supermatter			{color: #FBD436F1; font-family: "Matisse ITC", cursive, sans-serif; animation: delamination 1500ms infinite; animation-direction: alternate;}
+	@keyframes delamination {
+		0%		{color: #FBD436F1;}
+		50%		{color: #F09430;}
+		100%	{color: #EA6C2C;}
+}
+
 .command_headset		{font-weight: bold;	font-size: 3;}
 .small					{font-size: 1;}
 .big					{font-size: 3;}

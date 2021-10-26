@@ -239,6 +239,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	investigate_log("has been created.", INVESTIGATE_SUPERMATTER)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
+		if(HAS_TRAIT(SSstation, STATION_TRAIT_SENTIENTMATTER))
+			new /obj/effect/mob_spawn/sentientmatter(src)
 
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
@@ -275,6 +277,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/ui_interact(mob/user, datum/tgui/ui)
 	if(!isobserver(user))
 		return FALSE
+	if(locate(/obj/effect/mob_spawn/sentientmatter) in src)
+		to_chat(user, span_notice("You may join as the sentient supermatter from the spawners menu."))
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
