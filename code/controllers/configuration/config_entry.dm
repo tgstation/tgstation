@@ -199,7 +199,13 @@
 		return FALSE
 
 	str_val = trim(str_val)
-	var/key_pos = findtext(str_val, splitter)
+
+	// For VALUE_MODE_FLAG there is no value expected and we set it to TRUE if the config entry is present, so we keep the default key pos of 0 (end of string).
+	// Otherwise, we dig the key out of the str_val.
+	var/key_pos = 0
+	if(value_mode != VALUE_MODE_FLAG)
+		key_pos = findtext(str_val, splitter)
+
 	var/key_name = null
 	var/key_value = null
 
