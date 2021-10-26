@@ -1,9 +1,9 @@
 ## Harshlands SS13
 
-[![CI Suite](https://github.com/Harshlands-SS13/harshlands/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/Harshlands-SS13/harshlands/actions/workflows/ci_suite.yml)
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/Harshlands-SS13/harshlands.svg)](https://isitmaintained.com/project/Harshlands-SS13/harshlands "Percentage of issues still open")
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/Harshlands-SS13/harshlands.svg)](https://isitmaintained.com/project/Harshlands-SS13/harshlands "Average time to resolve an issue")
-![Coverage](https://img.shields.io/codecov/c/github/Harshlands-SS13/harshlands)
+[![CI Suite](https://github.com/harshlands/harshlands/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/harshlands/harshlands/actions/workflows/ci_suite.yml)
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/harshlands/harshlands.svg)](https://isitmaintained.com/project/harshlands/harshlands "Percentage of issues still open")
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/harshlands/harshlands.svg)](https://isitmaintained.com/project/harshlands/harshlands "Average time to resolve an issue")
+![Coverage](https://img.shields.io/codecov/c/github/harshlands/harshlands)
 
 ![madewith](https://raw.githubusercontent.com/ArtemisStation/artemis/master/made-with-witty-badges.svg) ![ohshit](https://raw.githubusercontent.com/ArtemisStation/artemis/master/oh-shit-the-syndicate.svg) ![edgy](https://raw.githubusercontent.com/ArtemisStation/artemis/master/edgy-roleplay.svg)
 
