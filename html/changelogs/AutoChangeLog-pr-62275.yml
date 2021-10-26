@@ -1,0 +1,6 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - qol: "Station Engineer trimmed ID cards can now be given Atmospherics access without needing to be Silver."
+  - qol: "Geneticist and Roboticist trimmed ID cards can now be given Ordnance (Toxins) accesses without needing to be Silver."
+  - qol: "Detective and Sec Officer trimmed ID cards can now be given Armory access without needing to be Silver."
