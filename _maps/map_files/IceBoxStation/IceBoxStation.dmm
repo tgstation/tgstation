@@ -20285,6 +20285,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/structure/sign/poster/random{
+	pixel_x = -32
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "gdK" = (
@@ -21365,6 +21368,10 @@
 "gIA" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/camera{
+	c_tag = "Atmospherics South West";
+	dir = 5
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "gIB" = (
@@ -24499,8 +24506,8 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/obj/structure/cable,
 /obj/item/clothing/gloves/color/yellow,
+/obj/structure/cable,
 /obj/item/stock_parts/cell/emproof{
 	pixel_x = -4;
 	pixel_y = -1
@@ -26161,9 +26168,9 @@
 /obj/item/clothing/mask/breath{
 	pixel_x = 4
 	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
+/obj/item/clothing/mask/breath{
+	pixel_x = 2;
+	pixel_y = -1
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage)
@@ -29666,6 +29673,7 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/iron/dark,
 /area/engineering/storage)
 "kXW" = (
@@ -30972,6 +30980,10 @@
 /obj/item/airlock_painter,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -3;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage)
 "lIa" = (
@@ -32190,10 +32202,6 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "mkZ" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics South East";
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -33730,10 +33738,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/science/breakroom)
 "mUY" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics South West";
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
 	},
@@ -38569,6 +38573,10 @@
 "pwq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/item/radio/intercom/directional/east,
+/obj/machinery/camera{
+	c_tag = "Atmospherics South East";
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "pwx" = (
@@ -39621,7 +39629,6 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
 	},
-/obj/structure/tank_holder,
 /turf/open/floor/plating,
 /area/engineering/storage_shared)
 "pZC" = (
@@ -45270,11 +45277,12 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/clothing/glasses/meson/engine,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
+/obj/item/clothing/suit/hazardvest,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/iron,
 /area/engineering/main)
 "sTA" = (
