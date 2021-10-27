@@ -13,6 +13,9 @@
 
 	. = ..()
 
+	if(!gibbed)
+		attach_rot()
+
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/BT = T
 		BT.on_death()
