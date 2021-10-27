@@ -73,9 +73,8 @@
 
 /obj/structure/chair/pew/can_user_rotate(mob/user)
 	. = ..()
-	if( . == FALSE )
-		return .
-
+	if(!.)
+		return
 	var/mob/living/LivingUser = user
 	if(istype(LivingUser))
 		var/obj/item/tool = LivingUser.get_active_held_item()
