@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/Washer)
 	..()
-	held_mob.machine_wash(WM)
+	held_mob.machine_wash(Washer)
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/Washer)
 	if(chained)
