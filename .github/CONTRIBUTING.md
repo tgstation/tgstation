@@ -9,9 +9,10 @@
 	3. [Issue Managers](#issue-managers)
 5. [Development Guides](#development-guides)
 6. [Pull Request Process](#pull-request-process)
-7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
-8. [Banned content](#banned-content)
-9. [A word on Git](#a-word-on-git)
+7. [Good Boy Points](#good-boy-points)
+8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
+9. [Banned content](#banned-content)
+10. [A word on Git](#a-word-on-git)
 
 ## Reporting Issues
 
@@ -133,6 +134,10 @@ There is no strict process when it comes to merging pull requests. Pull requests
 * While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
 * After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
+
+## Good Boy Points
+
+Each github account has a score known as Good Boy Points, or GBP. This is a point system our codebase has implemented to ensure an equal number of bugs are fixed as features are added. The GBP gain or loss for a PR depends on the type of change the PR makes. For example, fixing a bug will give you 2 GBP, a qol change will give you 1, adding a feature will cost you 10, and a content expansion will cost you 3. The GBP change of a PR is the sum of all tags it has, so having a PR that has both the Preformance tag and the Balance/rebalance tag, it will give you 4 GBP, +12 from the preformance and -8 from the balance/rebalance. A low GBP score increases the odds of a maintainer outright closing your PR, so Be sure to properly mark your PRs for what they are to prevent uneccessary GBP loss. You can see the GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
 
 ## Porting features/sprites/sounds/tools from other codebases
 
