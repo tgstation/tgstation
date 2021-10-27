@@ -1,0 +1,6 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "Emergency inlet access on the mining station eastern-most airlocks has been removed."
+  - bugfix: "Fixed mining station east airlocks requiring external airlock access instead of mining access."
+  - bugfix: "Removed access requirements from southern mining station public external airlocks."
