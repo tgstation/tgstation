@@ -74,12 +74,20 @@
 		return
 	if(has_sensor > NO_SENSORS)
 		if(severity <= EMP_HEAVY)
-			sensor_mode = SENSOR_OFF
+			has_sensor = BROKEN_SENSORS
+			if(ismob(loc))
+				var/mob/M = loc
+				to_chat(M,span_warning("[src]'s sensors short out!"))
 		else
-			sensor_mode = min(sensor_mode, pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS))
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M,span_warning("The sensors on the [src] shudder and buzz!"))
+			sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+			if(ismob(loc))
+				var/mob/M = loc
+				to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/ooman = loc
+			if(ooman.w_uniform == src)
+				ooman.update_suit_sensors()
+
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	..()
