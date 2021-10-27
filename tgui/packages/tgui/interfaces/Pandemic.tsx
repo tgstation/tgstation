@@ -76,7 +76,7 @@ type Threshold = {
 
 export const Pandemic = (props, context) => {
   const { data } = useBackend<PandemicContext>(context);
-  const { has_blood } = data;
+  const { has_blood, resistances } = data;
   return (
     <Window width={650} height={500}>
       <Window.Content>
@@ -84,11 +84,13 @@ export const Pandemic = (props, context) => {
           <Stack.Item>
             <BeakerDisplay />
           </Stack.Item>
-          {!!has_blood && (
+          {has_blood && (
             <>
-              <Stack.Item>
-                <AntibodyDisplay />
-              </Stack.Item>
+              {resistances.length && (
+                <Stack.Item>
+                  <AntibodyDisplay />
+                </Stack.Item>
+              )}
               <Stack.Item grow>
                 <SpecimenDisplay />
               </Stack.Item>
@@ -103,8 +105,7 @@ export const Pandemic = (props, context) => {
 const BeakerDisplay = (props, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const { has_beaker, beaker_empty, has_blood, blood, resistances } = data;
-  const cant_empty = !has_beaker || beaker_empty;
-
+  const cant_empty = !has_beaker || !!beaker_empty;
   return (
     <Section
       title="Beaker"
@@ -187,7 +188,7 @@ const SpecimenDisplay = (props, context) => {
         <Stack>
           {
             // Tabs if there's more viruses
-            viruses.length > 1 && (
+            viruses.length && (
               <Stack.Item>
                 <Tabs>
                   {viruses.map((virus, index) => {
@@ -212,8 +213,7 @@ const SpecimenDisplay = (props, context) => {
               onClick={() =>
                 act('create_culture_bottle', {
                   index: virus.index,
-                })
-              }
+                })}
             />
           </Stack.Item>
         </Stack>
@@ -233,6 +233,7 @@ const SpecimenDisplay = (props, context) => {
 const VirusInfoDisplay = (props: VirusInfoProps, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const { virus } = props;
+
   return (
     <Stack fill>
       <Stack.Item grow={3}>
@@ -245,8 +246,7 @@ const VirusInfoDisplay = (props: VirusInfoProps, context) => {
                   act('rename_disease', {
                     index: virus.index,
                     name: value,
-                  })
-                }
+                  })}
               />
             ) : (
               <Box color="bad">{virus.name}</Box>
@@ -264,7 +264,7 @@ const VirusInfoDisplay = (props: VirusInfoProps, context) => {
           </LabeledList.Item>
         </LabeledList>
       </Stack.Item>
-      {!!virus.is_adv && (
+      {virus.is_adv && (
         <>
           <Stack.Divider />
           <Stack.Item grow={1}>
@@ -307,111 +307,109 @@ const VirusInfoDisplay = (props: VirusInfoProps, context) => {
   );
 };
 
-const SymptomDisplay = (props: SymptomDisplayProps, context) => {
-  const { data } = useBackend<PandemicContext>(context);
+const SymptomDisplay = (props: SymptomDisplayProps) => {
   const { symptoms } = props;
-  return (
-    symptoms.length && (
-      <Section fill level={2} title="Symptoms">
-        {symptoms.map((symptom) => {
-          return (
-            <Collapsible
-              key={symptom.name}
-              title={
-                !symptom.neutered ? symptom.name : `${symptom.name} (Neutered)`
-              }>
-              <Stack fill>
-                <Stack.Item grow={3}>
-                  {symptom.desc}
-                  <Section level={3} mt={1} title="Thresholds">
-                    <LabeledList>
-                      {Object.entries(symptom.threshold_desc).map((label) => {
-                        return (
-                          <LabeledList.Item key={label} label={label[0]}>
-                            {label[1]}
-                          </LabeledList.Item>
-                        );
-                      })}
-                    </LabeledList>
-                  </Section>
-                </Stack.Item>
-                <Stack.Divider />
-                <Stack.Item grow={1}>
-                  <Section level={2} title="Modifiers">
-                    <LabeledList>
-                      <Tooltip content="Rarity of the symptom.">
-                        <LabeledList.Item
-                          color={GetColor(symptom.level)}
-                          label="Level">
-                          {symptom.level}
+
+  return (!symptoms.length ? (
+    <NoticeBox>No symptoms detected.</NoticeBox>
+  ) : (
+    <Section fill level={2} title="Symptoms">
+      {symptoms.map((symptom) => {
+        return (
+          <Collapsible
+            key={symptom.name}
+            title={
+              !symptom.neutered ? symptom.name : `${symptom.name} (Neutered)`
+            }>
+            <Stack fill>
+              <Stack.Item grow={3}>
+                {symptom.desc}
+                <Section level={3} mt={1} title="Thresholds">
+                  <LabeledList>
+                    {Object.entries(symptom.threshold_desc).map((label) => {
+                      return (
+                        <LabeledList.Item key={label[0]} label={label[0]}>
+                          {label[1]}
                         </LabeledList.Item>
-                      </Tooltip>
-                      <Tooltip content="Decides the cure complexity.">
-                        <LabeledList.Item
-                          color={GetColor(symptom.resistance)}
-                          label="Resistance">
-                          {symptom.resistance}
-                        </LabeledList.Item>
-                      </Tooltip>
-                      <Tooltip content="Symptomic progression.">
-                        <LabeledList.Item
-                          color={GetColor(symptom.stage_speed)}
-                          label="Stage Speed">
-                          {symptom.stage_speed}
-                        </LabeledList.Item>
-                      </Tooltip>
-                      <Tooltip content="Detection difficulty from medical equipment.">
-                        <LabeledList.Item
-                          color={GetColor(symptom.stealth)}
-                          label="Stealth">
-                          {symptom.stealth}
-                        </LabeledList.Item>
-                      </Tooltip>
-                      <Tooltip content="Decides the spread type.">
-                        <LabeledList.Item
-                          color={GetColor(symptom.transmission)}
-                          label="Transmission">
-                          {symptom.transmission}
-                        </LabeledList.Item>
-                      </Tooltip>
-                    </LabeledList>
-                  </Section>
-                </Stack.Item>
-              </Stack>
-            </Collapsible>
-          );
-        })}
-      </Section>
-    )
+                      );
+                    })}
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
+              <Stack.Divider />
+              <Stack.Item grow={1}>
+                <Section level={2} title="Modifiers">
+                  <LabeledList>
+                    <Tooltip content="Rarity of the symptom.">
+                      <LabeledList.Item
+                        color={GetColor(symptom.level)}
+                        label="Level">
+                        {symptom.level}
+                      </LabeledList.Item>
+                    </Tooltip>
+                    <Tooltip content="Decides the cure complexity.">
+                      <LabeledList.Item
+                        color={GetColor(symptom.resistance)}
+                        label="Resistance">
+                        {symptom.resistance}
+                      </LabeledList.Item>
+                    </Tooltip>
+                    <Tooltip content="Symptomic progression.">
+                      <LabeledList.Item
+                        color={GetColor(symptom.stage_speed)}
+                        label="Stage Speed">
+                        {symptom.stage_speed}
+                      </LabeledList.Item>
+                    </Tooltip>
+                    <Tooltip content="Detection difficulty from medical equipment.">
+                      <LabeledList.Item
+                        color={GetColor(symptom.stealth)}
+                        label="Stealth">
+                        {symptom.stealth}
+                      </LabeledList.Item>
+                    </Tooltip>
+                    <Tooltip content="Decides the spread type.">
+                      <LabeledList.Item
+                        color={GetColor(symptom.transmission)}
+                        label="Transmission">
+                        {symptom.transmission}
+                      </LabeledList.Item>
+                    </Tooltip>
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
+            </Stack>
+          </Collapsible>
+        );
+      })}
+    </Section>)
   );
 };
 
 const AntibodyDisplay = (props, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
-  const { resistances } = data;
+  const { is_ready, resistances } = data;
+
   return (
-    !!resistances.length && (
-      <Section scrollable level={2} title="Available Vaccines">
-        {!resistances.length
-          ? 'None'
-          : resistances.map((resistance) => {
-              return (
-                <Button
-                  key={resistance.name}
-                  icon="eye-dropper"
-                  disabled={!data.is_ready}
-                  tooltip="Creates a vaccine bottle."
-                  onClick={() =>
-                    act('create_vaccine_bottle', {
-                      index: resistance.id,
-                    })
-                  }>
-                  {`Create ${resistance.name} vaccine`}
-                </Button>
-              );
-            })}
-      </Section>
-    )
+    <Section scrollable level={2} title="Available Vaccines">
+      {!resistances.length
+        ? 'None'
+        : resistances.map((resistance) => {
+          return (
+            <Button
+              key={resistance.name}
+              icon="eye-dropper"
+              disabled={!is_ready}
+              tooltip="Creates a vaccine bottle."
+              onClick={() =>
+                act('create_vaccine_bottle', {
+                  index: resistance.id,
+                })}>
+              {`Create ${resistance.name} vaccine`}
+            </Button>
+          );
+        })}
+    </Section>
   );
 };
 
