@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where bans could not be applied if the database connection was not immediately established, even after a re-establish."
-  - server: "Updated database schema to allow for null round IDs in bans and tickets."

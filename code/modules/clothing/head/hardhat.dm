@@ -106,6 +106,11 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/obj/item/clothing/head/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
@@ -185,6 +190,7 @@
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
 	worn_y_offset = 1
+	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
 /obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -202,6 +208,14 @@
 	if(light_on && !isinhands)
 		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", alpha = src.alpha)
 
+/obj/item/clothing/head/hardhat/pumpkinhead/turn_on(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/pumpkin/lit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/turn_off(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
+
 /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
 	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
@@ -209,6 +223,15 @@
 	inhand_icon_state = "hardhat0_blumpkin"
 	hat_type = "blumpkin"
 	light_color = "#76ff8e"
+	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/blumpkin/lit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_off(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"

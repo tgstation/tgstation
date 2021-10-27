@@ -87,7 +87,7 @@
 				value = L[key]
 			variable_html += debug_variable(i, value, 0, L)
 	else
-		names = sortList(names)
+		names = sort_list(names)
 		for(var/V in names)
 			if(D.can_vv_get(V))
 				variable_html += D.vv_get_var(V)

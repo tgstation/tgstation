@@ -420,8 +420,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
+/obj/machinery/door/airlock/external/glass{
+	name = "Labor Camp Shuttle Prisoner Airlock";
+	space_dir = 8
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -542,10 +543,8 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock";
-	opacity = 0;
 	req_access_txt = "54"
 	},
 /turf/open/floor/iron,
@@ -612,10 +611,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Mining Shuttle Airlock";
-	opacity = 0
+	space_dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -3152,10 +3150,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "sH" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock";
-	opacity = 0
+	req_access_txt = "54"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
@@ -3397,10 +3394,10 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "zn" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock";
-	opacity = 0
+	req_access_txt = "54";
+	space_dir = 2
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -3666,10 +3663,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "FT" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp External Airlock";
-	opacity = 0
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -3755,10 +3751,9 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "HV" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp External Airlock";
-	opacity = 0
+	req_access = null
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -4365,7 +4360,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
-	name = "Lavaland Shuttle Airlock"
+	name = "Lavaland Shuttle Airlock";
+	space_dir = 8
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
@@ -4475,7 +4471,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4485,11 +4481,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock";
-	opacity = 0;
-	req_access_txt = "54"
+	req_access_txt = "54";
+	space_dir = 4
 	},
 /turf/open/floor/iron,
 /area/mine/eva)
@@ -4497,10 +4492,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external{
-	glass = 1;
+/obj/machinery/door/airlock/external/glass{
 	name = "Mining Shuttle Airlock";
-	opacity = 0
+	space_dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,

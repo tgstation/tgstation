@@ -174,8 +174,12 @@
 		return FALSE
 
 	var/wildcard_allocated
+	var/datum/id_trim/try_trim = ispath(trim) ? SSid_access.trim_singletons_by_path[trim] : trim
+
+	var/list/wildcard_overrides = try_trim?.get_common_wildcard_overrides()
+
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
+		var/wildcard_flag = (wildcard in wildcard_overrides) ? ACCESS_FLAG_COMMON : SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/flag_name in new_wildcard_limits)
 			var/limit_flags = SSid_access.wildcard_flags_by_wildcard[flag_name]
@@ -202,9 +206,13 @@
  */
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/wildcard_allocated
+
+	var/list/wildcard_overrides = trim?.get_common_wildcard_overrides()
+
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
+		var/wildcard_flag = (wildcard in wildcard_overrides) ? ACCESS_FLAG_COMMON : SSid_access.get_access_flag(wildcard)
+
 		wildcard_allocated = FALSE
 		for(var/flag_name in wildcard_slots)
 			if(flag_name == WILDCARD_NAME_FORCED)
@@ -1271,7 +1279,7 @@
 							trim_list[fake_trim_name] = trim_path
 
 					var/selected_trim_path
-					selected_trim_path = input("Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", selected_trim_path) as null|anything in sortList(trim_list, /proc/cmp_typepaths_asc)
+					selected_trim_path = input("Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", selected_trim_path) as null|anything in sort_list(trim_list, /proc/cmp_typepaths_asc)
 					if(selected_trim_path)
 						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
 

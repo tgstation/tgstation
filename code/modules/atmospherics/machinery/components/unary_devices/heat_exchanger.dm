@@ -34,7 +34,7 @@
 		add_atom_colour(node.color, FIXED_COLOUR_PRIORITY)
 	PIPING_LAYER_SHIFT(src, piping_layer)
 
-/obj/machinery/atmospherics/components/unary/heat_exchanger/atmosinit()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/atmos_init()
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = partner_ref?.resolve()
 	if(!partner)
 		partner_ref = null
@@ -46,10 +46,9 @@
 				target.partner_ref = WEAKREF(src)
 				break
 
-	..()
+	. = ..()
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
-	..()
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = partner_ref?.resolve()
 	if(!partner)
 		partner_ref = null
@@ -71,14 +70,14 @@
 	var/other_old_temperature = partnerair_contents.temperature
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = partnerair_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
+		var/combined_energy = partnerair_contents.temperature * other_air_heat_capacity + air_heat_capacity * air_contents.temperature
 
-		var/new_temperature = combined_energy/combined_heat_capacity
+		var/new_temperature = combined_energy / combined_heat_capacity
 		air_contents.temperature = new_temperature
 		partnerair_contents.temperature = new_temperature
 
-	if(abs(old_temperature-air_contents.temperature) > 1)
+	if(abs(old_temperature - air_contents.temperature) > 1)
 		update_parents()
 
-	if(abs(other_old_temperature-partnerair_contents.temperature) > 1)
+	if(abs(other_old_temperature - partnerair_contents.temperature) > 1)
 		partner.update_parents()
