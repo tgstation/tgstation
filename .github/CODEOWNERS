@@ -36,7 +36,7 @@
 
 # LemonInTheDark
 
-/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/__DEFINES/atmospherics/ @LemonInTheDark
 /code/modules/atmospherics/ @LemonInTheDark
 
 # Mothblocks
@@ -81,6 +81,11 @@
 /code/modules/wiremod/ @Watermelon914
 
 # CONTRIBUTORS
+
+# Ghilker
+
+/code/__DEFINES/atmospherics/ @Ghilker
+/code/modules/atmospherics/ @Ghilker
 
 # JohnFulpWizard
 
