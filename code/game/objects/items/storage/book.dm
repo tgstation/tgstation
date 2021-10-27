@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 /obj/item/storage/book/bible/proc/make_new_altar(atom/bible_smacked, mob/user)
 	var/new_altar_area = get_turf(bible_smacked)
 
-	balloon_alert(user, "unpacking [src]...")
+	balloon_alert(user, "unpacking bible...")
 	if(!do_after(user, 15 SECONDS, new_altar_area))
 		return
 	new /obj/structure/altar_of_gods(new_altar_area)
