@@ -44,11 +44,13 @@
 			if(!user.transferItemToLoc(item, src))
 				return
 			tank_one = item
+			tank_one.can_explode = TRUE
 			to_chat(user, span_notice("You attach the tank to the transfer valve."))
 		else if(!tank_two)
 			if(!user.transferItemToLoc(item, src))
 				return
 			tank_two = item
+			tank_two.can_explode = TRUE
 			to_chat(user, span_notice("You attach the tank to the transfer valve."))
 
 		update_appearance()
@@ -244,6 +246,7 @@
 				split_gases()
 				valve_open = FALSE
 				tank_one.forceMove(drop_location())
+				tank_one.can_explode = FALSE
 				tank_one = null
 				. = TRUE
 		if("tanktwo")
@@ -251,6 +254,7 @@
 				split_gases()
 				valve_open = FALSE
 				tank_two.forceMove(drop_location())
+				tank_two.can_explode = FALSE
 				tank_two = null
 				. = TRUE
 		if("toggle")

@@ -38,6 +38,8 @@
 	var/tank_holder_icon_state = "holder_generic"
 	///Used by process() to track if there's a reason to process each tick
 	var/excited = TRUE
+	///Only TTVs are allowed to go boom
+	var/can_explode = FALSE
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -306,7 +308,7 @@
 
 /// Handles rupturing and fragmenting
 /obj/item/tank/atom_destruction(damage_flag)
-	if(!air_contents)
+	if(!air_contents || !can_explode)
 		return ..()
 
 	/// Handle fragmentation
