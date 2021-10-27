@@ -113,9 +113,9 @@
 
 /obj/structure/mirror/magic/pride/New()
 	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_PRIDE)
-			choosable_races += initial(S.id)
+		var/datum/species/all_species = speciestype
+		if(initial(all_species.changesource_flags) & MIRROR_PRIDE)
+			choosable_races += initial(all_species.name)
 	..()
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
