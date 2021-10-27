@@ -39,7 +39,7 @@
 	)
 	premium = list(
 		/obj/item/disk/holodisk = 5,
-		/obj/item/toy/crayon/spraycan  = 3,
+		/obj/item/toy/crayon/spraycan = 3,
 		/obj/item/canvas/twentyfour_twentyfour = 5,
 		/obj/item/rcl = 2,
 		/obj/item/airlock_painter = 1,

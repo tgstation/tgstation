@@ -350,7 +350,7 @@
 	icon_state = "shears"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	toolspeed  = 1
+	toolspeed = 1
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 6

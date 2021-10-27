@@ -453,7 +453,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
-	var/datum/skill_panel/SP  = new(usr, target_mind)
+	var/datum/skill_panel/SP = new(usr, target_mind)
 	SP.ui_interact(usr)
 
 /datum/admins/proc/show_lag_switch_panel()
