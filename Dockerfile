@@ -1,6 +1,5 @@
 # base = ubuntu + full apt update
 FROM ubuntu:xenial AS base
-gamer025 is cool
 RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get upgrade -y \
