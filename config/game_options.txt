@@ -346,7 +346,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES sand_golem
 #ROUNDSTART_RACES glass_golem
 #ROUNDSTART_RACES bluespace_golem
-#ROUNDSTART_RACES #bananium_golem
+#ROUNDSTART_RACES bananium_golem
 #ROUNDSTART_RACES runic_golem
 #ROUNDSTART_RACES cloth_golem
 #ROUNDSTART_RACES plastic_golem
