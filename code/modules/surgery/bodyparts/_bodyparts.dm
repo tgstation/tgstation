@@ -905,9 +905,7 @@
 
 	var/draw_color
 	if(should_draw_greyscale)
-		to_chat(world,"[override_skin_tone]")
 		draw_color = mutation_color || override_skin_tone || species_color || (skin_tone && skintone2hex(skin_tone))
-		to_chat(world,"[draw_color]")
 		if(draw_color)
 			limb.color = draw_color
 			if(aux_zone)

@@ -231,3 +231,15 @@
 			..()
 	else
 		..()
+
+
+
+/obj/item/NTpartykit
+	name = "NTP kit"
+	desc = "Hero of NT-sponsored parties for the high command. Lasts entire night, morning and burial."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "NTP_kit"
+	w_class = WEIGHT_CLASS_SMALL
+/obj/item/NTpartykit/examine_more(mob/user)
+	. = ..()
+	. += span_notice("To use: <br>- hold with right hand. <br>- insert the thumb into a slot.<br>- adjust the dials.<br>- press the button.")
