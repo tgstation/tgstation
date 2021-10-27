@@ -28,11 +28,6 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
-# Ghilker
-
-/code/__DEFINES/atmospherics/ @Ghilker
-/code/modules/atmospherics/ @Ghilker
-
 # Jordie0608
 
 /SQL/ @Jordie0608
@@ -86,6 +81,11 @@
 /code/modules/wiremod/ @Watermelon914
 
 # CONTRIBUTORS
+
+# Ghilker
+
+/code/__DEFINES/atmospherics/ @Ghilker
+/code/modules/atmospherics/ @Ghilker
 
 # JohnFulpWizard
 
