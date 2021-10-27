@@ -84,4 +84,3 @@
 		to_chat(user, span_warning("You need to equip a wrench in your active slot to rotate the [name]"))
 		balloon_alert(user, "You need to equip a wrench in your active slot to rotate the [name]")
 		return FALSE
-	return TRUE
