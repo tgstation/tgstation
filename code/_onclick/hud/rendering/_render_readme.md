@@ -29,6 +29,7 @@ The following is an incomplete list of pitfalls that come from byond snowflake t
 8. Byond uses DirectX 9 (Lummox said he wants to update to DirectX 11)
 9. Particles are just fancy overlays and are not independent of their owner
 10. Maptick items inside mob.contents are cheaper compared to most other movables
+11. Displacement filter: The byond "displacement filter" does not, as the name would make you expect, use displacement maps, but instead uses normal maps.
 
 ## The rendering solution
 One of the main issues with making pretty effects is how objects can only render to one plane, and how filters can only be applied to single objects. Quite simply it means we cant apply effects to multiple planes at once, and an effect to one plane only by treating it as a single unit:
