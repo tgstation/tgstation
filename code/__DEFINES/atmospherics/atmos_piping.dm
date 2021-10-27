@@ -45,10 +45,21 @@
 #define TANK_LEAK_PRESSURE (30.*ONE_ATMOSPHERE)
 /// The internal pressure in kPa at which a handheld gas tank almost immediately ruptures.
 #define TANK_RUPTURE_PRESSURE (35.*ONE_ATMOSPHERE)
+// Tank explosions
+/// The base power of tank explosions. All of the below scaling constants are relative to this.
+#define TANK_FRAGMENT_POWER_BASE ((20**2)/2)
 /// The internal pressure in kPa at which an gas tank that breaks will cause an explosion.
-#define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
-/// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
-#define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
+#define TANK_FRAGMENT_PRESSURE_THRESHOLD (40.*ONE_ATMOSPHERE)
+/// The excess tank pressure required for the pressure power multiplier to be 1.
+#define TANK_FRAGMENT_PRESSURE_SCALE (120.*ONE_ATMOSPHERE)
+/// The exponent that the scaled excess tank pressure is scaled to to get the power multiplier.
+#define TANK_FRAGMENT_PRESSURE_EXP 1
+/// The tank volume required for the volume power multiplier to be 1.
+#define TANK_FRAGMENT_VOLUME_SCALE (70 * 2)
+/// The exponent that the scaled tank volume is raised to to get the power multiplier.
+#define TANK_FRAGMENT_VOLUME_EXP 1
+/// The equation used to get tank fragmentation explosion power. As of writing this it is scaled to maxcap at 140L and 160kPa.
+#define TANK_FRAGMENT_POWER(BASE_POWER, PRESSURE, VOLUME) ((BASE_POWER) * ((((PRESSURE) - (TANK_FRAGMENT_PRESSURE_THRESHOLD)) / (TANK_FRAGMENT_PRESSURE_SCALE))**(TANK_FRAGMENT_PRESSURE_EXP)) * (((VOLUME) / (TANK_FRAGMENT_VOLUME_SCALE))**(TANK_FRAGMENT_VOLUME_EXP)))
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
