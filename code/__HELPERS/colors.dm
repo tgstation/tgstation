@@ -63,5 +63,4 @@
 	animate(flashed_client, color = animate_color, time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
-#define TRIM_COLOR_HASH(input) copytext_char(input, 2)
 

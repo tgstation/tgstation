@@ -88,10 +88,10 @@
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		ethereal_light.set_light_range_power_color(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		ethereal_light.set_light_on(TRUE)
-		fixed_mut_color = TRIM_COLOR_HASH(current_color)
+		fixed_mut_color = current_color
 	else
 		ethereal_light.set_light_on(FALSE)
-		fixed_mut_color = TRIM_COLOR_HASH(rgb(128,128,128))
+		fixed_mut_color = rgb(128,128,128)
 	H.update_body()
 	H.update_hair() // This should fix the ethereal hair not changing with body, no clue as to why hair is not in update_body but okay
 
@@ -132,7 +132,7 @@
 /datum/species/ethereal/proc/handle_emag(mob/living/carbon/human/H)
 	if(!emageffect)
 		return
-	current_color = "#[GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]]"
+	current_color = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)]
 	spec_updatehealth(H)
 	addtimer(CALLBACK(src, .proc/handle_emag, H), 5) //Call ourselves every 0.5 seconds to change color
 

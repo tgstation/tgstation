@@ -157,7 +157,7 @@
 			facial_hairstyle = human_head_owner.facial_hairstyle
 			if(owner_species.hair_color)
 				if(owner_species.hair_color == "mutcolor")
-					facial_hair_color = "#[human_head_owner.dna.features["mcolor"]]"
+					facial_hair_color = human_head_owner.dna.features["mcolor"]
 				else if(hair_color == "fixedmutcolor")
 					facial_hair_color = owner_species.fixed_mut_color
 				else
@@ -174,7 +174,7 @@
 			hairstyle = human_head_owner.hairstyle
 			if(owner_species.hair_color)
 				if(owner_species.hair_color == "mutcolor")
-					hair_color = "#[human_head_owner.dna.features["mcolor"]]"
+					hair_color = human_head_owner.dna.features["mcolor"]
 				else if(hair_color == "fixedmutcolor")
 					hair_color = owner_species.fixed_mut_color
 				else
