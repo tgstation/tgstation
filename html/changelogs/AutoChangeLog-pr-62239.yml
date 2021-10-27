@@ -1,5 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Bits of space near the station are no longer randomly powered by unconnected areas. Outlet Injectors used for sending gas to space have been replaced with Passive Vents."
-  - bugfix: "The waste air from Virology on Tramstation will now be removed. Previously, the turf that the outlet injector was on was unpowered."

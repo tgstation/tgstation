@@ -96,6 +96,8 @@
 		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
 			force_lose(HM)
 
+#define sanitize_shortcolor(color) sanitize_hexcolor(color, 3, include_crunch = FALSE)
+
 /datum/dna/proc/generate_unique_identity()
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
@@ -112,13 +114,13 @@
 		if(!GLOB.hairstyles_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair,GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
 		L[DNA_HAIRSTYLE_BLOCK] = construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len)
-		L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
+		L[DNA_HAIR_COLOR_BLOCK] = sanitize_shortcolor(H.hair_color)
 		if(!GLOB.facial_hairstyles_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hairstyles_list, GLOB.facial_hairstyles_male_list, GLOB.facial_hairstyles_female_list)
 		L[DNA_FACIAL_HAIRSTYLE_BLOCK] = construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len)
-		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
+		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_shortcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
-		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
+		L[DNA_EYE_COLOR_BLOCK] = sanitize_shortcolor(H.eye_color)
 
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
@@ -133,9 +135,9 @@
 	var/list/L = new /list(DNA_FEATURE_BLOCKS)
 
 	if(features["mcolor"])
-		L[DNA_MUTANT_COLOR_BLOCK] = sanitize_hexcolor(features["mcolor"])
+		L[DNA_MUTANT_COLOR_BLOCK] = sanitize_shortcolor(features["mcolor"])
 	if(features["ethcolor"])
-		L[DNA_ETHEREAL_COLOR_BLOCK] = sanitize_hexcolor(features["ethcolor"])
+		L[DNA_ETHEREAL_COLOR_BLOCK] = sanitize_shortcolor(features["ethcolor"])
 	if(features["body_markings"])
 		L[DNA_LIZARD_MARKINGS_BLOCK] = construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len)
 	if(features["tail_lizard"])
@@ -228,13 +230,13 @@
 	var/mob/living/carbon/human/H = holder
 	switch(blocknumber)
 		if(DNA_HAIR_COLOR_BLOCK)
-			setblock(unique_identity, blocknumber, sanitize_hexcolor(H.hair_color))
+			setblock(unique_identity, blocknumber, sanitize_shortcolor(H.hair_color))
 		if(DNA_FACIAL_HAIR_COLOR_BLOCK)
-			setblock(unique_identity, blocknumber, sanitize_hexcolor(H.facial_hair_color))
+			setblock(unique_identity, blocknumber, sanitize_shortcolor(H.facial_hair_color))
 		if(DNA_SKIN_TONE_BLOCK)
 			setblock(unique_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
 		if(DNA_EYE_COLOR_BLOCK)
-			setblock(unique_identity, blocknumber, sanitize_hexcolor(H.eye_color))
+			setblock(unique_identity, blocknumber, sanitize_shortcolor(H.eye_color))
 		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
@@ -255,9 +257,9 @@
 		CRASH("Non-human mobs shouldn't have DNA")
 	switch(blocknumber)
 		if(DNA_MUTANT_COLOR_BLOCK)
-			setblock(unique_features, blocknumber, sanitize_hexcolor(features["mcolor"]))
+			setblock(unique_features, blocknumber, sanitize_shortcolor(features["mcolor"]))
 		if(DNA_ETHEREAL_COLOR_BLOCK)
-			setblock(unique_features, blocknumber, sanitize_hexcolor(features["ethcolor"]))
+			setblock(unique_features, blocknumber, sanitize_shortcolor(features["ethcolor"]))
 		if(DNA_LIZARD_MARKINGS_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len))
 		if(DNA_LIZARD_TAIL_BLOCK)
@@ -284,6 +286,8 @@
 			setblock(unique_features, blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_MONKEY_TAIL_BLOCK)
 			setblock(unique_features, blocknumber, construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len))
+
+#undef sanitize_shortcolor
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)
