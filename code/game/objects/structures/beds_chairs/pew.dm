@@ -77,11 +77,11 @@
 		return
 
 	var/mob/living/living_user = user
-	if(istype(living_user))
-		var/obj/item/tool = living_user.get_active_held_item()
-		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
-			to_chat(user, span_warning("You need to equip a wrench in your active slot to rotate the [name]"))
-			balloon_alert(user, "You need to equip a wrench in your active slot to rotate the [name]")
-			return FALSE
-		return TRUE
-	return
+	if(!istype(living_user))
+		return
+	var/obj/item/tool = living_user.get_active_held_item()
+	if(!tool || tool.tool_behaviour != TOOL_WRENCH)
+		to_chat(user, span_warning("You need to equip a wrench in your active slot to rotate the [name]"))
+		balloon_alert(user, "You need to equip a wrench in your active slot to rotate the [name]")
+		return FALSE
+	return TRUE
