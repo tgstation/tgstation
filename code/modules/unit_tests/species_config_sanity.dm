@@ -10,7 +10,7 @@
  */
 /datum/unit_test/species_config_sanity/Run()
 	var/datum/config_entry/keyed_list/roundstart_races/first_config_type = /datum/config_entry/keyed_list/roundstart_races
-	var/datum/config_entry/keyed_list/roundstart_no_hard_check/second_config_entry = /datum/config_entry/keyed_list/roundstart_no_hard_check
+	var/datum/config_entry/keyed_list/roundstart_no_hard_check/second_config_type = /datum/config_entry/keyed_list/roundstart_no_hard_check
 
 	var/first_splitter = initial(first_config_type.splitter)
 	var/second_splitter = initial(second_config_type.splitter)
