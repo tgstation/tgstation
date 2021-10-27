@@ -83,6 +83,16 @@
 	name = "Supermatter emergence"
 	trait_type = STATION_TRAIT_NEUTRAL
 	weight = 1
+	force = TRUE
 	show_in_report = TRUE
 	report_message = "When shipping the supermatter to your station, the infinite lattice fractal of crystals known as the supermatter has somehow leaped into emergence. It happens sometimes when you have any truly infinite space localized in definite area, and we're not exactly sure why..."
 	trait_to_give = STATION_TRAIT_SENTIENTMATTER
+
+/datum/station_trait/sentientmatter/revert()
+	. = ..()
+	var/mob_spawner = locate(/obj/effect/mob_spawn/sentientmatter) in GLOB.main_supermatter_engine
+	var/mob_itself = locate(/mob/living/simple_animal/sentientmatter) in GLOB.main_supermatter_engine
+	if(mob_spawner)
+		qdel(mob_spawner)
+	if(mob_itself)
+		qdel(mob_itself)

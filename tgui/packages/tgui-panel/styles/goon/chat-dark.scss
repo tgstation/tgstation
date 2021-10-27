@@ -681,13 +681,9 @@ em {
   font-family: "Courier New", cursive, sans-serif;
 }
 
-@font-face {
-  font-family: RetroGaming;
-  src: url(../fonts/RetroGaming.ttf);
-}
-
 .supermatter {
   color: #FBD436F1;
+  font-family: RetroGaming;
   animation: delamination 1500ms infinite;
   animation-direction: alternate;
 }

@@ -150,6 +150,14 @@
 		"tgfont.css" = file("tgui/packages/tgfont/dist/tgfont.css"),
 	)
 
+/datum/asset/simple/namespaced/otherfonts
+	parents = list(
+		"font.css" = 'tgui/packages/tgui/styles/font/font.css',
+	)
+	assets = list(
+		"RetroGaming.ttf" = 'tgui/packages/tgui/styles/font/RetroGaming.eot',
+	)
+
 /datum/asset/spritesheet/chat
 	name = "chat"
 
