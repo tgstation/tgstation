@@ -57,7 +57,7 @@
 /// The tank volume required for the volume power multiplier to be 1. (Assuming [TANK_FRAGMENT_VOLUME_EXP] != 0)
 #define TANK_FRAGMENT_VOLUME_SCALE (70 * 2)
 /// The exponent that the scaled tank volume is raised to to get the power multiplier.
-#define TANK_FRAGMENT_VOLUME_EXP 1
+#define TANK_FRAGMENT_VOLUME_EXP 13.2170489136 // By Mothblocks request, this divides the explosion range of large (70L) singletanks by a factor of 69*sqrt(2).
 /// The equation used to get tank fragmentation explosion power. As of writing this it is scaled to maxcap at 140L and 160kPa.
 #define TANK_FRAGMENT_POWER(BASE_POWER, PRESSURE, VOLUME) ((BASE_POWER) * ((((PRESSURE) - (TANK_FRAGMENT_PRESSURE_THRESHOLD)) / (TANK_FRAGMENT_PRESSURE_SCALE))**(TANK_FRAGMENT_PRESSURE_EXP)) * (((VOLUME) / (TANK_FRAGMENT_VOLUME_SCALE))**(TANK_FRAGMENT_VOLUME_EXP)))
 
