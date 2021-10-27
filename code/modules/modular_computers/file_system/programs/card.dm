@@ -288,6 +288,7 @@
 
 	data["regions"] = regions
 
+
 	data["accessFlags"] = SSid_access.flags_by_access
 	data["wildcardFlags"] = SSid_access.wildcard_flags_by_wildcard
 	data["accessFlagNames"] = SSid_access.access_flag_string_by_flag
@@ -333,18 +334,15 @@
 		data["access_on_card"] = id_card.access
 		data["wildcardSlots"] = id_card.wildcard_slots
 		data["id_age"] = id_card.registered_age
-		data["commonFlag"] = ACCESS_FLAG_COMMON
 
 		if(id_card.trim)
 			var/datum/id_trim/card_trim = id_card.trim
 			data["hasTrim"] = TRUE
 			data["trimAssignment"] = card_trim.assignment ? card_trim.assignment : ""
 			data["trimAccess"] = card_trim.access ? card_trim.access : list()
-			data["trimCommonWildcardOverrides"] = card_trim.get_common_wildcard_overrides()
 		else
 			data["hasTrim"] = FALSE
 			data["trimAssignment"] = ""
 			data["trimAccess"] = list()
-			data["trimCommonWildcardOverrides"] = list()
 
 	return data
