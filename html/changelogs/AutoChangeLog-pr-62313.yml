@@ -1,5 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Objects which use custom materials and break above 0 integrity no longer spawn broken."
-  - code_imp: "Made a comment which warned against breaking this sort of thing more explicit."

@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "A roundstart Mannitol pill should no longer cause overdose on its own."

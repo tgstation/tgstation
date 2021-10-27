@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - bugfix: "Squirt cider now requires salt. Tomato soup no longer becomes squirt cider"
