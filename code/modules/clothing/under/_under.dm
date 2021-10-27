@@ -68,13 +68,18 @@
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 
-/obj/item/clothing/under/emp_act()
+/obj/item/clothing/under/emp_act(severity)
 	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(has_sensor > NO_SENSORS)
-		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+		if(severity <= EMP_HEAVY)
+			sensor_mode = SENSOR_OFF
+		else
+			sensor_mode = min(sensor_mode, pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS))
 		if(ismob(loc))
 			var/mob/M = loc
-			to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
+			to_chat(M,span_warning("The sensors on the [src] shudder and buzz!"))
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	..()
