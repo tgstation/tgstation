@@ -100,14 +100,22 @@
 	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/keyed_list/roundstart_races/ValidateListEntry(key_name, key_value)
-	return (key_name in GLOB.species_list)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
 
 /datum/config_entry/keyed_list/roundstart_no_hard_check // Species contained in this list will not cause existing characters with no-longer-roundstart species set to be resetted to the human race.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
 /datum/config_entry/keyed_list/roundstart_no_hard_check/ValidateListEntry(key_name, key_value)
-	return (key_name in GLOB.species_list)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
 
 /datum/config_entry/flag/no_summon_guns //No
 
