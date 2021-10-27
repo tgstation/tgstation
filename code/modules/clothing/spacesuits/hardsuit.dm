@@ -48,26 +48,9 @@
 
 	update_action_buttons()
 
-/obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
-	..()
-	if(suit)
-		suit.RemoveHelmet()
-		soundloop.stop(user)
-
 /obj/item/clothing/head/helmet/space/hardsuit/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_HEAD)
 		return 1
-
-/obj/item/clothing/head/helmet/space/hardsuit/equipped(mob/user, slot)
-	..()
-	if(slot != ITEM_SLOT_HEAD)
-		if(suit)
-			suit.RemoveHelmet()
-			soundloop.stop(user)
-		else
-			qdel(src)
-	else
-		soundloop.start(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(msg)
 	var/mob/wearer = loc

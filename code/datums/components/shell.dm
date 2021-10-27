@@ -29,12 +29,13 @@
 		attach_circuit(starting_circuit)
 
 /datum/component/shell/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/on_attack_ghost)
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED))
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE))
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
@@ -155,7 +156,7 @@
 	if(attached_circuit)
 		if(attached_circuit.owner_id && item == attached_circuit.owner_id.resolve())
 			set_locked(!locked)
-			source.balloon_alert(attacker, "[locked? "locked" : "unlocked"] [source]")
+			source.balloon_alert(attacker, "[locked ? "locked" : "unlocked"] [source]")
 			return COMPONENT_NO_AFTERATTACK
 
 		if(!attached_circuit.owner_id && istype(item, /obj/item/card/id))
@@ -326,7 +327,7 @@
  * * user - The user to check if they are authorized
  */
 /datum/component/shell/proc/is_authorized(mob/user)
-	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
+	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && (shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
 		return FALSE
 
 	if(attached_circuit?.admin_only)

@@ -598,12 +598,6 @@
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
 
-/obj/item/clothing/suit/space/hardsuit/berserker/RemoveHelmet()
-	var/obj/item/clothing/head/helmet/space/hardsuit/berserker/helm = helmet
-	if(helm?.berserk_active)
-		return
-	return ..()
-
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
 #define DAMAGE_TO_CHARGE_SCALE 0.75

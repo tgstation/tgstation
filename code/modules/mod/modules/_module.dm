@@ -69,7 +69,7 @@
 
 /// Called when the module is selected from the TGUI
 /obj/item/mod/module/proc/on_select()
-	if(!mod.active || mod.activating)
+	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -77,7 +77,8 @@
 		else
 			on_activation()
 	else
-		on_use(mod.wearer)
+		on_use()
+	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED)
 
 /// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
@@ -314,7 +315,7 @@
 
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
-	visor_traits = list(TRAIT_MESON_VISION)
+	visor_traits = list(TRAIT_MESON_VISION, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
 
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
@@ -572,7 +573,7 @@
 	var/obj/projectile/tether = new /obj/projectile/tether
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
-	INVOKE_ASYNC(tether, /obj/projectile/proc/fire)
+	INVOKE_ASYNC(tether, /obj/projectile.proc/fire)
 
 /obj/projectile/tether
 	name = "tether"
@@ -603,7 +604,7 @@
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
 	desc = "A module that enables eating with the MOD helmet."
-	complexity = 2
+	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
 	var/former_flags = NONE
 	var/former_visor_flags = NONE
@@ -682,7 +683,6 @@
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
-	. = ..()
 	mod.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
 /obj/item/mod/module/emp_shield/on_uninstall()
@@ -905,14 +905,90 @@
 /obj/item/mod/module/circuit
 	name = "MOD circuit adapter module"
 	desc = "A module that adapts an integrated circuit to a MODsuit."
+	module_type = MODULE_USABLE
 	complexity = 3
 	idle_power_cost = 5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
+	cooldown_time = 0.5 SECONDS
+	var/obj/item/integrated_circuit/circuit
 
 /obj/item/mod/module/circuit/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(
-		new /obj/item/circuit_component/modsuit()
-	), SHELL_CAPACITY_LARGE)
+	circuit = new()
+	AddComponent(/datum/component/shell, \
+		list(new /obj/item/circuit_component/modsuit()), \
+		capacity = SHELL_CAPACITY_LARGE, \
+		shell_flags = SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
+		starting_circuit = circuit, \
+	)
+
+/obj/item/mod/module/circuit/on_install()
+	circuit.set_cell(mod.cell)
+
+/obj/item/mod/module/circuit/on_uninstall()
+	circuit.set_cell(mod.cell)
+
+/obj/item/mod/module/circuit/on_equip()
+	circuit.set_on(TRUE)
+
+/obj/item/mod/module/circuit/on_unequip()
+	circuit.set_on(FALSE)
+
+/obj/item/mod/module/circuit/on_use()
+	. = ..()
+	if(!.)
+		return
+	circuit.interact(mod.wearer)
 
 /obj/item/circuit_component/modsuit
+	display_name = "MOD"
+	desc = "Used to send and receive signals from a MODsuit."
+
+	var/obj/item/mod/module/attached_module
+
+	var/datum/port/input/module_to_select
+	var/datum/port/input/toggle_suit
+	var/datum/port/input/select_module
+
+	var/datum/port/output/wearer
+	var/datum/port/output/selected_module
+
+/obj/item/circuit_component/modsuit/populate_ports()
+	// Input Signals
+	module_to_select = add_input_port("Module to Select", PORT_TYPE_STRING)
+	toggle_suit = add_input_port("Toggle Suit", PORT_TYPE_SIGNAL)
+	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
+	// States
+	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
+	selected_module = add_output_port("Selected Module", PORT_TYPE_ATOM)
+
+/obj/item/circuit_component/modsuit/register_shell(atom/movable/shell)
+	if(istype(shell, /obj/item/mod/module))
+		attached_module = shell
+	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/obj/item/circuit_component/modsuit/unregister_shell(atom/movable/shell)
+	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
+	attached_module = null
+
+/obj/item/circuit_component/modsuit/input_received(datum/port/input/port)
+	var/obj/item/mod/module/module
+	for(var/obj/item/mod/module/potential_module as anything in attached_module.mod.modules)
+		if(potential_module.name == module_to_select.value)
+			module = potential_module
+	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
+		INVOKE_ASYNC(attached_module.mod, /obj/item/mod/control.proc/toggle_activate, attached_module.mod.wearer)
+	if(module && COMPONENT_TRIGGERED_BY(select_module, port))
+		INVOKE_ASYNC(module, /obj/item/mod/module.proc/on_select)
+
+/obj/item/circuit_component/modsuit/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
+	if(istype(source.loc, /obj/item/mod/control))
+		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+	else if(istype(old_loc, /obj/item/mod/control))
+		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_SELECTED)
+
+/obj/item/circuit_component/modsuit/proc/on_module_select()
+	selected_module.set_output(attached_module.mod.selected_module)
+
+/obj/item/circuit_component/modsuit/proc/on_mod_equip()
+	wearer.set_output(attached_module.mod.selected_module)

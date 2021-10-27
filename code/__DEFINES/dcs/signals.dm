@@ -1544,3 +1544,7 @@
 ///Sent from /datum/biological_sample/proc/reset_sample
 #define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
 	#define SPARE_SAMPLE (1<<0)
+
+//MODsuit signals
+/// Called when a module is selected to be the active one from on_select()
+#define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"
