@@ -11,3 +11,7 @@
 	var/list/access = list()
 	/// Accesses that this trim unlocks on a card that require wildcard slots to apply. If a card cannot accept all a trim's wildcard accesses, the card is incompatible with the trim.
 	var/list/wildcard_access = list()
+
+/// Overridable proc. A list of wildcard accesses that this trim is overriding to force them to be considered ACCESS_FLAG_COMMON if applied to an ID card holding this trim.
+/datum/id_trim/proc/get_common_wildcard_overrides()
+	return list()
