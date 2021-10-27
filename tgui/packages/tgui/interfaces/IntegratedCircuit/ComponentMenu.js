@@ -11,7 +11,7 @@ import { shallowDiffers } from 'common/react';
 import { fetchRetry } from "../../http";
 import { resolveAsset } from '../../assets';
 import { Port } from './Port';
-import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
+import { DEFAULT_COMPONENT_MENU_LIMIT, noop } from './constants';
 
 // Cache response so it's only sent once
 let fetchServerData;
@@ -178,7 +178,7 @@ export class ComponentMenu extends Component {
                             <Stack.Item key={portIndex}>
                               <Port
                                 port={port}
-                                act={() => {}}
+                                act={noop}
                               />
                             </Stack.Item>
                           ))}
@@ -190,7 +190,7 @@ export class ComponentMenu extends Component {
                             <Stack.Item key={portIndex}>
                               <Port
                                 port={port}
-                                act={() => {}}
+                                act={noop}
                                 isOutput
                               />
                             </Stack.Item>

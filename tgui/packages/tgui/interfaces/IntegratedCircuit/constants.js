@@ -7,3 +7,4 @@ export const OPTION_DROPDOWN_LARGE_CHAR_AMOUNT = 12;
 // in milliseconds
 export const TIME_UNTIL_PORT_RELEASE_WORKS = 100;
 export const DEFAULT_COMPONENT_MENU_LIMIT = 6;
+export const noop = () => {};

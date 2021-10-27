@@ -4,7 +4,7 @@ import {
 } from '../../components';
 import { Component } from 'inferno';
 import { shallowDiffers } from '../../../common/react';
-import { ABSOLUTE_Y_OFFSET } from './constants';
+import { ABSOLUTE_Y_OFFSET, noop } from './constants';
 import { Port } from "./Port";
 
 
@@ -96,12 +96,12 @@ export class ObjectComponent extends Component {
       removable,
       ui_buttons,
       locations,
-      onPortUpdated = Function.prototype,
-      onPortLoaded = Function.prototype,
-      onPortMouseDown = Function.prototype,
-      onPortRightClick = Function.prototype,
-      onPortMouseUp = Function.prototype,
-      act = Function.prototype,
+      onPortUpdated = noop,
+      onPortLoaded = noop,
+      onPortMouseDown = noop,
+      onPortRightClick = noop,
+      onPortMouseUp = noop,
+      act = noop,
       ...rest
     } = this.props;
     const { startPos, dragPos } = this.state;
