@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixes notes and bans being shown to players on connect when the note or ban doesn't belong to them."
