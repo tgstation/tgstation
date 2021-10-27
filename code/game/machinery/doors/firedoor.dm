@@ -31,7 +31,7 @@
 	var/being_held_open = FALSE
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
 	var/alarm_type = null
-	///Cooldown for Detections. If current world time is not greater than (dectect_cooldown + DETECT_COOLDOWN_STEP_TIME), we don't activate. Prevents instant re-activations when air mixing would solve an issue
+	///Cooldown for Detections. Prevents instant re-activations when air mixing would solve an issue
 	var/detect_cooldown = 0
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
