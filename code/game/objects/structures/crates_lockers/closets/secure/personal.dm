@@ -56,11 +56,11 @@
 	else
 		return ..()
 
-/obj/structure/closet/secure_closet/personal/allowed(mob/M)
+/obj/structure/closet/secure_closet/personal/allowed(mob/mob_to_check)
 	. = ..()
-	if (. || !ishuman(M))
+	if (. || !ishuman(mob_to_check))
 		return
-	var/mob/living/carbon/human/human = M
-	var/obj/item/card/id/I = human.wear_id?.GetID()
-	if (istype(I) && I.registered_name == registered_name)
+	var/mob/living/carbon/human/human_to_check = mob_to_check
+	var/obj/item/card/id/id_card = human_to_check.wear_id?.GetID()
+	if (istype(id_card) && id_card.registered_name == registered_name)
 		return TRUE
