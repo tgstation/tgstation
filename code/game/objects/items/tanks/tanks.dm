@@ -166,7 +166,7 @@
 		"minReleasePressure" = round(TANK_MIN_RELEASE_PRESSURE),
 		"maxReleasePressure" = round(TANK_MAX_RELEASE_PRESSURE),
 		"leakPressure" = round(TANK_LEAK_PRESSURE),
-		"fragmentPressure" = round(TANK_FRAGMENT_PRESSURE)
+		"fragmentPressure" = round(TANK_FRAGMENT_PRESSURE_THRESHOLD)
 	)
 
 /obj/item/tank/ui_data(mob/user)
@@ -311,7 +311,7 @@
 
 	/// Handle fragmentation
 	var/pressure = air_contents.return_pressure()
-	if(pressure > TANK_FRAGMENT_PRESSURE)
+	if(pressure > TANK_FRAGMENT_PRESSURE_THRESHOLD)
 		if(!istype(loc, /obj/item/transfer_valve))
 			log_bomber(get_mob_by_key(fingerprintslast), "was last key to touch", src, "which ruptured explosively")
 		//Give the gas a chance to build up more pressure through reacting

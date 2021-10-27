@@ -50,11 +50,11 @@
 #define TANK_FRAGMENT_POWER_BASE ((20**2)/2)
 /// The internal pressure in kPa at which an gas tank that breaks will cause an explosion.
 #define TANK_FRAGMENT_PRESSURE_THRESHOLD (40.*ONE_ATMOSPHERE)
-/// The excess tank pressure required for the pressure power multiplier to be 1.
+/// The excess tank pressure required for the pressure power multiplier to be 1. (Assuming [TANK_FRAGMENT_PRESSURE_EXP] != 0)
 #define TANK_FRAGMENT_PRESSURE_SCALE (120.*ONE_ATMOSPHERE)
 /// The exponent that the scaled excess tank pressure is scaled to to get the power multiplier.
 #define TANK_FRAGMENT_PRESSURE_EXP 1
-/// The tank volume required for the volume power multiplier to be 1.
+/// The tank volume required for the volume power multiplier to be 1. (Assuming [TANK_FRAGMENT_VOLUME_EXP] != 0)
 #define TANK_FRAGMENT_VOLUME_SCALE (70 * 2)
 /// The exponent that the scaled tank volume is raised to to get the power multiplier.
 #define TANK_FRAGMENT_VOLUME_EXP 1

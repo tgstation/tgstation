@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		"maxReleasePressure" = round(can_max_release_pressure),
 		"pressureLimit" = round(pressure_limit),
 		"holdingTankLeakPressure" = round(TANK_LEAK_PRESSURE),
-		"holdingTankFragPressure" = round(TANK_FRAGMENT_PRESSURE)
+		"holdingTankFragPressure" = round(TANK_FRAGMENT_PRESSURE_THRESHOLD)
 	)
 
 /obj/machinery/portable_atmospherics/canister/ui_data()
