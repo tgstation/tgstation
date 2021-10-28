@@ -39,10 +39,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	soundloop = new(src, TRUE)
 
 /obj/machinery/gravity_generator/main/Destroy()
-	. = ..()
-
 	QDEL_NULL(gravity_field)
 	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
