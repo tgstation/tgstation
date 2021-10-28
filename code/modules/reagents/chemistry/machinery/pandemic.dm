@@ -154,7 +154,9 @@
 	data["is_ready"] = !wait
 	if(beaker)
 		data["has_beaker"] = TRUE
-		data["beaker_empty"] = (!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+		data["beaker"] = list()
+		data["beaker"]["volume"] = round(beaker.reagents?.total_volume, 0.01) || 0
+		data["beaker"]["capacity"] = beaker.volume
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE

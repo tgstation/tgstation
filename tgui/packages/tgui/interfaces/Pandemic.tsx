@@ -1,26 +1,20 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  NoticeBox,
-  Section,
-  Stack,
-  Tabs,
-  Input,
-  Collapsible,
-  Tooltip,
-} from '../components';
+import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type PandemicContext = {
-  beaker_empty: number;
-  blood: Blood;
+  beaker?: Beaker;
+  blood?: Blood;
   has_beaker: number;
   has_blood: number;
   is_ready: number;
-  resistances: Resistance[];
-  viruses: Virus[];
+  resistances?: Resistance[];
+  viruses?: Virus[];
+};
+
+type Beaker = {
+  volume: number;
+  capacity: number;
 };
 
 type Blood = {
@@ -74,9 +68,11 @@ type Threshold = {
   descr: string;
 };
 
-export const Pandemic = (props, context) => {
-  const { data } = useBackend<PandemicContext>(context);
-  const { has_blood, resistances } = data;
+type ThresholdDisplayProps = {
+  thresholds: Threshold[];
+};
+
+export const Pandemic = () => {
   return (
     <Window width={650} height={500}>
       <Window.Content>
@@ -84,28 +80,21 @@ export const Pandemic = (props, context) => {
           <Stack.Item>
             <BeakerDisplay />
           </Stack.Item>
-          {has_blood && (
-            <>
-              {resistances.length && (
-                <Stack.Item>
-                  <AntibodyDisplay />
-                </Stack.Item>
-              )}
-              <Stack.Item grow>
-                <SpecimenDisplay />
-              </Stack.Item>
-            </>
-          )}
+          <Stack.Item grow>
+            <SpecimenDisplay />
+          </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
   );
 };
 
-const BeakerDisplay = (props, context) => {
+/** Displays loaded container info, if it exists */
+const BeakerDisplay = (_, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
-  const { has_beaker, beaker_empty, has_blood, blood, resistances } = data;
-  const cant_empty = !has_beaker || !!beaker_empty;
+  const { has_beaker, beaker, has_blood } = data;
+  const cant_empty = !has_beaker || !beaker?.volume;
+
   return (
     <Section
       title="Beaker"
@@ -133,31 +122,16 @@ const BeakerDisplay = (props, context) => {
         </>
       }>
       {has_beaker ? (
-        !beaker_empty ? (
+        beaker?.volume ? (
           has_blood ? (
-            <LabeledList>
-              <LabeledList.Item label="DNA">
-                {blood.dna.replace(/^\w/, (c) => c.toUpperCase())}
-              </LabeledList.Item>
-              <LabeledList.Item label="Type">
-                {blood.type.replace(/^\w/, (c) => c.toUpperCase())}
-              </LabeledList.Item>
-              <LabeledList.Item label="Antibodies">
-                {!resistances.length ? (
-                  'None'
-                ) : (
-                  <Stack>
-                    {resistances.map((resistance) => {
-                      return (
-                        <Stack.Item key={resistance.name}>
-                          <Box color="green">{resistance.name}</Box>
-                        </Stack.Item>
-                      );
-                    })}
-                  </Stack>
-                )}
-              </LabeledList.Item>
-            </LabeledList>
+            <Stack vertical>
+              <Stack.Item>
+                <BeakerInfoDisplay />
+              </Stack.Item>
+              <Stack.Item>
+                <AntibodyInfoDisplay />
+              </Stack.Item>
+            </Stack>
           ) : (
             <NoticeBox>No blood detected</NoticeBox>
           )
@@ -171,12 +145,91 @@ const BeakerDisplay = (props, context) => {
   );
 };
 
-const SpecimenDisplay = (props, context) => {
+/** Displays info about the blood type, beaker capacity - volume */
+const BeakerInfoDisplay = (_, context) => {
+  const { data } = useBackend<PandemicContext>(context);
+  const { beaker, blood } = data;
+  if (!beaker || !blood) {
+    return "Error";
+
+  }
+
+  return (
+    <Stack>
+      <Stack.Item grow={2}>
+        <LabeledList>
+          <LabeledList.Item label="DNA">
+            {blood.dna.replace(/^\w/, (c) => c.toUpperCase())}
+          </LabeledList.Item>
+          <LabeledList.Item label="Type">
+            {blood.type.replace(/^\w/, (c) => c.toUpperCase())}
+          </LabeledList.Item>
+        </LabeledList>
+      </Stack.Item>
+      <Stack.Item grow={2}>
+        <LabeledList>
+          <LabeledList.Item label="Container">
+            <ProgressBar
+              color="darkred"
+              value={beaker.volume}
+              minValue={0}
+              maxValue={beaker.capacity}
+              ranges={{
+                'good': [beaker.capacity * 0.85, beaker.capacity],
+                'average': [beaker.capacity * 0.25, beaker.capacity * 0.85],
+                'bad': [0, beaker.capacity * 0.25],
+              }}
+            />
+          </LabeledList.Item>
+        </LabeledList>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+/** If antibodies are present, returns buttons to create vaccines */
+const AntibodyInfoDisplay = (_, context) => {
+  const { act, data } = useBackend<PandemicContext>(context);
+  const { is_ready, resistances } = data;
+  if (!resistances) {
+    return "Error";
+  }
+
+  return (
+    <LabeledList>
+      <LabeledList.Item label="Antibodies">
+        {!resistances.length
+          ? 'None'
+          : resistances.map((resistance) => {
+            return (
+              <Button
+                key={resistance.name}
+                icon="eye-dropper"
+                disabled={!is_ready}
+                tooltip="Creates a vaccine bottle."
+                onClick={() =>
+                  act('create_vaccine_bottle', {
+                    index: resistance.id,
+                  })}>
+                {`${resistance.name}`}
+              </Button>
+            );
+          })}
+      </LabeledList.Item>
+    </LabeledList>
+  );
+};
+
+/** Displays info for the loaded blood, if any */
+const SpecimenDisplay = (_, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const [tab, setTab] = useSharedState(context, 'tab', 0);
-  const { viruses } = data;
-  const virus = viruses[tab];
+  const { is_ready, viruses } = data;
+  if (!viruses) {
+    return "Error";
+  }
 
+  const virus = viruses[tab];
   return !viruses.length ? (
     <NoticeBox>No viruses detected</NoticeBox>
   ) : (
@@ -188,7 +241,7 @@ const SpecimenDisplay = (props, context) => {
         <Stack>
           {
             // Tabs if there's more viruses
-            viruses.length && (
+            viruses.length > 1 && (
               <Stack.Item>
                 <Tabs>
                   {viruses.map((virus, index) => {
@@ -209,7 +262,7 @@ const SpecimenDisplay = (props, context) => {
             <Button
               icon="flask"
               content="Create culture bottle"
-              disabled={!data.is_ready}
+              disabled={!is_ready}
               onClick={() =>
                 act('create_culture_bottle', {
                   index: virus.index,
@@ -223,15 +276,19 @@ const SpecimenDisplay = (props, context) => {
           <VirusInfoDisplay virus={virus} />
         </Stack.Item>
         <Stack.Item>
-          <SymptomDisplay symptoms={virus.symptoms} />
+          <SymptomInfoDisplay symptoms={virus.symptoms} />
         </Stack.Item>
       </Stack>
     </Section>
   );
 };
 
+/** Displays info about the virus.
+ * Note: Players are only getting one of these from DM,
+ * but the functionality is here to display more than one.
+ */
 const VirusInfoDisplay = (props: VirusInfoProps, context) => {
-  const { act, data } = useBackend<PandemicContext>(context);
+  const { act } = useBackend<PandemicContext>(context);
   const { virus } = props;
 
   return (
@@ -268,7 +325,7 @@ const VirusInfoDisplay = (props: VirusInfoProps, context) => {
         <>
           <Stack.Divider />
           <Stack.Item grow={1}>
-            <Section level={2} title="Statistics">
+            <Section title="Statistics">
               <LabeledList>
                 <Tooltip content="Decides the cure complexity.">
                   <LabeledList.Item
@@ -307,38 +364,27 @@ const VirusInfoDisplay = (props: VirusInfoProps, context) => {
   );
 };
 
-const SymptomDisplay = (props: SymptomDisplayProps) => {
+/** Similar to the virus info display.
+ * Returns info about symptoms as collapsibles.
+ */
+const SymptomInfoDisplay = (props: SymptomDisplayProps) => {
   const { symptoms } = props;
 
-  return (!symptoms.length ? (
+  return !symptoms.length ? (
     <NoticeBox>No symptoms detected.</NoticeBox>
   ) : (
-    <Section fill level={2} title="Symptoms">
+    <Section fill title="Symptoms">
       {symptoms.map((symptom) => {
         return (
-          <Collapsible
-            key={symptom.name}
-            title={
-              !symptom.neutered ? symptom.name : `${symptom.name} (Neutered)`
-            }>
+          <Collapsible key={symptom.name} title={symptom.name}>
             <Stack fill>
               <Stack.Item grow={3}>
                 {symptom.desc}
-                <Section level={3} mt={1} title="Thresholds">
-                  <LabeledList>
-                    {Object.entries(symptom.threshold_desc).map((label) => {
-                      return (
-                        <LabeledList.Item key={label[0]} label={label[0]}>
-                          {label[1]}
-                        </LabeledList.Item>
-                      );
-                    })}
-                  </LabeledList>
-                </Section>
+                <ThresholdDisplay thresholds={symptom.threshold_desc} />
               </Stack.Item>
               <Stack.Divider />
               <Stack.Item grow={1}>
-                <Section level={2} title="Modifiers">
+                <Section title="Modifiers">
                   <LabeledList>
                     <Tooltip content="Rarity of the symptom.">
                       <LabeledList.Item
@@ -382,38 +428,43 @@ const SymptomDisplay = (props: SymptomDisplayProps) => {
           </Collapsible>
         );
       })}
-    </Section>)
-  );
-};
-
-const AntibodyDisplay = (props, context) => {
-  const { act, data } = useBackend<PandemicContext>(context);
-  const { is_ready, resistances } = data;
-
-  return (
-    <Section scrollable level={2} title="Available Vaccines">
-      {!resistances.length
-        ? 'None'
-        : resistances.map((resistance) => {
-          return (
-            <Button
-              key={resistance.name}
-              icon="eye-dropper"
-              disabled={!is_ready}
-              tooltip="Creates a vaccine bottle."
-              onClick={() =>
-                act('create_vaccine_bottle', {
-                  index: resistance.id,
-                })}>
-              {`Create ${resistance.name} vaccine`}
-            </Button>
-          );
-        })}
     </Section>
   );
 };
 
-/** Gives a color gradient based on the severity of the symptom */
+/** Displays threshold data */
+const ThresholdDisplay = (props: ThresholdDisplayProps) => {
+  const { thresholds } = props;
+  let convertedThresholds: Threshold[] = [];
+  // Converts obj of obj => array of thresholds
+  // I'm sure there's a more succinct way to do this
+  Object.entries(thresholds).map((label, value) => {
+    return convertedThresholds.push({
+      label: label[0],
+      descr: label[1].toString(),
+    });
+  });
+
+  return (
+    <Section mt={1} title="Thresholds">
+      {!convertedThresholds.length ? (
+        <NoticeBox>None</NoticeBox>
+      ) : (
+        <LabeledList>
+          {convertedThresholds.map((threshold) => {
+            return (
+              <LabeledList.Item key={threshold.label} label={threshold.label}>
+                {threshold.descr}
+              </LabeledList.Item>
+            );
+          })}
+        </LabeledList>
+      )}
+    </Section>
+  );
+};
+
+/** Gives a color gradient based on the severity of the symptom. */
 const GetColor = (severity: number) => {
   if (severity <= -10) {
     return 'blue';
