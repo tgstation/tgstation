@@ -75,6 +75,7 @@ type ThresholdDisplayProps = {
 export const Pandemic = (_, context) => {
   const { data } = useBackend<PandemicContext>(context);
   const { has_beaker, has_blood } = data;
+
   return (
     <Window width={650} height={500}>
       <Window.Content>
@@ -232,6 +233,7 @@ const SpecimenDisplay = (_, context) => {
     return <NoticeBox>No viruses detected</NoticeBox>;
   }
   const virus = viruses[tab];
+
   return (
     <Section
       fill
