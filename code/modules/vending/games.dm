@@ -3,6 +3,7 @@
 	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
 	product_ads = "Escape to a fantasy world!;Fuel your gambling addiction!;Ruin your friendships!;Roll for initiative!;Elves and dwarves!;Paranoid computers!;Totally not satanic!;Fun times forever!"
 	icon_state = "games"
+	panel_type = "panel4"
 	products = list(
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/cards/deck = 5,
