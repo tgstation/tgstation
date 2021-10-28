@@ -5,8 +5,6 @@
 		CRASH("[src] had /atom/proc/take_damage() called on it without it being a type that has uses_integrity = TRUE!")
 	if(QDELETED(src))
 		CRASH("[src] taking damage after deletion")
-	//if(atom_integrity <= 0)
-	//	CRASH("[src] taking damage while having <= 0 integrity")
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(resistance_flags & INDESTRUCTIBLE)
