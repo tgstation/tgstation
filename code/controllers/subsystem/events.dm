@@ -22,6 +22,7 @@ SUBSYSTEM_DEF(events)
 		control += E //add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
+	GLOB.roundstart_races = generate_selectable_species()
 	return ..()
 
 
