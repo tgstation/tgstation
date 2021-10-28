@@ -1,9 +1,11 @@
 /obj/item/gun/syringe
-	name = "syringe gun"
+	name = "syringe rifle"
 	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon_state = "syringegun"
+	icon_state = "syringerifle"
 	inhand_icon_state = "syringegun"
-	w_class = WEIGHT_CLASS_NORMAL
+	worn_icon_state = null
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
 	throw_speed = 3
 	throw_range = 7
 	force = 4
@@ -86,13 +88,14 @@
 
 /obj/item/gun/syringe/rapidsyringe
 	name = "rapid syringe gun"
-	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to six syringes."
+	desc = "A modification of the syringe rifle design to be more compact and using a rotating cylinder to store up to six syringes."
 	icon_state = "rapidsyringegun"
+	w_class = WEIGHT_CLASS_NORMAL
 	max_syringes = 6
 
 /obj/item/gun/syringe/syndicate
 	name = "dart pistol"
-	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
+	desc = "A small spring-loaded sidearm that functions identically to a syringe rifle."
 	icon_state = "syringe_pistol"
 	inhand_icon_state = "gun" //Smaller inhand
 	w_class = WEIGHT_CLASS_SMALL
@@ -102,8 +105,10 @@
 	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
-	name = "modified syringe gun"
-	desc = "A syringe gun that has been modified to fit DNA injectors instead of normal syringes."
+	name = "modified syringe rifle"
+	icon_state="syringegun"
+	desc = "A syringe rifle that has been modified to be smaller and fit DNA injectors instead of normal syringes."
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/gun/syringe/dna/Initialize(mapload)
 	. = ..()
