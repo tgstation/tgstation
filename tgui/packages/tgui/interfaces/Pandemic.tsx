@@ -72,7 +72,9 @@ type ThresholdDisplayProps = {
   thresholds: Threshold[];
 };
 
-export const Pandemic = () => {
+export const Pandemic = (_, context) => {
+  const { data } = useBackend<PandemicContext>(context);
+  const { has_beaker, has_blood } = data;
   return (
     <Window width={650} height={500}>
       <Window.Content>
@@ -80,9 +82,11 @@ export const Pandemic = () => {
           <Stack.Item>
             <BeakerDisplay />
           </Stack.Item>
-          <Stack.Item grow>
-            <SpecimenDisplay />
-          </Stack.Item>
+          {!!has_beaker && !!has_blood && (
+            <Stack.Item grow>
+              <SpecimenDisplay />
+            </Stack.Item>
+          )}
         </Stack>
       </Window.Content>
     </Window>
@@ -150,8 +154,7 @@ const BeakerInfoDisplay = (_, context) => {
   const { data } = useBackend<PandemicContext>(context);
   const { beaker, blood } = data;
   if (!beaker || !blood) {
-    return "Error";
-
+    return <NoticeBox>No beaker loaded</NoticeBox>;
   }
 
   return (
@@ -192,7 +195,7 @@ const AntibodyInfoDisplay = (_, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const { is_ready, resistances } = data;
   if (!resistances) {
-    return "Error";
+    return <NoticeBox>Nothing detected</NoticeBox>;
   }
 
   return (
@@ -225,14 +228,11 @@ const SpecimenDisplay = (_, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const [tab, setTab] = useSharedState(context, 'tab', 0);
   const { is_ready, viruses } = data;
-  if (!viruses) {
-    return "Error";
+  if (!viruses?.length) {
+    return <NoticeBox>No viruses detected</NoticeBox>;
   }
-
   const virus = viruses[tab];
-  return !viruses.length ? (
-    <NoticeBox>No viruses detected</NoticeBox>
-  ) : (
+  return (
     <Section
       fill
       scrollable
