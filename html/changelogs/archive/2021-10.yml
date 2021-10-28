@@ -905,3 +905,33 @@
       the turf that the outlet injector was on was unpowered.
   - bugfix: Reinforced walls will now properly re-smooth when nearby reinforced walls
       are created or destroyed.
+2021-10-28:
+  Cyberboss:
+  - bugfix: Emergency inlet access on the mining station eastern-most airlocks has
+      been removed.
+  - bugfix: Fixed mining station east airlocks requiring external airlock access instead
+      of mining access.
+  - bugfix: Removed access requirements from southern mining station public external
+      airlocks.
+  Guillaume Prata:
+  - expansion: Atmospherics Technicians can receive some useful things from their
+      mail now.
+  LemonInTheDark:
+  - bugfix: emagging ethereals works again
+  Seris02:
+  - bugfix: orion can now no longer give you multiple prizes
+  - qol: personal lockers will now allow you to actually un/lock them without swiping
+      ID
+  Watermelon914:
+  - balance: If you try using the staff of change, the staff of chaos or the staff
+      of healing as a crewmember, then it'll backfire. The Staff of change wabbajacks
+      the user, like the pool of change; this means you can't become a xenomorph or
+      a syndicate borg. The Staff of chaos has a 5% chance of firing the bolt directly
+      at the user using it. The Staff of healing now behaves like a medibeam gun to
+      non-wizards trying to use it.
+  carshalash:
+  - bugfix: Squirt cider now requires salt. Tomato soup no longer becomes squirt cider
+  esainane:
+  - bugfix: A roundstart Mannitol pill should no longer cause overdose on its own.
+  optimumtact:
+  - rscadd: Bans are now more user friendly
