@@ -649,4 +649,107 @@
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/jungle/mega_arachnid = 1)
 
+/datum/micro_organism/cell_line/goat
+	desc = "Caprinae stem cells"
+	required_reagents = list(
+	/datum/reagent/consumable/nutriment/protein,
+	/datum/reagent/consumable/nutriment,
+	/datum/reagent/consumable/berryjuice)
+
+	supplementary_reagents = list(
+	/datum/reagent/medicine/c2/multiver = 4,
+	/datum/reagent/consumable/poisonberryjuice = 2,
+	/datum/reagent/consumable/nutriment/vitamin = 2,
+	/datum/reagent/consumable/rice = 1,
+	/datum/reagent/consumable/flour = 1)
+
+	suppressive_reagents = list(/datum/reagent/toxin = -2,
+	/datum/reagent/consumable/mold = -5,
+	/datum/reagent/toxin/carpotoxin = -2,
+	/datum/reagent/consumable/coco = -2)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/goat = 1)
+
+/datum/micro_organism/cell_line/horror_mime
+	desc = "Mimenialoid manifestations"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/medicine/c2/helbital,
+		/datum/reagent/consumable/nothing,
+		/datum/reagent/drug/methamphetamine)
+
+	supplementary_reagents  = list(
+		/datum/reagent/toxin/mimesbane = 6,
+		/datum/reagent/fuel/unholywater = 3,
+		/datum/reagent/toxin/mutetoxin = 3,
+		/datum/reagent/consumable/nutriment/peptides = 1,
+		/datum/reagent/consumable/virus_food = 1,
+		/datum/reagent/liquidgibs = 1,
+		/datum/reagent/consumable/capsaicin = 1)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/banana = -3,
+		/datum/reagent/water/holywater = -1,
+		/datum/reagent/consumable/nutriment/vitamin = -1,
+		/datum/reagent/water = -1)
+
+	growth_rate = 3
+	resulting_atoms = list(/mob/living/simple_animal/hostile/horror_mime = 1)
+
+/datum/micro_organism/cell_line/ghost/regular //Another cell line designed to ruin your vat :D...
+	desc = "Ecto cells"
+	required_reagents = list(
+		/datum/reagent/medicine/strange_reagent,
+		/datum/reagent/consumable/milk)
+
+	supplementary_reagents  = list(
+		/datum/reagent/hydrogen = 5,
+		/datum/reagent/toxin/plasma = 3,
+		/datum/reagent/blood = 2,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment = 1,
+		/datum/reagent/stable_plasma = 1)
+
+	suppressive_reagents = list(
+		/datum/reagent/water/holywater = -5,
+		/datum/reagent/medicine/modafinil = -3,
+		/datum/reagent/medicine/mannitol = -2,
+		/datum/reagent/water = -1,
+		/datum/reagent/ash = -1)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/ghost = 1)
+
+/datum/micro_organism/cell_line/ghost/skeleton_spirit
+	desc = "Plascalciomic cells"
+	required_reagents = list(
+		/datum/reagent/medicine/strange_reagent,
+		/datum/reagent/consumable/milk,
+		/datum/reagent/bluespace,
+		/datum/reagent/blood)
+
+	supplementary_reagents  = list(
+		/datum/reagent/consumable/ethanol/kortara = 6,
+		/datum/reagent/toxin/itching_powder = 5,
+		/datum/reagent/consumable/soymilk = 2,
+		/datum/reagent/ash = 1,
+		/datum/reagent/consumable/milk/chocolate_milk = 1,
+		/datum/reagent/consumable/pumpkin_latte = 1,
+		/datum/reagent/carbon = 1)
+
+	suppressive_reagents = list(
+		/datum/reagent/consumable/salt = -5,
+		/datum/reagent/water/holywater = -3,
+		/datum/reagent/toxin/bonehurtingjuice = -3,
+		/datum/reagent/consumable/nutriment/protein = -2,
+		/datum/reagent/consumable/ethanol/bilk = -1)
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/skeleton_spirit = 1)
+
+/datum/micro_organism/cell_line/ghost/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //Ghost skeleton spawns, hehehe
+	vat.visible_message(span_warning("You the rattling of bones in the vat!"))
+	new /mob/living/simple_animal/hostile/skeleton(get_turf(vat))
+	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
+		return
+	QDEL_NULL(vat.biological_sample)
+
 #undef VAT_GROWTH_RATE

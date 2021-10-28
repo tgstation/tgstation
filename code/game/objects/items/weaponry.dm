@@ -470,6 +470,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 
+/obj/item/ectoplasm/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SKELETON_SPIRIT, CELL_VIRUS_TABLE_GENERIC_MOB, 2)
+
 /obj/item/ectoplasm/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
 	return (OXYLOSS)
