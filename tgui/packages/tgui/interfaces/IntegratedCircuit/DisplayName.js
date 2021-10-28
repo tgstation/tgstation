@@ -1,16 +1,15 @@
-import { useBackend } from '../../backend';
 import { Box, Button, Flex } from '../../components';
 import { FUNDAMENTAL_DATA_TYPES, DATATYPE_DISPLAY_HANDLERS } from './FundamentalTypes';
 
 export const DisplayName = (props, context) => {
-  const { act } = useBackend(context);
-  const { port, isOutput, componentId, portIndex, ...rest } = props;
+  const { port, isOutput, componentId, portIndex, act, ...rest } = props;
 
   const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'unknown'];
   const TypeDisplayHandler = DATATYPE_DISPLAY_HANDLERS[port.type || 'unknown'];
 
   const hasInput = !isOutput
     && !port.connected_to?.length
+    && (componentId || port.type === "option")
     && InputComponent;
 
   const displayType = TypeDisplayHandler? TypeDisplayHandler(port) : port.type;
