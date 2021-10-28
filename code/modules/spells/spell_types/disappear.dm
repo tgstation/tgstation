@@ -11,8 +11,6 @@
 	action_icon = 'icons/mob/actions/actions_mime.dmi'
 	action_icon_state = "mime_disappear"
 	action_background_icon_state = "bg_mime"
-	smoke_spread = 1
-	smoke_amt = 1
 	var/disappear_time = 25
 	var/alpha_amount = 10
 

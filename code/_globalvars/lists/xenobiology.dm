@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/horror_mime = 1),
 	CELL_LINE_TABLE_SKELETON_SPIRIT = list(
 		/datum/micro_organism/cell_line/ghost/regular = 1,
-		/datum/micro_organism/cell_line/ghost/skeleton_spirit = 1),
+		/datum/micro_organism/cell_line/ghost/skeleton_spirit = 1)
 	))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus
