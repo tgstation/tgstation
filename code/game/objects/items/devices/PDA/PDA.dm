@@ -764,6 +764,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
 		return
 
+	var/list/soft_filter_result = is_soft_ic_filtered_for_pdas(message)
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
+
 	if(prob(1))
 		message += "\nSent from my PDA"
 	// Send the signal

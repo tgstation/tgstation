@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Assemblies attached over a wire will now always pulse the wire on activation, even if the wire is cut. You can create voice or signal activated airlocks again!"
