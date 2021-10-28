@@ -322,13 +322,13 @@
 	var/datum/gas_mixture/airmix = current_location.return_air()
 
 	var/time_taken = 4 SECONDS
-	var/unsafe = 0
+	var/unsafe = FALSE
 
 	var/internal_pressure = air_contents.return_pressure() - airmix.return_pressure()
 	if(internal_pressure > 2 * ONE_ATMOSPHERE)
 		time_taken *= 2
 		to_chat(user, span_warning("The tank seems to be pressurized, are you sure this is a good idea?"))
-		unsafe = 1
+		unsafe = TRUE
 
 	if(!tool.use_tool(src, user, time_taken, volume =  60))
 		return
@@ -346,15 +346,15 @@
 		return
 	var/obj/structure/tank_frame/frame = new(location)
 	frame.construction_state = TANK_PLATING_UNSECURED
-	for(var/datum/material/mat as anything in custom_materials)
+	for(var/datum/material/material as anything in custom_materials)
 		if (frame.material_end_product)
 			// If something looks fishy, you get nothing
-			message_admins("The [src] had multiple materials set. Unless you were messing around with VV, yell at a coder")
+			message_admins("\The [src] had multiple materials set. Unless you were messing around with VV, yell at a coder")
 			frame.material_end_product = null
 			frame.construction_state = TANK_FRAME
 			break
 		else
-			frame.material_end_product = mat
+			frame.material_end_product = material
 	frame.update_appearance()
 
 ///////////////////////////////////////////////////////////////////
@@ -499,7 +499,7 @@
 /obj/structure/tank_frame/proc/add_plating(mob/living/user, obj/item/stack/stack)
 	. = FALSE
 	if(!stack.material_type)
-		to_chat(user, span_notice("You're not sure how to use this material to make a tank..."))
+		balloon_alert(user, "invalid material!")
 	var/datum/material/stack_mat = GET_MATERIAL_REF(stack.material_type)
 	if(!(MAT_CATEGORY_RIGID in stack_mat.categories))
 		to_chat(user, span_notice("This material doesn't seem rigid enough to hold the shape of a tank..."))
