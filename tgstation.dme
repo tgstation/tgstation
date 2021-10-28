@@ -3935,6 +3935,7 @@
 #include "code\modules\wiremod\components\variables\getter.dm"
 #include "code\modules\wiremod\components\variables\setter.dm"
 #include "code\modules\wiremod\core\admin_panel.dm"
+#include "code\modules\wiremod\core\assets.dm"
 #include "code\modules\wiremod\core\component.dm"
 #include "code\modules\wiremod\core\component_printer.dm"
 #include "code\modules\wiremod\core\datatypes.dm"
