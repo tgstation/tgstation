@@ -6999,10 +6999,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/meter,
 /obj/structure/cable,
-/obj/machinery/airalarm/engine{
-	dir = 1;
-	pixel_y = -24
-	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "aQw" = (

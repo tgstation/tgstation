@@ -23017,6 +23017,9 @@
 	dir = 4;
 	name = "Gas to Chamber"
 	},
+/obj/machinery/airalarm/engine{
+	pixel_y = 23
+	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "fUR" = (
@@ -36890,10 +36893,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/machinery/airalarm/engine{
-	dir = 8;
-	pixel_x = 24
-	},
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "lcF" = (

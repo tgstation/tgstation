@@ -28619,6 +28619,10 @@
 	dir = 1;
 	name = "Gas to Filter"
 	},
+/obj/machinery/airalarm/engine{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/circuit/green{
 	luminosity = 2
 	},
