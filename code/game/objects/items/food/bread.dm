@@ -255,6 +255,10 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
+/obj/item/food/baguette/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_HORROR_MIME, CELL_VIRUS_TABLE_GENERIC_MOB, 2)
+
 /obj/item/food/garlicbread
 	name = "garlic bread"
 	desc = "Alas, it is limited."

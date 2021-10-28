@@ -79,6 +79,8 @@
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
+#define CELL_LINE_TABLE_HORROR_MIME	"cell_line_horror_mime_table"
+#define CELL_LINE_TABLE_SKELETON_SPIRIT "cell_line_skeleton_spirit_table"
 
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"

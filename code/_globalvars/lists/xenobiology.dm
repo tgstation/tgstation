@@ -70,7 +70,15 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/queen_bee = 1,
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
 		/datum/micro_organism/cell_line/leaper = 2,
-		/datum/micro_organism/cell_line/mega_arachnid = 1)
+		/datum/micro_organism/cell_line/mega_arachnid = 1),
+	CELL_LINE_TABLE_HORROR_MIME = list(
+		/datum/micro_organism/cell_line/goat = 1,
+		/datum/micro_organism/cell_line/mouse = 1,
+		/datum/micro_organism/cell_line/cockroach = 1,
+		/datum/micro_organism/cell_line/horror_mime = 1),
+	CELL_LINE_TABLE_SKELETON_SPIRIT = list(
+		/datum/micro_organism/cell_line/ghost/regular = 1,
+		/datum/micro_organism/cell_line/ghost/skeleton_spirit = 1),
 	))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus

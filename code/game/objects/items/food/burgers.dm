@@ -156,6 +156,7 @@
 /obj/item/food/burger/ghost/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SKELETON_SPIRIT, CELL_VIRUS_TABLE_GENERIC_MOB, 2)
 
 /obj/item/food/burger/ghost/process()
 	if(!isturf(loc)) //no floating out of bags
