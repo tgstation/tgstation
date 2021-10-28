@@ -49793,7 +49793,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/engine,
-/area/engineering/supermatter)
+/area/engineering/supermatter/room)
 "lDK" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{

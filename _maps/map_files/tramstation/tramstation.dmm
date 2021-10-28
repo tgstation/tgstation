@@ -7004,7 +7004,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/engine,
-/area/engineering/supermatter)
+/area/engineering/supermatter/room)
 "aQw" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
