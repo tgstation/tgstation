@@ -39,7 +39,7 @@
 
 /obj/item/paper_bin/proc/generate_paper()
 	var/obj/item/paper/paper = new papertype(src)
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(SSevents.get_holiday(APRIL_FOOLS))
 		if(prob(30))
 			paper.info = "<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>"
 			paper.AddElement(/datum/element/honkspam)

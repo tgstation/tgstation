@@ -272,7 +272,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.uncuff()
 		H.stuttering = 0
 		H.cultslurring = 0
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(1) || SSevents.get_holiday(APRIL_FOOLS))
 			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 	return TRUE
 

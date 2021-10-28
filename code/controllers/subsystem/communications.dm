@@ -33,13 +33,13 @@ SUBSYSTEM_DEF(communications)
 /**
  * Check if a mob can call an emergency meeting
  *
- * Should only really happen during april fools. 
+ * Should only really happen during april fools.
  * Checks to see that it's been at least 5 minutes since the last emergency meeting call.
  * Arguments:
  * * user - Mob who called the meeting
  */
 /datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
-	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+	if(!(SSevents.get_holiday(APRIL_FOOLS)))
 		return FALSE
 	else if(COOLDOWN_FINISHED(src, emergency_meeting_cooldown))
 		return TRUE
@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(communications)
 /**
  * Call an emergency meeting
  *
- * Communications subsystem wrapper for the call_emergency_meeting world proc. 
+ * Communications subsystem wrapper for the call_emergency_meeting world proc.
  * Checks to make sure the proc can be called, and handles
  * relevant logging and timing. See that proc definition for more detail.
  * Arguments:

@@ -269,7 +269,7 @@ SUBSYSTEM_DEF(ticker)
 	if(SSevents.holidays)
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in SSevents.holidays)
-			var/datum/holiday/holiday = SSevents.holidays[holidayname]
+			var/datum/holiday/holiday = SSevents.get_holiday(holidayname)
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()

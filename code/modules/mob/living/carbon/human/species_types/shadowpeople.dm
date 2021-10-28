@@ -29,6 +29,6 @@
 			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYPART_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(SSevents.get_holiday(HALLOWEEN))
 		return TRUE
 	return ..()

@@ -44,6 +44,6 @@
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(SSevents.get_holiday(GARBAGEDAY))
 		backpack_contents += /obj/item/gun/ballistic/revolver
 		r_pocket = /obj/item/ammo_box/a357
