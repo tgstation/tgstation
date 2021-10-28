@@ -239,7 +239,7 @@
 	box = /obj/item/storage/box/survival
 
 	var/backpack = /obj/item/storage/backpack
-	var/satchel  = /obj/item/storage/backpack/satchel
+	var/satchel = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
 
 	var/pda_slot = ITEM_SLOT_BELT

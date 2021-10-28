@@ -953,8 +953,8 @@
 				"status" = equipment,
 				"topicParams" = list(
 					"auto" = list("eqp" = 3),
-					"on"   = list("eqp" = 2),
-					"off"  = list("eqp" = 1)
+					"on" = list("eqp" = 2),
+					"off" = list("eqp" = 1),
 				)
 			),
 			list(
@@ -963,8 +963,8 @@
 				"status" = lighting,
 				"topicParams" = list(
 					"auto" = list("lgt" = 3),
-					"on"   = list("lgt" = 2),
-					"off"  = list("lgt" = 1)
+					"on" = list("lgt" = 2),
+					"off" = list("lgt" = 1),
 				)
 			),
 			list(
@@ -973,8 +973,8 @@
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),
-					"on"   = list("env" = 2),
-					"off"  = list("env" = 1)
+					"on" = list("env" = 2),
+					"off" = list("env" = 1),
 				)
 			)
 		)

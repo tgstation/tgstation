@@ -669,7 +669,7 @@
 		while(query_unban_search_bans.NextRow())
 			var/ban_id = query_unban_search_bans.item[1]
 			var/ban_datetime = query_unban_search_bans.item[2]
-			var/ban_round_id  = query_unban_search_bans.item[3]
+			var/ban_round_id = query_unban_search_bans.item[3]
 			var/role = query_unban_search_bans.item[4]
 			var/expiration_time = query_unban_search_bans.item[5]
 			//we don't cast duration as num because if the duration is large enough to be converted to scientific notation by byond then the + character gets lost when passed through href causing SQL to interpret '4.321e 007' as '4'
