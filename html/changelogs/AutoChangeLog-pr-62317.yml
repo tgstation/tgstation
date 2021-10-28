@@ -1,0 +1,7 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "Pressure Tanks will now refuse to accept materials without a specific material type during construction."
+  - bugfix: "Pressure Tanks will now drop the correct amount of materials during deconstruction."
+  - bugfix: "Pressure Tanks will now send you flying if you continue to slice open a sufficiently pressurized tank despite the warning, rather than doing nothing."
+  - bugfix: "Pressure Tanks will release their gas contents when destroyed, rather than voiding them."
