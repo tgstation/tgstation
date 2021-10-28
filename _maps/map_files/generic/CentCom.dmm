@@ -7867,7 +7867,7 @@
 /area/syndicate_mothership/control)
 "xI" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/syndicate_mothership/control)
 "xJ" = (
 /obj/machinery/computer/mech_bay_power_console,

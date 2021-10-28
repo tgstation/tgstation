@@ -23177,7 +23177,7 @@
 /area/science/breakroom)
 "gJG" = (
 /obj/vehicle/sealed/mecha/working/ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/cargo/storage)
 "gJJ" = (
 /obj/machinery/door/airlock/hatch{
@@ -36052,7 +36052,7 @@
 /turf/open/floor/carpet,
 /area/service/chapel)
 "lEr" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "lFi" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -54618,7 +54618,7 @@
 /obj/effect/turf_decal/sand,
 /obj/structure/mecha_wreckage/ripley,
 /obj/item/stack/cable_coil/five,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/maintenance/port/central)
 "sSd" = (
 /obj/machinery/button/door/directional/east{

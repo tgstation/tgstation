@@ -7186,7 +7186,7 @@
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "blw" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "blz" = (
 /obj/structure/disposalpipe/segment,
@@ -29695,7 +29695,7 @@
 /area/cargo/storage)
 "lCJ" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/maintenance/department/electrical)
 "lCO" = (
 /obj/effect/turf_decal/bot,
@@ -35655,7 +35655,7 @@
 /area/maintenance/port/fore)
 "oFq" = (
 /obj/machinery/newscaster/directional/west,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "oFu" = (
 /obj/machinery/door/firedoor,

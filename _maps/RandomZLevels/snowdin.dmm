@@ -11957,7 +11957,7 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Ij" = (
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Ik" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -11975,7 +11975,7 @@
 "In" = (
 /obj/vehicle/sealed/mecha/working/ripley/mining,
 /obj/effect/turf_decal/bot,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Io" = (
 /obj/effect/turf_decal/stripes/line{

@@ -2613,7 +2613,7 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kj" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/spacebattle/cruiser)
 "kk" = (
 /obj/item/shard,
