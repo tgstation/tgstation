@@ -453,7 +453,6 @@
 				else if(delimiter_pos == 0)
 					error_state += "roleban_delimiter not found in href. Report this to coders."
 				else
-					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
 						roles_to_ban |= key
