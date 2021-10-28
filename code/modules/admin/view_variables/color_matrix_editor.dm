@@ -48,23 +48,23 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/color_matrix_proxy_view)
 
 /datum/color_matrix_editor
 	var/client/owner
-	var/atom/target
+	var/datum/weakref/target
 	var/atom/movable/screen/color_matrix_proxy_view/proxy_view
 	var/list/current_color
 	var/closed
 
-/datum/color_matrix_editor/New(user, _target = null)
+/datum/color_matrix_editor/New(user, atom/_target = null)
 	owner = CLIENT_FROM_VAR(user)
-	target = _target
-	if(islist(target?.color))
-		current_color = target.color
-	else if(istext(target?.color))
-		current_color = color_hex2color_matrix(target.color)
+	if(islist(_target?.color))
+		current_color = _target.color
+	else if(istext(_target?.color))
+		current_color = color_hex2color_matrix(_target.color)
 	else
 		current_color = color_matrix_identity()
 	proxy_view = new
-	if(target)
-		proxy_view.appearance = image(target)
+	if(_target)
+		target = WEAKREF(_target)
+		proxy_view.appearance = image(_target)
 	else
 		proxy_view.appearance = image('icons/misc/colortest.dmi', "colors")
 
@@ -113,8 +113,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/color_matrix_proxy_view)
 	closed = TRUE
 
 /datum/color_matrix_editor/proc/on_confirm()
-	if(target)
-		target.color = current_color
+	var/atom/target_atom = target?.resolve()
+	if(istype(target_atom))
+		target_atom.add_atom_colour(current_color, ADMIN_COLOUR_PRIORITY)
 
 /datum/color_matrix_editor/proc/wait()
 	while(!closed)
