@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - refactor: "Reworked `/turf/var/intact` into variables which don't conflate underfloor visibility, underfloor interactability, and overfloor presence. This fixes many bugs relating to turfs in general, especially catwalks and glass flooring."
