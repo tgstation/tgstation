@@ -219,6 +219,7 @@
 		<input type='hidden' name='oldreason' value='[reason]'>
 		<input type='hidden' name='page' value='[page]'>
 		<input type='hidden' name='adminkey' value='[admin_key]'>
+		<input type='hidden' name='role' value='[role]'>
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
@@ -434,6 +435,7 @@
 			changes += list("Reason" = "[href_list["oldreason"]]<br>to<br>[reason]")
 		if(!changes.len)
 			error_state += "No changes were detected."
+		roles_to_ban += href_list["role"]
 	else
 		severity = href_list["radioseverity"]
 		if(!severity)
@@ -1000,6 +1002,7 @@
 	if(player_client)
 		build_ban_cache(player_client)
 		to_chat(player_client, span_boldannounce("[banned_player_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
+		to_chat(player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
 			is_admin = TRUE
 		if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
@@ -1009,6 +1012,7 @@
 		if(other_player_client.address == banned_player_ip || other_player_client.computer_id == banned_player_cid)
 			build_ban_cache(other_player_client)
 			to_chat(other_player_client, span_boldannounce("[banned_other_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
+			to_chat(other_player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))

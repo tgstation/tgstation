@@ -6,6 +6,7 @@
 /obj/item/circuit_component/list_literal/assoc_literal
 	display_name = "Associative List Literal"
 	desc = "A component that returns an associative list consisting of the inputs."
+	category = "List"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The inputs used to create the list

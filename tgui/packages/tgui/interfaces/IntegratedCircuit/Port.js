@@ -5,6 +5,7 @@ import {
 import { Component, createRef } from 'inferno';
 import { DisplayName } from "./DisplayName";
 import { classes } from 'common/react';
+import { noop } from './constants';
 
 export class Port extends Component {
   constructor() {
@@ -23,7 +24,7 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
-      onPortMouseDown,
+      onPortMouseDown= noop,
     } = this.props;
     onPortMouseDown(portIndex, componentId, port, isOutput, e);
   }
@@ -34,7 +35,7 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
-      onPortMouseUp,
+      onPortMouseUp = noop,
     } = this.props;
     onPortMouseUp(portIndex, componentId, port, isOutput, e);
   }
@@ -45,7 +46,7 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
-      onPortRightClick,
+      onPortRightClick = noop,
     } = this.props;
     onPortRightClick(portIndex, componentId, port, isOutput, e);
   }
@@ -70,11 +71,13 @@ export class Port extends Component {
       portIndex,
       componentId,
       isOutput,
+      act,
     } = this.props;
 
     return (
       <Stack.Item>
         <DisplayName
+          act={act}
           port={port}
           isOutput={isOutput}
           componentId={componentId}
