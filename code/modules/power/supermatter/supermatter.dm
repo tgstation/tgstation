@@ -180,6 +180,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/hallucination_power = 0.1
 
 	///Pressure bonus constants
+	///If the SM is operating in sufficiently low pressure, increase power output.
+	///This needs both a small amount of gas and a strong cooling system to keep temperature low in a low heat capacity environment.
 
 	///These constants are used to derive the values in the pressure bonus equation from human-meaningful values
 	///If you're varediting these, call update_constants() to update the derived values
