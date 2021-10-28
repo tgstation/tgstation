@@ -502,6 +502,10 @@
 	end_day = 2
 	end_month = NOVEMBER
 
+/datum/holiday/halloween/celebrate()
+	. = ..()
+	GLOB.roundstart_races = generate_selectable_species()
+
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
 

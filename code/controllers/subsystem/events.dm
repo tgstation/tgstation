@@ -22,7 +22,6 @@ SUBSYSTEM_DEF(events)
 		control += E //add it to the list of all events (controls)
 	reschedule()
 	getHoliday()
-	GLOB.roundstart_races = generate_selectable_species()
 	return ..()
 
 
@@ -165,8 +164,8 @@ SUBSYSTEM_DEF(events)
 			var/DDD = time2text(time_in_timezone, "DDD") // get the current weekday
 
 			if(holiday.shouldCelebrate(DD, MM, YYYY, DDD))
-				holiday.celebrate()
 				LAZYSET(holidays, holiday.name, holiday)
+				holiday.celebrate()
 				delete_holiday = FALSE
 				break
 		if(delete_holiday)
