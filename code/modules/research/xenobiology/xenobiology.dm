@@ -686,58 +686,68 @@
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/slime/sentience/attack(mob/living/M, mob/user)
-	if(being_used || !ismob(M))
+/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
+	if(being_used || !ismob(dumb_mob))
 		return
-	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		to_chat(user, span_warning("[M] is already too intelligent for this to work!"))
+	if((!isanimal(dumb_mob) && !isbasicmob(dumb_mob)) || dumb_mob.ckey) //only works on animals that aren't player controlled
+		to_chat(user, span_warning("[dumb_mob] is already too intelligent for this to work!"))
 		return
-	if(M.stat)
-		to_chat(user, span_warning("[M] is dead!"))
+	if(dumb_mob.stat)
+		to_chat(user, span_warning("[dumb_mob] is dead!"))
 		return
-	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != sentience_type)
-		to_chat(user, span_warning("[src] won't work on [SM]."))
-		return
+	if(isanimal(dumb_mob))
+		var/mob/living/simple_animal/dumb_animal = dumb_mob
+		if(dumb_animal.sentience_type != sentience_type)
+			to_chat(user, span_warning("[src] won't work on [dumb_animal]."))
+			return
+	else if(isbasicmob(dumb_mob)) //duplicate shit code until all simple animasls are made into basic mobs. sentience_type is not on living, but it duplicated  on basic and animal
+		var/mob/living/basic/basic_dumb_bitch = dumb_mob
+		if(basic_dumb_bitch.sentience_type != sentience_type)
+			to_chat(user, span_warning("[src] won't work on [basic_dumb_bitch]."))
+			return
 
-	to_chat(user, span_notice("You offer [src] to [SM]..."))
+	to_chat(user, span_notice("You offer [src] to [dumb_mob]..."))
 	being_used = TRUE
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		SM.key = C.key
-		SM.mind.enslave_mind_to_creator(user)
-		SEND_SIGNAL(SM, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
-		SM.sentience_act()
-		to_chat(SM, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
-		to_chat(SM, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
-			to_chat(SM, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
-		to_chat(user, span_notice("[SM] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		SM.copy_languages(user)
-		after_success(user, SM)
+		dumb_mob.key = C.key
+		dumb_mob.mind.enslave_mind_to_creator(user)
+		SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
+		if(isanimal(dumb_mob))
+			var/mob/living/simple_animal/smart_animal = dumb_mob
+			smart_animal.sentience_act()
+		to_chat(dumb_mob, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
+		to_chat(dumb_mob, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
+		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
+			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
+		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
+		dumb_mob.copy_languages(user)
+		after_success(user, dumb_mob)
 		qdel(src)
 	else
-		to_chat(user, span_notice("[SM] looks interested for a moment, but then looks back down. Maybe you should try again later."))
+		to_chat(user, span_notice("[dumb_mob] looks interested for a moment, but then looks back down. Maybe you should try again later."))
 		being_used = FALSE
 		..()
 
-/obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/simple_animal/SM)
+/obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/smart_mob)
 	return
 
 /obj/item/slimepotion/slime/sentience/nuclear
 	name = "syndicate intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
-/obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
+/obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/smart_mob)
 	var/obj/item/implant/radio/syndicate/imp = new(src)
-	imp.implant(SM, user)
+	imp.implant(smart_mob, user)
 
 	// Ugly as sin. Simble mob accesses are for another time.
-	SM.access_card = new /obj/item/card/id/advanced/chameleon(SM)
-	SSid_access.apply_trim_to_card(SM, /datum/id_trim/chameleon)
-	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	if(isanimal(smart_mob))
+		var/mob/living/simple_animal/smart_animal = smart_mob
+		smart_animal.access_card = new /obj/item/card/id/advanced/chameleon(smart_animal)
+		SSid_access.apply_trim_to_card(smart_animal, /datum/id_trim/chameleon)
+		ADD_TRAIT(smart_animal.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
