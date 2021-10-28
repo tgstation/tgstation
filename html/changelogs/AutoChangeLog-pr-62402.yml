@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - qol: "Ordnance, Ordnance Storage and Atmospherics have been dropped to common-level accesses, allowing them to be added to any ID card instead of just silver and specific job trimmed cards."
