@@ -91,7 +91,7 @@
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
-		if(istype(F) && !F.intact)
+		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))
 				var/powered = C.avail()
