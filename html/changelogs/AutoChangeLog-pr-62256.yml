@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - code_imp: "Vending machines no longer require a unique panel overlay for each new type"
