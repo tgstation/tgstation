@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	var/fuel_consumption_multiplier = 1
 	///Multiplier for the gas production (min 0.01)
 	var/gas_production_multiplier = 1
-	///Max allowed temperature multiplier, scales the max temperature we can hit, See FUSION_MAXIMUM_TEMPERATURE (Maxed at 1, don't go getting any ideas)
+	///Max allowed temperature multiplier, scales the max temperature we can hit, see FUSION_MAXIMUM_TEMPERATURE (Maxed at 1, don't go getting any ideas)
 	var/temperature_change_multiplier = 1
 	///These are the main fuels, only 2 gases that are the ones being consumed by the fusion reaction (eg. H2 and trit)
 	var/requirements = list()
