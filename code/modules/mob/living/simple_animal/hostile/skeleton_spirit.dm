@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/skeleton_spirit
-	name = "Horror Mime"
-	desc = "A strange looking and weirdly scary mime."
+	name = "Skeleton Spirit"
+	desc = "A spine and skull with a fleshy goop holding it all together."
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "skeleton_spirit"
 	icon_living = "skeleton_spirit"
