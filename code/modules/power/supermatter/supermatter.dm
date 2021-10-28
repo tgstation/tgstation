@@ -195,9 +195,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/pressure_bonus_curve_angle = 1.8
 
 	///These values are calculated from the above in update_constants() and immediately overwritten
-	///These are here to 1) give you an idea of what to expect 2) provide a somewhat sane fallback if something breaks
-	var/pressure_bonus_derived_constant = 0.63
-	var/pressure_bonus_derived_steepness = 0.0333
+	///The default values will always result in a no-op 1x modifier, in case something breaks.
+	var/pressure_bonus_derived_constant = 1
+	var/pressure_bonus_derived_steepness = 0
 
 
 	///Our internal radio
