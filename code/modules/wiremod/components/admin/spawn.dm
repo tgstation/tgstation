@@ -6,6 +6,7 @@
 /obj/item/circuit_component/spawn_atom
 	display_name = "Spawn Atom"
 	desc = "Spawns an atom at a desired location"
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// The input path to convert into a typepath
@@ -38,8 +39,10 @@
 	if(!params)
 		params = list()
 
-	params.Insert(1, spawn_at.value)
+	var/list/resolved_params = recursive_list_resolve(params)
 
-	var/atom/spawned = new typepath(arglist(params))
+	resolved_params.Insert(1, spawn_at.value)
+
+	var/atom/spawned = new typepath(arglist(resolved_params))
 	spawned.datum_flags |= DF_VAR_EDITED
 	spawned_atom.set_output(spawned)

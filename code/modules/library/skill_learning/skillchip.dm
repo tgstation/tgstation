@@ -433,3 +433,21 @@
 	skill_icon = "lungs"
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
+
+/obj/item/skillchip/brainwashing
+	name = "suspicious skillchip"
+	auto_traits = list(TRAIT_BRAINWASHING)
+	skill_name = "Brainwashing"
+	skill_description = "WARNING: The integrity of this chip is compromised. Please discard this skillchip."
+	skill_icon = "soap"
+	activate_message = span_notice("...But all at once it comes to you... something involving putting a brain in a washing machine?")
+	deactivate_message = span_warning("All knowledge of the secret brainwashing technique is GONE.")
+
+/obj/item/skillchip/brainwashing/examine(mob/user)
+	. = ..()
+	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
+
+/obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
+	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	. = ..()

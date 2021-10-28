@@ -275,7 +275,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!reagents.total_volume)
 		return
 	reagents.expose_temperature(heat, 0.05)
-
+	if(!reagents.total_volume) //may have reacted and gone to 0 after expose_temperature
+		return
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
 	if(!istype(smoker) || src != smoker.wear_mask)
@@ -901,25 +902,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cig_paper"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/rollingpaper/afterattack(atom/target, mob/user, proximity)
+/obj/item/rollingpaper/Initialize(mapload)
 	. = ..()
-	if(!proximity)
-		return
-	if(!istype(target, /obj/item/food/grown))
-		return
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/clothing/mask/cigarette/rollie, CUSTOM_INGREDIENT_ICON_NOCHANGE, ingredient_type=CUSTOM_INGREDIENT_TYPE_DRYABLE, max_ingredients=2)
 
-	if(!HAS_TRAIT(target, TRAIT_DRIED))
-		to_chat(user, span_warning("You need to dry [target] first!"))
-		return
-
-	var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
-	R.chem_volume = target.reagents.maximum_volume
-	target.reagents.trans_to(R, R.chem_volume, transfered_by = user)
-	qdel(target)
-	qdel(src)
-	user.put_in_active_hand(R)
-	to_chat(user, span_notice("You roll the [target.name] into a rolling paper."))
-	R.desc = "Dried [target.name] rolled up in a thin piece of paper."
 
 ///////////////
 //VAPE NATION//
