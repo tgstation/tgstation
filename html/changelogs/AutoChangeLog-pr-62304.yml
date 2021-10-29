@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "The OOC messages of people with minor admin ranks now respect OOC filters in chat tabs"

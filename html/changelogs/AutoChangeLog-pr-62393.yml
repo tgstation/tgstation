@@ -1,6 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "Heavily EMPing a jumpsuit or another piece of under clothing will now short out its suit sensors (as if they had shorted out from damage to the jumpsuit) instead of randomizing their setting. You can repair them with a cable coil as normal."
-  - bugfix: "The sensor list will now be updated when your jumpsuit is EMP'd to reflect any possible changes in suit sensor status."
-  - bugfix: "Under clothing will now respect the EMP_PROTECT_SELF flag."

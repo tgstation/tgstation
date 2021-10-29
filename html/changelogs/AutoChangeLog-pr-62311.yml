@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "The crafting menu now uses scrollable sections, fitting the window regardless of resize. A little easier to use."
-  - bugfix: "Fixed an issue with the crafting menu not being fully dimmed while crafting."

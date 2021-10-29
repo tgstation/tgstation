@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Felinids can no longer be head of staff if human authority is required."
-  - bugfix: "The foreigner quirk on felinids now works as it does with all other nonhumans who have their own languages, rather than also giving Galactic Uncommon."

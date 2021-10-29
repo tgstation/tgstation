@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Bank machines will now immediately stop withdrawing funds if the machine is broken or unpowered."
