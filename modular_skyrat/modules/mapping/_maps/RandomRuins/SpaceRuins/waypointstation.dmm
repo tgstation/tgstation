@@ -1,0 +1,5199 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"ay" = (
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/ruin)
+"aR" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"aS" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/structure/door_assembly/door_assembly_com,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"bn" = (
+/obj/structure/table,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"bD" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"bF" = (
+/mob/living/simple_animal/hostile/alien/queen/large,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"bG" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"bY" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"cf" = (
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/item/toy/toy_xeno,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"ck" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"co" = (
+/obj/structure/lattice,
+/mob/living/simple_animal/hostile/alien,
+/turf/template_noop,
+/area/ruin)
+"cV" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"cW" = (
+/obj/item/stack/sheet/iron,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"dz" = (
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"dQ" = (
+/obj/item/shard,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin)
+"eD" = (
+/obj/item/stack/cable_coil/cut{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"eF" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"eP" = (
+/turf/template_noop,
+/area/template_noop)
+"eZ" = (
+/obj/item/stack/sheet/plasteel/twenty,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"fr" = (
+/obj/item/stack/cable_coil/cut{
+	pixel_x = -8;
+	pixel_y = -5
+	},
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"fs" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"fu" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"fJ" = (
+/obj/machinery/door/airlock/command/glass,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"fQ" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"gy" = (
+/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"gH" = (
+/obj/machinery/light/broken,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"gW" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"hl" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"ht" = (
+/obj/item/stack/tile/iron,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin)
+"hE" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"iu" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 4;
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"iO" = (
+/obj/item/pickaxe/drill,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"iY" = (
+/obj/item/flashlight,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"ju" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin)
+"ka" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"kI" = (
+/obj/item/shard{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"kR" = (
+/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"lf" = (
+/obj/effect/decal/cleanable/blood/drip,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"lr" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"lx" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"lE" = (
+/obj/item/shard{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/stack/cable_coil/cut{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"lU" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"mb" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"mc" = (
+/obj/structure/shuttle/engine/large,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"mD" = (
+/obj/item/stack/sheet/iron,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin)
+"mJ" = (
+/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"mO" = (
+/obj/item/gun/ballistic/shotgun/hook,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"na" = (
+/obj/structure/chair/sofa/corp,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"nw" = (
+/obj/effect/mob_spawn/human/corpse/assistant,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"nA" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"nC" = (
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"nO" = (
+/mob/living/simple_animal/hostile/alien,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"oa" = (
+/obj/structure/table,
+/obj/item/disk/tech_disk/spaceloot,
+/obj/item/disk/tech_disk/spaceloot,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"og" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/chair,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"oh" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav)
+"on" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"oC" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"pt" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/goonplaque,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"pB" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"pC" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"pG" = (
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"pJ" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"pO" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space)
+"pP" = (
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/item/reagent_containers/glass/bottle/random_virus,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"qh" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"qC" = (
+/obj/structure/barricade/security,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"qT" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"ra" = (
+/obj/item/stack/tile/iron,
+/turf/template_noop,
+/area/ruin)
+"rc" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"rd" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"rh" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"rp" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"rA" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/small/broken,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"rH" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"rX" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"sc" = (
+/obj/item/bodypart/r_leg,
+/turf/template_noop,
+/area/template_noop)
+"sh" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"sq" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/item/melee/baton/telescopic{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"sw" = (
+/obj/structure/closet/secure_closet/armory1,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"sx" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"sR" = (
+/obj/structure/closet/crate/large,
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"tc" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"tx" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"tE" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"tH" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"ub" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"ue" = (
+/obj/machinery/light/broken,
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"uA" = (
+/obj/machinery/door/window/brigdoor/westleft,
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"uE" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/flashlight,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"uK" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/entertainment/money,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"va" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"vj" = (
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"vq" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"wu" = (
+/obj/structure/shuttle/engine/heater,
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"wB" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"xi" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"xw" = (
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"xO" = (
+/obj/structure/frame/computer{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"yn" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"yR" = (
+/obj/structure/table,
+/obj/item/toy/figure/syndie,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"zp" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"zr" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"zu" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"zx" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"zy" = (
+/mob/living/simple_animal/hostile/alien/drone,
+/obj/effect/decal/cleanable/xenoblood,
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
+	pixel_x = 31
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"zE" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 1;
+	name = "Broken Computer"
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"zF" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 8;
+	name = "Broken Computer"
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Af" = (
+/mob/living/simple_animal/hostile/alien/sentinel,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Al" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"AC" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 4;
+	name = "Broken Computer"
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"AG" = (
+/obj/effect/decal/cleanable/blood/drip,
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"AP" = (
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Bi" = (
+/obj/structure/closet,
+/obj/item/ammo_casing/shotgun/pulverizer,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Bl" = (
+/obj/item/bodypart/head{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/alien/sentinel,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"BD" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/item/stack/tile/iron,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"BQ" = (
+/obj/item/pen/fountain/captain,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"BU" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/shard{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/stack/cable_coil/cut{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Cn" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Cx" = (
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"CC" = (
+/obj/item/stack/sheet/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"CL" = (
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"CY" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Dg" = (
+/turf/closed/mineral,
+/area/ruin/space)
+"Dj" = (
+/obj/item/shard{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ec" = (
+/obj/item/shard{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/stack/cable_coil/cut{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ek" = (
+/obj/item/spear,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"EZ" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ff" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Fu" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"FS" = (
+/turf/closed/mineral/bananium,
+/area/ruin/space)
+"Gh" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Gv" = (
+/obj/machinery/power/solar/fake,
+/turf/open/floor/iron/solarpanel/airless,
+/area/template_noop)
+"Gz" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
+	pixel_x = 33
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"GW" = (
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ha" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Hp" = (
+/obj/item/flashlight/flare,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"Hx" = (
+/obj/item/shard{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"HV" = (
+/obj/structure/door_assembly/door_assembly_com,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"If" = (
+/obj/item/clothing/under/syndicate/bloodred/sleepytime{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"IC" = (
+/obj/item/bodypart/l_arm,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"IM" = (
+/obj/item/shard{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/stack/cable_coil{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/light/small/broken,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"IQ" = (
+/obj/structure/chair/office,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"IW" = (
+/obj/structure/closet/secure_closet/security,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Jf" = (
+/obj/item/bodypart/r_arm,
+/turf/template_noop,
+/area/template_noop)
+"Jj" = (
+/obj/item/stack/tile/iron,
+/turf/template_noop,
+/area/template_noop)
+"Jq" = (
+/obj/structure/table,
+/obj/item/ammo_casing/shotgun/frag12{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/ammo_casing/shotgun/frag12,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"JC" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"JU" = (
+/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ke" = (
+/turf/template_noop,
+/area/ruin)
+"Kf" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"Kh" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ku" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"LG" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ma" = (
+/obj/structure/table,
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ml" = (
+/obj/item/shard,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Mx" = (
+/obj/item/shard{
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"MQ" = (
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"MR" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/machinery/light/small/broken,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Nv" = (
+/obj/item/stack/cable_coil,
+/turf/template_noop,
+/area/template_noop)
+"NX" = (
+/obj/item/shard{
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Oc" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ok" = (
+/obj/machinery/door/airlock/external/glass,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Oy" = (
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"OB" = (
+/obj/item/kirbyplants/random,
+/turf/template_noop,
+/area/template_noop)
+"OC" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"OL" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"OQ" = (
+/obj/structure/door_assembly/door_assembly_com,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Pg" = (
+/obj/item/clothing/head/helmet/swat{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/shard{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/item/shard{
+	pixel_x = -1;
+	pixel_y = -7
+	},
+/obj/item/stack/cable_coil{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/machinery/light/small/broken,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Pj" = (
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Pn" = (
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Pv" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Qd" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
+"Qo" = (
+/obj/structure/frame/computer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Qt" = (
+/obj/item/bodypart/r_arm{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Qw" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
+"QC" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"QT" = (
+/obj/machinery/computer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Rk" = (
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/template_noop)
+"RC" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"RE" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/small/broken{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"RS" = (
+/obj/item/bodypart/chest{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/armor/vest{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"SC" = (
+/obj/structure/barricade/security,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"SR" = (
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"SY" = (
+/obj/structure/table,
+/obj/item/toy/figure/captain,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Tq" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"TE" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"TH" = (
+/obj/machinery/door/airlock/security/glass,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"TN" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"TQ" = (
+/obj/item/stack/rods/ten,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"TR" = (
+/obj/structure/door_assembly/door_assembly_highsecurity,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Um" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Uz" = (
+/obj/structure/table,
+/obj/item/mining_scanner,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"UB" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ve" = (
+/obj/item/bodypart/chest{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/shard{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/stack/cable_coil{
+	pixel_y = -3
+	},
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"VB" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"VK" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/stack/cable_coil/cut{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Wg" = (
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Wu" = (
+/obj/item/bodypart/l_leg{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"WF" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"WS" = (
+/obj/item/stack/cable_coil/cut{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Xl" = (
+/obj/item/spear,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Xv" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"XG" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"XI" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	name = "Broken Computer"
+	},
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"XN" = (
+/obj/item/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"Ym" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/innards,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"YL" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/ruin)
+"YT" = (
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Zm" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Shuttle"
+	})
+"Zt" = (
+/obj/structure/table,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+"ZA" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav{
+	name = "Abandoned Station"
+	})
+
+(1,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+hl
+OC
+OC
+OC
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(2,1,1) = {"
+eP
+eP
+eP
+tH
+tH
+tH
+hl
+zr
+xO
+AC
+hl
+tH
+tH
+tH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Nv
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(3,1,1) = {"
+eP
+eP
+eP
+tH
+eP
+eP
+hl
+Mx
+Fu
+Dj
+hl
+eP
+rH
+eP
+eP
+rH
+eP
+eP
+eP
+eP
+rH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+hl
+hl
+hl
+hl
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(4,1,1) = {"
+eP
+eP
+eP
+tH
+eP
+hl
+hl
+xi
+Ec
+fs
+hl
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+tH
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+eP
+hl
+IW
+qT
+Zt
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(5,1,1) = {"
+eP
+eP
+eP
+tH
+eP
+hl
+Bi
+VK
+BQ
+BU
+Pj
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Qd
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+eP
+hl
+sw
+qT
+Zt
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(6,1,1) = {"
+OC
+OC
+OC
+hl
+hl
+hl
+hl
+hl
+HV
+hl
+hl
+hl
+ka
+co
+ju
+ju
+Ke
+rH
+eP
+eP
+eP
+Qd
+Gv
+Gv
+tH
+Gv
+Gv
+tH
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+eP
+hl
+lr
+qT
+Zt
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(7,1,1) = {"
+OC
+oa
+Pj
+Pj
+Pj
+cV
+Pj
+Pj
+Pj
+ka
+rh
+pB
+ka
+RC
+dQ
+Ke
+Ke
+eP
+eP
+eP
+eP
+tH
+Gv
+Gv
+Qd
+Gv
+Gv
+tH
+Gv
+Gv
+Qd
+Gv
+Gv
+Qd
+eP
+hl
+lr
+qT
+qT
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(8,1,1) = {"
+OC
+Jq
+Pj
+Xv
+Pj
+nC
+Pj
+ai
+qh
+ka
+ka
+Pj
+nA
+ju
+Ke
+Ke
+Ke
+eP
+eP
+eP
+eP
+tH
+tH
+Qd
+Qd
+Qd
+tH
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+Qd
+eP
+hl
+rX
+sq
+UB
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(9,1,1) = {"
+hl
+SY
+Pj
+Pj
+Ym
+Pj
+qh
+qh
+qh
+qh
+bD
+bG
+ka
+ZA
+bG
+ju
+ay
+eP
+OB
+eP
+eP
+rH
+eP
+eP
+tH
+eP
+eP
+tH
+eP
+eP
+tH
+Nv
+wB
+wB
+wB
+hl
+uA
+OC
+TH
+hl
+wB
+wB
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Ok
+OC
+eP
+eP
+eP
+eP
+"}
+(10,1,1) = {"
+hl
+hl
+Oy
+Pj
+Pj
+qh
+ai
+qh
+qh
+lU
+qh
+yn
+zu
+RC
+ju
+Ke
+Ke
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Qd
+Nv
+rH
+tH
+eP
+eP
+tH
+eP
+wB
+Gh
+Pj
+Pj
+Pj
+Pj
+rd
+Pj
+Pj
+XG
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+ka
+OC
+eP
+eP
+eP
+eP
+"}
+(11,1,1) = {"
+eP
+hl
+Pj
+cV
+qh
+hl
+hl
+fQ
+fQ
+fQ
+hl
+hl
+qh
+Pj
+ZA
+ju
+Ke
+ju
+Ke
+eP
+eP
+eP
+Nv
+eP
+Qd
+eP
+eP
+tH
+eP
+eP
+tH
+eP
+wB
+MQ
+Pj
+iY
+Pj
+Pj
+tx
+Pj
+bY
+ue
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+ka
+OC
+eP
+eP
+eP
+eP
+"}
+(12,1,1) = {"
+eP
+OC
+vj
+qh
+qh
+hl
+XI
+tc
+qh
+IQ
+zE
+hl
+qh
+bG
+bG
+Um
+ju
+nA
+Ke
+bG
+Wg
+Ke
+ZA
+ka
+ka
+wB
+wB
+OC
+OC
+OC
+OC
+wB
+wB
+XG
+nw
+Pj
+Pj
+Pj
+CY
+tE
+Kh
+fu
+wB
+OC
+OC
+wB
+OC
+OC
+OC
+wB
+OC
+OC
+OC
+wB
+Ok
+wB
+OC
+OC
+eP
+eP
+"}
+(13,1,1) = {"
+eP
+OC
+na
+qh
+qh
+fQ
+qh
+qh
+qh
+Af
+qh
+fQ
+qh
+qh
+CC
+Pj
+OQ
+ka
+ju
+ay
+RC
+ka
+Pj
+Pj
+Pj
+iu
+XN
+Pj
+Pj
+Pj
+Pj
+lf
+Pj
+on
+Pj
+Pj
+Pj
+Kh
+Pj
+TQ
+Pj
+Pj
+Pj
+Pj
+ck
+tE
+ZA
+ka
+ka
+tE
+tE
+bG
+tE
+hE
+gy
+cV
+Pj
+OC
+eP
+eP
+"}
+(14,1,1) = {"
+eP
+OC
+na
+qh
+Ku
+sx
+EZ
+rp
+bF
+qh
+qh
+fQ
+qh
+ka
+qC
+ka
+hl
+Pj
+ka
+Pj
+Pj
+nA
+Pj
+bG
+Pj
+GW
+Pj
+cV
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+eZ
+pt
+Pj
+Pj
+cV
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+bG
+Pj
+ka
+CC
+Ml
+Pj
+bG
+CC
+Ml
+Pj
+OC
+eP
+eP
+"}
+(15,1,1) = {"
+eP
+OC
+na
+qh
+JC
+fQ
+qh
+pC
+qh
+qh
+qh
+fQ
+qh
+qh
+Pj
+qC
+fJ
+Cn
+BD
+ka
+bG
+LG
+ka
+Cn
+Kh
+Pn
+Pj
+Pj
+Pj
+cV
+Pj
+Pj
+Pj
+iO
+Pj
+pJ
+Pj
+Pj
+kR
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Al
+Pj
+Pj
+QC
+nA
+ju
+ka
+bG
+Oc
+ka
+Pj
+Pj
+OC
+eP
+eP
+"}
+(16,1,1) = {"
+eP
+OC
+zx
+qh
+qh
+hl
+Ha
+qh
+lx
+IQ
+zE
+hl
+qh
+qh
+cV
+qC
+hl
+Pj
+wB
+wB
+wB
+wB
+qC
+Pj
+Pj
+wB
+wB
+OC
+OC
+OC
+OC
+wB
+wB
+Pj
+bn
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+wB
+OC
+OC
+wB
+OC
+OC
+ka
+ju
+Ke
+Ke
+mD
+wB
+gW
+wB
+OC
+OC
+eP
+eP
+"}
+(17,1,1) = {"
+eP
+hl
+zp
+qh
+qh
+hl
+hl
+fQ
+fQ
+fQ
+hl
+hl
+mb
+qh
+Cx
+Pj
+hl
+wB
+wB
+eP
+eP
+oh
+CL
+CL
+SC
+oh
+eP
+eP
+eP
+eP
+eP
+eP
+wB
+aR
+bn
+Uz
+Pj
+Pj
+cV
+Pj
+Pj
+gH
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Jj
+eP
+eP
+ju
+nA
+OC
+eP
+eP
+eP
+eP
+"}
+(18,1,1) = {"
+hl
+hl
+Oy
+Pj
+qh
+qh
+qh
+qh
+qh
+qh
+AP
+Ek
+qh
+bn
+wB
+Pj
+hl
+eP
+eP
+eP
+eP
+OL
+CL
+CL
+Hp
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+wB
+Pj
+Pj
+Pj
+Pj
+Pj
+Pj
+Xl
+mJ
+Pj
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+ju
+ju
+RC
+eP
+eP
+eP
+eP
+"}
+(19,1,1) = {"
+hl
+pG
+Pj
+cV
+Pj
+qh
+JU
+qh
+nO
+qh
+og
+qh
+Pj
+Ma
+wB
+Pj
+hl
+eP
+eP
+eP
+eP
+OL
+CL
+Kf
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+wB
+wB
+wB
+wB
+Pj
+Pj
+Pj
+wB
+wB
+wB
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+ju
+Ke
+mD
+eP
+eP
+eP
+eP
+"}
+(20,1,1) = {"
+OC
+yR
+Pj
+Pj
+Pj
+Pj
+qh
+ai
+rc
+Tq
+Tq
+rA
+wB
+wB
+wB
+Pj
+OC
+eP
+eP
+eP
+eP
+OL
+CL
+CL
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+wB
+Pj
+Pj
+Pj
+wB
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(21,1,1) = {"
+OC
+bn
+Pj
+Pj
+Pj
+nC
+Pj
+Pj
+rd
+Pj
+Pj
+cV
+Pj
+Pj
+nC
+Pj
+OC
+eP
+eP
+eP
+eP
+OL
+CL
+CL
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+Kh
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(22,1,1) = {"
+OC
+OC
+OC
+hl
+hl
+hl
+hl
+hl
+aS
+hl
+hl
+hl
+hl
+hl
+OC
+OC
+OC
+eP
+eP
+eP
+eP
+OL
+AG
+CL
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+Pj
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Qw
+eP
+eP
+eP
+"}
+(23,1,1) = {"
+eP
+eP
+eP
+tH
+eP
+hl
+uK
+eD
+cW
+TN
+mO
+hl
+eP
+tH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+CL
+CL
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+Pj
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(24,1,1) = {"
+eP
+eP
+eP
+tH
+eP
+hl
+hl
+kI
+WS
+Hx
+hl
+hl
+eP
+tH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+CL
+CL
+Kf
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Al
+Pj
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(25,1,1) = {"
+eP
+eP
+eP
+tH
+eP
+eP
+hl
+fr
+NX
+lE
+hl
+eP
+eP
+tH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+SC
+SC
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+cV
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(26,1,1) = {"
+eP
+eP
+eP
+tH
+tH
+tH
+hl
+SR
+zF
+SR
+hl
+tH
+tH
+tH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+eF
+eF
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+dz
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(27,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+hl
+OC
+OC
+OC
+hl
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+eF
+CL
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+Oc
+Pj
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(28,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+oC
+eF
+eF
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+ka
+Pj
+bG
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(29,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OL
+xw
+sh
+CL
+OL
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+Pj
+ka
+ju
+OC
+Jf
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(30,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+sh
+IC
+vq
+ju
+OL
+eP
+rH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+bG
+ju
+nA
+OC
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(31,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+VB
+ju
+Ke
+YL
+ju
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+OC
+bG
+mD
+Ke
+ht
+eP
+eP
+rH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(32,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+ju
+sh
+Ke
+ra
+ju
+eP
+eP
+eP
+eP
+eP
+Rk
+eP
+eP
+eP
+RC
+ju
+Ke
+dQ
+Ke
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Rk
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(33,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+YT
+YT
+YT
+YT
+YT
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Qw
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(34,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+YT
+YT
+YT
+YT
+YT
+WF
+YT
+YT
+pP
+wu
+TE
+mc
+eP
+Qw
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Rk
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(35,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Ff
+QT
+IM
+YT
+Bl
+Zm
+ub
+sR
+If
+wu
+TE
+TE
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Qw
+eP
+eP
+eP
+Jj
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(36,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Ff
+Qo
+Ve
+TR
+Qt
+RS
+Wu
+Pv
+MR
+YT
+YT
+YT
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Rk
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(37,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Ff
+Qo
+Pg
+YT
+RE
+va
+zy
+Gz
+uE
+wu
+TE
+mc
+eP
+eP
+eP
+eP
+eP
+Rk
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(38,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+YT
+YT
+YT
+YT
+YT
+WF
+YT
+YT
+cf
+wu
+TE
+TE
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+sc
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(39,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+YT
+YT
+YT
+YT
+YT
+eP
+rH
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(40,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(41,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(42,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(43,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(44,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(45,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(46,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(47,1,1) = {"
+eP
+eP
+eP
+pO
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(48,1,1) = {"
+eP
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(49,1,1) = {"
+eP
+eP
+pO
+Dg
+Dg
+FS
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+Dg
+Dg
+eP
+eP
+eP
+eP
+"}
+(50,1,1) = {"
+eP
+eP
+pO
+Dg
+Dg
+FS
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+"}
+(51,1,1) = {"
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+Dg
+FS
+Dg
+pO
+eP
+eP
+eP
+"}
+(52,1,1) = {"
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+pO
+eP
+eP
+eP
+"}
+(53,1,1) = {"
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+pO
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+Dg
+Dg
+Dg
+Dg
+FS
+eP
+eP
+eP
+"}
+(54,1,1) = {"
+eP
+eP
+pO
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+pO
+pO
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+Dg
+FS
+Dg
+Dg
+Dg
+eP
+eP
+eP
+"}
+(55,1,1) = {"
+eP
+eP
+eP
+Dg
+Dg
+Dg
+FS
+Dg
+Dg
+Dg
+Dg
+Dg
+pO
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+Dg
+FS
+Dg
+Dg
+Dg
+eP
+eP
+eP
+"}
+(56,1,1) = {"
+eP
+eP
+eP
+pO
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+FS
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+"}
+(57,1,1) = {"
+eP
+eP
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+FS
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(58,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+Dg
+Dg
+Dg
+Dg
+Dg
+Dg
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(59,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+pO
+pO
+pO
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}
+(60,1,1) = {"
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+eP
+"}

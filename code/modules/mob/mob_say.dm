@@ -4,6 +4,10 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
+	//SKYRAT EDIT ADDITION BEGIN - TYPING_INDICATOR
+	if(typing_indicator)
+		set_typing_indicator(FALSE)
+	//SKYRAT EDIT ADDITION END
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -27,7 +31,10 @@
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
-
+	//SKYRAT EDIT ADDITION BEGIN - TYPING_INDICATOR
+	if(typing_indicator)
+		set_typing_indicator(FALSE)
+	//SKYRAT EDIT ADDITION END
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return

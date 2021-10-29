@@ -1,0 +1,392 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/machinery/door/airlock/medical,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"d" = (
+/obj/item/reagent_containers/cocainebrick{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cocaine{
+	pixel_y = 4
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"e" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"g" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"h" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"k" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"m" = (
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"o" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"t" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"u" = (
+/obj/structure/table,
+/obj/item/seeds/cocoapod,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"v" = (
+/obj/effect/turf_decal/siding/thinplating/dark,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"y" = (
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/money,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"z" = (
+/turf/closed/mineral/random,
+/area/ruin/unpowered/no_grav)
+"A" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"B" = (
+/obj/structure/closet/secure_closet/hydroponics{
+	req_access = null
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"C" = (
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"E" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"F" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"H" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"I" = (
+/obj/machinery/door/airlock/mining{
+	name = "Backroom"
+	},
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"K" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"L" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/northleft,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"N" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"O" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"Q" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"R" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"S" = (
+/obj/effect/turf_decal/siding/thinplating,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"U" = (
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"V" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"W" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"Y" = (
+/obj/machinery/computer/crew/syndie{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+"Z" = (
+/obj/effect/turf_decal/siding/thinplating/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/smugglies)
+
+(1,1,1) = {"
+a
+a
+a
+z
+z
+z
+z
+a
+z
+z
+z
+z
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+z
+O
+O
+O
+O
+O
+O
+O
+O
+O
+z
+z
+a
+"}
+(4,1,1) = {"
+a
+z
+z
+O
+R
+v
+A
+L
+m
+m
+o
+O
+O
+O
+h
+"}
+(5,1,1) = {"
+a
+z
+z
+O
+Q
+v
+Y
+O
+H
+m
+o
+W
+K
+W
+k
+"}
+(6,1,1) = {"
+z
+z
+z
+O
+y
+Z
+U
+I
+o
+o
+o
+O
+O
+O
+C
+"}
+(7,1,1) = {"
+z
+z
+z
+O
+g
+c
+g
+O
+O
+O
+O
+O
+z
+z
+F
+"}
+(8,1,1) = {"
+z
+z
+z
+O
+B
+o
+u
+d
+o
+S
+e
+O
+z
+z
+z
+"}
+(9,1,1) = {"
+z
+z
+z
+O
+V
+o
+o
+o
+o
+S
+e
+O
+z
+z
+z
+"}
+(10,1,1) = {"
+z
+z
+z
+O
+E
+o
+o
+t
+N
+S
+e
+O
+z
+z
+z
+"}
+(11,1,1) = {"
+z
+z
+z
+O
+O
+O
+O
+O
+O
+O
+O
+O
+z
+z
+a
+"}
+(12,1,1) = {"
+a
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+z
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+z
+z
+z
+z
+z
+z
+z
+z
+z
+a
+a
+a
+a
+"}

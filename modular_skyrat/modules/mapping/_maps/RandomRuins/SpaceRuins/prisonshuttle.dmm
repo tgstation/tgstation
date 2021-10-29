@@ -1,0 +1,1070 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"br" = (
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"cP" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"da" = (
+/turf/template_noop,
+/area/template_noop)
+"dI" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"ev" = (
+/obj/structure/table,
+/obj/item/food/meat/steak/bear,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"fV" = (
+/obj/structure/table,
+/obj/item/food/meat/steak/bear,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"hG" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 4;
+	name = "Broken Computer"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"io" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"is" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/surplus,
+/obj/item/gun/ballistic/automatic/surplus{
+	pixel_y = -7
+	},
+/obj/item/ammo_box/magazine/m10mm/rifle{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/ammo_box/magazine/m10mm/rifle{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/ammo_box/magazine/m10mm/rifle{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/ammo_box/magazine/m10mm/rifle{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"ku" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/template_noop,
+/area/template_noop)
+"kx" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"lk" = (
+/obj/structure/shuttle/engine/huge,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"lT" = (
+/turf/template_noop,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"nr" = (
+/obj/structure/table,
+/obj/item/food/burger/bearger,
+/obj/machinery/light/small,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"nF" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"nG" = (
+/turf/open/floor/iron/stairs/left,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"nH" = (
+/obj/structure/table,
+/obj/item/food/bearsteak,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"oI" = (
+/obj/structure/table,
+/obj/item/food/meat/steak/bear,
+/obj/machinery/light/small,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"oY" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"qg" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 8;
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"qU" = (
+/obj/structure/shuttle/engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"tm" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"uU" = (
+/obj/structure/shuttle/engine/large,
+/turf/template_noop,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"vA" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"wO" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"xj" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"xo" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"xp" = (
+/obj/machinery/light/small,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"ys" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"yQ" = (
+/obj/structure/table,
+/obj/item/food/meat/cutlet/bear,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"zu" = (
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"zy" = (
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Bf" = (
+/turf/open/floor/iron/white/corner,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Cw" = (
+/mob/living/simple_animal/hostile/bear/russian,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"CX" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"DD" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"ED" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/iron/white/corner,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Hc" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Hq" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Hy" = (
+/obj/machinery/door/airlock/security/glass,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"HQ" = (
+/obj/structure/table,
+/obj/item/food/meat/cutlet/bear,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Ih" = (
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"IC" = (
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"IR" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"IU" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 4;
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Jo" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"LR" = (
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"LU" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"MR" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"MT" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Nw" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/template_noop,
+/area/template_noop)
+"NJ" = (
+/turf/open/floor/iron/stairs/right,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"OX" = (
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"QT" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Rg" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 10;
+	pixel_x = 32
+	},
+/turf/template_noop,
+/area/template_noop)
+"Rj" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"RA" = (
+/obj/structure/table,
+/obj/item/food/burger/bearger,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Sb" = (
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out error messages.";
+	dir = 1;
+	name = "Broken Computer"
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"SQ" = (
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Us" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Vw" = (
+/turf/open/floor/iron/stairs/medium,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Vy" = (
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Wt" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 6;
+	pixel_x = -32
+	},
+/turf/template_noop,
+/area/template_noop)
+"Xa" = (
+/obj/structure/table,
+/obj/item/food/burger/bearger,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"XH" = (
+/obj/structure/table,
+/obj/item/food/meat/steak/bear,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"XQ" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"Zp" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+"ZG" = (
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered{
+	name = "Unexplored Location"
+	})
+
+(1,1,1) = {"
+da
+da
+da
+da
+Rg
+da
+da
+da
+da
+da
+da
+da
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+da
+da
+da
+da
+da
+ku
+da
+da
+da
+da
+da
+"}
+(2,1,1) = {"
+ys
+ys
+xj
+xj
+ys
+da
+da
+da
+ys
+ys
+Hq
+ys
+ys
+IR
+ys
+Us
+ys
+Us
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+"}
+(3,1,1) = {"
+ys
+RA
+ev
+ev
+ys
+ys
+da
+da
+ys
+hG
+tm
+tm
+ys
+Hy
+ys
+Hy
+ys
+Hy
+ys
+nH
+yQ
+ev
+tm
+tm
+ev
+nr
+qU
+dI
+dI
+lk
+"}
+(4,1,1) = {"
+ys
+vA
+tm
+tm
+tm
+ys
+ys
+ys
+ys
+MT
+tm
+Jo
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+kx
+tm
+tm
+tm
+tm
+ev
+qU
+dI
+dI
+lT
+"}
+(5,1,1) = {"
+ys
+vA
+Zp
+tm
+tm
+zu
+nH
+ev
+ys
+Xa
+kx
+tm
+tm
+tm
+tm
+Jo
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+HQ
+qU
+dI
+dI
+lT
+"}
+(6,1,1) = {"
+xj
+vA
+tm
+tm
+tm
+tm
+ED
+Xa
+ys
+ev
+IC
+tm
+Rj
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+LU
+tm
+tm
+tm
+ys
+ys
+ys
+ys
+"}
+(7,1,1) = {"
+xj
+Hc
+tm
+tm
+tm
+tm
+OX
+xp
+ys
+fV
+LR
+tm
+ys
+nF
+nF
+nF
+nF
+nF
+ys
+Hc
+tm
+ys
+ys
+ys
+tm
+oY
+Sb
+qU
+dI
+uU
+"}
+(8,1,1) = {"
+xj
+tm
+tm
+tm
+tm
+tm
+Bf
+tm
+nG
+tm
+IC
+tm
+nF
+IU
+tm
+IU
+tm
+IU
+nF
+tm
+tm
+ys
+ZG
+io
+tm
+tm
+tm
+qU
+dI
+lT
+"}
+(9,1,1) = {"
+xj
+tm
+tm
+tm
+tm
+tm
+SQ
+tm
+Vw
+tm
+Ih
+tm
+tm
+cP
+Vy
+wO
+Vy
+cP
+nF
+tm
+tm
+ys
+Cw
+Hy
+tm
+tm
+xp
+ys
+ys
+ys
+"}
+(10,1,1) = {"
+xj
+tm
+tm
+tm
+tm
+tm
+OX
+Jo
+NJ
+tm
+LR
+tm
+nF
+qg
+tm
+qg
+tm
+qg
+nF
+tm
+tm
+ys
+is
+io
+tm
+tm
+tm
+qU
+dI
+uU
+"}
+(11,1,1) = {"
+xj
+Hc
+tm
+tm
+tm
+tm
+Bf
+xp
+ys
+fV
+QT
+tm
+ys
+nF
+nF
+nF
+nF
+nF
+ys
+Hc
+tm
+ys
+ys
+ys
+tm
+oY
+Sb
+qU
+dI
+lT
+"}
+(12,1,1) = {"
+xj
+vA
+tm
+tm
+tm
+tm
+XQ
+HQ
+ys
+nH
+LR
+tm
+xo
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+xo
+tm
+tm
+tm
+ys
+ys
+ys
+ys
+"}
+(13,1,1) = {"
+ys
+vA
+Zp
+tm
+tm
+br
+ev
+Xa
+ys
+ev
+kx
+tm
+tm
+MT
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+HQ
+qU
+dI
+dI
+lk
+"}
+(14,1,1) = {"
+ys
+vA
+tm
+tm
+tm
+ys
+ys
+ys
+ys
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+tm
+kx
+tm
+tm
+tm
+tm
+ev
+qU
+dI
+dI
+lT
+"}
+(15,1,1) = {"
+ys
+XH
+nH
+ev
+ys
+ys
+da
+da
+ys
+DD
+tm
+tm
+ys
+Hy
+ys
+Hy
+ys
+Hy
+ys
+zy
+XH
+Xa
+tm
+tm
+nH
+oI
+qU
+dI
+dI
+lT
+"}
+(16,1,1) = {"
+ys
+ys
+xj
+xj
+ys
+da
+da
+da
+ys
+ys
+Hq
+ys
+ys
+CX
+ys
+MR
+ys
+MR
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+"}
+(17,1,1) = {"
+da
+da
+da
+da
+Wt
+da
+da
+da
+da
+da
+da
+da
+ys
+ys
+ys
+ys
+ys
+ys
+ys
+da
+da
+da
+da
+da
+Nw
+da
+da
+da
+da
+da
+"}

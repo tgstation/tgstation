@@ -1,0 +1,21 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/structure/chair/sofa/right{dir = 4},/mob/living/simple_animal/hostile/gorilla{anchored = 1; dir = 4; faction = list("neutral")},/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"p" = (/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"t" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/bananalamp,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"y" = (/obj/effect/overlay/palmtree_l,/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"C" = (/obj/structure/showcase/machinery/tv,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"H" = (/mob/living/simple_animal/pet/dog/corgi{anchored = 1},/obj/structure/bed/dogbed,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"M" = (/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"O" = (/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/item/food/grown/banana,/obj/structure/closet/secure_closet/freezer/fridge/open,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"U" = (/obj/structure/chair/sofa/left{dir = 4},/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+"V" = (/obj/structure/water_source/puddle,/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/beach/sand,/area/ruin/space/has_grav/powered)
+
+(1,1,1) = {"
+aaaaaaa
+aMyVMMa
+aMUpOMa
+aMbpCMa
+aMtpHya
+ayMMMMa
+aaaaaaa
+"}

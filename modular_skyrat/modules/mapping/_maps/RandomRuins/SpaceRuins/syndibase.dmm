@@ -1,0 +1,1267 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/paper_bin{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"aZ" = (
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space)
+"be" = (
+/obj/effect/spawner/random/trash/bin,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"bg" = (
+/obj/structure/table/reinforced,
+/obj/item/healthanalyzer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"bY" = (
+/obj/machinery/hypnochair,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"ck" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"cv" = (
+/turf/template_noop,
+/area/ruin/space)
+"cL" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/entertainment/money,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"dc" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/anthro,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"dq" = (
+/obj/structure/table,
+/obj/item/bodybag/bluespace,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"dM" = (
+/obj/machinery/suit_storage_unit/radsuit,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"dY" = (
+/obj/structure/chair/sofa/corp/left,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"ei" = (
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"eo" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"eB" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/engineering/material_rare,
+/obj/effect/spawner/random/engineering/material_rare,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"eL" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/exotic/antag_gear,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"eT" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"fW" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"hB" = (
+/mob/living/simple_animal/hostile/syndicate/melee/sword/anthro,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"hE" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space/anthro/cat,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"if" = (
+/mob/living/simple_animal/hostile/syndicate/ranged,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"il" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Dormitories"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"jV" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 8
+	},
+/obj/structure/bed,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"ka" = (
+/mob/living/simple_animal/hostile/syndicate/melee/anthro,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"kc" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"kl" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/medical/mesh/advanced,
+/obj/item/stack/medical/suture/medicated,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"kw" = (
+/obj/structure/closet/radiation,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"np" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 1
+	},
+/obj/structure/bed,
+/obj/effect/spawner/random/clothing/twentyfive_percent_cyborg_mask,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"nL" = (
+/obj/structure/filingcabinet,
+/obj/item/folder/syndicate,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"oc" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"ok" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"oG" = (
+/obj/structure/showcase/machinery/cloning_pod{
+	name = "experiment pod"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"oP" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"pF" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"pL" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"qo" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"qT" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"rM" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/smg,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"sN" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/engineering/tool_advanced,
+/obj/effect/spawner/random/engineering/tool_advanced,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"tD" = (
+/obj/structure/chair/sofa/corp/right,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"tH" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/contraband/armory,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"uf" = (
+/mob/living/simple_animal/hostile/nanotrasen/elite,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"vf" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"vS" = (
+/obj/structure/window/reinforced/tinted,
+/obj/machinery/door/window/survival_pod{
+	dir = 8;
+	req_access_txt = "150"
+	},
+/obj/structure/bed,
+/obj/effect/spawner/random/clothing/backpack,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"wf" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "eng_secure";
+	name = "engine technician's locker";
+	req_access_txt = "150"
+	},
+/obj/item/storage/belt/utility/syndicate,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"wU" = (
+/obj/structure/window/reinforced/tinted,
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/effect/spawner/random/clothing/gloves,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"yN" = (
+/obj/structure/table,
+/obj/item/paper,
+/obj/item/paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/paper{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"zZ" = (
+/obj/machinery/autolathe/hacked,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Bf" = (
+/obj/structure/table/reinforced,
+/obj/item/circular_saw/alien,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Da" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Produces power through an unstable bluespace pocket.";
+	name = "bluespace-powered power storage unit"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"Dh" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/ointment,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"DI" = (
+/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"DM" = (
+/obj/structure/table/optable,
+/obj/effect/mob_spawn/human/abductor,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"DO" = (
+/turf/template_noop,
+/area/template_noop)
+"Eu" = (
+/obj/machinery/computer{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Ew" = (
+/obj/machinery/computer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"EH" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering";
+	req_access_txt = "150"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"EL" = (
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"FA" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"FJ" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "150"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"Gp" = (
+/mob/living/simple_animal/hostile/syndicate/civilian/scientist,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"GG" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/belt/utility/syndicate,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"GV" = (
+/obj/structure/table,
+/obj/item/scalpel/advanced,
+/obj/item/retractor/advanced{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"HA" = (
+/mob/living/simple_animal/hostile/syndicate/melee,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"Iw" = (
+/obj/structure/table/reinforced,
+/obj/item/paper{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/paper{
+	pixel_x = -4
+	},
+/obj/item/paper{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/paper{
+	pixel_x = 3
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Kn" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/exotic/antag_gear_weak,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Kw" = (
+/obj/effect/spawner/random/trash/box,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"KS" = (
+/mob/living/simple_animal/hostile/syndicate/civilian,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"LE" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/rods/fifty,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"Mr" = (
+/turf/closed/indestructible/syndicate,
+/area/ruin/space/has_grav/powered)
+"ME" = (
+/obj/machinery/door/airlock/research{
+	name = "Research";
+	req_access_txt = "150"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"MG" = (
+/obj/structure/table,
+/obj/item/disk/tech_disk/spaceloot{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/disk/tech_disk/spaceloot,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"MZ" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 9
+	},
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"NA" = (
+/obj/machinery/computer{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Pl" = (
+/obj/structure/window/reinforced/tinted,
+/obj/machinery/door/window/survival_pod{
+	dir = 4;
+	req_access_txt = "150"
+	},
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"PD" = (
+/mob/living/simple_animal/hostile/syndimouse,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"PT" = (
+/turf/closed/mineral/random/asteroid,
+/area/ruin/space)
+"Qt" = (
+/obj/structure/showcase/machinery/signal_decrypter,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"Qw" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/powered)
+"RI" = (
+/obj/structure/table,
+/obj/machinery/cell_charger_multi,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"TG" = (
+/obj/structure/table,
+/obj/structure/fluff/clockwork/alloy_shards/medium{
+	pixel_y = -6
+	},
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/structure/fluff/clockwork/blind_eye{
+	pixel_y = 12
+	},
+/obj/structure/fluff/clockwork/alloy_shards/large{
+	pixel_x = -8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Uh" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"UY" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Vo" = (
+/obj/machinery/door/window/survival_pod{
+	dir = 4
+	},
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered)
+"VF" = (
+/obj/machinery/rnd/destructive_analyzer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Ws" = (
+/mob/living/simple_animal/hostile/syndicate/melee,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"WT" = (
+/obj/structure/showcase/horrific_experiment,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Xs" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+"Yw" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating/asteroid/lowpressure,
+/area/ruin/space/has_grav/powered)
+"ZK" = (
+/obj/structure/fluff/empty_sleeper/syndicate{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered)
+
+(1,1,1) = {"
+DO
+DO
+DO
+PT
+PT
+PT
+PT
+PT
+DO
+DO
+DO
+DO
+DO
+DO
+PT
+PT
+PT
+PT
+cv
+cv
+cv
+cv
+cv
+PT
+PT
+DO
+"}
+(2,1,1) = {"
+DO
+DO
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+DO
+PT
+DO
+DO
+PT
+PT
+PT
+PT
+PT
+PT
+cv
+cv
+PT
+aZ
+PT
+PT
+DO
+"}
+(3,1,1) = {"
+DO
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+cv
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+aZ
+PT
+PT
+DO
+"}
+(4,1,1) = {"
+DO
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+aZ
+PT
+PT
+PT
+"}
+(5,1,1) = {"
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+ei
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+PT
+PT
+PT
+"}
+(6,1,1) = {"
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+ei
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+PT
+DO
+"}
+(7,1,1) = {"
+PT
+PT
+PT
+PT
+PT
+PT
+ei
+ei
+ei
+Yw
+ei
+Mr
+eL
+Eu
+bg
+Iw
+Qw
+Kw
+Kw
+Qw
+Pl
+wU
+Vo
+Mr
+PT
+DO
+"}
+(8,1,1) = {"
+DO
+PT
+PT
+PT
+PT
+ei
+ei
+DI
+ei
+Yw
+Yw
+Mr
+Ew
+ck
+qT
+KS
+Qw
+qT
+qT
+il
+eT
+eT
+HA
+Mr
+PT
+DO
+"}
+(9,1,1) = {"
+DO
+PT
+PT
+PT
+ei
+ei
+ei
+ei
+ei
+ei
+ei
+Mr
+Ew
+rM
+qT
+qT
+ME
+qT
+qT
+Qw
+eT
+ka
+Uh
+Mr
+PT
+DO
+"}
+(10,1,1) = {"
+DO
+PT
+PT
+PT
+ei
+ei
+ei
+ei
+Qt
+pL
+ei
+Mr
+cL
+Dh
+qT
+qT
+Qw
+qT
+dc
+Qw
+vS
+jV
+np
+Mr
+PT
+DO
+"}
+(11,1,1) = {"
+DO
+PT
+PT
+PT
+tD
+pL
+ei
+ei
+ei
+ei
+ei
+Mr
+Qw
+Qw
+Qw
+ME
+Qw
+qT
+qT
+Qw
+Qw
+Qw
+Qw
+Mr
+PT
+DO
+"}
+(12,1,1) = {"
+PT
+PT
+PT
+PT
+dY
+pL
+ei
+EL
+ei
+ei
+ei
+Mr
+UY
+UY
+UY
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+Mr
+PT
+DO
+"}
+(13,1,1) = {"
+PT
+PT
+PT
+PT
+ei
+ei
+ei
+ei
+ei
+hE
+ei
+FJ
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+Ws
+qT
+qT
+Mr
+PT
+DO
+"}
+(14,1,1) = {"
+PT
+PT
+PT
+PT
+ei
+ei
+ei
+ei
+ei
+ei
+MZ
+Qw
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+Mr
+PT
+DO
+"}
+(15,1,1) = {"
+PT
+PT
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+FJ
+Qw
+Qw
+qT
+qT
+Qw
+Qw
+Qw
+Qw
+Qw
+Qw
+Qw
+ME
+Qw
+Mr
+PT
+PT
+"}
+(16,1,1) = {"
+PT
+PT
+Mr
+wf
+kw
+dM
+Qw
+FA
+qT
+qT
+qT
+qT
+qT
+qT
+Qw
+GV
+ok
+TG
+oc
+oc
+UY
+qT
+qT
+Mr
+PT
+PT
+"}
+(17,1,1) = {"
+PT
+PT
+Mr
+eT
+eT
+eT
+EH
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+ME
+qT
+qT
+qT
+qT
+qT
+qT
+Ws
+qT
+Mr
+PT
+PT
+"}
+(18,1,1) = {"
+PT
+PT
+Mr
+eT
+eT
+eT
+Qw
+qT
+qT
+qT
+Ws
+qT
+qT
+qT
+Qw
+oG
+qT
+Gp
+qT
+qT
+qT
+qT
+Xs
+Mr
+PT
+PT
+"}
+(19,1,1) = {"
+PT
+PT
+Mr
+eo
+eT
+LE
+Qw
+qT
+qT
+Qw
+Qw
+Qw
+Qw
+Qw
+Qw
+WT
+qT
+qT
+RI
+ao
+qT
+qT
+yN
+Mr
+PT
+PT
+"}
+(20,1,1) = {"
+PT
+PT
+Mr
+eo
+eT
+oP
+Qw
+qT
+qT
+Qw
+eB
+vf
+kl
+Kn
+Qw
+oG
+qT
+fW
+MG
+kc
+qT
+qT
+dq
+Mr
+PT
+DO
+"}
+(21,1,1) = {"
+PT
+PT
+Mr
+eT
+eT
+eT
+Qw
+qT
+qT
+Qw
+Ew
+dc
+qT
+Ws
+Qw
+oG
+qT
+qT
+VF
+DM
+qT
+qT
+zZ
+Mr
+PT
+DO
+"}
+(22,1,1) = {"
+PT
+PT
+Mr
+Da
+uf
+GG
+Qw
+qT
+qT
+Qw
+Ew
+Gp
+tH
+qT
+ME
+qT
+hB
+qT
+qT
+qT
+qT
+Gp
+qT
+Mr
+PT
+DO
+"}
+(23,1,1) = {"
+PT
+PT
+Mr
+Da
+eT
+sN
+Qw
+if
+qT
+Qw
+Ew
+qT
+Gp
+PD
+Qw
+Ew
+qT
+qT
+qT
+qT
+qT
+qT
+qT
+Mr
+PT
+DO
+"}
+(24,1,1) = {"
+PT
+PT
+Mr
+Da
+eT
+qo
+Qw
+be
+qT
+Qw
+nL
+qT
+bY
+NA
+Qw
+Bf
+NA
+NA
+qT
+pF
+ZK
+ZK
+be
+Mr
+PT
+DO
+"}
+(25,1,1) = {"
+PT
+PT
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+Mr
+PT
+DO
+"}
+(26,1,1) = {"
+DO
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+PT
+DO
+"}
+(27,1,1) = {"
+DO
+DO
+PT
+DO
+DO
+DO
+PT
+PT
+PT
+PT
+DO
+DO
+PT
+PT
+PT
+PT
+PT
+PT
+DO
+DO
+PT
+PT
+PT
+PT
+DO
+DO
+"}

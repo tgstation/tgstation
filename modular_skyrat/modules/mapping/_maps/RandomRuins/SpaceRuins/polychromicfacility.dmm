@@ -1,0 +1,656 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"c" = (
+/turf/closed/mineral/random,
+/area/ruin/unpowered/no_grav)
+"d" = (
+/obj/machinery/destructive_scanner,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"e" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"f" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"g" = (
+/turf/open/floor/iron/dark/side,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"h" = (
+/obj/structure/toilet{
+	pixel_y = 12
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"i" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"j" = (
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"k" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"l" = (
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"m" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"n" = (
+/obj/item/card/id/advanced/polychromic{
+	pixel_y = 6
+	},
+/obj/structure/rack,
+/obj/item/card/id/advanced/polychromic{
+	pixel_y = 3
+	},
+/obj/item/card/id/advanced/polychromic,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"o" = (
+/obj/structure/sink{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"p" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"q" = (
+/obj/item/clothing/neck/cloak/polychromic/veil,
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"r" = (
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"s" = (
+/obj/machinery/autolathe,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"t" = (
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"u" = (
+/obj/machinery/door/window/southleft,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"v" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/rnd/destructive_analyzer,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"w" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"x" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"y" = (
+/turf/open/floor/iron/dark/corner,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"z" = (
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"A" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"B" = (
+/obj/machinery/door/airlock/research,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"C" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"D" = (
+/obj/machinery/light,
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"E" = (
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"F" = (
+/obj/machinery/door/window/westright,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"G" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"H" = (
+/turf/open/floor/iron/bluespace,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"I" = (
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"J" = (
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"K" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"L" = (
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"M" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"N" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"O" = (
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"P" = (
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"Q" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"R" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"S" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"T" = (
+/obj/structure/rack,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"U" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"V" = (
+/obj/structure/statue/silver/secborg{
+	anchored = 1
+	},
+/turf/open/floor/iron/bluespace,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"W" = (
+/obj/machinery/door/window/eastright,
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"Y" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+"Z" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/powered/skyrat/polychromicfacility)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+c
+c
+f
+f
+f
+f
+f
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+c
+c
+c
+c
+f
+j
+R
+j
+f
+d
+v
+s
+e
+U
+z
+e
+k
+i
+p
+w
+a
+a
+"}
+(5,1,1) = {"
+a
+c
+c
+c
+c
+c
+f
+j
+T
+j
+f
+G
+G
+G
+e
+h
+z
+A
+S
+S
+S
+w
+a
+a
+"}
+(6,1,1) = {"
+a
+c
+c
+f
+f
+f
+f
+E
+W
+E
+f
+l
+l
+l
+e
+e
+e
+e
+S
+S
+S
+e
+a
+a
+"}
+(7,1,1) = {"
+a
+c
+c
+f
+j
+j
+t
+G
+G
+G
+f
+y
+J
+O
+y
+J
+O
+e
+y
+J
+O
+w
+w
+w
+"}
+(8,1,1) = {"
+c
+c
+c
+f
+m
+n
+u
+G
+S
+G
+M
+g
+H
+P
+g
+H
+P
+B
+g
+V
+P
+Z
+b
+Z
+"}
+(9,1,1) = {"
+c
+c
+c
+f
+j
+j
+t
+G
+G
+G
+f
+C
+l
+x
+K
+l
+x
+e
+C
+l
+x
+w
+w
+w
+"}
+(10,1,1) = {"
+c
+c
+c
+f
+f
+f
+f
+I
+F
+I
+f
+y
+J
+O
+e
+e
+A
+e
+S
+S
+S
+e
+a
+a
+"}
+(11,1,1) = {"
+a
+c
+c
+c
+c
+c
+f
+j
+q
+j
+f
+g
+H
+P
+e
+z
+z
+e
+S
+S
+S
+w
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+c
+c
+c
+c
+f
+j
+N
+j
+f
+C
+Y
+x
+e
+o
+D
+e
+Q
+r
+L
+w
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+c
+c
+f
+f
+f
+f
+f
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+c
+c
+c
+c
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+"}

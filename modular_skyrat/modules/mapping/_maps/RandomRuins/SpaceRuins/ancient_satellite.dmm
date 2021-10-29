@@ -1,0 +1,153 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/space)
+"b" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"p" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"s" = (
+/obj/item/camera_bug,
+/obj/item/encryptionkey/headset_sci,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"y" = (
+/obj/machinery/power/solar/fake,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space)
+"D" = (
+/obj/machinery/exoscanner,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"G" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8;
+	pixel_x = -20
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"I" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"M" = (
+/obj/structure/table/reinforced,
+/obj/item/fuel_pellet/exotic,
+/obj/item/gps,
+/obj/structure/window/reinforced/shuttle,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"P" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/space)
+"V" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+I
+G
+I
+a
+a
+"}
+(4,1,1) = {"
+a
+y
+I
+D
+I
+y
+a
+"}
+(5,1,1) = {"
+a
+a
+P
+M
+P
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+p
+V
+p
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+P
+s
+P
+a
+a
+"}
+(8,1,1) = {"
+a
+y
+I
+D
+I
+y
+a
+"}
+(9,1,1) = {"
+a
+a
+I
+b
+I
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+"}

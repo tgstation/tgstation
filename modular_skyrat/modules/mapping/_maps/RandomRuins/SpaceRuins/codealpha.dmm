@@ -1,0 +1,727 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aV" = (
+/turf/closed/wall/mineral/bronze,
+/area/ruin/space/has_grav)
+"bR" = (
+/obj/structure/table/bronze,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"dz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"eE" = (
+/obj/machinery/door/window,
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"eS" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"eZ" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_x = -9
+	},
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"fm" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/item/mop,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"gM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"hw" = (
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/rods/ten,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"hS" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/decal/cleanable/blood/gibs/bubblegum,
+/obj/effect/decal/cleanable/blood/innards,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"jd" = (
+/obj/structure/fluff/clockwork/blind_eye,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav)
+"kD" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"kJ" = (
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"me" = (
+/turf/template_noop,
+/area/template_noop)
+"mM" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"oz" = (
+/obj/structure/mopbucket,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"oD" = (
+/turf/open/floor/plating/rust,
+/area/ruin/space/has_grav)
+"oW" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"ph" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"pj" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"rL" = (
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"sm" = (
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"sW" = (
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"ti" = (
+/turf/closed/wall/rust,
+/area/ruin/space/has_grav)
+"tT" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"uM" = (
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav)
+"vr" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"wk" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"wy" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav)
+"xU" = (
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav)
+"yo" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav)
+"yV" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/has_grav)
+"zd" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"zn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/item/clothing/suit/caution,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"AM" = (
+/obj/effect/spawner/random/engineering/material_rare,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Bl" = (
+/obj/structure/frame/machine,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"Cu" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"DA" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"DX" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"EP" = (
+/obj/machinery/door/firedoor/closed,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"FT" = (
+/obj/structure/grille,
+/obj/structure/window/bronze/fulltile,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"Gr" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"GZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav)
+"II" = (
+/obj/machinery/door/airlock/bronze,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"KE" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"Lc" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav)
+"Li" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"LI" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"LP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Nb" = (
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Nj" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"Of" = (
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"Oh" = (
+/obj/effect/turf_decal/trimline/red,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"PA" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Qs" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Qw" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav)
+"SP" = (
+/obj/effect/turf_decal/trimline/green/filled/warning,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"SY" = (
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Ur" = (
+/obj/structure/closet/cabinet,
+/obj/item/toy/clockwork_watch{
+	desc = "An intricate device, once meant to call to the horrors beyond. It now lays dormant, a shell of it's former self. At least it can tell the time?";
+	name = "broken clockwork slab"
+	},
+/turf/open/floor/bronze,
+/area/ruin/space/has_grav)
+"UG" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"UP" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"VO" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"VZ" = (
+/obj/machinery/door/airlock/multi_tile/glass,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Wd" = (
+/obj/structure/fluff/clockwork/alloy_shards/small,
+/turf/open/floor/iron/kitchen,
+/area/ruin/space/has_grav)
+"We" = (
+/obj/machinery/door/airlock/freezer,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Wp" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"Yo" = (
+/obj/machinery/door/firedoor/closed,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+"ZP" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav)
+
+(1,1,1) = {"
+me
+me
+me
+me
+me
+me
+me
+me
+me
+me
+yV
+me
+me
+me
+me
+"}
+(2,1,1) = {"
+Lc
+aV
+yV
+yV
+Lc
+me
+me
+me
+me
+me
+yV
+me
+yV
+me
+me
+"}
+(3,1,1) = {"
+Lc
+zd
+wk
+ph
+GZ
+yV
+yV
+yV
+yV
+yV
+Lc
+yV
+yV
+me
+me
+"}
+(4,1,1) = {"
+aV
+Li
+Oh
+sm
+eE
+oW
+me
+yV
+me
+me
+aV
+oW
+yV
+oW
+Lc
+"}
+(5,1,1) = {"
+aV
+tT
+VO
+LI
+aV
+oW
+oW
+yV
+me
+me
+aV
+mM
+Qs
+EP
+Lc
+"}
+(6,1,1) = {"
+aV
+aV
+aV
+aV
+aV
+aV
+aV
+Lc
+aV
+aV
+aV
+Gr
+kD
+LP
+Lc
+"}
+(7,1,1) = {"
+aV
+bR
+rL
+rL
+aV
+Of
+ZP
+ZP
+pj
+Cu
+Lc
+Gr
+kD
+oD
+aV
+"}
+(8,1,1) = {"
+aV
+rL
+Of
+Of
+II
+eS
+DA
+eZ
+Nb
+SP
+We
+dz
+Nb
+LP
+aV
+"}
+(9,1,1) = {"
+aV
+Ur
+Of
+DX
+aV
+Wp
+Of
+Of
+SY
+kJ
+ti
+Gr
+Nb
+LP
+aV
+"}
+(10,1,1) = {"
+aV
+aV
+II
+aV
+aV
+aV
+aV
+aV
+Lc
+Lc
+ti
+oD
+PA
+LP
+GZ
+"}
+(11,1,1) = {"
+Lc
+Of
+Of
+Of
+xU
+aV
+uM
+uM
+Of
+Of
+ti
+Gr
+UP
+fm
+GZ
+"}
+(12,1,1) = {"
+aV
+Of
+Of
+Qw
+xU
+EP
+yo
+uM
+jd
+uM
+aV
+Gr
+Nb
+zn
+FT
+"}
+(13,1,1) = {"
+aV
+Of
+xU
+xU
+Of
+EP
+yo
+uM
+uM
+uM
+VZ
+gM
+Nb
+LP
+FT
+"}
+(14,1,1) = {"
+Lc
+wy
+xU
+Wd
+Of
+EP
+yo
+Of
+uM
+uM
+UG
+dz
+oz
+oD
+GZ
+"}
+(15,1,1) = {"
+Lc
+vr
+Of
+xU
+xU
+EP
+Nj
+KE
+Of
+uM
+Lc
+Gr
+AM
+LP
+GZ
+"}
+(16,1,1) = {"
+Lc
+Bl
+Of
+Of
+xU
+Lc
+hw
+Of
+Of
+uM
+ti
+Gr
+Nb
+LP
+GZ
+"}
+(17,1,1) = {"
+Lc
+Lc
+Lc
+Lc
+aV
+aV
+aV
+Lc
+Lc
+Lc
+Lc
+oD
+Nb
+hS
+Lc
+"}
+(18,1,1) = {"
+me
+me
+me
+me
+me
+me
+yV
+yV
+me
+me
+Lc
+Gr
+Nb
+LP
+Lc
+"}
+(19,1,1) = {"
+me
+me
+me
+me
+me
+me
+me
+yV
+yV
+me
+Lc
+mM
+sW
+Yo
+Lc
+"}
+(20,1,1) = {"
+me
+me
+me
+me
+me
+me
+me
+me
+yV
+yV
+Lc
+oW
+oW
+oW
+Lc
+"}
+(21,1,1) = {"
+me
+me
+me
+me
+me
+me
+me
+me
+me
+yV
+Lc
+oW
+yV
+me
+yV
+"}
+(22,1,1) = {"
+me
+me
+me
+me
+me
+me
+me
+me
+me
+me
+yV
+me
+me
+me
+yV
+"}

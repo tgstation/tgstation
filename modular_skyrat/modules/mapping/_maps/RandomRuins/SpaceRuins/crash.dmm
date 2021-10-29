@@ -1,0 +1,32 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"c" = (/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"e" = (/obj/item/storage/toolbox/syndicate,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"g" = (/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"l" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"m" = (/turf/closed/mineral/random/asteroid,/area/ruin/space)
+"t" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"v" = (/turf/closed/wall/mineral/titanium/spaceship,/area/ruin/unpowered/no_grav)
+"x" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/gibs/up,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"C" = (/obj/structure/shuttle/engine/propulsion{dir = 8},/turf/template_noop,/area/ruin/unpowered/no_grav)
+"H" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/gibs/limb{dir = 4},/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"I" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"K" = (/obj/effect/spawner/random/engineering/flashlight,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"L" = (/obj/structure/closet/crate,/obj/effect/spawner/random/engineering/material_rare,/obj/effect/spawner/random/engineering/material_rare,/obj/effect/spawner/random/engineering/material,/obj/effect/spawner/random/engineering/material,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"O" = (/obj/structure/closet/crate,/obj/effect/spawner/random/engineering/tool_advanced,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"R" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/gibs/limb,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"T" = (/obj/effect/spawner/random/engineering/material_cheap,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"V" = (/obj/structure/closet/crate,/obj/effect/spawner/random/engineering/toolbox,/obj/effect/spawner/random/engineering/toolbox,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+"Y" = (/obj/machinery/power/port_gen/pacman/super,/turf/open/floor/iron/dark/airless,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaammmmmmmmmmaaa
+Cvvvvmmmmmmmmmaa
+CvTcvvvvmmmmmmma
+CvLeOgImmmmmmmma
+vvYgtHcxmmmmmmma
+vvYcRtmmmmmmmmma
+CvKcTltmmmmmmmaa
+CvcVvvvvmmmmmmaa
+Cvvvvammmmmmmmaa
+aaaaaaammmmmaaaa
+"}

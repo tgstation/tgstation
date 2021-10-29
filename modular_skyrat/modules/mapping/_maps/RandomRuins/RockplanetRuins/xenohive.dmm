@@ -1,0 +1,70 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/structure/alien/weeds,/obj/structure/bed/nest,/obj/effect/gibspawner/human/bodypartless,/obj/item/clothing/suit/space/hardsuit/ancient,/obj/item/gun/energy/plasmacutter,/obj/effect/mob_spawn/human/corpse/charredskeleton,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"c" = (/obj/structure/alien/resin/wall,/obj/structure/alien/weeds,/obj/structure/alien/weeds,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"d" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/queen/large{desc = "A gigantic alien who is in charge of the hive and all of its loyal servants."; name = "alien queen"; pixel_x = -16; plants_off = 1},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"e" = (/obj/structure/alien/weeds,/obj/structure/bed/nest,/obj/item/clothing/under/rank/security/officer/blueshirt,/obj/item/clothing/glasses/thermal/monocle,/obj/item/clothing/head/collectable/tophat,/obj/item/clothing/suit/british_officer,/obj/effect/mob_spawn/human/corpse/charredskeleton,/obj/effect/gibspawner/human/bodypartless,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"f" = (/obj/structure/alien/weeds/node,/obj/effect/gibspawner/human/bodypartless,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"g" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"i" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"m" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks{dir = 1},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"o" = (/obj/structure/alien/weeds,/obj/structure/bed/nest,/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/obj/effect/gibspawner/human/bodypartless,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"p" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks{dir = 5},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"q" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"r" = (/turf/closed/mineral/random/asteroid/rockplanet,/area/ruin/unpowered/xenonest)
+"s" = (/turf/closed/mineral/random/asteroid/rockplanet,/area/rockplanet/underground)
+"v" = (/obj/structure/alien/weeds/node,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"w" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks{dir = 10},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"G" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks{dir = 6},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"H" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"L" = (/obj/structure/alien/weeds,/obj/structure/bed/nest,/obj/effect/mob_spawn/human/corpse/cargo_tech,/obj/effect/gibspawner/human/bodypartless,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"N" = (/obj/structure/alien/weeds,/obj/structure/bed/nest,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"O" = (/obj/structure/alien/weeds,/obj/structure/bed/nest,/obj/effect/mob_spawn/human/corpse/assistant,/obj/effect/gibspawner/human/bodypartless,/obj/item/katana,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"P" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/gibs/up,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"R" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/drone{plants_off = 1},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"S" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/alien/sentinel,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"T" = (/obj/structure/alien/weeds,/obj/effect/gibspawner/human/bodypartless,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"U" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/tracks{dir = 9},/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"V" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"W" = (/obj/structure/alien/weeds,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"Y" = (/obj/structure/alien/weeds,/obj/structure/alien/egg/burst,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+"Z" = (/obj/structure/alien/resin/wall,/obj/structure/alien/weeds,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered/xenonest)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaassssssssssssssaa
+aaaaaaaaaaaaaaasssZZZZZZsssssssa
+asssssssssssaaasssZWSWWZZZZZZsss
+ssssssssssssssssssZWWvWWHWWWZZss
+sssZZZZZZsssssssssZZUWWWWWWWNZss
+ssZZWWWWZZZZZZsssssZmZWWWWWWWZZs
+ssZWvWWVWWWWYZZZZZsZWZWWvZrWWWZs
+ssZWWWHWWWWWWWWWYZZZqZWdWZrWWYZs
+sZZWWvWWWWWWWRWWWWZWWZWWWZrrWWZs
+sZNWvWWWvWWZZZZWvWWWTZZYWWrWHZZs
+sZZSWOZWWWrrrrZZWWHWWrrZWWWWWZss
+ssZZZZZWZrrrrrrZZZZZZrrZWWvWeZss
+ssssssZWWZrrrrrrrrrrrrrZRWWYZZss
+assssZZWWZZZZYrrrrrrrrrZNNZZZsss
+assZZZWWWWWWWWWgpWZZZZZZZZZssssa
+assZWWWWZZWWWWWZWgRWWWWZZsssssaa
+assZWHWZZZZWWvWZZWWWWWWWZssssaaa
+sssZWqWZWbZrWWWZZZZZZZWWZssssaaa
+sssZWWWZWfZrWWWWZZZrrZWZZssZZaaa
+ssZZWWZrWWWZZSWWZNZZZZWYZZZZvWaa
+ssZWHrrrZWWWZZWWWWWYZWWWWWVWWWaa
+ssZWqWrrrWWWWZWWWWWWZWvHWWWWPiaa
+ssZWqWvWZWWWYZWZZZWWWZWWWWZZZaaa
+ssZWwWYWZWWrrZWZrrrWWZWZZZZssaaa
+ssZWWrWWZWWZrrWZrrrWWZWZZssssaaa
+sZZWWrrWWWHZrWWZrrZZWZqWZssssaaa
+sZvWWWWWgWWcZWWZrrWZZZqWZZsssaaa
+sZvRWWNZZZZZWWWZrZWgWWVWWZZsssaa
+sZZZZZZZsssZWYWZrZWHZWWvWWZsssaa
+sssssssssssZZWWZZWGZZWvWYWZsssaa
+ssssZZZZssssZWWWRWZZZNLZZZZssaaa
+asssZWYZZssZZWWWWZZsZZZZsssssaaa
+assZZWvWZZZZWSZvoZsssssssssssaaa
+assZWHWWWWWWWWZZZZssssssssssaaaa
+assZZZZWWvWZZZZsssssssaaaaaaaaaa
+asssssZZZZZZsssssssaaaaaaaaaaaaa
+aassssssssssssssaaaaaaaaaaaaaaaa
+"}

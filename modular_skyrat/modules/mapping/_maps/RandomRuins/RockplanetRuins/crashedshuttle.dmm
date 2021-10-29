@@ -1,0 +1,255 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/crashedshuttle)
+"b" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"c" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"d" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/teleport/station,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"g" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/mob/living/simple_animal/hostile/giant_spider/tarantula/scrawny,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"h" = (
+/obj/item/construction/rcd/mattermanipulator,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"j" = (
+/obj/machinery/status_display/ai/directional/west,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"k" = (
+/obj/machinery/teleport/hub,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"l" = (
+/obj/machinery/light/directional/west,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"m" = (
+/obj/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"o" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"q" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"t" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"z" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"A" = (
+/obj/item/storage/secure/safe/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/robot_debris/down,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"B" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"C" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/mob/living/simple_animal/hostile/giant_spider/hunter/scrawny,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"D" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"E" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"F" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"K" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"L" = (
+/obj/machinery/computer/teleporter{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"N" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"P" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"R" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"T" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"U" = (
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+"W" = (
+/turf/template_noop,
+/area/template_noop)
+"X" = (
+/obj/machinery/computer/shuttle,
+/turf/open/floor/mineral/titanium/lowpressure,
+/area/ruin/powered/crashedshuttle)
+
+(1,1,1) = {"
+W
+F
+F
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+F
+F
+c
+l
+a
+z
+j
+E
+P
+z
+A
+c
+a
+L
+d
+k
+a
+D
+o
+"}
+(3,1,1) = {"
+F
+X
+N
+U
+t
+R
+z
+g
+z
+c
+U
+R
+t
+c
+R
+T
+a
+D
+o
+"}
+(4,1,1) = {"
+F
+F
+z
+z
+a
+q
+h
+c
+c
+c
+c
+U
+a
+C
+K
+b
+a
+D
+o
+"}
+(5,1,1) = {"
+W
+F
+F
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+m
+B
+a
+a
+a
+"}

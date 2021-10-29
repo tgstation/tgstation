@@ -1,0 +1,252 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"c" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/space)
+"e" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/ruin/space)
+"f" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"g" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/space)
+"h" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/clothing/under/rank/centcom/intern,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"i" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/machinery/computer{
+	desc = "A computer that's had it's internal circuits and wiring fried with a now long-dead device placed inside of it. What happened here?";
+	dir = 8;
+	name = "Broken Computer"
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"j" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/item/clothing/shoes/sneakers/black,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"k" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"l" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"m" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space)
+"o" = (
+/obj/item/clothing/under/rank/centcom/intern,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"p" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/under/rank/centcom/commander,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space)
+"s" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/item/clothing/shoes/sneakers/black,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"t" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/clothing/shoes/sneakers/brown,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"u" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"y" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space/stormtrooper,
+/turf/template_noop,
+/area/template_noop)
+"z" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"A" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space)
+"C" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space)
+"G" = (
+/obj/item/clothing/glasses/sunglasses,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"J" = (
+/obj/structure/lattice,
+/obj/machinery/light/small/built{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"M" = (
+/obj/item/radio/headset/headset_cent/empty,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space)
+"Q" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/space)
+"U" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/head/centhat,
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+"W" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/broken,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space)
+"X" = (
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
+"Y" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/item/gps/spaceruin,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue/airless,
+/area/ruin/space)
+
+(1,1,1) = {"
+a
+b
+k
+b
+a
+"}
+(2,1,1) = {"
+b
+g
+l
+g
+b
+"}
+(3,1,1) = {"
+c
+h
+t
+p
+c
+"}
+(4,1,1) = {"
+c
+i
+G
+U
+c
+"}
+(5,1,1) = {"
+e
+j
+u
+q
+e
+"}
+(6,1,1) = {"
+c
+m
+o
+s
+c
+"}
+(7,1,1) = {"
+c
+Y
+M
+W
+c
+"}
+(8,1,1) = {"
+c
+f
+X
+Q
+c
+"}
+(9,1,1) = {"
+e
+f
+C
+A
+z
+"}
+(10,1,1) = {"
+c
+m
+z
+z
+a
+"}
+(11,1,1) = {"
+c
+J
+y
+z
+a
+"}
+(12,1,1) = {"
+a
+z
+a
+a
+a
+"}

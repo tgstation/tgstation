@@ -1,0 +1,2422 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"aq" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"aC" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"aI" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"bf" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"bj" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"bt" = (
+/obj/structure/lattice,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/template_noop,
+/area/ruin/unpowered)
+"bV" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"cb" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"cD" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/corpse/charredskeleton,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"dd" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"do" = (
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"du" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"dB" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 8
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"dL" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/grille/broken,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"dX" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ea" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"eg" = (
+/obj/structure/grille,
+/turf/template_noop,
+/area/ruin/unpowered)
+"eo" = (
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"eq" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ev" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered)
+"fh" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"fG" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"fN" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"fZ" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"gl" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/grille/broken,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"gw" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"gB" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/structure/frame/computer{
+	dir = 8
+	},
+/obj/item/shard,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"gI" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"hb" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"hi" = (
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"hy" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner,
+/obj/structure/grille/broken,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ic" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"id" = (
+/obj/item/ammo_casing/c9mm,
+/obj/item/stack/rods,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"iC" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"iU" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"jj" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"jx" = (
+/obj/effect/turf_decal/bot_red,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"jG" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"kk" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"km" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"kF" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"lf" = (
+/obj/effect/mob_spawn/human/engineer{
+	brute_damage = 200
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"lp" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"lw" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/grille/broken,
+/obj/item/shard,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"lE" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/unpowered)
+"mp" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"mx" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered)
+"mN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"mP" = (
+/obj/effect/turf_decal/trimline/white/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"na" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"nv" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"nF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"nH" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/obj/item/shard,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"nN" = (
+/obj/item/stack/rods,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"nP" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ok" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"om" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"oo" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ph" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"pl" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"pu" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"pA" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"pZ" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"qv" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"qM" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"qR" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 9
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"ry" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"sn" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/obj/effect/mob_spawn/human/syndicatesoldier{
+	brute_damage = 200
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"sK" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"tc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"te" = (
+/obj/item/ammo_casing/c9mm,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tn" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/mob_spawn/human/engineer{
+	brute_damage = 200
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tv" = (
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered)
+"tw" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tD" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tE" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tK" = (
+/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tW" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"tX" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/ruin/unpowered)
+"ub" = (
+/turf/open/floor/carpet/black/airless,
+/area/ruin/unpowered)
+"ud" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"ui" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"um" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/obj/item/stack/rods,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"us" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"uB" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"uO" = (
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered)
+"ve" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 6
+	},
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"vm" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"vx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"vA" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"vH" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/template_noop,
+/area/ruin/unpowered)
+"vK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"wo" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"wr" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"xs" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"xJ" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"xL" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"xP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"yo" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/obj/item/stack/rods,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"yB" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/item/ammo_casing/c9mm,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"yO" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"yU" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"zd" = (
+/obj/structure/grille/broken,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"zn" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"zJ" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"zY" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"AK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"AM" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"AN" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"AR" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 9
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Bj" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"BO" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Cl" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Cp" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Cu" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/girder,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"CT" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"DN" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"Er" = (
+/obj/effect/mob_spawn/human/doctor{
+	brute_damage = 145;
+	id_job = "Geneticist";
+	name = "Geneticist";
+	oxy_damage = 55;
+	suit = /obj/item/clothing/suit/toggle/labcoat/genetics;
+	uniform = /obj/item/clothing/under/rank/rnd/geneticist
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ED" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 9
+	},
+/obj/item/ammo_casing/c9mm,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"EP" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"FD" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"FU" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 5
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Gc" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"Gi" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Gn" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Gr" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"GH" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"GJ" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"GO" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"GV" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Hh" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Hi" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Ho" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Hv" = (
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"HL" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"HX" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Ic" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Io" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"IC" = (
+/obj/effect/turf_decal/bot_red,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"IO" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"IT" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"IU" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Jc" = (
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Jl" = (
+/obj/effect/turf_decal/trimline/white/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Jp" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Jx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Jz" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 4
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"JH" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"JK" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/obj/item/stack/rods,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"JR" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"JT" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"JY" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/skeleton,
+/obj/item/shard,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Kn" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Kr" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 6
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Kx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"KH" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"KN" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 6
+	},
+/obj/item/shard,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"KU" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 8
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Lm" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/obj/item/stack/rods,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Lx" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"LK" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Mh" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Mu" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"MK" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Ne" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"NU" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 10
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"NX" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"NY" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"OE" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"OK" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"OY" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Pg" = (
+/obj/structure/girder,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"Pn" = (
+/obj/effect/turf_decal/trimline/green/filled/corner,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Pq" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Px" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"PH" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Qd" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Qs" = (
+/obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"QH" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
+"QN" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"QU" = (
+/obj/structure/grille/broken,
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Rj" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered)
+"Rq" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Rw" = (
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"RL" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 9
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"RN" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"RV" = (
+/obj/effect/turf_decal/trimline/white/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"RZ" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Su" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 5
+	},
+/obj/effect/mob_spawn/human/syndicatesoldier{
+	brute_damage = 200
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"SF" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"SS" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Tk" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Tu" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"TF" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 4
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"TH" = (
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"TW" = (
+/obj/effect/mob_spawn/human/doctor{
+	brute_damage = 200
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Ua" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 10
+	},
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Uo" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"UD" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 10
+	},
+/obj/effect/mob_spawn/human/doctor{
+	brute_damage = 200
+	},
+/obj/effect/gibspawner/human,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Vz" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Wy" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/purple/filled/corner{
+	dir = 8
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"WK" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"WY" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Xp" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/obj/item/ammo_casing/c9mm,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Xw" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"Xy" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"XL" = (
+/turf/template_noop,
+/area/template_noop)
+"Yc" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/brown/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"YD" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown,
+/obj/item/ammo_casing/c9mm,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"YV" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/floor/iron/airless{
+	icon_state = "floorscorched1"
+	},
+/area/ruin/unpowered)
+"Zt" = (
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ZT" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/obj/item/ammo_casing/c9mm,
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+"ZW" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/item/shard,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+XL
+XL
+XL
+ao
+ud
+uB
+ao
+do
+XL
+XL
+XL
+XL
+XL
+xL
+ao
+ao
+do
+ao
+XL
+XL
+XL
+XL
+"}
+(2,1,1) = {"
+XL
+XL
+EP
+ic
+nv
+EP
+ic
+xL
+xL
+XL
+XL
+XL
+xL
+xL
+ic
+ic
+Pg
+ic
+xL
+XL
+XL
+XL
+"}
+(3,1,1) = {"
+XL
+XL
+EP
+Zt
+GJ
+kk
+tE
+Ua
+xL
+xL
+QH
+QH
+xL
+Ho
+tn
+OE
+lw
+xs
+EP
+XL
+XL
+XL
+"}
+(4,1,1) = {"
+XL
+XL
+xL
+Zt
+JY
+WK
+eo
+dX
+xL
+JR
+OE
+um
+ph
+km
+Tk
+us
+Tk
+TF
+Pg
+XL
+XL
+XL
+"}
+(5,1,1) = {"
+XL
+XL
+xL
+IC
+jx
+vH
+IO
+iU
+xL
+na
+id
+CT
+do
+tv
+lE
+lE
+lE
+lE
+fZ
+XL
+XL
+XL
+"}
+(6,1,1) = {"
+XL
+XL
+xL
+kk
+tE
+bj
+FD
+tK
+bt
+na
+mp
+lE
+xs
+tv
+lE
+XL
+lE
+yO
+do
+XL
+XL
+XL
+"}
+(7,1,1) = {"
+XL
+XL
+xL
+SS
+lE
+Zt
+xJ
+lE
+do
+na
+Gr
+lf
+BO
+tv
+lE
+lE
+lE
+lE
+Pg
+XL
+XL
+XL
+"}
+(8,1,1) = {"
+XL
+XL
+xL
+xL
+dL
+IO
+tX
+cb
+xL
+lE
+lE
+RN
+Io
+Pg
+Pg
+EP
+fZ
+do
+aI
+XL
+XL
+XL
+"}
+(9,1,1) = {"
+XL
+XL
+XL
+EP
+WK
+xJ
+xL
+xL
+xL
+lE
+lE
+do
+EP
+EP
+eq
+oo
+Lm
+tX
+XL
+XL
+XL
+XL
+"}
+(10,1,1) = {"
+XL
+XL
+XL
+EP
+ZW
+lE
+NX
+jj
+Gi
+SF
+gw
+Hv
+GV
+dd
+du
+lp
+IT
+nN
+XL
+XL
+XL
+XL
+"}
+(11,1,1) = {"
+XL
+XL
+XL
+QH
+ud
+do
+do
+ry
+RZ
+lE
+hb
+zY
+pZ
+YV
+JT
+lE
+xL
+xL
+XL
+XL
+XL
+XL
+"}
+(12,1,1) = {"
+XL
+XL
+XL
+QH
+eo
+eo
+do
+Wy
+mN
+mN
+cD
+Ne
+Uo
+Cl
+oo
+lE
+nH
+XL
+XL
+XL
+XL
+XL
+"}
+(13,1,1) = {"
+XL
+XL
+XL
+aI
+ub
+eo
+eo
+Px
+lE
+lE
+wr
+lE
+QH
+lE
+hi
+lE
+NY
+XL
+XL
+XL
+XL
+XL
+"}
+(14,1,1) = {"
+XL
+XL
+XL
+jG
+ub
+ub
+xL
+fG
+QH
+Hi
+Gr
+TH
+xL
+hy
+WY
+WY
+IT
+xL
+XL
+XL
+XL
+XL
+"}
+(15,1,1) = {"
+XL
+XL
+uB
+xL
+xL
+xL
+xL
+nP
+lE
+vA
+vx
+nF
+lE
+iC
+do
+Hh
+lE
+xL
+xL
+XL
+XL
+XL
+"}
+(16,1,1) = {"
+XL
+XL
+do
+bf
+Rq
+tv
+lE
+bV
+xL
+xL
+Mu
+do
+QH
+iC
+QN
+eq
+KU
+aq
+Pg
+XL
+XL
+XL
+"}
+(17,1,1) = {"
+XL
+XL
+EP
+FU
+pl
+uO
+xL
+bV
+QH
+Lx
+wr
+UD
+QH
+lE
+bt
+tD
+Gn
+Vz
+EP
+XL
+XL
+XL
+"}
+(18,1,1) = {"
+XL
+XL
+QH
+do
+Bj
+xL
+xL
+JH
+QH
+Jx
+eo
+vK
+do
+OY
+QN
+Xy
+WY
+IT
+QH
+lE
+XL
+XL
+"}
+(19,1,1) = {"
+XL
+XL
+QH
+AR
+tW
+ok
+xL
+PH
+qM
+Hi
+lE
+MK
+kF
+OY
+do
+LK
+do
+ud
+QH
+XL
+XL
+XL
+"}
+(20,1,1) = {"
+XL
+XL
+QH
+IU
+Er
+om
+do
+PH
+lE
+Hi
+TW
+GH
+QH
+iC
+eo
+RL
+oo
+lE
+do
+XL
+lE
+xL
+"}
+(21,1,1) = {"
+XL
+XL
+HL
+zY
+te
+Qs
+Bj
+Pq
+QH
+ui
+vx
+ve
+xL
+iC
+Rw
+Qd
+eo
+Vz
+do
+XL
+lE
+xL
+"}
+(22,1,1) = {"
+XL
+XL
+EP
+yo
+Jc
+lE
+xL
+bV
+QH
+do
+lE
+xL
+QH
+lE
+GO
+fN
+Pn
+Kr
+EP
+XL
+xL
+xL
+"}
+(23,1,1) = {"
+XL
+XL
+do
+uB
+FU
+pl
+xL
+OK
+qv
+HX
+HX
+HX
+Yc
+vm
+Rw
+lE
+sn
+DN
+EP
+XL
+xL
+XL
+"}
+(24,1,1) = {"
+XL
+XL
+XL
+xL
+xL
+xL
+xL
+xL
+Ic
+tv
+tv
+mx
+KH
+lE
+Rw
+Rw
+Rw
+Pg
+lE
+XL
+XL
+XL
+"}
+(25,1,1) = {"
+XL
+XL
+XL
+xL
+ED
+dB
+zn
+do
+RV
+ev
+lE
+Rj
+Kn
+QH
+qR
+lE
+NU
+Pg
+XL
+XL
+XL
+XL
+"}
+(26,1,1) = {"
+XL
+XL
+XL
+xL
+ZT
+hi
+mP
+Xw
+tw
+ev
+tv
+tv
+Mh
+yU
+sK
+QU
+pA
+zd
+XL
+XL
+XL
+XL
+"}
+(27,1,1) = {"
+XL
+XL
+XL
+QH
+zJ
+Jz
+lE
+do
+Jl
+wo
+Kx
+Jp
+AM
+YD
+lE
+Xp
+KN
+xL
+XL
+XL
+XL
+XL
+"}
+(28,1,1) = {"
+XL
+XL
+lE
+QH
+ud
+ea
+ea
+EP
+Cu
+do
+gl
+lE
+EP
+EP
+gI
+yB
+xL
+QH
+XL
+XL
+XL
+XL
+"}
+(29,1,1) = {"
+XL
+XL
+XL
+XL
+QH
+tc
+xP
+do
+Tu
+AN
+AN
+wr
+Cp
+xL
+Su
+JK
+Pg
+XL
+XL
+XL
+XL
+XL
+"}
+(30,1,1) = {"
+XL
+lE
+XL
+XL
+uB
+uB
+HL
+do
+AK
+pu
+Gn
+fh
+nF
+EP
+Rw
+Gc
+xL
+XL
+XL
+XL
+XL
+XL
+"}
+(31,1,1) = {"
+xL
+lE
+XL
+XL
+XL
+lE
+lE
+QH
+uB
+gB
+aC
+nF
+do
+EP
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+"}
+(32,1,1) = {"
+xL
+xL
+XL
+lE
+XL
+lE
+XL
+XL
+ud
+eg
+eg
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+"}
+(33,1,1) = {"
+XL
+xL
+xL
+xL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+XL
+"}

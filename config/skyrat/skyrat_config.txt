@@ -1,0 +1,74 @@
+## The name that the server uses to identify itself to the database. Useful if you intend to run multiple servers that
+#  speak to the same database to share staff ranks, bans, notes etc.
+SERVERSQLNAME
+
+## Comment this out if you'd like a server that cares only about local bans in the database.
+RESPECT_GLOBAL_BANS
+
+## Comment this out if you want to use the SQL based mentor system, the legacy system uses mentors.txt.
+## You need to set up your database to use the SQL based system.
+## This flag is automatically enabled if SQL_ENABLED isn't
+## But currently the SQL system is not implemented and it'll read from mentors.txt nonetheless
+MENTOR_LEGACY_SYSTEM
+
+ALERT_AMBER_UPTO A major security emergency has developed. Security staff may have weapons unholstered at all times. Random searches are allowed and advised.
+ALERT_AMBER_DOWNTO A major security emergency is still underway. Non-security personnel are required to obey all relevant instructions from security staff.
+ALERT_ORANGE_UPTO A major engineering emergency has developed. Non-engineering personnel are required to evacuate any affected areas and obey relevant instructions from engineering staff.
+ALERT_ORANGE_DOWNTO A major engineering emergency has developed. Non-engineering personnel are required to evacuate any affected areas and obey relevant instructions from engineering staff.
+ALERT_VIOLET_UPTO A major medical emergency has developed. Non-medical personnel are required to obey all relevant instructions from medical staff.
+ALERT_VIOLET_DOWNTO  A major medical emergency has developed. Non-medical personnel are required to obey all relevant instructions from medical staff.
+ALERT_DELTA_UPTO Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_DELTA_DOWNTO Destruction of the station is still imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_GAMMA The Solar Federation has placed this system under Gamma Alert status. This galactic system is facing a ZK-Class Reality Failure Scenario. Security Personnel is authorized full access to lethal equipment to enforce Martial Law. Failure to follow emergency procedures is punishable by death. This is not a drill.
+
+## How long until someone can be put in cryo if they are SSD
+CRYO_MIN_SSD_TIME 15
+
+## log subtler emotes in game.txt
+#LOG_SUBTLER
+
+## log ambition changes in game.txt
+LOG_AMBITION
+
+## autovote initial delay (deciseconds in real time) before first automatic transfer vote call (default 120 minutes)
+## Set to 0 to disable the subsystem altogether.
+VOTE_AUTOTRANSFER_INITIAL 72000
+
+## autovote delay (deciseconds in real time) before sequential automatic transfer votes are called (default 30 minutes)
+VOTE_AUTOTRANSFER_INTERVAL 18000
+
+## autovote maximum votes until automatic transfer call. (default 4)
+## Set to 0 to force automatic crew transfer after the 'vote_autotransfer_initial' elapsed.
+## Set to -1 to disable the maximum votes cap.
+VOTE_AUTOTRANSFER_MAXIMUM 4
+
+## Policy for what people remember after dying and being brought back to life
+BLACKOUTPOLICY You remember nothing after you've blacked out and you do not remember who or what events killed you, however, you can have faint recollection of what led up to it.
+
+## Link to our wiki
+WIKIURLSKYRAT https://skyrat13.tk/wiki/index.php
+
+## Combat indicator, comment out to disable it
+COMBAT_INDICATOR
+
+## Role ID for the new game discord ping
+GAME_ALERT_ROLE_ID
+
+## Channel that either has reaction roles or instruction on assigning roles
+ROLE_ASSIGN_CHANNEL_ID
+
+##Rockplanet Ruins Budget
+ROCKPLANET_BUDGET 60
+
+##Player controlled mob spawn text
+PC_MOB_TEXT As a player controlled mob you are expected to play the role to the best of your ability. This means if you're an animal, act like one. You shouldn't display much intelligence if any. This also means if you're engaging in combat you should refrain from mercing people fully. Play not to win but to create a challenge. You're there to replace AI, make others enjoy the situation as well. If your simple mob is not above simple or mute intelligence, using structures such as welding tanks/canisters/boxes to hinder your opponent is entirely forbidden. Do not do this.
+
+## Toggles various checks for russian texts formation, as an example - autohiss. Useful only for russian servers
+#RUSSIAN_TEXT_FORMATION
+
+## Toggles off SSDecay when uncommented, HIGHLY recommended for map test-merges, to avoid giving it a bad first impression.
+#SSDECAY_DISABLED
+
+## Disables any ERP preferences for codebases that don't want it.
+#DISABLE_ERP_PREFERENCES
+#ERP_EMOTES_TO_DISABLE cum

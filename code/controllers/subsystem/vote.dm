@@ -118,6 +118,14 @@ SUBSYSTEM_DEF(vote)
 			if("map")
 				SSmapping.changemap(global.config.maplist[.])
 				SSmapping.map_voted = TRUE
+			//SKYRAT EDIT ADDITION BEGIN
+			if("transfer")
+				if(. == "Initiate Crew Transfer")
+					SSshuttle.autoEnd()
+					var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+					if(C)
+						C.post_status("shuttle")
+			//SKYRAT EDIT ADDITION END
 	if(restart)
 		var/active_admins = FALSE
 		for(var/client/C in GLOB.admins + GLOB.deadmins)
@@ -181,7 +189,7 @@ SUBSYSTEM_DEF(vote)
 				var/list/maps = list()
 				for(var/map in global.config.maplist)
 					var/datum/map_config/VM = config.maplist[map]
-					if(!VM.votable || (VM.map_name in SSpersistence.blocked_maps))
+					if(!VM.votable || (VM.map_name in SSpersistence.blocked_maps) || GLOB.clients.len >= VM.config_max_users || GLOB.clients.len <= VM.config_min_users) //SKYRAT EDIT CHANGE - ORIGINAL: if(!VM.votable || (VM.map_name in SSpersistence.blocked_maps))
 						continue
 					maps += VM.map_name
 					shuffle_inplace(maps)
@@ -196,6 +204,10 @@ SUBSYSTEM_DEF(vote)
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
+			//SKYRAT EDIT ADDITION BEGIN - AUTOTRANSFER
+			if("transfer")
+				choices.Add("Initiate Crew Transfer","Continue Playing")
+			//SKYRAT EDIT ADDITION END - AUTOTRANSFER
 			else
 				return FALSE
 		mode = vote_type
@@ -217,7 +229,12 @@ SUBSYSTEM_DEF(vote)
 			V.Grant(C.mob)
 			generated_actions += V
 			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
+			//SKYRAT EDIT START
+			/*
 				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
+			*/
+				SEND_SOUND(C, sound('sound/misc/announce_dig.ogg'))
+			//SKYRAT EDIT END
 		return TRUE
 	return FALSE
 
@@ -294,6 +311,11 @@ SUBSYSTEM_DEF(vote)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
+		//SKYRAT EDIT ADDITION BEGIN - autotransfer
+		if("transfer")
+			if(usr.client.holder && upper_admin)
+				initiate_vote("transfer",usr.key)
+		//SKYRAT EDIT ADDITION END
 		if("vote")
 			submit_vote(round(text2num(params["index"])))
 	return TRUE

@@ -1,0 +1,61 @@
+"bL" = (/obj/structure/door_assembly/multi_tile/glass,/obj/structure/barricade/wooden/crude,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"ct" = (/obj/effect/turf_decal/sand/plating,/obj/structure/sinkframe{pixel_y = 25},/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"dE" = (/obj/structure/grille/broken,/obj/effect/turf_decal/siding/wood,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"ei" = (/obj/effect/turf_decal/sand/plating,/obj/item/stack/tile/iron/grimy,/obj/item/stack/tile/iron/grimy,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"eD" = (/obj/effect/turf_decal/sand/plating,/obj/structure/table_frame,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"eV" = (/obj/effect/turf_decal/sand/plating,/obj/effect/spawner/lootdrop/gross_decal_spawner,/obj/machinery/light/built/directional/west,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"gI" = (/obj/effect/turf_decal/sand/plating,/obj/machinery/firealarm/directional/south,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"lt" = (/obj/effect/turf_decal/sand/plating,/obj/machinery/light/broken/directional/east,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"nO" = (/obj/item/stack/rods,/obj/effect/turf_decal/siding/wood,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"pB" = (/obj/effect/turf_decal/sand/plating,/obj/machinery/space_heater,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"sa" = (/obj/effect/turf_decal/sand/plating,/obj/item/stack/sheet/iron/five,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"uJ" = (/obj/effect/turf_decal/sand/plating,/obj/item/stack/tile/iron/grimy,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"wO" = (/obj/effect/turf_decal/sand/plating,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"wQ" = (/obj/structure/frame/computer{dir = 4},/obj/item/coin/iron,/obj/item/coin/iron,/obj/effect/spawner/lootdrop/space/cashmoney,/obj/structure/flippedtable{dir = 8},/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"xC" = (/obj/structure/girder,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"xM" = (/turf/template_noop,/area/template_noop)
+"zR" = (/obj/effect/turf_decal/sand/plating,/obj/item/stack/rods,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Ac" = (/obj/structure/girder,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Bq" = (/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"CN" = (/obj/effect/spawner/lootdrop/gross_decal_spawner,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Di" = (/turf/closed/wall/rust,/area/ruin/unpowered)
+"EU" = (/obj/effect/turf_decal/sand/plating,/obj/item/stack/tile/iron/grimy,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"FF" = (/obj/effect/turf_decal/sand/plating,/obj/structure/light_construct/directional/west,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Ig" = (/obj/structure/table_frame,/obj/item/food/spacetwinkie,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Im" = (/obj/effect/turf_decal/sand/plating,/obj/item/stack/sheet/iron,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Iz" = (/obj/structure/barricade/wooden/crude,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"JA" = (/obj/effect/turf_decal/sand/plating,/obj/structure/extinguisher_cabinet/directional/east,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"JO" = (/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"KY" = (/obj/structure/grille/broken,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"LM" = (/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Mo" = (/obj/structure/table_frame,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Mw" = (/obj/effect/turf_decal/sand/plating,/obj/structure/closet/mini_fridge,/obj/item/knife/hunting,/obj/item/food/meat/slab/human/mutant/zombie,/obj/item/stack/sheet/bone,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Nx" = (/obj/effect/turf_decal/sand/plating,/obj/structure/flippedtable{dir = 8},/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Pc" = (/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Rh" = (/obj/effect/turf_decal/sand/plating,/obj/structure/closet/secure_closet/freezer/gulag_fridge,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"TW" = (/obj/effect/turf_decal/sand/plating,/obj/structure/railing{dir = 8},/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Ut" = (/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"UW" = (/obj/structure/railing,/obj/effect/turf_decal/siding/wood,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"Wg" = (/obj/effect/turf_decal/sand/plating,/obj/structure/flippedtable{dir = 8},/obj/structure/light_construct/directional/south,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Wl" = (/obj/effect/turf_decal/sand/plating,/obj/structure/frame/machine,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"Yn" = (/obj/structure/kitchenspike_frame,/turf/open/floor/iron/grimy/lowpressure,/area/ruin/unpowered)
+"Yr" = (/obj/effect/spawner/lootdrop/gross_decal_spawner,/turf/open/floor/plating/asteroid/lowpressure,/area/ruin/unpowered)
+"YV" = (/obj/effect/turf_decal/sand/plating,/obj/structure/grille/broken,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+
+(1,1,1) = {"
+xMxMxMxMxMxMxMxMxMxMxMxMxMxMxMxM
+xMxMxMxMxMxMxMxMxMxMxMxMxMxMxMxM
+xMxMxCDiDiYVJOYVJODiJODiDiDixMxM
+xMxMIzwOPcJOJOLMPcJOPcJOctJOxMxM
+xMxMbLJOJOImLMBqCNIgPcEUJADixMxM
+xMxMDiFFPcLMLMLMBqwQLMPcltDixMxM
+xMxMJOJOImPcBqCNBqMosaJOWlJOxMxM
+xMxMKYJOJOgIeiuJJOWgPcPcJOKYxMxM
+xMxMDiDiJODiDiJOAcAcDiLMDiDixMxM
+xMxMxMTWJOzRpBPcNxDiYnPcMwJOxMxM
+xMxMxMJOYrPcPcPcltDieVPcWlJOxMxM
+xMxMxMJOeDUtJOJOeDAcJOJORhxCxMxM
+xMxMxMDidEnOUWUWUWDiJODiDiDixMxM
+xMxMxMxMxMxMxMxMxMxMxMxMxMxMxMxM
+xMxMxMxMxMxMxMxMxMxMxMxMxMxMxMxM
+"}

@@ -1,0 +1,4151 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/has_grav/vaulttango)
+"al" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/storage/box/stockparts/deluxe{
+	pixel_y = 7
+	},
+/obj/item/storage/box/stockparts/deluxe,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ar" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/syndicate/melee,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"aM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/aicard,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"bb" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"bn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"bF" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/entertainment/money,
+/obj/effect/spawner/random/entertainment/money,
+/obj/effect/spawner/random/entertainment/money,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"bZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cg" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cl" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/item/kirbyplants/random,
+/obj/machinery/button/door/directional/north{
+	id = "securevaultdoor";
+	name = "Vault Doors"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cw" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cB" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = -3
+	},
+/obj/item/pen,
+/obj/item/food/donkpocket/teriyaki{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cL" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/structure/filingcabinet,
+/obj/item/paper{
+	info = "Log name A10-52. Log date 03/28/2561. As of today, this vault will remain self-sustaining and unmanned. We no longer require workers aboard this station. The perimeter turrets will remain operable until further notice. If you have any inquiries, please see me directly. Ardere.";
+	name = "Report A10-52"
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/paper{
+	info = "Log name A10-35. Log date 02/21/2561. Expecting a shipment today from PC, something about storing a few unused cores for experiments at a later date. Expecting in 3-5 days, depending on how happy the engines are on the transport vessel. We'll see how it goes. Ardere.";
+	name = "Report A10-35"
+	},
+/obj/item/paper{
+	info = "Log name A10-28. Log date 11/13/2560. Looks like another research station got infiltrated a few days ago, just getting word of it now. Activated the self-destruct terminal before anything got stolen. Nobody made it. Expecting some in and out at the vault for mech pick-up, and probably some cash. Probably a lot. Ardere.";
+	name = "Report A10-28"
+	},
+/obj/item/paper{
+	info = "Log name A10-01. Log date 9/17/2560. A10 rotation is beginning. Relocating from location Delta to here, location Tango. Expecting low traffic, considering proximity to Nanotrasen station radio activity. Gonna keep an eye out for that. Thankful for the calm position. Ardere.";
+	name = "Report A10-01"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cN" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"cZ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"di" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"dm" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"do" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"dA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"dJ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ec" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"eh" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp{
+	light_on = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ek" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ep" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"eu" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ew" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/has_grav/vaulttango)
+"eC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"eH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"eO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ff" = (
+/obj/machinery/door/window/brigdoor{
+	dir = 8;
+	name = "Office Door"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"fv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"fE" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"gi" = (
+/obj/machinery/computer/teleporter{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"gK" = (
+/obj/machinery/teleport/station,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"gL" = (
+/obj/machinery/teleport/hub,
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"gP" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor{
+	id = "securevaultdoor";
+	name = "Vault Door";
+	network_id = null
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"hp" = (
+/obj/effect/turf_decal/stripes{
+	dir = 5
+	},
+/obj/structure/rack,
+/obj/item/clothing/mask/gas,
+/obj/item/tank/internals/oxygen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"hD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"hX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ik" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"iR" = (
+/mob/living/simple_animal/hostile/syndicate/melee,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"jc" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/poddoor/shutters{
+	id = "portshuttervault";
+	name = "Maintenance Shutter"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"jf" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"jw" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/rack/shelf,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/ammo_box/magazine/m9mm,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"jB" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"jI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/rack/shelf,
+/obj/effect/spawner/random/clothing/syndie,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"jY" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"kl" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"kV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"kZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"lq" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"lA" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ml" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"mQ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/light/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"mV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"mX" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"nm" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"nn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"no" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ny" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"nA" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/rack/shelf,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"nK" = (
+/obj/structure/grille,
+/turf/template_noop,
+/area/template_noop)
+"nO" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"oj" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"oF" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"pe" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ph" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark/textured_half,
+/area/ruin/space/has_grav/vaulttango)
+"pk" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"pD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"pN" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"pP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"pQ" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"qb" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"rq" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"rw" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"rI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"rM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"sp" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"sy" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"sH" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"sJ" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/blue,
+/obj/item/folder/blue{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"tp" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"tI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"tN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"tW" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"tZ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/vaulttango)
+"ut" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"vj" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"vB" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"vL" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ws" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ww" = (
+/obj/machinery/power/solar{
+	id = "vaultsolarwest";
+	name = "Port Auxiliary Solar Array"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel/airless,
+/area/template_noop)
+"xm" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/template_noop)
+"xE" = (
+/turf/template_noop,
+/area/ruin/space/has_grav/vaulttango)
+"xI" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/has_grav/vaulttango)
+"xQ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor{
+	id = "securevaultdoor";
+	name = "Vault Door";
+	network_id = null
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"yd" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor{
+	id = "securevaultdoor";
+	name = "Vault Door";
+	network_id = null
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"yL" = (
+/obj/machinery/power/solar{
+	id = "vaultsolareast";
+	name = "Starboard Auxiliary Solar Array"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel/airless,
+/area/template_noop)
+"zm" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"zy" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"zF" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"zZ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Ab" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Ad" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Ai" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/floor/iron/solarpanel/airless,
+/area/template_noop)
+"AM" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/cable,
+/turf/template_noop,
+/area/template_noop)
+"AT" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Bj" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"By" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/effect/spawner/random/maintenance,
+/turf/template_noop,
+/area/template_noop)
+"BK" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"BR" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"BY" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Cc" = (
+/obj/structure/cable,
+/obj/machinery/light/small/directional/north,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Cl" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Ct" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
+/obj/structure/closet/crate,
+/obj/item/raw_anomaly_core/bluespace,
+/obj/item/raw_anomaly_core/bluespace,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"CE" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"CG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/space/has_grav/vaulttango)
+"Dt" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Ei" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"EA" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 9
+	},
+/obj/structure/closet/crate/goldcrate,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"FS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"FZ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"GR" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"GS" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Hr" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/light/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Hs" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"HI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	desc = "An armed agent, provided by the Syndicate.";
+	name = "ARBORLINK Operative"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"HM" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 5
+	},
+/obj/structure/closet/crate/silvercrate,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/gps/spaceruin{
+	gpstag = "Illicit Signal"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"HV" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Ik" = (
+/obj/structure/rack/shelf,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Im" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/hatch,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Iz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"IP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"IQ" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Jm" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east{
+	cell_type = /obj/item/stock_parts/cell/hyper
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"JE" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/poddoor/shutters{
+	id = "starboardshuttervault";
+	name = "Maintenance Shutter"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"JF" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/template_noop,
+/area/template_noop)
+"JG" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"JQ" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Kd" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Kj" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes,
+/obj/machinery/door/firedoor/heavy,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Kn" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Ko" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Kv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Kz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"KW" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Ld" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Secure Vault Tango"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Lp" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/machinery/power/smes,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"LC" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"LM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Mb" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor{
+	id = "securevaultdoor";
+	name = "Vault Door";
+	network_id = null
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Mf" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Mh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/machinery/firealarm/directional/north,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Mk" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/west,
+/obj/machinery/firealarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Mm" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"MJ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"MN" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/mecha_wreckage/ripley/firefighter{
+	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged. This one has a strange logo on it.";
+	name = "\improper ARBORLINK Ripley MK-F wreckage"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"MW" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/filingcabinet,
+/obj/item/paper{
+	info = "1. 18. 2. 15. 18. 12. 9. 14. 11. 48 75 6b 20 70 75 20 61 6f 6c 20 6d 76 73 73 66 20 76 6d 20 74 68 75 72 70 75 6b 2c 20 64 6c 20 76 75 6a 6c 20 74 76 79 6c 20 74 70 7a 61 68 72 6c 20 61 6f 6c 20 7a 6f 6c 6c 79 20 70 73 73 62 7a 70 76 75 20 61 6f 68 61 20 70 7a 20 76 62 79 20 63 6c 79 66 20 76 64 75 20 6b 70 7a 6a 76 63 6c 79 66 20 6d 76 79 20 77 79 76 6e 79 6c 7a 7a 2e 20 44 6c 20 6a 70 79 6a 73 6c 20 69 68 6a 72 20 61 76 20 61 6c 79 79 70 61 76 79 66 20 62 75 6b 6c 6d 70 75 6c 6b 2c 20 62 75 6c 65 77 73 76 79 6c 6b 2c 20 68 75 6b 20 76 75 73 66 20 79 70 77 20 76 62 79 7a 6c 73 63 6c 7a 20 68 77 68 79 61 20 70 75 20 61 6f 6c 20 68 61 61 6c 74 77 61 20 61 76 20 7a 76 73 63 6c 20 70 61 2e 20 41 6f 70 7a 20 70 7a 20 75 76 61 20 7a 76 74 6c 61 6f 70 75 6e 20 61 6f 68 61 20 6a 68 75 20 69 6c 20 74 68 75 70 77 62 73 68 61 6c 6b 2e 20 41 6f 70 7a 20 70 7a 20 75 76 61 20 7a 76 74 6c 61 6f 70 75 6e 20 61 6f 68 61 20 6a 68 75 20 69 6c 20 61 68 74 6c 6b 2e 20 4c 63 6c 75 20 76 62 79 20 76 64 75 20 68 61 61 6c 74 77 61 7a 20 61 76 20 6b 76 20 7a 76 20 6c 75 6b 68 75 6e 6c 79 7a 20 74 76 79 6c 20 61 6f 68 75 20 64 6c 20 6a 76 62 73 6b 20 6c 63 6c 79 20 70 74 68 6e 70 75 6c 2e 20 41 6f 70 7a 20 70 7a 20 68 20 6d 68 70 73 2d 7a 68 6d 6c 2c 20 6d 76 79 20 76 62 79 20 70 75 6c 63 70 61 68 69 73 6c 20 6d 68 70 73 62 79 6c 2e 20 48 20 79 6c 74 70 75 6b 6c 79 20 61 76 20 6f 68 73 61 20 75 76 64 2c 20 6a 76 62 75 61 20 66 76 62 79 20 69 73 6c 7a 7a 70 75 6e 7a 2c 20 68 75 6b 20 74 76 63 6c 20 77 68 7a 61 20 61 6f 70 7a 20 68 73 73 2e 20 50 61 20 70 7a 20 6b 70 6d 6d 70 6a 62 73 61 20 61 76 20 68 6a 6a 6c 77 61 20 70 61 20 68 61 20 6d 70 79 7a 61 2c 20 69 62 61 20 6c 63 6c 79 66 69 76 6b 66 20 70 75 61 79 70 75 7a 70 6a 68 73 73 66 20 72 75 76 64 7a 20 61 6f 70 7a 2e 20 4c 63 6c 79 66 69 76 6b 66 20 72 75 76 64 7a 20 61 6f 68 61 20 68 61 20 61 6f 6c 20 63 6c 79 66 20 6a 76 79 6c 20 76 6d 20 61 6f 6c 70 79 20 7a 68 77 70 6c 75 61 20 74 70 75 6b 2c 20 64 6c 20 64 6c 79 6c 20 75 6c 63 6c 79 20 74 6c 68 75 61 20 61 76 20 77 68 70 75 61 20 76 62 79 7a 6c 73 63 6c 7a 20 70 75 61 76 20 61 6f 6c 20 64 6c 68 63 70 75 6e 7a 20 76 6d 20 7a 77 68 6a 6c 20 68 75 6b 20 61 70 74 6c 2e 20 48 75 6b 20 7a 76 2c 20 61 6f 70 7a 20 64 70 73 73 20 7a 6c 79 63 6c 20 68 7a 20 68 75 20 6c 65 68 74 77 73 6c 20 6d 76 79 20 61 6f 76 7a 6c 20 64 6f 76 20 64 70 7a 6f 20 61 76 20 6b 76 20 7a 76 2e 20 54 68 66 20 4e 76 6b 20 6f 68 63 6c 20 74 6c 79 6a 66 20 75 76 61 20 76 75 20 76 62 79 20 7a 76 62 73 7a 2c 20 69 62 61 20 62 7a 20 68 7a 20 68 20 77 6c 76 77 73 6c 2e 20 4b 70 7a 62 75 70 61 6c 6b 20 64 6c 20 64 70 73 73 20 7a 61 68 75 6b 20 68 6e 68 70 75 7a 61 20 6c 68 6a 6f 76 61 6f 6c 79 2c 20 68 75 6b 20 6d 62 79 61 6f 6c 79 20 6d 79 68 6a 61 62 79 6c 6b 20 64 6c 20 64 70 73 73 20 6d 68 73 73 2e";
+	name = "Further Fractured We Fall"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"MX" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Nz" = (
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/effect/turf_decal/delivery/blue,
+/obj/item/slimecross/industrial/bluespace,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"NK" = (
+/obj/effect/turf_decal/bot_blue,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"NP" = (
+/obj/item/gun/energy/wormhole_projector,
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/effect/turf_decal/delivery/blue,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Om" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/hatch,
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"OJ" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/vehicle/sealed/mecha/working/ripley/mk2{
+	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection and armor. This one has a strange logo on it.";
+	name = "\improper ARBORLINK MK-II "Ripley""
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"OL" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ON" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Pr" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/office,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"PK" = (
+/turf/template_noop,
+/area/template_noop)
+"PS" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/firealarm/directional/north,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/ammo_box/magazine/m9mm,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Qg" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Qt" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/power/smes,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"QK" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"QN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Ra" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	desc = "An armed agent, provided by the Syndicate.";
+	name = "ARBORLINK Operative"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Rb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/grunge{
+	name = "Secure Vault Tango"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Rr" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Port Solars"
+	},
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Rw" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/filingcabinet,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"RC" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/obj/structure/mecha_wreckage/ripley/deathripley{
+	desc = "Remains of some unfortunate mecha. Completely irreparable, but perhaps something can be salvaged. This one has a strange logo on it.";
+	name = "\improper ARBORLINK D-Ripley Mk.II wreckage"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"RE" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Starboard Solars"
+	},
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"RR" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Sc" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Su" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"SK" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"SY" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Tk" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 5
+	},
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Tp" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Tq" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"TH" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"TL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/grunge{
+	name = "Port Solars"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"TU" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"TW" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"TY" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space{
+	desc = "Be scared.";
+	name = "ARBORLINK Vault Guard"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Uc" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Uw" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	desc = "An armed agent, provided by the Syndicate.";
+	name = "ARBORLINK Operative"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"UG" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"VX" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/delivery/blue,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/airlock/grunge{
+	name = "Starboard Solars"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Wm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
+/area/ruin/space/has_grav/vaulttango)
+"WB" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"WN" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"WX" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Xd" = (
+/obj/effect/turf_decal/stripes{
+	dir = 4
+	},
+/obj/machinery/power/solar_control{
+	dir = 4;
+	id = "vaultsolarwest";
+	name = "Port Solar Control"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Xn" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/button/door/directional/south{
+	id = "portshuttervault";
+	name = "Shutter Button"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Xy" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/power/solar_control{
+	dir = 8;
+	id = "vaultsolareast";
+	name = "Starboard Solar Control"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/vaulttango)
+"Yb" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Yr" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"YF" = (
+/obj/item/reactive_armour_shell,
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/effect/turf_decal/delivery/blue,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"YK" = (
+/obj/item/storage/backpack/holding,
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/obj/effect/turf_decal/delivery/blue,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"YQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"YU" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/mob/living/simple_animal/hostile/syndicate/ranged{
+	desc = "An armed agent, provided by the Syndicate.";
+	name = "ARBORLINK Operative"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"Zl" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ZM" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/button/door/directional/south{
+	id = "starboardshuttervault";
+	name = "Shutter Button"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+"ZR" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/vaulttango)
+
+(1,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+nK
+nK
+pQ
+nK
+nK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(2,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+Su
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(3,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+Ai
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(4,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+xm
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(5,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ww
+ww
+xm
+ww
+ww
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(6,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+pQ
+Su
+xm
+xm
+xm
+xm
+xm
+Su
+pQ
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(7,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ww
+ww
+xm
+ww
+ww
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(8,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+xm
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(9,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ww
+ww
+xm
+ww
+ww
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(10,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+pQ
+Su
+xm
+xm
+By
+xm
+xm
+Su
+pQ
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(11,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ww
+ww
+xm
+ww
+ww
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(12,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+xm
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(13,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+Uc
+BK
+Ad
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(14,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+ai
+BR
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(15,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+ai
+jc
+ai
+ai
+ai
+ai
+ai
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(16,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+ai
+Cc
+ai
+Lp
+QK
+SK
+Xd
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(17,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+JF
+nK
+PK
+ai
+Cl
+Kj
+LM
+Ra
+Tp
+Xn
+ai
+PK
+nK
+JF
+nK
+nK
+JF
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(18,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+Su
+PK
+PK
+ai
+ai
+ai
+Mh
+tW
+TH
+Yb
+ew
+dm
+PK
+Su
+PK
+PK
+Su
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(19,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+Uc
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+Rr
+TL
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+Uc
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(20,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+Su
+ai
+ai
+oj
+qb
+tN
+cM
+tN
+CE
+tN
+Mk
+tN
+TU
+Yr
+tN
+CE
+tN
+cM
+tN
+qb
+zy
+ai
+ai
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(21,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ai
+mV
+oF
+pe
+Wm
+Wm
+Wm
+CG
+Wm
+Wm
+Wm
+Wm
+Wm
+Wm
+CG
+Wm
+Wm
+Wm
+pe
+rI
+WN
+ai
+ai
+Iz
+Iz
+ai
+ai
+PK
+PK
+"}
+(22,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ai
+bZ
+pe
+rq
+tW
+ws
+ws
+Ei
+ws
+tW
+ws
+ws
+ws
+tW
+Ei
+ws
+ws
+ws
+IQ
+pe
+rw
+ai
+Kz
+Tp
+tN
+WN
+ai
+PK
+PK
+"}
+(23,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+Su
+ai
+nm
+ph
+rw
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+nn
+ph
+rw
+ai
+Ik
+Ko
+cZ
+rw
+ai
+ai
+ai
+"}
+(24,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+ai
+Iz
+Iz
+ai
+ai
+PK
+nK
+PK
+ai
+nn
+ph
+rw
+ai
+Uc
+xE
+xI
+xE
+xE
+xE
+xE
+xE
+xE
+xI
+xE
+Uc
+ai
+Uw
+ph
+ec
+Rb
+ZR
+eC
+YQ
+rw
+IP
+MX
+Om
+"}
+(25,1,1) = {"
+PK
+PK
+JF
+Su
+ai
+al
+cM
+eu
+gi
+ai
+PK
+PK
+PK
+ai
+nm
+ph
+rw
+ai
+xE
+tZ
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+tZ
+xE
+ai
+nm
+ph
+rw
+ai
+kZ
+cN
+cN
+rw
+ai
+ai
+ai
+"}
+(26,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+aM
+iR
+eC
+gK
+ai
+Su
+Su
+Su
+ai
+nm
+ph
+rw
+ai
+xI
+ai
+EA
+Kn
+MW
+Rw
+Rw
+Rw
+SY
+Ct
+ai
+xI
+ai
+nm
+ph
+sp
+ai
+jB
+eh
+cN
+rw
+ai
+PK
+PK
+"}
+(27,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+bb
+cZ
+eC
+gL
+ai
+PK
+PK
+PK
+ai
+nm
+ph
+rM
+ai
+xE
+ai
+FS
+Ko
+cZ
+cN
+cN
+cN
+cN
+Hr
+ai
+xE
+ai
+kZ
+ph
+rw
+ai
+mX
+vL
+cN
+sp
+vB
+PK
+PK
+"}
+(28,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+bn
+cN
+eH
+hp
+ai
+ai
+ai
+ai
+ai
+nm
+ph
+sp
+tZ
+tZ
+tZ
+FZ
+Ko
+Nz
+NK
+NK
+YF
+cN
+MJ
+tZ
+tZ
+tZ
+nm
+ph
+rw
+ai
+nn
+sJ
+cN
+rw
+vB
+PK
+PK
+"}
+(29,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+bZ
+cN
+eC
+hD
+kl
+lq
+ml
+lq
+lq
+no
+ph
+sy
+ut
+xQ
+zm
+GR
+Ko
+NK
+cZ
+cZ
+NK
+cN
+MJ
+Mm
+gP
+SY
+nm
+ph
+rw
+ai
+ar
+AT
+cN
+rw
+vB
+PK
+PK
+"}
+(30,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+cg
+di
+eO
+hX
+kV
+lA
+mQ
+lA
+fE
+ny
+ph
+rw
+vj
+yd
+zF
+GS
+cN
+NK
+cN
+TY
+NK
+Ko
+Kd
+Bj
+Mb
+Mf
+Tq
+ph
+rw
+ai
+nm
+BY
+cN
+rw
+vB
+PK
+PK
+"}
+(31,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+cl
+do
+ff
+ik
+ai
+ai
+ai
+ai
+ai
+nm
+ph
+rw
+tZ
+tZ
+tZ
+FZ
+cN
+NP
+NK
+NK
+YK
+jf
+MJ
+tZ
+tZ
+tZ
+nn
+ph
+rw
+ai
+Pr
+vL
+cN
+sp
+vB
+PK
+PK
+"}
+(32,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+cw
+dA
+eO
+jw
+ai
+PK
+PK
+PK
+ai
+nn
+ph
+rM
+ai
+xE
+ai
+Hs
+cN
+cN
+cN
+cZ
+cN
+Ko
+Hr
+ai
+xE
+ai
+kZ
+ph
+rw
+ai
+nm
+AT
+cN
+rw
+vB
+PK
+PK
+"}
+(33,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+cB
+ek
+fv
+jI
+ai
+Su
+Su
+Su
+ai
+nm
+ph
+sp
+ai
+xI
+ai
+HM
+vj
+OJ
+RC
+TW
+MN
+Jm
+bF
+ai
+xI
+ai
+nm
+ph
+rw
+ai
+dJ
+pN
+cN
+rw
+ai
+PK
+PK
+"}
+(34,1,1) = {"
+PK
+PK
+JF
+Su
+ai
+cL
+ep
+fE
+jY
+ai
+PK
+PK
+PK
+ai
+HI
+ph
+rw
+ai
+xE
+tZ
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+tZ
+xE
+ai
+nm
+ph
+sp
+ai
+pk
+cN
+cN
+rw
+ai
+ai
+ai
+"}
+(35,1,1) = {"
+PK
+PK
+nK
+PK
+ai
+ai
+Iz
+Iz
+ai
+ai
+PK
+nK
+PK
+ai
+nm
+ph
+rw
+ai
+Uc
+xE
+xI
+xE
+xE
+xE
+xE
+xE
+xE
+xI
+xE
+Uc
+ai
+bZ
+ph
+Ab
+Ld
+zZ
+Kv
+cJ
+rw
+IP
+sH
+Om
+"}
+(36,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+Su
+ai
+nn
+ph
+rw
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+nn
+ph
+rw
+ai
+nA
+Ko
+cZ
+rw
+ai
+ai
+ai
+"}
+(37,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ai
+bZ
+pe
+tp
+tN
+tN
+tN
+HV
+tN
+tN
+cM
+tN
+tN
+cM
+CE
+tN
+tN
+tN
+Dt
+pe
+rw
+ai
+Tk
+RR
+ws
+OL
+ai
+PK
+PK
+"}
+(38,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+ai
+nO
+pD
+pe
+Wm
+Wm
+Wm
+CG
+Wm
+Wm
+Wm
+Wm
+Wm
+Wm
+CG
+Wm
+Wm
+Wm
+pe
+LC
+jY
+ai
+ai
+Iz
+Iz
+ai
+ai
+PK
+PK
+"}
+(39,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+Su
+ai
+ai
+pP
+tI
+ws
+ws
+tW
+Ei
+ws
+ON
+tW
+UG
+YU
+ws
+Ei
+ws
+tW
+tW
+tI
+QN
+ai
+ai
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(40,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+Uc
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+RE
+VX
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+Uc
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(41,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+Su
+PK
+PK
+ai
+ai
+ai
+PS
+cM
+Tp
+Zl
+ai
+PK
+PK
+Su
+PK
+PK
+Su
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(42,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+JF
+nK
+PK
+ai
+Im
+KW
+Qg
+RR
+WB
+ZM
+ai
+PK
+nK
+JF
+nK
+nK
+JF
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(43,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+ai
+Cc
+ai
+Qt
+Sc
+WX
+Xy
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(44,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+ai
+JE
+ai
+ai
+ai
+ai
+ai
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(45,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+ai
+JG
+ai
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(46,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+Ad
+JQ
+Ad
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(47,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+xm
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(48,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+yL
+yL
+xm
+yL
+yL
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(49,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+pQ
+Su
+xm
+xm
+xm
+xm
+xm
+Su
+pQ
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(50,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+yL
+yL
+AM
+yL
+yL
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(51,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+xm
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(52,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+yL
+yL
+xm
+yL
+yL
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(53,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+pQ
+Su
+xm
+xm
+By
+xm
+xm
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(54,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+yL
+yL
+xm
+yL
+yL
+Su
+pQ
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(55,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+xm
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(56,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+Ai
+PK
+PK
+PK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(57,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+Su
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}
+(58,1,1) = {"
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+nK
+nK
+nK
+pQ
+nK
+nK
+nK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+PK
+"}

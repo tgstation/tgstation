@@ -1,0 +1,4801 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/structure/sink/greyscale{
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"aW" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"aY" = (
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/trimline/blue,
+/obj/structure/closet/crate{
+	anchored = 1
+	},
+/turf/open/floor/mech_bay_recharge_floor{
+	desc = "Commonly used in cargo ships to secure external cargo";
+	name = "magnetic floor"
+	},
+/area/template_noop)
+"bj" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/template_noop,
+/area/template_noop)
+"bW" = (
+/turf/open/floor/engine/plasma,
+/area/template_noop)
+"cb" = (
+/obj/structure/lattice,
+/obj/structure/girder,
+/obj/item/stack/sheet/mineral/titanium,
+/turf/template_noop,
+/area/template_noop)
+"cq" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"cR" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/item/wallframe/airalarm,
+/turf/template_noop,
+/area/template_noop)
+"dd" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"dk" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/template_noop,
+/area/template_noop)
+"ef" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light{
+	active_power_usage = 10;
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"ej" = (
+/obj/item/assembly/signaler/anomaly/grav,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer1,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"eI" = (
+/obj/machinery/door/airlock/external,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"eT" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"eZ" = (
+/turf/open/floor/plating/airless,
+/area/ruin/powered)
+"fC" = (
+/obj/structure/rack,
+/obj/item/gun/energy/plasmacutter,
+/obj/item/gun/energy/plasmacutter{
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"fP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack/shelf,
+/obj/item/storage/pill_bottle/mining,
+/obj/item/storage/pill_bottle/lsdpsych,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"fW" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"gq" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
+"gA" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"hc" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"hn" = (
+/obj/structure/tank_holder/oxygen{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/structure/tank_holder/oxygen{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"hL" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"hU" = (
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"im" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/frame/computer,
+/turf/template_noop,
+/area/template_noop)
+"iT" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"iZ" = (
+/obj/item/pipe{
+	dir = 6
+	},
+/turf/template_noop,
+/area/template_noop)
+"je" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"jv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/bin{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"jV" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/item/wallframe/airalarm{
+	pixel_y = -7
+	},
+/turf/template_noop,
+/area/template_noop)
+"kp" = (
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"kx" = (
+/obj/structure/window/reinforced/shuttle/spaceship{
+	color = "#b49973"
+	},
+/turf/template_noop,
+/area/template_noop)
+"kD" = (
+/obj/structure/mirror{
+	pixel_y = -4
+	},
+/turf/closed/wall,
+/area/ruin/powered)
+"kF" = (
+/obj/item/pipe{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"lo" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/machinery/microwave{
+	pixel_y = 7
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"lY" = (
+/obj/item/stack/rods{
+	amount = 5
+	},
+/turf/template_noop,
+/area/template_noop)
+"mm" = (
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 3
+	},
+/turf/template_noop,
+/area/template_noop)
+"mT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"mV" = (
+/obj/item/stack/cable_coil/five,
+/turf/template_noop,
+/area/template_noop)
+"mW" = (
+/obj/structure/sign/warning/chemdiamond,
+/turf/closed/indestructible/opshuttle,
+/area/ruin/unpowered/no_grav)
+"ni" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"ns" = (
+/obj/structure/window/reinforced/shuttle/spaceship{
+	color = "#b49973"
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"od" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/template_noop)
+"oN" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk,
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/turf/template_noop,
+/area/template_noop)
+"oW" = (
+/turf/closed/wall/material,
+/area/ruin/unpowered/no_grav)
+"pb" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"pF" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/item/poster/random_contraband,
+/turf/template_noop,
+/area/template_noop)
+"pT" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/floor/engine/hull{
+	color = "#b49973"
+	},
+/area/template_noop)
+"pU" = (
+/obj/machinery/door/airlock/external,
+/obj/machinery/door/firedoor/closed,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"qd" = (
+/obj/item/wallframe/apc,
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"qj" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/turf/template_noop,
+/area/template_noop)
+"rp" = (
+/obj/item/card/id/away/old/salvagepod,
+/turf/template_noop,
+/area/template_noop)
+"rM" = (
+/obj/effect/decal/cleanable/glass,
+/turf/template_noop,
+/area/template_noop)
+"rP" = (
+/obj/structure/shuttle/engine/large{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"rR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"sc" = (
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"se" = (
+/obj/effect/decal/cleanable/generic,
+/turf/template_noop,
+/area/template_noop)
+"ss" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/template_noop)
+"sI" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"sK" = (
+/obj/item/stack/sheet/iron/ten,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"sL" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"tj" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"tu" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"tC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"uc" = (
+/obj/item/pipe,
+/turf/template_noop,
+/area/template_noop)
+"uK" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/template_noop,
+/area/template_noop)
+"ve" = (
+/obj/item/wallframe/airalarm{
+	pixel_y = -8
+	},
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"vn" = (
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"vt" = (
+/obj/structure/sign/warning/fire,
+/turf/closed/indestructible/opshuttle,
+/area/ruin/unpowered/no_grav)
+"vA" = (
+/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"vH" = (
+/obj/structure/sign/poster/official/work_for_a_future,
+/turf/closed/wall,
+/area/ruin/powered)
+"vP" = (
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"wc" = (
+/obj/machinery/airalarm/unlocked{
+	dir = 1;
+	pixel_y = 13
+	},
+/turf/closed/wall,
+/area/ruin/powered)
+"wu" = (
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/trimline/blue,
+/obj/machinery/portable_atmospherics/canister/plasma{
+	anchored = 1;
+	desc = "Plasma gas. Highly fuel efficient. Highly volatile. Highly toxic.";
+	name = "Fuel canister"
+	},
+/turf/open/floor/mech_bay_recharge_floor{
+	desc = "Commonly used in cargo ships to secure external cargo";
+	name = "magnetic floor"
+	},
+/area/template_noop)
+"wY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"xA" = (
+/obj/machinery/door/poddoor,
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered/no_grav)
+"yA" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"yQ" = (
+/turf/open/floor/engine/hull{
+	color = "#b49973"
+	},
+/area/template_noop)
+"zf" = (
+/obj/structure/bed/pod,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"Ae" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"Aq" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
+	anchored = 0;
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"Ay" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/tank/air{
+	anchored = 0;
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/turf/template_noop,
+/area/template_noop)
+"AC" = (
+/turf/open/floor/engine/o2,
+/area/template_noop)
+"AS" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"AW" = (
+/obj/structure/grille,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/template_noop)
+"Bc" = (
+/obj/item/stack/cable_coil/cut,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"BM" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"Dn" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"DB" = (
+/obj/item/gps/computer/space{
+	pixel_y = -5
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered)
+"DX" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"Eb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack/shelf,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Ee" = (
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Ep" = (
+/turf/closed/wall,
+/area/template_noop)
+"Eu" = (
+/turf/template_noop,
+/area/template_noop)
+"EE" = (
+/obj/machinery/portable_atmospherics/canister/plasma{
+	anchored = 1;
+	desc = "Plasma gas. Highly fuel efficient. Highly volatile. Highly toxic.";
+	name = "Fuel canister"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8;
+	piping_layer = 1
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"EJ" = (
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"EQ" = (
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/trimline/blue,
+/obj/effect/spawner/random/structure/crate_loot,
+/turf/open/floor/mech_bay_recharge_floor{
+	desc = "Commonly used in cargo ships to secure external cargo";
+	name = "magnetic floor"
+	},
+/area/template_noop)
+"ER" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/components/unary/outlet_injector/layer2{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"Fa" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer1,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Gf" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/dorms,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"Gg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/hivebot,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"GG" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Hl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Hq" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/glasses/meson/night{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/taperecorder/empty,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"HX" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Id" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 3
+	},
+/turf/template_noop,
+/area/template_noop)
+"Iu" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/item/wallframe/apc,
+/turf/template_noop,
+/area/template_noop)
+"Jv" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"Kc" = (
+/obj/structure/chair/office{
+	dir = 8;
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/machinery/light{
+	active_power_usage = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"Km" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Ko" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/closet/emcloset,
+/turf/template_noop,
+/area/template_noop)
+"KP" = (
+/obj/item/stack/cable_coil/cut,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/end{
+	dir = 8
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Lx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer1,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"LC" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/template_noop)
+"LF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"LR" = (
+/obj/structure/grille,
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"Ml" = (
+/turf/closed/indestructible/opshuttle,
+/area/ruin/unpowered/no_grav)
+"Mn" = (
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 11
+	},
+/turf/template_noop,
+/area/template_noop)
+"Ni" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/food/grilled_cheese_sandwich{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"Ns" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"NI" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"NO" = (
+/obj/effect/decal/cleanable/robot_debris/limb,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"NX" = (
+/obj/structure/table/wood,
+/obj/item/stack/sticky_tape{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/emergency{
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"NY" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4{
+	anchored = 0
+	},
+/turf/template_noop,
+/area/template_noop)
+"OG" = (
+/turf/open/floor/engine/airless,
+/area/template_noop)
+"OU" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/turf/template_noop,
+/area/template_noop)
+"OZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Ps" = (
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"PB" = (
+/obj/structure/cable,
+/obj/structure/door_assembly/door_assembly_ext,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"PD" = (
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"Qt" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"QC" = (
+/obj/item/stack/sheet/mineral/titanium,
+/turf/template_noop,
+/area/template_noop)
+"QG" = (
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"QU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer1,
+/obj/structure/shuttle/engine/router,
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"Rg" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/highsecurity{
+	name = "salvage pod airlock";
+	req_access_txt = "200"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"RA" = (
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"Su" = (
+/obj/effect/decal/fakelattice,
+/obj/structure/grille,
+/turf/closed/wall/mineral/titanium/spaceship/nodiagonal{
+	color = "#b49973"
+	},
+/area/template_noop)
+"SK" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/frame/computer{
+	anchored = 1;
+	pixel_x = -9
+	},
+/obj/item/tape/ruins/salvagepost{
+	pixel_x = 5
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"SW" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Uf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer1,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Uz" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"Vf" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"VF" = (
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 5
+	},
+/turf/template_noop,
+/area/template_noop)
+"VI" = (
+/obj/machinery/washing_machine,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Wm" = (
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/trimline/blue,
+/turf/open/floor/mech_bay_recharge_floor{
+	desc = "Commonly used in cargo ships to secure external cargo";
+	name = "magnetic floor"
+	},
+/area/template_noop)
+"WR" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod,
+/turf/template_noop,
+/area/template_noop)
+"WW" = (
+/obj/item/pipe{
+	dir = 5
+	},
+/turf/template_noop,
+/area/template_noop)
+"Xa" = (
+/obj/item/stack/cable_coil/cut,
+/turf/template_noop,
+/area/template_noop)
+"Xb" = (
+/obj/structure/lattice/catwalk/swarmer_catwalk{
+	color = "#318350";
+	desc = "A catwalk-like mesh, used for the collection of space debris before processing.";
+	name = "barge mesh"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/plasma{
+	desc = "Plasma gas. Highly fuel efficient. Highly volatile. Highly toxic.";
+	name = "Fuel canister"
+	},
+/turf/template_noop,
+/area/template_noop)
+"XT" = (
+/obj/structure/door_assembly/door_assembly_ext,
+/obj/machinery/door/firedoor/closed,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Yg" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/fakelattice,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Yi" = (
+/obj/item/gun/energy/gravity_gun,
+/obj/structure/cable,
+/mob/living/simple_animal/hostile/hivebot/range,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"YG" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"YI" = (
+/obj/structure/closet/emcloset/anchored,
+/turf/open/floor/plating/airless,
+/area/template_noop)
+"Zo" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Zv" = (
+/obj/structure/railing,
+/turf/template_noop,
+/area/template_noop)
+"Zx" = (
+/turf/open/floor/engine/airless,
+/area/ruin/unpowered/no_grav)
+"ZF" = (
+/turf/closed/wall/mineral/titanium/spaceship{
+	color = "#b49973"
+	},
+/area/template_noop)
+
+(1,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(2,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+tu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(3,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(4,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Ep
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(5,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+Uz
+Uz
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ep
+Ep
+Ep
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(6,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+kD
+am
+HX
+Uz
+Uz
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+tu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Ep
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(7,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+VI
+wY
+cq
+YG
+Uz
+Dn
+hL
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(8,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+Uz
+dd
+Uz
+Uz
+Uz
+eZ
+gA
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(9,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+Eb
+hn
+Zo
+fC
+hc
+Uz
+eZ
+bj
+eT
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+iT
+NI
+NI
+Xb
+NI
+NI
+NI
+Ay
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(10,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+ef
+Ns
+Zo
+Ns
+hc
+Uz
+eZ
+eZ
+ss
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+DX
+PD
+OU
+OU
+im
+yQ
+PD
+WR
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(11,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+Zo
+Zo
+Ns
+Zo
+Zo
+Rg
+eZ
+eZ
+ss
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+DX
+AW
+OU
+PD
+OU
+OU
+cR
+WR
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(12,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+fP
+jv
+Ns
+Hq
+NX
+wc
+eZ
+eZ
+ss
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+DX
+yQ
+OU
+yA
+pF
+Iu
+OU
+WR
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(13,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+Ni
+tC
+SK
+Kc
+Uz
+DB
+dk
+je
+Eu
+Eu
+Eu
+Eu
+Eu
+Ep
+fW
+Ep
+Eu
+Eu
+DX
+OU
+OU
+qj
+OU
+OU
+Aq
+WR
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+tu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(14,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+lo
+tC
+Ns
+Ns
+Uz
+RA
+aW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Ep
+fW
+Eu
+Eu
+jV
+NY
+OU
+OU
+yQ
+AW
+PD
+WR
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(15,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+vH
+Gf
+zf
+Uz
+Uz
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ep
+fW
+Ep
+Eu
+tu
+DX
+PD
+yQ
+OU
+yQ
+AW
+PD
+WR
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(16,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Uz
+Uz
+Uz
+Uz
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+BM
+ni
+OU
+OU
+OU
+OU
+ni
+Ko
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Ep
+fW
+Eu
+Eu
+Eu
+Eu
+"}
+(17,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+fW
+LC
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+vA
+OU
+OU
+oN
+oN
+EJ
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ep
+Ep
+Ep
+Eu
+Eu
+Eu
+Eu
+"}
+(18,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+fW
+LC
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Ep
+fW
+Eu
+Eu
+Eu
+Eu
+"}
+(19,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(20,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+tu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(21,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+LC
+fW
+fW
+ss
+fW
+fW
+fW
+oW
+oW
+LC
+LC
+fW
+fW
+fW
+LC
+fW
+fW
+fW
+ss
+Id
+fW
+fW
+LC
+fW
+fW
+fW
+LC
+LC
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(22,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+tu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(23,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+LR
+yQ
+se
+Eu
+QC
+PD
+Eu
+mm
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(24,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+ss
+fW
+fW
+gq
+fW
+fW
+fW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+LR
+pT
+Eu
+Eu
+Eu
+Su
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(25,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+se
+Eu
+Eu
+Eu
+Eu
+tu
+Eu
+vP
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(26,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+sL
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+WW
+kF
+PD
+vn
+sK
+Eu
+Mn
+Eu
+ZF
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+ss
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(27,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+kx
+ns
+Eu
+Eu
+Eu
+Xa
+VF
+AS
+vn
+Eu
+lY
+Eu
+vn
+PD
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+fW
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(28,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+ss
+fW
+fW
+ss
+fW
+fW
+fW
+oW
+oW
+Eu
+Eu
+Eu
+rM
+Eu
+uc
+Eu
+Eu
+Eu
+kF
+uc
+Ee
+NO
+vn
+PD
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+fW
+LC
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(29,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+sL
+Eu
+Eu
+Eu
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+mV
+mm
+se
+Vf
+vn
+vn
+sc
+Vf
+PD
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+fW
+fW
+fW
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(30,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+fW
+Eu
+Eu
+oW
+oW
+oW
+Eu
+Eu
+rM
+PD
+Eu
+Eu
+Eu
+iZ
+PD
+KP
+PD
+PD
+vn
+vn
+PD
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+ss
+fW
+LC
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(31,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+fW
+fW
+sL
+fW
+oW
+oW
+oW
+oW
+Eu
+PD
+rR
+PD
+Eu
+Eu
+Eu
+Eu
+PD
+Bc
+vn
+PD
+vn
+vn
+PD
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+fW
+fW
+fW
+ss
+Eu
+Eu
+Eu
+Eu
+"}
+(32,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+vt
+Eu
+PD
+rR
+PD
+PD
+Eu
+se
+Eu
+ZF
+PB
+PD
+PD
+PD
+PD
+ZF
+Eu
+Eu
+Eu
+Eu
+vt
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Eu
+Eu
+"}
+(33,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+PD
+rR
+sI
+vn
+Eu
+Eu
+Eu
+Zv
+Hl
+Ae
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(34,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+ZF
+PD
+PD
+PD
+Eu
+Eu
+Eu
+Zv
+Hl
+Ae
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(35,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+EQ
+QG
+QG
+Hl
+QG
+QG
+aY
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(36,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+Eu
+Eu
+Eu
+Eu
+rp
+Eu
+fW
+Zv
+Hl
+Ae
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(37,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+vt
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Zv
+Hl
+Ae
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+vt
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Eu
+Eu
+"}
+(38,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+EQ
+QG
+QG
+Hl
+QG
+QG
+Wm
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(39,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Zv
+Hl
+Ae
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(40,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Zv
+Hl
+Ae
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(41,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Wm
+QG
+QG
+Hl
+QG
+QG
+EQ
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(42,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Zv
+Hl
+Ae
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(43,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Zv
+Hl
+Ae
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(44,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+LC
+fW
+fW
+fW
+oW
+oW
+oW
+oW
+oW
+Eu
+ZF
+PD
+Eu
+Eu
+Eu
+wu
+QG
+QG
+Hl
+QG
+QG
+wu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+fW
+fW
+fW
+LC
+Eu
+Eu
+Eu
+"}
+(45,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+PD
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Zv
+Hl
+Ae
+Eu
+fW
+Eu
+PD
+ZF
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(46,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+PD
+Eu
+Eu
+tu
+Eu
+ER
+Eu
+Zv
+Hl
+Ae
+Eu
+fW
+Eu
+Eu
+PD
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(47,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+cb
+od
+tu
+od
+ZF
+LF
+PD
+PD
+eI
+PD
+PD
+PD
+ZF
+uK
+PD
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(48,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+LC
+fW
+fW
+fW
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+Gg
+GG
+PD
+Qt
+qd
+kp
+Km
+PD
+Eu
+PD
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+fW
+fW
+fW
+LC
+Eu
+Eu
+Eu
+"}
+(49,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+ZF
+PD
+OZ
+vn
+PD
+pU
+ve
+Yi
+mT
+PD
+ZF
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(50,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+yA
+QU
+Uf
+OZ
+OZ
+hU
+tj
+tj
+Fa
+QU
+yA
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(51,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+pb
+PD
+Lx
+vn
+OG
+AC
+OG
+vn
+ej
+PD
+pb
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(52,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+Lx
+Ps
+OG
+bW
+OG
+vn
+Lx
+PD
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(53,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+EE
+vn
+vn
+Yg
+vn
+vn
+EE
+PD
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(54,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+Yg
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+fW
+Eu
+Eu
+Eu
+"}
+(55,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+mW
+Eu
+Eu
+Eu
+Eu
+Eu
+Jv
+Eu
+Eu
+PD
+Yg
+PD
+Eu
+Eu
+Jv
+Eu
+Eu
+Eu
+Eu
+Eu
+mW
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Eu
+Eu
+"}
+(56,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+Eu
+Eu
+ZF
+PD
+PD
+ZF
+Eu
+PD
+Yg
+PD
+Eu
+ZF
+PD
+PD
+ZF
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(57,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+PD
+PD
+XT
+PD
+PD
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(58,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+PD
+YI
+Yg
+vn
+PD
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(59,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+xA
+xA
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+PD
+ZF
+Yg
+ZF
+PD
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+xA
+xA
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Zx
+Ml
+Eu
+Eu
+"}
+(60,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+mW
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+Eu
+ZF
+SW
+ZF
+Eu
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+mW
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Ml
+Eu
+Eu
+"}
+(61,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+ss
+fW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+PD
+PD
+PD
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+fW
+ss
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(62,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+LC
+oW
+oW
+oW
+Eu
+Eu
+Eu
+PD
+rP
+PD
+rP
+Eu
+Eu
+Eu
+Eu
+Eu
+PD
+rP
+PD
+rP
+Eu
+Eu
+Eu
+oW
+oW
+oW
+LC
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(63,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+fW
+fW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+fW
+fW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(64,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+ss
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+ss
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(65,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(66,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+oW
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(67,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(68,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(69,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}
+(70,1,1) = {"
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+Eu
+"}

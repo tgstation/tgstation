@@ -1,0 +1,1066 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC6"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"aQ" = (
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
+/obj/machinery/door/airlock/grunge{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi';
+	note_overlay_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"cq" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC4"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"dr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"dV" = (
+/obj/machinery/modular_computer/console/preset/civilian,
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"eW" = (
+/obj/machinery/light{
+	dir = 8;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"fe" = (
+/obj/machinery/light{
+	dir = 4;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"fl" = (
+/obj/structure/shuttle/engine/propulsion,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"gs" = (
+/turf/open/floor/iron{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"gG" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"gI" = (
+/obj/machinery/suit_storage_unit/open{
+	icon = 'icons/obj/machines/suit_storage.dmi'
+	},
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"gZ" = (
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"hh" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/circuit/red,
+/area/ruin/space/has_grav/powered)
+"hu" = (
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"hy" = (
+/turf/template_noop,
+/area/template_noop)
+"hY" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC5"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"jj" = (
+/obj/structure/rack{
+	icon = 'icons/obj/objects.dmi'
+	},
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"jt" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"jN" = (
+/obj/machinery/computer/crew/syndie,
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"kd" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"kC" = (
+/turf/open/floor/iron/white{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"mg" = (
+/obj/structure/closet/crate/secure/freezer{
+	name = "dangerous pizza crate"
+	},
+/obj/item/pizzabox/bomb/armed{
+	name = "unusually heavy pizza box"
+	},
+/obj/item/pizzabox/bomb{
+	pixel_y = 3
+	},
+/obj/item/pizzabox/bomb{
+	pixel_y = 9
+	},
+/turf/open/floor/iron{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"mm" = (
+/obj/item/paper/crumpled{
+	info = "So, Bob decided it'd be funny if he armed the pizza bomb in our last food cache. We haven't touched it since for fear of blowing up horribly. Please, for the love of god. Don't fucking blow up."
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"nT" = (
+/obj/structure/table/reinforced,
+/obj/item/multitool{
+	icon = 'icons/obj/device.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"oE" = (
+/obj/item/grown/bananapeel/bluespace,
+/turf/template_noop,
+/area/template_noop)
+"po" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"qw" = (
+/obj/machinery/light{
+	dir = 8;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"qF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"ra" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/has_grav/powered)
+"ru" = (
+/obj/machinery/door/airlock/command{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/station/command.dmi';
+	name = "E.V.A";
+	note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	req_access_txt = "150"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"ry" = (
+/obj/machinery/light{
+	dir = 1;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/iron{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"sL" = (
+/turf/open/floor/circuit/red,
+/area/ruin/space/has_grav/powered)
+"sO" = (
+/obj/structure/sign/warning/explosives{
+	pixel_x = 32
+	},
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/turf/open/floor/iron{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"tk" = (
+/obj/machinery/light{
+	dir = 1;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"tx" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"wB" = (
+/obj/structure/shuttle/engine/propulsion/right,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"wS" = (
+/obj/machinery/sleeper/syndie{
+	dir = 4
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"xx" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"yK" = (
+/obj/machinery/light{
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"zx" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC8"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"zF" = (
+/obj/structure/shuttle/engine/propulsion/left,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Bk" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC10"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"BY" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC7"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"CK" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/turf/open/floor/iron/white{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"DA" = (
+/obj/machinery/door/airlock/grunge{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi';
+	note_overlay_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"DQ" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC9"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Ez" = (
+/obj/item/modular_computer/laptop/preset/syndicate{
+	pixel_y = 5
+	},
+/obj/structure/table/wood,
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"EG" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/airlock/grunge{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi';
+	note_overlay_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	},
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Fj" = (
+/obj/machinery/light{
+	dir = 1;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"FG" = (
+/obj/structure/table/optable{
+	icon = 'icons/obj/surgery.dmi'
+	},
+/turf/open/floor/iron/white{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Gm" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"GC" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Hf" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC3"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Kf" = (
+/obj/structure/reagent_dispensers/fueltank{
+	icon = 'icons/obj/chemical_tanks.dmi'
+	},
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Kv" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"KC" = (
+/obj/machinery/door/window{
+	dir = 1
+	},
+/turf/open/floor/circuit/red,
+/area/ruin/space/has_grav/powered)
+"KH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/rack{
+	icon = 'icons/obj/objects.dmi'
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered)
+"Mp" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Na" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/recharge_station,
+/turf/open/floor/circuit/red,
+/area/ruin/space/has_grav/powered)
+"Nm" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/powered)
+"Ou" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"OZ" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC1"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Pj" = (
+/obj/effect/turf_decal/siding/blue{
+	dir = 1
+	},
+/obj/structure/bed/roller{
+	icon = 'icons/obj/rollerbed.dmi'
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Ql" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered)
+"RY" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Sn" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "SBC2"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Tv" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"UK" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Vi" = (
+/obj/machinery/door/airlock/external{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/external/external.dmi';
+	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"VI" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"VZ" = (
+/obj/machinery/door/airlock/command{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/station/command.dmi';
+	name = "Bridge";
+	note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi';
+	req_access_txt = "150"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Wz" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/iron/white{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"WC" = (
+/obj/machinery/light{
+	dir = 8;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"WJ" = (
+/obj/machinery/light{
+	dir = 4;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"WR" = (
+/obj/structure/dresser{
+	icon = 'icons/obj/stationobjs.dmi'
+	},
+/turf/open/floor/wood{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"XR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	boltDown = 'sound/machines/boltsdown.ogg';
+	boltUp = 'sound/machines/boltsup.ogg';
+	doorClose = 'sound/machines/airlockclose.ogg';
+	doorDeni = 'sound/machines/deniedbeep.ogg';
+	doorOpen = 'sound/machines/airlock.ogg';
+	icon = 'icons/obj/doors/airlocks/external/external.dmi';
+	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi';
+	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
+	},
+/turf/open/floor/plating{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"YJ" = (
+/obj/machinery/computer/shuttle{
+	desc = "That's strange, it's operating system is using an invalid version number, yet works just fine...";
+	icon_keyboard = "syndie_key";
+	icon_screen = "syndishuttle";
+	light_color = "#FA8282";
+	name = "syndicate shuttle terminal";
+	req_access_txt = "150";
+	shuttleId = null
+	},
+/turf/open/floor/iron/dark{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+"Zw" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 4;
+	icon = 'icons/obj/lighting.dmi';
+	overlayicon = 'icons/obj/lighting_overlay.dmi'
+	},
+/turf/open/floor/iron/white{
+	icon = 'icons/turf/floors.dmi'
+	},
+/area/ruin/space/has_grav/powered)
+
+(1,1,1) = {"
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+Nm
+ra
+ra
+ra
+ra
+hy
+"}
+(2,1,1) = {"
+hy
+hy
+hy
+hy
+hy
+hy
+Nm
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+WR
+UK
+Gm
+zF
+hy
+"}
+(3,1,1) = {"
+hy
+hy
+hy
+hy
+hy
+hy
+ra
+gI
+qF
+eW
+jt
+Kf
+ra
+CK
+xx
+Pj
+wS
+ra
+tk
+hu
+Gm
+fl
+hy
+"}
+(4,1,1) = {"
+hy
+Nm
+ra
+ra
+ra
+ra
+ra
+gI
+qF
+gZ
+jt
+jj
+ra
+FG
+kC
+GC
+gZ
+EG
+hu
+hu
+Gm
+wB
+hy
+"}
+(5,1,1) = {"
+hy
+VI
+tx
+Tv
+Tv
+Tv
+ra
+gI
+qF
+gZ
+jt
+RY
+ra
+Wz
+Zw
+GC
+gZ
+ra
+Ez
+Mp
+ra
+ra
+hy
+"}
+(6,1,1) = {"
+VI
+VI
+gZ
+OZ
+Sn
+Tv
+ra
+ra
+ra
+ru
+ra
+ra
+ra
+ra
+ra
+aQ
+ra
+ra
+ra
+ra
+ra
+hy
+oE
+"}
+(7,1,1) = {"
+VI
+jN
+Tv
+Hf
+cq
+gZ
+VI
+gG
+WC
+gZ
+gG
+gG
+VI
+gZ
+eW
+gZ
+gZ
+gZ
+dr
+Gm
+zF
+hy
+hy
+"}
+(8,1,1) = {"
+VI
+YJ
+Kv
+hY
+ad
+gZ
+VZ
+gZ
+gs
+gs
+gs
+gZ
+DA
+gZ
+gs
+gs
+gs
+gZ
+KC
+Gm
+fl
+hy
+hy
+"}
+(9,1,1) = {"
+VI
+dV
+Tv
+BY
+zx
+gZ
+VI
+Ou
+fe
+gZ
+Ou
+Ou
+VI
+gZ
+WJ
+gZ
+gZ
+gZ
+dr
+Gm
+wB
+hy
+hy
+"}
+(10,1,1) = {"
+VI
+VI
+gZ
+DQ
+Bk
+Tv
+ra
+ra
+ra
+Vi
+ra
+ra
+ra
+ra
+ra
+DA
+ra
+ra
+ra
+ra
+ra
+hy
+hy
+"}
+(11,1,1) = {"
+hy
+VI
+tx
+Tv
+Tv
+Tv
+ra
+gG
+gG
+gZ
+gG
+gG
+ra
+hh
+qw
+gZ
+gZ
+ra
+gZ
+gZ
+ra
+ra
+hy
+"}
+(12,1,1) = {"
+hy
+Nm
+ra
+ra
+ra
+ra
+ra
+Fj
+gZ
+gZ
+gZ
+yK
+ra
+sL
+po
+gZ
+gZ
+DA
+gZ
+mm
+Gm
+zF
+hy
+"}
+(13,1,1) = {"
+hy
+hy
+hy
+hy
+hy
+hy
+ra
+Ql
+Ql
+Ql
+Ql
+KH
+ra
+Na
+po
+nT
+Tv
+ra
+ry
+kd
+Gm
+fl
+hy
+"}
+(14,1,1) = {"
+hy
+hy
+hy
+hy
+hy
+hy
+Nm
+ra
+ra
+XR
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+ra
+mg
+sO
+Gm
+wB
+hy
+"}
+(15,1,1) = {"
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+hy
+Nm
+ra
+ra
+ra
+ra
+hy
+"}

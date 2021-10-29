@@ -1,0 +1,843 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"aw" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"aT" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"bC" = (
+/obj/structure/cable,
+/obj/structure/chair/plastic,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"bR" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"ck" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"em" = (
+/turf/open/floor/stone,
+/area/ruin/powered/cozycabin)
+"fP" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/ruin/powered/cozycabin)
+"hI" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"hO" = (
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"hT" = (
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"iL" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"je" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/stone,
+/area/ruin/powered/cozycabin)
+"jI" = (
+/turf/open/floor/carpet,
+/area/ruin/powered/cozycabin)
+"kC" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"kH" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"li" = (
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"lj" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"lr" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"ms" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"nx" = (
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"nC" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"nH" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered/cozycabin)
+"nO" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/ruin/powered/cozycabin)
+"of" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"or" = (
+/turf/open/floor/wood/large,
+/area/ruin/powered/cozycabin)
+"oO" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"qo" = (
+/turf/closed/wall/mineral/stone,
+/area/ruin/powered/cozycabin)
+"qw" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	anchored = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"qB" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"qP" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"qW" = (
+/obj/machinery/light/cold/no_nightlight/directional/south,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"rl" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"rD" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"si" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"sn" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/cozycabin)
+"to" = (
+/obj/structure/table/wood,
+/obj/machinery/microwave{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"tB" = (
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"tJ" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"tS" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"uo" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"vI" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"wh" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"AM" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"AU" = (
+/obj/structure/chair/pew/right,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Bw" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/cozycabin)
+"BR" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"Co" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"Ct" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/ruin/powered/cozycabin)
+"CC" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"CJ" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/instrument/guitar,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Ds" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/cozycabin)
+"DA" = (
+/obj/structure/rack,
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"Ff" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"FV" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"GN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/falsewall/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"GQ" = (
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"GU" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/north{
+	start_charge = 0
+	},
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"HA" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/mineral_door/wood,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Is" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"IQ" = (
+/obj/structure/railing,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Kq" = (
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"KT" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Lt" = (
+/obj/structure/chair/pew/left,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"LS" = (
+/obj/structure/bed/maint,
+/turf/open/floor/stone,
+/area/ruin/powered/cozycabin)
+"Me" = (
+/obj/structure/table/wood,
+/obj/item/kitchen/rollingpin,
+/obj/item/knife,
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"ME" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"MQ" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"Nq" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Nz" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"NP" = (
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"Pm" = (
+/obj/structure/closet/secure_closet/freezer/fridge{
+	req_access = null
+	},
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"PE" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"QQ" = (
+/obj/item/bedsheet/dorms,
+/obj/structure/bed,
+/turf/open/floor/carpet,
+/area/ruin/powered/cozycabin)
+"RG" = (
+/turf/open/water/overlay,
+/area/ruin/powered/cozycabin)
+"RP" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"RQ" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"RS" = (
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"Sh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Sx" = (
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/turf/open/floor/carpet,
+/area/ruin/powered/cozycabin)
+"SO" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/wood/large,
+/area/ruin/powered/cozycabin)
+"TV" = (
+/turf/template_noop,
+/area/template_noop)
+"Vr" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/kitchen,
+/area/ruin/powered/cozycabin)
+"VP" = (
+/obj/machinery/light/blacklight/directional/south,
+/turf/open/floor/iron,
+/area/ruin/powered/cozycabin)
+"We" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/ruin/powered/cozycabin)
+"WR" = (
+/obj/structure/dresser,
+/turf/open/floor/wood/large,
+/area/ruin/powered/cozycabin)
+"YT" = (
+/obj/structure/table/wood,
+/obj/machinery/light/cold/no_nightlight/directional/east,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+"Zj" = (
+/obj/machinery/light/cold/no_nightlight/directional/north,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/powered/cozycabin)
+
+(1,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+TV
+TV
+TV
+"}
+(2,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+fP
+sn
+Bw
+Ds
+nH
+je
+em
+je
+nH
+TV
+TV
+TV
+"}
+(3,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+BR
+GQ
+GQ
+VP
+nH
+je
+je
+je
+nH
+TV
+TV
+TV
+"}
+(4,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+GU
+GQ
+GQ
+GQ
+nH
+em
+je
+em
+nH
+TV
+TV
+TV
+"}
+(5,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+RQ
+BR
+GQ
+DA
+nH
+LS
+je
+je
+nH
+TV
+TV
+TV
+"}
+(6,1,1) = {"
+qo
+qo
+qo
+qo
+qo
+nH
+nH
+HA
+nH
+nH
+nH
+nH
+GN
+nH
+nH
+NP
+ms
+TV
+"}
+(7,1,1) = {"
+qo
+hT
+Kq
+hT
+hT
+nH
+hO
+qB
+qB
+qB
+tB
+qB
+qB
+qB
+nH
+qw
+Ff
+TV
+"}
+(8,1,1) = {"
+qo
+hT
+kC
+si
+ck
+nH
+hO
+Nq
+of
+of
+of
+of
+qP
+qB
+nH
+tJ
+RP
+KT
+"}
+(9,1,1) = {"
+qo
+nC
+hT
+We
+hT
+lr
+hO
+li
+RG
+RG
+RG
+RG
+Sh
+qB
+CC
+qB
+hO
+li
+"}
+(10,1,1) = {"
+qo
+hT
+lj
+bR
+qW
+nH
+Lt
+li
+RG
+RG
+RG
+RG
+Sh
+hO
+nH
+qB
+hO
+IQ
+"}
+(11,1,1) = {"
+qo
+hT
+kH
+hT
+hT
+nO
+AU
+li
+RG
+RG
+RG
+RG
+Sh
+hO
+nH
+Zj
+hO
+IQ
+"}
+(12,1,1) = {"
+qo
+aT
+hT
+Co
+hT
+nO
+AM
+li
+RG
+RG
+RG
+RG
+Sh
+hO
+nH
+bC
+hO
+IQ
+"}
+(13,1,1) = {"
+qo
+oO
+hI
+hT
+hT
+nO
+hO
+aw
+aa
+aa
+aa
+aa
+ME
+hO
+nH
+CJ
+hO
+IQ
+"}
+(14,1,1) = {"
+qo
+hT
+PE
+hT
+MQ
+nH
+hO
+hO
+wh
+YT
+vI
+hO
+hO
+hO
+nH
+uo
+tS
+iL
+"}
+(15,1,1) = {"
+qo
+qo
+qo
+qo
+qo
+nH
+nH
+Is
+nH
+nH
+nH
+nH
+FV
+nH
+nH
+qw
+Ff
+TV
+"}
+(16,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+WR
+or
+Ct
+nH
+to
+Me
+RS
+Pm
+nH
+Nz
+nx
+TV
+"}
+(17,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+Sx
+jI
+Ct
+nH
+rD
+RS
+RS
+RS
+nH
+TV
+TV
+TV
+"}
+(18,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+QQ
+jI
+SO
+nH
+rl
+RS
+RS
+Vr
+nH
+TV
+TV
+TV
+"}
+(19,1,1) = {"
+TV
+TV
+TV
+TV
+TV
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+nH
+TV
+TV
+TV
+"}

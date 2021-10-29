@@ -1,0 +1,36 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"e" = (/obj/effect/turf_decal/trimline/yellow/warning{dir = 4},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/dark/smooth_large/lowpressure,/area/ruin/unpowered)
+"f" = (/obj/effect/turf_decal/trimline/yellow/line,/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/dark/smooth_large/lowpressure,/area/ruin/unpowered)
+"h" = (/obj/structure/chair/sofa/bench/left{dir = 8},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"k" = (/obj/effect/turf_decal/trimline/yellow/line{dir = 1},/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/lowpressure,/area/ruin/unpowered)
+"n" = (/obj/effect/turf_decal/trimline/yellow/warning{dir = 10},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/dark/smooth_large/lowpressure,/area/ruin/unpowered)
+"t" = (/obj/structure/chair/sofa/bench/right,/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"u" = (/obj/effect/turf_decal/trimline/yellow/line{dir = 1},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/dark/smooth_large/lowpressure,/area/ruin/unpowered)
+"x" = (/obj/effect/turf_decal/trimline/yellow/line,/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/lowpressure,/area/ruin/unpowered)
+"y" = (/obj/effect/turf_decal/trimline/yellow/line{dir = 4},/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/lowpressure,/area/ruin/unpowered)
+"A" = (/obj/effect/turf_decal/trimline/yellow/line{dir = 4},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/dark/smooth_large/lowpressure,/area/ruin/unpowered)
+"D" = (/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"L" = (/obj/structure/chair/sofa/bench,/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"M" = (/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/rust/lowpressure,/area/ruin/unpowered)
+"P" = (/obj/structure/water_source/puddle,/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"T" = (/obj/effect/turf_decal/trimline/yellow/line{dir = 8},/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/lowpressure,/area/ruin/unpowered)
+"V" = (/obj/structure/chair/sofa/bench{dir = 8},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"W" = (/obj/effect/turf_decal/trimline/yellow/line{dir = 8},/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/dark/smooth_large/lowpressure,/area/ruin/unpowered)
+"Y" = (/obj/structure/chair/sofa/bench/corner,/obj/effect/turf_decal/sand/plating,/turf/open/floor/iron/large/lowpressure,/area/ruin/unpowered)
+"Z" = (/obj/effect/turf_decal/trimline/yellow/warning{dir = 4},/obj/effect/turf_decal/sand/plating,/turf/open/floor/plating/lowpressure,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaa
+aDATDaaaaaa
+aDaWDDDMaaa
+aMenfxffxaa
+aMZauukauaa
+aMyWDMMDDaa
+aDATDtLYaaa
+aaAWMDPVDaa
+aaATMMMhaaa
+aMATMDaaaaa
+aDATDDaaaaa
+aDaTDaaaaaa
+aaaaaaaaaaa
+"}
