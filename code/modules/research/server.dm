@@ -201,6 +201,7 @@
 
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master
+	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 	var/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/source_code_hdd
 	var/deconstruction_state = HDD_PANEL_CLOSED
 	var/front_panel_screws = 4
@@ -209,13 +210,14 @@
 /obj/machinery/rnd/server/master/Initialize(mapload)
 	. = ..()
 	name = "\improper Master " + name
+	desc += "\nIt looks incredibly resistant to damage!"
 	source_code_hdd = new(src)
 	SSresearch.master_servers += src
 
 	add_overlay("RD-server-objective-stripes")
 
 /obj/machinery/rnd/server/master/Destroy()
-	if(source_code_hdd)
+	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
 		QDEL_NULL(source_code_hdd)
 
 	SSresearch.master_servers -= src
@@ -318,12 +320,12 @@
 		if(usr)
 			var/mob/user = usr
 
-			message_admins("[ADMIN_LOOKUPFLW(user)] deconstructed [ADMIN_JMP(src)], destroying [source_code_hdd] inside.")
-			log_game("[key_name(user)] deconstructed [src], destroying [source_code_hdd] inside.")
+			message_admins("[ADMIN_LOOKUPFLW(user)] deconstructed [ADMIN_JMP(src)].")
+			log_game("[key_name(user)] deconstructed [src].")
 			return ..()
 
-		message_admins("[ADMIN_JMP(src)] has been deconstructed by an unknown user, destroying [source_code_hdd] inside.")
-		log_game("[src] has been deconstructed by an unknown user, destroying [source_code_hdd] inside.")
+		message_admins("[ADMIN_JMP(src)] has been deconstructed by an unknown user.")
+		log_game("[src] has been deconstructed by an unknown user.")
 
 	return ..()
 

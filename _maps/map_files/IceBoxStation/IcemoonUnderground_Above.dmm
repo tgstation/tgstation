@@ -2901,8 +2901,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Access";
-	req_access_txt = "13"
+	name = "External Access"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -3548,8 +3547,7 @@
 /area/service/chapel)
 "py" = (
 /obj/machinery/door/airlock/external{
-	name = "External Access";
-	req_access_txt = "13"
+	name = "External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -4578,10 +4576,10 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "tp" = (
-/obj/structure/bodycontainer/morgue{
-	dir = 2
-	},
 /obj/machinery/light/directional/south,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -5307,7 +5305,7 @@
 /area/maintenance/department/chapel)
 "wv" = (
 /obj/structure/bodycontainer/morgue{
-	dir = 2
+	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
@@ -7358,8 +7356,7 @@
 /area/maintenance/fore)
 "EW" = (
 /obj/machinery/door/airlock/external{
-	name = "External Access";
-	req_access_txt = "13"
+	name = "External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -8684,8 +8681,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/external{
-	name = "External Access";
-	req_access_txt = "13"
+	name = "External Access"
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/fore)

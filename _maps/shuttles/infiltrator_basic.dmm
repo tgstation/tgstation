@@ -398,7 +398,7 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "aW" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ready Room";
 	req_access_txt = "150"
 	},
@@ -455,7 +455,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "ba" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "E.V.A. Gear Storage";
 	req_access_txt = "150"
 	},
@@ -472,7 +472,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "bb" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/tile/neutral{

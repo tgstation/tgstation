@@ -4,8 +4,8 @@
  * Abstract component for handling variables
  */
 /obj/item/circuit_component/variable
-	display_name = "Variable Getter"
-	desc = "A component that gets a variable globally on the circuit."
+	display_name = "Abstract Variable Component"
+	desc = "You shouldn't be seeing this."
 
 	/// Variable name
 	var/datum/port/input/option/variable_name

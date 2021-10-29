@@ -112,10 +112,9 @@
 	icon_state = "magic_mirror"
 
 /obj/structure/mirror/magic/pride/New()
-	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_PRIDE)
-			choosable_races += initial(S.id)
+	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+		if(initial(species_type.changesource_flags) & MIRROR_PRIDE)
+			choosable_races += initial(species_type.name)
 	..()
 
 /obj/structure/mirror/magic/pride/curse(mob/user)

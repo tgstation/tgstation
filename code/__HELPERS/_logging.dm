@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 #define testing_profile_global_output(NAME) testing_profile_output(NAME, GLOB.testing_global_profiler)
 #define testing_profile_global_output_all testing_profile_output_all(GLOB.testing_global_profiler)
 
-#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc"  = world.timeofday )
+#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc" = world.timeofday )
 #define testing_profile_local_start(NAME) testing_profile_start(NAME, _timer_system)
 #define testing_profile_local_current(NAME) testing_profile_current(NAME, _timer_system)
 #define testing_profile_local_output(NAME) testing_profile_output(NAME, _timer_system)
