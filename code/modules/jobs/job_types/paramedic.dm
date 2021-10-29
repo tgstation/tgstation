@@ -60,5 +60,5 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	box = /obj/item/storage/box/survival/medical
-	chameleon_extras = /obj/item/gun/syringe
+	chameleon_extras = /obj/item/gun/syringe/rifle
 	pda_slot = ITEM_SLOT_LPOCKET
