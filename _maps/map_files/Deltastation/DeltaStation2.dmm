@@ -20976,7 +20976,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe,
+/obj/item/syringe/rifle,
 /obj/machinery/status_display/evac/directional/west,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
