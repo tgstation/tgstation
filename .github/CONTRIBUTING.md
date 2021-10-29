@@ -137,7 +137,17 @@ There is no strict process when it comes to merging pull requests. Pull requests
 
 ## Good Boy Points
 
-Each github account has a score known as Good Boy Points, or GBP. This is a point system our codebase has implemented to ensure an equal number of bugs are fixed as features are added. The GBP gain or loss for a PR depends on the type of change the PR makes. Generally speaking, fixing bugs or improving the code will increase your GBP score, but adding mechanics or rebalancing things will cost you GBP. The GBP change of a PR is the sum of greatest positive and lowest negative values it has, so having a PR that has tags worth +10, +4, -1, -7, then you're going to get 3 GBP (10 - 7). A negative GBP score increases the odds of a maintainer outright closing your PR, with that chance being higher the lower your GBP is, so be sure to properly mark your PRs to prevent unnecessary GBP loss. Please note that maintainers reserve the right to freely remove or add tags should they deem it appropriate. You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
+Each GitHub account has a score known as Good Boy Points, or GBP. This is a system we use to ensure that the codebase stays maintained and that contributors fix bugs as well as add features.
+
+The GBP gain or loss for a PR depends on the type of changes the PR makes, represented by the tags assigned to the PR by the tgstation github bot or maintainers. Generally speaking, fixing bugs, updating sprites, or improving maps increases your GBP score, while adding mechanics, or rebalancing things will cost you GBP.
+
+The GBP change of a PR is the sum of greatest positive and lowest negative values it has. For example, a PR that has tags worth +10, +4, -1, -7, will net 3 GBP (10 - 7).
+
+Negative GBP increases the likelihood of a maintainer closing your PR. With that chance being higher the lower your GBP is. Be sure to use the proper tags in the changelog to prevent unnecessary GBP loss. Maintainers reserve the right to change tags as they deem appropriate.
+
+There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
+
+You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
 
 ## Porting features/sprites/sounds/tools from other codebases
 
