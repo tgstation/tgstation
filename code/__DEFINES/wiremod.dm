@@ -52,6 +52,8 @@
 
 #define COMPONENT_DEFAULT_NAME "component"
 
+#define COMPONENT_DEFAULT_CATEGORY "Unassigned"
+
 /// The minimum position of the x and y co-ordinates of the component in the UI
 #define COMPONENT_MIN_RANDOM_POS 200
 /// The maximum position of the x and y co-ordinates of the component in the UI

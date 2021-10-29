@@ -235,6 +235,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 				fuel = 60
 				settlers = list("Harry","Larry","Bob")
 		if("continue")
+			if (gameStatus == ORION_STATUS_START)
+				return
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(gamer)
 				xp_gained += 34

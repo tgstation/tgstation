@@ -275,7 +275,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!reagents.total_volume)
 		return
 	reagents.expose_temperature(heat, 0.05)
-
+	if(!reagents.total_volume) //may have reacted and gone to 0 after expose_temperature
+		return
 	var/to_smoke = smoke_all ? (reagents.total_volume * (dragtime / smoketime)) : REAGENTS_METABOLISM
 	var/mob/living/carbon/smoker = loc
 	if(!istype(smoker) || src != smoker.wear_mask)

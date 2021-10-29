@@ -239,7 +239,7 @@
 	box = /obj/item/storage/box/survival
 
 	var/backpack = /obj/item/storage/backpack
-	var/satchel  = /obj/item/storage/backpack/satchel
+	var/satchel = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
 
 	var/pda_slot = ITEM_SLOT_BELT
@@ -418,8 +418,9 @@
 		if(require_human)
 			player_client.prefs.randomise["species"] = FALSE
 		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
-		if (require_human)
+		if (require_human && !ishumanbasic(src))
 			set_species(/datum/species/human)
+			apply_pref_name(/datum/preference/name/backup_human, player_client)
 		if(CONFIG_GET(flag/force_random_names))
 			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
 			var/datum/species/species = new species_type

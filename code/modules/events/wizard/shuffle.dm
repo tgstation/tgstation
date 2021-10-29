@@ -10,7 +10,7 @@
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
-	var/list/mobs  = list()
+	var/list/mobs = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!is_station_level(H.z))
@@ -46,7 +46,7 @@
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
-	var/list/mobs  = list()
+	var/list/mobs = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		mobnames += H.real_name
@@ -79,7 +79,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleminds/start()
-	var/list/mobs  = list()
+	var/list/mobs = list()
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(H.stat || !H.mind || IS_WIZARD(H))

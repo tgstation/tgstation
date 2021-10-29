@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 	corgi_source.place_on_head(equipping, user)
 
-/datum/strippable_item/corgi_head/finish_unequip(atom/source, obj/item/equipping, mob/user)
+/datum/strippable_item/corgi_head/finish_unequip(atom/source, mob/user)
 	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
 	if (!istype(corgi_source))
 		return

@@ -75,7 +75,7 @@
 			records -= record
 			return TRUE
 		if("print_record")
-			var/datum/data/tachyon_record/record  = locate(params["ref"]) in records
+			var/datum/data/tachyon_record/record = locate(params["ref"]) in records
 			if(!records || !(record in records))
 				return
 			print(usr, record)
