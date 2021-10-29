@@ -295,18 +295,21 @@
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
-		interact(user)
+		ui_interact(user)
 	else
 		return ..()
 
 /mob/living/simple_animal/bot/attack_ai(mob/user)
 	if(!topic_denied(user))
-		interact(user)
+		ui_interact(user)
 	else
 		to_chat(user, span_warning("[src]'s interface is not responding!"))
 
-/mob/living/simple_animal/bot/interact(mob/user)
-	show_controls(user)
+/mob/living/simple_animal/bot/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SimpleBot", name)
+		ui.open()
 
 /mob/living/simple_animal/bot/AltClick(mob/user)
 	. = ..()
