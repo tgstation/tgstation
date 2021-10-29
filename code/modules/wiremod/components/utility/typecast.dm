@@ -6,6 +6,7 @@
 /obj/item/circuit_component/typecast
 	display_name = "Typecast"
 	desc = "A component that casts a value to a type if it matches or outputs null."
+	category = "Utility"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/option/typecast_options

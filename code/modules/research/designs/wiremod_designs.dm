@@ -103,6 +103,16 @@
 	id = "comp_random"
 	build_path = /obj/item/circuit_component/random
 
+/datum/design/component/binary_conversion
+	name = "Binary Conversion Component"
+	id = "comp_binary_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
+
+/datum/design/component/decimal_conversion
+	name = "Decimal Conversion Component"
+	id = "comp_decimal_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
+
 /datum/design/component/species
 	name = "Get Species Component"
 	id = "comp_species"

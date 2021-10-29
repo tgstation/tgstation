@@ -194,6 +194,7 @@
 		SStgui.update_uis(src)
 
 /obj/item/canvas/nineteen_nineteen
+	name = "canvas (19x19)"
 	icon_state = "19x19"
 	width = 19
 	height = 19
@@ -203,6 +204,7 @@
 	framed_offset_y = 9
 
 /obj/item/canvas/twentythree_nineteen
+	name = "canvas (23x19)"
 	icon_state = "23x19"
 	width = 23
 	height = 19
@@ -212,6 +214,7 @@
 	framed_offset_y = 8
 
 /obj/item/canvas/twentythree_twentythree
+	name = "canvas (23x23)"
 	icon_state = "23x23"
 	width = 23
 	height = 23
@@ -221,7 +224,7 @@
 	framed_offset_y = 6
 
 /obj/item/canvas/twentyfour_twentyfour
-	name = "ai universal standard canvas"
+	name = "canvas (AI Universal Standard)"
 	desc = "Besides being very large, the AI can accept these as a display from their internal database after you've hung it up."
 	icon_state = "24x24"
 	width = 24

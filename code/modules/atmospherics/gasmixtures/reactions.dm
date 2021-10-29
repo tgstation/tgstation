@@ -421,6 +421,8 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
+
+  //This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitrium][MOLES])
 	var/energy_produced = heat_efficency * NITRIUM_DECOMPOSITION_ENERGY
 

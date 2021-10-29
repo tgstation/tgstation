@@ -1,4 +1,5 @@
 //Lavaland Ruins
+//NOTICE: /unpowered means you never get power. Thanks Fikou
 
 /area/ruin/powered/beach
 	icon_state = "dk_yellow"
@@ -43,7 +44,7 @@
 	name = "\improper Elephant Graveyard"
 	icon_state = "green"
 
-/area/ruin/unpowered/syndicate_lava_base
+/area/ruin/syndicate_lava_base
 	name = "\improper Secret Base"
 	icon_state = "dk_yellow"
 	ambience_index = AMBIENCE_DANGER
@@ -55,37 +56,37 @@
 
 //Syndicate lavaland base
 
-/area/ruin/unpowered/syndicate_lava_base/engineering
+/area/ruin/syndicate_lava_base/engineering
 	name = "Syndicate Lavaland Engineering"
 
-/area/ruin/unpowered/syndicate_lava_base/medbay
+/area/ruin/syndicate_lava_base/medbay
 	name = "Syndicate Lavaland Medbay"
 
-/area/ruin/unpowered/syndicate_lava_base/arrivals
+/area/ruin/syndicate_lava_base/arrivals
 	name = "Syndicate Lavaland Arrivals"
 
-/area/ruin/unpowered/syndicate_lava_base/bar
+/area/ruin/syndicate_lava_base/bar
 	name = "\improper Syndicate Lavaland Bar"
 
-/area/ruin/unpowered/syndicate_lava_base/main
+/area/ruin/syndicate_lava_base/main
 	name = "\improper Syndicate Lavaland Primary Hallway"
 
-/area/ruin/unpowered/syndicate_lava_base/cargo
+/area/ruin/syndicate_lava_base/cargo
 	name = "\improper Syndicate Lavaland Cargo Bay"
 
-/area/ruin/unpowered/syndicate_lava_base/chemistry
+/area/ruin/syndicate_lava_base/chemistry
 	name = "Syndicate Lavaland Chemistry"
 
-/area/ruin/unpowered/syndicate_lava_base/virology
+/area/ruin/syndicate_lava_base/virology
 	name = "Syndicate Lavaland Virology"
 
-/area/ruin/unpowered/syndicate_lava_base/testlab
+/area/ruin/syndicate_lava_base/testlab
 	name = "\improper Syndicate Lavaland Experimentation Lab"
 
-/area/ruin/unpowered/syndicate_lava_base/dormitories
+/area/ruin/syndicate_lava_base/dormitories
 	name = "\improper Syndicate Lavaland Dormitories"
 
-/area/ruin/unpowered/syndicate_lava_base/telecomms
+/area/ruin/syndicate_lava_base/telecomms
 	name = "\improper Syndicate Lavaland Telecommunications"
 
 //Xeno Nest

@@ -49,7 +49,7 @@
 
 /obj/item/food/jellysandwich/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
-	foodtypes  = GRAIN | TOXIC
+	foodtypes = GRAIN | TOXIC
 
 /obj/item/food/jellysandwich/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)

@@ -312,7 +312,7 @@
 	text += "Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]\n"
 	var/chem_cap = 0
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
-		var/datum/reagent/reagent  = _reagent
+		var/datum/reagent/reagent = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
 		reagents_text += "\n- [reagent.name]: [amount]"

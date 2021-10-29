@@ -10,9 +10,19 @@
 				"}
 	return dat
 
-/obj/item/implant/sad_trombone/trigger(emote, mob/source)
-	if(emote == "deathgasp")
-		playsound(loc, 'sound/misc/sadtrombone.ogg', 50, FALSE)
+/obj/item/implant/sad_trombone/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
+	. = ..()
+	if(.)
+		RegisterSignal(target, COMSIG_MOB_EMOTED("deathgasp"), .proc/on_deathgasp)
+
+/obj/item/implant/sad_trombone/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(.)
+		UnregisterSignal(target, COMSIG_MOB_EMOTED("deathgasp"))
+
+/obj/item/implant/sad_trombone/proc/on_deathgasp(mob/source)
+	SIGNAL_HANDLER
+	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, FALSE)
 
 ///Implanter that spawns with a sad trombone implant, as well as an appropriate name
 /obj/item/implanter/sad_trombone

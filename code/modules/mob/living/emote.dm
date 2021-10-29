@@ -124,7 +124,7 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(wings)
+		if(istype(wings))
 			if(wings.wings_open)
 				open = TRUE
 				wings.close_wings()

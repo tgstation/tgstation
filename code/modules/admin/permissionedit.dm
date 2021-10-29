@@ -58,7 +58,7 @@
 		while(query_search_admin_logs.NextRow())
 			var/datetime = query_search_admin_logs.item[1]
 			var/round_id = query_search_admin_logs.item[2]
-			var/admin_key  = query_search_admin_logs.item[3]
+			var/admin_key = query_search_admin_logs.item[3]
 			operation = query_search_admin_logs.item[4]
 			target = query_search_admin_logs.item[5]
 			var/log = query_search_admin_logs.item[6]

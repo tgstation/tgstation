@@ -57,7 +57,7 @@
 		waste_remove = FALSE
 		iron_content += 0.02 * power_level * delta_time
 
-	update_temperature_status()
+	update_temperature_status(delta_time)
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -204,9 +204,9 @@
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, \
-					- heat_limiter_modifier * 0.01 * negative_temperature_multiplier, \
-					heat_limiter_modifier * positive_temperature_multiplier)
+	heat_output_min = - heat_limiter_modifier * 0.01 * negative_temperature_multiplier
+	heat_output_max = heat_limiter_modifier * positive_temperature_multiplier
+	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, heat_output_min, heat_output_max)
 
 	// Is the fusion process actually going to run?
 	// Note we have to always perform the above calculations to keep the UI updated, so we can't use this to early return.
