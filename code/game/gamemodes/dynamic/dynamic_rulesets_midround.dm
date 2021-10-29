@@ -272,7 +272,7 @@
 		else if(player.mind)
 			if(player.mind.assigned_role.title in restricted_roles)
 				candidates -= player
-			else if(player.mind.special_role || player.mind.antag_datums?.len > 0))
+			else if(player.mind.special_role || player.mind.antag_datums?.len > 0)
 				candidates -= player
 		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
 			candidates -= player
