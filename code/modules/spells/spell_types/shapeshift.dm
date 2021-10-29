@@ -11,6 +11,7 @@
 	invocation = "RAC'WA NO!"
 	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
+	nonabstract_req = TRUE
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
