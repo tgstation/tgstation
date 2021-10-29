@@ -189,16 +189,6 @@
 			if(length(I.restricted_roles))
 				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
 					continue
-			if(I.restricted_species)
-				if(ishuman(user))
-					var/is_inaccessible = TRUE
-					var/mob/living/carbon/human/H = user
-					for(var/F in I.restricted_species)
-						if(F == H.dna.species.id || debug)
-							is_inaccessible = FALSE
-							break
-					if(is_inaccessible)
-						continue
 			cat["items"] += list(list(
 				"name" = I.name,
 				"cost" = I.cost,
