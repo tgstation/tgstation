@@ -17552,6 +17552,7 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown,
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "bTx" = (
@@ -33085,7 +33086,6 @@
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/science/research)
 "fpa" = (
-/obj/effect/landmark/start/cargo_technician,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/cargo/storage)
@@ -40504,15 +40504,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/multitool,
 /obj/machinery/airalarm/directional/north,
-/obj/item/toy/figure/miner{
-	pixel_x = 8
-	},
-/obj/item/toy/figure/cargotech{
-	pixel_x = -9
-	},
+/obj/machinery/autolathe,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/cargo/office)
 "igk" = (
@@ -41744,7 +41738,6 @@
 /area/science/xenobiology)
 "iFi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/quartermaster,
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
@@ -47712,8 +47705,15 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/east,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/autolathe,
+/obj/structure/table,
+/obj/item/multitool,
+/obj/item/toy/figure/cargotech{
+	pixel_x = -9
+	},
+/obj/item/toy/figure/miner{
+	pixel_x = 8
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/cargo/office)
 "kKk" = (
@@ -47932,6 +47932,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "kOw" = (
@@ -50133,6 +50134,10 @@
 	},
 /turf/open/floor/iron,
 /area/command/teleporter)
+"lES" = (
+/obj/effect/landmark/start/cargo_technician,
+/turf/open/floor/iron,
+/area/cargo/storage)
 "lFh" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -70455,33 +70460,35 @@
 /obj/structure/table,
 /obj/item/stock_parts/micro_laser{
 	pixel_x = -7;
-	pixel_y = -1
+	pixel_y = -3
+	},
+/obj/item/stock_parts/micro_laser{
+	pixel_x = -1;
+	pixel_y = 3
 	},
 /obj/item/stock_parts/micro_laser{
 	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/stock_parts/micro_laser{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/stock_parts/scanning_module{
+	pixel_x = 12;
+	pixel_y = -1
+	},
+/obj/item/stock_parts/scanning_module{
+	pixel_x = 10;
 	pixel_y = 1
 	},
-/obj/item/stock_parts/micro_laser{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/stock_parts/micro_laser{
-	pixel_x = -4;
-	pixel_y = 5
-	},
 /obj/item/stock_parts/scanning_module{
-	pixel_x = 5
-	},
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 2
-	},
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 2;
+	pixel_x = 13;
 	pixel_y = 4
 	},
 /obj/item/stock_parts/scanning_module{
-	pixel_x = 5;
-	pixel_y = 3
+	pixel_x = 8;
+	pixel_y = -1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -74627,6 +74634,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "uEI" = (
@@ -77873,22 +77881,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/closed/wall,
 /area/engineering/atmos)
-"vTz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/landmark/start/cargo_technician,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/cargo/storage)
 "vTF" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -78807,6 +78799,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/cargo/qm)
 "wlt" = (
@@ -123769,7 +123762,7 @@ kbq
 xtG
 wbm
 ovn
-vTz
+jqu
 oEW
 qhU
 wNE
@@ -125058,7 +125051,7 @@ ufq
 iHI
 pVU
 gUH
-xSP
+lES
 rda
 eZr
 hzt
