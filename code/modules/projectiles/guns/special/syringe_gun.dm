@@ -97,6 +97,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	force = 6 //A little bit more robust in melee since it's larger
+	
 /obj/item/gun/syringe/rapidsyringe
 	name = "rapid syringe gun"
 	desc = "A modification of the syringe rifle design to be more compact and using a rotating cylinder to store up to six syringes."
