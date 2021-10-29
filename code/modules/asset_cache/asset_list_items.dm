@@ -151,11 +151,11 @@
 	)
 
 /datum/asset/simple/namespaced/otherfonts
+	assets = list(
+		"RetroGaming.eot" = 'tgui/packages/tgui/styles/font/RetroGaming.eot',
+	)
 	parents = list(
 		"font.css" = 'tgui/packages/tgui/styles/font/font.css',
-	)
-	assets = list(
-		"RetroGaming.ttf" = 'tgui/packages/tgui/styles/font/RetroGaming.eot',
 	)
 
 /datum/asset/spritesheet/chat
