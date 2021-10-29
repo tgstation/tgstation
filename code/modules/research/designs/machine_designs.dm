@@ -675,7 +675,7 @@
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
 
-/datum/design/board/accounting
+/datum/design/board/washing_machine
 	name = "Machine Design (Washing Machine)"
 	desc = "The circuit board for a Washing Machine."
 	id = "washing_machine"
