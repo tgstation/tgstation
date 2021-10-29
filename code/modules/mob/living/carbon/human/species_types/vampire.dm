@@ -124,13 +124,6 @@
 #undef VAMP_DRAIN_AMOUNT
 
 
-/mob/living/carbon/get_status_tab_items()
-	. = ..()
-	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
-	if(darkheart)
-		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
-
-
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
 	color = "#1C1C1C"

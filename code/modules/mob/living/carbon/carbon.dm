@@ -389,6 +389,9 @@
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(vessel)
 		. += "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]"
+	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+	if(darkheart)
+		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."
 	if(locate(/obj/item/assembly/health) in src)
 		. += "Health: [health]"
 
@@ -843,7 +846,7 @@
 
 /mob/living/carbon/proc/can_defib()
 
-	
+
 	if (suiciding)
 		return DEFIB_FAIL_SUICIDE
 
@@ -875,10 +878,10 @@
 
 		if (BR.suicided || BR.brainmob?.suiciding)
 			return DEFIB_FAIL_NO_INTELLIGENCE
-	
+
 	if(key && key[1] == "@") // Adminghosts (#61870)
 		return DEFIB_NOGRAB_AGHOST
-	
+
 	return DEFIB_POSSIBLE
 
 /mob/living/carbon/harvest(mob/living/user)
