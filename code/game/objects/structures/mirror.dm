@@ -142,10 +142,9 @@
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
 	if(!choosable_races.len)
-		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = speciestype
-			if(initial(S.changesource_flags) & MIRROR_MAGIC)
-				choosable_races += initial(S.id)
+		for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+			if(initial(species_type.changesource_flags) & MIRROR_MAGIC)
+				choosable_races += initial(species_type.name)
 		choosable_races = sort_list(choosable_races)
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
@@ -153,10 +152,9 @@
 	return ..()
 
 /obj/structure/mirror/magic/badmin/Initialize(mapload)
-	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_BADMIN)
-			choosable_races += initial(S.id)
+	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+		if(initial(species_type.changesource_flags) & MIRROR_BADMIN)
+			choosable_races += initial(species_type.name)
 	return ..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
