@@ -411,7 +411,7 @@
 			to_chat(soulstone_spirit, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
 		if(message_user)
 			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [victim.real_name]'s soul has been ripped from [victim.p_their()] body and stored within [src].")
-	victum.dust()
+	victim.dust()
 
 
 /obj/item/soulstone/proc/getCultGhost(mob/living/carbon/victim, mob/user)
