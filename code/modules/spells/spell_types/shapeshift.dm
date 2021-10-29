@@ -65,11 +65,10 @@
 			continue
 
 		// Are we currently ventcrawling?
-		if(!(shapeshifted_targets.movement_type & VENTCRAWLING))
+		if(!(istype(shapeshifted_targets.loc, /obj/machinery/atmospherics)))
 			continue
 
-		//you're shapeshifting into something that can't fit into a vent
-
+		// You're shapeshifting into something that can't fit into a vent
 		var/obj/machinery/atmospherics/pipeyoudiein = shapeshifted_targets.loc
 		var/datum/pipeline/ourpipeline
 		var/pipenets = pipeyoudiein.return_pipenets()
