@@ -8823,7 +8823,7 @@
 /obj/structure/table,
 /obj/item/soap/nanotrasen,
 /obj/item/hand_labeler,
-/obj/item/syringe/rifle{
+/obj/item/gun/syringe/rifle{
 	pixel_y = 5
 	},
 /turf/open/floor/iron/dark,
