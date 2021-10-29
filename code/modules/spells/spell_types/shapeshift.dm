@@ -54,7 +54,10 @@
 			shapeshift_type = animal_list[shapeshift_type]
 
 		var/obj/shapeshift_holder/shapeshift_ability = locate() in shapeshifted_targets
+		var/currently_ventcrawling = FALSE
 		if(shapeshift_ability)
+			if(shapeshifted_targets.movement_type & VENTCRAWLING)
+				currently_ventcrawling = TRUE
 			shapeshifted_targets = restore_form(shapeshifted_targets)
 		else
 			shapeshifted_targets = Shapeshift(shapeshifted_targets)
@@ -65,7 +68,7 @@
 			continue
 
 		// Are we currently ventcrawling?
-		if(!(istype(shapeshifted_targets.loc, /obj/machinery/atmospherics)))
+		if(!currently_ventcrawling)
 			continue
 
 		// You're shapeshifting into something that can't fit into a vent
@@ -115,19 +118,18 @@
 	human_req = FALSE
 	return shape
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/proc/restore_form(mob/living/shape)
-	var/obj/shapeshift_holder/shapeshift_ability = locate() in shape
+/obj/effect/proc_holder/spell/targeted/shapeshift/proc/restore_form(mob/living/caster)
+	var/obj/shapeshift_holder/shapeshift_ability = locate() in caster
 	if(!shapeshift_ability)
 		return
 
-	var/mob/living/stored_user = shapeshift_ability.stored
-	. = stored_user
+	var/mob/living/restored_player = shapeshift_ability.stored
 
 	shapeshift_ability.restore()
 
 	clothes_req = initial(clothes_req)
 	human_req = initial(human_req)
-	return stored_user
+	return restored_player
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/dragon
 	name = "Dragon Form"
@@ -147,7 +149,7 @@
 	var/restoring = FALSE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload, obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
 	. = ..()
 	source = _source
 	shape = loc
@@ -236,3 +238,4 @@
 		QDEL_NULL(shape)
 
 	qdel(src)
+	return stored
