@@ -105,7 +105,7 @@
 	icon_state = "bounty_trap_on"
 	stun_time = 200
 	sparks = FALSE //the item version gives them off to prevent runtimes (see Destroy())
-	checks_antimagic  = FALSE
+	checks_antimagic = FALSE
 	var/obj/item/bountytrap/stored_item
 	var/caught = FALSE
 

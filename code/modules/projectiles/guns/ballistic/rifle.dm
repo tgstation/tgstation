@@ -90,7 +90,7 @@
 		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
 				jammed = TRUE
-			jamming_chance  += jamming_increment
+			jamming_chance += jamming_increment
 			jamming_chance = clamp (jamming_chance, 0, 100)
 	return ..()
 

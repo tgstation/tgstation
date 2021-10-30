@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
-	var/turf/TB  = get_step(src, direction)
+	var/turf/TB = get_step(src, direction)
 
 	for(var/obj/structure/cable/C in TB)
 		if(!C)
@@ -567,7 +567,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.intact || !T.can_have_cabling())
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
 		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 
