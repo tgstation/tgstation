@@ -22,6 +22,9 @@ SUBSYSTEM_DEF(radiation)
 		if (MC_TICK_CHECK)
 			return
 
+/datum/controller/subsystem/radiation/stat_entry(msg)
+	return ..(msg + " | Pulses: [processing.len]")
+
 /datum/controller/subsystem/radiation/proc/pulse(atom/source, datum/radiation_pulse_information/pulse_information)
 	var/list/cached_rad_insulations = list()
 
