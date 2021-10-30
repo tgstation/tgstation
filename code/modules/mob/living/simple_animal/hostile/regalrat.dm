@@ -292,7 +292,7 @@
 	. = ..()
 	if(prob(40))
 		var/turf/open/floor/F = get_turf(src)
-		if(istype(F) && !F.intact)
+		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			var/obj/structure/cable/C = locate() in F
 			if(C && prob(15))
 				if(C.avail())

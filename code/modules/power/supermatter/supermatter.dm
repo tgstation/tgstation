@@ -179,6 +179,27 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
 
+	///Pressure bonus constants
+	///If the SM is operating in sufficiently low pressure, increase power output.
+	///This needs both a small amount of gas and a strong cooling system to keep temperature low in a low heat capacity environment.
+
+	///These constants are used to derive the values in the pressure bonus equation from human-meaningful values
+	///If you're varediting these, call update_constants() to update the derived values
+
+	///What is the maximum multiplier reachable from having low pressure?
+	var/pressure_bonus_max_multiplier = 0.5
+	///At what environmental pressure, in kPa, should we start giving a pressure bonus?
+	var/pressure_bonus_max_pressure = 100
+	///How steeply angled is the pressure bonus curve? Higher values means more of the bonus is available at higher pressures.
+	///Note that very low values can keep the bonus very close to 1 until it's nearly a vaccuum. Higher values can introduce diminishing returns on lower pressure.
+	var/pressure_bonus_curve_angle = 1.8
+
+	///These values are calculated from the above in update_constants() and immediately overwritten
+	///The default values will always result in a no-op 1x modifier, in case something breaks.
+	var/pressure_bonus_derived_constant = 1
+	var/pressure_bonus_derived_steepness = 0
+
+
 	///Our internal radio
 	var/obj/item/radio/radio
 	///The key our internal radio uses
@@ -253,6 +274,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if (!moveable)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
+	update_constants()
+
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
 	SSair.stop_processing_machine(src)
@@ -264,6 +287,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(psyOverlay)
 		QDEL_NULL(psyOverlay)
 	return ..()
+
+/obj/machinery/power/supermatter_crystal/proc/update_constants()
+	pressure_bonus_derived_steepness = (1 - 1 / pressure_bonus_max_multiplier) / (pressure_bonus_max_pressure ** pressure_bonus_curve_angle)
+	pressure_bonus_derived_constant = 1 / pressure_bonus_max_multiplier - pressure_bonus_derived_steepness
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
@@ -652,7 +679,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 			var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
-			var/pressure_multiplier = max((1 / ((env_pressure ** 1.5) + 5.5) * 0.01) + 0.8, 1)
+			var/pressure_multiplier = max((1 / ((env_pressure ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
 			var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 			supermatter_zap(
 				zapstart = src,

@@ -83,7 +83,7 @@
 	if(announce)
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", SSstation.announcer.get_rand_report_sound(), has_important_message = TRUE)
 
-	var/datum/comm_message/M  = new
+	var/datum/comm_message/M = new
 	M.title = title
 	M.content =  text
 

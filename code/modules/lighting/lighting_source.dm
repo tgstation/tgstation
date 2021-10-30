@@ -81,7 +81,7 @@
 	if (needs_update == LIGHTING_NO_UPDATE) \
 		SSlighting.sources_queue += src; \
 	if (needs_update < level)               \
-		needs_update            = level;    \
+		needs_update = level;    \
 
 
 // This proc will cause the light source to update the top atom, and add itself to the update queue.

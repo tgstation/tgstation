@@ -9,6 +9,7 @@
 /obj/item/circuit_component/delay
 	display_name = "Delay"
 	desc = "A component that delays a signal by a specified duration. Timer gets reset when triggered again."
+	category = "Utility"
 
 	/// Amount to delay by
 	var/datum/port/input/delay_amount

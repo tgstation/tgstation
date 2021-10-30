@@ -7,6 +7,7 @@
 	display_name = "Printer"
 	desc = "A component that prints a string input on a paper. Requires a shell and paper. \
 		Attack with paper to load them in the circuit. Use in hand to dump the bottom-most paper."
+	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_REFUSE_MODULE
 
 	/// Prints stuff on the leftmost paper in the loaded_papers list.

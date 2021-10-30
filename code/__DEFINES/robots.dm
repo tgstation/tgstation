@@ -8,69 +8,113 @@
 #define LAW_HACKED "hacked"
 
 //Bot defines, placed here so they can be read by other things!
-#define BOT_STEP_DELAY 4 //Delay between movemements
-#define BOT_STEP_MAX_RETRIES 5 //Maximum times a bot will retry to step from its position
+/// Delay between movemements
+#define BOT_STEP_DELAY 4
+/// Maximum times a bot will retry to step from its position
+#define BOT_STEP_MAX_RETRIES 5
 
-#define DEFAULT_SCAN_RANGE 7 //default view range for finding targets.
+/// Default view range for finding targets.
+#define DEFAULT_SCAN_RANGE 7
 
 //Mode defines. If you add a new one make sure you update mode_name in /mob/living/simple_animal/bot
-#define BOT_IDLE 0 // idle
-#define BOT_HUNT 1 // found target, hunting
-#define BOT_PREP_ARREST 2 // at target, preparing to arrest
-#define BOT_ARREST 3 // arresting target
-#define BOT_START_PATROL 4 // start patrol
-#define BOT_PATROL 5 // patrolling
-#define BOT_SUMMON 6 // summoned by PDA
-#define BOT_CLEANING 7 // cleaning (cleanbots)
-#define BOT_REPAIRING 8 // repairing hull breaches (floorbots)
-#define BOT_MOVING 9 // for clean/floor/med bots, when moving.
-#define BOT_HEALING 10 // healing people (medbots)
-#define BOT_RESPONDING 11 // responding to a call from the AI
-#define BOT_DELIVER 12 // moving to deliver
-#define BOT_GO_HOME 13 // returning to home
-#define BOT_BLOCKED 14 // blocked
-#define BOT_NAV 15 // computing navigation
-#define BOT_WAIT_FOR_NAV 16 // waiting for nav computation
-#define BOT_NO_ROUTE 17 // no destination beacon found (or no route)
-#define BOT_SHOWERSTANCE 18 // cleaning unhygienic humans
-#define BOT_TIPPED 19 // someone tipped a bot over ;_;
+/// Idle
+#define BOT_IDLE 0
+/// Found target, hunting
+#define BOT_HUNT 1
+/// Currently tipped over.
+#define BOT_TIPPED 2
+/// Start patrol
+#define BOT_START_PATROL 3
+/// Patrolling
+#define BOT_PATROL 4
+/// Summoned to a location
+#define BOT_SUMMON 5
+/// Currently moving
+#define BOT_MOVING 6
+/// Secbot - At target, preparing to arrest
+#define BOT_PREP_ARREST 7
+/// Secbot - Arresting target
+#define BOT_ARREST 8
+/// Cleanbot - Cleaning
+#define BOT_CLEANING 9
+/// Hygienebot - Cleaning unhygienic humans
+#define BOT_SHOWERSTANCE 10
+/// Floorbots - Repairing hull breaches
+#define BOT_REPAIRING 11
+/// Medibots - Healing people
+#define BOT_HEALING 12
+/// Responding to a call from the AI
+#define BOT_RESPONDING 13
+/// MULEbot - Moving to deliver
+#define BOT_DELIVER 14
+/// MULEbot - Returning to home
+#define BOT_GO_HOME 15
+/// MULEbot - Blocked
+#define BOT_BLOCKED 16
+/// MULEbot - Computing navigation
+#define BOT_NAV 17
+/// MULEbot - Waiting for nav computation
+#define BOT_WAIT_FOR_NAV 18
+/// MULEbot - No destination beacon found (or no route)
+#define BOT_NO_ROUTE 19
 
 //Bot types
-#define SEC_BOT (1<<0) // Secutritrons (Beepsky) and ED-209s
-#define MULE_BOT (1<<1) // MULEbots
-#define FLOOR_BOT (1<<2) // Floorbots
-#define CLEAN_BOT (1<<3) // Cleanbots
-#define MED_BOT (1<<4) // Medibots
-#define HONK_BOT (1<<5) // Honkbots & ED-Honks
-#define FIRE_BOT (1<<6)  // Firebots
-#define HYGIENE_BOT (1<<7)  // Hygienebots
-#define VIBE_BOT (1<<8)  // Vibe bots
+/// Secutritrons (Beepsky) and ED-209s
+#define SEC_BOT (1<<0)
+/// MULEbots
+#define MULE_BOT (1<<1)
+/// Floorbots
+#define FLOOR_BOT (1<<2)
+/// Cleanbots
+#define CLEAN_BOT (1<<3)
+/// Medibots
+#define MED_BOT (1<<4)
+/// Honkbots & ED-Honks
+#define HONK_BOT (1<<5)
+/// Firebots
+#define FIRE_BOT (1<<6)
+/// Hygienebots
+#define HYGIENE_BOT (1<<7)
+/// Vibe bots
+#define VIBE_BOT (1<<8)
 
 //AI notification defines
-#define NEW_BORG            1
-#define NEW_MODEL           2
-#define RENAME              3
-#define AI_SHELL            4
-#define DISCONNECT          5
+///Alert when a new Cyborg is created.
+#define NEW_BORG 1
+///Alert when a Cyborg selects a model.
+#define NEW_MODEL 2
+///Alert when a Cyborg changes their name.
+#define RENAME 3
+///Alert when an AI disconnects themselves from their shell.
+#define AI_SHELL 4
+///Alert when a Cyborg gets disconnected from their AI.
+#define DISCONNECT 5
 
 //Assembly defines
 #define ASSEMBLY_FIRST_STEP 0
 #define ASSEMBLY_SECOND_STEP 1
-#define ASSEMBLY_THIRD_STEP     2
-#define ASSEMBLY_FOURTH_STEP    3
-#define ASSEMBLY_FIFTH_STEP     4
+#define ASSEMBLY_THIRD_STEP 2
+#define ASSEMBLY_FOURTH_STEP 3
+#define ASSEMBLY_FIFTH_STEP 4
 
-#define BORG_LAMP_CD_RESET -1 //special value to reset cyborg's lamp_cooldown
+/// Special value to reset cyborg's lamp_cooldown
+#define BORG_LAMP_CD_RESET -1
 
-/// Defines for whether or not module slots are broken.
-#define BORG_MODULE_ALL_DISABLED (1<<0)
+//Module slot define
+///The third module slots is disabed.
+#define BORG_MODULE_THREE_DISABLED (1<<0)
+///The second module slots is disabed.
 #define BORG_MODULE_TWO_DISABLED (1<<1)
-#define BORG_MODULE_THREE_DISABLED (1<<2)
+///All modules slots are disabled.
+#define BORG_MODULE_ALL_DISABLED (1<<2)
 
-/// Defines for borg module selection
-#define BORG_CHOOSE_MODULE_ONE    1
-#define BORG_CHOOSE_MODULE_TWO    2
-#define BORG_CHOOSE_MODULE_THREE   3
+//Cyborg module selection
+///First Borg module slot.
+#define BORG_CHOOSE_MODULE_ONE 1
+///Second Borg module slot.
+#define BORG_CHOOSE_MODULE_TWO 2
+///Third Borg module slot.
+#define BORG_CHOOSE_MODULE_THREE 3
 
 #define SKIN_ICON "skin_icon"
 #define SKIN_ICON_STATE "skin_icon_state"

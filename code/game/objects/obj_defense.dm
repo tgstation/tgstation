@@ -45,7 +45,7 @@
 		return
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.intact && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(src, TRAIT_T_RAY_VISIBLE))
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)

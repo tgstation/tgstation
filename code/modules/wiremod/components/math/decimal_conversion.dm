@@ -6,6 +6,7 @@
 /obj/item/circuit_component/binary_decimal/decimal_conversion
 	display_name = "Decimal Conversion"
 	desc = "Merges an array of binary digits, or bits, represented as 1 or 0 and often used in boolean or binary operations, into a decimal number."
+	category = "Math"
 
 /obj/item/circuit_component/binary_decimal/decimal_conversion/populate_ports()
 	. = ..()

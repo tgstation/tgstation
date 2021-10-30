@@ -9411,23 +9411,17 @@
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/disposal/incinerator)
+/area/icemoon/surface/outdoors)
 "bJN" = (
 /turf/closed/wall,
 /area/science/xenobiology)
 "bJP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/disposal/incinerator)
+/area/icemoon/surface/outdoors)
 "bJS" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
 /turf/open/floor/plating/icemoon,
-/area/maintenance/disposal/incinerator)
-"bJV" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/disposal/incinerator)
 "bJW" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
@@ -20098,7 +20092,7 @@
 	dir = 10
 	},
 /obj/structure/table,
-/obj/item/ai_module/core,
+/obj/item/circuitboard/aicore,
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
 "guJ" = (
@@ -25182,11 +25176,11 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "jeE" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/supermatter/room)
+/area/icemoon/surface/outdoors)
 "jeJ" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -29871,7 +29865,7 @@
 "lGj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/supermatter/room)
+/area/icemoon/surface/outdoors)
 "lGS" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
@@ -31754,11 +31748,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/binary/valve/digital/on{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/binary/pressure_valve/on{
 	dir = 4;
 	name = "Output Release"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "mEr" = (
@@ -42314,7 +42308,7 @@
 	},
 /area/science/research)
 "sfD" = (
-/obj/machinery/atmospherics/components/binary/valve/digital{
+/obj/machinery/atmospherics/components/binary/pressure_valve/on{
 	name = "Waste Release"
 	},
 /turf/open/floor/iron,
@@ -43765,11 +43759,11 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "sOq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/engineering/atmos)
+/area/icemoon/surface/outdoors)
 "sOs" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -85315,12 +85309,12 @@ lpW
 iaV
 lBH
 lGj
+lGj
+lGj
+lGj
+lGj
+lGj
 jeE
-boP
-boP
-boP
-boP
-boP
 boP
 boP
 boP
@@ -91728,7 +91722,7 @@ bJP
 bJP
 bJP
 bJP
-bJV
+jeE
 boP
 boP
 boP

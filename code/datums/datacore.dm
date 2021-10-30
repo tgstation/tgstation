@@ -250,11 +250,11 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		G.fields["m_stat"] = "Stable"
 		G.fields["gender"] = H.gender
 		if(H.gender == "male")
-			G.fields["gender"]  = "Male"
+			G.fields["gender"] = "Male"
 		else if(H.gender == "female")
-			G.fields["gender"]  = "Female"
+			G.fields["gender"] = "Female"
 		else
-			G.fields["gender"]  = "Other"
+			G.fields["gender"] = "Other"
 		G.fields["photo_front"] = photo_front
 		G.fields["photo_side"] = photo_side
 		general += G
@@ -293,11 +293,11 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		L.fields["age"] = H.age
 		L.fields["gender"] = H.gender
 		if(H.gender == "male")
-			G.fields["gender"]  = "Male"
+			G.fields["gender"] = "Male"
 		else if(H.gender == "female")
-			G.fields["gender"]  = "Female"
+			G.fields["gender"] = "Female"
 		else
-			G.fields["gender"]  = "Other"
+			G.fields["gender"] = "Other"
 		L.fields["blood_type"] = H.dna.blood_type
 		L.fields["b_dna"] = H.dna.unique_enzymes
 		L.fields["identity"] = H.dna.unique_identity
