@@ -85,10 +85,10 @@
 /datum/action/innate/horror_mime/expand/Activate()
 	var/mob/living/simple_animal/hostile/horror_mime/currect_user = owner
 	if(currect_user.steroid)
-		balloon_alert(currect_user, "You cannot handle more steroids!")
+		to_chat(currect_user, span_warning("You cannot handle more steroids!"))
 		return
 	if(currect_user.steroid_cooldown)
-		balloon_alert(currect_user, "You have no steroids!")
+		to_chat(currect_user, span_warning("You have no steroids!"))
 		return
 	currect_user.steroid = 1
 	currect_user.icon_state = "mime_st"
