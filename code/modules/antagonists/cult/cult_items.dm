@@ -210,7 +210,7 @@
 /obj/item/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
 	if(dash_toggled && !proximity)
-		jaunt.Teleport(user, target)
+		jaunt.teleport(user, target)
 		return
 	if(!proximity)
 		return
