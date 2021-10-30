@@ -71,34 +71,39 @@
 	if(centered)
 		. += world.icon_size
 
-///Check if there is already a wall item on the turf loc
-/proc/got_wall_item(loc, dir, check_external = 0)
-	var/locdir = get_step(loc, dir)
-	for(var/obj/checked_object in loc)
+/**
+ * Check if there is already a wall item on the turf loc
+ * floor_loc = floor tile in front of the wall
+ * dir_toward_wall = direction from the floor tile in front of the wall towards the wall
+ * check_external = 2 (!?) if we should be checking external against items coming out of the wall rather than visually over the wall.
+**/
+/proc/got_wall_item(floor_loc, dir_toward_wall, check_external = 0)
+	var/wall_loc = get_step(floor_loc, dir_toward_wall)
+	for(var/obj/checked_object in floor_loc)
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR) && check_external != 2)
 			//Direction works sometimes
 			if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INVERSE))
-				if(checked_object.dir == turn(dir, 180))
+				if(checked_object.dir == turn(dir_toward_wall, 180))
 					return TRUE
-			else if(checked_object.dir == dir)
+			else if(checked_object.dir == dir_toward_wall)
 				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
 			//That's exactly what get_turf_pixel() does
-			if(get_turf_pixel(checked_object) == locdir)
+			if(get_turf_pixel(checked_object) == wall_loc)
 				return TRUE
 
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_EXTERNAL) && check_external)
 			if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INVERSE))
-				if(checked_object.dir == turn(dir, 180))
+				if(checked_object.dir == turn(dir_toward_wall, 180))
 					return TRUE
-			else if(checked_object.dir == dir)
+			else if(checked_object.dir == dir_toward_wall)
 				return TRUE
 
 	//Some stuff is placed directly on the wallturf (signs)
 	if (check_external == 2)
 		return FALSE
-	for(var/obj/checked_object in locdir)
+	for(var/obj/checked_object in wall_loc)
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR))
 			if(checked_object.pixel_x == 0 && checked_object.pixel_y == 0)
 				return TRUE
