@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Vampires and Dullahans can no longer select Cat ears and Cat tails. You monsters."
