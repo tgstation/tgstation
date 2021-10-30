@@ -450,9 +450,7 @@
 /area/awaymission/academy/headmaster)
 "ch" = (
 /obj/structure/chair/stool/directional/east,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ci" = (
@@ -772,10 +770,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dG" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/chem_master/condimaster,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dH" = (
@@ -1365,9 +1361,7 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fX" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fY" = (
@@ -1601,10 +1595,8 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "gQ" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /mob/living/simple_animal/hostile/bear,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gR" = (

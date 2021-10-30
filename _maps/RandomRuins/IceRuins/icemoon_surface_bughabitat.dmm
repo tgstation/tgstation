@@ -333,9 +333,9 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light/small/blacklight,
 /obj/item/plunger,
 /mob/living/simple_animal/mouse,
+/obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Pt" = (

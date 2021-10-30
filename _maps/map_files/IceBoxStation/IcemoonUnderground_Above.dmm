@@ -1401,8 +1401,8 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/lavaland/surface/outdoors/explored)
 "gv" = (
-/obj/machinery/light/small,
 /obj/structure/closet/crate/coffin,
+/obj/machinery/light/small/red/directional/south,
 /turf/open/floor/iron/dark/smooth_half,
 /area/service/chapel)
 "gw" = (

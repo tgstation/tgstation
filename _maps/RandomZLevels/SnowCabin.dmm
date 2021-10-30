@@ -4369,11 +4369,11 @@
 /area/awaymission/cabin/caves)
 "lH" = (
 /obj/effect/decal/remains/human,
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lI" = (
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lJ" = (

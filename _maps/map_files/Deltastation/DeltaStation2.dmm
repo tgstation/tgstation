@@ -3652,7 +3652,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/light,
 /obj/structure/table,
 /obj/item/fuel_pellet{
 	pixel_x = 8
@@ -3660,6 +3659,7 @@
 /obj/item/wrench{
 	pixel_x = -4
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "ayd" = (
@@ -101953,10 +101953,8 @@
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "yen" = (

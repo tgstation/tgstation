@@ -3898,15 +3898,13 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "jO" = (
-/obj/machinery/light/small/broken{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "jP" = (
@@ -5457,9 +5455,6 @@
 	},
 /obj/item/retractor,
 /obj/item/surgical_drapes,
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -5467,6 +5462,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/ancientstation/medbay)
 "nD" = (
@@ -5810,9 +5806,6 @@
 	icon_state = "plant-25"
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5822,6 +5815,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/ancientstation/medbay)
 "ox" = (
@@ -5995,11 +5989,9 @@
 /obj/item/shard{
 	icon_state = "small"
 	},
-/obj/machinery/light/broken{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/broken/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "oR" = (

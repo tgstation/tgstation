@@ -425,9 +425,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -972,9 +970,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cm" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -1497,9 +1493,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "di" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -4066,9 +4060,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -5131,9 +5123,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lo" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/chair/wood,
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
@@ -5372,9 +5362,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lU" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
@@ -5555,9 +5543,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mu" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -5702,9 +5688,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mN" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/noticeboard/directional/east,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/welcome,
@@ -5782,9 +5766,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mT" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
 	pixel_x = 23;
@@ -5812,9 +5794,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mY" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
@@ -5926,9 +5906,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "np" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -6286,9 +6264,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nY" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron{
