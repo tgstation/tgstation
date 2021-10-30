@@ -9220,9 +9220,6 @@
 /area/maintenance/port/aft)
 "bHF" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -22275,6 +22272,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "hva" = (

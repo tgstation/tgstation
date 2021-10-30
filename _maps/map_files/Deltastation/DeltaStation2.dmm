@@ -67760,10 +67760,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/radio/intercom/chapel{
-	pixel_y = -27
-	},
 /obj/machinery/newscaster/directional/north,
+/obj/item/radio/intercom/chapel/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "oac" = (
@@ -71716,9 +71714,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/radio/intercom{
-	pixel_y = -32
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "pgZ" = (
@@ -89756,9 +89752,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/radio/intercom/chapel{
-	pixel_y = -27
-	},
+/obj/item/radio/intercom/chapel/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "uAm" = (

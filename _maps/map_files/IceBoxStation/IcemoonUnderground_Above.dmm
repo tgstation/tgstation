@@ -547,10 +547,8 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/radio/intercom/chapel{
-	pixel_x = 28
-	},
 /obj/machinery/light/small/red/directional/south,
+/obj/item/radio/intercom/chapel/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "ci" = (
@@ -9401,10 +9399,8 @@
 /area/engineering/lobby)
 "La" = (
 /obj/structure/chair,
-/obj/item/radio/intercom/chapel{
-	pixel_x = 28
-	},
 /obj/machinery/light/small/red/directional/north,
+/obj/item/radio/intercom/chapel/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "Lb" = (

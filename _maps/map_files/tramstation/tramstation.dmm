@@ -64266,9 +64266,6 @@
 /area/hallway/secondary/exit)
 "wxX" = (
 /obj/structure/table/wood,
-/obj/item/radio/intercom{
-	pixel_y = -32
-	},
 /obj/item/gavelblock,
 /obj/item/gavelhammer,
 /obj/effect/turf_decal/tile/blue{
@@ -64276,6 +64273,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "wxY" = (
