@@ -13,15 +13,15 @@
 															"digital messenger" = 5,
 															"atmosphere sensor" = 5,
 															"photography module" = 5,
+															"camera zoom" = 10,
+															"printer module" = 10,
 															"remote signaler" = 10,
 															"medical records" = 10,
 															"security records" = 10,
-															"camera zoom" = 10,
 															"host scan" = 10,
 															"medical HUD" = 20,
 															"security HUD" = 20,
 															"loudness booster" = 20,
-															"printer module" = 20,
 															"newscaster" = 20,
 															"door jack" = 25,
 															"encryption keys" = 25,
@@ -581,6 +581,5 @@
 	dat += "Messages: <hr> [aiPDA.tnote]"
 	return dat
 
-// Bootleg Printer "Software"
 /mob/living/silicon/pai/proc/softwarePrinter()
 	aicamera.paiprint(usr)

@@ -96,8 +96,6 @@
 	if(!istype(selection))
 		to_chat(user, span_warning("Invalid Image."))
 		return
-	var/obj/item/photo/p = new /obj/item/photo(C.loc, selection)
-	p.pixel_x = p.base_pixel_x + rand(-10, 10)
-	p.pixel_y = p.base_pixel_y + rand(-10, 10)
-	visible_message(span_notice("[C.name] spits out a photograph from a very tiny slit on its chassis."))
+	printpicture(user,selection)
+	visible_message(span_notice("A picture appears on top of the chassis of [C.name]!"))
 	to_chat(usr, span_notice("You print a photograph."))
