@@ -41,10 +41,10 @@
 
 	use(1)
 	if(istype(target, /obj/item/clothing/gloves/fingerless))
-		var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
-		to_chat(user, span_notice("You turn [target] into [O] with [src]."))
+		var/obj/item/clothing/gloves/tackler/offbrand/slapcraft_gloves = new /obj/item/clothing/gloves/tackler/offbrand
+		to_chat(user, span_notice("You turn [target] into [slapcraft_gloves] with [src]."))
 		QDEL_NULL(target)
-		user.put_in_hands(O)
+		user.put_in_hands(slapcraft_gloves)
 		return
 
 	if(applied_trait)

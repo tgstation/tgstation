@@ -59,7 +59,7 @@
 	var/static/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
 	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
 	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
-	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.", "Paramedic" = "E.M.T.")
+	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Paramedic" = "E.M.T.", "Psychologist" = "LCSW", "Chemist" = "Pharm.D.")
 	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
 	var/static/list/legal = list("Lawyer" = "Esq.")
 
@@ -96,7 +96,7 @@
 		attaching_weapon.force *= CLEANBOT_UNEMAGGED_FORCE_PENALTY
 
 	taped_weapon = attaching_weapon
-	add_overlay(image(icon=taped_weapon.lefthand_file,icon_state=taped_weapon.inhand_icon_state))
+
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_move_while_armed)
 
 /// Cycle through all of our stolen titles and see which ones we're going to apply to our name
@@ -128,13 +128,13 @@
 	name = working_title
 
 /// When someone enters a tile we're on
-/mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
+/mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/stepping_on_us)
 	SIGNAL_HANDLER
 
-	if(!taped_weapon || !iscarbon(AM) || !has_gravity())
+	if(!taped_weapon || !iscarbon(stepping_on_us) || !has_gravity())
 		return
 
-	stab_target(AM)
+	stab_target(stepping_on_us)
 
 /// When we enter a tile someone else is on
 /mob/living/simple_animal/bot/cleanbot/proc/on_move_while_armed(datum/source, old_loc, movement_dir, forced, old_locs)
@@ -156,7 +156,7 @@
  * This is the proc that does the actual stabbing on the target carbon. It attacks with the taped_weapon, and knocks the target down for 2 seconds
  *
  * Arguments:
- * * target - Who's getting stabbed
+ * * stab_target - Who's getting stabbed
  * * target_parts - Are we stabbing their legs (most of the time) or their arms (for parries)
  */
 /mob/living/simple_animal/bot/cleanbot/proc/stab_target(mob/living/carbon/stab_target, target_parts = CLEANBOT_STAB_LEGS)
@@ -178,10 +178,15 @@
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
 	if(taped_weapon)
-		. += "\t[span_warning("Is that \a [taped_weapon] taped to it...?")]"
+		. += span_warning("Is that \a [taped_weapon] taped to it...?")
 
 		if(ascended && user.stat == CONSCIOUS && user.client)
 			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
+
+/mob/living/simple_animal/bot/cleanbot/update_overlays()
+	. = ..()
+	if(taped_weapon)
+		. += image(icon=taped_weapon.lefthand_file,icon_state=taped_weapon.inhand_icon_state)
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
