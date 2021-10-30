@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(radiation)
 			if (current_insulation <= pulse_information.threshold)
 				break
 
-		SEND_SIGNAL(target, COMSIG_PRE_POTENTIAL_IRRADIATION, pulse_information, current_insulation)
+		SEND_SIGNAL(target, COMSIG_IN_RANGE_OF_IRRADIATION, pulse_information, current_insulation)
 
 		// Check a second time, because of TRAIT_BYPASS_EARLY_IRRADIATED_CHECK
 		if (HAS_TRAIT(target, TRAIT_IRRADIATED))
@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(radiation)
 		if (current_insulation <= pulse_information.threshold)
 			continue
 
-		var/irradiation_result = SEND_SIGNAL(target, COMSIG_PRE_POTENTIAL_IRRADIATION_WITHIN_RANGE, pulse_information)
+		var/irradiation_result = SEND_SIGNAL(target, COMSIG_IN_THRESHOLD_OF_IRRADIATION, pulse_information)
 		if (irradiation_result & CANCEL_IRRADIATION)
 			continue
 

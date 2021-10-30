@@ -12,7 +12,7 @@
 	QDEL_NULL(sound)
 
 	if (!isnull(last_parent))
-		UnregisterSignal(last_parent, COMSIG_PRE_POTENTIAL_IRRADIATION)
+		UnregisterSignal(last_parent, COMSIG_IN_RANGE_OF_IRRADIATION)
 
 	last_parent = null
 
@@ -21,7 +21,7 @@
 /datum/component/geiger_sound/RegisterWithParent()
 	sound = new(parent)
 
-	RegisterSignal(parent, COMSIG_PRE_POTENTIAL_IRRADIATION, .proc/on_pre_potential_irradiation)
+	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 
 	ADD_TRAIT(parent, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 
@@ -33,7 +33,7 @@
 /datum/component/geiger_sound/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PRE_POTENTIAL_IRRADIATION,
+		COMSIG_IN_RANGE_OF_IRRADIATION,
 	))
 
 	REMOVE_TRAIT(parent, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
@@ -56,12 +56,12 @@
 		return
 
 	if (!isnull(last_parent))
-		UnregisterSignal(last_parent, COMSIG_PRE_POTENTIAL_IRRADIATION)
+		UnregisterSignal(last_parent, COMSIG_IN_RANGE_OF_IRRADIATION)
 
 	last_parent = new_loc
 
 	if (!isnull(new_loc))
-		RegisterSignal(new_loc, COMSIG_PRE_POTENTIAL_IRRADIATION, .proc/on_pre_potential_irradiation)
+		RegisterSignal(new_loc, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 
 /datum/looping_sound/geiger
 	mid_sounds = list(
