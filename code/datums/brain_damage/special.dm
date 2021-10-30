@@ -134,7 +134,7 @@
 
 		user.visible_message(span_warning("[user] [slip_in_message]."), null, null, null, user)
 
-		if(!do_teleport(src, destination_turf, no_effects = TRUE))
+		if(!do_teleport(user, destination_turf, no_effects = TRUE))
 			user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), null, null, null, user)
 			return
 
