@@ -587,8 +587,6 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
-	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		sight = null
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)

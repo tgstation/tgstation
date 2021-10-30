@@ -128,8 +128,8 @@
 
 /obj/machinery/hydroponics/power_change()
 	. = ..()
-	if(machine_stat & NOPOWER && self_sustaining)
-		self_sustaining = FALSE
+	if((machine_stat & NOPOWER) && self_sustaining)
+		set_self_sustaining(FALSE)
 
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
@@ -137,16 +137,14 @@
 	if(myseed && (myseed.loc != src))
 		myseed.forceMove(src)
 
-	if(!powered() && self_sustaining)
-		visible_message("<span class='warning'>[name]'s auto-grow functionality shuts off!</span>")
-		update_use_power(NO_POWER_USE)
-		self_sustaining = FALSE
-		update_appearance()
-
-	else if(self_sustaining)
-		adjustWater(rand(1,2) * delta_time * 0.5)
-		adjustWeeds(-0.5 * delta_time)
-		adjustPests(-0.5 * delta_time)
+	if(self_sustaining)
+		if(powered())
+			adjustWater(rand(1,2) * delta_time * 0.5)
+			adjustWeeds(-0.5 * delta_time)
+			adjustPests(-0.5 * delta_time)
+		else
+			set_self_sustaining(FALSE)
+			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -347,6 +345,19 @@
 	if(harvest)
 		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3")
 
+/*
+ * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
+ *
+ * new_value - true / false value that self_sustaining is being set to
+ */
+/obj/machinery/hydroponics/proc/set_self_sustaining(new_value)
+	if(self_sustaining == new_value)
+		return
+
+	self_sustaining = new_value
+
+	update_use_power(self_sustaining ? IDLE_POWER_USE : NO_POWER_USE)
+	update_appearance()
 
 /obj/machinery/hydroponics/examine(user)
 	. = ..()
@@ -779,11 +790,8 @@
 		return
 	if(!anchored)
 		return
-	self_sustaining = !self_sustaining
-	update_use_power(self_sustaining ? IDLE_POWER_USE : NO_POWER_USE)
-	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
-
-	update_appearance()
+	set_self_sustaining(!self_sustaining)
+	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
 /obj/machinery/hydroponics/AltClick(mob/user)
 	. = ..()
@@ -819,8 +827,7 @@
 		desc = initial(desc)
 		TRAY_NAME_UPDATE
 		if(self_sustaining) //No reason to pay for an empty tray.
-			update_use_power(NO_POWER_USE)
-			self_sustaining = FALSE
+			set_self_sustaining(FALSE)
 	update_appearance()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.

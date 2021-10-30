@@ -41,7 +41,8 @@
 		if(W.use_tool(src, user, 40, volume=100))
 			to_chat(user, span_notice("You slice apart the girder."))
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
 			qdel(src)
 			return
 
@@ -240,7 +241,8 @@
 			state = GIRDER_DISASSEMBLED
 			to_chat(user, span_notice("You disassemble the girder."))
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 

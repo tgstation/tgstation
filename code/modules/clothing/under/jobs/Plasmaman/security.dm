@@ -4,6 +4,8 @@
 	icon_state = "security_envirosuit"
 	inhand_icon_state = "security_envirosuit"
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 95, ACID = 95)
+	sensor_mode = SENSOR_COORDS
+	random_sensor = FALSE
 
 /obj/item/clothing/under/plasmaman/security/warden
 	name = "warden plasma envirosuit"

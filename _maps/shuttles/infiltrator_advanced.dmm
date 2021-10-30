@@ -964,7 +964,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "infiltrator_portdoor";
 	name = "Infiltrator Port Airlock"
 	},

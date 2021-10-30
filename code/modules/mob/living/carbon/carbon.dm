@@ -521,8 +521,9 @@
 
 /mob/living/carbon/update_stamina()
 	var/stam = getStaminaLoss()
-	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold && !stat)
-		enter_stamcrit()
+	if(stam > DAMAGE_PRECISION && (maxHealth - stam) <= crit_threshold)
+		if (!stat)
+			enter_stamcrit()
 	else if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, STAMINA)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, STAMINA)
@@ -842,6 +843,8 @@
 		return FALSE
 
 /mob/living/carbon/proc/can_defib()
+
+
 	if (suiciding)
 		return DEFIB_FAIL_SUICIDE
 
@@ -873,6 +876,9 @@
 
 		if (BR.suicided || BR.brainmob?.suiciding)
 			return DEFIB_FAIL_NO_INTELLIGENCE
+
+	if(key && key[1] == "@") // Adminghosts (#61870)
+		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
 
@@ -1281,11 +1287,10 @@
 	return ..()
 
 
-/mob/living/carbon/proc/attach_rot(mapload)
-	SIGNAL_HANDLER
-	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+/mob/living/carbon/proc/attach_rot()
+	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
+		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-//I want 1 -> 2 -> 3. I have 2->3->1
 /mob/living/carbon/proc/disarm_collision(mob/living/carbon/collateral, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
 	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)

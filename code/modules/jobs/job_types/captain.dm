@@ -50,28 +50,33 @@
 	jobtype = /datum/job/captain
 
 	id = /obj/item/card/id/advanced/gold
-	belt = /obj/item/pda/captain
-	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/heads/captain/alt
-	gloves = /obj/item/clothing/gloves/color/captain
+	id_trim = /datum/id_trim/job/captain
 	uniform =  /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/station_charter = 1,
+		)
+	belt = /obj/item/pda/captain
+	ears = /obj/item/radio/headset/heads/captain/alt
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/color/captain
 	head = /obj/item/clothing/head/caphat
-	backpack_contents = list(/obj/item/melee/baton/telescopic=1, /obj/item/station_charter=1)
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 
-	skillchips = list(/obj/item/skillchip/disk_verifier)
 
 	backpack = /obj/item/storage/backpack/captain
 	satchel = /obj/item/storage/backpack/satchel/cap
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
 
-	implants = list(/obj/item/implant/mindshield)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
+	chameleon_extras = list(
+		/obj/item/gun/energy/e_gun,
+		/obj/item/stamp/captain,
+		)
+	implants = list(/obj/item/implant/mindshield)
+	skillchips = list(/obj/item/skillchip/disk_verifier)
 
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
-
-	id_trim = /datum/id_trim/job/captain
 	var/special_charter
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
@@ -98,6 +103,6 @@
 /datum/outfit/job/captain/hardsuit
 	name = "Captain (Hardsuit)"
 
-	mask = /obj/item/clothing/mask/gas/atmos/captain
 	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/gas/atmos/captain

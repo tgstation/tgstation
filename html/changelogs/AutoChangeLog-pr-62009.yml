@@ -1,4 +1,0 @@
-author: "FA120"
-delete-after: True
-changes: 
-  - bugfix: "list literal can now contain tables,like they are supposed to"

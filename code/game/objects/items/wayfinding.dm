@@ -274,7 +274,7 @@
 	. = ..()
 	var/msg = "Its tracking indicator reads "
 	if(target)
-		var/obj/machinery/navbeacon/wayfinding/B  = target
+		var/obj/machinery/navbeacon/wayfinding/B = target
 		msg += "\"[B.codes["wayfinding"]]\"."
 	else
 		msg = "Its tracking indicator is blank."
