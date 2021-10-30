@@ -67,7 +67,7 @@ export const AntagInfoWizard = (props, context) => {
           <Stack.Item>
             <Section fill title="Spellbook">
               <Stack vertical fill>
-                <Stack.Item grow>
+                <Stack.Item>
                   You have a spellbook which is bound to you. You can use it
                   to choose a magical arsenal.<br />
                   <span style={destructionstyle}>

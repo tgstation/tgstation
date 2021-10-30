@@ -41,21 +41,19 @@
 	name = "Medical Doctor"
 	jobtype = /datum/job/doctor
 
+	id_trim = /datum/id_trim/job/medical_doctor
+	uniform = /obj/item/clothing/under/rank/medical/doctor
+	suit =  /obj/item/clothing/suit/toggle/labcoat
+	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/doctor
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/medical
-	suit_store = /obj/item/flashlight/pen
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
 	box = /obj/item/storage/box/survival/medical
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
-
 	chameleon_extras = /obj/item/gun/syringe
-
-	id_trim = /datum/id_trim/job/medical_doctor
+	skillchips = list(/obj/item/skillchip/entrails_reader)

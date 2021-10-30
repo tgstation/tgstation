@@ -11,10 +11,6 @@ GLOBAL_LIST_INIT(wiremod_filter_info, list(
 		"y" = PORT_TYPE_NUMBER,
 		"size" = PORT_TYPE_NUMBER,
 	),
-	"color" = list(
-		"color" = PORT_TYPE_LIST,
-		"space" = PORT_TYPE_NUMBER,
-	),
 	"displace" = list(
 		"x" = PORT_TYPE_NUMBER,
 		"y" = PORT_TYPE_NUMBER,
@@ -39,7 +35,7 @@ GLOBAL_LIST_INIT(wiremod_filter_info, list(
 		"render_source" = PORT_TYPE_STRING,
 		"flags" = PORT_TYPE_NUMBER,
 		"color" = PORT_TYPE_STRING,
-		"transform" = PORT_TYPE_LIST,
+		"transform" = PORT_TYPE_LIST(PORT_TYPE_ANY),
 		"blend_mode" = PORT_TYPE_NUMBER,
 	),
 	"motion_blur" = list(
@@ -148,6 +144,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 /obj/item/circuit_component/filter_helper
 	display_name = "Filter Parameter Helper"
 	desc = "Constructs a list of filter parameters from the inputs."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	var/datum/port/input/option/filter_type_port
@@ -162,7 +159,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 
 /obj/item/circuit_component/filter_helper/populate_ports()
 	current_filter_type = filter_type_port.value
-	output_params = add_output_port("Parameters", PORT_TYPE_ASSOC_LIST)
+	output_params = add_output_port("Parameters", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_ANY))
 	handle_filter_type_changed()
 
 /obj/item/circuit_component/filter_helper/pre_input_received(datum/port/input/port)
@@ -191,6 +188,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 /obj/item/circuit_component/filter_adder
 	display_name = "Add Filter"
 	desc = "Adds a filter to the target atom."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	var/datum/port/input/target_port
@@ -242,6 +240,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 /obj/item/circuit_component/filter_remover
 	display_name = "Filter Remover"
 	desc = "Removes the specified filter from the target."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	var/datum/port/input/target_port
@@ -260,6 +259,7 @@ GLOBAL_LIST_INIT(wiremod_flag_info, list(
 
 /obj/item/circuit_component/bitflag_helper
 	display_name = "Animation & Filter Bitflag Helper"
+	category = "Admin"
 	desc = "Allows you to construct bitflags for BYOND animation and filter parameters without having to manually search for the corresponding values."
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN

@@ -14,10 +14,23 @@
 	/// The techweb the printer will get researched designs from
 	var/datum/techweb/techweb
 
+	/// The current unlocked circuit component designs. Used by integrated circuits to print off circuit components remotely.
+	var/list/current_unlocked_designs = list()
+
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
 
 	techweb = SSresearch.science_tech
+
+	for (var/researched_design_id in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
+			continue
+
+		current_unlocked_designs[design.build_path] = design.id
+
+	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
+	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
@@ -25,6 +38,19 @@
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
+
+/obj/machinery/component_printer/proc/on_research(datum/source, datum/design/added_design, custom)
+	SIGNAL_HANDLER
+	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
+		return
+	current_unlocked_designs[added_design.build_path] = added_design.id
+
+/obj/machinery/component_printer/proc/on_removed(datum/source, datum/design/added_design, custom)
+	SIGNAL_HANDLER
+	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
+		return
+	current_unlocked_designs -= added_design.build_path
+
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -36,6 +62,23 @@
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
 	)
+
+/obj/machinery/component_printer/proc/print_component(typepath)
+	var/design_id = current_unlocked_designs[typepath]
+
+	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	if (!(design.build_type & COMPONENT_PRINTER))
+		return
+
+	if (materials.on_hold())
+		return
+
+	if (!materials.mat_container?.has_materials(design.materials))
+		return
+
+	materials.mat_container.use_materials(design.materials)
+	materials.silo_log(src, "printed", -1, design.name, design.materials)
+	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params)
 	. = ..()
@@ -104,6 +147,14 @@
 	data["designs"] = designs
 
 	return data
+
+/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
+	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
+		var/obj/item/integrated_circuit/circuit = weapon
+		circuit.linked_component_printer = WEAKREF(src)
+		balloon_alert(user, "successfully linked to the integrated circuit")
+		return
+	return ..()
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())

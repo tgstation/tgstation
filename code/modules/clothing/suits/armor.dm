@@ -96,6 +96,17 @@
 	flags_inv = 0
 	strip_delay = 80
 
+/obj/item/clothing/suit/armor/hos/hos_formal
+	name = "\improper Head of Security's parade jacket"
+	desc = "For when an armoured vest isn't fashionable enough."
+	icon_state = "hosformal"
+	inhand_icon_state = "hostrench"
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
 	desc = "A navy-blue armored jacket with blue shoulder designations and '/Warden/' stitched into one of the chest pockets."
@@ -138,18 +149,16 @@
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
 
-/obj/item/clothing/suit/toggle/captains_parade
+/obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
 	inhand_icon_state = "capspacesuit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 0, RAD = 0, FIRE = 100, ACID = 90, WOUND = 10)
-	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/captains_parade/Initialize(mapload)
+/obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -352,28 +361,14 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/toggle/armor/vest/centcom_formal
+/obj/item/clothing/suit/armor/centcom_formal
 	name = "\improper CentCom formal coat"
 	desc = "A stylish coat given to CentCom Commanders. Perfect for sending ERTs to suicide missions with style!"
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
-	togglename = "buttons"
 
-/obj/item/clothing/suit/toggle/armor/vest/centcom_formal/Initialize(mapload)
+/obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
-
-/obj/item/clothing/suit/toggle/armor/hos/hos_formal
-	name = "\improper Head of Security's parade jacket"
-	desc = "For when an armoured vest isn't fashionable enough."
-	icon_state = "hosformal"
-	inhand_icon_state = "hostrench"
-	body_parts_covered = CHEST|GROIN|ARMS
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 70, ACID = 90, WOUND = 10)
-	togglename = "buttons"
-
-/obj/item/clothing/suit/toggle/armor/hos/hos_formal/Initialize(mapload)
-	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	AddComponent(/datum/component/toggle_icon)

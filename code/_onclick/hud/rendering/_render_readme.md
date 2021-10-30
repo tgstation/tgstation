@@ -12,6 +12,10 @@ When you create an atom, this will always create an internal byond structure cal
 
 Finally, we arrive at clientside behavior, where we have two main clientside functions: GetMapIcons, and Render. GetMapIcons is repsonsible for actual rendering calculations on the clientside, such as "Group Icons and Set bounds", which performs clientside calculations for transform matrixes. Note that particles here are handled in a seperate thread and are not diplayed in the clientside profiler. Render handles the actual drawing of the screen.
 
+For debugging rendering issues its reccomended you do two things:
+A) Talk to someone who has inside knowledge(like lummox) about it, most of this is undocumented and bugs often
+B) Use the undocumented debug printer which reads of data on icons rendering, this is very dense but can be useful in some cases. To use: Right click top tab -> Options & Messages -> Client -> Command -> Enter ".debug profile mapicons" and press Enter -> go to your Byond directory and find BYOND/cfg/mapicons.json . Yes this is one giant one-line json.
+
 ## Known internal snowflake
 The following is an incomplete list of pitfalls that come from byond snowflake that are known, this list is obviously incomplete.
 
@@ -25,6 +29,7 @@ The following is an incomplete list of pitfalls that come from byond snowflake t
 8. Byond uses DirectX 9 (Lummox said he wants to update to DirectX 11)
 9. Particles are just fancy overlays and are not independent of their owner
 10. Maptick items inside mob.contents are cheaper compared to most other movables
+11. Displacement filter: The byond "displacement filter" does not, as the name would make you expect, use displacement maps, but instead uses normal maps.
 
 ## The rendering solution
 One of the main issues with making pretty effects is how objects can only render to one plane, and how filters can only be applied to single objects. Quite simply it means we cant apply effects to multiple planes at once, and an effect to one plane only by treating it as a single unit:

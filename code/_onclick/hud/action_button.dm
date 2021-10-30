@@ -12,8 +12,13 @@
 	var/ordered = TRUE //If the button gets placed into the default bar
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
-	if (linked_action)
-		return linked_action.owner == user
+	if(linked_action)
+		if(linked_action.owner == user)
+			return TRUE
+		for(var/datum/weakref/reference as anything in linked_action.sharers)
+			if(IS_WEAKREF_OF(user, reference))
+				return TRUE
+		return FALSE
 	else if (isobserver(user))
 		var/mob/dead/observer/O = user
 		return !O.observetarget

@@ -735,6 +735,8 @@
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon updates their health (source = carbon)
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
+///Called when a carbon updates their sanity (source = carbon)
+#define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
 
 // simple_animal signals
 /// called when a simplemob is given sentience from a potion (target = person who sentienced)
@@ -819,6 +821,8 @@
 /// from /obj/machinery/atmospherics/components/binary/pump/set_on(active): (on)
 #define COMSIG_PUMP_SET_ON "pump_set_on"
 
+/// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
+#define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
 
 // /obj access signals
 
@@ -1155,8 +1159,12 @@
 #define COMSIG_PLANT_ON_SLIP "plant_on_slip"
 ///called when a plant with liquid contents is squashed on (atom/target)
 #define COMSIG_PLANT_ON_SQUASH "plant_on_squash"
-///called when a plant grows in a tray (obj/machinery/hydroponics)
-#define COMSIG_PLANT_ON_GROW "plant_on_grow"
+///called when a plant backfires via the backfire element (mob/victim)
+#define COMSIG_PLANT_ON_BACKFIRE "plant_on_backfire"
+///called when a seed grows in a tray (obj/machinery/hydroponics)
+#define COMSIG_SEED_ON_GROW "plant_on_grow"
+///called when a seed is planted in a tray (obj/machinery/hydroponics)
+#define COMSIG_SEED_ON_PLANTED "plant_on_plant"
 
 //Gibs
 
@@ -1325,8 +1333,10 @@
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
-///from base of obj/item/afterattack(): (atom/target, mob/user, params)
+///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
+///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
+#define COMSIG_ITEM_AFTERATTACK_SECONDARY "item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"
 ///from base of atom/attack_hand(): (mob/user, modifiers)
@@ -1335,7 +1345,9 @@
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
+///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
+#define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
+///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"
@@ -1459,6 +1471,12 @@
 /// Called in /obj/structure/moneybot/add_money(). (to_add)
 #define COMSIG_MONEYBOT_ADD_MONEY "moneybot_add_money"
 
+/// Called in /obj/structure/dispenserbot/add_item(). (obj/item/to_add)
+#define COMSIG_DISPENSERBOT_ADD_ITEM "moneybot_add_item"
+
+/// Called in /obj/structure/dispenserbot/remove_item(). (obj/item/to_remove)
+#define COMSIG_DISPENSERBOT_REMOVE_ITEM "moneybot_remove_item"
+
 /// Called when somebody passes through a scanner gate and it triggers
 #define COMSIG_SCANGATE_PASS_TRIGGER "scangate_pass_trigger"
 
@@ -1500,6 +1518,9 @@
 ///Called when the ticker sets up the game for start
 #define COMSIG_TICKER_ENTER_SETTING_UP "comsig_ticker_enter_setting_up"
 
+///Called when the ticker fails to set up the game for start
+#define COMSIG_TICKER_ERROR_SETTING_UP "comsig_ticker_error_setting_up"
+
 /// Called when the round has started, but before GAME_STATE_PLAYING
 #define COMSIG_TICKER_ROUND_STARTING "comsig_ticker_round_starting"
 
@@ -1510,3 +1531,14 @@
 #define COMSIG_ADDED_POINT_OF_INTEREST "added_point_of_interest"
 /// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed : (atom/old_poi)
 #define COMSIG_REMOVED_POINT_OF_INTEREST "removed_point_of_interest"
+
+//Cytology signals
+///Sent from /datum/biological_sample/proc/reset_sample
+#define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
+	#define SPARE_SAMPLE (1<<0)
+
+/// Called when a techweb design is researched (datum/design/researched_design, custom)
+#define COMSIG_TECHWEB_ADD_DESIGN "techweb_add_design"
+
+/// Called when a techweb design is removed (datum/design/removed_design, custom)
+#define COMSIG_TECHWEB_REMOVE_DESIGN "techweb_remove_design"

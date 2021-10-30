@@ -79,7 +79,7 @@
 				if(nlog_type & LOG_SAY)
 					var/list/reversed = log_source[log_type]
 					if(islist(reversed))
-						say_log = reverseRange(reversed.Copy())
+						say_log = reverse_range(reversed.Copy())
 						break
 			if(LAZYLEN(say_log))
 				for(var/spoken_memory in say_log)

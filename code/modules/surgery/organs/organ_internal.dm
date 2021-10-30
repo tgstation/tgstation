@@ -180,6 +180,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
+	check_failing_thresholds()
 	prev_damage = damage
 	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
@@ -187,7 +188,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
 /obj/item/organ/proc/setOrganDamage(damage_amount) //use mostly for admin heals
 	applyOrganDamage(damage_amount - damage)
-	check_failing_thresholds() // Apply organ damage, then check if it's failing afterwards
 
 /** check_damage_thresholds
  * input: mob/organ_owner (a mob, the owner of the organ we call the proc on)

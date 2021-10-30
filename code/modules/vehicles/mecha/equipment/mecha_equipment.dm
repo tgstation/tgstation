@@ -90,7 +90,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, list/modifiers)
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT, equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
 	send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
 	chassis.use_power(energy_drain)

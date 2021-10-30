@@ -47,7 +47,7 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Initialize(mapload)
 	. = ..()
 	if(wanted_objects.len)
-		AddComponent(/datum/component/udder, /obj/item/udder/gutlunch, /mob.proc/regenerate_icons, /mob.proc/regenerate_icons)
+		AddComponent(/datum/component/udder, /obj/item/udder/gutlunch, CALLBACK(src, .proc/regenerate_icons), CALLBACK(src, .proc/regenerate_icons))
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/CanAttack(atom/the_target) // Gutlunch-specific version of CanAttack to handle stupid stat_exclusive = true crap so we don't have to do it for literally every single simple_animal/hostile except the two that spawn in lavaland

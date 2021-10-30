@@ -141,6 +141,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSSTRUCTURE (1<<8)
 #define PASSFLAPS (1<<9)
 #define PASSDOORS (1<<10)
+#define PASSVEHICLE (1<<11)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -172,6 +173,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_DAMAGE (1<<3)
 #define ZAP_MOB_STUN (1<<4)
 #define ZAP_GENERATES_POWER (1<<5)
+/// Zaps with this flag will generate less power through tesla coils
+#define ZAP_LOW_POWER_GEN (1<<6)
 
 #define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
@@ -249,5 +252,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 ///Turns the dir by 180 degrees
 #define DIRFLIP(d)       turn(d, 180)
 
+#define MAX_BITFIELD_SIZE 24
+
 /// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
 #define MAX_BITFLAG_DIGITS 8
+

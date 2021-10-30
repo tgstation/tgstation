@@ -324,7 +324,7 @@
 	// There was a large fight in the coderbus about a player reference
 	// in absinthe. Ergo, this is why the name generation is now so
 	// complicated. Judge us kindly.
-	var/shortname = pickweight(
+	var/shortname = pick_weight(
 		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
 	var/fullname
 	switch(shortname)

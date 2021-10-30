@@ -126,9 +126,8 @@
 	desc = "A soft brown cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive the ladies mad."
 	icon_state = "owl_wings"
 	inhand_icon_state = "owl_wings"
-	togglename = "wings"
+	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
-	actions_types = list(/datum/action/item_action/toggle_wings)
 
 /obj/item/clothing/suit/toggle/owlwings/Initialize(mapload)
 	. = ..()

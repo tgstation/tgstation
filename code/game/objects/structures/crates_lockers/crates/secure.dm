@@ -9,22 +9,11 @@
 	var/tamperproof = 0
 	damage_deflection = 25
 
-/obj/structure/closet/crate/secure/update_overlays()
-	. = ..()
-	if(broken)
-		. += "securecrateemag"
-		return
-	if(locked)
-		. += "securecrater"
-		return
-	. += "securecrateg"
-
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()
 	else
 		return ..()
-
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)

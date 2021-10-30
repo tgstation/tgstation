@@ -183,11 +183,16 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(delta_time)
+	fusion_temperature_archived = fusion_temperature
 	fusion_temperature = internal_fusion.temperature
+	moderator_temperature_archived = moderator_temperature
 	moderator_temperature = moderator_internal.temperature
+	coolant_temperature_archived = coolant_temperature
 	coolant_temperature = airs[1].temperature
+	output_temperature_archived = output_temperature
 	output_temperature = linked_output.airs[1].temperature
+	temperature_period = delta_time
 
 	//Set the power level of the fusion process
 	switch(fusion_temperature)
@@ -220,7 +225,10 @@
 		var/next_sound = round((100 - aggression) * 5) + 5
 		last_accent_sound = world.time + max(HYPERTORUS_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 
-	soundloop.volume = clamp((power_level + 1) * 8, 0, 50)
+	var/ambient_hum = 1
+	if (check_fuel())
+		ambient_hum = power_level + 1
+	soundloop.volume = clamp(ambient_hum * 8, 0, 50)
 
 /**
  * Called by the main fusion processes in hfr_main_processes.dm
@@ -309,6 +317,23 @@
 	integrity = round(100 - integrity * 100, 0.01)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
+
+/**
+ * Get how charged the area's APC is
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_area_cell_percent()
+	// Make sure to get APC levels from the same area the core draws from
+	// Just in case people build an HFR across boundaries
+	var/area/area = get_area(src)
+	if (!area)
+		return 0
+	var/obj/machinery/power/apc/apc = area.apc
+	if (!apc)
+		return 0
+	var/obj/item/stock_parts/cell/cell = apc.cell
+	if (!cell)
+		return 0
+	return cell.percent()
 
 /**
  * Called by process_atmos() in hfr_main_processes.dm

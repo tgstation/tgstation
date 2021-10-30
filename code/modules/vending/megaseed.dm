@@ -4,6 +4,7 @@
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 	icon_state = "seeds"
+	panel_type = "panel2"
 	light_mask = "seeds-light-mask"
 	products = list(
 		/obj/item/seeds/aloe = 3,

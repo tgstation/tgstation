@@ -23,7 +23,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ae" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -262,7 +262,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aU" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -317,7 +317,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "be" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -519,7 +519,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -565,7 +565,7 @@
 "bM" = (
 /obj/structure/cable,
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},

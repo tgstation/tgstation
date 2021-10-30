@@ -119,7 +119,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+	M.adjust_drowsyness(-5 * REM * delta_time)
 	M.AdjustStun(-20 * REM * delta_time)
 	M.AdjustKnockdown(-20 * REM * delta_time)
 	M.AdjustUnconscious(-20 * REM * delta_time)
@@ -141,7 +141,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+	M.adjust_drowsyness(-5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
@@ -573,7 +573,7 @@
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		M.drowsyness++
+		M.adjust_drowsyness(1)
 	M.jitteriness -= 1 * REM * delta_time
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 3 * REM * delta_time)
 	..()
@@ -604,7 +604,7 @@
 		if(11)
 			to_chat(M, span_warning("You start to feel tired...") )
 		if(12 to 24)
-			M.drowsyness += 1 * REM * delta_time
+			M.adjust_drowsyness(1 * REM * delta_time)
 		if(24 to INFINITY)
 			M.Sleeping(40 * REM * delta_time)
 			. = TRUE
@@ -975,7 +975,7 @@
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = 0
-	M.drowsyness = 0
+	M.set_drowsyness(0)
 	M.slurring = 0
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
@@ -1069,8 +1069,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = "C2F"
-	exposed_human.facial_hair_color = "C2F"
+	exposed_human.hair_color = "#CC22FF"
+	exposed_human.facial_hair_color = "#CC22FF"
 	exposed_human.update_hair()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1173,7 +1173,7 @@
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, 5 * REM * delta_time)
-	M.drowsyness += 2 * REM * delta_time
+	M.adjust_drowsyness(2 * REM * delta_time)
 	if(M.jitteriness >= 3)
 		M.jitteriness -= 3 * REM * delta_time
 	if (M.hallucination >= 5)
@@ -1437,8 +1437,8 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
 		return
-	exposed_human.hair_color = "92f"
-	exposed_human.facial_hair_color = "92f"
+	exposed_human.hair_color = "#9922ff"
+	exposed_human.facial_hair_color = "#9922ff"
 	exposed_human.update_hair()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M, delta_time, times_fired)

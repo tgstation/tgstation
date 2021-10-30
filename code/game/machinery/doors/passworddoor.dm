@@ -32,12 +32,12 @@
 /obj/machinery/door/password/Bumped(atom/movable/AM)
 	return !density && ..()
 
-/obj/machinery/door/password/try_to_activate_door(mob/user)
+/obj/machinery/door/password/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating)
 		return
 	if(density)
-		if(ask_for_pass(user))
+		if(access_bypass || ask_for_pass(user))
 			open()
 		else
 			do_animate("deny")

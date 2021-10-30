@@ -40,7 +40,7 @@
 				animal_list[initial(animal.name)] = path
 				var/image/animal_image = image(icon = initial(animal.icon), icon_state = initial(animal.icon_state))
 				display_animals += list(initial(animal.name) = animal_image)
-			sortList(display_animals)
+			sort_list(display_animals)
 			var/new_shapeshift_type = show_radial_menu(M, M, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 			if(shapeshift_type)
 				return
@@ -67,7 +67,7 @@
 
 		var/obj/machinery/atmospherics/pipeyoudiein = M.loc
 		var/datum/pipeline/ourpipeline
-		var/pipenets = pipeyoudiein.returnPipenets()
+		var/pipenets = pipeyoudiein.return_pipenets()
 		if(islist(pipenets))
 			ourpipeline = pipenets[1]
 		else
@@ -173,7 +173,7 @@
 
 /obj/shapeshift_holder/Moved()
 	. = ..()
-	if(!restoring || QDELETED(src))
+	if(!restoring && !QDELETED(src))
 		restore()
 
 /obj/shapeshift_holder/handle_atom_del(atom/A)

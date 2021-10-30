@@ -88,7 +88,7 @@ const IntroductionSection = (props, context) => {
             &ensp;{hive_name}
           </span>.
         </Stack.Item>
-        <Stack.Item grow>
+        <Stack.Item>
           <ObjectivePrintout />
         </Stack.Item>
       </Stack>
@@ -170,6 +170,11 @@ const MemoriesSection = (props, context) => {
     selectedMemory,
     setSelectedMemory,
   ] = useSharedState(context, "memory", !!memories && memories[0] || null);
+  const memoryMap = {};
+  for (const index in memories) {
+    const memory = memories[index];
+    memoryMap[memory.name] = memory;
+  }
   return (
     <Section
       fill
@@ -197,16 +202,17 @@ const MemoriesSection = (props, context) => {
         <Stack vertical>
           <Stack.Item>
             <Dropdown
-              selected={selectedMemory}
+              width="100%"
+              selected={selectedMemory?.name}
               options={
-                Object.keys(memories).map(memory => {
-                  return memories[memory];
+                memories.map(memory => {
+                  return memory.name;
                 })
               }
-              onSelected={selected => setSelectedMemory(selected)} />
+              onSelected={selected => setSelectedMemory(memoryMap[selected])} />
           </Stack.Item>
           <Stack.Item>
-            {!!selectedMemory && selectedMemory}
+            {!!selectedMemory && selectedMemory.story}
           </Stack.Item>
         </Stack>
       )}
@@ -242,7 +248,7 @@ export const AntagInfoChangeling = (props, context) => {
           "backgroundImage": "none",
         }}>
         <Stack vertical fill>
-          <Stack.Item maxHeight={13.2} grow>
+          <Stack.Item maxHeight={13.2}>
             <IntroductionSection />
           </Stack.Item>
           <Stack.Item grow={4}>

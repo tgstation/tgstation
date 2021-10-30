@@ -65,11 +65,11 @@
 /area/ruin/unpowered)
 "r" = (
 /obj/structure/barricade/wooden,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "s" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 
