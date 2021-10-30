@@ -26,7 +26,7 @@
 		/obj/item/storage/box/lights/mixed = 20,
 		/obj/item/lightreplacer = 10
 	)
-
+	rpg_title = "Groundskeeper"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -34,12 +34,13 @@
 	name = "Janitor"
 	jobtype = /datum/job/janitor
 
+	id_trim = /datum/id_trim/job/janitor
+	uniform = /obj/item/clothing/under/rank/civilian/janitor
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/advanced = 1,
+		)
 	belt = /obj/item/pda/janitor
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/janitor
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
-
-	id_trim = /datum/id_trim/job/janitor
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

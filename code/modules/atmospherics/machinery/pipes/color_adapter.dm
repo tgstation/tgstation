@@ -16,13 +16,14 @@
 	paintable = FALSE
 	hide = FALSE
 
+	///cache for the icons
 	var/static/list/mutable_appearance/center_cache = list()
 
 /obj/machinery/atmospherics/pipe/color_adapter/Initialize(mapload)
 	icon_state = ""
 	. = ..()
 
-/obj/machinery/atmospherics/pipe/color_adapter/SetInitDirections()
+/obj/machinery/atmospherics/pipe/color_adapter/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = SOUTH|NORTH
@@ -44,7 +45,7 @@
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
-		var/image/pipe = getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-3", get_dir(src, nodes[i]), nodes[i].pipe_color)
+		var/image/pipe = get_pipe_image('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-3", get_dir(src, nodes[i]), nodes[i].pipe_color)
 		PIPING_LAYER_DOUBLE_SHIFT(pipe, piping_layer)
 		pipe.layer = layer + 0.01
 		. += pipe

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/sdql_operation
 	display_name = "SDQL Operation"
 	desc = "A component that performs an SDQL operation when invoked."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// SDQL Operation to invoke
@@ -16,7 +17,7 @@
 
 /obj/item/circuit_component/sdql_operation/populate_ports()
 	sdql_operation = add_input_port("SDQL String", PORT_TYPE_STRING)
-	results = add_output_port("Result", PORT_TYPE_LIST)
+	results = add_output_port("Result", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
 /obj/item/circuit_component/sdql_operation/input_received(datum/port/input/port)
 	if(GLOB.AdminProcCaller)

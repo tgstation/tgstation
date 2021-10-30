@@ -28,7 +28,7 @@
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/ratplush = 1
 	)
-
+	rpg_title = "Paladin"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
@@ -112,19 +112,17 @@
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/pda/chaplain
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/chaplain
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	backpack_contents = list(
+		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
-		/obj/item/camera/spooky = 1
 		)
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	belt = /obj/item/pda/chaplain
+	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
-
-	id_trim = /datum/id_trim/job/chaplain
+	skillchips = list(/obj/item/skillchip/entrails_reader)

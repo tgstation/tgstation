@@ -503,7 +503,7 @@
 * * snowball_chance - the chance to spawn a snowball on a turf
 */
 /datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS, snowball_chance = 0)
-	for(var/any_turf in circlerangeturfs(center = get_turf(holder.my_atom), radius = radius))
+	for(var/any_turf in circle_range_turfs(center = get_turf(holder.my_atom), radius = radius))
 		if(!istype(any_turf, /turf/open))
 			continue
 		var/turf/open/open_turf = any_turf

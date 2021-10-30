@@ -12,7 +12,7 @@
  */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet()
 	var/mob/living/carbon/human/ninja = affecting
-	var/mob/living/net_target = input("Select who to capture:","Capture who?",null) as null|mob in sortNames(oview(ninja))
+	var/mob/living/net_target = input("Select who to capture:","Capture who?",null) as null|mob in sort_names(oview(ninja))
 
 	if(QDELETED(net_target)||!(net_target in oview(ninja)))
 		return
@@ -20,7 +20,7 @@
 	if(locate(/obj/structure/energy_net) in get_turf(net_target))//Check if they are already being affected by an energy net.
 		to_chat(ninja, span_warning("[net_target.p_they(TRUE)] are already trapped inside an energy net!"))
 		return
-	for(var/turf/between_turf in getline(get_turf(ninja), get_turf(net_target)))
+	for(var/turf/between_turf in get_line(get_turf(ninja), get_turf(net_target)))
 		if(between_turf.density)//Don't want them shooting nets through walls. It's kind of cheesy.
 			to_chat(ninja, span_warning("You may not use an energy net through solid obstacles!"))
 			return

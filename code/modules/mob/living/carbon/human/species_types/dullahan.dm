@@ -10,7 +10,7 @@
 		TRAIT_NOBREATH,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutant_bodyparts = list("tail_human" = "None", "ears" = "None", "wings" = "None")
+	mutant_bodyparts = list("wings" = "None")
 	use_skintones = TRUE
 	mutantbrain = /obj/item/organ/brain/dullahan
 	mutanteyes = /obj/item/organ/eyes/dullahan
@@ -161,7 +161,7 @@
 	if(admin_revive)
 		var/obj/item/bodypart/head/H = loc
 		var/turf/T = get_turf(owner)
-		if(H && istype(H) && T && !(H in owner.GetAllContents()))
+		if(H && istype(H) && T && !(H in owner.get_all_contents()))
 			H.forceMove(T)
 
 /obj/item/dullahan_relay/Destroy()

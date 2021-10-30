@@ -62,37 +62,37 @@
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 
-/datum/quirk/item_quirk/fan_clown
-	name = "Clown Fan"
+/datum/quirk/item_quirk/clown_enjoyer
+	name = "Clown Enjoyer"
 	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
 	icon = "map-pin"
 	value = 2
-	mob_trait = TRAIT_FAN_CLOWN
-	gain_text = "<span class='notice'>You are a big fan of clowns.</span>"
+	mob_trait = TRAIT_CLOWN_ENJOYER
+	gain_text = "<span class='notice'>You are a big enjoyer of clowns.</span>"
 	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
-	medical_record_text = "Patient reports being a big fan of clowns."
+	medical_record_text = "Patient reports being a big enjoyer of clowns."
 
-/datum/quirk/item_quirk/fan_clown/add_unique()
-	give_item_to_holder(/obj/item/clothing/accessory/fan_clown_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+/datum/quirk/item_quirk/clown_enjoyer/add_unique()
+	give_item_to_holder(/obj/item/clothing/accessory/clown_enjoyer_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
-/datum/quirk/item_quirk/fan_clown/add()
+/datum/quirk/item_quirk/clown_enjoyer/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.add_hud_to(quirk_holder)
 
-/datum/quirk/item_quirk/fan_mime
+/datum/quirk/item_quirk/mime_fan
 	name = "Mime Fan"
-	desc = "You enjoy mime antics and get a mood boost from wearing your mime pin."
+	desc = "You're a fan of mime antics and get a mood boost from wearing your mime pin."
 	icon = "thumbtack"
 	value = 2
-	mob_trait = TRAIT_FAN_MIME
+	mob_trait = TRAIT_MIME_FAN
 	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
 	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
 	medical_record_text = "Patient reports being a big fan of mimes."
 
-/datum/quirk/item_quirk/fan_mime/add_unique()
-	give_item_to_holder(/obj/item/clothing/accessory/fan_mime_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+/datum/quirk/item_quirk/mime_fan/add_unique()
+	give_item_to_holder(/obj/item/clothing/accessory/mime_fan_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
-/datum/quirk/item_quirk/fan_mime/add()
+/datum/quirk/item_quirk/mime_fan/add()
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.add_hud_to(quirk_holder)
 

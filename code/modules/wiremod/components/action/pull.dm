@@ -6,6 +6,7 @@
 /obj/item/circuit_component/pull
 	display_name = "Start Pulling"
 	desc = "A component that can force the shell to pull entities. Only works for drone shells."
+	category = "Action"
 
 	/// Frequency input
 	var/datum/port/input/target

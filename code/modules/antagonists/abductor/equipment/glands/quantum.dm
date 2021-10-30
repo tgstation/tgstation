@@ -23,8 +23,8 @@
 		entangled_mob = null
 		return
 	var/turf/T = get_turf(owner)
-	do_teleport(owner, get_turf(entangled_mob),null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
-	do_teleport(entangled_mob, T,null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(owner, get_turf(entangled_mob), null, channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(entangled_mob, T, null, channel = TELEPORT_CHANNEL_QUANTUM)
 	to_chat(owner, span_warning("You suddenly find yourself somewhere else!"))
 	to_chat(entangled_mob, span_warning("You suddenly find yourself somewhere else!"))
 	if(!active_mind_control) //Do not reset entangled mob while mind control is active

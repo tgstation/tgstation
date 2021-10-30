@@ -20,7 +20,7 @@
 	)
 
 	family_heirlooms = list(/obj/item/pen/blue)
-
+	rpg_title = "Defeated Miniboss"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS
 
 
@@ -28,13 +28,12 @@
 	name = "Prisoner"
 	jobtype = /datum/job/prisoner
 
-	uniform = /obj/item/clothing/under/rank/prisoner
-	shoes = /obj/item/clothing/shoes/sneakers/orange
 	id = /obj/item/card/id/advanced/prisoner
-	ears = null
-	belt = null
-
 	id_trim = /datum/id_trim/job/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
+	belt = null
+	ears = null
+	shoes = /obj/item/clothing/shoes/sneakers/orange
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()

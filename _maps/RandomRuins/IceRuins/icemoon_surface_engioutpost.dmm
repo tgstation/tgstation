@@ -396,7 +396,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/book/manual/wiki/engineering_singulo_tesla,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bE" = (
@@ -757,12 +756,12 @@
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "dc" = (
-/obj/machinery/power/rad_collector,
+/obj/machinery/power/energy_accumulator/rad_collector,
 /obj/structure/cable,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "dd" = (
-/obj/machinery/power/rad_collector,
+/obj/machinery/power/energy_accumulator/rad_collector,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "de" = (

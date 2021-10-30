@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(weather)
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)
 		var/possible_weather = eligible_zlevels[z]
-		var/datum/weather/our_event = pickweight(possible_weather)
+		var/datum/weather/our_event = pick_weight(possible_weather)
 		run_weather(our_event, list(text2num(z)))
 		eligible_zlevels -= z
 		var/randTime = rand(3000, 6000)
@@ -44,6 +44,15 @@ SUBSYSTEM_DEF(weather)
 				LAZYINITLIST(eligible_zlevels["[z]"])
 				eligible_zlevels["[z]"][W] = probability
 	return ..()
+
+/datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
+	var/z = level.z_value
+	for(var/datum/weather/weather as anything in subtypesof(/datum/weather))
+		var/probability = initial(weather.probability)
+		var/target_trait = initial(weather.target_trait)
+		if(probability && level.traits[target_trait])
+			LAZYINITLIST(eligible_zlevels["[z]"])
+			eligible_zlevels["[z]"][weather] = probability
 
 /datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels)
 	if (istext(weather_datum_type))

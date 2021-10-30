@@ -98,7 +98,8 @@
 					if(state == 1)
 						to_chat(user, span_notice("You disassemble the frame."))
 						var/obj/item/stack/sheet/iron/M = new (loc, 5)
-						M.add_fingerprint(user)
+						if (!QDELETED(M))
+							M.add_fingerprint(user)
 						qdel(src)
 				return
 			if(P.tool_behaviour == TOOL_WRENCH)
