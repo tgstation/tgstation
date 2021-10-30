@@ -31,7 +31,7 @@
 
 /datum/chemical_reaction/food/chocolatepudding
 	results = list(/datum/reagent/consumable/chocolatepudding = 20)
-	required_reagents = list(/datum/reagent/consumable/cream  = 5, /datum/reagent/consumable/coco = 5, /datum/reagent/consumable/eggyolk = 2)
+	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/coco = 5, /datum/reagent/consumable/eggyolk = 2)
 
 /datum/chemical_reaction/food/vanillapudding
 	results = list(/datum/reagent/consumable/vanillapudding = 20)

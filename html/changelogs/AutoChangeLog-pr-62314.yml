@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - rscdel: "Removed leftover HTML from spawner menu"
-  - refactor: "Spawner menu is now easier to read"
