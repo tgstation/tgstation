@@ -89,3 +89,15 @@
 	C.toner -= printcost  //All fun allowed.
 	visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."))
 	to_chat(usr, span_notice("You print a photograph."))
+
+/obj/item/camera/siliconcam/proc/paiprint(mob/user)
+	var/mob/living/silicon/pai/C = loc
+	var/datum/picture/selection = selectpicture(user)
+	if(!istype(selection))
+		to_chat(user, span_warning("Invalid Image."))
+		return
+	var/obj/item/photo/p = new /obj/item/photo(C.loc, selection)
+	p.pixel_x = p.base_pixel_x + rand(-10, 10)
+	p.pixel_y = p.base_pixel_y + rand(-10, 10)
+	visible_message(span_notice("[C.name] spits out a photograph from a very tiny slit on its chassis."))
+	to_chat(usr, span_notice("You print a photograph."))
