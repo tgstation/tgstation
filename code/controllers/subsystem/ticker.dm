@@ -60,18 +60,18 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	var/list/byond_sound_formats = list(
-		"mid"  = TRUE,
+		"mid" = TRUE,
 		"midi" = TRUE,
-		"mod"  = TRUE,
-		"it"   = TRUE,
-		"s3m"  = TRUE,
-		"xm"   = TRUE,
-		"oxm"  = TRUE,
-		"wav"  = TRUE,
-		"ogg"  = TRUE,
-		"raw"  = TRUE,
-		"wma"  = TRUE,
-		"aiff" = TRUE
+		"mod" = TRUE,
+		"it" = TRUE,
+		"s3m" = TRUE,
+		"xm" = TRUE,
+		"oxm" = TRUE,
+		"wav" = TRUE,
+		"ogg" = TRUE,
+		"raw" = TRUE,
+		"wma" = TRUE,
+		"aiff" = TRUE,
 	)
 
 	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")

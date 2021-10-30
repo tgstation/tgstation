@@ -100,7 +100,7 @@
 	///User controlled variable to control the flow of the fusion by changing the contact of the material
 	var/heating_conductor = 100
 	///User controlled variable to control the flow of the fusion by changing the volume of the gasmix by controlling the power of the magnetic fields
-	var/magnetic_constrictor  = 100
+	var/magnetic_constrictor = 100
 	///User controlled variable to control the flow of the fusion by changing the instability of the reaction
 	var/current_damper = 0
 	///Stores the current fusion mix power level

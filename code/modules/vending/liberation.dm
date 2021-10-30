@@ -5,6 +5,7 @@
 	product_slogans = "Liberation Station: Your one-stop shop for all things second amendment!;Be a patriot today, pick up a gun!;Quality weapons for cheap prices!;Better dead than red!"
 	product_ads = "Float like an astronaut, sting like a bullet!;Express your second amendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
 	vend_reply = "Remember the name: Liberation Station!"
+	panel_type = "panel17"
 	products = list(
 		/obj/item/food/burger/plain = 5, //O say can you see, by the dawn's early light
 		/obj/item/food/burger/baseball = 3, //What so proudly we hailed at the twilight's last gleaming

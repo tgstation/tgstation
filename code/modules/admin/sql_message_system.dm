@@ -651,7 +651,7 @@
 		WHERE type = :type
 		AND deleted = 0
 		AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
-		AND ((type != 'message' AND type != 'watchlist entry') OR targetckey = :targetckey)
+		AND (type = 'memo' OR targetckey = :targetckey)
 		[after_timestamp? "AND timestamp > :after_timestamp": ""]
 		[!show_secret? "AND secret = 0": ""]
 	"}, parameters)

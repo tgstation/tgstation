@@ -6,6 +6,7 @@
 /obj/item/circuit_component/foreach
 	display_name = "For Each"
 	desc = "A component that loops through each element in a list."
+	category = "List"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	/// The list type

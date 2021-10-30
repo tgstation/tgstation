@@ -4,7 +4,7 @@
 
 /datum/antagonist/changeling
 	name = "Changeling"
-	roundend_category  = "changelings"
+	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
