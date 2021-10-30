@@ -222,22 +222,22 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
 //what happens to this object when washed inside a washing machine
-/atom/movable/proc/machine_wash(obj/machinery/washing_machine/Washer)
+/atom/movable/proc/machine_wash(obj/machinery/washing_machine/washer)
 	return
 
-/obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/stack/sheet/hairlesshide/machine_wash(obj/machinery/washing_machine/washer)
 	new /obj/item/stack/sheet/wethide(drop_location(), amount)
 	qdel(src)
 
-/obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/clothing/suit/hooded/ian_costume/machine_wash(obj/machinery/washing_machine/washer)
 	new /obj/item/food/meat/slab/corgi(loc)
 	qdel(src)
 
-/mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/Washer)
+/mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
 	Washer.bloody_mess = TRUE
 	gib()
 
-/obj/item/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/machine_wash(obj/machinery/washing_machine/washer)
 	if(Washer.color_source)
 		dye_item(Washer.color_source.dye_color)
 
@@ -249,16 +249,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
 			toggle_jumpsuit_adjust()
 
-/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/washer)
 	freshly_laundered = TRUE
 	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 	..()
 
-/obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
 	..()
 	held_mob.machine_wash(Washer)
 
-/obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/washer)
 	if(chained)
 		chained = FALSE
 		slowdown = SHOES_SLOWDOWN

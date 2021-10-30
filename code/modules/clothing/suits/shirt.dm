@@ -7,7 +7,7 @@
 	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
 	var/wash_count = 0
 
-/obj/item/clothing/suit/ianshirt/machine_wash(obj/machinery/washing_machine/Washer)
+/obj/item/clothing/suit/ianshirt/machine_wash(obj/machinery/washing_machine/washer)
 	. = ..()
 	if(wash_count <= 5)
 		transform *= TRANSFORM_USING_VARIABLE(0.8, 1)
