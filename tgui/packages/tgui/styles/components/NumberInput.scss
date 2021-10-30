@@ -19,7 +19,7 @@ $border-radius: Input.$border-radius !default;
   border: base.em(1px) solid $border-color;
   border: base.em(1px) solid rgba($border-color, 0.75);
   border-radius: $border-radius;
-  color: $border-color;
+  color: $text-color;
   background-color: $background-color;
   padding: 0 base.em(4px);
   margin-right: base.em(2px);
