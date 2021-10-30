@@ -75,7 +75,7 @@
 /proc/got_wall_item(loc, dir, check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/checked_object in loc)
-		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR) && check_external != 2)
 			//Direction works sometimes
 			if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INVERSE))
 				if(checked_object.dir == turn(dir, 180))
@@ -96,8 +96,10 @@
 				return TRUE
 
 	//Some stuff is placed directly on the wallturf (signs)
+	if (check_external == 2)
+		return FALSE
 	for(var/obj/checked_object in locdir)
-		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR))
 			if(checked_object.pixel_x == 0 && checked_object.pixel_y == 0)
 				return TRUE
 	return FALSE

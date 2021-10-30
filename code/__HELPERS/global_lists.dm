@@ -96,8 +96,8 @@
 /**
  * Checks if that loc and dir has an item on the wall
 **/
-GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 // Wall mounted machinery which are visually on the wall.
+GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
 	/obj/item/storage/secure/safe,
 	/obj/machinery/airalarm,
