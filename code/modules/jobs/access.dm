@@ -14,7 +14,7 @@
 		//Access can't stop the abuse
 		return TRUE
 	//If the mob has the simple_access component with the requried access, we let them in.
-	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS) & ACCESS_ALLOWED)
+	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
 		return TRUE
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
 	else if(check_access(accessor.get_active_held_item()))

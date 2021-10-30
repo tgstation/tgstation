@@ -741,13 +741,7 @@
 /obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/smart_mob)
 	var/obj/item/implant/radio/syndicate/imp = new(src)
 	imp.implant(smart_mob, user)
-
-	// Ugly as sin. Simble mob accesses are for another time.
-	if(isanimal(smart_mob))
-		var/mob/living/simple_animal/smart_animal = smart_mob
-		smart_animal.access_card = new /obj/item/card/id/advanced/chameleon(smart_animal)
-		SSid_access.apply_trim_to_card(smart_animal, /datum/id_trim/chameleon)
-		ADD_TRAIT(smart_animal.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
