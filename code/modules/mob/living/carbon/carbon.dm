@@ -828,9 +828,17 @@
 		suiciding = FALSE
 		regenerate_limbs()
 		regenerate_organs()
+		if(handcuffed)
+			var/obj/item/restraints/handcuffs = handcuffed
+			qdel(handcuffs)
+		if(legcuffed)
+			var/obj/item/restraints/legcuffs = legcuffed
+			qdel(legcuffs)
 		set_handcuffed(null)
-		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
-			qdel(R)
+		// duplicating code from /mob/living/carbon/resist_restraints()
+		// and /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
+		//for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
+			//qdel(R)
 		update_handcuffed()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
 	..()
