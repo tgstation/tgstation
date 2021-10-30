@@ -33,11 +33,11 @@
 	. = ..()
 	save_master(new_turf, turn(diagonal, 180))
 
-	var/vertical   = diagonal & ~(diagonal - 1) // The horizontal directions (4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
+	var/vertical = diagonal & ~(diagonal - 1) // The horizontal directions (4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
 	var/horizontal = diagonal & ~vertical       // Now that we know the horizontal one we can get the vertical one.
 
 	x = new_turf.x + (horizontal == EAST  ? 0.5 : -0.5)
-	y = new_turf.y + (vertical   == NORTH ? 0.5 : -0.5)
+	y = new_turf.y + (vertical == NORTH ? 0.5 : -0.5)
 
 	// My initial plan was to make this loop through a list of all the dirs (horizontal, vertical, diagonal).
 	// Issue being that the only way I could think of doing it was very messy, slow and honestly overengineered.
@@ -113,13 +113,13 @@
 	else if (largest_color_luminosity < LIGHTING_SOFT_THRESHOLD)
 		. = 0 // 0 means soft lighting.
 
-	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
-	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
-	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_r = round(lum_r * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_g = round(lum_g * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
+	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE) || LIGHTING_SOFT_THRESHOLD
 	#else
-	cache_r  = round(lum_r * ., LIGHTING_ROUND_VALUE)
-	cache_g  = round(lum_g * ., LIGHTING_ROUND_VALUE)
-	cache_b  = round(lum_b * ., LIGHTING_ROUND_VALUE)
+	cache_r = round(lum_r * ., LIGHTING_ROUND_VALUE)
+	cache_g = round(lum_g * ., LIGHTING_ROUND_VALUE)
+	cache_b = round(lum_b * ., LIGHTING_ROUND_VALUE)
 	#endif
 
 	src.largest_color_luminosity = round(largest_color_luminosity, LIGHTING_ROUND_VALUE)

@@ -405,6 +405,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
+/// this skillchip trait lets you wash brains in washing machines to heal them
+#define TRAIT_BRAINWASHING "brainwashing"
 
 ///Movement type traits for movables. See elements/movetype_handler.dm
 #define TRAIT_MOVE_GROUND "move_ground"
@@ -701,7 +703,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied by MODsuits
 #define MOD_TRAIT "mod"
 /// Trait applied by element
-#define ELEMENT_TRAIT "element_trait"
+#define ELEMENT_TRAIT(source) "element_trait_[source]"
 /// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
 #define BERSERK_TRAIT "berserk_trait"
 /// Trait granted by [/obj/item/rod_of_asclepius]

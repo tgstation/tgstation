@@ -1545,6 +1545,12 @@
 #define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
 	#define SPARE_SAMPLE (1<<0)
 
+/// Called when a techweb design is researched (datum/design/researched_design, custom)
+#define COMSIG_TECHWEB_ADD_DESIGN "techweb_add_design"
+
+/// Called when a techweb design is removed (datum/design/removed_design, custom)
+#define COMSIG_TECHWEB_REMOVE_DESIGN "techweb_remove_design"
+
 //MODsuit signals
 /// Called when a module is selected to be the active one from on_select()
 #define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"

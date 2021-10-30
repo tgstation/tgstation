@@ -6,6 +6,7 @@
 /obj/item/circuit_component/index
 	display_name = "Index List"
 	desc = "A component that returns the value of a list at a given index."
+	category = "List"
 
 	/// The list type
 	var/datum/port/input/option/list_options
