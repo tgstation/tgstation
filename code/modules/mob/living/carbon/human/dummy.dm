@@ -36,7 +36,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	create_dna(src)
 	dna.initialize_dna(skip_index = TRUE)
 	dna.features["body_markings"] = "None"
-	dna.features["ears"] = "Cat"
+	dna.features["ears"] = "None"
 	dna.features["ethcolor"] = COLOR_WHITE
 	dna.features["frills"] = "None"
 	dna.features["horns"] = "None"
@@ -46,7 +46,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dna.features["moth_wings"] = "Plain"
 	dna.features["snout"] = "Round"
 	dna.features["spines"] = "None"
-	dna.features["tail_human"] = "Cat"
+	dna.features["tail_human"] = "None"
 	dna.features["tail_lizard"] = "Smooth"
 
 //Inefficient pooling/caching way.
