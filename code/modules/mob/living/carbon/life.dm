@@ -505,6 +505,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		handle_hallucinations(delta_time, times_fired)
 
 	if(drunkenness)
+		var/drunk_clumsy_chance = 0 // the accumulated chance through the various tiers of drunkness to get the clumsy trait
+
 		drunkenness = max(drunkenness - ((0.005 + (drunkenness * 0.02)) * delta_time), 0)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
@@ -517,6 +519,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 			clear_alert("drunk")
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+		if(HAS_TRAIT_FROM(src, TRAIT_CLUMSY, DRUNK_TRAIT))
+			if(drunkenness < 30)
+				REMOVE_TRAIT(src, TRAIT_CLUMSY, DRUNK_TRAIT)
+				to_chat(src, span_notice("You feel sober enough to operate heavy machinery again!"))
+			else if (DT_PROB((drunkenness * 0.1) - 6, delta_time)) // getting so drunk your confidence tells you that you can totally operate a firearm without literally shooting yourself in the foot
+				to_chat(src, span_notice("You feel sober enough to operate heavy machinery again!"))
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 0.6 * delta_time
@@ -537,35 +546,44 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			Dizzy(5 * delta_time)
 
 		if(drunkenness >= 51)
+			drunk_clumsy_chance += 1
 			if(DT_PROB(1.5, delta_time))
 				add_confusion(15)
 				vomit() // vomiting clears toxloss, consider this a blessing
 			Dizzy(12.5 * delta_time)
 
 		if(drunkenness >= 61)
+			drunk_clumsy_chance += 1.5
 			if(DT_PROB(30, delta_time))
 				blur_eyes(5)
 
 		if(drunkenness >= 71)
 			blur_eyes(2.5 * delta_time)
+			drunk_clumsy_chance += 1.5
 
 		if(drunkenness >= 81)
 			adjustToxLoss(0.5 * delta_time)
+			drunk_clumsy_chance += 1.5
 			if(!stat && DT_PROB(2.5, delta_time))
 				to_chat(src, span_warning("Maybe you should lie down for a bit..."))
 
 		if(drunkenness >= 91)
 			adjustToxLoss(0.5 * delta_time)
 			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
+			drunk_clumsy_chance += 2.5
 			if(DT_PROB(10, delta_time) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
 					to_chat(src, span_warning("You're so tired... but you can't miss that shuttle..."))
 				else
 					to_chat(src, span_warning("Just a quick nap..."))
-					Sleeping(900)
+					Sleeping(1.5 MINUTES)
 
 		if(drunkenness >= 101)
 			adjustToxLoss(1 * delta_time) //Let's be honest you shouldn't be alive by now
+
+		if(!HAS_TRAIT_FROM(src, TRAIT_CLUMSY, DRUNK_TRAIT) && DT_PROB(drunk_clumsy_chance, delta_time))
+			ADD_TRAIT(src, TRAIT_CLUMSY, DRUNK_TRAIT)
+			to_chat(src, span_warning("You feel your brain desperately trying to warn you not to operate any heavy machinery. [prob(10) ? "You're probably fine though..." : ""]"))
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
