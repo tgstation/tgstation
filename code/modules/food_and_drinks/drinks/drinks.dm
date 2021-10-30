@@ -627,9 +627,9 @@
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
-/// How much fizziness is added to the can of soda by throwing it
+/// How much fizziness is added to the can of soda by throwing it, in percentage points
 #define SODA_FIZZINESS_THROWN 15
-/// How much fizziness is added to the can of soda by shaking it
+/// How much fizziness is added to the can of soda by shaking it, in percentage points
 #define SODA_FIZZINESS_SHAKE 5
 
 /obj/item/reagent_containers/food/drinks/soda_cans
@@ -642,7 +642,7 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.9
 	obj_flags = CAN_BE_HIT
 	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
-	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around
+	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
 	var/fizziness = 0
 
 /obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize(mapload)
@@ -701,7 +701,7 @@
 		burst_soda(user)
 		return
 
-	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
