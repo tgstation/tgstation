@@ -93,7 +93,7 @@
 			if(get_turf_pixel(checked_object) == wall_loc)
 				return TRUE
 
-		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_EXTERNAL) && check_external)
+		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_EXTERIOR) && check_external)
 			if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INVERSE))
 				if(checked_object.dir == turn(dir_toward_wall, 180))
 					return TRUE
