@@ -1,6 +1,8 @@
 #define MAX_ADMINBANS_PER_ADMIN 1
 #define MAX_ADMINBANS_PER_HEADMIN 3
 
+#define MAX_REASON_LENGTH 600
+
 //checks client ban cache or DB ban table if ckey is banned from one or more roles
 //doesn't return any details, use only for if statements
 /proc/is_banned_from(player_ckey, list/roles)
@@ -201,7 +203,7 @@
 		<div class='column'>
 			Reason
 			<br>
-			<textarea class='reason' name='reason'>[reason]</textarea>
+			<textarea class='reason' name='reason' maxlength='[MAX_REASON_LENGTH]'>[reason]</textarea>
 		</div>
 	</div>
 	"}
@@ -411,8 +413,8 @@
 	reason = href_list["reason"]
 	if(!reason)
 		error_state += "No reason was provided."
-	if(length(reason) > 600)
-		error_state += "Reason cannot be more than 600 characters."
+	if(length(reason) > MAX_REASON_LENGTH)
+		error_state += "Reason cannot be more than [MAX_REASON_LENGTH] characters."
 	if(href_list["editid"])
 		edit_id = href_list["editid"]
 		if(href_list["mirroredit"])
