@@ -97,6 +97,7 @@
  * Checks if that loc and dir has an item on the wall
 **/
 GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
+// Wall mounted machinery which are visually on the wall.
 	/obj/item/radio/intercom,
 	/obj/item/storage/secure/safe,
 	/obj/machinery/airalarm,
@@ -123,6 +124,9 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/structure/sign/picture_frame
 	)))
 
+// Wall mounted machinery which are visually coming out of the wall.
+// These do not conflict with machinery which are visually placed on the wall.
+// Dir is the direction they are pointing, away from the wall.
 GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
@@ -130,6 +134,8 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
 	/obj/structure/light_construct
 	)))
 
+// Similar to the above, except dir is the direction from the floor they are on towards the attached wall.
+// Logic in /proc/got_wall_item supports entries in either INTERIOR or EXTERIOR
 GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/obj/machinery/light,
 	/obj/structure/light_construct
