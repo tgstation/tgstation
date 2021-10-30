@@ -697,7 +697,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
 	if(prob(fizziness))
-		user.visible_message(span_danger("[user] opens [src], and [user.p_is()] suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and [user.p_are()] suddenly sprayed with a torrent of liquid! Ahhh!!"))
+		user.visible_message(span_danger("[user] opens [src], and is suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and are suddenly sprayed with a torrent of liquid! Ahhh!!"))
 		burst_soda(user)
 		return
 
