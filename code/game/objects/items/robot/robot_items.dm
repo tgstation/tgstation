@@ -96,6 +96,12 @@
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
+					M.AdjustStun(-60)
+					M.AdjustKnockdown(-60)
+					M.AdjustUnconscious(-60)
+					M.AdjustSleeping(-100)
+					M.AdjustParalyzed(-60)
+					M.AdjustImmobilized(-60)
 					if(M.body_position == LYING_DOWN)
 						user.visible_message(span_notice("[user] shakes [M] trying to get [M.p_them()] up!"), \
 										span_notice("You shake [M] trying to get [M.p_them()] up!"))
