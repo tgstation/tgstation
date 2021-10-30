@@ -73,7 +73,7 @@
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	color = "#1C1C1C"
-	var/drain_cooldown = 0
+	COOLDOWN_DECLARE(drain_cooldown)
 
 #define VAMP_DRAIN_AMOUNT 50
 
@@ -86,7 +86,7 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/H = owner
 		var/obj/item/organ/tongue/vampire/V = target
-		if(V.drain_cooldown >= world.time)
+		if(!COOLDOWN_FINISHED(V, drain_cooldown))
 			to_chat(H, span_warning("You just drained blood, wait a few seconds!"))
 			return
 		if(H.pulling && iscarbon(H.pulling))
@@ -100,7 +100,7 @@
 			if(!victim.blood_volume || (victim.dna && ((NOBLOOD in victim.dna.species.species_traits) || victim.dna.species.exotic_blood)))
 				to_chat(H, span_warning("[victim] doesn't have blood!"))
 				return
-			V.drain_cooldown = world.time + 30
+			COOLDOWN_START(V, drain_cooldown, 3 SECONDS)
 			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
 				to_chat(victim, span_warning("[H] tries to bite you, but stops before touching you!"))
 				to_chat(H, span_warning("[victim] is blessed! You stop just in time to avoid catching fire."))
@@ -109,7 +109,7 @@
 				to_chat(victim, span_warning("[H] tries to bite you, but recoils in disgust!"))
 				to_chat(H, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
 				return
-			if(!do_after(H, 30, target = victim))
+			if(!do_after(H, 3 SECONDS, target = victim))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
