@@ -61,6 +61,7 @@
 								"Implants",
 								"Control Interfaces",
 								"Modular Suits",
+								"Modular Suit Modules",
 								"Misc"
 								)
 

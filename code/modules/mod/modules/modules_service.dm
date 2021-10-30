@@ -30,23 +30,3 @@
 	var/datum/effect_system/spark_spread/spark_effect_two = new
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()
-
-/obj/item/mod/module/bikehorn
-	name = "MOD bike horn module"
-	desc = "A bike horn for honking."
-	module_type = MODULE_ACTIVE
-	complexity = 1
-	use_power_cost = 10
-	incompatible_modules = list(/obj/item/mod/module/bikehorn)
-
-/obj/item/mod/module/bikehorn/on_use()
-	. = ..()
-	if(!.)
-		return
-	playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
-
-/obj/item/mod/module/bikehorn/on_select_use(atom/target)
-	. = ..()
-	if(!. || QDELETED(target))
-		return
-	playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)

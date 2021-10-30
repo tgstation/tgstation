@@ -124,6 +124,36 @@
 		"mod_helmet",
 		"mod_paint_kit",
 		"mod_shell",
+		"modsuit_storage",
+		"modsuit_visor_medhud",
+		"modsuit_visor_diaghud",
+		"modsuit_visor_sechud",
+		"modsuit_visor_welding",
+		"modsuit_visor_sunglasses",
+		"modsuit_visor_meson",
+		"modsuit_health_analyzer",
+		"modsuit_stealth",
+		"modsuit_jetpack",
+		"modsuit_magboot",
+		"modsuit_holster",
+		"modsuit_tether",
+		"modsuit_mouthhole",
+		"modsuit_rad_counter",
+		"modsuit_emp_shield",
+		"modsuit_flashlight",
+		"modsuit_science_scanner",
+		"modsuit_gps",
+		"modsuit_constructor",
+		"modsuit_longfall",
+		"modsuit_thermal_regulator",
+		"modsuit_injector",
+		"modsuit_circuit",
+		"modsuit_clamps",
+		"modsuit_drill",
+		"modsuit_orebag",
+		"organ_thrower",
+		"modsuit_microwave_beam",
+		"modsuit_bikehorn",
 	)
 
 /datum/techweb_node/mech_tools
@@ -359,6 +389,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
+
+/datum/techweb_node/bio_expert
+	id = "bio_expert"
+	display_name = "Expert Biological Research"
+	description = "Pushing the boundaries of what is and is not acceptable biological research."
+	prereq_ids = list("adv_biotech")
+	design_ids = list(
+		"organ_thrower_bluespace",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	required_experiments = list(/datum/experiment/scanning/points/slime/expert)
 
 /////////////////////////Advanced Surgery/////////////////////////
 
@@ -624,6 +665,7 @@
 		"phasic_scanning",
 		"plumbing_receiver",
 		"roastingstick",
+		"modsuit_orebag_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)

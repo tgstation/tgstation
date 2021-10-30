@@ -982,13 +982,65 @@
 		INVOKE_ASYNC(module, /obj/item/mod/module.proc/on_select)
 
 /obj/item/circuit_component/modsuit/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
 		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
+		equip_check()
 	else if(istype(old_loc, /obj/item/mod/control))
-		UnregisterSignal(old_loc, COMSIG_MOD_MODULE_SELECTED)
+		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
+		selected_module.set_output(null)
+		wearer.set_output(null)
 
 /obj/item/circuit_component/modsuit/proc/on_module_select()
+	SIGNAL_HANDLER
 	selected_module.set_output(attached_module.mod.selected_module)
 
-/obj/item/circuit_component/modsuit/proc/on_mod_equip()
-	wearer.set_output(attached_module.mod.selected_module)
+/obj/item/circuit_component/modsuit/proc/equip_check()
+	SIGNAL_HANDLER
+	wearer.set_output(attached_module.mod.wearer)
+
+/obj/item/mod/module/clamp
+	name = "MOD hydraulic clamp module"
+	desc = "A specialized clamp system that allows the MODSuit to pick up crates."
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = 25
+	incompatible_modules = list(/obj/item/mod/module/clamp)
+	var/max_crates = 5
+	var/list/stored_crates = list()
+
+/obj/item/mod/module/clamp/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!mod.wearer.Adjacent(target))
+		return
+	if(istype(target, /obj/structure/closet/crate))
+		var/atom/movable/picked_crate = target
+		if(length(stored_crates) >= max_crates)
+			mod.wearer.balloon_alert("too many crates!")
+			return
+		stored_crates += picked_crate
+		picked_crate.forceMove(src)
+		mod.wearer.balloon_alert("picked up [picked_crate]")
+		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+	else if(length(stored_crates))
+		var/atom/movable/dropped_crate = pop(stored_crates)
+		dropped_crate.forceMove(target.drop_location())
+		mod.wearer.balloon_alert("dropped [dropped_crate]")
+		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+
+/obj/item/mod/module/bikehorn
+	name = "MOD bike horn module"
+	desc = "A bike horn for honking."
+	module_type = MODULE_USABLE
+	complexity = 1
+	use_power_cost = 10
+	incompatible_modules = list(/obj/item/mod/module/bikehorn)
+
+/obj/item/mod/module/bikehorn/on_use()
+	. = ..()
+	if(!.)
+		return
+	playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)

@@ -1031,3 +1031,323 @@
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
 	category = list("Modular Suits")
+
+/datum/design/modsuit_storage
+	name = "MOD Module: MOD storage module"
+	desc = "A modsuit module design!"
+	id = "modsuit_storage"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/storage
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_visor_medhud
+	name = "MOD Module: MOD medical visor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_visor_medhud"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/visor/medhud
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_visor_diaghud
+	name = "MOD Module: MOD diagnostic visor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_visor_diaghud"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/visor/diaghud
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_visor_sechud
+	name = "MOD Module: MOD security visor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_visor_sechud"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/visor/sechud
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_visor_welding
+	name = "MOD Module: MOD welding visor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_visor_welding"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/visor/welding
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_visor_sunglasses
+	name = "MOD Module: MOD protective visor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_visor_sunglasses"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/visor/sunglasses
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_visor_meson
+	name = "MOD Module: MOD meson visor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_visor_meson"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/visor/meson
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_health_analyzer
+	name = "MOD Module: MOD health analyzer module"
+	desc = "A modsuit module design!"
+	id = "modsuit_health_analyzer"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/health_analyzer
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_stealth
+	name = "MOD Module: MOD prototype cloaking module"
+	desc = "A modsuit module design!"
+	id = "modsuit_stealth"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/stealth
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_jetpack
+	name = "MOD Module: MOD ion jetpack module"
+	desc = "A modsuit module design!"
+	id = "modsuit_jetpack"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/jetpack
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_magboot
+	name = "MOD Module: MOD magnetic stability module"
+	desc = "A modsuit module design!"
+	id = "modsuit_magboot"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/magboot
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_holster
+	name = "MOD Module: MOD holster module"
+	desc = "A modsuit module design!"
+	id = "modsuit_holster"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/holster
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_tether
+	name = "MOD Module: MOD emergency tether module"
+	desc = "A modsuit module design!"
+	id = "modsuit_tether"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/tether
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_mouthhole
+	name = "MOD Module: MOD eating apparatus module"
+	desc = "A modsuit module design!"
+	id = "modsuit_mouthhole"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/mouthhole
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_rad_counter
+	name = "MOD Module: MOD radiation counter module"
+	desc = "A modsuit module design!"
+	id = "modsuit_rad_counter"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/rad_counter
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_emp_shield
+	name = "MOD Module: MOD EMP shield module"
+	desc = "A modsuit module design!"
+	id = "modsuit_emp_shield"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/emp_shield
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_flashlight
+	name = "MOD Module: MOD flashlight module"
+	desc = "A modsuit module design!"
+	id = "modsuit_flashlight"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/flashlight
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_science_scanner
+	name = "MOD Module: MOD science scanner module"
+	desc = "A modsuit module design!"
+	id = "modsuit_science_scanner"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/science_scanner
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_gps
+	name = "MOD Module: MOD internal GPS module"
+	desc = "A modsuit module design!"
+	id = "modsuit_gps"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/gps
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_constructor
+	name = "MOD Module: MOD constructor module"
+	desc = "A modsuit module design!"
+	id = "modsuit_constructor"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/constructor
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_longfall
+	name = "MOD Module: MOD longfall module"
+	desc = "A modsuit module design!"
+	id = "modsuit_longfall"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/longfall
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_thermal_regulator
+	name = "MOD Module: MOD thermal regulator module"
+	desc = "A modsuit module design!"
+	id = "modsuit_thermal_regulator"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/thermal_regulator
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_injector
+	name = "MOD Module: MOD injector module"
+	desc = "A modsuit module design!"
+	id = "modsuit_injector"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/injector
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_circuit
+	name = "MOD Module: MOD circuit adapter module"
+	desc = "A modsuit module design!"
+	id = "modsuit_circuit"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron=1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/circuit
+	category = list("Modular Suit Modules")
+
+/datum/design/modsuit_microwave_beam
+	name = "MOD Module: Microwave Beam"
+	desc = "A microwave beam for microwaving at range!"
+	id = "modsuit_microwave_beam"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/mod/module/wzhzhzh
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/modsuit_bikehorn
+	name = "MOD Module: Bike Horn"
+	desc = "A bike horn module."
+	id = "modsuit_bikehorn"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/mod/module/bikehorn
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/modsuit_clamps
+	name = "MOD Module: Crate Clamp"
+	desc = "A cargo clamp for carrying around up to five crates!"
+	id = "modsuit_clamps"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/mod/module/clamp
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/modsuit_drill
+	name = "MOD Module: Drill"
+	desc = "A drill for piercing the heavens!"
+	id = "modsuit_drill"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/mod/module/drill
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/modsuit_orebag
+	name = "MOD Module: Ore Bag"
+	desc = "An orebag."
+	id = "modsuit_orebag"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/mod/module/orebag
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/modsuit_orebag_bluespace
+	name = "MOD Module: Bluespace Ore Bag"
+	desc = "An orebag."
+	id = "modsuit_orebag_bluespace"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/bluespace = 1500)
+	build_path = /obj/item/mod/module/orebag/bluespace
+	category = list("Mining Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/organ_thrower
+	name = "MOD Module: Organ Thrower"
+	desc = "An arm mounted organ launching device to automatically insert organs into open bodies."
+	id = "organ_thrower"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
+	build_path = /obj/item/mod/module/organ_thrower
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/organ_thrower_bluespace
+	name = "MOD Module: Bluespace Organ Thrower"
+	desc = "Like the organ thrower, except it doesn't require an open body to replace the organ!"
+	id = "organ_thrower_bluespace"
+	build_type = PROTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 3000, /datum/material/bluespace = 1500)
+	build_path = /obj/item/mod/module/organ_thrower/bluespace
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

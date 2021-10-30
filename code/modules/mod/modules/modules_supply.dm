@@ -1,34 +1,3 @@
-/obj/item/mod/module/clamp
-	name = "MOD hydraulic clamp module"
-	desc = "A specialized clamp system that allows the MODSuit to pick up crates."
-	module_type = MODULE_ACTIVE
-	complexity = 3
-	use_power_cost = 25
-	incompatible_modules = list(/obj/item/mod/module/clamp)
-	var/max_crates = 5
-	var/list/stored_crates = list()
-
-/obj/item/mod/module/clamp/on_select_use(atom/target)
-	. = ..()
-	if(!.)
-		return
-	if(!mod.wearer.Adjacent(target))
-		return
-	if(istype(target, /obj/structure/closet/crate))
-		var/atom/movable/picked_crate = target
-		if(length(stored_crates) >= max_crates)
-			mod.wearer.balloon_alert("too many crates!")
-			return
-		stored_crates += picked_crate
-		picked_crate.forceMove(src)
-		mod.wearer.balloon_alert("picked up [picked_crate]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-	else if(length(stored_crates))
-		var/atom/movable/dropped_crate = pop(stored_crates)
-		dropped_crate.forceMove(target.drop_location())
-		mod.wearer.balloon_alert("dropped [dropped_crate]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
-
 /obj/item/mod/module/drill
 	name = "MOD drill module"
 	desc = "A specialized drilling system that allows the MODsuit to pierce the heavens."
@@ -90,6 +59,7 @@
 /obj/item/mod/module/orebag/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/rad_insulation, 0.01)
+	AddComponent(/datum/component/storage/concrete/stack)
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
