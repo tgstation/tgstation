@@ -1009,6 +1009,39 @@
 	if(mind.assigned_role.title in SSjob.name_occupations)
 		.[mind.assigned_role.title] = minutes
 
+/mob/living/carbon/human/can_be_absorbed(datum/antagonist/changeling/absorbing_changeling, verbose = TRUE, is_true_absorb = FALSE)
+	var/mob/changeling_mob = absorbing_changeling?.owner?.current
+
+	if(!istype(dna) || (NO_DNA_COPY in dna.species.species_traits))
+		if(verbose)
+			to_chat(changeling_mob, span_warning("[src] is not compatible with our biology."))
+		return
+
+	if(HAS_TRAIT(src, TRAIT_BADDNA))
+		if(verbose)
+			to_chat(changeling_mob, span_warning("DNA of [src] is ruined beyond usability!"))
+		return
+
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		if(verbose)
+			to_chat(changeling_mob, span_warning("[src]'s body is ruined beyond usability!"))
+		return
+
+	if(absorbing_changeling.has_dna(dna)) // changeling already absorbed this DNA
+		var/abort_absorb = TRUE // only way we don't abort is if it wasn't a true absorb before but this is a true absorb
+		if(is_true_absorb)
+			for(var/datum/changelingprofile/iter_profile in absorbing_changeling.stored_profiles)
+				if(iter_profile.dna.is_same_as(dna) && !iter_profile.true_absorb)
+					abort_absorb = FALSE // the profile we have on this guy was only a DNA sting, so an absorption still goes through
+					break
+
+		if(abort_absorb)
+			if(verbose)
+				to_chat(changeling_mob, span_warning("We already have this DNA in storage!"))
+			return
+
+	return TRUE
+
 /mob/living/carbon/human/monkeybrain
 	ai_controller = /datum/ai_controller/monkey
 

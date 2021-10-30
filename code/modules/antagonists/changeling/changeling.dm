@@ -248,9 +248,9 @@
  * Arguments:
  * * target - Who we're trying to absorb
  * * verbose - If TRUE, print a message to the changeling about why we can't absorb, if we can't
- * * override_nontrue_absorb - Set to TRUE for true absoprtions, which lets them override non-true absorptions, AKA DNA stings
+ * * is_true_absorb - Set to TRUE for true absoprtions, which lets them override non-true absorptions, AKA DNA stings
  */
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE, override_nontrue_absorb = FALSE)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE, is_true_absorb = FALSE)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -262,40 +262,7 @@
 			return
 	if(!target)
 		return
-	if(NO_DNA_COPY in target.dna.species.species_traits)
-		if(verbose)
-			to_chat(user, span_warning("[target] is not compatible with our biology."))
-		return
-	if(HAS_TRAIT(target, TRAIT_BADDNA))
-		if(verbose)
-			to_chat(user, span_warning("DNA of [target] is ruined beyond usability!"))
-		return
-	if(HAS_TRAIT(target, TRAIT_HUSK))
-		if(verbose)
-			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
-		return
-	if(!ishuman(target))
-		if(verbose)
-			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
-		return
-	if(has_dna(target.dna))
-		// in order for it to be possible to true absorb a body we already DNA stung, we have to be able to override DNA sting profiles
-		var/abort_absorb = TRUE
-		if(override_nontrue_absorb)
-			for(var/datum/changelingprofile/iter_profile in stored_profiles)
-				if(iter_profile.dna.is_same_as(target.dna) && !iter_profile.true_absorb)
-					abort_absorb = FALSE // the profile we have on this guy was only a DNA sting, so an absorption still goes through
-					break
-
-		if(abort_absorb)
-			if(verbose)
-				to_chat(user, span_warning("We already have this DNA in storage!"))
-			return
-	if(!target.has_dna())
-		if(verbose)
-			to_chat(user, span_warning("[target] is not compatible with our biology."))
-		return
-	return TRUE
+	return target.can_be_absorbed(src, verbose, is_true_absorb)
 
 
 /datum/antagonist/changeling/proc/create_profile(mob/living/carbon/human/H, protect = 0, true_absorb = FALSE)

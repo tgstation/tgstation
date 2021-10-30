@@ -25,7 +25,7 @@
 
 	var/mob/living/carbon/target = owner.pulling
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
-	return changeling.can_absorb_dna(target, override_nontrue_absorb = TRUE)
+	return changeling.can_absorb_dna(target, is_true_absorb = TRUE)
 
 /datum/action/changeling/absorb_dna/sting_action(mob/owner)
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)

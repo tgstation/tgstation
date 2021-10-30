@@ -2176,3 +2176,20 @@
 			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
 		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
 		lattice.deconstruct(FALSE)
+
+/**
+ * Used to see if this specific mob is kosher to be absorbed by a changeling. Only really matters for humans
+ *
+ * Returns TRUE if the various absorb conditions are met on the mob (namely, it has valid DNA that the changeling does not have).
+ * Called by [/datum/antagonist/changeling/proc/can_absorb_dna], after said proc verifies that the changeling has the space for it
+ *
+ * Arguments:
+ * * absorbing_changeling - The changeling datum for the changeling succ'ing us
+ * * verbose - If TRUE, give the absorbing changeling a message for why they can't absorb us, if that's the case
+ * * is_true_absorb - If TRUE, that means it's not just a DNA sting, and can override DNA profiles gained by DNA stings (in case you sting someone you actually need to absorb)
+ */
+/mob/living/proc/can_be_absorbed(datum/antagonist/changeling/absorbing_changeling, verbose = TRUE, is_true_absorb = FALSE)
+	var/mob/changeling_mob = absorbing_changeling?.owner?.current
+	if(verbose)
+		to_chat(changeling_mob, span_warning("We could gain no benefit from absorbing a lesser creature."))
+	return FALSE
