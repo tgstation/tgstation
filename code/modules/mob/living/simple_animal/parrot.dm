@@ -1000,6 +1000,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/simple_animal/parrot/poly/ghost/sentience_act()
 	..()
 	status_flags &= ~GODMODE
+	ADD_TRAIT(src, TRAIT_RESISTLOWPRESSURE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_RESISTCOLD, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOBREATH, ROUNDSTART_TRAIT)
 
 /mob/living/simple_animal/parrot/poly/ghost/proc/Possess(mob/living/carbon/human/H)
 	if(!ishuman(H))
