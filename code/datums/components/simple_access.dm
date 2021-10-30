@@ -19,7 +19,7 @@
 /datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing)
 	SIGNAL_HANDLER
 	if(!isobj(locked_thing))
-		return SOURCE_INCOMPATIBLE
+		return LOCKED_ATOM_INCOMPATIBLE
 	var/obj/locked_object = locked_thing
 	if(locked_object.check_access_list(access))
 		return ACCESS_ALLOWED

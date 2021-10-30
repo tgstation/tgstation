@@ -546,7 +546,7 @@
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
 	#define ACCESS_ALLOWED (1<<0)
 	#define ACCESS_DISALLOWED (1<<1)
-	#define SOURCE_INCOMPATIBLE (1<<2)
+	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
 ///from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"
