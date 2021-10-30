@@ -156,54 +156,55 @@
 /mob/living/simple_animal/bot/medbot/ui_data(mob/user)
 	var/list/data = list()
 	data["hack"] = hack(user)
-	data["pai"] = showpai(user)
 	data["maintenance_open"] = open
 	data["locked"] = locked
+	data["controls"] = list()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		data["heal_threshold"] = heal_threshold
-		data["speaker_off"] = shut_up
-		data["declare_crit"] = declare_crit
-		data["auto_patrol"] = auto_patrol
-		data["stationary_mode"] = stationary_mod
-	return dat
+		data["controls"]["pai"] = showpai(user)
+		data["controls"]["heal_threshold"] = heal_threshold
+		data["controls"]["speaker_off"] = shut_up
+		data["controls"]["declare_crit"] = declare_crit
+		data["controls"]["auto_patrol"] = auto_patrol
+		data["controls"]["stationary_mode"] = stationary_mode
+	return data
 
 // Actions received from TGUI
 /mob/living/simple_animal/bot/medbot/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
-	if("toggle_lock")
-		locked = !locked
-	if("toggle_maintenance")
-		open = !open
-	if("adj_threshold")
-		var/adjust_num = text2num(params2list["adj_threshold"])
-		heal_threshold += adjust_num
-		if(heal_threshold < 5)
-			heal_threshold = 5
-		if(heal_threshold > 75)
-			heal_threshold = 75
-	else if("toggle_voice")
-		shut_up = !shut_up
-	else if("toggle_alerts"])
-		declare_crit = !declare_crit
-	else if("toggle_stationary")
-		stationary_mode = !stationary_mode
-		path = list()
-		update_appearance()
-	else if("sync_tech")
-		var/oldheal_amount = heal_amount
-		var/tech_boosters
-		for(var/i in linked_techweb.researched_designs)
-			var/datum/design/surgery/healing/D = SSresearch.techweb_design_by_id(i)
-			if(!istype(D))
-				continue
-			tech_boosters++
-		if(tech_boosters)
-			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
-			if(oldheal_amount < heal_amount)
-				speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
-	update_controls()
+	switch(action)
+		if("toggle_lock")
+			locked = !locked
+		if("toggle_maintenance")
+			open = !open
+		if("adj_threshold")
+			var/adjust_num = round(text2num(params["threshold"]))
+			heal_threshold += adjust_num
+			if(heal_threshold < 5)
+				heal_threshold = 5
+			if(heal_threshold > 75)
+				heal_threshold = 75
+		if("toggle_voice")
+			shut_up = !shut_up
+		if("toggle_alerts")
+			declare_crit = !declare_crit
+		if("toggle_stationary")
+			stationary_mode = !stationary_mode
+			path = list()
+			update_appearance()
+		if("sync_tech")
+			var/oldheal_amount = heal_amount
+			var/tech_boosters
+			for(var/i in linked_techweb.researched_designs)
+				var/datum/design/surgery/healing/D = SSresearch.techweb_design_by_id(i)
+				if(!istype(D))
+					continue
+				tech_boosters++
+			if(tech_boosters)
+				heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
+				if(oldheal_amount < heal_amount)
+					speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)

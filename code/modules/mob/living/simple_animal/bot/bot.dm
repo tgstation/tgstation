@@ -922,31 +922,18 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return FALSE
 
 /mob/living/simple_animal/bot/proc/hack(mob/user)
-	var/hack
+	var/list/hack = list()
 	if(issilicon(user) || isAdminGhostAI(user)) //Allows silicons or admins to toggle the emag status of a bot.
-		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
-		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
+		hack["emagged"] = emagged == 2
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
-		hack += "Remote network control radio: <A href='?src=[REF(src)];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR>"
+		hack["remote_disabled"] = remote_disabled
 	return hack
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
-	var/eject = ""
-	if((!locked || issilicon(usr) || isAdminGhostAI(usr)))
-		if(paicard || allow_pai)
-			eject += "Personality card status: "
-			if(paicard)
-				if(client)
-					eject += "<A href='?src=[REF(src)];operation=ejectpai'>Active</A>"
-				else
-					eject += "<A href='?src=[REF(src)];operation=ejectpai'>Inactive</A>"
-			else if(!allow_pai || key)
-				eject += "Unavailable"
-			else
-				eject += "Not inserted"
-			eject += "<BR>"
-		eject += "<BR>"
-	return eject
+	var/list/pai_card = list()
+	pai_card["card_inserted"] = paicard
+	pai_card["allow_pai"] = allow_pai
+ 	return pai_card
 
 /mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)
 	if(paicard)
