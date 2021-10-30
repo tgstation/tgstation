@@ -11,8 +11,8 @@
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "phase"
 	action_background_icon_state = "bg_demon"
-	var/phase_time = 15
-	var/alpha_amount = 120
+	var/phase_time = 15 //The amount of time the mob phases for.
+	var/alpha_amount = 120 //The strength of the phasing invisability.
 
 /obj/effect/proc_holder/spell/self/phase/cast(list/targets, mob/user = usr)
 	. = ..()
@@ -22,6 +22,6 @@
 	addtimer(CALLBACK(src, .proc/Rephase), phase_time)
 
 /obj/effect/proc_holder/spell/self/phase/proc/Rephase(list/targets, mob/user = usr)
-	user.alpha = 255
-	user.move_resist = 1000
-	user.pass_flags = 0
+	user.alpha = initial(user.alpha)
+	user.move_resist = initial(user.move_resist)
+	user.pass_flags = initial(user.pass_flags)

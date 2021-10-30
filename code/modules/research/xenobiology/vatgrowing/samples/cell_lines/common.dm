@@ -663,10 +663,11 @@
 	/datum/reagent/consumable/rice = 1,
 	/datum/reagent/consumable/flour = 1)
 
-	suppressive_reagents = list(/datum/reagent/toxin = -2,
+	suppressive_reagents = list(
 	/datum/reagent/consumable/mold = -5,
 	/datum/reagent/toxin/carpotoxin = -2,
-	/datum/reagent/consumable/coco = -2)
+	/datum/reagent/consumable/coco = -2,
+	/datum/reagent/toxin = -1)
 
 	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/goat = 1)
 
