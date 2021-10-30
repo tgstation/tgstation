@@ -1,0 +1,6 @@
+author: "Zytolg"
+delete-after: True
+changes: 
+  - expansion: "Condition Orange! Severe Seismic Activity Detected! New Gulag Position Registered!"
+  - rscdel: "The remnants of the Old Mining Base are gone. We've always had the crater observatory."
+  - qol: "New Icebox Terrain"
