@@ -272,6 +272,10 @@
 	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
+/obj/item/clothing/suit/space/hardsuit/hostile_environment/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
+
 /obj/item/clothing/suit/space/hardsuit/hostile_environment/process(delta_time)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
@@ -298,6 +302,7 @@
 	. = ..()
 	update_appearance()
 	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
