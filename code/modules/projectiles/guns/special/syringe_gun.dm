@@ -84,9 +84,9 @@
 	var/syringe_count = syringes.len
 	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
 
-/obj/item/gun/syringe/rifle
-	name = "syringe rifle"
-	desc = "A spring loaded rifle designed to fit syringes, used to incapacitate unruly patients from a distance."
+/obj/item/gun/syringe/medical
+	name = "syringe gun"
+	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon_state = "syringerifle"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -99,14 +99,14 @@
 	force = 6 //A little bit more robust in melee since it's larger
 
 /obj/item/gun/syringe/rapidsyringe
-	name = "rapid syringe gun"
+	name = "mini rapid syringe gun"
 	desc = "A modification of the syringe rifle design to be more compact and use a rotating cylinder to store up to six syringes."
 	icon_state = "rapidsyringegun"
 	max_syringes = 6
 
 /obj/item/gun/syringe/syndicate
 	name = "dart pistol"
-	desc = "A small spring-loaded sidearm that functions identically to a syringe rifle."
+	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
 	icon_state = "syringe_pistol"
 	inhand_icon_state = "gun" //Smaller inhand
 	w_class = WEIGHT_CLASS_SMALL
@@ -116,8 +116,8 @@
 	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
-	name = "modified syringe rifle"
-	desc = "A syringe rifle that has been modified to be smaller and fit DNA injectors instead of normal syringes."
+	name = "modified mini syringe gun"
+	desc = "A syringe gun that has been modified to be smaller and fit DNA injectors instead of normal syringes."
 
 /obj/item/gun/syringe/dna/Initialize(mapload)
 	. = ..()
