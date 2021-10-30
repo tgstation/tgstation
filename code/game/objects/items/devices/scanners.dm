@@ -174,7 +174,7 @@ GENE SCANNER
 
 	render_list += "[span_info("Analyzing results for [M]:")]\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
 
-	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user)
+	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
 
 	// Husk detection
 	if(advanced && HAS_TRAIT_FROM(M, TRAIT_HUSK, BURN))

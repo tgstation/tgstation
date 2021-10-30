@@ -618,7 +618,7 @@
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
-/// from /proc/healthscan(): (list/scan_results, advanced, mob/user)
+/// from /proc/healthscan(): (list/scan_results, advanced, mob/user, mode)
 /// Consumers are allowed to mutate the scan_results list to add extra information
 #define COMSIG_LIVING_HEALTHSCAN "living_healthscan"
 
