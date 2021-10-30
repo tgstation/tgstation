@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - imageadd: "Hot Ice icons are now consistent, and now have an stack icon showing two pieces for when there are between 17 and 33 pieces in the stack."

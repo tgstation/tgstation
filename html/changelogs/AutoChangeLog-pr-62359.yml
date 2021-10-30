@@ -1,8 +1,0 @@
-author: "Timberpoes feat. JohnFulpWillard"
-delete-after: True
-changes: 
-  - config: "Modified how ambiguous VALUE_MODE_FLAG keyed_list config entries are parsed and added additional config logging for when weirdness with keyed_list config entries happens in general. (Timberpoes)"
-  - config: "/datum/config_entry/keyed_list/probability was unused and has been deleted. (Timberpoes)"
-  - bugfix: "The Cloth Golem preferences profile now works (JohnFulpWillard)"
-  - qol: "The species-changing magic mirror variants now list species names instead of internal code IDs. (JohnFulpWillard)"
-  - qol: "Shadowperson species should now show as \"Shadow\" instead of \"???\" (JohnFulpWillard)"
