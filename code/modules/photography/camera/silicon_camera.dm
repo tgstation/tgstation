@@ -91,11 +91,11 @@
 	to_chat(usr, span_notice("You print a photograph."))
 
 /obj/item/camera/siliconcam/proc/paiprint(mob/user)
-	var/mob/living/silicon/pai/C = loc
+	var/mob/living/silicon/pai/paimob = loc
 	var/datum/picture/selection = selectpicture(user)
 	if(!istype(selection))
 		to_chat(user, span_warning("Invalid Image."))
 		return
 	printpicture(user,selection)
-	visible_message(span_notice("A picture appears on top of the chassis of [C.name]!"))
+	visible_message(span_notice("A picture appears on top of the chassis of [paimob.name]!"))
 	to_chat(usr, span_notice("You print a photograph."))
