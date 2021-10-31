@@ -109,7 +109,7 @@
 /**
  * Returns the data from the datatype
  */
-/datum/port/proc/datatype_ui_data()
+/datum/port/proc/datatype_ui_data(mob/user)
 	return datatype_handler.datatype_ui_data(src)
 
 /**

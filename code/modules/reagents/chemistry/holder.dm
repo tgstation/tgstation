@@ -891,7 +891,7 @@
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 				if(meets_temp_requirement && meets_ph_requirement)
-					possible_reactions  += reaction
+					possible_reactions += reaction
 				else
 					LAZYADD(failed_but_capable_reactions, reaction)
 

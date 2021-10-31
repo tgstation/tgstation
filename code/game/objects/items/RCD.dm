@@ -1043,7 +1043,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			if(useResource(launchcost, user))
 				activate()
 				to_chat(user, span_notice("You fire a glowstick!"))
-				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
+				var/obj/item/flashlight/glowstick/G = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
 				G.set_light_color(G.color)
 				G.throw_at(A, 9, 3, user)

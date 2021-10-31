@@ -2,6 +2,7 @@
 	name = "\improper BODA"
 	desc = "Old sweet water vending machine."
 	icon_state = "sovietsoda"
+	panel_type = "panel8"
 	light_mask = "soviet-light-mask"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(
