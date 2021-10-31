@@ -828,10 +828,8 @@
 		suiciding = FALSE
 		regenerate_limbs()
 		regenerate_organs()
-		if(handcuffed)
-			qdel(handcuffed)
-		if(legcuffed)
-			qdel(legcuffed)
+		QDEL_NULL(handcuffed)
+		QDEL_NULL(legcuffed)
 		set_handcuffed(null)
 		update_handcuffed()
 	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
