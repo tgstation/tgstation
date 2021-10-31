@@ -742,7 +742,6 @@
 	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
 	user.AddElement(/datum/element/tenacious)
 
-/**** Spook God ****/
 
 ///spook rites have a shared cooldown and require you to have ghosts orbiting you
 /datum/religion_rites/spook
