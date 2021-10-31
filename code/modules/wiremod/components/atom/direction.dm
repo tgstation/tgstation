@@ -6,6 +6,7 @@
 /obj/item/circuit_component/direction
 	display_name = "Get Direction"
 	desc = "A component that returns the direction of itself and an entity."
+	category = "Entity"
 
 	/// The input port
 	var/datum/port/input/input_port

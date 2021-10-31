@@ -19,6 +19,49 @@
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
 
+/datum/antagonist/wizard_minion
+	name = "Wizard Minion"
+	antagpanel_category = "Wizard"
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "apprentice"
+	show_in_roundend = FALSE
+	show_name_in_check_antagonists = TRUE
+	/// The wizard team this wizard minion is part of.
+	var/datum/team/wizard/wiz_team
+
+/datum/antagonist/wizard_minion/create_team(datum/team/wizard/new_team)
+	if(!new_team)
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	wiz_team = new_team
+
+/datum/antagonist/wizard_minion/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, current_mob)
+	current_mob.faction |= ROLE_WIZARD
+
+/datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/last_mob = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, last_mob)
+	last_mob.faction -= ROLE_WIZARD
+
+/datum/antagonist/wizard_minion/on_gain()
+	create_objectives()
+	return ..()
+
+/datum/antagonist/wizard_minion/proc/create_objectives()
+	if(!wiz_team)
+		return
+	var/datum/objective/custom/custom_objective = new()
+	custom_objective.owner = owner
+	custom_objective.name = "Serve [wiz_team.master_wizard?.owner]"
+	custom_objective.explanation_text = "Serve [wiz_team.master_wizard?.owner]"
+	objectives += custom_objective
+
+/datum/antagonist/wizard_minion/get_team()
+	return wiz_team
+
 /datum/antagonist/wizard/on_gain()
 	equip_wizard()
 	if(give_objectives)
@@ -305,7 +348,7 @@
 	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
 	parts += master_wizard.roundend_report()
 	parts += " "
-	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
+	parts += "<span class='header'>[master_wizard.owner.name] apprentices and minions were:</span>"
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

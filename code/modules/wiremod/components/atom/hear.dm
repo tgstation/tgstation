@@ -6,6 +6,7 @@
 /obj/item/circuit_component/hear
 	display_name = "Voice Activator"
 	desc = "A component that listens for messages. Requires a shell."
+	category = "Entity"
 
 	/// The message heard
 	var/datum/port/output/message_port

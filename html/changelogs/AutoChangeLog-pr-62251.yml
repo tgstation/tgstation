@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixes mining drills showing as pickaxes when worn or held in-hand"

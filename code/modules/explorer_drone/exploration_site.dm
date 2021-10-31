@@ -60,9 +60,9 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 		/datum/exploration_event/simple/resource = 1
 	)
 	/// Weight mods scaled by distance, resources are more easily found on farther sites
-	var/static/list/distance_modifiers  = list(
+	var/static/list/distance_modifiers = list(
 		/datum/exploration_event/simple/trader = 0.3,
-		/datum/exploration_event/simple/resource = 0.3
+		/datum/exploration_event/simple/resource = 0.3,
 	)
 	var/list/category_weights = base_weights.Copy()
 	for(var/modifier in distance_modifiers)
