@@ -26532,6 +26532,10 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/rack,
+/obj/item/book/manual/wiki/medicine,
+/obj/item/stack/medical/mesh,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "jRs" = (
@@ -34899,9 +34903,14 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/medicine,
-/obj/item/stack/medical/mesh,
-/obj/item/wrench/medical,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8;
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "oiC" = (
