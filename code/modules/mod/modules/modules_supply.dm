@@ -4,7 +4,7 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = 50
-	incompatible_modules = list(/obj/item/mod/module/orebag, /obj/item/mod/module/orebag/bluespace)
+	incompatible_modules = list(/obj/item/mod/module/orebag)
 	var/max_items = 20
 	var/max_stack_amt = 50
 	var/max_w_class = WEIGHT_CLASS_HUGE
@@ -46,19 +46,15 @@
 			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, thing, user, TRUE))
 				show_message = TRUE
 			else
-				mod.wearer.balloon_alert("[src] is full")
+				mod.wearer.balloon_alert("ore bag full!")
 				continue
 	if(show_message)
 		playsound(mod.wearer, "rustle", 50, TRUE)
-		else
-			mod.wearer.balloon_alert("ores sent to [src]")
 
 /obj/item/mod/module/orebag/on_use()
 	. = ..()
 	if(!.)
 		return
-	if(!mod.wearer.Adjacent(target))
-		return
 	var/datum/component/storage/ore_storage = GetComponent(/datum/component/storage)
-	mod.wearer.balloon_alert("ores dropped on [target]")
-	ore_storage.do_quick_empty(target)
+	mod.wearer.balloon_alert("ores dropped")
+	ore_storage.do_quick_empty(mod.wearer.drop_location())
