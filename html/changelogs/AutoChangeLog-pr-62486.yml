@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "CMOs on Tramstation start back in their office again"
