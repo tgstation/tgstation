@@ -746,9 +746,12 @@
 
 ///spook rites have a shared cooldown and require you to have ghosts orbiting you
 /datum/religion_rites/spook
-	var/ghosts_needed = 0
 	invoke_msg = "oooooOOOOOOOOOOOOoooooooo"
+	/// the number of observers orbiting the user needed for a rite to be usable
+	var/ghosts_needed = 0
+	/// how much you have to wait after using a specific rite
 	var/rite_cooldown_amt = 0
+	/// shared variable that indicates when next you can use a rite
 	var/static/rite_cooldown = 0
 
 /datum/religion_rites/spook/can_afford(mob/living/user)
@@ -756,8 +759,8 @@
 		to_chat(user, span_warning("You do not want to annoy the spirits! Try again later."))
 		return FALSE
 	var/ghost_counter = 0
-	for(var/i in user.orbiters?.orbiter_list)	//shorter copypasta of the ghost_sword
-		if(!isobserver(i))						//ghost_check() proc
+	for(var/orbiter_around_user in user.orbiters?.orbiter_list)	//shorter copypasta of the ghost_sword
+		if(!isobserver(orbiter_around_user))						//ghost_check() proc
 			continue
 		ghost_counter++
 	if (ghost_counter >= ghosts_needed)
@@ -775,10 +778,11 @@
 	desc = "The chosen will fall in a deep slumber, where they will hear the whispers of the dead. This will drain their life."
 	ritual_length = 15 SECONDS
 	ritual_invocations =list( "O you from beyond!",
-							"Make your voices loud...")
+							"Make your voices loud...",
+							)
 	invoke_msg = "And let this one hear you!"
 	ghosts_needed = 10	//hearing the whinings of the dead is a big boy rite
-	rite_cooldown_amt = 300 SECONDS
+	rite_cooldown_amt = 5 MINUTES
 
 /datum/religion_rites/spook/ghost_dream/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
 	if(!ismovable(religious_tool))
@@ -804,14 +808,14 @@
 	if(!movable_reltool?.buckled_mobs?.len)
 		return FALSE
 	var/mob/living/carbon/human/sleeper
-	for(var/i in movable_reltool.buckled_mobs)
-		if(istype(i,/mob/living/carbon/human))
-			sleeper = i
+	for(var/mob_buckled_to_altar in movable_reltool.buckled_mobs)
+		if(istype(mob_buckled_to_altar,/mob/living/carbon/human))
+			sleeper = mob_buckled_to_altar
 			break
 	if (!sleeper)
 		return FALSE
 	
-	sleeper.SetSleeping(100)
+	sleeper.SetSleeping(10 SECONDS)
 	ADD_TRAIT(sleeper, TRAIT_SIXTHSENSE, "chaplain sect")
 	
 	sleeper.visible_message(span_notice("[sleeper] has fallen into a deep slumber..."))
@@ -820,8 +824,8 @@
 	while(!QDELETED(religious_tool) && !QDELETED(sleeper) && (sleeper in movable_reltool.buckled_mobs))
 		if(HAS_TRAIT(sleeper, TRAIT_CRITICAL_CONDITION))
 			break
-		user.apply_damage(0.5, BRUTE)
-		sleeper.SetSleeping(100)
+		sleeper.apply_damage(0.5, BRUTE)
+		sleeper.SetSleeping(10 SECONDS)
 		sleep(1)
 	
 	sleeper.visible_message(span_notice("[sleeper] wakes up!"))
@@ -842,13 +846,14 @@
 	invoke_msg = "We offer a new shell!"
 	ghosts_needed = 1
 	rite_cooldown_amt = 60 SECONDS
-///the item we want to spookify
+	///the item we want to spookify
 	var/obj/item/chosen_item
 
 /datum/religion_rites/spook/haunt_item/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
 	for(var/obj/item/phylactery in get_turf(religious_tool))	//any item goes, we're taking the top of the heap but any checks would go here
 		chosen_item = phylactery //the phylactery has been chosen by our lord and savior
 		return ..()
+	to_chat(user, span_warning("You need to place an item on the altar!"))
 	return FALSE
 
 /datum/religion_rites/spook/haunt_item/invoke_effect(mob/living/user, atom/religious_tool)
