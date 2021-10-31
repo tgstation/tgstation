@@ -121,7 +121,8 @@
 			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) //paid by requester
+			"paid" = !isnull(SO.paying_account), //paid by requester
+			"dep_order" = SO.department_destination ? TRUE : FALSE
 		))
 
 	data["requests"] = list()

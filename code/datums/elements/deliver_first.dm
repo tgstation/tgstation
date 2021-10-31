@@ -3,6 +3,8 @@
  *
  * bespoke element (1 per set of specific arguments in existence) that makes crates unable to be sold UNTIL they are opened once (to where this element, and the block, are removed)
  * Used for non-cargo orders to not get turned into a quick buck
+ *
+ * for the future coders or just me: please convert this into a component to allow for more feedback on the crate's status (clicking when unlocked, overlays, etc)
  */
 /datum/element/deliver_first
 	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
@@ -32,7 +34,7 @@
 	UnregisterSignal(target, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_AREA_ENTERED,
-		COMSIG_AREA_ENTERED,
+		COMSIG_ATOM_EMAG_ACT,
 		COMSIG_CLOSET_PRE_OPEN,
 		COMSIG_CLOSET_POST_OPEN,
 	))
@@ -43,12 +45,15 @@
 	examine_list += span_warning("An electronic delivery lock prevents this from opening until it reaches its destination, [GLOB.areas_by_type[goal_area_type]].")
 	examine_list += span_warning("This crate cannot be sold until it is opened.")
 
-///registers the signal that blocks target from opening when outside of the valid area.
+///registers the signal that blocks target from opening when outside of the valid area, returns if it is now unlocked
 /datum/element/deliver_first/proc/area_check(obj/structure/closet/target)
-	if(get_area(target) == GLOB.areas_by_type[goal_area_type])
+	var/area/target_area = get_area(target)
+	if(target_area.type == goal_area_type)
 		UnregisterSignal(target, COMSIG_CLOSET_PRE_OPEN)
+		return TRUE
 	else
 		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open)
+		return FALSE
 
 /datum/element/deliver_first/proc/on_area_enter(obj/structure/closet/target, atom/movable/arrived, area/old_area)
 	SIGNAL_HANDLER
@@ -65,6 +70,10 @@
 	SIGNAL_HANDLER
 	if(force)
 		return
+	if(istype(target, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/opening_crate = target
+		if(opening_crate.manifest) //we don't want to send feedback if they're just tearing off the manifest
+			return BLOCK_OPEN
 	if(user)
 		target.balloon_alert(user, "access denied until delivery!")
 	playsound(target, 'sound/machines/buzz-two.ogg', 30, TRUE)
@@ -73,7 +82,8 @@
 ///signal called by successfully opening target
 /datum/element/deliver_first/proc/on_post_open(obj/structure/closet/target, force)
 	SIGNAL_HANDLER
-	//noice, delivered!
-	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	cargo_account.adjust_money(payment)
+	if(area_check(target))
+		//noice, delivered!
+		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		cargo_account.adjust_money(payment)
 	target.RemoveElement(/datum/element/deliver_first)

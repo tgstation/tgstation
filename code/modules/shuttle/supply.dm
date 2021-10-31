@@ -167,9 +167,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			spawning_order.generate(pick_n_take(empty_turfs))
 
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]"))
-		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [paying_for_this.account_holder || "nobody (department order)"] has shipped.", INVESTIGATE_CARGO)
+		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [paying_for_this.account_holder ? paying_for_this.account_holder : "nobody (department order)"] has shipped.", INVESTIGATE_CARGO)
 		if(spawning_order.pack.dangerous)
-			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [paying_for_this.account_holder || "nobody (department order)"] has shipped.")
+			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [paying_for_this.account_holder ? paying_for_this.account_holder : "nobody (department order)"] has shipped.")
 		purchases++
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX

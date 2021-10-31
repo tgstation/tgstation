@@ -36,13 +36,9 @@ const CooldownEstimate = (props) => {
   || cost > COST_UPPER_BOUND * 0.25 && "moderate"
   || "short";
   return (
-    <>
-      {cost}
-      Estimated Cooldown:&ensp;
-      <Box as="span" textColor={cooldownColor}>
-        {cooldownText}
-      </Box>
-    </>
+    <Box as="span" textColor={cooldownColor}>
+      {cooldownText} cooldown.
+    </Box>
   );
 };
 
@@ -134,7 +130,7 @@ const DepartmentCatalog = (props, context) => {
     setTabCategory,
   ] = useLocalState(context, 'tabName', supplies[0]);
   return (
-    <Stack vertical>
+    <Stack vertical fill>
       <Stack.Item>
         <Tabs textAlign="center" fluid>
           {supplies.map(cat => (
@@ -147,8 +143,8 @@ const DepartmentCatalog = (props, context) => {
           ))}
         </Tabs>
       </Stack.Item>
-      <Stack.Item>
-        <Section fill>
+      <Stack.Item grow>
+        <Section fill scrollable>
           <Stack vertical>
             {tabCategory.packs.map(pack => (
               <Stack.Item className="candystripe" key={pack.name}>
