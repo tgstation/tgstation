@@ -1,0 +1,4 @@
+author: "phasenoisepon"
+delete-after: True
+changes: 
+  - bugfix: "Vampires can now no longer transform into bat form when their brain is placed in an MMI"
