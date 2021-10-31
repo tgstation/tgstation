@@ -986,15 +986,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	purchasable_from = UPLINK_CLOWN_OPS
 
-/datum/uplink_item/explosives/detomatix
-	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
-			detonate PDAs of crewmembers who have their message feature enabled. \
-			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
-	item = /obj/item/cartridge/virus/syndicate
-	cost = 6
-	restricted = TRUE
-
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \

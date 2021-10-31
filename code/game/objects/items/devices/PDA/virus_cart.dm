@@ -51,33 +51,6 @@
 	else
 		to_chat(U, span_alert("PDA not found."))
 
-/obj/item/cartridge/virus/syndicate
-	name = "\improper Detomatix cartridge"
-	icon_state = "cart"
-	access = CART_REMOTE_DOOR
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!! //don't ask about the name, testing.
-	charges = 4
-
-/obj/item/cartridge/virus/syndicate/send_virus(obj/item/pda/target, mob/living/U)
-	if(charges <= 0)
-		to_chat(U, span_notice("Out of charges."))
-		return
-	if(!isnull(target) && !target.toff)
-		charges--
-		var/difficulty = 0
-		if(target.cartridge)
-			difficulty += bit_count(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
-			if(target.cartridge.access & CART_MANIFEST)
-				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
-			U.show_message(span_danger("An error flashes on your [src]."), MSG_VISUAL)
-		else
-			log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
-			U.show_message(span_notice("Success!"), MSG_VISUAL)
-			target.explode()
-	else
-		to_chat(U, span_alert("PDA not found."))
-
 /obj/item/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"
 	icon_state = "cart"

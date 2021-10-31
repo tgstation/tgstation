@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		. += span_notice("Ctrl-click to remove [inserted_item].") //traitor pens are disguised so we're fine naming them on examine
 
 	if((!isnull(cartridge)))
-		. += span_notice("Ctrl+Shift-click to remove the cartridge.") //won't name cart on examine in case it's Detomatix
+		. += span_notice("Ctrl+Shift-click to remove the cartridge.") //won't name cart on examine in case it's a syndi cart.
 
 /obj/item/pda/Initialize(mapload)
 	. = ..()
