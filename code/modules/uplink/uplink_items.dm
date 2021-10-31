@@ -1191,6 +1191,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
 	purchasable_from = ~UPLINK_NUKE_OPS //clown ops are allowed to buy this kit, since it's basically a costume
+	
+/datum/uplink_item/stealthy_tools/chameleonarmor
+	name = "Chameleon Armor"
+	desc = "A unique vest and helmet possessing advanced Syndicate composite nanofibre and chameleon technology, providing the same protection as a \
+			full blood red hardsuit without any of the lacking subtleties. Now your hazard vest is ballistic! This product is not spaceproof."
+	item = /obj/item/storage/box/syndie_kit/chameleonarmor
+	cost = 8
+	purchasable_from = ~UPLINK_NUKE_OPS
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
