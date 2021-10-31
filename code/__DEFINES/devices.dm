@@ -19,6 +19,9 @@
 // Used by PDA and cartridge code to reduce repetitiveness of spritesheets
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
+// Used to stringify message targets before sending the signal datum.
+#define STRINGIFY_PDA_TARGET(name, job) "[name] ([job])"
+
 //N-spect scanner defines
 #define INSPECTOR_PRINT_SOUND_MODE_NORMAL 1
 #define INSPECTOR_PRINT_SOUND_MODE_CLASSIC 2

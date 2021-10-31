@@ -470,6 +470,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 
+// Denotes a PDA has been successfully infected by the detomatix cartridge and will soon explode.
+#define TRAIT_PDA_EXPLODING "pda_exploding"
+
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
 #define TRAIT_AGEUSIA "ageusia"

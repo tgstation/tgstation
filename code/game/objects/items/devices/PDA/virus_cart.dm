@@ -62,21 +62,41 @@
 	if(charges <= 0)
 		to_chat(U, span_notice("Out of charges."))
 		return
-	if(!isnull(target) && !target.toff)
-		charges--
-		var/difficulty = 0
-		if(target.cartridge)
-			difficulty += bit_count(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
-			if(target.cartridge.access & CART_MANIFEST)
-				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
-			U.show_message(span_danger("An error flashes on your [src]."), MSG_VISUAL)
-		else
-			log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
-			U.show_message(span_notice("Success!"), MSG_VISUAL)
-			target.explode()
-	else
+	if(isnull(target) || target.toff || !target.owner || !target.ownjob)
 		to_chat(U, span_alert("PDA not found."))
+		return
+	if(HAS_TRAIT(target, TRAIT_PDA_EXPLODING))
+		return
+
+	charges--
+	var/difficulty = 0
+	if(target.cartridge)
+		difficulty += bit_count(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
+		if(target.cartridge.access & CART_MANIFEST)
+			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
+	if(prob(difficulty * 15) || SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE)
+		U.show_message(span_danger("An error flashes on your [src]."), MSG_VISUAL)
+		return
+
+	log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
+	U.show_message(span_notice("Success!"), MSG_VISUAL)
+
+	// Send an anonymous, conspicious and silly message seconds before the PDA actually explodes,
+	// allowing a player to save themselves should he have decent reflexes. It can also be somewhat paranoia-inducing eheh.
+	var/bomber = pick_list(DETOMATIX_FILE, "detomatix_name")
+	var/bomber_job = pick_list(DETOMATIX_FILE, "detomatix_job")
+	var/bomber_message = pick_list(DETOMATIX_FILE, "detomatix_message")
+	var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+		"name" = bomber,
+		"job" = bomber_job,
+		"message" = bomber_message,
+		"targets" = list(STRINGIFY_PDA_TARGET(target.owner, target.ownjob)),
+		"emojis" = TRUE,
+	))
+	signal.send_to_receivers()
+
+	ADD_TRAIT(target, TRAIT_PDA_EXPLODING, TRAIT_GENERIC)
+	addtimer(CALLBACK(target, /obj/item/pda.proc/explode), 2.5 SECONDS)
 
 /obj/item/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"

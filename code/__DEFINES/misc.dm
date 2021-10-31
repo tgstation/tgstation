@@ -409,6 +409,7 @@ GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
 #define REDPILL_FILE "redpill.json"
 #define ARCADE_FILE "arcade.json"
 #define BOOMER_FILE "boomer.json"
+#define DETOMATIX_FILE "detomatix.json"
 #define LOCATIONS_FILE "locations.json"
 #define WANTED_FILE "wanted_message.json"
 #define VISTA_FILE "steve.json"

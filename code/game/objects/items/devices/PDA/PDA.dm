@@ -777,13 +777,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/string_targets = list()
 	for (var/obj/item/pda/P in targets)
 		if (P.owner && P.ownjob)  // != src is checked by the UI
-			string_targets += "[P.owner] ([P.ownjob])"
+			string_targets += STRINGIFY_PDA_TARGET(P.owner, P.ownjob)
 	for (var/obj/machinery/computer/message_monitor/M in targets)
 		// In case of "Reply" to a message from a console, this will make the
 		// message be logged successfully. If the console is impersonating
 		// someone by matching their name and job, the reply will reach the
 		// impersonated PDA.
-		string_targets += "[M.customsender] ([M.customjob])"
+		string_targets += STRINGIFY_PDA_TARGET(M.customsender, M.customjob)
 	if (!string_targets.len)
 		return
 
