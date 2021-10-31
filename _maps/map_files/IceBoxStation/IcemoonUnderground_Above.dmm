@@ -2856,9 +2856,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
-"ne" = (
-/turf/open/genturf,
-/area/icemoon/underground/unexplored)
 "ng" = (
 /obj/effect/landmark/start/chaplain,
 /turf/open/floor/iron/dark,
@@ -2963,7 +2960,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/genturf,
+/turf/open/floor/iron,
 /area/hallway/secondary/service)
 "nJ" = (
 /turf/closed/wall,
@@ -26251,7 +26248,7 @@ ak
 ak
 ak
 ak
-ne
+ak
 ak
 ak
 ak
