@@ -126,10 +126,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/plasmaman/clown
 	)),
 
-	"greytide" = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/security/cattleprod,
-		/obj/item/spear, /obj/item/clothing/mask/gas, /obj/item/toy/figure/assistant,
-		/obj/structure/statue/sandstone/assistant
-	)),
+	"greytide" = (typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/security/cattleprod,
+		/obj/item/spear, /obj/item/toy/figure/assistant,
+		/obj/structure/statue/sandstone/assistant))+typecacheof(list(/obj/item/clothing/mask/gas), FALSE, TRUE)),
 
 	"lizards" = typecacheof(list(/obj/item/toy/plush/lizard_plushie, /obj/item/food/kebab/tail, /obj/item/organ/tail/lizard,
 		/obj/item/reagent_containers/food/drinks/bottle/lizardwine, /obj/item/clothing/head/lizard, /obj/item/clothing/shoes/cowboy/lizard,
