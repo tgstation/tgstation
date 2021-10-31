@@ -18,7 +18,7 @@
 	var/card_face = "cas_white"
 	var/blanks = 25
 	var/decksize = 150
-	///Holds both .txt files for white and black cards respectively. Takes both "cas_white" and "cas_black", strings must be passed through world.2filelist.
+	///Holds both .txt files for white and black cards respectively. Takes both "cas_white" and "cas_black", strings must be passed through world.file2list.
 	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	var/list/allcards = list()
 
