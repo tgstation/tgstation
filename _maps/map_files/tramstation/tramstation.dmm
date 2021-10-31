@@ -50275,6 +50275,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
+/obj/effect/landmark/start/chief_medical_officer,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "rgk" = (
