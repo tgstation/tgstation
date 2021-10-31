@@ -418,4 +418,5 @@
 	alignment = ALIGNMENT_NEUT
 	rites_list = list(
 		/datum/religion_rites/spook/ghost_dream,
-		/datum/religion_rites/spook/haunt_item )
+		/datum/religion_rites/spook/haunt_item,
+	)
