@@ -431,6 +431,9 @@
 /obj/item/clothing/suit/chameleon/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
+	
+/obj/item/clothing/suit/chameleon/armored
+	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, RAD = 50, FIRE = 50, ACID = 90, WOUND = 25)
 
 /obj/item/clothing/glasses/chameleon
 	name = "Optical Meson Scanner"
@@ -531,6 +534,9 @@
 	togglehatmask_action.UpdateButtonIcon()
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
 	randomise_action.UpdateButtonIcon()
+	
+/obj/item/clothing/head/chameleon/armored
+	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, RAD = 50, FIRE = 50, ACID = 90, WOUND = 25)
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
