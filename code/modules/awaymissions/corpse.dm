@@ -214,11 +214,11 @@
 	if(haircolor)
 		H.hair_color = haircolor
 	else
-		H.hair_color = random_short_color()
+		H.hair_color = "#[random_color()]"
 	if(facial_haircolor)
 		H.facial_hair_color = facial_haircolor
 	else
-		H.facial_hair_color = random_short_color()
+		H.facial_hair_color = "#[random_color()]"
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else

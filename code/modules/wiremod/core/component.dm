@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The category of the component in the UI
+	var/category = COMPONENT_DEFAULT_CATEGORY
+
 	/// The colour this circuit component appears in the UI
 	var/ui_color = "blue"
 
@@ -81,7 +84,8 @@
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
-
+	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		desc += " Incompatible with module components."
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
@@ -96,6 +100,11 @@
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
 	return ..()
+
+/obj/item/circuit_component/examine(mob/user)
+	. = ..()
+	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		. += span_notice("It's incompatible with module components.")
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.

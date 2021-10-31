@@ -331,10 +331,20 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 	species_exception = list(/datum/species/golem/uranium)
 
+/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+
 /obj/item/clothing/head/hooded/winterhood/engineering
 	desc = "A yellow winter coat hood. Definitely not a replacement for a hard hat."
 	icon_state = "hood_engineer"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 20, ACID = 0)
+
+/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
 
 // Chief Engineer
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce

@@ -4,21 +4,21 @@
 /proc/random_eye_color()
 	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
 		if("brown")
-			return "630"
+			return "#663300"
 		if("hazel")
-			return "542"
+			return "#554422"
 		if("grey")
-			return pick("666","777","888","999","aaa","bbb","ccc")
+			return pick("#666666","#777777","#888888","#999999","#aaaaaa","#bbbbbb","#cccccc")
 		if("blue")
-			return "36c"
+			return "#3366cc"
 		if("green")
-			return "060"
+			return "#006600"
 		if("amber")
-			return "fc0"
+			return "#ffcc00"
 		if("albino")
-			return pick("c","d","e","f") + pick("0","1","2","3","4","5","6","7","8","9") + pick("0","1","2","3","4","5","6","7","8","9")
+			return "#" + pick("cc","dd","ee","ff") + pick("00","11","22","33","44","55","66","77","88","99") + pick("00","11","22","33","44","55","66","77","88","99")
 		else
-			return "000"
+			return "#000000"
 
 /proc/random_underwear(gender)
 	if(!GLOB.underwear_list.len)
@@ -78,7 +78,7 @@
 	if(!GLOB.moth_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_antennae" = pick(GLOB.moth_antennae_list), "moth_markings" = pick(GLOB.moth_markings_list), "tail_monkey" = "None"))
+	return(list("mcolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]","ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_antennae" = pick(GLOB.moth_antennae_list), "moth_markings" = pick(GLOB.moth_markings_list), "tail_monkey" = "None"))
 
 /proc/random_hairstyle(gender)
 	switch(gender)
@@ -139,7 +139,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, sortList(list(
+GLOBAL_LIST_INIT(skin_tones, sort_list(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -435,6 +435,15 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
+/// Returns if the given target is a human. Like, a REAL human.
+/// Not a moth, not a felinid (which are human subtypes), but a human.
+/proc/ishumanbasic(target)
+	if (!ishuman(target))
+		return FALSE
+	
+	var/mob/living/carbon/human/human_target = target
+	return human_target.dna?.species?.type == /datum/species/human
+
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
 	if(!T)
@@ -492,18 +501,18 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/chat_toggles = TOGGLES_DEFAULT_CHAT
 		var/toggles = TOGGLES_DEFAULT
 		var/list/ignoring
-		if(M.client.prefs)
-			var/datum/preferences/prefs = M.client.prefs
+		if(M.client?.prefs)
+			var/datum/preferences/prefs = M.client?.prefs
 			chat_toggles = prefs.chat_toggles
 			toggles = prefs.toggles
 			ignoring = prefs.ignoring
 		if(admin_only)
-			if (!M.client.holder)
+			if (!M.client?.holder)
 				return
 			else
 				message += span_deadsay(" (This is viewable to admins only).")
 		var/override = FALSE
-		if(M.client.holder && (chat_toggles & CHAT_DEAD))
+		if(M.client?.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
@@ -646,7 +655,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sort_list(borgs)
 		else
 			. = pick(borgs)
 	return .
@@ -655,7 +664,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/ais = active_ais(FALSE, z)
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sort_list(ais)
 		else
 			. = pick(ais)
 	return .
@@ -683,7 +692,7 @@ GLOBAL_LIST_EMPTY(species_list)
 ///Orders mobs by type then by name. Accepts optional arg to sort a custom list, otherwise copies GLOB.mob_list.
 /proc/sort_mobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortNames(GLOB.mob_list)
+	var/list/sortmob = sort_names(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/camera/mob_to_sort in sortmob)

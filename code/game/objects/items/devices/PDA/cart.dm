@@ -297,7 +297,7 @@ Code:
 		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 			menu = "<h4>[PDAIMG(medical)] Medical Record List</h4>"
 			if(GLOB.data_core.general)
-				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					menu += "<a href='byond://?src=[REF(src)];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 			menu += "<br>"
 		if(441)
@@ -340,7 +340,7 @@ Code:
 		if (45) //security records
 			menu = "<h4>[PDAIMG(cuffs)] Security Record List</h4>"
 			if(GLOB.data_core.general)
-				for (var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+				for (var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					menu += "<a href='byond://?src=[REF(src)];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 			menu += "<br>"
@@ -530,7 +530,7 @@ Code:
 			if(!emoji_table)
 				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 				var/list/collate = list("<br><table>")
-				for(var/emoji in sortList(icon_states(icon(EMOJI_SET))))
+				for(var/emoji in sort_list(icon_states(icon(EMOJI_SET))))
 					var/tag = sheet.icon_tag("emoji-[emoji]")
 					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
 				collate += "</table><br>"

@@ -65,7 +65,7 @@
 		if(!initial(potential_sign.is_editable))
 			continue
 		output[initial(potential_sign.sign_change_name)] = potential_sign
-	output = sortList(output) //Alphabetizes the results.
+	output = sort_list(output) //Alphabetizes the results.
 	return output
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)

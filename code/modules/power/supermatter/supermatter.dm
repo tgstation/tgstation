@@ -179,6 +179,27 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///How much hallucination should we produce per unit of power?
 	var/hallucination_power = 0.1
 
+	///Pressure bonus constants
+	///If the SM is operating in sufficiently low pressure, increase power output.
+	///This needs both a small amount of gas and a strong cooling system to keep temperature low in a low heat capacity environment.
+
+	///These constants are used to derive the values in the pressure bonus equation from human-meaningful values
+	///If you're varediting these, call update_constants() to update the derived values
+
+	///What is the maximum multiplier reachable from having low pressure?
+	var/pressure_bonus_max_multiplier = 0.5
+	///At what environmental pressure, in kPa, should we start giving a pressure bonus?
+	var/pressure_bonus_max_pressure = 100
+	///How steeply angled is the pressure bonus curve? Higher values means more of the bonus is available at higher pressures.
+	///Note that very low values can keep the bonus very close to 1 until it's nearly a vaccuum. Higher values can introduce diminishing returns on lower pressure.
+	var/pressure_bonus_curve_angle = 1.8
+
+	///These values are calculated from the above in update_constants() and immediately overwritten
+	///The default values will always result in a no-op 1x modifier, in case something breaks.
+	var/pressure_bonus_derived_constant = 1
+	var/pressure_bonus_derived_steepness = 0
+
+
 	///Our internal radio
 	var/obj/item/radio/radio
 	///The key our internal radio uses
@@ -253,6 +274,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if (!moveable)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
+	update_constants()
+
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
 	SSair.stop_processing_machine(src)
@@ -264,6 +287,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(psyOverlay)
 		QDEL_NULL(psyOverlay)
 	return ..()
+
+/obj/machinery/power/supermatter_crystal/proc/update_constants()
+	pressure_bonus_derived_steepness = (1 - 1 / pressure_bonus_max_multiplier) / (pressure_bonus_max_pressure ** pressure_bonus_curve_angle)
+	pressure_bonus_derived_constant = 1 / pressure_bonus_max_multiplier - pressure_bonus_derived_steepness
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
 	. = ..()
@@ -652,7 +679,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
 			playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 			var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
-			var/pressure_multiplier = max((1 / ((env_pressure ** 1.5) + 5.5) * 0.01) + 0.8, 1)
+			var/pressure_multiplier = max((1 / ((env_pressure ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
 			var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 			supermatter_zap(
 				zapstart = src,
@@ -830,7 +857,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 				has_been_powered = TRUE
 	else if(takes_damage)
-		damage += projectile.damage * bullet_energy
+		damage += (projectile.damage * bullet_energy) * clamp((emergency_point - damage) / emergency_point, 0, 1)
+		if(damage > damage_penalty_point)
+			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 	return BULLET_ACT_HIT
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
@@ -968,7 +997,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!istype(item) || (item.item_flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
-		return ..()
+		return FALSE
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
@@ -1060,6 +1089,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
 			matter_power += 200
+		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
+			damage += rand(-300, 300) // HONK
+			damage = max(damage, 0)
 	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
 	else if(isobj(consumed_object))
@@ -1177,8 +1209,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > COIL)
 			continue
 
-		if(istype(test, /obj/machinery/power/tesla_coil/))
-			var/obj/machinery/power/tesla_coil/coil = test
+		if(istype(test, /obj/machinery/power/energy_accumulator/tesla_coil/))
+			var/obj/machinery/power/energy_accumulator/tesla_coil/coil = test
 			if(coil.anchored && !(coil.obj_flags & BEING_SHOCKED) && !coil.panel_open && prob(70))//Diversity of death
 				if(target_type != COIL)
 					arc_targets = list()
@@ -1188,8 +1220,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(target_type > ROD)
 			continue
 
-		if(istype(test, /obj/machinery/power/grounding_rod/))
-			var/obj/machinery/power/grounding_rod/rod = test
+		if(istype(test, /obj/machinery/power/energy_accumulator/grounding_rod/))
+			var/obj/machinery/power/energy_accumulator/grounding_rod/rod = test
 			//We're adding machine damaging effects, rods need to be surefire
 			if(rod.anchored && !rod.panel_open)
 				if(target_type != ROD)
@@ -1285,9 +1317,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		zap_str -= (zap_str/10)
 		zap_count += 1
 	for(var/j in 1 to zap_count)
+		var/child_targets_hit = targets_hit
 		if(zap_count > 1)
-			targets_hit = targets_hit.Copy() //Pass by ref begone
-		supermatter_zap(target, new_range, zap_str, zap_flags, targets_hit, zap_cutoff, power_level, zap_icon)
+			child_targets_hit = targets_hit.Copy() //Pass by ref begone
+		supermatter_zap(target, new_range, zap_str, zap_flags, child_targets_hit, zap_cutoff, power_level, zap_icon)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

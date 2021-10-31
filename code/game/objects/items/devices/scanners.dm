@@ -844,7 +844,7 @@ GENE SCANNER
 	for(var/A in buffer)
 		options += get_display_name(A)
 
-	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in sortList(options)
+	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in sort_list(options)
 	if(answer && ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
 		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list

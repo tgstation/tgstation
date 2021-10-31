@@ -22,3 +22,7 @@
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 
 #define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
+
+#define UNDERFLOOR_HIDDEN 0
+#define UNDERFLOOR_VISIBLE 1
+#define UNDERFLOOR_INTERACTABLE 2

@@ -224,7 +224,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 			if(S)
 				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(facial_hair_color)
-					facial_hair_overlay.color = "#" + facial_hair_color
+					facial_hair_overlay.color = facial_hair_color
 				facial_hair_overlay.alpha = 200
 				add_overlay(facial_hair_overlay)
 		if(hairstyle)
@@ -232,7 +232,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 			if(S)
 				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(hair_color)
-					hair_overlay.color = "#" + hair_color
+					hair_overlay.color = hair_color
 				hair_overlay.alpha = 200
 				add_overlay(hair_overlay)
 
@@ -437,7 +437,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/area/A = V
 		if(!(A.area_flags & HIDDEN_AREA))
 			filtered += A
-	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
+	var/area/thearea = input("Area to jump to", "BOOYEA") as null|anything in filtered
 
 	if(!thearea)
 		return
@@ -611,8 +611,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 
 /proc/updateallghostimages()
-	listclearnulls(GLOB.ghost_images_default)
-	listclearnulls(GLOB.ghost_images_simple)
+	list_clear_nulls(GLOB.ghost_images_default)
+	list_clear_nulls(GLOB.ghost_images_simple)
 
 	for (var/mob/dead/observer/O in GLOB.player_list)
 		O.updateghostimages()
@@ -624,18 +624,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(lastsetting)
 		switch(lastsetting) //checks the setting we last came from, for a little efficiency so we don't try to delete images from the client that it doesn't have anyway
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images -= GLOB.ghost_images_default
+				client?.images -= GLOB.ghost_images_default
 			if(GHOST_OTHERS_SIMPLE)
-				client.images -= GLOB.ghost_images_simple
-	lastsetting = client.prefs.read_preference(/datum/preference/choiced/ghost_others)
+				client?.images -= GLOB.ghost_images_simple
+	lastsetting = client?.prefs.read_preference(/datum/preference/choiced/ghost_others)
 	if(!ghostvision)
 		return
 	if(lastsetting != GHOST_OTHERS_THEIR_SETTING)
 		switch(lastsetting)
 			if(GHOST_OTHERS_DEFAULT_SPRITE)
-				client.images |= (GLOB.ghost_images_default-ghostimage_default)
+				client?.images |= (GLOB.ghost_images_default-ghostimage_default)
 			if(GHOST_OTHERS_SIMPLE)
-				client.images |= (GLOB.ghost_images_simple-ghostimage_simple)
+				client?.images |= (GLOB.ghost_images_simple-ghostimage_simple)
 
 /mob/dead/observer/verb/possess()
 	set category = "Ghost"
@@ -649,7 +649,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 
-	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in sortNames(possessible)
+	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in sort_names(possessible)
 
 	if(!target)
 		return FALSE
@@ -813,11 +813,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(HAIR in species.species_traits)
 		hairstyle = client.prefs.read_preference(/datum/preference/choiced/hairstyle)
-		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color_legacy/hair_color))
+		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/hair_color))
 
 	if(FACEHAIR in species.species_traits)
 		facial_hairstyle = client.prefs.read_preference(/datum/preference/choiced/facial_hairstyle)
-		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color_legacy/facial_hair_color))
+		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
 
 	qdel(species)
 

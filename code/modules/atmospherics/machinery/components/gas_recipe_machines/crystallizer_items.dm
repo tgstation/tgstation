@@ -1,6 +1,6 @@
 /obj/item/hypernoblium_crystal
 	name = "Hypernoblium Crystal"
-	desc = "crystalized oxygen and hypernoblium stored in a bottle to pressureproof your clothes."
+	desc = "Crystalized oxygen and hypernoblium stored in a bottle to pressureproof your clothes."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potblue"
 	var/uses = 2
@@ -18,7 +18,7 @@
 	if(worn_item.min_cold_protection_temperature == SPACE_SUIT_MIN_TEMP_PROTECT && worn_item.clothing_flags & STOPSPRESSUREDAMAGE)
 		to_chat(user, span_warning("[worn_item] is already pressure-resistant!"))
 		return
-	to_chat(user, span_notice("you see how the [worn_item] changes color, its now pressure proof."))
+	to_chat(user, span_notice("You see how the [worn_item] changes color, it's now pressure proof."))
 	worn_item.name = "pressure-resistant [worn_item.name]"
 	worn_item.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	worn_item.add_atom_colour("#00fff7", FIXED_COLOUR_PRIORITY)

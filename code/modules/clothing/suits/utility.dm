@@ -30,6 +30,11 @@
 	equip_delay_other = 60
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
 	inhand_icon_state = "firefighter"
@@ -143,3 +148,8 @@
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 	flags_1 = RAD_PROTECT_CONTENTS_1
+
+/obj/item/clothing/suit/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)

@@ -52,6 +52,8 @@
 
 #define COMPONENT_DEFAULT_NAME "component"
 
+#define COMPONENT_DEFAULT_CATEGORY "Unassigned"
+
 /// The minimum position of the x and y co-ordinates of the component in the UI
 #define COMPONENT_MIN_RANDOM_POS 200
 /// The maximum position of the x and y co-ordinates of the component in the UI
@@ -113,6 +115,8 @@
 #define CIRCUIT_FLAG_HIDDEN (1<<4)
 /// This circuit component has been marked as a component that has instant execution and will show up in the UI as so. This will only cause a visual change.
 #define CIRCUIT_FLAG_INSTANT (1<<5)
+/// This circuit component can't be loaded in module component. Saves us some headaches.
+#define CIRCUIT_FLAG_REFUSE_MODULE (1<<6)
 
 // Datatype flags
 /// The datatype supports manual inputs

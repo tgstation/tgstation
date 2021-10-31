@@ -188,7 +188,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/datum/outfit/path = text2path(typetext)
 		if(ispath(path)) //whatever typepath fails this check probably doesn't exist anymore
 			parsed_favs += path
-	favorite_outfits = uniqueList(parsed_favs)
+	favorite_outfits = unique_list(parsed_favs)
 
 	// Custom hotkeys
 	READ_FILE(S["key_bindings"], key_bindings)

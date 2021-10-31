@@ -193,7 +193,8 @@
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
-	render_relay_plane = null
+	blend_mode_override = BLEND_MULTIPLY
+	render_relay_plane = RENDER_PLANE_GAME
 
 /atom/movable/screen/plane_master/runechat
 	name = "runechat plane master"

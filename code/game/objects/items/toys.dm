@@ -843,7 +843,6 @@
 	cardUser.visible_message(span_notice("[cardUser] draws a card from [cardUser.p_their()] hand."), span_notice("You take the [C.cardname] from your hand."))
 
 	interact(cardUser)
-	update_sprite()
 	if(length(currenthand) == 1)
 		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
 		N.parentdeck = parentdeck
@@ -852,7 +851,9 @@
 		qdel(src)
 		N.pickup(cardUser)
 		cardUser.put_in_hands(N)
-		to_chat(cardUser, span_notice("You also take [currenthand[1]] and hold it."))
+		to_chat(cardUser, span_notice("You also take [N.cardname] and hold it."))
+	else
+		update_sprite()
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
@@ -1497,7 +1498,7 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	icon_state = "shell[rand(1,3)]"
-	color = pickweight(possible_colors)
+	color = pick_weight(possible_colors)
 	setDir(pick(GLOB.cardinals))
 
 /obj/item/toy/brokenradio

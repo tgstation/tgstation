@@ -486,7 +486,7 @@
 )
 	belt = /obj/item/storage/belt/sabre
 	head = /obj/item/clothing/head/coordinator
-	l_pocket = /obj/item/kitchen/knife
+	l_pocket = /obj/item/knife/kitchen
 	l_hand = /obj/item/toy/balloon
 
 /datum/outfit/centcom/death_commando
@@ -547,7 +547,7 @@
 	back = /obj/item/shield/riot
 	belt = /obj/item/storage/belt/military/assault/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
-	l_pocket = /obj/item/kitchen/knife/combat
+	l_pocket = /obj/item/knife/combat
 	r_pocket = /obj/item/lighter
 	uniform = /obj/item/clothing/under/syndicate/combat
 	mask = /obj/item/clothing/mask/cigarette/robustgold

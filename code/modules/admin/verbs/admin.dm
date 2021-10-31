@@ -65,7 +65,7 @@
 	var/list/msg = list()
 	msg += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	var/list/clients_list_copy = GLOB.clients.Copy()
-	sortList(clients_list_copy)
+	sort_list(clients_list_copy)
 	for(var/client/C in clients_list_copy)
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
@@ -140,7 +140,7 @@
 				var/name = GLOB.trait_name_map[trait] || trait
 				available_traits[name] = trait
 
-	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(available_traits)
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sort_list(available_traits)
 	if(!chosen_trait)
 		return
 	chosen_trait = available_traits[chosen_trait]
@@ -159,7 +159,7 @@
 				if("All")
 					source = null
 				if("Specific")
-					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sort_list(D.status_traits[chosen_trait])
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)

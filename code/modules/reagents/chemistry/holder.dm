@@ -891,7 +891,7 @@
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 				if(meets_temp_requirement && meets_ph_requirement)
-					possible_reactions  += reaction
+					possible_reactions += reaction
 				else
 					LAZYADD(failed_but_capable_reactions, reaction)
 
@@ -1119,6 +1119,8 @@
 	var/sum_purity = 0
 	for(var/_reagent in cached_required_reagents)//this is not an object
 		var/datum/reagent/reagent = has_reagent(_reagent)
+		if (!reagent)
+			continue
 		sum_purity += reagent.purity
 		remove_reagent(_reagent, (multiplier * cached_required_reagents[_reagent]), safety = 1)
 	sum_purity /= cached_required_reagents.len

@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
 	))
 
-/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if(!can_speak())
 		return
 	if(sanitize)

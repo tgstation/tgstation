@@ -929,7 +929,7 @@
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_designs = sortList(list(
+	papersack_designs = sort_list(list(
 		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
 		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
 		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
@@ -1583,7 +1583,7 @@
 /obj/item/storage/box/hero/carphunter/PopulateContents()
 	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
 	new /obj/item/clothing/mask/gas/carp(src)
-	new /obj/item/kitchen/knife/hunting(src)
+	new /obj/item/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
 
 /obj/item/storage/box/holy/clock
