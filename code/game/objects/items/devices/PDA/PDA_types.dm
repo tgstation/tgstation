@@ -178,7 +178,6 @@
 	greyscale_colors = "#927444#D6B328#6C3BA1"
 
 /obj/item/pda/syndicate
-	default_cartridge = /obj/item/cartridge/virus/syndicate
 	greyscale_colors = "#891417#80FF80"
 	name = "military PDA"
 	owner = "John Doe"
