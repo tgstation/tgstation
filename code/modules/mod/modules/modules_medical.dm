@@ -26,11 +26,11 @@
 			return
 		var/atom/movable/organ = target
 		if(length(organ_list) >= max_organs)
-			mod.wearer.balloon_alert("too many organs!")
+			balloon_alert(mod.wearer, "too many organs!")
 			return
 		organ_list += organ
 		organ.forceMove(src)
-		mod.wearer.balloon_alert("picked up [organ]")
+		balloon_alert(mod.wearer, "picked up [organ]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	if(!length(organ_list))
 		return
@@ -42,7 +42,7 @@
 	organ_proj.require_open = require_open
 	organ_proj.preparePixelProjectile(target_to_shoot, mod.wearer)
 	organ_proj.firer = mod.wearer
-	mod.wearer.balloon_alert("fired [organ_proj.organ_ref]")
+	balloon_alert(mod.wearer, "fired [organ_proj.organ_ref]")
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(organ_proj, /obj/projectile.proc/fire)
 
@@ -68,7 +68,7 @@
 	if(require_open)
 		succeed = FALSE
 		if(organ_reciever.surgeries.len)
-			for(var/datum/surgery/procedure in organ_reciever.surgeries)
+			for(var/datum/surgery/procedure as anything in organ_reciever.surgeries)
 				if(procedure.location != organ_ref.zone)
 					continue
 				if(!istype(procedure, /datum/surgery/organ_manipulation))
@@ -80,7 +80,7 @@
 				break
 	if(succeed)
 		var/list/organs_to_boot_out = organ_reciever.getorganslot(organ_ref.slot)
-		for(var/obj/item/organ/organ_evacced in organs_to_boot_out)
+		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
 			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
 				continue
 			organ_evacced.Remove(target)

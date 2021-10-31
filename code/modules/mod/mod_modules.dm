@@ -236,7 +236,9 @@
 
 /obj/item/mod/module/storage/on_uninstall()
 	w_class = initial(w_class)
-	qdel(mod.GetComponent(/datum/component/storage))
+	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
+	storage.slaves -= modstorage
+	qdel(modstorage)
 
 /obj/item/mod/module/storage/antag
 	name = "MOD syndicate storage module"
@@ -817,7 +819,7 @@
 	desc = "A module that lets you scan the surrounding environment for construction holograms and speeds up wall construction time."
 	module_type = MODULE_USABLE
 	complexity = 2
-	idle_power_cost = 1
+	idle_power_cost = 3
 	use_power_cost = 50
 	incompatible_modules = list(/obj/item/mod/module/constructor)
 	cooldown_time = 11 SECONDS

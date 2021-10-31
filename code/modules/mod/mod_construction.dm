@@ -20,7 +20,8 @@
 /obj/item/mod/construction/core
 	name = "MOD core"
 	icon_state = "mod-core"
-	desc = "A mystical crystal able to convert cell power into energy usable by MODsuits."
+	desc = "A powerful crystal originating from the birthplace of Ethereals, planet Sprout. \
+	It has been repurposed to be an internal power source for a Modular Outerwear Device."
 
 /obj/item/mod/construction/armor
 	name = "MOD standard armor plates"
@@ -51,13 +52,37 @@
 /obj/item/mod/construction/shell
 	name = "MOD shell"
 	icon_state = "mod-construction"
-	desc = "An empty MOD shell."
+	desc = "A MOD shell."
 	var/obj/item/core
 	var/obj/item/helmet
 	var/obj/item/chestplate
 	var/obj/item/gauntlets
 	var/obj/item/boots
 	var/step = NONE
+
+/obj/item/mod/construction/shell/examine(mob/user)
+	. = ..()
+	var/display_text
+	switch(step)
+		if(NONE)
+			display_text = "It looks like it's missing a <b>MOD core</b>..."
+		if(CORE_STEP)
+			display_text = "The core seems <b>loose</b>..."
+		if(SCREWED_CORE_STEP)
+			display_text = "It looks like it's missing a <b>helmet</b>..."
+		if(HELMET_STEP)
+			display_text = "It looks like it's missing a <b>chestplate</b>..."
+		if(CHESTPLATE_STEP)
+			display_text = "It looks like it's missing <b>gauntlets</b>..."
+		if(GAUNTLETS_STEP)
+			display_text = "It looks like it's missing <b>boots</b>..."
+		if(BOOTS_STEP)
+			display_text = "The assembly seems <b>loose</b>..."
+		if(SCREWED_ASSEMBLY_STEP)
+			display_text = "The assembly seems <b>unsecured</b>..."
+		if(WRENCHED_ASSEMBLY_STEP)
+			display_text = "All it's missing is <b>external armor</b>..."
+	. += span_notice(display_text)
 
 /obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, params)
 	. = ..()

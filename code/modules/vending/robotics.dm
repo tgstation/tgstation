@@ -24,9 +24,6 @@
 		/obj/item/screwdriver = 5,
 		/obj/item/crowbar = 5
 	)
-	premium = list(
-		/obj/item/mod/construction/armor/engineering = 10,
-	)
 	refill_canister = /obj/item/vending_refill/robotics
 	default_price = PAYCHECK_HARD
 	payment_department = ACCOUNT_SCI

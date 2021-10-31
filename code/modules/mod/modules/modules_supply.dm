@@ -46,7 +46,7 @@
 			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, thing, user, TRUE))
 				show_message = TRUE
 			else
-				mod.wearer.balloon_alert("ore bag full!")
+				balloon_alert(mod.wearer, "ore bag full!")
 				continue
 	if(show_message)
 		playsound(mod.wearer, "rustle", 50, TRUE)
@@ -56,5 +56,5 @@
 	if(!.)
 		return
 	var/datum/component/storage/ore_storage = GetComponent(/datum/component/storage)
-	mod.wearer.balloon_alert("ores dropped")
+	balloon_alert(mod.wearer, "ores dropped")
 	ore_storage.do_quick_empty(mod.wearer.drop_location())

@@ -23,10 +23,10 @@
 	//TODO: microwave
 	if(microwave_target.microwave_act())
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
-		wearer_human.balloon_alert("[microwave_target] microwaved")
+		balloon_alert(mod.wearer, "[microwave_target] microwaved")
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		wearer_human.balloon_alert("[microwave_target] can't be microwaved")
+		balloon_alert(mod.wearer, "[microwave_target] can't be microwaved")
 	var/datum/effect_system/spark_spread/spark_effect_two = new
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()

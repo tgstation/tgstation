@@ -201,7 +201,7 @@
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
 			balloon_alert(carbon_user, "retract parts first!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
@@ -210,7 +210,7 @@
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
 			balloon_alert(wearer, "retract parts first!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return
 	if(!wearer.incapacitated())
 		var/atom/movable/screen/inventory/hand/ui_hand = over_object
@@ -229,7 +229,7 @@
 		balloon_alert(user, "removing cell...")
 		if(do_after(user, 1.5 SECONDS, target = src))
 			balloon_alert(user, "cell removed")
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 			if(!user.put_in_hands(cell))
 				cell.forceMove(drop_location())
 			return
@@ -243,7 +243,7 @@
 		return TRUE
 	if(active || activating)
 		balloon_alert(user, "deactivate suit first!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	balloon_alert(user, "[open ? "closing" : "opening"] panel...")
 	screwdriver.play_tool_sound(src, 100)
@@ -261,45 +261,46 @@
 	. = ..()
 	if(!open)
 		balloon_alert(user, "open the panel first!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(length(modules))
+		var/list/removable_modules = list()
 		for(var/obj/item/mod/module/module as anything in modules)
-			var/list/removable_modules = list()
-			if(module.removable)
-				removable_modules += module
-			var/obj/item/mod/module/module_to_remove = input("Which module to remove?") as null|anything in removable_modules
-			if(!module_to_remove)
-				return FALSE
-			uninstall(module_to_remove)
-			module_to_remove.forceMove(drop_location())
+			if(!module.removable)
+				continue
+			removable_modules += module
+		var/obj/item/mod/module/module_to_remove = tgui_input_list(user, "Which module to remove?", "Module Removal", removable_modules)
+		if(!module_to_remove?.mod)
+			return FALSE
+		uninstall(module_to_remove)
+		module_to_remove.forceMove(drop_location())
 		crowbar.play_tool_sound(src, 100)
 		return TRUE
 	balloon_alert(user, "no modules!")
-	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return FALSE
 
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the panel first!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		install(attacking_item, user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
 			balloon_alert(user, "open the panel first!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		if(cell)
 			balloon_alert(user, "cell already installed!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		attacking_item.forceMove(src)
 		cell = attacking_item
 		balloon_alert(user, "cell installed")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
@@ -381,20 +382,20 @@
 		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
 			if(user)
 				balloon_alert(user, "[new_module] incompatible with [old_module]!")
-				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-				return
+				playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+			return
 	if(is_type_in_list(module, theme.module_blacklist))
 		if(user)
 			balloon_alert(user, "[src] doesn't accept [new_module]!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			return
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return
 	var/complexity_with_module = complexity
 	complexity_with_module += new_module.complexity
 	if(complexity_with_module > complexity_max)
 		if(user)
 			balloon_alert(user, "[new_module] would make [src] too complex!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			return
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return
 	new_module.forceMove(src)
 	modules += new_module
 	complexity += new_module.complexity
@@ -402,15 +403,16 @@
 	new_module.on_install()
 	if(user)
 		balloon_alert(user, "[new_module] added")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 
 /obj/item/mod/control/proc/uninstall(module)
 	var/obj/item/mod/module/old_module = module
 	modules -= old_module
 	complexity -= old_module.complexity
-	old_module.on_unequip()
-	if(old_module.active)
-		old_module.on_deactivation()
+	if(active)
+		old_module.on_unequip()
+		if(old_module.active)
+			old_module.on_deactivation()
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -418,7 +420,7 @@
 	var/obj/item/card/id/access_id = card
 	if(!allowed(wearer))
 		balloon_alert(wearer, "insufficient access!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	req_access = access_id.access.Copy()
 	balloon_alert(wearer, "access updated")
@@ -559,6 +561,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
+	item_flags = IGNORE_DIGITIGRADE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 

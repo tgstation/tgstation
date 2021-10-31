@@ -16,7 +16,7 @@
 		return
 	if(active || activating)
 		balloon_alert(user, "deactivate the suit first!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	var/parts_to_check = mod_parts - part
 	if(part.loc == src)
@@ -50,10 +50,10 @@
 		ADD_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 	else if(piece.loc != src)
 		balloon_alert(user, "[piece] already deployed!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	else
 		balloon_alert(user, "bodypart clothed!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 
 /obj/item/mod/control/proc/conceal(mob/user, part)
 	var/obj/item/piece = part
@@ -72,24 +72,24 @@
 	for(var/obj/item/part as anything in mod_parts)
 		if(!force_deactivate && part.loc == src)
 			balloon_alert(user, "deploy all parts first!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 	if(locked && !active && !allowed(user) && !force_deactivate)
 		balloon_alert(user, "access insufficient!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(!cell?.charge && !force_deactivate)
 		balloon_alert(user, "suit not powered!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(open && !force_deactivate)
 		balloon_alert(user, "close the suit panel!")
-		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(activating)
 		if(!force_deactivate)
 			balloon_alert(user, "suit already [active ? "shutting down" : "starting up"]!")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
@@ -137,7 +137,9 @@
 		wearer.update_hair()
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
-		audible_message(span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."), hearing_distance = 0)
+		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
+		if(ai)
+			to_chat(ai, span_notice("SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\""))
 		icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		worn_icon_state = "[skin]-control[active ? "" : "-sealed"]"
 		active = !active
