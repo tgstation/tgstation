@@ -150,7 +150,6 @@
 		"mod_clamps",
 		"mod_drill",
 		"mod_orebag",
-		"mod_organ_thrower",
 		"mod_microwave_beam",
 		"mod_bikehorn",
 	)
@@ -350,7 +349,6 @@
 		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
-		"mod_organ_thrower_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	required_experiments = list(/datum/experiment/scanning/points/slime/easy)

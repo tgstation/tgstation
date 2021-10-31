@@ -34,16 +34,16 @@
 
 /obj/item/mod/module/orebag/proc/ore_pickup(mob/living/user)
 	SIGNAL_HANDLER
-	var/turf/tile = mod.wearer.loc
+	var/turf/tile = get_turf(mod.wearer)
 	var/show_message = FALSE
 	if (!isturf(tile))
 		return
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	if(STR)
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	if(storage)
 		for(var/thing in tile)
-			if(!is_type_in_typecache(thing, STR.can_hold))
+			if(!is_type_in_typecache(thing, storage.can_hold))
 				continue
-			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, thing, user, TRUE))
+			if(SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, thing, mod.wearer, TRUE))
 				show_message = TRUE
 			else
 				balloon_alert(mod.wearer, "ore bag full!")
