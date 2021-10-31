@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - qol: "the PDA will no longer bother you with a message if all you're doing is closing the interface while laying down."

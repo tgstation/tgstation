@@ -702,7 +702,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dp" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/academy/classrooms)
 "dq" = (
 /obj/machinery/computer/mech_bay_power_console{
