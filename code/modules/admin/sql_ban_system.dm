@@ -1023,3 +1023,5 @@
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
 				qdel(other_player_client)
+
+#undef MAX_REASON_LENGTH
