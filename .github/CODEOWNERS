@@ -82,6 +82,10 @@
 
 # CONTRIBUTORS
 
+# Fikou
+
+/code/modules/mod/ @Fikou
+
 # Ghilker
 
 /code/__DEFINES/atmospherics/ @Ghilker
@@ -107,10 +111,6 @@
 
 /code/modules/capture_the_flag/ @NamelessFairy
 /_maps/map_files/CTF/ @NamelessFairy
-
-# Fikou
-
-/code/modules/mod/ @Fikou
 
 # MULTIPLE OWNERS
 

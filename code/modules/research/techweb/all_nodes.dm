@@ -350,6 +350,7 @@
 		"piercesyringe",
 		"plasmarefiller",
 		"smoke_machine",
+		"mod_organ_thrower_bluespace",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	required_experiments = list(/datum/experiment/scanning/points/slime/easy)
@@ -390,17 +391,6 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
 	discount_experiments = list(/datum/experiment/scanning/random/cytology = 3000) //Big discount to reinforce doing it.
-
-/datum/techweb_node/bio_expert
-	id = "bio_expert"
-	display_name = "Expert Biological Research"
-	description = "Pushing the boundaries of what is and is not acceptable biological research."
-	prereq_ids = list("adv_biotech")
-	design_ids = list(
-		"organ_thrower_bluespace",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
-	required_experiments = list(/datum/experiment/scanning/points/slime/expert)
 
 /////////////////////////Advanced Surgery/////////////////////////
 

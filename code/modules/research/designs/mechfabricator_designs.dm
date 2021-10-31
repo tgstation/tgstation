@@ -1320,7 +1320,7 @@
 /datum/design/organ_thrower
 	name = "MOD Module: Organ Thrower"
 	desc = "An arm mounted organ launching device to automatically insert organs into open bodies."
-	id = "organ_thrower"
+	id = "mod_organ_thrower"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500)
 	build_path = /obj/item/mod/module/organ_thrower
@@ -1329,7 +1329,7 @@
 /datum/design/organ_thrower_bluespace
 	name = "MOD Module: Bluespace Organ Thrower"
 	desc = "Like the organ thrower, except it doesn't require an open body to replace the organ!"
-	id = "organ_thrower_bluespace"
+	id = "mod_organ_thrower_bluespace"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 3000, /datum/material/bluespace = 1500)
 	build_path = /obj/item/mod/module/organ_thrower/bluespace
