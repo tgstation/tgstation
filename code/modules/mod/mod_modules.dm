@@ -199,7 +199,6 @@
 
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay()
-	. = list()
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
 		used_overlay = overlay_state_use
@@ -207,8 +206,10 @@
 		used_overlay = overlay_state_active
 	else if(overlay_state_inactive)
 		used_overlay = overlay_state_inactive
+	if(!used_overlay)
+		return FALSE
 	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
-	. += module_icon
+	return module_icon
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"
@@ -385,8 +386,9 @@
 /obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 
-	if(!projectile.nodamage)
-		unstealth(source)
+	if(projectile.nodamage)
+		return
+	unstealth(source)
 
 /obj/item/mod/module/stealth/ninja
 	name = "MOD advanced cloaking module"

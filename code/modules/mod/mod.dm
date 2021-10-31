@@ -333,8 +333,9 @@
 		wearer.emote("scream")
 
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)
-	toggle_activate(stripper, TRUE)
-	for(var/part in modules)
+	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
+		return
+	for(var/obj/item/part in mod_parts)
 		conceal(stripper, part)
 	return ..()
 
@@ -343,9 +344,9 @@
 	if(!active)
 		return
 	for(var/obj/item/mod/module/module as anything in modules)
-		var/icon/module_icon = module.generate_worn_overlay()
+		var/mutable_appearance/module_icon = module.generate_worn_overlay()
 		if(!module_icon)
-			return
+			continue
 		. += module_icon
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
@@ -477,7 +478,7 @@
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = NONE
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
-	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
 	alternate_worn_layer = NECK_LAYER
 	var/obj/item/mod/control/mod

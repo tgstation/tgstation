@@ -63,7 +63,7 @@
 		gauntlets.show_overslot()
 	if(piece == boots)
 		boots.show_overslot()
-	user.visible_message(span_notice("[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
+	wearer.visible_message(span_notice("[wearer]'s [piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
 		span_notice("[piece] retract[piece.p_s()] back into [src] with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -73,24 +73,24 @@
 		if(!force_deactivate && part.loc == src)
 			balloon_alert(user, "deploy all parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return
+			return FALSE
 	if(locked && !active && !allowed(user) && !force_deactivate)
 		balloon_alert(user, "access insufficient!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
+		return FALSE
 	if(!cell?.charge && !force_deactivate)
 		balloon_alert(user, "suit not powered!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
+		return FALSE
 	if(open && !force_deactivate)
 		balloon_alert(user, "close the suit panel!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
+		return FALSE
 	if(activating)
 		if(!force_deactivate)
 			balloon_alert(user, "suit already [active ? "shutting down" : "starting up"]!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		return
+		return FALSE
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
@@ -161,3 +161,4 @@
 			STOP_PROCESSING(SSobj, src)
 		wearer.update_equipment_speed_mods()
 	activating = FALSE
+	return TRUE

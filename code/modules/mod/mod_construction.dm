@@ -77,10 +77,10 @@
 		if(GAUNTLETS_STEP)
 			display_text = "It looks like it's missing <b>boots</b>..."
 		if(BOOTS_STEP)
-			display_text = "The assembly seems <b>loose</b>..."
-		if(SCREWED_ASSEMBLY_STEP)
 			display_text = "The assembly seems <b>unsecured</b>..."
 		if(WRENCHED_ASSEMBLY_STEP)
+			display_text = "The assembly seems <b>loose</b>..."
+		if(SCREWED_ASSEMBLY_STEP)
 			display_text = "All it's missing is <b>external armor</b>..."
 	. += span_notice(display_text)
 

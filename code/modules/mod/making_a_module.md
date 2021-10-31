@@ -7,7 +7,7 @@ This is a guide to creating a module of your own. It shows you the basics of any
 We're simply starting out with the definition of our module. Think of what it'll do, name it, give it a desc explaining it.
 
 ```dm
-/obj/item/mod/module
-	name = "cow"
-	desc = "Known for their milk, just don't tip them over."
+/obj/item/mod/module/
+	name = ""
+	desc = ""
 ```
