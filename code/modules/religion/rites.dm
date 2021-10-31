@@ -817,10 +817,10 @@
 	sleeper.visible_message(span_notice("[sleeper] has fallen into a deep slumber..."))
 	
 	
-	while(!QDELETED(religious_tool) && !QDELETED(sleeper))
+	while(!QDELETED(religious_tool) && !QDELETED(sleeper) && (sleeper in movable_reltool.buckled_mobs))
 		if(HAS_TRAIT(sleeper, TRAIT_CRITICAL_CONDITION))
 			break
-		user.apply_damage(0.1, OXY)
+		user.apply_damage(0.5, BRUTE)
 		sleeper.SetSleeping(100)
 		sleep(1)
 	
