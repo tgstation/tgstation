@@ -244,7 +244,7 @@
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
-	pixel_shift = -28
+	pixel_shift = 28
 
 /obj/item/wallframe/defib_mount/charging
 	name = "unhooked PENLITE defibrillator mount"
