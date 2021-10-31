@@ -1,5 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "The SM now properly provides bonus power for operating in a low pressure environment. Make sure you can keep it cool enough, and remember, space or a vacuum won't work, but it will damage the SM!"
-  - code_imp: "Calculations relating to the SM pressure bonus are now derived from human readable parameters."

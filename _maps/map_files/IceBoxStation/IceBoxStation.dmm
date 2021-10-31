@@ -7186,7 +7186,7 @@
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "blw" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "blz" = (
 /obj/structure/disposalpipe/segment,
@@ -26532,6 +26532,10 @@
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/rack,
+/obj/item/book/manual/wiki/medicine,
+/obj/item/stack/medical/mesh,
+/obj/item/wrench/medical,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "jRs" = (
@@ -29695,7 +29699,7 @@
 /area/cargo/storage)
 "lCJ" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/maintenance/department/electrical)
 "lCO" = (
 /obj/effect/turf_decal/bot,
@@ -34899,9 +34903,14 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/book/manual/wiki/medicine,
-/obj/item/stack/medical/mesh,
-/obj/item/wrench/medical,
+/obj/machinery/computer/med_data/laptop{
+	dir = 8;
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "oiC" = (
@@ -35655,7 +35664,7 @@
 /area/maintenance/port/fore)
 "oFq" = (
 /obj/machinery/newscaster/directional/west,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "oFu" = (
 /obj/machinery/door/firedoor,
