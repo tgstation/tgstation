@@ -932,13 +932,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"es" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/space/basic,
-/area/icemoon/underground/explored)
 "et" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/plating/dirt{
@@ -1374,14 +1367,17 @@
 /turf/open/floor/stone,
 /area/service/bar)
 "gD" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
 /obj/machinery/button/door/directional/north{
 	id = "drone_bay_shutter";
 	name = "bay shutter control";
 	pixel_x = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/cargo/drone_bay)
@@ -2074,13 +2070,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"js" = (
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/structure/flora/grass/both,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "jt" = (
 /obj/structure/closet/crate,
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -3125,6 +3114,9 @@
 /turf/open/genturf,
 /area/hallway/secondary/service)
 "nG" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/cargo/drone_bay)
 "nJ" = (
@@ -3895,10 +3887,13 @@
 /turf/closed/wall,
 /area/mine/storage)
 "qH" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
 	},
+/obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/plating/snowed/icemoon,
 /area/cargo/drone_bay)
 "qI" = (
@@ -8967,10 +8962,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"Kv" = (
-/obj/structure/flora/grass/brown,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "Kw" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 1
@@ -30258,7 +30249,7 @@ mO
 OA
 Va
 Va
-js
+Fe
 mO
 mO
 mO
@@ -30513,7 +30504,7 @@ mO
 mO
 Qj
 eI
-Kv
+PG
 yk
 xf
 Va
@@ -31022,7 +31013,7 @@ ak
 Xo
 Rj
 Rj
-es
+qs
 Rj
 JN
 gd
