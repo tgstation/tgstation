@@ -1087,3 +1087,51 @@
 	mineral_turf.gets_drilled(mod.wearer)
 	drain_power(use_power_cost)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/item/mod/module/orebag
+	name = "MOD ore pickup module"
+	desc = "An integrated ore storage system that allows the MODsuit to automatically collect and deposit ore."
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_power_cost = 15
+	incompatible_modules = list(/obj/item/mod/module/orebag)
+	var/list/ores = list()
+
+/obj/item/mod/module/orebag/on_activation()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/ore_pickup)
+
+/obj/item/mod/module/orebag/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+
+/obj/item/mod/module/orebag/proc/ore_pickup(atom/movable/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
+		move_ore(ore)
+		playsound(src, "rustle", 50, TRUE)
+
+/obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
+	for(var/obj/item/stack/stored_ore as anything in ores)
+		if(!ore.can_merge(stored_ore))
+			continue
+		ore.merge(stored_ore)
+		if(QDELETED(ore))
+			return
+		break
+	ore.forceMove(src)
+	ores += ore
+
+/obj/item/mod/module/orebag/on_use()
+	. = ..()
+	if(!.)
+		return
+	for(var/obj/item/ore as anything in ores)
+		ore.forceMove(mod.drop_location())
+		ores -= ore
+	balloon_alert(mod.wearer, "ores dropped")
