@@ -741,3 +741,124 @@
 	..()
 	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
 	user.AddElement(/datum/element/tenacious)
+
+/**** Spook God ****/
+
+///spook rites have a shared cooldown and require you to have ghosts orbiting you
+/datum/religion_rites/spook
+	var/ghosts_needed = 0
+	invoke_msg = "oooooOOOOOOOOOOOOoooooooo"
+	var/rite_cooldown_amt = 0
+	var/static/rite_cooldown = 0
+
+/datum/religion_rites/spook/can_afford(mob/living/user)
+	if (rite_cooldown > world.time)		//no need to count the ghosts in this case
+		to_chat(user, span_warning("You do not want to annoy the spirits! Try again later."))
+		return FALSE
+	var/ghost_counter = 0
+	for(var/i in user.orbiters?.orbiter_list)	//shorter copypasta of the ghost_sword
+		if(!isobserver(i))						//ghost_check() proc
+			continue
+		ghost_counter++
+	if (ghost_counter >= ghosts_needed)
+		return TRUE
+	to_chat(user, span_warning("You need more spirits..."))
+	return FALSE
+
+/datum/religion_rites/spook/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	rite_cooldown = world.time + rite_cooldown_amt
+	. = ..()
+
+
+/datum/religion_rites/spook/ghost_dream
+	name = "Dream Communion"
+	desc = "The chosen will fall in a deep slumber, where they will hear the whispers of the dead. This will drain their life."
+	ritual_length = 15 SECONDS
+	ritual_invocations =list( "O you from beyond!",
+							"Make your voices loud...")
+	invoke_msg = "And let this one hear you!"
+	ghosts_needed = 10	//hearing the whinings of the dead is a big boy rite
+	rite_cooldown_amt = 300 SECONDS
+
+/datum/religion_rites/spook/ghost_dream/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
+	if(!ismovable(religious_tool))
+		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
+		return FALSE
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool)
+		return FALSE
+	if(!LAZYLEN(movable_reltool.buckled_mobs))
+		. = FALSE
+		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
+			to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
+			return
+		to_chat(user, span_warning("This rite requires an individual to be buckled to [movable_reltool]."))
+		return
+	return ..()
+	
+/datum/religion_rites/spook/ghost_dream/invoke_effect(mob/living/user, atom/religious_tool)
+	..()
+	if(!ismovable(religious_tool))
+		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool?.buckled_mobs?.len)
+		return FALSE
+	var/mob/living/carbon/human/sleeper
+	for(var/i in movable_reltool.buckled_mobs)
+		if(istype(i,/mob/living/carbon/human))
+			sleeper = i
+			break
+	if (!sleeper)
+		return FALSE
+	
+	sleeper.SetSleeping(100)
+	ADD_TRAIT(sleeper, TRAIT_SIXTHSENSE, "chaplain sect")
+	
+	sleeper.visible_message(span_notice("[sleeper] has fallen into a deep slumber..."))
+	
+	
+	while(!QDELETED(religious_tool) && !QDELETED(sleeper))
+		if(HAS_TRAIT(sleeper, TRAIT_CRITICAL_CONDITION))
+			break
+		user.apply_damage(0.1, OXY)
+		sleeper.SetSleeping(100)
+		sleep(1)
+	
+	sleeper.visible_message(span_notice("[sleeper] wakes up!"))
+	
+	REMOVE_TRAIT(sleeper, TRAIT_SIXTHSENSE, "chaplain sect")
+	sleeper.SetSleeping(1)
+
+
+/datum/religion_rites/spook/haunt_item/proc/apply_spirit_holding(obj/item/possessed_item)
+	possessed_item.AddComponent(/datum/component/spirit_holding)
+	possessed_item.name = "eerie [possessed_item.name]"				//todo: avoid eerie eerie items
+
+/datum/religion_rites/spook/haunt_item
+	name = "Haunt Item"
+	desc = "Lets the dead possess an offering."
+	ritual_length = 5 SECONDS
+	ritual_invocations =list("To those in wait...")
+	invoke_msg = "We offer a new shell!"
+	ghosts_needed = 1
+	rite_cooldown_amt = 60 SECONDS
+///the item we want to spookify
+	var/obj/item/chosen_item
+
+/datum/religion_rites/spook/haunt_item/perform_rite(mob/living/carbon/human/user, atom/movable/religious_tool)
+	for(var/obj/item/phylactery in get_turf(religious_tool))	//any item goes, we're taking the top of the heap but any checks would go here
+		chosen_item = phylactery //the phylactery has been chosen by our lord and savior
+		return ..()
+	return FALSE
+
+/datum/religion_rites/spook/haunt_item/invoke_effect(mob/living/user, atom/religious_tool)
+	..()
+	if(!QDELETED(chosen_item) && get_turf(religious_tool) == chosen_item.loc) //check if the same item is still there
+		apply_spirit_holding(chosen_item)
+		playsound(get_turf(religious_tool), 'sound/spookoween/chain_rattling.ogg', 50, TRUE)
+		chosen_item = null //our lord and savior no longer cares about this item
+		return TRUE
+	chosen_item = null
+	to_chat(user, span_warning("The item that was chosen for the rite is no longer on the altar!"))
+	return FALSE
+

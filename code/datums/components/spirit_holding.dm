@@ -8,6 +8,8 @@
 	var/attempting_awakening = FALSE
 	///mob contained in the item.
 	var/mob/living/simple_animal/shade/bound_spirit
+	///a thing can only get this component once
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 /datum/component/spirit_holding/Initialize()
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out

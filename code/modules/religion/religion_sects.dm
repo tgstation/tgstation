@@ -406,3 +406,16 @@
 
 /datum/religion_sect/spar/tool_examine(mob/living/holy_creature)
 	return "You have [round(favor)] sparring matches won in [GLOB.deity]'s name to redeem. You have lost [matches_lost] holy matches. You will be excommunicated after losing three matches."
+
+/**** Spook God ****/
+
+/datum/religion_sect/spook
+	name = "Death God"
+	quote = "You've got friends on the other side."
+	desc = "Gain and retain the attention of the dead."
+	tgui_icon = "eye"
+	altar_icon_state = "convertaltar-spook"				//TODO: change altar icon & tgui icon
+	alignment = ALIGNMENT_NEUT
+	rites_list = list(
+		/datum/religion_rites/spook/ghost_dream,
+		/datum/religion_rites/spook/haunt_item )
