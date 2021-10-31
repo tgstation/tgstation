@@ -10,6 +10,7 @@
 /obj/item/circuit_component/input_request
 	display_name = "Input Request"
 	desc = "Converts a string into a typepath. Useful for adding components."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// Options for input requests

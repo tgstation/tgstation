@@ -13,17 +13,6 @@
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
 	var/bare_wound_bonus = 0
 
-	/*
-	var/datum/armor/armor
-	VAR_PRIVATE/atom_integrity //defaults to max_integrity
-	var/max_integrity = 500
-	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
-	///Damage under this value will be completely ignored
-	var/damage_deflection = 0
-
-	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
-	*/
-
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
 
@@ -57,15 +46,7 @@
 	return ..()
 
 /obj/Initialize(mapload)
-	//if (islist(armor))
-	//	armor = getArmor(arglist(armor))
-	//else if (!armor)
-	//	armor = getArmor()
-	//else if (!istype(armor, /datum/armor))
-	//	stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
-	//atom_integrity = max_integrity
-
-	. = ..() //Do this after, else mat datums is mad.
+	. = ..()
 
 	if (set_obj_flags)
 		var/flagslist = splittext(set_obj_flags,";")

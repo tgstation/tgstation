@@ -16053,8 +16053,6 @@
 /area/tdome/arena_source)
 "Ws" = (
 /obj/machinery/vending/coffee{
-	custom_premium_price = 0;
-	custom_price = 0;
 	default_price = 0;
 	extra_price = 0;
 	fair_market_price = 0;

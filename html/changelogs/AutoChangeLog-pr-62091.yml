@@ -1,4 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - bugfix: "borgs will no longer leave MMIs while cryoing"
