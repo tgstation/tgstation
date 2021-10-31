@@ -12401,7 +12401,7 @@
 /area/icemoon/underground/explored)
 "YG" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/mine/mechbay)
 "YI" = (
 /obj/structure/toilet{
