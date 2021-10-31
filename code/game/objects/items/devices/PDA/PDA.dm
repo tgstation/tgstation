@@ -218,6 +218,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return
 
+	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED) && mode == 2)
+		explode(user, from_message_menu = TRUE)
+		return
+
 	..()
 
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
@@ -531,6 +535,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("2")//Messenger
+				if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
+					explode(U, from_message_menu = TRUE)
+					return
 				mode = 2
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
@@ -642,6 +649,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					return
 			if("Message")
 				create_message(U, locate(href_list["target"]) in GLOB.PDAs)
+			if("Mess_us_up")
+				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE)) //in case someone ever tries to call this with forged hrefs
+					return
+				explode(U, locate(href_list["target"]))
 
 			if("Sorting Mode")
 				sort_by_job = !sort_by_job
@@ -742,7 +753,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	update_slot_icon()
 
 
-/obj/item/pda/proc/msg_input(mob/living/U = usr)
+/obj/item/pda/proc/msg_input(mob/living/U = usr, rigged = FALSE)
 	var/t = stripped_input(U, "Please enter message", name)
 	if (!t || toff)
 		return
@@ -752,22 +763,27 @@ GLOBAL_LIST_EMPTY(PDAs)
 		t = Gibberish(t, TRUE)
 	return t
 
-/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone)
-	var/message = msg_input(user)
+/**
+ * Prompts the user to input and send a message to another PDA.
+ * the everyone arg is used for mass messaging from lawyer and captain carts.
+ * rigged for PDA bombs. fakename and fakejob for forged messages (also PDA bombs).
+ */
+/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone = FALSE, rigged = FALSE, fakename, fakejob)
+	var/message = msg_input(user, rigged)
 	if(!message || !targets.len)
-		return
+		return FALSE
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
-		return
+		return FALSE
 
 	var/list/filter_result = is_ic_filtered_for_pdas(message)
 	if (filter_result)
 		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
-		return
+		return FALSE
 
 	var/list/soft_filter_result = is_soft_ic_filtered_for_pdas(message)
 	if (soft_filter_result)
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			return
+			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
 
@@ -777,22 +793,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/string_targets = list()
 	for (var/obj/item/pda/P in targets)
 		if (P.owner && P.ownjob)  // != src is checked by the UI
-			string_targets += "[P.owner] ([P.ownjob])"
+			string_targets += STRINGIFY_PDA_TARGET(P.owner, P.ownjob)
 	for (var/obj/machinery/computer/message_monitor/M in targets)
 		// In case of "Reply" to a message from a console, this will make the
 		// message be logged successfully. If the console is impersonating
 		// someone by matching their name and job, the reply will reach the
 		// impersonated PDA.
-		string_targets += "[M.customsender] ([M.customjob])"
+		string_targets += STRINGIFY_PDA_TARGET(M.customsender, M.customjob)
 	if (!string_targets.len)
-		return
+		return FALSE
 
 	var/datum/signal/subspace/messaging/pda/signal = new(src, list(
-		"name" = "[owner]",
-		"job" = "[ownjob]",
+		"name" = "[fakename || owner]",
+		"job" = "[fakejob || ownjob]",
 		"message" = message,
 		"targets" = string_targets,
 		"emojis" = allow_emojis,
+		"rigged" = rigged,
 	))
 	if (picture)
 		signal.data["photo"] = picture
@@ -803,7 +820,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, span_notice("ERROR: Server isn't responding."))
 		if(!silent)
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
-		return
+		return FALSE
 
 	var/target_text = signal.format_target()
 	if(allow_emojis)
@@ -813,12 +830,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Log it in our logs
 	tnote += "<i><b>&rarr; To [target_text]:</b></i><br>[signal.format_message()]<br>"
 	// Show it to ghosts
-	var/ghost_message = span_name("[owner] </span><span class='game say'>PDA Message</span> --> [span_name("[target_text]")]: <span class='message'>[signal.format_message()]")
+	var/ghost_message = span_name("[owner] </span><span class='game say'>[rigged ? "Rigged" : ""] PDA Message</span> --> [span_name("[target_text]")]: <span class='message'>[signal.format_message()]")
 	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
-	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
+	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(name)] to [target_text]")
+	if(rigged)
+		log_bomber(user, "Sent a Rigged PDA message (Name: [fakename || owner]. Job: [fakejob || ownjob]) to [english_list(string_targets)] [!is_special_character(user) ? "(TRIGGED BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [target_text]: \"[message]\""))
 	if(!silent)
 		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
@@ -827,9 +846,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	last_text = world.time
 	if (everyone)
 		last_everyone = world.time
+	return TRUE
 
 /obj/item/pda/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
-	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
+	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];target=[signal.data["rigged"] || REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -846,7 +866,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		L = get(src, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
-		var/reply = "(<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)"
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
@@ -1150,9 +1170,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 		notescanned = TRUE
 		to_chat(user, span_notice("Paper scanned. Saved to PDA's notekeeper.") )
 
-
-/obj/item/pda/proc/explode() //This needs tuning.
+/**
+ * Called when someone replies to a rigged PDA message. It explodes.
+ * from_message_menu : whether it's caused by the target opening the message menu too early.
+ */
+/obj/item/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/T = get_turf(src)
+
+	log_bomber(bomber, "PDA-bombed", target, "as [target.p_they()] tried to [from_message_menu ? "open the PDA message menu" : "reply to the rigged PDA message"] [bomber && !is_special_character(bomber) ? "(TRIGGED BY NON-ANTAG)" : ""]")
 
 	if (ismob(loc))
 		var/mob/M = loc
@@ -1167,7 +1192,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
-	return
 
 /obj/item/pda/Destroy()
 	GLOB.PDAs -= src
