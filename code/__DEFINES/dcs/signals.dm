@@ -278,6 +278,10 @@
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
+///from base of [/datum/reagents/proc/add_reagent] - Sent before the reagent is added: (reagenttype, amount, reagtemp, data, no_react)
+#define COMSIG_REAGENTS_PRE_ADD_REAGENT "reagents_pre_add_reagent"
+	/// Prevents the reagent from being added.
+	#define COMPONENT_CANCEL_REAGENT_ADD (1<<0)
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
 #define COMSIG_REAGENTS_NEW_REAGENT "reagents_new_reagent"
 ///from base of [/datum/reagents/proc/add_reagent]: (/datum/reagent, amount, reagtemp, data, no_react)
@@ -1536,3 +1540,9 @@
 ///Sent from /datum/biological_sample/proc/reset_sample
 #define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
 	#define SPARE_SAMPLE (1<<0)
+
+/// Called when a techweb design is researched (datum/design/researched_design, custom)
+#define COMSIG_TECHWEB_ADD_DESIGN "techweb_add_design"
+
+/// Called when a techweb design is removed (datum/design/removed_design, custom)
+#define COMSIG_TECHWEB_REMOVE_DESIGN "techweb_remove_design"

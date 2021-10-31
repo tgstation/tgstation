@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - bugfix: "fixes a runtime when transferring advanced ids to/from wallets"

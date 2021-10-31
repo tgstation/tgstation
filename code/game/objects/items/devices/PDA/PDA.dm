@@ -462,7 +462,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"])
+	if(!href_list["close"] && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -763,6 +763,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (filter_result)
 		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
 		return
+
+	var/list/soft_filter_result = is_soft_ic_filtered_for_pdas(message)
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
 
 	if(prob(1))
 		message += "\nSent from my PDA"

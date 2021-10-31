@@ -414,13 +414,14 @@
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
-		"MAX_TEMP" = 600
+		"MAX_TEMP" = T0C + 70 //Pretty warm, explicitly not fire temps. Time bombs are cool, but not that cool. If it makes you feel any better it's close
 	)
 
 /datum/gas_reaction/nitryl_decomposition/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
+	//This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitryl][MOLES])
 	var/energy_produced = heat_efficency * NITRYL_DECOMPOSITION_ENERGY
 
