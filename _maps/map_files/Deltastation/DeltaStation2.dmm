@@ -63898,10 +63898,6 @@
 /turf/open/floor/iron,
 /area/cargo/qm)
 "mXc" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/color/fyellow,
-/obj/item/clothing/suit/hazardvest,
-/obj/item/multitool,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -63910,6 +63906,7 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
 /area/commons/storage/tools)
 "mXx" = (
@@ -86892,7 +86889,6 @@
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "tIE" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -86904,6 +86900,10 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/item/clothing/gloves/color/fyellow,
+/obj/structure/rack,
+/obj/item/multitool,
+/obj/item/clothing/suit/hazardvest,
 /turf/open/floor/iron,
 /area/commons/storage/tools)
 "tIS" = (
