@@ -1044,3 +1044,42 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
+
+/obj/item/mod/module/drill
+	name = "MOD drill module"
+	desc = "A specialized drilling system that allows the MODsuit to pierce the heavens."
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	use_power_cost = 50
+	incompatible_modules = list(/obj/item/mod/module/drill)
+
+/obj/item/mod/module/drill/on_activation()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
+
+/obj/item/mod/module/drill/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP)
+
+/obj/item/mod/module/drill/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!mod.wearer.Adjacent(target))
+		return
+	if(istype(target, /turf/closed/mineral))
+		var/turf/closed/mineral/mineral_turf = target
+		mineral_turf.gets_drilled(mod.wearer)
+
+/obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
+	SIGNAL_HANDLER
+	if(!istype(bumped_into, /turf/closed/mineral))
+		return
+	var/turf/closed/mineral/mineral_turf = bumped_into
+	mineral_turf.gets_drilled(mod.wearer)
+	drain_power(use_power_cost)
+	return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -58,7 +58,6 @@
 	var/obj/item/organ/organ_ref
 	var/require_open = TRUE
 
-
 /obj/projectile/organ/on_hit(atom/target)
 	. = ..()
 	if(!ishuman(target))

@@ -108,6 +108,10 @@
 /code/modules/capture_the_flag/ @NamelessFairy
 /_maps/map_files/CTF/ @NamelessFairy
 
+# Fikou
+
+/code/modules/mod/ @Fikou
+
 # MULTIPLE OWNERS
 
 /icons/ @Twaticus @ShizCalev @Krysonism
