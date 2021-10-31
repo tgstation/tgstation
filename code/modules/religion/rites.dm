@@ -838,7 +838,7 @@
 	name = "Haunt Item"
 	desc = "Lets the dead possess an offering."
 	ritual_length = 5 SECONDS
-	ritual_invocations =list("To those in wait...")
+	ritual_invocations = list("To those in wait...")
 	invoke_msg = "We offer a new shell!"
 	ghosts_needed = 1
 	rite_cooldown_amt = 60 SECONDS
