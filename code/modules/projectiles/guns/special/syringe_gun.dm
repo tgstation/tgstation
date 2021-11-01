@@ -99,9 +99,8 @@
 	force = 6 //A little bit more robust in melee since it's larger
 
 /obj/item/gun/syringe/rapidsyringe
-	name = "mini rapid syringe gun"
+	name = "compact rapid syringe gun"
 	desc = "A modification of the syringe gun design to be more compact and use a rotating cylinder to store up to six syringes."
-	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "rapidsyringegun"
 	max_syringes = 6
 
@@ -117,8 +116,8 @@
 	syringes = list(new /obj/item/reagent_containers/syringe())
 
 /obj/item/gun/syringe/dna
-	name = "modified mini syringe gun"
-	desc = "A syringe gun that has been modified to be smaller and fit DNA injectors instead of normal syringes."
+	name = "modified compact syringe gun"
+	desc = "A syringe gun that has been modified to be compact and fit DNA injectors instead of normal syringes."
 	icon_state = "dnasyringegun"
 
 /obj/item/gun/syringe/dna/Initialize(mapload)
