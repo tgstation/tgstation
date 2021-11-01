@@ -76,8 +76,6 @@
 	var/power_output = 0
 	///Instability effects how chaotic the behavior of the reaction is
 	var/instability = 0
-	///Amount of radiation that the machine can output
-	var/rad_power = 0
 	///Difference between the gases temperature and the internal temperature of the reaction
 	var/delta_temperature = 0
 	///Energy from the reaction lost from the molecule colliding between themselves.
