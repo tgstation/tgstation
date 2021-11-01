@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "It is no longer possible to add reagents to containers in the BRPED."
