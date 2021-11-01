@@ -184,7 +184,6 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	return joinable_departments_by_type[department_type]
 
-
 /datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, datum/job/job, latejoin = FALSE)
 	JobDebug("Running AR, Player: [player], Rank: [isnull(job) ? "null" : job.type], LJ: [latejoin]")
 	if(!player?.mind || !job)
