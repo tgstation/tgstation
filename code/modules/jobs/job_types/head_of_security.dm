@@ -47,34 +47,37 @@
 	jobtype = /datum/job/head_of_security
 
 	id = /obj/item/card/id/advanced/silver
+	id_trim = /datum/id_trim/job/head_of_security
+	uniform = /obj/item/clothing/under/rank/security/head_of_security
+	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
+	suit_store = /obj/item/gun/energy/e_gun
+	backpack_contents = list(
+		/obj/item/melee/baton/security/loaded = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		)
 	belt = /obj/item/pda/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
-	uniform = /obj/item/clothing/under/rank/security/head_of_security
-	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/hos/beret
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	suit_store = /obj/item/gun/energy/e_gun
-	r_pocket = /obj/item/assembly/flash/handheld
+	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
-	backpack_contents = list(/obj/item/melee/baton/security/loaded=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
+	r_pocket = /obj/item/assembly/flash/handheld
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+
 	box = /obj/item/storage/box/survival/security
-
+	chameleon_extras = list(
+		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/stamp/hos,
+		)
 	implants = list(/obj/item/implant/mindshield)
-
-	chameleon_extras = list(/obj/item/gun/energy/e_gun/hos, /obj/item/stamp/hos)
-
-	id_trim = /datum/id_trim/job/head_of_security
 
 /datum/outfit/job/hos/hardsuit
 	name = "Head of Security (Hardsuit)"
 
-	mask = /obj/item/clothing/mask/gas/sechailer
 	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
 	suit_store = /obj/item/tank/internals/oxygen
-	backpack_contents = list(/obj/item/melee/baton/security/loaded=1)
+	mask = /obj/item/clothing/mask/gas/sechailer

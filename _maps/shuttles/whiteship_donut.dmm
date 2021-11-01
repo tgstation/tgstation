@@ -167,7 +167,7 @@
 "aE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "aF" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -270,7 +270,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/directional/south,
 /obj/effect/spawner/random/exotic/ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "aV" = (
 /obj/machinery/computer/mech_bay_power_console{

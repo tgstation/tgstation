@@ -80,7 +80,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	/// Cached icon that has been built for this card. Intended for use in chat.
@@ -805,7 +805,7 @@
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
 			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(loc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+	if(istype(loc, /obj/item/pda) || istype(loc, /obj/item/storage/wallet))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 

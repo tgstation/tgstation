@@ -374,32 +374,43 @@
 	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
-/obj/item/dest_tagger/proc/openwindow(mob/user)
-	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+/** Standard TGUI actions */
+/obj/item/dest_tagger/ui_interact(mob/user, datum/tgui/ui)
+	add_fingerprint(user)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DestinationTagger", name)
+		ui.set_autoupdate(FALSE)
+		ui.open()
 
-	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for (var/i = 1, i <= GLOB.TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=[REF(src)];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
+/** If the user dropped the tagger */
+/obj/item/dest_tagger/ui_state(mob/user)
+	return GLOB.inventory_state
 
-		if(i%4==0)
-			dat += "</tr><tr>"
-
-	dat += "</tr></table><br>Current Selection: [currTag ? GLOB.TAGGERLOCATIONS[currTag] : "None"]</tt>"
-
-	user << browse(dat, "window=destTagScreen;size=450x350")
-	onclose(user, "destTagScreen")
-
+/** User activates in hand */
 /obj/item/dest_tagger/attack_self(mob/user)
 	if(!locked_destination)
-		openwindow(user)
+		ui_interact(user)
 		return
 
-/obj/item/dest_tagger/Topic(href, href_list)
-	add_fingerprint(usr)
-	if(href_list["nextTag"])
-		var/n = text2num(href_list["nextTag"])
-		currTag = n
-	openwindow(usr)
+/** Data sent to TGUI window */
+/obj/item/dest_tagger/ui_data(mob/user)
+	var/list/data = list()
+	data["locations"] = GLOB.TAGGERLOCATIONS
+	data["currentTag"] = currTag
+	return data
+
+/** User clicks a button on the tagger */
+/obj/item/dest_tagger/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(action != "change")
+		return
+	if(round(text2num(params["index"])) == currTag)
+		return
+	currTag = round(text2num(params["index"]))
+	return TRUE
 
 /obj/item/sales_tagger
 	name = "sales tagger"

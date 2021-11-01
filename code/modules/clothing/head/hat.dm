@@ -4,7 +4,7 @@
 	desc = "It's good to be emperor."
 	inhand_icon_state = "that"
 	flags_inv = 0
-	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/spacepolice
@@ -71,7 +71,7 @@
 	icon_state = "cowboy"
 	worn_icon_state = "hunter"
 	inhand_icon_state = "hunter"
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/santa
@@ -134,7 +134,7 @@
 	desc = "A cap for a party coordinator, stylish!."
 	icon_state = "capcap"
 	inhand_icon_state = "that"
-	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
 /obj/item/clothing/head/jackbros
 	name = "frosty hat"
@@ -154,7 +154,7 @@
 	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
 	inhand_icon_state = "that"
 	flags_inv = 0
-	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 	strip_delay = (8 SECONDS)
 
 /obj/item/clothing/head/human_leather

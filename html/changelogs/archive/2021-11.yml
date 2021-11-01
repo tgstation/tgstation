@@ -1,0 +1,25 @@
+2021-11-01:
+  MMMiracles:
+  - bugfix: CMOs on Tramstation start back in their office again
+  Melbert:
+  - rscadd: 'Icebox: Engineering and Atmos remapping!'
+  RandomGamer123:
+  - bugfix: Swapped positions of a fuel tank and rack in Delta's Auxillary Tech Storage
+  RaveRadbury:
+  - bugfix: Vampires and Dullahans can be enabled in the config.
+  Seris02:
+  - bugfix: sharding someone no longer causes an invisible dead mob
+  - qol: the PDA will no longer bother you with a message if all you're doing is closing
+      the interface while laying down.
+  - bugfix: fixes a runtime when transferring advanced ids to/from wallets
+  Timberpoes:
+  - bugfix: It is no longer possible to add reagents to containers in the BRPED.
+  Zytolg:
+  - bugfix: Using leftover funding from the quarter, the Icebox CMO has bought their
+      staff a dinky medical records laptop.
+  adamsong:
+  - code_imp: added check to make sure roleban_delimiter exists on a roleban
+  - admin: max ban message length added
+  phasenoisepon:
+  - bugfix: Vampires can now no longer transform into bat form when their brain is
+      placed in an MMI

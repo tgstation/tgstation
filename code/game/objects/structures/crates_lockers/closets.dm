@@ -9,7 +9,7 @@
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 60)
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// The overlay for the closet's door
@@ -413,6 +413,7 @@
 			return FALSE
 		if (!user.transferItemToLoc(W, src))
 			return FALSE
+		W.moveToNullspace()
 		to_chat(user, span_notice("You install the electronics."))
 		electronics = W
 		if (electronics.one_access)

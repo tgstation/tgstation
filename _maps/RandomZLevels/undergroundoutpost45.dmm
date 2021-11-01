@@ -12447,7 +12447,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xR" = (
 /obj/structure/cable,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/undergroundoutpost45/mining)
 "xS" = (
 /obj/machinery/mech_bay_recharge_port{
