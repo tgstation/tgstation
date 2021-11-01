@@ -2,6 +2,8 @@
 #define BOOKCASE_ANCHORED 1
 #define BOOKCASE_FINISHED 2
 
+GLOBAL_LIST_EMPTY(roundstart_books_by_area)
+
 /* Library Items
  *
  * Contains:
@@ -26,12 +28,45 @@
 	max_integrity = 200
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
 	var/state = BOOKCASE_UNANCHORED
-	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
+	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
 	/// The category of books to pick from when populating random books.
 	var/random_category = null
 	/// How many random books to generate.
 	var/books_to_load = 0
+
+/obj/structure/bookcase/Initialize(mapload)
+	. = ..()
+	if(!mapload || QDELETED(src))
+		return
+	set_anchored(TRUE)
+	state = BOOKCASE_FINISHED
+	for(var/obj/item/I in loc)
+		if(!isbook(I))
+			continue
+		I.forceMove(src)
+	update_appearance()
+	SSlibrary.shelves_to_load += src
+
+///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
+/obj/structure/bookcase/proc/load_shelf()
+	//Loads a random selection of books in from the db, adds a copy of their info to a global list
+	//To send to library consoles as a starting inventory
+	if(load_random_books)
+		create_random_books(books_to_load, src, FALSE, random_category)
+		update_appearance() //Make sure you look proper
+
+	var/area/our_area = get_area(src)
+	var/area_type = our_area.type //Save me from the dark
+
+	if(!GLOB.roundstart_books_by_area[area_type])
+		GLOB.roundstart_books_by_area[area_type] = list()
+
+	//Time to populate that list
+	var/list/books_in_area = GLOB.roundstart_books_by_area[area_type]
+	for(var/obj/item/book/book in contents)
+		var/datum/book_info/info = book.book_data
+		books_in_area += info.return_copy()
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
@@ -46,18 +81,6 @@
 			. += span_notice("There's space inside for a <i>wooden</i> shelf.")
 		if(BOOKCASE_FINISHED)
 			. += span_notice("There's a <b>small crack</b> visible on the shelf.")
-
-/obj/structure/bookcase/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-	set_anchored(TRUE)
-	state = BOOKCASE_FINISHED
-	for(var/obj/item/I in loc)
-		if(!isbook(I))
-			continue
-		I.forceMove(src)
-	update_appearance()
 
 /obj/structure/bookcase/set_anchored(anchorvalue)
 	. = ..()
@@ -132,16 +155,12 @@
 			else
 				return ..()
 
-
 /obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(!istype(user))
 		return
-	if(load_random_books)
-		create_random_books(books_to_load, src, FALSE, random_category)
-		load_random_books = FALSE
 	if(contents.len)
 		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
 		if(choice)
@@ -154,27 +173,22 @@
 				choice.forceMove(drop_location())
 			update_appearance()
 
-
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
 	for(var/obj/item/I in contents)
-		if(!isbook(I))
+		if(!isbook(I)) //Wake me up inside
 			continue
 		I.forceMove(Tsec)
 	return ..()
-
 
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
 		return ..()
 	var/amount = contents.len
-	if(load_random_books)
-		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"
 	return ..()
-
 
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
@@ -215,27 +229,43 @@
 	author = _author
 	content = _content
 
-/datum/book_info/proc/set_title(_title, legacy = FALSE)
-	if(legacy)
+/datum/book_info/proc/set_title(_title, trusted = FALSE)
+	if(trusted)
 		title = _title
 		return
-	title = reject_bad_text(trim(html_encode(_title), 200))
+	title = reject_bad_text(trim(html_encode(_title), 30))
 
-/datum/book_info/proc/set_author(_author, legacy = FALSE)
-	if(legacy)
+/datum/book_info/proc/get_title(default="N/A")
+	return html_decode(title) || "N/A"
+
+/datum/book_info/proc/set_author(_author, trusted = FALSE)
+	if(trusted)
 		author = _author
 		return
-	author = trim(html_encode(_author), 40)
+	author = trim(html_encode(_author), MAX_NAME_LEN)
 
-/datum/book_info/proc/set_content(_content, legacy = FALSE) //Legacy should only be used for books read from the db. It is unsafe in all other cases
-	if(legacy)
+/datum/book_info/proc/get_author(default="N/A")
+	return html_decode(author) || "N/A"
+
+/datum/book_info/proc/set_content(_content, trusted = FALSE) //Trusted should only be used for books read from the db, or in cases that we can be sure the info has already been sanitized
+	if(trusted)
 		content = _content
 		return
 	content = trim(html_encode(_content), MAX_PAPER_LENGTH)
 
+/datum/book_info/proc/get_content(default="N/A")
+	return html_decode(content) || "N/A"
+
 ///Returns a copy of the book_info datum
 /datum/book_info/proc/return_copy()
 	var/datum/book_info/copycat = new(title, author, content)
+	return copycat
+
+///Modify an existing book_info datum to match your data
+/datum/book_info/proc/copy_into(datum/book_info/copycat)
+	copycat.set_title(title, trusted = TRUE)
+	copycat.set_author(author, trusted = TRUE)
+	copycat.set_content(content, trusted = TRUE)
 	return copycat
 
 /datum/book_info/proc/compare(datum/book_info/cmp_with)
@@ -322,15 +352,15 @@
 					to_chat(user, span_warning("That title is invalid."))
 					return
 				name = newtitle
-				book_data.set_title(newtitle)
+				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
-				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):", max_length= MAX_PAPER_LENGTH)
+				var/content = stripped_input(user, "Write your book's contents:", max_length= MAX_PAPER_LENGTH)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
 					to_chat(user, span_warning("The content is invalid."))
 					return
-				book_data.set_content(content)
+				book_data.set_content(html_decode(content))
 			if("Author")
 				var/author = stripped_input(user, "Write the author's name:")
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
@@ -338,39 +368,40 @@
 				if(!author)
 					to_chat(user, span_warning("The name is invalid."))
 					return
-				book_data.set_author(author)
+				book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
 			else
 				return
 
 	else if(istype(I, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = I
 		if(!scanner.computer)
-			to_chat(user, span_alert("[I]'s screen flashes: 'No associated computer found!'"))
+			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
 		else
 			switch(scanner.mode)
 				if(0)
 					scanner.book = src
-					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer.'"))
+					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer.'"))
 				if(1)
 					scanner.book = src
-					scanner.computer.buffer_book = name
-					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"))
+					scanner.computer.buffer_book = book_data.return_copy()
+					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"))
 				if(2)
 					scanner.book = src
-					for(var/datum/borrowbook/b in scanner.computer.checkouts)
-						if(b.loanedto == name)
-							scanner.computer.checkouts -= b
-							to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
+					var/list/checkouts = scanner.computer.checkouts
+					for(var/checkout_ref in checkouts)
+						var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
+						if(book_data.compare(maybe_ours.book_data))
+							checkouts -= checkout_ref
+							scanner.computer.checkout_update()
+							to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
 							return
-					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
+					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
 				if(3)
 					scanner.book = src
-					for(var/datum/book_info/info as anything in scanner.computer.inventory)
-						if(info.compare(src))
-							to_chat(user, span_alert("[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"))
-							return
-					scanner.computer.inventory.Add(book_data.return_copy())
-					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
+					var/datum/book_info/our_copy = book_data.return_copy()
+					scanner.computer.inventory[ref(our_copy)] = our_copy
+					scanner.computer.inventory_update()
+					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
 	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [book_data.title]..."))

@@ -273,7 +273,7 @@
 			</html>
 
 			"}
-		book_data.set_content(wikiinfo, legacy = TRUE)
+		book_data.set_content(wikiinfo, trusted = TRUE)
 
 /obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"

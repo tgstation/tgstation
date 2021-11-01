@@ -345,6 +345,7 @@
 #include "code\controllers\subsystem\job.dm"
 #include "code\controllers\subsystem\lag_switch.dm"
 #include "code\controllers\subsystem\language.dm"
+#include "code\controllers\subsystem\library.dm"
 #include "code\controllers\subsystem\lighting.dm"
 #include "code\controllers\subsystem\machines.dm"
 #include "code\controllers\subsystem\mapping.dm"
