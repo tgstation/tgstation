@@ -62,6 +62,8 @@
 
 /datum/config_entry/flag/log_prayer // log prayers
 
+/datum/config_entry/flag/log_craft //log crafts
+
 /datum/config_entry/flag/log_law // log lawchanges
 
 /datum/config_entry/flag/log_game // log game events

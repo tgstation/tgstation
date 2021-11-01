@@ -210,11 +210,14 @@
 			if(!check_tools(a, R, contents))
 				return ", missing tool."
 			var/list/parts = del_reqs(R, a)
-			var/atom/movable/I = new R.result (get_turf(a.loc))
-			I.CheckParts(parts, R)
+			var/atom/movable/crafted_item = new R.result (get_turf(a.loc))
+			crafted_item.CheckParts(parts, R)
+			if(ismob(parent))
+				var/mob/crafting_mob = parent
+				crafting_mob.log_message("crafted [crafted_item].", LOG_CRAFT)
 			if(send_feedback)
-				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
+				SSblackbox.record_feedback("tally", "object_crafted", 1, crafted_item.type)
+			return crafted_item //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."
 

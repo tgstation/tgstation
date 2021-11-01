@@ -175,6 +175,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_prayer))
 		WRITE_LOG(GLOB.world_game_log, "PRAY: [text]")
 
+/proc/log_craft(text)
+	if (CONFIG_GET(flag/log_craft))
+		WRITE_LOG(GLOB.world_game_log, "GAME: [text]")
+
 /proc/log_pda(text)
 	if (CONFIG_GET(flag/log_pda))
 		WRITE_LOG(GLOB.world_pda_log, "PDA: [text]")
