@@ -495,6 +495,18 @@
 /datum/asset/simple/portraits/library_private
 	tab = "library_private"
 
+/datum/asset/spritesheet/bibles
+	name = "bibles"
+
+/datum/asset/spritesheet/bibles/register()
+	var/obj/item/storage/book/bible/holy_template = /obj/item/storage/book/bible
+	InsertAll("display", initial(holy_template.icon))
+	..()
+
+/datum/asset/spritesheet/bibles/ModifyInserted(icon/pre_asset)
+	pre_asset.Scale(288, 288) // Scale up by 9x
+	return pre_asset
+
 /datum/asset/simple/safe
 	assets = list(
 		"safe_dial.png" = 'icons/ui_icons/safe/safe_dial.png'
