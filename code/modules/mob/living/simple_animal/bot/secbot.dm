@@ -186,13 +186,11 @@
 		if("declarearrests")
 			selected_mode = SECBOT_DECLARE_ARRESTS
 
+	// Changing something that doesn't have a flag? Don't bother changing it then.
 	if(isnull(selected_mode))
 		update_controls()
 		return
-	if(security_mode_flags & selected_mode)
-		security_mode_flags &= ~selected_mode
-	else
-		security_mode_flags |= selected_mode
+	security_mode_flags ^= selected_mode
 	update_controls()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
