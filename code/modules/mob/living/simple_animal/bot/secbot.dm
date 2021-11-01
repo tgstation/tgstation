@@ -173,24 +173,18 @@
 	if(.)
 		return TRUE
 
-	var/selected_mode
 	switch(href_list["operation"])
 		if("idcheck")
-			selected_mode = SECBOT_CHECK_IDS
+			security_mode_flags ^= SECBOT_CHECK_IDS
 		if("weaponscheck")
-			selected_mode = SECBOT_CHECK_WEAPONS
+			security_mode_flags ^= SECBOT_CHECK_WEAPONS
 		if("ignorerec")
-			selected_mode = SECBOT_CHECK_RECORDS
+			security_mode_flags ^= SECBOT_CHECK_RECORDS
 		if("switchmode")
-			selected_mode = SECBOT_HANDCUFF_TARGET
+			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
 		if("declarearrests")
-			selected_mode = SECBOT_DECLARE_ARRESTS
+			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
 
-	// Changing something that doesn't have a flag? Don't bother changing it then.
-	if(isnull(selected_mode))
-		update_controls()
-		return
-	security_mode_flags ^= selected_mode
 	update_controls()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
