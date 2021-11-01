@@ -24,7 +24,7 @@
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
 	integrity_failure = 0.5
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
@@ -322,30 +322,5 @@
 		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
-
-/obj/item/tank/rad_act(strength)
-	. = ..()
-	var/gas_change = FALSE
-	var/list/cached_gases = air_contents.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air_contents.temperature <= PLUOXIUM_TEMP_CAP)
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
-		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, air_contents)
-		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
-		strength -= pulse_strength
-
-	if(cached_gases[/datum/gas/hydrogen])
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, air_contents)
-		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
-		strength -= pulse_strength
-
-	if(gas_change)
-		air_contents.garbage_collect()
-		START_PROCESSING(SSobj, src)
 
 #undef ASSUME_AIR_DT_FACTOR
