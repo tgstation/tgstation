@@ -10,9 +10,9 @@
 	mob_size = MOB_SIZE_LARGE
 
 	model = "ED-209"
+	bot_type = ADVANCED_SEC_BOT
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
-	ranged = TRUE
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
@@ -75,7 +75,6 @@
 		return
 	if(!isturf(T))
 		return
-
 	if(!projectile)
 		return
 
@@ -90,32 +89,34 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if (severity >= 2)
-		new /obj/effect/temp_visual/emp(loc)
-		var/list/mob/living/carbon/targets = new
-		for(var/mob/living/carbon/C in view(12,src))
-			if(C.stat==DEAD)
-				continue
-			targets += C
+	if(severity <= 1)
+		return
+	new /obj/effect/temp_visual/emp(loc)
+	var/list/mob/living/carbon/targets = new
+	for(var/mob/living/carbon/C in view(12,src))
+		if(C.stat == DEAD)
+			continue
+		targets += C
+	if(!targets.len)
+		return
+	if(prob(50))
+		var/mob/toshoot = pick(targets)
+		if(toshoot)
+			targets -= toshoot
+			if(prob(50) && emagged < 2)
+				emagged = 2
+				set_weapon()
+				shootAt(toshoot)
+				emagged = FALSE
+				set_weapon()
+			else
+				shootAt(toshoot)
+	else if(prob(50))
 		if(targets.len)
-			if(prob(50))
-				var/mob/toshoot = pick(targets)
-				if(toshoot)
-					targets-=toshoot
-					if(prob(50) && emagged < 2)
-						emagged = 2
-						set_weapon()
-						shootAt(toshoot)
-						emagged = FALSE
-						set_weapon()
-					else
-						shootAt(toshoot)
-			else if(prob(50))
-				if(targets.len)
-					var/mob/toarrest = pick(targets)
-					if(toarrest)
-						target = toarrest
-						mode = BOT_HUNT
+			var/mob/toarrest = pick(targets)
+			if(toarrest)
+				target = toarrest
+				mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/ed209/RangedAttack(atom/A)
 	if(!on)

@@ -79,7 +79,7 @@
 
 	var/beacon_freq = FREQ_NAV_BEACON
 	var/model = "" //The type of bot it is.
-	var/bot_type = 0 //The type of bot it is, for radio control.
+	var/bot_type = NONE //The type of bot it is, for radio control.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC //The type of data HUD the bot uses. Diagnostic by default.
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface. This is in order of the defines for the mode defines in robots.dm, in order
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
