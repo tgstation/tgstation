@@ -130,7 +130,13 @@
 	. = ..()
 	if(!proximity)
 		return
-	if(wielded)
+	if(wielded && istype(AM))
+		if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
+			return
+		if(ismob(AM))
+			var/mob/mob_target = AM
+			if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
+				return
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
 		explosive.detonate(lanced_by=user)
