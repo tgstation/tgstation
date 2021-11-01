@@ -23,7 +23,8 @@ SUBSYSTEM_DEF(radiation)
 			return
 
 /datum/controller/subsystem/radiation/stat_entry(msg)
-	return ..(msg + " | Pulses: [processing.len]")
+	msg = "[msg] | Pulses: [processing.len]"
+	return ..()
 
 /datum/controller/subsystem/radiation/proc/pulse(atom/source, datum/radiation_pulse_information/pulse_information)
 	var/list/cached_rad_insulations = list()
