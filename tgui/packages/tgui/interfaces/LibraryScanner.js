@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, NoticeBox, Section, Stack } from '../components';
+import { Button, Flex, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const LibraryScanner = (props, context) => {
@@ -8,25 +8,9 @@ export const LibraryScanner = (props, context) => {
       title="Library Scanner"
       width={350}
       height={150}>
-      <BookInsert />
       <BookScanning />
     </Window>
   );
-};
-
-export const BookInsert = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    has_book,
-    has_cache,
-  } = data;
-  if (!has_book && !has_cache) {
-    return (
-      <NoticeBox>
-        Insert a book to scan
-      </NoticeBox>
-    );
-  }
 };
 
 export const BookScanning = (props, context) => {
@@ -37,7 +21,11 @@ export const BookScanning = (props, context) => {
     book,
   } = data;
   if (!has_book && !has_cache) {
-    return;
+    return (
+      <NoticeBox>
+        Insert a book to scan
+      </NoticeBox>
+    );
   }
   return (
     <Flex
@@ -46,6 +34,7 @@ export const BookScanning = (props, context) => {
       justify="flex-end">
       <Flex.Item grow>
         <Section
+          textAlign="center"
           height="100%"
           title={book.author}>
           {book.title}
@@ -56,8 +45,8 @@ export const BookScanning = (props, context) => {
           width="100%">
           <Flex.Item grow>
             <Button fluid
-              textAlign={'center'}
-              icon={'eject'}
+              textAlign="center"
+              icon="eject"
               onClick={() => act('eject')}
               disabled={!has_book}>
               Eject Book
@@ -65,20 +54,20 @@ export const BookScanning = (props, context) => {
           </Flex.Item>
           <Flex.Item grow>
             <Button fluid
-              textAlign={'center'}
+              textAlign="center"
               onClick={() => act('scan')}
-              color={'good'}
-              icon={'qrcode'}
+              color="good"
+              icon="qrcode"
               disabled={!has_book}>
               Scan Book
             </Button>
           </Flex.Item>
           <Flex.Item grow>
             <Button fluid
-              textAlign={'center'}
-              icon={'fire'}
+              textAlign="center"
+              icon="fire"
               onClick={() => act('clear')}
-              color={'bad'}
+              color="bad"
               disabled={!has_cache}>
               Clear Cache
             </Button>

@@ -2,15 +2,15 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Input, NoticeBox, Section, Stack, Table } from '../components';
-import { TableCell } from '../components/Table';
 import { Window } from '../layouts';
+import { PageSelect } from './LibraryConsole';
 
 export const LibraryVisitor = (props, context) => {
   return (
     <Window
       title="Library Lookup Console"
       width={702}
-      height={410}>
+      height={421}>
       <BookListing />
     </Window>
   );
@@ -20,39 +20,49 @@ export const BookListing = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     can_connect,
+    can_db_request,
+    our_page,
+    page_count,
   } = data;
-  if (can_connect) {
+  if (!can_connect) {
     return (
-      <Stack
-        fill={1}
-        vertical={1}
-        justify={"space-between"}>
-        <Stack.Item>
-          <Box fillPositionedParent bottom="20px">
-            <Window.Content
-              scrollable={1}>
-              <SearchAndDisplay />
-            </Window.Content>
-          </Box>
-        </Stack.Item>
-        <Stack.Item
-          align={"center"}>
-          <PageSelect />
-        </Stack.Item>
-      </Stack>
+      <NoticeBox>
+        Unable to retrieve book listings.
+        Please contact your system administrator for assistance.
+      </NoticeBox>
     );
   }
   return (
-    <NoticeBox>
-      Unable to retrieve book listings.
-      Please contact your system administrator for assistance.
-    </NoticeBox>
+    <Stack
+      fill
+      vertical
+      justify="space-between">
+      <Stack.Item>
+        <Box fillPositionedParent bottom="25px">
+          <Window.Content scrollable>
+            <SearchAndDisplay />
+          </Window.Content>
+        </Box>
+      </Stack.Item>
+      <Stack.Item
+        align="center">
+        <PageSelect
+          minimum_page_count={1}
+          page_count={page_count}
+          current_page={our_page}
+          disabled={!can_db_request}
+          call_on_change={(value) => act('switch_page', {
+            page: value,
+          })} />
+      </Stack.Item>
+    </Stack>
   );
 };
 
 export const SearchAndDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    can_db_request,
     categories = [],
     title,
     category,
@@ -69,73 +79,52 @@ export const SearchAndDisplay = (props, context) => {
   ])(data.pages);
   return (
     <Section>
-      <Stack>
-        <Stack.Item grow={1}>
-          <Dropdown
-            options={categories}
-            selected={category}
-            onSelected={(value) => act('set-category', {
-              category: value,
-            })} />
-        </Stack.Item>
-        <Stack.Item grow={1}>
+      <Stack justify="space-between">
+        <Stack.Item pb={0.6}>
           <Stack>
             <Stack.Item>
-              <Box
-                fontSize={1.4}>
-                Title:
-              </Box>
+              <Dropdown
+                options={categories}
+                selected={category}
+                onSelected={(value) => act('set_search_category', {
+                  category: value,
+                })} />
             </Stack.Item>
             <Stack.Item>
               <Input
                 value={title}
-                placeholder={title || "Title"}
+                placeholder={title || 'Title'}
                 mt={0.5}
-                onChange={(e, value) => act("set-title", {
+                onChange={(e, value) => act('set_search_title', {
                   title: value,
                 })} />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-        <Stack.Item grow={1}>
-          <Stack>
-            <Stack.Item>
-              <Box
-                fontSize={1.4}>
-                Author:
-              </Box>
             </Stack.Item>
             <Stack.Item>
               <Input
                 value={author}
-                placeholder={author || "Author"}
+                placeholder={author || 'Author'}
                 mt={0.5}
-                onChange={(e, value) => act("set-author", {
+                onChange={(e, value) => act('set_search_author', {
                   author: value,
                 })} />
             </Stack.Item>
           </Stack>
         </Stack.Item>
-        <Stack.Item
-          grow={1}
-          align={"end"}>
+        <Stack.Item>
           <Button
-            disabled={!params_changed}
-            textAlign={'right'}
+            disabled={!can_db_request}
+            textAlign="right"
             onClick={() => act('search')}
-            color={'good'}
-            icon={'book'}>
+            color={params_changed ? 'good' : ''}
+            icon="book">
             Search
           </Button>
-        </Stack.Item>
-        <Stack.Item
-          grow={1}
-          align={"end"}>
           <Button
-            textAlign={'right'}
-            onClick={() => act('clear-data')}
-            color={'bad'}
-            icon={'fire'}>
+            disabled={!can_db_request}
+            textAlign="right"
+            onClick={() => act('clear_data')}
+            color="bad"
+            icon="fire">
             Reset Search
           </Button>
         </Stack.Item>
@@ -146,10 +135,10 @@ export const SearchAndDisplay = (props, context) => {
             fontSize={1.5}>
             #
           </Table.Cell>
-          <TableCell
+          <Table.Cell
             fontSize={1.5}>
             Category
-          </TableCell>
+          </Table.Cell>
           <Table.Cell
             fontSize={1.5}>
             Title
@@ -177,52 +166,5 @@ export const SearchAndDisplay = (props, context) => {
         ))}
       </Table>
     </Section>
-  );
-};
-
-export const PageSelect = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    page_count,
-    our_page,
-  } = data;
-  return (
-    <Stack>
-      <Stack.Item>
-        <Button
-          icon={'angle-double-left'}
-          onClick={() => act('switch-page', {
-            page: 0,
-          })} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon={'chevron-left'}
-          onClick={() => act('switch-page', {
-            page: our_page - 1,
-          })} />
-      </Stack.Item>
-      <Stack.Item>
-        <Input
-          placeholder={our_page + "/" + page_count}
-          onChange={(e, value) => act('switch-page', {
-            page: value,
-          })} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon={'chevron-right'}
-          onClick={() => act('switch-page', {
-            page: our_page + 1,
-          })} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon={'angle-double-right'}
-          onClick={() => act('switch-page', {
-            page: page_count,
-          })} />
-      </Stack.Item>
-    </Stack>
   );
 };

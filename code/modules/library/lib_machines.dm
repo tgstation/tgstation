@@ -9,12 +9,6 @@
  * Book Binder
  */
 
-//Make db request
-//All other db requests are frozed until it's done
-//Freeze those buttons
-//Do not update page numbers until a db request is complete
-//Make sure you block requests with a harcoded timer
-
 #define DEFAULT_UPLOAD_CATAGORY "Fiction"
 GLOBAL_LIST_INIT(book_categories, list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 GLOBAL_LIST_INIT(upload_categories, list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))

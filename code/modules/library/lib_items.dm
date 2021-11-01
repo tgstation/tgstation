@@ -215,6 +215,11 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 /*
  * Book
  */
+//Some information about how html sanitization is handled
+//All book info datums should store sanitized data. This cannot be worked around
+//All inputs and outputs from the round (DB calls) need to use sanitized data
+//All tgui menus should get unsanitized data, since jsx handles that on its own
+//Everything else should use sanitized data. Yes including names, it's an xss vuln because of how chat works
 ///A datum which contains all the metadata of a book
 /datum/book_info
 	///The title of the book
@@ -229,13 +234,13 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 	author = _author
 	content = _content
 
-/datum/book_info/proc/set_title(_title, trusted = FALSE)
+/datum/book_info/proc/set_title(_title, trusted = FALSE)  //Trusted should only be used for books read from the db, or in cases that we can be sure the info has already been sanitized
 	if(trusted)
 		title = _title
 		return
 	title = reject_bad_text(trim(html_encode(_title), 30))
 
-/datum/book_info/proc/get_title(default="N/A")
+/datum/book_info/proc/get_title(default="N/A") //Loads in an html decoded version of the title. Only use this for tgui menus, absolutely nothing else.
 	return html_decode(title) || "N/A"
 
 /datum/book_info/proc/set_author(_author, trusted = FALSE)
@@ -247,7 +252,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 /datum/book_info/proc/get_author(default="N/A")
 	return html_decode(author) || "N/A"
 
-/datum/book_info/proc/set_content(_content, trusted = FALSE) //Trusted should only be used for books read from the db, or in cases that we can be sure the info has already been sanitized
+/datum/book_info/proc/set_content(_content, trusted = FALSE)
 	if(trusted)
 		content = _content
 		return
