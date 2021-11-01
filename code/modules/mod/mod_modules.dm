@@ -1328,7 +1328,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
-	icon_state = "recall"
+	button_icon_state = "recall"
 	COOLDOWN_DECLARE(recall_cooldown)
 	var/obj/item/implant/mod/implant
 

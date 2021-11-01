@@ -152,7 +152,8 @@
 		"mod_orebag",
 		"mod_microwave_beam",
 		"mod_bikehorn",
-		"mod_organ_thrower"
+		"mod_organ_thrower",
+		"mod_pathfinder",
 	)
 
 /datum/techweb_node/mech_tools
