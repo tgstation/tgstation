@@ -9,7 +9,7 @@
 /turf/template_noop,
 /area/template_noop)
 "c" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "d" = (

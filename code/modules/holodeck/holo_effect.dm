@@ -106,7 +106,7 @@
 
 /obj/effect/holodeck_effect/mobspawner/pet
 
-/obj/effect/holodeck_effect/mobspawner/pet/Initialize()
+/obj/effect/holodeck_effect/mobspawner/pet/Initialize(mapload)
 	. = ..()
 	mobtype = list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/chick/holo, /mob/living/simple_animal/pet/fox)
 	mobtype += pick(/mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/pet/dog/corgi/puppy,
@@ -122,7 +122,7 @@
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/simple_animal/pet/penguin/emperor
 
-/obj/effect/holodeck_effect/mobspawner/penguin/Initialize()
+/obj/effect/holodeck_effect/mobspawner/penguin/Initialize(mapload)
 	if(prob(1))
 		mobtype = /mob/living/simple_animal/pet/penguin/emperor/shamebrero
 	return ..()

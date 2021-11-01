@@ -1,0 +1,241 @@
+@use 'sass:color';
+@use 'sass:map';
+@use '../components/Button.scss';
+@use '../colors.scss';
+
+$department_map: (
+  'Assistant': colors.$grey,
+  'Captain': colors.fg(colors.$blue),
+  'Command': colors.$yellow,
+  'Security': colors.$red,
+  'Engineering': #f1a839,
+  'Medical': colors.$teal,
+  'Misc': colors.$white,
+  'Science': colors.fg(colors.$purple),
+  'Supply': colors.$brown,
+  'Service': colors.$green,
+  'Silicon': colors.$pink,
+);
+
+.PreferencesMenu {
+  &__Antags {
+    &__antagSelection {
+      $antagonist_bottom_padding: 10px;
+
+      margin-bottom: -$antagonist_bottom_padding;
+
+      @mixin animate-hover {
+        .antagonist-icon-parent .antagonist-icon {
+          &:hover {
+            transform: scale(1.3);
+            transition: transform 1s ease-out;
+          }
+        }
+      }
+
+      &__antagonist {
+        padding-bottom: $antagonist_bottom_padding;
+        padding-right: 20px;
+
+        .antagonist-icon-parent {
+          border-style: solid;
+          border-radius: 50%;
+          border-width: 4px;
+          box-sizing: content-box;
+          overflow: hidden;
+          position: relative;
+
+          height: 96px;
+          width: 96px;
+
+          .antagonist-icon {
+            border-radius: 50%;
+            -ms-interpolation-mode: nearest-neighbor;
+            overflow: hidden;
+            transition: transform 0.1s ease-in;
+          }
+        }
+
+        &--off {
+          @include animate-hover;
+
+          .antagonist-icon-parent {
+            border-color: colors.$red;
+
+            .antagonist-icon {
+              opacity: 0.5;
+
+              &:hover {
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        &--on {
+          @include animate-hover;
+
+          .antagonist-icon-parent {
+            border-color: colors.$green;
+          }
+        }
+
+        &--banned {
+          .antagonist-icon-parent {
+            border-color: colors.$grey;
+          }
+
+          .antagonist-icon {
+            opacity: 0.5;
+          }
+        }
+
+        .antagonist-banned-slash {
+          background: colors.$grey;
+
+          width: 100%;
+          height: 3px;
+
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translateY(-50%) translateX(-50%) rotate(35deg);
+
+          opacity: 0.8;
+        }
+
+        .antagonist-days-left {
+          text-align: center;
+          text-shadow: 1px 1px 1px #222;
+
+          width: 100%;
+
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translateY(-50%) translateX(-50%);
+        }
+      }
+    }
+  }
+
+  &__Jobs {
+    > * {
+      flex: 1;
+    }
+
+    &__departments {
+      @each $department-name, $color-value in $department_map {
+        &--#{$department-name} {
+          &.head {
+            background: $color-value;
+
+            .job-name {
+              font-weight: bold;
+            }
+          }
+
+          background: colors.fg($color-value);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+          border-left: 2px solid rgba(0, 0, 0, 0.3);
+          border-right: 2px solid rgba(0, 0, 0, 0.3);
+          color: black;
+
+          > * {
+            height: calc(100% + 0.2em);
+            padding-bottom: 0.2em;
+          }
+
+          &:first-child {
+            border-top: 2px solid rgba(0, 0, 0, 0.3);
+          }
+
+          .options {
+            background: rgba(0, 0, 0, 0.2);
+            height: 100%;
+          }
+        }
+
+        &--Captain {
+          border: 3px solid rgba(200, 200, 0, 1);
+
+          &:first-child {
+            border-top: 3px solid rgba(200, 200, 0, 1);
+          }
+
+          .job-name {
+            font-size: 17px;
+          }
+        }
+      }
+
+      &__priority {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+
+        &--off::after {
+          content: "";
+
+          background: rgba(0, 0, 0, 0.2);
+          display: block;
+          height: 80%;
+          left: 50%;
+          position: relative;
+          top: 50%;
+          transform: translateX(-50%) translateY(-50%) rotate(40deg);
+          width: 2px;
+        }
+      }
+    }
+
+    &__PriorityHeader {
+      font-weight: bold;
+      transform:
+        translateX(-4px)
+        translateY(-8px)
+        rotate(315deg);
+      white-space: nowrap;
+      width: 19px;
+    }
+  }
+
+  &__Quirks {
+    &__QuirkList {
+      background-color: colors.$light-grey;
+      height: calc(90vh - 170px);
+      min-height: 100%;
+      overflow-y: scroll;
+
+      &__quirk {
+        background-color: colors.$white;
+        border-bottom: 1px solid black;
+        color: #111;
+        transition: background-color 0.1s ease-in;
+
+        $quality_map: (
+          "positive": colors.$green,
+          "neutral": colors.$white,
+          "negative": colors.$red,
+        );
+
+        @each $quality, $color-value in $quality_map {
+          &--#{$quality} {
+            background-color: $color-value;
+            transition: background-color 0.1s ease-in;
+          }
+        }
+
+        &:hover {
+          background-color: colors.$grey;
+          transition: background-color 0.1s ease-out;
+
+          @each $quality, $color-value in $quality_map {
+            .PreferencesMenu__Quirks__QuirkList__quirk--#{$quality} {
+              background-color: color.scale($color-value, $lightness: -25%);
+              transition: background-color 0.1s ease-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}

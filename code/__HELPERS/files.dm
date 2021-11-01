@@ -21,7 +21,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		if(path != root)
 			choices.Insert(1,"/")
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sortList(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
 		switch(choice)
 			if(null)
 				return

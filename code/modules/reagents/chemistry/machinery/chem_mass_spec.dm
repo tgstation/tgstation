@@ -93,6 +93,8 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	..()
 
 /obj/machinery/chem_mass_spec/attackby_secondary(obj/item/item, mob/user, params)
+	. = ..()
+
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
 		return
@@ -107,8 +109,9 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		replace_beaker(user, BEAKER2, beaker)
 		to_chat(user, span_notice("You add [beaker] to [src]."))
 		updateUsrDialog()
+		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	update_appearance()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()

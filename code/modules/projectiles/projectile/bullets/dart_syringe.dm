@@ -6,7 +6,7 @@
 	shrapnel_type = null
 	var/piercing = FALSE
 
-/obj/projectile/bullet/dart/Initialize()
+/obj/projectile/bullet/dart/Initialize(mapload)
 	. = ..()
 	create_reagents(50, NO_REACT)
 
@@ -28,7 +28,7 @@
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
 
-/obj/projectile/bullet/dart/metalfoam/Initialize()
+/obj/projectile/bullet/dart/metalfoam/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/aluminium, 15)
 	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
@@ -37,6 +37,14 @@
 /obj/projectile/bullet/dart/syringe
 	name = "syringe"
 	icon_state = "syringeproj"
+
+/obj/projectile/bullet/dart/syringe/Initialize(mapload)
+	. = ..()
+
+	// This prevents the Ody from being used as a combat mech spamming RDX/Teslium syringes all over the place.
+	// Other syringe guns are loaded manually with pre-filled syringes which will react chems themselves.
+	// The traitor chem dartgun uses /obj/projectile/bullet/dart/piercing, so this does not impact it.
+	reagents.flags &= ~NO_REACT
 
 /obj/projectile/bullet/dart/piercing
 	piercing = TRUE

@@ -30,7 +30,7 @@
 	name = "Mafia Minigame"
 	icon_state = "mafia"
 	static_lighting = FALSE
-	base_lighting_color = COLOR_WHITE
+
 	base_lighting_alpha = 255
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY

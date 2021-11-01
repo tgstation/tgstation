@@ -17,7 +17,7 @@
 	var/allow_clothing = FALSE
 	var/allow_living = FALSE
 
-/obj/machinery/harvester/Initialize()
+/obj/machinery/harvester/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		name = "auto-autopsy"
@@ -50,12 +50,16 @@
 	harvesting = FALSE
 
 /obj/machinery/harvester/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	if(state_open)
 		close_machine()
 	else if(!harvesting)
 		open_machine()
 
 /obj/machinery/harvester/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(harvesting || !user || !isliving(user) || state_open)
 		return
 	if(can_harvest())

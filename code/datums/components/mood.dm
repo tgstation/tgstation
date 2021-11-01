@@ -221,6 +221,7 @@
 		return
 	sanity = amount
 	var/mob/living/master = parent
+	SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
@@ -265,6 +266,8 @@
 	SIGNAL_HANDLER
 
 	var/datum/mood_event/the_event
+	if(!ispath(type, /datum/mood_event))
+		return
 	if(!istext(category))
 		category = REF(category)
 	if(mood_events[category])

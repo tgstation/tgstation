@@ -73,7 +73,7 @@
 	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(power, T, 0, 0)
-	e.start()
+	e.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/chemical_reaction/bath_salts

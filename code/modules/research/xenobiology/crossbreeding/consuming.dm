@@ -293,7 +293,7 @@ Consuming extracts:
 	taste = "vanilla and " //Randomly selected color dye.
 	var/colour = "#FFFFFF"
 
-/obj/item/slime_cookie/pyrite/Initialize()
+/obj/item/slime_cookie/pyrite/Initialize(mapload)
 	. = ..()
 	var/tastemessage = "paint remover"
 	switch(rand(1,7))

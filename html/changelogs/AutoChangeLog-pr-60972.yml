@@ -1,8 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - bugfix: "Variables within an SDQL spell list variable can have their names changed without causing a cascade of errors"
-  - refactor: "SDQL spell query execution has been moved to a component"
-  - admin: "The parse error handling for SDQL spells has been improved significantly"
-  - admin: "Projectile SDQL spells can now fire any projectile"
-  - admin: "Touch SDQL spells can now use any touch attack item"

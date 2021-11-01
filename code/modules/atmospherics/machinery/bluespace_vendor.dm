@@ -18,7 +18,7 @@
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -79,7 +79,7 @@
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
+/obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 

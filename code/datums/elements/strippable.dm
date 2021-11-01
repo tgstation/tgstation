@@ -112,8 +112,8 @@
 	to_chat(user, span_notice("You try to put [equipping] on [source]..."))
 
 	var/log = "[key_name(source)] is having [equipping] put on them by [key_name(user)]"
-	source.log_message(log, LOG_ATTACK, color="red")
-	user.log_message(log, LOG_ATTACK, color="red", log_globally=FALSE)
+	user.log_message(log, LOG_ATTACK, color="red")
+	source.log_message(log, LOG_VICTIM, color="red", log_globally=FALSE)
 
 	return TRUE
 
@@ -149,14 +149,14 @@
 		return FALSE
 
 	source.visible_message(
-		span_warning("[user] tries to remove [source]'s [item]."),
-		span_userdanger("[user] tries to remove your [item]."),
+		span_warning("[user] tries to remove [source]'s [item.name]."),
+		span_userdanger("[user] tries to remove your [item.name]."),
 		ignored_mobs = user,
 	)
 
 	to_chat(user, span_danger("You try to remove [source]'s [item]..."))
-	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red", log_globally=FALSE)
+	user.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
+	source.log_message("[key_name(source)] is being stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
 	item.add_fingerprint(src)
 
 	if(ishuman(source))
@@ -301,8 +301,8 @@
 	if (!item.doStrip(user, source))
 		return FALSE
 
-	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
-	user.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red", log_globally=FALSE)
+	user.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_ATTACK, color="red")
+	source.log_message("[key_name(source)] has been stripped of [item] by [key_name(user)]", LOG_VICTIM, color="red", log_globally=FALSE)
 
 	// Updates speed in case stripped speed affecting item
 	source.update_equipment_speed_mods()

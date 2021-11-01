@@ -51,5 +51,5 @@
 		for(var/turf/T in get_area_turfs(thearea.type))
 			L+=T
 		var/loc = pick(L)
-		explosion(loc, explosiondev, explosionmed, explosionlight)
+		explosion(loc, explosiondev, explosionmed, explosionlight, explosion_cause = src)
 		reload = 0

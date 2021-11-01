@@ -45,7 +45,7 @@
 	species = "blumpkin"
 	plantname = "Blumpkin Vines"
 	product = /obj/item/food/grown/pumpkin/blumpkin
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/ammonia = 0.2, /datum/reagent/chlorine = 0.1, /datum/reagent/consumable/nutriment = 0.2)
 	rarity = 20
 

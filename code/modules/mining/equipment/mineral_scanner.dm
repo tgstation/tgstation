@@ -3,7 +3,7 @@
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	name = "manual mining scanner"
 	icon = 'icons/obj/device.dmi'
-	icon_state = "mining1"
+	icon_state = "manual_mining"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -33,7 +33,7 @@
 /obj/item/t_scanner/adv_mining_scanner
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. This one has an extended range."
 	name = "advanced automatic mining scanner"
-	icon_state = "mining0"
+	icon_state = "advmining0"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -44,13 +44,14 @@
 	var/current_cooldown = 0
 	var/range = 7
 
-/obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize()
+/obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
 	. = ..()
 	toggle_on()
 
 /obj/item/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
+	icon_state = "mining0"
 	range = 4
 	cooldown = 50
 
@@ -82,6 +83,6 @@
 	pixel_x = -224
 	pixel_y = -224
 
-/obj/effect/temp_visual/mining_overlay/Initialize()
+/obj/effect/temp_visual/mining_overlay/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, time = duration, easing = EASE_IN)

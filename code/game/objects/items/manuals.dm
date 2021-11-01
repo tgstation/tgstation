@@ -296,13 +296,6 @@
 	starting_title = "Engineering Textbook"
 	page_link = "Guide_to_engineering"
 
-/obj/item/book/manual/wiki/engineering_singulo_tesla
-	name = "Singularity and Tesla for Dummies"
-	icon_state ="bookEngineeringSingularitySafety"
-	starting_author = "Engineering Encyclopedia"
-	starting_title = "Singularity and Tesla for Dummies"
-	page_link = "Singularity_and_Tesla_engines"
-
 /obj/item/book/manual/wiki/security_space_law
 	name = "Space Law"
 	desc = "A set of Nanotrasen guidelines for keeping law and order on their space stations."

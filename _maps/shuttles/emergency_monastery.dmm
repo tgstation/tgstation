@@ -278,6 +278,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"cT" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "cY" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Transit";
@@ -353,10 +357,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"du" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "dF" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/power/terminal,
@@ -386,6 +386,12 @@
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"dR" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "dU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -551,6 +557,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
+"fo" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "fq" = (
 /obj/structure/chair/wood,
 /turf/open/floor/iron/chapel{
@@ -650,9 +663,23 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"gN" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Pod Docking Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "gW" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"gY" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "hq" = (
 /obj/structure/window/reinforced{
@@ -673,11 +700,6 @@
 	dir = 4;
 	name = "Air Out"
 	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
-"hN" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hV" = (
@@ -771,13 +793,6 @@
 	name = "Chapel"
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"iT" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "iV" = (
 /obj/machinery/camera{
@@ -903,13 +918,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"ko" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "kq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -992,13 +1000,6 @@
 /obj/effect/station_crash/devastating,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"lc" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "lj" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -1020,13 +1021,17 @@
 "lX" = (
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
+"md" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/kitchen/rollingpin,
+/obj/item/knife/kitchen,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "me" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
-"mh" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "mi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1156,6 +1161,13 @@
 	},
 /turf/open/space/basic,
 /area/shuttle/escape)
+"nU" = (
+/obj/structure/dresser,
+/obj/structure/sign/picture_frame/portrait{
+	pixel_y = 28
+	},
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
 "oa" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet,
@@ -1167,6 +1179,10 @@
 "od" = (
 /obj/machinery/vending/wardrobe/curator_wardrobe,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"of" = (
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "om" = (
 /obj/structure/window/reinforced{
@@ -1211,16 +1227,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"oH" = (
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_y = 3
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "oI" = (
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23
@@ -1253,20 +1259,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"oX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/tank/air,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "oZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
 	dir = 1
@@ -1292,6 +1284,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"pm" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "pr" = (
 /obj/structure/shuttle/engine/heater,
@@ -1399,13 +1398,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"qx" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "qA" = (
 /obj/structure/window/reinforced,
@@ -1767,11 +1759,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"vl" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "vE" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Chapel Access"
@@ -2073,6 +2060,16 @@
 "yc" = (
 /turf/closed/wall/mineral/iron,
 /area/shuttle/escape)
+"yf" = (
+/obj/structure/sign/picture_frame/portrait{
+	pixel_y = 28
+	},
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_y = 3
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "yh" = (
 /obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2238,13 +2235,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"zw" = (
-/obj/machinery/door/airlock/external{
-	name = "Pod Docking Bay"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "zB" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -2270,13 +2260,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"zU" = (
-/obj/structure/dresser,
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 28
-	},
-/turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "zX" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -2307,6 +2290,18 @@
 /obj/structure/table/wood,
 /obj/item/plate,
 /obj/item/kitchen/fork,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"At" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Dock Access"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ax" = (
@@ -2360,21 +2355,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"BC" = (
-/obj/structure/table/wood/fancy,
-/obj/structure/sign/painting/library_secure{
-	pixel_y = -32
-	},
-/obj/item/kitchen/knife/combat/bone{
-	desc = "An old bone sharpened into a blade. It's rather dull nowadays.";
-	force = 8;
-	name = "ancient bone dagger";
-	pixel_y = 6;
-	throwforce = 8
-	},
-/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "BQ" = (
@@ -2504,6 +2484,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"DL" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "DM" = (
 /obj/machinery/door/airlock{
 	name = "Dining Room"
@@ -2515,13 +2502,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"DS" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "DV" = (
 /obj/structure/bed,
@@ -2619,12 +2599,6 @@
 /obj/item/disk/nuclear/fake,
 /obj/item/barcodescanner,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Fb" = (
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "Ff" = (
 /obj/structure/flora/ausbushes/genericbush,
@@ -3124,6 +3098,13 @@
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"Lv" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external/ruin,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "Lz" = (
 /obj/item/clothing/suit/apron/chef,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -3353,14 +3334,6 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"Nf" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
 /area/shuttle/escape)
 "Ng" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -3703,6 +3676,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"Qz" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "QG" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/iron,
@@ -3721,6 +3699,20 @@
 	dir = 6
 	},
 /turf/open/floor/carpet,
+/area/shuttle/escape)
+"Rc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/tank/air,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Rd" = (
 /obj/machinery/hydroponics/soil,
@@ -3978,6 +3970,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"To" = (
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "Tp" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -4003,13 +3999,6 @@
 	pixel_x = 11
 	},
 /turf/open/floor/iron/showroomfloor,
-/area/shuttle/escape)
-"TK" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "TR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -4089,15 +4078,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"UQ" = (
-/obj/machinery/door/airlock/external{
-	name = "Pod Docking Bay"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "UR" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -4222,21 +4202,18 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Wa" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Pod Docking Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "We" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"Wh" = (
-/obj/machinery/door/airlock/external{
-	name = "Dock Access"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Wl" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -4436,12 +4413,6 @@
 	},
 /turf/open/space/basic,
 /area/shuttle/escape)
-"YB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "YC" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
@@ -4526,6 +4497,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"Zx" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ZA" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/photo_album,
@@ -4558,6 +4534,21 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ZY" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = -32
+	},
+/obj/item/knife/combat/bone{
+	desc = "An old bone sharpened into a blade. It's rather dull nowadays.";
+	force = 8;
+	name = "ancient bone dagger";
+	pixel_y = 6;
+	throwforce = 8
+	},
+/obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ZZ" = (
@@ -4608,7 +4599,7 @@ JG
 Ho
 JZ
 zE
-lc
+fo
 zE
 Ho
 JG
@@ -4854,7 +4845,7 @@ Ho
 nr
 nr
 zE
-ko
+Lv
 zE
 nr
 Ho
@@ -4918,7 +4909,7 @@ nr
 nr
 nr
 nr
-oH
+yf
 lX
 yE
 yE
@@ -4993,9 +4984,9 @@ JG
 JG
 JG
 JG
-hN
+Zx
 Zf
-iT
+DL
 jx
 kM
 lP
@@ -5080,7 +5071,7 @@ zE
 jR
 Gv
 kN
-mh
+cT
 nr
 rw
 zb
@@ -5182,7 +5173,7 @@ Fx
 nr
 nr
 nr
-Wh
+At
 nr
 Qv
 Sc
@@ -5260,7 +5251,7 @@ OW
 RQ
 DE
 Nh
-Nf
+md
 nr
 Gy
 nO
@@ -5410,7 +5401,7 @@ Ho
 Ho
 nr
 lE
-du
+of
 jx
 YE
 rV
@@ -5491,7 +5482,7 @@ uO
 uO
 jW
 nr
-du
+of
 nr
 nr
 nr
@@ -5888,7 +5879,7 @@ iw
 iw
 iw
 zE
-DS
+gY
 zE
 zE
 zE
@@ -6052,7 +6043,7 @@ bT
 zE
 zE
 zE
-qx
+pm
 zE
 fx
 EN
@@ -6170,8 +6161,8 @@ ZM
 yc
 Rx
 Su
-YB
-Fb
+Zf
+dR
 nr
 Ho
 Ho
@@ -6252,8 +6243,8 @@ kq
 yc
 Zr
 Ig
-TK
-Fb
+To
+dR
 nr
 Ho
 Ho
@@ -6335,7 +6326,7 @@ OH
 DG
 Zf
 oZ
-Fb
+dR
 nr
 nr
 nr
@@ -6370,9 +6361,9 @@ JG
 JG
 "}
 (23,1,1) = {"
-zw
+gN
 Zf
-UQ
+Wa
 DW
 be
 yq
@@ -6506,7 +6497,7 @@ nr
 nr
 PB
 Kg
-DS
+gY
 Kg
 PB
 nr
@@ -6618,7 +6609,7 @@ JG
 (26,1,1) = {"
 as
 zE
-oX
+Rc
 bb
 aa
 Tm
@@ -6670,7 +6661,7 @@ yc
 yc
 nr
 Kg
-qx
+pm
 Kg
 nr
 nr
@@ -6916,7 +6907,7 @@ yc
 yc
 nr
 Kg
-DS
+gY
 Kg
 nr
 nr
@@ -7080,7 +7071,7 @@ yc
 nr
 PB
 Kg
-qx
+pm
 Kg
 PB
 nr
@@ -7088,7 +7079,7 @@ Lu
 Am
 jx
 jx
-vl
+Qz
 SJ
 SJ
 kt
@@ -7139,7 +7130,7 @@ jx
 Vl
 yc
 yc
-lc
+fo
 yc
 yc
 BQ
@@ -7293,7 +7284,7 @@ zE
 iv
 EN
 kv
-lc
+fo
 zE
 EN
 EN
@@ -7303,13 +7294,13 @@ jR
 nr
 nr
 nr
-ko
+Lv
 yc
-zU
+nU
 vh
 Dk
 yc
-zU
+nU
 vh
 Dk
 yc
@@ -7405,7 +7396,7 @@ rF
 rF
 rF
 PA
-BC
+ZY
 yc
 Ho
 JG
@@ -7457,7 +7448,7 @@ Jl
 Jl
 jS
 zE
-ko
+Lv
 zE
 EN
 EN

@@ -17,11 +17,11 @@
 	var/datum/action/innate/camera_multiz_down/move_down_action = new
 	var/list/actions = list()
 	///Should we supress any view changes?
-	var/should_supress_view_changes  = TRUE
+	var/should_supress_view_changes = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
 
-/obj/machinery/computer/camera_advanced/Initialize()
+/obj/machinery/computer/camera_advanced/Initialize(mapload)
 	. = ..()
 	for(var/i in networks)
 		networks -= i

@@ -9,6 +9,7 @@
 /obj/item/circuit_component/textcase
 	display_name = "Text Case"
 	desc = "A component that makes its input uppercase or lowercase."
+	category = "String"
 
 	var/datum/port/input/option/textcase_options
 
@@ -27,15 +28,11 @@
 	)
 	textcase_options = add_option_port("Textcase Options", component_options)
 
-/obj/item/circuit_component/textcase/Initialize()
-	. = ..()
+/obj/item/circuit_component/textcase/populate_ports()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	output = add_output_port("Output", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/textcase/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/value = input_port.value
 	if(isnull(value))

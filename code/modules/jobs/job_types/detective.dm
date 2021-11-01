@@ -38,7 +38,7 @@
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
-
+	rpg_title = "Thiefcatcher"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -46,26 +46,29 @@
 	name = "Detective"
 	jobtype = /datum/job/detective
 
+	id_trim = /datum/id_trim/job/detective
+	uniform = /obj/item/clothing/under/rank/security/detective
+	suit = /obj/item/clothing/suit/det_suit
+	backpack_contents = list(
+		/obj/item/detective_scanner = 1,
+		/obj/item/melee/baton = 1,
+		/obj/item/storage/box/evidence = 1,
+		)
 	belt = /obj/item/pda/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security/detective
-	neck = /obj/item/clothing/neck/tie/detective
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
+	mask = /obj/item/clothing/mask/cigarette
+	neck = /obj/item/clothing/neck/tie/detective
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/toy/crayon/white
 	r_pocket = /obj/item/lighter
-	backpack_contents = list(/obj/item/storage/box/evidence=1,\
-		/obj/item/detective_scanner=1,\
-		/obj/item/melee/classic_baton=1)
-	mask = /obj/item/clothing/mask/cigarette
 
+	chameleon_extras = list(
+		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/gun/ballistic/revolver/detective,
+		)
 	implants = list(/obj/item/implant/mindshield)
-
-	chameleon_extras = list(/obj/item/gun/ballistic/revolver/detective, /obj/item/clothing/glasses/sunglasses)
-
-	id_trim = /datum/id_trim/job/detective
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

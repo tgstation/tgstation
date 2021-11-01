@@ -10,7 +10,6 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	grind_results = list(/datum/reagent/iodine = 4)
-	material_flags = MATERIAL_NO_EFFECTS
 	var/datum/picture/picture
 	var/scribble //Scribble on the back.
 

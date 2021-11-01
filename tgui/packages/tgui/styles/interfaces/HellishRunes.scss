@@ -1,0 +1,22 @@
+@use '../colors.scss';
+@use '../base.scss';
+
+$bg-map: colors.$bg-map !default;
+
+.HellishRunes__demonrune {
+  font-size: 20px;
+  margin-top: -240px;
+  animation-duration: 5s;
+  animation-name: demonrune;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes demonrune {
+  from {
+    transform: translate(0px, 0px);
+  }
+  to {
+    transform: translate(0px,194px);
+  }
+}

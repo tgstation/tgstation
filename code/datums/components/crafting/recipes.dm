@@ -95,7 +95,7 @@
 
 /datum/crafting_recipe/stunprod
 	name = "Stunprod"
-	result = /obj/item/melee/baton/cattleprod
+	result = /obj/item/melee/baton/security/cattleprod
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1)
@@ -105,7 +105,7 @@
 
 /datum/crafting_recipe/teleprod
 	name = "Teleprod"
-	result = /obj/item/melee/baton/cattleprod/teleprod
+	result = /obj/item/melee/baton/security/cattleprod/teleprod
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
 				/obj/item/assembly/igniter = 1,
@@ -341,7 +341,7 @@
 	result = /mob/living/simple_animal/bot/secbot
 	reqs = list(/obj/item/assembly/signaler = 1,
 				/obj/item/clothing/head/helmet/sec = 1,
-				/obj/item/melee/baton = 1,
+				/obj/item/melee/baton/security/ = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	tool_behaviors = list(TOOL_WELDER)
@@ -539,7 +539,7 @@
 				/obj/item/spear = 1,
 				/obj/item/storage/toolbox= 1)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
-	tool_paths = list(/obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas, /obj/item/melee/baton/cattleprod)
+	tool_paths = list(/obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas, /obj/item/melee/baton/security/cattleprod)
 	time = 300 //contemplate for a bit
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -551,7 +551,7 @@
 	result = /obj/structure/cannon/trash
 	reqs = list(
 		/obj/item/melee/skateboard/improvised = 1,
-		/obj/item/tank/internals/oxygen/red = 1,
+		/obj/item/tank/internals/oxygen = 1,
 		/datum/reagent/drug/maint/tar = 15,
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/storage/toolbox = 1,
@@ -889,7 +889,7 @@
 
 /datum/crafting_recipe/bonedagger
 	name = "Bone Dagger"
-	result = /obj/item/kitchen/knife/combat/bone
+	result = /obj/item/knife/combat/bone
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2)
 	category = CAT_PRIMAL
@@ -1120,7 +1120,7 @@
 	name = "Improvised Pickaxe"
 	reqs = list(
 		/obj/item/crowbar = 1,
-		/obj/item/kitchen/knife = 1,
+		/obj/item/knife = 1,
 		/obj/item/stack/sticky_tape = 1,
 	)
 	result = /obj/item/pickaxe/improvised
@@ -1212,7 +1212,7 @@
 	name = "Alcohol burner"
 	result = /obj/item/burner
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/consumable/ethanol = 15,
 				/obj/item/paper = 1
 				)
@@ -1222,7 +1222,7 @@
 	name = "Oil burner"
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/fuel/oil = 15,
 				/obj/item/paper = 1
 				)
@@ -1232,7 +1232,7 @@
 	name = "Fuel burner"
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/fuel = 15,
 				/obj/item/paper = 1
 				)
@@ -1275,8 +1275,8 @@
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
 	reqs = list(
-				/obj/item/stack/sheet/glass  = 1,
-				)
+		/obj/item/stack/sheet/glass = 1,
+	)
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater

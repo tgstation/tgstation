@@ -6,13 +6,14 @@
 /obj/item/circuit_component/compare/contains
 	display_name = "String Contains"
 	desc = "Checks if a string contains a word/letter"
+	category = "String"
 
 	input_port_amount = 0
 
 	var/datum/port/input/needle
 	var/datum/port/input/haystack
 
-/obj/item/circuit_component/compare/contains/load_custom_ports()
+/obj/item/circuit_component/compare/contains/populate_custom_ports()
 	needle = add_input_port("Needle", PORT_TYPE_STRING)
 	haystack = add_input_port("Haystack", PORT_TYPE_STRING)
 

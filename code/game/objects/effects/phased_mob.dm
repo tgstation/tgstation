@@ -57,7 +57,7 @@
 	if(newloc.flags_1 & NOJAUNT)
 		to_chat(user, span_warning("Some strange aura is blocking the way."))
 		return
-	if(destination_area.area_flags & NOTELEPORT)
+	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))
 		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
 		return
 	return newloc

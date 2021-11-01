@@ -68,8 +68,11 @@
 	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
-/datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
+/datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, list/modifiers)
 	SIGNAL_HANDLER
+
+	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+		return
 
 	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
@@ -99,9 +102,6 @@
 
 	user.face_atom(A)
 
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
-		return
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
@@ -461,7 +461,7 @@
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 			shard.embedding = null
 			shard.updateEmbedding()
-		W.obj_destruction()
+		W.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(30)
 		user.visible_message(span_danger("[user] smacks into [W] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [W] and shatter it, shredding yourself with glass!"))
@@ -476,7 +476,7 @@
 
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
 	if(W)
-		W.obj_destruction()
+		W.atom_destruction()
 		playsound(W, "shatter", 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!

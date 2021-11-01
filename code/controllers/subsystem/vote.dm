@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(vote)
 			else if(mode == "map")
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
-					var/preferred_map = C.prefs.preferred_map
+					var/preferred_map = C.prefs.read_preference(/datum/preference/choiced/preferred_map)
 					if(isnull(global.config.defaultmap))
 						continue
 					if(!preferred_map)

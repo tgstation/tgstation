@@ -30,7 +30,7 @@
 	)
 
 	family_heirlooms = list(/obj/item/bikehorn/golden)
-
+	rpg_title = "Jester"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -38,37 +38,34 @@
 	. = ..()
 	if(!ishuman(spawned))
 		return
-	spawned.apply_pref_name("clown", player_client)
+	spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 
 
 /datum/outfit/job/clown
 	name = "Clown"
 	jobtype = /datum/job/clown
 
-	belt = /obj/item/pda/clown
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	l_pocket = /obj/item/bikehorn
 	backpack_contents = list(
 		/obj/item/stamp/clown = 1,
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/food/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
 		)
-
-	implants = list(/obj/item/implant/sad_trombone)
+	belt = /obj/item/pda/clown
+	ears = /obj/item/radio/headset/headset_srv
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	l_pocket = /obj/item/bikehorn
 
 	backpack = /obj/item/storage/backpack/clown
 	satchel = /obj/item/storage/backpack/clown
 	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/storage/box/hug/survival
-
 	chameleon_extras = /obj/item/stamp/clown
-
-	id_trim = /datum/id_trim/job/clown
+	implants = list(/obj/item/implant/sad_trombone)
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

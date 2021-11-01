@@ -44,6 +44,7 @@ However, if you want finer control over the installation or build process, you w
   - `bin/tgui-dev --debug` - Run server with debug logging enabled.
   - `bin/tgui-dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
 - `bin/tgui-sonar` - Analyze code with SonarQube.
+- `bin/tgui-bench` - Run benchmarks.
 
 > To open a CMD or PowerShell window in any open folder, right click **while holding Shift** on any free space in the folder, then click on either `Open command window here` or `Open PowerShell window here`.
 
@@ -58,6 +59,7 @@ However, if you want finer control over the installation or build process, you w
 - `tools/build/build tgui-sonar` - Analyze code with SonarQube.
 - `tools/build/build tgui-test` - Run unit and integration tests.
 - `tools/build/build tgui-analyze` - Run a bundle analyzer.
+- `tools/build/build tgui-bench` - Run benchmarks.
 - `tools/build/build tgui-clean` - Clean up tgui folder.
 
 > With Juke Build, you can run multiple targets together, e.g.:
@@ -80,6 +82,7 @@ Run `yarn install` once to install tgui dependencies.
 - `yarn tgui:tsc` - Check code with TypeScript compiler.
 - `yarn tgui:test` - Run unit and integration tests.
 - `yarn tgui:analyze` - Run a bundle analyzer.
+- `yarn tgui:bench` - Run benchmarks.
 
 ## Important memo
 

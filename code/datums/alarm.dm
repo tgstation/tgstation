@@ -122,6 +122,8 @@
 ///Adds an alarm to our alarms list, you shouldn't be calling this manually
 ///It should all be handled by the signal listening we do, unless you want to only send an alarm to one listener
 /datum/alarm_listener/proc/add_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/source_area, source_z, optional_camera)
+	SIGNAL_HANDLER
+
 	if (!accepting_alarm_changes)
 		return
 
@@ -156,6 +158,8 @@
 ///Removes an alarm to our alarms list, you probably shouldn't be calling this manually
 ///It should all be handled by the signal listening we do, unless you want to only remove an alarm to one listener
 /datum/alarm_listener/proc/clear_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+
 	if(!accepting_alarm_changes)
 		return
 
@@ -175,6 +179,10 @@
 		return //Return if there's still sources left, no sense clearing the list or bothering anyone about it
 
 	alarms_of_our_type -= source_area.name
+
+	if(!length(alarms_of_our_type))
+		alarms -= alarm_type
+
 	SEND_SIGNAL(src, COMSIG_ALARM_CLEARED, alarm_type, source_area)
 
 ///Does what it says on the tin, exists for signal hooking

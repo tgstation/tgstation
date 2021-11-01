@@ -65,7 +65,8 @@ export const SelectEquipment = (props, context) => {
   return (
     <Window
       width={650}
-      height={415}>
+      height={415}
+      theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item>

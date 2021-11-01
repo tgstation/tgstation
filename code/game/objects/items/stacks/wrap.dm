@@ -16,7 +16,7 @@
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
 
-/obj/item/stack/wrapping_paper/Initialize()
+/obj/item/stack/wrapping_paper/Initialize(mapload)
 	. = ..()
 	if(!greyscale_colors)
 		//Generate random valid colors for paper and ribbon
@@ -124,7 +124,7 @@
 				user.put_in_hands(P)
 			I.forceMove(P)
 			var/size = round(I.w_class)
-			P.name = "[weightclass2text(size)] parcel"
+			P.name = "[weight_class_to_text(size)] parcel"
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"

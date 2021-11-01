@@ -476,7 +476,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
 			roundstart_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sortList(roundstart_rules)
+		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sort_list(roundstart_rules)
 		if (added_rule)
 			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
 			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
@@ -958,6 +958,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
 				job.total_positions += 1
+				log_job_debug("[key_name(usr)] added a slot to [job.title]")
 				break
 
 		src.manage_free_slots()
@@ -976,6 +977,7 @@
 				if(!newtime)
 					to_chat(src.owner, "Setting to amount of positions filled for the job", confidential = TRUE)
 					job.total_positions = job.current_positions
+					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [job.total_positions]")
 					break
 				job.total_positions = newtime
 
@@ -990,6 +992,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Remove && job.total_positions - job.current_positions > 0)
 				job.total_positions -= 1
+				log_job_debug("[key_name(usr)] removed a slot from [job.title]")
 				break
 
 		src.manage_free_slots()
@@ -1003,6 +1006,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Unlimit)
 				job.total_positions = -1
+				log_job_debug("[key_name(usr)] removed the limit from [job.title]")
 				break
 
 		src.manage_free_slots()
@@ -1016,6 +1020,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Limit)
 				job.total_positions = job.current_positions
+				log_job_debug("[key_name(usr)] set the limit for [job.title] to [job.total_positions]")
 				break
 
 		src.manage_free_slots()
@@ -1054,6 +1059,22 @@
 		SSblackbox.record_feedback("amount", "admin_cookies_spawned", 1)
 		to_chat(H, span_adminnotice("Your prayers have been answered!! You received the <b>best [new_item.name]!</b>"), confidential = TRUE)
 		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
+
+	else if (href_list["adminpopup"])
+		if (!check_rights(R_ADMIN))
+			return
+
+		var/message = input(owner, "As well as a popup, they'll also be sent a message to reply to. What do you want that to be?", "Message") as text|null
+		if (!message)
+			to_chat(owner, span_notice("Popup cancelled."))
+			return
+
+		var/client/target = locate(href_list["adminpopup"])
+		if (!istype(target))
+			to_chat(owner, span_notice("The mob doesn't exist anymore!"))
+			return
+
+		give_admin_popup(target, owner, message)
 
 	else if(href_list["adminsmite"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -1411,7 +1432,7 @@
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in sortList(available_channels) )
+		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in sort_list(available_channels) )
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
@@ -1468,7 +1489,7 @@
 			already_wanted = 1
 
 		if(already_wanted)
-			src.admincaster_wanted_message.criminal  = GLOB.news_network.wanted_issue.criminal
+			src.admincaster_wanted_message.criminal = GLOB.news_network.wanted_issue.criminal
 			src.admincaster_wanted_message.body = GLOB.news_network.wanted_issue.body
 		src.admincaster_screen = 14
 		src.access_news_network()
@@ -1931,6 +1952,17 @@
 		var/page = href_list["unbanpage"]
 		var/admin_key = href_list["unbanadminkey"]
 		unban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
+
+	else if(href_list["rebanid"])
+		var/ban_id = href_list["rebanid"]
+		var/player_key = href_list["rebankey"]
+		var/player_ip = href_list["rebanip"]
+		var/player_cid = href_list["rebancid"]
+		var/role = href_list["rebanrole"]
+		var/page = href_list["rebanpage"]
+		var/admin_key = href_list["rebanadminkey"]
+		var/applies_to_admins = href_list["applies_to_admins"]
+		reban(ban_id, applies_to_admins, player_key, player_ip, player_cid, role, page, admin_key)
 
 	else if(href_list["unbanlog"])
 		var/ban_id = href_list["unbanlog"]
