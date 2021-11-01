@@ -23,21 +23,31 @@
 
 	combat_mode = TRUE
 
+	///The type of baton this SecBOT will use
 	var/baton_type = /obj/item/melee/baton/security
+	///The stored weapon, given the baton_type
 	var/obj/item/weapon
+	///Their current target
 	var/mob/living/carbon/target
+	///Name of their last target to prevent spamming
 	var/oldtarget_name
+	///The threat level of the BOT, will arrest anyone at threatlevel 4 or above
 	var/threatlevel = 0
-	var/target_lastloc //Loc of target when arrested.
-	var/last_found //There's a delay
+	///The last location their target was seen at
+	var/target_lastloc
+	///Time since last seeing their perpetrator
+	var/last_found
 
 	///Flags SecBOTs use on what to check on targets when arresting, and whether they should announce it to security/handcuff their target
 	var/security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 //	SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 
-	var/fair_market_price_arrest = 25 // On arrest, charges the violator this much. If they don't have that much in their account, the securitron will beat them instead
-	var/fair_market_price_detain = 5 // Charged each time the violator is stunned on detain
-	var/weapon_force = 20 // Only used for NAP violation beatdowns on non-grievous securitrons
+	///On arrest, charges the violator this much. If they don't have that much in their account, they will get beaten instead.
+	var/fair_market_price_arrest = 25
+	///Charged each time the violator is stunned on detain
+	var/fair_market_price_detain = 5
+	/// Force of the harmbaton used on them
+	var/weapon_force = 20
 	var/market_verb = "Suspect"
 	var/payment_department = ACCOUNT_SEC
 
@@ -49,6 +59,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
+	health = 45
 	auto_patrol = FALSE
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS| SECBOT_CHECK_RECORDS
 
