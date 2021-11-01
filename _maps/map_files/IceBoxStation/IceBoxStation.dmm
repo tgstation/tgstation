@@ -7151,7 +7151,7 @@
 /area/maintenance/starboard)
 "bkA" = (
 /obj/effect/landmark/event_spawn,
-/mob/living/simple_animal/bot/secbot/armsky,
+/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory)
 "bkD" = (
