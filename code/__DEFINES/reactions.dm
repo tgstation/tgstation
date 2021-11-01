@@ -25,7 +25,6 @@
 //tritium reaction
 #define TRITIUM_BURN_OXY_FACTOR 100
 #define TRITIUM_BURN_TRIT_FACTOR 10
-#define TRITIUM_BURN_RADIOACTIVITY_FACTOR 50000 //The neutrons gotta go somewhere. Completely arbitrary number.
 #define TRITIUM_MINIMUM_RADIATION_ENERGY 0.1 //minimum 0.01 moles trit or 10 moles oxygen to start producing rads
 #define MINIMUM_TRIT_OXYBURN_ENERGY 2000000 //This is calculated to help prevent singlecap bombs(Overpowered tritium/oxygen single tank bombs)
 //hydrogen reaction
