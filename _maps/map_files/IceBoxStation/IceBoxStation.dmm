@@ -220,6 +220,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron,
 /area/security/prison)
 "abc" = (
@@ -949,6 +950,7 @@
 "afG" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
 "afH" = (
@@ -3187,6 +3189,7 @@
 "asD" = (
 /obj/structure/table,
 /obj/item/kitchen/fork/plastic,
+/obj/item/radio/intercom/prison/directional/south,
 /turf/open/floor/iron,
 /area/security/prison)
 "asE" = (
@@ -5094,13 +5097,9 @@
 /area/engineering/lobby)
 "aML" = (
 /obj/structure/cable,
-/obj/item/radio/intercom/directional/west{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron,
 /area/security/prison)
 "aMN" = (
@@ -15570,15 +15569,11 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "dZz" = (
-/obj/item/radio/intercom/directional/east{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron,
 /area/security/brig)
 "dZH" = (
@@ -16556,11 +16551,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
-"eAF" = (
-/obj/machinery/light/directional/north,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/prison)
 "eAJ" = (
 /obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/yellow{
@@ -21678,11 +21668,7 @@
 "hfm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
 "hfu" = (
@@ -37445,11 +37431,7 @@
 /turf/open/floor/iron,
 /area/command/gateway)
 "pgn" = (
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
 "pgu" = (
@@ -45287,15 +45269,11 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "tkt" = (
-/obj/item/radio/intercom/directional/west{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron,
 /area/security/brig)
 "tkC" = (
@@ -50903,12 +50881,8 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "vZV" = (
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
 "wac" = (
@@ -78899,8 +78873,8 @@ alZ
 apz
 aqI
 acd
-acd
-eAF
+fRx
+aaq
 frj
 abz
 xPb
@@ -81199,7 +81173,7 @@ gQb
 bBM
 boP
 aai
-aaw
+pgn
 aap
 abs
 aoG

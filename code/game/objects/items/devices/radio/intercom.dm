@@ -11,6 +11,11 @@
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 
+/obj/item/radio/intercom/prison
+	name = "prison intercom"
+	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	prison_radio = TRUE
+
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -157,4 +162,16 @@
 	pixel_x = 28
 
 /obj/item/radio/intercom/directional/west
+	pixel_x = -28
+
+/obj/item/radio/intercom/prison/directional/north
+	pixel_y = 22
+
+/obj/item/radio/intercom/prison/directional/south
+	pixel_y = -28
+
+/obj/item/radio/intercom/prison/directional/east
+	pixel_x = 28
+
+/obj/item/radio/intercom/prison/directional/west
 	pixel_x = -28
