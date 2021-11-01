@@ -98,4 +98,4 @@
 		return
 	printpicture(user,selection)
 	visible_message(span_notice("A picture appears on top of the chassis of [paimob.name]!"))
-	to_chat(usr, span_notice("You print a photograph."))
+	to_chat(user, span_notice("You print a photograph."))
