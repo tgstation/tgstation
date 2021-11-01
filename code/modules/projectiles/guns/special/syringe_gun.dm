@@ -1,5 +1,5 @@
 /obj/item/gun/syringe
-	name = "syringe gun"
+	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon = 'icons/obj/guns/syringegun.dmi'
 	icon_state = "medicalsyringegun"
@@ -105,6 +105,8 @@
 	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
+	base_pixel_x = 0
+	pixel_x = 0
 	max_syringes = 6
 	force = 4
 
@@ -120,6 +122,8 @@
 	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
+	base_pixel_x = 0
+	pixel_x = 0
 	force = 2 //Also very weak because it's smaller
 	suppressed = TRUE //Softer fire sound
 	can_unsuppress = FALSE //Permanently silenced
@@ -137,6 +141,8 @@
 	worn_icon_state = "gun"
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
+	base_pixel_x = 0
+	pixel_x = 0
 	force = 4
 
 /obj/item/gun/syringe/dna/Initialize(mapload)
@@ -177,6 +183,8 @@
 	fire_sound = 'sound/items/syringeproj.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
+	base_pixel_x = 0
+	pixel_x = 0
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] starts aiming with a blowgun!"))
