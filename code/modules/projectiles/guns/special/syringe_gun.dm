@@ -88,11 +88,11 @@
 	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
 	icon_state = "medicalsyringegun"
-	//lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	//righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	//inhand_icon_state = "medicalsyringegun"
-	//inhand_x_dimension = 64
-	//inhand_y_dimension = 64
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_icon_state = "medicalsyringegun"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
