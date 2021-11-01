@@ -112,6 +112,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
 
+/proc/log_silicon(text)
+	if (CONFIG_GET(flag/log_silicon))
+		WRITE_LOG(GLOB.world_silicon_log, "SILICON: [text]")
+
 /**
  * Writes to a special log file if the log_suspicious_login config flag is set,
  * which is intended to contain all logins that failed under suspicious circumstances.
@@ -124,10 +128,6 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		WRITE_LOG(GLOB.world_suspicious_login_log, "SUSPICIOUS_ACCESS: [text]")
 	if(access_log_mirror)
 		log_access(text)
-
-/proc/log_law(text)
-	if (CONFIG_GET(flag/log_law))
-		WRITE_LOG(GLOB.world_game_log, "LAW: [text]")
 
 /proc/log_attack(text)
 	if (CONFIG_GET(flag/log_attack))

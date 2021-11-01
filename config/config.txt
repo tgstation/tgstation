@@ -127,7 +127,7 @@ LOG_TELECOMMS
 LOG_PRAYER
 
 ## log lawchanges
-LOG_LAW
+LOG_SILICON
 
 ## log economy actions
 LOG_ECON

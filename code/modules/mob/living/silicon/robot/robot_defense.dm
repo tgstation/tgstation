@@ -332,6 +332,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		to_chat(user, span_warning("You must unexpose the wires first!"))
 		return
 
+	log_silicon("EMAG: [key_name(src)] has been emagged by [key_name(user)].")
 	to_chat(user, span_notice("You emag [src]'s interface."))
 	emag_cooldown = world.time + 100
 
