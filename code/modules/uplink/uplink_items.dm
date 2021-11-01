@@ -612,6 +612,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/stealthy_weapons/crossbow/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+		desc += " Happy Halloween!"
+
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
 	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
@@ -1381,6 +1387,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
 	item = /obj/item/card/emag
 	cost = 4
+
+/datum/uplink_item/device_tools/emag/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/card/emag/halloween
+		desc += " This one is fitted to support the Halloween season. Candle not included."
 
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
