@@ -153,6 +153,10 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 	if (!check_rights_for(client, R_ADMIN))
 		return
 
+	if (!SSdbcore.Connect())
+		to_chat(usr, span_warning("Couldn't connect to the database."))
+		return
+
 	var/list/known_alts_html = list()
 
 	for (var/known_alt in load_known_alts())
