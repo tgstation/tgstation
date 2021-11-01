@@ -3,18 +3,45 @@
  * Contains:
  * Borrowbook datum
  * Library Public Computer
- * Cachedbook datum
+ * Book Info datum
  * Library Computer
  * Library Scanner
  * Book Binder
  */
 
+//Make db request
+//All other db requests are frozed until it's done
+//Freeze those buttons
+//Do not update page numbers until a db request is complete
+//Make sure you block requests with a harcoded timer
+
+#define DEFAULT_UPLOAD_CATAGORY "Fiction"
 GLOBAL_LIST_INIT(book_categories, list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
+GLOBAL_LIST_INIT(upload_categories, list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 GLOBAL_VAR_INIT(default_book_category, "Any")
+GLOBAL_LIST_INIT(printable_posters, prepare_official_posters())
+GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
+
+
+/proc/prepare_official_posters()
+	var/list/name_to_poster = list()
+	for(var/obj/structure/sign/poster/official/poster_type as anything in subtypesof(/obj/structure/sign/poster/official))
+		name_to_poster[initial(poster_type.name)] = poster_type
+	return name_to_poster
+
+/proc/prepare_library_areas()
+	var/list/library_areas = typesof(/area/service/library) - /area/service/library/abandoned
+	var/list/additional_areas = SSmapping.config.library_areas
+	if(additional_areas)
+		library_areas += additional_areas
+	return library_areas
 
 ///How many books should we load per page?
-#define BOOKS_PER_PAGE 20
-
+#define BOOKS_PER_PAGE 18
+///How many checkout records should we load per page?
+#define CHECKOUTS_PER_PAGE 17
+///How many inventory items should we load per page?
+#define INVENTORY_PER_PAGE 19
 /*
  * Library Public Computer
  */
@@ -43,8 +70,10 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	var/last_search_hash = ""
 	///Have the search params changed at all since the last search?
 	var/params_changed = FALSE
-	///Prevents spamming the search button
-	COOLDOWN_DECLARE(search_run_cooldown)
+	///Are we currently sending a db request for books?
+	var/sending_request = FALSE
+	///Prevents spamming requests, acts as a second layer of protection against spam
+	COOLDOWN_DECLARE(db_request_cooldown)
 
 /obj/machinery/computer/libraryconsole/Initialize(mapload)
 	. = ..()
@@ -59,8 +88,9 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 
 /obj/machinery/computer/libraryconsole/ui_data(mob/user)
 	var/list/data = list()
-	data["categories"] = GLOB.book_categories
-	data["category"] = category || GLOB.default_book_category
+	data["can_db_request"] = can_db_request()
+	data["book_categories"] = GLOB.book_categories
+	data["category"] = category
 	data["author"] = author
 	data["title"] = title
 	data["page_count"] = page_count + 1 //Increase these by one so it looks like we're not indexing at 0
@@ -75,14 +105,14 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	if(.)
 		return
 	switch(action)
-		if("set-title")
+		if("set_search_title")
 			var/newtitle = params["title"]
 			newtitle = sanitize(newtitle)
 			if(newtitle != title)
 				params_changed = TRUE
 			title = newtitle
 			return TRUE
-		if("set-category")
+		if("set_search_category")
 			var/newcategory = params["category"]
 			if(!(newcategory in GLOB.book_categories)) //Nice try
 				newcategory = GLOB.default_book_category
@@ -91,7 +121,7 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 				params_changed = TRUE
 			category = newcategory
 			return TRUE
-		if("set-author")
+		if("set_search_author")
 			var/newauthor = params["author"]
 			newauthor = sanitize(newauthor)
 			if(newauthor != author)
@@ -99,30 +129,64 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 			author = newauthor
 			return TRUE
 		if("search")
+			if(!prevent_db_spam())
+				say("Database cables refreshing. Please wait a moment.")
+				return
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
-		if("switch-page")
-			var/parsed = text2num(params["page"])
-			search_page = parsed || params["page"]
-			//We expect the search page to be one greater then it should be, because we're lying about indexing at 1
-			search_page = min(max(0, search_page - 1), page_count)
+		if("switch_page")
+			if(!prevent_db_spam())
+				say("Database cables refreshing. Please wait a moment.")
+				return
+			search_page = sanitize_page_input(params["page"], search_page, page_count)
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
-		if("clear-data") //The cap just walked in on your browsing, quick! delete it!
+		if("clear_data") //The cap just walked in on your browsing, quick! delete it!
+			if(!prevent_db_spam())
+				say("Database cables refreshing. Please wait a moment.")
+				return
 			title = initial(title)
 			author = initial(author)
 			category = GLOB.default_book_category
+			search_page = 0
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
 
+///Checks if the machine is alloweed to make another db request yet. TRUE if so, FALSE otherwise
+/obj/machinery/computer/libraryconsole/proc/prevent_db_spam()
+	var/allowed = can_db_request()
+	if(!allowed)
+		return FALSE
+	COOLDOWN_START(src, db_request_cooldown, 1 SECONDS)
+	return TRUE
+
+/obj/machinery/computer/libraryconsole/proc/can_db_request()
+	if(sending_request) //Absolutely not
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, db_request_cooldown))
+		return FALSE
+	return TRUE
+
+///Returns a santized page input, so converted from num/text to num, and properly maxed
+/obj/machinery/computer/libraryconsole/proc/sanitize_page_input(input, default, max)
+	input = convert_ambiguous_input(input, default + 1) // + 1 to invert the below reasons
+	//We expect the search page to be one greater then it should be, because we're lying about indexing at 1
+	return clamp(input - 1, 0, max)
+
+///Takes input that could either be a number, or a string that represents a number and returns a number
+/obj/machinery/computer/libraryconsole/proc/convert_ambiguous_input(input, default)
+	if(isnum(input))
+		return input
+	if(!istext(input))
+		return default
+	var/hidden_number = text2num(input)
+	if(!isnum(hidden_number))
+		return default
+	return hidden_number
+
 /obj/machinery/computer/libraryconsole/proc/update_db_info()
-	var/hashed_search = hash_search_info()
-	if(last_search_hash == hashed_search) //You're not allowed to make the same search twice, waste of resources
+	if(!has_anything_changed()) //You're not allowed to make the same search twice, waste of resources
 		return
-	if(!COOLDOWN_FINISHED(src, search_run_cooldown))
-		say("Database cables refreshing. Please wait a moment.")
-		return
-	COOLDOWN_START(src, search_run_cooldown, 1 SECONDS)
 	if (!SSdbcore.Connect())
 		can_connect = FALSE
 		page_count = 0
@@ -130,17 +194,25 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 		return
 	can_connect = TRUE
 	params_changed = FALSE
-	last_search_hash = hashed_search
+	last_search_hash = hash_search_info()
 
 	update_page_count()
 	update_page_contents()
 	SStgui.update_uis(src) //We need to do this because we sleep here, so we've gotta update manually
 
+//Returns true if there's been an update worth refreshing our pages for, false otherwise
+/obj/machinery/computer/libraryconsole/proc/has_anything_changed()
+	if(last_search_hash == hash_search_info())
+		return FALSE
+	return TRUE
+
 /obj/machinery/computer/libraryconsole/proc/hash_search_info()
 	return "[title]-[author]-[category]-[search_page]-[page_count]"
 
 /obj/machinery/computer/libraryconsole/proc/update_page_contents()
-	page_content.Cut()
+	if(sending_request) //Final defense against nerds spamming db requests
+		return
+	sending_request = TRUE
 	search_page = clamp(search_page, 0, page_count)
 	var/datum/db_query/query_library_list_books = SSdbcore.NewQuery({"
 		SELECT author, title, category, id
@@ -152,20 +224,23 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 		ORDER BY id DESC
 		LIMIT :skip, :take
 	"}, list("author" = author, "title" = title, "category" = category, "skip" = BOOKS_PER_PAGE * search_page, "take" = BOOKS_PER_PAGE))
-	if(!query_library_list_books.Execute())
+
+	var/query_succeeded = query_library_list_books.Execute()
+	sending_request = FALSE
+	page_content.Cut()
+	if(!query_succeeded)
 		qdel(query_library_list_books)
 		return
 	while(query_library_list_books.NextRow())
 		page_content += list(list(
-			"author" = query_library_list_books.item[1],
-			"title" = query_library_list_books.item[2],
+			"author" = html_decode(query_library_list_books.item[1]),
+			"title" = html_decode(query_library_list_books.item[2]),
 			"category" = query_library_list_books.item[3],
 			"id" = query_library_list_books.item[4]
 		))
 	qdel(query_library_list_books)
 
 /obj/machinery/computer/libraryconsole/proc/update_page_count()
-	page_count = 0
 	var/bookcount = 0
 	var/datum/db_query/query_library_count_books = SSdbcore.NewQuery({"
 		SELECT COUNT(id) FROM [format_table_name("library")]
@@ -182,8 +257,8 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 		bookcount = text2num(query_library_count_books.item[1])
 	qdel(query_library_count_books)
 
-	if(bookcount > BOOKS_PER_PAGE)
-		page_count = round(bookcount / BOOKS_PER_PAGE) //This is just floor()
+	page_count = round(max(bookcount - 1, 0) / BOOKS_PER_PAGE) //This is just floor()
+	search_page = clamp(search_page, 0, page_count)
 
 /*
  * Borrowbook datum
@@ -195,10 +270,9 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	var/duedate
 
 #define PRINTER_COOLDOWN 6 SECONDS
-#define BOOK_CLUB "Nanotrasen Book Club"
+#define LIBRARY_NEWSFEED "Nanotrasen Book Club"
 //The different states the computer can be in, only send the info we need yeah?
-#define LIBRARY_INVENTORY 0
-#define LIBRARY_CHECKOUT_LISTING 1
+#define LIBRARY_INVENTORY 1
 #define LIBRARY_CHECKOUT 2
 #define LIBRARY_ARCHIVE 3
 #define LIBRARY_UPLOAD 4
@@ -232,28 +306,33 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	var/screen_state = LIBRARY_INVENTORY
 	///Should we show the buttons required for changing screens?
 	var/show_dropdown = TRUE
-	///The set checkout time, in minutes
-	var/checkoutperiod = 5
 	///The name of the book being checked out
-	var/buffer_book
-	///The name of the mob currently checking out the book
-	var/buffer_mob
-	///Category to upload to
-	var/upload_category
+	var/datum/book_info/buffer_book
 	///List of checked out books, /datum/borrowbook
 	var/list/checkouts = list()
+	///The current max amount of checkout pages allowed
+	var/checkout_page_count = 0
+	///The current page we're on in the checkout listing
+	var/checkout_page = 0
 	///List of book info datums to display to the user as our "inventory"
 	var/list/inventory = list()
+	///The current max amount of inventory pages allowed
+	var/inventory_page_count = 0
+	///The current page we're on in the inventory
+	var/inventory_page = 0
+	///Should we load our inventory from the bookselves in our area?
+	var/dynamic_inv_load = FALSE
+	///Toggled if some bit of code wants to override hashing and allow for page updates
+	var/ignore_hash = FALSE
 	///Book scanner that will be used when uploading books to the Archive
 	var/datum/weakref/scanner
 	///Our cooldown on using the printer
 	COOLDOWN_DECLARE(printer_cooldown)
-	///Our upload cooldown, prevents spamming the db
-	COOLDOWN_DECLARE(upload_cooldown)
 
 /obj/machinery/computer/libraryconsole/bookmanagement/Initialize(mapload)
 	. = ..()
-	upload_category = GLOB.default_book_category
+	if(mapload)
+		dynamic_inv_load = TRUE //Only load in stuff if we were placed during mapload
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -263,196 +342,95 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_data(mob/user)
 	var/list/data = list()
+	data["can_db_request"] = can_db_request()
 	data["screen_state"] = screen_state
 	data["show_dropdown"] = show_dropdown
 	data["display_lore"] = (obj_flags & EMAGGED && can_spawn_lore)
-	data["world_time"] = world.time
+	if(dynamic_inv_load) //Time to load those area books in
+		dynamic_inv_load = FALSE
+		load_nearby_books()
 
-	if(screen_state == LIBRARY_INVENTORY)
-		var/id = 0
-		data["inventory"] = list()
-		for(var/datum/book_info/info in inventory)
-			data["inventory"] += list(list(
-				"id" = id,
-				"title" = info.title,
-				"author" = info.author,
-			))
-			id += 1
+	switch(screen_state)
+		if(LIBRARY_INVENTORY)
+			data["inventory"] = list()
+			var/inventory_len = length(inventory)
+			if(inventory_len)
+				for(var/id in ((INVENTORY_PER_PAGE * inventory_page) + 1) to min(INVENTORY_PER_PAGE * (inventory_page + 1), inventory_len))
+					var/book_ref = inventory[id]
+					var/datum/book_info/info = inventory[book_ref]
+					data["inventory"] += list(list(
+						"id" = id,
+						"ref" = book_ref,
+						"title" = info.get_title(),
+						"author" = info.get_author(),
+					))
+			data["has_inventory"] = !!inventory_len
+			data["inventory_page"] = inventory_page + 1
+			data["inventory_page_count"] = inventory_page_count + 1
 
-	if(screen_state == LIBRARY_CHECKOUT_LISTING)
-		var/id = 0
-		for(var/datum/borrowbook/loan as anything in checkouts)
-			var/checkedout = (world.time - loan.checkout) / (1 MINUTES)
-			checkedout = round(checkedout)
-			var/timedue = (loan.duedate - world.time) / (1 MINUTES)
-			timedue = round(timedue)
-			data["checkouts"] += list(list(
-				"id" = id,
-				"borrower" = loan.loanedto,
-				"checked_out_at" = checkedout,
-				"overdue" = (timedue <= 0),
-				"due_in" = timedue,
-				"due_time" = loan.duedate,
-				"title" = loan.book_data.title,
-				"author" = loan.book_data.author
-			))
-			id += 1
+		if(LIBRARY_CHECKOUT)
+			data["checkouts"] = list()
+			var/checkout_len = length(checkouts)
+			if(checkout_len)
+				for(var/id in ((CHECKOUTS_PER_PAGE * checkout_page) + 1) to min(CHECKOUTS_PER_PAGE * (checkout_page + 1), checkout_len))
+					var/checkout_ref = checkouts[id]
+					var/datum/borrowbook/loan = checkouts[checkout_ref]
+					var/timedue = (loan.duedate - world.time) / (1 MINUTES)
+					timedue = max(round(timedue, 0.1), 0)
+					data["checkouts"] += list(list(
+						"id" = id,
+						"ref" = checkout_ref,
+						"borrower" = loan.loanedto || "N/A",
+						"overdue" = (timedue <= 0),
+						"due_in_minutes" = timedue,
+						"title" = loan.book_data.get_title(),
+						"author" = loan.book_data.get_author()
+					))
+			data["checking_out"] = buffer_book?.get_title()
+			data["has_checkout"] = !!checkout_len
+			data["checkout_page"] = checkout_page + 1
+			data["checkout_page_count"] = checkout_page_count + 1
 
-	if(screen_state == LIBRARY_CHECKOUT)
-		data["checkoutee"] = buffer_mob
-		data["checking_out"] = buffer_book
-		data["checkout_for"] = checkoutperiod
+		//Copypasta from the visitor console
+		if(LIBRARY_ARCHIVE)
+			data |= ..() //I am so sorry
 
-	//Copypasta from the visitor console
-	if(screen_state == LIBRARY_ARCHIVE)
-		data["categories"] = GLOB.book_categories
-		data["category"] = category || GLOB.default_book_category
-		data["author"] = author
-		data["title"] = title
-		data["page_count"] = page_count + 1 //Increase these by one so it looks like we're not indexing at 0
-		data["our_page"] = search_page + 1
-		data["pages"] = page_content
-		data["can_connect"] = can_connect
-		data["params_changed"] = params_changed
+		if(LIBRARY_UPLOAD)
+			data["upload_categories"] = GLOB.upload_categories
+			data["default_category"] = DEFAULT_UPLOAD_CATAGORY
+			var/obj/machinery/libraryscanner/scan = get_scanner()
+			data["has_scanner"] = !!(scan)
+			data["has_cache"] = !!(scan?.cache)
+			if(scan?.cache)
+				data["cache_title"] = scan.cache.get_title()
+				data["cache_author"] = scan.cache.get_author() 
+				data["cache_content"] = scan.cache.get_content()
 
-	if(screen_state == LIBRARY_UPLOAD)
-		var/obj/machinery/libraryscanner/scan = get_scanner()
-		data["has_scanner"] = !!(scan)
-		data["has_cache"] = !!(scan?.cache)
-		if(scan?.cache)
-			data["cache_info"] = list(
-				"title" = scan.cache.title,
-				"author" = scan.cache.author
-			)
+		if(LIBRARY_PRINT)
+			data["deity"] = GLOB.deity || DEFAULT_DEITY
+			data["religion"] = GLOB.religion || DEFAULT_RELIGION
+			data["bible_name"] = GLOB.bible_name || DEFAULT_BIBLE
+			data["bible_sprite"] = "display-[GLOB.bible_icon_state || "bible"]"
+			data["posters"] = list()
+			for(var/poster_name in GLOB.printable_posters)
+				data["posters"] += poster_name
 
 	return data
 
-/*
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_interact(mob/user)
-	. = ..()
-	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
-	switch(screenstate)
-		if(0)
-			// Main Menu
-			dat += "<A href='?src=[REF(src)];switchscreen=1'>1. View General Inventory</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=2'>2. View Checked Out Inventory</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=3'>3. Check out a Book</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=4'>4. Connect to External Archive</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=6'>6. Upload Scanned Title to Newscaster</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=7'>7. Print Corporate Materials</A><BR>"
-			if(obj_flags & EMAGGED)
-				dat += "<A href='?src=[REF(src)];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
-		if(1)
-			// Inventory
-			dat += "<H3>Inventory</H3><BR>"
-			for(var/obj/item/book/b in inventory)
-				dat += "[b.name] <A href='?src=[REF(src)];delbook=[REF(b)]'>(Delete)</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(2)
-			// Checked Out
-			dat += "<h3>Checked Out Books</h3><BR>"
-			for(var/datum/borrowbook/b in checkouts)
-				var/timetaken = world.time - b.checkout
-				timetaken /= 600
-				timetaken = round(timetaken)
-				var/timedue = b.duedate - world.time
-				timedue /= 600
-				if(timedue <= 0)
-					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
-				else
-					timedue = round(timedue)
-				dat += "\"[b.bookname]\", Checked out to: [b.mobname]<BR>--- Taken: [timetaken] minutes ago, Due: in [timedue] minutes<BR>"
-				dat += "<A href='?src=[REF(src)];checkin=[REF(b)]'>(Check In)</A><BR><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(3)
-			// Check Out a Book
-			dat += "<h3>Check Out a Book</h3><BR>"
-			dat += "Book: [src.buffer_book] "
-			dat += "<A href='?src=[REF(src)];editbook=1'>\[Edit\]</A><BR>"
-			dat += "Recipient: [src.buffer_mob] "
-			dat += "<A href='?src=[REF(src)];editmob=1'>\[Edit\]</A><BR>"
-			dat += "Checkout Date : [world.time/600]<BR>"
-			dat += "Due Date: [(world.time + checkoutperiod)/600]<BR>"
-			dat += "(Checkout Period: [checkoutperiod] minutes) (<A href='?src=[REF(src)];increasetime=1'>+</A>/<A href='?src=[REF(src)];decreasetime=1'>-</A>)"
-			dat += "<A href='?src=[REF(src)];checkout=1'>(Commit Entry)</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(4)
-			dat += "<h3>External Archive</h3>"
-			if(!SSdbcore.Connect())
-				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
-			else
-				var/booksperpage = 50
-				var/pagecount
-				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("library")] WHERE isnull(deleted)")
-				if(!query_library_count_books.Execute())
-					qdel(query_library_count_books)
-					return
-				if(query_library_count_books.NextRow())
-					pagecount = CEILING(text2num(query_library_count_books.item[1]) / booksperpage, 1)
-				qdel(query_library_count_books)
-				var/list/booklist = list()
-				var/datum/db_query/query_library_get_books = SSdbcore.NewQuery({"
-					SELECT id, author, title, category
-					FROM [format_table_name("library")]
-					WHERE isnull(deleted)
-					LIMIT :skip, :take
-				"}, list("skip" = booksperpage * (page - 1), "take" = booksperpage))
-				if(!query_library_get_books.Execute())
-					qdel(query_library_get_books)
-					return
-				while(query_library_get_books.NextRow())
-					booklist += "<tr><td>[query_library_get_books.item[2]]</td><td>[query_library_get_books.item[3]]</td><td>[query_library_get_books.item[4]]</td><td><A href='?src=[REF(src)];targetid=[query_library_get_books.item[1]]'>\[Order\]</A></td></tr>\n"
-				dat += "<A href='?src=[REF(src)];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
-				dat += "<table>"
-				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
-				dat += jointext(booklist, "")
-				dat += "<tr><td><A href='?src=[REF(src)];page=[max(1,page-1)]'>&lt;&lt;&lt;&lt;</A></td> <td></td> <td></td> <td><span style='text-align:right'><A href='?src=[REF(src)];page=[min(pagecount,page+1)]'>&gt;&gt;&gt;&gt;</A></span></td></tr>"
-				dat += "</table>"
-				qdel(query_library_get_books)
-			dat += "<BR><A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(5)
-			dat += "<H3>Upload a New Title</H3>"
-			if(!scanner)
-				scanner = findscanner(9)
-			if(!scanner)
-				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
-			else if(!scanner.cache)
-				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
-			else
-				dat += "<TT>Data marked for upload...</TT><BR>"
-				dat += "<TT>Title: </TT>[scanner.cache.title]<BR>"
-				if(!scanner.cache.author)
-					scanner.cache.set_author("Anonymous")
-				dat += "<TT>Author: </TT><A href='?src=[REF(src)];setauthor=1'>[scanner.cache.author]</A><BR>"
-				dat += "<TT>Category: </TT><A href='?src=[REF(src)];setcategory=1'>[upload_category]</A><BR>"
-				dat += "<A href='?src=[REF(src)];upload=1'>\[Upload\]</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(6)
-			dat += "<h3>Post Title to Newscaster</h3>"
-			if(!scanner)
-				scanner = findscanner(9)
-			if(!scanner)
-				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
-			else if(!scanner.cache)
-				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
-			else
-				dat += "<TT>Post [scanner.cache.title] to station newscasters?</TT>"
-				dat += "<A href='?src=[REF(src)];newspost=1'>\[Post\]</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(7)
-			dat += "<h3>NTGanda(tm) Universal Printing Module</h3>"
-			dat += "What would you like to print?<BR>"
-			dat += "<A href='?src=[REF(src)];printbible=1'>\[Bible\]</A><BR>"
-			dat += "<A href='?src=[REF(src)];printposter=1'>\[Poster\]</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>(Return to main menu)</A><BR>"
-		if(8)
-			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
-			dat += "Are you absolutely sure you want to proceed? EldritchRelics Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
-			dat += "<A href='?src=[REF(src)];arccheckout=1'>Yes.</A><BR>"
-			dat += "<A href='?src=[REF(src)];switchscreen=0'>No.</A><BR>"
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_assets(mob/user)
+	return list(get_asset_datum(/datum/asset/spritesheet/bibles))
 
-*/
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/load_nearby_books()
+	var/area/current_area = get_area(src)
+	var/list/areas = list(current_area.type)
+	if(length(areas & GLOB.library_areas))
+		areas |= GLOB.library_areas
+
+	for(var/area_type in areas)
+		for(var/datum/book_info/book as anything in GLOB.roundstart_books_by_area[area_type])
+			var/datum/book_info/our_copy = book.return_copy()
+			inventory[ref(our_copy)] = our_copy
+			inventory_update()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/get_scanner(viewrange)
 	if(scanner)
@@ -465,11 +443,135 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 		scanner = WEAKREF(foundya)
 		return foundya
 
-/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
-	can_spawn_lore = FALSE
-	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	to_chat(user, span_warning("Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from..."))
-	user.visible_message(span_warning("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older."), 2)
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, params)
+	//The parent call takes care of stuff like searching, don't forget about that yeah?
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("set_screen")
+			var/window = params["screen_index"]
+			set_screen_state(window)
+			return TRUE
+		if("toggle_dropdown")
+			show_dropdown = !show_dropdown
+			return TRUE
+		if("inventory_remove")
+			var/id = params["book_id"]
+			inventory -= id
+			inventory_update()
+			return TRUE
+		if("switch_inventory_page")
+			inventory_page = sanitize_page_input(params["page"], inventory_page, inventory_page_count)
+			inventory_update()
+			return TRUE
+		if("checkout")
+			var/datum/borrowbook/loan = new /datum/borrowbook
+			var/datum/book_info/book_data = buffer_book?.return_copy() || new /datum/book_info
+
+			book_data.set_title(params["book_name"])
+			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
+			var/checkoutperiod = max(params["checkout_time"], 1)
+
+			loan.book_data = book_data.return_copy()
+			loan.loanedto = loan_to
+			loan.checkout = world.time
+			loan.duedate = world.time + (checkoutperiod MINUTES)
+			checkouts[ref(loan)] = loan
+			checkout_update()
+			return TRUE
+		if("checkin")
+			var/id = params["checked_out_id"]
+			checkouts -= id
+			checkout_update()
+			return TRUE
+		if("switch_checkout_page")
+			checkout_page = sanitize_page_input(params["page"], checkout_page, checkout_page_count)
+			checkout_update()
+			return TRUE
+		if("set_cache_title")
+			var/obj/machinery/libraryscanner/scan = get_scanner()
+			if(scan?.cache && params["title"])
+				scan.cache.set_title(params["title"])
+			return TRUE
+		if("set_cache_author")
+			var/obj/machinery/libraryscanner/scan = get_scanner()
+			if(scan?.cache && params["author"])
+				scan.cache.set_author(params["author"])
+			return TRUE
+		if("upload")
+			if(!prevent_db_spam())
+				say("Database cables refreshing. Please wait a moment.")
+				return
+			var/upload_category = params["category"]
+			if(!(upload_category in GLOB.upload_categories)) //Nice try
+				upload_category = DEFAULT_UPLOAD_CATAGORY
+			upload_category = sanitize(upload_category)
+
+			INVOKE_ASYNC(src, .proc/upload_from_scanner, upload_category)
+			return TRUE
+		if("news_post")
+			if(!GLOB.news_network)
+				say("No news network found on station. Aborting.")
+			var/channelexists = FALSE
+			for(var/datum/newscaster/feed_channel/feed in GLOB.news_network.network_channels)
+				if(feed.channel_name == LIBRARY_NEWSFEED)
+					channelexists = TRUE
+					break
+			if(!channelexists)
+				GLOB.news_network.CreateFeedChannel(LIBRARY_NEWSFEED, "Library", null)
+
+			var/obj/machinery/libraryscanner/scan = get_scanner()
+			if(!scan)
+				say("No nearby scanner detected. Aborting.")
+				return
+			GLOB.news_network.SubmitArticle(scan.cache.content, "[scan.cache.author]: [scan.cache.title]", LIBRARY_NEWSFEED, null)
+			say("Upload complete. Your uploaded title is now available on station newscasters.")
+			return TRUE
+		if("print_book")
+			if(!COOLDOWN_FINISHED(src, printer_cooldown))
+				say("Printer currently unavailable, please wait a moment.")
+				return
+			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
+			var/id = params["book_id"]
+			print_book(id)
+			return TRUE
+		if("print_bible")
+			if(!COOLDOWN_FINISHED(src, printer_cooldown))
+				say("Printer currently unavailable, please wait a moment.")
+				return
+			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
+			var/obj/item/storage/book/bible/holy_book = new(loc)
+			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
+				holy_book.icon_state = GLOB.bible_icon_state
+				holy_book.inhand_icon_state = GLOB.bible_inhand_icon_state
+				holy_book.name = GLOB.bible_name
+				holy_book.deity_name = GLOB.deity
+			return TRUE
+		if("print_poster")
+			if(!COOLDOWN_FINISHED(src, printer_cooldown))
+				say("Printer currently unavailable, please wait a moment.")
+				return
+			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
+
+			var/poster_name = params["poster_name"]
+			var/poster_type = GLOB.printable_posters[poster_name]
+			if(!poster_type)
+				return
+
+			var/obj/item/poster/random_official/poster = new(loc, new poster_type)
+			poster.name = poster_name
+			return TRUE
+		if("lore_spawn")
+			if(obj_flags & EMAGGED && can_spawn_lore)
+				print_forbidden_lore(usr)
+			set_screen_state(MIN_LIBRARY)
+			return TRUE
+		if("lore_deny")
+			if(obj_flags & EMAGGED && can_spawn_lore)
+				shun_the_corp(usr)
+			set_screen_state(MIN_LIBRARY)
+			return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, /obj/item/barcodescanner))
@@ -480,115 +582,43 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	audible_message(span_hear("[src] lets out a low, short blip."))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(density && !(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, params)
-	//The parent call takes care of stuff like searching, don't forget about that yeah?
-	. = ..()
-	if(.)
+	if(!density)
 		return
-	switch(action)
-		if("set_screen")
-			var/window = params["screen_index"]
-			screen_state = clamp(window, MIN_LIBRARY, MAX_LIBRARY)
-			return TRUE
-		if("lore_spawn")
-			if(obj_flags & EMAGGED && can_spawn_lore)
-				print_forbidden_lore()
-			screen_state = MIN_LIBRARY
-			return TRUE
-		if("set-checkout-period")
-			var/checkout_time = params["new_time"]
-			checkout_time = text2num(checkout_time) || checkout_time
-			checkoutperiod = max(checkout_time, 1)
-			return TRUE
-		if("set-book-name")
-			buffer_book = copytext(html_encode(params["new_name"]), 1, 45)
-			return TRUE
-		if("set-mob-name")
-			buffer_mob = copytext(html_encode(params["new_name"]), 1, MAX_NAME_LEN)
-			return TRUE
-		if("checkout")
-			var/datum/borrowbook/loan = new /datum/borrowbook
-			loan.loanedto = sanitize(buffer_book)
-			loan.loanedto = sanitize(buffer_mob)
-			loan.checkout = world.time
-			loan.duedate = world.time + (checkoutperiod * 600)
-			checkouts += loan
-			return TRUE
-		if("checkin")
-			var/id = params["id"]
-			var/datum/borrowbook/loan = checkouts[id]
-			checkouts -= loan
-			return TRUE
-		if("delbook")
-			var/id = params["id"]
-			var/datum/book_info/data = inventory[id]
-			inventory -= data
-			return TRUE
-		if("set-author-name")
-			var/newauthor = copytext(html_encode(params["new_name"]), 1, MAX_NAME_LEN)
-			var/obj/machinery/libraryscanner/scan = get_scanner()
-			if(scan?.cache && newauthor)
-				scan.cache.set_author(newauthor)
-			return TRUE
-		if("set-upload-category")
-			var/newcategory = params["category"]
-			if(!(newcategory in GLOB.book_categories)) //Nice try
-				newcategory = GLOB.default_book_category
-			upload_category = sanitize(newcategory)
-			return TRUE
-		if("upload")
-			upload_from_scanner()
-			return TRUE
-		if("newspost")
-			if(!GLOB.news_network)
-				say("No news network found on station. Aborting.")
-			var/channelexists = FALSE
-			for(var/datum/newscaster/feed_channel/feed in GLOB.news_network.network_channels)
-				if(feed.channel_name == BOOK_CLUB)
-					channelexists = TRUE
-					break
-			if(!channelexists)
-				GLOB.news_network.CreateFeedChannel(BOOK_CLUB, "Library", null)
+	obj_flags |= EMAGGED
 
-			var/obj/machinery/libraryscanner/scan = get_scanner()
-			if(!scan)
-				say("No nearby scanner detected. Aborting.")
-				return
-			GLOB.news_network.SubmitArticle(scan.cache.content, "[scan.cache.title]", BOOK_CLUB, null)
-			say("Upload complete. Your uploaded title is now available on station newscasters.")
-			return TRUE
-		if("print-book")
-			if(!COOLDOWN_FINISHED(src, printer_cooldown))
-				say("Printer currently unavailable, please wait a moment.")
-				return
-			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
-			var/id = params["book_id"]
-			print_book(id)
-			return TRUE
-		if("print-bible")
-			if(!COOLDOWN_FINISHED(src, printer_cooldown))
-				say("Printer currently unavailable, please wait a moment.")
-				return
-			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
-			var/obj/item/storage/book/bible/B = new /obj/item/storage/book/bible(loc)
-			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
-				B.icon_state = GLOB.bible_icon_state
-				B.inhand_icon_state = GLOB.bible_inhand_icon_state
-				B.name = GLOB.bible_name
-				B.deity_name = GLOB.deity
-			return TRUE
-		if("print-poster")
-			if(!COOLDOWN_FINISHED(src, printer_cooldown))
-				say("Printer currently unavailable, please wait a moment.")
-				return
-			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
-			new /obj/item/poster/random_official(loc)
-			return TRUE
+/obj/machinery/computer/libraryconsole/bookmanagement/has_anything_changed()
+	if(..())
+		return TRUE
+	if(!ignore_hash)
+		return FALSE
+	ignore_hash = FALSE
+	return TRUE
 
-/obj/machinery/computer/libraryconsole/bookmanagement/proc/upload_from_scanner()
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/set_screen_state(new_state)
+	screen_state = clamp(new_state, MIN_LIBRARY, MAX_LIBRARY)
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/inventory_update()
+	inventory_page_count = round(max(length(inventory) - 1, 0) / INVENTORY_PER_PAGE) //This is just floor()
+	inventory_page = clamp(inventory_page, 0, inventory_page_count)
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/checkout_update()
+	checkout_page_count = round(max(length(checkouts) - 1, 0) / CHECKOUTS_PER_PAGE) //This is just floor()
+	checkout_page = clamp(checkout_page, 0, checkout_page_count)
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_forbidden_lore(mob/user)
+	can_spawn_lore = FALSE
+	new /obj/item/melee/cultblade/dagger(get_turf(src))
+	to_chat(user, span_warning("Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from..."))
+	user.visible_message(span_warning("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older."), vision_distance = 2)
+	if(ishuman(user))
+		var/mob/living/carbon/human/fool = user
+		fool.age = clamp(fool.age + 10, AGE_MIN, AGE_MAX) //Fuck you
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/shun_the_corp(mob/user)
+	can_spawn_lore = FALSE
+	to_chat(user, span_warning("You click off the page in a rush, and the machine hums back to normal, the tab gone..."))
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/upload_from_scanner(upload_category)
 	var/obj/machinery/libraryscanner/scan = get_scanner()
 	if(!scan)
 		say("No nearby scanner detected.")
@@ -596,20 +626,24 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	if(!scan.cache)
 		say("No cached book found. Aborting upload.")
 		return
-	if(!COOLDOWN_FINISHED(src, upload_cooldown))
-		say("Database cables refreshing. Please wait a moment.")
-		return
-	COOLDOWN_START(src, upload_cooldown, 1 SECONDS)
 	if (!SSdbcore.Connect())
 		say("Connection to Archive has been severed. Aborting.")
 		return
 	var/datum/book_info/book = scan.cache
-	var/content = book.content
-	var/msg = "[key_name(usr)] has uploaded the book titled [book.title], [length(content)] signs"
+	if(!book.title)
+		say("No title detected. Aborting")
+		return
+	if(!book.author)
+		say("No author detected. Aborting")
+		return
+	if(!book.content)
+		say("No content detected. Aborting")
+		return
+	var/msg = "[key_name(usr)] has uploaded the book titled [book.title], [length(book.content)] signs"
 	var/datum/db_query/query_library_upload = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime, round_id_created)
 		VALUES (:author, :title, :content, :category, :ckey, Now(), :round_id)
-	"}, list("title" = book.title, "author" = book.author, "content" = content, "category" = upload_category, "ckey" = usr.ckey, "round_id" = GLOB.round_id))
+	"}, list("title" = book.title, "author" = book.author, "content" = book.content, "category" = upload_category, "ckey" = usr.ckey, "round_id" = GLOB.round_id))
 	if(!query_library_upload.Execute())
 		qdel(query_library_upload)
 		say("Database error encountered uploading to Archive")
@@ -617,6 +651,8 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	log_game(msg)
 	qdel(query_library_upload)
 	say("Upload Complete. Uploaded title will be available for printing in a moment")
+	ignore_hash = TRUE
+	update_db_info()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_book(id)
 	if (!SSdbcore.Connect())
@@ -641,9 +677,9 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 			printed_book.name = "Book: [title]"
 			printed_book.book_data = new()
 			var/datum/book_info/fill = printed_book.book_data
-			fill.set_title(title, legacy = TRUE)
-			fill.set_title(author, legacy = TRUE)
-			fill.set_author(content, legacy = TRUE)
+			fill.set_title(title, trusted = TRUE)
+			fill.set_author(author, trusted = TRUE)
+			fill.set_content(content, trusted = TRUE)
 			printed_book.icon_state = "book[rand(1,8)]"
 			visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 		break
@@ -656,17 +692,31 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	name = "scanner control interface"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	desc = "It servers the purpose of scanning stuff."
+	desc = "It's an industrial strength book scanner. Perfect!"
 	density = TRUE
-	///Our scanned in book
+	var/obj/item/book/held_book
+	///Our scanned-in book
 	var/datum/book_info/cache
 
-/obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/book))
-		if(!user.transferItemToLoc(O, src))
-			return
-	else
-		return ..()
+/obj/machinery/libraryscanner/Destroy()
+	held_book = null
+	cache = null
+	return ..()
+
+/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, params)
+	if(istype(hitby, /obj/item/book) && !held_book)
+		user.transferItemToLoc(hitby, src)
+		held_book = hitby
+		RegisterSignal(held_book, COMSIG_MOVABLE_MOVED, .proc/handle_book_move)
+		return TRUE
+	return ..()
+
+/obj/machinery/libraryscanner/proc/handle_book_move(datum/parent)
+	SIGNAL_HANDLER
+	if(held_book?.loc == src)
+		return
+	UnregisterSignal(held_book, COMSIG_MOVABLE_MOVED)
+	held_book = null
 
 /obj/machinery/libraryscanner/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -677,12 +727,11 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 /obj/machinery/libraryscanner/ui_data()
 	var/list/data = list()
 	var/list/cached_info = list()
-	var/obj/item/book/scannable = locate(/obj/item/book) in contents
-	data["has_book"] = !!scannable
+	data["has_book"] = !!held_book
 	data["has_cache"] = !!cache
 	if(cache)
-		cached_info["title"] = cache.title
-		cached_info["author"] = cache.author
+		cached_info["title"] = cache.get_title()
+		cached_info["author"] = cache.get_author()
 	data["book"] = cached_info
 
 	return data
@@ -693,18 +742,16 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 		return
 	switch(action)
 		if("scan")
-			var/obj/item/book/to_store = locate(/obj/item/book) in contents
-			if(cache?.compare(to_store.book_data))
+			if(cache?.compare(held_book.book_data))
 				say(span_robot("This book is already in my internal cache"))
 				return
-			cache = to_store.book_data.return_copy()
+			cache = held_book.book_data.return_copy()
 			return TRUE
 		if("clear")
 			cache = null
 			return TRUE
 		if("eject")
-			var/obj/item/book/yeet = locate(/obj/item/book) in contents
-			yeet.forceMove(drop_location())
+			held_book.forceMove(drop_location())
 			return TRUE
 
 /*
@@ -718,34 +765,37 @@ GLOBAL_VAR_INIT(default_book_category, "Any")
 	density = TRUE
 	var/busy = FALSE
 
-/obj/machinery/bookbinder/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/paper))
-		bind_book(user, O)
-	else if(default_unfasten_wrench(user, O))
-		return 1
-	else
-		return ..()
+/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, params)
+	if(istype(hitby, /obj/item/paper))
+		prebind_book(user, hitby)
+		return
+	if(default_unfasten_wrench(user, hitby))
+		return TRUE
+	return ..()
 
-/obj/machinery/bookbinder/proc/bind_book(mob/user, obj/item/paper/P)
+/obj/machinery/bookbinder/proc/prebind_book(mob/user, obj/item/paper/draw_from)
 	if(machine_stat)
 		return
 	if(busy)
 		to_chat(user, span_warning("The book binder is busy. Please wait for completion of previous operation."))
 		return
-	if(!user.transferItemToLoc(P, src))
+	if(!user.transferItemToLoc(draw_from, src))
 		return
 	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
 	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
-	sleep(rand(200,400))
+	addtimer(CALLBACK(src, .proc/bind_book, draw_from), rand(200, 400))
+
+/obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
 	busy = FALSE
-	if(P)
-		if(!machine_stat)
-			visible_message(span_notice("[src] whirs as it prints and binds a new book."))
-			var/obj/item/book/bound_book = new(src.loc)
-			bound_book.book_data.content = P.info
-			bound_book.name = "Print Job #" + "[rand(100, 999)]"
-			bound_book.icon_state = "book[rand(1,7)]"
-			qdel(P)
-		else
-			P.forceMove(drop_location())
+	if(!draw_from) //What the fuck did you do
+		return
+	if(machine_stat)
+		draw_from.forceMove(drop_location())
+		return
+	visible_message(span_notice("[src] whirs as it prints and binds a new book."))
+	var/obj/item/book/bound_book = new(loc)
+	bound_book.book_data.set_content(draw_from.info)
+	bound_book.name = "Print Job #" + "[rand(100, 999)]"
+	bound_book.icon_state = "book[rand(1,7)]"
+	qdel(draw_from)
