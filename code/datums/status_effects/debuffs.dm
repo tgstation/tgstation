@@ -980,7 +980,7 @@
 	var/ants_remaining = 0
 
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
-	if(isnum(amount_left) && new_owner.stat <= SOFT_CRIT)
+	if(isnum(amount_left) && new_owner.stat >= HARD_CRIT)
 		to_chat(new_owner, "<span class='userdanger'>You're covered in ants!</span>")
 		ants_remaining += amount_left
 		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
@@ -988,7 +988,7 @@
 
 /datum/status_effect/ants/refresh(effect, amount_left)
 	var/mob/living/carbon/human/victim = owner
-	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat <= SOFT_CRIT)
+	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat >= HARD_CRIT)
 		if(!prob(1)) // 99%
 			to_chat(victim, "<span class='userdanger'>You're covered in MORE ants!</span>")
 		else // 1%
