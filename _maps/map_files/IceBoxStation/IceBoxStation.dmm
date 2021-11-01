@@ -25741,8 +25741,8 @@
 	},
 /obj/item/storage/box/rxglasses,
 /obj/item/hand_labeler,
-/obj/item/gun/syringe/medical,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "jgP" = (

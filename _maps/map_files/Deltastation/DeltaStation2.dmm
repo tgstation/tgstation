@@ -20976,7 +20976,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /obj/machinery/status_display/evac/directional/west,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -26675,7 +26675,7 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue{

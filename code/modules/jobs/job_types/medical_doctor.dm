@@ -55,5 +55,5 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	box = /obj/item/storage/box/survival/medical
-	chameleon_extras = /obj/item/gun/syringe/medical
+	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)

@@ -11529,7 +11529,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/box/syringes,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "cxl" = (

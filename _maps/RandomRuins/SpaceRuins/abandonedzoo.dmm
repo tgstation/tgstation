@@ -173,7 +173,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aW" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aY" = (

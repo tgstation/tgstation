@@ -3344,7 +3344,7 @@
 /obj/machinery/light/directional/north,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/storage)
@@ -9551,7 +9551,7 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/north,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/cable,
@@ -41538,7 +41538,7 @@
 	},
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/gun/syringe/medical,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "nOd" = (
