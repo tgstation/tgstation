@@ -137,6 +137,8 @@
 			var/mob/mob_target = AM
 			if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
 				return
+		if(iseffect(AM)) //no accidentally wasting your moment of glory on graffiti
+			return
 		user.say("[war_cry]", forced="spear warcry")
 		explosive.forceMove(AM)
 		explosive.detonate(lanced_by=user)
