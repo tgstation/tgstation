@@ -403,7 +403,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin"
 	if(!check_rights(R_BAN))
 		return
-	holder.ban_panel(duration = 1440)
+	holder.ban_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Banning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/unban_panel()

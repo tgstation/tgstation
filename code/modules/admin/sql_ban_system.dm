@@ -114,7 +114,10 @@
 	return ban_cache
 
 
-/datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration, applies_to_admins, reason, edit_id, page, admin_key)
+/datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration = 1440, applies_to_admins, reason, edit_id, page, admin_key)
+	if (duration == BAN_PANEL_PERMANENT)
+		duration = null
+
 	var/panel_height = 620
 	if(edit_id)
 		panel_height = 240
