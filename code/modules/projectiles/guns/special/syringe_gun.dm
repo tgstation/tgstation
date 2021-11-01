@@ -1,7 +1,7 @@
 /obj/item/gun/syringe
 	name = "syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance, You feel like you shouldn't have this."
-	icon_state = "syringegun"
+	icon = 'icons/obj/guns/syringegun.dmi'
 	inhand_icon_state = "syringegun"
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
@@ -85,14 +85,14 @@
 	. += "[initial(icon_state)]_[syringe_count ? clamp(syringe_count, 1, initial(max_syringes)) : "empty"]"
 
 /obj/item/gun/syringe/medical
-	name = "syringe gun"
+	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon_state = "syringerifle"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	inhand_icon_state = "syringerifle"
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
+	icon_state = "medicalsyringegun"
+	//lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	//righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	//inhand_icon_state = "medicalsyringegun"
+	//inhand_x_dimension = 64
+	//inhand_y_dimension = 64
 	worn_icon_state = null
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -101,13 +101,14 @@
 /obj/item/gun/syringe/rapidsyringe
 	name = "mini rapid syringe gun"
 	desc = "A modification of the syringe gun design to be more compact and use a rotating cylinder to store up to six syringes."
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "rapidsyringegun"
 	max_syringes = 6
 
 /obj/item/gun/syringe/syndicate
 	name = "dart pistol"
 	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
-	icon_state = "syringe_pistol"
+	icon_state = "dartsyringegun"
 	inhand_icon_state = "gun" //Smaller inhand
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2 //Also very weak because it's smaller
@@ -118,6 +119,7 @@
 /obj/item/gun/syringe/dna
 	name = "modified mini syringe gun"
 	desc = "A syringe gun that has been modified to be smaller and fit DNA injectors instead of normal syringes."
+	icon_state = "dnasyringegun"
 
 /obj/item/gun/syringe/dna/Initialize(mapload)
 	. = ..()
@@ -135,6 +137,8 @@
 			to_chat(user, span_notice("You load \the [D] into \the [src]."))
 			syringes += D
 			recharge_newshot()
+			update_appearance()
+			playsound(loc, load_sound, 40)
 			return TRUE
 		else
 			to_chat(user, span_warning("[src] cannot hold more syringes!"))
@@ -143,6 +147,7 @@
 /obj/item/gun/syringe/blowgun
 	name = "blowgun"
 	desc = "Fire syringes at a short distance."
+	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "blowgun"
 	inhand_icon_state = "blowgun"
 	has_syringe_overlay = FALSE
