@@ -1317,6 +1317,15 @@
 	build_path = /obj/item/mod/module/organ_thrower
 	category = list("Modular Suit Modules")
 
+/datum/design/pathfinder
+	name = "MOD Module: Pathfinder"
+	desc = "A modsuit module design!"
+	id = "mod_pathfinder"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	build_path = /obj/item/mod/module/pathfinder
+	category = list("Modular Suit Modules")
+
 /datum/design/mod_circuit
 	name = "MOD Module: Circuit Adapter"
 	desc = "A modsuit module design!"

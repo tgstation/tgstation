@@ -66,11 +66,11 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/job/engineer/gloved/rig
-	name = "Station Engineer (Hardsuit)"
+	name = "Station Engineer (MOD)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/engine
-	suit_store = /obj/item/tank/internals/oxygen
-	r_hand = /obj/item/mod/control/pre_equipped/engineering
+	back = /obj/item/mod/control/pre_equipped/engineering
+	backpack_contents = null
+	box = null
+	r_hand = /obj/item/tank/internals/oxygen
 	head = null
 	mask = /obj/item/clothing/mask/breath
-	internals_slot = ITEM_SLOT_SUITSTORE

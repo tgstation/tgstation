@@ -13,7 +13,6 @@
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer
 	shoes = /obj/item/clothing/shoes/combat/swat
-	toggle_helmet = FALSE
 
 /datum/outfit/centcom/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

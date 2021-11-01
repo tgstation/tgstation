@@ -114,9 +114,6 @@
 	  */
 	var/list/skillchips = null
 
-	/// Should the toggle helmet proc be called on the helmet during equip
-	var/toggle_helmet = TRUE
-
 	/// Any undershirt. While on humans it is a string, here we use paths to stay consistent with the rest of the equips.
 	var/datum/sprite_accessory/undershirt = null
 
@@ -228,6 +225,11 @@
 				for(var/i in 1 to number)
 					H.equip_to_slot_or_del(new path(H),ITEM_SLOT_BACKPACK, TRUE)
 
+		if(ispath(back, /obj/item/mod/control))
+			var/obj/item/mod/control/mod = H.back
+			if(istype(mod))
+				mod.quick_activation()
+
 	post_equip(H, visualsOnly)
 
 	if(!visualsOnly)
@@ -321,7 +323,6 @@
 	.["name"] = name
 	.["uniform"] = uniform
 	.["suit"] = suit
-	.["toggle_helmet"] = toggle_helmet
 	.["back"] = back
 	.["belt"] = belt
 	.["gloves"] = gloves
@@ -349,7 +350,6 @@
 	name = target.name
 	uniform = target.uniform
 	suit = target.suit
-	toggle_helmet = target.toggle_helmet
 	back = target.back
 	belt = target.belt
 	gloves = target.gloves
@@ -388,7 +388,6 @@
 	name = outfit_data["name"]
 	uniform = text2path(outfit_data["uniform"])
 	suit = text2path(outfit_data["suit"])
-	toggle_helmet = outfit_data["toggle_helmet"]
 	back = text2path(outfit_data["back"])
 	belt = text2path(outfit_data["belt"])
 	gloves = text2path(outfit_data["gloves"])

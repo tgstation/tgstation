@@ -120,60 +120,61 @@
 		if(ai)
 			to_chat(ai, span_notice("SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\""))
 		finish_activation(!active)
+		if(active)
+			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
+			SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
+		else
+			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 	activating = FALSE
 	return TRUE
 
 /obj/item/mod/control/proc/seal_part(obj/item/part, seal)
-	switch(part)
-		if(boots)
-			boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
-			boots.worn_icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
-			wearer.update_inv_shoes()
-		if(gauntlets)
-			gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
-			gauntlets.worn_icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
-			wearer.update_inv_gloves()
-		if(chestplate)
-			chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
-			chestplate.worn_icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
-			if(seal)
-				chestplate.clothing_flags |= chestplate.visor_flags
-				chestplate.flags_inv |= chestplate.visor_flags_inv
-			else
-				chestplate.clothing_flags &= ~chestplate.visor_flags
-				chestplate.flags_inv &= ~chestplate.visor_flags_inv
-			wearer.update_inv_wear_suit()
-			wearer.update_inv_w_uniform()
-		if(helmet)
-			helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
-			helmet.worn_icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
-			if(seal)
-				helmet.flags_cover |= helmet.visor_flags_cover
-				helmet.flags_inv |= helmet.visor_flags_inv
-				helmet.clothing_flags |= helmet.visor_flags
-				helmet.alternate_worn_layer = null
-			else
-				helmet.flags_cover &= ~helmet.visor_flags_cover
-				helmet.flags_inv &= ~helmet.visor_flags_inv
-				helmet.clothing_flags &= ~helmet.visor_flags
-				helmet.alternate_worn_layer = initial(helmet.alternate_worn_layer)
-			wearer.update_inv_head()
-			wearer.update_inv_wear_mask()
-			wearer.update_hair()
+	if(part == boots)
+		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
+		boots.worn_icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
+		wearer.update_inv_shoes()
+	if(part == gauntlets)
+		gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
+		gauntlets.worn_icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
+		wearer.update_inv_gloves()
+	if(part == chestplate)
+		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
+		chestplate.worn_icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
+		if(seal)
+			chestplate.clothing_flags |= chestplate.visor_flags
+			chestplate.flags_inv |= chestplate.visor_flags_inv
+		else
+			chestplate.clothing_flags &= ~chestplate.visor_flags
+			chestplate.flags_inv &= ~chestplate.visor_flags_inv
+		wearer.update_inv_wear_suit()
+		wearer.update_inv_w_uniform()
+	if(part == helmet)
+		helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
+		helmet.worn_icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
+		if(seal)
+			helmet.flags_cover |= helmet.visor_flags_cover
+			helmet.flags_inv |= helmet.visor_flags_inv
+			helmet.clothing_flags |= helmet.visor_flags
+			helmet.alternate_worn_layer = null
+		else
+			helmet.flags_cover &= ~helmet.visor_flags_cover
+			helmet.flags_inv &= ~helmet.visor_flags_inv
+			helmet.clothing_flags &= ~helmet.visor_flags
+			helmet.alternate_worn_layer = initial(helmet.alternate_worn_layer)
+		wearer.update_inv_head()
+		wearer.update_inv_wear_mask()
+		wearer.update_hair()
 
 /obj/item/mod/control/proc/finish_activation(on)
 	icon_state = "[skin]-control[on ? "-sealed" : ""]"
-	worn_icon_state = "[skin]-control[active ? "-sealed" : ""]"
+	worn_icon_state = "[skin]-control[on ? "-sealed" : ""]"
 	wearer.update_inv_back()
 	if(on)
-		playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 		slowdown = theme.slowdown_active
-		SEND_SOUND(wearer, sound('sound/mecha/nominal.ogg',volume=50))
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_equip()
 		START_PROCESSING(SSobj,src)
 	else
-		playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 		slowdown = theme.slowdown_unactive
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_unequip()
@@ -181,7 +182,7 @@
 				module.on_deactivation()
 		STOP_PROCESSING(SSobj, src)
 	wearer.update_equipment_speed_mods()
-	active = !active
+	active = on
 
 /obj/item/mod/control/proc/quick_activation() //quick activation, for stuff like outfits with the suit on
 	for(var/obj/item/part in mod_parts)

@@ -3,7 +3,7 @@
 	icon_state = "module"
 	/// If it can be removed
 	var/removable = TRUE
-	/// If it's passive, active or usable
+	/// If it's passive, togglable, usable or active
 	var/module_type = MODULE_PASSIVE
 	/// Is the module active
 	var/active = FALSE
@@ -1104,11 +1104,10 @@
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
-	if(!istype(bumped_into, /turf/closed/mineral))
+	if(!istype(bumped_into, /turf/closed/mineral) || !drain_power(use_power_cost))
 		return
 	var/turf/closed/mineral/mineral_turf = bumped_into
 	mineral_turf.gets_drilled(mod.wearer)
-	drain_power(use_power_cost)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/mod/module/orebag
@@ -1234,6 +1233,8 @@
 
 /obj/projectile/organ/Initialize(mapload, obj/item/organ)
 	. = ..()
+	if(!organ)
+		return INITIALIZE_HINT_QDEL
 	appearance = organ.appearance
 	organ.forceMove(src)
 
@@ -1264,3 +1265,82 @@
 		organ.Insert(target)
 	else
 		organ.forceMove(drop_location())
+
+/obj/item/mod/module/pathfinder
+	name = "MOD pathfinder module"
+	desc = "A module linked to an implant, able to find the user and attach itself onto them. To inject the implant, hit someone with it."
+	complexity = 3
+	use_power_cost = 100
+	incompatible_modules = list(/obj/item/mod/module/pathfinder)
+	var/obj/item/implant/mod/implant
+
+/obj/item/mod/module/pathfinder/Initialize(mapload)
+	. = ..()
+	implant = new(src)
+
+/obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, params)
+	if(!ishuman(target) || !implant)
+		return
+	if(!implant.implant(target, user))
+		return
+	if(target == user)
+		to_chat(user, span_notice("You implant yourself with [implant]."))
+	else
+		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
+	implant = null
+
+/obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if(human_user.back && !human_user.dropItemToGround(human_user.back))
+		return
+	if(!human_user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+		return
+	balloon_alert(human_user, "[mod] attached")
+	playsound(mod, 'sound/machines/ping.ogg', 100, TRUE)
+
+/obj/item/implant/mod
+	name = "MOD pathfinder implant"
+	desc = "Lets you recall a MODsuit to you at any time."
+	actions_types = list(/datum/action/item_action/mod_recall)
+	var/obj/item/mod/module/pathfinder/module
+
+/obj/item/implant/mod/Initialize(mapload)
+	. = ..()
+	if(istype(loc, /obj/item/mod/module/pathfinder))
+		module = loc
+	else
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/implant/mod/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR>
+				<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"}
+	return dat
+
+/obj/item/implant/mod/proc/recall()
+	balloon_alert(imp_in, "fuck")
+
+/datum/action/item_action/mod_recall
+	name = "Recall MOD"
+	desc = "Recall a MODsuit anyplace, anytime."
+	check_flags = AB_CHECK_CONSCIOUS
+	background_icon_state = "bg_tech_blue"
+	icon_icon = 'icons/mob/actions/actions_mod.dmi'
+	icon_state = "recall"
+	COOLDOWN_DECLARE(recall_cooldown)
+	var/obj/item/implant/mod/implant
+
+/datum/action/item_action/mod_recall/New(Target)
+	..()
+	implant = Target
+
+/datum/action/item_action/mod_recall/Trigger()
+	. = ..()
+	if(!.)
+		return
+	if(!COOLDOWN_FINISHED(src, recall_cooldown))
+		return
+	COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
+	implant.recall()
