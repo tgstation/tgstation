@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(current_card.registered_account)
 			current_user = current_card.registered_account
 			return TRUE
-		to_chat(user, "There's no account assigned with this ID.")
+		say("Requesting ID has no registered account.")
 		return TRUE
 	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))

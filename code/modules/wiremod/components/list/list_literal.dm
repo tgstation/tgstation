@@ -6,6 +6,7 @@
 /obj/item/circuit_component/list_literal
 	display_name = "List Literal"
 	desc = "A component that creates a list from whatever input you give it."
+	category = "List"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list type

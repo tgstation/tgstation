@@ -13,10 +13,7 @@
 	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/catwalk_tile
 	footstep = FOOTSTEP_CATWALK
-	barefootstep = FOOTSTEP_CATWALK
-	clawfootstep = FOOTSTEP_CATWALK
-	heavyfootstep = FOOTSTEP_CATWALK
-	intact = FALSE
+	overfloor_placed = TRUE
 	var/covered = TRUE
 
 

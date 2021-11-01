@@ -34,14 +34,15 @@
 	name = "Quartermaster"
 	jobtype = /datum/job/quartermaster
 
+	id_trim = /datum/id_trim/job/quartermaster
+	uniform = /obj/item/clothing/under/rank/cargo/qm
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1,
+		)
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/qm
-	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1)
 
 	chameleon_extras = /obj/item/stamp/qm
-
-	id_trim = /datum/id_trim/job/quartermaster
