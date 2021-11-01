@@ -40,15 +40,15 @@
 
 	///Flags SecBOTs use on what to check on targets when arresting, and whether they should announce it to security/handcuff their target
 	var/security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
-//	SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
+//	Selections: SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS | SECBOT_HANDCUFF_TARGET
 
-	///On arrest, charges the violator this much. If they don't have that much in their account, they will get beaten instead.
+	///On arrest, charges the violator this much. If they don't have that much in their account, they will get beaten instead
 	var/fair_market_price_arrest = 25
 	///Charged each time the violator is stunned on detain
 	var/fair_market_price_detain = 5
 	/// Force of the harmbaton used on them
 	var/weapon_force = 20
-	var/market_verb = "Suspect"
+	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
 
 /mob/living/simple_animal/bot/secbot/beepsky
@@ -535,23 +535,23 @@
 	var/mob/living/carbon/human/human_target = target
 	var/obj/item/card/id/target_id = human_target.get_idcard(TRUE)
 	if(!target_id)
-		say("[market_verb] NAP Violation: No ID card found.")
+		say("Suspect NAP Violation: No ID card found.")
 		nap_violation(target)
 		return FALSE
 	var/datum/bank_account/insurance = target_id.registered_account
 	if(!insurance)
-		say("[market_verb] NAP Violation: No bank account found.")
+		say("Suspect NAP Violation: No bank account found.")
 		nap_violation(target)
 		return FALSE
 	var/fair_market_price = (security_mode_flags & SECBOT_HANDCUFF_TARGET ? fair_market_price_detain : fair_market_price_arrest)
 	if(!insurance.adjust_money(-fair_market_price))
-		say("[market_verb] NAP Violation: Unable to pay.")
+		say("Suspect NAP Violation: Unable to pay.")
 		nap_violation(target)
 		return FALSE
-	var/datum/bank_account/target_department_account = SSeconomy.get_dep_account(payment_department)
+	var/datum/bank_account/beepsky_department_account = SSeconomy.get_dep_account(payment_department)
 	say("Thank you for your compliance. Your account been charged [fair_market_price] credits.")
-	if(target_department_account)
-		target_department_account.adjust_money(fair_market_price)
+	if(beepsky_department_account)
+		beepsky_department_account.adjust_money(fair_market_price)
 		return TRUE
 
 /// Does nothing
