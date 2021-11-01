@@ -143,7 +143,6 @@
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)
 	var/worn_slot_flags = NONE
 
-	var/radiation = 0 ///If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
 

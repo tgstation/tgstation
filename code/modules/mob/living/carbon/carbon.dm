@@ -8,7 +8,6 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
-	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -843,7 +842,7 @@
 
 /mob/living/carbon/proc/can_defib()
 
-	
+
 	if (suiciding)
 		return DEFIB_FAIL_SUICIDE
 
@@ -875,10 +874,10 @@
 
 		if (BR.suicided || BR.brainmob?.suiciding)
 			return DEFIB_FAIL_NO_INTELLIGENCE
-	
+
 	if(key && key[1] == "@") // Adminghosts (#61870)
 		return DEFIB_NOGRAB_AGHOST
-	
+
 	return DEFIB_POSSIBLE
 
 /mob/living/carbon/harvest(mob/living/user)
@@ -1286,6 +1285,6 @@
 	return ..()
 
 
-/mob/living/carbon/proc/attach_rot(mapload)
-	SIGNAL_HANDLER
-	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
+/mob/living/carbon/proc/attach_rot()
+	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
+		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
