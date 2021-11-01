@@ -33,6 +33,14 @@
 /datum/action/item_action/mod/activate/Trigger()
 	mod.toggle_activate(usr)
 
+/datum/action/item_action/mod/module
+	name = "Toggle Module"
+	desc = "Toggle a MODsuit module."
+	button_icon_state = "module"
+
+/datum/action/item_action/mod/module/Trigger()
+	mod.quick_module(usr)
+
 /datum/action/item_action/mod/panel
 	name = "MODsuit Panel"
 	desc = "Open the MODsuit's panel."

@@ -214,12 +214,12 @@
 /obj/item/mod/module/storage
 	name = "MOD storage module"
 	desc = "A module using nanotechnology to fit a storage inside of the MOD."
-	complexity = 5
+	complexity = 4
 	incompatible_modules = list(/obj/item/mod/module/storage)
 	var/expand_on_install = FALSE
 	var/datum/component/storage/concrete/storage
 	var/max_w_class = WEIGHT_CLASS_NORMAL
-	var/max_combined_w_class = 14
+	var/max_combined_w_class = 15
 	var/max_items = 7
 
 /obj/item/mod/module/storage/Initialize(mapload)
@@ -299,32 +299,43 @@
 
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
+	icon_state = "medhud_visor"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
 /obj/item/mod/module/visor/diaghud
 	name = "MOD diagnostic visor module"
+	icon_state = "diaghud_visor"
 	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
 /obj/item/mod/module/visor/sechud
 	name = "MOD security visor module"
+	icon_state = "sechud_visor"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
 /obj/item/mod/module/visor/welding
 	name = "MOD welding visor module"
+	icon_state = "welding_visor"
 	helmet_tint = 2
 	helmet_flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/visor/sunglasses
 	name = "MOD protective visor module"
+	icon_state = "sun_visor"
 	helmet_tint = 1
 	helmet_flash_protect = FLASH_PROTECTION_FLASH
 
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
+	icon_state = "meson_visor"
 	visor_traits = list(TRAIT_MESON_VISION, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
+
+/obj/item/mod/module/visor/thermal
+	name = "MOD thermal visor module"
+	icon_state = "thermal_visor"
+	visor_traits = list(TRAIT_THERMAL_VISION)
 
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
@@ -580,7 +591,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/tether = new /obj/projectile/tether
+	var/obj/projectile/tether = new /obj/projectile/tether()
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	INVOKE_ASYNC(tether, /obj/projectile.proc/fire)
@@ -637,6 +648,7 @@
 	complexity = 1
 	idle_power_cost = 3
 	incompatible_modules = list(/obj/item/mod/module/rad_counter)
+/*
 	tgui_id = "rad_counter"
 	var/current_tick_amount = 0
 	var/radiation_count = 0
@@ -684,6 +696,8 @@
 	if(amount <= RAD_BACKGROUND_RADIATION)
 		return
 	current_tick_amount += amount
+
+*/
 
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
@@ -1017,6 +1031,7 @@
 	complexity = 3
 	use_power_cost = 25
 	incompatible_modules = list(/obj/item/mod/module/clamp)
+	cooldown_time = 0.5 SECONDS
 	var/max_crates = 5
 	var/list/stored_crates = list()
 
@@ -1048,6 +1063,7 @@
 	complexity = 1
 	use_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
+	cooldown_time = 1 SECONDS
 
 /obj/item/mod/module/bikehorn/on_use()
 	. = ..()
@@ -1062,6 +1078,7 @@
 	complexity = 2
 	use_power_cost = 50
 	incompatible_modules = list(/obj/item/mod/module/drill)
+	cooldown_time = 0.5 SECONDS
 
 /obj/item/mod/module/drill/on_activation()
 	. = ..()
@@ -1101,6 +1118,7 @@
 	complexity = 2
 	use_power_cost = 15
 	incompatible_modules = list(/obj/item/mod/module/orebag)
+	cooldown_time = 0.5 SECONDS
 	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_activation()
@@ -1140,4 +1158,109 @@
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(mod.drop_location())
 		ores -= ore
-	balloon_alert(mod.wearer, "ores dropped")
+
+/obj/item/mod/module/microwave_beam
+	name = "MOD microwave beam module"
+	desc = "A hand-mounted microwave beam to cook your food to perfection."
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	use_power_cost = 50
+	incompatible_modules = list(/obj/item/mod/module/microwave_beam)
+	cooldown_time = 10 SECONDS
+
+/obj/item/mod/module/microwave_beam/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!istype(target, /obj/item))
+		return
+	var/obj/item/microwave_target = target
+	var/datum/effect_system/spark_spread/spark_effect = new()
+	spark_effect.set_up(2, 1, mod.wearer)
+	spark_effect.start()
+	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
+	//TODO: microwave
+	if(microwave_target.microwave_act())
+		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
+	else
+		balloon_alert(mod.wearer, "can't be microwaved!")
+	var/datum/effect_system/spark_spread/spark_effect_two = new()
+	spark_effect_two.set_up(2, 1, microwave_target)
+	spark_effect_two.start()
+
+/obj/item/mod/module/organ_thrower
+	name = "MOD organ thrower module"
+	desc = "An arm mounted organ launching device to automatically insert organs into open bodies."
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	use_power_cost = 50
+	incompatible_modules = list(/obj/item/mod/module/organ_thrower)
+	cooldown_time = 0.5 SECONDS
+	var/max_organs = 5
+	var/organ_list = list()
+
+/obj/item/mod/module/organ_thrower/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/carbon/human/wearer_human = mod.wearer
+	if(istype(target, /obj/item/organ))
+		if(!wearer_human.Adjacent(target))
+			return
+		var/atom/movable/organ = target
+		if(length(organ_list) >= max_organs)
+			balloon_alert(mod.wearer, "too many organs!")
+			return
+		organ_list += organ
+		organ.forceMove(src)
+		balloon_alert(mod.wearer, "picked up [organ]")
+		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+	if(!length(organ_list))
+		return
+	var/atom/movable/fired_organ = pop(organ_list)
+	var/obj/projectile/organ/projectile = new /obj/projectile/organ(null, fired_organ)
+	projectile.preparePixelProjectile(target, mod.wearer)
+	projectile.firer = mod.wearer
+	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+	INVOKE_ASYNC(projectile, /obj/projectile.proc/fire)
+
+/obj/projectile/organ
+	name = "organ"
+	damage = 0
+	nodamage = TRUE
+	hitsound = 'sound/effects/attackblob.ogg'
+	hitsound_wall = 'sound/effects/attackblob.ogg'
+	var/obj/item/organ/organ
+
+/obj/projectile/organ/Initialize(mapload, obj/item/organ)
+	. = ..()
+	appearance = organ.appearance
+	organ.forceMove(src)
+
+/obj/projectile/organ/on_hit(atom/target)
+	. = ..()
+	if(!ishuman(target))
+		organ.forceMove(drop_location())
+	var/mob/living/carbon/human/organ_receiver = target
+	var/succeed = FALSE
+	if(organ_receiver.surgeries.len)
+		for(var/datum/surgery/procedure as anything in organ_receiver.surgeries)
+			if(procedure.location != organ.zone)
+				continue
+			if(!istype(procedure, /datum/surgery/organ_manipulation))
+				continue
+			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
+			if(!istype(surgery_step, /datum/surgery_step/manipulate_organs))
+				continue
+			succeed = TRUE
+			break
+	if(succeed)
+		var/list/organs_to_boot_out = organ_receiver.getorganslot(organ.slot)
+		for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
+			if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
+				continue
+			organ_evacced.Remove(target)
+			organ_evacced.forceMove(get_turf(target))
+		organ.Insert(target)
+	else
+		organ.forceMove(drop_location())

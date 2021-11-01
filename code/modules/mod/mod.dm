@@ -14,8 +14,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
 	slowdown = 2
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
-	actions_types = list(/datum/action/item_action/mod/deploy, /datum/action/item_action/mod/activate, /datum/action/item_action/mod/panel)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
+	actions_types = list(/datum/action/item_action/mod/deploy, /datum/action/item_action/mod/activate, /datum/action/item_action/mod/module, /datum/action/item_action/mod/panel)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -349,6 +349,19 @@
 			continue
 		. += module_icon
 
+/obj/item/mod/control/proc/quick_module(mob/user)
+	var/list/quick_module_list = list()
+	for(var/obj/item/mod/module/module as anything in modules)
+		if(module.module_type == MODULE_PASSIVE)
+			continue
+		quick_module_list += module
+	if(!length(quick_module_list))
+		return
+	var/obj/item/mod/module/selected_module = tgui_input_list(user, "Select a module.", "Module Selector", quick_module_list)
+	if(!selected_module)
+		return
+	selected_module.on_select()
+
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(length(theme.skins) <= 1)
 		return FALSE
@@ -465,7 +478,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = HEAD
 	heat_protection = HEAD
 	cold_protection = HEAD
@@ -497,7 +510,7 @@
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/mod.dmi'
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = CHEST|GROIN
 	heat_protection = CHEST|GROIN
 	cold_protection = CHEST|GROIN
@@ -523,7 +536,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = HANDS|ARMS
 	heat_protection = HANDS|ARMS
 	cold_protection = HANDS|ARMS
@@ -554,7 +567,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "boots"
 	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 0, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	body_parts_covered = FEET|LEGS
 	heat_protection = FEET|LEGS
 	cold_protection = FEET|LEGS
@@ -590,4 +603,4 @@
 	theme = /datum/mod_theme/syndicate
 	req_access = list(ACCESS_SYNDICATE)
 	cell = /obj/item/stock_parts/cell/hyper
-	initial_modules = list(/obj/item/mod/module/storage/antag, /obj/item/mod/module/jetpack)
+	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/jetpack)

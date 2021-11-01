@@ -3138,7 +3138,6 @@
 #include "code\modules\mod\mod_modules.dm"
 #include "code\modules\mod\mod_theme.dm"
 #include "code\modules\mod\mod_ui.dm"
-#include "code\modules\mod\modules\modules_service.dm"
 #include "code\modules\modular_computers\laptop_vendor.dm"
 #include "code\modules\modular_computers\computers\_modular_computer_shared.dm"
 #include "code\modules\modular_computers\computers\item\computer.dm"

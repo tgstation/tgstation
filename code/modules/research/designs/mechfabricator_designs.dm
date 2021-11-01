@@ -1269,7 +1269,7 @@
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
-	build_path = /obj/item/mod/module/wzhzhzh
+	build_path = /obj/item/mod/module/microwave_beam
 	category = list("Modular Suit Modules")
 
 /datum/design/mod_bikehorn
@@ -1306,6 +1306,15 @@
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/orebag
+	category = list("Modular Suit Modules")
+
+/datum/design/organ_thrower
+	name = "MOD Module: Organ Thrower"
+	desc = "A modsuit module design!"
+	id = "mod_organ_thrower"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	build_path = /obj/item/mod/module/organ_thrower
 	category = list("Modular Suit Modules")
 
 /datum/design/mod_circuit
