@@ -34,9 +34,9 @@
 		/obj/item/food/donut/matcha = 10,
 		/obj/item/food/donut/blumpkin = 5,
 		/obj/item/clothing/mask/whistle = 5,
-		/obj/item/melee/baton/boomerang/loaded = 1
+		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
-
+	rpg_title = "Guard"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 /// Returns the department this mob was assigned to, if any.
 /datum/job/security_officer/proc/setup_department(mob/living/carbon/human/spawning, client/player_client)
-	var/department = player_client?.prefs?.prefered_security_department
+	var/department = player_client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 	if (!isnull(department))
 		department = get_my_department(spawning, department)
 
@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
-		var/obj/item/card/id/worn_id = spawning.wear_id
+		var/obj/item/card/id/worn_id = spawning.get_idcard(hand_first = FALSE)
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
 		spawning.sec_hud_set_ID()
 
@@ -194,31 +194,35 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	name = "Security Officer"
 	jobtype = /datum/job/security_officer
 
+	id_trim = /datum/id_trim/job/security_officer
+	uniform = /obj/item/clothing/under/rank/security/officer
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	suit_store = /obj/item/gun/energy/disabler
+	backpack_contents = list(
+		/obj/item/melee/baton/security/loaded = 1,
+		)
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security/officer
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
-	suit_store = /obj/item/gun/energy/disabler
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
-	box = /obj/item/storage/box/survival/security
 
+	box = /obj/item/storage/box/survival/security
+	chameleon_extras = list(
+		/obj/item/clothing/glasses/hud/security/sunglasses,
+		/obj/item/clothing/head/helmet,
+		/obj/item/gun/energy/disabler,
+		)
+		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
 
-	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
-	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
-
-	id_trim = /datum/id_trim/job/security_officer
-
-/obj/item/radio/headset/headset_sec/alt/department/Initialize()
+/obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
@@ -381,7 +385,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			indices -= chosen
 			preferences[chosen] = null
 
-	listclearnulls(preferences)
+	list_clear_nulls(preferences)
 
 	departments -= biggest_preference
 

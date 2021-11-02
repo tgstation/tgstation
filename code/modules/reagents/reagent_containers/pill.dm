@@ -16,7 +16,7 @@
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
-/obj/item/reagent_containers/pill/Initialize()
+/obj/item/reagent_containers/pill/Initialize(mapload)
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
@@ -139,7 +139,7 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/mannitol = 50)
+	list_reagents = list(/datum/reagent/medicine/mannitol = 14)
 	rename_with_volume = TRUE
 
 //Lower quantity mannitol pills (50u pills heal 250 brain damage, 5u pills heal 25)
@@ -263,7 +263,7 @@
 	var/static/list/descs = list("Your feeling is telling you no, but...","Drugs are expensive, you can't afford not to eat any pills that you find."\
 	, "Surely, there's no way this could go bad.", "Winners don't do dr- oh what the heck!", "Free pills? At no cost, how could I lose?")
 
-/obj/item/reagent_containers/pill/maintenance/Initialize()
+/obj/item/reagent_containers/pill/maintenance/Initialize(mapload)
 	list_reagents = list(get_random_reagent_id() = rand(10,50)) //list_reagents is called before init, because init generates the reagents using list_reagents
 	. = ..()
 	name = pick(names)

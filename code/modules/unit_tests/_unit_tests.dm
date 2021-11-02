@@ -50,6 +50,9 @@
 #include "breath.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
+#include "chat_filter.dm"
+#include "circuit_component_category.dm"
+#include "closets.dm"
 #include "combat.dm"
 #include "component_tests.dm"
 #include "connect_loc.dm"
@@ -65,6 +68,7 @@
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
+#include "hydroponics_self_mutations.dm"
 #include "keybinding_init.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
@@ -74,7 +78,9 @@
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
+#include "preferences.dm"
 #include "projectiles.dm"
+#include "quirks.dm"
 #include "rcd.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"
@@ -87,6 +93,7 @@
 #include "siunit.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
+#include "species_config_sanity.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
 #include "strippable.dm"
@@ -97,7 +104,6 @@
 #include "timer_sanity.dm"
 #include "unit_test.dm"
 #include "wizard.dm"
-
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif

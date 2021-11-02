@@ -711,6 +711,11 @@
 	if(can_interact(usr))
 		return ..()
 
+/obj/item/storage/pod/attack_hand_secondary(mob/user, list/modifiers)
+	if(!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
 /obj/item/storage/pod/AltClick(mob/user)
 	if(!can_interact(user))
 		return
@@ -722,6 +727,7 @@
 	if(SSsecurity_level.current_level >= SEC_LEVEL_RED || unlocked)
 		return TRUE
 	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
+	return FALSE
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
@@ -731,7 +737,7 @@
 	height = 8
 	dir = EAST
 
-/obj/docking_port/mobile/emergency/backup/Initialize()
+/obj/docking_port/mobile/emergency/backup/Initialize(mapload)
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.

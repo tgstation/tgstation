@@ -60,7 +60,7 @@ export const MafiaPanel = (props, context) => {
                     {!!roleinfo && (
                       <Stack.Item height="80px">
                         <Section fill scrollable>
-                          {roleinfo?.action_log?.map(line => (
+                          {roleinfo.action_log?.map(line => (
                             <Box key={line}>{line}</Box>
                           ))}
                         </Section>
@@ -127,8 +127,8 @@ const MafiaLobby = (props, context) => {
         </>
       )}>
       <NoticeBox info>
-        The lobby currently has {readyGhosts.length + '/12'} valid
-        players signed up.
+        The lobby currently has {readyGhosts
+          ? readyGhosts.length : "0"}/12 valid players signed up.
       </NoticeBox>
       {lobbydata?.map(lobbyist => (
         <Stack

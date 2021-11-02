@@ -24,7 +24,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/shuttle/medium_1)
 "h" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_1)
 "i" = (
@@ -122,7 +122,7 @@
 /turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
 "u" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_1)
 "v" = (

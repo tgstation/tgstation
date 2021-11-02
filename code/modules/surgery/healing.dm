@@ -63,6 +63,7 @@
 			display_results(user, target, span_notice("You attempt to patch some of [target]'s [woundtype]."),
 		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
 		span_notice("[user] attempts to patch some of [target]'s [woundtype]."))
+		display_pain(target, "Your [woundtype] sting like hell!")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())

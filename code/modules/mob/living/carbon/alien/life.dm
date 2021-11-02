@@ -10,6 +10,9 @@
 		//Aliens breathe in vaccuum
 		return 0
 
+	if(health <= HEALTH_THRESHOLD_CRIT)
+		adjustOxyLoss(2)
+
 	var/plasma_used = 0
 	var/plas_detect_threshold = 0.02
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME

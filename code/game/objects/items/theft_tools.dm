@@ -15,7 +15,7 @@
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
 
-/obj/item/nuke_core/Initialize()
+/obj/item/nuke_core/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -33,7 +33,7 @@
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
-		radiation_pulse(src, 400, 2)
+		radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION)
 
 /obj/item/nuke_core/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -105,6 +105,40 @@
 	<li>???</li>\
 	</ul>"
 
+/obj/item/paper/guides/antag/hdd_extraction
+	info = "<h1>Source Code Theft & You - The Idiot's Guide to Crippling Nanotrasen Research & Development</h1><br>\
+	Rumour has it that Nanotrasen are using their R&D Servers to create something awful! They've codenamed it Project Goon, whatever that means.<br>\
+	This cannot be allowed to stand. Below is all our intel for stealing their source code and crippling their research efforts:<br>\
+	<ul>\
+	<li>Locate the physical R&D Server mainframes. Intel suggests these are stored in specially cooled rooms deep within their Science department.</li>\
+	<li>Nanotrasen is a corporation not known for subtlety in design. You should be able to identify the master server by any distinctive markings.</li>\
+	<li>Tools are on-site procurement. Screwdriver, crowbar and wirecutters should be all you need to do the job.<li>\
+	<li>The front panel screws are hidden in recesses behind stickers. Easily removed once you know they're there.</li>\
+	<li>You'll probably find the hard drive in secure housing. You may need to pry it loose with a crowbar, shouldn't do too much damage.</li>\
+	<li>Finally, carefully cut all of the hard drive's connecting wires. Don't rush this, snipping the wrong wire could wipe all data!</li>\
+	</ul>\
+	Removing this drive is guaranteed to cripple research efforts regardless of what data is contained on it.<br>\
+	The thing's probably hardwired. No putting it back once you've extracted it. The crew are likely to be as mad as bees if they find out!<br>\
+	Survive the shift and extract the hard drive safely.<br>\
+	Succeed and you will receive a coveted green highlight on your record for this assignment. Fail us and red's the last colour you'll ever see.<br>\
+	Do not disappoint us.<br>"
+
+/obj/item/computer_hardware/hard_drive/cluster
+	name = "cluster hard disk drive"
+	desc = "A large storage cluster consisting of multiple HDDs for usage in dedicated storage systems."
+	power_usage = 500
+	max_capacity = 2048
+	icon_state = "harddisk"
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/computer_hardware/hard_drive/cluster/hdd_theft
+	name = "r&d server hard disk drive"
+	desc = "For some reason, people really seem to want to steal this. The source code on this drive is probably used for something awful!"
+	icon = 'icons/obj/nuke_tools.dmi'
+	icon_state = "something_awful"
+	max_capacity = 512
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
 // STEALING SUPERMATTER
 
 /obj/item/paper/guides/antag/supermatter_sliver
@@ -149,7 +183,7 @@
 		return
 	else
 		to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [W] burst into dust!"))
-		radiation_pulse(user, 100)
+		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 		qdel(W)
 		qdel(src)
@@ -172,7 +206,7 @@
 		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
 		span_hear("Everything suddenly goes silent."))
 	victim.dust()
-	radiation_pulse(src, 500, 2)
+	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	qdel(src)
 
@@ -183,7 +217,7 @@
 	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
 			span_userdanger("You reach for [src] with your hands. That was dumb."),\
 			span_hear("Everything suddenly goes silent."))
-	radiation_pulse(user, 500, 2)
+	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.dust()
 
@@ -233,7 +267,7 @@
 	usesound = 'sound/weapons/bladeslice.ogg'
 	var/usesLeft
 
-/obj/item/scalpel/supermatter/Initialize()
+/obj/item/scalpel/supermatter/Initialize(mapload)
 	. = ..()
 	usesLeft = rand(2, 4)
 
@@ -294,7 +328,7 @@
 			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
 			span_hear("Everything suddenly goes silent."))
 		user.dust()
-	radiation_pulse(src, 500, 2)
+	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
 	update_appearance()

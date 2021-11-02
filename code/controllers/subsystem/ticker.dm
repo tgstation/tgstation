@@ -60,18 +60,18 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	var/list/byond_sound_formats = list(
-		"mid"  = TRUE,
+		"mid" = TRUE,
 		"midi" = TRUE,
-		"mod"  = TRUE,
-		"it"   = TRUE,
-		"s3m"  = TRUE,
-		"xm"   = TRUE,
-		"oxm"  = TRUE,
-		"wav"  = TRUE,
-		"ogg"  = TRUE,
-		"raw"  = TRUE,
-		"wma"  = TRUE,
-		"aiff" = TRUE
+		"mod" = TRUE,
+		"it" = TRUE,
+		"s3m" = TRUE,
+		"xm" = TRUE,
+		"oxm" = TRUE,
+		"wav" = TRUE,
+		"ogg" = TRUE,
+		"raw" = TRUE,
+		"wma" = TRUE,
+		"aiff" = TRUE,
 	)
 
 	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
@@ -171,7 +171,7 @@ SUBSYSTEM_DEF(ticker)
 			timeLeft -= wait
 
 			if(timeLeft <= 300 && !tipped)
-				send_tip_of_the_round()
+				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
 
 			if(timeLeft <= 0)
@@ -188,6 +188,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -252,6 +253,8 @@ SUBSYSTEM_DEF(ticker)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_start_events)
+
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	round_start_time = world.time
@@ -426,7 +429,7 @@ SUBSYSTEM_DEF(ticker)
 			officer_mobs += character
 
 			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
-			var/preference = client?.prefs?.prefered_security_department || SEC_DEPT_NONE
+			var/preference = client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 			officer_preferences += preference
 
 	var/distribution = get_officer_departments(officer_preferences, departments)
@@ -447,7 +450,7 @@ SUBSYSTEM_DEF(ticker)
 			qdel(player)
 			living.notransform = TRUE
 			if(living.client)
-				var/atom/movable/screen/splash/S = new(living.client, TRUE)
+				var/atom/movable/screen/splash/S = new(null, living.client, TRUE)
 				S.Fade(TRUE)
 				living.client.init_verbs()
 			livings += living
@@ -459,27 +462,12 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living/L = I
 		L.notransform = FALSE
 
-/datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
-	var/m
-	if(selected_tip)
-		m = selected_tip
-	else
-		var/list/randomtips = world.file2list("strings/tips.txt")
-		var/list/memetips = world.file2list("strings/sillytips.txt")
-		if(randomtips.len && prob(95))
-			m = pick(randomtips)
-		else if(memetips.len)
-			m = pick(memetips)
-
-	if(m)
-		to_chat(world, span_purple("<span class='oocplain'><b>Tip of the round: </b>[html_encode(m)]</span>"))
-
 /datum/controller/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len)
 		return
 	var/hpc = CONFIG_GET(number/hard_popcap)
 	if(!hpc)
-		listclearnulls(queued_players)
+		list_clear_nulls(queued_players)
 		for (var/mob/dead/new_player/NP in queued_players)
 			to_chat(NP, span_userdanger("The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
 			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
@@ -493,7 +481,7 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
-			listclearnulls(queued_players)
+			list_clear_nulls(queued_players)
 			if(living_player_count() < hpc)
 				if(next_in_line?.client)
 					to_chat(next_in_line, span_userdanger("A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a>"))
@@ -675,18 +663,7 @@ SUBSYSTEM_DEF(ticker)
 	save_admin_data()
 	update_everything_flag_in_db()
 	if(!round_end_sound)
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/scrunglartiy.ogg',
-		'sound/roundend/petersondisappointed.ogg',
-		'sound/roundend/bully2.ogg'\
-		)
+		round_end_sound = choose_round_end_song()
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
@@ -694,3 +671,12 @@ SUBSYSTEM_DEF(ticker)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
+
+/datum/controller/subsystem/ticker/proc/choose_round_end_song()
+	var/list/reboot_sounds = flist("[global.config.directory]/reboot_themes/")
+	var/list/possible_themes = list()
+
+	for(var/themes in reboot_sounds)
+		possible_themes += themes
+	if(possible_themes.len)
+		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"

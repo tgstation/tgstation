@@ -5,7 +5,8 @@
 	icon_state = "glass-0"
 	base_icon_state = "glass"
 	baseturfs = /turf/open/openspace
-	intact = FALSE //this means wires go on top
+	overfloor_placed = FALSE // We can't tear this up, with tools, explosives, or other means.
+	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_TRANSPARENT_GLASS)
@@ -18,7 +19,7 @@
 	return list("glass-damaged1", "glass-damaged2", "glass-damaged3")
 
 
-/turf/open/floor/glass/Initialize()
+/turf/open/floor/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
 	return INITIALIZE_HINT_LATELOAD

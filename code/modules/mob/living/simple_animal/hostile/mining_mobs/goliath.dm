@@ -106,7 +106,7 @@
 	var/can_saddle = FALSE
 	var/saddled = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
@@ -129,7 +129,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/proc/tamed(mob/living/tamer)
 	can_saddle = TRUE
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		new /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient(loc)

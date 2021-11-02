@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { Placement } from '@popperjs/core';
 import { Box, Button, Section, Tooltip } from '../components';
 
 export const meta = {

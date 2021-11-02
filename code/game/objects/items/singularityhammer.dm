@@ -12,7 +12,7 @@
 	throwforce = 15
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 	///Is it able to pull shit right now?
@@ -20,7 +20,7 @@
 	///track wielded status on item
 	var/wielded = FALSE
 
-/obj/item/singularityhammer/Initialize()
+/obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -101,7 +101,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/mjollnir/Initialize()
+/obj/item/mjollnir/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -141,6 +141,8 @@
 
 /obj/item/mjollnir/attack(mob/living/M, mob/user)
 	..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
 	if(wielded)
 		shock(M)
 

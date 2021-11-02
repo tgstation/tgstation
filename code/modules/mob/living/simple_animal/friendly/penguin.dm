@@ -22,7 +22,7 @@
 
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
-/mob/living/simple_animal/pet/penguin/Initialize()
+/mob/living/simple_animal/pet/penguin/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "honks happily!")
 	AddElement(/datum/element/waddling)

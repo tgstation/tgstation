@@ -14,6 +14,10 @@
 	action_background_icon_state = "bg_demon"
 	var/phased = FALSE
 
+/obj/effect/proc_holder/spell/bloodcrawl/on_lose(mob/living/user)
+	if(phased)
+		user.phasein(get_turf(user), TRUE)
+
 /obj/effect/proc_holder/spell/bloodcrawl/cast_check(skipcharge = 0,mob/user = usr)
 	. = ..()
 	if(!.)

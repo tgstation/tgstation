@@ -3,7 +3,7 @@
 	desc = "Keep away from electricity."
 	icon_state = "bicycle"
 
-/obj/vehicle/ridden/bicycle/Initialize()
+/obj/vehicle/ridden/bicycle/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/bicycle)
 

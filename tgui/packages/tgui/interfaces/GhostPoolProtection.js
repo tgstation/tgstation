@@ -15,7 +15,8 @@ export const GhostPoolProtection = (props, context) => {
     <Window
       title="Ghost Pool Protection"
       width={400}
-      height={270}>
+      height={270}
+      theme="admin">
       <Window.Content>
         <Flex grow={1} height="100%">
           <Section

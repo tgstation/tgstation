@@ -40,11 +40,18 @@
 /obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = 10
 	damage_type = BURN
-	nodamage = TRUE
+	nodamage = FALSE
 	flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
+	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
+
+/obj/projectile/temp/basilisk/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target) && slowdown)
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.apply_status_effect(/datum/status_effect/freezing_blast)
 
 /obj/projectile/temp/basilisk/heated
 	name = "energy blast"
@@ -53,6 +60,7 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	temperature = 0
+	slowdown = FALSE
 
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -122,7 +130,7 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/pen/survival, /obj/item/stack/ore/diamond)
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 
@@ -140,7 +148,7 @@
 			qdel(potential_consumption)
 			visible_message(span_notice("[src] examines [potential_consumption] closer, and telekinetically shatters the pen."))
 
-/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		if(prob(75))
@@ -187,6 +195,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	temperature = 200 // Heats you up! per hit!
+	slowdown = FALSE
 
 /obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()

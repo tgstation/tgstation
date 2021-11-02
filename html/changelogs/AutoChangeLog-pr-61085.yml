@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Fix oversight allowing players to spam observers with notifications for ghost roles."

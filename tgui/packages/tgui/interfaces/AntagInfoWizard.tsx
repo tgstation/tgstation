@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
-import { Blink, BlockQuote, Box, Dimmer, Icon, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Section, Stack } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
 
@@ -67,7 +67,7 @@ export const AntagInfoWizard = (props, context) => {
           <Stack.Item>
             <Section fill title="Spellbook">
               <Stack vertical fill>
-                <Stack.Item grow>
+                <Stack.Item>
                   You have a spellbook which is bound to you. You can use it
                   to choose a magical arsenal.<br />
                   <span style={destructionstyle}>

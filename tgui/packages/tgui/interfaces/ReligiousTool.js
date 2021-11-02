@@ -1,6 +1,5 @@
-import { capitalize } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, BlockQuote, Box, Button, Collapsible, Dimmer, Icon, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
+import { BlockQuote, Box, Button, Collapsible, Dimmer, Icon, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const ALIGNMENT2COLOR = {

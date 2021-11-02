@@ -116,8 +116,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "al" = (
@@ -344,7 +342,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aF" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -377,7 +375,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aJ" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -793,7 +791,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bZ" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -803,7 +801,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ce" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "piratestarboardexternal"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -924,7 +922,7 @@
 	id = "piratebridge"
 	},
 /obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (

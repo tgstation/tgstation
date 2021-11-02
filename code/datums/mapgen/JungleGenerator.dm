@@ -89,5 +89,5 @@
 	name = "planet generation area"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	base_lighting_color = COLOR_WHITE
+
 	map_generator = /datum/map_generator/jungle_generator

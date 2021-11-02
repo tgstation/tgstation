@@ -42,10 +42,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ADMIN_SPAWNED_1 (1<<10)
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<11)
-/// should the contents of this atom be acted upon
-#define RAD_PROTECT_CONTENTS_1 (1<<12)
-/// should this object be allowed to be contaminated
-#define RAD_NO_CONTAMINATE_1 (1<<13)
 /// Should this object be paintable with very dark colors?
 #define ALLOW_DARK_PAINTS_1 (1<<14)
 /// Should this object be unpaintable?
@@ -122,7 +118,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define CULT_PERMITTED (1<<13)
 ///Whther this area is iluminated by starlight
 #define AREA_USES_STARLIGHT (1<<14)
-
+/// If engravings are persistent in this area
+#define PERSISTENT_ENGRAVINGS (1<<15)
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
@@ -140,6 +137,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSSTRUCTURE (1<<8)
 #define PASSFLAPS (1<<9)
 #define PASSDOORS (1<<10)
+#define PASSVEHICLE (1<<11)
 
 //Movement Types
 #define GROUND (1<<0)
@@ -171,6 +169,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_DAMAGE (1<<3)
 #define ZAP_MOB_STUN (1<<4)
 #define ZAP_GENERATES_POWER (1<<5)
+/// Zaps with this flag will generate less power through tesla coils
+#define ZAP_LOW_POWER_GEN (1<<6)
 
 #define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
@@ -248,5 +248,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 ///Turns the dir by 180 degrees
 #define DIRFLIP(d)       turn(d, 180)
 
+#define MAX_BITFIELD_SIZE 24
+
 /// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
 #define MAX_BITFLAG_DIGITS 8
+

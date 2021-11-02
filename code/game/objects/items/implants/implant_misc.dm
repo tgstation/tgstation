@@ -29,25 +29,6 @@
 	name = "implanter (EMP)"
 	imp_type = /obj/item/implant/emp
 
-
-//Health Tracker Implant
-
-/obj/item/implant/health
-	name = "health implant"
-	activated = FALSE
-	var/healthstring = ""
-
-/obj/item/implant/health/proc/sensehealth()
-	if (!imp_in)
-		return "ERROR"
-	else
-		if(isliving(imp_in))
-			var/mob/living/L = imp_in
-			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
-		if (!healthstring)
-			healthstring = "ERROR"
-		return healthstring
-
 /obj/item/implant/radio
 	name = "internal radio implant"
 	activated = TRUE

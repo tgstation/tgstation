@@ -9,14 +9,19 @@
 	equip_delay_other = 25
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = 250)
+	gender = PLURAL
 	var/vision_flags = 0
-	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING //admin only for now
-	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
+	var/darkness_view = 2 // Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
+	/// Override to allow glasses to set higher than normal see_invis
+	var/invis_override = 0
 	var/lighting_alpha
-	var/list/icon/current = list() //the current hud icons
-	var/vision_correction = FALSE //does wearing these glasses correct some of our vision defects?
-	var/glass_colour_type //colors your vision when worn
+	/// The current hud icons
+	var/list/icon/current = list()
+	/// Does wearing these glasses correct some of our vision defects?
+	var/vision_correction = FALSE
+	/// Colors your vision when worn
+	var/glass_colour_type
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -38,8 +43,12 @@
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(. && user)
 		user.update_sight()
+		if(iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -56,16 +65,18 @@
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, span_notice("You will now see glasses colors."))
-					else
-						to_chat(H, span_notice("You will no longer see glasses colors."))
-					H.update_glasses_color(src, 1)
+		var/mob/living/carbon/human/human_user = user
+
+		if (human_user.glasses != src)
+			return ..()
+
+		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
+			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will now see glasses colors."))
+		else
+			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will no longer see glasses colors."))
+		human_user.update_glasses_color(src, TRUE)
 	else
 		return ..()
 
@@ -81,7 +92,7 @@
 
 
 /mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if(client?.prefs.uses_glasses_colour && glasses_equipped)
+	if (HAS_TRAIT(src, TRAIT_SEE_GLASS_COLORS) && glasses_equipped)
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)
@@ -134,7 +145,7 @@
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_EYES)
@@ -202,7 +213,7 @@
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
 
-/obj/item/clothing/glasses/regular/Initialize()
+/obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
 	var/static/list/loc_connections = list(
@@ -215,6 +226,8 @@
 	SIGNAL_HANDLER
 	if(damaged_clothes == CLOTHING_SHREDDED)
 		return
+	if(item_flags & IN_INVENTORY)
+		return
 	if(isliving(movable))
 		var/mob/living/crusher = movable
 		if(crusher.m_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & (FLYING|FLOATING)) || crusher.buckled))
@@ -222,7 +235,7 @@
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 
-/obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
+/obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
 	vision_correction = FALSE
 
@@ -241,6 +254,11 @@
 /obj/item/clothing/glasses/regular/repair()
 	. = ..()
 	vision_correction = TRUE
+
+/obj/item/clothing/glasses/regular/thin
+	name = "thin prescription glasses"
+	desc = "More expensive, more fragile and much less practical, but oh so fashionable."
+	icon_state = "glasses_thin"
 
 /obj/item/clothing/glasses/regular/jamjar
 	name = "jamjar glasses"
@@ -388,7 +406,7 @@
 /obj/item/clothing/glasses/blindfold/white/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user) && !colored_before)
-		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		add_atom_colour(user.eye_color, FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
 /obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
@@ -399,7 +417,7 @@
 	var/mob/living/carbon/human/H = loc
 	var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
 	M.appearance_flags |= RESET_COLOR
-	M.color = "#[H.eye_color]"
+	M.color = H.eye_color
 	. += M
 
 /obj/item/clothing/glasses/sunglasses/big
@@ -434,7 +452,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/thermal/syndi/Initialize()
+/obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -551,3 +569,54 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
+/obj/item/clothing/glasses/osi
+	name = "O.S.I. Sunglasses"
+	desc = "There's no such thing as good news! Just bad news and... weird news.."
+	icon_state = "osi_glasses"
+	inhand_icon_state = "osi_glasses"
+
+/obj/item/clothing/glasses/phantom
+	name = "Phantom Thief Mask"
+	desc = "Lookin' cool."
+	icon_state = "phantom_glasses"
+	inhand_icon_state = "phantom_glasses"
+
+/obj/item/clothing/glasses/regular/kim
+	name = "binoclard lenses"
+	desc = "Shows you know how to sew a lapel and center a back vent."
+	icon_state = "binoclard_lenses"
+	inhand_icon_state = "binoclard_lenses"
+
+/obj/item/clothing/glasses/salesman
+	name = "colored glasses"
+	desc = "A pair of glasses with uniquely colored lenses. The frame is inscribed with 'Best Salesman 1997'."
+	icon_state = "salesman"
+	inhand_icon_state = "salesman"
+	///Tells us who the current wearer([BIGSHOT]) is.
+	var/mob/living/carbon/human/bigshot
+
+/obj/item/clothing/glasses/salesman/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot != ITEM_SLOT_EYES)
+		return
+	bigshot = user
+	RegisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)
+
+/obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
+	..()
+	UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
+	bigshot = initial(bigshot)
+	icon_state = initial(icon_state)
+	desc = initial(desc)
+
+/obj/item/clothing/glasses/salesman/proc/moodshift(atom/movable/source, amount)
+	SIGNAL_HANDLER
+	if(amount < SANITY_UNSTABLE)	
+		icon_state = "salesman_fzz"
+		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
+		bigshot.update_inv_glasses()
+	else
+		icon_state = initial(icon_state)
+		desc = initial(desc)
+		bigshot.update_inv_glasses()
