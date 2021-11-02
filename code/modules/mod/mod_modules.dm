@@ -51,6 +51,11 @@
 		QDEL_NULL(device)
 	return ..()
 
+/obj/item/mod/module/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
+		. += span_notice("Complexity level: [complexity]")
+
 /// Called from MODsuit's install() proc, so when the module is installed.
 /obj/item/mod/module/proc/on_install()
 	return
