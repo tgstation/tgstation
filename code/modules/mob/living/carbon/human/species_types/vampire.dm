@@ -51,6 +51,7 @@
 		C.adjustCloneLoss(-2 * delta_time)
 		return
 	C.blood_volume -= 0.125 * delta_time
+	C.blood_volume -= BLOOD_REGEN_FACTOR * 1.25 * delta_time //snowflake code so vamps do not regen blood.
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, span_danger("You ran out of blood!"))
 		var/obj/shapeshift_holder/H = locate() in C
