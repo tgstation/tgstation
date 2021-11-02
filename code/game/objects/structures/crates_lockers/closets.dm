@@ -686,11 +686,11 @@
 		target.forceMove(src)
 	if(!(locked || welded))
 		toggle()
-		say("Bro I am [opened]!")
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (locker/crate)")
+	return COMSIG_CARBON_SHOVE_HANDLED
 
 #undef LOCKER_FULL

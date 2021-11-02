@@ -259,9 +259,15 @@
 	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 	var/mob/living/carbon/target_collateral_carbon
 	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-
-	for(var/atom/movable/every_single_thing as anything in target_shove_turf.contents)
-		SEND_SIGNAL(every_single_thing, COMSIG_CARBON_DISARM_COLLIDE, src, target)
+	var/handled = FALSE
+	for(var/atom/movable/every_single_thing_but_target as anything in target_shove_turf.contents - target)
+		if(SEND_SIGNAL(every_single_thing_but_target, COMSIG_CARBON_DISARM_COLLIDE, src, target) & COMSIG_CARBON_SHOVE_HANDLED)
+			handled = TRUE
+			break
+		if(!handled)
+			SEND_SIGNAL(target, COMSIG_CARBON_DISARM_COLLIDE, src, target)
+	if(handled)
+		return //We are using an object's disarm collision reaction instead of base disarm reactions.
 	//Thank you based whoneedsspace
 	target_collateral_carbon = locate(/mob/living/carbon) in target_shove_turf.contents
 

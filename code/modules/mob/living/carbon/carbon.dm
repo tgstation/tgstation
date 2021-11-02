@@ -1300,3 +1300,4 @@
 		span_userdanger("You're shoved into [collateral.name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into [collateral.name]!"))
 	log_combat(src, target, "shoved", "into [collateral.name]")
+	return COMSIG_CARBON_SHOVE_HANDLED

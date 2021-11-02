@@ -528,11 +528,12 @@
 
 	INVOKE_ASYNC(src, /obj/machinery/disposal/.proc/rat_rummage, king)
 
-/obj/machinery/disposal/proc/trash_carbon(mob/living/carbon/shover, mob/living/carbon/target)
+/obj/machinery/disposal/proc/trash_carbon(obj/machinery/disposal/binny, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	target.forceMove(src)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(src, target, "shoved", "into [src] (disposal bin)")
+	target.forceMove(binny)
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [binny]!"),
+		span_userdanger("You're shoved into \the [binny] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, binny)
+	to_chat(binny, span_danger("You shove [target.name] into \the [binny]!"))
+	log_combat(binny, target, "shoved", "into [binny] (disposal bin)")
+	return COMSIG_CARBON_SHOVE_HANDLED
