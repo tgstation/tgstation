@@ -397,13 +397,17 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 			data["has_cache"] = !!(scan?.cache)
 			if(scan?.cache)
 				data["cache_title"] = scan.cache.get_title()
-				data["cache_author"] = scan.cache.get_author() 
+				data["cache_author"] = scan.cache.get_author()
 				data["cache_content"] = scan.cache.get_content()
 
 		if(LIBRARY_PRINT)
 			data["deity"] = GLOB.deity || DEFAULT_DEITY
-			data["religion"] = GLOB.religion || DEFAULT_RELIGION
-			data["bible_name"] = GLOB.bible_name || DEFAULT_BIBLE
+			var/reigion = GLOB.religion || DEFAULT_RELIGION
+			data["religion"] = reigion
+			var/bible_name = GLOB.bible_name
+			if(!bible_name)
+				bible_name = DEFAULT_BIBLE_REPLACE(reigion)
+			data["bible_name"] = bible_name
 			data["bible_sprite"] = "display-[GLOB.bible_icon_state || "bible"]"
 			data["posters"] = list()
 			for(var/poster_name in GLOB.printable_posters)
