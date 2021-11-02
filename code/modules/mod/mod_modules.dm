@@ -214,6 +214,7 @@
 /obj/item/mod/module/storage
 	name = "MOD storage module"
 	desc = "A module using nanotechnology to fit a storage inside of the MOD."
+	icon_state = "storage"
 	complexity = 4
 	incompatible_modules = list(/obj/item/mod/module/storage)
 	var/expand_on_install = FALSE
@@ -246,12 +247,14 @@
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
+	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
 	expand_on_install = TRUE
 
 /obj/item/mod/module/storage/syndicate
 	name = "MOD syndicate storage module"
+	icon_state = "storage_syndi"
 	max_combined_w_class = 30
 	max_items = 21
 	expand_on_install = TRUE
@@ -419,6 +422,7 @@
 /obj/item/mod/module/jetpack
 	name = "MOD ion jetpack module"
 	desc = "A module that runs a micro-jetpack using a MOD's power cell."
+	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
 	active_power_cost = 20
@@ -693,6 +697,7 @@
 /obj/item/mod/module/flashlight
 	name = "MOD flashlight module"
 	desc = "A module granting the MOD a light source."
+	icon_state = "flashlight"
 	module_type = MODULE_TOGGLE
 	complexity = 1
 	active_power_cost = 15
@@ -860,6 +865,7 @@
 /obj/item/mod/module/thermal_regulator
 	name = "MOD thermal regulator module"
 	desc = "A module that lets you set a temperature to keep your body at."
+	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = 5
@@ -1052,6 +1058,7 @@
 /obj/item/mod/module/drill
 	name = "MOD drill module"
 	desc = "A specialized drilling system that allows the MODsuit to pierce the heavens."
+	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = 50
@@ -1108,7 +1115,7 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 
 /obj/item/mod/module/orebag/proc/ore_pickup(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
@@ -1219,13 +1226,15 @@
 	organ = stored_organ
 
 /obj/projectile/organ/Destroy()
-	organ = null
+	QDEL_NULL(organ)
 	return ..()
 
 /obj/projectile/organ/on_hit(atom/target)
 	. = ..()
 	if(!ishuman(target))
 		organ.forceMove(drop_location())
+		organ = null
+		return
 	var/mob/living/carbon/human/organ_receiver = target
 	var/succeed = FALSE
 	if(organ_receiver.surgeries.len)
@@ -1249,10 +1258,12 @@
 		organ.Insert(target)
 	else
 		organ.forceMove(drop_location())
+	organ = null
 
 /obj/item/mod/module/pathfinder
 	name = "MOD pathfinder module"
 	desc = "A module linked to an implant, able to find the user and attach itself onto them. To inject the implant, hit someone with it."
+	icon_state = "pathfinder"
 	complexity = 3
 	use_power_cost = 100
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
@@ -1269,12 +1280,18 @@
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, params)
 	if(!ishuman(target) || !implant)
 		return
+	if(!do_after(user, 1.5 SECONDS, target = target))
+		balloon_alert(user, "interrupted!")
+		return
 	if(!implant.implant(target, user))
+		balloon_alert(user, "can't implant!")
 		return
 	if(target == user)
 		to_chat(user, span_notice("You implant yourself with [implant]."))
 	else
 		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
+	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
+	icon_state = "pathfinder_empty"
 	implant = null
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
@@ -1286,23 +1303,28 @@
 	if(!human_user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
 	balloon_alert(human_user, "[mod] attached")
-	playsound(mod, 'sound/machines/ping.ogg', 100, TRUE)
+	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
+	drain_power(use_power_cost)
 
 /obj/item/implant/mod
 	name = "MOD pathfinder implant"
 	desc = "Lets you recall a MODsuit to you at any time."
 	actions_types = list(/datum/action/item_action/mod_recall)
 	var/obj/item/mod/module/pathfinder/module
+	var/image/jet_icon
 
 /obj/item/implant/mod/Initialize(mapload)
 	. = ..()
-	if(istype(loc, /obj/item/mod/module/pathfinder))
-		module = loc
-	else
+	if(!istype(loc, /obj/item/mod/module/pathfinder))
 		return INITIALIZE_HINT_QDEL
+	module = loc
+	jet_icon = image(icon = 'icons/obj/mod.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
 
 /obj/item/implant/mod/Destroy()
+	if(module?.mod?.ai_controller)
+		end_recall(successful = FALSE)
 	module = null
+	jet_icon = null
 	return ..()
 
 /obj/item/implant/mod/get_data()
@@ -1314,24 +1336,49 @@
 /obj/item/implant/mod/proc/recall()
 	if(!module?.mod || module.mod.open)
 		balloon_alert(imp_in, "no connected suit!")
-		return
+		return FALSE
+	if(module.mod.ai_controller)
+		balloon_alert(imp_in, "already in transit!")
+		return FALSE
 	if(module.z != z)
 		balloon_alert(imp_in, "too far away!")
-		return
+		return FALSE
+	if(ismob(get_atom_on_turf(module.mod)))
+		balloon_alert(imp_in, "already on someone!")
+		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
+	module.mod.ai_controller = mod_ai
 	mod_ai.current_movement_target = imp_in
 	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
-	mod_ai.blackboard[BB_MOD_MODULE] = module
-	module.mod.ai_controller = mod_ai
+	mod_ai.blackboard[BB_MOD_IMPLANT] = src
+	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	module.mod.AddElement(/datum/element/movetype_handler)
 	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
+	animate(module.mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
+	module.mod.add_overlay(jet_icon)
+	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	balloon_alert(imp_in, "suit recalled")
+	return TRUE
 
-/obj/item/implant/mod/proc/end_recall()
+/obj/item/implant/mod/proc/end_recall(successful = TRUE)
 	if(!module?.mod)
 		return
 	QDEL_NULL(module.mod.ai_controller)
+	module.mod.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 	REMOVE_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
 	module.mod.RemoveElement(/datum/element/movetype_handler)
+	module.mod.cut_overlay(jet_icon)
+	module.mod.transform = matrix()
+	UnregisterSignal(module.mod, COMSIG_MOVABLE_MOVED)
+	if(!successful)
+		balloon_alert(imp_in, "suit lost connection!")
+
+/obj/item/implant/mod/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	var/matrix/mod_matrix = matrix()
+	mod_matrix.Turn(get_angle(source, imp_in))
+	source.transform = mod_matrix
 
 /datum/action/item_action/mod_recall
 	name = "Recall MOD"
@@ -1352,6 +1399,7 @@
 	if(!.)
 		return
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
+		implant.balloon_alert(implant.imp_in, "on cooldown!")
 		return
-	COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
-	implant.recall()
+	if(implant.recall())
+		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
