@@ -38,7 +38,8 @@
 	var/obj/item/mod/control/mod = holder
 	switch(wire)
 		if(WIRE_HACK)
-			mod.locked = !mend
+			if(!mend)
+				mod.req_access = list()
 		if(WIRE_DISABLE)
 			mod.malfunctioning = !mend
 		if(WIRE_SHOCK)

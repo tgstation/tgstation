@@ -169,6 +169,18 @@
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
 	cell.charge = max(0, cell.charge - (cell_drain + malfunctioning_charge_drain)*delta_time)
+	var/remaining_cell = cell.charge/cell.maxcharge
+	switch(remaining_cell)
+		if(0.75 to INFINITY)
+			wearer.clear_alert("mod_charge")
+		if(0.5 to 0.75)
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 1)
+		if(0.25 to 0.5)
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 2)
+		if(0.01 to 0.25)
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
+		else
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
 			module.on_deactivation()
@@ -310,13 +322,19 @@
 		qdel(attacking_item)
 		return TRUE
 	else if(open && attacking_item.GetID())
-		update_access(attacking_item)
+		update_access(user, attacking_item)
 		return TRUE
 	return ..()
 
 /obj/item/mod/control/get_cell()
 	if(open)
 		return cell
+
+/obj/item/mod/control/GetAccess()
+	if(ai_controller)
+		return req_access.Copy()
+	else
+		return ..()
 
 /obj/item/mod/control/emag_act(mob/user)
 	locked = !locked
@@ -430,14 +448,13 @@
 	old_module.on_uninstall()
 	old_module.mod = null
 
-/obj/item/mod/control/proc/update_access(card)
-	var/obj/item/card/id/access_id = card
-	if(!allowed(wearer))
-		balloon_alert(wearer, "insufficient access!")
+/obj/item/mod/control/proc/update_access(mob/user, obj/item/card/id/card)
+	if(!allowed(user))
+		balloon_alert(user, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
-	req_access = access_id.access.Copy()
-	balloon_alert(wearer, "access updated")
+	req_access = card.access.Copy()
+	balloon_alert(user, "access updated")
 
 /obj/item/mod/control/proc/power_off()
 	balloon_alert(wearer, "no power!")
