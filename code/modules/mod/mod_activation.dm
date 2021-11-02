@@ -168,7 +168,6 @@
 /obj/item/mod/control/proc/finish_activation(on)
 	icon_state = "[skin]-control[on ? "-sealed" : ""]"
 	worn_icon_state = "[skin]-control[on ? "-sealed" : ""]"
-	wearer.update_inv_back()
 	if(on)
 		slowdown = theme.slowdown_active
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -183,6 +182,7 @@
 		STOP_PROCESSING(SSobj, src)
 	wearer.update_equipment_speed_mods()
 	active = on
+	wearer.update_inv_back()
 
 /obj/item/mod/control/proc/quick_activation() //quick activation, for stuff like outfits with the suit on
 	for(var/obj/item/part in mod_parts)

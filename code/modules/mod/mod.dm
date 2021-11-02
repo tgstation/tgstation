@@ -169,18 +169,7 @@
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
 	cell.charge = max(0, cell.charge - (cell_drain + malfunctioning_charge_drain)*delta_time)
-	var/remaining_cell = cell.charge/cell.maxcharge
-	switch(remaining_cell)
-		if(0.75 to INFINITY)
-			wearer.clear_alert("mod_charge")
-		if(0.5 to 0.75)
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 1)
-		if(0.25 to 0.5)
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 2)
-		if(0.01 to 0.25)
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
-		else
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
+	update_cell_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
 			module.on_deactivation()
@@ -192,6 +181,7 @@
 		wearer = user
 		RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 		RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+		update_cell_alert()
 	else if(wearer)
 		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 		wearer = null
@@ -200,6 +190,7 @@
 	. = ..()
 	if(wearer)
 		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
+		wearer.clear_alert("mod_charge")
 		wearer = null
 
 /obj/item/mod/control/item_action_slot_check(slot)
@@ -355,7 +346,7 @@
 		conceal(stripper, part)
 	return ..()
 
-/obj/item/mod/control/worn_overlays()
+/obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	. = ..()
 	if(!active)
 		return
@@ -453,6 +444,20 @@
 		return
 	req_access = card.access.Copy()
 	balloon_alert(user, "access updated")
+
+/obj/item/mod/control/proc/update_cell_alert()
+	var/remaining_cell = cell.charge/cell.maxcharge
+	switch(remaining_cell)
+		if(0.75 to INFINITY)
+			wearer.clear_alert("mod_charge")
+		if(0.5 to 0.75)
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 1)
+		if(0.25 to 0.5)
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 2)
+		if(0.01 to 0.25)
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
+		else
+			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
 
 /obj/item/mod/control/proc/power_off()
 	balloon_alert(wearer, "no power!")

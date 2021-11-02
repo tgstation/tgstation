@@ -762,9 +762,13 @@
 	switch(key)
 		if("light_color")
 			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
-			if(value)
-				set_light_color(value)
-				mod.wearer.update_inv_back()
+			if(!value)
+				return
+			if(color_hex2num(new_color) < 150)
+				balloon_alert(mod.wearer, "too dark!")
+				return
+			set_light_color(value)
+			mod.wearer.update_inv_back()
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
