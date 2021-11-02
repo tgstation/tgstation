@@ -158,7 +158,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/antinoblium = 1,
 	)
 	///The list of gases that reduce powerloss.
-	var/list/powerloss_gas = list(
+	var/list/powerloss_inhibitor_gas = list(
 		/datum/gas/carbon_dioxide,
 		/datum/gas/antinoblium,
 	)
@@ -178,8 +178,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/dynamic_heat_resistance = 1
 	///Uses powerloss_dynamic_scaling and combined_gas to lessen the effects of our powerloss functions
 	var/powerloss_inhibitor = 1
-	///Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor
-	var/powerloss_dynamic_scaling= 0
+	///Based on co2 and antinob composition, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor
+	var/powerloss_dynamic_scaling = 0
 	///Affects the amount of radiation the sm makes. We multiply this with power to find the zap power.
 	var/power_transmission_bonus = 0
 	///Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.
@@ -670,9 +670,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Some value between 0 and 1.
 		///The composition of the gasses that effect powerloss. Powerloss_dynamic_scaling converges to powerloss_inhibitor_comp.
 		var/powerloss_inhibitor_comp = 0
-		for(var/gas_id in powerloss_gas)
+		for(var/gas_id in powerloss_inhibitor_gas)
 			powerloss_inhibitor_comp += gas_comp[gas_id]
-		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_inhibitor_comp > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
+		if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_inhibitor_comp > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more than 20% powerloss_inhibitor_comp
 			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_inhibitor_comp - powerloss_dynamic_scaling, -0.02 / antinoblium_multiplier, 0.02 * antinoblium_multiplier), 0, 1)
 		else
 			powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05 / antinoblium_multiplier, 0, 1)
