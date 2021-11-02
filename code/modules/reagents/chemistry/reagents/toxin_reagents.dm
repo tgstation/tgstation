@@ -60,7 +60,7 @@
 		exposed_mob.domutcheck()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.apply_effect(5 * REM * delta_time, EFFECT_IRRADIATE, 0)
+	C.adjustToxLoss(0.5 * delta_time * REM)
 	return ..()
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -254,7 +254,7 @@
 	switch(current_cycle)
 		if(1 to 5)
 			M.add_confusion(1 * REM * delta_time)
-			M.drowsyness += 1 * REM * delta_time
+			M.adjust_drowsyness(1 * REM * delta_time)
 			M.slurring += 3 * REM * delta_time
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
@@ -447,7 +447,7 @@
 	switch(current_cycle)
 		if(1 to 10)
 			M.add_confusion(2 * REM * normalise_creation_purity() * delta_time)
-			M.drowsyness += 2 * REM * normalise_creation_purity() * delta_time
+			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 			. = TRUE
@@ -548,7 +548,11 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation += 4 * REM * delta_time
+	if (!HAS_TRAIT(M, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(M))
+		M.AddComponent(/datum/component/irradiated)
+	else
+		M.adjustToxLoss(1 * REM * delta_time)
+
 	..()
 
 /datum/reagent/toxin/histamine
@@ -615,8 +619,15 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	///Mob Size of the current mob sprite.
+	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
+	M.resize = newsize/current_size
+	current_size = newsize
+	M.update_transform()
+
 	toxpwr = 0.1 * volume
 	M.adjustBruteLoss((0.3 * volume) * REM * delta_time, 0)
 	. = TRUE
@@ -625,6 +636,12 @@
 		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
+
+/datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/M)
+	M.resize = RESIZE_DEFAULT_SIZE/current_size
+	current_size = RESIZE_DEFAULT_SIZE
+	M.update_transform()
+	..()
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"

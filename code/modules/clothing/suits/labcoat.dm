@@ -18,6 +18,7 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/gun/syringe,
 		/obj/item/sensor_device,
 		/obj/item/soap,
 		/obj/item/stack/medical,
@@ -25,8 +26,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 50, ACID = 50)
-	togglename = "buttons"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 50)
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
@@ -35,11 +35,11 @@
 	icon_state = "labcoat_cmo"
 	inhand_icon_state = "labcoat_cmo"
 
-/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize()
+/obj/item/clothing/suit/toggle/labcoat/cmo/Initialize(mapload)
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
-	)	
+		/obj/item/melee/baton/telescopic,
+	)
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic
 	name = "paramedic's jacket"

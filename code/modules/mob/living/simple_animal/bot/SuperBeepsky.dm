@@ -31,7 +31,7 @@
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 		INVOKE_ASYNC(src, .proc/stun_attack, AM)
 
-/mob/living/simple_animal/bot/secbot/grievous/Initialize()
+/mob/living/simple_animal/bot/secbot/grievous/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(weapon, /obj/item.proc/attack_self, src)
 

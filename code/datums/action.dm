@@ -5,8 +5,8 @@
 
 /datum/action
 	var/name = "Generic Action"
-	var/desc = null
-	var/obj/target = null
+	var/desc
+	var/datum/target
 	var/check_flags = NONE
 	var/processing = FALSE
 	var/atom/movable/screen/movable/action_button/button = null
@@ -19,6 +19,8 @@
 	var/icon_icon = 'icons/hud/actions.dmi' //This is the file for the ACTION icon
 	var/button_icon_state = "default" //And this is the state for the action icon
 	var/mob/owner
+	///All mobs that are sharing our action button.
+	var/list/sharers = list()
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -67,7 +69,7 @@
 		LAZYADD(M.actions, src)
 		if(M.client)
 			M.client.screen += button
-			button.locked = M.client.prefs.buttons_locked || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+			button.locked = M.client.prefs.read_preference(/datum/preference/toggle/buttons_locked) || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
 			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
 		M.update_action_buttons()
 	else
@@ -78,6 +80,12 @@
 	Remove(owner)
 
 /datum/action/proc/Remove(mob/M)
+	for(var/datum/weakref/reference as anything in sharers)
+		var/mob/freeloader = reference.resolve()
+		if(!freeloader)
+			continue
+		Unshare(freeloader)
+	sharers = null
 	if(M)
 		if(M.client)
 			M.client.screen -= button
@@ -149,6 +157,25 @@
 	SIGNAL_HANDLER
 	UpdateButtonIcon()
 
+//Adds our action button to the screen of another player
+/datum/action/proc/Share(mob/freeloader)
+	if(!freeloader.client)
+		return
+	sharers += WEAKREF(freeloader)
+	freeloader.client.screen += button
+	freeloader.update_action_buttons()
+
+//Removes our action button from the screen of another player
+/datum/action/proc/Unshare(mob/freeloader)
+	if(!freeloader.client)
+		return
+	for(var/freeloader_reference in sharers)
+		if(IS_WEAKREF_OF(freeloader, freeloader_reference))
+			sharers -= freeloader_reference
+			break
+	freeloader.client.screen -= button
+	freeloader.update_action_buttons()
+
 //Presets for item actions
 /datum/action/item_action
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
@@ -178,21 +205,21 @@
 	return TRUE
 
 /datum/action/item_action/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	var/obj/item/item_target = target
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
 		// of the item appearence
 		..()
-	else if((target && current_button.appearance_cache != target.appearance) || force) //replace with /ref comparison if this is not valid.
-		var/obj/item/I = target
-		var/old_layer = I.layer
-		var/old_plane = I.plane
-		I.layer = FLOAT_LAYER //AAAH
-		I.plane = FLOAT_PLANE //^ what that guy said
+	else if((target && current_button.appearance_cache != item_target.appearance) || force) //replace with /ref comparison if this is not valid.
+		var/old_layer = item_target.layer
+		var/old_plane = item_target.plane
+		item_target.layer = FLOAT_LAYER //AAAH
+		item_target.plane = FLOAT_PLANE //^ what that guy said
 		current_button.cut_overlays()
-		current_button.add_overlay(I)
-		I.layer = old_layer
-		I.plane = old_plane
-		current_button.appearance_cache = I.appearance
+		current_button.add_overlay(item_target)
+		item_target.layer = old_layer
+		item_target.plane = old_plane
+		current_button.appearance_cache = item_target.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -352,7 +379,8 @@
 
 /datum/action/item_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/item_target = target
+	name = "Toggle [item_target.name]"
 	button.name = name
 
 /datum/action/item_action/halt
@@ -381,14 +409,12 @@
 
 /datum/action/item_action/adjust/New(Target)
 	..()
-	name = "Adjust [target.name]"
+	var/obj/item/item_target = target
+	name = "Adjust [item_target.name]"
 	button.name = name
 
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
-
-/datum/action/item_action/toggle_wings
-	name = "Toggle Wings"
 
 /datum/action/item_action/toggle_human_head
 	name = "Toggle Human Head"
@@ -469,12 +495,14 @@
 
 /datum/action/item_action/organ_action/toggle/New(Target)
 	..()
-	name = "Toggle [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Toggle [organ_target.name]"
 	button.name = name
 
 /datum/action/item_action/organ_action/use/New(Target)
 	..()
-	name = "Use [target.name]"
+	var/obj/item/organ/organ_target = target
+	name = "Use [organ_target.name]"
 	button.name = name
 
 /datum/action/item_action/cult_dagger
@@ -668,6 +696,27 @@
 		if(next_use_time > world.time)
 			START_PROCESSING(SSfastprocess, src)
 
+///Like a cooldown action, but with an associated proc holder.
+/datum/action/cooldown/spell_like
+
+/datum/action/cooldown/spell_like/New(Target)
+	..()
+	var/obj/effect/proc_holder/our_proc_holder = target
+	our_proc_holder.action = src
+	name = our_proc_holder.name
+	desc = our_proc_holder.desc
+	icon_icon = our_proc_holder.action_icon
+	button_icon_state = our_proc_holder.action_icon_state
+	background_icon_state = our_proc_holder.action_background_icon_state
+	button.name = name
+
+/datum/action/cooldown/spell_like/Trigger()
+	if(!..())
+		return FALSE
+	if(target)
+		var/obj/effect/proc_holder/our_proc_holder = target
+		our_proc_holder.Click()
+		return TRUE
 
 //Stickmemes
 /datum/action/item_action/stickmen
@@ -746,6 +795,11 @@
 /datum/action/small_sprite/megafauna/legion
 	small_icon_state = "mega_legion"
 
+/datum/action/small_sprite/mega_arachnid
+	small_icon = 'icons/mob/jungle/arachnid.dmi'
+	small_icon_state = "arachnid_mini"
+	background_icon_state = "bg_demon"
+
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
@@ -767,12 +821,13 @@
 
 /datum/action/item_action/storage_gather_mode/ApplyIcon(atom/movable/screen/movable/action_button/current_button)
 	. = ..()
-	var/old_layer = target.layer
-	var/old_plane = target.plane
-	target.layer = FLOAT_LAYER //AAAH
-	target.plane = FLOAT_PLANE //^ what that guy said
+	var/obj/item/item_target = target
+	var/old_layer = item_target.layer
+	var/old_plane = item_target.plane
+	item_target.layer = FLOAT_LAYER //AAAH
+	item_target.plane = FLOAT_PLANE //^ what that guy said
 	current_button.cut_overlays()
 	current_button.add_overlay(target)
-	target.layer = old_layer
-	target.plane = old_plane
-	current_button.appearance_cache = target.appearance
+	item_target.layer = old_layer
+	item_target.plane = old_plane
+	current_button.appearance_cache = item_target.appearance

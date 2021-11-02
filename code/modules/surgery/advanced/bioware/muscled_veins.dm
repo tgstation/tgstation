@@ -21,11 +21,13 @@
 	display_results(user, target, span_notice("You start wrapping muscles around [target]'s circulatory system."),
 		span_notice("[user] starts wrapping muscles around [target]'s circulatory system."),
 		span_notice("[user] starts manipulating [target]'s circulatory system."))
+	display_pain(target, "Your entire body burns in agony!")
 
 /datum/surgery_step/muscled_veins/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, span_notice("You reshape [target]'s circulatory system, adding a muscled membrane!"),
 		span_notice("[user] reshapes [target]'s circulatory system, adding a muscled membrane!"),
 		span_notice("[user] finishes manipulating [target]'s circulatory system."))
+	display_pain(target, "You can feel your heartbeat's powerful pulses ripple through your body!")
 	new /datum/bioware/muscled_veins(target)
 	return ..()
 

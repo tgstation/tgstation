@@ -788,6 +788,7 @@ class PresetsPage extends Component {
     for (let i = 0; i < presets.length; i++) {
       if (presets[i].id === deleteID) {
         presets.splice(i, 1);
+        break;
       }
     }
     storage.set("podlauncher_presetlist", presets);

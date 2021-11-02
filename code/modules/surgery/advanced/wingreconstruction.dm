@@ -29,6 +29,7 @@
 	display_results(user, target, span_notice("You begin to fix [target]'s charred wing membranes..."),
 		span_notice("[user] begins to fix [target]'s charred wing membranes."),
 		span_notice("[user] begins to perform surgery on [target]'s charred wing membranes."))
+	display_pain(target, "Your wings sting like hell!")
 
 /datum/surgery_step/wing_reconstruction/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
@@ -36,6 +37,7 @@
 		display_results(user, target, span_notice("You succeed in reconstructing [target]'s wings."),
 			span_notice("[user] successfully reconstructs [target]'s wings!"),
 			span_notice("[user] completes the surgery on [target]'s wings."))
+		display_pain(target, "You can feel your wings again!")
 		var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		wings?.heal_wings()
 

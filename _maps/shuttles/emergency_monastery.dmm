@@ -354,7 +354,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "du" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "dF" = (
@@ -682,7 +682,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hN" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -779,7 +779,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -913,7 +913,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "kq" = (
@@ -1002,12 +1002,16 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "lj" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
+/area/shuttle/escape)
+"lm" = (
+/obj/machinery/meter,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "lB" = (
 /turf/open/floor/iron/chapel{
@@ -1029,10 +1033,6 @@
 "me" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet,
-/area/shuttle/escape)
-"mh" = (
-/obj/effect/spawner/lootdrop/gross_decal_spawner,
-/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "mi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1111,6 +1111,10 @@
 /obj/machinery/light/small/directional/north,
 /obj/item/seeds/watermelon/holy,
 /turf/open/floor/grass,
+/area/shuttle/escape)
+"nb" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -1218,7 +1222,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "oH" = (
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait{
 	pixel_y = 28
 	},
 /obj/item/kirbyplants{
@@ -1393,7 +1397,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "qx" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -2231,7 +2235,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "zw" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -2265,7 +2269,7 @@
 /area/shuttle/escape)
 "zU" = (
 /obj/structure/dresser,
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/picture_frame/portrait{
 	pixel_y = 28
 	},
 /turf/open/floor/iron/grimy,
@@ -2359,7 +2363,7 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_y = -32
 	},
-/obj/item/kitchen/knife/combat/bone{
+/obj/item/knife/combat/bone{
 	desc = "An old bone sharpened into a blade. It's rather dull nowadays.";
 	force = 8;
 	name = "ancient bone dagger";
@@ -2509,7 +2513,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "DS" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -3344,7 +3348,7 @@
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/flour,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -4004,13 +4008,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/escape)
-"TK" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "TR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -4091,7 +4088,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "UQ" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Pod Docking Bay"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -4227,7 +4224,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Wh" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Dock Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -4435,12 +4432,6 @@
 	pixel_y = 1
 	},
 /turf/open/space/basic,
-/area/shuttle/escape)
-"YB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden{
-	dir = 6
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape)
 "YC" = (
 /obj/machinery/light/small/directional/west,
@@ -5080,7 +5071,7 @@ zE
 jR
 Gv
 kN
-mh
+nb
 nr
 rw
 zb
@@ -6170,7 +6161,7 @@ ZM
 yc
 Rx
 Su
-YB
+Zf
 dR
 nr
 Ho
@@ -6252,7 +6243,7 @@ kq
 yc
 Zr
 Ig
-TK
+lm
 dR
 nr
 Ho

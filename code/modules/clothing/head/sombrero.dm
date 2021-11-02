@@ -29,6 +29,6 @@
 	greyscale_colors = "#d565d3#f8db18"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/head/sombrero/shamebrero/Initialize()
+/obj/item/clothing/head/sombrero/shamebrero/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)

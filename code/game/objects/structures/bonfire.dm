@@ -27,11 +27,11 @@
 /obj/structure/bonfire/dense
 	density = TRUE
 
-/obj/structure/bonfire/prelit/Initialize()
+/obj/structure/bonfire/prelit/Initialize(mapload)
 	. = ..()
 	start_burning()
 
-/obj/structure/bonfire/Initialize()
+/obj/structure/bonfire/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -62,6 +62,8 @@
 	if(used_item.get_temperature())
 		start_burning()
 	if(grill)
+		if(istype(used_item, /obj/item/melee/roastingstick))
+			return FALSE
 		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
 				used_item.forceMove(get_turf(src))

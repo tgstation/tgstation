@@ -36,11 +36,13 @@
 	. = ..()
 	if(!cause || !imp_in || active)
 		return 0
-	if(cause == "action_button" && !popup)
+	if(cause == "action_button")
+		if(popup)
+			return FALSE
 		popup = TRUE
 		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
 		popup = FALSE
-		if(response == "No")
+		if(response != "Yes")
 			return 0
 	heavy = round(heavy)
 	medium = round(medium)
@@ -51,7 +53,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
-		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak)
+		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 		if(imp_in)
 			imp_in.gib(1)
 		qdel(src)
@@ -73,6 +75,11 @@
 	if(.)
 		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
+/obj/item/implant/explosive/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(.)
+		UnregisterSignal(target, COMSIG_LIVING_DEATH)
+
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
@@ -86,7 +93,7 @@
 	sleep(delay*0.25)
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
-	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak)
+	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 	if(imp_in)
 		imp_in.gib(1)
 	qdel(src)

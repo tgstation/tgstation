@@ -34,7 +34,7 @@
 	damage = 25
 	speed = 0.6 // higher power = faster, that's how light works right
 
-/obj/projectile/beam/laser/hellfire/Initialize()
+/obj/projectile/beam/laser/hellfire/Initialize(mapload)
 	. = ..()
 	transform *= 2
 
@@ -73,9 +73,8 @@
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"
-	flag = RAD
+	flag = TOX
 	damage = 15
-	irradiate = 300
 	range = 15
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 

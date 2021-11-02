@@ -17,7 +17,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/usb_cable/Initialize()
+/obj/item/usb_cable/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 

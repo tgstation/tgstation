@@ -70,6 +70,7 @@
 				VV_NEW_TYPE,
 				VV_NEW_LIST,
 				VV_NULL,
+				VV_INFINITY,
 				VV_RESTORE_DEFAULT,
 				VV_TEXT_LOCATE,
 				VV_PROCCALL_RETVAL,
@@ -278,3 +279,6 @@
 			if(.["value"] == null)
 				.["class"] = null
 				return
+
+		if(VV_INFINITY)
+			.["value"] = INFINITY

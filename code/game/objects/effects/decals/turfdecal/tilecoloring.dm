@@ -6,7 +6,7 @@
 
 #define PRIDE_ALPHA 60
 
-/obj/effect/turf_decal/tile/Initialize()
+/obj/effect/turf_decal/tile/Initialize(mapload)
 	if(SSevents.holidays)
 		if (SSevents.holidays[APRIL_FOOLS])
 			color = "#[random_short_color()]"
@@ -203,7 +203,7 @@
 	icon_state = "tile_full"
 	name = "colorful full"
 
-/obj/effect/turf_decal/tile/random/Initialize()
+/obj/effect/turf_decal/tile/random/Initialize(mapload)
 	color = "#[random_short_color()]"
 	. = ..()
 
@@ -214,7 +214,7 @@
 	alpha = 110
 	icon_state = "trimline_box"
 
-/obj/effect/turf_decal/trimline/Initialize()
+/obj/effect/turf_decal/trimline/Initialize(mapload)
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		color = "#[random_short_color()]"
 	. = ..()

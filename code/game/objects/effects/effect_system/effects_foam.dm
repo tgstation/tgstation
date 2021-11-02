@@ -144,7 +144,7 @@
 			continue
 		if(isturf(O.loc))
 			var/turf/T = O.loc
-			if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+			if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				continue
 		if(lifetime % reagent_divisor)
 			reagents.expose(O, VAPOR, fraction)
@@ -274,9 +274,9 @@
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
 	max_integrity = 20
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 
-/obj/structure/foamedmetal/Initialize()
+/obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
@@ -318,7 +318,7 @@
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
 
-/obj/structure/foamedmetal/resin/Initialize()
+/obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
 	if(isopenturf(loc))
 		var/turf/open/O = loc

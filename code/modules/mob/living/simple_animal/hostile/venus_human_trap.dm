@@ -30,7 +30,7 @@
 
 	var/list/vines = list()
 
-/obj/structure/alien/resin/flower_bud/Initialize()
+/obj/structure/alien/resin/flower_bud/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
 	var/list/anchors = list()
@@ -161,7 +161,7 @@
 			return
 	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
 		return
-	for(var/turf/T in getline(src,target))
+	for(var/turf/T in get_line(src,target))
 		if (T.density)
 			return
 		for(var/obj/O in T)

@@ -27,10 +27,10 @@
 	var/victims_needed = 25
 	var/ascend_bonus = 15
 
-/obj/item/his_grace/Initialize()
+/obj/item/his_grace/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
 	update_appearance()
 

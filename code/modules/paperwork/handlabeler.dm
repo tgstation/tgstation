@@ -15,7 +15,7 @@
 	var/old_real_name = user.real_name
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
-	for(var/atom/A in user.GetAllContents())
+	for(var/atom/A in user.get_all_contents())
 		if(istype(A, /obj/item/card/id))
 			var/obj/item/card/id/their_card = A
 

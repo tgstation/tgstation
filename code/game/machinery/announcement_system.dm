@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/pinklight = "Light_Pink"
 	var/errorlight = "Error_Red"
 
-/obj/machinery/announcement_system/Initialize()
+/obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
 	GLOB.announcement_systems += src
 	radio = new /obj/item/radio/headset/silicon/ai(src)
@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	if(!obj_break()) // if badmins flag this unbreakable or its already broken
+	if(!atom_break()) // if badmins flag this unbreakable or its already broken
 		return
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")

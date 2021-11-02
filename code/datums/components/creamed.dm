@@ -19,6 +19,8 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	SEND_SIGNAL(parent, COMSIG_MOB_CREAMED)
 
+	add_memory_in_range(parent, 7, MEMORY_CREAMPIED, list(DETAIL_PROTAGONIST = parent), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS, protagonist_memory_flags = NONE)
+
 	creamface = mutable_appearance('icons/effects/creampie.dmi')
 
 	if(ishuman(parent))

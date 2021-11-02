@@ -82,7 +82,7 @@
 	worn_icon_state = "syndicate_holster"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/storage/belt/holster/chameleon/Initialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
 
 	chameleon_action = new(src)
@@ -101,7 +101,7 @@
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/storage/belt/holster/chameleon/broken/Initialize()
+/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 

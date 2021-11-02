@@ -14,7 +14,7 @@
 	icon_state = "pewend_left"
 	var/mutable_appearance/leftpewarmrest
 
-/obj/structure/chair/pew/left/Initialize()
+/obj/structure/chair/pew/left/Initialize(mapload)
 	leftpewarmrest = GetLeftPewArmrest()
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
 	return ..()
@@ -45,7 +45,7 @@
 	icon_state = "pewend_right"
 	var/mutable_appearance/rightpewarmrest
 
-/obj/structure/chair/pew/right/Initialize()
+/obj/structure/chair/pew/right/Initialize(mapload)
 	rightpewarmrest = GetRightPewArmrest()
 	rightpewarmrest.layer = ABOVE_MOB_LAYER
 	return ..()

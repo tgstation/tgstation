@@ -52,12 +52,13 @@ Difficulty: Extremely Hard
 	/// If the demonic frost miner is currently transforming to its enraged state
 	var/enraging = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /datum/action/innate/megafauna_attack/frost_orbs
 	name = "Fire Frost Orbs"
@@ -326,7 +327,7 @@ Difficulty: Extremely Hard
 	var/change_turf = /turf/open/floor/plating/ice/icemoon/no_planet_atmos
 	var/duration = 6 SECONDS
 
-/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
 
@@ -363,7 +364,7 @@ Difficulty: Extremely Hard
 	desc = "Cracks rocks at an inhuman speed, as well as being enhanced for combat purposes."
 	toolspeed = 0
 
-/obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
+/obj/item/pickaxe/drill/jackhammer/demonic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/knockback, 4, TRUE, FALSE)
 	AddElement(/datum/element/lifesteal, 5)

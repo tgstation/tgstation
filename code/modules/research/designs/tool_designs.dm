@@ -22,6 +22,7 @@
 	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	autolathe_exportable = FALSE
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
@@ -277,15 +278,5 @@
 	category = list("initial", "Tools")
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200)
 	build_path = /obj/item/wirebrush
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
-/datum/design/wirebrush_adv
-	name = "Advanced Wirebrush"
-	desc = "An advanced wirebrush."
-	id = "wirebrush_adv"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/uranium = 200, /datum/material/plasma = 200)
-	build_path = /obj/item/wirebrush/advanced
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

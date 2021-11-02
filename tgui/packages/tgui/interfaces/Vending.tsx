@@ -200,7 +200,6 @@ export const Vending = (props, context) => {
   inventory = inventory.filter(item => !!item);
   return (
     <Window
-      title="Vending Machine"
       width={450}
       height={600}>
       <Window.Content scrollable>

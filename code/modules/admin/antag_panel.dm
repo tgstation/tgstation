@@ -34,9 +34,8 @@ GLOBAL_VAR(antag_prototypes)
 	var/command_part = commands.Join(" | ")
 	var/data_part = antag_panel_data()
 	var/objective_part = antag_panel_objectives()
-	var/memory_part = antag_panel_memory()
 
-	var/list/parts = listtrim(list(command_part,data_part,objective_part,memory_part))
+	var/list/parts = listtrim(list(command_part, data_part, objective_part))
 
 	return parts.Join("<br>")
 
@@ -46,18 +45,12 @@ GLOBAL_VAR(antag_prototypes)
 		result += "EMPTY<br>"
 	else
 		var/obj_count = 1
-		for(var/datum/objective/objective in objectives)
+		for(var/datum/objective/objective as anything in objectives)
 			result += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
 			obj_count++
 	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
 	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
 	return result
-
-/datum/antagonist/proc/antag_panel_memory()
-	var/out = "<b>Memory:</b><br>"
-	out += antag_memory
-	out += "<br><a href='?src=[REF(src)];memory_edit=1'>Edit memory</a><br>"
-	return out
 
 /datum/mind/proc/get_common_admin_commands()
 	var/common_commands = "<span>Common Commands:</span>"
@@ -203,11 +196,6 @@ GLOBAL_VAR(antag_prototypes)
 		uplink_info += "." //hiel grammar
 
 		out += uplink_info + "<br>"
-	//Common Memory
-	var/common_memory = "<span>Common Memory:</span>"
-	common_memory += memory
-	common_memory += "<a href='?src=[REF(src)];memory_edit=1'>Edit Memory</a>"
-	out += common_memory + "<br>"
 	//Other stuff
 	out += get_common_admin_commands()
 

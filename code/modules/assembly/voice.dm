@@ -24,7 +24,7 @@
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
-/obj/item/assembly/voice/Initialize()
+/obj/item/assembly/voice/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
@@ -54,15 +54,15 @@
 		if(INCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", message_language)
+			say("Activation message is '[recorded]'.", sanitize = FALSE, language = message_language)
 		if(EXCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", message_language)
+			say("Activation message is '[recorded]'.", sanitize = FALSE, language = message_language)
 		if(RECOGNIZER_MODE)
 			recorded = speaker.GetVoice()
 			listening = FALSE
-			say("Your voice pattern is saved.", message_language)
+			say("Your voice pattern is saved.", language = message_language)
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
 				send_pulse()

@@ -38,7 +38,7 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = LARGE_MOB_LAYER
-	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, FIRE = 100, ACID = 80)
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
@@ -48,7 +48,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.")
+	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [atom_integrity]</b>.")
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)

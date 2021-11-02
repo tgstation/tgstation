@@ -7,7 +7,6 @@
 	clothing_flags = MASKINTERNALS
 	visor_flags = MASKINTERNALS
 	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0.1
 	permeability_coefficient = 0.5
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH

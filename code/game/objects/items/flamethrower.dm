@@ -83,7 +83,7 @@
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
-			var/turflist = getline(user, target_turf)
+			var/turflist = get_line(user, target_turf)
 			log_combat(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
@@ -197,7 +197,7 @@
 	for(var/turf/T in turflist)
 		if(T == previousturf)
 			continue //so we don't burn the tile we be standin on
-		var/list/turfs_sharing_with_prev = previousturf.GetAtmosAdjacentTurfs(alldir=1)
+		var/list/turfs_sharing_with_prev = previousturf.get_atmos_adjacent_turfs(alldir=1)
 		if(!(T in turfs_sharing_with_prev))
 			break
 		if(igniter)

@@ -230,7 +230,7 @@
 	/// List of all limb designs this disk contains.
 	var/list/limb_designs = list()
 
-/obj/item/disk/design_disk/limbs/Initialize()
+/obj/item/disk/design_disk/limbs/Initialize(mapload)
 	. = ..()
 	max_blueprints = limb_designs.len
 	for(var/design in limb_designs)

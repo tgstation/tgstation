@@ -8,9 +8,9 @@
 	sheet_type = /obj/item/stack/sheet/hauntium
 	value_per_unit = 0.05
 	beauty_modifier = 0.25
-	strength_modifier = 1
-	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
-
+	//pretty good but only the undead can actually make use of these modifiers
+	strength_modifier = 1.2
+	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 1, ACID = 0.7)
 
 /datum/material/hauntium/on_applied_obj(obj/o, amount, material_flags)
 	. = ..()

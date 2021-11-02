@@ -9,12 +9,15 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 150
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 40, ACID = 0)
-	var/frequency = 0
-	var/atom/target
-	var/target_layer = PIPING_LAYER_DEFAULT
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 40, ACID = 0)
 	greyscale_config = /datum/greyscale_config/meter
 	greyscale_colors = COLOR_GRAY
+	///To connect to the ntnet
+	var/frequency = 0
+	///The pipe we are attaching to
+	var/atom/target
+	///The piping layer of the target
+	var/target_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/meter/atmos
 	frequency = FREQ_ATMOS_STORAGE
@@ -76,16 +79,16 @@
 		return FALSE
 
 	var/env_pressure = environment.return_pressure()
-	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
+	if(env_pressure <= 0.15 * ONE_ATMOSPHERE)
 		icon_state = "meter0"
-	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
+	else if(env_pressure <= 1.8 * ONE_ATMOSPHERE)
+		var/val = round(env_pressure / (ONE_ATMOSPHERE * 0.3) + 0.5)
 		icon_state = "meter1_[val]"
-	else if(env_pressure <= 30*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5)-0.35) + 1
+	else if(env_pressure <= 30 * ONE_ATMOSPHERE)
+		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 0.35) + 1
 		icon_state = "meter2_[val]"
-	else if(env_pressure <= 59*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5) - 6) + 1
+	else if(env_pressure <= 59 * ONE_ATMOSPHERE)
+		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 6) + 1
 		icon_state = "meter3_[val]"
 	else
 		icon_state = "meter4"
@@ -139,10 +142,10 @@
 	. = ..()
 	. += status()
 
-/obj/machinery/meter/wrench_act(mob/user, obj/item/I)
+/obj/machinery/meter/wrench_act(mob/user, obj/item/wrench)
 	..()
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
-	if (I.use_tool(src, user, 40, volume=50))
+	if (wrench.use_tool(src, user, 40, volume=50))
 		user.visible_message(
 			"[user] unfastens \the [src].",
 			span_notice("You unfasten \the [src]."),

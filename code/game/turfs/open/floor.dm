@@ -18,8 +18,9 @@
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
-	intact = TRUE
 	tiled_dirt = TRUE
+
+	overfloor_placed = TRUE
 
 	var/broken = FALSE
 	var/burnt = FALSE
@@ -166,7 +167,7 @@
 	. = ..()
 	if(.)
 		return .
-	if(intact && istype(object, /obj/item/stack/tile))
+	if(overfloor_placed && istype(object, /obj/item/stack/tile))
 		try_replace_tile(object, user, params)
 		return TRUE
 	if(user.combat_mode && istype(object, /obj/item/stack/sheet))
@@ -175,7 +176,7 @@
 	return FALSE
 
 /turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
-	if(intact && pry_tile(I, user))
+	if(overfloor_placed && pry_tile(I, user))
 		return TRUE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
@@ -298,12 +299,19 @@
 				new_airlock.electronics.accesses = the_rcd.airlock_electronics.accesses.Copy()
 				new_airlock.electronics.one_access = the_rcd.airlock_electronics.one_access
 				new_airlock.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
+				new_airlock.electronics.passed_name = the_rcd.airlock_electronics.passed_name
+				new_airlock.electronics.passed_cycle_id = the_rcd.airlock_electronics.passed_cycle_id
 			if(new_airlock.electronics.one_access)
 				new_airlock.req_one_access = new_airlock.electronics.accesses
 			else
 				new_airlock.req_access = new_airlock.electronics.accesses
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
+			if(new_airlock.electronics.passed_name)
+				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
+			if(new_airlock.electronics.passed_cycle_id)
+				new_airlock.closeOtherId = new_airlock.electronics.passed_cycle_id
+				new_airlock.update_other_id()
 			new_airlock.autoclose = TRUE
 			new_airlock.update_appearance()
 			return TRUE
@@ -346,7 +354,7 @@
 /turf/open/floor/material
 	name = "floor"
 	icon_state = "materialfloor"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	floor_tile = /obj/item/stack/tile/material
 
 /turf/open/floor/material/has_tile()

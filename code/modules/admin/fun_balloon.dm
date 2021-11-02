@@ -7,7 +7,7 @@
 	var/popped = FALSE
 	var/pop_sound_effect = 'sound/items/party_horn.ogg'
 
-/obj/effect/fun_balloon/Initialize()
+/obj/effect/fun_balloon/Initialize(mapload)
 	. = ..()
 	SSobj.processing |= src
 
@@ -132,7 +132,7 @@
 	var/min_crash_strength = 3
 	var/max_crash_strength = 15
 
-/obj/effect/station_crash/Initialize()
+/obj/effect/station_crash/Initialize(mapload)
 	..()
 	shuttle_crash()
 	return INITIALIZE_HINT_QDEL

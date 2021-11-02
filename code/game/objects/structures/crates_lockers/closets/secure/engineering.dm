@@ -5,13 +5,8 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/ce(src)
-	new /obj/item/clothing/under/rank/engineering/chief_engineer(src)
-	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
-	new /obj/item/clothing/head/hardhat/white(src)
-	new /obj/item/clothing/head/hardhat/weldhat/white(src)
-	new /obj/item/clothing/gloves/color/chief_engineer(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+
+	new /obj/item/storage/bag/garment/engineering_chief (src)
 	new /obj/item/tank/jetpack/suit(src)
 	new /obj/item/cartridge/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
@@ -19,14 +14,13 @@
 	new /obj/item/areaeditor/blueprints(src)
 	new /obj/item/holosign_creator/atmos(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/door_remote/chief_engineer(src)
 	new /obj/item/pipe_dispenser(src)
 	new /obj/item/circuitboard/machine/techfab/department/engineering(src)
 	new /obj/item/extinguisher/advanced(src)
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/engineering/ce(src)
+
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "electrical supplies locker"

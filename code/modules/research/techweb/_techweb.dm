@@ -147,7 +147,7 @@
 	if(unlock_hidden)
 		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
-			if(!hidden_nodes[i])
+			if(available_nodes[i] || researched_nodes[i] || visible_nodes[i])
 				receiver.hidden_nodes -= i //We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
@@ -199,6 +199,7 @@
 /datum/techweb/proc/add_design(datum/design/design, custom = FALSE)
 	if(!istype(design))
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_TECHWEB_ADD_DESIGN, design, custom)
 	researched_designs[design.id] = TRUE
 	if(custom)
 		custom_designs[design.id] = TRUE
@@ -212,6 +213,7 @@
 		return FALSE
 	if(custom_designs[design.id] && !custom)
 		return FALSE
+	SEND_SIGNAL(src, COMSIG_TECHWEB_REMOVE_DESIGN, design, custom)
 	custom_designs -= design.id
 	researched_designs -= design.id
 	return TRUE
