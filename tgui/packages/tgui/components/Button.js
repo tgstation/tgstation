@@ -35,7 +35,7 @@ export const Button = props => {
     children,
     onclick,
     onClick,
-	verticalAlign,
+    verticalAlign,
     ...rest
   } = props;
   const hasContent = !!(content || children);
