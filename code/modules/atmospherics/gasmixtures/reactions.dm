@@ -862,7 +862,7 @@
 		ASSERT_GAS(/datum/gas/helium, air)
 		ASSERT_GAS(/datum/gas/plasma, air)
 		cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
-		cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 0.8
+		cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 1.6
 		cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
 		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 		energy_released += consumed_amount * 60000
