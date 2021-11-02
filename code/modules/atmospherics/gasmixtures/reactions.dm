@@ -858,11 +858,18 @@
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 	if(cached_gases[/datum/gas/bz][MOLES] < 30)
+		ASSERT_GAS(/datum/gas/nitrogen, air)
+		ASSERT_GAS(/datum/gas/helium, air)
+		ASSERT_GAS(/datum/gas/plasma, air)
+		cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
+		cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 0.8
+		cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
 		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
+		energy_released += consumed_amount * 60000
 	else
+		energy_released += 100
 		for(var/mob/living/carbon/L in location)
 			L.hallucination += cached_gases[/datum/gas/bz][MOLES] * 0.7
-	energy_released += 100
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -887,9 +894,6 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/turf/open/location = isturf(holder) ? holder : null
-	if(location == null)
-		return NO_REACTION
 	var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
