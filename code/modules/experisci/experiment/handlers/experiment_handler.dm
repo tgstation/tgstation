@@ -247,7 +247,8 @@
  * * user - The user to show the experiment configuration panel to
  */
 /datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
-	ui_interact(user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, /datum/proc/ui_interact, user)
 
 /**
  * Attempts to link this experiment_handler to a provided techweb

@@ -10,15 +10,13 @@
 	value_per_unit = 0.05
 	beauty_modifier = -0.3
 	strength_modifier = 0.7
-	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 0, RAD = 0.7, FIRE = 1, ACID = 1)
+	armor_modifiers = list(MELEE = 0.3, BULLET = 0.3, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 0, FIRE = 1, ACID = 1)
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "meat"
 
 /datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	if(material_flags & MATERIAL_NO_EFFECTS)
-		return
 	qdel(source.GetComponent(/datum/component/edible))
 
 /datum/material/meat/on_applied_obj(obj/O, amount, material_flags)

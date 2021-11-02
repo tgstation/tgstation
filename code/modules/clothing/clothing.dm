@@ -62,7 +62,7 @@
 	/// A lazily initiated "food" version of the clothing for moths
 	var/obj/item/food/clothing/moth_snack
 
-/obj/item/clothing/Initialize()
+/obj/item/clothing/Initialize(mapload)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
@@ -159,7 +159,7 @@
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
 	update_clothes_damaged_state(CLOTHING_PRISTINE)
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
 	slot_flags = initial(slot_flags)
@@ -204,7 +204,7 @@
  *
  * Arguments:
  * * def_zone: The bodypart zone we're disabling
- * * damage_type: Only really relevant for the verb for describing the breaking, and maybe obj_destruction()
+ * * damage_type: Only really relevant for the verb for describing the breaking, and maybe atom_destruction()
  */
 /obj/item/clothing/proc/disable_zone(def_zone, damage_type)
 	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
@@ -224,7 +224,7 @@
 		body_parts_covered &= ~i
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
-		obj_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
+		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
 	switch(zones_disabled)
@@ -308,7 +308,7 @@
 		if (pockets.can_hold?.len) // If pocket type can hold anything, vs only specific items
 			how_cool_are_your_threads += "[src] can store [pockets.max_items] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
 		else
-			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
+			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weight_class_to_text(pockets.max_w_class)] or smaller.\n"
 		if(pockets.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from [src] using Right-Click.\n"
 		if(pockets.silent)
@@ -332,8 +332,6 @@
 		armor_list += list("MAGIC" = armor.magic)
 	if(armor.melee)
 		armor_list += list("MELEE" = armor.melee)
-	if(armor.rad)
-		armor_list += list("RADIATION" = armor.rad)
 
 	if(LAZYLEN(durability_list))
 		durability_list.Cut()
@@ -397,7 +395,7 @@
 			. = "X"
 	return .
 
-/obj/item/clothing/obj_break(damage_flag)
+/obj/item/clothing/atom_break(damage_flag)
 	. = ..()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
@@ -486,11 +484,13 @@ BLIND     // can't see anything
 			return 1
 	return 0
 
-/obj/item/clothing/obj_destruction(damage_flag)
+/obj/item/clothing/proc/_spawn_shreds()
+	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)
+
+/obj/item/clothing/atom_destruction(damage_flag)
 	if(damage_flag == BOMB)
-		var/turf/T = get_turf(src)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
+		addtimer(CALLBACK(src, .proc/_spawn_shreds), 1)
 		deconstruct(FALSE)
 	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
 		var/turf/current_position = get_turf(src)

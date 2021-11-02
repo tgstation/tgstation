@@ -10,7 +10,7 @@
 	TEST_ASSERT_EQUAL(human.fire_stacks, 5, "Human does not have 5 fire stacks pre-resist")
 
 	// Stop, drop, and roll has a sleep call. This would delay the test, and is not necessary.
-	CallAsync(human, /mob/living/verb/resist)
+	call_async(human, /mob/living/verb/resist)
 
 	TEST_ASSERT(human.fire_stacks < 5, "Human did not lower fire stacks after resisting")
 

@@ -23,7 +23,7 @@
 	var/range = 7
 	var/power = 3
 
-/obj/structure/etherealball/Initialize()
+/obj/structure/etherealball/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

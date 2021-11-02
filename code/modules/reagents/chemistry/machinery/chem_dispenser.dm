@@ -87,13 +87,13 @@
 
 	var/list/saved_recipes = list()
 
-/obj/machinery/chem_dispenser/Initialize()
+/obj/machinery/chem_dispenser/Initialize(mapload)
 	. = ..()
-	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
+	dispensable_reagents = sort_list(dispensable_reagents, /proc/cmp_reagents_asc)
 	if(emagged_reagents)
-		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
+		emagged_reagents = sort_list(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
-		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+		upgrade_reagents = sort_list(upgrade_reagents, /proc/cmp_reagents_asc)
 	if(is_operational)
 		begin_processing()
 	update_appearance()
@@ -437,7 +437,7 @@
 		return
 	replace_beaker(user)
 
-/obj/machinery/chem_dispenser/drinks/Initialize()
+/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
@@ -519,7 +519,7 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
-/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
@@ -568,7 +568,7 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
 
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
@@ -609,7 +609,7 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
 
-/obj/machinery/chem_dispenser/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 

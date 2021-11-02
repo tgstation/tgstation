@@ -7,7 +7,8 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
-	idle_power_usage = 0
+	idle_power_usage = 5000
+	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 100
 	///The maximum amount of water in the tray
@@ -55,7 +56,7 @@
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 
-/obj/machinery/hydroponics/Initialize()
+/obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(20)
@@ -119,11 +120,16 @@
 		return myseed.bullet_act(Proj)
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
 		if(myseed)
-			if(myseed.mutatelist.len > 0)
+			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
 	else
 		return ..()
+
+/obj/machinery/hydroponics/power_change()
+	. = ..()
+	if((machine_stat & NOPOWER) && self_sustaining)
+		set_self_sustaining(FALSE)
 
 /obj/machinery/hydroponics/process(delta_time)
 	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
@@ -131,16 +137,14 @@
 	if(myseed && (myseed.loc != src))
 		myseed.forceMove(src)
 
-	if(!powered() && self_sustaining)
-		visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
-		idle_power_usage = 0
-		self_sustaining = FALSE
-		update_appearance()
-
-	else if(self_sustaining)
-		adjustWater(rand(1,2) * delta_time * 0.5)
-		adjustWeeds(-0.5 * delta_time)
-		adjustPests(-0.5 * delta_time)
+	if(self_sustaining)
+		if(powered())
+			adjustWater(rand(1,2) * delta_time * 0.5)
+			adjustWeeds(-0.5 * delta_time)
+			adjustPests(-0.5 * delta_time)
+		else
+			set_self_sustaining(FALSE)
+			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -245,7 +249,7 @@
 				var/mutation_chance = myseed.instability - 75
 				mutate(0, 0, 0, 0, 0, 0, 0, mutation_chance, 0) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
-				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
+				if(prob((myseed.instability)/2) && !self_sustaining && LAZYLEN(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
 			if(myseed.instability >= 40)
@@ -290,7 +294,7 @@
 			update_appearance()
 
 		if(myseed)
-			SEND_SIGNAL(myseed, COMSIG_PLANT_ON_GROW, src)
+			SEND_SIGNAL(myseed, COMSIG_SEED_ON_GROW, src)
 
 	return
 
@@ -341,6 +345,19 @@
 	if(harvest)
 		. += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3")
 
+/*
+ * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
+ *
+ * new_value - true / false value that self_sustaining is being set to
+ */
+/obj/machinery/hydroponics/proc/set_self_sustaining(new_value)
+	if(self_sustaining == new_value)
+		return
+
+	self_sustaining = new_value
+
+	update_use_power(self_sustaining ? IDLE_POWER_USE : NO_POWER_USE)
+	update_appearance()
 
 /obj/machinery/hydroponics/examine(user)
 	. = ..()
@@ -419,7 +436,7 @@
 		return
 
 	var/oldPlantName = myseed.plantname
-	if(myseed.mutatelist.len > 0)
+	if(LAZYLEN(myseed.mutatelist))
 		var/mutantseed = pick(myseed.mutatelist)
 		qdel(myseed)
 		myseed = null
@@ -574,6 +591,7 @@
 				investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
 			if(!user.transferItemToLoc(O, src))
 				return
+			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
 			to_chat(user, span_notice("You plant [O]."))
 			dead = FALSE
 			myseed = O
@@ -633,7 +651,7 @@
 			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE))
 				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
-		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sortList(current_traits))
+		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sort_list(current_traits))
 		if(removed_trait == null)
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
@@ -645,6 +663,7 @@
 		for(var/datum/plant_gene/gene in myseed.genes)
 			if(gene.name == removed_trait)
 				if(myseed.genes.Remove(gene))
+					gene.on_removed(myseed)
 					qdel(gene)
 					break
 		myseed.reagents_from_genes()
@@ -709,7 +728,7 @@
 		if(myseed.endurance <= 20)
 			to_chat(user, span_warning("[myseed.plantname] isn't hardy enough to sequence it's mutation!"))
 			return
-		if(!myseed.mutatelist)
+		if(!LAZYLEN(myseed.mutatelist))
 			to_chat(user, span_warning("[myseed.plantname] has nothing else to mutate into!"))
 			return
 		else
@@ -717,7 +736,7 @@
 			for(var/muties in myseed.mutatelist)
 				var/obj/item/seeds/another_mut = new muties
 				fresh_mut_list[another_mut.plantname] =  muties
-			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sortList(fresh_mut_list))
+			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sort_list(fresh_mut_list))
 			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
@@ -767,13 +786,12 @@
 		return
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
+		update_use_power(NO_POWER_USE)
 		return
 	if(!anchored)
 		return
-	self_sustaining = !self_sustaining
-	idle_power_usage = self_sustaining ? 5000 : 0
-	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
-	update_appearance()
+	set_self_sustaining(!self_sustaining)
+	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
 /obj/machinery/hydroponics/AltClick(mob/user)
 	. = ..()
@@ -809,8 +827,7 @@
 		desc = initial(desc)
 		TRAY_NAME_UPDATE
 		if(self_sustaining) //No reason to pay for an empty tray.
-			idle_power_usage = 0
-			self_sustaining = FALSE
+			set_self_sustaining(FALSE)
 	update_appearance()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.

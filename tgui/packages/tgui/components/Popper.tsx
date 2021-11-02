@@ -1,4 +1,4 @@
-import { createPopper, OptionsGeneric } from "@popperjs/core";
+import { createPopper } from "@popperjs/core";
 import { ArgumentsOf } from "common/types";
 import { Component, findDOMfromVNode, InfernoNode, render } from "inferno";
 
@@ -64,11 +64,18 @@ export class Popper extends Component<PopperProps> {
 
   componentWillUnmount() {
     this.popperInstance?.destroy();
-    this.renderedContent.remove();
+    render(null, this.renderedContent, () => this.renderedContent.remove());
   }
 
   renderPopperContent(callback: () => void) {
-    render(this.props.popperContent, this.renderedContent, callback);
+    // `render` errors when given false, so we convert it to `null`,
+    // which is supported.
+    render(
+      this.props.popperContent || null,
+      this.renderedContent,
+      callback,
+      this.context,
+    );
   }
 
   render() {

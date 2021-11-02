@@ -157,7 +157,7 @@
 	else
 		slowdown = initial(slowdown)
 
-/obj/item/gun/energy/beam_rifle/Initialize()
+/obj/item/gun/energy/beam_rifle/Initialize(mapload)
 	. = ..()
 	fire_delay = delay
 	current_tracers = list()

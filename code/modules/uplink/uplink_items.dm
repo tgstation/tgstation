@@ -1430,9 +1430,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		return
 	U.failsafe_code = U.generate_code()
 	var/code = "[islist(U.failsafe_code) ? english_list(U.failsafe_code) : U.failsafe_code]"
-	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]."))
-	if(user.mind)
-		user.mind.store_memory("Failsafe code for [U.parent] : [code]")
+	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
 	return U.parent //For log icon
 
 /datum/uplink_item/device_tools/toolbox
@@ -1816,6 +1814,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 	restricted_roles = list("Roboticist", "Research Director")
 
+/datum/uplink_item/role_restricted/syndimmi
+	name = "Syndicate Brand MMI"
+	desc = "An MMI modified to give cyborgs laws to serve the Syndicate without having their interface damaged by Cryptographic Sequencers, this will not unlock their hidden modules."
+	item = /obj/item/mmi/syndie
+	cost = 2
+	restricted_roles = list("Roboticist", "Research Director", "Scientist", "Medical Doctor", "Chief Medical Officer")
+	surplus = 0
+
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
 	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. \
@@ -1881,8 +1887,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
-	name = "Modified Syringe Gun"
-	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	name = "Modified  Compact Syringe Gun"
+	desc = "A compact version of the syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
 	restricted_roles = list("Geneticist", "Research Director")

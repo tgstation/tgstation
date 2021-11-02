@@ -18,7 +18,7 @@
 	var/ai_detector_color = COLOR_RED
 	interaction_range = null
 
-/mob/camera/ai_eye/Initialize()
+/mob/camera/ai_eye/Initialize(mapload)
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()

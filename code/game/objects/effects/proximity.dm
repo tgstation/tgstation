@@ -53,6 +53,8 @@
 		return FALSE
 	. = TRUE
 
+	LAZYINITLIST(checkers)
+
 	current_range = range
 
 	var/list/checkers_local = checkers

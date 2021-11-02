@@ -18,7 +18,7 @@
 	wound_bonus = -30
 	bare_wound_bonus = 20
 
-/obj/item/light_eater/Initialize()
+/obj/item/light_eater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)

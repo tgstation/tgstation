@@ -81,7 +81,7 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/abductor2,
 /area/mafia)
 "z" = (

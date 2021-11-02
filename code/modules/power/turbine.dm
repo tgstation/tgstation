@@ -29,7 +29,7 @@
 	icon_state = "compressor"
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_compressor
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
@@ -54,7 +54,7 @@
 	icon_state = "turbine"
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_turbine
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
@@ -70,14 +70,14 @@
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/power/compressor/Initialize()
+/obj/machinery/power/compressor/Initialize(mapload)
 	. = ..()
 	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
 	locate_machinery()
 	if(!turbine)
-		obj_break()
+		atom_break()
 
 #define COMPFRICTION 5e5
 
@@ -112,7 +112,7 @@
 			set_machine_stat(machine_stat & ~BROKEN)
 		else
 			to_chat(user, span_alert("Turbine not connected."))
-			obj_break()
+			atom_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -168,13 +168,13 @@
 #define TURBGENQ 100000
 #define TURBGENG 0.5
 
-/obj/machinery/power/turbine/Initialize()
+/obj/machinery/power/turbine/Initialize(mapload)
 	. = ..()
 // The outlet is pointed at the direction of the turbine component
 	outturf = get_step(src, dir)
 	locate_machinery()
 	if(!compressor)
-		obj_break()
+		atom_break()
 	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
@@ -245,7 +245,7 @@
 			set_machine_stat(machine_stat & ~BROKEN)
 		else
 			to_chat(user, span_alert("Compressor not connected."))
-			obj_break()
+			atom_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -263,7 +263,7 @@
 	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.machine_stat & BROKEN)) ? TRUE : FALSE
 	data["online"] = compressor?.starter
-	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["power"] = display_power(compressor?.turbine?.lastgen)
 	data["rpm"] = compressor?.rpm
 	data["temp"] = compressor?.gas_contained.temperature
 	return data
@@ -296,7 +296,7 @@
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
-/obj/machinery/computer/turbine_computer/Initialize()
+/obj/machinery/computer/turbine_computer/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -325,7 +325,7 @@
 	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.machine_stat & BROKEN)) ? TRUE : FALSE
 	data["online"] = compressor?.starter
-	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["power"] = display_power(compressor?.turbine?.lastgen)
 	data["rpm"] = compressor?.rpm
 	data["temp"] = compressor?.gas_contained.temperature
 	return data

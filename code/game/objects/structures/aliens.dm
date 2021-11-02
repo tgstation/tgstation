@@ -11,7 +11,7 @@
 	icon = 'icons/mob/alien.dmi'
 	max_integrity = 100
 
-/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/alien/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BRUTE)
@@ -63,7 +63,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_RESIN)
 	max_integrity = 200
 	var/resintype = null
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 
 
 /obj/structure/alien/resin/Initialize(mapload)
@@ -89,7 +89,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WALLS)
 
-/obj/structure/alien/resin/wall/BlockSuperconductivity()
+/obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
 
 /// meant for one lavaland ruin or anywhere that has simplemobs who can push aside structures
@@ -190,7 +190,7 @@
 		qdel(src)
 		return FALSE
 
-	for(var/turf/T in U.GetAtmosAdjacentTurfs())
+	for(var/turf/T in U.get_atmos_adjacent_turfs())
 		if(locate(/obj/structure/alien/weeds) in T)
 			continue
 
@@ -219,7 +219,7 @@
 	var/node_range = NODERANGE
 
 
-/obj/structure/alien/weeds/node/Initialize()
+/obj/structure/alien/weeds/node/Initialize(mapload)
 	. = ..()
 	set_light(lon_range)
 	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds) in loc
@@ -285,7 +285,7 @@
 		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
-		obj_integrity = integrity_failure * max_integrity
+		atom_integrity = integrity_failure * max_integrity
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
@@ -361,7 +361,7 @@
 /obj/structure/alien/egg/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(5, BURN, 0, 0)
 
-/obj/structure/alien/egg/obj_break(damage_flag)
+/obj/structure/alien/egg/atom_break(damage_flag)
 	. = ..()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(status != BURST)

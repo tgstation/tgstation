@@ -31,13 +31,13 @@
 	bounty_types = CIV_JOB_MED
 
 	mail_goodies = list(
-		/obj/effect/spawner/lootdrop/organ_spawner = 10,
-		/obj/effect/spawner/lootdrop/memeorgans = 8,
-		/obj/effect/spawner/lootdrop/space/fancytool/advmedicalonly = 4,
-		/obj/effect/spawner/lootdrop/space/fancytool/raremedicalonly = 1
+		/obj/effect/spawner/random/medical/organs = 10,
+		/obj/effect/spawner/random/medical/memeorgans = 8,
+		/obj/effect/spawner/random/medical/surgery_tool_advanced = 4,
+		/obj/effect/spawner/random/medical/surgery_tool_alien = 1
 	)
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
-
+	rpg_title = "High Cleric"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 1.4 //Command staff has authority
@@ -52,31 +52,35 @@
 	jobtype = /datum/job/chief_medical_officer
 
 	id = /obj/item/card/id/advanced/silver
-	belt = /obj/item/pda/heads/cmo
-	l_pocket = /obj/item/pinpointer/crew
-	ears = /obj/item/radio/headset/heads/cmo
+	id_trim = /datum/id_trim/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
-	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen/paramedic
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		)
+	belt = /obj/item/pda/heads/cmo
+	ears = /obj/item/radio/headset/heads/cmo
+	shoes = /obj/item/clothing/shoes/sneakers/blue
+	l_pocket = /obj/item/pinpointer/crew
+	l_hand = /obj/item/storage/firstaid/medical
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
 	box = /obj/item/storage/box/survival/medical
-
-	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
-
-	id_trim = /datum/id_trim/job/chief_medical_officer
+	chameleon_extras = list(
+		/obj/item/gun/syringe,
+		/obj/item/stamp/cmo,
+		)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
 /datum/outfit/job/cmo/hardsuit
 	name = "Chief Medical Officer (Hardsuit)"
 
-	mask = /obj/item/clothing/mask/breath/medical
 	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
+	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen/paramedic

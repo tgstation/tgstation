@@ -27,7 +27,7 @@
 	flight_y_offset = 13
 	single_shot_type_overlay = FALSE
 
-/obj/item/gun/energy/e_gun/mini/Initialize()
+/obj/item/gun/energy/e_gun/mini/Initialize(mapload)
 	set_gun_light(new /obj/item/flashlight/seclite(src))
 	return ..()
 
@@ -125,11 +125,11 @@
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
-				M.rad_act(40)
+				M.adjustFireLoss(3)
 				to_chat(M, span_userdanger("Your [name] feels warmer."))
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.rad_act(80)
+				M.adjustFireLoss(10)
 				reactor_overloaded = TRUE
 				to_chat(M, span_userdanger("Your [name]'s reactor overloads!"))
 

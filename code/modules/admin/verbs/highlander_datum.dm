@@ -12,8 +12,8 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
 	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
-	for(var/obj/item/disk/nuclear/fukkendisk in GLOB.poi_list)
-		var/datum/component/stationloving/component = fukkendisk.GetComponent(/datum/component/stationloving)
+	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
+		var/datum/component/stationloving/component = nuke_disk.GetComponent(/datum/component/stationloving)
 		component?.relocate() //Gets it out of bags and such
 
 	for(var/mob/living/carbon/human/human in GLOB.player_list)
@@ -56,7 +56,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
  * * ready_players: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
  */
-/datum/highlander_controller/proc/new_highlander(mob/living/carbon/human/new_crewmember, rank)
+/datum/highlander_controller/proc/new_highlander(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
 	to_chat(new_crewmember, span_userdanger("<i>THERE CAN BE ONLY ONE!!!</i>"))
@@ -90,8 +90,11 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
 	addtimer(CALLBACK(src, .proc/only_one, TRUE), 42 SECONDS)
 
-/mob/living/carbon/human/proc/make_scottish()
+/mob/living/proc/make_scottish()
+	return
+
+/mob/living/carbon/human/make_scottish()
 	mind.add_antag_datum(/datum/antagonist/highlander)
 
-/mob/living/silicon/robot/proc/make_scottish()
+/mob/living/silicon/robot/make_scottish()
 	mind.add_antag_datum(/datum/antagonist/highlander/robot)

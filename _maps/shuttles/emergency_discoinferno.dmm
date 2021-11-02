@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "c" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/elevatorshaft,
 /area/shuttle/escape)
 "d" = (
@@ -106,7 +106,7 @@
 	name = "Disco Inferno"
 	},
 /obj/machinery/door/airlock/gold{
-	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "fire" = 100, "acid" = 100);
 	heat_proof = 1;
 	resistance_flags = 2
 	},
@@ -202,7 +202,7 @@
 /area/shuttle/escape)
 "M" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

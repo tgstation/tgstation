@@ -737,7 +737,7 @@
 	name = "Cyborg Upgrade (Emergency Reboot Board)"
 	id = "borg_upgrade_restart"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/restart
+	build_path = /obj/item/borg_restart_board
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
@@ -969,13 +969,3 @@
 	construction_time = 100
 	build_path = /obj/item/assembly/flash/handheld
 	category = list("Misc")
-
-/datum/design/maint_drone
-	name = "Maintenance Drone"
-	desc = "\"Repairs the station without bothering you!\" is what the marketing says."
-	id = "maint_drone"
-	build_type = MECHFAB
-	materials = list(/datum/material/iron = 800, /datum/material/glass = 350)
-	construction_time = 150
-	build_path = /obj/effect/mob_spawn/drone
-	category = list("Control Interfaces")

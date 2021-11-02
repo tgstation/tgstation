@@ -133,7 +133,7 @@
 	return json_structure
 
 /**
- * Attempt to create a value from a JATUN JSON.
+ * Attempt to create a value from a JATUM JSON.
  *
  * * json - The JSON to deserialize.
  */

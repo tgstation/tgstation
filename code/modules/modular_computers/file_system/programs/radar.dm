@@ -98,7 +98,7 @@
 
 	if(get_dist_euclidian(here_turf, target_turf) > 24)
 		userot = TRUE
-		rot = round(Get_Angle(here_turf, target_turf))
+		rot = round(get_angle(here_turf, target_turf))
 	else
 		if(target_turf.z > here_turf.z)
 			pointer="caret-up"
@@ -270,7 +270,7 @@
 	pointercolor = "red"
 
 /datum/computer_file/program/radar/fission360/find_atom()
-	return locate(selected) in GLOB.poi_list
+	return SSpoints_of_interest.get_poi_atom_by_ref(selected)
 
 /datum/computer_file/program/radar/fission360/scan()
 	if(world.time < next_scan)
@@ -285,7 +285,7 @@
 			name = nuke.name,
 			)
 		objects += list(nukeinfo)
-	var/obj/item/disk/nuclear/disk = locate() in GLOB.poi_list
+	var/obj/item/disk/nuclear/disk = locate() in SSpoints_of_interest.real_nuclear_disks
 	var/list/nukeinfo = list(
 		ref = REF(disk),
 		name = "Nuke Auth. Disk",

@@ -111,7 +111,7 @@
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/hud/security/chameleon/Initialize()
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses

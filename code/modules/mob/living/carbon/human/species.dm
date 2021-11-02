@@ -1,5 +1,8 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
 
+/// An assoc list of species types to their features (from get_features())
+GLOBAL_LIST_EMPTY(features_by_species)
+
 /**
  * # species datum
  *
@@ -17,7 +20,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
-	var/default_color = "#FFF"
+	var/default_color = "#FFFFFF"
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
@@ -141,6 +144,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/// The body temperature limit the body can take before it starts taking damage from cold.
 	var/bodytemp_cold_damage_limit = BODYTEMP_COLD_DAMAGE_LIMIT
 
+	/// The icon_state of the fire overlay added when sufficently ablaze and standing. see onfire.dmi
+	var/fire_overlay = "Standing"
+
 	///the species that body parts are surgically compatible with (found in _DEFINES/mobs.dm)
 	///current acceptable bitfields are HUMAN_BODY, ALIEN_BODY, LARVA_BODY, MONKEY_BODY, or NONE
 	var/allowed_animal_origin = HUMAN_BODY
@@ -212,8 +218,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	///List of visual overlays created by handle_body()
 	var/list/body_vis_overlays = list()
 
-
-
 ///////////
 // PROCS //
 ///////////
@@ -226,6 +230,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	wings_icons = string_list(wings_icons)
 	..()
 
+/// Gets a list of all species available to choose in roundstart.
+/proc/get_selectable_species()
+	RETURN_TYPE(/list)
+
+	if (!GLOB.roundstart_races.len)
+		GLOB.roundstart_races = generate_selectable_species()
+
+	return GLOB.roundstart_races
+
 /**
  * Generates species available to choose in character setup at roundstart
  *
@@ -233,13 +246,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * If there are no available roundstart species, defaults to human.
  */
 /proc/generate_selectable_species()
-	for(var/I in subtypesof(/datum/species))
-		var/datum/species/S = new I
-		if(S.check_roundstart_eligible())
-			GLOB.roundstart_races += S.id
-			qdel(S)
-	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += SPECIES_HUMAN
+	var/list/selectable_species = list()
+
+	for(var/species_type in subtypesof(/datum/species))
+		var/datum/species/species = new species_type
+		if(species.check_roundstart_eligible())
+			selectable_species += species.id
+			qdel(species)
+
+	if(!selectable_species.len)
+		selectable_species += SPECIES_HUMAN
+
+	return selectable_species
 
 /**
  * Checks if a species is eligible to be picked at roundstart.
@@ -371,6 +389,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	SHOULD_CALL_PARENT(TRUE)
 	// Drop the items the new species can't wear
 	if((AGENDER in species_traits))
 		C.gender = PLURAL
@@ -409,15 +428,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(istype(I))
 				C.dropItemToGround(I)
 			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-				C.put_in_hands(new mutanthands())
+				INVOKE_ASYNC(C, /mob/proc/put_in_hands, new mutanthands)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
 		for(var/obj/item/organ/external/organ_path as anything in external_organs)
 			//Load a persons preferences from DNA
-			var/preference_name = human.dna.features[initial(organ_path.preference)]
+			var/feature_key_name = human.dna.features[initial(organ_path.feature_key)]
 
-			var/obj/item/organ/external/new_organ = new organ_path(null, preference_name, human.body_type)
+			var/obj/item/organ/external/new_organ = new organ_path(null, feature_key_name, human.body_type)
 
 			new_organ.Insert(human)
 
@@ -460,6 +479,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  * * pref_load - Preferences to be loaded from character setup, loads in preferred mutant things like bodyparts, digilegs, skin color, etc.
  */
 /datum/species/proc/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	SHOULD_CALL_PARENT(TRUE)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)
@@ -562,21 +582,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(!forced_colour)
 				if(hair_color)
 					if(hair_color == "mutcolor")
-						facial_overlay.color = "#" + H.dna.features["mcolor"]
+						facial_overlay.color = H.dna.features["mcolor"]
 					else if(hair_color == "fixedmutcolor")
-						facial_overlay.color = "#[fixed_mut_color]"
+						facial_overlay.color = fixed_mut_color
 					else
-						facial_overlay.color = "#" + hair_color
+						facial_overlay.color = hair_color
 				else
-					facial_overlay.color = "#" + H.facial_hair_color
+					facial_overlay.color = H.facial_hair_color
 			else
 				facial_overlay.color = forced_colour
 
 			facial_overlay.alpha = hair_alpha
-
-			var/mutable_appearance/facial_em_blocker = mutable_appearance(fhair_file, fhair_state, plane = EMISSIVE_PLANE, alpha = hair_alpha, appearance_flags = KEEP_APART)
-			facial_em_blocker.color = GLOB.em_block_color
-			facial_overlay.overlays += facial_em_blocker
+			facial_overlay.overlays += emissive_blocker(fhair_file, fhair_state, alpha = hair_alpha)
 
 			standing += facial_overlay
 
@@ -586,6 +603,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/obj/item/clothing/C = I
 			dynamic_hair_suffix = C.dynamic_hair_suffix
 		if(I.flags_inv & HIDEHAIR)
+			hair_hidden = TRUE
+
+	if(H.w_uniform)
+		var/obj/item/item_uniform = H.w_uniform
+		if(isclothing(item_uniform))
+			var/obj/item/clothing/clothing_object = item_uniform
+			dynamic_hair_suffix = clothing_object.dynamic_hair_suffix
+		if(item_uniform.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
 	if(H.wear_mask)
@@ -630,13 +655,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(!forced_colour)
 					if(hair_color)
 						if(hair_color == "mutcolor")
-							hair_overlay.color = "#" + H.dna.features["mcolor"]
+							hair_overlay.color = H.dna.features["mcolor"]
 						else if(hair_color == "fixedmutcolor")
-							hair_overlay.color = "#[fixed_mut_color]"
+							hair_overlay.color = fixed_mut_color
 						else
-							hair_overlay.color = "#" + hair_color
+							hair_overlay.color = hair_color
 					else
-						hair_overlay.color = "#" + H.hair_color
+						hair_overlay.color = H.hair_color
 
 					//Gradients
 					grad_style = H.grad_style
@@ -647,7 +672,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						var/icon/temp_hair = icon(hair_file, hair_state)
 						temp.Blend(temp_hair, ICON_ADD)
 						gradient_overlay.icon = temp
-						gradient_overlay.color = "#" + grad_color
+						gradient_overlay.color = grad_color
 
 				else
 					hair_overlay.color = forced_colour
@@ -656,11 +681,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(OFFSET_FACE in H.dna.species.offset_features)
 					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
 					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-		if(hair_overlay.icon)
-			var/mutable_appearance/hair_em_block = mutable_appearance(hair_overlay.icon, hair_overlay.icon_state, plane = EMISSIVE_PLANE, alpha = hair_alpha, appearance_flags = KEEP_APART)
-			hair_em_block.color = GLOB.em_block_color
-			hair_overlay.overlays += hair_em_block
 
+		if(hair_overlay.icon)
+			hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_alpha)
 			standing += hair_overlay
 			standing += gradient_overlay
 
@@ -699,7 +722,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!(NOEYESPRITES in species_traits))
 			var/obj/item/organ/eyes/eye_organ = species_human.getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/no_eyeslay
-			var/list/eye_overlays = list()
+			var/mutable_appearance/eye_overlay
 			var/obscured = species_human.check_obscured_slots(TRUE) //eyes that shine in the dark shouldn't show when you have glasses
 			var/add_pixel_x = 0
 			var/add_pixel_y = 0
@@ -715,15 +738,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				no_eyeslay.pixel_y += add_pixel_y
 				standing += no_eyeslay
 			if(!no_eyeslay)//we need eyes
-				eye_overlays += mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
 				if(eye_organ.overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
-					eye_overlays += emissive_appearance('icons/mob/human_face.dmi', eye_organ.eye_icon_state, -BODY_LAYER)
-				for(var/mutable_appearance/eye_overlay as anything in eye_overlays)
-					eye_overlay.pixel_x += add_pixel_x
-					eye_overlay.pixel_y += add_pixel_y
-					if((EYECOLOR in species_traits) && eye_organ)
-						eye_overlay.color = "#" + species_human.eye_color
-					standing += eye_overlay
+					eye_overlay.overlays += emissive_appearance(eye_overlay.icon, eye_overlay.icon_state, alpha = eye_overlay.alpha)
+
+				eye_overlay.pixel_x += add_pixel_x
+				eye_overlay.pixel_y += add_pixel_y
+				if((EYECOLOR in species_traits) && eye_organ)
+					eye_overlay.color = species_human.eye_color
+				standing += eye_overlay
 
 	// organic body markings
 	if(HAS_MARKINGS in species_traits)
@@ -770,7 +793,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 				if(!underwear.use_static)
-					underwear_overlay.color = "#" + species_human.underwear_color
+					underwear_overlay.color = species_human.underwear_color
 				standing += underwear_overlay
 
 		if(species_human.undershirt)
@@ -926,9 +949,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				accessory_overlay.icon_state = "m_[bodypart]_[accessory.icon_state]_[layertext]"
 
 			if(accessory.em_block)
-				var/mutable_appearance/em_overlay = mutable_appearance(accessory_overlay.icon, accessory_overlay.icon_state, plane = EMISSIVE_PLANE, alpha = accessory_overlay.alpha, appearance_flags = KEEP_APART)
-				em_overlay.color = GLOB.em_block_color
-				accessory_overlay.overlays |= em_overlay
+				accessory_overlay.overlays += emissive_blocker(accessory_overlay.icon, accessory_overlay.icon_state, accessory_overlay.alpha)
 
 			if(accessory.center)
 				accessory_overlay = center_image(accessory_overlay, accessory.dimension_x, accessory.dimension_y)
@@ -938,20 +959,20 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					switch(accessory.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
-								accessory_overlay.color = "#[fixed_mut_color]"
+								accessory_overlay.color = fixed_mut_color
 							else
-								accessory_overlay.color = "#[source.dna.features["mcolor"]]"
+								accessory_overlay.color = source.dna.features["mcolor"]
 						if(HAIR)
 							if(hair_color == "mutcolor")
-								accessory_overlay.color = "#[source.dna.features["mcolor"]]"
+								accessory_overlay.color = source.dna.features["mcolor"]
 							else if(hair_color == "fixedmutcolor")
-								accessory_overlay.color = "#[fixed_mut_color]"
+								accessory_overlay.color = fixed_mut_color
 							else
-								accessory_overlay.color = "#[source.hair_color]"
+								accessory_overlay.color = source.hair_color
 						if(FACEHAIR)
-							accessory_overlay.color = "#[source.facial_hair_color]"
+							accessory_overlay.color = source.facial_hair_color
 						if(EYECOLOR)
-							accessory_overlay.color = "#[source.eye_color]"
+							accessory_overlay.color = source.eye_color
 				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
@@ -1195,32 +1216,26 @@ GLOBAL_LIST_EMPTY(roundstart_races)
  *
  * Arguments:
  * - [source][/mob/living/carbon/human]: The mob requesting handling
+ * - time_since_irradiated: The amount of time since the mob was first irradiated
  * - delta_time: The amount of time that has passed since the last tick
- * - times_fired: The number of times SSmobs has fired
  */
-/datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
-	if(HAS_TRAIT(source, TRAIT_RADIMMUNE))
-		source.radiation = 0
-		return TRUE
-
-	. = FALSE
-	var/radiation = source.radiation
-	if(radiation > RAD_MOB_KNOCKDOWN && DT_PROB(RAD_MOB_KNOCKDOWN_PROB, delta_time))
+/datum/species/proc/handle_radiation(mob/living/carbon/human/source, time_since_irradiated, delta_time)
+	if(time_since_irradiated > RAD_MOB_KNOCKDOWN && DT_PROB(RAD_MOB_KNOCKDOWN_PROB, delta_time))
 		if(!source.IsParalyzed())
 			source.emote("collapse")
 		source.Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(source, span_danger("You feel weak."))
 
-	if(radiation > RAD_MOB_VOMIT && DT_PROB(RAD_MOB_VOMIT_PROB, delta_time))
+	if(time_since_irradiated > RAD_MOB_VOMIT && DT_PROB(RAD_MOB_VOMIT_PROB, delta_time))
 		source.vomit(10, TRUE)
 
-	if(radiation > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
+	if(time_since_irradiated > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
 		to_chat(source, span_danger("You mutate!"))
 		source.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 		source.emote("gasp")
 		source.domutcheck()
 
-	if(radiation > RAD_MOB_HAIRLOSS && DT_PROB(RAD_MOB_HAIRLOSS_PROB, delta_time))
+	if(time_since_irradiated > RAD_MOB_HAIRLOSS && DT_PROB(RAD_MOB_HAIRLOSS_PROB, delta_time))
 		if(!(source.hairstyle == "Bald") && (HAIR in species_traits))
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
 			addtimer(CALLBACK(src, .proc/go_bald, source), 5 SECONDS)
@@ -1924,6 +1939,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else
 			H.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (H.fire_stacks * 12)) * 0.5 * delta_time)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+			H.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = H), story_value = STORY_VALUE_OKAY)
 
 /datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
@@ -2080,3 +2096,35 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			continue
 
 		current_part.change_bodypart(species_part)
+
+/// Returns a list of strings representing features this species has.
+/// Used by the preferences UI to know what buttons to show.
+/datum/species/proc/get_features()
+	var/cached_features = GLOB.features_by_species[type]
+	if (!isnull(cached_features))
+		return cached_features
+
+	var/list/features = list()
+
+	for (var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+
+		if ( \
+			(preference.relevant_mutant_bodypart in mutant_bodyparts) \
+			|| (preference.relevant_species_trait in species_traits) \
+		)
+			features += preference.savefile_key
+
+	for (var/obj/item/organ/external/organ_type as anything in external_organs)
+		var/preference = initial(organ_type.preference)
+		if (!isnull(preference))
+			features += preference
+
+	GLOB.features_by_species[type] = features
+
+	return features
+
+/// Given a human, will adjust it before taking a picture for the preferences UI.
+/// This should create a CONSISTENT result, so the icons don't randomly change.
+/datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
+	return

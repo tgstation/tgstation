@@ -133,11 +133,11 @@
 
 /datum/asset/simple/namespaced/fontawesome
 	assets = list(
-		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
+		"fa-regular-400.eot" = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
-		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
-		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
-		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
+		"fa-solid-900.eot" = 'html/font-awesome/webfonts/fa-solid-900.eot',
+		"fa-solid-900.woff" = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"v4shim.css" = 'html/font-awesome/css/v4-shims.min.css',
 	)
 	parents = list("font-awesome.css" = 'html/font-awesome/css/all.min.css')
 
@@ -476,10 +476,9 @@
 	assets = list()
 
 /datum/asset/simple/portraits/New()
-	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
+	if(!length(SSpersistent_paintings.paintings[tab]))
 		return
-	for(var/p in SSpersistence.paintings[tab])
-		var/list/portrait = p
+	for(var/list/portrait as anything in SSpersistent_paintings.paintings[tab])
 		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
 		if(fexists(png))
 			var/asset_name = "[tab]_[portrait["md5"]]"
@@ -498,6 +497,14 @@
 /datum/asset/simple/safe
 	assets = list(
 		"safe_dial.png" = 'icons/ui_icons/safe/safe_dial.png'
+	)
+
+/datum/asset/simple/contracts
+	assets = list(
+		"bluespace.png" = 'icons/ui_icons/contracts/bluespace.png',
+		"destruction.png" = 'icons/ui_icons/contracts/destruction.png',
+		"healing.png" = 'icons/ui_icons/contracts/healing.png',
+		"robeless.png" = 'icons/ui_icons/contracts/robeless.png',
 	)
 
 /datum/asset/spritesheet/fish

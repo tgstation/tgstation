@@ -7,7 +7,7 @@
 	item_flags = NOBLUDGEON
 	var/employee_name = ""
 
-/obj/item/paper/employment_contract/Initialize()
+/obj/item/paper/employment_contract/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
 

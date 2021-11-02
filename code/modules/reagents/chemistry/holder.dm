@@ -5,22 +5,20 @@
 #define REAGENT_TRANSFER_AMOUNT "amount"
 #define REAGENT_PURITY "purity"
 
-/////////////These are used in the reagents subsystem init() and the reagent_id_typos.dm////////
-/proc/build_chemical_reagent_list()
-	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
-
-	if(GLOB.chemical_reagents_list)
-		return
+/// Initialises all /datum/reagent into a list indexed by reagent id
+/proc/init_chemical_reagent_list()
+	var/list/reagent_list = list()
 
 	var/paths = subtypesof(/datum/reagent)
-	GLOB.chemical_reagents_list = list()
 
 	for(var/path in paths)
 		if(path in GLOB.fake_reagent_blacklist)
 			continue
 		var/datum/reagent/D = new path()
 		D.mass = rand(10, 800) //This is terrible and should be removed ASAP!
-		GLOB.chemical_reagents_list[path] = D
+		reagent_list[path] = D
+
+	return reagent_list
 
 /proc/build_chemical_reactions_lists()
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
@@ -169,6 +167,9 @@
 		return FALSE
 
 	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small amount problems.
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
 		return FALSE
 
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
@@ -483,7 +484,8 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+				continue
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(reagent, target, methods, part, show_message)
@@ -508,7 +510,8 @@
 				transfer_amount = reagent.volume
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -893,7 +896,7 @@
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 				if(meets_temp_requirement && meets_ph_requirement)
-					possible_reactions  += reaction
+					possible_reactions += reaction
 				else
 					LAZYADD(failed_but_capable_reactions, reaction)
 
@@ -1121,6 +1124,8 @@
 	var/sum_purity = 0
 	for(var/_reagent in cached_required_reagents)//this is not an object
 		var/datum/reagent/reagent = has_reagent(_reagent)
+		if (!reagent)
+			continue
 		sum_purity += reagent.purity
 		remove_reagent(_reagent, (multiplier * cached_required_reagents[_reagent]), safety = 1)
 	sum_purity /= cached_required_reagents.len

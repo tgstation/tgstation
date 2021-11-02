@@ -15,7 +15,7 @@
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
@@ -50,7 +50,7 @@
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
 	user.put_in_hands(woven_cloth)
 
-/obj/structure/spider/stickyweb/Initialize()
+/obj/structure/spider/stickyweb/Initialize(mapload)
 	if(!sealed && prob(50))
 		icon_state = "stickyweb2"
 	. = ..()
@@ -77,7 +77,7 @@
 	desc = "A solid thick wall of web, airtight enough to block air flow."
 	icon_state = "sealedweb"
 	sealed = TRUE
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE
@@ -107,7 +107,7 @@
 	/// Mob spawner handling the actual spawn of the spider
 	var/obj/effect/mob_spawn/spider/spawner
 
-/obj/structure/spider/eggcluster/Initialize()
+/obj/structure/spider/eggcluster/Initialize(mapload)
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	return ..()
@@ -261,7 +261,7 @@
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
 		option.info = span_boldnotice("[initial(spider.menu_description)]")
 		display_spiders[initial(spider.name)] = option
-	sortList(display_spiders)
+	sort_list(display_spiders)
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
 	chosen_spider = spider_list[chosen_spider]
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
@@ -287,7 +287,7 @@
 	new/obj/item/food/spiderling(get_turf(src))
 	. = ..()
 
-/obj/structure/spider/spiderling/Initialize()
+/obj/structure/spider/spiderling/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
@@ -354,7 +354,7 @@
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
 			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmos_machines)
 				vents.Add(temp_vent)
 			if(!vents.len)
 				entry_vent = null
@@ -401,7 +401,7 @@
 	icon_state = "cocoon1"
 	max_integrity = 60
 
-/obj/structure/spider/cocoon/Initialize()
+/obj/structure/spider/cocoon/Initialize(mapload)
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 

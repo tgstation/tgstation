@@ -520,7 +520,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "mz" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ni" = (
@@ -618,7 +618,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "px" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/box,
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -696,7 +696,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "sj" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/machinery/light/directional/north,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
@@ -985,7 +985,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "BY" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Cg" = (
@@ -1035,7 +1035,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -1108,7 +1108,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Fl" = (
-/obj/effect/spawner/randomarcade,
+/obj/effect/spawner/random/entertainment/arcade,
 /obj/machinery/light/directional/north,
 /obj/structure/window/reinforced/tinted{
 	dir = 4
@@ -1429,7 +1429,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Sl" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/box,
 /obj/structure/window/reinforced/tinted{
 	dir = 4

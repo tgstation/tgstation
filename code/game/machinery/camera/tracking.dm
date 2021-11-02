@@ -53,7 +53,7 @@
 		else
 			track.others[name] = WEAKREF(L)
 
-	var/list/targets = sortList(track.humans) + sortList(track.others)
+	var/list/targets = sort_list(track.humans) + sort_list(track.others)
 
 	return targets
 

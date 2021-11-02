@@ -25,7 +25,7 @@
 ///Adds a mob reference to the list of all suicided mobs
 /mob/proc/add_to_mob_suicide_list()
 	GLOB.suicided_mob_list += src
-	
+
 ///Removes a mob references from the list of all suicided mobs
 /mob/proc/remove_from_mob_suicide_list()
 	GLOB.suicided_mob_list -= src

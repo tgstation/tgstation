@@ -27,7 +27,7 @@
 	icon_state = "barrier0"
 	alpha = 100
 
-/obj/effect/murderdome/dead_barricade/Initialize()
+/obj/effect/murderdome/dead_barricade/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/respawn), 3 MINUTES)
 

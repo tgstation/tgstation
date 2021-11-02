@@ -84,7 +84,7 @@
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(1, 7))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 	update_icon_state()
 
 /obj/item/storage/bag/trash/bluespace
@@ -121,7 +121,6 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))

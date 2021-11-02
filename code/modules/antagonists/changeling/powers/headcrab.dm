@@ -18,7 +18,7 @@
 	for(var/obj/item/organ/I in organs)
 		I.Remove(user, 1)
 
-	explosion(user, light_impact_range = 2, adminlog = TRUE)
+	explosion(user, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/H in range(2,user))
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		to_chat(H, span_userdanger("You are blinded by a shower of blood!"))

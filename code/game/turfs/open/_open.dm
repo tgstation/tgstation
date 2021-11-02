@@ -97,7 +97,7 @@
 	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
-/turf/open/indestructible/necropolis/Initialize()
+/turf/open/indestructible/necropolis/Initialize(mapload)
 	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
@@ -141,7 +141,7 @@
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 	footstep = null
@@ -159,7 +159,7 @@
 	update_visuals()
 
 	current_cycle = times_fired
-	ImmediateCalculateAdjacentTurfs()
+	immediate_calculate_adjacent_turfs()
 	for(var/i in atmos_adjacent_turfs)
 		var/turf/open/enemy_tile = i
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
@@ -178,7 +178,7 @@
 	air.temperature += temp
 	air_update_turf(FALSE, FALSE)
 
-/turf/open/proc/freon_gas_act()
+/turf/open/proc/freeze_turf()
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
 			continue
@@ -259,29 +259,3 @@
 
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
-
-/turf/open/rad_act(strength)
-	. = ..()
-	var/gas_change = FALSE
-	var/list/cached_gases = air.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air.temperature <= PLUOXIUM_TEMP_CAP)
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
-		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, air)
-		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
-		strength -= pulse_strength
-
-	if(cached_gases[/datum/gas/hydrogen])
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, air)
-		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
-		strength -= pulse_strength
-
-	if(gas_change)
-		air.garbage_collect()
-		air_update_turf(FALSE, FALSE)
-

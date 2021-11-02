@@ -61,7 +61,7 @@
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -97,7 +97,7 @@
 	speed = 1
 	projectile_deflect_chance = 50
 
-/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -124,7 +124,7 @@
 	var/obj/effect/light_emitter/red_energy_sword/sord
 	projectile_deflect_chance = 50
 
-/mob/living/simple_animal/hostile/syndicate/melee/sword/Initialize()
+/mob/living/simple_animal/hostile/syndicate/melee/sword/Initialize(mapload)
 	. = ..()
 	set_light(2)
 
@@ -149,7 +149,7 @@
 	speed = 1
 	projectile_deflect_chance = 50
 
-/mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	sord = new(src)
@@ -195,7 +195,7 @@
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -228,7 +228,7 @@
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -258,7 +258,7 @@
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -316,7 +316,7 @@
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"
 
-/mob/living/simple_animal/hostile/viscerator/Initialize()
+/mob/living/simple_animal/hostile/viscerator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)

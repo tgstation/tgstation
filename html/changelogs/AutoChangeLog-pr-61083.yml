@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Plasmamen that have all of their limbs replaced with non-plasma alternatives will not autoignite in flammable environments."

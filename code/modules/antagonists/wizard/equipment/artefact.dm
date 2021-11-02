@@ -40,17 +40,17 @@
 	icon_state = "rift"
 	density = TRUE
 	anchored = TRUE
-	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
+	var/spawn_path = /mob/living/basic/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = FALSE
 
-/obj/effect/rend/New(loc, spawn_type, spawn_amt, desc, spawn_fast)
+/obj/effect/rend/Initialize(mapload, spawn_type, spawn_amt, desc, spawn_fast)
+	. = ..()
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
 	src.spawn_fast = spawn_fast
 	START_PROCESSING(SSobj, src)
-	return
 
 /obj/effect/rend/process()
 	if(!spawn_fast)
@@ -78,7 +78,7 @@
 /obj/item/veilrender/vealrender
 	name = "veal render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast farm."
-	spawn_type = /mob/living/simple_animal/cow
+	spawn_type = /mob/living/basic/cow
 	spawn_amt = 20
 	activate_descriptor = "hunger"
 	rend_desc = "Reverberates with the sound of ten thousand moos."
@@ -254,6 +254,11 @@
 	spooky_scaries |= M
 	to_chat(M, "[span_userdanger("You have been revived by ")]<B>[user.real_name]!</B>")
 	to_chat(M, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
+	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	if(antag_datum)
+		if(!antag_datum.wiz_team)
+			antag_datum.create_wiz_team()
+		M.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
 	equip_roman_skeleton(M)
 
@@ -272,7 +277,7 @@
 			H.dust(TRUE)
 			spooky_scaries.Remove(X)
 			continue
-	listclearnulls(spooky_scaries)
+	list_clear_nulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
 /obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
@@ -365,6 +370,6 @@
 	duration = 40
 	pixel_x = 500
 
-/obj/effect/temp_visual/tornado/Initialize()
+/obj/effect/temp_visual/tornado/Initialize(mapload)
 	. = ..()
 	animate(src, pixel_x = -500, time = 40)

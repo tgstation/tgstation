@@ -12,7 +12,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
-/obj/item/experi_scanner/Initialize()
+/obj/item/experi_scanner/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

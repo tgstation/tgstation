@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -30,7 +30,7 @@
 	/// The heat given off when active.
 	var/active_heat = 3500
 
-/obj/item/melee/energy/Initialize()
+/obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
 	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
@@ -293,7 +293,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
-/obj/item/melee/energy/blade/Initialize()
+/obj/item/melee/energy/blade/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)

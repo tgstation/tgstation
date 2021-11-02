@@ -20,7 +20,7 @@ GLOBAL_DATUM_INIT(_preloader, /datum/map_preloader, new)
 	for(var/attribute in preloader_local.attributes)
 		var/value = preloader_local.attributes[attribute]
 		if(islist(value))
-			value = deepCopyList(value)
+			value = deep_copy_list(value)
 		#ifdef TESTING
 		if(what.vars[attribute] == value)
 			var/message = "<font color=green>[what.type]</font> at [AREACOORD(what)] - <b>VAR:</b> <font color=red>[attribute] = [isnull(value) ? "null" : (isnum(value) ? value : "\"[value]\"")]</font>"
