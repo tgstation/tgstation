@@ -200,6 +200,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		)
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
