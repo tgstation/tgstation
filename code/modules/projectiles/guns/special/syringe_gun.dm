@@ -185,6 +185,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	base_pixel_x = 0
 	pixel_x = 0
+	force = 4
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	visible_message(span_danger("[user] starts aiming with a blowgun!"))
