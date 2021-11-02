@@ -1074,7 +1074,7 @@
 /area/centcom/holding)
 "ew" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "ex" = (

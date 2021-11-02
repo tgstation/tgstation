@@ -33977,7 +33977,7 @@
 /turf/open/floor/wood,
 /area/command/meeting_room)
 "ntp" = (
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
 /obj/machinery/newscaster/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -46137,7 +46137,7 @@
 /area/commons/dorms)
 "tHJ" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/wood,
