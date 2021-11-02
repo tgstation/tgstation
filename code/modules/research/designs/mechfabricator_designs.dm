@@ -1172,14 +1172,14 @@
 	build_path = /obj/item/mod/module/mouthhole
 	category = list("Modular Suit Modules")
 
-/datum/design/mod_rad_counter
-	name = "MOD Module: Radiation Counter"
+/datum/design/mod_rad_protection
+	name = "MOD Module: Radiation Protection"
 	desc = "A modsuit module design!"
-	id = "mod_rad_counter"
+	id = "mod_rad_protection"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
-	build_path = /obj/item/mod/module/rad_counter
+	build_path = /obj/item/mod/module/rad_protection
 	category = list("Modular Suit Modules")
 
 /datum/design/mod_emp_shield
@@ -1278,6 +1278,7 @@
 	id = "mod_bikehorn"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/bikehorn
 	category = list("Modular Suit Modules")
 
@@ -1287,6 +1288,7 @@
 	id = "mod_clamps"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/clamp
 	category = list("Modular Suit Modules")
 
@@ -1296,6 +1298,7 @@
 	id = "mod_drill"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/drill
 	category = list("Modular Suit Modules")
 
@@ -1305,6 +1308,7 @@
 	id = "mod_orebag"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/orebag
 	category = list("Modular Suit Modules")
 
@@ -1314,6 +1318,7 @@
 	id = "mod_organ_thrower"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/organ_thrower
 	category = list("Modular Suit Modules")
 
@@ -1323,6 +1328,7 @@
 	id = "mod_pathfinder"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/pathfinder
 	category = list("Modular Suit Modules")
 

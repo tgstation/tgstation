@@ -138,7 +138,7 @@
 		"mod_holster",
 		"mod_tether",
 		"mod_mouthhole",
-		"mod_rad_counter",
+		"mod_rad_protection",
 		"mod_emp_shield",
 		"mod_flashlight",
 		"mod_science_scanner",

@@ -16,7 +16,7 @@
 	/// Power use when used
 	var/use_power_cost = 0
 	/// ID used by their TGUI
-	var/tgui_id = null
+	var/tgui_id
 	/// Linked MODsuit
 	var/obj/item/mod/control/mod
 	/// If we're an active module, what item are we?
@@ -266,7 +266,7 @@
 	cooldown_time = 0.5 SECONDS
 	var/helmet_tint = 0
 	var/helmet_flash_protect = FLASH_PROTECTION_NONE
-	var/hud_type = null
+	var/hud_type
 	var/list/visor_traits = list()
 
 /obj/item/mod/module/visor/on_activation()
@@ -591,7 +591,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/tether = new /obj/projectile/tether()
+	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc)
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	INVOKE_ASYNC(tether, /obj/projectile.proc/fire)
@@ -642,62 +642,40 @@
 	if(!(former_visor_flags & HEADCOVERSMOUTH))
 		mod.helmet.visor_flags_cover |= HEADCOVERSMOUTH
 
-/obj/item/mod/module/rad_counter
-	name = "MOD radiation counter module"
-	desc = "A module that enables a radiation scan in the MOD."
-	complexity = 1
-	idle_power_cost = 3
-	incompatible_modules = list(/obj/item/mod/module/rad_counter)
-/*
+/obj/item/mod/module/rad_protection
+	name = "MOD radiation protection module"
+	desc = "A module that lets the MOD scan for radiation and protects the user from it."
+	complexity = 2
+	idle_power_cost = 10
+	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 	tgui_id = "rad_counter"
-	var/current_tick_amount = 0
-	var/radiation_count = 0
-	var/grace = RAD_GEIGER_GRACE_PERIOD
-	var/datum/looping_sound/geiger/soundloop
+	var/perceived_threat_level
 
-/obj/item/mod/module/rad_counter/Initialize(mapload)
+/obj/item/mod/module/rad_protection/on_equip()
+	AddComponent(/datum/component/geiger_sound)
+	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	RegisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	for(var/obj/item/part in mod.mod_parts)
+		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
+
+/obj/item/mod/module/rad_protection/on_unequip()
+	qdel(GetComponent(/datum/component/geiger_sound))
+	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
+	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
+	for(var/obj/item/part in mod.mod_parts)
+		REMOVE_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
+
+/obj/item/mod/module/rad_protection/add_ui_data()
 	. = ..()
-	soundloop = new(src, FALSE)
-	soundloop.volume = 5
+	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : 0
+	.["usertoxins"] = mod.wearer ? mod.wearer.getToxLoss() : 0
+	.["threatlevel"] = perceived_threat_level
 
-/obj/item/mod/module/rad_counter/Destroy()
-	QDEL_NULL(soundloop)
-	return ..()
+/obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
+	SIGNAL_HANDLER
 
-/obj/item/mod/module/rad_counter/on_equip()
-	soundloop.start(mod.wearer)
-	RegisterSignal(mod, COMSIG_ATOM_RAD_ACT, .proc/rad_react)
-
-/obj/item/mod/module/rad_counter/on_unequip()
-	soundloop.stop(mod.wearer)
-	UnregisterSignal(mod, COMSIG_ATOM_RAD_ACT)
-
-/obj/item/mod/module/rad_counter/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
-	radiation_count = LPFILTER(radiation_count, current_tick_amount, delta_time, RAD_GEIGER_RC)
-	if(current_tick_amount)
-		grace = RAD_GEIGER_GRACE_PERIOD
-	else
-		grace -= delta_time
-		if(grace <= 0)
-			radiation_count = 0
-	current_tick_amount = 0
-	soundloop.last_radiation = radiation_count
-
-/obj/item/mod/module/rad_counter/add_ui_data()
-	. = ..()
-	.["userrads"] = mod.wearer ? mod.wearer.radiation : 0
-	.["usercontam"] = mod.wearer ? get_rad_contamination(mod.wearer) : 0
-	.["radcount"] = radiation_count
-
-/obj/item/mod/module/rad_counter/proc/rad_react(datum/source, amount)
-	if(amount <= RAD_BACKGROUND_RADIATION)
-		return
-	current_tick_amount += amount
-
-*/
+	perceived_threat_level = get_perceived_radiation_danger(pulse_information, insulation_to_target)
+	addtimer(VARSET_CALLBACK(src, perceived_threat_level, null), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
@@ -1214,10 +1192,11 @@
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		return
 	if(!length(organ_list))
 		return
 	var/atom/movable/fired_organ = pop(organ_list)
-	var/obj/projectile/organ/projectile = new /obj/projectile/organ(null, fired_organ)
+	var/obj/projectile/organ/projectile = new /obj/projectile/organ(mod.wearer.loc, fired_organ)
 	projectile.preparePixelProjectile(target, mod.wearer)
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
@@ -1231,12 +1210,17 @@
 	hitsound_wall = 'sound/effects/attackblob.ogg'
 	var/obj/item/organ/organ
 
-/obj/projectile/organ/Initialize(mapload, obj/item/organ)
+/obj/projectile/organ/Initialize(mapload, obj/item/stored_organ)
 	. = ..()
-	if(!organ)
+	if(!stored_organ)
 		return INITIALIZE_HINT_QDEL
-	appearance = organ.appearance
-	organ.forceMove(src)
+	appearance = stored_organ.appearance
+	stored_organ.forceMove(src)
+	organ = stored_organ
+
+/obj/projectile/organ/Destroy()
+	organ = null
+	return ..()
 
 /obj/projectile/organ/on_hit(atom/target)
 	. = ..()
@@ -1278,6 +1262,10 @@
 	. = ..()
 	implant = new(src)
 
+/obj/item/mod/module/pathfinder/Destroy()
+	implant = null
+	return ..()
+
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, params)
 	if(!ishuman(target) || !implant)
 		return
@@ -1313,6 +1301,10 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/implant/mod/Destroy()
+	module = null
+	return ..()
+
 /obj/item/implant/mod/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR>
@@ -1320,7 +1312,26 @@
 	return dat
 
 /obj/item/implant/mod/proc/recall()
-	balloon_alert(imp_in, "fuck")
+	if(!module?.mod || module.mod.open)
+		balloon_alert(imp_in, "no connected suit!")
+		return
+	if(module.z != z)
+		balloon_alert(imp_in, "too far away!")
+		return
+	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
+	mod_ai.current_movement_target = imp_in
+	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
+	mod_ai.blackboard[BB_MOD_MODULE] = module
+	module.mod.ai_controller = mod_ai
+	module.mod.AddElement(/datum/element/movetype_handler)
+	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
+
+/obj/item/implant/mod/proc/end_recall()
+	if(!module?.mod)
+		return
+	QDEL_NULL(module.mod.ai_controller)
+	REMOVE_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
+	module.mod.RemoveElement(/datum/element/movetype_handler)
 
 /datum/action/item_action/mod_recall
 	name = "Recall MOD"

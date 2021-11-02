@@ -1,6 +1,5 @@
-import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, RoundGauge, Dimmer, NumberInput, Flex } from '../components';
+import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber } from '../components';
 import { Window } from '../layouts';
 
 const ConfigureNumberEntry = (props, context) => {
@@ -71,35 +70,34 @@ const ConfigureDataEntry = (props, context) => {
 const RadCounter = (props, context) => {
   const {
     active,
-    radcount,
-    userrads,
-    usercontam,
+    userradiated,
+    usertoxins,
+    threatlevel,
   } = props;
   return (
-    <Stack fill>
-      <Stack.Item>
-        <Section title="Radiation Magnitude">
-          {active && userrads ? userrads : "N/A"}
+    <Stack fill textAlign="center">
+      <Stack.Item grow>
+        <Section title="Radiation Level" color={active && userradiated ? "bad" : "good"}>
+          {active && userradiated ? "IRRADIATED" : "RADIATION-FREE"}
         </Section>
       </Stack.Item>
-      <Stack.Item>
-        <Section title="Radiation Contamination">
-          {active && usercontam ? usercontam : "N/A"}
+      <Stack.Item grow>
+        <Section title="Toxins Level">
+          <ProgressBar
+            value={active ? usertoxins / 100 : 0}
+            ranges={{
+              good: [-Infinity, 0.2],
+              average: [0.2, 0.5],
+              bad: [0.5, Infinity],
+            }} >
+            <AnimatedNumber value={usertoxins} />
+          </ProgressBar>
         </Section>
       </Stack.Item>
-      <Stack.Item>
-        <RoundGauge
-          size={3}
-          value={active ? radcount : "N/A"}
-          minValue={0}
-          maxValue={1500}
-          alertAfter={400}
-          ranges={{
-            "good": [0, 400],
-            "average": [400, 800],
-            "bad": [800, 1500],
-          }}
-          format={value => toFixed(value/10) + '%'} />
+      <Stack.Item grow>
+        <Section title="Hazard Level" color={active && threatlevel ? "bad" : "good"} bold>
+          {active && threatlevel ? threatlevel : 0}
+        </Section>
       </Stack.Item>
     </Stack>
   );

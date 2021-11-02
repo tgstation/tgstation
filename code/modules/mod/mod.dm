@@ -241,7 +241,7 @@
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(..())
 		return TRUE
-	if(active || activating)
+	if(active || activating || ai_controller)
 		balloon_alert(user, "deactivate suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
