@@ -678,6 +678,7 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
+		"assembly_shell",
 		"bot_shell",
 		"controller_shell",
 		"dispenser_shell",
@@ -1254,7 +1255,6 @@
 		"laserscalpel",
 		"mechanicalpinches",
 		"searingtool",
-		"wirebrush_adv",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
@@ -1573,7 +1573,6 @@
 	design_ids = list(
 		"mech_ccw_armor",
 		"mech_energy_relay",
-		"mech_generator_nuclear",
 		"mech_proj_armor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
