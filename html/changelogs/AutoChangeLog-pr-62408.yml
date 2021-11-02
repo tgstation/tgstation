@@ -1,5 +1,0 @@
-author: "adamsong"
-delete-after: True
-changes: 
-  - code_imp: "added check to make sure roleban_delimiter exists on a roleban"
-  - admin: "max ban message length added"
