@@ -681,7 +681,6 @@
 
 /obj/structure/closet/proc/locker_carbon(obj/structure/closet/closet, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
-	//target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	if(opened)
 		target.forceMove(src)
 	if(!(locked || welded))
