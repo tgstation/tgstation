@@ -133,6 +133,7 @@
 
 /// Called when an activated module without a device is used
 /obj/item/mod/module/proc/on_select_use(atom/target)
+	mod.wearer.face_atom(target)
 	if(!on_use())
 		return FALSE
 	return TRUE
@@ -199,6 +200,7 @@
 
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay()
+	. = list()
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
 		used_overlay = overlay_state_use
@@ -206,10 +208,8 @@
 		used_overlay = overlay_state_active
 	else if(overlay_state_inactive)
 		used_overlay = overlay_state_inactive
-	if(!used_overlay)
-		return FALSE
 	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
-	return module_icon
+	. += module_icon
 
 /obj/item/mod/module/storage
 	name = "MOD storage module"
@@ -429,6 +429,8 @@
 	use_power_cost = 80
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
+	overlay_state_inactive = "module_jetpack"
+	overlay_state_active = "module_jetpack_on"
 	var/stabilizers = FALSE
 	var/full_speed = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
@@ -559,10 +561,10 @@
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
 			holstered = holding
-			balloon_alert(mod.wearer, "holstered")
+			balloon_alert(mod.wearer, "weapon holstered")
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
-		balloon_alert(mod.wearer, "drawn")
+		balloon_alert(mod.wearer, "weapon drawn")
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 
@@ -578,6 +580,7 @@
 /obj/item/mod/module/tether
 	name = "MOD emergency tether module"
 	desc = "A module that can shoot an emergency tether to pull yourself towards an object in 0-G."
+	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	use_power_cost = 50
@@ -602,7 +605,7 @@
 
 /obj/projectile/tether
 	name = "tether"
-	icon_state = "tether"
+	icon_state = "tether_projectile"
 	icon = 'icons/obj/mod.dmi'
 	pass_flags = PASSTABLE
 	damage = 0
@@ -629,8 +632,10 @@
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
 	desc = "A module that enables eating with the MOD helmet."
+	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
+	overlay_state_inactive = "module_apparatus"
 	var/former_flags = NONE
 	var/former_visor_flags = NONE
 
@@ -736,7 +741,7 @@
 
 /obj/item/mod/module/flashlight/generate_worn_overlay()
 	. = ..()
-	if(!. || !active)
+	if(!active)
 		return
 	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/mod.dmi', "module_light_on")
 	light_icon.appearance_flags = RESET_COLOR
@@ -822,6 +827,7 @@
 /obj/item/mod/module/constructor
 	name = "MOD constructor module"
 	desc = "A module that lets you scan the surrounding environment for construction holograms and speeds up wall construction time."
+	icon_state = "constructor"
 	module_type = MODULE_USABLE
 	complexity = 2
 	idle_power_cost = 3
@@ -1028,16 +1034,16 @@
 	if(istype(target, /obj/structure/closet/crate))
 		var/atom/movable/picked_crate = target
 		if(length(stored_crates) >= max_crates)
-			mod.wearer.balloon_alert("too many crates!")
+			balloon_alert(mod.wearer, "too many crates!")
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
-		mod.wearer.balloon_alert("picked up [picked_crate]")
+		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	else if(length(stored_crates))
 		var/atom/movable/dropped_crate = pop(stored_crates)
-		dropped_crate.forceMove(target.drop_location())
-		mod.wearer.balloon_alert("dropped [dropped_crate]")
+		dropped_crate.forceMove(get_turf(target))
+		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 
 /obj/item/mod/module/bikehorn
@@ -1096,7 +1102,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/mod/module/orebag
-	name = "MOD ore pickup module"
+	name = "MOD ore bag module"
 	desc = "An integrated ore storage system that allows the MODsuit to automatically collect and deposit ore."
 	module_type = MODULE_USABLE
 	complexity = 2
@@ -1105,13 +1111,13 @@
 	cooldown_time = 0.5 SECONDS
 	var/list/ores = list()
 
-/obj/item/mod/module/orebag/on_activation()
+/obj/item/mod/module/orebag/on_equip()
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/ore_pickup)
 
-/obj/item/mod/module/orebag/on_deactivation()
+/obj/item/mod/module/orebag/on_unequip()
 	. = ..()
 	if(!.)
 		return

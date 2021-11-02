@@ -344,10 +344,10 @@
 	if(!active)
 		return
 	for(var/obj/item/mod/module/module as anything in modules)
-		var/mutable_appearance/module_icon = module.generate_worn_overlay()
-		if(!module_icon)
+		var/list/module_icons = module.generate_worn_overlay()
+		if(!length(module_icons))
 			continue
-		. += module_icon
+		. += module_icons
 
 /obj/item/mod/control/proc/quick_module(mob/user)
 	var/list/quick_module_list = list()
