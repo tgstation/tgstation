@@ -138,7 +138,7 @@ export const Inventory = (props, context) => {
       justify="space-between"
       height="100%">
       <Stack.Item grow>
-        <ScrollableSection 
+        <ScrollableSection
           header="Library Inventory"
           contents={<InventoryDetails />} />
       </Stack.Item>
@@ -222,7 +222,7 @@ export const Checkout = (props, context) => {
       <Stack.Item grow>
         <Stack vertical height="100%">
           <Stack.Item grow>
-            <ScrollableSection 
+            <ScrollableSection
               header="Checked Out Books"
               contents={<CheckoutEntries />} />
           </Stack.Item>
@@ -398,7 +398,7 @@ export const Archive = (props, context) => {
       justify="space-between"
       height="100%">
       <Stack.Item grow>
-        <ScrollableSection 
+        <ScrollableSection
           header="Remote Archive"
           contents={<SearchAndDisplay />} />
       </Stack.Item>
@@ -551,7 +551,7 @@ export const Upload = (props, context) => {
         No nearby scanner detected, construct one to continue.
       </NoticeBox>
     );
-}
+  }
   if (!has_cache) {
     return (
       <NoticeBox>
@@ -782,7 +782,7 @@ export const Print = (props, context) => {
               <Stack.Item align="center">
                 <Box
                   className={classes([
-                    'bibles288x288',
+                    'bibles224x224',
                     bible_sprite,
                   ])} />
               </Stack.Item>
@@ -916,7 +916,7 @@ export const PageSelect = (props, context) => {
 
   if (page_count === 1) {
     return;
-  }  
+  }
 
   return (
     <Stack>
@@ -940,7 +940,8 @@ export const PageSelect = (props, context) => {
             if (value !== "") {
               call_on_change(value);
               e.target.value=null;
-            }}} />
+            }
+          }} />
       </Stack.Item>
       <Stack.Item>
         <Button

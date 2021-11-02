@@ -503,7 +503,7 @@
 	..()
 
 /datum/asset/spritesheet/bibles/ModifyInserted(icon/pre_asset)
-	pre_asset.Scale(288, 288) // Scale up by 9x
+	pre_asset.Scale(224, 224) // Scale up by 7x
 	return pre_asset
 
 /datum/asset/simple/safe
