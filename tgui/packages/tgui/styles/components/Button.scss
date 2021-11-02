@@ -134,3 +134,27 @@ $bg-map: colors.$bg-map !default;
 .Button--selected {
   @include button-color($color-selected);
 }
+
+.Button--align-top{
+	display: flex;
+	justify-content: center;
+	flex-direction: flex-start;
+	height:100%;
+	width:100%
+}
+
+.Button--align--center{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	height:100%;
+	width:100%
+}
+
+.Button--align--bottom{
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	height:100%;
+	width:100%;
+}
