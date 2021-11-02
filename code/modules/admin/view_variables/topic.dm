@@ -32,7 +32,7 @@
 
 			// If the new name is something that would be restricted by IC chat filters,
 			// give the admin a warning but allow them to do it anyway if they want.
-			if(is_ic_filtered(new_name) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) == "Cancel")
+			if(is_ic_filtered(new_name) || is_soft_ic_filtered(new_name) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) == "Cancel")
 				return
 
 			if( !new_name || !M )

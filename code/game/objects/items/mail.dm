@@ -202,6 +202,7 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()

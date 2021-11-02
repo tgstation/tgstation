@@ -35,7 +35,8 @@
 	var/window_width = 0 //0 for default size
 	var/window_height = 0
 	var/obj/item/paicard/paicard // Inserted pai card.
-	var/allow_pai = 1 // Are we even allowed to insert a pai card.
+	///If a pAI is allowed to be inserted into this bot.
+	var/allow_pai = TRUE
 	var/bot_name
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
@@ -286,7 +287,7 @@
 		if(BOT_RESPONDING) //Called by the AI.
 			call_mode()
 			return
-		if(BOT_SUMMON) //Called by PDA
+		if(BOT_SUMMON) //Called to a location
 			bot_summon()
 			return
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.

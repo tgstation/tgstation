@@ -1489,7 +1489,7 @@
 			already_wanted = 1
 
 		if(already_wanted)
-			src.admincaster_wanted_message.criminal  = GLOB.news_network.wanted_issue.criminal
+			src.admincaster_wanted_message.criminal = GLOB.news_network.wanted_issue.criminal
 			src.admincaster_wanted_message.body = GLOB.news_network.wanted_issue.body
 		src.admincaster_screen = 14
 		src.access_news_network()
@@ -1952,6 +1952,17 @@
 		var/page = href_list["unbanpage"]
 		var/admin_key = href_list["unbanadminkey"]
 		unban(ban_id, player_key, player_ip, player_cid, role, page, admin_key)
+
+	else if(href_list["rebanid"])
+		var/ban_id = href_list["rebanid"]
+		var/player_key = href_list["rebankey"]
+		var/player_ip = href_list["rebanip"]
+		var/player_cid = href_list["rebancid"]
+		var/role = href_list["rebanrole"]
+		var/page = href_list["rebanpage"]
+		var/admin_key = href_list["rebanadminkey"]
+		var/applies_to_admins = href_list["applies_to_admins"]
+		reban(ban_id, applies_to_admins, player_key, player_ip, player_cid, role, page, admin_key)
 
 	else if(href_list["unbanlog"])
 		var/ban_id = href_list["unbanlog"]

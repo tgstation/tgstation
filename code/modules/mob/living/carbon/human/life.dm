@@ -78,10 +78,6 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 	return ..()
 
-/mob/living/carbon/human/handle_mutations_and_radiation(delta_time, times_fired)
-	if(!dna || !dna.species.handle_mutations_and_radiation(src, delta_time, times_fired))
-		..()
-
 /mob/living/carbon/human/breathe()
 	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
 		return ..()

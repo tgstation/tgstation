@@ -630,7 +630,7 @@
 		/datum/reagent/ants,
 		/datum/reagent/medicine/omnizine)
 
-	supplementary_reagents  = list(
+	supplementary_reagents = list(
 		/datum/reagent/toxin/venom = 6,
 		/datum/reagent/drug/kronkaine = 4,
 		/datum/reagent/consumable/nutriment/peptides = 3,

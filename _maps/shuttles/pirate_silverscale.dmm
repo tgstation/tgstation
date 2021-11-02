@@ -46,7 +46,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "de" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -131,7 +131,7 @@
 /turf/template_noop,
 /area/template_noop)
 "jm" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "piratestarboardexternal"
 	},
 /obj/docking_port/stationary{
@@ -250,7 +250,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "nY" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /turf/open/floor/pod/dark,
@@ -385,7 +385,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "zQ" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "piratestarboardexternal"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{

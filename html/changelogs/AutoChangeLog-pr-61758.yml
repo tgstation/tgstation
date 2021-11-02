@@ -1,4 +1,0 @@
-author: "That REALLY Good Soda Flavor"
-delete-after: True
-changes: 
-  - refactor: "Rolling paper will now use the customizable reagent holder component. This cleans up the code and expands the possibilities for using the component by adding support for dried items."

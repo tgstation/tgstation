@@ -1620,7 +1620,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "du" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
@@ -1775,7 +1775,7 @@
 /area/awaymission/moonoutpost19/main)
 "dI" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
@@ -5683,7 +5683,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mL" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -5693,7 +5693,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mM" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -6423,7 +6423,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "vV" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -6439,7 +6439,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "zZ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -6545,7 +6545,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "Wf" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

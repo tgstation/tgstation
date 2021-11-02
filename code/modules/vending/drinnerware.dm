@@ -3,6 +3,7 @@
 	desc = "A kitchen and restaurant equipment vendor."
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
+	panel_type = "panel4"
 	products = list(
 		/obj/item/storage/bag/tray = 8,
 		/obj/item/reagent_containers/glass/bowl = 20,
