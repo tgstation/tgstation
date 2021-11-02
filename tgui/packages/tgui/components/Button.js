@@ -95,25 +95,30 @@ export const Button = props => {
         }
       }}
       {...computeBoxProps(rest)}>
-      <div className={(verticalAlign && typeof verticalAlign == "string")
-      ? "Button--align--" + verticalAlign
-      : undefined}>
+      <div
+        className={
+          verticalAlign && typeof verticalAlign === 'string'
+            ? 'Button--align--' + verticalAlign
+            : undefined
+        }>
         <div>
-          {(icon && iconPosition !== 'right') && (
-              <Icon
+          {icon && iconPosition !== 'right' && (
+            <Icon
               name={icon}
               color={iconColor}
               rotation={iconRotation}
-              spin={iconSpin} />
+              spin={iconSpin}
+            />
           )}
           {content}
           {children}
-          {(icon && iconPosition === 'right') && (
-              <Icon
+          {icon && iconPosition === 'right' && (
+            <Icon
               name={icon}
               color={iconColor}
               rotation={iconRotation}
-              spin={iconSpin} />
+              spin={iconSpin}
+            />
           )}
         </div>
       </div>
