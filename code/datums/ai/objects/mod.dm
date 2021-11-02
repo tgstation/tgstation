@@ -1,10 +1,11 @@
 /datum/ai_controller/mod
 	blackboard = list(
-		BB_MOD_TARGET = null,
-		BB_MOD_IMPLANT = null,
+		BB_MOD_TARGET,
+		BB_MOD_IMPLANT,
 	)
 	max_target_distance = 50
 	ai_movement = /datum/ai_movement/jps
+	///ID card generated from the suit's required access. Used for pathing.
 	var/obj/item/card/id/advanced/id_card
 
 /datum/ai_controller/mod/TryPossessPawn(atom/new_pawn)

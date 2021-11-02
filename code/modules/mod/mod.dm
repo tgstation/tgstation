@@ -60,7 +60,7 @@
 	var/obj/item/clothing/gloves/mod/gauntlets
 	/// MOD boots.
 	var/obj/item/clothing/shoes/mod/boots
-	/// List of parts.
+	/// List of parts (helmet, chestplate, gauntlets, boots).
 	var/list/mod_parts = list()
 	/// Modules the MOD should spawn with.
 	var/list/initial_modules = list()
@@ -239,15 +239,13 @@
 			balloon_alert(user, "no cell!")
 			return
 		balloon_alert(user, "removing cell...")
-		if(do_after(user, 1.5 SECONDS, target = src))
-			balloon_alert(user, "cell removed")
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-			if(!user.put_in_hands(cell))
-				cell.forceMove(drop_location())
-			return
-		else
+		if(!do_after(user, 1.5 SECONDS, target = src))
 			balloon_alert(user, "interrupted!")
 			return
+		balloon_alert(user, "cell removed")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+		if(!user.put_in_hands(cell))
+			cell.forceMove(drop_location())
 	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)

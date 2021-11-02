@@ -37,7 +37,8 @@
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
-#define IGNORE_DIGITIGRADE (1<<18) //can be equipped on digitigrade legs
+///Can be equipped on digitigrade legs.
+#define IGNORE_DIGITIGRADE (1<<18)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
