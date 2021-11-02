@@ -87,5 +87,13 @@
 	p.pixel_x = p.base_pixel_x + rand(-10, 10)
 	p.pixel_y = p.base_pixel_y + rand(-10, 10)
 	C.toner -= printcost  //All fun allowed.
-	visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."))
-	to_chat(usr, span_notice("You print a photograph."))
+	user.visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."),span_notice("You print a photograph."))
+
+/obj/item/camera/siliconcam/proc/paiprint(mob/user)
+	var/mob/living/silicon/pai/paimob = loc
+	var/datum/picture/selection = selectpicture(user)
+	if(!istype(selection))
+		to_chat(user, span_warning("Invalid Image."))
+		return
+	printpicture(user,selection)
+	user.visible_message(span_notice("A picture appears on top of the chassis of [paimob.name]!"),span_notice("You print a photograph."))

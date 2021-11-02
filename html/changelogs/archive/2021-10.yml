@@ -1018,3 +1018,19 @@
   esainane:
   - imageadd: Hot Ice icons are now consistent, and now have an stack icon showing
       two pieces for when there are between 17 and 33 pieces in the stack.
+2021-10-31:
+  GoldenAlpharex:
+  - bugfix: You can finally remember how to place down wires again! How did you even
+      forget something so simple?
+  Krysonism:
+  - balance: The organic slurry is now retained inside the rat after it is dipped
+      in welding fuel.
+  Timberpoes:
+  - bugfix: Vampires and Dullahans can no longer select Cat ears and Cat tails. You
+      monsters.
+  Zytolg:
+  - expansion: Condition Orange! Severe Seismic Activity Detected! New Gulag Position
+      Registered!
+  - rscdel: The remnants of the Old Mining Base are gone. We've always had the crater
+      observatory.
+  - qol: New Icebox Terrain
