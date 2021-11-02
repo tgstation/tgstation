@@ -1468,6 +1468,7 @@
 #include "code\game\objects\items\storage\briefcase.dm"
 #include "code\game\objects\items\storage\fancy.dm"
 #include "code\game\objects\items\storage\firstaid.dm"
+#include "code\game\objects\items\storage\garment.dm"
 #include "code\game\objects\items\storage\holsters.dm"
 #include "code\game\objects\items\storage\lockbox.dm"
 #include "code\game\objects\items\storage\secure.dm"
