@@ -678,6 +678,7 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
+		"assembly_shell",
 		"bot_shell",
 		"controller_shell",
 		"dispenser_shell",
