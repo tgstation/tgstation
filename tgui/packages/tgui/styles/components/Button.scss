@@ -137,18 +137,18 @@ $bg-map: colors.$bg-map !default;
   @include button-color($color-selected);
 }
 
-.Button--verticalAlign--top{
-	align-items: flex-start;
+.Button--verticalAlign--top {
+  align-items: flex-start;
 }
 
-.Button--verticalAlign--center{
-	align-items: center;
+.Button--verticalAlign--center {
+  align-items: center;
 }
 
-.Button--verticalAlign--bottom{
-	align-items: flex-end;
+.Button--verticalAlign--bottom {
+  align-items: flex-end;
 }
 
-.Button--content--fluid{
-	flex: 1;
+.Button__content--fluid {
+  flex: 1;
 }
