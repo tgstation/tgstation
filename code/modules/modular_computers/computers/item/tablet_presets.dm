@@ -31,6 +31,18 @@
 	install_component(new /obj/item/computer_hardware/radio_card)
 	hard_drive.store_file(new /datum/computer_file/program/signaler)
 
+/obj/item/modular_computer/tablet/preset/robotics/Initialize(mapload)
+	. = ..()
+	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
+	install_component(new /obj/item/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
+	install_component(hard_drive)
+	install_component(new /obj/item/computer_hardware/card_slot)
+	install_component(new /obj/item/computer_hardware/network_card)
+	hard_drive.store_file(new /datum/computer_file/program/signaler)
+	hard_drive.store_file(new /datum/computer_file/program/borg_monitor)
+	hard_drive.store_file(new /datum/computer_file/program/robocontrol)
+
 /obj/item/modular_computer/tablet/preset/cargo/Initialize(mapload)
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
