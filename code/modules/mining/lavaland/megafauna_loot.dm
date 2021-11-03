@@ -19,7 +19,7 @@
 /datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		user.balloon_alert(user, "Blink destination out of range.")
+		user.balloon_alert(user, "destination out of range!")
 		return
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
