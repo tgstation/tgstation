@@ -379,6 +379,16 @@
 		S = apply_status_effect(STATUS_EFFECT_SLEEPING, -1)
 	return S
 
+///////////////////////// CLEAR STATUS /////////////////////////
+
+/mob/living/proc/status_clear(amount)
+	AdjustStun(-60 * amount)
+	AdjustKnockdown(-60 * amount)
+	AdjustUnconscious(-60 * amount)
+	AdjustSleeping(-100 * amount)
+	AdjustParalyzed(-60 * amount)
+	AdjustImmobilized(-60 * amount)
+
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
 /mob/living/proc/IsFrozen()
