@@ -209,7 +209,8 @@ const Blanks = (props, context) => {
       />
       <Box mt={0.4}>
         {visibleBlanks.map(blank => (
-          <Button disabled={!has_toner}
+          <Button key={blank.code}
+            disabled={!has_toner}
             onClick={() => act("print_blank", {
               name: blank.name,
               info: blank.info,
