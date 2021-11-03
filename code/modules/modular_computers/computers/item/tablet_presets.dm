@@ -39,7 +39,6 @@
 	install_component(hard_drive)
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/network_card)
-	hard_drive.store_file(new /datum/computer_file/program/signaler)
 	hard_drive.store_file(new /datum/computer_file/program/borg_monitor)
 	hard_drive.store_file(new /datum/computer_file/program/robocontrol)
 
