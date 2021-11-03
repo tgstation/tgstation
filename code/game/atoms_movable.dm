@@ -810,11 +810,9 @@
 
 	//TDLR;
 	//Move packets to atom/movable
-	//Get rid of drift(), should just use move() combined with some signals
-	//Test precedence system. Dab on floyd
-	//Maybe fuck with that client delay thing a bit more? I think it might break things that both drift and move. Test it
-	//Make move procs return the movemnt loop created, ensure signals are send to that rather then the moving object
-
+	//Move procs to the subsystem, shorten its name for others sake
+	//Maybe nuke the handler subsystem, maybe just keep it as a place to do logic so people don't override stuff
+	//Maybe remove override? maybe?
 	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
 	AddComponent(/datum/component/drift, direction)
 

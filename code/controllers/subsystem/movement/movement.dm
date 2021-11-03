@@ -1,5 +1,5 @@
 SUBSYSTEM_DEF(movement)
-	name = "Movement Loop"
+	name = "Movement Loops"
 	flags = SS_BACKGROUND|SS_NO_INIT|SS_KEEP_TIMING
 	wait = 1 //Fire each tick
 	///The list of datums we're processing

@@ -111,7 +111,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	stop_looping(src)
+	SSmove_manager.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
@@ -323,7 +323,7 @@ Auto Patrol: []"},
 
 		if(BOT_IDLE) // idle
 
-			stop_looping(src)
+			SSmove_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && auto_patrol) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -332,7 +332,7 @@ Auto Patrol: []"},
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				stop_looping(src)
+				SSmove_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -350,7 +350,7 @@ Auto Patrol: []"},
 
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					move_to(src, target, 1, 4)
+					SSmove_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else

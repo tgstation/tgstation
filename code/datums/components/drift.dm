@@ -13,7 +13,7 @@
 	. = ..()
 
 	var/atom/movable/movable_parent = parent
-	drifting_loop = move(moving = parent, direction = direction, delay = movable_parent.inertia_move_delay, subsystem = SSspacedrift, precedence = MOVEMENT_SPACE_PRECEDENCE)
+	drifting_loop = SSmove_manager.move(moving = parent, direction = direction, delay = movable_parent.inertia_move_delay, subsystem = SSspacedrift, precedence = MOVEMENT_SPACE_PRECEDENCE)
 
 	if(!drifting_loop) //Really want to qdel here but can't
 		return COMPONENT_INCOMPATIBLE

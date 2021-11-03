@@ -372,7 +372,7 @@
 		var/list/nearby = oview(10, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
-			move_to(src, target_atom)
+			SSmove_manager.move_to(src, target_atom)
 			if(prob(40))
 				src.visible_message(span_notice("\The [src] skitters[pick(" away"," around","")]."))
 	else if(prob(10))
@@ -380,7 +380,7 @@
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
-				move_to(src, entry_vent, 1)
+				SSmove_manager.move_to(src, entry_vent, 1)
 				break
 	if(isturf(loc))
 		amount_grown += rand(0,2)

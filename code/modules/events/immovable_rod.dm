@@ -86,9 +86,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
 	if(special_target)
-		home_onto(src, special_target)
+		SSmove_manager.home_onto(src, special_target)
 	else
-		move_towards(src, destination)
+		SSmove_manager.move_towards(src, destination)
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
@@ -153,7 +153,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				return
 
 			visible_message(span_danger("[src] phases into reality."))
-			home_onto(src, special_target)
+			SSmove_manager.home_onto(src, special_target)
 
 		if(loc == target_turf)
 			complete_trajectory()
@@ -196,7 +196,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Process_Spacemove()
 	return TRUE
-	
+
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
@@ -296,7 +296,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
  * Stops your rod's automated movement. Sit... Stay... Good rod!
  */
 /obj/effect/immovablerod/proc/sit_stay_good_rod()
-	stop_looping(src)
+	SSmove_manager.stop_looping(src)
 
 /**
  * Allows your rod to release restraint level zero and go for a walk.
@@ -310,7 +310,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
 	if(walkies_location)
 		special_target = walkies_location
-		home_onto(src, special_target)
+		SSmove_manager.home_onto(src, special_target)
 		return
 
 	complete_trajectory()
@@ -326,4 +326,4 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
  */
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination = get_edge_target_turf(src, direction)
-	move_towards(src, destination)
+	SSmove_manager.move_towards(src, destination)

@@ -74,7 +74,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	stop_looping(src)
+	SSmove_manager.stop_looping(src)
 	last_found = world.time
 	limiting_spam = FALSE
 
@@ -237,7 +237,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 		if(BOT_IDLE) // idle
 
-			stop_looping(src)
+			SSmove_manager.stop_looping(src)
 			look_for_perp()
 			if(!mode && auto_patrol)
 				mode = BOT_START_PATROL
@@ -246,7 +246,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 5) //gives up easier than beepsky
-				stop_looping(src)
+				SSmove_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -265,7 +265,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					move_to(src, target, 1, 4)
+					SSmove_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else

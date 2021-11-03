@@ -80,9 +80,9 @@
 /datum/move_loop/proc/move()
 	return FALSE
 
-
-/proc/stop_looping(atom/moving, subsystem)
-	SSmove_manager.remove_from_subsystem(subsystem)
+///Removes the atom from some movement subsystem. Defaults to SSmovement
+/datum/controller/subsystem/move_manager/proc/stop_looping(atom/moving, subsystem)
+	remove_from_subsystem(subsystem)
 
 /**
  * Replacement for walk()
@@ -99,8 +99,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move(moving, direction, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move, override, flags, precedence, delay, timeout, direction)
+/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move, override, flags, precedence, delay, timeout, direction)
 
 ///Replacement for walk()
 /datum/move_loop/move
@@ -157,8 +157,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/force_move(moving, chasing, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, flags, precedence, delay, timeout, chasing)
+/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, override, flags, precedence, delay, timeout, chasing)
 
 ///Used for force-move loops
 /datum/move_loop/has_target/force_move
@@ -204,8 +204,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, flags, precedence, delay, timeout, chasing, min_dist)
+/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, override, flags, precedence, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
 /datum/move_loop/has_target/dist_bound/move_to
@@ -236,8 +236,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, flags, precedence, delay, timeout, chasing, max_dist)
+/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, override, flags, precedence, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
 /datum/move_loop/has_target/dist_bound/move_away
@@ -268,11 +268,11 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, flags, precedence, delay, timeout, chasing, home)
+/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, override, flags, precedence, delay, timeout, chasing, home)
 
 ///Helper proc for homing
-/proc/home_onto(moving, chasing, delay, timeout, override)
+/datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout, override)
 	return move_towards(moving, chasing, delay, TRUE, timeout, override)
 
 ///Used as a alternative to walk_towards
@@ -383,8 +383,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, flags, precedence, delay, timeout, chasing)
+/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, override, flags, precedence, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
@@ -409,10 +409,10 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_rand(moving, directions, delay, timeout, override, subsystem, flags, precedence)
+/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, override, subsystem, flags, precedence)
 	if(!directions)
 		directions = GLOB.alldirs
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, flags, precedence, delay, timeout, directions)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, override, flags, precedence, delay, timeout, directions)
 
 /**
  * This isn't actually the same as walk_rand
@@ -454,8 +454,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/proc/move_to_rand(moving, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, flags, precedence, delay, timeout)
+/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, override, subsystem, flags, precedence)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, override, flags, precedence, delay, timeout)
 
 ///Wrapper around step_rand
 /datum/move_loop/move_to_rand

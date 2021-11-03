@@ -183,13 +183,12 @@ Difficulty: Hard
 	charging = TRUE
 	revving_charge = TRUE
 	DestroySurroundings()
-	stop_looping(src)
 	setDir(dir)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
-	var/datum/move_loop/new_loop = home_onto(src, T, timeout = get_dist(src, T))
+	var/datum/move_loop/new_loop = SSmove_manager.home_onto(src, T, timeout = get_dist(src, T))
 	if(new_loop)
 		charging = TRUE //Set it again in case this is an override
 		RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/reset_charge)

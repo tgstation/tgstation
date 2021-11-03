@@ -61,7 +61,7 @@
 	switch(mode)
 		if(BOT_IDLE) // idle
 			update_appearance()
-			stop_looping(src)
+			SSmove_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && auto_patrol) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -70,7 +70,7 @@
 			playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 			// general beepsky doesn't give up so easily, jedi scum
 			if(frustration >= 20)
-				stop_looping(src)
+				SSmove_manager.stop_looping(src)
 				back_to_idle()
 				return
 			if(target) // make sure target exists
@@ -81,7 +81,7 @@
 					return
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					move_to(src, target, 1, 4)
+					SSmove_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else

@@ -41,7 +41,7 @@
 	move_loop(target, delay)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
-	var/datum/move_loop/new_loop = force_move(src, set_target, delay, override = FALSE)
+	var/datum/move_loop/new_loop = SSmove_manager.force_move(src, set_target, delay, override = FALSE)
 	if(!new_loop)
 		return
 	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/check_target)
