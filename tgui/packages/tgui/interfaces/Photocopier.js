@@ -209,15 +209,14 @@ const Blanks = (props, context) => {
       />
       <Box mt={0.4}>
         {visibleBlanks.map(blank => (
-          <Button key={blank.path}
-            content={blank.code}
-            tooltip={blank.name}
-            disabled={!has_toner}
+          <Button disabled={!has_toner}
             onClick={() => act("print_blank", {
               name: blank.name,
               info: blank.info,
             })}
-          />
+          >
+            {blank.code}
+          </Button>
         ))}
       </Box>
     </Section>

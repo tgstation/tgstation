@@ -63,8 +63,7 @@
 	data["num_copies"] = num_copies
 	
 	try
-		var/json = file2text("config/blanks.json")
-		var/list/blanks = json_decode(json)
+		var/list/blanks = json_decode(file2text("config/blanks.json"))
 		if (blanks != null)
 			data["blanks"] = blanks
 			data["category"] = category
@@ -180,13 +179,6 @@
 			return TRUE
 		// Called when you press print blank
 		if("print_blank")
-			var/obj/item/paper/printblank = new /obj/item/paper (loc)
-			var/printname = params["name"]
-			var/list/printinfo
-			for(var/infoline as anything in params["info"])
-				printinfo += infoline
-			printblank.name = printname
-			printblank.info = printinfo
 			if(busy)
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return FALSE
@@ -194,6 +186,13 @@
 				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
 				return FALSE
 			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
+			var/obj/item/paper/printblank = new /obj/item/paper (loc)
+			var/printname = params["name"]
+			var/list/printinfo
+			for(var/infoline as anything in params["info"])
+				printinfo += infoline
+			printblank.name = printname
+			printblank.info = printinfo
 			return printblank
 
 /**
