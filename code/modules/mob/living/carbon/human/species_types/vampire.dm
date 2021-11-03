@@ -36,15 +36,7 @@
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 	///static list shared among all vampire species datums that give a house name for each department
-	var/static/list/vampire_houses = list(
-		DEPARTMENT_COMMAND,
-		DEPARTMENT_SECURITY,
-		DEPARTMENT_ENGINEERING,
-		DEPARTMENT_MEDICAL,
-		DEPARTMENT_SCIENCE,
-		DEPARTMENT_CARGO,
-		DEPARTMENT_SERVICE,
-	)
+	var/static/list/vampire_houses = list()
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
