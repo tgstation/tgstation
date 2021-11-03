@@ -10,7 +10,7 @@ nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
 We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+inclusive, and healthy community.
 
 ## Our Standards
 
@@ -20,8 +20,6 @@ community include:
 * Demonstrating empathy and kindness toward other people
 * Being respectful of differing opinions, viewpoints, and experiences
 * Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
 * Focusing on what is best not just for us as individuals, but for the
   overall community
 
@@ -33,8 +31,6 @@ Examples of unacceptable behavior include:
 * Public or private harassment
 * Publishing others' private information, such as a physical or email
   address, without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
 
 ## Enforcement Responsibilities
 
@@ -46,7 +42,7 @@ or harmful.
 Community leaders have the right and responsibility to remove, edit, or reject
 comments, commits, code, wiki edits, issues, and other contributions that are
 not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+decisions.
 
 ## Scope
 
@@ -74,7 +70,7 @@ the consequences for any action they deem in violation of this Code of Conduct:
 ### 1. Correction
 
 **Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
+unwelcome in the community.
 
 **Consequence**: A private, written warning from community leaders, providing
 clarity around the nature of the violation and an explanation of why the
