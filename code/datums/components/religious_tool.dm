@@ -114,9 +114,14 @@
 			select_sect(usr, params["path"])
 		if("perform_rite")
 			perform_rite(usr, params["path"])
+		else
+			to_chat(world, action)
 
 /// Select the sect, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/select_sect(mob/living/user, path)
+	if(!istype(path, /datum/religion_sect))
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has likely attempted to spawn an item.")
+		return
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
@@ -138,6 +143,9 @@
 
 /// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
+	if(!istype(path, /datum/religion_sect))
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has likely attempted to spawn an item.")
+		return
 	if(user.mind.holy_role == HOLY_ROLE_DEACON)
 		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
 		return
