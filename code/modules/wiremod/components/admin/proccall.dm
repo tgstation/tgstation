@@ -10,6 +10,7 @@
 /obj/item/circuit_component/proccall
 	display_name = "Proc Call"
 	desc = "A component that calls a proc on an object."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	var/datum/port/input/option/proccall_options
@@ -62,7 +63,7 @@
 		return
 
 	var/to_invoke = proc_name.value
-	var/params = arguments.value || list()
+	var/list/params = arguments.value || list()
 
 	if(!to_invoke)
 		return
@@ -70,7 +71,7 @@
 	if(called_on != GLOBAL_PROC && !hascall(called_on, to_invoke))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, params)
+	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, recursive_list_resolve(params))
 
 /obj/item/circuit_component/proccall/proc/do_proccall(called_on, to_invoke, params)
 	var/result = HandleUserlessProcCall(parent.get_creator(), called_on, to_invoke, params)

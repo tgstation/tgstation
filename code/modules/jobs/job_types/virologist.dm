@@ -41,17 +41,17 @@
 	name = "Virologist"
 	jobtype = /datum/job/virologist
 
-	belt = /obj/item/pda/viro
-	ears = /obj/item/radio/headset/headset_med
+	id_trim = /datum/id_trim/job/virologist
 	uniform = /obj/item/clothing/under/rank/medical/virologist
-	mask = /obj/item/clothing/mask/surgical
-	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/flashlight/pen
+	belt = /obj/item/pda/viro
+	ears = /obj/item/radio/headset/headset_med
+	mask = /obj/item/clothing/mask/surgical
+	shoes = /obj/item/clothing/shoes/sneakers/white
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
 	duffelbag = /obj/item/storage/backpack/duffelbag/virology
-	box = /obj/item/storage/box/survival/medical
 
-	id_trim = /datum/id_trim/job/virologist
+	box = /obj/item/storage/box/survival/medical

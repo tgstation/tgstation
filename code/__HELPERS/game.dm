@@ -37,7 +37,7 @@
 		get_area(get_ranged_target_turf(center, EAST, 1)),
 		get_area(get_ranged_target_turf(center, WEST, 1))
 		)
-	listclearnulls(.)
+	list_clear_nulls(.)
 
 ///Returns the open turf next to the center in a specific direction
 /proc/get_open_turf_in_dir(atom/center, dir)
@@ -53,7 +53,7 @@
 		get_open_turf_in_dir(center, EAST),
 		get_open_turf_in_dir(center, WEST)
 		)
-	listclearnulls(.)
+	list_clear_nulls(.)
 
 ///Returns a list with all the adjacent areas by getting the adjacent open turfs
 /proc/get_adjacent_open_areas(atom/center)
@@ -449,7 +449,7 @@
 		if(!asking_mob.key || !asking_mob.client)
 			result -= asking_mob
 
-	listclearnulls(result)
+	list_clear_nulls(result)
 
 	return result
 

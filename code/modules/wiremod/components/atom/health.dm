@@ -6,6 +6,7 @@
 /obj/item/circuit_component/health
 	display_name = "Get Health"
 	desc = "A component that returns the health of an organism."
+	category = "Entity"
 
 	/// The input port
 	var/datum/port/input/input_port

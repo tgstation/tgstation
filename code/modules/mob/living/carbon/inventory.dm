@@ -212,6 +212,6 @@
 		visible_message(span_notice("[offerer] tries to hand over [I] but it's stuck to them...."))
 		return
 
-	visible_message(span_notice("[src] takes [I] from [offerer]"), \
-					span_notice("You take [I] from [offerer]"))
+	visible_message(span_notice("[src] takes [I] from [offerer]."), \
+					span_notice("You take [I] from [offerer]."))
 	put_in_hands(I)

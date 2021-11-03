@@ -18,7 +18,7 @@
 
 /datum/antagonist/monkey/get_preview_icon()
 	// Creating a *real* monkey is fairly involved before atoms init.
-	var/icon/icon = icon('icons/mob/monkey.dmi', "monkey1")
+	var/icon/icon = icon('icons/mob/human.dmi', "monkey")
 
 	icon.Crop(4, 9, 28, 33)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)

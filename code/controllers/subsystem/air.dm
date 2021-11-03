@@ -386,8 +386,8 @@ SUBSYSTEM_DEF(air)
 			continue
 		for(var/obj/machinery/atmospherics/considered_device in result)
 			if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
-				considered_device.setPipenet(net, borderline)
-				net.addMachineryMember(considered_device)
+				considered_device.set_pipenet(net, borderline)
+				net.add_machinery_member(considered_device)
 				continue
 			var/obj/machinery/atmospherics/pipe/item = considered_device
 			if(net.members.Find(item))
@@ -555,7 +555,7 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		AM.atmosinit()
+		AM.atmos_init()
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
@@ -583,7 +583,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	var/obj/machinery/atmospherics/AM
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		AM.atmosinit()
+		AM.atmos_init()
 		CHECK_TICK
 
 	for(var/A in 1 to atmos_machines.len)
@@ -604,7 +604,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	if(!pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"])
 		var/obj/machinery/atmospherics/temp = new type(null, FALSE, dir, init_dir)
-		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.GetInitDirections()
+		pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"] = temp.get_init_directions()
 		qdel(temp)
 
 	return pipe_init_dirs_cache[type]["[init_dir]"]["[dir]"]

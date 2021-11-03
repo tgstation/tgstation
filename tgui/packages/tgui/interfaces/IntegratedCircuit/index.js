@@ -14,6 +14,7 @@ import { ABSOLUTE_Y_OFFSET, MOUSE_BUTTON_LEFT, TIME_UNTIL_PORT_RELEASE_WORKS } f
 import { Connections } from './Connections';
 import { ObjectComponent } from './ObjectComponent';
 import { VariableMenu } from './VariableMenu';
+import { ComponentMenu } from './ComponentMenu';
 
 export class IntegratedCircuit extends Component {
   constructor() {
@@ -26,7 +27,8 @@ export class IntegratedCircuit extends Component {
       zoom: 1,
       backgroundX: 0,
       backgroundY: 0,
-      menuOpen: false,
+      variableMenuOpen: false,
+      componentMenuOpen: false,
     };
     this.handlePortLocation = this.handlePortLocation.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -43,6 +45,9 @@ export class IntegratedCircuit extends Component {
     this.onVarClickedSetter = this.onVarClickedSetter.bind(this);
     this.onVarClickedGetter = this.onVarClickedGetter.bind(this);
     this.handleVarDropped = this.handleVarDropped.bind(this);
+
+    this.handleMouseDownComponent = this.handleMouseDownComponent.bind(this);
+    this.handleComponentDropped = this.handleComponentDropped.bind(this);
   }
 
   // Helper function to get an element's exact position
@@ -301,6 +306,48 @@ export class IntegratedCircuit extends Component {
     window.removeEventListener('mouseup', this.handleVarDropped);
   }
 
+
+  handleMouseDownComponent(event, component) {
+    this.setState({
+      draggingComponent: component.type,
+    });
+
+    window.addEventListener('mouseup', this.handleComponentDropped);
+  }
+
+  handleComponentDropped(event) {
+    const { data, act } = useBackend(this.context);
+    const {
+      draggingComponent,
+      backgroundX,
+      backgroundY,
+      zoom,
+    } = this.state;
+    const {
+      screen_x,
+      screen_y,
+    } = data;
+
+    this.setState({
+      draggingComponent: null,
+    });
+
+    window.removeEventListener('mouseup', this.handleComponentDropped);
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    const xPos = (event.clientX - (backgroundX || screen_x));
+    const yPos = (event.clientY - (backgroundY || screen_y));
+
+    act("print_component", {
+      component_to_print: draggingComponent,
+      rel_x: xPos*Math.pow(zoom, -1),
+      rel_y: (yPos + ABSOLUTE_Y_OFFSET)*Math.pow(zoom, -1),
+    });
+  }
+
   render() {
     const { act, data } = useBackend(this.context);
     const {
@@ -316,8 +363,14 @@ export class IntegratedCircuit extends Component {
       is_admin,
       variables,
       global_basic_types,
+      stored_designs,
     } = data;
-    const { locations, selectedPort, menuOpen } = this.state;
+    const {
+      locations,
+      selectedPort,
+      variableMenuOpen,
+      componentMenuOpen,
+    } = this.state;
     const connections = [];
 
     for (const comp of components) {
@@ -367,7 +420,7 @@ export class IntegratedCircuit extends Component {
               <Stack.Item grow>
                 <Input
                   fluid
-                  placeholder="Circuit Name"
+                  placeholder="Name"
                   value={display_name}
                   onChange={(e, value) => act("set_display_name", { display_name: value })}
                 />
@@ -378,9 +431,21 @@ export class IntegratedCircuit extends Component {
                   top={0}
                   color="transparent"
                   icon="cog"
-                  selected={menuOpen}
+                  selected={variableMenuOpen}
                   onClick={() => this.setState((state) => ({
-                    menuOpen: !state.menuOpen,
+                    variableMenuOpen: !state.variableMenuOpen,
+                  }))}
+                />
+              </Stack.Item>
+              <Stack.Item basis="24px">
+                <Button
+                  position="absolute"
+                  top={0}
+                  color="transparent"
+                  icon="plus"
+                  selected={componentMenuOpen}
+                  onClick={() => this.setState((state) => ({
+                    componentMenuOpen: !state.componentMenuOpen,
                   }))}
                 />
               </Stack.Item>
@@ -425,6 +490,7 @@ export class IntegratedCircuit extends Component {
                     onPortMouseDown={this.handlePortClick}
                     onPortRightClick={this.handlePortRightClick}
                     onPortMouseUp={this.handlePortUp}
+                    act={act}
                   />
                 )
             )}
@@ -441,7 +507,7 @@ export class IntegratedCircuit extends Component {
               notices={examined_notices}
             />
           )}
-          {!!menuOpen && (
+          {!!variableMenuOpen && (
             <Box
               position="absolute"
               left={0}
@@ -460,7 +526,7 @@ export class IntegratedCircuit extends Component {
               <VariableMenu
                 variables={variables}
                 types={global_basic_types}
-                onClose={(event) => this.setState({ menuOpen: false })}
+                onClose={(event) => this.setState({ variableMenuOpen: false })}
                 onAddVariable={(name, type, asList, event) => act("add_variable", {
                   variable_name: name,
                   variable_datatype: type,
@@ -474,6 +540,27 @@ export class IntegratedCircuit extends Component {
                 style={{
                   "border-radius": "0px 32px 0px 0px",
                 }}
+              />
+            </Box>
+          )}
+          {!!componentMenuOpen && (
+            <Box
+              position="absolute"
+              right={0}
+              top={0}
+              height="100%"
+              width="300px"
+              style={{
+                "background-color": "rgba(0, 0, 0, 0.3)",
+                "-ms-user-select": "none",
+              }}
+              unselectable="on"
+            >
+              <ComponentMenu
+                components={stored_designs && Object.keys(stored_designs) || []}
+                onClose={(event) => this.setState({ componentMenuOpen: false })}
+                onMouseDownComponent={this.handleMouseDownComponent}
+                showAll={is_admin}
               />
             </Box>
           )}

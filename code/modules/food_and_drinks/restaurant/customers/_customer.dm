@@ -52,7 +52,7 @@
 /// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
 /// If the list of orders are static, just modify orderable_objects.
 /datum/customer_data/proc/get_order(datum/venue/venue)
-	return pickweight(orderable_objects[venue.venue_type])
+	return pick_weight(orderable_objects[venue.venue_type])
 
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
@@ -309,7 +309,7 @@
 		orderable[buffet.shoes] = 1
 
 	if (orderable.len)
-		var/datum/order = pickweight(orderable)
+		var/datum/order = pick_weight(orderable)
 		return order.type
 
 /datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)

@@ -38,6 +38,7 @@
 	BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/monkey,\
 	BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,\
 	BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey)
+	fire_overlay = "Monkey_burning"
 	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
@@ -98,12 +99,6 @@
 		return TRUE
 	target.attack_paw(user, modifiers)
 	return TRUE
-
-/datum/species/monkey/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
-	. = ..()
-	if(source.radiation > RAD_MOB_MUTATE * 2 && DT_PROB(0.25, delta_time))
-		source.gorillize()
-		return
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
