@@ -627,6 +627,10 @@
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
+/// How much fizziness is added to the can of soda by throwing it, in percentage points
+#define SODA_FIZZINESS_THROWN 15
+/// How much fizziness is added to the can of soda by shaking it, in percentage points
+#define SODA_FIZZINESS_SHAKE 5
 
 /obj/item/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
@@ -637,6 +641,9 @@
 	isGlass = FALSE
 	custom_price = PAYCHECK_ASSISTANT * 0.9
 	obj_flags = CAN_BE_HIT
+	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
+	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
+	var/fizziness = 0
 
 /obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize(mapload)
 	..()
@@ -689,10 +696,58 @@
 		return
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
-	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+	if(prob(fizziness))
+		user.visible_message(span_danger("[user] opens [src], and is suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and are suddenly sprayed with a torrent of liquid! Ahhh!!"))
+		burst_soda(user)
+		return
+
+	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
+	throwforce = 0
+
+/**
+ * Burst the soda open on someone. Fun! Opens and empties the soda can, but does not crush it.
+ *
+ * Arguments:
+ * * target - Who's getting covered in soda
+ * * hide_message - Stops the generic fizzing message, so you can do your own
+ */
+/obj/item/reagent_containers/food/drinks/soda_cans/proc/burst_soda(atom/target, hide_message = FALSE)
+	if(!target)
+		return
+
+	if(ismob(target))
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
+		for(var/mob/living/iter_mob in view(src, 7))
+			if(iter_mob != target)
+				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
+
+	playsound(src, 'sound/effects/can_pop.ogg', 80, TRUE)
+	if(!hide_message)
+		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
+	spillable = TRUE
+	reagents.flags |= OPENCONTAINER
+	reagents.expose(target, TOUCH)
+	reagents.clear_reagents()
+	throwforce = 0
+
+/obj/item/reagent_containers/food/drinks/soda_cans/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(. || spillable || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
+		return
+
+	fizziness += SODA_FIZZINESS_THROWN
+	if(!prob(fizziness))
+		return
+
+	burst_soda(hit_atom, hide_message = TRUE)
+	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+	crushed_can.icon_state = icon_state
+	moveToNullspace()
+	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
@@ -702,9 +757,22 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self_secondary(mob/user)
 	if(!is_drainable())
-		open_soda(user)
+		playsound(src, 'sound/effects/can_shake.ogg', 50, TRUE)
+		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
+		fizziness += SODA_FIZZINESS_SHAKE
 		return
 	return ..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/examine_more(mob/user)
+	. = ..()
+	if(!in_range(user, src))
+		return
+	if(fizziness > 30 && prob(fizziness * 2))
+		. += span_notice("<i>You examine [src] closer, and note the following...</i>")
+		. += "\t[span_warning("You get a menacing aura of fizziness from it...")]"
+
+#undef SODA_FIZZINESS_THROWN
+#undef SODA_FIZZINESS_SHAKE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
