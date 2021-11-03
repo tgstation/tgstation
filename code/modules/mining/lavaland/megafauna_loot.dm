@@ -23,7 +23,7 @@
 		return
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
-		user.balloon_alert(user, "blink destination blocked.")
+		user.balloon_alert(user, "destination blocked!")
 		return
 	. = ..()
 	if(!current_charges)
