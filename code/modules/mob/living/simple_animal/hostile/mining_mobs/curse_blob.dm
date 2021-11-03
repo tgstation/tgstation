@@ -24,11 +24,10 @@
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
 	var/mob/living/set_target
-	var/timerid
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Initialize(mapload)
 	. = ..()
-	timerid = QDEL_IN(src, 600)
+	QDEL_IN(src, 60 SECONDS)
 	AddElement(/datum/element/simple_flying)
 	playsound(src, 'sound/effects/curse1.ogg', 100, TRUE, -1)
 
@@ -42,11 +41,11 @@
 	move_loop(target, delay)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
-	//Goto passes delay in ticks, we need it in deciseconds
-	//We don't need to check to see if the loop exists, as the subsystem handles that
-	if(force_move(src, set_target, delay, override = FALSE))
-		RegisterSignal(src, COMSIG_MOVELOOP_PROCESS_CHECK, .proc/check_target)
-		RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/handle_loop_end)
+	var/datum/move_loop/new_loop = force_move(src, set_target, delay, override = FALSE)
+	if(!new_loop)
+		return
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/check_target)
+	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/handle_loop_end)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/check_target()
 	SIGNAL_HANDLER
@@ -55,6 +54,8 @@
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/handle_loop_end()
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
 	qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/check_for_target()

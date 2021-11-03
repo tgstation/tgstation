@@ -344,7 +344,6 @@
 		return
 	if(!client)
 		return
-	client.ignore_movement_until = world.time + inertia_move_delay * SSspacedrift.visual_delay * INVERSE(world.tick_lag)
 	client.visual_delay = MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay) //Make sure moving into a space move looks like a space move
 
 /// Called when this mob slips over, override as needed

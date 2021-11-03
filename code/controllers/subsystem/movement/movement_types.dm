@@ -10,7 +10,7 @@
 	var/flags = NONE
 	///Defines how different move loops override each other. Lower numbers beat higher numbers
 	var/precedence = MOVEMENT_DEFAULT_PRECEDENCE
-	///Time to stop processing in deci-seconds, defaults to forever
+	///Time till we stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
 	///Delay between each move in deci-seconds
 	var/delay = 1
@@ -30,23 +30,22 @@
 		return FALSE
 
 	src.delay = max(delay, 1) //Please...
-	src.lifetime =  max(world.time + timeout, INFINITY)
+	src.lifetime = timeout
 	return TRUE
 
 /datum/move_loop/proc/start_loop()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
 	src.timer = world.time + delay
-	return
 
 /datum/move_loop/proc/stop_loop()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/Destroy()
 	if(owner)
 		owner.remove_loop(controller, src)
 		owner = null
-	if(!QDELETED(moving))
-		UnregisterSignal(moving, COMSIG_PARENT_QDELETING)
-		SEND_SIGNAL(moving, COMSIG_MOVELOOP_END)
 	moving = null
 	controller = null
 	return ..()
@@ -57,9 +56,10 @@
 	qdel(src)
 
 /datum/move_loop/process(delta_ticks)
-	if(SEND_SIGNAL(moving, COMSIG_MOVELOOP_PROCESS_CHECK) & MOVELOOP_STOP_PROCESSING) //Chance for the object to react
+	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_STOP_PROCESSING) //Chance for the object to react
 		qdel(src)
 		return
+
 	lifetime -= delay //This needs to be based on work over time, not just time passed
 	if(lifetime <= 0) //Otherwise lag would make things look really weird
 		nuke_loop()
@@ -67,16 +67,13 @@
 
 	var/visual_delay = max((world.time - timer) / delay, 1)
 	timer = world.time + delay
-	if(!move()) //If we didn't go anywhere
+	var/success = move()
+	if(QDELETED(src)) //Can happen
 		return
-	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
-	if(flags & MOVELOOP_OVERRIDE_CLIENT_CONTROL && istype(moving, /mob))
-		var/mob/moved_mob = moving
-		var/client/our_client = moved_mob.client
-		if(our_client)
-			 //You can step when our delay is over, plus a bit to account for how delay is checked
-			var/deciseconds_to_ticklag = INVERSE(world.tick_lag)
-			our_client.ignore_movement_until = world.time + delay * visual_delay * deciseconds_to_ticklag
+
+	if(success)
+		moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
 
 ///Handles the actual move, overriden by children
 ///Returns FALSE if nothing happen, TRUE otherwise
@@ -117,71 +114,6 @@
 
 /datum/move_loop/move/move()
 	. = moving.Move(get_step(moving, direction), direction)
-	if(QDELETED(src))
-		return FALSE
-
-/**
- * Handles drifting, most commonly used by space movement
- *
- * Arguments:
- * moving - The atom we want to move
- * direction - The direction we want to move in
- * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
- * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
- * override - Should we replace the current loop if it exists. Defaults to TRUE
- * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one datum may run on any one subsystem at once
- * flags - Different toggles that effect the loop datum. See _DEFINES/movement.dm
- * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
- *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
-**/
-/proc/drift(moving, direction, delay, timeout, override, subsystem, flags, precedence)
-	return SSmove_manager.add_to_loop(moving, subsystem, /datum/move_loop/move/drift, override, flags, precedence, delay, timeout, direction)
-
-/datum/move_loop/move/drift
-	var/atom/inertia_last_loc
-
-/datum/move_loop/move/drift/start_loop()
-	inertia_last_loc = moving.loc
-	RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/check_inertia)
-	RegisterSignal(moving, COMSIG_MOVABLE_NEWTONIAN_MOVE, .proc/handle_newtonian_move)
-	return ..()
-
-/datum/move_loop/move/drift/stop_loop()
-	moving.inertia_moving = FALSE
-	UnregisterSignal(moving, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_NEWTONIAN_MOVE))
-	return ..()
-
-/datum/move_loop/move/drift/proc/check_inertia(datum/source, old_loc)
-	SIGNAL_HANDLER
-	if(!isturf(moving.loc) || moving.Process_Spacemove(0))
-		qdel(src)
-		return
-	if(!moving.inertia_moving)
-		if(inertia_last_loc != moving.loc)
-			qdel(src)
-		return
-	inertia_last_loc = moving.loc
-
-/datum/move_loop/move/drift/proc/handle_newtonian_move(datum/source, inertia_direction)
-	direction = inertia_direction
-	inertia_last_loc = moving.loc
-	if(!inertia_direction)
-		qdel(src)
-	return COMPONENT_MOVABLE_NEWTONIAN_BLOCK
-
-/datum/move_loop/move/drift/move()
-	var/old_dir = moving.dir
-	var/old_loc = moving.loc
-	moving.inertia_moving = TRUE
-	. = ..()
-	if(!. && QDELETED(src))
-		return FALSE
-	moving.inertia_moving = FALSE
-	moving.setDir(old_dir)
-	if (moving.loc == old_loc)
-		qdel(src)
-		return FALSE
 
 /datum/move_loop/has_target
 	///The thing we're moving in relation to, either at or away from

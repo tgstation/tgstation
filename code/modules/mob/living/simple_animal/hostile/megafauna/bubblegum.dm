@@ -189,13 +189,13 @@ Difficulty: Hard
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	SLEEP_CHECK_DEATH(delay)
 	revving_charge = FALSE
-	if(home_onto(src, T, timeout = get_dist(src, T)))
+	var/datum/move_loop/new_loop = home_onto(src, T, timeout = get_dist(src, T))
+	if(new_loop)
 		charging = TRUE //Set it again in case this is an override
-		RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/reset_charge)
+		RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/reset_charge)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/reset_charge()
 	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_MOVELOOP_END)
 	charging = FALSE
 	try_bloodattack()
 

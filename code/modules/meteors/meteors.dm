@@ -128,6 +128,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	. = ..()
+	if(!OldLoc)
+		return
 
 	var/dest_turf = get_turf(dest) //Dest can be deleted in the if block
 
@@ -155,12 +157,17 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	move_towards(src, chasing, delay, home, lifetime)
-	RegisterSignal(src, COMSIG_MOVELOOP_END, .proc/handle_stopping)
+	var/datum/move_loop/new_loop = move_towards(src, chasing, delay, home, lifetime)
+	if(!new_loop)
+		return
 
+	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/handle_stopping)
+
+///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/handle_stopping()
 	SIGNAL_HANDLER
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf

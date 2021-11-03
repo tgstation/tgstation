@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(move_manager)
 		packets[thing_to_add] = our_data
 
 	var/list/arguments = args.Copy(2) //Drop the atom, since the movement packet already knows about it
-	our_data.add_loop(arglist(arguments))
+	return our_data.add_loop(arglist(arguments))
 
 /datum/controller/subsystem/move_manager/proc/remove_from_subsystem(atom/movable/thing_to_remove, datum/controller/subsystem/movement/subsystem = SSmovement)
 	var/datum/movement_packet/our_info = packets[thing_to_remove]
@@ -56,11 +56,11 @@ SUBSYSTEM_DEF(move_manager)
 	existing_loops = null //Catch anyone modifying this post del
 	return ..()
 
-///Adds a loop to our parent. Returns TRUE if a success, FALSE otherwise
+///Adds a loop to our parent. Returns the created loop if a success, null otherwise
 /datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override, flags, precedence)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
 	if(existing_loop && !override)
-		return FALSE //Give up
+		return //Give up
 
 	var/list/arguments = args.Copy(6) //Just send the args we're not dealing with here
 
@@ -69,13 +69,13 @@ SUBSYSTEM_DEF(move_manager)
 	var/worked_out = new_loop.setup(arglist(arguments)) //Here goes the rest
 	if(!worked_out)
 		qdel(new_loop)
-		return FALSE
+		return
 
 	existing_loops[subsystem] = new_loop
 	if(existing_loop)
 		qdel(existing_loop) //We need to do this here because otherwise the packet would think it was empty, and self destruct
 	contest_running_loop(new_loop)
-	return TRUE
+	return new_loop
 
 ///Attempts to contest the current running move loop. Returns TRUE if it succeeds, FALSE otherwise
 /datum/movement_packet/proc/contest_running_loop(datum/move_loop/contestant)
@@ -93,6 +93,7 @@ SUBSYSTEM_DEF(move_manager)
 
 	current_subsystem.remove_loop(running_loop)
 	contesting_subsystem.add_loop(contestant)
+	running_loop = contestant
 	return TRUE
 
 ///Tries to figure out the current favorite loop to run. More complex then just deciding between two different loops, assumes no running loop currently exists
