@@ -68,6 +68,7 @@ export const Button = props => {
         circular && 'Button--circular',
         compact && 'Button--compact',
         iconPosition && 'Button--iconPosition--' + iconPosition,
+        verticalAlign && 'Button--verticalAlign--' + verticalAlign,
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
@@ -95,32 +96,25 @@ export const Button = props => {
         }
       }}
       {...computeBoxProps(rest)}>
-      <div
-        className={
-          verticalAlign && typeof verticalAlign === 'string'
-            ? 'Button--align--' + verticalAlign
-            : undefined
-        }>
-        <div>
-          {icon && iconPosition !== 'right' && (
-            <Icon
-              name={icon}
-              color={iconColor}
-              rotation={iconRotation}
-              spin={iconSpin}
-            />
-          )}
-          {content}
-          {children}
-          {icon && iconPosition === 'right' && (
-            <Icon
-              name={icon}
-              color={iconColor}
-              rotation={iconRotation}
-              spin={iconSpin}
-            />
-          )}
-        </div>
+      <div className={fluid && 'Button--content--fluid'}>
+        {icon && iconPosition !== 'right' && (
+          <Icon
+            name={icon}
+            color={iconColor}
+            rotation={iconRotation}
+            spin={iconSpin}
+          />
+        )}
+        {content}
+        {children}
+        {icon && iconPosition === 'right' && (
+          <Icon
+            name={icon}
+            color={iconColor}
+            rotation={iconRotation}
+            spin={iconSpin}
+          />
+        )}
       </div>
     </div>
   );
