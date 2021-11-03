@@ -187,7 +187,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		mychild.sentience_act()
 		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	icon_state = "tumor_popped"
-	RegisterSignal(mychild, COMSIG_PARENT_QDELETED, .proc/mychild_gone_missing)
+	RegisterSignal(mychild, COMSIG_PARENT_QDELETING, .proc/mychild_gone_missing)
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
 /obj/structure/elite_tumor/proc/mychild_gone_missing()
