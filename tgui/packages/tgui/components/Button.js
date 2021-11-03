@@ -96,7 +96,7 @@ export const Button = props => {
         }
       }}
       {...computeBoxProps(rest)}>
-      <div className={fluid && 'Button--content--fluid'}>
+      <div className={fluid && 'Button__content--fluid'}>
         {icon && iconPosition !== 'right' && (
           <Icon
             name={icon}
