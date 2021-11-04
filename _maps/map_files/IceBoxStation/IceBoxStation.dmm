@@ -6649,11 +6649,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
-"bga" = (
-/obj/machinery/destructive_scanner,
-/obj/effect/turf_decal/stripes/end,
-/turf/open/floor/iron,
-/area/hallway/primary/starboard)
 "bgc" = (
 /turf/closed/wall/r_wall,
 /area/science/lab)
@@ -100524,7 +100519,7 @@ tut
 tut
 hof
 pXx
-bga
+aYV
 mGd
 aYV
 bfX
