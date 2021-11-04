@@ -295,8 +295,8 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/remains
-		)
+		/obj/effect/decal/remains,
+	)
 
 	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood
@@ -397,9 +397,9 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"})
+			Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
+			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+			Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| isAdminGhostAI(user))
 		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"

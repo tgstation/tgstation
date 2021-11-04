@@ -274,7 +274,7 @@
 		ignorelistcleanuptimer++
 
 	if(!on || client)
-		return
+		return FALSE
 
 	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, salute_delay)
@@ -286,10 +286,10 @@
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
 		if(BOT_RESPONDING) //Called by the AI.
 			call_mode()
-			return
+			return FALSE
 		if(BOT_SUMMON) //Called to a location
 			bot_summon()
-			return
+			return FALSE
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
