@@ -24,7 +24,8 @@
 			for(var/datum/action/action as anything in actions)
 				if(action.owner == intAI)
 					action.Remove(intAI)
-					qdel(action)
+				else
+					action.Unshare(intAI)
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
 			balloon_alert(intAI, "transferred to a card")
@@ -59,10 +60,8 @@
 	newAI.forceMove(src)
 	ai = newAI
 	balloon_alert(newAI, "transferred to a suit")
-	for(var/datum/action/action in actions)
-		var/datum/action/newaction = action.type
-		newaction = new newaction(src)
-		newaction.Grant(newAI)
+	for(var/datum/action/action as anything in actions)
+		action.Share(newAI)
 
 #define CARDINAL_DELAY 2
 #define DIAGONAL_DELAY 3

@@ -9,11 +9,24 @@
 
 /datum/action/item_action/mod/Grant(mob/M)
 	if(owner)
+		Share(M)
 		return
 	..()
 
+/datum/action/item_action/mod/Remove(mob/M)
+	var/mob_to_grant
+	for(var/datum/weakref/reference as anything in sharers)
+		var/mob/freeloader = reference.resolve()
+		if(!freeloader)
+			continue
+		mob_to_grant = freeloader
+		break
+	..()
+	if(mob_to_grant)
+		Grant(mob_to_grant)
+
 /datum/action/item_action/mod/IsAvailable()
-	if(owner == mod.ai)
+	if(owner == mod.ai && owner.stat != DEAD)
 		return TRUE
 	return ..()
 

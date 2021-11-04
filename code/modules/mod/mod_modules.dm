@@ -1047,6 +1047,9 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
+	if(!do_after(mod.wearer, 1 SECONDS, target = target))
+		balloon_alert(mod.wearer, "interrupted!")
+		return
 	if(istype(target, /obj/structure/closet/crate))
 		var/atom/movable/picked_crate = target
 		if(length(stored_crates) >= max_crates)
@@ -1057,8 +1060,11 @@
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	else if(length(stored_crates))
+		var/turf/target_turf = get_turf(target)
+		if(target_turf.is_blocked_turf())
+			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
-		dropped_crate.forceMove(get_turf(target))
+		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 
@@ -1075,7 +1081,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/bikehorn.ogg', 50, FALSE)
+	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
 
 /obj/item/mod/module/drill
 	name = "MOD drill module"
