@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	. = ..()
-	if(!OldLoc)
+	if(QDELETED(src))
 		return
 
 	var/dest_turf = get_turf(dest) //Dest can be deleted in the if block

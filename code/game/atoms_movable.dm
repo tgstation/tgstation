@@ -36,6 +36,8 @@
 	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
+	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
+	var/datum/movement_packet/move_packet
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
@@ -134,6 +136,11 @@
 	if(orbiting)
 		orbiting.end_orbit(src)
 		orbiting = null
+
+	if(move_packet)
+		if(!QDELETED(move_packet))
+			qdel(move_packet)
+		move_packet = null
 
 	. = ..()
 
@@ -809,9 +816,6 @@
 		return TRUE
 
 	//TDLR;
-	//Move packets to atom/movable
-	//Move procs to the subsystem, shorten its name for others sake
-	//Maybe nuke the handler subsystem, maybe just keep it as a place to do logic so people don't override stuff
 	//Maybe remove override? maybe?
 	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
 	AddComponent(/datum/component/drift, direction)

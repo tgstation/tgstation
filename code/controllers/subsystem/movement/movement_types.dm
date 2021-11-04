@@ -82,7 +82,7 @@
 
 ///Removes the atom from some movement subsystem. Defaults to SSmovement
 /datum/controller/subsystem/move_manager/proc/stop_looping(atom/moving, subsystem)
-	remove_from_subsystem(subsystem)
+	remove_from_subsystem(moving, subsystem)
 
 /**
  * Replacement for walk()

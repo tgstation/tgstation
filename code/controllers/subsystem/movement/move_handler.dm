@@ -1,37 +1,27 @@
 SUBSYSTEM_DEF(move_manager)
 	name = "Movement Handler"
-	flags = SS_NO_FIRE
+	flags = SS_NO_INIT | SS_NO_FIRE
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	///A list of all the currently running movement packets
-	var/list/datum/movement_packet/packets = list()
-
-/datum/controller/subsystem/move_manager/stat_entry(msg)
-	msg = "P:[length(packets)]"
-	return ..()
 
 ///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
 /datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, override=TRUE, flags, priority=MOVEMENT_DEFAULT_PRECEDENCE)
-	var/datum/movement_packet/our_data = packets[thing_to_add]
+	var/datum/movement_packet/our_data = thing_to_add.move_packet
 	if(!our_data)
 		our_data = new(thing_to_add)
-		packets[thing_to_add] = our_data
+		thing_to_add.move_packet = our_data
 
 	var/list/arguments = args.Copy(2) //Drop the atom, since the movement packet already knows about it
 	return our_data.add_loop(arglist(arguments))
 
 /datum/controller/subsystem/move_manager/proc/remove_from_subsystem(atom/movable/thing_to_remove, datum/controller/subsystem/movement/subsystem = SSmovement)
-	var/datum/movement_packet/our_info = packets[thing_to_remove]
+	var/datum/movement_packet/our_info = thing_to_remove.move_packet
 	if(!our_info)
 		return FALSE
 	return our_info.remove_subsystem(subsystem)
 
-///Temporary proc for use while packets live on the subsystem. I'm going to move them to the objects later, but it makes debugging harder
-/datum/controller/subsystem/move_manager/proc/get_packet(atom/movable/packet_holder)
-	return packets[packet_holder]
-
 ///See above. Returns 1 if we're using the subsystem, 0 otherwise
-/datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_holder, datum/controller/subsystem/movement/subsystem)
-	var/datum/movement_packet/packet = get_packet(packet_holder)
+/datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_owner, datum/controller/subsystem/movement/subsystem)
+	var/datum/movement_packet/packet = packet_owner.move_packet
 	if(!packet)
 		return
 	var/datum/move_loop/active_loop = packet.running_loop
@@ -50,7 +40,7 @@ SUBSYSTEM_DEF(move_manager)
 	src.parent = parent
 
 /datum/movement_packet/Destroy(force)
-	SSmove_manager.packets -= parent
+	parent.move_packet = null
 	parent = null
 	QDEL_LIST(existing_loops)
 	existing_loops = null //Catch anyone modifying this post del
