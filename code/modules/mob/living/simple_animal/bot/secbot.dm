@@ -59,7 +59,7 @@
 	name = "Sergeant-At-Armsky"
 	health = 45
 	auto_patrol = FALSE
-	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS| SECBOT_CHECK_RECORDS
+	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
 	name = "Officer Pipsqueak"
@@ -185,12 +185,12 @@
 
 	update_controls()
 
-/mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
+/mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()
-	threatlevel = H.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+	threatlevel = attacking_human.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 	threatlevel += 6
 	if(threatlevel >= 4)
-		target = H
+		target = attacking_human
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
@@ -227,16 +227,15 @@
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/living/user, params)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
 	..()
 	if(!on) // Bots won't remember if you hit them while they're off.
 		return
-	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
+	if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(W.tool_behaviour != TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(attacking_item.tool_behaviour != TOOL_SCREWDRIVER && (attacking_item.force) && (!target) && (attacking_item.damtype != STAMINA)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
-		if(special_retaliate_after_attack(user))
-			return
+		special_retaliate_after_attack(user)
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
@@ -255,40 +254,40 @@
 				retaliate(Proj.firer)
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+/mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(!on)
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	if(!iscarbon(A))
+	if(!iscarbon(attack_target))
 		return ..()
-	var/mob/living/carbon/C = A
+	var/mob/living/carbon/C = attack_target
 	if(!C.IsParalyzed() || !(security_mode_flags & SECBOT_HANDCUFF_TARGET))
 		if(!check_nap_violations())
-			stun_attack(A, TRUE)
+			stun_attack(attack_target, TRUE)
 		else
-			stun_attack(A)
+			stun_attack(attack_target)
 	else if(C.canBeHandcuffed() && !C.handcuffed)
-		cuff(A)
+		start_handcuffing(attack_target)
 
-/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
-	if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		var/mob/thrown_by = I.thrownby?.resolve()
-		if(I.throwforce < src.health && thrown_by && ishuman(thrown_by))
+/mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+	if(istype(hitting_atom, /obj/item))
+		var/obj/item/item_hitby = hitting_atom
+		var/mob/thrown_by = item_hitby.thrownby?.resolve()
+		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
 			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 	..()
 
-/mob/living/simple_animal/bot/secbot/proc/cuff(mob/living/carbon/C)
+/mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/C)
 	mode = BOT_ARREST
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	C.visible_message(span_danger("[src] is trying to put zipties on [C]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
-	addtimer(CALLBACK(src, .proc/attempt_handcuff, C), 60)
+	addtimer(CALLBACK(src, .proc/handcuff_target, C), 60)
 
-/mob/living/simple_animal/bot/secbot/proc/attempt_handcuff(mob/living/carbon/C)
-	if( !on || !Adjacent(C) || !isturf(C.loc) ) //if he's in a closet or not adjacent, we cancel cuffing.
+/mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/C)
+	if(!on || !Adjacent(C) || !isturf(C.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!C.handcuffed)
 		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))
@@ -375,7 +374,7 @@
 				return
 			if(security_mode_flags & SECBOT_HANDCUFF_TARGET)
 				if(!target.handcuffed) //he's not cuffed? Try to cuff him!
-					cuff(target)
+					start_handcuffing(target)
 				else
 					back_to_idle()
 					return

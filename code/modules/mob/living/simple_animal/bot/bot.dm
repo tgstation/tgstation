@@ -330,29 +330,29 @@
 	to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 	return TRUE
 
-/mob/living/simple_animal/bot/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+/mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
 			open = !open
 			to_chat(user, span_notice("The maintenance panel is now [open ? "opened" : "closed"]."))
 		else
 			to_chat(user, span_warning("The maintenance panel is locked!"))
-	else if(W.GetID())
+	else if(attacking_item.GetID())
 		unlock_with_id(user)
-	else if(istype(W, /obj/item/paicard))
-		insertpai(user, W)
-	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
+	else if(istype(attacking_item, /obj/item/paicard))
+		insertpai(user, attacking_item)
+	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
 			to_chat(user, span_warning("Close the access panel before manipulating the personality slot!"))
 		else
 			to_chat(user, span_notice("You attempt to pull [paicard] free..."))
 			if(do_after(user, 30, target = src))
 				if (paicard)
-					user.visible_message(span_notice("[user] uses [W] to pull [paicard] out of [bot_name]!"),span_notice("You pull [paicard] out of [bot_name] with [W]."))
+					user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [bot_name]!"),span_notice("You pull [paicard] out of [bot_name] with [attacking_item]."))
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(health >= maxHealth)
 				to_chat(user, span_warning("[src] does not need a repair!"))
 				return
@@ -360,11 +360,11 @@
 				to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
 				return
 
-			if(W.use_tool(src, user, 0, volume=40))
+			if(attacking_item.use_tool(src, user, 0, volume=40))
 				adjustHealth(-10)
 				user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 		else
-			if(W.force) //if force is non-zero
+			if(attacking_item.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
 			..()
 

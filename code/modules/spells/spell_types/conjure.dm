@@ -60,7 +60,7 @@
 		"remote_disabled" = 1,
 		"shoot_sound" = 'sound/weapons/laser.ogg',
 		"projectile" = /obj/projectile/beam/laser,
-		security_mode_flags = ~(SECBOT_DECLARE_ARRESTS),
+		"security_mode_flags" = ~(SECBOT_DECLARE_ARRESTS),
 		"name" = "Wizard's Justicebot",
 	)
 

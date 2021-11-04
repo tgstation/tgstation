@@ -9,15 +9,15 @@
 
 //AI notification defines
 ///Alert when a new Cyborg is created.
-#define NEW_BORG 1
+#define AI_NOTIFICATION_NEW_BORG 1
 ///Alert when a Cyborg selects a model.
-#define NEW_MODEL 2
+#define AI_NOTIFICATION_NEW_MODEL 2
 ///Alert when a Cyborg changes their name.
-#define RENAME 3
+#define AI_NOTIFICATION_CYBORG_RENAMED 3
 ///Alert when an AI disconnects themselves from their shell.
-#define AI_SHELL 4
+#define AI_NOTIFICATION_AI_SHELL 4
 ///Alert when a Cyborg gets disconnected from their AI.
-#define DISCONNECT 5
+#define AI_NOTIFICATION_AI_SHELL 5
 
 /** Cyborg defines */
 
