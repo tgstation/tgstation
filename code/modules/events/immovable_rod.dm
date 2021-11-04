@@ -169,7 +169,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		if(target_turf.z != z)
 			if(loopy_rod)
 				complete_trajectory()
-				return
+				return ..()
 
 			qdel(src)
 			return
