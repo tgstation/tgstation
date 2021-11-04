@@ -64,6 +64,12 @@
 
 /datum/config_entry/flag/log_silicon // log silicons
 
+/datum/config_entry/flag/log_law
+	deprecated_by = /datum/config_entry/flag/log_silicon
+
+/datum/config_entry/flag/log_law/DeprecationUpdate(value)
+	return value
+
 /datum/config_entry/flag/log_game // log game events
 
 /datum/config_entry/flag/log_mecha // log mech data
