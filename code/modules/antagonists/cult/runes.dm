@@ -88,6 +88,8 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	if(!IS_CULTIST(user))
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
+	if(istype(user, /mob/living/simple_animal/shade)) //shades can't use runes
+		to_chat(user, span_warning("You aren't strong enough to invoke the rune!"))
 	var/list/invokers = can_invoke(user)
 	if(invokers.len >= req_cultists)
 		invoke(invokers)
@@ -133,7 +135,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
 		var/list/things_in_range = range(1, src)
 		for(var/mob/living/L in things_in_range)
-			if(IS_CULTIST(L))
+			if(IS_CULTIST(L) && !istype(L, /mob/living/simple_animal/shade)) //shades dont count
 				if(L == user)
 					continue
 				if(ishuman(L))
@@ -761,15 +763,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Spirit Realm"
-	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
+	cultist_desc = "allows you to ascend as a spirit. The invoker must not move from atop the rune."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "7"
 	invoke_damage = 10
 	construct_invoke = FALSE
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/affecting = null
-	var/ghost_limit = 3
-	var/ghosts = 0
 
 /obj/effect/rune/manifest/Initialize(mapload)
 	. = ..()
@@ -781,109 +781,43 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
 		return list()
-	if(user.has_status_effect(STATUS_EFFECT_SUMMONEDGHOST))
-		to_chat(user, "<span class='cult italic'>Ghosts can't summon more ghosts!</span>")
-		fail_invoke()
-		log_game("Manifest rune failed - user is a ghost")
-		return list()
 	return ..()
 
 /obj/effect/rune/manifest/invoke(list/invokers)
 	. = ..()
 	var/mob/living/user = invokers[1]
 	var/turf/T = get_turf(src)
-	var/choice = tgui_alert(user,"You tear open a connection to the spirit realm...",,list("Summon a Cult Ghost","Ascend as a Dark Spirit","Cancel"))
-	if(choice == "Summon a Cult Ghost")
-		if(!is_station_level(T.z))
-			to_chat(user, span_cultitalic("<b>The veil is not weak enough here to manifest spirits, you must be on station!</b>"))
-			return
-		if(ghosts >= ghost_limit)
-			to_chat(user, span_cultitalic("You are sustaining too many ghosts to summon more!"))
-			fail_invoke()
-			log_game("Manifest rune failed - too many summoned ghosts")
-			return list()
-		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src, header = "Manifest rune")
-		var/list/ghosts_on_rune = list()
-		for(var/mob/dead/observer/O in T)
-			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(isAdminObserver(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))
-				ghosts_on_rune += O
-		if(!ghosts_on_rune.len)
-			to_chat(user, span_cultitalic("There are no spirits near [src]!"))
-			fail_invoke()
-			log_game("Manifest rune failed - no nearby ghosts")
-			return list()
-		var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
-		var/mob/living/carbon/human/cult_ghost/new_human = new(T)
-		new_human.real_name = ghost_to_spawn.real_name
-		new_human.alpha = 150 //Makes them translucent
-		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
-		new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
-		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
-		ghosts++
-		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
-		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
-		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
-		var/obj/structure/emergency_shield/cult/weak/N = new(T)
-		new_human.key = ghost_to_spawn.key
-		new_human.mind?.add_antag_datum(/datum/antagonist/cult)
-		to_chat(new_human, span_cultitalic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
-
-		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
-			if(user.stat != CONSCIOUS || HAS_TRAIT(new_human, TRAIT_CRITICAL_CONDITION))
-				break
-			user.apply_damage(0.1, BRUTE)
-			sleep(1)
-
-		qdel(N)
-		ghosts--
-		if(new_human)
-			new_human.visible_message(span_warning("[new_human] suddenly dissolves into bones and ashes."), \
-					span_cultlarge("Your link to the world fades. Your form breaks apart."))
-			for(var/obj/I in new_human)
-				new_human.dropItemToGround(I, TRUE)
-			new_human.dust()
-	else if(choice == "Ascend as a Dark Spirit")
-		affecting = user
-		affecting.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
-		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
-						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
-		var/mob/dead/observer/G = affecting.ghostize(1)
-		var/datum/action/innate/cult/comm/spirit/CM = new
-		var/datum/action/innate/cult/ghostmark/GM = new
-		G.name = "Dark Spirit of [G.name]"
-		G.color = "red"
-		CM.Grant(G)
-		GM.Grant(G)
-		while(!QDELETED(affecting))
-			if(!(affecting in T))
-				user.visible_message(span_warning("A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!"))
-				Beam(affecting, icon_state="drainbeam", time = 2)
-				affecting.forceMove(get_turf(src)) //NO ESCAPE :^)
-			if(affecting.key)
-				affecting.visible_message(span_warning("[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming."), \
-					span_danger("You are re-united with your physical form. [src] releases its hold over you."))
-				affecting.Paralyze(40)
-				break
-			if(affecting.health <= 10)
-				to_chat(G, span_cultitalic("Your body can no longer sustain the connection!"))
-				break
-			sleep(5)
-		CM.Remove(G)
-		GM.Remove(G)
-		affecting.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
-		affecting.grab_ghost()
-		affecting = null
-		rune_in_use = FALSE
-
-/mob/living/carbon/human/cult_ghost/spill_organs(no_brain, no_organs, no_bodyparts) //cult ghosts never drop a brain
-	no_brain = TRUE
-	. = ..()
-
-/mob/living/carbon/human/cult_ghost/getorganszone(zone, subzones = 0)
-	. = ..()
-	for(var/obj/item/organ/brain/B in .) //they're not that smart, really
-		. -= B
-
+	affecting = user
+	affecting.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
+	affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
+					span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
+	var/mob/dead/observer/G = affecting.ghostize(1)
+	var/datum/action/innate/cult/comm/spirit/CM = new
+	var/datum/action/innate/cult/ghostmark/GM = new
+	G.name = "Dark Spirit of [G.name]"
+	G.color = "red"
+	CM.Grant(G)
+	GM.Grant(G)
+	while(!QDELETED(affecting))
+		if(!(affecting in T))
+			user.visible_message(span_warning("A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!"))
+			Beam(affecting, icon_state="drainbeam", time = 2)
+			affecting.forceMove(get_turf(src)) //NO ESCAPE :^)
+		if(affecting.key)
+			affecting.visible_message(span_warning("[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming."), \
+				span_danger("You are re-united with your physical form. [src] releases its hold over you."))
+			affecting.Paralyze(40)
+			break
+		if(affecting.health <= 10)
+			to_chat(G, span_cultitalic("Your body can no longer sustain the connection!"))
+			break
+		sleep(5)
+	CM.Remove(G)
+	GM.Remove(G)
+	affecting.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
+	affecting.grab_ghost()
+	affecting = null
+	rune_in_use = FALSE
 
 /obj/effect/rune/apocalypse
 	cultist_name = "Apocalypse"
