@@ -26,6 +26,16 @@ SUBSYSTEM_DEF(movement)
 			return
 	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / wait, 1))
 
+/datum/controller/subsystem/movement/Recover()
+	//Get ready this is gonna be horrible
+	//We need to do this to support subtypes by the by
+	var/list/typenames = return_typenames(src.type)
+	var/our_name = typenames[length(typenames)] //Get the last name in the list, IE the subsystem identifier
+
+	var/datum/controller/subsystem/movement/old_version = global.vars["SS[our_name]"]
+	processing = old_version.processing
+	currentrun = old_version.currentrun
+
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
 	processing += add
 	add.start_loop()
