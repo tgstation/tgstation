@@ -52,14 +52,14 @@
 	/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
 	var/damagetype_healer = BRUTE
 	/// If active, the bot will transmit a critical patient alert to MedHUD users.
-	var/declare_crit = TRUE
+	var/crit_alerts = TRUE
 	/// Prevents spam of critical patient alerts.
 	var/declare_cooldown = FALSE
 	/// If enabled, the Medibot will not move automatically.
 	var/stationary_mode = FALSE
 
-	/// silences the medbot if TRUE
-	var/shut_up = FALSE
+	/// silences the medbot if FALSE
+	var/speaker = TRUE
 	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
 	///Is the medbot currently tending wounds
@@ -84,7 +84,7 @@
 	skin = "bezerk"
 	damagetype_healer = "all"
 	heal_threshold = 0
-	declare_crit = 0
+	crit_alerts = FALSE
 	heal_amount = 5
 
 /mob/living/simple_animal/bot/medbot/update_icon_state()
@@ -159,13 +159,14 @@
 	data["maintenance_open"] = open
 	data["locked"] = locked
 	data["controls"] = list()
+	data["pai"] = showpai(user)
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		data["controls"]["pai"] = showpai(user)
 		data["controls"]["heal_threshold"] = heal_threshold
-		data["controls"]["speaker_off"] = shut_up
-		data["controls"]["declare_crit"] = declare_crit
+		data["controls"]["speaker"] = speaker
+		data["controls"]["crit_alerts"] = crit_alerts
 		data["controls"]["auto_patrol"] = auto_patrol
 		data["controls"]["stationary_mode"] = stationary_mode
+		data["controls"]["sync_tech"] = TRUE
 	return data
 
 // Actions received from TGUI
@@ -178,33 +179,35 @@
 			locked = !locked
 		if("toggle_maintenance")
 			open = !open
-		if("adj_threshold")
+		if("heal_threshold")
 			var/adjust_num = round(text2num(params["threshold"]))
-			heal_threshold += adjust_num
+			heal_threshold = adjust_num
 			if(heal_threshold < 5)
 				heal_threshold = 5
 			if(heal_threshold > 75)
 				heal_threshold = 75
-		if("toggle_voice")
-			shut_up = !shut_up
-		if("toggle_alerts")
-			declare_crit = !declare_crit
-		if("toggle_stationary")
+		if("speaker")
+			speaker = !speaker
+		if("crit_alerts")
+			crit_alerts = !crit_alerts
+		if("stationary_mode")
 			stationary_mode = !stationary_mode
 			path = list()
 			update_appearance()
 		if("sync_tech")
 			var/oldheal_amount = heal_amount
 			var/tech_boosters
-			for(var/i in linked_techweb.researched_designs)
-				var/datum/design/surgery/healing/D = SSresearch.techweb_design_by_id(i)
-				if(!istype(D))
+			for(var/index in linked_techweb.researched_designs)
+				var/datum/design/surgery/healing/design = SSresearch.techweb_design_by_id(index)
+				if(!istype(design))
 					continue
 				tech_boosters++
 			if(tech_boosters)
 				heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
 				if(oldheal_amount < heal_amount)
 					speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
+			else
+				speak("No new surgical research detected. Aborting.")
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -216,7 +219,7 @@
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
 	if(emagged == 2)
-		declare_crit = 0
+		crit_alerts = FALSE
 		if(user)
 			to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
 		audible_message(span_danger("[src] buzzes oddly!"))
@@ -367,7 +370,7 @@
 		soft_reset()
 
 	if(QDELETED(patient))
-		if(!shut_up && prob(1))
+		if(speaker && prob(1))
 			if(emagged && prob(30))
 				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
 				playsound(src, pick(i_need_scissors), 70)
@@ -452,7 +455,7 @@
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
 				return FALSE // Skip over them if they have no exposed flesh.
 
-	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
+	if(crit_alerts && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
 
 	//They're injured enough for it!

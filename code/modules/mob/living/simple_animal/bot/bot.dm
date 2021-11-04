@@ -58,7 +58,7 @@
 	var/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = BOT_IDLE //Standardizes the vars that indicate the bot is busy with its function.
 	var/tries = 0 //Number of times the bot tried and failed to move.
-	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
+	var/remote_enabled = TRUE //If disabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_key = null //which channels can the bot listen to
@@ -214,7 +214,7 @@
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = 2
-		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
+		remote_enabled = FALSE //Manually emagging the bot locks out the AI built in panel.
 		locked = TRUE //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
@@ -731,7 +731,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!on || emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!on || emagged == 2 || !remote_enabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client)
 		bot_control_message(command, user)
@@ -832,47 +832,33 @@ Pass a positive integer as an argument to override a bot's default speed.
 			D.open()
 			frustration = 0
 
-/mob/living/simple_animal/bot/proc/show_controls(mob/M)
-	users |= M
-	var/dat = ""
-	dat = get_controls(M)
-	var/datum/browser/popup = new(M,window_id,window_name,350,600)
-	popup.set_content(dat)
-	popup.open(use_onclose = FALSE)
-	onclose(M,window_id,ref=src)
-	return
+// /mob/living/simple_animal/bot/proc/show_controls(mob/M)
+// 	users |= M
+// 	var/dat = ""
+// 	dat = get_controls(M)
+// 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
+// 	popup.set_content(dat)
+// 	popup.open(use_onclose = FALSE)
+// 	onclose(M,window_id,ref=src)
+// 	return
 
-/mob/living/simple_animal/bot/proc/update_controls()
-	for(var/mob/M in users)
-		show_controls(M)
+// /mob/living/simple_animal/bot/proc/update_controls()
+// 	for(var/mob/M in users)
+// 		show_controls(M)
 
-/mob/living/simple_animal/bot/proc/get_controls(mob/M)
-	return "PROTOBOT - NOT FOR USE"
+// /mob/living/simple_animal/bot/proc/get_controls(mob/M)
+// 	return "PROTOBOT - NOT FOR USE"
 
-/mob/living/simple_animal/bot/Topic(href, href_list)
-	//No ..() to prevent strip panel showing up - Todo: make that saner
-	if(href_list["close"])// HUE HUE
-		if(usr in users)
-			users.Remove(usr)
-		return TRUE
-
-	if(topic_denied(usr))
-		to_chat(usr, span_warning("[src]'s interface is not responding!"))
-		return TRUE
-	add_fingerprint(usr)
-
-	if((href_list["power"]) && (bot_core.allowed(usr) || !locked))
-		if(on)
-			turn_off()
-		else
-			turn_on()
-
-	switch(href_list["operation"])
-		if("patrol")
+/mob/living/simple_animal/bot/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("auto_patrol")
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
-			remote_disabled = !remote_disabled
+			remote_enabled = !remote_enabled
 		if("hack")
 			if(emagged != 2)
 				emagged = 2
@@ -890,11 +876,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, span_notice("[text_dehack]"))
 				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
-		if("ejectpai")
+		if("eject_pai")
 			if(paicard && (!locked || issilicon(usr) || isAdminGhostAI(usr)))
 				to_chat(usr, span_notice("You eject [paicard] from [bot_name]."))
 				ejectpai(usr)
-	update_controls()
+	return
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][on]"
@@ -926,13 +912,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(issilicon(user) || isAdminGhostAI(user)) //Allows silicons or admins to toggle the emag status of a bot.
 		hack["emagged"] = emagged == 2
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
-		hack["remote_disabled"] = remote_disabled
+		hack["remote_enabled"] = remote_enabled
 	return hack
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)
 	var/list/pai_card = list()
-	pai_card["card_inserted"] = paicard
-	pai_card["allow_pai"] = allow_pai
+	if(!locked || issilicon(user) || isAdminGhostAI(user))
+		pai_card["card_inserted"] = paicard
+		pai_card["allow_pai"] = allow_pai
  	return pai_card
 
 /mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/paicard/card)

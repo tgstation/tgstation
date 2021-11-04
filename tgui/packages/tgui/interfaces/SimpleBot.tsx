@@ -1,28 +1,34 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import {
+  Button,
+  Section,
+  Knob,
+  LabeledControls,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type SimpleBotContext = {
   maintenance_open: number;
   locked: number;
-  controls: Control[];
+  pai?: Pai;
+  controls: Controls;
 };
 
-type Control = {
+type Pai = {
+  card_inserted: number;
+  allow_pai: number;
+};
+
+type Controls = {
   [Control: string]: [Value: number];
 };
 
 export const SimpleBot = (_, context) => {
-  const { act, data } = useBackend<SimpleBotContext>(context);
-  logger.log(data);
-
   return (
-    <Window width={400} height={350}>
+    <Window width={600} height={250}>
       <Window.Content>
-        <Section title="Controls" buttons={<StatusDisplay />}>
-          <ControlsDisplay />
-        </Section>
+        <ControlsDisplay />
       </Window.Content>
     </Window>
   );
@@ -30,18 +36,19 @@ export const SimpleBot = (_, context) => {
 
 const StatusDisplay = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
+  const { locked, maintenance_open } = data;
 
   return (
     <>
       <Button.Checkbox
-        checked={data.locked}
-        icon={data.locked ? 'lock' : 'lock-open'}
+        checked={locked}
+        icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('toggle_lock')}>
         Controls Lock
       </Button.Checkbox>
       <Button.Checkbox
-        checked={!data.maintenance_open}
-        icon={!data.maintenance_open ? 'lock' : 'lock-open'}
+        checked={!maintenance_open}
+        icon={!maintenance_open ? 'lock' : 'lock-open'}
         onClick={() => act('toggle_maintenance')}>
         Maintenance Panel
       </Button.Checkbox>
@@ -50,26 +57,71 @@ const StatusDisplay = (_, context) => {
 };
 
 const ControlsDisplay = (_, context) => {
-  const { act, data } = useBackend<SimpleBotContext>(context);
+  const { data } = useBackend<SimpleBotContext>(context);
   const { controls } = data;
 
   return (
-    <LabeledList>
-      {Object.entries(controls).map((control, value) => {
-        return (
-          <LabeledList.Item
-            key={control[0]}
-            label={control[0]
-              .replace(/^\w/, (c) => c.toUpperCase())
-              .replace('_', ' ')}>
-            {parseInt(controls[control[0]], 10) > 1
-              ? control[1]
-              : parseInt(controls[control[0]], 10) === 1
-              ? 'On'
-              : 'Off'}
-          </LabeledList.Item>
-        );
-      })}
-    </LabeledList>
+    <Section title="Controls" buttons={<StatusDisplay />}>
+      <LabeledControls>
+        {Object.entries(controls).map((control) => {
+          return (
+            <LabeledControls.Item
+              key={control[0]}
+              label={control[0]
+                .replace(/^\w/, (c) => c.toUpperCase())
+                .replace('_', ' ')}>
+              <ControlHelper control={control} />
+            </LabeledControls.Item>
+          );
+        })}
+      </LabeledControls>
+      {controls.pai && <PaiDisplay />}
+    </Section>
+  );
+};
+
+const ControlHelper = (props, context) => {
+  const { act } = useBackend<SimpleBotContext>(context);
+  const { control } = props;
+
+  if (control[0] === 'sync_tech') {
+    /** Control is for sync - this is medbot specific */
+    return (
+      <Button
+        tooltip="Synchronize surgical data with research network. Improves Efficiency."
+        onClick={() => act('sync_tech')}>
+        Update
+      </Button>
+    );
+  } else if (control[1] === 0 || control[1] === 1) {
+    /** Control is an on/off toggle */
+    return (
+      <Button selected={control[1]} onClick={() => act(control[0])}>
+        {control[1] ? 'ON' : 'OFF'}
+      </Button>
+    );
+  } else if (control[1] > 1) {
+    /** Control is a threshold - this is medbot specific */
+    return (
+      <Knob
+        minValue={5}
+        maxValue={75}
+        step={5}
+        value={control[1]}
+        onChange={(_, value) => act(control[0], { value })}
+      />
+    );
+  } else {
+    return 'Error!';
+  }
+};
+
+const PaiDisplay = (props, context) => {
+  const { act } = useBackend<SimpleBotContext>(context);
+
+  return (
+    <Section fill title="PAI Information">
+      <NoticeBox>No PAI Loaded!</NoticeBox>
+    </Section>
   );
 };
