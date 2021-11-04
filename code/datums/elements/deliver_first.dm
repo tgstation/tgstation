@@ -21,7 +21,7 @@
 	src.goal_area_type = goal_area_type
 	src.payment = payment
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_AREA_ENTERED, .proc/on_area_enter)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(target, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
 	RegisterSignal(target, COMSIG_CLOSET_POST_OPEN, .proc/on_post_open)
 	ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
@@ -55,7 +55,7 @@
 		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open)
 		return FALSE
 
-/datum/element/deliver_first/proc/on_area_enter(obj/structure/closet/target, atom/movable/arrived, area/old_area)
+/datum/element/deliver_first/proc/on_moved(obj/structure/closet/target, atom/oldloc, direction)
 	SIGNAL_HANDLER
 	area_check(target)
 
