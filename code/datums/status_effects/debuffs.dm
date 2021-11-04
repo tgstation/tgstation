@@ -981,7 +981,7 @@
 
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left) && new_owner.stat >= HARD_CRIT)
-		if(new_owner.stat <= SOFT_CRIT) // Unconcious people won't get messages
+		if(new_owner.stat <= UNCONSCIOUS) // Unconcious people won't get messages
 			to_chat(new_owner, "<span class='userdanger'>You're covered in ants!</span>")
 		ants_remaining += amount_left
 		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
@@ -990,7 +990,7 @@
 /datum/status_effect/ants/refresh(effect, amount_left)
 	var/mob/living/carbon/human/victim = owner
 	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat >= HARD_CRIT)
-		if(victim.stat <= SOFT_CRIT) // Unconcious people won't get messages
+		if(victim.stat <= UNCONSCIOUS) // Unconcious people won't get messages
 			if(!prob(1)) // 99%
 				to_chat(victim, "<span class='userdanger'>You're covered in MORE ants!</span>")
 			else // 1%
@@ -1012,7 +1012,7 @@
 /datum/status_effect/ants/tick()
 	var/mob/living/carbon/human/victim = owner
 	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
-	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're unconcious
+	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
 		if(prob(15))
 			switch(rand(1,2))
 				if(1)
