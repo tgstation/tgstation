@@ -229,10 +229,6 @@ the baseline alignment.
 over the button.
 - `children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
-- `verticalAlign: string` - Align content vertically.
-  - `top` - align content to the ceiling of the button box.
-  - `middle` - align content on the middle of the button box.
-  - `bottom` - align content on the ground of the button box.
 
 ### `Button.Checkbox`
 
