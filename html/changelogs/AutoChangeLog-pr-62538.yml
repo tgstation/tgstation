@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed blind mobs not receiving messages for when a food item has finished baking (\"You smell something great / a burnt smell...\")"
+  - spellcheck: "Added punctuation to the above messages."
