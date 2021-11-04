@@ -68,7 +68,7 @@
 				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
 				return TRUE
 
-			active_channel =  new_target
+			active_channel = new_target
 			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 			if((!(src in channel.active_clients) && !(src in channel.offline_clients)) && !channel.password)
 				channel.add_client(src)

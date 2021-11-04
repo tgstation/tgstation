@@ -21,29 +21,29 @@
 		if(istype(object,/obj/machinery/hypertorus/corner))
 			var/dir = get_dir(src,object)
 			if(dir in GLOB.cardinals)
-				. =  FALSE
+				. = FALSE
 			switch(dir)
 				if(SOUTHEAST)
 					if(object.dir != dir)
 						. = FALSE
 				if(SOUTHWEST)
 					if(object.dir != dir)
-						. =  FALSE
+						. = FALSE
 				if(NORTHEAST)
 					if(object.dir != dir)
-						. =  FALSE
+						. = FALSE
 				if(NORTHWEST)
 					if(object.dir != dir)
-						. =  FALSE
+						. = FALSE
 			corners |= object
 			continue
 
 		if(get_step(object,turn(object.dir,180)) != loc)
-			. =  FALSE
+			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
 			if(linked_interface && linked_interface != object)
-				. =  FALSE
+				. = FALSE
 			linked_interface = object
 
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/object in orange(1,src))
@@ -54,23 +54,23 @@
 			. = FALSE
 
 		if(get_step(object,turn(object.dir,180)) != loc)
-			. =  FALSE
+			. = FALSE
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
 			if(linked_input && linked_input != object)
-				. =  FALSE
+				. = FALSE
 			linked_input = object
 			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
-				. =  FALSE
+				. = FALSE
 			linked_output = object
 			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
-				. =  FALSE
+				. = FALSE
 			linked_moderator = object
 			machine_parts |= object
 

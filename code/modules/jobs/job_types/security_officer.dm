@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
 			destination = /area/security/checkpoint/medical
-			accessory =  /obj/item/clothing/accessory/armband/medblue
+			accessory = /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
