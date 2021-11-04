@@ -43,8 +43,6 @@
 	var/last_turn = 0
 	///Move delay of controlled mob, any keypresses inside this period will persist until the next proper move
 	var/move_delay = 0
-	///Blocks movement until some specified time. Different from move_delay, as it doesn't hold onto inputs. For longer timed blocking
-	var/ignore_movement_until = 0
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
 	var/visual_delay = 0
 	///Current area of the controlled mob
