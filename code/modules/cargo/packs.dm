@@ -2527,7 +2527,7 @@
 
 /datum/supply_pack/misc/exploration_fuel
 	name = "Drone Fuel Pellet"
-	desc = "A fresh tank of exoploration drone fuel."
+	desc = "A fresh tank of exploration drone fuel."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/fuel_pellet)
 	crate_name = "exodrone fuel crate"
