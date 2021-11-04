@@ -23,10 +23,8 @@
 
 	combat_mode = TRUE
 
-	///The type of baton this SecBOT will use
-	var/baton_type = /obj/item/melee/baton/security
-	///The stored weapon, given the baton_type
-	var/obj/item/weapon
+	///The tool this Secbot will use to make arrests
+	var/obj/item/weapon = /obj/item/melee/baton/security
 	///Their current target
 	var/mob/living/carbon/target
 	///Name of their last target to prevent spamming
@@ -88,7 +86,7 @@
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
-	weapon = new baton_type()
+	weapon = new weapon()
 	update_appearance(UPDATE_ICON)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
@@ -489,7 +487,7 @@
 		Sa.add_overlay("hs_hole")
 		Sa.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
-		drop_part(baton_type, Tsec)
+		drop_part(weapon, Tsec)
 
 		if(prob(50))
 			drop_part(robot_arm, Tsec)
