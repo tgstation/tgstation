@@ -186,6 +186,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/ears/earmuffs = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
 		/obj/item/clothing/glasses/salesman = 1,
+		/obj/item/blackmarket_uplink = 1,
 		) = 8,
 
 	list(//strange objects
