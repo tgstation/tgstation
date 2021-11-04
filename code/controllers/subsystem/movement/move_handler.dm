@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(move_manager)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 ///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
-/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, override=TRUE, flags, priority=MOVEMENT_DEFAULT_PRECEDENCE)
+/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, flags, priority=MOVEMENT_DEFAULT_PRECEDENCE)
 	var/datum/movement_packet/our_data = thing_to_add.move_packet
 	if(!our_data)
 		our_data = new(thing_to_add)
@@ -19,11 +19,11 @@ SUBSYSTEM_DEF(move_manager)
 		return FALSE
 	return our_info.remove_subsystem(subsystem)
 
-///See above. Returns 1 if we're using the subsystem, 0 otherwise
+///Returns 1 if we're using the subsystem, 0 otherwise
 /datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_owner, datum/controller/subsystem/movement/subsystem)
 	var/datum/movement_packet/packet = packet_owner.move_packet
 	if(!packet)
-		return
+		return FALSE
 	var/datum/move_loop/active_loop = packet.running_loop
 	return (active_loop && active_loop == packet.existing_loops[subsystem])
 
@@ -42,17 +42,17 @@ SUBSYSTEM_DEF(move_manager)
 /datum/movement_packet/Destroy(force)
 	parent.move_packet = null
 	parent = null
-	QDEL_LIST(existing_loops)
+	QDEL_LIST_ASSOC_VAL(existing_loops)
 	existing_loops = null //Catch anyone modifying this post del
 	return ..()
 
 ///Adds a loop to our parent. Returns the created loop if a success, null otherwise
-/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, override, flags, precedence)
+/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, flags, precedence)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
-	if(existing_loop && !override)
+	if(existing_loop && existing_loop.precedence > precedence)
 		return //Give up
 
-	var/list/arguments = args.Copy(6) //Just send the args we're not dealing with here
+	var/list/arguments = args.Copy(5) //Just send the args we're not dealing with here
 
 	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, flags, precedence) //Pass the mob to move and ourselves in via new
 
