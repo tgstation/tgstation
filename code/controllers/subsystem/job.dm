@@ -407,9 +407,7 @@ SUBSYSTEM_DEF(job)
 	JobDebug("DO, AI Check end")
 
 	//Other jobs are now checked
-	JobDebug("DO, Running Standard Check")
-
-
+	JobDebug("DO, Running standard job assignment")
 	// New job giving system by Donkie
 	// This will cause lots of more loops, but since it's only done once it shouldn't really matter much at all.
 	// Hopefully this will add more randomness and fairness to job giving.
@@ -455,14 +453,16 @@ SUBSYSTEM_DEF(job)
 				unassigned -= player
 				break
 
+	JobDebug("DO, Ending standard job assignment")
 
-	JobDebug("DO, Handling unassigned.")
+	JobDebug("DO, Handle unassigned.")
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct
 	for(var/mob/dead/new_player/player in unassigned)
 		HandleUnassigned(player)
+	JobDebug("DO, Ending handle unassigned.")
 
-	JobDebug("DO, Handling unrejectable unassigned")
+	JobDebug("DO, Handle unrejectable unassigned")
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
@@ -470,6 +470,7 @@ SUBSYSTEM_DEF(job)
 				JobDebug("DO, Forced antagonist could not be assigned any random job or the overflow role. DivideOccupations failed.")
 				JobDebug("---------------------------------------------------")
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
+	JobDebug("DO, Ending handle unrejectable unassigned")
 
 	JobDebug("All divide occupations tasks completed.")
 	JobDebug("---------------------------------------------------")
