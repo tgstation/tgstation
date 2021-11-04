@@ -384,7 +384,6 @@
 /obj/effect/turf_decal/caution/white{
 	dir = 4
 	},
-/obj/item/beacon,
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "bl" = (
@@ -450,7 +449,6 @@
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage,
-/obj/effect/spawner/random/exotic/syndie,
 /obj/effect/spawner/random/food_or_drink/seed_rare,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
@@ -790,8 +788,6 @@
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_empty,
 /obj/effect/spawner/random/exotic/syndie,
-/obj/effect/spawner/random/exotic/syndie,
-/obj/effect/spawner/random/exotic/tool,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/abandoned/cargo)
