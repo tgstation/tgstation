@@ -10,7 +10,7 @@ GLOBAL_DATUM_INIT(is_color, /regex, regex("^#\[0-9a-fA-F]{6}$"))
 //finds text strings recognized as links on discord. Mainly used to stop embedding.
 GLOBAL_DATUM_INIT(has_discord_embeddable_links, /regex, regex("(https?://\[^\\s|<\]{2,})"))
 
-//All < and > characters 
+//All < and > characters
 GLOBAL_DATUM_INIT(angular_brackets, /regex, regex(@"[<>]", "g"))
 
 //All characters forbidden by filenames: ", \, \n, \t, /, ?, %, *, :, |, <, >
