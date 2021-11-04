@@ -176,6 +176,7 @@
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
+		/obj/item/gun/syringe,
 		/obj/item/stack/medical,
 		/obj/item/sensor_device,
 		/obj/item/storage/pill_bottle,

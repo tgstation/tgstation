@@ -149,6 +149,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(.)
 		return
 	. = TRUE
+
 	switch(action)
 		if("load_program")
 			var/program_to_load = params["id"]

@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "AtmoZphere (tablet program) will show the tile's temperature as both °C and K now."

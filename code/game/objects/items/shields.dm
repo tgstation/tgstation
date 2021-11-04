@@ -135,7 +135,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
-	. =  embedded_flash.attack(M, user)
+	. = embedded_flash.attack(M, user)
 	update_appearance()
 
 /obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)

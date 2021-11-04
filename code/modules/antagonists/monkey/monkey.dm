@@ -50,7 +50,7 @@
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
 
-	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
+	var/datum/disease/transformation/jungle_fever/D = locate() in owner.current.diseases
 	if(D)
 		qdel(D)
 

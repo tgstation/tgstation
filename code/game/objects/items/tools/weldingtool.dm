@@ -16,7 +16,7 @@
 	hitsound = "swing_hit"
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
-	pickup_sound =  'sound/items/handling/weldingtool_pickup.ogg'
+	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
 	light_system = MOVABLE_LIGHT
 	light_range = 2
 	light_power = 0.75
