@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Corpses will no longer scream when their limbs melt to the bone in icemoon's plasma lava"
