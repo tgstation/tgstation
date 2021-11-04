@@ -211,7 +211,7 @@
 			reagents.trans_to(water, 1, transfered_by = user)
 
 		//Make em move dat ass, hun
-		move_particles(move_particles)
+		move_particles(water_particles)
 
 //Particle movement loop
 /obj/item/extinguisher/proc/move_particles(list/particles)
@@ -222,14 +222,14 @@
 
 //Chair movement loop
 /obj/item/extinguisher/proc/move_chair(obj/buckled_object, movementdirection)
-	step(B, movementdirection)
+	step(buckled_object, movementdirection)
 
 	var/datum/move_loop/loop = SSmove_manager.move(buckled_object, movementdirection, 1, timeout = 9)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/manage_chair_speed)
 
 /obj/item/extinguisher/proc/manage_chair_speed(datum/move_loop/move/source)
 	SIGNAL_HANDLER
-	switch(source.timeout)
+	switch(source.lifetime)
 		if(5 to 4)
 			source.delay = 2
 		if(3 to 1)

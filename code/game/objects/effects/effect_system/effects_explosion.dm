@@ -9,7 +9,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/expl_particles/LateInitialize()
-	var/steps_amt = pick(25;1,50;2,100;3,200;4)
+	var/step_amt = pick(25;1,50;2,100;3,200;4)
 
 	var/datum/move_loop/loop = SSmove_manager.move(src, pick(GLOB.alldirs), 1, timeout = step_amt)
 	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/end_particle)
@@ -56,7 +56,7 @@
 	var/datum/effect_system/smoke_spread/S = new
 	S.set_up(2, location)
 	S.start()
-	
+
 /datum/effect_system/explosion/smoke/start()
 	..()
 	addtimer(CALLBACK(src, .proc/create_smoke), 5)

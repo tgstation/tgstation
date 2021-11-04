@@ -42,7 +42,12 @@ SUBSYSTEM_DEF(move_manager)
 /datum/movement_packet/Destroy(force)
 	parent.move_packet = null
 	parent = null
-	QDEL_LIST_ASSOC_VAL(existing_loops)
+	for(var/datum/controller/subsystem/processor as anything in existing_loops)
+		var/datum/move_loop/loop = existing_loops[processor]
+		if(QDELETED(loop))
+			continue
+		qdel(loop)
+	existing_loops.Cut()
 	existing_loops = null //Catch anyone modifying this post del
 	return ..()
 

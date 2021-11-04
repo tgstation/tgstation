@@ -183,17 +183,17 @@
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
 	sprays_left += 5	
-	extinguish()
+	spray_extinguisher(target)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/extinguish()
-	var/direction = get_dir(chassis,target)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/spray_extinguisher(atom/target)
+	var/direction = get_dir(chassis, target)
 	var/turf/T1 = get_turf(target)
 	var/turf/T2 = get_step(T1,turn(direction, 90))
 	var/turf/T3 = get_step(T1,turn(direction, -90))
 	var/list/targets = list(T1,T2,T3)
 
-	var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher/obj/effect/particle_effect/water(get_turf(chassis))
+	var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(get_turf(chassis))
 	var/datum/reagents/reagents = new /datum/reagents(5)
 	water.reagents = reagents
 	reagents.my_atom = water
@@ -203,12 +203,12 @@
 	var/datum/move_loop/our_loop = SSmove_manager.move_towards(water, pick(targets), delay, timeout = delay * 4)
 	RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/water_finished_moving)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/water_finished_moving(datum/source)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/proc/water_finished_moving(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
 	sprays_left--
 	if(!sprays_left)
 		return
-	extinguish()
+	extinguish(source.target)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
