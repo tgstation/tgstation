@@ -220,6 +220,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	to_chat(user, span_notice("You hear a hefty clunk from inside the generator."))
 	emp_act(EMP_HEAVY)
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
