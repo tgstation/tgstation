@@ -24,7 +24,3 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVEMENT_SPACE_PRECEDENCE 2 //Very few things should override this
 ///Standard, go lower then this if you want to override, higher otherwise
 #define MOVEMENT_DEFAULT_PRECEDENCE 10
-
-//Movement datum flags
-///If the object being moved is a cliented mob, our moves will be treated as steps, and they won't be able to cancel out of them
-#define MOVELOOP_OVERRIDE_CLIENT_CONTROL (1<<0)
