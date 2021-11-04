@@ -39,7 +39,7 @@
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/Destroy()
-	if(!QDELETED(owner))
+	if(owner)
 		owner.remove_loop(controller, src)
 	owner = null
 	moving = null

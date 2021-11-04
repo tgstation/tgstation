@@ -109,10 +109,12 @@ SUBSYSTEM_DEF(move_manager)
 	if(loop_to_remove == running_loop)
 		remove_from.remove_loop(loop_to_remove)
 		running_loop = null
+	if(QDELETED(src))
+		return
 	if(existing_loops[remove_from] == loop_to_remove)
 		existing_loops -= remove_from
 	decide_on_running_loop()
-	return TRUE
+	return
 
 /datum/movement_packet/proc/remove_subsystem(datum/controller/subsystem/movement/remove)
 	var/datum/move_loop/our_loop = existing_loops[remove]
