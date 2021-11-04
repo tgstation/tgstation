@@ -268,7 +268,7 @@
 	name = "MOD visor module"
 	desc = "A module installed to the helmet, allowing access to different views."
 	module_type = MODULE_TOGGLE
-	complexity = 3
+	complexity = 2
 	active_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS
@@ -355,7 +355,7 @@
 	desc = "A module with a microchip health analyzer to instantly scan the wearer's vitals."
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = 30
+	use_power_cost = 25
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	var/module_advanced = FALSE
@@ -371,9 +371,9 @@
 	desc = "A module using prototype cloaking technology to hide the user from plain sight."
 	icon_state = "cloak"
 	module_type = MODULE_TOGGLE
-	complexity = 5
+	complexity = 4
 	active_power_cost = 50
-	use_power_cost = 150
+	use_power_cost = 100
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	var/bumpoff = TRUE
@@ -437,8 +437,8 @@
 	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_cost = 20
-	use_power_cost = 80
+	active_power_cost = 10
+	use_power_cost = 40
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
@@ -526,7 +526,7 @@
 	desc = "A module granting magnetic stability to the wearer, protecting them from forces pushing them away."
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 20
+	active_power_cost = 15
 	incompatible_modules = list(/obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
 	var/slowdown_active = 0.5
@@ -917,7 +917,7 @@
 	desc = "A module that extends a piercing injector."
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = 20
+	use_power_cost = 25
 	device = /obj/item/reagent_containers/syringe/mod
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
@@ -1067,7 +1067,7 @@
 	desc = "A bike horn for honking."
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = 10
+	use_power_cost = 25
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
 
@@ -1122,7 +1122,7 @@
 	desc = "An integrated ore storage system that allows the MODsuit to automatically collect and deposit ore."
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = 15
+	use_power_cost = 25
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
 	var/list/ores = list()
