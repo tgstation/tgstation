@@ -258,17 +258,20 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		addtimer(CALLBACK(src, .proc/arena_checks), 50)
 
 /obj/structure/elite_tumor/proc/fighters_check()
-	if(activator != null && activator.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(activator))
-		onEliteWon()
-	if(mychild != null && mychild.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(mychild))
+	if(QDELETED(mychild) || mychild.stat == DEAD)
 		onEliteLoss()
+		return
+	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(activator, TRAIT_NODEATH)))
+		if(!QDELETED(activator) && HAS_TRAIT(activator, TRAIT_NODEATH)) // dust the unkillable activator
+			activator.dust(drop_items = TRUE)
+		onEliteWon()
 
 /obj/structure/elite_tumor/proc/arena_trap()
 	var/turf/T = get_turf(src)
 	if(loc == null)
 		return
-	var/activator_ref = REF(activator)
-	var/mychild_ref = REF(mychild)
+	var/datum/weakref/activator_ref = WEAKREF(activator)
+	var/datum/weakref/mychild_ref = WEAKREF(mychild)
 	for(var/t in RANGE_TURFS(12, T))
 		if(get_dist(t, T) == 12)
 			var/obj/effect/temp_visual/elite_tumor_wall/newwall
@@ -359,8 +362,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_SOFT_RED
-	var/activator_ref
-	var/ourelite_ref
+	var/datum/weakref/activator_ref
+	var/datum/weakref/ourelite_ref
 
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()
@@ -375,6 +378,5 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/effect/temp_visual/elite_tumor_wall/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	var/mover_ref = REF(mover)
-	if(mover_ref == ourelite_ref || mover_ref == activator_ref)
+	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
