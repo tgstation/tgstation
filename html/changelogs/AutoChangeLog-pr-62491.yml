@@ -1,0 +1,5 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation's engine and emitters have been correctly rewired."
+  - bugfix: "Extra air alarm in tramstation's engine has been removed"

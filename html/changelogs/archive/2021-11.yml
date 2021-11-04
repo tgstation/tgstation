@@ -23,3 +23,57 @@
   phasenoisepon:
   - bugfix: Vampires can now no longer transform into bat form when their brain is
       placed in an MMI
+2021-11-02:
+  Mothblocks:
+  - balance: Radiation is now a status effect, where you are either irradiated or
+      not. When irradiated, you will take constant toxin damage, and irregular burn
+      damage. Radiation is removed once all toxin damage is healed. Standing under
+      a shower will pause the harmful effects of radiation, making it easier to heal.
+      Everything that is irradiated will glow green.
+  - balance: A lot of radiation sources keep their radiating capabilities, though
+      most of it was eyeballed. If anything was significantly nerfed/buffed, feel
+      free to let me know.
+  - rscdel: Removes contamination from radiation.
+  - balance: Uranium structures will irradiate those around them, but will be delayed,
+      giving you time to stay away.
+  - rscdel: The radioactive microlaser no longer irradiates, but still has its knockdown,
+      which was never related.
+  - balance: Seiver now heals high toxin damage when cold, but only if the patient
+      is irradiated.
+  - balance: Screwdriver (the drink) and Potassium Iodide are similar. They will heal
+      toxin damage when the target is irradiated.
+  - balance: Screwdriver, Potassium Iodide, and Pentetic Acid will halt the damaging
+      effects of radiation, just like showers. This means no tox damage or burns.
+  - balance: The gravity generator, instead of giving radiation when on, will now
+      have a high gravity field around it.
+  - balance: Radiation protection has been kept to engineering hardsuits, rad suits,
+      and H.E.C.K. suits. This can be expanded to others, those are just the ones
+      I recognized.
+  - balance: Genetics no longer uses radiation, but instead genetic damage. Genetic
+      damage works very similarly--once it tops 100%, you will start to take toxin
+      damage. Gorillas are now made through genetic damage instead of radiation.
+  - rscdel: Removed the halogen counter PDA app.
+  - rscdel: Removed the emag effect on geiger counters, though an emag functionality
+      can be added back later.
+  - rscdel: Removed the geiger counter from cyborgs, but mostly because it's not actually
+      really that useful anymore? Everything glows green!
+  - rscdel: Removed the advanced wirebrush, a weird consumer of radiation with an
+      extremely niche purpose. The standard wirebrush still exists.
+  - rscdel: Removed radiation scanning from meson goggles.
+  - rscdel: Removed leftover radiation collectors on ruins.
+  - rscdel: Removed radiation from the radioisotope thermoelectric generator, though
+      it still produces power. Trivia points if you actually know what that is!
+  - balance: The EMP'd advanced energy gun now deals burn damage instead of radiation
+      damage.
+  - balance: Technetium 99 and Unstable Mutagen now deal toxin damage instead of radiation
+      damage.
+  - balance: Polonium will now irradiate the mob its in, and deal toxin damage if
+      they're already irradiated (or can't be).
+  - balance: Breathing tritium will now irradiate you after a certain amount, as well
+      as deal toxin damage.
+  phasenoisepon:
+  - bugfix: admin heals no longer delete all restraints in target's inventory
+2021-11-04:
+  CocaColaTastesGood:
+  - bugfix: Removes a XSS vulnerability while picking religious sect.
+  - bugfix: Fixes an exploit that allowed players to arbitrarily spawn any path.

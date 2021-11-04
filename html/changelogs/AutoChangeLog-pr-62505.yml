@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Liches (and mortals) can no longer use explosive lances to store grenade phylacteries inside of indestructible objects (including structures)), immortal mobs, or effects. As a side effect, you should no longer accidentally trigger your explosive lance on the wrong target by misclicking on a piece of graffiti during the heat of combat."

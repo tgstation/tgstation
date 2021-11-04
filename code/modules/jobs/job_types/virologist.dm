@@ -43,8 +43,8 @@
 
 	id_trim = /datum/id_trim/job/virologist
 	uniform = /obj/item/clothing/under/rank/medical/virologist
-	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
-	suit_store =  /obj/item/flashlight/pen
+	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
+	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	mask = /obj/item/clothing/mask/surgical
