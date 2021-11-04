@@ -201,7 +201,7 @@
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
-	if(emagged == 2)
+	if(emagged)
 		final |= JUDGE_EMAGGED
 	if(bot_type == ADVANCED_SEC_BOT)
 		final |= JUDGE_IGNOREMONKEYS
@@ -239,13 +239,14 @@
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
-		if(user)
-			to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
-			oldtarget_name = user.name
-		audible_message(span_danger("[src] buzzes oddly!"))
-		security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
-		update_appearance()
+	if(!emagged)
+		return
+	if(user)
+		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
+		oldtarget_name = user.name
+	audible_message(span_danger("[src] buzzes oddly!"))
+	security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
+	update_appearance()
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
 	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))

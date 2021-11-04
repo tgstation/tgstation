@@ -60,7 +60,7 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
-	if(emagged == 2)
+	if(emagged)
 		projectile = /obj/projectile/beam
 	else
 		projectile = /obj/projectile/beam/disabler
@@ -103,8 +103,8 @@
 		var/mob/toshoot = pick(targets)
 		if(toshoot)
 			targets -= toshoot
-			if(prob(50) && emagged < 2)
-				emagged = 2
+			if(prob(50) && !emagged) // Temporarily emags it
+				emagged = TRUE
 				set_weapon()
 				shoot_at(toshoot)
 				emagged = FALSE
