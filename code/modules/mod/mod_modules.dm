@@ -530,8 +530,8 @@
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	mod.slowdown += slowdown_active
+	mod.wearer.update_gravity(mod.wearer.mob_has_gravity())
 	mod.wearer.update_equipment_speed_mods()
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 
 /obj/item/mod/module/magboot/on_deactivation()
 	. = ..()
@@ -539,8 +539,8 @@
 		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
+	mod.wearer.update_gravity(mod.wearer.mob_has_gravity())
 	mod.wearer.update_equipment_speed_mods()
-	mod.wearer.update_gravity(mod.wearer.has_gravity())
 
 /obj/item/mod/module/holster
 	name = "MOD holster module"
@@ -764,7 +764,7 @@
 			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
 			if(!value)
 				return
-			if(color_hex2num(new_color) < 150)
+			if(color_hex2num(value) < 150)
 				balloon_alert(mod.wearer, "too dark!")
 				return
 			set_light_color(value)

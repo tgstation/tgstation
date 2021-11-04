@@ -42,7 +42,7 @@
 	to_chat(user, span_notice("You [magpulse ? "enable" : "disable"] the mag-pulse traction system."))
 	update_gravity_trait(user)
 	user.update_inv_shoes() //so our mob-overlays update
-	user.update_gravity(user.has_gravity())
+	user.update_gravity(user.mob_has_gravity())
 	user.update_equipment_speed_mods() //we want to update our speed so we arent running at max speed in regular magboots
 	update_action_buttons()
 
