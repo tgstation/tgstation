@@ -63,3 +63,6 @@
 		if(findtext("[key]", filter, -end_len) || findtext("[value]", filter, -end_len))
 			matches[key] = value
 	return matches
+
+/proc/return_typenames(type)
+	return splittext("[type]", "/")
