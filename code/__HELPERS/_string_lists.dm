@@ -1,4 +1,3 @@
-#define STRING_DIRECTORY "strings"
 #define pick_list(FILE, KEY) (pick(strings(FILE, KEY)))
 #define pick_list_weighted(FILE, KEY) (pick_weight(strings(FILE, KEY)))
 #define pick_list_replacements(FILE, KEY) (strings_replacement(FILE, KEY))
