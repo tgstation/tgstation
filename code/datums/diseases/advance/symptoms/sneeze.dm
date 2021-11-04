@@ -59,7 +59,7 @@ Bonus
 			M.emote("sneeze")
 			if(M.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 				for(var/mob/living/L in oview(spread_range, M))
-					if(is_A_facing_B(M, L) && disease_air_spread_walk(get_turf(M), get_turf(L)))
+					if(is_source_facing_target(M, L) && disease_air_spread_walk(get_turf(M), get_turf(L)))
 						L.AirborneContractDisease(A, TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you

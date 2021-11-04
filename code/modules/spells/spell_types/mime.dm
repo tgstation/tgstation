@@ -154,7 +154,7 @@
 	invocation_type = INVOCATION_EMOTE
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
-	sound =  null
+	sound = null
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	range = -1

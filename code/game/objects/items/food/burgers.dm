@@ -343,6 +343,14 @@
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_CHEAP
 
+/obj/item/food/burger/catburger
+	name = "catburger"
+	desc = "Finally those cats and catpeople are worth something!"
+	icon_state = "catburger"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
+	foodtypes = GRAIN | MEAT | GROSS
+
 /obj/item/food/burger/crab
 	name = "crab burger"
 	desc = "A delicious patty of the crabby kind, slapped in between a bun."

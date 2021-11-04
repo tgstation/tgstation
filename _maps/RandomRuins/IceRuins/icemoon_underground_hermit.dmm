@@ -120,7 +120,7 @@
 "UL" = (
 /obj/item/pickaxe/improvised,
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/combat,
+/obj/item/knife/combat,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Wb" = (

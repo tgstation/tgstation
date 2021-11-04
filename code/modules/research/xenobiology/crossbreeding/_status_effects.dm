@@ -527,7 +527,7 @@
 	else
 		cooldown = max_cooldown
 		var/list/sheets = list()
-		for(var/obj/item/stack/sheet/S in owner.GetAllContents())
+		for(var/obj/item/stack/sheet/S in owner.get_all_contents())
 			if(S.amount < S.max_amount)
 				sheets += S
 
@@ -552,7 +552,7 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.GetAllContents())
+	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
@@ -818,7 +818,7 @@
 	var/faction_name
 
 /datum/status_effect/stabilized/pink/on_apply()
-	faction_name = owner.real_name
+	faction_name = REF(owner)
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick()

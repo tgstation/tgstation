@@ -124,6 +124,8 @@
 
 /obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/cyborg = loc
+	if (!istype(cyborg))
+		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
 	cyborg.uneq_all()
@@ -185,6 +187,7 @@
 	cyborg.update_module_innate()
 	new_model.rebuild_modules()
 	cyborg.radio.recalculateChannels()
+	cyborg.set_modularInterface_theme()
 
 	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
 	qdel(src)
@@ -313,7 +316,6 @@
 		/obj/item/multitool/cyborg,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
-		/obj/item/geiger_counter/cyborg,
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,

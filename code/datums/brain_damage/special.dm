@@ -108,6 +108,13 @@
 	. = ..()
 	QDEL_IN(src, 300)
 
+/obj/effect/hallucination/simple/bluespace_stream/Destroy()
+	if(!QDELETED(linked_to))
+		qdel(linked_to)
+	linked_to = null
+	seer = null
+	return ..()
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user, list/modifiers)
 	if(user != seer || !linked_to)
@@ -203,7 +210,7 @@
 		linked = FALSE
 		return
 	to_chat(owner, span_warning("You're pulled through spacetime!"))
-	do_teleport(owner, get_turf(linked_target), null, TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(owner, get_turf(linked_target), null, channel = TELEPORT_CHANNEL_QUANTUM)
 	owner.playsound_local(owner, 'sound/magic/repulse.ogg', 100, FALSE)
 	linked_target = null
 	linked = FALSE

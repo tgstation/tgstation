@@ -94,7 +94,7 @@
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
 	. = _mid_sounds || mid_sounds
 	while(!isfile(.) && !isnull(.))
-		. = pickweight(.)
+		. = pick_weight(.)
 
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0

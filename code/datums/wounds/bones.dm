@@ -170,7 +170,7 @@
 	else if(gelled)
 		msg += ", [span_notice("with fizzing flecks of blue bone gel sparking off the bone!")]"
 	else
-		msg +=  "!"
+		msg += "!"
 	return "<B>[msg.Join()]</B>"
 
 /*

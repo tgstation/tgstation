@@ -17,7 +17,7 @@
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
-	allow_pai = 0
+	allow_pai = FALSE
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
@@ -361,7 +361,7 @@ Auto Patrol: []"},
 		if(BOT_PREP_ARREST) // preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if( !Adjacent(target) || !isturf(target.loc) ||  target.AmountParalyzed() < 40)
+			if( !Adjacent(target) || !isturf(target.loc) || target.AmountParalyzed() < 40)
 				back_to_hunt()
 				return
 

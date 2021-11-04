@@ -702,7 +702,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dp" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/academy/classrooms)
 "dq" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -981,7 +981,7 @@
 /area/awaymission/academy)
 "eA" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -2429,7 +2429,7 @@
 /area/awaymission/academy/academycellar)
 "kT" = (
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
 /obj/item/candle/infinite,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)

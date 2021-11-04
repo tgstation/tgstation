@@ -131,7 +131,9 @@
 	return result
 
 /mob/living/basic/vv_edit_var(vname, vval)
+	. = ..()
 	if(vname == NAMEOF(src, speed))
+		datum_flags |= DF_VAR_EDITED
 		set_varspeed(vval)
 
 /mob/living/basic/proc/set_varspeed(var_value)

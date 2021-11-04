@@ -376,11 +376,11 @@
 		else if(nommer.has_quirk(/datum/quirk/pineapple_hater))
 			var/list/pineapple_pizza_liker = pizza_types.Copy()
 			pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
-			pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
+			pizza_preferences[nommer.ckey] = pick_weight(pineapple_pizza_liker)
 		else if(nommer.mind?.assigned_role.title == /datum/job/botanist)
 			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
 		else
-			pizza_preferences[nommer.ckey] = pickweight(pizza_types)
+			pizza_preferences[nommer.ckey] = pick_weight(pizza_types)
 	if(pizza)
 		//if the pizza isn't our favourite, delete it
 		if(pizza.type != pizza_preferences[nommer.ckey])

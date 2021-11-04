@@ -14,13 +14,13 @@
 	usesound = 'sound/items/ratchet.ogg'
 	custom_materials = list(/datum/material/iron=150)
 	drop_sound = 'sound/items/handling/wrench_drop.ogg'
-	pickup_sound =  'sound/items/handling/wrench_pickup.ogg'
+	pickup_sound = 'sound/items/handling/wrench_pickup.ogg'
 
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_WRENCH
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
 
 /obj/item/wrench/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -32,6 +32,7 @@
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wrench"
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 
@@ -65,8 +66,8 @@
 	sleep(20)
 	if(!user)
 		return
-	for(var/obj/item/W in user)
-		user.dropItemToGround(W)
+	for(var/obj/item/suicide_wrench in user)
+		user.dropItemToGround(suicide_wrench)
 	suicider = user.real_name
 	user.dust()
 	return OXYLOSS

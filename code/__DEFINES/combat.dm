@@ -31,8 +31,6 @@
 #define BOMB "bomb"
 /// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
 #define BIO "bio"
-/// Involves ionizing radiation.
-#define RAD "rad"
 /// Involves fire or temperature extremes.
 #define FIRE "fire"
 /// Involves corrosive substances.
@@ -58,7 +56,6 @@
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
-#define EFFECT_IRRADIATE "irradiate"
 #define EFFECT_STUTTER "stutter"
 #define EFFECT_SLUR "slur"
 #define EFFECT_EYE_BLUR "eye_blur"

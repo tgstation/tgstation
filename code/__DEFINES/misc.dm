@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define ORBITRON "Orbitron"
 #define SHARE "Share Tech Mono"
 
-GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
+GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
@@ -462,11 +462,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define AREASELECT_CORNERA "corner A"
 #define AREASELECT_CORNERB "corner B"
-
-#define VARSET_FROM_LIST(L, V) if(L && L[#V]) V = L[#V]
-#define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
-#define VARSET_TO_LIST(L, V) if(L) L[#V] = V
-#define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
 
 #define DICE_NOT_RIGGED 1
 #define DICE_BASICALLY_RIGGED 2

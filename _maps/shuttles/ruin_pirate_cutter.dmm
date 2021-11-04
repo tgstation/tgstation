@@ -646,7 +646,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
@@ -821,7 +821,7 @@
 "Jb" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_port"
 	},
 /obj/docking_port/mobile{
@@ -855,7 +855,7 @@
 "Ku" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
@@ -914,7 +914,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_port"
 	},
 /turf/open/floor/plating,

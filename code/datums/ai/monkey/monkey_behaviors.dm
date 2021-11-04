@@ -139,7 +139,11 @@
 /datum/ai_behavior/monkey_attack_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
-/datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/monkey_attack_mob/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+
+/datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 
 	var/mob/living/target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
@@ -228,6 +232,11 @@
 /datum/ai_behavior/disposal_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM //performs to increase frustration
 
+/datum/ai_behavior/disposal_mob/setup(datum/ai_controller/controller, attack_target_key, disposal_target_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+
+
 /datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
 	. = ..()
 	controller.blackboard[attack_target_key] = null //Reset attack target
@@ -287,4 +296,18 @@
 		var/list/enemies = L.ai_controller.blackboard[BB_MONKEY_ENEMIES]
 		enemies[your_enemy] = MONKEY_RECRUIT_HATED_AMOUNT
 		monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/monkey_set_combat_target/perform(delta_time, datum/ai_controller/controller, set_key, enemies_key)
+	var/list/enemies = controller.blackboard[enemies_key]
+	var/list/valids = list()
+	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))
+		if(possible_enemy == controller.pawn || (!enemies[possible_enemy] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
+			continue
+		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
+		valids[possible_enemy] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
+
+	if(!valids.len)
+		finish_action(controller, FALSE)
+	controller.blackboard[set_key] = pick_weight(valids)
 	finish_action(controller, TRUE)

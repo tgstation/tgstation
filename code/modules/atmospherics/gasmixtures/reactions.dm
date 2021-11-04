@@ -74,7 +74,7 @@
 	var/turf/open/location = isturf(holder) ? holder : null
 	. = NO_REACTION
 	if (air.temperature <= WATER_VAPOR_FREEZE)
-		if(location?.freon_gas_act())
+		if(location?.freeze_turf())
 			. = REACTING
 	else if(air.temperature <= T20C + 10)
 		if(location?.water_vapor_gas_act())
@@ -164,10 +164,6 @@
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		cached_results["fire"] += burned_fuel * 10
-
-	if(burned_fuel)
-		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
-			radiation_pulse(location, energy_released / TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -414,13 +410,14 @@
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
-		"MAX_TEMP" = 600
+		"MAX_TEMP" = T0C + 70 //Pretty warm, explicitly not fire temps. Time bombs are cool, but not that cool. If it makes you feel any better it's close
 	)
 
 /datum/gas_reaction/nitryl_decomposition/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
+	//This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitryl][MOLES])
 	var/energy_produced = heat_efficency * NITRYL_DECOMPOSITION_ENERGY
 
@@ -861,7 +858,6 @@
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 	if(cached_gases[/datum/gas/bz][MOLES] < 30)
-		radiation_pulse(location, consumed_amount * 20, 2.5, TRUE, FALSE)
 		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 	else
 		for(var/mob/living/carbon/L in location)
@@ -897,7 +893,6 @@
 	var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
-	location.rad_act(produced_amount * 2.4)
 	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01

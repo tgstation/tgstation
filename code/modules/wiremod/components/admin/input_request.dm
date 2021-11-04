@@ -10,6 +10,7 @@
 /obj/item/circuit_component/input_request
 	display_name = "Input Request"
 	desc = "Converts a string into a typepath. Useful for adding components."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// Options for input requests
@@ -93,7 +94,7 @@
 		if(COMP_INPUT_NUMBER)
 			input_response.set_datatype(PORT_TYPE_NUMBER)
 		if(COMP_INPUT_LIST)
-			parameter = add_input_port("Options List", PORT_TYPE_LIST)
+			parameter = add_input_port("Options List", PORT_TYPE_LIST(PORT_TYPE_ANY))
 			input_response.set_datatype(PORT_TYPE_STRING)
 
 #undef COMP_INPUT_STRING

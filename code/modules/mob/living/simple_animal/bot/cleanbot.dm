@@ -41,7 +41,7 @@
 
 	var/static/list/officers = list("Captain", "Head of Personnel", "Head of Security")
 	var/static/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
-	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
+	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" = "Det.", "Security Officer" = "Officer")
 	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
 	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
 	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
@@ -176,7 +176,7 @@
 				to_chat(user, span_warning("Please close the access panel before locking it."))
 			else
 				to_chat(user, span_notice("\The [src] doesn't seem to respect your authority."))
-	else if(istype(W, /obj/item/kitchen/knife) && !user.combat_mode)
+	else if(istype(W, /obj/item/knife) && !user.combat_mode)
 		to_chat(user, span_notice("You start attaching \the [W] to \the [src]..."))
 		if(do_after(user, 25, target = src))
 			deputize(W, user)

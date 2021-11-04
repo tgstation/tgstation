@@ -95,7 +95,7 @@
 
 		playsound(carbon, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
-		tesla_zap(carbon, 2, crystal_charge*2.5, ZAP_OBJ_DAMAGE | ZAP_ALLOW_DUPLICATES)
+		tesla_zap(carbon, 2, crystal_charge*2.5, ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
 		adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge)
 		to_chat(carbon, span_warning("You violently discharge energy!"))
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"))

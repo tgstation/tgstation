@@ -4,8 +4,8 @@
 	mutant_bodyparts = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
-	fixed_mut_color = "DBBF92"
-	hair_color = "FF4B19" //cap color, spot color uses eye color
+	fixed_mut_color = "#DBBF92"
+	hair_color = "#FF4B19" //cap color, spot color uses eye color
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like

@@ -115,7 +115,6 @@
 	. = ..()
 	controller.current_movement_target = controller.blackboard[target_key]
 
-
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
@@ -150,25 +149,31 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	action_cooldown = 2 SECONDS
 
-/datum/ai_behavior/consume/setup(datum/ai_controller/controller, obj/item/target)
+/datum/ai_behavior/consume/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = target
+	controller.current_movement_target = controller.blackboard[target_key]
 
-/datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, obj/item/target)
+/datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, target_key, hunger_timer_key)
 	. = ..()
-	var/mob/living/pawn = controller.pawn
+	var/mob/living/living_pawn = controller.pawn
+	var/obj/item/target = controller.blackboard[target_key]
 
-	if(!(target in pawn.held_items))
-		if(!pawn.put_in_hand_check(target))
-			finish_action(controller, FALSE)
+	if(!(target in living_pawn.held_items))
+		if(!living_pawn.put_in_hand_check(target))
+			finish_action(controller, FALSE, target, hunger_timer_key)
 			return
 
-		pawn.put_in_hands(target)
+		living_pawn.put_in_hands(target)
 
-	target.melee_attack_chain(pawn, pawn)
+	target.melee_attack_chain(living_pawn, living_pawn)
 
 	if(QDELETED(target) || prob(10)) // Even if we don't finish it all we can randomly decide to be done
-		finish_action(controller, TRUE)
+		finish_action(controller, TRUE, null, hunger_timer_key)
+
+/datum/ai_behavior/consume/finish_action(datum/ai_controller/controller, succeeded, target_key, hunger_timer_key)
+	. = ..()
+	if(succeeded)
+		controller.blackboard[hunger_timer_key] = world.time + rand(12 SECONDS, 60 SECONDS)
 
 /**find and set
  * Finds an item near themselves, sets a blackboard key as it. Very useful for ais that need to use machines or something.
@@ -177,24 +182,73 @@
  */
 /datum/ai_behavior/find_and_set
 	action_cooldown = 5 SECONDS
-	///search range in how many tiles around the pawn to look for the path
-	var/search_range = 7
-	//optional, don't use if you're changing search_tactic()
-	var/locate_path
-	var/bb_key_to_set
 
-/datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/find_and_set/perform(delta_time, datum/ai_controller/controller, set_key, locate_path, search_range)
 	. = ..()
-	var/find_this_thing = search_tactic(controller)
+	var/find_this_thing = search_tactic(controller, locate_path, search_range)
 	if(find_this_thing)
-		controller.blackboard[bb_key_to_set] = find_this_thing
+		controller.blackboard[set_key] = find_this_thing
 		finish_action(controller, TRUE)
 	else
 		finish_action(controller, FALSE)
 
-/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller)
+/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	return locate(locate_path) in oview(search_range, controller.pawn)
 
+/**
+ * Variant of find and set that fails if the living pawn doesn't hold something
+ */
+/datum/ai_behavior/find_and_set/pawn_must_hold_item
+
+/datum/ai_behavior/find_and_set/pawn_must_hold_item/search_tactic(datum/ai_controller/controller)
+	var/mob/living/living_pawn = controller.pawn
+	if(!living_pawn.get_num_held_items())
+		return //we want to fail the search if we don't have something held
+	. = ..()
+
+/**
+ * Variant of find and set that also requires the item to be edible. checks hands too
+ */
+/datum/ai_behavior/find_and_set/edible
+
+/datum/ai_behavior/find_and_set/edible/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	var/mob/living/living_pawn = controller.pawn
+	var/list/food_candidates = list()
+	for(var/held_candidate as anything in living_pawn.held_items)
+		if(!held_candidate || !IsEdible(held_candidate))
+			continue
+		food_candidates += held_candidate
+
+	var/list/local_results = locate(locate_path) in oview(search_range, controller.pawn)
+	for(var/local_candidate in local_results)
+		if(!IsEdible(local_candidate))
+			continue
+		food_candidates += local_candidate
+	if(food_candidates.len)
+		return pick(food_candidates)
+
+/**
+ * Variant of find and set that only checks in hands, search range should be excluded for this
+ */
+/datum/ai_behavior/find_and_set/in_hands
+
+/datum/ai_behavior/find_and_set/in_hands/search_tactic(datum/ai_controller/controller, locate_path)
+	var/mob/living/living_pawn = controller.pawn
+	return locate(locate_path) in living_pawn.held_items
+
+/**
+ * Drops items in hands, very important for future behaviors that require the pawn to grab stuff
+ */
+/datum/ai_behavior/drop_item
+
+/datum/ai_behavior/drop_item/perform(delta_time, datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/living_pawn = controller.pawn
+	var/obj/item/best_held = GetBestWeapon(controller, null, living_pawn.held_items)
+	for(var/obj/item/held as anything in living_pawn.held_items)
+		if(!held || held == best_held)
+			continue
+		living_pawn.dropItemToGround(held)
 
 /// This behavior involves attacking a target.
 /datum/ai_behavior/attack
@@ -284,10 +338,11 @@
 
 /datum/ai_behavior/setup_instrument
 
-/datum/ai_behavior/setup_instrument/perform(delta_time, datum/ai_controller/controller, song_datum_key, song_lines_key)
+/datum/ai_behavior/setup_instrument/perform(delta_time, datum/ai_controller/controller, song_instrument_key, song_lines_key)
 	. = ..()
 
-	var/datum/song/song = controller.blackboard[song_datum_key]
+	var/obj/item/instrument/song_instrument = controller.blackboard[song_instrument_key]
+	var/datum/song/song = song_instrument.song
 	var/song_lines = controller.blackboard[song_lines_key]
 
 	//just in case- it won't do anything if the instrument isn't playing
@@ -299,10 +354,28 @@
 
 /datum/ai_behavior/play_instrument
 
-/datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller, song_datum_key)
+/datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller, song_instrument_key)
 	. = ..()
 
-	var/datum/song/song = controller.blackboard[song_datum_key]
+	var/obj/item/instrument/song_instrument = controller.blackboard[song_instrument_key]
+	var/datum/song/song = song_instrument.song
 
 	song.start_playing(controller.pawn)
+	finish_action(controller, TRUE)
+
+/datum/ai_behavior/find_nearby
+
+/datum/ai_behavior/find_nearby/perform(delta_time, datum/ai_controller/controller, target_key)
+	. = ..()
+
+	var/list/possible_targets = list()
+	for(var/atom/thing in view(2, controller.pawn))
+		if(!thing.mouse_opacity)
+			continue
+		if(thing.IsObscured())
+			continue
+		possible_targets += thing
+	if(!possible_targets.len)
+		finish_action(controller, FALSE)
+	controller.blackboard[target_key] = pick(possible_targets)
 	finish_action(controller, TRUE)
