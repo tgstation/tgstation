@@ -186,27 +186,29 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	return joinable_departments_by_type[department_type]
 
-
-/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, datum/job/job, latejoin = FALSE)
-	JobDebug("Running AR, Player: [player], Rank: [isnull(job) ? "null" : job.type], LJ: [latejoin]")
+/**
+ * Assigns the given job role to the player.
+ *
+ * Arguments:
+ * * player - The player to assign the job to
+ * * job - The job to assign
+ * * latejoin - Set to TRUE if this is a latejoin role assignment.
+ * * do_eligibility_checks - Set to TRUE to conduct all job eligibility tests and reject on failure. Set to FALSE if job eligibility has been tested elsewhere and they can be safely skipped.
+ */
+/datum/controller/subsystem/job/proc/AssignRole(mob/dead/new_player/player, datum/job/job, latejoin = FALSE, do_eligibility_checks = TRUE)
+	JobDebug("Running AR, Player: [player], Job: [isnull(job) ? "null" : job], LateJoin: [latejoin]")
 	if(!player?.mind || !job)
-		JobDebug("AR has failed, Player: [player], Rank: [isnull(job) ? "null" : job.type]")
+		JobDebug("AR has failed, player has no mind or job is null, Player: [player], Rank: [isnull(job) ? "null" : job.type]")
 		return FALSE
-	if(is_banned_from(player.ckey, job.title) || QDELETED(player))
+
+	if(do_eligibility_checks && (check_job_eligibility(player, job, "AR", add_job_to_log = TRUE) != JOB_AVAILABLE))
 		return FALSE
-	if(!job.player_old_enough(player.client))
-		return FALSE
-	if(job.required_playtime_remaining(player.client))
-		return FALSE
-	var/position_limit = job.total_positions
-	if(!latejoin)
-		position_limit = job.spawn_positions
-	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[position_limit]")
+
+	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
 	player.mind.set_assigned_role(job)
 	unassigned -= player
 	job.current_positions++
 	return TRUE
-
 
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)
@@ -231,7 +233,7 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		// This check handles its own output to JobDebug.
-		if(!check_job_eligibility(player, job, "FOC", add_job_to_log = FALSE))
+		if(check_job_eligibility(player, job, "FOC", add_job_to_log = FALSE) != JOB_AVAILABLE)
 			continue
 
 		// They have the job enabled, at this priority level, with no restrictions applying to them.
@@ -260,10 +262,10 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		// This check handles its own output to JobDebug.
-		if(!check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE))
+		if(check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
 			continue
 
-		if(AssignRole(player, job))
+		if(AssignRole(player, job, do_eligibility_checks = FALSE))
 			JobDebug("GRJ Random job given, Player: [player], Job: [job]")
 			return TRUE
 
@@ -299,7 +301,8 @@ SUBSYSTEM_DEF(job)
 			if(!candidates.len)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
-			if(AssignRole(candidate, job))
+			// Eligibility checks done as part of FindOccupationCandidates.
+			if(AssignRole(candidate, job, do_eligibility_checks = FALSE))
 				return TRUE
 	return FALSE
 
@@ -321,7 +324,8 @@ SUBSYSTEM_DEF(job)
 		if(!candidates.len)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
-		AssignRole(candidate, job)
+		// Eligibility checks done as part of FindOccupationCandidates
+		AssignRole(candidate, job, do_eligibility_checks = FALSE)
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
@@ -335,7 +339,8 @@ SUBSYSTEM_DEF(job)
 			candidates = FindOccupationCandidates(ai_job, level)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
-				if(AssignRole(candidate, GetJobType(/datum/job/ai)))
+				// Eligibility checks done as part of FindOccupationCandidates
+				if(AssignRole(candidate, GetJobType(/datum/job/ai), do_eligibility_checks = FALSE))
 					break
 
 
@@ -386,7 +391,8 @@ SUBSYSTEM_DEF(job)
 	JobDebug("AC1, Candidates: [overflow_candidates.len]")
 	for(var/mob/dead/new_player/player in overflow_candidates)
 		JobDebug("AC1 pass, Player: [player]")
-		AssignRole(player, GetJobType(overflow_role))
+		// Eligibility checks done as part of FindOccupationCandidates
+		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE)
 		overflow_candidates -= player
 	JobDebug("DO, AC1 end")
 
@@ -422,36 +428,32 @@ SUBSYSTEM_DEF(job)
 			// Loop through all jobs
 			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
 				if(!job)
+					JobDebug("FOC invalid/null job in occupations, Player: [player], Job: [job]")
+					shuffledoccupations -= job
 					continue
 
-				if(is_banned_from(player.ckey, job.title))
-					JobDebug("DO isbanned failed, Player: [player], Job:[job.title]")
+				// Make sure the job isn't filled. If it is, remove it from the list so it doesn't get checked again.
+				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+					JobDebug("FOC job filled and not overflow, Player: [player], Job: [job], Current: [job.current_positions], Limit: [job.spawn_positions]")
+					shuffledoccupations -= job
 					continue
 
-				if(QDELETED(player))
-					JobDebug("DO player deleted during job ban check")
-					break
-
-				if(!job.player_old_enough(player.client))
-					JobDebug("DO player not old enough, Player: [player], Job:[job.title]")
+				// Filter any job that doesn't fit the current level.
+				var/player_job_level = player.client.prefs.job_preferences[job.title]
+				if(isnull(player_job_level))
+					JobDebug("FOC player job not enabled, Player: [player]")
+					continue
+				else if(player_job_level != level)
+					JobDebug("FOC player job enabled but at different level, Player: [player], TheirLevel: [job_priority_level_to_string(player_job_level)], ReqLevel: [job_priority_level_to_string(level)]")
 					continue
 
-				if(job.required_playtime_remaining(player.client))
-					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
+				if(check_job_eligibility(player, job, "DO", add_job_to_log = TRUE) != JOB_AVAILABLE)
 					continue
 
-				if(player.mind && (job.title in player.mind.restricted_roles))
-					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
-					continue
-
-				// If the player wants that job on this level, then try give it to him.
-				if(player.client.prefs.job_preferences[job.title] == level)
-					// If the job isn't filled
-					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
-						AssignRole(player, job)
-						unassigned -= player
-						break
+				JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
+				AssignRole(player, job, do_eligibility_checks = FALSE)
+				unassigned -= player
+				break
 
 
 	JobDebug("DO, Handling unassigned.")
@@ -465,7 +467,12 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
 			if(!AssignRole(player, GetJobType(overflow_role))) //If everything is already filled, make them an assistant
+				JobDebug("DO, Forced antagonist could not be assigned any random job or the overflow role. DivideOccupations failed.")
+				JobDebug("---------------------------------------------------")
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
+
+	JobDebug("All divide occupations tasks completed.")
+	JobDebug("---------------------------------------------------")
 
 	return TRUE
 
@@ -480,19 +487,23 @@ SUBSYSTEM_DEF(job)
 	switch (jobless_role)
 		if (BEOVERFLOW)
 			var/datum/job/overflow_role_datum = GetJobType(overflow_role)
-			var/allowed_to_be_a_loser = !is_banned_from(player.ckey, overflow_role_datum.title)
-			if(QDELETED(player) || !allowed_to_be_a_loser)
+
+			if(check_job_eligibility(player, overflow_role_datum, debug_prefix = "HU", add_job_to_log = TRUE) != JOB_AVAILABLE)
 				RejectPlayer(player)
-			else
-				if(!AssignRole(player, overflow_role_datum))
-					RejectPlayer(player)
+				return
+
+			if(!AssignRole(player, overflow_role_datum, do_eligibility_checks = FALSE))
+				RejectPlayer(player)
+				return
 		if (BERANDOMJOB)
 			if(!GiveRandomJob(player))
 				RejectPlayer(player)
+				return
 		if (RETURNTOLOBBY)
 			RejectPlayer(player)
+			return
 		else //Something gone wrong if we got here.
-			var/message = "DO: [player] fell through handling unassigned"
+			var/message = "HU: [player] fell through handling unassigned"
 			JobDebug(message)
 			log_game(message)
 			message_admins(message)
@@ -858,6 +869,8 @@ SUBSYSTEM_DEF(job)
 /// Blindly assigns the required roles to every player in the dynamic_forced_occupations list.
 /datum/controller/subsystem/job/proc/assign_priority_positions()
 	for(var/mob/new_player in dynamic_forced_occupations)
+		// Eligibility checks already carried out as part of the dynamic ruleset trim_candidates proc.area
+		// However no guarantee of game state between then and now, so don't skip eligibility checks on AssignRole.
 		AssignRole(new_player, GetJob(dynamic_forced_occupations[new_player]))
 
 /// Takes a job priority #define such as JP_LOW and gets its string representation for logging.
@@ -877,25 +890,34 @@ SUBSYSTEM_DEF(job)
  * * player - The player to check for job eligibility.
  * * possible_job - The job to check for eligibility against.
  * * debug_prefix - Logging prefix for the JobDebug log entries. For example, GRJ during GiveRandomJob or DO during DivideOccupations.
- * * add_job_to_log - If TRUE, appends the job type to the log entry. If FALSE, does not. Set to FALSE when check is part of iterating over players for a specific job, set to TRUE when check is part of iterating over jobs for a specific player.
+ * * add_job_to_log - If TRUE, appends the job type to the log entry. If FALSE, does not. Set to FALSE when check is part of iterating over players for a specific job, set to TRUE when check is part of iterating over jobs for a specific player and you don't want extra log entry spam.
  */
 /datum/controller/subsystem/job/proc/check_job_eligibility(mob/dead/new_player/player, datum/job/possible_job, debug_prefix = "", add_job_to_log = FALSE)
-	if(is_banned_from(player.ckey, possible_job.title) || QDELETED(player))
-		if(QDELETED(player))
-			JobDebug("[debug_prefix] isbanned from role, player is deleted[add_job_to_log ? ", Job: [possible_job]" : ""]")
-			return FALSE
-		JobDebug("[debug_prefix] isbanned from role, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return FALSE
+	if(!player.mind)
+		JobDebug("[debug_prefix] player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_GENERIC
+
+	if(possible_job.title in player.mind.restricted_roles)
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_ANTAG_INCOMPAT
 
 	if(!possible_job.player_old_enough(player.client))
-		JobDebug("[debug_prefix] account too few days played for role, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return FALSE
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ACCOUNTAGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_ACCOUNTAGE
+
 	var/required_playtime_remaining = possible_job.required_playtime_remaining(player.client)
 	if(required_playtime_remaining)
-		JobDebug("[debug_prefix] not enough playtime for role, Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return FALSE
-	if(player.mind && (possible_job.title in player.mind.restricted_roles))
-		JobDebug("[debug_prefix] incompatible with antagonist role, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
-		return FALSE
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_PLAYTIME)], Player: [player], MissingTime: [required_playtime_remaining][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_PLAYTIME
 
-	return TRUE
+	// Run the banned check last since it should be the rarest check to fail and can access the database.
+	if(is_banned_from(player.ckey, possible_job.title))
+		JobDebug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_BANNED)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_BANNED
+
+	// Run this check after is_banned_from since it can query the DB which may sleep.
+	if(QDELETED(player))
+		JobDebug("[debug_prefix] player is qdeleted, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
+		return JOB_UNAVAILABLE_GENERIC
+
+	return JOB_AVAILABLE
