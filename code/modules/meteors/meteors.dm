@@ -131,8 +131,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	if(QDELETED(src))
 		return
 
-	var/dest_turf = get_turf(dest) //Dest can be deleted in the if block
-
 	if(OldLoc != loc)//If did move, ram the turf we get in
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
@@ -140,7 +138,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
 			get_hit()
 
-	if(z != z_original || loc == get_turf(dest_turf))
+	if(z != z_original || loc == get_turf(dest))
 		qdel(src)
 		return
 
@@ -170,32 +168,18 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
-	//first bust whatever is in the turf
-	for(var/thing in T)
-		if(thing == src)
-			continue
-		if(isliving(thing))
-			var/mob/living/living_thing = thing
-			living_thing.visible_message(span_warning("[src] slams into [living_thing]."), span_userdanger("[src] slams into you!."))
-		switch(hitpwr)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.high_mov_atom += thing
-			if(EXPLODE_HEAVY)
-				SSexplosions.med_mov_atom += thing
-			if(EXPLODE_LIGHT)
-				SSexplosions.low_mov_atom += thing
+	//first yell at mobs about them dying horribly
+	for(var/mob/living/thing in T)
+		thing.visible_message(span_warning("[src] slams into [thing]."), span_userdanger("[src] slams into you!."))
 
-	//then, ram the turf if it still exists
-	if(T)
-		switch(hitpwr)
-			if(EXPLODE_DEVASTATE)
-				SSexplosions.highturf += T
-			if(EXPLODE_HEAVY)
-				SSexplosions.medturf += T
-			if(EXPLODE_LIGHT)
-				SSexplosions.lowturf += T
-
-
+	//then, ram the turf
+	switch(hitpwr)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.highturf += T
+		if(EXPLODE_HEAVY)
+			SSexplosions.medturf += T
+		if(EXPLODE_LIGHT)
+			SSexplosions.lowturf += T
 
 //process getting 'hit' by colliding with a dense object
 //or randomly when ramming turfs
