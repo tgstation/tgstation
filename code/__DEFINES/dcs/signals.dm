@@ -1272,7 +1272,7 @@
 ///from /datum/move_loop/process():
 #define COMSIG_MOVELOOP_PREPROCESS_CHECK "moveloop_preprocess_check"
 	#define MOVELOOP_STOP_PROCESSING (1<<0)
-///from /datum/move_loop/process():
+///from /datum/move_loop/process(): (succeeded, visual_delay)
 #define COMSIG_MOVELOOP_POSTPROCESS "moveloop_postprocess"
 
 // /datum/element/movetype_handler signals

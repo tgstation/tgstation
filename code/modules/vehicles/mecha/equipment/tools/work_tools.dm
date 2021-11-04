@@ -182,7 +182,9 @@
 		return
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 
-	sprays_left += 5	
+	sprays_left += 5
+	add_hiddenprint(source) //log prints so admins can figure out who touched it last.
+	log_combat(source, target, "fired an extinguisher at")
 	spray_extinguisher(target)
 	return ..()
 

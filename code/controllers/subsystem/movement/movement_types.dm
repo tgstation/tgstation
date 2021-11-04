@@ -58,15 +58,14 @@
 
 	var/visual_delay = max((world.time - timer) / delay, 1)
 	var/success = move()
-	if(QDELETED(src)) //Can happen
-		return
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
 
-	if(success)
-		moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
-		timer = world.time + delay
+	timer = world.time + delay
+	if(QDELETED(src) || !success) //Can happen
+		return
 
+	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
 
 ///Handles the actual move, overriden by children
 ///Returns FALSE if nothing happen, TRUE otherwise

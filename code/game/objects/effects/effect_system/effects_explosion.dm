@@ -13,9 +13,11 @@
 
 	var/datum/move_loop/loop = SSmove_manager.move(src, pick(GLOB.alldirs), 1, timeout = step_amt)
 	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/end_particle)
-		
-/obj/effect/particle_effect/expl_particles/proc/end_particle(datum/source)	
+
+/obj/effect/particle_effect/expl_particles/proc/end_particle(datum/source)
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
 	qdel(src)
 
 /datum/effect_system/expl_particles
