@@ -369,6 +369,7 @@
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
 	desc = "A module using prototype cloaking technology to hide the user from plain sight."
+	icon_state = "cloak"
 	module_type = MODULE_TOGGLE
 	complexity = 5
 	active_power_cost = 50
@@ -423,6 +424,7 @@
 /obj/item/mod/module/stealth/ninja
 	name = "MOD advanced cloaking module"
 	desc = "A module using advanced cloaking technology to hide the user from plain sight."
+	icon_state = "cloak_ninja"
 	bumpoff = FALSE
 	stealth_alpha = 20
 	active_power_cost = 10
@@ -527,7 +529,7 @@
 	active_power_cost = 20
 	incompatible_modules = list(/obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
-	var/slowdown_active = 1
+	var/slowdown_active = 0.5
 
 /obj/item/mod/module/magboot/on_activation()
 	. = ..()
