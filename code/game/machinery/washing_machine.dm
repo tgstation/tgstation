@@ -234,12 +234,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	qdel(src)
 
 /mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
-	Washer.bloody_mess = TRUE
+	washer.bloody_mess = TRUE
 	gib()
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
-	if(Washer.color_source)
-		dye_item(Washer.color_source.dye_color)
+	if(washer.color_source)
+		dye_item(washer.color_source.dye_color)
 
 /obj/item/clothing/under/dye_item(dye_color, dye_key)
 	. = ..()
@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
 	..()
-	held_mob.machine_wash(Washer)
+	held_mob.machine_wash(washer)
 
 /obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/washer)
 	if(chained)
