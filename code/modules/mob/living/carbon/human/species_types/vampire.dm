@@ -35,13 +35,12 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
-	///static list shared among all vampire species datums that give a house name for each department
-	var/static/list/vampire_houses = list()
 
 /datum/species/vampire/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
-		return TRUE
-	return ..()
+	return TRUE
+	//if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	//	return TRUE
+	//return ..()
 
 /datum/species/vampire/on_species_gain(mob/living/carbon/human/new_vampire, datum/species/old_species)
 	. = ..()
@@ -49,32 +48,6 @@
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
 	new_vampire.set_safe_hunger_level()
-	var/clan_status = new_vampire.client?.prefs?.read_preference(/datum/preference/choiced/vampire_status)
-	if(clan_status == "Inoculated")
-		add_vampire_to_house(new_vampire)
-
-/datum/species/vampire/proc/add_vampire_to_house(mob/living/carbon/human/new_vampire)
-
-	//find and setup the house (department) this vampire is joining
-	var/datum/job_department/vampire_house
-	var/datum/job/vampire_job = SSjob.GetJob(new_vampire.job)
-	var/list/valid_departments = (SSjob.joinable_departments.Copy()) - list(/datum/job_department/silicon, /datum/job_department/undefined)
-	for(var/datum/job_department/potential_house as anything in valid_departments)
-		if(vampire_job in potential_house.department_jobs)
-			vampire_house = potential_house
-			break
-	if(!vampire_house)
-		return
-	if(!vampire_houses[vampire_house.department_name])
-		vampire_houses[vampire_house.department_name] = pick(GLOB.vampire_house_names)
-	var/house_name = vampire_houses[vampire_house.department_name]
-
-	//modify name (Platos Syrup > Platos de Lioncourt)
-	var/first_space_index = findtextEx(new_vampire.real_name, " ")
-	var/new_name = copytext(new_vampire.real_name, 1, first_space_index + 1)
-	new_name += house_name
-	new_vampire.fully_replace_character_name(new_vampire.real_name, new_name)
-	to_chat(new_vampire, span_boldnotice("You've been brought into house \"[house_name]\". Do not disappoint your vampire ménages!"))
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, delta_time, times_fired)
 	. = ..()
