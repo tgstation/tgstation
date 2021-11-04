@@ -284,26 +284,25 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		to_chat(user, span_notice("[src] is already occupied!"))
 		return
 
-	if(target.stat == DEAD)
-		to_chat(user, span_notice("Dead people can not be put into cryo."))
-		return
-
-	if(target.key && user != target)
-		if(iscyborg(target))
-			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] online."))
-		else
-			to_chat(user, span_danger("You can't put [target] into [src]. [target.p_theyre(capitalized = TRUE)] conscious."))
+	if(user != target)
+		to_chat(user, span_danger("You can't put [target] into [src]. The system doesn't allow unwilling cryogenic patients."))
 		return
 
 	if(target == user && (tgalert(target, "Would you like to enter cryosleep?", "Enter Cryopod?", "Yes", "No") != "Yes"))
 		return
 
-	if(target == user)
-		if(target.mind.assigned_role.req_admin_notify)
-			tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
-		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
-		if(antag)
-			tgui_alert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
+	if(target.mind.assigned_role.req_admin_notify)
+		tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
+	var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
+	if(antag)
+		if(tgalert(target, "As an [antag.name], you are a driving narrative force in the round. Do you consent to offering your character to ghosts? \
+		If you refuse, you cannot enter cryogenics until you consent to offering your character to the ghosts.", "Antagonist Ghost Takeover", "Yes", "No") != "Yes")
+			to_chat(user, span_notice("You decide not to enter cryogenics as you still have a job to do."))
+			return
+		if(offer_control(target))
+			return // The user has been replaced by a ghost at this point, let them leave the pod.
+		else
+			message_admins("[key_name_admin(target)], the [antag.name] is entering Cryogenics and no ghosts were willing to replace them.")
 
 	if(!istype(target) || !can_interact(user) || !target.Adjacent(user) || !ismob(target) || isanimal(target) || !istype(user.loc, /turf) || target.buckled)
 		return
