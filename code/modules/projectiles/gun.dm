@@ -276,7 +276,8 @@
 				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				process_fire(user, user, FALSE, null, shot_leg)
 				SEND_SIGNAL(user, COMSIG_MOB_CLUMSY_SHOOT_FOOT)
-				user.dropItemToGround(src, TRUE)
+				if(!HAS_TRAIT(src, TRAIT_NODROP))
+					user.dropItemToGround(src, TRUE)
 				return TRUE
 
 /obj/item/gun/can_trigger_gun(mob/living/user)
