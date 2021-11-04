@@ -17,7 +17,7 @@
 ///Alert when an AI disconnects themselves from their shell.
 #define AI_NOTIFICATION_AI_SHELL 4
 ///Alert when a Cyborg gets disconnected from their AI.
-#define AI_NOTIFICATION_AI_SHELL 5
+#define AI_NOTIFICATION_CYBORG_DISCONNECTED 5
 
 /** Cyborg defines */
 
