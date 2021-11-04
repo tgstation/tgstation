@@ -3,7 +3,7 @@
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/mod.dmi'
-	icon_state = "mod_shell"
+	icon_state = "standard-control"
 	worn_icon = 'icons/mob/mod.dmi'
 
 /obj/item/mod/control

@@ -345,6 +345,11 @@
 	icon_state = "thermal_visor"
 	visor_traits = list(TRAIT_THERMAL_VISION)
 
+/obj/item/mod/module/visor/night
+	name = "MOD night visor module"
+	icon_state = "night_visor"
+	visor_traits = list(TRAIT_TRUE_NIGHT_VISION)
+
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
 	desc = "A module with a microchip health analyzer to instantly scan the wearer's vitals."
@@ -939,7 +944,7 @@
 	. = ..()
 	circuit = new()
 	AddComponent(/datum/component/shell, \
-		list(new /obj/item/circuit_component/modsuit()), \
+		list(new /obj/item/circuit_component/mod()), \
 		capacity = SHELL_CAPACITY_LARGE, \
 		shell_flags = SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
 		starting_circuit = circuit, \
@@ -963,7 +968,7 @@
 		return
 	circuit.interact(mod.wearer)
 
-/obj/item/circuit_component/modsuit
+/obj/item/circuit_component/mod
 	display_name = "MOD"
 	desc = "Used to send and receive signals from a MODsuit."
 
@@ -976,7 +981,7 @@
 	var/datum/port/output/wearer
 	var/datum/port/output/selected_module
 
-/obj/item/circuit_component/modsuit/populate_ports()
+/obj/item/circuit_component/mod/populate_ports()
 	// Input Signals
 	module_to_select = add_input_port("Module to Select", PORT_TYPE_STRING)
 	toggle_suit = add_input_port("Toggle Suit", PORT_TYPE_SIGNAL)
@@ -985,16 +990,16 @@
 	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_ATOM)
 
-/obj/item/circuit_component/modsuit/register_shell(atom/movable/shell)
+/obj/item/circuit_component/mod/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
 	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-/obj/item/circuit_component/modsuit/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/mod/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
 	attached_module = null
 
-/obj/item/circuit_component/modsuit/input_received(datum/port/input/port)
+/obj/item/circuit_component/mod/input_received(datum/port/input/port)
 	var/obj/item/mod/module/module
 	for(var/obj/item/mod/module/potential_module as anything in attached_module.mod.modules)
 		if(potential_module.name == module_to_select.value)
@@ -1004,7 +1009,7 @@
 	if(module && COMPONENT_TRIGGERED_BY(select_module, port))
 		INVOKE_ASYNC(module, /obj/item/mod/module.proc/on_select)
 
-/obj/item/circuit_component/modsuit/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
+/obj/item/circuit_component/mod/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
 		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
@@ -1015,11 +1020,11 @@
 		selected_module.set_output(null)
 		wearer.set_output(null)
 
-/obj/item/circuit_component/modsuit/proc/on_module_select()
+/obj/item/circuit_component/mod/proc/on_module_select()
 	SIGNAL_HANDLER
 	selected_module.set_output(attached_module.mod.selected_module)
 
-/obj/item/circuit_component/modsuit/proc/equip_check()
+/obj/item/circuit_component/mod/proc/equip_check()
 	SIGNAL_HANDLER
 	wearer.set_output(attached_module.mod.wearer)
 
