@@ -73,3 +73,7 @@
       as deal toxin damage.
   phasenoisepon:
   - bugfix: admin heals no longer delete all restraints in target's inventory
+2021-11-04:
+  CocaColaTastesGood:
+  - bugfix: Removes a XSS vulnerability while picking religious sect.
+  - bugfix: Fixes an exploit that allowed players to arbitrarily spawn any path.

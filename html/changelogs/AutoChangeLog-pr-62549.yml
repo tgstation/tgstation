@@ -1,4 +1,0 @@
-author: "CocaColaTastesGood"
-delete-after: True
-changes: 
-  - bugfix: "Removes a XSS vulnerability while picking religious sect."
