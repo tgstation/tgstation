@@ -647,10 +647,7 @@
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "aeC" = (
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
 "aeF" = (
@@ -742,10 +739,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
 "afq" = (
@@ -2466,10 +2460,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/item/radio/intercom/directional/west{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron,
 /area/security/brig)
 "apk" = (
@@ -2495,10 +2486,7 @@
 	dir = 6;
 	network = list("ss13","Security")
 	},
-/obj/item/radio/intercom/directional/east{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/security/brig)
 "app" = (
@@ -2668,10 +2656,7 @@
 	dir = 1;
 	network = list("ss13","Security")
 	},
-/obj/item/radio/intercom/directional/south{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/security/brig)
 "aqe" = (
@@ -12937,11 +12922,8 @@
 	c_tag = "Security - Prison Garden";
 	network = list("ss13","Security","prison")
 	},
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/machinery/duct,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison/garden)
 "cYt" = (
@@ -17522,10 +17504,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "eIm" = (
@@ -25501,16 +25480,13 @@
 /area/medical/virology)
 "hHU" = (
 /obj/structure/chair,
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "hHZ" = (
@@ -27249,6 +27225,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/item/radio/intercom/prison/directional/south,
 /turf/open/floor/iron,
 /area/security/prison/rec)
 "iqJ" = (
@@ -28806,13 +28783,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/west{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/machinery/power/apc/auto_name/south,
 /obj/structure/cable,
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron,
 /area/security/prison/work)
 "iQD" = (
@@ -29601,10 +29574,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/item/radio/intercom/directional/south{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/south,
 /turf/open/floor/iron,
 /area/security/prison/workout)
 "jjN" = (
@@ -40234,10 +40204,7 @@
 	c_tag = "Security - Prison Commons";
 	network = list("ss13","Security","prison")
 	},
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison/rec)
 "ntZ" = (
@@ -51127,10 +51094,7 @@
 	dir = 1;
 	network = list("ss13","Security")
 	},
-/obj/item/radio/intercom/directional/south{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/security/brig)
 "ryJ" = (
@@ -52044,14 +52008,11 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/item/radio/intercom/directional/east{
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "rST" = (
@@ -62240,10 +62201,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/south{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
 /area/security/brig)
 "vNI" = (
@@ -62706,10 +62664,7 @@
 	dir = 1
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison/mess)
 "vWW" = (
@@ -65929,10 +65884,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron,
 /area/security/prison/mess)
 "xej" = (
@@ -68800,15 +68752,12 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/item/radio/intercom/directional/north{
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "ydp" = (
