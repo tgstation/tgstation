@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(move_manager)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 ///Adds a movable thing to a movement subsystem. Returns TRUE if it all worked, FALSE if it failed somehow
-/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, flags, priority=MOVEMENT_DEFAULT_PRECEDENCE)
+/datum/controller/subsystem/move_manager/proc/add_to_loop(atom/movable/thing_to_add, datum/controller/subsystem/movement/subsystem = SSmovement, datum/move_loop/loop_type, priority=MOVEMENT_DEFAULT_PRECEDENCE)
 	var/datum/movement_packet/our_data = thing_to_add.move_packet
 	if(!our_data)
 		our_data = new(thing_to_add)
@@ -47,14 +47,14 @@ SUBSYSTEM_DEF(move_manager)
 	return ..()
 
 ///Adds a loop to our parent. Returns the created loop if a success, null otherwise
-/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, flags, precedence)
+/datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, precedence)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
 	if(existing_loop && existing_loop.precedence > precedence)
 		return //Give up
 
-	var/list/arguments = args.Copy(5) //Just send the args we're not dealing with here
+	var/list/arguments = args.Copy(4) //Just send the args we're not dealing with here
 
-	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, flags, precedence) //Pass the mob to move and ourselves in via new
+	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, precedence) //Pass the mob to move and ourselves in via new
 
 	var/worked_out = new_loop.setup(arglist(arguments)) //Here goes the rest
 	if(!worked_out)
