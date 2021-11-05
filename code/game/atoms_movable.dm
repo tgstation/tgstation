@@ -375,17 +375,29 @@
 	loc = new_loc
 	Moved(old_loc)
 
-////////////////////////////////////////
-// Here's where we rewrite how byond handles movement except slightly different
-// To be removed on step_ conversion
-// All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direction, glide_size_override = 0)
-	. = FALSE
-	if(!newloc || newloc == loc)
-		return
+/atom/movable/Move(atom/newloc, direction, glide_size_override)
+	var/atom/movable/pullee = pulling
+	var/turf/old_turf = loc
+	if(!moving_from_pull)
+		check_pulling()
+	if(!loc || !newloc || loc == newloc)
+		return FALSE
 
 	if(!direction)
 		direction = get_dir(src, newloc)
+
+	var/can_pass_diagonally = FALSE
+	if ((direction & (direction - 1))) //Check if the first part of the diagonal move is possible
+		if(direction & NORTH)
+			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : 0
+		if(!can_pass_diagonally && (direction & EAST))
+			can_pass_diagonally = get_step(loc, EAST)?.Enter(src) ? EAST : 0
+		if(!can_pass_diagonally && (direction & WEST))
+			can_pass_diagonally = get_step(loc, WEST)?.Enter(src) ? WEST : 0
+		if(!can_pass_diagonally && (direction & SOUTH))
+			can_pass_diagonally = get_step(loc, SOUTH)?.Enter(src) ? SOUTH : 0
+		if(!can_pass_diagonally)
+			return
 
 	if(set_dir_on_move)
 		setDir(direction)
@@ -398,9 +410,8 @@
 		for(var/atom/exiting_loc as anything in old_locs)
 			if(!exiting_loc.Exit(src, direction))
 				return
-	else
-		if(!loc.Exit(src, direction))
-			return
+	else if(!loc.Exit(src, direction))
+		return
 
 	var/list/new_locs
 	if(is_multi_tile_object && isturf(newloc))
@@ -415,29 +426,30 @@
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
 				return
-			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc))
 				return
-	else // Else just try to enter the single destination.
-		if(!newloc.Enter(src))
-			return
-		if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-			return
+	else if(!newloc.Enter(src) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
+		if(can_pass_diagonally) //We cannot get to our final destination, but we can move a little
+			Move(get_step(loc, can_pass_diagonally), can_pass_diagonally)
+		return
 
-	// Past this is the point of no return
 	var/atom/oldloc = loc
-	var/area/oldarea = get_area(oldloc)
-	var/area/newarea = get_area(newloc)
 	move_stacks++
-
 	loc = newloc
-
-	. = TRUE
 
 	if(old_locs) // This condition will only be true if it is a multi-tile object.
 		for(var/atom/exited_loc as anything in (old_locs - new_locs))
 			exited_loc.Exited(src, direction)
 	else // Else there's just one loc to be exited.
 		oldloc.Exited(src, direction)
+
+	if(!loc || (loc == oldloc && oldloc != newloc))
+		last_move = 0
+		return
+
+	var/area/oldarea = get_area(oldloc)
+	var/area/newarea = get_area(newloc)
+
 	if(oldarea != newarea)
 		oldarea.Exited(src, direction)
 
@@ -446,110 +458,32 @@
 			entered_loc.Entered(src, oldloc, old_locs)
 	else
 		newloc.Entered(src, oldloc, old_locs)
+
 	if(oldarea != newarea)
 		newarea.Entered(src, oldarea)
 
-	Moved(oldloc, direction, FALSE, old_locs)
-
-////////////////////////////////////////
-
-/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
-	var/atom/movable/pullee = pulling
-	var/turf/current_turf = loc
-	if(!moving_from_pull)
-		check_pulling()
-	if(!loc || !newloc)
-		return FALSE
-	var/atom/oldloc = loc
-	//Early override for some cases like diagonal movement
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
-			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			moving_diagonally = FIRST_DIAG_STEP
-			var/first_step_dir
-			// The `&& moving_diagonally` checks are so that a forceMove taking
-			// place due to a Crossed, Bumped, etc. call will interrupt
-			// the second half of the diagonal movement, or the second attempt
-			// at a first half if step() fails because we hit something.
-			if (direct & NORTH)
-				if (direct & EAST)
-					if (step(src, NORTH) && moving_diagonally)
-						first_step_dir = NORTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
-						first_step_dir = EAST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-				else if (direct & WEST)
-					if (step(src, NORTH) && moving_diagonally)
-						first_step_dir = NORTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
-						first_step_dir = WEST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-			else if (direct & SOUTH)
-				if (direct & EAST)
-					if (step(src, SOUTH) && moving_diagonally)
-						first_step_dir = SOUTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (moving_diagonally && step(src, EAST))
-						first_step_dir = EAST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-				else if (direct & WEST)
-					if (step(src, SOUTH) && moving_diagonally)
-						first_step_dir = SOUTH
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (moving_diagonally && step(src, WEST))
-						first_step_dir = WEST
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-			if(moving_diagonally == SECOND_DIAG_STEP)
-				if(!. && set_dir_on_move)
-					setDir(first_step_dir)
-				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
-					newtonian_move(direct)
-			moving_diagonally = 0
-			return
+	Moved(oldloc, direction)
 
-	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
-		return
-
-	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
+	if(pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
 		if(pulling.anchored)
 			stop_pulling()
 		else
 			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
-			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir))))
+			//puller and pullee more than one tile away or in diagonal position
+			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
 				pulling.moving_from_pull = src
-				pulling.Move(current_turf, get_dir(pulling, current_turf), glide_size) //the pullee tries to reach our previous position
+				pulling.Move(old_turf, get_dir(pulling, old_turf)) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
 			check_pulling()
 
+	last_move = direction
 
-	//glide_size strangely enough can change mid movement animation and update correctly while the animation is playing
-	//This means that if you don't override it late like this, it will just be set back by the movement update that's called when you move turfs.
-	if(glide_size_override)
-		set_glide_size(glide_size_override)
-
-	last_move = direct
-
-	if(set_dir_on_move)
-		setDir(direct)
-	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc, direct, glide_size_override)) //movement failed due to buckled mob(s)
+	if(LAZYLEN(buckled_mobs) && !handle_buckled_mob_movement(loc, direction)) //movement failed due to buckled mob(s)
 		return FALSE
+	return TRUE
 
 
 /**
