@@ -12,26 +12,37 @@
 	mergeable_decal = FALSE
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
+	///What direction are we streaking in, if we are
+	var/streak_direction
 
 /obj/effect/decal/cleanable/robot_debris/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions, mapload=FALSE)
-	set waitfor = FALSE
-	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4, 17; 50), i++) //the 3% chance of 50 steps is intentional and played for laughs.
-		if (!mapload)
-			sleep(2)
-		if (i > 0)
+	streak_direction = pick(directions)
+	var/delay = 2
+	var/range = pick(1, 200; 2, 150; 3, 50; 4, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
+	if(!step_to(src, get_step(src, direction), 0))
+			return
+	if(mapload)
+		for (var/i = 0, i < range, i++)
 			if (prob(40))
 				new /obj/effect/decal/cleanable/oil/streak(src.loc)
-			else if (prob(10) && !mapload)
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, src)
-				s.start()
-		if (!step_to(src, get_step(src, direction), 0))
-			break
+		return
+
+	var/datum/move_loop/loop = SSmove_manager.move_to(src, get_step(src, streak_direction), delay = 2, timeout = range * delay)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/spread_movement_effects)
+
+/obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/source)
+	SIGNAL_HANDLER
+	source.target = get_step(src, streak_direction) //This isn't great, but adding a subtype seems unnessesary
+	if (prob(40))
+		new /obj/effect/decal/cleanable/oil/streak(src.loc)
+	else if (prob(10))
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
 
 /obj/effect/decal/cleanable/robot_debris/proc/on_pipe_eject(atom/source, direction)
 	SIGNAL_HANDLER
