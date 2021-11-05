@@ -8,6 +8,8 @@
 	var/atom/movable/moving
 	///Defines how different move loops override each other. Lower numbers beat higher numbers
 	var/precedence = MOVEMENT_DEFAULT_PRECEDENCE
+	///Bitfield of different things that effect how a loop operates
+	var/flags
 	///Time till we stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
 	///Delay between each move in deci-seconds
@@ -15,11 +17,12 @@
 	///The next time we should process
 	var/timer = 0
 
-/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, precedence, precedence)
+/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, precedence, flags)
 	src.owner = owner
 	src.controller = controller
 	src.moving = moving
 	src.precedence = precedence
+	src.flags = flags
 
 /datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
 	if(!ismovable(moving) || !owner)
@@ -85,12 +88,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/move, precedence, delay, timeout, direction)
+/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move, precedence, flags, delay, timeout, direction)
 
 ///Replacement for walk()
 /datum/move_loop/move
@@ -141,12 +145,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, precedence, delay, timeout, chasing)
+/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, precedence, flags, delay, timeout, chasing)
 
 ///Used for force-move loops
 /datum/move_loop/has_target/force_move
@@ -186,12 +191,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, precedence, delay, timeout, chasing, min_dist)
+/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, precedence, flags, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
 /datum/move_loop/has_target/dist_bound/move_to
@@ -216,12 +222,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, precedence, delay, timeout, chasing, max_dist)
+/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, precedence, flags, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
 /datum/move_loop/has_target/dist_bound/move_away
@@ -246,12 +253,13 @@
  * home - Should we move towards the object at all times? Or launch towards them, but allow walls and such to take us off track. Defaults to FALSE
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to INFINITY
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, precedence, delay, timeout, chasing, home)
+/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, precedence, flags, delay, timeout, chasing, home)
 
 ///Helper proc for homing
 /datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout)
@@ -359,12 +367,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, precedence, delay, timeout, chasing)
+/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, precedence, flags, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
@@ -383,14 +392,15 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, precedence)
+/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, precedence, flags)
 	if(!directions)
 		directions = GLOB.alldirs
-	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, precedence, delay, timeout, directions)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, precedence, flags, delay, timeout, directions)
 
 /**
  * This isn't actually the same as walk_rand
@@ -426,12 +436,13 @@
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
  * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
  * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
- * * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, precedence)
-	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, precedence, delay, timeout)
+/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, precedence, flags, delay, timeout)
 
 ///Wrapper around step_rand
 /datum/move_loop/move_to_rand
