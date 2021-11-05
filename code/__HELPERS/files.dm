@@ -95,3 +95,12 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	fcopy(file, filename)
 	. = md5filepath(filename)
 	fdel(filename)
+
+/// Sanitizes the name of each node in the path.
+/proc/sanitize_filepath(path)
+	. = ""
+	var/list/all_nodes = splittext(path, "/")
+	for(var/node in all_nodes)
+		if(.)
+			. += "/" // Add the delimiter before each successive node.
+		. += SANITIZE_FILENAME(node)
