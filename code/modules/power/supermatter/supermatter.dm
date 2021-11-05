@@ -22,7 +22,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	density = TRUE
 	anchored = TRUE
 	layer = MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
@@ -102,7 +102,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/proto_nitrate = 0,
 		/datum/gas/zauker = 0,
 	)
-	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
+	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on the zaps
 	var/list/gas_trans = list(
 		/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER,
 		/datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER,
@@ -166,7 +166,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/powerloss_inhibitor = 1
 	///Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor
 	var/powerloss_dynamic_scaling= 0
-	///Affects the amount of radiation the sm makes. We multiply this with power to find the rads.
+	///Affects the amount of radiation the sm makes. We multiply this with power to find the zap power.
 	var/power_transmission_bonus = 0
 	///Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.
 	var/mole_heat_penalty = 0
@@ -426,6 +426,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explode()
 
 /obj/machinery/power/supermatter_crystal/proc/explode()
+
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || victim.z != z)
 			continue
@@ -433,8 +434,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//Hilariously enough, running into a closet should make you get hit the hardest.
 			var/mob/living/carbon/human/human = victim
 			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1)) ) )
-		var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(victim, src) + 1) )
-		victim.rad_act(rads)
+
+		if (get_dist(victim, src) <= DETONATION_RADIATION_RANGE)
+			SSradiation.irradiate(victim)
 
 	var/turf/local_turf = get_turf(src)
 	for(var/mob/victim as anything in GLOB.player_list)
@@ -670,9 +672,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(power_changes)
 			power = max((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0)
 
-		if(prob(50))
-			//(1 + (tritRad + pluoxDampen * bzDampen * o2Rad * plasmaRad / (10 - bzrads))) * freonbonus
-			radiation_pulse(src, power * max(0, (1 + (power_transmission_bonus/(10-(gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus))// RadModBZ(500%)
+		emit_radiation()
 
 		//Zaps around 2.5 seconds at 1500 MeV, limited to 0.5 from 4000 MeV and up
 		if(power && (last_power_zap + 4 SECONDS - (power * 0.001)) < world.time)
@@ -747,9 +747,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		seen_by_sm.hallucination += power * hallucination_power * dist
 		seen_by_sm.hallucination = clamp(seen_by_sm.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + psy_coeff_diff, 0, 1)
-	for(var/mob/living/in_range_living in range(src, round((power * 0.01) ** 0.25)))
-		var/rad_amount = (power * 0.1) * sqrt(1 / max(get_dist(in_range_living, src), 1))
-		in_range_living.rad_act(rad_amount)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
@@ -1017,14 +1014,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [src]. That didn't seem like a good idea..."))
 			playsound(src, 'sound/effects/supermatter.ogg', 150, TRUE)
 			Consume(item)
-			radiation_pulse(src, 150, 4)
+			radiation_pulse(src, max_range = 3, threshold = 0.1, chance = 50)
 			return ..()
 		else
 			cig.light()
 			user.visible_message(span_danger("As [user] lights \their [item] on \the [src], silence fills the room..."),\
 				span_danger("Time seems to slow to a crawl as you touch \the [src] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [src]. Damn."))
 			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-			radiation_pulse(src, 50, 3)
+			radiation_pulse(src, max_range = 1, threshold = 0, chance = 100)
 			return
 	if(istype(item, /obj/item/scalpel/supermatter))
 		var/obj/item/scalpel/supermatter/scalpel = item
@@ -1047,7 +1044,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		Consume(item)
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 
-		radiation_pulse(src, 150, 4)
+		radiation_pulse(src, max_range = 3, threshold = 0.1, chance = 50)
 
 	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
 		var/vis_msg = span_danger("[user] reaches out and touches [src] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_they(TRUE)] bursts into flames before flashing into dust!")
@@ -1106,7 +1103,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		matter_power += 200
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(src, 3000, 2, TRUE)
+	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
 	for(var/mob/living/near_mob in range(10))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_SUPERMATTER)
 		if(near_mob in view())

@@ -612,6 +612,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/stealthy_weapons/crossbow/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+		desc += " Happy Halloween!"
+
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
 	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
@@ -1382,6 +1388,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/card/emag
 	cost = 4
 
+/datum/uplink_item/device_tools/emag/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/card/emag/halloween
+		desc += " This one is fitted to support the Halloween season. Candle not included."
+
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
 	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
@@ -1887,8 +1899,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
-	name = "Modified Syringe Gun"
-	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	name = "Modified  Compact Syringe Gun"
+	desc = "A compact version of the syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
 	restricted_roles = list("Geneticist", "Research Director")
