@@ -161,6 +161,7 @@
 #include "code\__DEFINES\vehicles.dm"
 #include "code\__DEFINES\vv.dm"
 #include "code\__DEFINES\wall_dents.dm"
+#include "code\__DEFINES\wall_mounted.dm"
 #include "code\__DEFINES\weather.dm"
 #include "code\__DEFINES\wiremod.dm"
 #include "code\__DEFINES\wires.dm"
