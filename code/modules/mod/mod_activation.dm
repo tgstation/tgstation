@@ -75,6 +75,10 @@
 	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/mod/control/proc/toggle_activate(mob/user, force_deactivate = FALSE)
+	if(!wearer)
+		balloon_alert(user, "put suit on back!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
 	for(var/obj/item/part as anything in mod_parts)
 		if(!force_deactivate && part.loc == src)
 			balloon_alert(user, "deploy all parts first!")

@@ -1286,6 +1286,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
 
+/*
 /datum/uplink_item/suits/hardsuit
 	name = "Syndicate Hardsuit"
 	desc = "The feared suit of a Syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
@@ -1294,6 +1295,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
+	cost = 8
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+*/
+
+/datum/uplink_item/suits/modsuit
+	name = "Syndicate MODsuit"
+	desc = "The feared MODsuit of a Syndicate agent."
+	item = /obj/item/mod/control/pre_equipped/syndicate
 	cost = 8
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 

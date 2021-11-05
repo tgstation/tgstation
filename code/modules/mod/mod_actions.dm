@@ -26,7 +26,7 @@
 		Grant(mob_to_grant)
 
 /datum/action/item_action/mod/IsAvailable()
-	if(owner == mod.ai && owner.stat != DEAD)
+	if(usr == mod.ai && !mod.ai.stat)
 		return TRUE
 	return ..()
 
@@ -36,6 +36,8 @@
 	button_icon_state = "deploy"
 
 /datum/action/item_action/mod/deploy/Trigger()
+	if(!IsAvailable())
+		return FALSE
 	mod.choose_deploy(usr)
 
 /datum/action/item_action/mod/activate
@@ -44,6 +46,8 @@
 	button_icon_state = "activate"
 
 /datum/action/item_action/mod/activate/Trigger()
+	if(!IsAvailable())
+		return FALSE
 	mod.toggle_activate(usr)
 
 /datum/action/item_action/mod/module
@@ -52,6 +56,8 @@
 	button_icon_state = "module"
 
 /datum/action/item_action/mod/module/Trigger()
+	if(!IsAvailable())
+		return FALSE
 	mod.quick_module(usr)
 
 /datum/action/item_action/mod/panel
@@ -60,4 +66,6 @@
 	button_icon_state = "panel"
 
 /datum/action/item_action/mod/panel/Trigger()
+	if(!IsAvailable())
+		return FALSE
 	mod.ui_interact(usr)

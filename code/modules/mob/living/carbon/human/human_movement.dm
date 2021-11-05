@@ -26,17 +26,6 @@
 				return FALSE
 	return ..()
 
-/mob/living/carbon/human/experience_pressure_difference()
-	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
-	if(shoes && istype(shoes, /obj/item/clothing))
-		var/obj/item/clothing/S = shoes
-		if (S.clothing_flags & NOSLIP)
-			return 0
-	return ..()
-
-/mob/living/carbon/human/mob_has_gravity()
-	return ..() || mob_negates_gravity()
-
 /mob/living/carbon/human/mob_negates_gravity()
 	return dna.species.negates_gravity(src) || ..()
 

@@ -885,7 +885,8 @@
 		return pick("trails_1", "trails_2")
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	if(buckled)
+	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
+	if(buckled || mob_negates_gravity())
 		return
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30

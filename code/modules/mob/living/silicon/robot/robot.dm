@@ -711,7 +711,6 @@
 
 	hat_offset = model.hat_offset
 
-	magpulse = model.magpulsing
 	INVOKE_ASYNC(src, .proc/updatename)
 
 

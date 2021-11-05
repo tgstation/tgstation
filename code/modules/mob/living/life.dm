@@ -182,7 +182,7 @@
 	return
 
 /mob/living/proc/handle_gravity(delta_time, times_fired)
-	var/gravity = mob_has_gravity()
+	var/gravity = has_gravity()
 	update_gravity(gravity)
 
 	if(gravity > STANDARD_GRAVITY)

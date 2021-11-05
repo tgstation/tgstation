@@ -105,8 +105,6 @@
 	///So they can initialize sparks whenever/N
 	var/datum/effect_system/spark_spread/spark_system
 
-	///Magboot-like effect.
-	var/magpulse = FALSE
 	///Jetpack-like effect.
 	var/ionpulse = FALSE
 	///Jetpack-like effect.

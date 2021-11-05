@@ -537,7 +537,7 @@
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	mod.slowdown += slowdown_active
-	mod.wearer.update_gravity(mod.wearer.mob_has_gravity())
+	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/magboot/on_deactivation()
@@ -546,7 +546,7 @@
 		return
 	REMOVE_TRAIT(mod.wearer, TRAIT_NEGATES_GRAVITY, MOD_TRAIT)
 	mod.slowdown -= slowdown_active
-	mod.wearer.update_gravity(mod.wearer.mob_has_gravity())
+	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
 /obj/item/mod/module/holster
@@ -866,7 +866,7 @@
 /obj/item/mod/module/longfall
 	name = "MOD longfall module"
 	desc = "A module that stops fall damage from happening to the user, converting into kinetic charge."
-	complexity = 2
+	complexity = 1
 	use_power_cost = 100
 	incompatible_modules = list(/obj/item/mod/module/longfall)
 
@@ -1047,13 +1047,13 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(!do_after(mod.wearer, 1 SECONDS, target = target))
-		balloon_alert(mod.wearer, "interrupted!")
-		return
 	if(istype(target, /obj/structure/closet/crate))
 		var/atom/movable/picked_crate = target
 		if(length(stored_crates) >= max_crates)
 			balloon_alert(mod.wearer, "too many crates!")
+			return
+		if(!do_after(mod.wearer, 1 SECONDS, target = target))
+			balloon_alert(mod.wearer, "interrupted!")
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
@@ -1062,6 +1062,9 @@
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
+			return
+		if(!do_after(mod.wearer, 1 SECONDS, target = target))
+			balloon_alert(mod.wearer, "interrupted!")
 			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
 		dropped_crate.forceMove(target_turf)
@@ -1186,12 +1189,14 @@
 		return
 	if(!istype(target, /obj/item))
 		return
+	if(!isturf(target.loc))
+		balloon_alert(mod.wearer, "must be on the floor!")
+		return
 	var/obj/item/microwave_target = target
 	var/datum/effect_system/spark_spread/spark_effect = new()
 	spark_effect.set_up(2, 1, mod.wearer)
 	spark_effect.start()
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
-	//TODO: microwave
 	if(microwave_target.microwave_act())
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
 	else
@@ -1362,17 +1367,20 @@
 	return dat
 
 /obj/item/implant/mod/proc/recall()
-	if(!module?.mod || module.mod.open)
+	if(!module?.mod)
 		balloon_alert(imp_in, "no connected suit!")
+		return FALSE
+	if(module.mod.open)
+		balloon_alert(imp_in, "suit is open!")
 		return FALSE
 	if(module.mod.ai_controller)
 		balloon_alert(imp_in, "already in transit!")
 		return FALSE
-	if(module.z != z)
-		balloon_alert(imp_in, "too far away!")
-		return FALSE
 	if(ismob(get_atom_on_turf(module.mod)))
 		balloon_alert(imp_in, "already on someone!")
+		return FALSE
+	if(module.z != z || get_dist(imp_in, module.mod) > MOD_AI_RANGE)
+		balloon_alert(imp_in, "too far away!")
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai

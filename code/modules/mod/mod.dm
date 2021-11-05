@@ -243,6 +243,8 @@
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 		if(!user.put_in_hands(cell))
 			cell.forceMove(drop_location())
+		update_cell_alert()
+		return
 	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
@@ -308,6 +310,7 @@
 		cell = attacking_item
 		balloon_alert(user, "cell installed")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+		update_cell_alert()
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
@@ -452,6 +455,10 @@
 	balloon_alert(user, "access updated")
 
 /obj/item/mod/control/proc/update_cell_alert()
+	if(!wearer)
+		return
+	if(!cell)
+		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
 	var/remaining_cell = cell.charge/cell.maxcharge
 	switch(remaining_cell)
 		if(0.75 to INFINITY)
@@ -476,6 +483,7 @@
 		return
 	if(part == cell)
 		cell = null
+		update_cell_alert()
 		return
 	if(part.loc == wearer)
 		return
@@ -519,6 +527,7 @@
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
+	alternate_worn_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
 
 /obj/item/clothing/head/helmet/space/mod/Destroy()

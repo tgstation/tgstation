@@ -103,6 +103,8 @@
 #define BB_MOD_TARGET "BB_mod_target"
 ///The implant the AI was created from
 #define BB_MOD_IMPLANT "BB_mod_implant"
+///How far can a MODsuit go?
+#define MOD_AI_RANGE 100
 
 ///Vending machine AI controller blackboard keys
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"

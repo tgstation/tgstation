@@ -318,20 +318,13 @@
 					continue
 				. = AM
 
-/**
- * Returns true if a mob has gravity
- *
- * I hate that this exists
- */
-/mob/proc/mob_has_gravity()
-	return has_gravity()
+/mob/has_gravity()
+	return mob_negates_gravity() || ..()
 
-/**
- * Does this mob ignore gravity
- */
 /mob/proc/mob_negates_gravity()
 	var/turf/turf = get_turf(src)
-	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
+	if(!isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
+		return TRUE
 
 /// Called when this mob slips over, override as needed
 /mob/proc/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)

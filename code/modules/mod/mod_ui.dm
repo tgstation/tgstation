@@ -56,6 +56,7 @@
 		return
 	if(!allowed(usr) && locked)
 		balloon_alert(usr, "insufficient access!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
 	if(malfunctioning && prob(75))
 		balloon_alert(usr, "button malfunctions!")
