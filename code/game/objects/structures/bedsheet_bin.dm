@@ -264,12 +264,13 @@ LINEN BINS
 /obj/item/bedsheet/random/Initialize(mapload)
 	..()
 	if(!LAZYACCESS(bedsheet_list, spawn_type))
-		LAZYSET(bedsheet_list, spawn_type, list())
-		var/possible_types = typesof(/obj/item/bedsheet)
+		var/list/spawn_list = list()
+		var/list/possible_types = typesof(/obj/item/bedsheet)
 		for(var/obj/item/bedsheet/sheet as anything in possible_types)
 			if(initial(sheet.bedsheet_type) == spawn_type)
-				bedsheet_list[spawn_type] += sheet
-	var/chosen_type = pick(bedsheet_list)
+				spawn_list += sheet
+		LAZYSET(bedsheet_list, spawn_type, spawn_list)
+	var/chosen_type = pick(bedsheet_list[spawn_type])
 	new chosen_type(loc)
 	return INITIALIZE_HINT_QDEL
 
