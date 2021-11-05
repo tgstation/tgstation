@@ -202,7 +202,7 @@
 	},
 /area/awaymission/cabin)
 "aF" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -5100,7 +5100,7 @@
 /obj/structure/window{
 	dir = 4
 	},
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nU" = (
