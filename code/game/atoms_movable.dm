@@ -34,7 +34,6 @@
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
-	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
@@ -352,7 +351,7 @@
 		if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()
 			return
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1) //separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && get_dist(src, pulledby) > 1) //separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
 
@@ -386,7 +385,7 @@
 		direction = get_dir(src, newloc)
 
 	var/can_pass_diagonally = 0
-	if ((direction & (direction - 1))) //Check if the first part of the diagonal move is possible
+	if (direction & (direction - 1)) //Check if the first part of the diagonal move is possible
 		if(direction & NORTH)
 			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : 0
 		if(!can_pass_diagonally && (direction & EAST))
@@ -658,8 +657,6 @@
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
 		var/movement_dir = get_dir(src, destination)
-
-		moving_diagonally = 0
 
 		loc = destination
 

@@ -451,7 +451,7 @@
 
 
 /mob/living/simple_animal/hostile/Move(atom/newloc, dir , step_x , step_y)
-	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
+	if(dodging && approaching_target && prob(dodge_prob) && isturf(loc) && isturf(newloc))
 		return dodge(newloc,dir)
 	else
 		return ..()
