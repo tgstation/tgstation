@@ -91,7 +91,7 @@
 /datum/action/innate/cult/request_aid/Activate()
 	var/datum/antagonist/cult/team = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(world.time < cooldown)
-		to_chat(owner, span_warning("You need to wait longer before requesting aid again!"))
+		to_chat(owner, span_warning("You need to wait longer before requesting assistance again!"))
 		return
 	if(team.cult_team.need_of_help) //check to make sure no one else has already requested assistance
 		to_chat(owner, span_warning("Someone else is currently requesting assistance!"))

@@ -90,6 +90,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		return
 	if(istype(user, /mob/living/simple_animal/shade)) //shades can't use runes
 		to_chat(user, span_warning("You aren't strong enough to invoke the rune!"))
+		return
 	var/list/invokers = can_invoke(user)
 	if(invokers.len >= req_cultists)
 		invoke(invokers)
