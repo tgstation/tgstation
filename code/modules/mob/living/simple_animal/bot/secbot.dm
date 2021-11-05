@@ -71,18 +71,18 @@
 	resize = 0.8
 	update_transform()
 
-
-/mob/living/simple_animal/bot/secbot/beepsky/explode()
-	var/atom/Tsec = drop_location()
-	new /obj/item/stock_parts/cell/potato(Tsec)
-	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
-	S.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
-	..()
-
 /mob/living/simple_animal/bot/secbot/pingsky
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
+
+
+/mob/living/simple_animal/bot/secbot/beepsky/explode()
+	var/atom/Tsec = drop_location()
+	new /obj/item/stock_parts/cell/potato(Tsec)
+	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/drinking_oil = new(Tsec)
+	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
+	..()
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
@@ -195,16 +195,16 @@
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
 	var/final = FALSE
+	if(emagged)
+		final |= JUDGE_EMAGGED
+	if(bot_type == ADVANCED_SEC_BOT)
+		final |= JUDGE_IGNOREMONKEYS
 	if(security_mode_flags & SECBOT_CHECK_IDS)
 		final |= JUDGE_IDCHECK
 	if(security_mode_flags & SECBOT_CHECK_RECORDS)
 		final |= JUDGE_RECORDCHECK
 	if(security_mode_flags & SECBOT_CHECK_WEAPONS)
 		final |= JUDGE_WEAPONCHECK
-	if(emagged)
-		final |= JUDGE_EMAGGED
-	if(bot_type == ADVANCED_SEC_BOT)
-		final |= JUDGE_IGNOREMONKEYS
 	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
@@ -262,13 +262,13 @@
 		return
 	if(!iscarbon(attack_target))
 		return ..()
-	var/mob/living/carbon/C = attack_target
-	if(!C.IsParalyzed() || !(security_mode_flags & SECBOT_HANDCUFF_TARGET))
+	var/mob/living/carbon/carbon_target = attack_target
+	if(!carbon_target.IsParalyzed() || !(security_mode_flags & SECBOT_HANDCUFF_TARGET))
 		if(!check_nap_violations())
 			stun_attack(attack_target, TRUE)
 		else
 			stun_attack(attack_target)
-	else if(C.canBeHandcuffed() && !C.handcuffed)
+	else if(carbon_target.canBeHandcuffed() && !carbon_target.handcuffed)
 		start_handcuffing(attack_target)
 
 /mob/living/simple_animal/bot/secbot/hitby(atom/movable/hitting_atom, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
@@ -276,27 +276,27 @@
 		var/obj/item/item_hitby = hitting_atom
 		var/mob/thrown_by = item_hitby.thrownby?.resolve()
 		if(item_hitby.throwforce < src.health && thrown_by && ishuman(thrown_by))
-			var/mob/living/carbon/human/H = thrown_by
-			retaliate(H)
+			var/mob/living/carbon/human/human_throwee = thrown_by
+			retaliate(human_throwee)
 	..()
 
-/mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/C)
+/mob/living/simple_animal/bot/secbot/proc/start_handcuffing(mob/living/carbon/current_target)
 	mode = BOT_ARREST
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-	C.visible_message(span_danger("[src] is trying to put zipties on [C]!"),\
+	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
-	addtimer(CALLBACK(src, .proc/handcuff_target, C), 60)
+	addtimer(CALLBACK(src, .proc/handcuff_target, target), 60)
 
-/mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/C)
-	if(!on || !Adjacent(C) || !isturf(C.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
+/mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
+	if(!on || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
-	if(!C.handcuffed)
-		C.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(C))
-		C.update_handcuffed()
+	if(!current_target.handcuffed)
+		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
+		current_target.update_handcuffed()
 		playsound(src, "law", 50, FALSE)
 		back_to_idle()
 
-/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, harm = FALSE)
+/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
@@ -304,22 +304,22 @@
 	var/threat = 5
 
 	if(harm)
-		weapon.attack(C, src)
-	if(ishuman(C))
-		C.stuttering = 5
-		C.Paralyze(100)
-		var/mob/living/carbon/human/H = C
-		threat = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		weapon.attack(current_target, src)
+	if(ishuman(current_target))
+		current_target.stuttering = 5
+		current_target.Paralyze(100)
+		var/mob/living/carbon/human/human_target = current_target
+		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 	else
-		C.Paralyze(100)
-		C.stuttering = 5
-		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
+		current_target.Paralyze(100)
+		current_target.stuttering = 5
+		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
-	log_combat(src,C,"stunned")
+	log_combat(src, target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
-		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message(span_danger("[src] stuns [C]!"),\
+		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
+	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
@@ -428,27 +428,27 @@
 /mob/living/simple_animal/bot/secbot/proc/look_for_perp()
 	set_anchored(FALSE)
 	var/judgement_criteria = judgement_criteria()
-	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
-		if((C.stat) || (C.handcuffed))
+	for(var/mob/living/carbon/nearby_carbons in view(7,src)) //Let's find us a criminal
+		if((nearby_carbons.stat) || (nearby_carbons.handcuffed))
 			continue
 
-		if((C.name == oldtarget_name) && (world.time < last_found + 100))
+		if((nearby_carbons.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+		threatlevel = nearby_carbons.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
 		if(!threatlevel)
 			continue
 
 		if(threatlevel >= 4)
-			target = C
-			oldtarget_name = C.name
+			target = nearby_carbons
+			oldtarget_name = nearby_carbons.name
 			speak("Level [threatlevel] infraction alert!")
 			if(bot_type == ADVANCED_SEC_BOT)
 				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 			else
 				playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
-			visible_message("<b>[src]</b> points at [C.name]!")
+			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, .proc/handle_automated_action)
 			break
@@ -460,18 +460,18 @@
 
 /mob/living/simple_animal/bot/secbot/explode()
 
-	walk_to(src,0)
+	walk_to(src, 0)
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	if(bot_type == ADVANCED_SEC_BOT)
-		var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
-		Sa.build_step = 1
-		Sa.add_overlay("hs_hole")
-		Sa.created_name = name
+		var/obj/item/bot_assembly/ed209/ed_assembly = new(Tsec)
+		ed_assembly.build_step = ASSEMBLY_FIRST_STEP
+		ed_assembly.add_overlay("hs_hole")
+		ed_assembly.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
-		var/obj/item/gun/energy/disabler/G = new (Tsec)
-		G.cell.charge = 0
-		G.update_appearance()
+		var/obj/item/gun/energy/disabler/disabler_gun = new(Tsec)
+		disabler_gun.cell.charge = 0
+		disabler_gun.update_appearance()
 		if(prob(50))
 			new /obj/item/bodypart/l_leg/robot(Tsec)
 			if(prob(25))
@@ -482,10 +482,10 @@
 			else
 				new /obj/item/clothing/suit/armor/vest(Tsec)
 	else
-		var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
-		Sa.build_step = 1
-		Sa.add_overlay("hs_hole")
-		Sa.created_name = name
+		var/obj/item/bot_assembly/secbot/secbot_assembly = new(Tsec)
+		secbot_assembly.build_step = ASSEMBLY_FIRST_STEP
+		secbot_assembly.add_overlay("hs_hole")
+		secbot_assembly.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
 		drop_part(weapon, Tsec)
 
@@ -523,7 +523,7 @@
 	if(!ishuman(target))
 		return TRUE
 	var/mob/living/carbon/human/human_target = target
-	var/obj/item/card/id/target_id = human_target.get_idcard(TRUE)
+	var/obj/item/card/id/target_id = human_target.get_idcard()
 	if(!target_id)
 		say("Suspect NAP Violation: No ID card found.")
 		nap_violation(target)
