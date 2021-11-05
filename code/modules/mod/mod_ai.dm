@@ -76,9 +76,13 @@
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	cell.charge = max(0, cell.charge - CELL_PER_STEP)
-	if(!wearer)
-		return step(src, direction)
-	return step(wearer, direction)
+	var/atom/movable/mover = wearer || src
+	if(mover == wearer)
+		var/mob/relayed = mover.loc
+		if(istype(relayed) && relayed.buckled)
+			relayed = relayed.buckled
+		return relayed.relaymove(mover, direction)
+	return step(mover, direction)
 
 #undef CARDINAL_DELAY
 #undef DIAGONAL_DELAY

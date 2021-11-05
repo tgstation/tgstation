@@ -513,7 +513,6 @@
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	alternate_worn_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
 
 /obj/item/clothing/head/helmet/space/mod/Destroy()
