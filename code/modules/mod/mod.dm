@@ -48,7 +48,9 @@
 	var/complexity = 0
 	/// Power usage of the MOD.
 	var/cell_drain = 0
-	/// Slowdown when active.
+	/// Slowdown of the MOD when not active.
+	var/slowdown_inactive = 2
+	/// Slowdown of the MOD when active.
 	var/slowdown_active = 1
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
@@ -82,11 +84,13 @@
 	if(newtheme)
 		theme = newtheme
 	theme = GLOB.mod_themes[theme]
-	slowdown = theme.slowdown_unactive
+	slowdown_inactive = theme.slowdown_inactive
+	slowdown_active = theme.slowdown_active
+	slowdown = slowdown_inactive
 	complexity_max = theme.complexity_max
 	skin = theme.default_skin
 	ui_theme = theme.ui_theme
-	cell_drain = theme.cell_usage
+	cell_drain = theme.cell_drain
 	wires = new /datum/wires/mod(src)
 	if(length(req_access))
 		locked = TRUE
@@ -119,6 +123,8 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+		if(istype(theme, /datum/mod_theme/syndicate)) //holy fuck
+			piece.color = COLOR_THEME_OPERATIVE //remove this before its merged
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
@@ -617,9 +623,15 @@
 
 /obj/item/mod/control/pre_equipped/engineering
 	theme = /datum/mod_theme/engineering
+	initial_modules = list(/obj/item/mod/module/storage)
+
+/obj/item/mod/control/pre_equipped/advanced
+	theme = /datum/mod_theme/advanced
+	cell = /obj/item/stock_parts/cell/super
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/jetpack, /obj/item/mod/module/magboot, /obj/item/mod/module/rad_protection)
 
 /obj/item/mod/control/pre_equipped/syndicate
 	theme = /datum/mod_theme/syndicate
 	req_access = list(ACCESS_SYNDICATE)
 	cell = /obj/item/stock_parts/cell/hyper
-	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/jetpack)
+	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/jetpack, /obj/item/mod/module/pathfinder)

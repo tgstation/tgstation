@@ -60,8 +60,8 @@
 								"Cybernetics",
 								"Implants",
 								"Control Interfaces",
-								"Modular Suits",
-								"Modular Suit Modules",
+								"MOD Construction",
+								"MOD Modules",
 								"Misc"
 								)
 

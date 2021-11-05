@@ -168,13 +168,12 @@
 /obj/item/mod/control/proc/finish_activation(on)
 	icon_state = "[skin]-control[on ? "-sealed" : ""]"
 	worn_icon_state = "[skin]-control[on ? "-sealed" : ""]"
+	slowdown = on ? slowdown_active : slowdown_inactive
 	if(on)
-		slowdown = theme.slowdown_active
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_equip()
 		START_PROCESSING(SSobj,src)
 	else
-		slowdown = theme.slowdown_unactive
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_unequip()
 			if(module.active)

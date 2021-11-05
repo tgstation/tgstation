@@ -87,6 +87,7 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type= /obj/item/clothing/shoes/magboots/advance
+	mod_type = /obj/item/mod/control/pre_equipped/advanced
 
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security

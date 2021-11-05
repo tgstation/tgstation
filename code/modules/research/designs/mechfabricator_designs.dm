@@ -980,7 +980,7 @@
 	materials = list(/datum/material/iron = 10000, /datum/material/plasma = 5000)
 	construction_time = 25 SECONDS
 	build_path = /obj/item/mod/construction/shell
-	category = list("Modular Suits")
+	category = list("MOD Construction")
 
 /datum/design/mod_helmet
 	name = "MOD helmet"
@@ -990,7 +990,7 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/helmet
-	category = list("Modular Suits")
+	category = list("MOD Construction")
 
 /datum/design/mod_chestplate
 	name = "MOD chestplate"
@@ -1000,7 +1000,7 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/chestplate
-	category = list("Modular Suits")
+	category = list("MOD Construction")
 
 /datum/design/mod_gauntlets
 	name = "MOD gauntlets"
@@ -1010,7 +1010,7 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/gauntlets
-	category = list("Modular Suits")
+	category = list("MOD Construction")
 
 /datum/design/mod_boots
 	name = "MOD boots"
@@ -1020,7 +1020,29 @@
 	materials = list(/datum/material/iron = 5000)
 	construction_time = 10 SECONDS
 	build_path = /obj/item/mod/construction/boots
-	category = list("Modular Suits")
+	category = list("MOD Construction")
+
+/datum/design/mod_armor
+	name = "MOD armor"
+	desc = "External armor for a Modular Suit."
+	id = "mod_armor"
+	build_type = MECHFAB|PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/plasma = 1000)
+	construction_time = 15 SECONDS
+	build_path = /obj/item/mod/construction/armor
+	category = list("MOD Construction", "Equipment")
+
+/datum/design/mod_armor/New()
+	. = ..()
+	var/obj/item/mod/construction/armor/armor_type = build_path
+	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
+	name = "MOD [theme.name] armor"
+	desc = "External armor for a Modular Suit. [theme.desc]"
+
+/datum/design/mod_armor/engineering
+	id = "mod_armor_engineering"
+	build_path = /obj/item/mod/construction/armor/engineering
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/mod_paint_kit
 	name = "MOD paint kit"
@@ -1030,7 +1052,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/plastic = 500)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
-	category = list("Modular Suits")
+	category = list("Misc")
 
 /datum/design/mod_storage
 	name = "MOD Module: Storage"
@@ -1040,7 +1062,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/storage
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_visor_medhud
 	name = "MOD Module: Medical Visor"
@@ -1050,7 +1072,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/medhud
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_visor_diaghud
 	name = "MOD Module: Diagnostic Visor"
@@ -1060,7 +1082,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/diaghud
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_visor_sechud
 	name = "MOD Module: Security Visor"
@@ -1070,7 +1092,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/sechud
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_visor_welding
 	name = "MOD Module: Welding Visor"
@@ -1080,7 +1102,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/welding
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_visor_sunglasses
 	name = "MOD Module: Protective Visor"
@@ -1090,7 +1112,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/sunglasses
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_visor_meson
 	name = "MOD Module: Meson Visor"
@@ -1100,7 +1122,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/meson
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_health_analyzer
 	name = "MOD Module: Health Analyzer"
@@ -1110,7 +1132,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/health_analyzer
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_stealth
 	name = "MOD Module: Cloak"
@@ -1120,7 +1142,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/stealth
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_jetpack
 	name = "MOD Module: Ion Jetpack"
@@ -1130,7 +1152,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/jetpack
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_magboot
 	name = "MOD Module: Magnetic Stabilizator"
@@ -1140,7 +1162,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/magboot
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_holster
 	name = "MOD Module: Holster"
@@ -1150,7 +1172,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/holster
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_tether
 	name = "MOD Module: Emergency Tether"
@@ -1160,7 +1182,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/tether
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_mouthhole
 	name = "MOD Module: Eating Apparatus"
@@ -1170,7 +1192,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/mouthhole
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_rad_protection
 	name = "MOD Module: Radiation Protection"
@@ -1180,7 +1202,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/rad_protection
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_emp_shield
 	name = "MOD Module: EMP Shield"
@@ -1190,7 +1212,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/emp_shield
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_flashlight
 	name = "MOD Module: Flashlight"
@@ -1200,7 +1222,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/flashlight
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_science_scanner
 	name = "MOD Module: Science Scanner"
@@ -1210,7 +1232,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/science_scanner
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_gps
 	name = "MOD Module: Internal GPS"
@@ -1220,7 +1242,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/gps
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_constructor
 	name = "MOD Module: Constructor"
@@ -1230,7 +1252,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/constructor
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_longfall
 	name = "MOD Module: Longfall"
@@ -1240,7 +1262,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/longfall
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_thermal_regulator
 	name = "MOD Module: Thermal Regulator"
@@ -1250,7 +1272,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/thermal_regulator
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_injector
 	name = "MOD Module: Injector"
@@ -1260,7 +1282,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/injector
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_microwave_beam
 	name = "MOD Module: Microwave Beam"
@@ -1270,7 +1292,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/microwave_beam
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_bikehorn
 	name = "MOD Module: Bike Horn"
@@ -1280,7 +1302,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/bikehorn
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_clamps
 	name = "MOD Module: Crate Clamp"
@@ -1290,7 +1312,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/clamp
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_drill
 	name = "MOD Module: Drill"
@@ -1300,7 +1322,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/drill
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_orebag
 	name = "MOD Module: Ore Bag"
@@ -1310,7 +1332,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/orebag
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/organ_thrower
 	name = "MOD Module: Organ Thrower"
@@ -1320,7 +1342,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/organ_thrower
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/pathfinder
 	name = "MOD Module: Pathfinder"
@@ -1330,7 +1352,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/pathfinder
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
 
 /datum/design/mod_circuit
 	name = "MOD Module: Circuit Adapter"
@@ -1340,4 +1362,4 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/circuit
-	category = list("Modular Suit Modules")
+	category = list("MOD Modules")
