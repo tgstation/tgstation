@@ -18,8 +18,6 @@
 
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
-	if(building)
-		setDir(turn(ndir, 180))
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return

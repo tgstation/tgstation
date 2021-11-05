@@ -10,6 +10,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
+	pixel_shift = 24
 
 /obj/machinery/firealarm
 	name = "fire alarm"
@@ -41,13 +42,9 @@
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
-	if(dir)
-		src.setDir(dir)
 	if(building)
 		buildstage = 0
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)

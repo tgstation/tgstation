@@ -39,6 +39,8 @@
 		var/floor_to_wall = get_dir(user, on_wall)
 
 		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
+		O.setDir(floor_to_wall)
+
 		if(pixel_shift)
 			switch(floor_to_wall)
 				if(NORTH)

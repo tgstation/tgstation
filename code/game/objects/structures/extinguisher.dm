@@ -15,9 +15,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 		opened = TRUE
 		icon_state = "extinguisher_empty"
 	else
@@ -165,3 +162,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 	desc = "Used for building wall-mounted extinguisher cabinets."
 	icon_state = "extinguisher"
 	result_path = /obj/structure/extinguisher_cabinet
+	pixel_shift = 29

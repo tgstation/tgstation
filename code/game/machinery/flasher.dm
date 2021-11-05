@@ -33,11 +33,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	if(built)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
-	else
+	if(!built)
 		bulb = new(src)
 
 
@@ -202,6 +198,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null
+	pixel_shift = 28
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()

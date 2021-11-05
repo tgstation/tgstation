@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
+	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -55,13 +56,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()
-	if(ndir)
-		setDir(ndir)
 
 	if(nbuild)
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
 
 	update_appearance()
 
