@@ -1,0 +1,4 @@
+author: "TheFakeElon"
+delete-after: True
+changes: 
+  - server: "Patches multiple(?) arbitrary file related vulnerabilities"
