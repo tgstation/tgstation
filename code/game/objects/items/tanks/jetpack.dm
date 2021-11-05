@@ -149,7 +149,7 @@
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
-	inhand_icon_state =  "jetpack-void"
+	inhand_icon_state = "jetpack-void"
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
@@ -187,7 +187,7 @@
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	icon_state = "jetpack-black"
-	inhand_icon_state =  "jetpack-black"
+	inhand_icon_state = "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
 

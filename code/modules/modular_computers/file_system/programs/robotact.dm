@@ -53,7 +53,7 @@
 	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
 	data["lampIntensity"] = borgo.lamp_intensity //Borgo lamp power setting
 	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
-	data["printerPictures"] =  borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
+	data["printerPictures"] = borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
 	data["printerToner"] = borgo.toner //amount of toner
 	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
 	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade

@@ -219,7 +219,7 @@
 		SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
 		our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/knotted))
 
-	else if(tied ==  SHOES_UNTIED)
+	else if(tied == SHOES_UNTIED)
 		var/wiser = TRUE // did we stumble and realize our laces are undone?
 		switch(rand(1, 1000))
 			if(1) // .1% chance to trip and fall over (note these are per step while our laces are undone)
