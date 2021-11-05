@@ -12,10 +12,3 @@
 /obj/item/clothing/shoes/cult/alt
 	name = "cultist boots"
 	icon_state = "cultalt"
-
-/obj/item/clothing/shoes/cult/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/shoes/cult/alt/ghost/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)

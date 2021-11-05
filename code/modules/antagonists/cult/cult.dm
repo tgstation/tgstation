@@ -11,6 +11,7 @@
 	suicide_cry = "FOR NAR'SIE!!"
 	preview_outfit = /datum/outfit/cultist
 	var/datum/action/innate/cult/comm/communion = new
+	var/datum/action/innate/cult/request_aid/aid = new
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
@@ -45,6 +46,7 @@
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
+	QDEL_NULL(aid)
 	QDEL_NULL(vote)
 	return ..()
 
@@ -129,6 +131,7 @@
 	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
+	aid.Grant(current)
 	if(ishuman(current))
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
@@ -148,6 +151,7 @@
 	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
+	aid.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
@@ -263,6 +267,7 @@
 	var/reckoning_complete = FALSE
 	var/cult_risen = FALSE
 	var/cult_ascendent = FALSE
+	var/need_of_help
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)

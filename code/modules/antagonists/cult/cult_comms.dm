@@ -1,4 +1,4 @@
-// Contains cult communion, guide, and cult master abilities
+// Contains cult communion, assistance, guide, and cult master abilities
 
 /datum/action/innate/cult
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -78,6 +78,100 @@
 		else if(M in GLOB.dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
+
+///a button for requesting cultists come to your location, lasts for 3 minutes (during which time no one else can request assistance)
+/datum/action/innate/cult/request_aid
+	name = "Request Assistance"
+	desc = "Request a number of cultists of your choosing to your location."
+	button_icon_state = "assistance"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	var/cooldown = 0
+	var/base_cooldown = 180 SECONDS
+
+/datum/action/innate/cult/request_aid/Activate()
+	var/datum/antagonist/cult/team = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(world.time < cooldown)
+		to_chat(owner, span_warning("You need to wait longer before requesting aid again!"))
+		return
+	if(team.cult_team.need_of_help) //check to make sure no one else has already requested assistance
+		to_chat(owner, span_warning("Someone else is currently requesting assistance!"))
+		return
+	var/number = tgui_alert(owner, "How many cultists do you need?",, list("0", "1", "2", "3"))
+	if(number == "0")
+		to_chat(owner, "You decide not to request help.")
+		return
+	team.cult_team.need_of_help = owner
+	for(var/datum/mind/cultist as anything in get_antag_minds(/datum/antagonist/cult))
+		if(cultist.current && cultist.current.stat != DEAD && cultist.current.client)
+			var/area/location = get_area(owner)
+			var/title = "Acolyte"
+			if(owner.mind && owner.mind.has_antag_datum(/datum/antagonist/cult/master))
+				title = "Master"
+			else if(!ishuman(owner))
+				title = "Construct"
+			to_chat(cultist.current, span_cultitalic("<b>[title] [findtextEx(owner.name, owner.real_name) ? owner.name : "[owner.real_name] (as [owner.name])"] has requested the aid of [number] cultists in the [location.name]! <a href=?src=[REF(src)];pledge_assistance=1>(Pledge Assistance)</b>"))
+			SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+	cooldown = world.time + base_cooldown
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_need_of_help,team.cult_team), base_cooldown, TIMER_STOPPABLE)
+	return
+
+///when a player clicks the "Pledge Assistance" link, they gain a tracker and the rest of cult is notified about it
+/datum/action/innate/cult/request_aid/Topic(href, href_list)
+	if(href_list["pledge_assistance"])
+		if(istype(usr, /mob/living) && IS_CULTIST(usr.mind.current))
+			var/mob/living/user = usr
+			var/datum/antagonist/cult/team = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+			if(!team.cult_team.need_of_help) //check to make sure someone has requested assistance
+				to_chat(user, span_warning("No one is in need of assistance right now!"))
+				return
+			if(user == team.cult_team.need_of_help)
+				to_chat(user, span_warning("You can't answer your own request for assistance!"))
+				return
+			if(user.has_status_effect(/datum/status_effect/agent_pinpointer/cult_assistance)) //if you're already helping someone, you can't pledge again
+				to_chat(user, span_warning("You are already assisting someone!"))
+				return
+			for(var/datum/mind/cultist as anything in get_antag_minds(/datum/antagonist/cult))
+				if(cultist.current && cultist.current.stat != DEAD && cultist.current.client)
+					var/title = "Acolyte"
+					if(usr.mind && usr.mind.has_antag_datum(/datum/antagonist/cult/master))
+						title = "Master"
+					else if(!ishuman(usr))
+						title = "Construct"
+					to_chat(cultist.current, span_cultitalic("<b>[title] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]</b> has pledged their assistance!"))
+					SEND_SOUND(cultist.current, sound('sound/effects/ghost2.ogg',0,1,75))
+			user.apply_status_effect(/datum/status_effect/agent_pinpointer/cult_assistance)
+			to_chat(user, span_boldnotice("You have pledged your assistance! Follow the tracker to find the cultist and give them whatever help they need. Consider using teleport runes to get there faster!"))
+	return
+
+///a tracker for finding the cultist who requested assistance
+/datum/status_effect/agent_pinpointer/cult_assistance
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/cult_assistance
+	tick_interval = 5
+	minimum_range = 0
+	range_fuzz_factor = 0
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/cult_assistance
+	name = "Assistance Tracker"
+	desc = "Leads you to the location of the cultist who requested assistance."
+
+///locates the cult member in need of assistance
+/datum/status_effect/agent_pinpointer/cult_assistance/scan_for_target()
+	var/datum/antagonist/cult/team = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	scan_target = null
+	if(team.cult_team.need_of_help) //check to make sure someone has requested help
+		var/mob/living/target = team.cult_team.need_of_help
+		scan_target = target
+	else
+		owner.remove_status_effect(/datum/status_effect/agent_pinpointer/cult_assistance)
+	return
+
+///removes anyone in need of help, and wipes the pin pointer from anyone helping them. called once the duration of request assistance has run its course
+/proc/reset_need_of_help(datum/team/cult/team)
+	for(var/datum/mind/cultists in team.members)
+		if(cultists.current && cultists.current.stat != DEAD && cultists.current.client)
+			to_chat(cultists, span_warning("The request for assistance expires!"))
+	team.need_of_help = null
+	return
 
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"

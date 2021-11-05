@@ -760,7 +760,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 
-//Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
+//Rite of Spectral Ascension: allows a user to ascend as a cult ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Spirit Realm"
 	cultist_desc = "allows you to ascend as a spirit. The invoker must not move from atop the rune."

@@ -95,17 +95,6 @@
 		return
 	..()
 
-/obj/item/melee/cultblade/ghost
-	name = "eldritch sword"
-	force = 19 //can't break normal airlocks
-	item_flags = NEEDS_PERMIT | DROPDEL
-	flags_1 = NONE
-	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
-
-/obj/item/melee/cultblade/ghost/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!IS_CULTIST(user))
@@ -356,14 +345,6 @@
 	icon_state = "cultrobesalt"
 	inhand_icon_state = "cultrobesalt"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
-
-/obj/item/clothing/suit/hooded/cultrobes/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/suit/hooded/cultrobes/alt/ghost/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
 
 /obj/item/clothing/head/magus
 	name = "magus helm"
