@@ -63,6 +63,10 @@
 		return
 	if(crystal_charge < ETHEREAL_CHARGE_FULL - amount / 3.5)
 		adjust_charge(amount / 3.5)
+		return
+	if(crystal_charge > ETHEREAL_CHARGE_OVERLOAD) //prevents reduction of charge of overcharged ethereals
+		return
+	adjust_charge(ETHEREAL_CHARGE_FULL - crystal_charge) //perfectly tops off an ethereal if the amount of power that would be applied would go into overcharge
 
 /obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
