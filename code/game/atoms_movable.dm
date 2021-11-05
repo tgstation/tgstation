@@ -385,7 +385,7 @@
 	if(!direction)
 		direction = get_dir(src, newloc)
 
-	var/can_pass_diagonally = FALSE
+	var/can_pass_diagonally = 0
 	if ((direction & (direction - 1))) //Check if the first part of the diagonal move is possible
 		if(direction & NORTH)
 			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : 0
