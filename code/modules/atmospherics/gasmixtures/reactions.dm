@@ -855,16 +855,17 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
+	var/density = (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate]) / air.volume
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var consumed_amount = min(5, cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
+	var consumed_amount = min(max(min(5000 * density, air.volume, cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]) / 100, 1), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
-	if(cached_gases[/datum/gas/bz][MOLES] < 30)
+	if(density * 25 > consumed_amount)
 		ASSERT_GAS(/datum/gas/nitrogen, air)
 		ASSERT_GAS(/datum/gas/helium, air)
 		ASSERT_GAS(/datum/gas/plasma, air)
@@ -902,13 +903,14 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
+	var/density = (cached_gases[/datum/gas/tritium][MOLES] + cached_gases[/datum/gas/proto_nitrate]) / air.volume
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
+	var produced_amount = min(max(min(1000 * density, air.volume, cached_gases[/datum/gas/tritium], cached_gases[/datum/gas/proto_nitrate] * 100) / 50, 1), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/hydrogen, air)
