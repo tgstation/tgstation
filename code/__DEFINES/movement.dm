@@ -24,3 +24,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVEMENT_SPACE_PRECEDENCE 2 //Very few things should override this
 ///Standard, go lower then this if you want to override, higher otherwise
 #define MOVEMENT_DEFAULT_PRECEDENCE 10
+
+//Movement loop flags
+///Should the loop act immediately following its addition?
+#define MOVEMENT_LOOP_START_FAST (1<<0)

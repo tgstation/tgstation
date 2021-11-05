@@ -55,7 +55,7 @@
 		return
 
 	lifetime -= delay //This needs to be based on work over time, not just time passed
-	if(lifetime <= 0) //Otherwise lag would make things look really weird
+	if(lifetime < 0) //Otherwise lag would make things look really weird
 		qdel(src)
 		return
 
@@ -271,12 +271,16 @@
 	var/turf/moving_towards
 	///Should we try and stay on the path, or is deviation alright
 	var/home = FALSE
-	///When this gets larger then 1 or smaller then -1 we move a turf
+	///When this gets larger then 1 we move a turf
 	var/x_ticker = 0
 	var/y_ticker = 0
-	///The rate at which we move, between -1 and 1
+	///The rate at which we move, between 0 and 1
 	var/x_rate = 1
 	var/y_rate = 1
+	//We store the signs of x and y seperately, because byond will round negative numbers down
+	//So doing all our operations with absolute values then multiplying them is easier
+	var/x_sign = 0
+	var/y_sign = 0
 
 /datum/move_loop/has_target/move_towards/setup(delay, timeout, atom/chasing, home = FALSE)
 	. = ..()
@@ -288,10 +292,7 @@
 		if(ismovable(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
 		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
-
-/datum/move_loop/has_target/move_towards/start_loop()
 	update_slope()
-	return ..()
 
 /datum/move_loop/has_target/move_towards/Destroy()
 	if(home)
@@ -312,18 +313,24 @@
 	var/y = moving.y
 	var/z = moving.z
 
-	moving_towards = locate(x + round(x_ticker), y + round(y_ticker), z)
+	moving_towards = locate(x + round(x_ticker) * x_sign, y + round(y_ticker) * y_sign, z)
 	//The tickers serve as good methods of tracking remainder
-	if(abs(x_ticker) >= 1)
-		x_ticker -= (x_ticker > 0) ? 1 : -1
-	if(abs(y_ticker) >= 1)
-		y_ticker -= (y_ticker > 0) ? 1 : -1
+	if(x_ticker >= 1)
+		x_ticker -= 1
+	if(y_ticker >= 1)
+		y_ticker -= 1
 	return moving.Move(moving_towards, get_dir(moving, moving_towards))
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
-	if(moving.loc != moving_towards) //If we didn't go where we should have, update slope to account for the deviation
+	if(moving.loc != moving_towards && homing) //If we didn't go where we should have, update slope to account for the deviation
 		update_slope()
+
+/datum/move_loop/has_target/move_towards/handle_no_target()
+	SIGNAL_HANDLER
+	if(homing)
+		return ..()
+	target = null
 
 /**
  * Recalculates the slope between our object and the target, sets our rates to it
@@ -342,21 +349,27 @@
 	//This is so we never move more then once tile at once
 	var/delta_y = target.y - moving.y
 	var/delta_x = target.x - moving.x
-	if(abs(delta_x) >= abs(delta_y))
+	//It's more convienent to store delta x and y as absolute values
+	//and modify them right at the end then it is to deal with rounding errors
+	x_sign = (delta_x > 0) ? 1 : -1
+	y_sign = (delta_y > 0) ? 1 : -1
+	delta_x = abs(delta_x)
+	delta_y = abs(delta_y)
+
+	if(delta_x >= delta_y)
 		if(delta_x == 0) //Just go up/down
 			x_rate = 0
-			y_rate = (delta_y > 0) ? 1 : -1
+			y_rate = 1
 			return
-		x_rate = (delta_x > 0) ? 1 : -1
-		y_rate = delta_y / abs(delta_x) //rise over run, you know the deal
+		x_rate = 1
+		y_rate = delta_y / delta_x //rise over run, you know the deal
 	else
 		if(delta_y == 0) //Just go right/left
+			x_rate = 1
 			y_rate = 0
-			x_rate = (delta_x > 0) ? 1 : -1
 			return
-		y_rate = (delta_y > 0) ? 1 : -1
-		x_rate = delta_x / abs(delta_y) //Keep the larger step size at 1
-
+		x_rate = delta_x / delta_y //Keep the larger step size at 1
+		y_rate = 1
 
 /**
  * Wrapper for walk_towards, not reccomended, as it's movement ends up being a bit stilted
