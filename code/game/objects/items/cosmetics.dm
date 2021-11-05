@@ -245,7 +245,7 @@
 
 /obj/item/NTPkit/examine(mob/user)
 	. = ..()
-	. += span_notice("Kit is [removal_mode ? "buzzing softly" : "silent"].<br>Alt-click to change the color.<br>Ctrl-click to change its mode.")
+	. += span_notice("NPT kit is [removal_mode ? "buzzing softly" : "silent"].<br>Alt-click to change the color.<br>Ctrl-click to change its mode.")
 
 /obj/item/NTPkit/examine_more(mob/user)
 	. = ..()
@@ -254,6 +254,8 @@
 	. += span_notice("<br>To remove the color, hold the button for 3 seconds and inhale again.")
 
 /obj/item/NTPkit/attack_self(mob/user, modifiers)
+	var/freq = rand(24750, 26550)
+	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	. = ..()
 
 /obj/item/NTPkit/proc/select_colour(mob/user)
@@ -265,14 +267,17 @@
 
 /obj/item/NTPkit/CtrlClick(mob/user)
 	if(removal_mode)
-		to_chat(user, span_notice("You hold the button and kit clicks in your hands."))
-		removal_mode = TRUE
-		return
-	else
 		to_chat(user, span_notice("You hold the button and kit starts to buzz in your hands."))
+		var/sound_freq = rand(5120, 8800)
+		playsound(src, 'sound/machines/synth_yes.ogg', 10, TRUE, frequency = sound_freq)
 		removal_mode = FALSE
 		return
-		
+	else
+		to_chat(user, span_notice("You hold the button and kit clicks in your hands before going silent."))
+		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+		removal_mode = TRUE
+		return
+
 obj/item/NTPkit/AltClick(mob/user)
 	if(!isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		select_colour(user)
