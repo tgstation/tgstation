@@ -40,7 +40,10 @@
 			. = VV_TYPE
 
 	else if(islist(var_value))
-		. = VV_LIST
+		if(var_name in GLOB.color_vars)
+			. = VV_COLOR_MATRIX
+		else
+			. = VV_LIST
 
 	else if(isfile(var_value))
 		. = VV_FILE
@@ -57,6 +60,7 @@
 				VV_MESSAGE,
 				VV_ICON,
 				VV_COLOR,
+				VV_COLOR_MATRIX,
 				VV_ATOM_REFERENCE,
 				VV_DATUM_REFERENCE,
 				VV_MOB_REFERENCE,
@@ -279,6 +283,11 @@
 			if(.["value"] == null)
 				.["class"] = null
 				return
+
+		if(VV_COLOR_MATRIX)
+			.["value"] = open_color_matrix_editor()
+			if(.["value"] == color_matrix_identity()) //identity is equivalent to null
+				.["class"] = null
 
 		if(VV_INFINITY)
 			.["value"] = INFINITY

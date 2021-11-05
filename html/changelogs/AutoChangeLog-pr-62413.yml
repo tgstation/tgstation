@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - admin: "Added the color matrix editor. It is available from a dropdown option in an atom's View Variables menu as well as when editing an existing color matrix."

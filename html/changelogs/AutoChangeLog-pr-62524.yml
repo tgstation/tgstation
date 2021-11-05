@@ -1,4 +1,0 @@
-author: "Stonetear"
-delete-after: True
-changes: 
-  - bugfix: "PACMANs could previously be emaged, but now there's a indicator when you do so successfully."

@@ -45,7 +45,6 @@ $bg-map: colors.$bg-map !default;
 .Button {
   position: relative;
   display: inline-block;
-  display: inline-flex;
   line-height: 1.667em;
   padding: 0 0.5em;
   margin-right: base.em(2px);
@@ -91,7 +90,6 @@ $bg-map: colors.$bg-map !default;
 
 .Button--fluid {
   display: block;
-  display: flex;
   margin-left: 0;
   margin-right: 0;
 }
@@ -135,20 +133,4 @@ $bg-map: colors.$bg-map !default;
 
 .Button--selected {
   @include button-color($color-selected);
-}
-
-.Button--verticalAlign--top {
-  align-items: flex-start;
-}
-
-.Button--verticalAlign--middle {
-  align-items: center;
-}
-
-.Button--verticalAlign--bottom {
-  align-items: flex-end;
-}
-
-.Button__content--fluid {
-  flex: 1;
 }

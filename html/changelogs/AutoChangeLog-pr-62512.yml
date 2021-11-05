@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - qol: "All prison intercoms on all maps have been standardized!"
-  - bugfix: "Delta's dormitories intercoms can now actually be spoken through, as it is no longer a prison intercom."
