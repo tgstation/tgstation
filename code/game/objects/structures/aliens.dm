@@ -391,7 +391,7 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
-#define BURSTING "bursting"
+#undef BURSTING
 #undef BURST
 #undef GROWING
 #undef GROWN
