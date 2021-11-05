@@ -51,21 +51,7 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/machinery/bluespace_vendor/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/bluespace_vendor/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/bluespace_vendor/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()

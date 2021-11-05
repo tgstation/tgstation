@@ -19,21 +19,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
-/obj/machinery/bounty_board/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/bounty_board/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/bounty_board/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/bounty_board/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bounty_board, 32)
 
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()

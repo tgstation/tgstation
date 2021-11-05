@@ -279,21 +279,7 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
-/obj/machinery/computer/security/telescreen/entertainment/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/computer/security/telescreen/entertainment/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/computer/security/telescreen/entertainment/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/computer/security/telescreen/entertainment/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()

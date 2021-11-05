@@ -18,41 +18,13 @@
 /// the type of wallframe it 'disassembles' into
 	var/wallframe_type = /obj/item/wallframe/defib_mount
 
-/obj/machinery/defibrillator_mount/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/defibrillator_mount/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
 
-/obj/machinery/defibrillator_mount/loaded/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/loaded/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
 	if(defib)

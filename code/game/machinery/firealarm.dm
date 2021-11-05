@@ -368,20 +368,7 @@
 	detecting = !detecting
 	to_chat(user, span_notice("You [ detecting ? "enable" : "disable" ] [src]'s detecting unit!"))
 
-/obj/machinery/firealarm/directional/north
-	pixel_y = 26
-
-/obj/machinery/firealarm/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/firealarm/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/firealarm/directional/west
-	dir = EAST
-	pixel_x = -26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 /*
  * Return of Party button

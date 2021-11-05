@@ -10,21 +10,7 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
-/obj/structure/extinguisher_cabinet/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/structure/extinguisher_cabinet/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/extinguisher_cabinet/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/extinguisher_cabinet/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
@@ -173,18 +159,6 @@
 			stored_extinguisher.forceMove(loc)
 			stored_extinguisher = null
 	qdel(src)
-
-/obj/structure/extinguisher_cabinet/directional/north
-	pixel_y = 32
-
-/obj/structure/extinguisher_cabinet/directional/south
-	pixel_y = -32
-
-/obj/structure/extinguisher_cabinet/directional/east
-	pixel_x = 26
-
-/obj/structure/extinguisher_cabinet/directional/west
-	pixel_x = -26
 
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
