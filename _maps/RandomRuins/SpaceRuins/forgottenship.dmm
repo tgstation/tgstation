@@ -79,7 +79,7 @@
 "ar" = (
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
-	dir = 9;
+	dir = 6;
 	network = list("fsci");
 	screen_loc = ""
 	},

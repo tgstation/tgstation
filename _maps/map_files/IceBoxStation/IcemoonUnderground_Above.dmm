@@ -1122,7 +1122,7 @@
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/camera{
 	c_tag = "Cargo Bay Drones";
-	dir = 10
+	dir = 5
 	},
 /turf/open/floor/iron/dark,
 /area/cargo/drone_bay)
@@ -1733,7 +1733,7 @@
 /obj/structure/closet/crate/internals,
 /obj/machinery/camera{
 	c_tag = "Cargo Bay B-1";
-	dir = 9
+	dir = 6
 	},
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
@@ -2413,7 +2413,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab South";
-	dir = 10;
+	dir = 5;
 	network = list("ss13","medbay")
 	},
 /turf/open/floor/iron/white,
@@ -2742,7 +2742,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/machinery/camera{
 	c_tag = "Service-Botany Bottom 2";
-	dir = 10
+	dir = 5
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
@@ -3154,7 +3154,7 @@
 /obj/machinery/mechpad,
 /obj/machinery/camera{
 	c_tag = "Mining Aux Mechbay";
-	dir = 9
+	dir = 6
 	},
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
@@ -4552,7 +4552,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Mining Bunks";
-	dir = 9
+	dir = 6
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -4963,7 +4963,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Mining Ore Smeltery";
-	dir = 9
+	dir = 6
 	},
 /turf/open/floor/iron,
 /area/mine/production)
@@ -6970,7 +6970,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/machinery/camera{
 	c_tag = "Service-Back Bar";
-	dir = 9
+	dir = 6
 	},
 /obj/machinery/requests_console/directional/east{
 	name = "Bar Requests Console"
@@ -8538,7 +8538,7 @@
 "HZ" = (
 /obj/machinery/camera{
 	c_tag = "Chapel North";
-	dir = 9
+	dir = 6
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -8587,7 +8587,7 @@
 /obj/machinery/food_cart,
 /obj/machinery/camera{
 	c_tag = "Service-Kitchen Bottom";
-	dir = 10
+	dir = 5
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/cafeteria,
@@ -9621,7 +9621,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera{
 	c_tag = "Service-Ultils Bottom";
-	dir = 10
+	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10872,7 +10872,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab East";
-	dir = 9;
+	dir = 6;
 	network = list("ss13","medbay")
 	},
 /obj/structure/table/reinforced,

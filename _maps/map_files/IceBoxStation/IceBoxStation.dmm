@@ -14278,7 +14278,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Service-Hallway Top 1";
-	dir = 10
+	dir = 5
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -18025,7 +18025,7 @@
 /obj/machinery/deepfryer,
 /obj/machinery/camera{
 	c_tag = "Service-Kitchen Top";
-	dir = 10
+	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
@@ -24686,7 +24686,7 @@
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/camera{
 	c_tag = "Atmospherics South East";
-	dir = 9
+	dir = 6
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -32786,7 +32786,7 @@
 "mTd" = (
 /obj/machinery/camera{
 	c_tag = "Science - Server Room";
-	dir = 10;
+	dir = 5;
 	name = "science camera";
 	network = list("ss13","rd")
 	},
@@ -50171,7 +50171,7 @@
 "vNE" = (
 /obj/machinery/camera{
 	c_tag = "Service-Hallway Top 2";
-	dir = 10
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -52446,7 +52446,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera{
 	c_tag = "Service-Ultils Top";
-	dir = 10
+	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
