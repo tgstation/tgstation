@@ -184,7 +184,7 @@
 			var/obj/B = user.buckled
 			var/movementdirection = turn(direction,180)
 			addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection), 1)
-		else 
+		else
 			user.newtonian_move(turn(direction, 180))
 
 		//Get all the turfs that can be shot at
@@ -217,7 +217,7 @@
 /obj/item/extinguisher/proc/move_particles(list/particles)
 	var/delay = 2
 	// Second loop: Get all the water particles and make them move to their target
-	for(var/obj/effect/particle_effect/water/extinguisher/water in particles)
+	for(var/obj/effect/particle_effect/water/extinguisher/water as anything in particles)
 		SSmove_manager.move_towards(water, particles[water], delay, timeout = delay * power)
 
 //Chair movement loop

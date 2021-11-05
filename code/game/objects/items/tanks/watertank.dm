@@ -320,7 +320,7 @@
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5)
 		RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/resin_landed)
 		return
-	
+
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
 			return
@@ -360,6 +360,9 @@
 	S.amount = 4
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
+
+/obj/effect/resin_container/newtonian_move() // Please don't spacedrift thanks
+	return TRUE
 
 #undef EXTINGUISHER
 #undef RESIN_LAUNCHER
