@@ -267,10 +267,10 @@ LINEN BINS
 		LAZYSET(bedsheet_list, spawn_type, list())
 		var/possible_types = typesof(/obj/item/bedsheet)
 		for(var/obj/item/bedsheet/sheet as anything in possible_types)
-			if(initial(sheet.bedsheet_type == spawn_type))
+			if(initial(sheet.bedsheet_type) == spawn_type)
 				bedsheet_list[spawn_type] += sheet
 	var/chosen_type = pick(bedsheet_list)
-	new type(loc)
+	new chosen_type(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/random/double
