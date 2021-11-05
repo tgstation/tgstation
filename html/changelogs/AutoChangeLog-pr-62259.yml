@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the curator PDA having some inconsistent-looking icons for slotted in IDs and pAIs."

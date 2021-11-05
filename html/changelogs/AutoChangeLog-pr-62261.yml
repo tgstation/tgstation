@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - balance: "The wine cork fired when champagne is popped open is now a projectile and not a thrown item. It can ricochet on walls and will leave an harmless wine cork item when its trajectory has finished."
-  - bugfix: "This also fixes a small exploit with hand-thrown corks knocking people down, which was unintended."

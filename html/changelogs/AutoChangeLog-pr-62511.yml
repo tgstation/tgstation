@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixed guns that are supposed to be undroppable (implant guns, guns when using an anti-drop implant) dropping anyway when you shoot yourself in the leg due to being Clumsy"
