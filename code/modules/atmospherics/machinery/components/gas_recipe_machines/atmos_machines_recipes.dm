@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer/crystal_foam
 	id = "crystal_foam"
 	name = "Crystal foam grenade"
-	reaction_type =  EXOTHERMIC_REACTION
+	reaction_type = EXOTHERMIC_REACTION
 	energy_release = 140000
 	requirements = list(/datum/gas/carbon_dioxide = 150, /datum/gas/nitrous_oxide = 100, /datum/gas/water_vapor = 25)
 	products = list(/obj/item/grenade/gas_crystal/crystal_foam = 1)

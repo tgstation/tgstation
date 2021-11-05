@@ -735,7 +735,7 @@
 			var/list/fresh_mut_list = list()
 			for(var/muties in myseed.mutatelist)
 				var/obj/item/seeds/another_mut = new muties
-				fresh_mut_list[another_mut.plantname] =  muties
+				fresh_mut_list[another_mut.plantname] = muties
 			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sort_list(fresh_mut_list))
 			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
 				return

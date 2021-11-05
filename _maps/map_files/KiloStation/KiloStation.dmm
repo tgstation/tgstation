@@ -5112,7 +5112,7 @@
 "axD" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/north,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "axF" = (
 /turf/closed/wall,
@@ -5841,7 +5841,7 @@
 /area/maintenance/starboard/fore)
 "aBy" = (
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "aBC" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -16560,7 +16560,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/maintenance/port/aft)
 "bNe" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -23615,6 +23615,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
+/obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "cwO" = (
@@ -23655,6 +23656,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
+/obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "cwS" = (
@@ -23686,6 +23688,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
+/obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "cxa" = (
@@ -37680,6 +37683,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/insectguts,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/grimy,
 /area/security/prison/safe)
 "het" = (
@@ -40876,11 +40880,6 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -40934,6 +40933,12 @@
 /obj/structure/bedsheetbin,
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
+/area/security/prison)
+"irG" = (
+/obj/machinery/plate_press,
+/obj/machinery/light/small/directional/south,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/plating,
 /area/security/prison)
 "isi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -54830,6 +54835,11 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
+"nyX" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/item/radio/intercom/prison/directional/south,
+/turf/open/floor/iron/white,
+/area/security/prison)
 "nzm" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -54902,12 +54912,8 @@
 /area/ai_monitored/turret_protected/aisat/atmos)
 "nAW" = (
 /obj/structure/bookcase/random,
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/machinery/light/small/directional/north,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/grimy,
 /area/security/prison)
 "nAY" = (
@@ -64819,12 +64825,8 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
-/obj/item/radio/intercom/directional/north{
-	desc = "A station intercom. It looks like it has been modified to not broadcast.";
-	name = "prison intercom";
-	prison_radio = 1
-	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "rhk" = (
@@ -65279,6 +65281,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
 	},
+/obj/item/radio/intercom/prison/directional/west,
 /turf/open/floor/iron,
 /area/security/prison)
 "rnV" = (
@@ -79380,6 +79383,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"wLJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/security/prison)
 "wLR" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "command maintenance";
@@ -91124,7 +91133,7 @@ anu
 ivj
 qJs
 aav
-kLr
+wLJ
 xFp
 xFp
 aau
@@ -92416,7 +92425,7 @@ oub
 chR
 qKa
 doP
-eXt
+irG
 aav
 aeU
 aeU
@@ -95759,7 +95768,7 @@ ycs
 cjD
 cjD
 cjD
-vAM
+nyX
 aav
 cmU
 cmU
