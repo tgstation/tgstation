@@ -211,6 +211,8 @@ There appears to be a small amount of surface corrosion. It doesn't look like it
 	max_integrity = 300
 	color = "#ffdd33"
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
+
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
 
