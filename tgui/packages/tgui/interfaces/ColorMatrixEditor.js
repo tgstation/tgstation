@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
-import { Stack, Section, ByondUi, NumberInput, Button } from '../components';
+import { Box, Stack, Section, ByondUi, NumberInput, Button } from '../components';
 import { Window } from '../layouts';
 
 export const ColorMatrixEditor = (props, context) => {
@@ -17,7 +17,7 @@ export const ColorMatrixEditor = (props, context) => {
   return (
     <Window
       title="Color Matrix Editor"
-      width={500}
+      width={600}
       height={220}>
       <Window.Content>
         <Stack fill>
@@ -33,10 +33,17 @@ export const ColorMatrixEditor = (props, context) => {
                           {[0, 1, 2, 3, 4].map((row, key) => (
                             <Stack.Item
                               key={key}>
-                              {`${prefixes[row]}${prefixes[col]}:`}
+                              <Box
+                                inline
+                                textColor="label"
+                                width="2.1rem">
+                                {`${prefixes[row]}${prefixes[col]}:`}
+                              </Box>
                               <NumberInput
+                                inline
                                 value={currentColor[row*4+col]}
                                 step={0.01}
+                                width="50px"
                                 format={value => toFixed(value, 2)}
                                 onDrag={(e, value) => {
                                   let retColor = currentColor;
