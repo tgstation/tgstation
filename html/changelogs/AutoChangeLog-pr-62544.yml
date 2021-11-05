@@ -1,0 +1,4 @@
+author: "ReinaCoder"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the two Disco Elysium detectives suits to be non-adjustable"
