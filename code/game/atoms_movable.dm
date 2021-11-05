@@ -480,7 +480,7 @@
 
 	last_move = direction
 
-	if(LAZYLEN(buckled_mobs) && !handle_buckled_mob_movement(loc, direction)) //movement failed due to buckled mob(s)
+	if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direction)) //movement failed due to buckled mob(s)
 		return FALSE
 	return TRUE
 
