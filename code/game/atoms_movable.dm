@@ -426,7 +426,7 @@
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
 				return
-			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc))
+			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 				return
 	else if(!newloc.Enter(src) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
 		if(can_pass_diagonally) //We cannot get to our final destination, but we can move a little
@@ -472,8 +472,8 @@
 			stop_pulling()
 		else
 			var/pull_dir = get_dir(src, pulling)
-			//puller and pullee more than one tile away or in diagonal position
-			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
+			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || (pull_dir - 1) & pull_dir))
 				pulling.moving_from_pull = src
 				pulling.Move(old_turf, get_dir(pulling, old_turf)) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
