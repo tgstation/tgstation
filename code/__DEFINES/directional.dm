@@ -1,7 +1,5 @@
 /// Create directional subtypes for a path to simplify mapping.
-#define MAPPING_DIRECTIONAL_HELPERS(path, offset) MAPPING_DIRECTIONAL_HELPERS_INVERSE(path, offset)
-
-#define MAPPING_DIRECTIONAL_HELPERS_INVERSE(path, offset) ##path/directional/north {\
+#define MAPPING_DIRECTIONAL_HELPERS(path, offset) ##path/directional/north {\
 	dir = NORTH; \
 	pixel_y = offset; \
 } \
