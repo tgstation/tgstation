@@ -474,7 +474,7 @@
 			//puller and pullee more than one tile away or in diagonal position and whatever the pullee is pulling isn't already moving from a pull as it'll most likely result in an infinite loop a la ouroborus.
 			if(!pulling.pulling?.moving_from_pull && (get_dist(src, pulling) > 1 || (pull_dir - 1) & pull_dir))
 				pulling.moving_from_pull = src
-				pulling.Move(oldloc, get_dir(pulling, oldloc)) //the pullee tries to reach our previous position
+				pulling.Move(oldloc, get_dir(pulling, oldloc), glide_size) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
 			check_pulling()
 
