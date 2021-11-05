@@ -262,12 +262,10 @@
 
 /obj/machinery/vending/update_overlays()
 	. = ..()
-	if(!light_mask)
-		return
-	if(!(machine_stat & BROKEN) && powered())
-		. += emissive_appearance(icon, light_mask)
 	if(panel_open)
 		. += panel_type
+	if(light_mask && !(machine_stat & BROKEN) && powered())
+		. += emissive_appearance(icon, light_mask)
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
