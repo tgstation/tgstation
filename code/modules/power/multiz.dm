@@ -9,8 +9,8 @@
 /obj/structure/cable/multilayer/multiz/get_cable_connections(powernetless_only)
 	. = ..()
 	var/turf/T = get_turf(src)
-	. +=  locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_below(T))
-	. +=  locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_above(T))
+	. += locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_below(T))
+	. += locate(/obj/structure/cable/multilayer/multiz) in (SSmapping.get_turf_above(T))
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()

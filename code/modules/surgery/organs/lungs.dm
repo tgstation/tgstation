@@ -57,6 +57,11 @@
 	var/plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/plas_damage_type = TOX
 
+	var/tritium_irradiation_moles_min = 1
+	var/tritium_irradiation_moles_max = 15
+	var/tritium_irradiation_probability_min = 10
+	var/tritium_irradiation_probability_max = 60
+
 	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
 	var/cold_level_2_threshold = 200
@@ -283,10 +288,20 @@
 
 	// Tritium
 		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
-		if (trit_pp > 50)
-			breather.radiation += trit_pp/2 //If you're breathing in half an atmosphere of radioactive gas, you fucked up.
-		else
-			breather.radiation += trit_pp/10
+		// If you're breathing in half an atmosphere of radioactive gas, you fucked up.
+		if (trit_pp > tritium_irradiation_moles_min && SSradiation.can_irradiate_basic(breather))
+			var/lerp_scale = min(tritium_irradiation_moles_max, trit_pp - tritium_irradiation_moles_min) / (tritium_irradiation_moles_max - tritium_irradiation_moles_min)
+			var/chance = LERP(tritium_irradiation_probability_min, tritium_irradiation_probability_max, lerp_scale)
+			if (prob(chance))
+				breather.AddComponent(/datum/component/irradiated)
+
+		gas_breathed = breath_gases[/datum/gas/tritium][MOLES]
+
+		if (trit_pp > 0)
+			var/ratio = gas_breathed * 15
+			breather.adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+
+		breath_gases[/datum/gas/tritium][MOLES] -= gas_breathed
 
 	// Nitryl
 		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
@@ -504,7 +519,7 @@
 	icon_state = "lungs-plasma"
 
 	safe_oxygen_min = 0 //We don't breathe this
-	safe_plasma_min = 16 //We breathe THIS!
+	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
 
 /obj/item/organ/lungs/slime

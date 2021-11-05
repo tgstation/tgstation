@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - bugfix: "Corpses will no longer cough, spit, or choke on blood when you hit them in the chest really hard"
