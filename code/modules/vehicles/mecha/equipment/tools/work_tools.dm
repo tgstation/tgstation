@@ -196,9 +196,9 @@
 	var/list/targets = list(T1,T2,T3)
 
 	var/obj/effect/particle_effect/water/extinguisher/water = new /obj/effect/particle_effect/water/extinguisher(get_turf(chassis))
-	var/datum/reagents/reagents = new /datum/reagents(5)
-	water.reagents = reagents
-	reagents.my_atom = water
+	var/datum/reagents/water_reagents = new /datum/reagents(5)
+	water.reagents = water_reagents
+	water_reagents.my_atom = water
 	reagents.trans_to(water, 1)
 
 	var/delay = 2

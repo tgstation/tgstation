@@ -205,9 +205,9 @@
 			// If precise, remove turf from targets so it won't be picked more than once
 			if(precision)
 				the_targets -= my_target
-			var/datum/reagents/reagents = new /datum/reagents(5)
-			water.reagents = reagents
-			reagents.my_atom = water
+			var/datum/reagents/water_reagents = new /datum/reagents(5)
+			water.reagents = water_reagents
+			water_reagents.my_atom = water
 			reagents.trans_to(water, 1, transfered_by = user)
 
 		//Make em move dat ass, hun
@@ -225,6 +225,8 @@
 	step(buckled_object, movementdirection)
 
 	var/datum/move_loop/loop = SSmove_manager.move(buckled_object, movementdirection, 1, timeout = 9)
+	//This means the chair slowing down is dependant on the extinguisher existing, which is weird
+	//Couldn't figure out a better way though
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/manage_chair_speed)
 
 /obj/item/extinguisher/proc/manage_chair_speed(datum/move_loop/move/source)
