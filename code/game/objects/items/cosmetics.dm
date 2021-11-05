@@ -234,12 +234,47 @@
 
 
 
-/obj/item/NTpartykit
+/obj/item/NTPkit
 	name = "NTP kit"
-	desc = "Hero of NT-sponsored parties for the high command. Lasts entire night, morning and burial."
+	desc = "Hero of NT-sponsored parties for the high command. Lasts entire night, morning and burial.<br>There is something written on its side."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "NTP_kit"
-	w_class = WEIGHT_CLASS_SMALL
-/obj/item/NTpartykit/examine_more(mob/user)
+	w_class = WEIGHT_CLASS_NORMAL
+	var/removal_mode = FALSE
+	var/powder_color = "#00B7EF"
+
+/obj/item/NTPkit/examine(mob/user)
 	. = ..()
-	. += span_notice("To use: <br>- hold with right hand. <br>- insert the thumb into a slot.<br>- adjust the dials.<br>- press the button.")
+	. += span_notice("Kit is [removal_mode ? "buzzing softly" : "silent"].<br>Alt-click to change the color.<br>Ctrl-click to change its mode.")
+
+/obj/item/NTPkit/examine_more(mob/user)
+	. = ..()
+	. += span_notice("To use: <br>- Adjust the color with the sliders.<br>- Inhale.<br>")
+	. += span_warning("Usage nullifies insurance clause B12 and permit circular-74")
+	. += span_notice("<br>To remove the color, hold the button for 3 seconds and inhale again.")
+
+/obj/item/NTPkit/attack_self(mob/user, modifiers)
+	. = ..()
+
+/obj/item/NTPkit/proc/select_colour(mob/user)
+	var/chosen_colour = input(user, "", "Choose Color", powder_color) as color|null
+	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		powder_color = chosen_colour
+		return TRUE
+	return FALSE
+
+/obj/item/NTPkit/CtrlClick(mob/user)
+	if(removal_mode)
+		to_chat(user, span_notice("You hold the button and kit clicks in your hands."))
+		removal_mode = TRUE
+		return
+	else
+		to_chat(user, span_notice("You hold the button and kit starts to buzz in your hands."))
+		removal_mode = FALSE
+		return
+		
+obj/item/NTPkit/AltClick(mob/user)
+	if(!isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		select_colour(user)
+	else
+		return ..()
