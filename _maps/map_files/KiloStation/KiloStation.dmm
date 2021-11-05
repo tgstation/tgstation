@@ -52317,10 +52317,7 @@
 	},
 /obj/item/healthanalyzer,
 /obj/item/hand_labeler,
-/obj/item/storage/secure/safe/caps_spare{
-	pixel_x = 5;
-	pixel_y = 32
-	},
+/obj/item/storage/secure/safe/caps_spare/directional/north,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "mzV" = (

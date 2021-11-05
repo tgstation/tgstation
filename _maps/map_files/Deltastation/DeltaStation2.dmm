@@ -59451,23 +59451,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
-"lLY" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/storage/secure/safe/caps_spare{
-	pixel_x = -27;
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/command/bridge)
 "lMj" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -65020,6 +65003,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/storage/secure/safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "nmX" = (
@@ -139905,7 +139889,7 @@ aaa
 khQ
 nTB
 nmR
-lLY
+wQK
 nzz
 pjP
 gdT

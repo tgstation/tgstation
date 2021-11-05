@@ -19675,9 +19675,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/item/storage/secure/safe/caps_spare{
-	pixel_x = -27
-	},
+/obj/item/storage/secure/safe/caps_spare/directional/west,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "eQv" = (

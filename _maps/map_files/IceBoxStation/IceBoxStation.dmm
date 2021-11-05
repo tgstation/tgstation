@@ -18812,10 +18812,6 @@
 "fMy" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
-/obj/item/storage/secure/safe/caps_spare{
-	pixel_x = 37;
-	pixel_y = 32
-	},
 /turf/open/floor/iron,
 /area/command/bridge)
 "fMz" = (
@@ -36512,6 +36508,7 @@
 "oMm" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
+/obj/item/storage/secure/safe/caps_spare/directional/east,
 /turf/open/floor/iron,
 /area/command/bridge)
 "oMy" = (
