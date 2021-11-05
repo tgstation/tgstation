@@ -2,6 +2,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 
 /datum/known_alts
 	var/list/cached_known_alts
+	COOLDOWN_DECLARE(cache_cooldown)
 
 /datum/known_alts/Topic(href, list/href_list)
 	if (!check_rights(R_ADMIN))
@@ -122,18 +123,18 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 /// Returns the list of known alts, will return an empty list if the DB could not be connected to.
 /// This proc can block.
 /datum/known_alts/proc/load_known_alts()
-	if (!isnull(cached_known_alts))
+	if (!isnull(cached_known_alts) && !COOLDOWN_FINISHED(src, cache_cooldown))
 		return cached_known_alts
 
 	if (!SSdbcore.Connect())
-		return list()
+		return cached_known_alts || list()
 
 	var/datum/db_query/query_known_alts = SSdbcore.NewQuery("SELECT id, ckey1, ckey2 FROM [format_table_name("known_alts")] ORDER BY id DESC")
 	query_known_alts.warn_execute()
 
 	if (query_known_alts.last_error)
 		qdel(query_known_alts)
-		return list()
+		return cached_known_alts || list()
 
 	cached_known_alts = list()
 
@@ -146,7 +147,9 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			query_known_alts.item[1],
 		))
 
+	COOLDOWN_START(src, cache_cooldown, 10 SECONDS)
 	qdel(query_known_alts)
+
 	return cached_known_alts
 
 /datum/known_alts/proc/show_panel(client/client)
