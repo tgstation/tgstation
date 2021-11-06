@@ -63,10 +63,59 @@ type CustomInput = {
 };
 
 export const Vending = (props, context) => {
-  const { act, data } = useBackend<VendingData>(context);
+  return (
+    <Window width={450} height={600}>
+      <Window.Content>
+        <Stack fill vertical>
+          <Stack.Item>
+            <UserDetails />
+          </Stack.Item>
+          <Stack.Item grow>
+            <ProductDisplay />
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
+/** Displays user details if an ID is present and the user is on the station */
+const UserDetails = (_, context) => {
+  const { data } = useBackend<VendingData>(context);
+  const { user, onstation } = data;
+
+  if (!onstation) {
+    return <NoticeBox>Error!</NoticeBox>;
+  } else if (!user) {
+    return (
+      <NoticeBox>No ID detected! Contact the Head of Personnel.</NoticeBox>
+    );
+  } else {
+    return (
+      <Section>
+        <Stack>
+          <Stack.Item>
+            <Icon name="id-card" size={3} mr={1} />
+          </Stack.Item>
+          <Stack.Item>
+            <LabeledList>
+              <LabeledList.Item label="User">{user.name}</LabeledList.Item>
+              <LabeledList.Item label="Occupation">
+                {user.job || 'Unemployed'}
+              </LabeledList.Item>
+            </LabeledList>
+          </Stack.Item>
+        </Stack>
+      </Section>
+    );
+  }
+};
+
+/** Displays  products in a section, with user balance at top */
+const ProductDisplay = (_, context) => {
+  const { data } = useBackend<VendingData>(context);
   const {
     user,
-    onstation,
     product_records = [],
     coin_records = [],
     hidden_records = [],
@@ -85,77 +134,40 @@ export const Vending = (props, context) => {
   }
   // Just in case we still have undefined values in the list
   inventory = inventory.filter((item) => !!item);
+
   return (
-    <Window width={450} height={600}>
-      <Window.Content>
-        <Stack fill vertical>
-          {!!onstation
-            && (user ? (
-              <Stack.Item>
-                <Section>
-                  <Stack>
-                    <Stack.Item>
-                      <Icon name="id-card" size={3} mr={1} />
-                    </Stack.Item>
-                    <Stack.Item>
-                      <LabeledList>
-                        <LabeledList.Item label="User">
-                          {user.name}
-                        </LabeledList.Item>
-                        <LabeledList.Item label="Occupation">
-                          {user.job || 'Unemployed'}
-                        </LabeledList.Item>
-                      </LabeledList>
-                    </Stack.Item>
-                  </Stack>
-                </Section>
-              </Stack.Item>
-            ) : (
-              <NoticeBox>
-                No ID Detected! Contact the Head of Personnel.
-              </NoticeBox>
-            ))}
-          <Stack.Item grow>
-            <Section
-              fill
-              scrollable
-              title="Products"
-              buttons={
-                <Box fontSize="16px" color="green">
-                  {(user && user.cash) || 0} cr{' '}
-                  <Icon name="coins" color="gold" />
-                </Box>
-              }>
-              <Table>
-                {inventory.map((product) => (
-                  <VendingRow
-                    key={product.name}
-                    custom={custom}
-                    product={product}
-                    productStock={stock[product.name]}
-                  />
-                ))}
-              </Table>
-            </Section>
-          </Stack.Item>
-        </Stack>
-      </Window.Content>
-    </Window>
+    <Section
+      fill
+      scrollable
+      title="Products"
+      buttons={
+        <Box fontSize="16px" color="green">
+          {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
+        </Box>
+      }>
+      <Table>
+        {inventory.map((product) => (
+          <VendingRow
+            key={product.name}
+            custom={custom}
+            product={product}
+            productStock={stock[product.name]}
+          />
+        ))}
+      </Table>
+    </Section>
   );
 };
 
+/** An individual listing for an item. */
 const VendingRow = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
   const { product, productStock, custom } = props;
   const { onstation, department, user, jobDiscount } = data;
-  const free = (
-    !onstation
+  const free
+    = !onstation
     || product.price === 0
-    || (
-      !product.premium
-      && department
-      && user
-    ));
+    || (!product.premium && department && user);
   const discount = department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   return (
@@ -180,6 +192,21 @@ const VendingRow = (props, context) => {
         )}
       </Table.Cell>
       <Table.Cell bold>{product.name}</Table.Cell>
+      <Table.Cell>
+        {productStock?.colorable ? (
+          <Button
+            icon="palette"
+            tooltip="Change color"
+            disabled={
+              productStock?.amount === 0
+              || (!free && (!user || product.price > user.cash))
+            }
+            onClick={() => act('select_colors', { ref: product.ref })}
+          />
+        ) : (
+          ''
+        )}
+      </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         <Box
           color={
@@ -216,21 +243,6 @@ const VendingRow = (props, context) => {
                 'ref': product.ref,
               })}
           />
-        )}
-      </Table.Cell>
-      <Table.Cell>
-        {productStock?.colorable ? (
-          <Button
-            fluid
-            icon="palette"
-            disabled={
-              productStock?.amount === 0
-              || (!free && (!user || product.price > user.cash))
-            }
-            onClick={() => act('select_colors', { ref: product.ref })}
-          />
-        ) : (
-          ''
         )}
       </Table.Cell>
     </Table.Row>
