@@ -38,13 +38,13 @@
  * Proc that simply loads the default map config, which should always be functional.
  */
 /proc/load_default_map_config()
-	return new var/datum/map_config/config
+	return new /datum/map_config
 
 
 /**
  * Proc handling the loading of map configs. Will return the default map config (see above) if the loading of said confile fails for any reason whatsoever, so we always have a working map for the server to run.
  * Arguments:
- * * filename - Name of the config file for the map we want to load.
+ * * filename - Name of the config file for the map we want to load. The .json file extension is added during the proc, so do not specify filenames with the extension.
  * * error_if_missing - Bool that says whether failing to load the config for the map will be logged in log_world or not as it's passed to LoadConfig().
  *
  * Returns the config for the map to load.
