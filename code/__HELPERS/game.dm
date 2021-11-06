@@ -217,6 +217,7 @@
  * returns every hearaing movable in view to the turf of source not taking into account lighting
  * useful when you need to maintain always being able to hear something if a sound is emitted from it and you can see it (and youre in range).
  * otherwise this is just a more expensive version of get_hearers_in_LOS()
+ *
  * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  */
@@ -249,6 +250,7 @@
  * the majority of the work is passed off to the spatial grid if view_radius > 0
  * because view() isnt a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
  * if you want that use get_hearers_in_view() - however thats significantly more expensive
+ *
  * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
  */
@@ -285,7 +287,7 @@
 		//maybe in the future a high volume algorithm would be worth it
 		var/turf/inbetween_turf = center_turf
 
-		//this is the lowest overhead way of doing a loop in dm. distance is guaranteed to be >= steps taken to target by this algorithm
+		//this is the lowest overhead way of doing a loop in dm other than a goto. distance is guaranteed to be >= steps taken to target by this algorithm
 		for(var/step_counter in 1 to distance)
 			inbetween_turf = get_step_towards(inbetween_turf, target_turf)
 
