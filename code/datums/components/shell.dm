@@ -272,7 +272,6 @@
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
-	attached_circuit.set_shell(parent_atom)
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
 	attached_circuit.set_locked(FALSE)
@@ -284,6 +283,7 @@
 		circuitboard.moveToNullspace()
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
+	attached_circuit.set_shell(parent_atom)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.
