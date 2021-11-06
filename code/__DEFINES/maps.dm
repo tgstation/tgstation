@@ -26,6 +26,9 @@ require only minor tweaks.
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 
+/// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.
+#define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
+
 /// Special map path value for custom adminloaded stations.
 #define CUSTOM_MAP_PATH "custom"
 
