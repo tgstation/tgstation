@@ -214,33 +214,69 @@
 	return
 
 /**
- * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight of source
- * the majority of the work is passed off to the spatial grid if view_radius > 0
- * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
+ * returns every hearaing movable in view to the turf of source not taking into account lighting
+ * useful when you need to maintain always being able to hear something if a sound is emitted from it and you can see it (and youre in range).
+ * otherwise this is just a more expensive version of get_hearers_in_LOS()
+ * * view_radius - what radius search circle we are using, worse performance as this increases
  * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
- * * include_source - if FALSE, source will be subtracted from the output. used for things that want to transmit data to other things like radios
  */
 /proc/get_hearers_in_view(view_radius, atom/source)
 	var/turf/center_turf = get_turf(source)
 	if(!center_turf)
 		return
 
+	. = list()
+
 	if(view_radius <= 0)//special case for if only source cares
-		. = list()
-		for(var/atom/movable/movable as anything in center_turf)
-			var/list/recursive_contents = LAZYACCESS(movable.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
+		for(var/atom/movable/target as anything in center_turf)
+			var/list/recursive_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
 			if(recursive_contents)
 				. += recursive_contents
+		return
+
+	var/old_luminosity = center_turf.luminosity
+	center_turf.luminosity = 6 //man if only we had an inbuilt dview()
+
+	for(var/atom/movable/target in view(view_radius, center_turf))
+		var/list/hearing_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+		if(hearing_contents)
+			. += hearing_contents
+
+	center_turf.luminosity = old_luminosity
+
+/**
+ * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight to source
+ * the majority of the work is passed off to the spatial grid if view_radius > 0
+ * because view() isnt a raycasting algorithm, this does not hold symmetry to it. something in view might not be hearable with this.
+ * if you want that use get_hearers_in_view() - however thats significantly more expensive
+ * * view_radius - what radius search circle we are using, worse performance as this increases but not as much as it used to
+ * * source - object at the center of our search area. everything in get_turf(source) is guaranteed to be part of the search area
+ */
+/proc/get_hearers_in_LOS(view_radius, atom/source)
+	var/turf/center_turf = get_turf(source)
+	if(!center_turf)
+		return
+
+	if(view_radius <= 0)//special case for if only source cares
+		. = list()
+		for(var/atom/movable/target as anything in center_turf)
+			var/list/hearing_contents = target.important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]
+			if(hearing_contents)
+				. += hearing_contents
 		return
 
 	. = SSspatial_grid.orthogonal_range_search(source, SPATIAL_GRID_CONTENTS_TYPE_HEARING, view_radius)
 
 	for(var/atom/movable/target as anything in .)
 		var/turf/target_turf = get_turf(target)
+
 		var/distance = get_dist(center_turf, target_turf)
 
 		if(distance > view_radius)
 			. -= target
+			continue
+
+		else if(distance < 2) //we should always be able to see something 0 or 1 tiles away
 			continue
 
 		//this turf search algorithm is the worst scaling part of this proc, scaling worse than view() for small-moderate ranges and > 50 length contents_to_return
@@ -248,13 +284,15 @@
 		//i can do things that would scale better, but they would be slower for low volume searches which is the vast majority of the current workload
 		//maybe in the future a high volume algorithm would be worth it
 		var/turf/inbetween_turf = center_turf
-		while(inbetween_turf.z == target_turf.z)//multiz not allowed fuck off
-			inbetween_turf = get_step(inbetween_turf, get_dir(inbetween_turf, target_turf))
+
+		//this is the lowest overhead way of doing a loop in dm. distance is guaranteed to be >= steps taken to target by this algorithm
+		for(var/step_counter in 1 to distance)
+			inbetween_turf = get_step_towards(inbetween_turf, target_turf)
 
 			if(inbetween_turf == target_turf)//we've gotten to target's turf without returning due to turf opacity, so we must be able to see target
 				break
 
-			if(inbetween_turf.opacity || inbetween_turf.opacity_sources)//this turf or something on it is opaque so we cant see through it
+			if(IS_OPAQUE_TURF(inbetween_turf))//this turf or something on it is opaque so we cant see through it
 				. -= target
 				break
 
@@ -262,7 +300,7 @@
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
-		. |= get_hearers_in_view(radio.canhear_range, radio, FALSE)
+		. |= get_hearers_in_LOS(radio.canhear_range, radio, FALSE)
 
 ///Calculate if two atoms are in sight, returns TRUE or FALSE
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
