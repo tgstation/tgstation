@@ -34,8 +34,11 @@
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
 
-/proc/load_map_config(filename = "next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
-	filename = "data/[filename].json"
+/proc/load_map_config(filename = "next_map", default_to_box, delete_after, error_if_missing = TRUE)
+	if(filename == "next_map") // Since they don't share the same path, you gotta handle them differently...
+		filename = "data/[filename].json"
+	else
+		filename = "_maps/[filename].json"
 	var/datum/map_config/config = new
 	if (default_to_box)
 		return config
