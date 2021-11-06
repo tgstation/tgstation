@@ -17,7 +17,7 @@
 	throw_speed = 3
 	throw_range = 7
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
 	/**
 	 * Set to true if the device has different icons for each position.

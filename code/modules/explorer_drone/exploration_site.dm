@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 
 /datum/exploration_site/abandoned_refueling_station
 	name = "abandoned refueling station"
-	description =  "old shuttle refueling station drifting through the void."
+	description = "old shuttle refueling station drifting through the void."
 	band_info = list(EXOSCANNER_BAND_TECH = 1)
 	site_traits = list(EXPLORATION_SITE_RUINS,EXPLORATION_SITE_TECHNOLOGY,EXPLORATION_SITE_STATION)
 

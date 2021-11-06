@@ -191,7 +191,7 @@
 			return
 		theCluster = clusters[moduleClusters]
 	else
-		theCluster =  CLUSTER_CHECK_NONE
+		theCluster = CLUSTER_CHECK_NONE
 
 	if(theCluster)
 		for(var/datum/map_generator_module/M in N.modules)

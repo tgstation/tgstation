@@ -7,7 +7,7 @@
 	shaded_charge = TRUE
 	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	flight_x_offset = 17

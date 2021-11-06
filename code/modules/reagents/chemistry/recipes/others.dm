@@ -837,7 +837,7 @@
 	mix_sound = 'sound/chemistry/bluespace.ogg'
 	//FermiChem vars:
 	required_temp = 350
-	optimal_temp =  600
+	optimal_temp = 600
 	overheat_temp = 650
 	optimal_ph_min = 9
 	optimal_ph_max = 12

@@ -332,8 +332,6 @@
 		armor_list += list("MAGIC" = armor.magic)
 	if(armor.melee)
 		armor_list += list("MELEE" = armor.melee)
-	if(armor.rad)
-		armor_list += list("RADIATION" = armor.rad)
 
 	if(LAZYLEN(durability_list))
 		durability_list.Cut()
