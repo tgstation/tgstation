@@ -107,6 +107,9 @@
 /obj/item/clothing/mask/gas/atmos/centcom
 	name = "\improper CentCom gas mask"
 	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	worn_icon_state = "centcomspace"
 	icon_state = "gas_centcom"
 	inhand_icon_state = "gas_centcom"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
