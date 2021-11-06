@@ -35,29 +35,31 @@
 	var/job_changes = list()
 
 /**
+ * Proc that simply loads the default map config, which should always be functional.
+ */
+/proc/load_default_map_config()
+	return new var/datum/map_config/config
+
+
+/**
  * Proc handling the loading of map configs. Will return the default map config (see above) if the loading of said confile fails for any reason whatsoever, so we always have a working map for the server to run.
  * Arguments:
  * * filename - Name of the config file for the map we want to load.
- * * force_default_map - Do we forcefully load the default map?
- * * delete_after - Boolean to delete the map config after loading it (I don't know why you would, I suggest not setting it to TRUE if you don't want to mess up the config of your server(s)).
  * * error_if_missing - Bool that says whether failing to load the config for the map will be logged in log_world or not as it's passed to LoadConfig().
  *
  * Returns the config for the map to load.
  */
-/proc/load_map_config(filename = null, force_default_map, delete_after, error_if_missing = TRUE)
+/proc/load_map_config(filename = null, error_if_missing = TRUE)
+	var/datum/map_config/config = load_default_map_config()
 	if(filename) // If none is specified, then go to look for next_map.json, for map rotation purposes.
 		filename = "_maps/[filename].json"
 	else
 		filename = PATH_TO_NEXT_MAP_JSON
-	var/datum/map_config/config = new
-	if (force_default_map)
-		return config
 	if (!config.LoadConfig(filename, error_if_missing))
 		qdel(config)
-		config = new /datum/map_config  // Fall back to Box
-	else if (delete_after)
-		fdel(filename)
+		return load_default_map_config()
 	return config
+
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
 
