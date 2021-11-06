@@ -1,3 +1,10 @@
+//TODO:
+//Make the system support more then one thing operating at once
+//Basically just let loops opt out of precedence, or maybe create classes of precedence. Yeah that's better
+//Nuke the idea of running_loop? maybe?
+//Audit existing delays to match the change from <= to <
+//Convert conveyor belts
+
 ///Template class of the movement datums, handles the timing portion of the loops
 /datum/move_loop
 	///The movement packet that owns us
@@ -50,8 +57,7 @@
 	return ..()
 
 /datum/move_loop/process(delta_ticks)
-	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_STOP_PROCESSING) //Chance for the object to react
-		qdel(src)
+	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
 		return
 
 	lifetime -= delay //This needs to be based on work over time, not just time passed
