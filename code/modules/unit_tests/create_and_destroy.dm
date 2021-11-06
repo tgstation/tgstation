@@ -21,10 +21,6 @@
 		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
-		//Say it with me now, type template
-		/obj/effect/mapping_helpers/component_injector,
-		//template type
-		/obj/effect/mapping_helpers/trait_injector,
 		//Singleton
 		/mob/dview,
 		//Template,
