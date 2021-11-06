@@ -778,7 +778,10 @@
 
 		if(owner_species.use_skintones)
 			skin_tone = human_owner.skin_tone
-			override_skin_tone = human_owner.override_skin_tone
+			if(is_organic_limb())
+				override_skin_tone = human_owner.override_skin_tone
+			else
+				override_skin_tone = ""
 			should_draw_greyscale = TRUE
 		else
 			skin_tone = ""
