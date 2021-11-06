@@ -23,8 +23,6 @@
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
-		//Template,
-		/obj/effect/mapping_helpers/custom_icon,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers/atom_injector)

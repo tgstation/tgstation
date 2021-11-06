@@ -186,7 +186,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
 
-///Helpers used for injecting stuff into atoms on the map
+///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
 	name = "Atom Injector"
 	icon_state = "injector"
@@ -232,7 +232,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/proc/generate_stack_trace()
 	. = "[name] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]"
 
-//This helper applies components to things on the map directly.
+///This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/component_injector
 	name = "Component Injector"
 	icon_state = "component"
@@ -255,7 +255,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	. += " | component type: [component_type] | component arguments: [list2params(component_args)]"
 
-//This helper applies elements to things on the map directly.
+///This helper applies elements to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/element_injector
 	name = "Element Injector"
 	icon_state = "element"
@@ -278,7 +278,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	. += " | element type: [element_type] | element arguments: [list2params(element_args)]"
 
-//This helper applies traits to things on the map directly.
+///This helper applies traits to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/trait_injector
 	name = "Trait Injector"
 	icon_state = "trait"
@@ -300,6 +300,49 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/trait_injector/generate_stack_trace()
 	. = ..()
 	. += " | trait name: [trait_name]"
+
+///Fetches an external dmi and applies to the target object
+/obj/effect/mapping_helpers/atom_injector/custom_icon
+	name = "Custom Icon Injector"
+	icon_state = "trait"
+	///This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	var/target_variable = "icon"
+	///This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	var/icon_url
+	///The icon file we fetched from the http get request.
+	var/icon_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_icon/check_validity()
+	var/static/icon_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(icon_cache[icon_url])
+		icon_file = icon_cache[icon_url]
+		return TRUE
+	log_asset("Custom Icon Helper fetching dmi from: [icon_url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_icon.dmi"
+	request.prepare(RUSTG_HTTP_METHOD_GET, icon_url, "", "", file_name)
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom icon from url [icon_url], code: [response.status_code], error: [response.error]")
+	var/icon/new_icon = new(file_name)
+	icon_cache[icon_url] = new_icon
+	query_in_progress = FALSE
+	icon_file = new_icon
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/custom_icon/inject(atom/target)
+	target.vars[target_variable] = icon_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
+	. = ..()
+	. += " | target variable: [target_variable] | icon url: [icon_url]"
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
@@ -467,67 +510,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		qdel(src)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
-
-/// Fetches an external dmi and applies to the target object
-/obj/effect/mapping_helpers/custom_icon
-	name = "Custom Icon Helper"
-	icon_state = "trait"
-	late = TRUE
-	///Will inject into all fitting the criteria if false, otherwise first found.
-	var/first_match_only = TRUE
-	///Will inject into atoms of this type.
-	var/target_type
-	///Will inject into atoms with this name.
-	var/target_name
-	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
-	var/target_variable = "icon"
-	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
-	var/icon_url
-
-/obj/effect/mapping_helpers/custom_icon/LateInitialize()
-	///TODO put this injector stuff under common root
-	var/I = fetch_icon(icon_url)
-	var/turf/target_turf = get_turf(src)
-	var/matches_found = 0
-	for(var/a in target_turf.get_all_contents())
-		var/atom/atom_on_turf = a
-		if(atom_on_turf == src)
-			continue
-		if(target_name && atom_on_turf.name != target_name)
-			continue
-		if(target_type && !istype(atom_on_turf,target_type))
-			continue
-		atom_on_turf.vars[target_variable] = I
-		matches_found++
-		if(first_match_only)
-			qdel(src)
-			return
-	if(!matches_found)
-		stack_trace("[src] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]")
-	qdel(src)
-
-/obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
-	var/static/icon_cache = list()
-	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
-	if(query_in_progress)
-		UNTIL(!query_in_progress)
-	if(icon_cache[url])
-		return icon_cache[url]
-	log_asset("Custom Icon Helper fetching dmi from: [url]")
-	var/datum/http_request/request = new()
-	var/file_name = "tmp/custom_map_icon.dmi"
-	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
-	query_in_progress = TRUE
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-	if(response.errored || response.status_code != 200)
-		query_in_progress = FALSE
-		CRASH("Failed to fetch mapped custom icon from url [url], code: [response.status_code], error: [response.error]")
-	var/icon/I = new(file_name)
-	icon_cache[url] = I
-	query_in_progress = FALSE
-	return I
 
 /**
  * ## trapdoor placer!
