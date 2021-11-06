@@ -112,7 +112,7 @@
 	if(fulltile)
 		return FALSE
 
-	if(border_dir == dir)
+	if(border_dir & dir)
 		return FALSE
 
 	if(istype(mover, /obj/structure/window))
