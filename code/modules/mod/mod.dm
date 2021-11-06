@@ -641,6 +641,6 @@
 
 /obj/item/mod/control/pre_equipped/syndicate
 	theme = /datum/mod_theme/syndicate
-	req_access = list(ACCESS_SYNDICATE)
+	req_access = list()
 	cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/jetpack, /obj/item/mod/module/pathfinder)

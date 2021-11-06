@@ -526,7 +526,7 @@
 	desc = "A module granting magnetic stability to the wearer, protecting them from forces pushing them away."
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 15
+	active_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
 	var/slowdown_active = 0.5
@@ -701,8 +701,8 @@
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
 	desc = "A module that shields the MOD from EMP's, taking a power cost for that."
-	complexity = 2
-	idle_power_cost = 15
+	complexity = 1
+	idle_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
