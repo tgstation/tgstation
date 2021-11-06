@@ -107,8 +107,9 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
  *
  * If you use SANITIZE_FILENAME to sanitize a file path things will break.
  */
-/proc/sanitize_filepath(path, delimiter = "/")
+/proc/sanitize_filepath(path)
 	. = ""
+	var/delimiter = "/" //Very much intentionally hardcoded
 	var/list/all_nodes = splittext(path, delimiter)
 	for(var/node in all_nodes)
 		if(.)
