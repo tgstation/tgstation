@@ -98,10 +98,10 @@
 
 /obj/item/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot
-	for (var/i = 1, i <= ammo_type.len, i++)
-		var/shottype = ammo_type[i]
+	for (var/index in 1 to ammo_type.len)
+		var/shottype = ammo_type[index]
 		shot = new shottype(src)
-		ammo_type[i] = shot
+		ammo_type[index] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay

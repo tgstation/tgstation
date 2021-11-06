@@ -177,7 +177,7 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			var/turf/drop_loc = drop_location()
 
-			for(var/i=1,i<=4,i++)
+			for(var/iteration in 1 to 4)
 				var/child_colour
 				if(mutation_chance >= 100)
 					child_colour = "rainbow"
@@ -190,7 +190,7 @@
 				if(ckey)
 					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
-				if(i != 1)
+				if(iteration != 1)
 					step_away(M,src)
 				M.set_friends(Friends)
 				babies += M

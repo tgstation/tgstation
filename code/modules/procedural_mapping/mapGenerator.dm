@@ -69,13 +69,13 @@
 	if(bigZ % 2 == 0)
 		offByOneOffset = 0
 
-	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
+	for(var/iteration in lilZ to bigZ+offByOneOffset)
 		var/theRadius = radius
-		if(i != sphereMagic)
-			theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
+		if(iteration != sphereMagic)
+			theRadius = max(radius/max((2*abs(sphereMagic-iteration)),1),1)
 
 
-		map |= circle_range(locate(centerX,centerY,i),theRadius)
+		map |= circle_range(locate(centerX,centerY,iteration),theRadius)
 
 
 	return map
