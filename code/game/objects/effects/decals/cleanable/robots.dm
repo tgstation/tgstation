@@ -23,18 +23,20 @@
 	streak_direction = pick(directions)
 	var/delay = 2
 	var/range = pick(1, 200; 2, 150; 3, 50; 4, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
-	if(!step_to(src, get_step(src, direction), 0))
-			return
+	if(!step_to(src, get_step(src, streak_direction), 0))
+		return
 	if(mapload)
 		for (var/i = 0, i < range, i++)
 			if (prob(40))
 				new /obj/effect/decal/cleanable/oil/streak(src.loc)
+			if (!step_to(src, get_step(src, streak_direction), 0))
+				break
 		return
 
 	var/datum/move_loop/loop = SSmove_manager.move_to(src, get_step(src, streak_direction), delay = 2, timeout = range * delay)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/spread_movement_effects)
 
-/obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/source)
+/obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/move_loop/has_target/source)
 	SIGNAL_HANDLER
 	source.target = get_step(src, streak_direction) //This isn't great, but adding a subtype seems unnessesary
 	if (prob(40))
