@@ -587,17 +587,17 @@
 		on_changed_z_level(old_turf, new_turf)
 
 	if(HAS_SPATIAL_GRID_CONTENTS(src))
-		if(old_turf && new_turf && old_turf.z == new_turf.z \
-			&& CEILING(old_turf.x / SPATIAL_GRID_CELLSIZE, 1) == CEILING(new_turf.x / SPATIAL_GRID_CELLSIZE, 1) \
-			&& CEILING(old_turf.y / SPATIAL_GRID_CELLSIZE, 1) == CEILING(new_turf.y / SPATIAL_GRID_CELLSIZE, 1))
+		if(old_turf && new_turf && (old_turf.z != new_turf.z \
+			|| ROUND_UP(old_turf.x / SPATIAL_GRID_CELLSIZE) != ROUND_UP(new_turf.x / SPATIAL_GRID_CELLSIZE) \
+			|| ROUND_UP(old_turf.y / SPATIAL_GRID_CELLSIZE) != ROUND_UP(new_turf.y / SPATIAL_GRID_CELLSIZE)))
 
 			SSspatial_grid.exit_cell(src, old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
 
-		else if(old_turf)
+		else if(old_turf && !new_turf)
 			SSspatial_grid.exit_cell(src, old_turf)
 
-		else if(new_turf)
+		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
 
 	return TRUE
