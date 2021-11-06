@@ -935,14 +935,6 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, emag_card)
 
 /**
- * Respond to a radioactive wave hitting this atom
- *
- * Default behaviour is to send [COMSIG_ATOM_RAD_ACT] and return
- */
-/atom/proc/rad_act(strength)
-	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
-
-/**
  * Respond to narsie eating our atom
  *
  * Default behaviour is to send [COMSIG_ATOM_NARSIE_ACT] and return
@@ -1156,37 +1148,37 @@
 				set_light(l_range = var_value)
 			else
 				set_light_range(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, light_power))
 			if(light_system == STATIC_LIGHT)
 				set_light(l_power = var_value)
 			else
 				set_light_power(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, light_color))
 			if(light_system == STATIC_LIGHT)
 				set_light(l_color = var_value)
 			else
 				set_light_color(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, light_on))
 			set_light_on(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, light_flags))
 			set_light_flags(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, smoothing_junction))
 			set_smoothed_icon_state(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, opacity))
 			set_opacity(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, base_pixel_x))
 			set_base_pixel_x(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, base_pixel_y))
 			set_base_pixel_y(var_value)
-			. =  TRUE
+			. = TRUE
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -1219,8 +1211,8 @@
 	VV_DROPDOWN_OPTION(VV_HK_ADD_REAGENT, "Add Reagent")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EMP, "EMP Pulse")
 	VV_DROPDOWN_OPTION(VV_HK_TRIGGER_EXPLOSION, "Explosion")
-	VV_DROPDOWN_OPTION(VV_HK_RADIATE, "Radiate")
 	VV_DROPDOWN_OPTION(VV_HK_EDIT_FILTERS, "Edit Filters")
+	VV_DROPDOWN_OPTION(VV_HK_EDIT_COLOR_MATRIX, "Edit Color as Matrix")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_AI, "Add AI controller")
 	if(greyscale_colors)
 		VV_DROPDOWN_OPTION(VV_HK_MODIFY_GREYSCALE, "Modify greyscale colors")
@@ -1266,11 +1258,6 @@
 
 	if(href_list[VV_HK_TRIGGER_EMP] && check_rights(R_FUN))
 		usr.client.cmd_admin_emp(src)
-
-	if(href_list[VV_HK_RADIATE] && check_rights(R_FUN))
-		var/strength = input(usr, "Choose the radiation strength.", "Choose the strength.") as num|null
-		if(!isnull(strength))
-			AddComponent(/datum/component/radioactive, strength, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS] && check_rights(R_ADMIN))
 		usr.client.cmd_show_hiddenprints(src)
@@ -1319,6 +1306,10 @@
 	if(href_list[VV_HK_EDIT_FILTERS] && check_rights(R_VAREDIT))
 		var/client/C = usr.client
 		C?.open_filter_editor(src)
+
+	if(href_list[VV_HK_EDIT_COLOR_MATRIX] && check_rights(R_VAREDIT))
+		var/client/C = usr.client
+		C?.open_color_matrix_editor(src)
 
 /atom/vv_get_header()
 	. = ..()

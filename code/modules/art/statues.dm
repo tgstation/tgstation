@@ -315,7 +315,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
-	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
+	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 3 // You're gonna have a bad time

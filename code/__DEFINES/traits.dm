@@ -531,6 +531,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait applied when the MMI component is added to an [/obj/item/integrated_circuit]
 #define TRAIT_COMPONENT_PRINTER "component_printer"
 
+/// Trait applied when an integrated circuit/module becomes undupable
+#define TRAIT_CIRCUIT_UNDUPABLE "circuit_undupable"
+
 /// PDA Traits. This one makes PDAs explode if the user opens the messages menu
 #define TRAIT_PDA_MESSAGE_MENU_RIGGED "pda_message_menu_rigged"
 /// This one denotes a PDA has received a rigged message and will explode when the user tries to reply to a rigged PDA message
@@ -753,3 +756,20 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This human wants to see the color of their glasses, for some reason
 #define TRAIT_SEE_GLASS_COLORS "see_glass_colors"
+
+// Radiation defines
+
+/// Marks that this object is irradiated
+#define TRAIT_IRRADIATED "iraddiated"
+
+/// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
+#define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
+
+/// This clothing protects the user from radiation.
+/// This should not be used on clothing_traits, but should be applied to the clothing itself.
+#define TRAIT_RADIATION_PROTECTED_CLOTHING "radiation_protected_clothing"
+
+/// Whether or not this item will allow the radiation SS to go through standard
+/// radiation processing as if this wasn't already irradiated.
+/// Basically, without this, COMSIG_IN_RANGE_OF_IRRADIATION won't fire once the object is irradiated.
+#define TRAIT_BYPASS_EARLY_IRRADIATED_CHECK "radiation_bypass_early_irradiated_check"

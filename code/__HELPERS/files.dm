@@ -1,4 +1,3 @@
-
 /**
  * For FTP requests. (i.e. downloading runtime logs.)
  *
