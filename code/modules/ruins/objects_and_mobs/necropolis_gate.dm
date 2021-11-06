@@ -64,7 +64,7 @@
 
 /obj/structure/necropolis_gate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(border_dir != dir)
+	if(!(border_dir & dir))
 		return TRUE
 
 /obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, direction)
