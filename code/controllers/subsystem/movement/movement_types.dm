@@ -109,6 +109,29 @@
 /datum/move_loop/move/move()
 	. = moving.Move(get_step(moving, direction), direction)
 
+
+/**
+ * Like walk(), but it uses byond's pathfinding on a step by step basis
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * direction - The direction we want to move in
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * precedence - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRECEDENCE
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, precedence, flags)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move/move_to, precedence, flags, delay, timeout, direction)
+
+/datum/move_loop/move/move_to
+
+/datum/move_loop/move/move_to/move()
+	. = step_to(moving, get_step(moving, direction))
+
 /datum/move_loop/has_target
 	///The thing we're moving in relation to, either at or away from
 	var/atom/target
@@ -327,7 +350,6 @@
 		update_slope()
 
 /datum/move_loop/has_target/move_towards/handle_no_target()
-	SIGNAL_HANDLER
 	if(home)
 		return ..()
 	target = null
