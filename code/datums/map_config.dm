@@ -34,13 +34,23 @@
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
 
-/proc/load_map_config(filename = "next_map", default_to_box, delete_after, error_if_missing = TRUE)
-	if(filename == "next_map") // Since they don't share the same path, you gotta handle them differently...
-		filename = "data/[filename].json"
-	else
+/**
+ * Proc handling the loading of map configs. Will return the default map config (see above) if the loading of said confile fails for any reason whatsoever, so we always have a working map for the server to run.
+ * Arguments:
+ * * filename - Name of the config file for the map we want to load.
+ * * force_default_map - Do we forcefully load the default map?
+ * * delete_after - Boolean to delete the map config after loading it (I don't know why you would, I suggest not setting it to TRUE if you don't want to mess up the config of your server(s)).
+ * * error_if_missing - Bool that says whether failing to load the config for the map will be logged in log_world or not as it's passed to LoadConfig().
+ *
+ * Returns the config for the map to load.
+ */
+/proc/load_map_config(filename = null, force_default_map, delete_after, error_if_missing = TRUE)
+	if(filename) // If none is specified, then go to look for next_map.json, for map rotation purposes.
 		filename = "_maps/[filename].json"
+	else
+		filename = PATH_TO_NEXT_MAP_JSON
 	var/datum/map_config/config = new
-	if (default_to_box)
+	if (force_default_map)
 		return config
 	if (!config.LoadConfig(filename, error_if_missing))
 		qdel(config)
@@ -50,6 +60,7 @@
 	return config
 
 #define CHECK_EXISTS(X) if(!istext(json[X])) { log_world("[##X] missing from json!"); return; }
+
 /datum/map_config/proc/LoadConfig(filename, error_if_missing)
 	if(!fexists(filename))
 		if(error_if_missing)
