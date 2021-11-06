@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Godmoded shades should no longer spawn from posessed blades spawning spirits too fast."

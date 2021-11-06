@@ -959,8 +959,8 @@
 
 		// Combines two mutations from the console to try and create a new mutation
 		// ---------------------------------------------------------------------- //
-		// params["firstref"] -  ATOM Ref of first mutation for combination
-		// params["secondref"] -  ATOM Ref of second mutation for combination
+		// params["firstref"] - ATOM Ref of first mutation for combination
+		// params["secondref"] - ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_console")
 			// GUARD CHECK - We're running a research-type operation. If, for some
@@ -1005,8 +1005,8 @@
 
 		// Combines two mutations from the disk to try and create a new mutation
 		// ---------------------------------------------------------------------- //
-		// params["firstref"] -  ATOM Ref of first mutation for combination
-		// params["secondref"] -  ATOM Ref of second mutation for combination
+		// params["firstref"] - ATOM Ref of first mutation for combination
+		// params["secondref"] - ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_disk")
 			// GUARD CHECK - This code shouldn't even be callable without a diskette

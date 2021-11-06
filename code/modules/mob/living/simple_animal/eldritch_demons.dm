@@ -241,7 +241,7 @@
 		if(current_stacks >= stacks_to_grow)
 			var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
 			icon_state = "armsy_mid"
-			icon_living =  "armsy_mid"
+			icon_living = "armsy_mid"
 			back = prev
 			prev.icon_state = "armsy_end"
 			prev.icon_living = "armsy_end"

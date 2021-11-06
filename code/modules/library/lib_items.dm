@@ -294,7 +294,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
-	pickup_sound =  'sound/items/handling/book_pickup.ogg'
+	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 	///Game time in 1/10th seconds
 	var/due_date = 0
 	///false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
