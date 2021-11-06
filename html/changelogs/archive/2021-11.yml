@@ -137,3 +137,19 @@
       do so successfully.
   vincentiusvin:
   - bugfix: fixed some buttons having zero width
+2021-11-06:
+  KittyNoodle:
+  - bugfix: Radstorms dont mutate people who are immune to rads
+  Seris02:
+  - rscadd: custom say emotes, or in other words, radio emotes. The format is for
+      example "screams and shouts*damnit!" with any relevant radio keys, language
+      keys and all that used as normal, for example, ";,o screams and shouts*damnit!"
+      or you can use just the emote, ie, ";screams!*"
+  TheBonded:
+  - bugfix: Corpses will no longer cough, spit, or choke on blood when you hit them
+      in the chest really hard
+  TheFakeElon:
+  - server: Patches multiple(?) arbitrary file related vulnerabilities
+  Y0SH1M4S73R:
+  - admin: Added the color matrix editor. It is available from a dropdown option in
+      an atom's View Variables menu as well as when editing an existing color matrix.
