@@ -42,7 +42,7 @@
 
 
 /**
- * Proc handling the loading of map configs. Will return the default map config (see above) if the loading of said confile fails for any reason whatsoever, so we always have a working map for the server to run.
+ * Proc handling the loading of map configs. Will return the default map config using [/proc/load_default_map_config] if the loading of said file fails for any reason whatsoever, so we always have a working map for the server to run.
  * Arguments:
  * * filename - Name of the config file for the map we want to load. The .json file extension is added during the proc, so do not specify filenames with the extension.
  * * error_if_missing - Bool that says whether failing to load the config for the map will be logged in log_world or not as it's passed to LoadConfig().
