@@ -588,3 +588,31 @@
 			blended_color = "#2eeb9a"
 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 	return pre_asset
+
+/// Sends information needed for uplinks
+/datum/asset/json/uplink
+	name = "uplink"
+
+/datum/asset/json/uplink/generate()
+	var/list/data = list()
+	var/list/categories = list()
+	var/list/items = list()
+	for(var/datum/uplink_category/category as anything in subtypesof(/datum/uplink_category))
+		categories[category] = initial(category.name)
+		sortTim(category, .proc/cmp_uplink_category_desc)
+
+	for(var/datum/uplink_item/item_path as anything in subtypesof(/datum/uplink_item))
+		items += list(list(
+			"name" = initial(item_path.name),
+			"cost" = initial(item_path.cost),
+			"desc" = initial(item_path.desc),
+			"category" = initial(item_path.category),
+			"purchasable_from" = initial(item_path.purchasable_from),
+			"restricted" = initial(item_path.restricted),
+			"limited_stock" = initial(item_path.limited_stock),
+			"restricted_roles" = initial(item_path.restricted_roles)
+		))
+
+	data["items"] = items
+	data["categories"] = categories
+	return data

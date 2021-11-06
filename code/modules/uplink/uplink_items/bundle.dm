@@ -1,6 +1,10 @@
 //All bundles and telecrystals
+/datum/uplink_category/bundle
+	name = "Bundles"
+	weight = 10
+
 /datum/uplink_item/bundles_tc
-	category = "Bundles"
+	category = /datum/uplink_category/bundle
 	surplus = 0
 	cant_discount = TRUE
 

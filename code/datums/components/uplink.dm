@@ -9,13 +9,20 @@
 **/
 /datum/component/uplink
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/// Name of the uplink
 	var/name = "syndicate uplink"
+	/// Whether the uplink is currently active or not
 	var/active = FALSE
+	/// Whether this uplink can be locked or not
 	var/lockable = TRUE
+	/// Whether the uplink is locked or not.
 	var/locked = TRUE
+	/// Whether this uplink allows restricted items to be accessed
 	var/allow_restricted = TRUE
-	var/telecrystals
-	var/selected_cat
+	/// The amount of telecrystals contained in this uplink
+	var/telecrystals = 0
+	/// The amount of experience points this uplink has
+	var/experience_points = 0
 	var/owner = null
 	var/uplink_flag
 	var/datum/uplink_purchase_log/purchase_log
@@ -30,10 +37,9 @@
 	var/unlock_text
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
+/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, progression_points = UPLINK_HAS_PROGRESSION)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -173,28 +179,12 @@
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
 	data["compactMode"] = compact_mode
+	data["expPoints"] = experience_points
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
-	data["categories"] = list()
-	for(var/category in uplink_items)
-		var/list/cat = list(
-			"name" = category,
-			"items" = (category == selected_cat ? list() : null))
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			if(I.limited_stock == 0)
-				continue
-			if(length(I.restricted_roles))
-				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
-					continue
-			cat["items"] += list(list(
-				"name" = I.name,
-				"cost" = I.cost,
-				"desc" = I.desc,
-			))
-		data["categories"] += list(cat)
+	data["lockable"] = lockable
 	return data
 
 /datum/component/uplink/ui_act(action, params)

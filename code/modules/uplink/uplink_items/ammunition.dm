@@ -1,7 +1,11 @@
 // File ordered by progression
 
+/datum/uplink_category/ammo
+	name = "Ammunition"
+	weight = 7
+
 /datum/uplink_item/ammo
-	category = "Ammunition"
+	category = /datum/uplink_category/ammo
 	surplus = 40
 
 // No progression cost

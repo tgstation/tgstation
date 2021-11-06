@@ -1,7 +1,11 @@
 // File ordered based on progression
 
-/datum/uplink_item/device_tools
-	category = "Misc. Gadgets"
+/datum/uplink_category/device_tools
+	name = "Misc. Gadgets"
+	weight = 3
+
+/datum/uplink_item/suits
+	category = /datum/uplink_category/device_tools
 
 // No progression cost
 

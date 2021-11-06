@@ -1,6 +1,10 @@
 // File organised based on progression
+/datum/uplink_category/stealthy
+	name = "Stealthy Weapons"
+	weight = 8
+
 /datum/uplink_item/stealthy_weapons
-	category = "Stealthy Weapons"
+	category = /datum/uplink_category/stealthy
 
 // No progression cost
 

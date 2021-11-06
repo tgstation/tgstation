@@ -1,7 +1,11 @@
 // File ordered by progression
 
+/datum/uplink_category/suits
+	name = "Space Suits"
+	weight = 3
+
 /datum/uplink_item/suits
-	category = "Space Suits"
+	category = /datum/uplink_category/suits
 	surplus = 40
 
 /datum/uplink_item/suits/infiltrator_bundle

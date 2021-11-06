@@ -1,6 +1,11 @@
 // File ordered based on progression
+
+/datum/uplink_category/stealthy_tools
+	name = "Stealth Gadgets"
+	weight = 4
+
 /datum/uplink_item/stealthy_tools
-	category = "Stealth Gadgets"
+	category = /datum/uplink_category/stealthy_tools
 
 // No progression cost
 

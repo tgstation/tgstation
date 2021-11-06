@@ -1,5 +1,9 @@
+/datum/uplink_category/badassery
+	name = "(Pointless) Badassery"
+	weight = 0
+
 /datum/uplink_item/badass
-	category = "(Pointless) Badassery"
+	category = /datum/uplink_category/badassery
 	surplus = 0
 
 /datum/uplink_item/badass/balloon

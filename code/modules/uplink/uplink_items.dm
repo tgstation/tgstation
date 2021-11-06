@@ -76,26 +76,47 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
  * Items that can be spawned from an uplink. Can be limited by gamemode.
 **/
 /datum/uplink_item
+	/// Name of the uplink item
 	var/name = "item name"
-	var/category = "item category"
+	/// Category of the uplink
+	var/datum/uplink_category/category
+	/// Description of the uplink
 	var/desc = "item description"
-	var/item = null // Path to the item to spawn.
-	var/refund_path = null // Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
+	/// Path to the item to spawn.
+	var/item = null
+	/// Alternative path for refunds, in case the item purchased isn't what is actually refunded (ie: holoparasites).
+	var/refund_path = null
+	/// Cost of the item.
 	var/cost = 0
-	var/refund_amount = 0 // specified refund amount in case there needs to be a TC penalty for refunds.
+	/// Amount of TC to refund, in case there's a TC penalty for refunds.
+	var/refund_amount = 0
+	/// Whether this item is refundable or not.
 	var/refundable = FALSE
-	var/surplus = 100 // Chance of being included in the surplus crate.
+	// Chance of being included in the surplus crate.
+	var/surplus = 100
+	/// Whether this can be discounted or not
 	var/cant_discount = FALSE
+	/// How many items of this stock can be purchased.
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
 	/// A bitfield to represent what uplinks can purchase this item.
 	/// See [`code/__DEFINES/uplink.dm`].
 	var/purchasable_from = ALL
-	var/list/restricted_roles = list() //If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
+	/// If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
+	var/list/restricted_roles = list()
 	/// The minimum amount of progression needed for this item to be added to uplinks.
 	var/progression_minimum = 0
+	/// Whether this purchase is visible in the purchase log.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
-	var/restricted = FALSE // Adds restrictions for VR/Events
-	var/illegal_tech = TRUE // Can this item be deconstructed to unlock certain techweb research nodes?
+	/// Whether this purchase is restricted or not (VR/Events related)
+	var/restricted = FALSE
+	/// Can this item be deconstructed to unlock certain techweb research nodes?
+	var/illegal_tech = TRUE
+
+/datum/uplink_category
+	/// Name of the category
+	var/name
+	/// Weight of the category. Used to determine the positioning in the uplink. High weight = appears first
+	var/weight = 0
 
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
@@ -122,9 +143,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
 	return A
 
+/datum/uplink_category/discounts
+	name = "Discounts"
+	weight = -1
+
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
-	category = "Discounts"
+	category = /datum/uplink_category/discounts
 
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment

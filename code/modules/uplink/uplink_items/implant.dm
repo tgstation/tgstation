@@ -1,7 +1,12 @@
 // File ordered based on progression
 
+/datum/uplink_category/implants
+	name = "Implants"
+	weight = 2
+
+
 /datum/uplink_item/implants
-	category = "Implants"
+	category = /datum/uplink_category/implants
 	surplus = 50
 
 // No progression cost

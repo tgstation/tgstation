@@ -519,8 +519,12 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 //Support and Mechs
+/datum/uplink_category/support
+	name = "Support and Exosuits"
+	weight = 5
+
 /datum/uplink_item/support
-	category = "Support and Exosuits"
+	category = /datum/uplink_category/support
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS
 

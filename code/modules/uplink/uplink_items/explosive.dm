@@ -1,7 +1,11 @@
 // File ordered based on progression.
 
+/datum/uplink_category/explosives
+	name = "Explosives"
+	weight = 6
+
 /datum/uplink_item/explosives
-	category = "Explosives"
+	category = /datum/uplink_category/explosives
 
 // Low progression cost
 /datum/uplink_item/explosives/soap_clusterbang

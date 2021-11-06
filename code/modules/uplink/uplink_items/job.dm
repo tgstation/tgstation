@@ -1,7 +1,11 @@
 // File organised based on progression
 
+/datum/uplink_category/role_restricted
+	name = "Role-Restricted"
+	weight = 1
+
 /datum/uplink_item/role_restricted
-	category = "Role-Restricted"
+	category = /datum/uplink_category/role_restricted
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	surplus = 0
 

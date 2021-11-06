@@ -1,7 +1,12 @@
 // File organised based on progression
 
+//All bundles and telecrystals
+/datum/uplink_category/dangerous
+	name = "Conspicuous Weapons"
+	weight = 9
+
 /datum/uplink_item/dangerous
-	category = "Conspicuous Weapons"
+	category = /datum/uplink_category/dangerous
 
 // No progression cost
 
