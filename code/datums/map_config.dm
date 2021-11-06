@@ -34,9 +34,13 @@
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
 
-/proc/load_map_config(filename = "next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
-	filename = "data/[filename].json"
+/proc/load_map_config(directory = "data", filename = "next_map", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
+	//directory must be in whitelist
+	if(!(directory in MAP_DIRECTORY_WHITELIST))
+		log_world("map directory not in whitelist: [directory] for map [filename]")
+		return config  // Fall back to Box
+	filename = "[directory]/[filename].json"
 	if (default_to_box)
 		return config
 	if (!config.LoadConfig(filename, error_if_missing))

@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/New()
 	..()
 #ifdef FORCE_MAP
-	config = load_map_config(FORCE_MAP)
+	config = load_map_config(FORCE_MAP_DIRECTORY, FORCE_MAP)
 #else
 	config = load_map_config(error_if_missing = FALSE)
 #endif
