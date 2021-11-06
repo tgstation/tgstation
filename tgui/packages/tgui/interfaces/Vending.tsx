@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, NoticeBox, Button, Section, Table, Stack, Icon, LabeledList } from '../components';
+import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 type VendingData = {
