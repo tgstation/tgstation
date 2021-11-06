@@ -7501,7 +7501,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "aUk" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
@@ -7762,7 +7762,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	name = "euthanization chamber freezer"
 	},
 /turf/open/floor/iron/dark,
@@ -16004,7 +16004,7 @@
 /turf/open/floor/iron,
 /area/security/courtroom)
 "egF" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -20962,7 +20962,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "fTt" = (
 /obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/north,
@@ -34796,7 +34796,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "lcW" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -36820,7 +36820,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "lUM" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -41811,7 +41811,7 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "nTO" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -68313,7 +68313,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	name = "euthanization chamber freezer"
 	},
 /obj/structure/cable,

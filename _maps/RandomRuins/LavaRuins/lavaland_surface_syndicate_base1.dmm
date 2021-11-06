@@ -185,7 +185,7 @@
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "dg" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
 /turf/open/floor/iron,
@@ -5711,7 +5711,7 @@
 /area/ruin/syndicate_lava_base/testlab)
 "Ec" = (
 /obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 1
 	},
 /turf/open/floor/iron,

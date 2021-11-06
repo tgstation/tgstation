@@ -12,7 +12,7 @@ export const ThermoMachine = (props, context) => {
         width="200px"
         textAlign="center"
         minHeight="39px">
-        {"No enviromental pressure or ports not connected/with no gas"}
+        {"Port not connected or with no gas"}
       </Box>
     </Modal>
   );
@@ -29,14 +29,6 @@ export const ThermoMachine = (props, context) => {
         }}>
         {Math.round(data.efficiency * 10000)/100 + " %"}
       </ProgressBar>
-    </LabeledList.Item>
-  );
-  const cooling_enviroment_reservoir = !!data.cooling &&(
-    <LabeledList.Item label="Enviroment as heat reservoir">
-      <Button
-        content={data.use_env_heat ? 'On' : 'Off'}
-        selected={data.use_env_heat}
-        onClick={() => act('use_env_heat')} />
     </LabeledList.Item>
   );
   return (
@@ -75,14 +67,6 @@ export const ThermoMachine = (props, context) => {
               onClick={() => act('power')} />
           )}>
           <LabeledList>
-            <LabeledList.Item label="Safeties">
-              <Button
-                content={data.safeties ? 'Safeties ON' : 'Safeties OFF'}
-                color={data.safeties ? "green" : "red"}
-                disabled={!data.hacked}
-                onClick={() => act('safeties')} />
-            </LabeledList.Item>
-            {cooling_enviroment_reservoir}
             <LabeledList.Item label="Target Temperature">
               <NumberInput
                 animated
