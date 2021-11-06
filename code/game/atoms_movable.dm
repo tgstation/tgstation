@@ -384,16 +384,16 @@
 	if(!direction)
 		direction = get_dir(src, newloc)
 
-	var/can_pass_diagonally = 0
+	var/can_pass_diagonally = NONE
 	if (direction & (direction - 1)) //Check if the first part of the diagonal move is possible
 		if(direction & NORTH)
-			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : 0
+			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : NONE
 		if(!can_pass_diagonally && (direction & EAST))
-			can_pass_diagonally = get_step(loc, EAST)?.Enter(src) ? EAST : 0
+			can_pass_diagonally = get_step(loc, EAST)?.Enter(src) ? EAST : NONE
 		if(!can_pass_diagonally && (direction & WEST))
-			can_pass_diagonally = get_step(loc, WEST)?.Enter(src) ? WEST : 0
+			can_pass_diagonally = get_step(loc, WEST)?.Enter(src) ? WEST : NONE
 		if(!can_pass_diagonally && (direction & SOUTH))
-			can_pass_diagonally = get_step(loc, SOUTH)?.Enter(src) ? SOUTH : 0
+			can_pass_diagonally = get_step(loc, SOUTH)?.Enter(src) ? SOUTH : NONE
 		if(!can_pass_diagonally)
 			return
 
