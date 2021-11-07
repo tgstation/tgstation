@@ -14,6 +14,10 @@
 /// The APCs cover is missing.
 #define APC_COVER_REMOVED 2
 
+// APC visuals
+/// Pixel offset of the APC from the floor turf
+#define APC_PIXEL_OFFSET 25
+
 // APC charging status:
 /// The APC is not charging.
 #define APC_NOT_CHARGING 0
@@ -186,7 +190,7 @@
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 25)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET)
 
 /obj/machinery/power/apc/get_cell()
 	return cell
@@ -219,23 +223,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 25)
 
 	// offset APC_PIXEL_OFFSET pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
+	var/offset_old
 	switch(dir)
 		if(NORTH)
-			if((pixel_y != initial(pixel_y)) && (pixel_y != 25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_y value ([pixel_y] - should be 25.)")
-			pixel_y = 25
+			offset_old = pixel_y
+			pixel_y = APC_PIXEL_OFFSET
 		if(SOUTH)
-			if((pixel_y != initial(pixel_y)) && (pixel_y != -25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_y value ([pixel_y] - should be -25.)")
-			pixel_y = -25
+			offset_old = pixel_y
+			pixel_y = -APC_PIXEL_OFFSET
 		if(EAST)
-			if((pixel_y != initial(pixel_x)) && (pixel_x != 25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_x value ([pixel_x] - should be 25.)")
-			pixel_x = 25
+			offset_old = pixel_x
+			pixel_x = APC_PIXEL_OFFSET
 		if(WEST)
-			if((pixel_y != initial(pixel_x)) && (pixel_x != -25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_x value ([pixel_x] - should be -25.)")
-			pixel_x = -25
+			offset_old = pixel_x
+			pixel_x = -APC_PIXEL_OFFSET
+	if(offset_old != APC_PIXEL_OFFSET && !building)
+		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -1538,6 +1541,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 25)
 #undef AUTOSET_FORCE_OFF
 #undef AUTOSET_OFF
 #undef AUTOSET_ON
+
+#undef APC_PIXEL_OFFSET
 
 #undef APC_NO_POWER
 #undef APC_LOW_POWER
