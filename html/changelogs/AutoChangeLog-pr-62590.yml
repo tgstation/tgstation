@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the random double bed sheets spawners spawning normal bedsheets."
-  - bugfix: "Fixed double bed sheets other than the standard white one looking like single bed sheets when dyed."
