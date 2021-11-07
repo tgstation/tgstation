@@ -1,0 +1,4 @@
+author: "Nyksia"
+delete-after: True
+changes: 
+  - bugfix: "aliens can no longer clear eggs before the hugger bursts out"
