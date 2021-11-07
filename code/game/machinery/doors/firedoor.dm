@@ -22,6 +22,9 @@
 	assemblytype = /obj/structure/firelock_frame
 	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, RAD = 100, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
+
+	COOLDOWN_DECLARE(detect_cooldown)
+
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
@@ -31,8 +34,6 @@
 	var/being_held_open = FALSE
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
 	var/alarm_type = null
-	///Cooldown for Detections. Prevents instant re-activations when air mixing would solve an issue
-	var/detect_cooldown = 0
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
 	var/merger_typecache
@@ -44,11 +45,14 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
-
-	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/MergerAdding)
-	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/MergerRemoving)
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_EXPOSE = .proc/check_atmos,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
+
+	check_atmos()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -58,8 +62,6 @@
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
-	UnregisterSignal(src, COMSIG_MERGER_ADDING)
-	UnregisterSignal(src, COMSIG_MERGER_REMOVING)
 	return ..()
 
 /obj/machinery/door/firedoor/examine(mob/user)
@@ -75,27 +77,6 @@
 		. += span_notice("It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.")
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
-
-///////////////////////////////////////////////////////////////////
-// Merger handling
-
-/obj/machinery/door/firedoor/proc/MergerAdding(obj/machinery/door/firedoor/us, datum/merger/new_merger)
-	SIGNAL_HANDLER
-	if(new_merger.id != merger_id)
-		return
-	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/MergerRefreshComplete)
-
-/obj/machinery/door/firedoor/proc/MergerRemoving(obj/machinery/door/firedoor/us, datum/merger/old_merger)
-	SIGNAL_HANDLER
-	if(old_merger.id != merger_id)
-		return
-	UnregisterSignal(old_merger, COMSIG_MERGER_REFRESH_COMPLETE)
-
-/// Handles the firelocks to register only one signal per group
-/obj/machinery/door/firedoor/proc/MergerRefreshComplete(datum/merger/merger, list/leaving_members, list/joining_members)
-
-///////////////////////////////////////////////////////////////////
-// End of Merger
 
 /**
  * Calculates what areas we should worry about.
@@ -125,25 +106,32 @@
 				for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 					fire_panel.set_status()
 
-/obj/machinery/door/firedoor/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return world.time > detect_cooldown && (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && !(obj_flags & EMAGGED) && !machine_stat
-
-/obj/machinery/door/firedoor/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+/obj/machinery/door/firedoor/proc/check_atmos(datum/source)
+	if(!COOLDOWN_FINISHED(src, detect_cooldown))
+		return
 	if(obj_flags & EMAGGED)
+		return
+	if(alarm_type)
 		return
 	for(var/area/place in affecting_areas)
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
-	if(alarm_type)
+
+	var/turf/my_turf = source
+	if(!my_turf)
+		my_turf = get_turf(src)
+
+	var/datum/gas_mixture/environment = my_turf.return_air()
+	var/result
+
+	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		result = FIRELOCK_ALARM_TYPE_HOT
+	if(environment.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+		result = FIRELOCK_ALARM_TYPE_COLD
+	if(!result)
 		return
 
-	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		start_activation_process(FIRELOCK_ALARM_TYPE_HOT)
-		return
-	if(exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-		start_activation_process(FIRELOCK_ALARM_TYPE_COLD)
-		return
-	activate()//Fallback. If firelocks regularly trigger themselves as generic, we need to do some bugfixing
+	start_activation_process(result)
 
 /**
  * Begins activation process of us and our neighbors.
@@ -160,7 +148,7 @@
 		return //We're already active
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
-		INVOKE_ASYNC(buddylock, .proc/activate, code)
+		buddylock.activate(code)
 
 
 /**
@@ -185,17 +173,13 @@
 				fire_panel.set_status()
 			if(place == my_area)
 				place.alarm_manager.send_alarm(ALARM_FIRE, place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
-	update_icon() //Sets the lights even if the door doesn't move.
-	if(!being_held_open)
-		INVOKE_ASYNC(src, .proc/correct_state)
+	update_icon() //Sets the door lights even if the door doesn't move.
+	correct_state()
 
 /**
  * Proc that handles reset steps
  *
- * Sets the alarm_type to null, removes us from active firelock lists
- * in the affected areas, and may tell fire alarms to update their icon
- * Also sets the detect cooldown so that we can't immediately re-activate
- * and finally calls correct_state() to handle opening the fire lock.
+ * Clears the alarm state and attempts to open the firelock.
  */
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
@@ -205,9 +189,9 @@
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
-	detect_cooldown = world.time + DETECT_COOLDOWN_STEP_TIME
-	update_icon() //Sets the lights even if the door doesn't move.
-	INVOKE_ASYNC(src, .proc/correct_state)
+	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
+	update_icon() //Sets the door lights even if the door doesn't move.
+	correct_state()
 
 /obj/machinery/door/firedoor/emag_act(mob/user)
 	obj_flags |= EMAGGED
@@ -226,7 +210,7 @@
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	update_icon()
-	INVOKE_ASYNC(src, .proc/correct_state)
+	correct_state()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -319,7 +303,7 @@
 	if(!QDELETED(user) && Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
 		return
 	being_held_open = FALSE
-	INVOKE_ASYNC(src, .proc/correct_state)
+	correct_state()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
@@ -383,12 +367,14 @@
  * changes during the timer, the door doesn't close or open incorrectly.
  */
 /obj/machinery/door/firedoor/proc/correct_state()
-	if(obj_flags & EMAGGED)
+	if(obj_flags & EMAGGED || being_held_open)
 		return //Unmotivated, indifferent, we have no real care what state we're in anymore.
 	if(alarm_type && !density) //We should be closed but we're not
-		return close()
+		INVOKE_ASYNC(src, .proc/close)
+		return
 	if(!alarm_type && density) //We should be open but we're not
-		return open()
+		INVOKE_ASYNC(src, .proc/open)
+		return
 
 /obj/machinery/door/firedoor/open()
 	if(welded)
