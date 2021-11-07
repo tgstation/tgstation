@@ -28,7 +28,7 @@
 	if(!new_grad_style)
 		return
 
-	var/new_grad_color = input(usr, "Choose a secondary hair color:", "Character Preference","#"+human_target.grad_color) as color|null
+	var/new_grad_color = input(usr, "Choose a secondary hair color:", "Character Preference",human_target.grad_color) as color|null
 	if(!new_grad_color)
 		return
 

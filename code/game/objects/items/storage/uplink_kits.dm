@@ -23,7 +23,7 @@
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/bundle_a/PopulateContents()
-	switch (pickweight(list(
+	switch (pick_weight(list(
 		KIT_RECON = 2,
 		KIT_BLOODY_SPAI = 3,
 		KIT_STEALTHY = 2,
@@ -153,7 +153,7 @@
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
-	switch (pickweight(list(
+	switch (pick_weight(list(
 		KIT_JAMES_BOND = 2,
 		KIT_NINJA = 1,
 		KIT_DARK_LORD = 1,

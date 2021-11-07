@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/proc/flip_deck()
 	flipped = !flipped
 	var/list/temp_deck = contents.Copy()
-	contents = reverseRange(temp_deck)
+	contents = reverse_range(temp_deck)
 	//Now flip the cards to their opposite positions.
 	for(var/a in 1 to contents.len)
 		var/obj/item/tcgcard/nu_card = contents[a]
@@ -437,7 +437,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			weight += rarity_table[chance]
 		var/random = rand(weight)
 		for(var/bracket in rarity_table)
-			//Steals blatently from pickweight(), sorry buddy I need the index
+			//Steals blatently from pick_weight(), sorry buddy I need the index
 			random -= rarity_table[bracket]
 			if(random <= 0)
 				rarity = bracket
@@ -565,7 +565,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			totalCards++
 			cardsByCount[id] += 1
 	var/toSend = "Out of [totalCards] cards"
-	for(var/id in sortList(cardsByCount, /proc/cmp_num_string_asc))
+	for(var/id in sort_list(cardsByCount, /proc/cmp_num_string_asc))
 		if(id)
 			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][id]
 			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"

@@ -79,7 +79,7 @@
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
  */
 /datum/beam/proc/Draw()
-	var/Angle = round(Get_Angle(origin,target))
+	var/Angle = round(get_angle(origin,target))
 	var/matrix/rot_matrix = matrix()
 	var/turf/origin_turf = get_turf(origin)
 	rot_matrix.Turn(Angle)

@@ -146,7 +146,7 @@
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
-		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -627,7 +627,7 @@
 		if(user_unbuckle_mob(buckled_mobs[1],user))
 			return TRUE
 
-	var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
+	var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sort_names(buckled_mobs)
 	if(user_unbuckle_mob(unbuckled,user))
 		return TRUE
 

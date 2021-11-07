@@ -72,6 +72,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The current size of the circuit.
 	var/current_size = 0
 
+	/// The current linked component printer. Lets you remotely print off circuit components and places them in the integrated circuit.
+	var/datum/weakref/linked_component_printer
+
 /obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
@@ -272,7 +275,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/simple/circuit_assets)
+		get_asset_datum(/datum/asset/simple/circuit_assets),
+		get_asset_datum(/datum/asset/json/circuit_components)
 	)
 
 /obj/item/integrated_circuit/ui_static_data(mob/user)
@@ -280,6 +284,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	.["global_basic_types"] = GLOB.wiremod_basic_types
 	.["screen_x"] = screen_x
 	.["screen_y"] = screen_y
+
+	var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+	if(!printer)
+		return
+	.["stored_designs"] = printer.current_unlocked_designs
 
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
@@ -314,6 +323,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				"type" = port.datatype,
 				"ref" = REF(port),
 				"color" = port.color,
+				"datatype_data" = port.datatype_ui_data(user)
 			))
 
 		component_data["name"] = component.display_name
@@ -467,7 +477,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return TRUE
 
 			if(params["marked_atom"])
-				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
+				if(!(port.datatype_handler.datatype_flags & DATATYPE_FLAG_ALLOW_ATOM_INPUT))
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
 				// Let's admins upload marked datums to an entity port.
@@ -551,7 +561,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/variable_datatype = params["variable_datatype"]
 			if(!(variable_datatype in GLOB.wiremod_basic_types))
 				return
-
+			if(params["is_list"])
+				variable_datatype = PORT_TYPE_LIST(variable_datatype)
 			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
 			. = TRUE
 		if("remove_variable")
@@ -568,19 +579,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(setter_and_getter_count >= max_setters_and_getters)
 				balloon_alert(usr, "setter and getter count at maximum capacity")
 				return
-			var/designated_type = /obj/item/circuit_component/getter
+			var/designated_type = /obj/item/circuit_component/variable/getter
 			if(params["is_setter"])
-				designated_type = /obj/item/circuit_component/setter
-			var/obj/item/circuit_component/component = new designated_type(src)
+				designated_type = /obj/item/circuit_component/variable/setter
+			var/obj/item/circuit_component/variable/component = new designated_type(src)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
-			if(params["is_setter"])
-				var/obj/item/circuit_component/setter/setter = component
-				setter.variable_name.set_input(params["variable"])
-			else
-				var/obj/item/circuit_component/getter/getter = component
-				getter.variable_name.set_input(params["variable"])
+			component.variable_name.set_input(params["variable"])
 			component.rel_x = text2num(params["rel_x"])
 			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
@@ -595,7 +601,28 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			var/obj/item/circuit_component/component = attached_components[component_id]
 			component.ui_perform_action(ui.user, params["action_name"])
-
+		if("print_component")
+			var/component_path = text2path(params["component_to_print"])
+			var/obj/item/circuit_component/component
+			if(!check_rights_for(ui.user.client, R_SPAWN))
+				var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+				if(!printer)
+					balloon_alert(ui.user, "linked printer not found!")
+					return
+				component = printer.print_component(component_path)
+				if(!component)
+					balloon_alert(ui.user, "failed to make the component!")
+					return
+			else
+				if(!ispath(component_path, /obj/item/circuit_component))
+					return
+				component = new component_path(drop_location())
+				component.datum_flags |= DF_VAR_EDITED
+			if(!add_component(component))
+				return
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
+			return TRUE
 
 #undef WITHIN_RANGE
 

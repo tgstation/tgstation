@@ -58,6 +58,7 @@ Difficulty: Extremely Hard
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /datum/action/innate/megafauna_attack/frost_orbs
 	name = "Fire Frost Orbs"

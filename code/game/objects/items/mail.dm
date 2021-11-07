@@ -10,7 +10,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
-	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
@@ -158,7 +158,7 @@
 				goodies += job_goodies
 
 	for(var/iterator = 0, iterator < goodie_count, iterator++)
-		var/target_good = pickweight(goodies)
+		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
 		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
@@ -202,6 +202,7 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()

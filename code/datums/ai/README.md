@@ -19,3 +19,8 @@ The blackboard is an associated list keyed with strings and with values of whate
 
 ## AI Behavior
 AI behaviors are the actions an AI can take. These can range from "Do an emote" to "Attack this target until he is dead". They are singletons and should contain nothing but static data. Any dynamic data should be stored in the blackboard, to allow different controllers to use the same behaviors.
+
+
+# Guides:
+
+[Making Your AI](./making_your_ai.md): Quickly runs through how to make an ai controller for anything with a step by step development of one.

@@ -78,7 +78,7 @@
 	message_alien = "lets out a waning guttural screech, and collapses onto the floor..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
-	message_simple =  "stops moving..."
+	message_simple = "stops moving..."
 	cooldown = (15 SECONDS)
 	stat_allowed = HARD_CRIT
 
@@ -124,7 +124,7 @@
 		var/mob/living/carbon/human/H = user
 		var/open = FALSE
 		var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(wings)
+		if(istype(wings))
 			if(wings.wings_open)
 				open = TRUE
 				wings.close_wings()

@@ -36,6 +36,8 @@
 
 
 /datum/element/basic_body_temp_sensitive/proc/on_life(datum/target, delta_time, times_fired)
+	SIGNAL_HANDLER
+
 	var/mob/living/basic/basic_mob = target
 	var/gave_alert = FALSE
 

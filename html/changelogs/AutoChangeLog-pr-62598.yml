@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "TramStation now has a ticket dispenser by the HoP line, replacing one of two very close gas vendors."

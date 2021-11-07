@@ -333,7 +333,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			client.screen |= r_hand
 
 	if(l_hand)
-		hands_overlays +=  l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		hands_overlays += l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.plane = ABOVE_HUD_PLANE
@@ -454,7 +454,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(P.reset)
 			guardians -= P //clear out guardians that are already reset
 	if(guardians.len)
-		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in sortNames(guardians)
+		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in sort_names(guardians)
 		if(G)
 			to_chat(src, span_holoparasite("You attempt to reset <font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font>'s personality..."))
 			var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, FALSE, 100)
@@ -519,6 +519,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
 	var/allowguardian = FALSE
+	var/datum/antagonist/antag_datum_to_give
 
 /obj/item/guardiancreator/attack_self(mob/living/user)
 	if(isguardian(user) && !allowguardian)
@@ -551,7 +552,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sortList(possible_guardians)
+		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sort_list(possible_guardians)
 		if(!guardiantype || !candidate.client)
 			to_chat(user, "[failure_message]" )
 			used = FALSE
@@ -620,6 +621,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						/mob/living/proc/guardian_recall, \
 						/mob/living/proc/guardian_reset))
 	G?.client.init_verbs()
+	return G
 
 /obj/item/guardiancreator/choose
 	random = FALSE
@@ -630,6 +632,18 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/choose/wizard
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Gravitokinetic")
 	allowmultiple = TRUE
+
+/obj/item/guardiancreator/choose/wizard/spawn_guardian(mob/living/user, mob/dead/candidate)
+	. = ..()
+	var/mob/guardian = .
+	if(!guardian)
+		return
+
+	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	if(antag_datum)
+		if(!antag_datum.wiz_team)
+			antag_datum.create_wiz_team()
+		guardian.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
 /obj/item/guardiancreator/tech
 	name = "holoparasite injector"

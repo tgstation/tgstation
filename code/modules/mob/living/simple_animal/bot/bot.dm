@@ -35,7 +35,8 @@
 	var/window_width = 0 //0 for default size
 	var/window_height = 0
 	var/obj/item/paicard/paicard // Inserted pai card.
-	var/allow_pai = 1 // Are we even allowed to insert a pai card.
+	///If a pAI is allowed to be inserted into this bot.
+	var/allow_pai = TRUE
 	var/bot_name
 
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
@@ -286,7 +287,7 @@
 		if(BOT_RESPONDING) //Called by the AI.
 			call_mode()
 			return
-		if(BOT_SUMMON) //Called by PDA
+		if(BOT_SUMMON) //Called to a location
 			bot_summon()
 			return
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
@@ -459,7 +460,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
+	var/list/adjacent = T.get_atmos_adjacent_turfs(1)
 	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
 		adjacent = shuffle(adjacent)
 		shuffle = FALSE
@@ -822,7 +823,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
-	if((istype(A, /obj/machinery/door/airlock) ||  istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
+	if((istype(A, /obj/machinery/door/airlock) || istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
 		var/obj/machinery/door/D = A
 		if(D.check_access(access_card))
 			D.open()

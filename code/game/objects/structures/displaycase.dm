@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
@@ -333,7 +333,7 @@
 		to_chat(user, span_warning("The case rejects the [W]!"))
 		return
 
-	for(var/a in W.GetAllContents())
+	for(var/a in W.get_all_contents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
 			to_chat(user, span_warning("The case rejects the [W]!"))
 			return

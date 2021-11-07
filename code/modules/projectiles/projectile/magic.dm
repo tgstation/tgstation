@@ -479,7 +479,7 @@
 
 	var/zap_power = 20000
 	var/zap_range = 15
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 	var/chain
 	var/mob/living/caster
 
@@ -502,7 +502,7 @@
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
 	zap_range = 4
-	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)

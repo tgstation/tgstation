@@ -6,7 +6,6 @@
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
-#define CTF_REQUIRED_PLAYERS 4
 
 /obj/item/ctf
 	name = "banner"
@@ -381,7 +380,7 @@
 			option.info = "<span class='boldnotice'>[initial(class.class_description)]</span>"
 			display_classes[key] = option
 
-		sortList(display_classes)
+		sort_list(display_classes)
 		var/choice = show_radial_menu(new_team_member.mob, src, display_classes, radius = 38)
 		if(!choice || !(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME) || (new_team_member.ckey in recently_dead_ckeys) || !isobserver(new_team_member.mob) || src.ctf_enabled == FALSE || !(new_team_member.ckey in src.team_members))
 			return //picked nothing, admin disabled it, cheating to respawn faster, cheating to respawn... while in game?,
@@ -638,4 +637,3 @@
 #undef FLAG_RETURN_TIME
 #undef INSTAGIB_RESPAWN
 #undef DEFAULT_RESPAWN
-#undef CTF_REQUIRED_PLAYERS

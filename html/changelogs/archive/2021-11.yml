@@ -1,0 +1,177 @@
+2021-11-01:
+  MMMiracles:
+  - bugfix: CMOs on Tramstation start back in their office again
+  Melbert:
+  - rscadd: 'Icebox: Engineering and Atmos remapping!'
+  RandomGamer123:
+  - bugfix: Swapped positions of a fuel tank and rack in Delta's Auxillary Tech Storage
+  RaveRadbury:
+  - bugfix: Vampires and Dullahans can be enabled in the config.
+  Seris02:
+  - bugfix: sharding someone no longer causes an invisible dead mob
+  - qol: the PDA will no longer bother you with a message if all you're doing is closing
+      the interface while laying down.
+  - bugfix: fixes a runtime when transferring advanced ids to/from wallets
+  Timberpoes:
+  - bugfix: It is no longer possible to add reagents to containers in the BRPED.
+  Zytolg:
+  - bugfix: Using leftover funding from the quarter, the Icebox CMO has bought their
+      staff a dinky medical records laptop.
+  adamsong:
+  - code_imp: added check to make sure roleban_delimiter exists on a roleban
+  - admin: max ban message length added
+  phasenoisepon:
+  - bugfix: Vampires can now no longer transform into bat form when their brain is
+      placed in an MMI
+2021-11-02:
+  Mothblocks:
+  - balance: Radiation is now a status effect, where you are either irradiated or
+      not. When irradiated, you will take constant toxin damage, and irregular burn
+      damage. Radiation is removed once all toxin damage is healed. Standing under
+      a shower will pause the harmful effects of radiation, making it easier to heal.
+      Everything that is irradiated will glow green.
+  - balance: A lot of radiation sources keep their radiating capabilities, though
+      most of it was eyeballed. If anything was significantly nerfed/buffed, feel
+      free to let me know.
+  - rscdel: Removes contamination from radiation.
+  - balance: Uranium structures will irradiate those around them, but will be delayed,
+      giving you time to stay away.
+  - rscdel: The radioactive microlaser no longer irradiates, but still has its knockdown,
+      which was never related.
+  - balance: Seiver now heals high toxin damage when cold, but only if the patient
+      is irradiated.
+  - balance: Screwdriver (the drink) and Potassium Iodide are similar. They will heal
+      toxin damage when the target is irradiated.
+  - balance: Screwdriver, Potassium Iodide, and Pentetic Acid will halt the damaging
+      effects of radiation, just like showers. This means no tox damage or burns.
+  - balance: The gravity generator, instead of giving radiation when on, will now
+      have a high gravity field around it.
+  - balance: Radiation protection has been kept to engineering hardsuits, rad suits,
+      and H.E.C.K. suits. This can be expanded to others, those are just the ones
+      I recognized.
+  - balance: Genetics no longer uses radiation, but instead genetic damage. Genetic
+      damage works very similarly--once it tops 100%, you will start to take toxin
+      damage. Gorillas are now made through genetic damage instead of radiation.
+  - rscdel: Removed the halogen counter PDA app.
+  - rscdel: Removed the emag effect on geiger counters, though an emag functionality
+      can be added back later.
+  - rscdel: Removed the geiger counter from cyborgs, but mostly because it's not actually
+      really that useful anymore? Everything glows green!
+  - rscdel: Removed the advanced wirebrush, a weird consumer of radiation with an
+      extremely niche purpose. The standard wirebrush still exists.
+  - rscdel: Removed radiation scanning from meson goggles.
+  - rscdel: Removed leftover radiation collectors on ruins.
+  - rscdel: Removed radiation from the radioisotope thermoelectric generator, though
+      it still produces power. Trivia points if you actually know what that is!
+  - balance: The EMP'd advanced energy gun now deals burn damage instead of radiation
+      damage.
+  - balance: Technetium 99 and Unstable Mutagen now deal toxin damage instead of radiation
+      damage.
+  - balance: Polonium will now irradiate the mob its in, and deal toxin damage if
+      they're already irradiated (or can't be).
+  - balance: Breathing tritium will now irradiate you after a certain amount, as well
+      as deal toxin damage.
+  phasenoisepon:
+  - bugfix: admin heals no longer delete all restraints in target's inventory
+2021-11-04:
+  CocaColaTastesGood:
+  - bugfix: Removes a XSS vulnerability while picking religious sect.
+  - bugfix: Fixes an exploit that allowed players to arbitrarily spawn any path.
+2021-11-05:
+  ATHATH:
+  - bugfix: Liches (and mortals) can no longer use explosive lances to store grenade
+      phylacteries inside of indestructible objects (including structures)), immortal
+      mobs, or effects. As a side effect, you should no longer accidentally trigger
+      your explosive lance on the wrong target by misclicking on a piece of graffiti
+      during the heat of combat.
+  AndAllThatJazz:
+  - bugfix: Fluid ducts will no longer duplicate when unwrenched
+  ArcaneDefence:
+  - bugfix: Corpses will no longer scream when their limbs melt to the bone in icemoon's
+      plasma lava
+  CocaColaTastesGood:
+  - bugfix: Fixes an exploit that allowed players to disable holodeck safety without
+      following the proper conditions
+  Ghommie:
+  - balance: The wine cork fired when champagne is popped open is now a projectile
+      and not a thrown item. It can ricochet on walls and will leave an harmless wine
+      cork item when its trajectory has finished.
+  - bugfix: This also fixes a small exploit with hand-thrown corks knocking people
+      down, which was unintended.
+  - bugfix: Fixed the curator PDA having some inconsistent-looking icons for slotted
+      in IDs and pAIs.
+  - bugfix: Fixed blind mobs not receiving messages for when a food item has finished
+      baking ("You smell something great / a burnt smell...")
+  - spellcheck: Added punctuation to the above messages.
+  Ghommie (taken from an old unused file):
+  - expansion: Skull and coffin cookies can now be baked.
+  - expansion: Energy Crossbows and Cryptographic sequencers now have a Halloween
+      exclusive look.
+  Guillaume Prata:
+  - expansion: Security Officers, Detectives and the Warden will now spawn with a
+      Tablet pre installed with BotKeeper and Crew Manifest.
+  - qol: "AtmoZphere (tablet program) will show the tile's temperature as both \xB0\
+      C and K now."
+  JohnFulpWillard:
+  - qol: All prison intercoms on all maps have been standardized!
+  - bugfix: Delta's dormitories intercoms can now actually be spoken through, as it
+      is no longer a prison intercom.
+  - qol: Chaplains can now replace their Altar of the Gods by hitting the Chapel floor
+      with a Bible.
+  LemonInTheDark:
+  - admin: the party alarm now flashes roughly 2.5 times slower
+  - server: Init profiles are now logged separately from standard ones, in init_profiler.json
+  Maurukas:
+  - bugfix: Tramstation's engine and emitters have been correctly rewired.
+  - bugfix: Extra air alarm in tramstation's engine has been removed
+  Melbert:
+  - spellcheck: Dormat -> Dormant
+  ReinaCoder:
+  - bugfix: Fixes the two Disco Elysium detectives suits to be non-adjustable
+  Sealed101:
+  - bugfix: fixed guns that are supposed to be undroppable (implant guns, guns when
+      using an anti-drop implant) dropping anyway when you shoot yourself in the leg
+      due to being Clumsy
+  Stonetear:
+  - bugfix: PACMANs could previously be emaged, but now there's a indicator when you
+      do so successfully.
+  vincentiusvin:
+  - bugfix: fixed some buttons having zero width
+2021-11-06:
+  KittyNoodle:
+  - bugfix: Radstorms dont mutate people who are immune to rads
+  Seris02:
+  - rscadd: custom say emotes, or in other words, radio emotes. The format is for
+      example "screams and shouts*damnit!" with any relevant radio keys, language
+      keys and all that used as normal, for example, ";,o screams and shouts*damnit!"
+      or you can use just the emote, ie, ";screams!*"
+  TheBonded:
+  - bugfix: Corpses will no longer cough, spit, or choke on blood when you hit them
+      in the chest really hard
+  TheFakeElon:
+  - server: Patches multiple(?) arbitrary file related vulnerabilities
+  Y0SH1M4S73R:
+  - admin: Added the color matrix editor. It is available from a dropdown option in
+      an atom's View Variables menu as well as when editing an existing color matrix.
+2021-11-07:
+  Archanial:
+  - bugfix: mapload works
+  Bumtickley00:
+  - bugfix: Cold seiver now quickly heals your radiation instead of quickly killing
+      you
+  Ghommie:
+  - bugfix: Fixed the emissive appearances (basically what you can see even in complete
+      darkness) and possibly other overlays of vending machines being removed when
+      the wire panel is opened/closed.
+  - bugfix: Fixed the random double bed sheets spawners spawning normal bedsheets.
+  - bugfix: Fixed double bed sheets other than the standard white one looking like
+      single bed sheets when dyed.
+  GoldenAlpharex, with some oversight from Timberpoes:
+  - bugfix: Maps will now correctly be loaded at the start of a round. Hurray!
+  - code_imp: Improved the code for loading map configs and made it more documented,
+      while also removing a way to delete config files while I was at it.
+  JohnFulpWillard:
+  - bugfix: Godmoded shades should no longer spawn from posessed blades spawning spirits
+      too fast.
+  Mickyan:
+  - imageadd: Added fallback icons for clothing inhands

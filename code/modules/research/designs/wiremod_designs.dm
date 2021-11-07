@@ -48,6 +48,11 @@
 	id = "comp_arithmetic"
 	build_path = /obj/item/circuit_component/arithmetic
 
+/datum/design/component/trigonometry
+	name = "Trigonometry Component"
+	id = "comp_trigonometry"
+	build_path = /obj/item/circuit_component/trigonometry
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
@@ -73,6 +78,11 @@
 	id = "comp_index"
 	build_path = /obj/item/circuit_component/index
 
+/datum/design/component/index_assoc
+	name = "Index Associative List Component"
+	id = "comp_index_assoc"
+	build_path = /obj/item/circuit_component/index/assoc_string
+
 /datum/design/component/length
 	name = "Length Component"
 	id = "comp_length"
@@ -93,6 +103,16 @@
 	id = "comp_random"
 	build_path = /obj/item/circuit_component/random
 
+/datum/design/component/binary_conversion
+	name = "Binary Conversion Component"
+	id = "comp_binary_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
+
+/datum/design/component/decimal_conversion
+	name = "Decimal Conversion Component"
+	id = "comp_decimal_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
+
 /datum/design/component/species
 	name = "Get Species Component"
 	id = "comp_species"
@@ -102,6 +122,11 @@
 	name = "Speech Component"
 	id = "comp_speech"
 	build_path = /obj/item/circuit_component/speech
+
+/datum/design/component/timepiece
+	name = "Timepiece Component"
+	id = "comp_timepiece"
+	build_path = /obj/item/circuit_component/timepiece
 
 /datum/design/component/tostring
 	name = "To String Component"
@@ -253,6 +278,11 @@
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
 
+/datum/design/component/printer
+	name = "Printer Component"
+	id = "comp_printer"
+	build_path = /obj/item/circuit_component/printer
+
 /datum/design/component/pinpointer
 	name = "Proximity Pinpointer Component"
 	id = "comp_pinpointer"
@@ -285,6 +315,17 @@
 	name = "Counter Overlay Component"
 	id = "comp_counter_overlay"
 	build_path = /obj/item/circuit_component/counter_overlay
+
+/datum/design/component/foreach
+	name = "For Each Component"
+	id = "comp_foreach"
+	build_path = /obj/item/circuit_component/foreach
+
+/datum/design/component/filter_list
+	name = "Filter List Component"
+	id = "comp_filter_list"
+	build_path = /obj/item/circuit_component/filter_list
+
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -378,6 +419,18 @@
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 
+/datum/design/dispenser_shell
+	name = "Dispenser Shell"
+	desc = "A dispenser shell that can dispense items."
+	id = "dispenser_shell"
+	materials = list(
+		/datum/material/glass = 5000,
+		/datum/material/iron = 15000,
+	)
+	build_path = /obj/item/shell/dispenser
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
 /datum/design/bci_shell
 	name = "Brain-Computer Interface Shell"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
@@ -409,3 +462,12 @@
 	build_path = /obj/item/circuitboard/machine/bci_implanter
 	build_type = IMPRINTER | COMPONENT_PRINTER
 	category = list("Circuitry", "Core")
+
+/datum/design/assembly_shell
+	name = "Assembly Shell"
+	desc = "An assembly shell that can be attached to wires and other assemblies."
+	id = "assembly_shell"
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
+	build_path = /obj/item/assembly/wiremod
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")

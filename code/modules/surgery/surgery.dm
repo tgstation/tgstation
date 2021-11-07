@@ -38,6 +38,7 @@
 /datum/surgery/Destroy()
 	if(operated_wound)
 		operated_wound.attached_surgery = null
+		operated_wound = null
 	if(target)
 		target.surgeries -= src
 	target = null

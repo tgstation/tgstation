@@ -371,13 +371,13 @@
 	. = ..()
 	to_chat(owner,span_notice("You phase through reality, nothing is out of bounds!"))
 	owner.alpha = 180
-	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS
+	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
 	location = get_turf(owner)
 
 /datum/status_effect/crucible_soul/on_remove()
 	to_chat(owner,span_notice("You regain your physicality, returning you to your original location..."))
 	owner.alpha = initial(owner.alpha)
-	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS)
+	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
 	owner.forceMove(location)
 	location = null
 	return ..()

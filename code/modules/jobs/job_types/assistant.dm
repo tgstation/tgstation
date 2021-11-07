@@ -30,7 +30,7 @@ Assistant
 	)
 
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
-
+	rpg_title = "Lout"
 
 /datum/outfit/job/assistant
 	name = "Assistant"

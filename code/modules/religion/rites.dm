@@ -420,7 +420,7 @@
 	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
 		if(istype(could_writ, /obj/item/paper/holy_writ))
 			continue
-		if(could_writ.info) //blank paper pls
+		if(could_writ.get_info_length()) //blank paper pls
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
@@ -614,7 +614,7 @@
 
 /datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
-		if(could_contract.info) //blank paper pls
+		if(could_contract.get_info_length()) //blank paper pls
 			continue
 		contract_target = could_contract
 		return ..()
@@ -698,7 +698,7 @@
 	to_chat(user, span_warning("[used_for_blade] reshapes into a ceremonial blade!"))
 	if(!used_for_blade.use(5))//use 5 of the material
 		return
-	var/obj/item/ceremonial_blade/blade =  new(altar_turf)
+	var/obj/item/ceremonial_blade/blade = new(altar_turf)
 	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = MINERAL_MATERIAL_AMOUNT * 5))
 	return TRUE
 

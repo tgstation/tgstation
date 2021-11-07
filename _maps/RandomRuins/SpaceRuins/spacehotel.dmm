@@ -1339,7 +1339,44 @@
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
+<<<<<<< HEAD
 /turf/open/floor/iron/textured_half{
+=======
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/hotel/dock)
+"fY" = (
+/obj/structure/table,
+/obj/item/knife/kitchen,
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"fZ" = (
+/obj/structure/table,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"ga" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
+"gb" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
+"gc" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/sugar,
+/obj/item/reagent_containers/food/condiment/sugar,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
+"gd" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/glass/rag,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+>>>>>>> master
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -1442,12 +1479,77 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "lW" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
+=======
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"gA" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"gB" = (
+/obj/machinery/gibber,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"gC" = (
+/obj/structure/closet/secure_closet/freezer/meat{
+	req_access_txt = "200"
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
+"gD" = (
+/obj/structure/table,
+/obj/item/knife,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
+"gE" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/pack/hotsauce,
+/obj/item/reagent_containers/food/condiment/pack/hotsauce,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/food/condiment/pack/ketchup,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/has_grav/hotel/bar)
+"gF" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"gG" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"gH" = (
+/obj/structure/table,
+/obj/machinery/light/directional/north,
+/obj/item/crowbar,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"gI" = (
+/obj/structure/noticeboard/directional/north,
+/obj/item/paper/fluff/ruins/spacehotel/notice,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"gJ" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/mining,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"gK" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hotel/workroom)
+"gL" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets,
+/obj/structure/sign/warning/nosmoking/circle{
+	pixel_y = 32
+>>>>>>> master
 	},
 /obj/structure/closet/crate,
 /obj/item/clothing/under/syndicate/tacticool,
@@ -1685,6 +1787,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/dock)
+<<<<<<< HEAD
 "nv" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/iron/dark/smooth_corner,
@@ -1694,6 +1797,62 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/side{
 	dir = 1
+=======
+"ht" = (
+/obj/structure/table,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"hu" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/pug,
+/obj/item/food/meat/slab/pug,
+/obj/item/food/meat/slab/xeno,
+/obj/item/food/meat/slab/xeno,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/plant,
+/obj/item/food/meat/slab/human/mutant/plant,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"hv" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/bear,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/corgi,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/monkey,
+/obj/item/food/meat/slab/pug,
+/obj/item/food/meat/slab/pug,
+/obj/item/food/meat/slab/xeno,
+/obj/item/food/meat/slab/xeno,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/lizard,
+/obj/item/food/meat/slab/human/mutant/plant,
+/obj/item/food/meat/slab/human/mutant/plant,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"hw" = (
+/obj/structure/table,
+/obj/item/knife/kitchen,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/hotel/bar)
+"hx" = (
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = -4
+>>>>>>> master
 	},
 /area/ruin/space/has_grav/hotel/dock)
 "nx" = (
@@ -2813,7 +2972,25 @@
 	},
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
+<<<<<<< HEAD
 "Cw" = (
+=======
+"kH" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/power)
+"kI" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Air Supply";
+	req_access_txt = "200,201"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/power)
+"kJ" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
+>>>>>>> master
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "CL" = (
@@ -4174,6 +4351,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
+<<<<<<< HEAD
 /area/ruin/space/has_grav/hotel)
 "Uf" = (
 /obj/structure/cable,
@@ -4223,6 +4401,11 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "Uw" = (
 /obj/machinery/door/airlock/external/glass,
+=======
+/area/ruin/space/has_grav/hotel/power)
+"sN" = (
+/obj/machinery/door/airlock/external/glass/ruin,
+>>>>>>> master
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

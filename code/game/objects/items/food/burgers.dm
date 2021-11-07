@@ -164,7 +164,7 @@
 	switch(paranormal_activity)
 		if(97 to 100)
 			audible_message("[src] rattles a length of chain.")
-			playsound(loc,'sound/spookoween/chain_rattling.ogg', 300, TRUE)
+			playsound(loc,'sound/misc/chain_rattling.ogg', 300, TRUE)
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
 		if(84 to 90)
@@ -342,6 +342,14 @@
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/burger/catburger
+	name = "catburger"
+	desc = "Finally those cats and catpeople are worth something!"
+	icon_state = "catburger"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
+	foodtypes = GRAIN | MEAT | GROSS
 
 /obj/item/food/burger/crab
 	name = "crab burger"

@@ -314,9 +314,17 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			M.visible_message(span_warning("[src] grabs [M] [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by their hands":"passively"]!"), \
-							span_warning("[src] grabs you [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by your hands":"passively"]!"), null, null, src)
-			to_chat(src, span_notice("You grab [M] [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by their hands":"passively"]!"))
+			if(ishuman(M))
+				var/mob/living/carbon/human/grabbed_human = M
+				var/grabbed_by_hands = (zone_selected == "l_arm" || zone_selected == "r_arm") && grabbed_human.usable_hands > 0
+				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
+								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
+				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+			else
+				M.visible_message(span_warning("[src] grabs [M] passively!"), \
+								span_warning("[src] grabs you passively!"), null, null, src)
+				to_chat(src, span_notice("You grab [M] passively!"))
+
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -744,7 +752,6 @@
 	remove_CC()
 	set_disgust(0)
 	losebreath = 0
-	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
@@ -759,7 +766,7 @@
 	fire_stacks = 0
 	set_confusion(0)
 	dizziness = 0
-	drowsyness = 0
+	set_drowsyness(0)
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
@@ -1351,21 +1358,6 @@
 		G.summoner = new_mob
 		G.Recall()
 		to_chat(G, span_holoparasite("Your summoner has changed form!"))
-
-/mob/living/rad_act(amount)
-	. = ..()
-
-	if(!amount || (amount < RAD_MOB_SKIN_PROTECTION) || HAS_TRAIT(src, TRAIT_RADIMMUNE))
-		return
-
-	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
-
-	var/blocked = getarmor(null, RAD)
-
-	if(amount > RAD_BURN_THRESHOLD)
-		apply_damage(RAD_BURN_CURVE(amount), BURN, null, blocked)
-
-	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
 /mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	. = ..()

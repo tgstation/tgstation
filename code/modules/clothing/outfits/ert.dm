@@ -157,7 +157,7 @@
 		/obj/item/storage/box/survival/engineer = 1,
 )
 	belt = /obj/item/storage/belt/utility/full/powertools
-	glasses =  /obj/item/clothing/glasses/meson/engine
+	glasses = /obj/item/clothing/glasses/meson/engine
 	l_pocket = /obj/item/rcd_ammo/large
 
 /datum/outfit/centcom/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -486,7 +486,7 @@
 )
 	belt = /obj/item/storage/belt/sabre
 	head = /obj/item/clothing/head/coordinator
-	l_pocket = /obj/item/kitchen/knife
+	l_pocket = /obj/item/knife/kitchen
 	l_hand = /obj/item/toy/balloon
 
 /datum/outfit/centcom/death_commando
@@ -547,7 +547,7 @@
 	back = /obj/item/shield/riot
 	belt = /obj/item/storage/belt/military/assault/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
-	l_pocket = /obj/item/kitchen/knife/combat
+	l_pocket = /obj/item/knife/combat
 	r_pocket = /obj/item/lighter
 	uniform = /obj/item/clothing/under/syndicate/combat
 	mask = /obj/item/clothing/mask/cigarette/robustgold
@@ -622,7 +622,7 @@
 	back = /obj/item/deployable_turret_folded
 	uniform = /obj/item/clothing/under/syndicate/camo
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
-	glasses =  /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	r_pocket = /obj/item/rcd_ammo/large
 
 /datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)

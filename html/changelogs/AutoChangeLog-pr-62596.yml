@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "TramStation's Engineering Console now has a cable to connect it to the main powernet."

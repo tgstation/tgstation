@@ -134,7 +134,7 @@
 	if(!home.requires_power)
 		return amount //Shuttles get free power, don't ask why
 
-	var/obj/machinery/power/apc/local_apc = home?.apc
+	var/obj/machinery/power/apc/local_apc = home.apc
 	if(!local_apc)
 		return FALSE
 	var/surplus = local_apc.surplus()
@@ -210,7 +210,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.intact || !isfloorturf(T))
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
 			return
 		if(get_dist(src, user) > 1)
 			return
