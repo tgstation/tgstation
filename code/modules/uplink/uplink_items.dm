@@ -1302,7 +1302,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/suits/modsuit
 	name = "Syndicate MODsuit"
 	desc = "The feared MODsuit of a Syndicate agent."
-	item = /obj/item/mod/control/pre_equipped/syndicate
+	item = /obj/item/mod/control/pre_equipped/traitor
 	cost = 8
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 

@@ -91,6 +91,7 @@
 	skin = theme.default_skin
 	ui_theme = theme.ui_theme
 	cell_drain = theme.cell_drain
+	initial_modules += theme.inbuilt_modules
 	wires = new /datum/wires/mod(src)
 	if(length(req_access))
 		locked = TRUE
@@ -100,18 +101,15 @@
 		helmet = new theme.helmet_path(src)
 		helmet.mod = src
 		mod_parts += helmet
-	if(ispath(theme.chestplate_path))
-		chestplate = new theme.chestplate_path(src)
-		chestplate.mod = src
-		mod_parts += chestplate
-	if(ispath(theme.gauntlets_path))
-		gauntlets = new theme.gauntlets_path(src)
-		gauntlets.mod = src
-		mod_parts += gauntlets
-	if(ispath(theme.boots_path))
-		boots = new theme.boots_path(src)
-		boots.mod = src
-		mod_parts += boots
+	chestplate = new /obj/item/clothing/suit/armor/mod(src)
+	chestplate.mod = src
+	mod_parts += chestplate
+	gauntlets = new /obj/item/clothing/gloves/mod(src)
+	gauntlets.mod = src
+	mod_parts += gauntlets
+	boots = new /obj/item/clothing/shoes/mod(src)
+	boots.mod = src
+	mod_parts += boots
 	var/list/all_parts = mod_parts.Copy() + src
 	for(var/obj/item/piece as anything in all_parts)
 		piece.name = "[theme.name] [piece.name]"
@@ -123,8 +121,6 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-		if(istype(theme, /datum/mod_theme/syndicate)) //holy fuck
-			piece.color = COLOR_THEME_OPERATIVE //remove this before its merged
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
@@ -505,142 +501,3 @@
 	if(!cell)
 		return
 	cell.give(amount)
-
-/obj/item/clothing/head/helmet/space/mod
-	name = "MOD helmet"
-	desc = "A helmet for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
-	icon_state = "helmet"
-	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	body_parts_covered = HEAD
-	heat_protection = HEAD
-	cold_protection = HEAD
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	resistance_flags = NONE
-	flash_protect = FLASH_PROTECTION_NONE
-	clothing_flags = SNUG_FIT
-	flags_inv = HIDEFACIALHAIR
-	flags_cover = NONE
-	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
-	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
-	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	alternate_worn_layer = NECK_LAYER
-	var/obj/item/mod/control/mod
-
-/obj/item/clothing/head/helmet/space/mod/Destroy()
-	if(!QDELETED(mod))
-		mod.helmet = null
-		mod.mod_parts -= src
-		QDEL_NULL(mod)
-	return ..()
-
-/obj/item/clothing/suit/armor/mod
-	name = "MOD chestplate"
-	desc = "A chestplate for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
-	icon_state = "chestplate"
-	worn_icon = 'icons/mob/mod.dmi'
-	blood_overlay_type = "armor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	body_parts_covered = CHEST|GROIN
-	heat_protection = CHEST|GROIN
-	cold_protection = CHEST|GROIN
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	visor_flags = STOPSPRESSUREDAMAGE
-	visor_flags_inv = HIDEJUMPSUIT
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
-	resistance_flags = NONE
-	var/obj/item/mod/control/mod
-
-/obj/item/clothing/suit/armor/mod/Destroy()
-	if(!QDELETED(mod))
-		mod.chestplate = null
-		mod.mod_parts -= src
-		QDEL_NULL(mod)
-	return ..()
-
-/obj/item/clothing/gloves/mod
-	name = "MOD gauntlets"
-	desc = "A pair of gauntlets for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
-	icon_state = "gauntlets"
-	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	body_parts_covered = HANDS|ARMS
-	heat_protection = HANDS|ARMS
-	cold_protection = HANDS|ARMS
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	resistance_flags = NONE
-	var/obj/item/mod/control/mod
-	var/obj/item/clothing/overslot
-
-/obj/item/clothing/gloves/mod/Destroy()
-	if(!QDELETED(mod))
-		mod.gauntlets = null
-		mod.mod_parts -= src
-		QDEL_NULL(mod)
-	return ..()
-
-/obj/item/clothing/gloves/mod/proc/show_overslot()
-	if(!overslot)
-		return
-	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		mod.wearer.dropItemToGround(overslot, TRUE, TRUE)
-	overslot = null
-
-/obj/item/clothing/shoes/mod
-	name = "MOD boots"
-	desc = "A pair of boots for a MODsuit."
-	icon = 'icons/obj/mod.dmi'
-	icon_state = "boots"
-	worn_icon = 'icons/mob/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	body_parts_covered = FEET|LEGS
-	heat_protection = FEET|LEGS
-	cold_protection = FEET|LEGS
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	resistance_flags = NONE
-	item_flags = IGNORE_DIGITIGRADE
-	var/obj/item/mod/control/mod
-	var/obj/item/clothing/overslot
-
-/obj/item/clothing/shoes/mod/Destroy()
-	if(!QDELETED(mod))
-		mod.boots = null
-		mod.mod_parts -= src
-		QDEL_NULL(mod)
-	return ..()
-
-/obj/item/clothing/shoes/mod/proc/show_overslot()
-	if(!overslot)
-		return
-	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		mod.wearer.dropItemToGround(overslot, TRUE, TRUE)
-	overslot = null
-
-/obj/item/mod/control/pre_equipped
-	cell = /obj/item/stock_parts/cell/high
-
-/obj/item/mod/control/pre_equipped/engineering
-	theme = /datum/mod_theme/engineering
-	initial_modules = list(/obj/item/mod/module/storage)
-
-/obj/item/mod/control/pre_equipped/advanced
-	theme = /datum/mod_theme/advanced
-	cell = /obj/item/stock_parts/cell/super
-	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/jetpack, /obj/item/mod/module/magboot, /obj/item/mod/module/rad_protection)
-
-/obj/item/mod/control/pre_equipped/syndicate
-	theme = /datum/mod_theme/syndicate
-	req_access = list()
-	cell = /obj/item/stock_parts/cell/hyper
-	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/jetpack, /obj/item/mod/module/pathfinder)

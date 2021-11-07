@@ -9,13 +9,7 @@
 	/// Armor shared across the MOD pieces.
 	var/armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	/// Helmet for the MOD.
-	var/helmet_path = /obj/item/clothing/head/helmet/space/mod //these 4 should probably later be replaced, they are just used for overriding helmet/suit flags
-	/// Chestplate for the MOD.
-	var/chestplate_path = /obj/item/clothing/suit/armor/mod
-	/// Gauntlets for the MOD.
-	var/gauntlets_path = /obj/item/clothing/gloves/mod
-	/// Boots for the MOD.
-	var/boots_path = /obj/item/clothing/shoes/mod
+	var/helmet_path = /obj/item/clothing/head/helmet/space/mod //this should probably later be replaced, its just used for overriding helmet flags
 	/// Resistance flags shared across the MOD pieces.
 	var/resistance_flags = NONE
 	/// Max heat protection shared across the MOD pieces.
@@ -38,6 +32,8 @@
 	var/ui_theme = "ntos"
 	/// Total list of selectable skins for the MOD.
 	var/list/skins = list("standard", "civilian")
+	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
+	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
 
@@ -62,11 +58,12 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 
 /datum/mod_theme/syndicate
 	name = "syndicate"
 	desc = "This one is manufactured by the Gorlex Marauders, offering armor protections ruled illegal in most of Spinward Stellar."
-	default_skin = "advanced" //todo sprites
+	default_skin = "syndicate"
 	skins = list("syndicate")
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
 	siemens_coefficient = 0

@@ -1,0 +1,217 @@
+/obj/item/mod/module
+	name = "MOD module"
+	icon_state = "module"
+	/// If it can be removed
+	var/removable = TRUE
+	/// If it's passive, togglable, usable or active
+	var/module_type = MODULE_PASSIVE
+	/// Is the module active
+	var/active = FALSE
+	/// How much space it takes up in the MOD
+	var/complexity = 0
+	/// Power use when idle
+	var/idle_power_cost = 0
+	/// Power use when active
+	var/active_power_cost = 0
+	/// Power use when used
+	var/use_power_cost = 0
+	/// ID used by their TGUI
+	var/tgui_id
+	/// Linked MODsuit
+	var/obj/item/mod/control/mod
+	/// If we're an active module, what item are we?
+	var/obj/item/device
+	/// Overlay given to the user when the module is inactive
+	var/overlay_state_inactive
+	/// Overlay given to the user when the module is active
+	var/overlay_state_active
+	/// Overlay given to the user when the module is used, lasts until cooldown finishes
+	var/overlay_state_use
+	/// What modules are we incompatible with?
+	var/list/incompatible_modules = list()
+	/// Cooldown after use
+	var/cooldown_time = 0
+	/// Timer for the cooldown
+	COOLDOWN_DECLARE(cooldown_timer)
+
+/obj/item/mod/module/Initialize(mapload)
+	. = ..()
+	if(module_type != MODULE_ACTIVE)
+		return
+	if(ispath(device))
+		device = new device(src)
+		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
+		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
+		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+
+/obj/item/mod/module/Destroy()
+	mod?.uninstall(src)
+	if(device)
+		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
+		QDEL_NULL(device)
+	return ..()
+
+/obj/item/mod/module/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
+		. += span_notice("Complexity level: [complexity]")
+
+/// Called from MODsuit's install() proc, so when the module is installed.
+/obj/item/mod/module/proc/on_install()
+	return
+
+/// Called from MODsuit's uninstall() proc, so when the module is uninstalled.
+/obj/item/mod/module/proc/on_uninstall()
+	return
+
+/// Called when the MODsuit is activated
+/obj/item/mod/module/proc/on_equip()
+	return
+
+/// Called when the MODsuit is deactivated
+/obj/item/mod/module/proc/on_unequip()
+	return
+
+/// Called when the module is selected from the TGUI
+/obj/item/mod/module/proc/on_select()
+	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+		return
+	if(module_type != MODULE_USABLE)
+		if(active)
+			on_deactivation()
+		else
+			on_activation()
+	else
+		on_use()
+	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED)
+
+/// Called when the module is activated
+/obj/item/mod/module/proc/on_activation()
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		return FALSE
+	if(!mod.active || mod.activating || !mod.cell?.charge)
+		return FALSE
+	active = TRUE
+	if(module_type == MODULE_ACTIVE)
+		if(mod.selected_module)
+			mod.selected_module.on_deactivation()
+		mod.selected_module = src
+		if(device)
+			if(mod.wearer.put_in_hands(device))
+				balloon_alert(mod.wearer, "[device] extended")
+				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+			else
+				balloon_alert(mod.wearer, "can't extend [device]!")
+				return
+		else
+			balloon_alert(mod.wearer, "[src] activated, middle-click or alt-click to use")
+			RegisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_special_click)
+	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+	mod.wearer.update_inv_back()
+	return TRUE
+
+/// Called when the module is deactivated
+/obj/item/mod/module/proc/on_deactivation()
+	active = FALSE
+	if(module_type == MODULE_ACTIVE)
+		mod.selected_module = null
+		if(device)
+			mod.wearer.transferItemToLoc(device, src, TRUE)
+			balloon_alert(mod.wearer, "[device] retracted")
+			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+		else
+			balloon_alert(mod.wearer, "[src] deactivated")
+			UnregisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	mod.wearer.update_inv_back()
+	return TRUE
+
+/// Called when the module is used
+/obj/item/mod/module/proc/on_use()
+	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		return FALSE
+	if(!drain_power(use_power_cost))
+		return FALSE
+	COOLDOWN_START(src, cooldown_timer, cooldown_time)
+	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
+	mod.wearer.update_inv_back()
+	return TRUE
+
+/// Called when an activated module without a device is used
+/obj/item/mod/module/proc/on_select_use(atom/target)
+	mod.wearer.face_atom(target)
+	if(!on_use())
+		return FALSE
+	return TRUE
+
+/// Called when an activated module without a device is active and the user alt/middle-clicks
+/obj/item/mod/module/proc/on_special_click(mob/source, atom/target)
+	SIGNAL_HANDLER
+	on_select_use(target)
+	return COMSIG_MOB_CANCEL_CLICKON
+
+/// Called on the MODsuit's process
+/obj/item/mod/module/proc/on_process(delta_time)
+	if(active)
+		if(!drain_power(active_power_cost * delta_time))
+			on_deactivation()
+			return FALSE
+	else
+		drain_power(idle_power_cost * delta_time)
+	return TRUE
+
+/// Drains power from the suit cell
+/obj/item/mod/module/proc/drain_power(amount)
+	if(!mod.cell || (mod.cell.charge < amount))
+		return FALSE
+	mod.cell.charge = max(0, mod.cell.charge - amount)
+	return TRUE
+
+/// Adds additional things to the MODsuit ui_data()
+/obj/item/mod/module/proc/add_ui_data()
+	return list()
+
+/// Creates a list of configuring options for this module
+/obj/item/mod/module/proc/get_configuration()
+	return list()
+
+/// Generates an element of the get_configuration list with a display name, type and value
+/obj/item/mod/module/proc/add_ui_configuration(display_name, type, value)
+	return list("display_name" = display_name, "type" = type, "value" = value)
+
+/// Receives configure edits from the TGUI and edits the vars
+/obj/item/mod/module/proc/configure_edit(key, value)
+	return
+
+/// Called when the device moves to a different place on active modules
+/obj/item/mod/module/proc/on_exit(datum/source, atom/movable/part, direction)
+	SIGNAL_HANDLER
+
+	if(!active)
+		return
+	if(part.loc == src)
+		return
+	if(part.loc == mod.wearer)
+		return
+	if(part == device)
+		on_deactivation()
+
+/// Called when the device gets deleted on active modules
+/obj/item/mod/module/proc/on_device_deletion(datum/source)
+	SIGNAL_HANDLER
+
+	if(source == device)
+		device = null
+		qdel(src)
+
+/// Generates an icon to be used for the suit's worn overlays
+/obj/item/mod/module/proc/generate_worn_overlay()
+	. = list()
+	var/used_overlay
+	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
+		used_overlay = overlay_state_use
+	else if(overlay_state_active && active)
+		used_overlay = overlay_state_active
+	else if(overlay_state_inactive)
+		used_overlay = overlay_state_inactive
+	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
+	. += module_icon
