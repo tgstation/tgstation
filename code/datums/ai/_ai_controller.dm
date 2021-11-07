@@ -259,3 +259,15 @@ multiple modular subtrees with behaviors
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
 /datum/ai_controller/proc/get_access()
 	return
+
+///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
+/datum/ai_controller/proc/get_minimum_distance()
+	var/minimum_distance = max_target_distance
+	// right now I'm just taking the shortest minimum distance of our current behaviors, at some point in the future
+	// we should let whatever sets the current_movement_target also set the min distance and max path length
+	// (or at least cache it on the controller)
+	if(LAZYLEN(current_behaviors))
+		for(var/datum/ai_behavior/iter_behavior as anything in current_behaviors)
+			if(iter_behavior.required_distance < minimum_distance)
+				minimum_distance = iter_behavior.required_distance
+	return minimum_distance
