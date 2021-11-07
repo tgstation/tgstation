@@ -26,7 +26,7 @@
 		Grant(mob_to_grant)
 
 /datum/action/item_action/mod/IsAvailable()
-	if(usr == mod.ai && !mod.ai.stat)
+	if(mod.ai && usr == mod.ai && !mod.ai.stat)
 		return TRUE
 	return ..()
 

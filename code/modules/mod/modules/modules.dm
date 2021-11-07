@@ -108,21 +108,16 @@
 
 /obj/item/mod/module/welding
 	name = "MOD welding protection module"
-	desc = "A module installed to the helmet, allowing access to different views."
+	desc = "A welding mask installed onto the helmet, giving it welding protection when powered."
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/welding)
-	var/helmet_tint = 2
-	var/helmet_flash_protect = FLASH_PROTECTION_WELDER
+	overlay_state_inactive = "module_welding"
 
 /obj/item/mod/module/welding/on_equip()
-	mod.helmet.tint = helmet_tint
-	mod.helmet.flash_protect = helmet_flash_protect
-	mod.wearer.update_tint()
+	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/mod/module/welding/on_unequip()
-	mod.helmet.tint = initial(mod.helmet.tint)
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
-	mod.wearer.update_tint()
 
 /obj/item/mod/module/t_ray
 	name = "MOD t-ray scan module"
@@ -144,7 +139,7 @@
 	name = "MOD health analyzer module"
 	desc = "A module with a microchip health analyzer to instantly scan vitals at a range."
 	module_type = MODULE_ACTIVE
-	complexity = 1
+	complexity = 2
 	use_power_cost = 25
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
@@ -578,28 +573,43 @@
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
-/obj/item/mod/module/science_scanner
-	name = "MOD science scanner module"
-	desc = "A module that enables internal research and reagent scanners in the MOD."
+/obj/item/mod/module/reagent_scanner
+	name = "MOD reagent scanner module"
+	desc = "A module that enables internal reagent scanners in the MOD."
 	module_type = MODULE_TOGGLE
 	complexity = 1
 	active_power_cost = 5
-	incompatible_modules = list(/obj/item/mod/module/science_scanner)
+	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
 
 /obj/item/mod/module/science_scanner/on_activation()
 	. = ..()
 	if(!.)
 		return
-	mod.wearer.research_scanner++
-	mod.helmet.clothing_flags |= SCAN_REAGENTS
+	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
 /obj/item/mod/module/science_scanner/on_deactivation()
 	. = ..()
 	if(!.)
 		return
+	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
+
+/obj/item/mod/module/reagent_scanner/advanced
+	name = "MOD advanced reagent scanner module"
+	complexity = 0
+	removable = FALSE
+
+/obj/item/mod/module/science_scanner/advanced/on_activation()
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.research_scanner++
+
+/obj/item/mod/module/science_scanner/advanced/on_deactivation()
+	. = ..()
+	if(!.)
+		return
 	mod.wearer.research_scanner--
-	mod.helmet.clothing_flags &= ~SCAN_REAGENTS
 
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"

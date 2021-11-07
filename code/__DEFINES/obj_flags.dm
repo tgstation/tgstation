@@ -52,7 +52,6 @@
 #define THICKMATERIAL (1<<7) //prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define VOICEBOX_TOGGLABLE (1<<8) // The voicebox in this clothing can be toggled.
 #define VOICEBOX_DISABLED (1<<9) // The voicebox is currently turned off.
-#define SCAN_REAGENTS (1<<10) // Allows helmets, masks and glasses to scan reagents.
 #define BLOCKS_SHOVE_KNOCKDOWN (1<<11) // Prevents shovies against a dense object from knocking the wearer down.
 #define SNUG_FIT (1<<12) //Prevents knock-off from things like hat-throwing.
 #define ANTI_TINFOIL_MANEUVER (1<<13) //Hats with negative effects when worn (i.e the tinfoil hat).

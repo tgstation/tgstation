@@ -1224,14 +1224,14 @@
 	build_path = /obj/item/mod/module/flashlight
 	category = list("MOD Modules")
 
-/datum/design/mod_science_scanner
-	name = "MOD Module: Science Scanner"
+/datum/design/mod_reagent_scanner
+	name = "MOD Module: Reagent Scanner"
 	desc = "A modsuit module design!"
-	id = "mod_science_scanner"
+	id = "mod_reagent_scanner"
 	build_type = MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
-	build_path = /obj/item/mod/module/science_scanner
+	build_path = /obj/item/mod/module/reagent_scanner
 	category = list("MOD Modules")
 
 /datum/design/mod_gps

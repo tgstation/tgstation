@@ -142,7 +142,7 @@
 		"mod_rad_protection",
 		"mod_emp_shield",
 		"mod_flashlight",
-		"mod_science_scanner",
+		"mod_reagent_scanner",
 		"mod_gps",
 		"mod_constructor",
 		"mod_quick_carry",

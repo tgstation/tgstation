@@ -1,5 +1,5 @@
 /// Default value for the max_complexity var on modsuits
-#define DEFAULT_MAX_COMPLEXITY 20
+#define DEFAULT_MAX_COMPLEXITY 15
 
 /// Passive module, just acts when put in naturally.
 #define MODULE_PASSIVE 0

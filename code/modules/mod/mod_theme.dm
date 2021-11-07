@@ -101,6 +101,19 @@
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 
+/datum/mod_theme/prototype
+	name = "prototype"
+	desc = "A private military EOD suit by Aussec Armory, intended for explosive research. Bulky, but expansive."
+	default_skin = "prototype"
+	skins = list("prototype")
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	slowdown_inactive = 2
+	slowdown_active = 1.5
+	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
+
 /datum/mod_theme/syndicate
 	name = "syndicate"
 	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."

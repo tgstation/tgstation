@@ -8,7 +8,7 @@
 
 /obj/item/mod/control
 	name = "MOD control unit"
-	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments. Technology is amazing."
+	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments."
 	icon_state = "control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -127,6 +127,8 @@
 				piece.color = COLOR_SOAPSTONE_IRON
 			if(/datum/mod_theme/rescue)
 				piece.color = COLOR_THEME_GLASS
+			if(/datum/mod_theme/prototype)
+				piece.color = COLOR_ASSEMBLY_PURPLE
 			if(/datum/mod_theme/syndicate)
 				piece.color = COLOR_THEME_OPERATIVE
 	for(var/obj/item/mod/module/module as anything in initial_modules)

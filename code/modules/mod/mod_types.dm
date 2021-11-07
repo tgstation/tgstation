@@ -23,6 +23,11 @@
 	cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/flashlight, /obj/item/mod/module/health_analyzer, /obj/item/mod/module/injector)
 
+/obj/item/mod/control/pre_equipped/prototype
+	theme = /datum/mod_theme/prototype
+	cell = /obj/item/stock_parts/cell/super
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/circuit, /obj/item/mod/module/t_ray)
+
 /obj/item/mod/control/pre_equipped/traitor
 	theme = /datum/mod_theme/syndicate
 	cell = /obj/item/stock_parts/cell/super
