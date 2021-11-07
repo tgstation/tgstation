@@ -80,8 +80,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	.["headset"] = TRUE
 
 /obj/item/radio/headset/MouseDrop(mob/over, src_location, over_location)
-	var/mob/M = usr
-	if((M == over) && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/mob/headset_user = usr
+	if((headset_user == over) && headset_user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return attack_self(M)
 	return ..()
 
