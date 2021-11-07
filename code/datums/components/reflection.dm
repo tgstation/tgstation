@@ -38,6 +38,7 @@
 
 /datum/component/reflection/Destroy()
 	QDEL_NULL(reflection_effect)
+	return ..()
 
 /datum/component/reflection/RegisterWithParent()
 	var/atom/atom_parent = parent
@@ -87,7 +88,7 @@
 	if(isturf(source.loc))
 		set_reflection_targets()
 
-/// The component will call register_reflection_turf() on turfs that pass certain conditions. Called when the
+/// The component will call register_reflection_turf() on turfs that pass certain conditions.
 /datum/component/reflection/proc/set_reflection_targets()
 	var/atom/atom_parent = parent
 	if(use_parent_dir)
