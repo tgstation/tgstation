@@ -79,6 +79,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	.["headset"] = TRUE
 
+/obj/item/radio/headset/MouseDrop(mob/over, src_location, over_location)
+	var/mob/M = usr
+	if((M == over) && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return attack_self(M)
+	return ..()
+
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
 /obj/item/radio/headset/syndicate/alt //undisguised bowman with flash protection
