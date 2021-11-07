@@ -26,7 +26,7 @@ require only minor tweaks.
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 
-//List of directories we can load map .jsons from
+/// List of directories we can load map .json files from
 #define MAP_DIRECTORY_WHITELIST list("_maps","data")
 
 /// Special map path value for custom adminloaded stations.
