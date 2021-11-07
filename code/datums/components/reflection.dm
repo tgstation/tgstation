@@ -69,7 +69,7 @@
 		return
 	for(var/turf/target_turf as anything in orange(1, atom_parent.loc))
 		UnregisterSignal(target_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
-	reflection_effect.vis_contents -= reflected_movables
+	reflection_effect?.vis_contents -= reflected_movables
 	LAZYNULL(reflected_movables)
 
 /datum/component/reflection/PostTransfer()
