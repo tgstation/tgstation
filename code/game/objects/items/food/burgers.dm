@@ -432,6 +432,7 @@
 /obj/item/food/burger/empty
 	name = "burger"
 	icon_state = "custburg"
+	layer = ABOVE_MOB_LAYER
 	tastes = list("bun")
 	foodtypes = GRAIN
 	desc = "A crazy, custom burger made by a mad cook."
