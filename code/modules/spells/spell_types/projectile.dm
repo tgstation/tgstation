@@ -122,7 +122,7 @@
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/choose_targets(mob/user = usr)
 	var/turf/T = get_turf(user)
-	for(var/iteration in 1 to range-1)
+	for(var/i in 1 to range-1)
 		var/turf/new_turf = get_step(T, user.dir)
 		if(new_turf.density)
 			break

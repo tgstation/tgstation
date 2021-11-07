@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(all_wormholes) // So we can pick wormholes to teleport to
 		if(is_station_level(T.z))
 			pick_turfs += T
 
-	for(var/iteration in 1 to number_of_wormholes)
+	for(var/i in 1 to number_of_wormholes)
 		var/turf/T = pick(pick_turfs)
 		wormholes += new /obj/effect/portal/wormhole(T, 0, null, FALSE)
 

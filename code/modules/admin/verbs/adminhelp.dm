@@ -714,8 +714,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 					surname_found = i
 					break
 			//forenames
-			for(var/iteration in 1 to surname_found-1)
-				var/word = ckey(L[iteration])
+			for(var/i in 1 to surname_found-1)
+				var/word = ckey(L[i])
 				if(word)
 					forenames[word] = M
 			//ckeys

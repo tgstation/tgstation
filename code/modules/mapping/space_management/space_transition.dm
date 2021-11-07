@@ -68,10 +68,10 @@
 	var/list/point_grid[conf_set_len*2+1][conf_set_len*2+1]
 	var/list/grid = list()
 	var/datum/space_transition_point/P
-	for(var/iteration_x in 1 to conf_set_len*2+1)
-		for(var/iteration_y in 1 to conf_set_len*2+1)
-			P = new/datum/space_transition_point(iteration_x, iteration_y, point_grid)
-			point_grid[iteration_x][iteration_y] = P
+	for(var/x in 1 to conf_set_len*2+1)
+		for(var/y in 1 to conf_set_len*2+1)
+			P = new/datum/space_transition_point(x, y, point_grid)
+			point_grid[x][y] = P
 			grid.Add(P)
 	for(var/datum/space_transition_point/pnt in grid)
 		pnt.set_neigbours(point_grid)

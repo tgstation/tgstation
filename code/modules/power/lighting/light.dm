@@ -406,7 +406,7 @@
 		return
 	flickering = TRUE
 	if(on && status == LIGHT_OK)
-		for(var/iteration in 1 to amount)
+		for(var/i in 1 to amount)
 			if(status != LIGHT_OK)
 				break
 			on = !on

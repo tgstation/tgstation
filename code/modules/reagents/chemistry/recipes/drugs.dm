@@ -128,7 +128,7 @@
 
 /datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/iteration in 1 to created_volume)
+	for(var/i in 1 to created_volume)
 		var/obj/item/food/drug/moon_rock/new_rock = new(location)
 		new_rock.pixel_x = rand(-6, 6)
 		new_rock.pixel_y = rand(-6, 6)

@@ -30,10 +30,10 @@
 
 /datum/map_generator/ca/proc/initialize()
 	old_state = new/list(width)
-	for(var/iteration_x in 1 to width)
-		old_state[iteration_x] = new/list(height)
-		for(var/iteration_y in 1 to height)
-			old_state[iteration_x][iteration_y] = rand(0,1)
+	for(var/x in 1 to width)
+		old_state[x] = new/list(height)
+		for(var/y in 1 to height)
+			old_state[x][y] = rand(0,1)
 
 	current_state = old_state.Copy()
 
@@ -43,24 +43,24 @@
 	initialize()
 
 	for(var/generation in 1 to iterations)
-		for(var/iteration_x in 1 to width)
-			for(var/iteration_y in 1 to height)
-				current_state[iteration_x][iteration_y] = apply_rule(iteration_x, iteration_y)
+		for(var/x in 1 to width)
+			for(var/y in 1 to height)
+				current_state[x][y] = apply_rule(x, y)
 		//copy state over
 		old_state = current_state.Copy()
 
-	for(var/iteration_x in 1 to width)
-		for(var/iteration_y in 1 to height)
-			var/turf/T = locate(start.x+iteration_x-1,start.y+iteration_y-1,start.z)
+	for(var/x in 1 to width)
+		for(var/y in 1 to height)
+			var/turf/T = locate(start.x+x-1,start.y+y-1,start.z)
 			if(T)
-				T.ChangeTurf(type_map[current_state[iteration_x][iteration_y]+1])
+				T.ChangeTurf(type_map[current_state[x][y]+1])
 
-/datum/map_generator/ca/proc/apply_rule(index_x, index_y)
+/datum/map_generator/ca/proc/apply_rule(x, y)
 	var/value = 0
 	for(var/dist_x in -1 to 1)
 		for(var/dist_y in -1 to 1)
-			var/n_x = index_x+dist_x
-			var/n_y = index_y+dist_y
+			var/n_x = x+dist_x
+			var/n_y = y+dist_y
 			if(n_x < 1 || n_x > width || n_y <1 || n_y > height)
 				if(loop_edges)
 					if(n_x < 1)
@@ -75,12 +75,12 @@
 					value += edge_value
 					continue
 			value += old_state[n_x][n_y]
-	value -= old_state[index_y][index_y]
+	value -= old_state[y][y]
 
 	if(value in b_rule)
 		return 1
 	if(value in s_rule)
-		return old_state[index_x][index_y]
+		return old_state[x][y]
 	return 0
 
 /datum/map_generator/ca/caves

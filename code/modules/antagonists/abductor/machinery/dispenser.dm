@@ -18,9 +18,9 @@
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
-	for(var/iteration in 1 to gland_types.len)
-		gland_colors[iteration] = random_color()
-		amounts[iteration] = rand(1,5)
+	for(var/i in 1 to gland_types.len)
+		gland_colors[i] = random_color()
+		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/ui_status(mob/user)
 	if(!isabductor(user) && !isobserver(user))
@@ -65,9 +65,9 @@
 	if(istype(W, /obj/item/organ/heart/gland))
 		if(!user.transferItemToLoc(W, src))
 			return
-		for(var/iteration in 1 to gland_colors.len)
-			if(gland_types[iteration] == W.type)
-				amounts[iteration]++
+		for(var/i in 1 to gland_colors.len)
+			if(gland_types[i] == W.type)
+				amounts[i]++
 	else
 		return ..()
 
