@@ -3,6 +3,7 @@
  * For more complex behaviors, use the COMSIG_ON_MULTIPLE_LIVES_RESPAWN comsig.
  */
 /datum/component/multiple_lives
+	can_transfer = TRUE
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// The number of respawns the living mob has left.
 	var/lives_left
@@ -30,8 +31,7 @@
 	lives_left--
 	if(lives_left <= 0)
 		qdel(src)
-	else
-		respawned_mob.TakeComponent(src)
+	source.TransferComponents(respawned_mob)
 	SEND_SIGNAL(source, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, respawned_mob, gibbed, lives_left)
 
 /datum/component/multiple_lives/proc/on_examine(mob/living/source, mob/user, list/examine_list)
@@ -41,3 +41,7 @@
 
 /datum/component/multiple_lives/InheritComponent(datum/component/multiple_lives/new_comp , lives_left)
 	src.lives_left += new_comp ? new_comp.lives_left : lives_left
+
+/datum/component/multiple_lives/PostTransfer()
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
