@@ -130,7 +130,7 @@
 		var/selected_limb = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
 		attached.apply_damage(3, BRUTE, selected_limb)
 		var/datum/wound/pierce/moderate/iv_wound = new
-		iv_wound.apply_wound(selected_limb, silent)
+		iv_wound.apply_wound(selected_limn)
 		detach_iv()
 		return PROCESS_KILL
 
