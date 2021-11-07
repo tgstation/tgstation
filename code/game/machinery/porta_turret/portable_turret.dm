@@ -1029,7 +1029,8 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
 	desc = "Used for building turret control panels."
-	icon_state = "apc"
+	icon = 'icons/obj/machines/turret_control.dmi'
+	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
