@@ -48,7 +48,7 @@
 
 	tray.set_plant_health(seed.endurance)
 	tray.age = 20
-	tray.set_harvestable(TRUE)
+	tray.set_plant_status(HYDROTRAY_PLANT_HARVESTABLE)
 
 /datum/unit_test/hydroponics_harvest/proc/test_seed(obj/machinery/hydroponics/tray, obj/item/seeds/seed, mob/living/carbon/user)
 	tray.reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 20)
@@ -91,7 +91,6 @@
 	TEST_ASSERT_EQUAL(found_vitamins, expected_vitamins * max_volume, "Hydroponics harvest from [saved_name] has a [expected_vitamins] vitamin gene (expecting [expected_nutriments * max_volume]) but only had [found_vitamins] units of vitamins inside.")
 
 	if(tray.myseed)
-		tray.set_harvestable(FALSE)
 		tray.age = 0
 		tray.set_plant_health(0)
 
