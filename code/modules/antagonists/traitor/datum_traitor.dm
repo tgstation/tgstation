@@ -41,10 +41,11 @@
 	///reference to the uplink this traitor was given, if they were.
 	var/datum/component/uplink/uplink
 
-	var/datum/contractor_hub/contractor_hub
-
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
+
+	/// the traitor's current progression points. Used to determine what objectives they get and what they can purchase from their uplink.
+	var/datum/objective/progression_points
 
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
@@ -53,10 +54,10 @@
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
 	uplink = owner.find_syndicate_uplink()
+	RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
 
 	if(give_objectives)
 		forge_traitor_objectives()
-		forge_ending_objective()
 
 	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 
@@ -67,6 +68,10 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	return ..()
+
+/datum/antagonist/traitor/proc/on_uplink_lost(datum/source)
+	SIGNAL_HANDLER
+	uplink = null
 
 /datum/antagonist/traitor/on_removal()
 	if(!silent && owner.current)
@@ -95,93 +100,11 @@
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
-	var/objective_count = 0
 
-	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
-		is_hijacker = TRUE
-		objective_count++
-
-	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
-
-	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
-	// This does not give them 1 fewer objectives than intended.
-	for(var/i in objective_count to objective_limit - 1)
-		objectives += forge_single_generic_objective()
-
-
-/**
- * ## forge_ending_objective
- *
- * Forges the endgame objective and adds it to this datum's objective list.
- */
-/datum/antagonist/traitor/proc/forge_ending_objective()
-	if(is_hijacker)
-		ending_objective = new /datum/objective/hijack
-		ending_objective.owner = owner
-		return
-
-	var/martyr_compatibility = TRUE
-
-	for(var/datum/objective/traitor_objective in objectives)
-		if(!traitor_objective.martyr_compatible)
-			martyr_compatibility = FALSE
-			break
-
-	if(martyr_compatibility && prob(MARTYR_PROB))
-		ending_objective = new /datum/objective/martyr
-		ending_objective.owner = owner
-		objectives += ending_objective
-		return
-
-	ending_objective = new /datum/objective/escape
-	ending_objective.owner = owner
-	objectives += ending_objective
-
-/// Forges a single escape objective and adds it to this datum's objective list.
-/datum/antagonist/traitor/proc/forge_escape_objective()
-	var/is_martyr = prob(MARTYR_PROB)
-	var/martyr_compatibility = TRUE
-
-	for(var/datum/objective/traitor_objective in objectives)
-		if(!traitor_objective.martyr_compatible)
-			martyr_compatibility = FALSE
-			break
-
-	if(martyr_compatibility && is_martyr)
-		var/datum/objective/martyr/martyr_objective = new
-		martyr_objective.owner = owner
-		objectives += martyr_objective
-		return
-
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = owner
-	objectives += escape_objective
-
-/// Adds a generic kill or steal objective to this datum's objective list.
-/datum/antagonist/traitor/proc/forge_single_generic_objective()
-	if(prob(KILL_PROB))
-		var/list/active_ais = active_ais()
-		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
-			var/datum/objective/destroy/destroy_objective = new
-			destroy_objective.owner = owner
-			destroy_objective.find_target()
-			return destroy_objective
-
-		if(prob(MAROON_PROB))
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			return maroon_objective
-
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		return kill_objective
-
-	var/datum/objective/steal/steal_objective = new
-	steal_objective.owner = owner
-	steal_objective.find_target()
-	return steal_objective
+	var/datum/objective/custom/final_objective = new /datum/objective/custom()
+	final_objective.owner = owner
+	final_objective.explanation_text = "Complete enough objectives to unlock your Final Objective."
+	objectives += final_objective
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -218,7 +141,6 @@
 	if(uplink)
 		data["uplink_intro"] = traitor_flavor["uplink"]
 		data["uplink_unlock_info"] = uplink.unlock_text
-	data["objectives"] = get_objectives()
 	return data
 
 /datum/antagonist/traitor/roundend_report()
