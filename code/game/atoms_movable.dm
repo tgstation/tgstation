@@ -716,27 +716,6 @@
 
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
-	/*
-	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE) || trait_source == ROUNDSTART_TRAIT)
-		return
-
-	if(trait_source == ALL)//force remove hearing sensitivity from us
-		for(var/source in TRAIT_SOURCES(src, TRAIT_HEARING_SENSITIVE))
-			REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, source)
-
-	else
-		REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
-
-	if(HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
-		return
-
-	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
-	*/
-
-
-
-
 
 ///allows this movable to know when it has "entered" another area no matter how many movable atoms its stuffed into, uses important_recursive_contents
 /atom/movable/proc/become_area_sensitive(trait_source = TRAIT_GENERIC)
@@ -757,45 +736,6 @@
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 
-
-/*
-/atom/movable/proc/remove_important_recursive_contents()
-	if(!important_recursive_contents)
-		return
-
-	for(var/channel in important_recursive_contents)
-		switch(channel)
-			if(RECURSIVE_CONTENTS_AREA_SENSITIVE)
-				on_area_sensitive_trait_loss()
-
-			if(RECURSIVE_CONTENTS_HEARING_SENSITIVE)
-				on_hearing_sensitive_trait_loss()
-
-			if(RECURSIVE_CONTENTS_CLIENT_MOBS)
-				clear_important_client_contents()
-*/
-
-
-/atom/movable/proc/on_area_sensitive_trait_loss()
-	SIGNAL_HANDLER
-
-	//UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
-	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
-
-/atom/movable/proc/on_hearing_sensitive_trait_loss()
-	SIGNAL_HANDLER
-
-	var/turf/our_turf = get_turf(src)
-	if(our_turf && SSspatial_grid.initialized)
-		SSspatial_grid.exit_cell(src, our_turf)
-	else if(our_turf && !SSspatial_grid.initialized)
-		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_HEARING_SENSITIVE)
-
-	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HEARING_SENSITIVE))
-	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
-		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_HEARING_SENSITIVE, src)
-
 ///propogates new_client's mob through our nested contents, similar to other important_recursive_contents procs
 ///main difference is that client contents need to possibly duplicate recursive contents for the clients mob AND its eye
 /atom/movable/proc/enable_client_mobs_in_contents(client/new_client)
@@ -809,12 +749,8 @@
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
 		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, new_client.mob)
 
-	//ADD_TRAIT(src, TRAIT_CLIENT_CONTENTS, new_client)
-
 ///Clears the clients channel of this movables important_recursive_contents list and all nested locs
 /atom/movable/proc/clear_important_client_contents(client/former_client)
-	//if(!HAS_TRAIT(src, TRAIT_CLIENT_CONTENTS))
-	//	return
 
 	var/turf/our_turf = get_turf(src)
 
