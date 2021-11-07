@@ -704,7 +704,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/space)
+/area/ruin/space/has_grav/hotel)
 "hA" = (
 /obj/structure/dresser,
 /turf/open/floor/wood/parquet,
@@ -1277,7 +1277,6 @@
 /obj/machinery/door/airlock{
 	name = "Bathroom"
 	},
-/turf/open/floor/iron/textured_half,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "kY" = (
@@ -1631,7 +1630,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/side{
 	dir = 1
-	})
+	},
+/area/ruin/space/has_grav/hotel/dock)
 "nx" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel)
@@ -2750,7 +2750,8 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "Cw" = (
-)
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/hotel/power)
 "CL" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -4155,6 +4156,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "Uw" = (
 /obj/machinery/door/airlock/external/glass,
+/turf/open/space/basic,
 /area/ruin/space/has_grav/hotel/power)
 "UD" = (
 /obj/effect/turf_decal/stripes/end,
