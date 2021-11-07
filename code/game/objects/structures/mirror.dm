@@ -8,6 +8,7 @@
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
+	var/datum/component/reflection/reflection_comp
 
 /obj/structure/mirror/directional/north
 	dir = SOUTH
@@ -27,8 +28,22 @@
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
-	if(icon_state == "mirror_broke" && !broken)
-		atom_break(null, mapload)
+	if(icon_state == "mirror_broke")
+		if(!broken)
+			atom_break(null, mapload)
+	else
+		add_reflection_comp()
+
+/obj/structure/mirror/Destroy()
+	QDEL_NULL(reflection_comp)
+	return ..()
+
+/obj/structure/mirror/proc/add_reflection_comp()
+	if(reflection_comp)
+		return
+	var/list/mask_filter = alpha_mask_filter(icon = icon('icons/obj/watercloset.dmi', "mirror_mask"))
+	var/matrix/matrix = matrix(-0.75, 0, 0, 0, 0.75, 0)
+	reflection_comp = AddComponent(/datum/component/reflection, use_parent_dir = TRUE, reflection_filter = mask_filter, reflection_matrix = matrix)
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -92,6 +107,7 @@
 	. = ..()
 	if(broken || (flags_1 & NODECONSTRUCT_1))
 		return
+	QDEL_NULL(reflection_comp)
 	icon_state = "mirror_broke"
 	if(!mapload)
 		playsound(src, "shatter", 70, TRUE)
@@ -119,9 +135,11 @@
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(I.use_tool(src, user, 10, volume=50))
 		to_chat(user, span_notice("You repair [src]."))
-		broken = 0
+		broken = FALSE
+		repair_damage(max_integrity)
 		icon_state = initial(icon_state)
 		desc = initial(desc)
+		add_reflection_comp()
 
 	return TRUE
 
