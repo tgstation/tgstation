@@ -155,9 +155,14 @@
 		if(!drain_power(active_power_cost * delta_time))
 			on_deactivation()
 			return FALSE
+		on_active_process(delta_time)
 	else
 		drain_power(idle_power_cost * delta_time)
 	return TRUE
+
+/// Called on the MODsuit's process if it is an active module
+/obj/item/mod/module/proc/on_active_process(delta_time)
+	return
 
 /// Drains power from the suit cell
 /obj/item/mod/module/proc/drain_power(amount)

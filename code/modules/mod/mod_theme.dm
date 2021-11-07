@@ -104,7 +104,7 @@
 /datum/mod_theme/prototype
 	name = "prototype"
 	desc = "A private military EOD suit by Aussec Armory, intended for explosive research. Bulky, but expansive."
-	default_skin = "prototype"
+	default_skin = "advanced"
 	skins = list("prototype")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF

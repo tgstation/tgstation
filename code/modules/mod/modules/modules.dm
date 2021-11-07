@@ -129,10 +129,7 @@
 	cooldown_time = 0.5 SECONDS
 	var/range = 2
 
-/obj/item/mod/module/t_ray/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/t_ray/on_active_process(delta_time)
 	t_ray_scan(mod.wearer, 8, range)
 
 /obj/item/mod/module/health_analyzer
@@ -539,10 +536,7 @@
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
-/obj/item/mod/module/flashlight/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/flashlight/on_active_process(delta_time)
 	active_power_cost = base_power * light_range
 
 /obj/item/mod/module/flashlight/generate_worn_overlay()
@@ -742,10 +736,7 @@
 		if("temperature_setting")
 			temperature_setting = clamp(value + T0C, min_temp, max_temp)
 
-/obj/item/mod/module/thermal_regulator/on_process(delta_time)
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/thermal_regulator/on_active_process(delta_time)
 	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * delta_time))
 
 /obj/item/mod/module/injector
