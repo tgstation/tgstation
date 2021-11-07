@@ -346,6 +346,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+/// User has recently yawned. Cheaty way to track if someone has yawned recently, whether they meant to or not, since emote cooldowns don't track unintentional emotes
+#define TRAIT_YAWNED_RECENTLY "yawned_recently"
 /*
 * Trait granted by various security jobs, and checked by [/obj/item/food/donut]
 * When present in the mob's mind, they will always love donuts.
