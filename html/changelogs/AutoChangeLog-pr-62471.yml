@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Items with dash actions and the Bluespace Prophecy trauma now utilise proper teleportation code, disallowing teleportation to and from teleport restricted areas."
