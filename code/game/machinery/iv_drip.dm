@@ -128,7 +128,7 @@
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, span_userdanger("The IV drip needle is ripped out of you!"))
 		var/selected_limb = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-		attached.apply_damage(3, BRUTE, selected_limb))
+		attached.apply_damage(3, BRUTE, selected_limb)
 		var/datum/wound/pierce/moderate/iv_wound = new
 		iv_wound.apply_wound(selected_limb, silent)
 		detach_iv()
