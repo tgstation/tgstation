@@ -10,7 +10,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
-	pixel_shift = 24
+	pixel_shift = 26
 
 /obj/machinery/firealarm
 	name = "fire alarm"
