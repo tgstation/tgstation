@@ -136,7 +136,6 @@
 	var/locked = TRUE
 	var/coverlocked = TRUE
 	var/aidisabled = FALSE
-	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
 	var/lastused_equip = 0
@@ -207,30 +206,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 25)
 	GLOB.apcs_list += src
 
 	wires = new /datum/wires/apc(src)
-	// offset 25 pixels in direction of dir
-	// this allows the APC to be embedded in a wall, yet still inside an area
-	if (building)
-		setDir(turn(ndir, 180))
-	tdir = dir // to fix Vars bug
-	setDir(SOUTH)
 
-	switch(tdir)
-		if(NORTH)
-			if((pixel_y != initial(pixel_y)) && (pixel_y != 25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_y value ([pixel_y] - should be 25.)")
-			pixel_y = 25
-		if(SOUTH)
-			if((pixel_y != initial(pixel_y)) && (pixel_y != -25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_y value ([pixel_y] - should be -25.)")
-			pixel_y = -25
-		if(EAST)
-			if((pixel_y != initial(pixel_x)) && (pixel_x != 25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_x value ([pixel_x] - should be 25.)")
-			pixel_x = 25
-		if(WEST)
-			if((pixel_y != initial(pixel_x)) && (pixel_x != -25))
-				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([tdir] | [uppertext(dir2text(tdir))]) has pixel_x value ([pixel_x] - should be -25.)")
-			pixel_x = -25
 	if (building)
 		area = get_area(src)
 		opened = APC_COVER_OPENED
@@ -239,6 +215,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 25)
 		set_machine_stat(machine_stat | MAINT)
 		update_appearance()
 		addtimer(CALLBACK(src, .proc/update), 5)
+		dir = ndir
+
+	// offset APC_PIXEL_OFFSET pixels in direction of dir
+	// this allows the APC to be embedded in a wall, yet still inside an area
+	switch(dir)
+		if(NORTH)
+			if((pixel_y != initial(pixel_y)) && (pixel_y != 25))
+				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_y value ([pixel_y] - should be 25.)")
+			pixel_y = 25
+		if(SOUTH)
+			if((pixel_y != initial(pixel_y)) && (pixel_y != -25))
+				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_y value ([pixel_y] - should be -25.)")
+			pixel_y = -25
+		if(EAST)
+			if((pixel_y != initial(pixel_x)) && (pixel_x != 25))
+				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_x value ([pixel_x] - should be 25.)")
+			pixel_x = 25
+		if(WEST)
+			if((pixel_y != initial(pixel_x)) && (pixel_x != -25))
+				log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_x value ([pixel_x] - should be -25.)")
+			pixel_x = -25
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -272,7 +269,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 25)
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.setDir(tdir)
+	terminal.setDir(dir)
 	terminal.master = src
 
 /obj/machinery/power/apc/Initialize(mapload)
