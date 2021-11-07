@@ -1094,26 +1094,6 @@
 	build_path = /obj/item/mod/module/visor/sechud
 	category = list("MOD Modules")
 
-/datum/design/mod_visor_welding
-	name = "MOD Module: Welding Visor"
-	desc = "A modsuit module design!"
-	id = "mod_visor_welding"
-	build_type = MECHFAB
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
-	construction_time = 1 SECONDS
-	build_path = /obj/item/mod/module/visor/welding
-	category = list("MOD Modules")
-
-/datum/design/mod_visor_sunglasses
-	name = "MOD Module: Protective Visor"
-	desc = "A modsuit module design!"
-	id = "mod_visor_sunglasses"
-	build_type = MECHFAB
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
-	construction_time = 1 SECONDS
-	build_path = /obj/item/mod/module/visor/sunglasses
-	category = list("MOD Modules")
-
 /datum/design/mod_visor_meson
 	name = "MOD Module: Meson Visor"
 	desc = "A modsuit module design!"
@@ -1122,6 +1102,26 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/visor/meson
+	category = list("MOD Modules")
+
+/datum/design/mod_visor_welding
+	name = "MOD Module: Welding Protection"
+	desc = "A modsuit module design!"
+	id = "mod_welding"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/welding
+	category = list("MOD Modules")
+
+/datum/design/mod_t_ray
+	name = "MOD Module: T-Ray Scanner"
+	desc = "A modsuit module design!"
+	id = "mod_t_ray"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/t_ray
 	category = list("MOD Modules")
 
 /datum/design/mod_health_analyzer
@@ -1252,6 +1252,16 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/constructor
+	category = list("MOD Modules")
+
+/datum/design/quick_carry
+	name = "MOD Module: Quick Carry"
+	desc = "A modsuit module design!"
+	id = "mod_quick_carry"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/quick_carry
 	category = list("MOD Modules")
 
 /datum/design/mod_longfall

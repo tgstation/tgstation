@@ -33,14 +33,12 @@
 	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
-	expand_on_install = TRUE
 
 /obj/item/mod/module/storage/syndicate
 	name = "MOD syndicate storage module"
 	icon_state = "storage_syndi"
 	max_combined_w_class = 30
 	max_items = 21
-	expand_on_install = TRUE
 
 /obj/item/mod/module/visor
 	name = "MOD visor module"
@@ -50,8 +48,6 @@
 	active_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS
-	var/helmet_tint = 0
-	var/helmet_flash_protect = FLASH_PROTECTION_NONE
 	var/hud_type
 	var/list/visor_traits = list()
 
@@ -59,29 +55,23 @@
 	. = ..()
 	if(!.)
 		return
-	mod.helmet.tint = helmet_tint
-	mod.helmet.flash_protect = helmet_flash_protect
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		hud.add_hud_to(mod.wearer)
 	for(var/trait in visor_traits)
 		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
-	mod.wearer.update_tint()
 
 /obj/item/mod/module/visor/on_deactivation()
 	. = ..()
 	if(!.)
 		return
-	mod.helmet.tint = initial(mod.helmet.tint)
-	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
 		hud.remove_hud_from(mod.wearer)
 	for(var/trait in visor_traits)
 		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
-	mod.wearer.update_tint()
 
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
@@ -101,18 +91,6 @@
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
-/obj/item/mod/module/visor/welding
-	name = "MOD welding visor module"
-	icon_state = "welding_visor"
-	helmet_tint = 2
-	helmet_flash_protect = FLASH_PROTECTION_WELDER
-
-/obj/item/mod/module/visor/sunglasses
-	name = "MOD protective visor module"
-	icon_state = "sun_visor"
-	helmet_tint = 1
-	helmet_flash_protect = FLASH_PROTECTION_FLASH
-
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
 	icon_state = "meson_visor"
@@ -128,21 +106,56 @@
 	icon_state = "night_visor"
 	visor_traits = list(TRAIT_TRUE_NIGHT_VISION)
 
+/obj/item/mod/module/welding
+	name = "MOD welding protection module"
+	desc = "A module installed to the helmet, allowing access to different views."
+	complexity = 2
+	incompatible_modules = list(/obj/item/mod/module/welding)
+	var/helmet_tint = 2
+	var/helmet_flash_protect = FLASH_PROTECTION_WELDER
+
+/obj/item/mod/module/welding/on_equip()
+	mod.helmet.tint = helmet_tint
+	mod.helmet.flash_protect = helmet_flash_protect
+	mod.wearer.update_tint()
+
+/obj/item/mod/module/welding/on_unequip()
+	mod.helmet.tint = initial(mod.helmet.tint)
+	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
+	mod.wearer.update_tint()
+
+/obj/item/mod/module/t_ray
+	name = "MOD t-ray scan module"
+	desc = "A module scanning the station for pipes and wires underneath."
+	module_type = MODULE_TOGGLE
+	complexity = 2
+	active_power_cost = 15
+	incompatible_modules = list(/obj/item/mod/module/t_ray)
+	cooldown_time = 0.5 SECONDS
+	var/range = 2
+
+/obj/item/mod/module/t_ray/on_process(delta_time)
+	. = ..()
+	if(!.)
+		return
+	t_ray_scan(mod.wearer, 8, range)
+
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
-	desc = "A module with a microchip health analyzer to instantly scan the wearer's vitals."
-	module_type = MODULE_USABLE
+	desc = "A module with a microchip health analyzer to instantly scan vitals at a range."
+	module_type = MODULE_ACTIVE
 	complexity = 1
 	use_power_cost = 25
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
-	var/module_advanced = FALSE
 
-/obj/item/mod/module/health_analyzer/on_use()
+/obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
 	if(!.)
 		return
-	healthscan(mod.wearer, mod.wearer, advanced = module_advanced)
+	if(!isliving(target))
+		return
+	healthscan(mod.wearer, target)
 
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
@@ -634,7 +647,7 @@
 	complexity = 2
 	idle_power_cost = 3
 	use_power_cost = 50
-	incompatible_modules = list(/obj/item/mod/module/constructor)
+	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
 /obj/item/mod/module/constructor/on_equip()
@@ -648,6 +661,33 @@
 	if(!.)
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
+
+/obj/item/mod/module/quick_carry
+	name = "MOD quick carry module"
+	desc = "A module that redirects power to arms, allowing for quicker carrying."
+	icon_state = "constructor"
+	complexity = 1
+	idle_power_cost = 3
+	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
+
+/obj/item/mod/module/quick_carry/on_equip()
+	ADD_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
+
+/obj/item/mod/module/quick_carry/on_unequip()
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
+
+/obj/item/mod/module/quick_carry/advanced
+	name = "MOD advanced quick carry module"
+	removable = FALSE
+	complexity = 0
+
+/obj/item/mod/module/quick_carry/on_equip()
+	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
+
+/obj/item/mod/module/quick_carry/on_unequip()
+	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
 /obj/item/mod/module/longfall
 	name = "MOD longfall module"
@@ -1121,6 +1161,7 @@
 		return
 	if(!human_user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
+	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
 	drain_power(use_power_cost)

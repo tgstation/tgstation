@@ -97,10 +97,9 @@
 		locked = TRUE
 	if(ispath(cell))
 		cell = new cell(src)
-	if(ispath(theme.helmet_path))
-		helmet = new theme.helmet_path(src)
-		helmet.mod = src
-		mod_parts += helmet
+	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
+	helmet.mod = src
+	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/armor/mod(src)
 	chestplate.mod = src
 	mod_parts += chestplate
@@ -121,6 +120,15 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+		switch(theme.type)
+			if(/datum/mod_theme/atmospheric)
+				piece.color = COLOR_SAMPLE_GRAY
+			if(/datum/mod_theme/medical)
+				piece.color = COLOR_SOAPSTONE_IRON
+			if(/datum/mod_theme/rescue)
+				piece.color = COLOR_THEME_GLASS
+			if(/datum/mod_theme/syndicate)
+				piece.color = COLOR_THEME_OPERATIVE
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
@@ -348,7 +356,7 @@
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
 		return
 	for(var/obj/item/part in mod_parts)
-		conceal(stripper, part)
+		conceal(null, part)
 	return ..()
 
 /obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
@@ -392,7 +400,7 @@
 	var/list/skin_updating = mod_parts.Copy() + src
 	for(var/obj/item/piece as anything in skin_updating)
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	wearer.update_icons()
+	wearer?.update_icons()
 	return TRUE
 
 /obj/item/mod/control/proc/shock(mob/living/user)
