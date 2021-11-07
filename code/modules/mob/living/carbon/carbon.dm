@@ -151,12 +151,15 @@
 
 	var/atom/movable/thrown_thing
 	var/obj/item/I = get_active_held_item()
+	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
 
 	if(!I)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
 			var/mob/living/throwable_mob = pulling
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
+				if(grab_state >= GRAB_NECK)
+					neckgrab_throw = TRUE
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
@@ -178,7 +181,7 @@
 			power_throw--
 		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
 			power_throw++
-		if(pulling && grab_state >= GRAB_NECK)
+		if(neckgrab_throw)
 			power_throw++
 		visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
 						span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
