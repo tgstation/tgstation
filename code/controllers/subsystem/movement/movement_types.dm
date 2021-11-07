@@ -11,6 +11,9 @@
 	var/datum/movement_packet/owner
 	///The subsystem we're processing on
 	var/datum/controller/subsystem/movement/controller
+	///An extra reference we pass around because it's occasionally handy for signals
+	///This feels horrible, but constantly making components seems worse
+	var/datum/extra_info
 	///The thing we're moving about
 	var/atom/movable/moving
 	///Defines how different move loops override each other. Lower numbers beat higher numbers
@@ -24,9 +27,12 @@
 	///The next time we should process
 	var/timer = 0
 
-/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, precedence, flags)
+/datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, precedence, flags, datum/extra_info)
 	src.owner = owner
 	src.controller = controller
+	src.extra_info = extra_info
+	if(extra_info)
+		RegisterSignal(extra_info, COMSIG_PARENT_QDELETING, .proc/info_deleted)
 	src.moving = moving
 	src.precedence = precedence
 	src.flags = flags
@@ -48,12 +54,17 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
+/datum/move_loop/proc/info_deleted(datum/source)
+	SIGNAL_HANDLER
+	extra_info = null
+
 /datum/move_loop/Destroy()
 	if(owner)
 		owner.remove_loop(controller, src)
 	owner = null
 	moving = null
 	controller = null
+	extra_info = null
 	return ..()
 
 /datum/move_loop/process(delta_ticks)
@@ -99,8 +110,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/move, precedence, flags, delay, timeout, direction)
+/datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move, precedence, flags, extra_info,extra_info, delay, timeout, direction)
 
 ///Replacement for walk()
 /datum/move_loop/move
@@ -130,8 +141,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/move/move_to, precedence, flags, delay, timeout, direction)
+/datum/controller/subsystem/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move/move_to, precedence, flags, extra_info, delay, timeout, direction)
 
 /datum/move_loop/move/move_to
 
@@ -157,8 +168,6 @@
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because we don't care
 
 /datum/move_loop/has_target/Destroy()
-	if(!isturf(target) && target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	target = null
 	return ..()
 
@@ -181,8 +190,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, precedence, flags, delay, timeout, chasing)
+/datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, precedence, flags, extra_info, delay, timeout, chasing)
 
 ///Used for force-move loops
 /datum/move_loop/has_target/force_move
@@ -224,12 +233,14 @@
 	skip_first,
 	subsystem,
 	precedence,
-	flags)
+	flags,
+	datum/extra_info)
 	return add_to_loop(moving,
 		subsystem,
 		/datum/move_loop/has_target/jps,
 		precedence,
 		flags,
+		extra_info,
 		delay,
 		timeout,
 		chasing,
@@ -261,7 +272,7 @@
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
 
-/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/id/id, simulated_only, turf/avoid, skip_first)
+/datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
 	. = ..()
 	if(!.)
 		return
@@ -277,7 +288,7 @@
 
 /datum/move_loop/has_target/jps/start_loop()
 	. = ..()
-	recalculate_path()
+	INVOKE_ASYNC(src, .proc/recalculate_path)
 
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
@@ -286,18 +297,19 @@
 
 /datum/move_loop/has_target/jps/proc/handle_no_id()
 	SIGNAL_HANDLER
-	qdel(src)
+	id = null
 
 //Returns FALSE if the recalculation failed, TRUE otherwise
 /datum/move_loop/has_target/jps/proc/recalculate_path()
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
-	COOLDOWN_START(controller, repath_cooldown, repath_delay)
+	COOLDOWN_START(src, repath_cooldown, repath_delay)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 	movement_path = get_path_to(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
-		recalculate_path()
+		INVOKE_ASYNC(src, .proc/recalculate_path)
 		if(!length(movement_path))
 			return FALSE
 
@@ -309,8 +321,9 @@
 	if(get_turf(moving) == next_step)
 		movement_path.Cut(1,2)
 	else
-		recalculate_path()
+		INVOKE_ASYNC(src, .proc/recalculate_path)
 		return FALSE
+
 
 ///Base class of move_to and move_away, deals with the distance and target aspect of things
 /datum/move_loop/has_target/dist_bound
@@ -348,8 +361,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, precedence, flags, delay, timeout, chasing, min_dist)
+/datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, precedence, flags, extra_info, delay, timeout, chasing, min_dist)
 
 ///Wrapper around walk_to()
 /datum/move_loop/has_target/dist_bound/move_to
@@ -379,8 +392,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, precedence, flags, delay, timeout, chasing, max_dist)
+/datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, precedence, flags, extra_info, delay, timeout, chasing, max_dist)
 
 ///Wrapper around walk_away()
 /datum/move_loop/has_target/dist_bound/move_away
@@ -410,8 +423,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, precedence, flags, delay, timeout, chasing, home)
+/datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, precedence, flags, extra_info, delay, timeout, chasing, home)
 
 ///Helper proc for homing
 /datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout)
@@ -536,8 +549,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, precedence, flags, delay, timeout, chasing)
+/datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, precedence, flags, extra_info, delay, timeout, chasing)
 
 ///The actual implementation of walk_towards()
 /datum/move_loop/has_target/move_towards_budget
@@ -561,10 +574,10 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, precedence, flags)
+/datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, precedence, flags, datum/extra_info)
 	if(!directions)
 		directions = GLOB.alldirs
-	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, precedence, flags, delay, timeout, directions)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move_rand, precedence, flags, extra_info, delay, timeout, directions)
 
 /**
  * This isn't actually the same as walk_rand
@@ -605,8 +618,8 @@
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
-/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, precedence, flags)
-	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, precedence, flags, delay, timeout)
+/datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, precedence, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, precedence, flags, extra_info, delay, timeout)
 
 ///Wrapper around step_rand
 /datum/move_loop/move_to_rand
