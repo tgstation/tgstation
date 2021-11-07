@@ -14,14 +14,14 @@
 	//Attempt to load our configs
 
 	// test load from _maps - this should pass
-	var/datum/map_config/maps_config = load_map_config("_maps",VALID_TEST_MAP)
+	var/datum/map_config/maps_config = load_map_config(VALID_TEST_MAP, MAP_DIRECTORY_MAPS)
 
 	// test load from data - this should pass
 	// this also confirms that our fcopy worked for our bad_config test
-	var/datum/map_config/data_config = load_map_config("data","load_map_security_temp/[VALID_TEST_MAP]")
+	var/datum/map_config/data_config = load_map_config("load_map_security_temp/[VALID_TEST_MAP]", MAP_DIRECTORY_DATA)
 
 	// data/load_map_security_temp/ is not in our whitelist, this should fail
-	var/datum/map_config/bad_config = load_map_config("data/load_map_security_temp",VALID_TEST_MAP)
+	var/datum/map_config/bad_config = load_map_config(VALID_TEST_MAP,"data/load_map_security_temp")
 
 
 	// Check we can load from _maps

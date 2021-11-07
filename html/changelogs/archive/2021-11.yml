@@ -153,3 +153,25 @@
   Y0SH1M4S73R:
   - admin: Added the color matrix editor. It is available from a dropdown option in
       an atom's View Variables menu as well as when editing an existing color matrix.
+2021-11-07:
+  Archanial:
+  - bugfix: mapload works
+  Bumtickley00:
+  - bugfix: Cold seiver now quickly heals your radiation instead of quickly killing
+      you
+  Ghommie:
+  - bugfix: Fixed the emissive appearances (basically what you can see even in complete
+      darkness) and possibly other overlays of vending machines being removed when
+      the wire panel is opened/closed.
+  - bugfix: Fixed the random double bed sheets spawners spawning normal bedsheets.
+  - bugfix: Fixed double bed sheets other than the standard white one looking like
+      single bed sheets when dyed.
+  GoldenAlpharex, with some oversight from Timberpoes:
+  - bugfix: Maps will now correctly be loaded at the start of a round. Hurray!
+  - code_imp: Improved the code for loading map configs and made it more documented,
+      while also removing a way to delete config files while I was at it.
+  JohnFulpWillard:
+  - bugfix: Godmoded shades should no longer spawn from posessed blades spawning spirits
+      too fast.
+  Mickyan:
+  - imageadd: Added fallback icons for clothing inhands
