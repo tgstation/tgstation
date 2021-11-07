@@ -183,6 +183,7 @@
 #include "code\__HELPERS\atmospherics.dm"
 #include "code\__HELPERS\atoms.dm"
 #include "code\__HELPERS\bitflag_lists.dm"
+#include "code\__HELPERS\botany.dm"
 #include "code\__HELPERS\chat.dm"
 #include "code\__HELPERS\chat_filter.dm"
 #include "code\__HELPERS\clients.dm"
