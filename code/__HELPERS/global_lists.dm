@@ -130,7 +130,6 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 
 // Wall mounted machinery which are visually coming out of the wall.
 // These do not conflict with machinery which are visually placed on the wall.
-// Dir is the direction they are pointing, away from the wall.
 GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
