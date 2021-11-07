@@ -75,17 +75,14 @@
  * Check if there is already a wall item on the turf loc
  * floor_loc = floor tile in front of the wall
  * dir_toward_wall = direction from the floor tile in front of the wall towards the wall
- * check_external = 2 (!?) if we should be checking external against items coming out of the wall rather than visually over the wall.
+ * check_external = truthy if we should be checking against items coming out of the wall, rather than visually on top of the wall.
 **/
-/proc/got_wall_item(floor_loc, dir_toward_wall, check_external = 0)
+/proc/check_wall_item(floor_loc, dir_toward_wall, check_external = 0)
 	var/wall_loc = get_step(floor_loc, dir_toward_wall)
 	for(var/obj/checked_object in floor_loc)
-		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR) && check_external != 2)
+		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR) && !check_external)
 			//Direction works sometimes
-			if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INVERSE))
-				if(checked_object.dir == turn(dir_toward_wall, 180))
-					return TRUE
-			else if(checked_object.dir == dir_toward_wall)
+			if(checked_object.dir == dir_toward_wall)
 				return TRUE
 
 			//Some stuff doesn't use dir properly, so we need to check pixel instead
@@ -94,14 +91,12 @@
 				return TRUE
 
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_EXTERIOR) && check_external)
-			if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INVERSE))
-				if(checked_object.dir == turn(dir_toward_wall, 180))
-					return TRUE
-			else if(checked_object.dir == dir_toward_wall)
+			if(checked_object.dir == dir_toward_wall)
 				return TRUE
 
-	//Some stuff is placed directly on the wallturf (signs)
-	if (check_external == 2)
+	//Some stuff is placed directly on the wallturf (signs).
+	//If we're only checking for external entities, we don't need to look though these.
+	if (check_external)
 		return FALSE
 	for(var/obj/checked_object in wall_loc)
 		if(is_type_in_typecache(checked_object, GLOB.WALLITEMS_INTERIOR))

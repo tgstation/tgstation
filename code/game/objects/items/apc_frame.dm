@@ -7,14 +7,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
-	var/inverse = 0 // For inverse dir frames like light fixtures.
+	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
 	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
 		return
-	var/ndir = get_dir(on_wall, user)
-	if(!(ndir in GLOB.cardinals))
+	var/floor_to_wall = get_dir(user, on_wall)
+	if(!(floor_to_wall in GLOB.cardinals))
 		return
 	var/turf/T = get_turf(user)
 	var/area/A = get_area(T)
@@ -24,7 +24,7 @@
 	if(A.always_unpowered)
 		to_chat(user, span_warning("You cannot place [src] in this area!"))
 		return
-	if(got_wall_item(T, ndir, inverse*2))
+	if(check_wall_item(T, floor_to_wall, wall_external))
 		to_chat(user, span_warning("There's already an item on this wall!"))
 		return
 
@@ -36,13 +36,11 @@
 		user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
 			span_notice("You attach [src] to the wall."),
 			span_hear("You hear clicking."))
-		var/ndir = get_dir(on_wall,user)
-		if(inverse)
-			ndir = turn(ndir, 180)
+		var/floor_to_wall = get_dir(user, on_wall)
 
-		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
+		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
 		if(pixel_shift)
-			switch(ndir)
+			switch(floor_to_wall)
 				if(NORTH)
 					O.pixel_y = pixel_shift
 				if(SOUTH)
@@ -85,8 +83,6 @@
 	desc = "Used for repairing or building APCs."
 	icon_state = "apc"
 	result_path = /obj/machinery/power/apc
-	inverse = 1
-
 
 /obj/item/wallframe/apc/try_build(turf/on_wall, user)
 	if(!..())

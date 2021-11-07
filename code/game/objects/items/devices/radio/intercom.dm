@@ -19,7 +19,7 @@
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
-		setDir(ndir)
+		setDir(turn(ndir, 180))
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
@@ -143,7 +143,6 @@
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
-	inverse = TRUE
 	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
 
 /obj/item/radio/intercom/chapel
@@ -154,24 +153,48 @@
 
 /obj/item/radio/intercom/directional/north
 	pixel_y = 22
+	dir = NORTH
 
 /obj/item/radio/intercom/directional/south
 	pixel_y = -28
+	dir = SOUTH
 
 /obj/item/radio/intercom/directional/east
 	pixel_x = 28
+	dir = EAST
 
 /obj/item/radio/intercom/directional/west
+	dir = WEST
 	pixel_x = -28
 
 /obj/item/radio/intercom/prison/directional/north
 	pixel_y = 22
+	dir = NORTH
 
 /obj/item/radio/intercom/prison/directional/south
 	pixel_y = -28
+	dir = SOUTH
 
 /obj/item/radio/intercom/prison/directional/east
 	pixel_x = 28
+	dir = EAST
 
 /obj/item/radio/intercom/prison/directional/west
 	pixel_x = -28
+	dir = WEST
+
+/obj/item/radio/intercom/chapel/directional/north
+	pixel_y = 22
+	dir = NORTH
+
+/obj/item/radio/intercom/chapel/directional/south
+	pixel_y = -28
+	dir = SOUTH
+
+/obj/item/radio/intercom/chapel/directional/east
+	pixel_x = 28
+	dir = EAST
+
+/obj/item/radio/intercom/chapel/directional/west
+	pixel_x = -28
+	dir = WEST

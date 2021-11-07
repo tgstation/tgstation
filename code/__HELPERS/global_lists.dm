@@ -133,12 +133,3 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/structure/camera_assembly,
 	/obj/structure/light_construct
 	)))
-
-// Similar to the above, except dir is the direction from the floor they are on towards the attached wall.
-// Logic in /proc/got_wall_item supports entries in either INTERIOR or EXTERIOR
-GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
-	/obj/item/radio/intercom,
-	/obj/machinery/light,
-	/obj/machinery/power/apc,
-	/obj/structure/light_construct
-	)))
