@@ -75,7 +75,7 @@
 					value += edge_value
 					continue
 			value += old_state[n_x][n_y]
-	value -= old_state[y][y]
+	value -= old_state[x][y]
 
 	if(value in b_rule)
 		return 1
