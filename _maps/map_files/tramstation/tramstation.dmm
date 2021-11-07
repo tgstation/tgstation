@@ -25727,7 +25727,7 @@
 /area/security/interrogation)
 "hKt" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/bluespace_vendor/north,
+/obj/machinery/ticket_machine/directional/north,
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
 "hKu" = (
