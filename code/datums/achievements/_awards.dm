@@ -2,7 +2,7 @@
 	///Name of the achievement, If null it won't show up in the achievement browser. (Handy for inheritance trees)
 	var/name
 	var/desc = "You did it."
-	///The relative path (the absolute is icons/ui_icons/achievements...) of the icon used in the UI
+	///The icon state for this award. The icon file is found in ui_icons/achievements.
 	var/icon = "default"
 
 	var/category = "Normal"

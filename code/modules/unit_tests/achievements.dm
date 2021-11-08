@@ -1,4 +1,4 @@
-///Checks that all achievements have an existing icon.
+///Checks that all achievements have an existing icon state in the achievements icon file.
 /datum/unit_test/achievements
 
 /datum/unit_test/achievements/Run()
