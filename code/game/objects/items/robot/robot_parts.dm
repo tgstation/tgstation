@@ -279,7 +279,7 @@
 				lawsync = FALSE
 				O.set_connected_ai(null)
 			else
-				O.notify_ai(NEW_BORG)
+				O.notify_ai(AI_NOTIFICATION_NEW_BORG)
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
 			if(!lawsync)
@@ -337,7 +337,7 @@
 			else
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
-				O.notify_ai(AI_SHELL)
+				O.notify_ai(AI_NOTIFICATION_AI_SHELL)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()

@@ -14,7 +14,7 @@
 
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/pda/host_pda = null
@@ -66,13 +66,13 @@
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY | CART_MANIFEST
-	bot_access_flags = SEC_BOT
+	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT
 
 /obj/item/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
-	bot_access_flags = SEC_BOT
+	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT
 
 /obj/item/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
@@ -136,7 +136,7 @@
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_SECURITY
-	bot_access_flags = SEC_BOT
+	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT
 
 
 /obj/item/cartridge/ce
@@ -166,7 +166,7 @@
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
-	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
+	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	spam_enabled = 1
 
 /obj/item/cartridge/captain/Initialize(mapload)
