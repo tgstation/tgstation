@@ -372,7 +372,7 @@
 				to_chat(user, span_notice("You complete the Securitron! Beep boop."))
 				var/mob/living/simple_animal/bot/secbot/S = new(Tsec)
 				S.name = created_name
-				S.baton_type = I.type
+				S.weapon = I.type
 				S.robot_arm = robot_arm
 				qdel(I)
 				qdel(src)

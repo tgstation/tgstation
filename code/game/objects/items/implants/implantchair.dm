@@ -48,7 +48,7 @@
 		data["occupant"]["stat"] = mob_occupant.stat
 
 	data["special_name"] = special ? special_name : null
-	data["ready_implants"]  = ready_implants
+	data["ready_implants"] = ready_implants
 	data["ready"] = ready
 	data["replenishing"] = replenishing
 

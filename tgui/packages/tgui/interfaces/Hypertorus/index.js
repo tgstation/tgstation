@@ -83,7 +83,7 @@ export const Hypertorus = (props, context) => {
   const idealWidth = 850, idealHeight = 980;
 
   // ...but we should check for small screens, to play nicely with eg laptops.
-  const winWidth  = window.screen.availWidth;
+  const winWidth = window.screen.availWidth;
   const winHeight = window.screen.availHeight;
 
   // Make sure we don't start larger than 50%/80% of screen width/height.

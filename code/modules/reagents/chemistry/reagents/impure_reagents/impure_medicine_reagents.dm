@@ -419,16 +419,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
 /datum/reagent/inverse/technetium
 	name = "Technetium 99"
-	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
+	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 	tox_damage = 0
-	///Accumulates radiation, then adds it as a whole number to the owner
-	var/radiation_ticker
+
+	var/time_until_next_poison = 0
+
+	var/poison_interval = (9 SECONDS)
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	//for some reason radiation doesn't work when small
-	owner.radiation += creation_purity * delta_time * 0.5
+	time_until_next_poison -= delta_time * (1 SECONDS)
+	if (time_until_next_poison <= 0)
+		time_until_next_poison = poison_interval
+		owner.adjustToxLoss(creation_purity * 1)
+
 	..()
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that

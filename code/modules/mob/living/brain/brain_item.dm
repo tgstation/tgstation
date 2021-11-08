@@ -305,7 +305,7 @@
 	. = ..()
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
 		setOrganDamage(0)
-		cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
+		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	else
 		setOrganDamage(BRAIN_DAMAGE_DEATH)
 

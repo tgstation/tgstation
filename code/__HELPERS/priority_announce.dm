@@ -32,7 +32,7 @@
 
 	///If the announcer overrides alert messages, use that message.
 	if(SSstation.announcer.custom_alert_message && !has_important_message)
-		announcement +=  SSstation.announcer.custom_alert_message
+		announcement += SSstation.announcer.custom_alert_message
 	else
 		announcement += "<br>[span_alert("[html_encode(text)]")]<br>"
 	announcement += "<br>"
@@ -83,9 +83,9 @@
 	if(announce)
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", SSstation.announcer.get_rand_report_sound(), has_important_message = TRUE)
 
-	var/datum/comm_message/M  = new
+	var/datum/comm_message/M = new
 	M.title = title
-	M.content =  text
+	M.content = text
 
 	SScommunications.send_message(M)
 

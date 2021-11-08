@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "Directional firelocks are now transparent, consistent with full-tile firelocks. This avoids some very strange behavior where you could see through a directional firelock when you were on the same tile."

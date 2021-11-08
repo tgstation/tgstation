@@ -5,7 +5,7 @@
  * you can screwdriver it to interact with the underneath stuff without destroying the tile...
  * unless you want to!
  */
-/turf/open/floor/plating/catwalk_floor
+/turf/open/floor/catwalk_floor
 	icon = 'icons/turf/floors/catwalk_plating.dmi'
 	icon_state = "catwalk_below"
 	name = "catwalk floor"
@@ -13,13 +13,15 @@
 	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/catwalk_tile
 	footstep = FOOTSTEP_CATWALK
+	overfloor_placed = TRUE
 	var/covered = TRUE
 
-/turf/open/floor/plating/catwalk_floor/Initialize(mapload)
+
+/turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 
-/turf/open/floor/plating/catwalk_floor/update_overlays()
+/turf/open/floor/catwalk_floor/update_overlays()
 	. = ..()
 	var/static/image/catwalk_overlay
 	if(isnull(catwalk_overlay))
@@ -32,13 +34,13 @@
 	if(covered)
 		. += catwalk_overlay
 
-/turf/open/floor/plating/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
+/turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	covered = !covered
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	update_icon(UPDATE_OVERLAYS)
 
-/turf/open/floor/plating/catwalk_floor/pry_tile(obj/item/crowbar, mob/user, silent)
+/turf/open/floor/catwalk_floor/crowbar_act(mob/user, obj/item/crowbar)
 	if(covered)
 		user.balloon_alert(user, "remove cover first!")
 		return FALSE

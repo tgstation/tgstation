@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "auto-grow for hydroponics trays now use a setter"

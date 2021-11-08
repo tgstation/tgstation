@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The category of the component in the UI
+	var/category = COMPONENT_DEFAULT_CATEGORY
+
 	/// The colour this circuit component appears in the UI
 	var/ui_color = "blue"
 
@@ -282,10 +285,13 @@
 
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+		ADD_TRAIT(added_to, TRAIT_CIRCUIT_UNDUPABLE, src)
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
 /obj/item/circuit_component/proc/removed_from(obj/item/integrated_circuit/removed_from)
+	REMOVE_TRAIT(removed_from, TRAIT_CIRCUIT_UNDUPABLE, src)
 	return
 
 /**
