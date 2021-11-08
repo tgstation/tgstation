@@ -234,42 +234,43 @@
 
 
 
-/obj/item/ntpkit
+/obj/item/ntp_kit
 	name = "NTP kit"
-	desc = "Hero of NT-sponsored parties for the high command. Lasts entire night, morning and burial.<br>There is something written on its side."
+	desc = "Hero of NT-sponsored parties for the high command. Lasts entire night, morning and burial.<br>There is something written on its side.<br>"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "ntp_kit"
 	w_class = WEIGHT_CLASS_NORMAL
 	var/removal_mode = FALSE
 	var/powder_color = "#00B7EF"
 
-/obj/item/ntpkit/examine(mob/user)
+/obj/item/ntp_kit/examine(mob/user)
 	. = ..()
-	. += span_notice("NPT kit is [removal_mode ? "buzzing softly" : "silent"].<br>Alt-click to change the color.<br>Ctrl-click to change its mode.")
+	. += span_notice("NPT kit is [removal_mode ? "silent" : "buzzing softly"].<br>Alt-click to change the color.<br>Ctrl-click to change its mode.<br>")
 
-/obj/item/ntpkit/examine_more(mob/user)
+/obj/item/ntp_kit/examine_more(mob/user)
 	. = ..()
 	. += span_notice("To use: <br>- Adjust the color with the sliders.<br>- Inhale.<br>")
 	. += span_warning("Usage nullifies insurance clause B12 and permit circular-74")
 	. += span_notice("<br>To remove the color, hold the button for 3 seconds and inhale again.")
 
-/obj/item/ntpkit/attack_self(mob/user, modifiers)
+/obj/item/ntp_kit/attack_self(mob/user, modifiers)
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_parent = user
 		human_parent.override_skin_tone = powder_color
 		human_parent.update_body()
+		src.visible_message("[user] suddenly changes color!","You suddenly change color!")
 	return ..()
 
-/obj/item/ntpkit/proc/select_colour(mob/user)
+/obj/item/ntp_kit/proc/select_colour(mob/user)
 	var/chosen_colour = input(user, "", "Choose Color", powder_color) as color|null
 	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		powder_color = chosen_colour
 		return TRUE
 	return FALSE
 
-/obj/item/ntpkit/CtrlClick(mob/user)
+/obj/item/ntp_kit/CtrlClick(mob/user)
 	if(removal_mode)
 		to_chat(user, span_notice("You hold the button and kit starts to buzz in your hands."))
 		var/sound_freq = rand(5120, 8800)
@@ -282,7 +283,7 @@
 		removal_mode = TRUE
 		return
 
-obj/item/ntpkit/AltClick(mob/user)
+obj/item/ntp_kit/AltClick(mob/user)
 	if(!isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		select_colour(user)
 	else
