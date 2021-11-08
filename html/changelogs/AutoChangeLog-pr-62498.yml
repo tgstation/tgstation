@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - balance: "Being launched into a solid atom by Sleeping Carp's Wave Kick has been fixed to no longer deal far more damage and wounding power than originally intended, and can no longer cause outright compound fractures in healthy targets."
-  - bugfix: "Throwing someone you have in a neckgrab or are choking will now properly throw them harder than normal."

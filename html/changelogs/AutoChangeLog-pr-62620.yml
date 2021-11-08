@@ -1,6 +1,0 @@
-author: "AndrewL97"
-delete-after: True
-changes: 
-  - rscadd: "unit test for map load"
-  - rscadd: "directory param to map load + whitelist for data and _maps"
-  - rscadd: "advertising for mojave sun in tg commit logs"
