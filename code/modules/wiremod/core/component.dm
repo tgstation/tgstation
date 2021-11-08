@@ -273,12 +273,7 @@
 
 /// Called when trying to get the physical location of this object
 /obj/item/circuit_component/proc/get_location()
-	var/turf/current_turf = get_turf(src)
-	if(current_turf)
-		return current_turf
-	if(parent?.shell)
-		return get_turf(parent?.shell)
-	return null
+	return get_turf(src) || get_turf(parent?.shell)
 
 /// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)

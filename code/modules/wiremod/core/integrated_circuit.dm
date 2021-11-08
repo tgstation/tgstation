@@ -631,9 +631,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 #undef WITHIN_RANGE
 
-/obj/item/integrated_circuit/balloon_alert_perform(mob/viewer, text)
+/obj/item/integrated_circuit/balloon_alert(mob/viewer, text)
 	if(shell)
-		return shell.balloon_alert_perform(viewer, text)
+		return shell.balloon_alert(viewer, text)
 	return ..()
 
 /obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
