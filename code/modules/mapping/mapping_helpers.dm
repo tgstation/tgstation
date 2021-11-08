@@ -338,6 +338,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	return TRUE
 
 /obj/effect/mapping_helpers/atom_injector/custom_icon/inject(atom/target)
+	if(IsAdminAdvancedProcCall())
+		return
 	target.vars[target_variable] = icon_file
 
 /obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
