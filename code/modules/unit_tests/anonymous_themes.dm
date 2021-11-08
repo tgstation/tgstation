@@ -1,5 +1,5 @@
 /// Ensure that anonymous themes works without changing your preferences
-TEST_FOCUS(/datum/unit_test/anonymous_themes)
+/datum/unit_test/anonymous_themes
 
 /datum/unit_test/anonymous_themes/Run()
 	GLOB.current_anonymous_theme = new /datum/anonymous_theme
