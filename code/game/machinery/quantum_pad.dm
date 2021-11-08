@@ -177,7 +177,7 @@
 					if(isliving(ROI))
 						var/mob/living/L = ROI
 						//only TP living mobs buckled to non anchored items
-						if(!L.buckled || L.buckled.anchored)
+						if(L.buckled && L.buckled.anchored)
 							continue
 					//Don't TP ghosts
 					else if(isobserver(ROI))
