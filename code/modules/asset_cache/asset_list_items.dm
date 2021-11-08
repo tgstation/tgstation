@@ -589,6 +589,8 @@
 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 	return pre_asset
 
+GLOBAL_LIST_EMPTY_TYPED(uplink_items, /datum/uplink_item)
+
 /// Sends information needed for uplinks
 /datum/asset/json/uplink
 	name = "uplink"
@@ -599,19 +601,21 @@
 	var/list/items = list()
 	for(var/datum/uplink_category/category as anything in subtypesof(/datum/uplink_category))
 		categories[category] = initial(category.name)
-		sortTim(category, .proc/cmp_uplink_category_desc)
+		sortTim(categories, .proc/cmp_uplink_category_desc)
 
 	for(var/datum/uplink_item/item_path as anything in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/item = new item_path()
 		items += list(list(
-			"name" = initial(item_path.name),
-			"cost" = initial(item_path.cost),
-			"desc" = initial(item_path.desc),
-			"category" = initial(item_path.category),
-			"purchasable_from" = initial(item_path.purchasable_from),
-			"restricted" = initial(item_path.restricted),
-			"limited_stock" = initial(item_path.limited_stock),
-			"restricted_roles" = initial(item_path.restricted_roles)
+			"name" = item.name,
+			"cost" = item.cost,
+			"desc" = item.desc,
+			"category" = item.category,
+			"purchasable_from" = item.purchasable_from,
+			"restricted" = item.restricted,
+			"limited_stock" = item.limited_stock,
+			"restricted_roles" = item.restricted_roles
 		))
+		uplink_items += item
 
 	data["items"] = items
 	data["categories"] = categories

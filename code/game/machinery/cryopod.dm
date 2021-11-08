@@ -175,44 +175,34 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 				to_chat(mind.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
 				mind.announce_objectives()
 		else if(istype(objective.target) && objective.target == mob_occupant.mind)
-			if(istype(objective, /datum/objective/contract))
-				var/datum/antagonist/traitor/affected_traitor = objective.owner.has_antag_datum(/datum/antagonist/traitor)
-				var/datum/contractor_hub/affected_contractor_hub = affected_traitor.contractor_hub
-				for(var/datum/syndicate_contract/affected_contract as anything in affected_contractor_hub.assigned_contracts)
-					if(affected_contract.contract == objective)
-						affected_contract.generate(affected_contractor_hub.assigned_targets)
-						affected_contractor_hub.assigned_targets.Add(affected_contract.contract.target)
-						to_chat(objective.owner.current, "<BR>[span_userdanger("Contract target out of reach. Contract rerolled.")]")
-						break
+			var/old_target = objective.target
+			objective.target = null
+			if(!objective)
+				return
+			objective.find_target()
+			if(!objective.target && objective.owner)
+				to_chat(objective.owner.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
+				for(var/datum/antagonist/antag in objective.owner.antag_datums)
+					antag.objectives -= objective
+			if (!objective.team)
+				objective.update_explanation_text()
+				objective.owner.announce_objectives()
+				to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
 			else
-				var/old_target = objective.target
-				objective.target = null
-				if(!objective)
-					return
-				objective.find_target()
-				if(!objective.target && objective.owner)
-					to_chat(objective.owner.current, "<BR>[span_userdanger("Your target is no longer within reach. Objective removed!")]")
-					for(var/datum/antagonist/antag in objective.owner.antag_datums)
-						antag.objectives -= objective
-				if (!objective.team)
-					objective.update_explanation_text()
-					objective.owner.announce_objectives()
+				var/list/objectivestoupdate
+				for(var/datum/mind/objective_owner in objective.get_owners())
+					to_chat(objective_owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
+					for(var/datum/objective/update_target_objective in objective_owner.get_all_objectives())
+						LAZYADD(objectivestoupdate, update_target_objective)
+				objectivestoupdate += objective.team.objectives
+				for(var/datum/objective/update_objective in objectivestoupdate)
+					if(update_objective.target != old_target || !istype(update_objective,objective.type))
+						continue
+					update_objective.target = objective.target
+					update_objective.update_explanation_text()
 					to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
-				else
-					var/list/objectivestoupdate
-					for(var/datum/mind/objective_owner in objective.get_owners())
-						to_chat(objective_owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
-						for(var/datum/objective/update_target_objective in objective_owner.get_all_objectives())
-							LAZYADD(objectivestoupdate, update_target_objective)
-					objectivestoupdate += objective.team.objectives
-					for(var/datum/objective/update_objective in objectivestoupdate)
-						if(update_objective.target != old_target || !istype(update_objective,objective.type))
-							continue
-						update_objective.target = objective.target
-						update_objective.update_explanation_text()
-						to_chat(objective.owner.current, "<BR>[span_userdanger("You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!")]")
-						update_objective.owner.announce_objectives()
-				qdel(objective)
+					update_objective.owner.announce_objectives()
+			qdel(objective)
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/item)
 	for(var/datum/objective_item/steal/possible_item in GLOB.possible_items)

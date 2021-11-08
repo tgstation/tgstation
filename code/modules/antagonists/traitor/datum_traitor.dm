@@ -1,18 +1,3 @@
-/// Chance that the traitor could roll hijack if the pop limit is met.
-#define HIJACK_PROB 10
-/// Hijack is unavailable as a random objective below this player count.
-#define HIJACK_MIN_PLAYERS 30
-
-/// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
-#define MARTYR_PROB 20
-
-/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
-#define KILL_PROB 50
-/// If a kill objective is rolled, chance that it is to destroy the AI.
-#define DESTROY_AI_PROB(denominator) (100 / denominator)
-/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
-#define MAROON_PROB 30
-
 /datum/antagonist/traitor
 	name = "Traitor"
 	roundend_category = "traitors"
@@ -184,9 +169,6 @@
 
 	var/special_role_text = lowertext(name)
 
-	if (contractor_hub)
-		result += contractor_round_end()
-
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
@@ -194,42 +176,6 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
-
-/// Proc detailing contract kit buys/completed contracts/additional info
-/datum/antagonist/traitor/proc/contractor_round_end()
-	var/result = ""
-	var/total_spent_rep = 0
-
-	var/completed_contracts = contractor_hub.contracts_completed
-	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
-
-	var/contractor_item_icons = "" // Icons of purchases
-	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
-
-	/// Get all the icons/total cost for all our items bought
-	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
-		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
-
-		total_spent_rep += contractor_purchase.cost
-
-		/// Special case for reinforcements, we want to show their ckey and name on round end.
-		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
-			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
-			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
-
-	if (contractor_hub.purchased_items.len)
-		result += "<br>(used [total_spent_rep] Rep) "
-		result += contractor_item_icons
-	result += "<br>"
-	if (completed_contracts > 0)
-		var/pluralCheck = "contract"
-		if (completed_contracts > 1)
-			pluralCheck = "contracts"
-
-		result += "Completed [span_greentext("[completed_contracts]")] [pluralCheck] for a total of \
-					[span_greentext("[tc_total] TC")]![contractor_support_unit]<br>"
-
-	return result
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
@@ -256,10 +202,3 @@
 	sword.worn_icon_state = "e_sword_on_red"
 
 	H.update_inv_hands()
-
-#undef HIJACK_PROB
-#undef HIJACK_MIN_PLAYERS
-#undef MARTYR_PROB
-#undef KILL_PROB
-#undef DESTROY_AI_PROB
-#undef MAROON_PROB

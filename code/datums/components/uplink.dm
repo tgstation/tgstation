@@ -23,10 +23,12 @@
 	var/telecrystals = 0
 	/// The amount of experience points this uplink has
 	var/experience_points = 0
+	/// Current owner of the uplink
 	var/owner = null
-	var/uplink_flag
+	/// Uplink flags
+	var/uplink_flag = NONE
+	/// Purchase log, listing all the purchases this uplink has made
 	var/datum/uplink_purchase_log/purchase_log
-	var/list/uplink_items
 	var/hidden_crystals = 0
 	var/unlock_note
 	var/unlock_code
@@ -85,21 +87,6 @@
 	purchase_log = null
 	return ..()
 
-/datum/component/uplink/proc/update_items(user)
-	var/updated_items
-	updated_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
-	update_sales(updated_items)
-	update_special_equipment(user, updated_items)
-	uplink_items = updated_items
-
-/datum/component/uplink/proc/update_sales(updated_items)
-	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
-	if (uplink_items == null)
-		return
-	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
-		if (uplink_items[category] != null && updated_items[category] != null)
-			updated_items[category] = uplink_items[category]
-
 /datum/component/uplink/proc/update_special_equipment(mob/user, updated_items)
 	if(!user?.mind?.failed_special_equipment)
 		return
@@ -132,19 +119,6 @@
 		return //no hitting everyone/everything just to try to slot tcs in!
 	if(istype(I, /obj/item/stack/telecrystal))
 		LoadTC(user, I)
-	for(var/category in uplink_items)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/UI = uplink_items[category][item]
-			var/path = UI.refund_path || UI.item
-			var/cost = UI.refund_amount || UI.cost
-			if(I.type == path && UI.refundable && I.check_uplink_validity())
-				telecrystals += cost
-				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
-				if(purchase_log)
-					purchase_log.total_spent -= cost
-				to_chat(user, span_notice("[I] refunded."))
-				qdel(I)
-				return
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -195,23 +169,21 @@
 		return
 	switch(action)
 		if("buy")
-			var/item_name = params["name"]
-			var/list/buyable_items = list()
-			for(var/category in uplink_items)
-				buyable_items += uplink_items[category]
-			if(item_name in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item_name]
-				MakePurchase(usr, I)
-				return TRUE
+			var/datum/uplink_item/item_path = text2path(params["path"])
+			if(!ispath(item_path, /datum/uplink_item))
+				return
+
+			if(!(initial(item_path.purchasable_from) & uplink_flag))
+				return
+
+			if(initial(item_path.progression_minimum) > progression)
+
 		if("lock")
 			active = FALSE
 			locked = TRUE
 			telecrystals += hidden_crystals
 			hidden_crystals = 0
 			SStgui.close_uis(src)
-		if("select")
-			selected_cat = params["category"]
-			return TRUE
 		if("compact_toggle")
 			compact_mode = !compact_mode
 			return TRUE

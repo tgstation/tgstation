@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /// Orders by uplink category weight
 /proc/cmp_uplink_category_desc(datum/uplink_category/compare1, datum/uplink_category/compare2)
-	return compare2.weight - compare1.weight
+	return initial(compare2.weight) - initial(compare1.weight)
 
 /**
  * Sorts crafting recipe requirements before the crafting recipe is inserted into GLOB.crafting_recipes
