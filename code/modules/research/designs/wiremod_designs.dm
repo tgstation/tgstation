@@ -188,6 +188,11 @@
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
 
+/datum/design/component/matscanner
+	name = "Material Scanner"
+	id = "comp_matscanner"
+	build_path = /obj/item/circuit_component/matscanner
+
 /datum/design/component/split
 	name = "Split Component"
 	id = "comp_split"
