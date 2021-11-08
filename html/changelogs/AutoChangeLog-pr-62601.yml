@@ -1,0 +1,12 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - refactor: "Wall mounted and directional objects have undergone major internal simplification. Please report anything unusual!"
+  - bugfix: "You can no longer stack an indefinite amount of Intercoms on the same wall."
+  - bugfix: "Defibrillator Mounts, Bluespace Gas Vendors, Turret Controlers, and Ticket Machines are now considered wall items."
+  - bugfix: "Wall mounted items on top of the wall now consistently check against other items on top of the wall, and items coming out of the wall now consistently check against other items coming out of the wall."
+  - bugfix: "The various directional pixel offsets within an APC, Fire Extinguisher Cabinet, Intercom, or Newscaster have been made consistent with each other."
+  - bugfix: "The pixel offsets of Intercoms, Fire Alarms, Fire Extinguisher Cabinets, Flashers, and Newscasters have been made consistent between roundstart and constructed instances."
+  - bugfix: "Constructed Turret Controls will no longer oddly overhang the wall they were placed on."
+  - qol: "Defibrillator mounts now better indicate which side of the wall they are on."
+  - bugfix: "Some instances where there were multiple identical lights on the same tile have been fixed to only have one."
