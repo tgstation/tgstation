@@ -51,7 +51,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	. += "Players: [SSticker.totalPlayers]"
 	if(client.holder)
 		. += "Players Ready: [SSticker.totalPlayersReady]"
-		. += "Admins Ready: [SSticker.totalPlayersReady] / [GLOB.admins.len]"
+		. += "Admins Ready: [SSticker.total_admins_ready] / [GLOB.admins.len]"
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
