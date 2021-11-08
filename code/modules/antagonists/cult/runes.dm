@@ -36,6 +36,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	var/scribe_damage = 0.1 //how much damage you take doing it
 	var/invoke_damage = 0 //how much damage invokers take when invoking it
 	var/construct_invoke = TRUE //if constructs can invoke it
+	var/shade_invoke = FALSE //if shades can invoke it
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
@@ -88,9 +89,6 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	if(!IS_CULTIST(user))
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
-	if(istype(user, /mob/living/simple_animal/shade)) //shades can't use runes
-		to_chat(user, span_warning("You aren't strong enough to invoke the rune!"))
-		return
 	var/list/invokers = can_invoke(user)
 	if(invokers.len >= req_cultists)
 		invoke(invokers)
@@ -103,7 +101,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		if(istype(user, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(user, /mob/living/simple_animal/hostile/construct/artificer/angelic))
 			to_chat(user, span_warning("You purge the rune!"))
 			qdel(src)
-		else if(construct_invoke || !IS_CULTIST(user)) //if you're not a cult construct we want the normal fail message
+		else if((istype(user, /mob/living/simple_animal/hostile/construct) && construct_invoke) || (istype(user, /mob/living/simple_animal/shade) && shade_invoke) || !IS_CULTIST(user)) //if you're not a cult construct/shade we want the normal fail message
 			attack_hand(user)
 		else
 			to_chat(user, span_warning("You are unable to invoke the rune!"))
@@ -364,6 +362,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_TELEPORT
 	req_keyword = TRUE
 	light_power = 4
+	shade_invoke = TRUE
 	var/obj/effect/temp_visual/cult/portal/inner_portal //The portal "hint" for off-station teleportations
 	var/obj/effect/temp_visual/cult/rune_spawn/rune2/outer_portal
 	var/listkey

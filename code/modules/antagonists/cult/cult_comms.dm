@@ -105,12 +105,13 @@
 		if(cultist.current && cultist.current.stat != DEAD && cultist.current.client)
 			var/area/location = get_area(owner)
 			var/title = "Acolyte"
-			if(owner.mind && owner.mind.has_antag_datum(/datum/antagonist/cult/master))
+			if(owner.mind?.has_antag_datum(/datum/antagonist/cult/master))
 				title = "Master"
 			else if(!ishuman(owner))
 				title = "Construct"
-			to_chat(cultist.current, span_cultitalic("<b>[title] [findtextEx(owner.name, owner.real_name) ? owner.name : "[owner.real_name] (as [owner.name])"] has requested the aid of [number] cultists in the [location.name]! <a href=?src=[REF(src)];pledge_assistance=1>(Pledge Assistance)</b>"))
+			to_chat(cultist.current, span_cultitalic("<b>[title] [findtextEx(owner.name, owner.real_name) ? owner.name : "[owner.real_name] (as [owner.name])"] has requested the assistance of [number] cultists in \the [location.name]! <a href=?src=[REF(src)];pledge_assistance=1>(Pledge Assistance)</b>"))
 			SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
+	to_chat(owner, span_boldnotice("You have requested assistance! Considering making a teleport rune with your dagger to help cultists reach you easier."))
 	cooldown = world.time + base_cooldown
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/reset_need_of_help,team.cult_team), base_cooldown, TIMER_STOPPABLE)
 	return
@@ -133,7 +134,7 @@
 			for(var/datum/mind/cultist as anything in get_antag_minds(/datum/antagonist/cult))
 				if(cultist.current && cultist.current.stat != DEAD && cultist.current.client)
 					var/title = "Acolyte"
-					if(usr.mind && usr.mind.has_antag_datum(/datum/antagonist/cult/master))
+					if(usr.mind?.has_antag_datum(/datum/antagonist/cult/master))
 						title = "Master"
 					else if(!ishuman(usr))
 						title = "Construct"
