@@ -207,40 +207,19 @@
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
-	assets = list(
-		"default" = 'icons/ui_icons/achievements/default.png',
-		"basemisc" = 'icons/ui_icons/achievements/basemisc.png',
-		"baseboss" = 'icons/ui_icons/achievements/baseboss.png',
-		"baseskill" = 'icons/ui_icons/achievements/baseskill.png',
-		"bbgum" = 'icons/ui_icons/achievements/boss/bbgum.png',
-		"colossus" = 'icons/ui_icons/achievements/boss/colossus.png',
-		"hierophant" = 'icons/ui_icons/achievements/boss/hierophant.png',
-		"legion" = 'icons/ui_icons/achievements/boss/legion.png',
-		"miner" = 'icons/ui_icons/achievements/boss/miner.png',
-		"swarmer" = 'icons/ui_icons/achievements/boss/swarmer.png',
-		"tendril" = 'icons/ui_icons/achievements/boss/tendril.png',
-		"featofstrength" = 'icons/ui_icons/achievements/misc/featofstrength.png',
-		"helbital" = 'icons/ui_icons/achievements/misc/helbital.png',
-		"jackpot" = 'icons/ui_icons/achievements/misc/jackpot.png',
-		"meteors" = 'icons/ui_icons/achievements/misc/meteors.png',
-		"timewaste" = 'icons/ui_icons/achievements/misc/timewaste.png',
-		"upgrade" = 'icons/ui_icons/achievements/misc/upgrade.png',
-		"clownking" = 'icons/ui_icons/achievements/misc/clownking.png',
-		"clownthanks" = 'icons/ui_icons/achievements/misc/clownthanks.png',
-		"rule8" = 'icons/ui_icons/achievements/misc/rule8.png',
-		"snail" = 'icons/ui_icons/achievements/misc/snail.png',
-		"ascension" = 'icons/ui_icons/achievements/misc/ascension.png',
-		"ashascend" = 'icons/ui_icons/achievements/misc/ashascend.png',
-		"fleshascend" = 'icons/ui_icons/achievements/misc/fleshascend.png',
-		"rustascend" = 'icons/ui_icons/achievements/misc/rustascend.png',
-		"voidascend" = 'icons/ui_icons/achievements/misc/voidascend.png',
-		"mining" = 'icons/ui_icons/achievements/skills/mining.png',
-		"changeling" = 'icons/ui_icons/achievements/mafia/mafia.png',
-		"chaplain" = 'icons/ui_icons/achievements/mafia/town.png',
-		"clown" = 'icons/ui_icons/achievements/mafia/neutral.png',
-		"basemafia" ='icons/ui_icons/achievements/basemafia.png',
-		"frenching" = 'icons/ui_icons/achievements/misc/frenchingthebubble.png'
-	)
+
+///This way we don't have to fix it everytime someone adds a new achievement icon but forgets to add it to the spritesheet.
+/datum/asset/spritesheet/simple/achievements/register()
+	for(var/award_type in SSachievements.awards)
+		var/datum/award/award = SSachievements.awards[award_type]
+		if(!award?.name) //Skip abstract achievements types
+			continue
+		var/init_icon_path = initial(award.icon_path)
+		if(!init_icon_path || assets[init_icon_path])
+			continue
+		var/file_to_add = file("icons/ui_icons/achievements/[init_icon_path]")
+		assets[init_icon_path] = file_to_add
+	return ..()
 
 /datum/asset/spritesheet/simple/pills
 	name = "pills"
