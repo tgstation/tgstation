@@ -124,7 +124,7 @@
 			"name" = SSachievements.awards[achievement_type].name,
 			"desc" = SSachievements.awards[achievement_type].desc,
 			"category" = SSachievements.awards[achievement_type].category,
-			"icon_class" = assets.icon_class_name(SSachievements.awards[achievement_type].icon_path),
+			"icon_class" = assets.icon_class_name(SSachievements.awards[achievement_type].icon),
 			"value" = data[achievement_type],
 			"score" = ispath(achievement_type,/datum/award/score)
 			)

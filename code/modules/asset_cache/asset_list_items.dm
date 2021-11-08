@@ -208,17 +208,8 @@
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
 
-///This way we don't have to fix it everytime someone adds a new achievement icon but forgets to add it to the spritesheet.
 /datum/asset/spritesheet/simple/achievements/register()
-	for(var/award_type in SSachievements.awards)
-		var/datum/award/award = SSachievements.awards[award_type]
-		if(!award?.name) //Skip abstract achievements types
-			continue
-		var/init_icon_path = initial(award.icon_path)
-		if(!init_icon_path || assets[init_icon_path])
-			continue
-		var/file_to_add = file("icons/ui_icons/achievements/[init_icon_path]")
-		assets[init_icon_path] = file_to_add
+	InsertAll("", ACHIEVEMENTS_SET)
 	return ..()
 
 /datum/asset/spritesheet/simple/pills

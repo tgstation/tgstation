@@ -1,60 +1,60 @@
 /datum/award/achievement/misc
 	category = "Misc"
-	icon_path = "misc/basemisc.png" //for those achievements that still need an actual icon, later.
+	icon = "basemisc" //for those achievements that still need an actual icon, later.
 
 /datum/award/achievement/misc/meteor_examine
 	name = "Your Life Before Your Eyes"
 	desc = "Take a close look at hurtling space debris"
 	database_id = MEDAL_METEOR
-	icon_path = "misc/meteors.png"
+	icon = "meteors"
 
 /datum/award/achievement/misc/pulse
 	name = "Jackpot"
 	desc = "Win a pulse rifle from an arcade machine"
 	database_id = MEDAL_PULSE
-	icon_path = "misc/jackpot.png"
+	icon = "jackpot"
 
 /datum/award/achievement/misc/time_waste
 	name = "Time waster"
 	desc = "Speak no evil, hear no evil, see just errors"
 	database_id = MEDAL_TIMEWASTE
-	icon_path = "misc/timewaste.png"
+	icon = "timewaste"
 
 /datum/award/achievement/misc/feat_of_strength
 	name = "Feat of Strength"
 	desc = "If the rod is immovable, is it passing you or are you passing it?"
 	database_id = MEDAL_RODSUPLEX
-	icon_path = "misc/featofstrength.png"
+	icon = "featofstrength"
 
 /datum/award/achievement/misc/round_and_full
 	name = "Round and Full"
 	desc = "Well at least you aren't down the river, I hear they eat people there."
 	database_id = MEDAL_CLOWNCARKING
-	icon_path = "misc/clownking.png"
+	icon = "clownking"
 
 /datum/award/achievement/misc/the_best_driver
 	name = "The Best Driver"
 	desc = "100 honks later"
 	database_id = MEDAL_THANKSALOT
-	icon_path = "misc/clownthanks.png"
+	icon = "clownthanks"
 
 /datum/award/achievement/misc/helbitaljanken
 	name = "Helbitaljanken"
 	desc = "You janked hard"
 	database_id = MEDAL_HELBITALJANKEN
-	icon_path = "misc/helbital.png"
+	icon = "helbital"
 
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
 	database_id = MEDAL_MATERIALCRAFT
-	icon_path = "misc/upgrade.png"
+	icon = "upgrade"
 
 /datum/award/achievement/misc/rocket_holdup
 	name = "Disk, Please!"
 	desc = "Is the man currently pointing a loaded rocket launcher at your head point blank really dumb enough to pull the trigger? Do you really want to find out?"
 	database_id = MEDAL_DISKPLEASE
-	icon_path = "misc/rocket_holdup.png"
+	icon = "rocket_holdup"
 
 /datum/award/achievement/misc/gamer
 	name = "My Watchlist Status is Not Important"
@@ -90,19 +90,19 @@
 	name = "Rule 8"
 	desc = "Call an admin this is ILLEGAL!!"
 	database_id = MEDAL_RULE8
-	icon_path = "misc/rule8.png"
+	icon = "rule8"
 
 /datum/award/achievement/misc/speed_round
 	name = "Long shift"
 	desc = "Well, that didn't take long."
 	database_id = MEDAL_LONGSHIFT
-	icon_path = "misc/longshift.png"
+	icon = "longshift"
 
 /datum/award/achievement/misc/snail
 	name = "KKKiiilll mmmeee"
 	desc = "You were a little too ambitious, but hey, I guess you're still alive?"
 	database_id = MEDAL_SNAIL
-	icon_path = "misc/snail.png"
+	icon = "snail"
 
 /datum/award/achievement/misc/lookoutsir
 	name = "Look Out, Sir!"
@@ -113,70 +113,70 @@
 	name = "HA, GOTTEM"
 	desc = "Made you look!"
 	database_id = MEDAL_GOTTEM
-	icon_path = "misc/gottem.png"
+	icon = "gottem"
 
 /datum/award/achievement/misc/ascension
 	name = "Ascension"
 	desc = "Caedite eos. Novit enim Dominus qui sunt eius."
 	database_id = MEDAL_ASCENSION
-	icon_path = "misc/ascension.png"
+	icon = "ascension"
 
 /datum/award/achievement/misc/frenching
 	name = "Frenching"
 	desc = "Just a taste, for science!"
 	database_id = MEDAL_FRENCHING
-	icon_path = "misc/frenchingthebubble.png"
+	icon = "frenchingthebubble"
 
 /datum/award/achievement/misc/ash_ascension
 	name = "Nightwatcher's Eyes"
 	desc = "You've risen above the flames, became one with the ashes. You've been reborn as one with the Nightwatcher."
 	database_id = MEDAL_ASH_ASCENSION
-	icon_path = "misc/ashascend.png"
+	icon = "ashascend"
 
 /datum/award/achievement/misc/flesh_ascension
 	name = "Vortex of Arms"
 	desc = "You've became something more, something greater. A piece of the emperor resides within you, and you within him."
 	database_id = MEDAL_FLESH_ASCENSION
-	icon_path = "misc/fleshascend.png"
+	icon = "fleshascend"
 
 /datum/award/achievement/misc/rust_ascension
 	name = "Hills of Rust"
 	desc = "You've summoned a piece of the Hill of rust, and so the Hills welcome you."
 	database_id = MEDAL_RUST_ASCENSION
-	icon_path = "misc/rustascend.png"
+	icon = "rustascend"
 
 /datum/award/achievement/misc/void_ascension
 	name = "All that perish"
 	desc = "Place of a different being, different time. Everything ends there... but maybe it is just the beginning?"
 	database_id = MEDAL_VOID_ASCENSION
-	icon_path = "misc/voidascend.png"
+	icon = "voidascend"
 
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."
 	database_id = MEDAL_TOOLBOX_SOUL
-	icon_path = "misc/toolbox_soul.png"
+	icon = "toolbox_soul"
 
 /datum/award/achievement/misc/hot_damn
 	name = "Hot Damn!"
 	desc = "Sometimes you need to make some noise to make a point."
 	database_id = MEDAL_HOT_DAMN
-	icon_path = "misc/hotdamn.png"
+	icon = "hotdamn"
 
 /datum/award/achievement/misc/cayenne_disk
 	name = "Very Important Piscis"
 	desc = "You can rest well now."
 	database_id = MEDAL_CAYENNE_DISK
-	icon_path = "misc/cayenne_disk.png"
+	icon = "cayenne_disk"
 
 /datum/award/achievement/misc/tram_surfer
 	name = "Tram Surfer"
 	desc = "Lights out, guerilla radio!"
 	database_id = MEDAL_TRAM_SURFER
-	icon_path = "misc/tram_surfer.png"
+	icon = "tram_surfer"
 
 /datum/award/achievement/misc/cult_shuttle_omfg
 	name = "WHAT JUST HAPPENED"
 	desc = "As a blood cultist, be part of a team that summons 3 shuttle curses within 10 seconds. Imagine cleaning up after them, g r o s s!"
 	database_id = MEDAL_CULT_SHUTTLE_OMFG
-	icon_path = "misc/cult_shuttle_omfg.png"
+	icon = "cult_shuttle_omfg"

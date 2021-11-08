@@ -3,7 +3,7 @@
 	var/name
 	var/desc = "You did it."
 	///The relative path (the absolute is icons/ui_icons/achievements...) of the icon used in the UI
-	var/icon_path = "default.png"
+	var/icon = "default"
 
 	var/category = "Normal"
 
@@ -69,7 +69,7 @@
 ///Achievements are one-off awards for usually doing cool things.
 /datum/award/achievement
 	desc = "Achievement for epic people"
-	icon_path = "" // This should warn contributors that do not declare an icon when contributing new achievements.
+	icon = "" // This should warn contributors that do not declare an icon when contributing new achievements.
 
 /datum/award/achievement/get_metadata_row()
 	. = ..()
