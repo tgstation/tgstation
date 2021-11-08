@@ -47,11 +47,12 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				qdel(query_already_exists)
 				return
 
-			if (query_already_exists.NextRow())
+			var/already_exists_row = query_already_exists.NextRow()
+			qdel(query_already_exists)
+
+			if (already_exists_row)
 				alert(usr, "Those two are already in the list of known alts!")
 				return
-
-			qdel(query_already_exists)
 
 			var/datum/db_query/query_add_known_alt = SSdbcore.NewQuery({"
 				INSERT INTO [format_table_name("known_alts")] (ckey1, ckey2)
@@ -95,9 +96,11 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 
 			if (!query_known_alt_info.NextRow())
 				alert("Couldn't find the known alt with the ID [id]")
+				qdel(query_known_alt_info)
 				return
 
 			var/list/result = query_known_alt_info.item
+			qdel(query_known_alt_info)
 
 			if (alert("Are you sure you want to delete the alt connection between [result[1]] and [result[2]]?",,"Yes", "No") != "Yes")
 				return
