@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Fixed certain preferences being reset to their default values when trying to change them, due to the dropdown menu of options changing numbers into text and due to that not being supported by numeric preferences. AKA, changing pixel scaling method will work again."
