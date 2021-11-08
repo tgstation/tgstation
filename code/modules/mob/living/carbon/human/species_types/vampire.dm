@@ -50,9 +50,9 @@
 		C.adjustOxyLoss(-2 * delta_time)
 		C.adjustCloneLoss(-2 * delta_time)
 		return
-	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK)))
+	if(coretemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK)))
 		C.blood_volume -= BLOOD_REGEN_FACTOR  * 1.375 * delta_time //snowflake code so vamps do not regen blood.
-	if(bodytemperature <= TCRYO && (HAS_TRAIT(src, TRAIT_HUSK)))
+	if(coretemperature <= TCRYO && (HAS_TRAIT(src, TRAIT_HUSK)))
 		C.blood_volume -= 0.125 * delta_time
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, span_danger("You ran out of blood!"))
