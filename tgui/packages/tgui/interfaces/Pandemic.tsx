@@ -43,8 +43,17 @@ type Virus = {
   cure: string;
 };
 
+type VirusDisplayProps = {
+  virus: Virus;
+};
+
 type VirusInfoProps = {
   virus: Virus;
+};
+
+type TabsProps = {
+  tab: number;
+  tabHandler: (tab: number) => void;
 };
 
 type Symptom = {
@@ -61,6 +70,10 @@ type Symptom = {
 
 type SymptomDisplayProps = {
   symptoms: Symptom[];
+};
+
+type SymptomInfoProps = {
+  symptom: Symptom;
 };
 
 type Threshold = {
@@ -99,6 +112,25 @@ const BeakerDisplay = (_, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
   const { has_beaker, beaker, has_blood } = data;
   const cant_empty = !has_beaker || !beaker?.volume;
+  let content;
+  if (!has_beaker) {
+    content = <NoticeBox>No beaker loaded.</NoticeBox>;
+  } else if (!beaker?.volume) {
+    content = <NoticeBox>Beaker is empty.</NoticeBox>;
+  } else if (!has_blood) {
+    content = <NoticeBox>No blood sample loaded.</NoticeBox>;
+  } else {
+    content = (
+      <Stack vertical>
+        <Stack.Item>
+          <BeakerInfoDisplay />
+        </Stack.Item>
+        <Stack.Item>
+          <AntibodyInfoDisplay />
+        </Stack.Item>
+      </Stack>
+    );
+  }
 
   return (
     <Section
@@ -126,26 +158,7 @@ const BeakerDisplay = (_, context) => {
           />
         </>
       }>
-      {has_beaker ? (
-        beaker?.volume ? (
-          has_blood ? (
-            <Stack vertical>
-              <Stack.Item>
-                <BeakerInfoDisplay />
-              </Stack.Item>
-              <Stack.Item>
-                <AntibodyInfoDisplay />
-              </Stack.Item>
-            </Stack>
-          ) : (
-            <NoticeBox>No blood detected</NoticeBox>
-          )
-        ) : (
-          <NoticeBox>Beaker is empty</NoticeBox>
-        )
-      ) : (
-        <NoticeBox>No beaker loaded</NoticeBox>
-      )}
+      {content}
     </Section>
   );
 };
@@ -233,6 +246,9 @@ const SpecimenDisplay = (_, context) => {
     return <NoticeBox>No viruses detected</NoticeBox>;
   }
   const virus = viruses[tab];
+  const setTabHandler = (index: number) => {
+    setTab(index);
+  };
 
   return (
     <Section
@@ -241,25 +257,11 @@ const SpecimenDisplay = (_, context) => {
       title="Specimen"
       buttons={
         <Stack>
-          {
-            // Tabs if there's more viruses
-            viruses.length > 1 && (
-              <Stack.Item>
-                <Tabs>
-                  {viruses.map((virus, index) => {
-                    return (
-                      <Tabs.Tab
-                        selected={tab === index}
-                        onClick={() => setTab(index)}
-                        key={virus.name}>
-                        {virus.name}
-                      </Tabs.Tab>
-                    );
-                  })}
-                </Tabs>
-              </Stack.Item>
-            )
-          }
+          {viruses.length > 1 && (
+            <Stack.Item>
+              <VirusTabs tab={tab} tabHandler={setTabHandler} />
+            </Stack.Item>
+          )}
           <Stack.Item>
             <Button
               icon="flask"
@@ -275,90 +277,59 @@ const SpecimenDisplay = (_, context) => {
       }>
       <Stack fill vertical>
         <Stack.Item>
-          <VirusInfoDisplay virus={virus} />
+          <VirusDisplay virus={virus} />
         </Stack.Item>
         <Stack.Item>
-          <SymptomInfoDisplay symptoms={virus.symptoms} />
+          <SymptomDisplay symptoms={virus.symptoms} />
         </Stack.Item>
       </Stack>
     </Section>
   );
 };
 
-/** Displays info about the virus.
- * Note: Players are only getting one of these from DM,
- * but the functionality is here to display more than one.
+/** Virus Tab display - changes the tab for virus info
+ * Whenever the tab changes, the virus info is updated
  */
-const VirusInfoDisplay = (props: VirusInfoProps, context) => {
-  const { act } = useBackend<PandemicContext>(context);
+const VirusTabs = (props: TabsProps, context) => {
+  const { data } = useBackend<PandemicContext>(context);
+  const { tab, tabHandler } = props;
+  const { viruses } = data;
+  if (!viruses) {
+    return <NoticeBox>No viruses detected</NoticeBox>;
+  }
+
+  return (
+    <Tabs>
+      {viruses.map((virus, index) => {
+        return (
+          <Tabs.Tab
+            selected={tab === index}
+            onClick={() => tabHandler(index)}
+            key={virus.name}>
+            {virus.name}
+          </Tabs.Tab>
+        );
+      })}
+    </Tabs>
+  );
+};
+
+/** Displays info about the virus. Child elements display
+ * the virus's traits and descriptions.
+ */
+const VirusDisplay = (props: VirusDisplayProps) => {
   const { virus } = props;
 
   return (
     <Stack fill>
       <Stack.Item grow={3}>
-        <LabeledList>
-          <LabeledList.Item label="Name">
-            {virus.can_rename ? (
-              <Input
-                value={virus.name}
-                onChange={(e, value) =>
-                  act('rename_disease', {
-                    index: virus.index,
-                    name: value,
-                  })}
-              />
-            ) : (
-              <Box color="bad">{virus.name}</Box>
-            )}
-          </LabeledList.Item>
-          <LabeledList.Item label="Description">
-            {virus.description}
-          </LabeledList.Item>
-          <LabeledList.Item label="Agent">
-            {virus.agent.replace(/^\w/, (c) => c.toUpperCase())}
-          </LabeledList.Item>
-          <LabeledList.Item label="Spread">{virus.spread}</LabeledList.Item>
-          <LabeledList.Item label="Possible Cure">
-            {virus.cure}
-          </LabeledList.Item>
-        </LabeledList>
+        <VirusTextInfo virus={virus} />
       </Stack.Item>
       {virus.is_adv && (
         <>
           <Stack.Divider />
           <Stack.Item grow={1}>
-            <Section title="Statistics">
-              <LabeledList>
-                <Tooltip content="Decides the cure complexity.">
-                  <LabeledList.Item
-                    color={GetColor(virus.resistance)}
-                    label="Resistance">
-                    {virus.resistance}
-                  </LabeledList.Item>
-                </Tooltip>
-                <Tooltip content="Symptomic progression.">
-                  <LabeledList.Item
-                    color={GetColor(virus.stage_speed)}
-                    label="Stage speed">
-                    {virus.stage_speed}
-                  </LabeledList.Item>
-                </Tooltip>
-                <Tooltip content="Detection difficulty from medical equipment.">
-                  <LabeledList.Item
-                    color={GetColor(virus.stealth)}
-                    label="Stealth">
-                    {virus.stealth}
-                  </LabeledList.Item>
-                </Tooltip>
-                <Tooltip content="Decides the spread type.">
-                  <LabeledList.Item
-                    color={GetColor(virus.transmission)}
-                    label="Transmissibility">
-                    {virus.transmission}
-                  </LabeledList.Item>
-                </Tooltip>
-              </LabeledList>
-            </Section>
+            <VirusTraitInfo virus={virus} />
           </Stack.Item>
         </>
       )}
@@ -366,15 +337,91 @@ const VirusInfoDisplay = (props: VirusInfoProps, context) => {
   );
 };
 
+/** Displays the description, name and other info for the virus. */
+const VirusTextInfo = (props: VirusInfoProps, context) => {
+  const { act } = useBackend<PandemicContext>(context);
+  const { virus } = props;
+
+  return (
+    <LabeledList>
+      <LabeledList.Item label="Name">
+        {virus.can_rename ? (
+          <Input
+            placeholder="Input a name"
+            value={virus.name === 'Unknown' ? '' : virus.name}
+            onChange={(e, value) =>
+              act('rename_disease', {
+                index: virus.index,
+                name: value,
+              })}
+          />
+        ) : (
+          <Box color="bad">{virus.name}</Box>
+        )}
+      </LabeledList.Item>
+      <LabeledList.Item label="Description">
+        {virus.description}
+      </LabeledList.Item>
+      <LabeledList.Item label="Agent">
+        {virus.agent.replace(/^\w/, (c) => c.toUpperCase())}
+      </LabeledList.Item>
+      <LabeledList.Item label="Spread">{virus.spread}</LabeledList.Item>
+      <LabeledList.Item label="Possible Cure">{virus.cure}</LabeledList.Item>
+    </LabeledList>
+  );
+};
+
+/** Displays the traits of the virus. This could be iterated over
+ * with object.keys but you would need a helper function for the tooltips.
+ * I would rather hard code it here.
+ */
+const VirusTraitInfo = (props: VirusInfoProps) => {
+  const { virus } = props;
+
+  return (
+    <Section title="Statistics">
+      <LabeledList>
+        <Tooltip content="Decides the cure complexity.">
+          <LabeledList.Item
+            color={GetColor(virus.resistance)}
+            label="Resistance">
+            {virus.resistance}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Symptomic progression.">
+          <LabeledList.Item
+            color={GetColor(virus.stage_speed)}
+            label="Stage speed">
+            {virus.stage_speed}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Detection difficulty from medical equipment.">
+          <LabeledList.Item color={GetColor(virus.stealth)} label="Stealth">
+            {virus.stealth}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Decides the spread type.">
+          <LabeledList.Item
+            color={GetColor(virus.transmission)}
+            label="Transmissibility">
+            {virus.transmission}
+          </LabeledList.Item>
+        </Tooltip>
+      </LabeledList>
+    </Section>
+  );
+};
+
 /** Similar to the virus info display.
  * Returns info about symptoms as collapsibles.
  */
-const SymptomInfoDisplay = (props: SymptomDisplayProps) => {
+const SymptomDisplay = (props: SymptomDisplayProps) => {
   const { symptoms } = props;
+  if (!symptoms.length) {
+    return <NoticeBox>No symptoms detected.</NoticeBox>;
+  }
 
-  return !symptoms.length ? (
-    <NoticeBox>No symptoms detected.</NoticeBox>
-  ) : (
+  return (
     <Section fill title="Symptoms">
       {symptoms.map((symptom) => {
         return (
@@ -386,50 +433,55 @@ const SymptomInfoDisplay = (props: SymptomDisplayProps) => {
               </Stack.Item>
               <Stack.Divider />
               <Stack.Item grow={1}>
-                <Section title="Modifiers">
-                  <LabeledList>
-                    <Tooltip content="Rarity of the symptom.">
-                      <LabeledList.Item
-                        color={GetColor(symptom.level)}
-                        label="Level">
-                        {symptom.level}
-                      </LabeledList.Item>
-                    </Tooltip>
-                    <Tooltip content="Decides the cure complexity.">
-                      <LabeledList.Item
-                        color={GetColor(symptom.resistance)}
-                        label="Resistance">
-                        {symptom.resistance}
-                      </LabeledList.Item>
-                    </Tooltip>
-                    <Tooltip content="Symptomic progression.">
-                      <LabeledList.Item
-                        color={GetColor(symptom.stage_speed)}
-                        label="Stage Speed">
-                        {symptom.stage_speed}
-                      </LabeledList.Item>
-                    </Tooltip>
-                    <Tooltip content="Detection difficulty from medical equipment.">
-                      <LabeledList.Item
-                        color={GetColor(symptom.stealth)}
-                        label="Stealth">
-                        {symptom.stealth}
-                      </LabeledList.Item>
-                    </Tooltip>
-                    <Tooltip content="Decides the spread type.">
-                      <LabeledList.Item
-                        color={GetColor(symptom.transmission)}
-                        label="Transmission">
-                        {symptom.transmission}
-                      </LabeledList.Item>
-                    </Tooltip>
-                  </LabeledList>
-                </Section>
+                <SymptomTraitInfo symptom={symptom} />
               </Stack.Item>
             </Stack>
           </Collapsible>
         );
       })}
+    </Section>
+  );
+};
+
+/** Displays the numerical trait modifiers for a virus symptom */
+const SymptomTraitInfo = (props: SymptomInfoProps) => {
+  const { symptom } = props;
+
+  return (
+    <Section title="Modifiers">
+      <LabeledList>
+        <Tooltip content="Rarity of the symptom.">
+          <LabeledList.Item color={GetColor(symptom.level)} label="Level">
+            {symptom.level}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Decides the cure complexity.">
+          <LabeledList.Item
+            color={GetColor(symptom.resistance)}
+            label="Resistance">
+            {symptom.resistance}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Symptomic progression.">
+          <LabeledList.Item
+            color={GetColor(symptom.stage_speed)}
+            label="Stage Speed">
+            {symptom.stage_speed}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Detection difficulty from medical equipment.">
+          <LabeledList.Item color={GetColor(symptom.stealth)} label="Stealth">
+            {symptom.stealth}
+          </LabeledList.Item>
+        </Tooltip>
+        <Tooltip content="Decides the spread type.">
+          <LabeledList.Item
+            color={GetColor(symptom.transmission)}
+            label="Transmission">
+            {symptom.transmission}
+          </LabeledList.Item>
+        </Tooltip>
+      </LabeledList>
     </Section>
   );
 };
