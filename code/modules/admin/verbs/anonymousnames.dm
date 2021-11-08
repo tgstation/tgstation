@@ -129,7 +129,8 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * * target - mob for preferences and gender
  */
 /datum/anonymous_theme/proc/anonymous_name(mob/target)
-	var/species_type = target.client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/client_interface/client = GET_CLIENT(target)
+	var/species_type = client.prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = new species_type
 	return species.random_name(target.gender,1)
 
