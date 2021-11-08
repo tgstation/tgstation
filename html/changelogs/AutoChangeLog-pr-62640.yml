@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - imageadd: "Turret Control frames now have a dedicated icon, rather than literally using the APC image."

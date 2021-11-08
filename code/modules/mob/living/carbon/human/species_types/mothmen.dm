@@ -63,3 +63,6 @@
 	human_mob.dna.features["wings"] = wings
 	human_mob.dna.features["moth_wings"] = wings
 	human_mob.update_body()
+
+/datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
+	return 'sound/voice/moth/scream_moth.ogg'

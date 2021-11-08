@@ -17,3 +17,6 @@
 
 ///Adds a html style to a text string. Hacky, but that's how inputted text appear on paper sheets after going through the UI.
 #define PAPER_MARK_TEXT(text, color, font) "<span style=\"color:[color];font-family:'[font]';\">[text]</span>\n \n"
+
+/// Folder directory for strings
+#define STRING_DIRECTORY "strings"

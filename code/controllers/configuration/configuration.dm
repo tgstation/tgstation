@@ -32,7 +32,7 @@
 
 	/// A regex that matches words blocked IC, but not in PDAs
 	var/static/regex/ic_outside_pda_filter_regex
-	
+
 	/// A regex that matches words soft blocked IC
 	var/static/regex/soft_ic_filter_regex
 
@@ -348,7 +348,7 @@ Example config:
 
 		switch (command)
 			if ("map")
-				currentmap = load_map_config("_maps/[data].json")
+				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
 					currentmap = null
