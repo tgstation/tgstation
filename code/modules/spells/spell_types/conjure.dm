@@ -23,7 +23,7 @@
 		if(T.density && !summon_ignore_density)
 			targets -= T
 
-	for(var/i=0,i<summon_amt,i++)
+	for(var/i in 1 to summon_amt)
 		if(!targets.len)
 			break
 		var/summoned_object_type = pick(summon_type)
