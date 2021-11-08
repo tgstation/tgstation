@@ -14,10 +14,11 @@
 	health = 25
 	maxHealth = 25
 
+	hackables = "fire safety protocols"
+	model = "Firebot"
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
-	model = "Firebot"
 	bot_core = /obj/machinery/bot_core/firebot
 	window_id = "autoextinguisher"
 	window_name = "Mobile Fire Extinguisher v1.0"
@@ -101,11 +102,6 @@
 	mode = BOT_IDLE
 	last_found = world.time
 	update_appearance()
-
-/mob/living/simple_animal/bot/firebot/set_custom_texts()
-	text_hack = "You corrupt [name]'s safety protocols."
-	text_dehack = "You detect errors in [name] and reset his programming."
-	text_dehack_fail = "[name] is not responding to reset commands!"
 
 /mob/living/simple_animal/bot/firebot/get_controls(mob/user)
 	var/dat
@@ -316,9 +312,6 @@
 	if(isopenturf(T))
 		var/turf/open/theturf = T
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 	..()

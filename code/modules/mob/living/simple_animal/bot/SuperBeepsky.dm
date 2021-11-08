@@ -140,11 +140,8 @@
 	Sa.created_name = name
 	new /obj/item/assembly/prox_sensor(Tsec)
 
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
-
 	do_sparks(3, TRUE, src)
 	for(var/IS = 0 to 4)
 		drop_part(weapon, Tsec)
 	new /obj/effect/decal/cleanable/oil(Tsec)
-	qdel(src)
+	..()

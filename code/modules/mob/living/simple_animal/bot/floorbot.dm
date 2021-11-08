@@ -8,10 +8,11 @@
 	health = 25
 	maxHealth = 25
 
+	hackables = "floor construction protocols"
+	model = "Floorbot"
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
-	model = "Floorbot"
 	bot_core = /obj/machinery/bot_core/floorbot
 	window_id = "autofloor"
 	window_name = "Automatic Station Floor Repairer v1.1"
@@ -79,11 +80,6 @@
 	oldloc = null
 	ignore_list = list()
 	toggle_magnet(FALSE)
-
-/mob/living/simple_animal/bot/floorbot/set_custom_texts()
-	text_hack = "You corrupt [name]'s construction protocols."
-	text_dehack = "You detect errors in [name] and reset his programming."
-	text_dehack_fail = "[name] is not responding to reset commands!"
 
 /mob/living/simple_animal/bot/floorbot/get_controls(mob/user)
 	var/dat
@@ -408,9 +404,6 @@
 
 	if(tilestack)
 		tilestack.forceMove(drop_location())
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
 
 	new /obj/item/stack/tile/iron/base(Tsec, 1)
 

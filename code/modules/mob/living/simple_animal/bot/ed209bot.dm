@@ -9,10 +9,11 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
-	model = "ED-209"
 	bot_type = ADVANCED_SEC_BOT
+	model = "ED-209"
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
+	hackables = "combat inhibitors"
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
@@ -26,11 +27,6 @@
 /mob/living/simple_animal/bot/secbot/ed209/bot_reset()
 	..()
 	set_weapon()
-
-/mob/living/simple_animal/bot/secbot/ed209/set_custom_texts()
-	text_hack = "You disable [name]'s combat inhibitor."
-	text_dehack = "You restore [name]'s combat inhibitor."
-	text_dehack_fail = "[name] ignores your attempts to restrict him!"
 
 /mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user)
 	..()

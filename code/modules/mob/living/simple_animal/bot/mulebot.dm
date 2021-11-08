@@ -25,12 +25,12 @@
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
 
+	model = "MULE"
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
 
 	bot_type = MULE_BOT
-	model = "MULE"
-	bot_core_type = /obj/machinery/bot_core/mulebot
+	bot_core = /obj/machinery/bot_core/mulebot
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
 	var/network_id = NETWORK_BOTS_CARGO
@@ -47,6 +47,8 @@
 	var/home_destination = "" /// tag of home delivery beacon
 
 	var/reached_target = TRUE ///true if already reached the target
+	///Number of times retried a blocked path
+	var/blockcount = 0
 
 	var/auto_return = TRUE /// true if auto return to home beacon after unload
 	var/auto_pickup = TRUE /// true if auto-pickup at beacon
@@ -135,9 +137,7 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
-	if(paicard)
-		bot_name = "[initial(name)] ([new_id])"
-	else
+	if(!paicard)
 		name = "[initial(name)] ([new_id])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
@@ -525,7 +525,7 @@
 	if(path?.len)
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
-		pathset = 1 //Indicates the AI's custom path is initialized.
+		pathset = TRUE //Indicates the AI's custom path is initialized.
 		start()
 
 /mob/living/simple_animal/bot/mulebot/Move(atom/newloc, direct) //handle leaving bloody tracks. can't be done via Moved() since that can end up putting the tracks somewhere BEFORE we get bloody.

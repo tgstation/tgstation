@@ -12,14 +12,16 @@
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = HYGIENE_BOT
-	model = "Cleanbot"
-	bot_core_type = /obj/machinery/bot_core/hygienebot
+	bot_core = /obj/machinery/bot_core/hygienebot
 	window_id = "autoclean"
 	window_name = "Automatic Crew Cleaner X2"
 	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
 	path_image_color = "#993299"
 	allow_pai = FALSE
 	layer = ABOVE_MOB_LAYER
+
+	hackables = "cleaning service protocols"
+	model = "Cleanbot"
 
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target

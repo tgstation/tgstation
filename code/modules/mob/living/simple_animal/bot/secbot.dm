@@ -10,11 +10,12 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
+	hackables = "target identification systems"
+	model = "Securitron"
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	model = "Securitron"
-	bot_core_type = /obj/machinery/bot_core/secbot
+	bot_core = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
 	allow_pai = FALSE
@@ -130,11 +131,6 @@
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
-
-/mob/living/simple_animal/bot/secbot/set_custom_texts()
-	text_hack = "You overload [name]'s target identification system."
-	text_dehack = "You reboot [name] and restore the target identification."
-	text_dehack_fail = "[name] refuses to accept your authority!"
 
 /mob/living/simple_animal/bot/secbot/get_controls(mob/user)
 	var/dat
@@ -488,9 +484,6 @@
 		secbot_assembly.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
 		drop_part(weapon, Tsec)
-
-		if(prob(50))
-			drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 

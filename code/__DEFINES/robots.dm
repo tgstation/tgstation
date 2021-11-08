@@ -55,6 +55,8 @@
 #define BOT_STEP_DELAY 4
 /// Maximum times a bot will retry to step from its position
 #define BOT_STEP_MAX_RETRIES 5
+//Amount of time that must pass after a Commissioned bot gets saluted to get another.
+#define BOT_COMMISSIONED_SALUTE_DELAY (60 SECONDS)
 
 /// Default view range for finding targets.
 #define DEFAULT_SCAN_RANGE 7

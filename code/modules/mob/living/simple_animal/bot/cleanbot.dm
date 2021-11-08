@@ -11,12 +11,14 @@
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
-	model = "Cleanbot"
-	bot_core_type = /obj/machinery/bot_core/cleanbot
+	bot_core = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.4"
 	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
+
+	hackables = "cleaning software"
+	model = "Cleanbot"
 
 	var/blood = 1
 	var/trash = 0
@@ -142,11 +144,6 @@
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldloc = null
-
-/mob/living/simple_animal/bot/cleanbot/set_custom_texts()
-	text_hack = "You corrupt [name]'s cleaning software."
-	text_dehack = "[name]'s software has been reset!"
-	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -378,15 +375,12 @@
 
 	new /obj/item/assembly/prox_sensor(Tsec)
 
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
-
 	do_sparks(3, TRUE, src)
 	..()
 
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
-	bot_core_type = /obj/machinery/bot_core/cleanbot/medbay
+	bot_core = /obj/machinery/bot_core/cleanbot/medbay
 	on = FALSE
 
 /obj/machinery/bot_core/cleanbot

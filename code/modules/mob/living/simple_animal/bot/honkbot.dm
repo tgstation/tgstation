@@ -10,11 +10,12 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
+	hackables = "sound control systems"
+	model = "Honkbot"
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
-	model = "Honkbot"
-	bot_core_type = /obj/machinery/bot_core/honkbot
+	bot_core = /obj/machinery/bot_core/honkbot
 	window_id = "autohonk"
 	window_name = "Honkomatic Bike Horn Unit v1.0.7"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
@@ -77,12 +78,6 @@
 	walk_to(src,0)
 	last_found = world.time
 	limiting_spam = FALSE
-
-/mob/living/simple_animal/bot/honkbot/set_custom_texts()
-
-	text_hack = "You overload [name]'s sound control system"
-	text_dehack = "You reboot [name] and restore the sound control system."
-	text_dehack_fail = "[name] refuses to accept your authority!"
 
 /mob/living/simple_animal/bot/honkbot/get_controls(mob/user)
 	var/dat
@@ -339,8 +334,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
 	new bikehorn(Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 

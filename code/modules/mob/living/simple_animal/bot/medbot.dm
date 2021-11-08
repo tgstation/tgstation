@@ -26,9 +26,10 @@
 	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL
 
-	bot_type = MED_BOT
+	hackables = "healt processor circuits"
 	model = "Medibot"
-	bot_core_type = /obj/machinery/bot_core/medbot
+	bot_type = MED_BOT
+	bot_core = /obj/machinery/bot_core/medbot
 	window_id = "automed"
 	window_name = "Automatic Medical Unit v1.1"
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
@@ -142,12 +143,6 @@
 	mode = BOT_IDLE
 	last_found = world.time
 	update_appearance()
-
-/mob/living/simple_animal/bot/medbot/set_custom_texts()
-
-	text_hack = "You corrupt [name]'s healing processor circuits."
-	text_dehack = "You reset [name]'s healing processor circuits."
-	text_dehack_fail = "[name] seems damaged and does not respond to reprogramming!"
 
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -594,9 +589,6 @@
 	drop_part(firstaid, Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(healthanalyzer, Tsec)
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
 
 	if(emagged && prob(25))
 		playsound(src, 'sound/voice/medbot/insult.ogg', 50)

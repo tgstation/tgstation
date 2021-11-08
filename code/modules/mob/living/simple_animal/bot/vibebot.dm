@@ -10,10 +10,10 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
+	model = "Vibebot"
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = VIBE_BOT
-	model = "Vibebot"
 	window_id = "vibebot"
 	window_name = "Discomatic Vibe Bot v1.05"
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC // show jobs
