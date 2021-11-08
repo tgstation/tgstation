@@ -21,15 +21,11 @@
 		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
-		//Say it with me now, type template
-		/obj/effect/mapping_helpers/component_injector,
-		//template type
-		/obj/effect/mapping_helpers/trait_injector,
 		//Singleton
 		/mob/dview,
-		//Template,
-		/obj/effect/mapping_helpers/custom_icon,
 	)
+	//Say it with me now, type template
+	ignore += typesof(/obj/effect/mapping_helpers/atom_injector)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
@@ -54,8 +50,6 @@
 	//We don't have a pod
 	ignore += typesof(/obj/effect/pod_landingzone_effect)
 	ignore += typesof(/obj/effect/pod_landingzone)
-	//We don't have a disease to pass in
-	ignore += typesof(/obj/effect/mapping_helpers/component_injector/infective)
 	//It's a trapdoor to nowhere
 	ignore += typesof(/obj/effect/mapping_helpers/trapdoor_placer)
 	//There's no shapeshift to hold
@@ -92,8 +86,6 @@
 	ignore += typesof(/obj/structure/alien/resin/flower_bud)
 	//Needs a linked mecha
 	ignore += typesof(/obj/effect/skyfall_landingzone)
-	//Leads to errors as a consequence of the logic behind moving back to a tile that's moving you somewhere else
-	ignore += typesof(/obj/effect/mapping_helpers/component_injector/areabound)
 	//Expects a mob to holderize, we have nothing to give
 	ignore += typesof(/obj/item/clothing/head/mob_holder)
 
