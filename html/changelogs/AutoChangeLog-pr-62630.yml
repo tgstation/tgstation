@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - admin: "Admin circuits are now abstract so that they don't appear in lockers when attached to custom shells and such."
