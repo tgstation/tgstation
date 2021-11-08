@@ -137,3 +137,70 @@
       do so successfully.
   vincentiusvin:
   - bugfix: fixed some buttons having zero width
+2021-11-06:
+  KittyNoodle:
+  - bugfix: Radstorms dont mutate people who are immune to rads
+  Seris02:
+  - rscadd: custom say emotes, or in other words, radio emotes. The format is for
+      example "screams and shouts*damnit!" with any relevant radio keys, language
+      keys and all that used as normal, for example, ";,o screams and shouts*damnit!"
+      or you can use just the emote, ie, ";screams!*"
+  TheBonded:
+  - bugfix: Corpses will no longer cough, spit, or choke on blood when you hit them
+      in the chest really hard
+  TheFakeElon:
+  - server: Patches multiple(?) arbitrary file related vulnerabilities
+  Y0SH1M4S73R:
+  - admin: Added the color matrix editor. It is available from a dropdown option in
+      an atom's View Variables menu as well as when editing an existing color matrix.
+2021-11-07:
+  Archanial:
+  - bugfix: mapload works
+  Bumtickley00:
+  - bugfix: Cold seiver now quickly heals your radiation instead of quickly killing
+      you
+  Ghommie:
+  - bugfix: Fixed the emissive appearances (basically what you can see even in complete
+      darkness) and possibly other overlays of vending machines being removed when
+      the wire panel is opened/closed.
+  - bugfix: Fixed the random double bed sheets spawners spawning normal bedsheets.
+  - bugfix: Fixed double bed sheets other than the standard white one looking like
+      single bed sheets when dyed.
+  GoldenAlpharex, with some oversight from Timberpoes:
+  - bugfix: Maps will now correctly be loaded at the start of a round. Hurray!
+  - code_imp: Improved the code for loading map configs and made it more documented,
+      while also removing a way to delete config files while I was at it.
+  JohnFulpWillard:
+  - bugfix: Godmoded shades should no longer spawn from posessed blades spawning spirits
+      too fast.
+  Mickyan:
+  - imageadd: Added fallback icons for clothing inhands
+2021-11-08:
+  AndrewL97:
+  - rscadd: unit test for map load
+  - rscadd: directory param to map load + whitelist for data and _maps
+  - rscadd: advertising for mojave sun in tg commit logs
+  Nyksia:
+  - bugfix: aliens can no longer clear eggs before the hugger bursts out
+  Ryll/Shaps:
+  - balance: Being launched into a solid atom by Sleeping Carp's Wave Kick has been
+      fixed to no longer deal far more damage and wounding power than originally intended,
+      and can no longer cause outright compound fractures in healthy targets.
+  - bugfix: Throwing someone you have in a neckgrab or are choking will now properly
+      throw them harder than normal.
+  Timberpoes:
+  - bugfix: Items with dash actions and the Bluespace Prophecy trauma now utilise
+      proper teleportation code, disallowing teleportation to and from teleport restricted
+      areas.
+  Toastgoats:
+  - spellcheck: Fixed a typo on the singulo toy.
+  axietheaxolotl:
+  - bugfix: CentCom's suit using an old icon, and fixed the gas mask and helmet's
+      icon not showing
+  esainane:
+  - bugfix: TramStation now has a ticket dispenser by the HoP line, replacing one
+      of two very close gas vendors.
+  - bugfix: TramStation's Engineering Console now has a cable to connect it to the
+      main powernet.
+  tralezab:
+  - bugfix: anonymous names doesn't break anymore! it works! hip hip hooray!

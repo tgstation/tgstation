@@ -786,14 +786,7 @@
 /area/ai_monitored/security/armory)
 "agc" = (
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/secbot{
-	arrest_type = 1;
-	health = 45;
-	icon_state = "secbot1";
-	idcheck = 1;
-	name = "Sergeant-at-Armsky";
-	weaponscheck = 1
-	},
+/mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "agd" = (

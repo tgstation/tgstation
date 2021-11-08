@@ -329,9 +329,9 @@
 		radcalc *= normalise_creation_purity()
 		// no cost percent healing if you are SUPER cold (on top of cost healing)
 		if(chemtemp < radbonustemp*0.1)
-			M.adjustToxLoss(radcalc * (0.9**(REM * delta_time)))
+			M.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)))
 		else if(chemtemp < radbonustemp)
-			M.adjustToxLoss(radcalc * (0.75**(REM * delta_time)))
+			M.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)))
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
