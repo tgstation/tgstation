@@ -40,18 +40,17 @@
 /mob/living/simple_animal/bot/secbot/ed209/handle_automated_action()
 	var/judgement_criteria = judgement_criteria()
 	var/list/targets = list()
-	for(var/mob/living/carbon/nearby_carbons in view(7, src)) //Let's find us a target
+	for(var/mob/living/carbon/nearby_carbon in view(7, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(nearby_carbons.incapacitated())
+		if(nearby_carbon.incapacitated())
 			continue
-		threatlevel = nearby_carbons.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
-		//speak(nearby_carbons.real_name + text(": threat: []", threatlevel))
+		threatlevel = nearby_carbon.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 		if(threatlevel < 4 )
 			continue
-		var/dst = get_dist(src, nearby_carbons)
+		var/dst = get_dist(src, nearby_carbon)
 		if(dst <= 1 || dst > 7)
 			continue
-		targets += nearby_carbons
+		targets += nearby_carbon
 	if(targets.len > 0)
 		var/mob/living/carbon/all_targets = pick(targets)
 		if(all_targets.stat != DEAD && !all_targets.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
