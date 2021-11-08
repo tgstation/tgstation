@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Radioactive microlasers will no longer irradiate humans wearing radiation proof clothing."
