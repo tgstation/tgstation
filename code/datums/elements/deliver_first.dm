@@ -52,7 +52,7 @@
 		UnregisterSignal(target, COMSIG_CLOSET_PRE_OPEN)
 		return TRUE
 	else
-		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open)
+		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open, override = TRUE) //very purposefully overriding
 		return FALSE
 
 /datum/element/deliver_first/proc/on_moved(obj/structure/closet/target, atom/oldloc, direction)
