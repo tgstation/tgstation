@@ -912,9 +912,9 @@
 	description = "Causes slight toxin damage followed by chain-stunning and oxygen damage."
 	reagent_state = LIQUID
 	color = "#191919"
-	metabolization_rate = 0.125 * REAGENTS_METABOLISM|REAGENT_NO_RANDOM_RECIPE
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 11)
