@@ -180,7 +180,7 @@
 						if(!L.buckled || L.buckled.anchored)
 							continue
 					//Don't TP ghosts
-					else if(!isobserver(ROI))
+					else if(isobserver(ROI))
 						continue
 
 				do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
