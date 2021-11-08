@@ -212,10 +212,10 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += {"
-<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
-Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel is [open ? "opened" : "closed"]"}
+			<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
+			Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
+			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+			Maintenance panel is [open ? "opened" : "closed"]"}
 
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
@@ -223,7 +223,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	return dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
-	if((emagged == 2) && L.stat != DEAD)
+	if((emagged) && L.stat != DEAD)
 		return FALSE
 
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))

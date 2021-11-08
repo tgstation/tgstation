@@ -354,7 +354,7 @@
 	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
-	w_class =  WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -457,10 +457,10 @@
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 	if(istype(I, /obj/item/paper))
-		if (!(paper_count >=  max_paper_count))
+		if (!(paper_count >= max_paper_count))
 			paper_count += 10
 			qdel(I)
-			if (paper_count >=  max_paper_count)
+			if (paper_count >= max_paper_count)
 				paper_count = max_paper_count
 				to_chat(user, span_notice("[src]'s paper supply is now full."))
 				return
@@ -472,7 +472,7 @@
 
 /obj/item/sales_tagger/attack_self(mob/user)
 	. = ..()
-	if(paper_count <=  0)
+	if(paper_count <= 0)
 		to_chat(user, span_warning("You're out of paper!'."))
 		return
 	if(!payments_acc)

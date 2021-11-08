@@ -1434,7 +1434,7 @@
 	},
 /area/awaymission/bmpship/fore)
 "fK" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},

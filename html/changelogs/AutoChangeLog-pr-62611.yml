@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Randomized reagent recipes (so far only metalgen and the secret sauce) should no longer from time to time require reagents that are normally TOO hard (emphasis on TOO) to get or unobtainable by non-antag players (e.g. most mutation toxins, syndie stims, godblood, spores)"

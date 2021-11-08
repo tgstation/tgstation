@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Yawns can now propagate and cause other nearby mobs who see it to yawn as well."

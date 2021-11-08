@@ -13,7 +13,7 @@
 	icon_state = "vest_stealth"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, RAD = 15, FIRE = 70, ACID = 70)
+	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, FIRE = 70, ACID = 70)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
@@ -26,8 +26,8 @@
 	/// Cooldown in seconds
 	var/combat_cooldown = 20
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, RAD = 15, FIRE = 70, ACID = 70)
-	var/combat_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 90, ACID = 90)
+	var/stealth_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, FIRE = 70, ACID = 70)
+	var/combat_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, FIRE = 90, ACID = 90)
 
 /obj/item/clothing/suit/armor/abductor/vest/Initialize(mapload)
 	. = ..()
@@ -759,7 +759,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			for(var/i = 1, i <= framestackamount, i++)
+			for(var/i in 0 to framestackamount)
 				new framestack(get_turf(src))
 			qdel(src)
 			return
@@ -866,5 +866,5 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor"
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, fire = 0, acid = 0)
 	can_adjust = FALSE

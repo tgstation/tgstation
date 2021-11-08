@@ -305,7 +305,8 @@
 "EO" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,

@@ -169,9 +169,7 @@
 /area/shuttle/escape)
 "aJ" = (
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aK" = (
@@ -182,9 +180,7 @@
 "aL" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aM" = (
@@ -224,7 +220,7 @@
 /area/shuttle/escape)
 "aR" = (
 /obj/item/toy/snappop/phoenix,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aS" = (
@@ -256,16 +252,11 @@
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aY" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "aZ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "bb" = (
@@ -277,9 +268,7 @@
 	},
 /obj/item/crowbar,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "bc" = (

@@ -51,7 +51,7 @@
 
 	id = /obj/item/card/id/advanced/gold
 	id_trim = /datum/id_trim/job/captain
-	uniform =  /obj/item/clothing/under/rank/captain
+	uniform = /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,

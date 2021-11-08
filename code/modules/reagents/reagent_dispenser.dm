@@ -150,21 +150,7 @@
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
-/obj/structure/reagent_dispensers/peppertank/directional/north
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/structure/reagent_dispensers/peppertank/directional/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/structure/reagent_dispensers/peppertank/directional/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/structure/reagent_dispensers/peppertank/directional/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/peppertank, 30)
 
 /obj/structure/reagent_dispensers/peppertank/Initialize(mapload)
 	. = ..()
@@ -221,21 +207,7 @@
 	density = FALSE
 	reagent_id = /datum/reagent/consumable/virus_food
 
-/obj/structure/reagent_dispensers/virusfood/directional/north
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/structure/reagent_dispensers/virusfood/directional/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/structure/reagent_dispensers/virusfood/directional/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/structure/reagent_dispensers/virusfood/directional/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/virusfood, 30)
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
