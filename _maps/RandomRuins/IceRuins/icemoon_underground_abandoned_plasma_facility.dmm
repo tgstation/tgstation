@@ -2681,7 +2681,9 @@
 "Rd" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/plasma_facility/operations)
 "Rf" = (
 /obj/effect/decal/cleanable/dirt,

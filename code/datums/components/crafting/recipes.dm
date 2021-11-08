@@ -1212,7 +1212,7 @@
 	name = "Alcohol burner"
 	result = /obj/item/burner
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/consumable/ethanol = 15,
 				/obj/item/paper = 1
 				)
@@ -1222,7 +1222,7 @@
 	name = "Oil burner"
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/fuel/oil = 15,
 				/obj/item/paper = 1
 				)
@@ -1232,7 +1232,7 @@
 	name = "Fuel burner"
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/fuel = 15,
 				/obj/item/paper = 1
 				)
@@ -1275,8 +1275,8 @@
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
 	reqs = list(
-				/obj/item/stack/sheet/glass  = 1,
-				)
+		/obj/item/stack/sheet/glass = 1,
+	)
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater

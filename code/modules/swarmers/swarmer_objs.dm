@@ -44,7 +44,7 @@
 	desc = "A machine that prints swarmers."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	max_integrity = 500
 	plane = MASSIVE_OBJ_PLANE
 	light_color = LIGHT_COLOR_CYAN
