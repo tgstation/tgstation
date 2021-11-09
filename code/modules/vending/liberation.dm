@@ -33,7 +33,7 @@
 		/obj/item/bedsheet/patriot = 5,
 		/obj/item/food/burger/superbite = 3
 	) //U S A
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	default_price = PAYCHECK_HARD * 2.5
 	extra_price = PAYCHECK_COMMAND * 2.5

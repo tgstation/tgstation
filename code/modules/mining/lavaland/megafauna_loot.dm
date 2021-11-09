@@ -16,14 +16,14 @@
 	// It's a simple purple beam, works well enough for the purple hiero effects.
 	beam_effect = "plasmabeam"
 
-/datum/action/innate/dash/hierophant/Teleport(mob/user, atom/target)
+/datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		to_chat(user, span_hierophant_warning("Blink destination out of range."))
+		user.balloon_alert(user, "destination out of range!")
 		return
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
-		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		user.balloon_alert(user, "destination blocked!")
 		return
 	. = ..()
 	if(!current_charges)
@@ -117,7 +117,7 @@
 	if((target == beacon) && target.Adjacent(src))
 		return
 	if(blink_activated)
-		blink.Teleport(user, target)
+		blink.teleport(user, target)
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
@@ -269,8 +269,12 @@
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/hostile_environment
 	slowdown = 0
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+
+/obj/item/clothing/suit/space/hardsuit/hostile_environment/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/space/hardsuit/hostile_environment/process(delta_time)
 	. = ..()
@@ -290,7 +294,7 @@
 	hardsuit_type = "heck"
 	w_class = WEIGHT_CLASS_NORMAL
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
 	actions_types = list()
 
@@ -298,6 +302,7 @@
 	. = ..()
 	update_appearance()
 	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()

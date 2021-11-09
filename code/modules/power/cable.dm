@@ -567,7 +567,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.underfloor_accessibility || !T.can_have_cabling())
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
 		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 

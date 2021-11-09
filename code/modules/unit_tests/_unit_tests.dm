@@ -70,6 +70,7 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "keybinding_init.dm"
+#include "load_map_security.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
@@ -93,6 +94,7 @@
 #include "siunit.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
+#include "species_config_sanity.dm"
 #include "species_whitelists.dm"
 #include "stomach.dm"
 #include "strippable.dm"
@@ -103,7 +105,6 @@
 #include "timer_sanity.dm"
 #include "unit_test.dm"
 #include "wizard.dm"
-
 #ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif

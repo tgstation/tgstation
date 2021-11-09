@@ -993,3 +993,44 @@
   - bugfix: The crafting menu now uses scrollable sections, fitting the window regardless
       of resize. A little easier to use.
   - bugfix: Fixed an issue with the crafting menu not being fully dimmed while crafting.
+2021-10-30:
+  ArcaneMusic:
+  - bugfix: Metastation once again has power to arrivals.
+  Horatio22:
+  - imageadd: made command envirosuits more consistent
+  KathrinBailey:
+  - bugfix: Corporate Sofas now have their rear middle sprites fixed to align with
+      the rest of the rear sofa sprites.
+  LemonInTheDark:
+  - bugfix: You're (hopefully) no longer able to make timed singlecaps using nitryl.
+      I really liked this one honestly, it's got an aggressive amount of heart and
+      soul
+  Timberpoes feat. JohnFulpWillard:
+  - config: Modified how ambiguous VALUE_MODE_FLAG keyed_list config entries are parsed
+      and added additional config logging for when weirdness with keyed_list config
+      entries happens in general. (Timberpoes)
+  - config: /datum/config_entry/keyed_list/probability was unused and has been deleted.
+      (Timberpoes)
+  - bugfix: The Cloth Golem preferences profile now works (JohnFulpWillard)
+  - qol: The species-changing magic mirror variants now list species names instead
+      of internal code IDs. (JohnFulpWillard)
+  - qol: Shadowperson species should now show as "Shadow" instead of "???" (JohnFulpWillard)
+  esainane:
+  - imageadd: Hot Ice icons are now consistent, and now have an stack icon showing
+      two pieces for when there are between 17 and 33 pieces in the stack.
+2021-10-31:
+  GoldenAlpharex:
+  - bugfix: You can finally remember how to place down wires again! How did you even
+      forget something so simple?
+  Krysonism:
+  - balance: The organic slurry is now retained inside the rat after it is dipped
+      in welding fuel.
+  Timberpoes:
+  - bugfix: Vampires and Dullahans can no longer select Cat ears and Cat tails. You
+      monsters.
+  Zytolg:
+  - expansion: Condition Orange! Severe Seismic Activity Detected! New Gulag Position
+      Registered!
+  - rscdel: The remnants of the Old Mining Base are gone. We've always had the crater
+      observatory.
+  - qol: New Icebox Terrain

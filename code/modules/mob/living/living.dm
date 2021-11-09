@@ -752,7 +752,6 @@
 	remove_CC()
 	set_disgust(0)
 	losebreath = 0
-	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = get_body_temp_normal(apply_change=FALSE)
 	set_blindness(0)
@@ -1209,7 +1208,7 @@
 			Robot.connected_ai.disconnect_shell()
 		if(Robot.mmi)
 			qdel(Robot.mmi)
-		Robot.notify_ai(NEW_BORG)
+		Robot.notify_ai(AI_NOTIFICATION_NEW_BORG)
 	else
 		for(var/obj/item/item in src)
 			if(!dropItemToGround(item))
@@ -1359,21 +1358,6 @@
 		G.summoner = new_mob
 		G.Recall()
 		to_chat(G, span_holoparasite("Your summoner has changed form!"))
-
-/mob/living/rad_act(amount)
-	. = ..()
-
-	if(!amount || (amount < RAD_MOB_SKIN_PROTECTION) || HAS_TRAIT(src, TRAIT_RADIMMUNE))
-		return
-
-	amount -= RAD_BACKGROUND_RADIATION // This will always be at least 1 because of how skin protection is calculated
-
-	var/blocked = getarmor(null, RAD)
-
-	if(amount > RAD_BURN_THRESHOLD)
-		apply_damage(RAD_BURN_CURVE(amount), BURN, null, blocked)
-
-	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
 /mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	. = ..()

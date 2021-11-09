@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	material_type = /datum/material/alloy/plasteel
 	throwforce = 10
 	flags_1 = CONDUCT_1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 80)
 	resistance_flags = FIRE_PROOF
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/wood=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "wood"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/bamboo = MINERAL_MATERIAL_AMOUNT)
 	throwforce = 15
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list(/datum/reagent/cellulose = 10)
@@ -382,7 +382,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
@@ -413,7 +413,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/durathread
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 
 /obj/item/stack/sheet/durathread/get_main_recipes()
 	. = ..()

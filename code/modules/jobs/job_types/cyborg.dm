@@ -27,7 +27,7 @@
 		return
 	spawned.gender = NEUTER
 	var/mob/living/silicon/robot/robot_spawn = spawned
-	robot_spawn.notify_ai(NEW_BORG)
+	robot_spawn.notify_ai(AI_NOTIFICATION_NEW_BORG)
 
 
 /datum/job/cyborg/radio_help_message(mob/M)

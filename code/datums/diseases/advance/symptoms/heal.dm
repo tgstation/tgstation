@@ -471,7 +471,7 @@
 		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. +=  power * 0.75
+		. += power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
@@ -529,20 +529,7 @@
 		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	switch(M.radiation)
-		if(0)
-			return FALSE
-		if(1 to RAD_MOB_SAFE)
-			return 0.25
-		if(RAD_MOB_SAFE to RAD_BURN_THRESHOLD)
-			return 0.5
-		if(RAD_BURN_THRESHOLD to RAD_MOB_MUTATE)
-			return 0.75
-		if(RAD_MOB_MUTATE to RAD_MOB_KNOCKDOWN)
-			return 1
-		else
-			return 1.5
+	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
 
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
