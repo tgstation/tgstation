@@ -164,11 +164,13 @@
 		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
 		return
 
-	var/list/model_list = list("Engineering" = /obj/item/robot_model/engineering, \
-	"Medical" = /obj/item/robot_model/medical, \
-	"Miner" = /obj/item/robot_model/miner, \
-	"Janitor" = /obj/item/robot_model/janitor, \
-	"Service" = /obj/item/robot_model/service)
+	var/list/model_list = list(
+		"Engineering" = /obj/item/robot_model/engineering,
+		"Medical" = /obj/item/robot_model/medical,
+		"Miner" = /obj/item/robot_model/miner,
+		"Janitor" = /obj/item/robot_model/janitor,
+		"Service" = /obj/item/robot_model/service,
+	)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
@@ -353,6 +355,7 @@
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
 	log_game("[key_name(usr)] detonated [key_name(src)]!")
 	log_combat(usr, src, "detonated cyborg")
+	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
 	if(connected_ai)
 		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
 
@@ -368,6 +371,7 @@
 	lawupdate = FALSE
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
+	log_silicon("CYBORG: [key_name(src)] has been unlinked from an AI.")
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
 		QDEL_NULL(builtInCamera)
@@ -674,6 +678,7 @@
 		hasExpanded = FALSE
 		update_transform()
 	logevent("Chassis model has been reset.")
+	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
 	model.transform_to(/obj/item/robot_model)
 
 	// Remove upgrades.

@@ -286,6 +286,7 @@
 				O.lawupdate = FALSE
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
+					O.log_current_laws()
 
 			brainmob.mind?.remove_antags_for_borging()
 			O.job = "Cyborg"
@@ -341,6 +342,7 @@
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
+				O.log_current_laws()
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
