@@ -3842,7 +3842,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "iF" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
@@ -5173,7 +5173,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lW" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -5191,7 +5191,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lZ" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
@@ -39751,7 +39751,7 @@ jC
 jV
 iX
 jn
-qo
+wa
 jF
 jF
 kc
@@ -41293,7 +41293,7 @@ jk
 jY
 iX
 jn
-kU
+zs
 kR
 jF
 kc
@@ -42066,7 +42066,7 @@ kt
 kE
 jF
 jF
-qo
+wa
 jF
 jF
 jF
@@ -47702,7 +47702,7 @@ fW
 fW
 ho
 hF
-eo
+ux
 dT
 dF
 do
@@ -48730,7 +48730,7 @@ fX
 fW
 ho
 hF
-eo
+ux
 dT
 dF
 do

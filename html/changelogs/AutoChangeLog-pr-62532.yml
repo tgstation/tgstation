@@ -1,4 +1,0 @@
-author: "AndAllThatJazz"
-delete-after: True
-changes: 
-  - bugfix: "Fluid ducts will no longer duplicate when unwrenched"

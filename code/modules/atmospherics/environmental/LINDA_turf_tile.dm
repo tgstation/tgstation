@@ -371,15 +371,6 @@
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
-/*
-	I've got a problem with excited groups
-	Adding tiles works out fine, but if you try and remove them, we get issues
-	The main one is to do with how sleeping tiles are processed
-	If a tile is sleeping, it is removed from the active turfs list and not processed at all
-	The issue comes when we try and reform excited groups after a removal like this
-	and the turfs just poof go fully to sleep.
-	We solve this with excited group cleanup. See the documentation for more details.
-*/
 /datum/excited_group
 	///Stores a reference to the turfs we are controlling
 	var/list/turf_list = list()

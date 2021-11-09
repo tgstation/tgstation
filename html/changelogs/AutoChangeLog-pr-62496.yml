@@ -1,0 +1,6 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - qol: "Ants have become easier to pour in tiles with vents, pipes or cables."
+  - bugfix: "Makes ants incapable of affecting the afterlife."
+  - bugfix: "Ants, gibs, and garbage cleanable decals now properly show up above pipes."

@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a grave oversight of being able to type with boxing gloves on."
