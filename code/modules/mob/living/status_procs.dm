@@ -258,7 +258,7 @@
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
 /mob/living/proc/Incapacitate(amount, ignore_canstun = FALSE)
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_INCAPACITATE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(status_flags & GODMODE)
 		return
@@ -279,7 +279,7 @@
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
 /mob/living/proc/set_incapacitated(amount, ignore_canstun = FALSE)
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_INCAPACITATE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(status_flags & GODMODE)
 		return
@@ -304,7 +304,7 @@
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
 /mob/living/proc/adjust_incapacitated(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_INCAPACITATE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(status_flags & GODMODE)
 		return
