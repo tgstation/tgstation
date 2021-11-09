@@ -814,6 +814,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
 	energyfactor = 66
+	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
 	matter = 160
