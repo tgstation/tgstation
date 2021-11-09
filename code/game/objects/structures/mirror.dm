@@ -1,13 +1,14 @@
 //wip wip wup
 /obj/structure/mirror
 	name = "mirror"
-	desc = "Despite everything, it's still you."
+	desc = "It's you!"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
+	var/creation_time
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
@@ -15,11 +16,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
 		atom_break(null, mapload)
+	creation_time = world.time
 
 /obj/structure/mirror/examine(mob/user)
 	. = ..()
-	if(!broken && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE) && user.key)
-		. = "It's me, [user.key]." //uses the player's OOC name, not their IC one
+	if(desc != "It's you!") //I'm really not a fan of hardcoding this, but I don't see another way to do this
+		return
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE) && user.key)
+		return "It's me, [user.key]." //uses the player's OOC name, not their IC one
+	if(SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+		return "Still just you, [user.real_name]."
+	if(world.time >= creation_time + 60 MINUTES)
+		return "Despite everything, it's still you."
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
