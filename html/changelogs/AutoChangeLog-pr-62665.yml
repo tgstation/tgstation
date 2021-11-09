@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed missing award icons in the achievement menu
+sprite: All achievements outside the misc category have been given their own icons and should no longer use the base background one."
