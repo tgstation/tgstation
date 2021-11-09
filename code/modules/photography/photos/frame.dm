@@ -9,6 +9,7 @@
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/photo/displayed
+	pixel_shift = 30
 
 /obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/photo))
@@ -83,9 +84,6 @@
 	LAZYADD(SSpersistence.photo_frames, src)
 	if(dir)
 		setDir(dir)
-	if(building)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 
 /obj/structure/sign/picture_frame/Destroy()
 	LAZYREMOVE(SSpersistence.photo_frames, src)

@@ -175,3 +175,91 @@
       too fast.
   Mickyan:
   - imageadd: Added fallback icons for clothing inhands
+2021-11-08:
+  AndrewL97:
+  - rscadd: unit test for map load
+  - rscadd: directory param to map load + whitelist for data and _maps
+  - rscadd: advertising for mojave sun in tg commit logs
+  Nyksia:
+  - bugfix: aliens can no longer clear eggs before the hugger bursts out
+  Ryll/Shaps:
+  - balance: Being launched into a solid atom by Sleeping Carp's Wave Kick has been
+      fixed to no longer deal far more damage and wounding power than originally intended,
+      and can no longer cause outright compound fractures in healthy targets.
+  - bugfix: Throwing someone you have in a neckgrab or are choking will now properly
+      throw them harder than normal.
+  Timberpoes:
+  - bugfix: Items with dash actions and the Bluespace Prophecy trauma now utilise
+      proper teleportation code, disallowing teleportation to and from teleport restricted
+      areas.
+  Toastgoats:
+  - spellcheck: Fixed a typo on the singulo toy.
+  axietheaxolotl:
+  - bugfix: CentCom's suit using an old icon, and fixed the gas mask and helmet's
+      icon not showing
+  esainane:
+  - bugfix: TramStation now has a ticket dispenser by the HoP line, replacing one
+      of two very close gas vendors.
+  - bugfix: TramStation's Engineering Console now has a cable to connect it to the
+      main powernet.
+  tralezab:
+  - bugfix: anonymous names doesn't break anymore! it works! hip hip hooray!
+2021-11-09:
+  Ghommie:
+  - bugfix: Randomized reagent recipes (so far only metalgen and the secret sauce)
+      should no longer from time to time require reagents that are normally TOO hard
+      (emphasis on TOO) to get or unobtainable by non-antag players (e.g. most mutation
+      toxins, syndie stims, godblood, spores)
+  GoldenAlpharex:
+  - bugfix: Fixed certain preferences being reset to their default values when trying
+      to change them, due to the dropdown menu of options changing numbers into text
+      and due to that not being supported by numeric preferences. AKA, changing pixel
+      scaling method will work again.
+  JohnFulpWillard:
+  - refactor: Bot emagging has been refactored, and as such, their cover can be closed
+      if forced open by emag if the bot itself hasn't been emagged.
+  - bugfix: Sergeant-At-Armsky can now be found in Delta's Armory!
+  Melbert:
+  - bugfix: Chaplains can no longer select admin only null rods.
+  Mothblocks:
+  - qol: Cult pylons, rod of asclepius, and space dragon rifts will now give you an
+      alert as feedback for when you are being healed by them.
+  - admin: Adds a panel for "known alts", which let you write down confirmed, valid
+      alts between two people so that they don't show in suspicious connection history.
+  PositiveEntropy, Naevii:
+  - imageadd: Ports BeeStation cloak designs!
+  Ryll/Shaps:
+  - rscadd: Yawns can now propagate and cause other nearby mobs who see it to yawn
+      as well.
+  ShizCalev:
+  - bugfix: Radioactive microlasers will no longer irradiate humans wearing radiation
+      proof clothing.
+  V2LenKagamine:
+  - bugfix: You now drop food trash items on use, putting the actual "Trash" in the
+      same hand you used the item in.
+  Watermelon914:
+  - admin: Admin circuits are now abstract so that they don't appear in lockers when
+      attached to custom shells and such.
+  esainane:
+  - refactor: Wall mounted and directional objects have undergone major internal simplification.
+      Please report anything unusual!
+  - bugfix: You can no longer stack an indefinite amount of Intercoms on the same
+      wall.
+  - bugfix: Defibrillator Mounts, Bluespace Gas Vendors, Turret Controlers, and Ticket
+      Machines are now considered wall items.
+  - bugfix: Wall mounted items on top of the wall now consistently check against other
+      items on top of the wall, and items coming out of the wall now consistently
+      check against other items coming out of the wall.
+  - bugfix: The various directional pixel offsets within an APC, Fire Extinguisher
+      Cabinet, Intercom, or Newscaster have been made consistent with each other.
+  - bugfix: The pixel offsets of Intercoms, Fire Alarms, Fire Extinguisher Cabinets,
+      Flashers, and Newscasters have been made consistent between roundstart and constructed
+      instances.
+  - bugfix: Constructed Turret Controls will no longer oddly overhang the wall they
+      were placed on.
+  - qol: Defibrillator mounts now better indicate which side of the wall they are
+      on.
+  - bugfix: Some instances where there were multiple identical lights on the same
+      tile have been fixed to only have one.
+  - imageadd: Turret Control frames now have a dedicated icon, rather than literally
+      using the APC image.

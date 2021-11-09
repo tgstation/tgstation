@@ -22,21 +22,7 @@
 	var/list/ticket_holders = list()
 	var/list/obj/item/ticket_machine_ticket/tickets = list()
 
-/obj/machinery/ticket_machine/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/ticket_machine/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/ticket_machine/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/ticket_machine/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer

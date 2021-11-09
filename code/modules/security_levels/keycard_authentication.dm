@@ -22,21 +22,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/mob/triggerer = null
 	var/waiting = FALSE
 
-/obj/machinery/keycard_auth/directional/north
-	dir = SOUTH
-	pixel_y = 26
-
-/obj/machinery/keycard_auth/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/keycard_auth/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/keycard_auth/directional/west
-	dir = EAST
-	pixel_x = -26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
