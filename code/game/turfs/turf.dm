@@ -350,8 +350,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
 		firstbump = src
 	if(firstbump)
-		mover.Bump(firstbump)
-		return (mover.movement_type & PHASING)
+		return (mover.Bump(firstbump)) | (mover.movement_type & PHASING)
 	return TRUE
 
 

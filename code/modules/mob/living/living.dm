@@ -61,7 +61,7 @@
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
-			return
+			return BUMP_MOVE_DEALT_WITH
 	if(isobj(A))
 		var/obj/O = A
 		if(ObjBump(O))
@@ -69,7 +69,7 @@
 	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
-			return
+			return BUMP_MOVE_DEALT_WITH
 
 /mob/living/Bumped(atom/movable/AM)
 	..()
@@ -114,6 +114,9 @@
 					if(!(world.time % 5))
 						to_chat(src, span_warning("[L] is restraining [P], you cannot push past."))
 					return TRUE
+
+	if(dir & (dir - 1)) //no mob swap during diagonal moves.
+		return
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
@@ -207,6 +210,8 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM, force = move_force)
 	if(now_pushing)
+		return TRUE
+	if(dir & (dir - 1)) // No pushing in diagonal move
 		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
