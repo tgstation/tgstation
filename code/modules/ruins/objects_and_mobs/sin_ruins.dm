@@ -119,7 +119,7 @@
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message(span_danger("<B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B>"), \
-	span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"))
+	span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist m-"))
 
 	var/turf/T = get_turf(user)
 	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
@@ -131,6 +131,7 @@
 	var/turf/open/chasm/C = T
 	C.set_target(dest)
 	C.drop(user)
+	return TRUE //don't give them another mirror pop-up
 
 //can't be bothered to do sloth right now, will make later
 

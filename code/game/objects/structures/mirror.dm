@@ -23,32 +23,39 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(broken || !Adjacent(user))
 		return
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
+	if(!ishuman(user))
+		return
 
-		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
-		//this is largely copypasted from there.
+	mirror_stuff(user)
 
-		//handle facial hair (if necessary)
-		if(H.gender != FEMALE)
-			var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return //no tele-grooming
-			if(new_style)
-				H.facial_hairstyle = new_style
-		else
-			H.facial_hairstyle = "Shaved"
+//Mirror man, mirror man, does whatever a mirror can.
+/obj/structure/mirror/mirror_stuff(mob/living/carbon/human/stylist)
+	//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
+	//this is largely copypasted from there.
 
-		//handle normal hair
-		var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
-		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	//handle normal hair
+	if(!HAS_TRAIT(stylist, TRAIT_BALD))
+		var/new_style = input(stylist, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
+		if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !HAS_TRAIT(stylist, TRAIT_BALD))
 			return //no tele-grooming
-		if(HAS_TRAIT(H, TRAIT_BALD))
-			to_chat(H, span_notice("If only growing back hair were that easy for you..."))
-		if(new_style)
-			H.hairstyle = new_style
+		else if(new_style)
+			stylist.hairstyle = new_style
+			stylist.update_hair()
+			if(curse(stylist))
+				return
 
-		H.update_hair()
+	//handle facial hair
+	var/new_facial_hair_style = input(stylist, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
+	if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return //no tele-grooming
+	if(new_style)
+		stylist.facial_hairstyle = new_style
+		stylist.update_hair()
+		curse(stylist)
+
+///Curses the user of the mirror. Return TRUE if you want this to kick the user out of the mirror's menus.
+/obj/structure/mirror/proc/curse(mob/living/user)
+	return
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
@@ -143,129 +150,141 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			choosable_races += initial(species_type.name)
 	return ..()
 
-/obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!ishuman(user))
-		return
+/obj/structure/mirror/magic/mirror_stuff(mob/living/carbon/human/stylist)
+	var/choice = input(stylist, "Something to change?", "Magical Grooming") as null|anything in list("name", "species", "color", "gender", "sex", "hairstyle", "hair color", "eyes")
 
-	var/mob/living/carbon/human/H = user
-
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
-
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	switch(choice)
 		if("name")
-			var/newname = sanitize_name(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
-			if(!newname)
+			var/newname = sanitize_name(stripped_input(stylist, "Who are we again?", "Name change", stylist.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
+			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !newname)
 				return
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			H.real_name = newname
-			H.name = newname
-			if(H.dna)
-				H.dna.real_name = newname
-			if(H.mind)
-				H.mind.name = newname
+			stylist.real_name = newname
+			stylist.name = newname
+			if(stylist.dna)
+				stylist.dna.real_name = newname
+			if(stylist.mind)
+				stylist.mind.name = newname
+			curse(stylist)
 
-		if("race")
-			var/newrace
-			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
-			newrace = GLOB.species_list[racechoice]
+		if("species")
+			var/newspecies
+			var/specieschoice = input(stylist, "What species are we again?", "Species change") as null|anything in choosable_races
+			newspecies = GLOB.species_list[specieschoice]
 
-			if(!newrace)
+			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !newspecies)
 				return
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			H.set_species(newrace, icon_update=0)
+			stylist.set_species(newspecies, icon_update=0)
 
-			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			stylist.update_body() //not actually sure if these updates are needed, but eh, it can't hurt to update this stuff again, just in case
+			stylist.update_hair()
+			stylist.update_body_parts()
+			stylist.update_mutations_overlay() // no hulk lizard
+			curse(stylist)
+
+		if("color")
+			if(!stylist.dna.species.use_skintones && !(MUTCOLORS in stylist.dna.species.species_traits))
+				to_chat(stylist, span_notice("Your species doesn't have variant colorings."))
+				return
+
+			if(stylist.dna.species.use_skintones)
+				var/new_s_tone = input(stylist, "What is our skin tone again?", "Race change")  as null|anything in GLOB.skin_tones
+				if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
+				if(new_s_tone && stylist.dna.species.use_skintones) //we need to repeat the use_skintones check because their species could have changed between the last check and now
+					stylist.skin_tone = new_s_tone
+					stylist.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
+					stylist.update_body()
+					stylist.update_hair()
+					stylist.update_body_parts()
+					stylist.update_mutations_overlay()
+					if(curse(stylist))
+						return
+
+			if(MUTCOLORS in stylist.dna.species.species_traits)
+				var/new_mutantcolor = input(stylist, "What color are we again?", "Race change",stylist.dna.features["mcolor"]) as color|null
+				if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !new_mutantcolor || !(MUTCOLORS in stylist.dna.species.species_traits))
 					return
 
-				if(new_s_tone)
-					H.skin_tone = new_s_tone
-					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
+				var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
-			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change",H.dna.features["mcolor"]) as color|null
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-					return
-				if(new_mutantcolor)
-					var/temp_hsv = RGBtoHSV(new_mutantcolor)
-
-					if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
-						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-						H.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
-
-					else
-						to_chat(H, span_notice("Invalid color. Your color is not bright enough."))
-
-			H.update_body()
-			H.update_hair()
-			H.update_body_parts()
-			H.update_mutations_overlay() // no hulk lizard
+				if(ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright
+					stylist.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+					stylist.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+					stylist.update_body()
+					stylist.update_hair()
+					stylist.update_body_parts()
+					stylist.update_mutations_overlay()
+					curse(stylist)
+				else
+					to_chat(stylist, span_notice("Invalid color. Your color is not bright enough."))
 
 		if("gender")
-			if(!(H.gender in list("male", "female"))) //blame the patriarchy
+			var/attackhelicopter = input(stylist, "What do we identify as again?", "Gender change") as null|anything in list(MALE, FEMALE, PLURAL)
+			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !attackhelicopter)
 				return
-			if(H.gender == "male")
-				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
-					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			stylist.gender = attackhelicopter
+			curse(stylist)
+
+		if("sex")
+			if(stylist.body_type == MALE)
+				if(tgui_alert(stylist, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
+					if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
-					H.gender = FEMALE
-					H.body_type = FEMALE
-					to_chat(H, span_notice("Man, you feel like a woman!"))
+					stylist.body_type = FEMALE
+					if(stylist.gender != PLURAL)
+						stylist.gender = FEMALE //we'll update their gender to match their body type- if they want their gender to not match their body type, they can change that using the gender-changing function of the mirror
 				else
 					return
-
 			else
-				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
-					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				if(tgui_alert(stylist, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
+					if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
-					H.gender = MALE
-					H.body_type = MALE
-					to_chat(H, span_notice("Whoa man, you feel like a man!"))
+					stylist.body_type = MALE
+					if(stylist.gender != PLURAL)
+						stylist.gender = MALE //we'll update their gender to match their body type- if they want their gender to not match their body type, they can change that using the gender-changing function of the mirror
 				else
 					return
 			H.dna.update_ui_block(DNA_GENDER_BLOCK)
 			H.update_body()
 			H.update_mutations_overlay() //(hulk male/female)
+			curse(stylist)
 
-		if("hair")
-			var/hairchoice = tgui_alert(H, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if("hairstyle")
+			..()
+		
+		if("hair color")
+			var/new_hair_color = input(stylist, "What is the color of our hair again?", "Hair Color",H.hair_color) as color|null
+			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
-			if(hairchoice == "Style") //So you just want to use a mirror then?
-				..()
-			else
-				var/new_hair_color = input(H, "Choose your hair color", "Hair Color",H.hair_color) as color|null
-				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			
+
+			if(new_hair_color)
+				stylist.hair_color = sanitize_hexcolor(new_hair_color)
+				stylist.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
+				stylist.update_hair()
+				if(curse(stylist))
 					return
-				if(new_hair_color)
-					H.hair_color = sanitize_hexcolor(new_hair_color)
-					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
-				if(H.gender == "male")
-					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color",H.facial_hair_color) as color|null
-					if(new_face_color)
-						H.facial_hair_color = sanitize_hexcolor(new_face_color)
-						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
-				H.update_hair()
 
-		if(BODY_ZONE_PRECISE_EYES)
-			var/new_eye_color = input(H, "Choose your eye color", "Eye Color",H.eye_color) as color|null
-			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			var/new_face_color = input(stylist, "What is the color of our facial hair again?", "Hair Color",stylist.facial_hair_color) as color|null
+			
+			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !new_face_color)
 				return
-			if(new_eye_color)
-				H.eye_color = sanitize_hexcolor(new_eye_color)
-				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-				H.update_body()
-	if(choice)
-		curse(user)
 
-/obj/structure/mirror/magic/proc/curse(mob/living/user)
-	return
+			stylist.facial_hair_color = sanitize_hexcolor(new_face_color)
+			stylist.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
+			stylist.update_hair()
+			curse(stylist)
+
+
+
+		if("eyes")
+			var/new_eye_color = input(stylist, "What is the color of our eyes again?", "Eye Color",stylist.eye_color) as color|null
+			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !new_eye_color)
+				return
+			stylist.eye_color = sanitize_hexcolor(new_eye_color)
+			stylist.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+			stylist.update_body()
+			curse(stylist)
