@@ -381,13 +381,13 @@
 
 ///////////////////////// CLEAR STATUS /////////////////////////
 
-/mob/living/proc/status_clear(amount)
-	AdjustStun(-60 * amount)
-	AdjustKnockdown(-60 * amount)
-	AdjustUnconscious(-60 * amount)
-	AdjustSleeping(-100 * amount)
-	AdjustParalyzed(-60 * amount)
-	AdjustImmobilized(-60 * amount)
+/mob/living/proc/adjust_status_effects_on_shake_up()
+	AdjustStun(-60)
+	AdjustKnockdown(-60)
+	AdjustUnconscious(-60)
+	AdjustSleeping(-100)
+	AdjustParalyzed(-60)
+	AdjustImmobilized(-60)
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
