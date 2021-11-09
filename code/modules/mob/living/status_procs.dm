@@ -241,16 +241,16 @@
 			P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount)
 		return P
 
-///////////////////////////////// STARTLED //////////////////////////////////
+///////////////////////////////// INCAPACITATED //////////////////////////////////
 
-/mob/living/proc/IsStartled() //If we're Startled
-	return has_status_effect(STATUS_EFFECT_STARTLED)
+/mob/living/proc/is_incapacitated() //If we're incapacitated
+	return has_status_effect(STATUS_EFFECT_INCAPACITATED)
 
-/mob/living/proc/AmountStartled() //How many deciseconds remain in our Startled status effect
-	var/datum/status_effect/incapacitating/startled/I = IsStartled()
+/mob/living/proc/amount_incapacitated() //How many deciseconds remain in our Incapacitated status effect
+	var/datum/status_effect/incapacitating/incapacitated/I = is_incapacitated()
 	return I?.duration - world.time || 0
 
-/mob/living/proc/Startle(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Incapacitate(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(status_flags & GODMODE)
@@ -258,20 +258,20 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/startled/I = IsStartled()
+		var/datum/status_effect/incapacitating/incapacitated/I = is_incapacitated()
 		if(I)
 			I.duration = max(world.time + amount, I.duration)
 		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_STARTLED, amount)
+			I = apply_status_effect(STATUS_EFFECT_INCAPACITATED, amount)
 		return I
 
-/mob/living/proc/SetStartled(amount, ignore_canstun = FALSE) //Sets remaining duration
+/mob/living/proc/set_incapacitated(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(status_flags & GODMODE)
 		return
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
-		var/datum/status_effect/incapacitating/startled/I = IsStartled()
+		var/datum/status_effect/incapacitating/incapacitated/I = is_incapacitated()
 		if(amount <= 0)
 			if(I)
 				qdel(I)
@@ -281,10 +281,10 @@
 			if(I)
 				I.duration = world.time + amount
 			else
-				I = apply_status_effect(STATUS_EFFECT_STARTLED, amount)
+				I = apply_status_effect(STATUS_EFFECT_INCAPACITATED, amount)
 		return I
 
-/mob/living/proc/AdjustStartled(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/adjust_incapacitated(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(status_flags & GODMODE)
@@ -292,11 +292,11 @@
 	if(((status_flags & CANKNOCKDOWN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE)) || ignore_canstun)
 		if(absorb_stun(amount, ignore_canstun))
 			return
-		var/datum/status_effect/incapacitating/startled/I = IsStartled()
+		var/datum/status_effect/incapacitating/incapacitated/I = is_incapacitated()
 		if(I)
 			I.duration += amount
 		else if(amount > 0)
-			I = apply_status_effect(STATUS_EFFECT_STARTLED, amount)
+			I = apply_status_effect(STATUS_EFFECT_INCAPACITATED, amount)
 		return I
 
 //Blanket

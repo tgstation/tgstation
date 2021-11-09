@@ -91,18 +91,18 @@
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-//STARTLED
+//INCAPACITATED
+/// This status effect represents anything that leaves a character unable to perform basic tasks, but doesn't incapacitate them further than that (no stuns etc..)
+/datum/status_effect/incapacitating/incapacitated
+	id = "incapacitated"
 
-/datum/status_effect/incapacitating/startled
-	id = "startled"
-
-/datum/status_effect/incapacitating/startled/on_apply()
+/datum/status_effect/incapacitating/incapacitated/on_apply()
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
 
-/datum/status_effect/incapacitating/startled/on_remove()
+/datum/status_effect/incapacitating/incapacitated/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 

@@ -57,7 +57,7 @@
 
 #define STATUS_EFFECT_PARALYZED /datum/status_effect/incapacitating/paralyzed //the affected is unable to move, use items, or stand up.
 
-#define STATUS_EFFECT_STARTLED /datum/status_effect/incapacitating/startled //the startled gets their do_afters canceled.
+#define STATUS_EFFECT_INCAPACITATED /datum/status_effect/incapacitating/incapacitated //the incapacitated is unable to perform some basic actions and gets their do_afters canceled
 
 #define STATUS_EFFECT_UNCONSCIOUS /datum/status_effect/incapacitating/unconscious //the affected is unconscious
 
