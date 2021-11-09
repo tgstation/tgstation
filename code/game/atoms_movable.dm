@@ -398,7 +398,7 @@
 			return
 
 	if(set_dir_on_move)
-		setDir(direction)
+		setDir(direction &~ can_pass_diagonally)
 
 	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
 
