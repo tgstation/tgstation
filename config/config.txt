@@ -559,6 +559,12 @@ DEFAULT_VIEW_SQUARE 15x15
 ## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
 #HARD_DELETES_OVERRUN_LIMIT 0
 
+## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
+URGENT_AHELP_COOLDOWN 300
+
+## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
+#URGENT_AHELP_MESSAGE Ban ban ban ban
+
 ## Sets an MOTD of the server.
 ## You can use this multiple times, and the MOTDs will be appended in order.
 ## Based on config directory, so "motd.txt" points to "config/motd.txt"

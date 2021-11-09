@@ -543,3 +543,9 @@
 	min_val = 0
 
 /datum/config_entry/str_list/motd
+
+/datum/config_entry/number/urgent_ahelp_cooldown
+	default = 300
+
+/datum/config_entry/string/urgent_ahelp_message
+	default = 300

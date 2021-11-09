@@ -192,7 +192,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  * * msg_raw - The first message of this admin_help: used for the initial title of the ticket
  * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
  */
-/datum/admin_help/New(msg_raw, client/C, is_bwoink)
+/datum/admin_help/New(msg_raw, client/C, is_bwoink, urgent = FALSE)
 	//clean the input msg
 	var/msg = sanitize(copytext_char(msg_raw, 1, MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
@@ -223,14 +223,25 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
 		MessageNoRecipient(msg_raw)
-
-		//send it to TGS if nobody is on and tell us how many were on
-		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [msg]")
-		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-		if(admin_number_present <= 0)
-			to_chat(C, span_notice("No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord."), confidential = TRUE)
-			heard_by_no_admins = TRUE
+		send_message_to_tgs(msg, urgent)
 	GLOB.ahelp_tickets.active_tickets += src
+
+/datum/admin_help/proc/send_message_to_tgs(message, urgent = FALSE)
+	var/message_to_send = message
+
+	if(urgent)
+		message_to_send = "[message] - This ahelp is URGENT"
+		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
+		if(extra_message)
+			message_to_send += " ([extra_message])"
+		to_chat(initiator, span_boldwarning("Sent an urgent message to admins through TGS."))
+
+	//send it to TGS if nobody is on and tell us how many were on
+	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
+	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	if(admin_number_present <= 0)
+		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord."), confidential = TRUE)
+		heard_by_no_admins = TRUE
 
 /datum/admin_help/Destroy()
 	RemoveActive()
@@ -561,12 +572,28 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	var/list/admins = get_admin_counts(R_BAN)
+	var/urgent = FALSE
+	if(length(admins["present"]) == 0 && COOLDOWN_FINISHED(src, urgent_ahelp_cooldown))
+		urgent = alert(src, "There are no admins on. Is this an urgent ahelp that requires immediate attention? Abuse and misuse can lead to punishment.", \
+			"No admins on", "No", "Yes") == "Yes"
+
+	var/list/potentially_new_admins = get_admin_counts(R_BAN)
+	if(length(potentially_new_admins["present"]) != 0)
+		urgent = FALSE
+
+	if(urgent)
+		COOLDOWN_START(src, urgent_ahelp_cooldown, CONFIG_GET(number/urgent_ahelp_cooldown) * (1 SECONDS))
+
 	if(current_ticket)
+		if(urgent)
+			var/sanitized_message = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
+			current_ticket.send_message_to_tgs(sanitized_message, TRUE)
 		current_ticket.MessageNoRecipient(msg)
 		current_ticket.TimeoutVerb()
 		return
 
-	new /datum/admin_help(msg, src, FALSE)
+	new /datum/admin_help(msg, src, FALSE, urgent)
 
 
 //

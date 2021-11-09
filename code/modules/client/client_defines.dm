@@ -34,6 +34,9 @@
 	COOLDOWN_DECLARE(cryo_warned)
 	///Tracks say() usage for ic/dchat while slowmode is enabled
 	COOLDOWN_DECLARE(say_slowmode)
+	/// The last urgent ahelp that this player sent
+	COOLDOWN_DECLARE(urgent_ahelp_cooldown)
+
 		/////////
 		//OTHER//
 		/////////
