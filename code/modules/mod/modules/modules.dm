@@ -855,6 +855,9 @@
 
 /obj/item/circuit_component/mod/proc/equip_check()
 	SIGNAL_HANDLER
+
+	if(!attached_module.mod.wearer)
+		return
 	wearer.set_output(attached_module.mod.wearer)
 
 /obj/item/mod/module/clamp
@@ -1267,3 +1270,39 @@
 		return
 	if(implant.recall())
 		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
+
+/obj/item/mod/module/dna_lock
+	name = "MOD DNA lock module"
+	desc = "A module that locks the MODsuit's activation to the wearer's DNA. Shorted out by EMPs."
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_power_cost = 100
+	incompatible_modules = list(/obj/item/mod/module/dna_lock)
+	cooldown_time = 0.5 SECONDS
+	var/dna = null
+
+/obj/item/mod/module/dna_lock/on_install()
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
+
+/obj/item/mod/module/dna_lock/on_uninstall()
+	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+
+/obj/item/mod/module/dna_lock/on_use()
+	. = ..()
+	if(!.)
+		return
+	dna = mod.wearer.dna.unique_enzymes
+
+/obj/item/mod/module/dna_lock/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	dna = null
+
+/obj/item/mod/module/dna_lock/proc/on_mod_activation(datum/source)
+	SIGNAL_HANDLER
+
+	if(!dna || (mod.wearer.has_dna() && mod.wearer.dna.unique_enzymes == dna))
+		return
+	balloon_alert(mod.wearer, "dna locked!")
+	return MOD_CANCEL_ACTIVATE

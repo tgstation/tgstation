@@ -121,10 +121,6 @@
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 		switch(theme.type)
-			if(/datum/mod_theme/atmospheric)
-				piece.color = COLOR_SAMPLE_GRAY
-			if(/datum/mod_theme/medical)
-				piece.color = COLOR_SOAPSTONE_IRON
 			if(/datum/mod_theme/rescue)
 				piece.color = COLOR_THEME_GLASS
 			if(/datum/mod_theme/prototype)
@@ -278,6 +274,10 @@
 		balloon_alert(user, "open the panel first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
+	if(!allowed(user))
+		balloon_alert(user, "insufficient access!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return
 	if(length(modules))
 		var/list/removable_modules = list()
 		for(var/obj/item/mod/module/module as anything in modules)

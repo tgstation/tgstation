@@ -36,7 +36,7 @@
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// Total list of selectable skins for the MOD.
-	var/list/skins = list("standard", "civilian")
+	var/list/skins = list("standard")
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
@@ -57,7 +57,7 @@
 /datum/mod_theme/atmospheric
 	name = "atmospheric"
 	desc = "An atmospheric-resistant suit by Nakamura Engineering, offering extreme heat resistance compared to the engineer suit."
-	default_skin = "advanced"
+	default_skin = "atmospheric"
 	skins = list("atmospheric")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
 	resistance_flags = FIRE_PROOF
@@ -81,7 +81,7 @@
 /datum/mod_theme/medical
 	name = "medical"
 	desc = "A lightweight suit by DeForest Medical Corporation, allows for easier movement."
-	default_skin = "advanced"
+	default_skin = "medical"
 	skins = list("medical")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
 	cell_drain = 7
@@ -91,7 +91,7 @@
 /datum/mod_theme/rescue
 	name = "rescue"
 	desc = "An advanced version of DeForest Medical Corporation's medical suit, designed for quick rescue of bodies from the most dangerous environments."
-	default_skin = "advanced"
+	default_skin = "medical"
 	skins = list("rescue")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
 	resistance_flags = FIRE_PROOF|ACID_PROOF

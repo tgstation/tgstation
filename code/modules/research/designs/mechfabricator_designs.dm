@@ -1344,7 +1344,7 @@
 	build_path = /obj/item/mod/module/orebag
 	category = list("MOD Modules")
 
-/datum/design/organ_thrower
+/datum/design/mod_organ_thrower
 	name = "MOD Module: Organ Thrower"
 	desc = "A modsuit module design!"
 	id = "mod_organ_thrower"
@@ -1354,7 +1354,7 @@
 	build_path = /obj/item/mod/module/organ_thrower
 	category = list("MOD Modules")
 
-/datum/design/pathfinder
+/datum/design/mod_pathfinder
 	name = "MOD Module: Pathfinder"
 	desc = "A modsuit module design!"
 	id = "mod_pathfinder"
@@ -1362,6 +1362,16 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	construction_time = 1 SECONDS
 	build_path = /obj/item/mod/module/pathfinder
+	category = list("MOD Modules")
+
+/datum/design/mod_dna_lock
+	name = "MOD Module: DNA Lock"
+	desc = "A modsuit module design!"
+	id = "mod_dna_lock"
+	build_type = MECHFAB
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
+	construction_time = 1 SECONDS
+	build_path = /obj/item/mod/module/dna_lock
 	category = list("MOD Modules")
 
 /datum/design/mod_circuit

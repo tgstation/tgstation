@@ -156,6 +156,7 @@
 		"mod_bikehorn",
 		"mod_organ_thrower",
 		"mod_pathfinder",
+		"mod_dna_lock",
 	)
 
 /datum/techweb_node/mech_tools

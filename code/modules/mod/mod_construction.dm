@@ -24,15 +24,24 @@
 	It has been repurposed to be an internal power source for a Modular Outerwear Device."
 
 /obj/item/mod/construction/armor
-	name = "MOD standard armor plates"
-	desc = "Armor plates used to finish a MOD"
+	name = "MOD armor plates"
+	desc = "Armor plates used to finish a MOD."
 	icon_state = "armor"
-	var/theme = /datum/mod_theme
+	var/datum/mod_theme/theme = /datum/mod_theme
+
+/obj/item/mod/construction/armor/Initialize(mapload)
+	. = ..()
+	name = "MOD [initial(theme.name)] armor plates"
+	icon_state = "[initial(theme.default_skin)]-armor"
 
 /obj/item/mod/construction/armor/engineering
-	name = "MOD engineering armor plates"
-	icon_state = "engineering-armor"
 	theme = /datum/mod_theme/engineering
+
+/obj/item/mod/construction/armor/atmospheric
+	theme = /datum/mod_theme/atmospheric
+
+/obj/item/mod/construction/armor/medical
+	theme = /datum/mod_theme/medical
 
 /obj/item/mod/paint
 	name = "MOD paint kit"
