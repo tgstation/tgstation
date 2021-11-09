@@ -1,7 +1,7 @@
 //wip wip wup
 /obj/structure/mirror
 	name = "mirror"
-	desc = "Mirror mirror on the wall, who's the most robust of them all?"
+	desc = "Despite everything, it's still you."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	density = FALSE
@@ -15,6 +15,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	. = ..()
 	if(icon_state == "mirror_broke" && !broken)
 		atom_break(null, mapload)
+
+/obj/structure/mirror/examine(mob/user)
+	. = ..()
+	if(!broken && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE) && user.key)
+		. = "It's me, [user.key]." //uses the player's OOC name, not their IC one
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -128,7 +133,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
-	desc = "Turn and face the strange... face."
+	desc = "Turn and face the strange."
 	icon_state = "magic_mirror"
 	var/list/choosable_races = list()
 
