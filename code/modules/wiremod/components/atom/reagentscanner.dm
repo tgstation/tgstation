@@ -27,8 +27,8 @@
 
 /obj/item/circuit_component/reagentscanner/input_received(datum/port/input/port)
 	var/atom/entity = input_port.value
-	var/turf/current_turf = get_turf(src)
-	if(!istype(entity) || get_dist(current_turf, entity) > max_range || current_turf.z != entity.z)
+	var/turf/location = get_location()
+	if(!istype(entity) || !IN_GIVEN_RANGE(location, entity, max_range))
 		result.set_output(null)
 		return
 	var/list/output_list = list()
