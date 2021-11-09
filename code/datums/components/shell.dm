@@ -96,7 +96,7 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !attached_circuit?.admin_only)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !attached_circuit?.admin_only)
 		remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
@@ -266,7 +266,7 @@
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !circuitboard.admin_only)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !circuitboard.admin_only)
 		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
 	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
@@ -280,7 +280,7 @@
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		attached_circuit.on = parent_atom.anchored
 
-	if((shell_flags & SHELL_FLAG_CIRCUIT_FIXED) || circuitboard.admin_only)
+	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) || circuitboard.admin_only)
 		circuitboard.moveToNullspace()
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)

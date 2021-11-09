@@ -1302,7 +1302,7 @@
 		return
 	on_emp(src, severity)
 
-/obj/item/mod/module/dna_lock/on_emp(datum/source, severity)
+/obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity)
 	SIGNAL_HANDLER
 
 	dna = null
