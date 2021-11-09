@@ -39,7 +39,6 @@ SUBSYSTEM_DEF(economy)
 	var/bounty_modifier = 1
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
-	var/market_crashing = FALSE
 
 	/// Total value of exported materials.
 	var/export_total = 0
@@ -75,7 +74,7 @@ SUBSYSTEM_DEF(economy)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
-	if(!market_crashing)
+	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		price_update()
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
 	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)

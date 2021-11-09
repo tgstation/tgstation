@@ -446,6 +446,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///If the item will block the cargo shuttle from flying to centcom
 #define TRAIT_BANNED_FROM_CARGO_SHUTTLE "banned_from_cargo_shuttle"
 
+///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
+#define TRAIT_MARKET_CRASHING "market_crashing"
+
 // item traits
 #define TRAIT_NODROP "nodrop"
 /// cannot be inserted in a storage.
@@ -743,6 +746,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
+
+///From the market_crash event
+#define MARKET_CRASH_EVEN_TRAIT "crashed_market_event"
 
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
