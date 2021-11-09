@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - admin: "Silicon activity is now logged in silicon logs rather than being stuffed into game.log"

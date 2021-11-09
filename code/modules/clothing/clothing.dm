@@ -328,8 +328,6 @@
 		armor_list += list("ENERGY" = armor.energy)
 	if(armor.laser)
 		armor_list += list("LASER" = armor.laser)
-	if(armor.magic)
-		armor_list += list("MAGIC" = armor.magic)
 	if(armor.melee)
 		armor_list += list("MELEE" = armor.melee)
 

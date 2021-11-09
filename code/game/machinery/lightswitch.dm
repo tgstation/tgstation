@@ -16,21 +16,7 @@
 		/obj/item/circuit_component/light_switch,
 	))
 
-/obj/machinery/light_switch/directional/north
-	dir = SOUTH
-	pixel_y = 26
-
-/obj/machinery/light_switch/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/light_switch/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/light_switch/directional/west
-	dir = EAST
-	pixel_x = -26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()

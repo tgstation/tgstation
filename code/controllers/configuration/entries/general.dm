@@ -62,7 +62,13 @@
 
 /datum/config_entry/flag/log_prayer // log prayers
 
-/datum/config_entry/flag/log_law // log lawchanges
+/datum/config_entry/flag/log_silicon // log silicons
+
+/datum/config_entry/flag/log_law
+	deprecated_by = /datum/config_entry/flag/log_silicon
+
+/datum/config_entry/flag/log_law/DeprecationUpdate(value)
+	return value
 
 /datum/config_entry/flag/log_game // log game events
 
