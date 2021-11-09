@@ -556,8 +556,23 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "fZ" = (
-/obj/structure/table,
-/turf/open/floor/iron/freezer,
+/obj/structure/table/wood,
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/candle/infinite{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "gc" = (
 /obj/effect/turf_decal/siding/wood{
@@ -587,21 +602,22 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "go" = (
-/obj/structure/chair/wood{
-	dir = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/wood/corner,
+/obj/structure/chair/wood{
+	dir = 1
+	},
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "gr" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hotel/power)
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/ruin/space/has_grav/hotel/guestroom/room_4)
 "gs" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1
@@ -794,8 +810,9 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "hZ" = (
-/turf/open/floor/catwalk_floor,
-/area/ruin/space/has_grav/hotel/dock)
+/obj/machinery/light/directional/north,
+/turf/open/floor/stone,
+/area/ruin/space/has_grav/hotel/bar)
 "ia" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/freezer,
@@ -1302,34 +1319,9 @@
 /obj/structure/window{
 	dir = 1
 	},
-<<<<<<< HEAD
-/obj/machinery/shower{
-=======
+/obj/machinery/shower,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/hotel/bar)
-"go" = (
-/obj/structure/kitchenspike,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/hotel/bar)
-"gp" = (
-/obj/structure/table,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/hotel/bar)
-"gq" = (
-/obj/structure/table,
-/obj/item/kitchen/rollingpin,
-/turf/open/floor/iron/cafeteria,
-/area/ruin/space/has_grav/hotel/bar)
-"gr" = (
-/obj/structure/chair/stool/bar/directional/west,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
->>>>>>> master
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/ruin/space/has_grav/hotel/guestroom/room_4)
 "lh" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/poster/official/no_erp{
@@ -1469,9 +1461,16 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "mF" = (
-/obj/structure/dresser,
-/turf/open/floor/wood/parquet,
-/area/ruin/space/has_grav/hotel/guestroom/room_5)
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/has_grav/hotel)
 "mJ" = (
 /turf/open/floor/plating/beach/water/coastline_t,
 /area/ruin/space/has_grav/hotel/pool)
@@ -1751,15 +1750,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-<<<<<<< HEAD
-=======
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/grimy,
-/area/ruin/space/has_grav/hotel/bar)
-"hZ" = (
->>>>>>> master
-/obj/machinery/light/directional/north,
-/turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "ot" = (
 /obj/structure/table/wood/fancy/red,
@@ -3913,26 +3905,12 @@
 /obj/structure/chair/plastic{
 	dir = 8
 	},
-<<<<<<< HEAD
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "Rp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-=======
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/custodial)
-"mF" = (
-/obj/structure/chair/stool/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
->>>>>>> master
-	dir = 4
-	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
 "Ru" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
