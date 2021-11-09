@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	possibly_deactivate_in_loc()
 
 /obj/item/radio/headset/proc/possibly_deactivate_in_loc()
-	if(ishuman(loc))
+	if(ismob(loc))
 		set_listening(should_be_listening)
 	else
 		set_listening(FALSE, actual_setting = FALSE)
