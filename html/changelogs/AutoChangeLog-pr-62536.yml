@@ -1,0 +1,4 @@
+author: "V2LenKagamine"
+delete-after: True
+changes: 
+  - bugfix: "You now drop food trash items on use, putting the actual \"Trash\" in the same hand you used the item in."
