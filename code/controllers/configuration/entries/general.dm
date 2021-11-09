@@ -548,4 +548,4 @@
 	default = 300
 
 /datum/config_entry/string/urgent_ahelp_message
-	default = 300
+	default = "No message provided"
