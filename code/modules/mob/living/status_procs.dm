@@ -244,12 +244,10 @@
 ///////////////////////////////// INCAPACITATED //////////////////////////////////
 
 /// Proc that checks if a mob/living currently has the incapacitated status effect.
-
 /mob/living/proc/is_incapacitated()
 	return has_status_effect(STATUS_EFFECT_INCAPACITATED)
 
 /// Proc that returns the remaining duration of the status efect in deciseconds.
-
 /mob/living/proc/amount_incapacitated()
 	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = is_incapacitated()
 	return incapacitated_status_effect?.duration - world.time || 0
@@ -259,7 +257,6 @@
  * * amount - Amount of time the status effect should be applied for, in deciseconds.
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
-
 /mob/living/proc/Incapacitate(amount, ignore_canstun = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -281,7 +278,6 @@
  * * amount - Amount of time the status effect should be set to, in deciseconds.
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
-
 /mob/living/proc/set_incapacitated(amount, ignore_canstun = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
@@ -307,8 +303,6 @@
  * * amount - Amount of time the status effect should be set to, in deciseconds.
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
-
-
 /mob/living/proc/adjust_incapacitated(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STARTLE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
