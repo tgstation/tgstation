@@ -1210,7 +1210,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
-	icon_state =  "interrogation"
+	icon_state = "interrogation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/security/warden
@@ -1306,6 +1306,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Warehouse"
 	icon_state = "cargo_warehouse"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/cargo/drone_bay
+	name = "\improper Drone Bay"
+	icon_state = "cargo_drone"
 
 /area/cargo/warehouse/upper
 	name = "\improper Upper Warehouse"

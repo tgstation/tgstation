@@ -90,7 +90,7 @@
 	if(mob.force_moving)
 		return FALSE
 
-	var/mob/living/L = mob  //Already checked for isliving earlier
+	var/mob/living/L = mob //Already checked for isliving earlier
 	if(L.incorporeal_move && !is_secret_level(mob.z)) //Move though walls
 		Process_Incorpmove(direct)
 		return FALSE

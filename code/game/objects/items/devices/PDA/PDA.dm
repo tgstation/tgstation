@@ -34,15 +34,29 @@ GLOBAL_LIST_EMPTY(PDAs)
 	light_on = FALSE
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
-	//Main variables
-	var/owner = null // String name of owner
-	var/default_cartridge = 0 // Access level defined by cartridge
-	var/obj/item/cartridge/cartridge = null //current cartridge
-	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
-	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
-	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
-	var/font_mode = "font-family:monospace;" //The currently selected font.
-	var/background_color = "#808000" //The currently selected background color.
+	/// String name of owner
+	var/owner = null
+	/// Access level defined by cartridge
+	var/default_cartridge = 0
+	/// Current cartridge
+	var/obj/item/cartridge/cartridge = null
+	/// Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/mode = 0
+	/// Icon to be overlayed for message alerts. Taken from the pda icon file.
+	var/icon_alert = "pda-r"
+	/// Icon to be overlayed when an active pAI is slotted in.
+	var/icon_pai = "pai_overlay"
+	/// Same as above but for an inactive pAI.
+	var/icon_inactive_pai = "pai_off_overlay"
+	/**
+	 * This int tells DM which font is currently selected and lets DM know when the last font has been selected
+	 * so that it can cycle back to the first font when "toggle font" is pressed again.
+	 */
+	var/font_index = 0
+	/// The currently selected font.
+	var/font_mode = "font-family:monospace;"
+	/// The currently selected background color.
+	var/background_color = "#808000"
 
 	#define FONT_MONO "font-family:monospace;"
 	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
@@ -84,7 +98,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-	var/overlays_x_offset = 0 //x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -179,26 +192,20 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/update_overlays()
 	. = ..()
-	if(!initial(icon))
+	var/init_icon = initial(icon)
+	if(!init_icon)
 		return
-	var/mutable_appearance/overlay = new(initial(icon))
-	overlay.pixel_x = overlays_x_offset
 	if(id)
-		overlay.icon_state = "id_overlay"
-		. += new /mutable_appearance(overlay)
+		. += mutable_appearance(init_icon, "id_overlay")
 	if(inserted_item)
-		overlay.icon_state = "insert_overlay"
-		. += new /mutable_appearance(overlay)
+		. += mutable_appearance(init_icon, "insert_overlay")
 	if(light_on)
-		overlay.icon_state = "light_overlay"
-		. += new /mutable_appearance(overlay)
+		. += mutable_appearance(init_icon, "light_overlay")
 	if(pai)
 		if(pai.pai)
-			overlay.icon_state = "pai_overlay"
-			. += new /mutable_appearance(overlay)
+			. += mutable_appearance(init_icon, icon_pai)
 		else
-			overlay.icon_state = "pai_off_overlay"
-			. += new /mutable_appearance(overlay)
+			. += mutable_appearance(init_icon, icon_inactive_pai)
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr

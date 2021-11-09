@@ -213,7 +213,7 @@
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
-	pickup_sound =  'sound/items/handling/book_pickup.ogg'
+	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 	var/dat //Actual page content
 	var/due_date = 0 //Game time in 1/10th seconds
 	var/author //Who wrote the thing, can be changed by pen or PC. It is not automatically assigned

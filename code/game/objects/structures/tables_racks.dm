@@ -41,6 +41,7 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
+	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/table_carbon)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -258,6 +259,15 @@
 			return TRUE
 	return FALSE
 
+/obj/structure/table/proc/table_carbon(obj/structure/table/the_table, mob/living/carbon/shover, mob/living/carbon/target)
+	SIGNAL_HANDLER
+	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [the_table]!"),
+		span_userdanger("You're shoved onto \the [the_table] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(shover, span_danger("You shove [target.name] onto \the [the_table]!"))
+	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
+	log_combat(src, target, "shoved", "onto [the_table] (table)")
+	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'

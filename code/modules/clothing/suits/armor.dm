@@ -235,6 +235,9 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/swat/centcom
 	name = "\improper CentCom SWAT helmet"
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	worn_icon_state = "centcomspace"
 	icon_state = "centcomspace"
 	inhand_icon_state = "centcomspacehelmet"
 	desc = "A tactical MK.II SWAT helmet boasting better protection and a reasonable fashion sense."

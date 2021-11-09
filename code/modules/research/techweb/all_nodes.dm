@@ -725,6 +725,7 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
+		"assembly_shell",
 		"bot_shell",
 		"controller_shell",
 		"dispenser_shell",
@@ -1688,7 +1689,7 @@
 
 /datum/techweb_node/mech_disabler
 	id = "mech_disabler"
-	display_name =  "Exosuit Weapon (CH-DS \"Peacemaker\" Mounted Disabler)"
+	display_name = "Exosuit Weapon (CH-DS \"Peacemaker\" Mounted Disabler)"
 	description = "A basic piece of mech weaponry"
 	prereq_ids = list("beam_weapons")
 	design_ids = list(
@@ -1762,7 +1763,7 @@
 
 /datum/techweb_node/mech_diamond_drill
 	id = "mech_diamond_drill"
-	display_name =  "Exosuit Diamond Drill"
+	display_name = "Exosuit Diamond Drill"
 	description = "A diamond drill fit for a large exosuit"
 	prereq_ids = list("adv_mining")
 	design_ids = list(

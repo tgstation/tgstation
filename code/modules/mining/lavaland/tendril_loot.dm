@@ -293,7 +293,7 @@
 /obj/item/warp_cube/Destroy()
 	if(!QDELETED(linked))
 		qdel(linked)
-	linked =  null
+	linked = null
 	return ..()
 
 /obj/item/warp_cube/attack_self(mob/user)

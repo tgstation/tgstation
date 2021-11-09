@@ -222,15 +222,16 @@
 
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
-		declare_crit = 0
-		if(user)
-			to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
-		audible_message(span_danger("[src] buzzes oddly!"))
-		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		if(user)
-			oldpatient = user
+	if(!emagged)
+		return
+	declare_crit = FALSE
+	if(user)
+		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
+	audible_message(span_danger("[src] buzzes oddly!"))
+	flick("medibot_spark", src)
+	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(user)
+		oldpatient = user
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -445,7 +446,7 @@
 	if(C.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
-	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
+	if(emagged) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
 	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
@@ -542,7 +543,7 @@
 		if(damagetype_healer == "all" && potential_methods.len)
 			treatment_method = pick(potential_methods)
 
-		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
+		if(!treatment_method && !emagged) //If they don't need any of that they're probably cured!
 			if(C.maxHealth - C.get_organic_health() < heal_threshold)
 				to_chat(src, span_notice("[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
 
@@ -562,7 +563,7 @@
 					var/obj/item/storage/firstaid/FA = firstaid
 					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
 						healies *= 1.1
-					if(emagged == 2)
+					if(emagged)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 						patient.apply_damage_type((healies*1),treatment_method)
 						log_combat(src, patient, "pretended to tend wounds on", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")

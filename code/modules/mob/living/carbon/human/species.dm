@@ -2128,3 +2128,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// This should create a CONSISTENT result, so the icons don't randomly change.
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
 	return
+
+/// Returns the species's scream sound.
+/datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
+	return

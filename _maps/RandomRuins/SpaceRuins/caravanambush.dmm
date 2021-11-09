@@ -91,7 +91,7 @@
 /area/template_noop)
 "av" = (
 /obj/effect/turf_decal/bot_white/right,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -226,7 +226,7 @@
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
 /obj/machinery/button/door/directional/north{
@@ -729,7 +729,7 @@
 /area/shuttle/caravan/freighter3)
 "ie" = (
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1006,7 +1006,7 @@
 "ju" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/iron/airless,

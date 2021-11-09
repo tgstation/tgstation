@@ -1,0 +1,5 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - bugfix: "A small mistake on our contract with Nakamura Engineering made them supply the station with Rad Insulated Atmos Hardsuits. The mistake was fixed so please don't stand near the SM or the HFR with the hardsuit, it was never made for that."
+  - bugfix: "You can't put a PKA inside your Mining hardsuit helmet anymore but you can put it in your hardsuit instead!"
