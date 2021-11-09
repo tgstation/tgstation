@@ -91,7 +91,7 @@
 /datum/mod_theme/rescue
 	name = "rescue"
 	desc = "An advanced version of DeForest Medical Corporation's medical suit, designed for quick rescue of bodies from the most dangerous environments."
-	default_skin = "medical"
+	default_skin = "rescue"
 	skins = list("rescue")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
 	resistance_flags = FIRE_PROOF|ACID_PROOF

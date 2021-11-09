@@ -141,15 +141,12 @@
 /obj/item/mod/control/proc/seal_part(obj/item/part, seal)
 	if(part == boots)
 		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
-		boots.worn_icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
 		wearer.update_inv_shoes()
 	if(part == gauntlets)
 		gauntlets.icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
-		gauntlets.worn_icon_state = "[skin]-gauntlets[seal ? "-sealed" : ""]"
 		wearer.update_inv_gloves()
 	if(part == chestplate)
 		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
-		chestplate.worn_icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
 		if(seal)
 			chestplate.clothing_flags |= chestplate.visor_flags
 			chestplate.flags_inv |= chestplate.visor_flags_inv
@@ -160,7 +157,6 @@
 		wearer.update_inv_w_uniform()
 	if(part == helmet)
 		helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
-		helmet.worn_icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
 		if(seal)
 			helmet.flags_cover |= helmet.visor_flags_cover
 			helmet.flags_inv |= helmet.visor_flags_inv
@@ -177,7 +173,6 @@
 
 /obj/item/mod/control/proc/finish_activation(on)
 	icon_state = "[skin]-control[on ? "-sealed" : ""]"
-	worn_icon_state = "[skin]-control[on ? "-sealed" : ""]"
 	slowdown = on ? slowdown_active : slowdown_inactive
 	if(on)
 		for(var/obj/item/mod/module/module as anything in modules)

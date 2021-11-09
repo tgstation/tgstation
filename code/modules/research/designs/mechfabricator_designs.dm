@@ -1025,9 +1025,9 @@
 /datum/design/mod_armor
 	name = "MOD armor"
 	desc = "External armor for a Modular Suit."
-	id = "mod_armor"
+	id = "mod_armor_standard"
 	build_type = MECHFAB|PROTOLATHE
-	materials = list(/datum/material/iron = 5000, /datum/material/plasma = 1000)
+	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/plasma = 1000)
 	construction_time = 15 SECONDS
 	build_path = /obj/item/mod/construction/armor
 	category = list("MOD Construction", "Equipment")
@@ -1042,7 +1042,20 @@
 /datum/design/mod_armor/engineering
 	id = "mod_armor_engineering"
 	build_path = /obj/item/mod/construction/armor/engineering
+	materials = list(/datum/material/iron = 6000, /datum/material/gold = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/mod_armor/atmospheric
+	id = "mod_armor_atmospheric"
+	build_path = /obj/item/mod/construction/armor/atmospheric
+	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/mod_armor/medical
+	id = "mod_armor_medical"
+	build_path = /obj/item/mod/construction/armor/medical
+	materials = list(/datum/material/iron = 6000, /datum/material/silver = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/mod_paint_kit
 	name = "MOD paint kit"

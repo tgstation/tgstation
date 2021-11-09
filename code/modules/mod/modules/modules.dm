@@ -2,7 +2,7 @@
 	name = "MOD storage module"
 	desc = "A module using nanotechnology to fit a storage inside of the MOD."
 	icon_state = "storage"
-	complexity = 4
+	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage)
 	var/datum/component/storage/concrete/storage
 	var/max_w_class = WEIGHT_CLASS_NORMAL
@@ -576,13 +576,13 @@
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
 
-/obj/item/mod/module/science_scanner/on_activation()
+/obj/item/mod/module/reagent_scanner/on_activation()
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
-/obj/item/mod/module/science_scanner/on_deactivation()
+/obj/item/mod/module/reagent_scanner/on_deactivation()
 	. = ..()
 	if(!.)
 		return
@@ -593,13 +593,13 @@
 	complexity = 0
 	removable = FALSE
 
-/obj/item/mod/module/science_scanner/advanced/on_activation()
+/obj/item/mod/module/reagent_scanner/advanced/on_activation()
 	. = ..()
 	if(!.)
 		return
 	mod.wearer.research_scanner++
 
-/obj/item/mod/module/science_scanner/advanced/on_deactivation()
+/obj/item/mod/module/reagent_scanner/advanced/on_deactivation()
 	. = ..()
 	if(!.)
 		return
@@ -896,6 +896,8 @@
 		if(!do_after(mod.wearer, 1 SECONDS, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
+		if(target_turf.is_blocked_turf())
+			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
@@ -1127,7 +1129,7 @@
 	name = "MOD pathfinder module"
 	desc = "A module linked to an implant, able to find the user and attach itself onto them. To inject the implant, hit someone with it."
 	icon_state = "pathfinder"
-	complexity = 3
+	complexity = 2
 	use_power_cost = 100
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	var/obj/item/implant/mod/implant

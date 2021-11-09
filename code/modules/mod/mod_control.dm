@@ -10,6 +10,7 @@
 	name = "MOD control unit"
 	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments."
 	icon_state = "control"
+	inhand_icon_state = "mod_control"
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
@@ -319,9 +320,12 @@
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
 		return TRUE
-	else if(istype(attacking_item, /obj/item/mod/paint) && paint(user, attacking_item))
-		balloon_alert(user, "suit painted")
-		qdel(attacking_item)
+	else if(istype(attacking_item, /obj/item/mod/paint))
+		if(paint(user, attacking_item))
+			balloon_alert(user, "suit painted")
+			qdel(attacking_item)
+		else
+			balloon_alert(user, "no skins!")
 		return TRUE
 	else if(open && attacking_item.GetID())
 		update_access(user, attacking_item)
