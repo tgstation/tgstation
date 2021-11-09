@@ -488,7 +488,7 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, span_warning("[src] looks visibly upset as you hug [p_them()]."))
 
-	status_clear(1)
+	adjust_status_effects_on_shake_up()
 	set_resting(FALSE)
 	if(body_position != STANDING_UP && !resting && !buckled && !HAS_TRAIT(src, TRAIT_FLOORED))
 		get_up(TRUE)
