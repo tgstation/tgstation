@@ -386,6 +386,8 @@
 
 	var/can_pass_diagonally = NONE
 	if (direction & (direction - 1)) //Check if the first part of the diagonal move is possible
+		if(set_dir_on_move)
+			setDir(direction) //We first set the direction to prevent going through dir sensible object
 		if(direction & NORTH)
 			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : NONE
 		if(!can_pass_diagonally && (direction & EAST))
@@ -398,7 +400,7 @@
 			return
 
 	if(set_dir_on_move)
-		setDir(direction &~ can_pass_diagonally)
+		setDir(direction &~ can_pass_diagonally) //We don't want to have a diagonal direction, so we take the direction of our last hypothetical cardinal move
 
 	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
 
