@@ -64,7 +64,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/exotic/syndie,
