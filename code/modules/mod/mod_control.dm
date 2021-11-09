@@ -121,8 +121,6 @@
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 		switch(theme.type)
-			if(/datum/mod_theme/rescue)
-				piece.color = COLOR_THEME_GLASS
 			if(/datum/mod_theme/prototype)
 				piece.color = COLOR_ASSEMBLY_PURPLE
 			if(/datum/mod_theme/syndicate)

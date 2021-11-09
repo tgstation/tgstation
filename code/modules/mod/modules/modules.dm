@@ -1283,20 +1283,28 @@
 
 /obj/item/mod/module/dna_lock/on_install()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
+	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 
 /obj/item/mod/module/dna_lock/on_uninstall()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
 
 /obj/item/mod/module/dna_lock/on_use()
 	. = ..()
 	if(!.)
 		return
 	dna = mod.wearer.dna.unique_enzymes
+	balloon_alert(mod.wearer, "dna updated")
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+	on_emp(src, severity)
+
+/obj/item/mod/module/dna_lock/on_emp(datum/source, severity)
+	SIGNAL_HANDLER
+
 	dna = null
 
 /obj/item/mod/module/dna_lock/proc/on_mod_activation(datum/source)
