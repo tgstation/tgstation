@@ -61,7 +61,7 @@
 		user.transferItemToLoc(W, src)
 		weapon = W
 		weapon_orig_force = weapon.force
-		if(!emagged)
+		if(!(bot_status_flags & BOT_EMAGGED))
 			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
 
@@ -105,7 +105,7 @@
 
 	chosen_name = name
 	get_targets()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[get_bot_flag(BOT_MODE_ON)]"
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
@@ -129,17 +129,17 @@
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[get_bot_flag(BOT_MODE_ON)]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[get_bot_flag(BOT_MODE_ON)]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
-	if(weapon && emagged)
+	if(weapon && bot_status_flags & BOT_EMAGGED)
 		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
@@ -163,13 +163,13 @@
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID())
-		if(bot_core.allowed(user) && !open && !emagged)
-			locked = !locked
-			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] \the [src] behaviour controls."))
+		if(bot_core.allowed(user) && !bot_status_flags & BOT_COVER_OPEN && !bot_status_flags & BOT_EMAGGED)
+			bot_status_flags ^= BOT_COVER_LOCKED
+			to_chat(user, span_notice("You [bot_status_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] \the [src] behaviour controls."))
 		else
-			if(emagged)
+			if(bot_status_flags & BOT_EMAGGED)
 				to_chat(user, span_warning("ERROR"))
-			if(open)
+			if(bot_status_flags & BOT_COVER_OPEN)
 				to_chat(user, span_warning("Please close the access panel before locking it."))
 			else
 				to_chat(user, span_notice("\The [src] doesn't seem to respect your authority."))
@@ -183,7 +183,7 @@
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 
-	if(!emagged)
+	if(!(bot_status_flags & BOT_EMAGGED))
 		return
 	if(weapon)
 		weapon.force = weapon_orig_force
@@ -205,7 +205,7 @@
 	if(mode == BOT_CLEANING)
 		return
 
-	if(emagged) //Emag functions
+	if(bot_status_flags & BOT_EMAGGED) //Emag functions
 		if(isopenturf(loc))
 			for(var/mob/living/carbon/victim in loc)
 				if(victim != target)
@@ -223,7 +223,7 @@
 		if(!process_scan(target))
 			target = null
 
-	if(!target && emagged) // When emagged, target humans who slipped on the water and melt their faces off
+	if(!target && bot_status_flags & BOT_EMAGGED) // When emagged, target humans who slipped on the water and melt their faces off
 		target = scan(/mob/living/carbon)
 
 	if(!target && pests) //Search for pests to exterminate first.
@@ -327,7 +327,7 @@
 			target = null
 
 		mode = BOT_IDLE
-		icon_state = "cleanbot[on]"
+		icon_state = "cleanbot[get_bot_flag(BOT_MODE_ON)]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [A]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
@@ -340,7 +340,7 @@
 			living_target.death()
 		living_target = null
 
-	else if(emagged) //Emag functions
+	else if(bot_status_flags & BOT_EMAGGED) //Emag functions
 		if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job
@@ -367,7 +367,7 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	on = FALSE
+	bot_status_flags &= ~BOT_MODE_ON
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
@@ -381,7 +381,7 @@
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
 	bot_core = /obj/machinery/bot_core/cleanbot/medbay
-	on = FALSE
+	bot_status_flags = BOT_COVER_LOCKED
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
@@ -391,10 +391,10 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-			Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
-			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-			Maintenance panel panel is [open ? "opened" : "closed"]"})
-	if(!locked || issilicon(user)|| isAdminGhostAI(user))
+			Status: <A href='?src=[REF(src)];power=1'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A><BR>
+			Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>
+			Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]"})
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user)|| isAdminGhostAI(user))
 		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"

@@ -84,25 +84,25 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.7 controls</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
+			<TT><B>Honkomatic Bike Horn Unit v1.0.7 controls</B></TT><BR><BR>
+			Status: []<BR>
+			Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>
+			Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]"},
 
-"<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
+			"<A href='?src=[REF(src)];power=[TRUE]'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		dat += text({"<BR> Auto Patrol: []"},
 
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+			"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 	return dat
 
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
 	var/final = NONE
 	if(check_records)
-		final = final|JUDGE_RECORDCHECK
-	if(emagged)
-		final = final|JUDGE_EMAGGED
+		final |= JUDGE_RECORDCHECK
+	if(bot_status_flags & BOT_EMAGGED)
+		final |= JUDGE_EMAGGED
 	return final
 
 /mob/living/simple_animal/bot/honkbot/proc/retaliate(mob/living/carbon/human/H)
@@ -128,7 +128,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
 	..()
-	if(!emagged)
+	if(!(bot_status_flags & BOT_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!"))
@@ -143,13 +143,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return ..()
 
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!on)
+	if(!(bot_status_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(emagged)
+		if(bot_status_flags & BOT_EMAGGED)
 			honk_attack(A)
 		else
 			if(!C.IsParalyzed() || arrest_type)
@@ -170,7 +170,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
-	if (emagged) //emagged honkbots will spam short and memorable sounds.
+	if (bot_status_flags & BOT_EMAGGED) //emagged honkbots will spam short and memorable sounds.
 		if (!limiting_spam)
 			playsound(src, "honkbot_e", 50, FALSE)
 			limiting_spam = TRUE // prevent spam
@@ -206,7 +206,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				limiting_spam = TRUE
-			if (emagged) // you really don't want to hit an emagged honkbot
+			if (bot_status_flags & BOT_EMAGGED) // you really don't want to hit an emagged honkbot
 				threatlevel = 6 // will never let you go
 			else
 				//HONK once, then leave
@@ -352,7 +352,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(ismob(AM) && (on)) //only if its online
+	if(ismob(AM) && (bot_status_flags & BOT_MODE_ON)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
 			if(!istype(C) || !C || in_range(src, target))

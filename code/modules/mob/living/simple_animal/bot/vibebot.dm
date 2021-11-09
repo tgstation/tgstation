@@ -33,11 +33,11 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += "<TT><B>DiscoMatic Vibebot v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
+	dat += "Status: <A href='?src=[REF(src)];power=1'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A><BR>"
+	dat += "Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]<BR>"
 
-	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	dat += "Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>"
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
 
 	return dat.Join("")
@@ -68,7 +68,7 @@
 		if(mode == BOT_PATROL)
 			bot_patrol()
 
-	if(on)
+	if(bot_status_flags & BOT_MODE_ON)
 		Vibe()
 
 	else

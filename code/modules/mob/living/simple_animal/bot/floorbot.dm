@@ -86,16 +86,16 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += "<TT><B>Floor Repairer Controls v1.1</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
+	dat += "Status: <A href='?src=[REF(src)];power=1'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A><BR>"
+	dat += "Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]<BR>"
 	dat += "Special tiles: "
 	if(tilestack)
 		dat += "<A href='?src=[REF(src)];operation=eject'>Loaded \[[tilestack.amount]/[maxtiles]\]</a><BR>"
 	else
 		dat += "None Loaded<BR>"
 
-	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<BR>"
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	dat += "Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>"
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		dat += "Add tiles to new hull plating: <A href='?src=[REF(src)];operation=autotile'>[autotile ? "Yes" : "No"]</A><BR>"
 		dat += "Place floor tiles: <A href='?src=[REF(src)];operation=place'>[placetiles ? "Yes" : "No"]</A><BR>"
 		dat += "Replace existing floor tiles with custom tiles: <A href='?src=[REF(src)];operation=replace'>[replacetiles ? "Yes" : "No"]</A><BR>"
@@ -139,7 +139,7 @@
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
-	if(!emagged)
+	if(!(bot_status_flags & BOT_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
@@ -202,7 +202,7 @@
 		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
-	if(!target && emagged)
+	if(!target && bot_status_flags & BOT_EMAGGED)
 		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
 			if(isspaceturf(T)) //Check for space
@@ -226,7 +226,7 @@
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
 			target = scan(/turf/open/floor)
 
-	if(!target && emagged) //We are emagged! Time to rip up the floors!
+	if(!target && bot_status_flags & BOT_EMAGGED) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
 		target = scan(/turf/open/floor)
 
@@ -248,9 +248,9 @@
 					target = null
 					path = list()
 					return
-			if(isturf(target) && !emagged)
+			if(isturf(target) && !bot_status_flags & BOT_EMAGGED)
 				repair(target)
-			else if(emagged && isfloorturf(target))
+			else if(bot_status_flags & BOT_EMAGGED && isfloorturf(target))
 				var/turf/open/floor/F = target
 				toggle_magnet()
 				mode = BOT_REPAIRING
@@ -390,10 +390,10 @@
 
 /mob/living/simple_animal/bot/floorbot/update_icon_state()
 	. = ..()
-	icon_state = "[toolbox_color]floorbot[on]"
+	icon_state = "[toolbox_color]floorbot[get_bot_flag(BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
-	on = FALSE
+	bot_status_flags &= ~BOT_MODE_ON
 	target = null
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()

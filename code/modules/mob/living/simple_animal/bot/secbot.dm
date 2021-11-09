@@ -139,12 +139,12 @@
 	dat += text({"
 		<TT><B>Securitron v1.6 controls</B></TT><BR><BR>
 		Status: []<BR>
-		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-		Maintenance panel panel is [open ? "opened" : "closed"]"},
+		Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>
+		Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]"},
 
-		"<A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A>")
+		"<A href='?src=[REF(src)];power=1'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A>")
 
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		dat += text({"<BR>
 		Arrest Unidentifiable Persons: []<BR>
 		Arrest for Unauthorized Weapons: []<BR>
@@ -191,7 +191,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
 	var/final = FALSE
-	if(emagged)
+	if(bot_status_flags & BOT_EMAGGED)
 		final |= JUDGE_EMAGGED
 	if(bot_type == ADVANCED_SEC_BOT)
 		final |= JUDGE_IGNOREMONKEYS
@@ -225,7 +225,7 @@
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
 	..()
-	if(!on) // Bots won't remember if you hit them while they're off.
+	if(!(bot_status_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
 	if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
 		return
@@ -235,7 +235,7 @@
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-	if(!emagged)
+	if(!(bot_status_flags & BOT_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
@@ -252,7 +252,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(!on)
+	if(!(bot_status_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
@@ -284,7 +284,7 @@
 	addtimer(CALLBACK(src, .proc/handcuff_target, target), 60)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
-	if(!on || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!(bot_status_flags & BOT_MODE_ON) || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))

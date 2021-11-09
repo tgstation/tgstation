@@ -57,7 +57,7 @@
 	walk_to(src,0)
 	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
 	do_sparks(3, TRUE, src)
-	on = FALSE
+	bot_status_flags &= ~BOT_MODE_ON
 	new /obj/effect/particle_effect/foam(loc)
 
 	..()
@@ -69,16 +69,16 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][on ? "-on" : null]"
+	icon_state = "[base_icon_state][bot_status_flags & BOT_MODE_ON ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
-	if(on)
+	if(bot_status_flags & BOT_MODE_ON)
 		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
-		. += mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
+		. += mutable_appearance(icon, bot_status_flags & BOT_EMAGGED ? "hygienebot-fire" : "hygienebot-water")
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
@@ -100,7 +100,7 @@
 		do_wash(loc)
 		for(var/AM in loc)
 			do_wash(AM)
-		if(isopenturf(loc) && !emagged)
+		if(isopenturf(loc) && !bot_status_flags & BOT_EMAGGED)
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
@@ -112,7 +112,7 @@
 				mode = BOT_START_PATROL // switch to patrol mode
 
 		if(BOT_HUNT) // hunting for stinkman
-			if(emagged) //lol fuck em up
+			if(bot_status_flags & BOT_EMAGGED) //lol fuck em up
 				currentspeed = 3.5
 				start_washing()
 				mad = TRUE
@@ -214,18 +214,18 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += {"
-			<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
-			Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
-			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-			Maintenance panel is [open ? "opened" : "closed"]"}
+		<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
+		Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A>"]<BR>
+		Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>
+		Maintenance panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]"}
 
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
 
 	return dat.Join("")
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
-	if((emagged) && L.stat != DEAD)
+	if((bot_status_flags & BOT_EMAGGED) && L.stat != DEAD)
 		return FALSE
 
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
@@ -236,7 +236,7 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/hygienebot/proc/do_wash(atom/A)
-	if(emagged)
+	if(bot_status_flags & BOT_EMAGGED)
 		A.fire_act()  //lol pranked no cleaning besides that
 	else
 		A.wash(CLEAN_WASH)
