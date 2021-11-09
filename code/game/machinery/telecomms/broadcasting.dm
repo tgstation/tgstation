@@ -80,6 +80,7 @@
 		current = current.original
 
 /datum/signal/subspace/proc/send_to_receivers()
+	message_admins("send_to_receivers")
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(src)
 	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
