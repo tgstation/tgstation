@@ -102,6 +102,7 @@
 
 /obj/item/grenade/proc/log_grenade(mob/user)
 	log_bomber(user, "has primed a", src, "for detonation")
+	log_combat(user, src, "has primed a", src, "for detonation")
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
