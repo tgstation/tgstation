@@ -61,7 +61,7 @@
 /datum/outfit/job/atmos/rig
 	name = "Atmospheric Technician (Hardsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
+	suit = /obj/item/clothing/suit/space/hardsuit/atmos
 	suit_store = /obj/item/tank/internals/oxygen
 	mask = /obj/item/clothing/mask/gas/atmos
 	internals_slot = ITEM_SLOT_SUITSTORE
