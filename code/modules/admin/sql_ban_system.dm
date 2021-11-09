@@ -1010,7 +1010,6 @@
 	var/is_admin = FALSE
 	if(player_client)
 		build_ban_cache(player_client)
-		to_chat(player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 		to_chat(player_client, span_boldannounce("[banned_player_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
 		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
 			is_admin = TRUE
@@ -1020,7 +1019,6 @@
 	for(var/client/other_player_client in GLOB.clients - player_client)
 		if(other_player_client.address == banned_player_ip || other_player_client.computer_id == banned_player_cid)
 			build_ban_cache(other_player_client)
-			to_chat(other_player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 			to_chat(other_player_client, span_boldannounce("[banned_other_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
 			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
 				is_admin = TRUE
