@@ -398,7 +398,7 @@
 		if(stunned_mob.stat == DEAD || stunned_mob.is_blind())
 			continue
 
-		if(ishuman(stunned_mob))
+		if(!ishuman(stunned_mob))
 			apply_stun(stunned_mob)
 			continue
 
