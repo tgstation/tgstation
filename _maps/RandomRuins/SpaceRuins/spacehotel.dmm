@@ -318,8 +318,8 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "dh" = (
-/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
+/obj/machinery/power/solar_control,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "dj" = (
@@ -3833,6 +3833,11 @@
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/bar)
+"Qy" = (
+/obj/structure/cable,
+/obj/machinery/power/tracker,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/has_grav/hotel)
 "QD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -4827,7 +4832,7 @@ Cl
 Cl
 Cl
 Cl
-eF
+Qy
 Cl
 Cl
 Cl
@@ -7267,7 +7272,7 @@ OT
 QN
 dh
 uK
-uK
+be
 QN
 eN
 cf
@@ -8342,7 +8347,7 @@ Cl
 "}
 (51,1,1) = {"
 wI
-ri
+Qy
 ak
 ak
 ak
