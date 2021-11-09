@@ -476,3 +476,6 @@
 
 //Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
+
+///How much the yeastyglob max health is healed when it passes over a flour decal.
+#define YEASTYGLOB_FLOUR_HEAL_MOD 0.05

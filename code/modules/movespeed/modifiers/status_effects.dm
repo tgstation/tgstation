@@ -16,3 +16,6 @@
 	variable = TRUE
 	blacklisted_movetypes = (FLYING|FLOATING)
 
+/datum/movespeed_modifier/status_effect/speed_stacks
+	variable = TRUE
+	blacklisted_movetypes = (FLYING|FLOATING)

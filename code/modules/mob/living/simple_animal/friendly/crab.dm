@@ -47,7 +47,7 @@
 	icon_dead = "evilcrab_dead"
 	gold_core_spawnable = FRIENDLY_SPAWN
 	health = 40
-	max_health = 40 //slightly more effective health than a human.
+	maxHealth = 40 //slightly more effective health than a human.
 	melee_damage_lower = 2
 	melee_damage_upper = 5
 	var/obj/effect/proc_holder/evil_pinch/pinch
@@ -56,7 +56,7 @@
 	. = ..()
 	pinch = new(src, src)
 	AddAbility(pinch)
-	//TODO cell sample
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_EVIL_CRAB, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/crab/evil/melee_attack(atom/target)
 	. = ..()
@@ -138,7 +138,7 @@
 	sinister_creature.start_pulling(human_target, force = MOVE_FORCE_EXTREMELY_STRONG)
 	human_target.apply_status_effect(STATUS_EFFECT_IMMOBILIZING_GRAB, 10 SECONDS)
 	playsound(owner, 'sound/effects/wounds/crack1.ogg', 70)
-	addtimer(CALLBACK(human_target, .proc/emote, "scream"), 1 SECONDS)
+	addtimer(CALLBACK(human_target, /mob/proc/emote, "scream"), 1 SECONDS)
 	remove_ranged_ability()
 
 	var/datum/action/cooldown/our_action = action

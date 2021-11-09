@@ -487,3 +487,195 @@
 
 	if(inhabitant.reagents.get_reagent_amount(/datum/reagent/consumable/milk) < 20)
 		inhabitant.reagents.add_reagent(/datum/reagent/consumable/milk, 2)
+
+/mob/living/simple_animal/hostile/ooze/yeastyglob
+	name = "Yeastyglob"
+	desc = "A frothy symbiotic organism composed of yeast cells in an oozy host matrix, commonly found as a pest in starch yards and Dwarven brewing cellars."
+	icon_state = "yeastyglob"
+	icon_living = "yeastyglob"
+	icon_dead = "yeastyglob_dead"
+	speed = 0
+	health = 120
+	maxHealth = 120
+	melee_damage_lower = 8
+	melee_damage_upper = 12
+	obj_damage = 10
+	deathmessage = "slackens and collapses!"
+	edible_food_types = GRAIN | FRUIT
+	melee_damage_type = STAMINA
+	///The ability lets you produce dough at the cost of nutrients.
+	var/datum/action/excrete/dough/dough_excretion
+	///The ability lets you produce cake batter at the high cost of nutrients.
+	var/datum/action/excrete/batter/batter_excretion
+	///The ability to shoot that lets the ooze fire a volley of boozy projectiles.
+	var/obj/effect/proc_holder/moonshine_volley/booze_squirt
+
+/mob/living/simple_animal/hostile/ooze/yeastyglob/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/venomous, /datum/reagent/consumable/ethanol/moonshine, 5)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/flourwalk)
+	dough_excretion = new()
+	dough_excretion.Grant(src)
+	batter_excretion = new()
+	batter_excretion.Grant(src)
+	booze_squirt = new(src, src)
+	AddAbility(booze_squirt)
+
+/mob/living/simple_animal/hostile/ooze/yeastyglob/Destroy()
+	. = ..()
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	QDEL_NULL(dough_excretion)
+	QDEL_NULL(batter_excretion)
+	QDEL_NULL(booze_squirt)
+
+/mob/living/simple_animal/hostile/ooze/yeastyglob/add_cell_sample()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_YEASTYGLOB, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+///This proc consumes flour decals on the floor and grants the ooze nutrion, a small heal and a variable speed boost.
+/mob/living/simple_animal/hostile/ooze/yeastyglob/proc/flourwalk(datum/source)
+	SIGNAL_HANDLER
+	var/turf/dirty_floor = loc
+	if(!isturf(dirty_floor))
+		return
+
+	var/obj/effect/decal/cleanable/food/flour/delicious_flour = locate(/obj/effect/decal/cleanable/food/flour) in dirty_floor
+	if(!delicious_flour)
+		return
+
+	heal_overall_damage(maxHealth * YEASTYGLOB_FLOUR_HEAL_MOD)
+	if(delicious_flour.reagents)
+		delicious_flour.reagents.trans_to(src, delicious_flour.reagents.total_volume, transfered_by = src)
+	apply_status_effect(STATUS_EFFECT_SPEED_STACKS)
+	qdel(delicious_flour)
+
+/datum/action/excrete
+	name = "orange excretion"
+	desc = "Yell at coders if you see this."
+	icon_icon = 'icons/obj/hydroponics/harvest.dmi'
+	button_icon_state = "orange"
+	background_icon_state = "bg_changeling"
+	///The  type of atom spawned when this ability is triggered
+	var/obj/excreted_path= /obj/item/food/grown/citrus/orange
+	///How much nutrition this costs oozes performing this action
+	var/ooze_nutrition_cost = 20
+
+/datum/action/excrete/Trigger()
+	. = ..()
+	if(!do_after(owner, 1 SECONDS))
+		return
+	if(istype(owner, /mob/living/simple_animal/hostile/ooze))
+		var/mob/living/simple_animal/hostile/ooze/ooze_owner = owner
+		if(ooze_owner.ooze_nutrition < ooze_nutrition_cost)
+			to_chat(ooze_owner, span_warning("You are too hungry to do this!"))
+			return
+		else
+			ooze_owner.adjust_ooze_nutrition(-ooze_nutrition_cost)
+	var/obj/excreted_atom = new excreted_path(owner.drop_location())
+	excreted_atom.pixel_x = rand(-8, 8)
+	excreted_atom.pixel_y = rand(-8, 8)
+	owner.balloon_alert_to_viewers("excreted [excreted_atom.name]")
+	playsound(owner, 'sound/effects/splat.ogg', 30)
+
+/datum/action/excrete/dough
+	name = "excrete dough"
+	icon_icon = 'icons/obj/food/food_ingredients.dmi'
+	button_icon_state = "dough"
+	desc = "Excrete a well-kneded bread dough from your body."
+	excreted_path = /obj/item/food/dough
+
+/datum/action/excrete/batter
+	name = "excrete cake batter"
+	icon_icon = 'icons/obj/food/food_ingredients.dmi'
+	button_icon_state = "cakebatter"
+	desc = "Excrete an airy cake batter from your body."
+	excreted_path = /obj/item/food/cakebatter
+	ooze_nutrition_cost = 40
+
+/obj/effect/proc_holder/moonshine_volley
+	name = "Moonshine volley"
+	desc = "Shoot a volley of boozy projectiles."
+	active = FALSE
+	action_icon = 'icons/obj/drinks.dmi'
+	action_icon_state = "moonshinebottle"
+	action_background_icon_state = "bg_changeling"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	base_action = /datum/action/cooldown/spell_like
+	///How long cooldown before we can use the ability again
+	var/cooldown = 12 SECONDS
+	///How much nutrion the ability costs if an ooze uses it.
+	var/ooze_nutrition_cost = 40
+	///How many projectiles we will shoot per volley
+	var/shots = 5
+
+/obj/effect/proc_holder/moonshine_volley/Initialize(mapload, mob/living/new_owner)
+	. = ..()
+	if(!action)
+		return
+	var/datum/action/cooldown/our_action = action
+	our_action.cooldown_time = cooldown
+
+/obj/effect/proc_holder/moonshine_volley/Click(location, control, params)
+	. = ..()
+	if(!isliving(usr))
+		return TRUE
+	fire(usr)
+
+/obj/effect/proc_holder/moonshine_volley/fire(mob/living/user)
+	if(active)
+		remove_ranged_ability(span_notice("You relax and let your liquids diffuse throughout your body."))
+	else
+		add_ranged_ability(user, span_notice("You gather your fermented liquids. <B>Left-click to shoot a boozy volley!</B>"), TRUE)
+
+/obj/effect/proc_holder/moonshine_volley/InterceptClickOn(mob/living/caller, params, atom/target)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/living/mob_owner = owner.resolve()
+
+	if(!mob_owner)
+		return
+
+	if(mob_owner.stat)
+		remove_ranged_ability()
+		return
+
+	if(!action.IsAvailable())
+		remove_ranged_ability()
+		to_chat(mob_owner, span_notice("This ability is still on cooldown."))
+		return
+
+	if(istype(mob_owner, /mob/living/simple_animal/hostile/ooze))
+		var/mob/living/simple_animal/hostile/ooze/ooze_owner = mob_owner
+		if(ooze_owner.ooze_nutrition < ooze_nutrition_cost)
+			to_chat(ooze_owner, span_warning("You are too hungry to do this!"))
+			remove_ranged_ability()
+			return
+		else
+			ooze_owner.adjust_ooze_nutrition(-ooze_nutrition_cost)
+	for(var/iteration in 0 to shots)
+		addtimer(CALLBACK(src, .proc/liquor_shot), 0.5 SECONDS * iteration)
+	remove_ranged_ability()
+
+	var/datum/action/cooldown/our_action = action
+	our_action.StartCooldown()
+
+	return TRUE
+
+/obj/effect/proc_holder/moonshine_volley/proc/liquor_shot()
+	var/mob/living/mob_owner = owner.resolve()
+	var/squirt_angle
+
+	if(!mob_owner)
+		return
+
+	if(!mob_owner.client)
+		squirt_angle = rand(0, 359)
+	else
+		squirt_angle = mouse_angle_from_client(mob_owner.client)
+
+	var/obj/projectile/boozy/moonshine_shot = new(mob_owner.loc)
+	moonshine_shot.firer = mob_owner
+	moonshine_shot.fire(squirt_angle)
+	playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)

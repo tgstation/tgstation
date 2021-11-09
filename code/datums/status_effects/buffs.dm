@@ -556,3 +556,23 @@
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
 
+///Amount of speedup per refresh of /datum/status_effect/speed_stacks
+#define SPEED_STACKS_SPEEDUP -0.3
+/datum/status_effect/speed_stacks
+	id = "speed_stacks"
+	duration = 2 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	var/stacks = 1
+
+/datum/status_effect/speed_stacks/on_apply()
+	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/speed_stacks, TRUE, multiplicative_slowdown = stacks * -0.3)
+	return ..()
+
+/datum/status_effect/speed_stacks/on_remove()
+	owner.remove_actionspeed_modifier(/datum/movespeed_modifier/status_effect/speed_stacks, TRUE)
+	return ..()
+
+/datum/status_effect/speed_stacks/refresh(effect, ...)
+	. = ..()
+	stacks++
+	owner.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/status_effect/speed_stacks, TRUE, multiplicative_slowdown = stacks * -0.3)

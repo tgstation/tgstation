@@ -251,6 +251,28 @@
 		/datum/reagent/fuel/oil = -1)
 
 	resulting_atoms = list(/mob/living/basic/pigeon = 1)
+
+/datum/micro_organism/cell_line/evil_crab
+	desc = "Sinister looking crustacean cells"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein,
+		/datum/reagent/yuck)
+
+	supplementary_reagents = list(
+		/datum/reagent/fuel/unholywater = 5,
+		/datum/reagent/consumable/hell_ramen = 3,
+		/datum/reagent/consumable/ethanol/sea_breeze = 2,
+		/datum/reagent/consumable/ethanol/squirt_cider = 2,
+		/datum/reagent/toxin/bonehurtingjuice = 2,
+		/datum/reagent/consumable/salt = 1,)
+
+	suppressive_reagents = list(
+		/datum/reagent/toxin/carpotoxin = -3,
+		/datum/reagent/lead = -2,
+		/datum/reagent/consumable/mayonnaise = -2,
+		/datum/reagent/water/holywater = -2,)
+
+	resulting_atoms = list(/mob/living/basic/crab/evil = 1)
 ///////////////////////////////////////////
 /// SLIMES, OOZES & BLOBS ///
 //////////////////////////////////////////
@@ -359,6 +381,33 @@
 
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/grapes = 1)
+
+/datum/micro_organism/cell_line/yeastyglob
+	desc = "Yeast-symbiotic ooze particles"
+	required_reagents = list(
+		/datum/reagent/consumable/nutriment/protein)
+
+	supplementary_reagents = list(
+		/datum/reagent/consumable/honey = 4,
+		/datum/reagent/consumable/corn_syrup = 3,
+		/datum/reagent/consumable/grapejuice = 3,
+		/datum/reagent/consumable/peachjuice = 3,
+		/datum/reagent/consumable/rice = 2,
+		/datum/reagent/consumable/applejuice = 2,
+		/datum/reagent/consumable/enzyme = 1,
+		/datum/reagent/consumable/mold = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 1)
+
+	suppressive_reagents = list(
+		/datum/reagent/rat_spit = -6,
+		/datum/reagent/lead = -2,
+		/datum/reagent/consumable/ethanol/rubberneck = -2,
+		/datum/reagent/consumable/ethanol/stinger = -2,
+		/datum/reagent/consumable/eggrot = -1,
+		/datum/reagent/consumable/salt = -1)
+
+	virus_suspectibility = 0
+	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/yeastyglob = 1)
 
 ////////////////////
 //// MISC ////

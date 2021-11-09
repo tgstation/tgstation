@@ -10,7 +10,8 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/mouse = 1,
 		/datum/micro_organism/cell_line/chicken = 1,
 		/datum/micro_organism/cell_line/cockroach = 2,
-	),
+		/datum/micro_organism/cell_line/pigeon = 1,
+		/datum/micro_organism/cell_line/yeastyglob = 1),
 
 	CELL_LINE_TABLE_MOIST = list(
 		/datum/micro_organism/cell_line/gelatinous_cube = 2,
@@ -18,7 +19,8 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/slime = 2,
 		/datum/micro_organism/cell_line/snake = 1,
 		/datum/micro_organism/cell_line/carp = 1,
-		/datum/micro_organism/cell_line/cockroach = 1),
+		/datum/micro_organism/cell_line/cockroach = 1,
+		/datum/micro_organism/cell_line/evil_crab = 1),
 
 	CELL_LINE_TABLE_BLOB = list(
 		/datum/micro_organism/cell_line/blobbernaut = 1,
@@ -72,7 +74,9 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/walking_mushroom = 2,
 		/datum/micro_organism/cell_line/leaper = 2,
 		/datum/micro_organism/cell_line/mega_arachnid = 1),
-	CELL_LINE_TABLE_PIGEON = list(/datum/micro_organism/cell_line/pigeon = 1)
+	CELL_LINE_TABLE_PIGEON = list(/datum/micro_organism/cell_line/pigeon = 1),
+	CELL_LINE_TABLE_EVIL_CRAB = list(/datum/micro_organism/cell_line/evil_crab = 1),
+	CELL_LINE_TABLE_YEASTYGLOB = list(/datum/micro_organism/cell_line/yeastyglob = 1)
 	))
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus

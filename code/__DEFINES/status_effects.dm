@@ -44,6 +44,8 @@
 #define STATUS_EFFECT_MAYHEM /datum/status_effect/mayhem //Total bloodbath. Activated by orb of mayhem pickup/bottle of mayhem item.
 ///Has had their health buffed 10% to 30% depending if the effect has been reapplied.
 #define STATUS_EFFECT_HEALTH_BUFFED /datum/status_effect/limited_buff/health_buff
+///Gives a short speed boost that grants greater speed every time the buff is refreshed.
+#define STATUS_EFFECT_SPEED_STACKS  /datum/status_effect/speed_stacks
 
 /////////////
 // DEBUFFS //
