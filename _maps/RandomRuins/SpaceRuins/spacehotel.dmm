@@ -359,6 +359,10 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/hotel/dock)
+"dN" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/sepia,
+/area/ruin/space/has_grav/hotel/pool)
 "dO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -620,7 +624,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "gs" = (
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 1
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -810,9 +814,8 @@
 /turf/open/floor/carpet/blue,
 /area/ruin/space/has_grav/hotel)
 "hZ" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/stone,
-/area/ruin/space/has_grav/hotel/bar)
+/turf/open/floor/catwalk_floor,
+/area/ruin/space/has_grav/hotel/dock)
 "ia" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/freezer,
@@ -1765,7 +1768,7 @@
 /area/ruin/space/has_grav/hotel)
 "oZ" = (
 /obj/machinery/atmospherics/components/tank/air{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -3908,8 +3911,10 @@
 /turf/open/floor/iron/sepia,
 /area/ruin/space/has_grav/hotel/pool)
 "Rp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel/custodial)
 "Ru" = (
 /obj/machinery/door/airlock/external/glass,
@@ -6943,7 +6948,7 @@ mK
 mK
 mK
 Qc
-mL
+dN
 JY
 Cl
 Cl
