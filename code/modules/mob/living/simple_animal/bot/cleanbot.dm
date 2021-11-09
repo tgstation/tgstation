@@ -163,7 +163,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID())
-		if(bot_core.allowed(user) && !bot_status_flags & BOT_COVER_OPEN && !bot_status_flags & BOT_EMAGGED)
+		if(bot_core.allowed(user) && !(bot_status_flags & BOT_COVER_OPEN) && !(bot_status_flags & BOT_EMAGGED))
 			bot_status_flags ^= BOT_COVER_LOCKED
 			to_chat(user, span_notice("You [bot_status_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] \the [src] behaviour controls."))
 		else

@@ -538,7 +538,7 @@
 		if(damagetype_healer == "all" && potential_methods.len)
 			treatment_method = pick(potential_methods)
 
-		if(!treatment_method && !bot_status_flags & BOT_EMAGGED) //If they don't need any of that they're probably cured!
+		if(!treatment_method && !(bot_status_flags & BOT_EMAGGED)) //If they don't need any of that they're probably cured!
 			if(C.maxHealth - C.get_organic_health() < heal_threshold)
 				to_chat(src, span_notice("[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
 

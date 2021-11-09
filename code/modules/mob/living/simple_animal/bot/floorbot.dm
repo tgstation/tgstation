@@ -248,7 +248,7 @@
 					target = null
 					path = list()
 					return
-			if(isturf(target) && !bot_status_flags & BOT_EMAGGED)
+			if(isturf(target) && !(bot_status_flags & BOT_EMAGGED))
 				repair(target)
 			else if(bot_status_flags & BOT_EMAGGED && isfloorturf(target))
 				var/turf/open/floor/F = target

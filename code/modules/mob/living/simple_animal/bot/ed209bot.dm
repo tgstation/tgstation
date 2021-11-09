@@ -98,7 +98,7 @@
 		var/mob/toshoot = pick(targets)
 		if(toshoot)
 			targets -= toshoot
-			if(prob(50) && !bot_status_flags & BOT_EMAGGED) // Temporarily emags it
+			if(prob(50) && !(bot_status_flags & BOT_EMAGGED)) // Temporarily emags it
 				bot_status_flags |= BOT_EMAGGED
 				set_weapon()
 				shoot_at(toshoot)

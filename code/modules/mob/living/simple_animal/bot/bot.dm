@@ -886,7 +886,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return TRUE
 	add_fingerprint(usr)
 
-	if((href_list["power"]) && (bot_core.allowed(usr) || !bot_status_flags & BOT_COVER_LOCKED))
+	if((href_list["power"]) && (bot_core.allowed(usr) || !(bot_status_flags & BOT_COVER_LOCKED)))
 		if(bot_status_flags & BOT_MODE_ON)
 			turn_off()
 		else
@@ -977,7 +977,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!allow_pai || !key)
 		to_chat(user, span_warning("[src] is not compatible with [card]!"))
 		return
-	if(bot_status_flags & BOT_COVER_LOCKED || !bot_status_flags & BOT_COVER_OPEN)
+	if(bot_status_flags & BOT_COVER_LOCKED || !(bot_status_flags & BOT_COVER_OPEN))
 		to_chat(user, span_warning("The personality slot is locked."))
 		return
 	if(!card.pai || !card.pai.mind)
