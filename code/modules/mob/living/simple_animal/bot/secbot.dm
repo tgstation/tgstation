@@ -85,7 +85,7 @@
 /mob/living/simple_animal/bot/secbot/genesky
 	name = "Officer Genesky"
 	desc = "A beefy variant of the standard securitron model."
-	health = "50"
+	health = 50
 	faction = list("nanotrasenprivate")
 	bot_status_flags = BOT_MODE_ON | BOT_COVER_LOCKED | BOT_EMAGGED
 
