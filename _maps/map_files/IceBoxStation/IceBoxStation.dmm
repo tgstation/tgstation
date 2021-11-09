@@ -6617,11 +6617,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
-"bga" = (
-/obj/machinery/destructive_scanner,
-/obj/effect/turf_decal/stripes/end,
-/turf/open/floor/iron,
-/area/hallway/primary/starboard)
 "bgc" = (
 /turf/closed/wall/r_wall,
 /area/science/lab)
@@ -18642,11 +18637,11 @@
 	freq = 1400;
 	location = "Research Division"
 	},
-/obj/structure/plasticflaps,
 /obj/effect/turf_decal/delivery,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/plasticflaps/opaque,
 /turf/open/floor/iron,
 /area/maintenance/starboard)
 "fIw" = (
@@ -20100,7 +20095,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/machinery/light/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -34159,13 +34153,13 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "nFk" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "9;12;47"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "nFn" = (
@@ -51165,6 +51159,7 @@
 	dir = 4
 	},
 /obj/machinery/disposal/bin,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/exit/departure_lounge)
 "woa" = (
@@ -100296,7 +100291,7 @@ tut
 tut
 hof
 pXx
-bga
+aYV
 mGd
 aYV
 bfX
