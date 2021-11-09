@@ -9,7 +9,11 @@
 
 	GLOB.carbon_list += src
 	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/disarm_collision)
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -1297,13 +1301,20 @@
 	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
 		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-/mob/living/carbon/proc/disarm_collision(mob/living/carbon/collateral, mob/living/carbon/shover, mob/living/carbon/target)
+/mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
+	if(can_be_shoved_into)
+		return COMSIG_CARBON_ACT_SOLID
+
+/mob/living/carbon/proc/disarm_collision(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+	SIGNAL_HANDLER
+	if(src == target || !can_be_shoved_into)
+		return
 	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-	if(!collateral.is_shove_knockdown_blocked())
-		collateral.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-	target.visible_message(span_danger("[shover] shoves [target.name] into [collateral.name]!"),
-		span_userdanger("You're shoved into [collateral.name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into [collateral.name]!"))
-	log_combat(src, target, "shoved", "into [collateral.name]")
+	if(!is_shove_knockdown_blocked())
+		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
+		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into [name]!"))
+	log_combat(src, target, "shoved", "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
