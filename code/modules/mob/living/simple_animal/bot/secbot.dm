@@ -56,6 +56,11 @@
 	auto_patrol = TRUE
 	commissioned = TRUE
 
+/mob/living/simple_animal/bot/secbot/beepsky/officer
+	name = "Officer Beepsky"
+	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too."
+	health = 45
+
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	health = 45
@@ -77,6 +82,12 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
 
+/mob/living/simple_animal/bot/secbot/genesky
+	name = "Officer Genesky"
+	desc = "A beefy variant of the standard securitron model."
+	health = "50"
+	faction = list("nanotrasenprivate")
+	bot_status_flags = BOT_MODE_ON | BOT_COVER_LOCKED | BOT_EMAGGED
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
