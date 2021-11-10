@@ -114,6 +114,7 @@
 /obj/machinery/field
 	///Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 	var/has_shocked = FALSE
+	generic_can_allow_through = FALSE
 
 /obj/machinery/field/Bumped(atom/movable/mover)
 	if(has_shocked)

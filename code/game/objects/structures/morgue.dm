@@ -387,6 +387,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "Apply corpse before closing."
 	icon_state = "morguet"
 	pass_flags_self = PASSTABLE
+	generic_can_allow_through = FALSE
 
 /obj/structure/tray/m_tray/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

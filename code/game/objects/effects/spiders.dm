@@ -6,6 +6,7 @@
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 15
+	generic_can_allow_through = FALSE
 
 /obj/structure/spider/Initialize(mapload)
 	. = ..()

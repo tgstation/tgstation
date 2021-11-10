@@ -6,6 +6,7 @@
 	pressure_resistance = 10
 
 	hud_type = /datum/hud/living
+	generic_can_allow_through = FALSE
 
 	var/resize = 1 ///Badminnery resize
 	var/lastattacker = null

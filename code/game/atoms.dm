@@ -359,7 +359,6 @@
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE)
 	if(!density)
 		return TRUE
 
@@ -1919,13 +1918,13 @@
 	density = new_value
 
 /atom/movable/set_density(new_value)
-	if(density == new_value)
-		return
 	. = ..()
+	if(isnull(.))
+		return
 
-	if(.) //if we are dense, then add ourselves to our turfs bumpable contents list
+	if(new_value) //if we are dense, then add ourselves to our turfs bumpable contents list
 		for(var/turf/turf_loc in locs)
-			LAZYSET(turf_loc.bumpable_contents, src)
+			LAZYOR(turf_loc.bumpable_contents, src)
 	else
 		for(var/turf/turf_loc in locs)
 			LAZYREMOVE(turf_loc.bumpable_contents, src)
@@ -1948,29 +1947,6 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
-
-/atom/proc/benchmark(seconds = 5)
-	var/iterations = 0
-	var/duration = seconds SECONDS
-	var/turf/our_loc = get_turf(src)
-	var/list/cache = typecacheof(/turf)
-	var/end_time = world.timeofday + duration
-
-	while(world.timeofday < end_time)
-		var/i = isturf(our_loc)
-		iterations++
-
-	message_admins("isturf(our_turf) was able to complete [iterations] iterations in [seconds] seconds!")
-	iterations = 0
-	end_time = world.timeofday + duration
-
-	while(world.timeofday < end_time)
-		var/i = is_type_in_typecache(our_loc, cache)
-		iterations++
-
-	message_admins("is_type_in_typecache(our_loc, cache) was able to complete [iterations] iterations in [seconds] seconds!")
-	iterations = 0
-	end_time = world.timeofday + duration
 
 
 /**

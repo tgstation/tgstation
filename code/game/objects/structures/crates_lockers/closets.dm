@@ -11,6 +11,7 @@
 	integrity_failure = 0.25
 	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	generic_can_allow_through = FALSE
 
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj

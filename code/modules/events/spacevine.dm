@@ -326,6 +326,7 @@
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
+	generic_can_allow_through = FALSE
 	var/energy = 0
 	var/datum/spacevine_controller/master = null
 	var/list/mutations = list()

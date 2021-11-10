@@ -231,6 +231,7 @@
 	locked = TRUE
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	generic_can_allow_through = FALSE
 	speech_span = SPAN_ROBOT
 	var/threshold = 500
 	var/static/list/approved_passengers = list()

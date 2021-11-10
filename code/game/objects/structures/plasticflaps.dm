@@ -8,6 +8,7 @@
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
+	generic_can_allow_through = FALSE
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE

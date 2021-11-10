@@ -93,6 +93,7 @@
 	icon_state = "blob"
 	icon = 'icons/mob/blob.dmi'
 	color = rgb(145, 150, 0)
+	generic_can_allow_through = FALSE
 
 /obj/effect/gluttony/CanAllowThrough(atom/movable/mover, border_dir)//So bullets will fly over and stuff.
 	. = ..()

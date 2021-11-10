@@ -158,6 +158,7 @@
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	max_integrity = 50
 	density = TRUE
+	generic_can_allow_through = FALSE
 
 /obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

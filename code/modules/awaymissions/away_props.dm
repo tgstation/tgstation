@@ -5,6 +5,7 @@
 	icon_state = "field_dir"
 	invisibility = INVISIBILITY_MAXIMUM
 	anchored = TRUE
+	generic_can_allow_through = FALSE
 
 /obj/effect/oneway/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -35,6 +36,7 @@
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = "blocker" //todo make this actually look fine when visible
 	anchored = TRUE
+	generic_can_allow_through = FALSE
 	var/list/blocked_types = list()
 	var/reverse = FALSE //Block if path not present
 

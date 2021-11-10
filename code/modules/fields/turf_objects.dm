@@ -22,6 +22,7 @@
 /obj/effect/abstract/proximity_checker/advanced/field_turf
 	name = "energy field"
 	desc = "Get off my turf!"
+	generic_can_allow_through = FALSE
 
 /obj/effect/abstract/proximity_checker/advanced/field_turf/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -43,6 +44,7 @@
 /obj/effect/abstract/proximity_checker/advanced/field_edge
 	name = "energy field edge"
 	desc = "Edgy description here."
+	generic_can_allow_through = FALSE
 
 /obj/effect/abstract/proximity_checker/advanced/field_edge/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

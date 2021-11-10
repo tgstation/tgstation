@@ -28,6 +28,7 @@
 	var/secure = FALSE //Whether or not this creates a secure windoor
 	var/state = "01" //How far the door assembly has progressed
 	CanAtmosPass = ATMOS_PASS_PROC
+	generic_can_allow_through = FALSE
 
 /obj/structure/windoor_assembly/Initialize(mapload, loc, set_dir)
 	. = ..()

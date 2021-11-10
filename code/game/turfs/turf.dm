@@ -319,18 +319,28 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
+/turf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(arrived.density || !arrived.generic_can_allow_through)
+		LAZYADD(bumpable_contents, arrived)
+
+/turf/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone.density || !gone.generic_can_allow_through)
+		LAZYREMOVE(bumpable_contents, gone)
+
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/canPassSelf = TRUE //TODOKYLER: this is sin why
 	var/movement_direction = get_dir(src, mover)
-	if((mover.movement_type & PHASING) || canPassSelf = CanPass(mover, movement_direction))
+	var/canPassSelf = CanPass(mover, movement_direction)
+	if((mover.movement_type & PHASING) || canPassSelf)
 
-		for(var/atom/movable/contents_movable as anything in bumpable_contents)
-			if(contents_movable == mover || contents_movable == mover.loc) // Multi tile objects and moving out of other objects
+		for(var/atom/movable/contents_movable as anything in bumpable_contents)//buckled is automatically excluded
+			if(contents_movable == mover || contents_movable == mover.loc || (mover in contents_movable.buckled_mobs)) // Multi tile objects and moving out of other objects
 				continue
 
 			if(!contents_movable.CanPass(mover, movement_direction))

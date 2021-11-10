@@ -11,6 +11,7 @@
 	range = -1
 	include_user = TRUE
 	cooldown_min = 50 //12 deciseconds reduction per rank
+	generic_can_allow_through = FALSE
 	var/wall_type = /obj/effect/forcefield/wizard
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets,mob/user = usr)

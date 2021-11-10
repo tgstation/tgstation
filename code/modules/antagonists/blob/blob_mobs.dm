@@ -18,6 +18,7 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
+	generic_can_allow_through = FALSE
 	var/mob/camera/blob/overmind = null
 	var/obj/structure/blob/special/factory = null
 	var/independent = FALSE

@@ -13,6 +13,7 @@
 	max_integrity = 20
 
 	resistance_flags = FIRE_PROOF
+	generic_can_allow_through = FALSE
 
 	/// The stored tank. If this is a path, it gets created into contents at Initialize.
 	var/obj/item/tank

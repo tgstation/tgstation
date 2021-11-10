@@ -38,6 +38,7 @@
 	light_system = MOVABLE_LIGHT
 	light_range = 6
 	light_on = FALSE
+	generic_can_allow_through = FALSE
 	var/mode = MINEDRONE_COLLECT
 	var/obj/item/gun/energy/kinetic_accelerator/minebot/stored_gun
 

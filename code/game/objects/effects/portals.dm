@@ -19,6 +19,7 @@
 	anchored = TRUE
 	density = TRUE // dense for receiving bumbs
 	layer = HIGH_OBJ_LAYER
+	generic_can_allow_through = FALSE
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
