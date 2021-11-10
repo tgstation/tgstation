@@ -410,7 +410,7 @@
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitrium = MINIMUM_MOLE_COUNT,
-		"MAX_TEMP" = 45
+		"MAX_TEMP" = T0C + 70 //Pretty warm, explicitly not fire temps. Time bombs are cool, but not that cool. If it makes you feel any better it's close
 	)
 
 /datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
