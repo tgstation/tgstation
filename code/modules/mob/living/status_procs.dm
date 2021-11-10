@@ -3,8 +3,8 @@
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 #define IS_STUN_IMMUNE(source, ignore_canstun) ((source.status_flags & GODMODE) || (!ignore_canstun && (!(source.status_flags & CANKNOCKDOWN) || HAS_TRAIT(source, TRAIT_STUNIMMUNE))))
-////////////////////////////// STUN ////////////////////////////////////
 
+/* STUN */
 /mob/living/proc/IsStun() //If we're stunned
 	return has_status_effect(STATUS_EFFECT_STUN)
 
@@ -60,8 +60,7 @@
 		S = apply_status_effect(STATUS_EFFECT_STUN, amount)
 	return S
 
-///////////////////////////////// KNOCKDOWN /////////////////////////////////////
-
+/* KNOCKDOWN */
 /mob/living/proc/IsKnockdown() //If we're knocked down
 	return has_status_effect(STATUS_EFFECT_KNOCKDOWN)
 
@@ -117,7 +116,7 @@
 		K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount)
 	return K
 
-///////////////////////////////// IMMOBILIZED ////////////////////////////////////
+/* IMMOBILIZED */
 /mob/living/proc/IsImmobilized() //If we're immobilized
 	return has_status_effect(STATUS_EFFECT_IMMOBILIZED)
 
@@ -173,7 +172,7 @@
 		I = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount)
 	return I
 
-///////////////////////////////// PARALYZED //////////////////////////////////
+/* PARALYZED */
 /mob/living/proc/IsParalyzed() //If we're paralyzed
 	return has_status_effect(STATUS_EFFECT_PARALYZED)
 
@@ -229,7 +228,7 @@
 		P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount)
 	return P
 
-///////////////////////////////// INCAPACITATED //////////////////////////////////
+/* INCAPACITATED */
 
 /// Proc that checks if a mob/living currently has the incapacitated status effect.
 /mob/living/proc/is_incapacitated()
@@ -319,7 +318,7 @@
 	AdjustImmobilized(amount)
 
 
-//////////////////UNCONSCIOUS
+/* UNCONSCIOUS */
 /mob/living/proc/IsUnconscious() //If we're unconscious
 	return has_status_effect(STATUS_EFFECT_UNCONSCIOUS)
 
@@ -368,8 +367,7 @@
 		U = apply_status_effect(STATUS_EFFECT_UNCONSCIOUS, amount)
 	return U
 
-/////////////////////////////////// SLEEPING ////////////////////////////////////
-
+/* SLEEPING */
 /mob/living/proc/IsSleeping() //If we're asleep
 	if(!HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
 		return has_status_effect(STATUS_EFFECT_SLEEPING)
@@ -444,11 +442,12 @@
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
+/* FROZEN */
 /mob/living/proc/IsFrozen()
 	return has_status_effect(/datum/status_effect/freon)
 
-///////////////////////////////////// STUN ABSORPTION /////////////////////////////////////
 
+/* STUN ABSORPTION*/
 /mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)
 //adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stun/examined, if any
 	if(!islist(stun_absorption))
@@ -510,8 +509,7 @@
 			return TRUE
 	return FALSE
 
-/////////////////////////////////// TRAIT PROCS ////////////////////////////////////
-
+/* TRAIT PROCS */
 /mob/living/proc/cure_blind(source)
 	if(source)
 		REMOVE_TRAIT(src, TRAIT_BLIND, source)
