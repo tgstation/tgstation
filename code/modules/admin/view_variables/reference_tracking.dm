@@ -30,7 +30,13 @@
 	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
 	log_reftracker("Finished searching globals")
 
-	DoSearchVar(global.vars, "Native Global", search_time = starting_time)
+	 //Yes we do actually need to do this. The searcher refuses to read weird lists
+	 //And global.vars is a really weird list
+	var/global_vars = list()
+	for(var/key in global.vars)
+		global_vars[key] = global.vars[key]
+
+	DoSearchVar(global_vars, "Native Global", search_time = starting_time)
 	log_reftracker("Finished searching native globals")
 
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
