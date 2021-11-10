@@ -14,4 +14,5 @@
 	if (!..(preferences))
 		return FALSE
 
-	return TRUE
+	var/datum/species/species = preferences.read_preference(/datum/preference/choiced/species)
+	return initial(species.sexes)
