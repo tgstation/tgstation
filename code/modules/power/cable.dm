@@ -29,16 +29,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/layer1
 	color = "red"
 	cable_layer = CABLE_LAYER_1
-	machinery_layer = null
 	layer = WIRE_LAYER - 0.01
 	icon_state = "l1-1-2-4-8-node"
 
 /obj/structure/cable/layer3
 	color = "blue"
 	cable_layer = CABLE_LAYER_3
-	machinery_layer = null
 	layer = WIRE_LAYER + 0.01
-	icon_state = "l4-1-2-4-8-node"
+	icon_state = "l3-1-2-4-8-node"
 
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
@@ -656,7 +654,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/effect/node/layer3
 	color = "blue"
-	icon_state = "l4-1-2-4-8-node"
+	icon_state = "l3-1-2-4-8-node"
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 /obj/structure/cable/multilayer/update_icon_state()
