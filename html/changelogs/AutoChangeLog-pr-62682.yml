@@ -1,6 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Quantum pads can teleport non-living things again."
-  - bugfix: "Quantum pads can teleport creatures who aren't buckled to something again. Creatures who are buckled to something unanchored can still be teleported by quantum pads, but creatures who are buckled to something anchored cannot."
-  - bugfix: "Quantum pads can no longer involuntarily teleport ghosts, although ghosts can still click on a quantum pad to teleport to that quantum pad's destination pad."

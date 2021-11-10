@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - admin: "Admins can now tell when other admins are readied up in the pre-game lobby. Check adminwho or view your stat panel."
