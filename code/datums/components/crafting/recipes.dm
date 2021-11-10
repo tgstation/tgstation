@@ -45,6 +45,14 @@
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return
 
+///Check if the pipe used for atmospheric device crafting is the proper one
+/datum/crafting_recipe/proc/atmos_pipe_check(mob/user, list/collected_requirements)
+	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
+	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+		return TRUE
+	to_chat(user, span_boldwarning("You can't craft \a [name] without a pipe fitting!"))
+	return FALSE
+
 /datum/crafting_recipe/improv_explosive
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
@@ -1353,17 +1361,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/layer_adapter/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/layer_adapter/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/layer_manifold
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/color_adapter
@@ -1377,17 +1381,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/color_adapter/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/color_adapter/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/color_adapter
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/he_pipe
@@ -1401,17 +1401,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/he_pipe/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/he_pipe/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/he_junction
@@ -1425,17 +1421,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/he_junction/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/he_junction/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/pressure_pump
@@ -1450,17 +1442,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/pressure_pump/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/pressure_pump/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/binary/pump
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/manual_valve
@@ -1474,17 +1462,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/manual_valve/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/manual_valve/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/binary/valve
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/vent
@@ -1499,17 +1483,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/vent/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/vent/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/scrubber
@@ -1524,17 +1504,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/scrubber/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/scrubber/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/filter
@@ -1549,17 +1525,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/filter/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/filter/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/trinary/filter
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/mixer
@@ -1574,17 +1546,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/mixer/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/mixer/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/trinary/mixer
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/connector
@@ -1598,17 +1566,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/connector/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/connector/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/portables_connector
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/passive_vent
@@ -1622,17 +1586,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/passive_vent/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/passive_vent/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/passive_vent
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/injector
@@ -1647,17 +1607,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/injector/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/injector/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/outlet_injector
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 /datum/crafting_recipe/he_exchanger
@@ -1671,17 +1627,13 @@
 	category = CAT_ATMOSPHERIC
 
 /datum/crafting_recipe/he_exchanger/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	to_chat(user, span_boldwarning("You can't craft a [name] without a pipe fitting!"))
-	return FALSE
+	return atmos_pipe_check(user, collected_requirements)
 
 /datum/crafting_recipe/he_exchanger/on_craft_completion(mob/user, atom/result)
 	var/obj/item/pipe/crafted_pipe = result
 	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
 	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
-	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.setDir(user.dir)
 	crafted_pipe.update()
 
 #undef CRAFTING_MACHINERY_CONSUME
