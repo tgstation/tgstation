@@ -1,5 +1,32 @@
 #define DEPSEC_OUTFIT "depsec_outfit"
 #define DEPSEC_DESTINATION "depsec_destination"
+GLOBAL_LIST_INIT(departmental_sec_keys, list(
+		SEC_DEPT_SUPPLY = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/supply,
+			DEPSEC_DESTINATION = /area/security/checkpoint/supply
+		),
+		SEC_DEPT_ENGINEERING = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/engineering,
+			DEPSEC_DESTINATION = /area/security/checkpoint/engineering
+		),
+		SEC_DEPT_MEDICAL = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/medical,
+			DEPSEC_DESTINATION = /area/security/checkpoint/medical
+		),
+		SEC_DEPT_SCIENCE = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/science,
+			DEPSEC_DESTINATION = /area/security/checkpoint/science
+		),
+		SEC_DEPT_SERVICE = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/service,
+			DEPSEC_DESTINATION = /area/security // no maps have sec posts for service(yet)
+		),
+		SEC_DEPT_NONE = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security,
+			DEPSEC_DESTINATION = /area/security
+		)
+	)
+)
 /datum/job/security_officer
 	title = "Security Officer"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
@@ -76,40 +103,18 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		// This should theoretically still run if a player isn't in the distributions, but isn't a late join.
 		GLOB.security_officer_distribution[REF(spawning)] = department
 
-	var/list/department_outfit_keys = list(
-		SEC_DEPT_SUPPLY = list(
-			DEPSEC_OUTFIT = /datum/outfit/job/security/supply,
-			DEPSEC_DESTINATION = /area/security/checkpoint/supply
-		),
-		SEC_DEPT_ENGINEERING = list(
-			DEPSEC_OUTFIT = /datum/outfit/job/security/engineering,
-			DEPSEC_DESTINATION = /area/security/checkpoint/engineering
-		),
-		SEC_DEPT_MEDICAL = list(
-			DEPSEC_OUTFIT = /datum/outfit/job/security/medical,
-			DEPSEC_DESTINATION = /area/security/checkpoint/medical
-		),
-		SEC_DEPT_SCIENCE = list(
-			DEPSEC_OUTFIT = /datum/outfit/job/security/science,
-			DEPSEC_DESTINATION = /area/security/checkpoint/science
-		),
-		SEC_DEPT_SERVICE = list(
-			DEPSEC_OUTFIT = /datum/outfit/job/security/service,
-			DEPSEC_DESTINATION = /area/security // no maps have sec posts for service(yet)
-		),
-		SEC_DEPT_NONE = list(
-			DEPSEC_OUTFIT = /datum/outfit/job/security,
-			DEPSEC_DESTINATION = /area/security
-		)
-	)
-	spawning.equipOutfit(department_outfit_keys[department][DEPSEC_OUTFIT], FALSE)
+	var/datum/bank_account/bank_account = new(spawning.real_name, src, spawning.dna.species.payday_modifier)
+	bank_account.payday(STARTING_PAYCHECKS, TRUE)
+	spawning.account_id = bank_account.account_id
+
+	spawning.equipOutfit(GLOB.departmental_sec_keys[department][DEPSEC_OUTFIT], FALSE)
 	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 
-	if(!CONFIG_GET(flag/sec_start_brig) && (department_outfit_keys[department][DEPSEC_DESTINATION] || spawn_point))
+	if(!CONFIG_GET(flag/sec_start_brig) && (GLOB.departmental_sec_keys[department][DEPSEC_DESTINATION] || spawn_point))
 		if(spawn_point)
 			spawning.Move(get_turf(spawn_point))
 		else
-			var/list/possible_turfs = get_area_turfs(department_outfit_keys[department][DEPSEC_DESTINATION])
+			var/list/possible_turfs = get_area_turfs(GLOB.departmental_sec_keys[department][DEPSEC_DESTINATION])
 			while (length(possible_turfs))
 				var/random_index = rand(1, length(possible_turfs))
 				var/turf/target = possible_turfs[random_index]
@@ -238,7 +243,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	ears = /obj/item/radio/headset/headset_sec/alt/department/engi
 	gloves = null
 	head = /obj/item/clothing/head/helmet/guard
-	shoes = /obj/item/clothing/shoes/sneakers/orange
+	shoes = /obj/item/clothing/shoes/workboots
 
 /datum/outfit/job/security/science
 	name = "Science Guard"
