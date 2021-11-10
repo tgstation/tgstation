@@ -376,6 +376,29 @@
 	loc = new_loc
 	Moved(old_loc)
 
+#define BENCHMARK_LOOP while(world.timeofday < end_time)
+#define BENCHMARK_RESET iterations = 0; end_time = world.timeofday + duration
+#define BENCHMARK_MESSAGE(message) message_admins("[message] got [iterations] iterations in 1 seconds!"); BENCHMARK_RESET
+
+/atom/movable/proc/benchmark()
+	var/iterations = 0
+	var/duration = 1 SECONDS
+	var/end_time = world.timeofday + duration
+
+	BENCHMARK_LOOP
+		Move(get_step(src, NORTH), NORTH)
+		Move(get_step(src, SOUTH), SOUTH)
+		iterations++
+
+	BENCHMARK_MESSAGE("cardinal move")
+
+	BENCHMARK_LOOP
+		Move(get_step(src, NORTHEAST), NORTHEAST)
+		Move(get_step(src, SOUTHWEST), SOUTHWEST)
+		iterations++
+
+	BENCHMARK_MESSAGE("diag move")
+
 #define SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)\
 if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 
