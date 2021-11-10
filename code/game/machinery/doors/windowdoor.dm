@@ -149,7 +149,7 @@
 	if((pass_flags_self & leaving.pass_flags) || ((pass_flags_self & LETPASSTHROW) && leaving.throwing))
 		return
 
-	if(direction == dir && density)
+	if((direction & dir) && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 

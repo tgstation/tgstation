@@ -86,7 +86,7 @@
 	if (leaving.pass_flags & pass_flags_self)
 		return
 
-	if (direction == dir && density)
+	if ((direction & dir) && density)
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
