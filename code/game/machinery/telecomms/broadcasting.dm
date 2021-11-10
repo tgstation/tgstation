@@ -152,7 +152,7 @@
 			var/list/all_radios_of_our_frequency = GLOB.all_radios["[frequency]"]
 			radios = all_radios_of_our_frequency.Copy()
 
-			for(var/obj/item/radio/subspace_radio as anything in radios)
+			for(var/obj/item/radio/subspace_radio in radios)
 				if(!subspace_radio.can_receive(frequency, signal_reaches_every_z_level))
 					radios -= subspace_radio
 
@@ -164,13 +164,13 @@
 
 		if (TRANSMISSION_RADIO)
 			// Only radios not currently in subspace mode
-			for(var/obj/item/radio/non_subspace_radio as anything in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/non_subspace_radio in GLOB.all_radios["[frequency]"])
 				if(!non_subspace_radio.subspace_transmission && non_subspace_radio.can_receive(frequency, levels))
 					radios += non_subspace_radio
 
 		if (TRANSMISSION_SUPERSPACE)
 			// Only radios which are independent
-			for(var/obj/item/radio/independent_radio as anything in GLOB.all_radios["[frequency]"])
+			for(var/obj/item/radio/independent_radio in GLOB.all_radios["[frequency]"])
 				if(independent_radio.independent && independent_radio.can_receive(frequency, levels))
 					radios += independent_radio
 
