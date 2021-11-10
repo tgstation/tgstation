@@ -1,3 +1,5 @@
+#define DEPSEC_OUTFIT "depsec_outfit"
+#define DEPSEC_DESTINATION "depsec_destination"
 /datum/job/security_officer
 	title = "Security Officer"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
@@ -38,7 +40,7 @@
 	)
 	rpg_title = "Guard"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
-
+	custom_equipment_handling = TRUE
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
@@ -74,55 +76,40 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		// This should theoretically still run if a player isn't in the distributions, but isn't a late join.
 		GLOB.security_officer_distribution[REF(spawning)] = department
 
-	var/ears = null
-	var/accessory = null
-	var/list/dep_trim = null
-	var/destination = null
-
-	switch(department)
-		if(SEC_DEPT_SUPPLY)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/supply
-			dep_trim = /datum/id_trim/job/security_officer/supply
-			destination = /area/security/checkpoint/supply
-			accessory = /obj/item/clothing/accessory/armband/cargo
-		if(SEC_DEPT_ENGINEERING)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/engi
-			dep_trim = /datum/id_trim/job/security_officer/engineering
-			destination = /area/security/checkpoint/engineering
-			accessory = /obj/item/clothing/accessory/armband/engine
-		if(SEC_DEPT_MEDICAL)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/med
-			dep_trim = /datum/id_trim/job/security_officer/medical
-			destination = /area/security/checkpoint/medical
-			accessory = /obj/item/clothing/accessory/armband/medblue
-		if(SEC_DEPT_SCIENCE)
-			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
-			dep_trim = /datum/id_trim/job/security_officer/science
-			destination = /area/security/checkpoint/science
-			accessory = /obj/item/clothing/accessory/armband/science
-
-	if(accessory)
-		var/obj/item/clothing/under/worn_under = spawning.w_uniform
-		worn_under.attach_accessory(new accessory)
-
-	if(ears)
-		if(spawning.ears)
-			qdel(spawning.ears)
-		spawning.equip_to_slot_or_del(new ears(spawning),ITEM_SLOT_EARS)
-
-	// If there's a departmental sec trim to apply to the card, overwrite.
-	if(dep_trim)
-		var/obj/item/card/id/worn_id = spawning.get_idcard(hand_first = FALSE)
-		SSid_access.apply_trim_to_card(worn_id, dep_trim)
-		spawning.sec_hud_set_ID()
-
+	var/list/department_outfit_keys = list(
+		SEC_DEPT_SUPPLY = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/supply,
+			DEPSEC_DESTINATION = /area/security/checkpoint/supply
+		),
+		SEC_DEPT_ENGINEERING = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/engineering,
+			DEPSEC_DESTINATION = /area/security/checkpoint/engineering
+		),
+		SEC_DEPT_MEDICAL = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/medical,
+			DEPSEC_DESTINATION = /area/security/checkpoint/medical
+		),
+		SEC_DEPT_SCIENCE = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/science,
+			DEPSEC_DESTINATION = /area/security/checkpoint/science
+		),
+		SEC_DEPT_SERVICE = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security/service,
+			DEPSEC_DESTINATION = /area/security // no maps have sec posts for service(yet)
+		),
+		SEC_DEPT_NONE = list(
+			DEPSEC_OUTFIT = /datum/outfit/job/security,
+			DEPSEC_DESTINATION = /area/security
+		)
+	)
+	spawning.equipOutfit(department_outfit_keys[department][DEPSEC_OUTFIT], FALSE)
 	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 
-	if(!CONFIG_GET(flag/sec_start_brig) && (destination || spawn_point))
+	if(!CONFIG_GET(flag/sec_start_brig) && (department_outfit_keys[department][DEPSEC_DESTINATION] || spawn_point))
 		if(spawn_point)
 			spawning.Move(get_turf(spawn_point))
 		else
-			var/list/possible_turfs = get_area_turfs(destination)
+			var/list/possible_turfs = get_area_turfs(department_outfit_keys[department][DEPSEC_DESTINATION])
 			while (length(possible_turfs))
 				var/random_index = rand(1, length(possible_turfs))
 				var/turf/target = possible_turfs[random_index]
@@ -223,6 +210,56 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
 
+/datum/outfit/job/security/supply
+	name = "Customs Agent"
+	id_trim = /datum/id_trim/job/security_officer/supply
+	uniform = /obj/item/clothing/under/rank/security/officer/supply
+	suit = /obj/item/clothing/suit/armor/vest/supply
+	ears = /obj/item/radio/headset/headset_sec/alt/department/supply
+	gloves = null
+	head = /obj/item/clothing/head/helmet/guard
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
+/datum/outfit/job/security/medical
+	name = "Orderly"
+	id_trim = /datum/id_trim/job/security_officer/medical
+	uniform = /obj/item/clothing/under/rank/security/officer/medical
+	suit = /obj/item/clothing/suit/armor/vest/medical
+	ears = /obj/item/radio/headset/headset_sec/alt/department/med
+	gloves = null
+	head = /obj/item/clothing/head/helmet/guard
+	shoes = /obj/item/clothing/shoes/sneakers/white
+
+/datum/outfit/job/security/engineering
+	name = "Engineering Guard"
+	id_trim = /datum/id_trim/job/security_officer/engineering
+	uniform = /obj/item/clothing/under/rank/security/officer/engineering
+	suit = /obj/item/clothing/suit/armor/vest/engineering
+	ears = /obj/item/radio/headset/headset_sec/alt/department/engi
+	gloves = null
+	head = /obj/item/clothing/head/helmet/guard
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+
+/datum/outfit/job/security/science
+	name = "Science Guard"
+	id_trim = /datum/id_trim/job/security_officer/science
+	uniform = /obj/item/clothing/under/rank/security/officer/science
+	suit = /obj/item/clothing/suit/armor/vest/science
+	ears = /obj/item/radio/headset/headset_sec/alt/department/sci
+	gloves = null
+	head = /obj/item/clothing/head/helmet/science
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
+/datum/outfit/job/security/service
+	name = "Bouncer"
+	id_trim = /datum/id_trim/job/security_officer/service
+	uniform = /obj/item/clothing/under/rank/security/officer/service
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	ears = /obj/item/radio/headset/headset_sec/alt/department/service
+	gloves = null
+	head = /obj/item/clothing/head/helmet/guard
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
@@ -230,19 +267,24 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_eng
+	keyslot2 = new /obj/item/encryptionkey/headset_sec
+	keyslot = new /obj/item/encryptionkey/headset_eng
 
 /obj/item/radio/headset/headset_sec/alt/department/supply
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_cargo
+	keyslot2 = new /obj/item/encryptionkey/headset_sec
+	keyslot = new /obj/item/encryptionkey/headset_cargo
+
 /obj/item/radio/headset/headset_sec/alt/department/med
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_med
+	keyslot2 = new /obj/item/encryptionkey/headset_sec
+	keyslot = new /obj/item/encryptionkey/headset_med
 
 /obj/item/radio/headset/headset_sec/alt/department/sci
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_sci
+	keyslot2 = new /obj/item/encryptionkey/headset_sec
+	keyslot = new /obj/item/encryptionkey/headset_sci
+
+/obj/item/radio/headset/headset_sec/alt/department/service
+	keyslot2 = new /obj/item/encryptionkey/headset_sec
+	keyslot = new /obj/item/encryptionkey/headset_service
 
 /// Returns the distribution of splitting the given security officers into departments.
 /// Return value is an assoc list of candidate => SEC_DEPT_*.

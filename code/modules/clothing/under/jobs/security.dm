@@ -24,6 +24,36 @@
 	icon_state = "rsecurity"
 	inhand_icon_state = "r_suit"
 
+/obj/item/clothing/under/rank/security/officer/supply
+	name = "customs agent uniform"
+	desc = "For searching the assistant for contraband."
+	icon_state = "customs_uniform"
+	inhand_icon_state = "customs_uniform"
+
+/obj/item/clothing/under/rank/security/officer/engineering
+	name = "engineering guard uniform"
+	desc = "Recommended for operating tesla coil defense networks."
+	icon_state = "engineer_uniform"
+	inhand_icon_state = "engineer_uniform"
+
+/obj/item/clothing/under/rank/security/officer/medical
+	name = "orderly uniform"
+	desc = "I believe you're trying to leave without your vaccine. Are you sure about that?"
+	icon_state = "medical_uniform"
+	inhand_icon_state = "medical_uniform"
+
+/obj/item/clothing/under/rank/security/officer/science
+	name = "science guard uniform"
+	desc = "I'm a little busy right now, Calhoun."
+	icon_state = "barney_uniform"
+	inhand_icon_state = "barney_uniform"
+
+/obj/item/clothing/under/rank/security/officer/service
+	name = "bouncer uniform"
+	desc = "You're not on the list."
+	icon_state = "bouncer_uniform"
+	inhand_icon_state = "bouncer_uniform"
+
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
 	desc = "A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."

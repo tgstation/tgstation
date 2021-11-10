@@ -69,6 +69,18 @@
 			old_attached_light.forceMove(get_turf(src))
 
 
+/obj/item/clothing/head/helmet/guard
+	name = "guard helmet"
+	desc = "A helmet that protects the head from impacts."
+	icon_state = "mallcop_helm"
+	inhand_icon_state = "mallcop_helm"
+
+/obj/item/clothing/head/helmet/science
+	name = "science guard helmet"
+	desc = "Can I see your passport, please?"
+	icon_state = "barney_helm"
+	inhand_icon_state = "barney_helm"
+
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = TRUE
 

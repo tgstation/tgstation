@@ -29,6 +29,30 @@
 	icon_state = "armor"
 	inhand_icon_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/supply
+	name = "customs agent coat"
+	desc = "A comfortable, durathread lined, yet utilitarian sleeveless coat for protecting Customs Agents."
+	icon_state = "customs_coat"
+	inhand_icon_state = "customs_coat"
+
+/obj/item/clothing/suit/armor/vest/engineering
+	name = "engineering guard coat"
+	desc = "A black and orange coat lined with durathread for keeping Engineering Guards safe on the job."
+	icon_state = "engineering_coat"
+	inhand_icon_state = "engineering_coat"
+
+/obj/item/clothing/suit/armor/vest/medical
+	name = "orderly coat"
+	desc = "A blue and white coat lined with durathread for keeping Orderlies safe on the job."
+	icon_state = "medical_coat"
+	inhand_icon_state = "medical_coat"
+
+/obj/item/clothing/suit/armor/vest/science
+	name = "science guard armor"
+	desc = "Keeping you safe on this blue alert shift."
+	icon_state = "barney_armor_symbol"
+	inhand_icon_state = "barney_armor_symbol"
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "marine combat armor"
 	desc = "A multirole set of armor used by the marines, painted in a tacticool black color with blue markings to indicate you might be important."

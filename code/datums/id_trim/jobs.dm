@@ -449,24 +449,33 @@
 	access |= department_access
 
 /datum/id_trim/job/security_officer/supply
-	assignment = "Security Officer (Cargo)"
-	trim_state = "trim_securityofficer_car"
-	department_access = list(ACCESS_AUX_BASE, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION)
+	assignment = "Customs Agent"
+	trim_state = "trim_customs"
+	department_access = list(ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM,
+	ACCESS_MINING, ACCESS_MINING_STATION)
 
 /datum/id_trim/job/security_officer/engineering
-	assignment = "Security Officer (Engineering)"
-	trim_state = "trim_securityofficer_engi"
-	department_access = list(ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_ENGINE)
+	assignment = "Engineering Guard"
+	trim_state = "trim_engiguard"
+	department_access = list(ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_EXTERNAL_AIRLOCKS,
+	ACCESS_MECH_ENGINE, ACCESS_MINERAL_STOREROOM, ACCESS_TCOMSAT, ACCESS_TECH_STORAGE)
 
 /datum/id_trim/job/security_officer/medical
-	assignment = "Security Officer (Medical)"
-	trim_state = "trim_securityofficer_med"
-	department_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
+	assignment = "Orderly"
+	trim_state = "trim_orderly"
+	department_access = list(ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY,
+	ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY)
 
 /datum/id_trim/job/security_officer/science
-	assignment = "Security Officer (Science)"
-	trim_state = "trim_securityofficer_sci"
-	department_access = list(ACCESS_AUX_BASE, ACCESS_RESEARCH, ACCESS_RND)
+	assignment = "Science Guard"
+	trim_state = "trim_calhoun"
+	department_access = list(ACCESS_AUX_BASE, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE,
+					ACCESS_RESEARCH, ACCESS_RND, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS, ACCESS_TECH_STORAGE)
+
+/datum/id_trim/job/security_officer/service
+	assignment = "Bouncer"
+	trim_state = "trim_bouncer"
+	department_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE, ACCESS_HYDROPONICS, ACCESS_KITCHEN)
 
 /datum/id_trim/job/shaft_miner
 	assignment = "Shaft Miner"

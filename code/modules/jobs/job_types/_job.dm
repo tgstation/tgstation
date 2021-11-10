@@ -105,6 +105,9 @@
 	///RPG job names, for the memes
 	var/rpg_title
 
+	/// Does this job handle it's equipment in a special way? (Ex. Security Officers with Departmental Security)
+	var/custom_equipment_handling = FALSE
+
 
 /datum/job/New()
 	. = ..()
