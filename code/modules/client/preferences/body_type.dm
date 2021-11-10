@@ -8,14 +8,10 @@
 	return list(MALE, FEMALE)
 
 /datum/preference/choiced/body_type/apply_to_human(mob/living/carbon/human/target, value)
-	if (target.gender != MALE && target.gender != FEMALE)
-		target.body_type = value
-	else
-		target.body_type = target.gender
+	target.body_type = value
 
 /datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
 		return FALSE
 
-	var/gender = preferences.read_preference(/datum/preference/choiced/gender)
-	return gender != MALE && gender != FEMALE
+	return TRUE
