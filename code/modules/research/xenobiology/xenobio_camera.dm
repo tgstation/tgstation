@@ -17,6 +17,15 @@
 	else
 		return
 
+/mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	. = ..()
+	if(!.)
+		return
+	var/area/new_area = get_area(.)
+	if(new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
+		to_chat(rider || src, "oh god oh fuck")
+		return FALSE
+
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."

@@ -600,7 +600,7 @@
 				// You may wonder why we're not just forcemoving the pulling movable and regrabbing it.
 				// The answer is simple. forcemoving and regrabbing is ugly and breaks conga lines.
 				if(pulling.z != z)
-					target_turf = get_step(pulling, pull_dir)
+					target_turf = get_step(pulling, get_dir(pulling, current_turf))
 
 				if(target_turf != current_turf || (moving_diagonally != SECOND_DIAG_STEP && ISDIAGONALDIR(pull_dir)) || get_dist(src, pulling) > 1)
 					pulling.move_from_pull(src, target_turf, glide_size)

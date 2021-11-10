@@ -209,14 +209,6 @@
 		return eye_user.client
 	return null
 
-/mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
-	. = ..()
-	if(!.)
-		return
-	var/area/new_area = get_area(.)
-	if(!new_area || (new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE)))
-		return FALSE
-
 /mob/camera/ai_eye/remote/setLoc(turf/destination, force_update = FALSE)
 	if(eye_user)
 		destination = get_turf(destination)
