@@ -215,7 +215,7 @@
 	if(methods & VAPOR)
 		if(!isfelinid(exposed_mob))
 			return
-		exposed_mob.Incapacitate(1) //cancels any do_after
+		exposed_mob.Incapacitate(1) // startles the felinid, canceling any do_after
 		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
 
 
