@@ -171,7 +171,7 @@
 		cached_results["fire"] += burned_fuel * 10
 
 	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY)
-		radiation_pulse(location, max_range = sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), threshold = 10 * INVERSE(10 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 50)
+		radiation_pulse(location, max_range = sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 2, threshold = 10 * INVERSE(10 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 50)
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -855,30 +855,27 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/density = (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate]) / air.volume
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var consumed_amount = min(max(min(5000 * density, air.volume, cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]) / 100, 1), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
+	var consumed_amount = min(air.temperature / 280 * cached_gases[/datum/gas/bz][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES] / (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
-	if(density * 25 > consumed_amount)
-		ASSERT_GAS(/datum/gas/nitrogen, air)
-		ASSERT_GAS(/datum/gas/helium, air)
-		ASSERT_GAS(/datum/gas/plasma, air)
-		cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
-		cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 1.6
-		cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
-		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
-		energy_released += consumed_amount * 60000
-		radiation_pulse(location, max_range = sqrt(consumed_amount), threshold = 10 * INVERSE(10 + consumed_amount), chance = 50)
-	else
-		energy_released += 100
-		for(var/mob/living/carbon/L in location)
-			L.hallucination += cached_gases[/datum/gas/bz][MOLES] * 0.7
+
+	ASSERT_GAS(/datum/gas/nitrogen, air)
+	ASSERT_GAS(/datum/gas/helium, air)
+	ASSERT_GAS(/datum/gas/plasma, air)
+	cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
+	cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 1.6
+	cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
+	cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
+	energy_released += consumed_amount * 60000
+	radiation_pulse(location, max_range = sqrt(consumed_amount) / 2, threshold = 10 * INVERSE(10 + consumed_amount), chance = 50)
+	for(var/mob/living/carbon/L in location)
+		L.hallucination += consumed_amount
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -903,22 +900,21 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/density = (cached_gases[/datum/gas/tritium][MOLES] + cached_gases[/datum/gas/proto_nitrate]) / air.volume
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var produced_amount = min(max(min(1000 * density, air.volume, cached_gases[/datum/gas/tritium], cached_gases[/datum/gas/proto_nitrate] * 100) / 50, 1), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
+	var produced_amount = min(air.temperature / 34 * (cached_gases[/datum/gas/tritium][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES]) / (cached_gases[/datum/gas/tritium][MOLES] + 10 * cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
-	energy_released += 50
-	radiation_pulse(location, max_range = sqrt(produced_amount), threshold = 10 * INVERSE(10 + produced_amount), chance = 50)
+	energy_released += produced_amount * 10000
+	radiation_pulse(location, max_range = sqrt(produced_amount) / 2, threshold = 10 * INVERSE(10 + produced_amount), chance = 50)
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
