@@ -159,92 +159,140 @@ const ProductDisplay = (_, context) => {
   );
 };
 
-/** An individual listing for an item. */
+/** An individual listing for an item.
+ * Uses a table layout - Labeledlist might be better,
+ * but you cannot use item icons as labels currently.
+ */
 const VendingRow = (props, context) => {
-  const { act, data } = useBackend<VendingData>(context);
-  const { product, productStock, custom } = props;
-  const { onstation, department, user, jobDiscount } = data;
+  const { data } = useBackend<VendingData>(context);
+  const { custom, product, productStock } = props;
+  const { department, onstation, user } = data;
   const free
     = !onstation
     || product.price === 0
     || (!product.premium && department && user);
-  const discount = department === user?.department;
-  const redPrice = Math.round(product.price * jobDiscount);
+
   return (
     <Table.Row>
       <Table.Cell collapsing>
-        {(product.img && (
-          <img
-            src={`data:image/jpeg;base64,${product.img}`}
-            style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
-            }}
-          />
-        )) || (
-          <span
-            className={classes(['vending32x32', product.path])}
-            style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
-            }}
-          />
-        )}
+        <ProductImage product={product} />
       </Table.Cell>
-      <Table.Cell bold>{product.name}</Table.Cell>
+      <Table.Cell bold>
+        {product.name.replace(/^\w/, (c) => c.toUpperCase())}
+      </Table.Cell>
       <Table.Cell>
-        {productStock?.colorable ? (
-          <Button
-            icon="palette"
-            tooltip="Change color"
-            disabled={
-              productStock?.amount === 0
-              || (!free && (!user || product.price > user.cash))
-            }
-            onClick={() => act('select_colors', { ref: product.ref })}
-          />
-        ) : (
-          ''
+        {!!productStock?.colorable && (
+          <ProductColorSelect free={free} product={product} />
         )}
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center">
-        <Box
-          color={
-            (custom && 'good')
-            || (productStock.amount <= 0 && 'bad')
-            || (productStock.amount <= product.max_amount / 2 && 'average')
-            || 'good'
-          }>
-          {custom ? product.amount : productStock.amount} in stock
-        </Box>
+      <Table.Cell collapsing textAlign="right">
+        <ProductStock
+          custom={custom}
+          product={product}
+          productStock={productStock}
+        />
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
-        {(custom && (
-          <Button
-            fluid
-            content={data.access ? 'FREE' : product.price + ' cr'}
-            onClick={() =>
-              act('dispense', {
-                'item': product.name,
-              })}
-          />
-        )) || (
-          <Button
-            fluid
-            disabled={
-              productStock.amount === 0
-              || (!free && (!user || product.price > user.cash))
-            }
-            content={
-              free && discount ? `${redPrice} cr` : `${product.price} cr`
-            }
-            onClick={() =>
-              act('vend', {
-                'ref': product.ref,
-              })}
-          />
-        )}
+        <ProductButton
+          free={free}
+          product={product}
+          productStock={productStock}
+        />
       </Table.Cell>
     </Table.Row>
+  );
+};
+
+/** Displays the product image. Displays a default if there is none. */
+const ProductImage = (props) => {
+  const { product } = props;
+
+  return product.img ? (
+    <img
+      src={`data:image/jpeg;base64,${product.img}`}
+      style={{
+        'vertical-align': 'middle',
+        'horizontal-align': 'middle',
+      }}
+    />
+  ) : (
+    <span
+      className={classes(['vending32x32', product.path])}
+      style={{
+        'vertical-align': 'middle',
+        'horizontal-align': 'middle',
+      }}
+    />
+  );
+};
+
+/** Displays a colored indicator for remaining stock */
+const ProductStock = (props) => {
+  const { custom, product, productStock } = props;
+
+  return (
+    <Box
+      color={
+        (custom && 'good')
+        || (productStock.amount <= 0 && 'bad')
+        || (productStock.amount <= product.max_amount / 2 && 'average')
+        || 'good'
+      }>
+      {custom ? product.amount : productStock.amount} left
+    </Box>
+  );
+};
+
+/** In the case of customizable items, ie: shoes,
+ * this displays a color wheel button that opens another window.
+ */
+const ProductColorSelect = (props, context) => {
+  const { act, data } = useBackend<VendingData>(context);
+  const { user } = data;
+  const { free, product, productStock } = props;
+
+  return (
+    <Button
+      icon="palette"
+      tooltip="Change color"
+      disabled={
+        productStock?.amount === 0
+        || (!free && (!user || product.price > user.cash))
+      }
+      onClick={() => act('select_colors', { ref: product.ref })}
+    />
+  );
+};
+
+/** The main button to purchase an item. */
+const ProductButton = (props, context) => {
+  const { act, data } = useBackend<VendingData>(context);
+  const { access, department, jobDiscount, user } = data;
+  const { custom, free, product, productStock } = props;
+  const discount = department === user?.department;
+  const redPrice = Math.round(product.price * jobDiscount);
+
+  return custom ? (
+    <Button
+      fluid
+      content={access ? 'FREE' : product.price + ' cr'}
+      onClick={() =>
+        act('dispense', {
+          'item': product.name,
+        })}
+    />
+  ) : (
+    <Button
+      fluid
+      disabled={
+        productStock.amount === 0
+        || (!free && (!user || product.price > user.cash))
+      }
+      content={free && discount ? `${redPrice} cr` : `${product.price} cr`}
+      onClick={() =>
+        act('vend', {
+          'ref': product.ref,
+        })}
+    />
   );
 };
