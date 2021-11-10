@@ -54,6 +54,8 @@
 					terminal = term
 					break dir_loop
 
+	AddComponent(/datum/component/power_refundee, .proc/refund_unused_power)
+
 	if(!terminal)
 		atom_break()
 		return
@@ -259,7 +261,7 @@
 			output_used = min( charge/SMESRATE, output_level) //limit output to that stored
 
 			if (add_avail(output_used)) // add output to powernet if it exists (smes side)
-				charge -= output_used*SMESRATE // reduce the storage (may be recovered in /restore() if excessive)
+				charge -= output_used*SMESRATE // reduce the storage (any excess is refunded in /refund_unused_power())
 			else
 				outputting = FALSE
 
@@ -281,7 +283,8 @@
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
-/obj/machinery/power/smes/proc/restore()
+/obj/machinery/power/smes/proc/refund_unused_power()
+	SIGNAL_HANDLER
 	if(machine_stat & BROKEN)
 		return
 
@@ -304,7 +307,7 @@
 
 	output_used -= excess
 
-	if(clev != chargedisplay() ) //if needed updates the icons overlay
+	if(clev != chargedisplay()) //if we need to update the icons overlay
 		update_appearance()
 	return
 

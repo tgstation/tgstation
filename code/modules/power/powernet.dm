@@ -57,8 +57,9 @@
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/remove_machine(obj/machinery/power/M)
-	nodes -=M
+	nodes -= M
 	M.powernet = null
+	SEND_SIGNAL(M, COMSIG_POWERNET_CABLE_DETACHED, src)
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it
 
@@ -73,6 +74,7 @@
 			M.disconnect_from_network()//..remove it
 	M.powernet = src
 	nodes[M] = M
+	SEND_SIGNAL(M, COMSIG_POWERNET_CABLE_ATTACHED, src)
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
@@ -80,15 +82,15 @@
 	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
 	netexcess = avail - load
 
-	if(netexcess > 100 && length(nodes)) // if there was excess power last cycle
-		for(var/obj/machinery/power/smes/S in nodes) // find the SMESes in the network
-			S.restore() // and restore some of the power that was used
+	if(netexcess > 100)
+		// Ask all entities capable of handling refunds to retake some of the power that was used
+		SEND_SIGNAL(src, COMSIG_POWERNET_DO_REFUND)
 
-	// update power consoles
+	// Update power consoles/multi-inspection/etc. These are slowly moving averages for player presentation.
 	viewavail = round(0.8 * viewavail + 0.2 * avail)
 	viewload = round(0.8 * viewload + 0.2 * load)
 
-	// reset the powernet
+	// Finally, reset the powernet for the next power tick
 	load = delayedload
 	delayedload = 0
 	avail = newavail
