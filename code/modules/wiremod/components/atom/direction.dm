@@ -28,8 +28,7 @@
 	. = ..()
 	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
 
-/obj/item/circuit_component/direction/Initialize()
-	. = ..()
+/obj/item/circuit_component/direction/populate_ports()
 	input_port = add_input_port("Organism", PORT_TYPE_ATOM)
 
 	output = add_output_port("Direction", PORT_TYPE_STRING)
@@ -40,9 +39,6 @@
 	west = add_output_port("West", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/direction/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/atom/object = input_port.value
 	if(!object)

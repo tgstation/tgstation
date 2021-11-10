@@ -21,3 +21,17 @@
 /area/ruin/powered/mailroom
 	name = "\improper Abandoned Post Office"
 	icon_state = "dk_yellow"
+
+/area/ruin/plasma_facility/commons
+	name = "\improper Abandoned Plasma Facility Commons"
+	icon_state = "dk_yellow"
+	sound_environment = SOUND_AREA_STANDARD_STATION
+	mood_bonus = -5
+	mood_message = "<span class='brown'>I feel like I am being watched...</span>\n"
+
+/area/ruin/plasma_facility/operations
+	name = "\improper Abandoned Plasma Facility Operations"
+	icon_state = "dk_yellow"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	mood_bonus = -5
+	mood_message = "<span class='brown'>I feel like I am being watched...</span>\n"

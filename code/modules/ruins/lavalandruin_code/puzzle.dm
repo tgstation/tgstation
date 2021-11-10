@@ -242,7 +242,8 @@
 
 /obj/structure/puzzle_element/Moved()
 	. = ..()
-	source.validate()
+	if(source)
+		source.validate()
 
 //Admin abuse version so you can pick the icon before it sets up
 /obj/effect/sliding_puzzle/admin

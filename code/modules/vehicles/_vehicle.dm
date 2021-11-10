@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSVEHICLE
 	COOLDOWN_DECLARE(cooldown_vehicle_move)
 	var/list/mob/occupants //mob = bitflags of their control level.
 	///Maximum amount of passengers plus drivers
@@ -45,7 +46,7 @@
 	. = ..()
 	if(resistance_flags & ON_FIRE)
 		. += span_warning("It's on fire!")
-	var/healthpercent = obj_integrity/max_integrity * 100
+	var/healthpercent = atom_integrity/max_integrity * 100
 	switch(healthpercent)
 		if(50 to 99)
 			. += "It looks slightly damaged."

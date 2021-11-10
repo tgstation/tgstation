@@ -9,6 +9,7 @@
 	hijack_speed = 0.5
 	ui_name = "AntagInfoWizard"
 	suicide_cry = "FOR THE FEDERATION!!"
+	preview_outfit = /datum/outfit/wizard
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE

@@ -66,7 +66,7 @@
 	///passed to egg_layer component as how many eggs it starts out as able to lay.
 	var/initial_egg_amount = 10
 
-/mob/living/simple_animal/rabbit/Initialize()
+/mob/living/simple_animal/rabbit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
@@ -91,7 +91,7 @@
 	icon_living = "s_rabbit_white"
 	icon_dead = "s_rabbit_white_dead"
 	icon_prefix = "s_rabbit"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	unsuitable_atmos_damage = 0
@@ -100,7 +100,7 @@
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
 
-/obj/item/storage/basket/easter/Initialize()
+/obj/item/storage/basket/easter/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg))
@@ -157,7 +157,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/surprise_egg/Initialize()
+/obj/item/surprise_egg/Initialize(mapload)
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"

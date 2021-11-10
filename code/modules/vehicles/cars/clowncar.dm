@@ -22,7 +22,7 @@
 	///Current status of the cannon, alternates between CLOWN_CANNON_INACTIVE, CLOWN_CANNON_BUSY and CLOWN_CANNON_READY
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 
-/obj/vehicle/sealed/car/clowncar/Initialize()
+/obj/vehicle/sealed/car/clowncar/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj,src)
 
@@ -75,7 +75,7 @@
 	if(!istype(I, /obj/item/food/grown/banana))
 		return
 	var/obj/item/food/grown/banana/banana = I
-	obj_integrity += min(banana.seed.potency, max_integrity-obj_integrity)
+	atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
 	to_chat(user, span_danger("You use the [banana] to repair the [src]!"))
 	qdel(banana)
 
@@ -110,7 +110,7 @@
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
 	AddElement(/datum/element/waddling)
 
-/obj/vehicle/sealed/car/clowncar/obj_destruction(damage_flag)
+/obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 	STOP_PROCESSING(SSobj,src)
 	return ..()

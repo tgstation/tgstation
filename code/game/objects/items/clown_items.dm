@@ -188,7 +188,7 @@
 	///sound file given to the squeaky component we make in Initialize() so sub-types can specify their own sound
 	var/sound_file = 'sound/items/bikehorn.ogg'
 
-/obj/item/bikehorn/Initialize()
+/obj/item/bikehorn/Initialize(mapload)
 	. = ..()
 	var/list/sound_list = list()
 	sound_list[sound_file] = 1

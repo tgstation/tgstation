@@ -68,28 +68,39 @@
 	name = "searing tool"
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "cautery_a"
+	icon_state = "e_cautery"
 	hitsound = 'sound/items/welder.ogg'
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_color = COLOR_SOFT_RED
 
+/obj/item/cautery/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/cautery/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_CAUTERY)
-		tool_behaviour = TOOL_DRILL
-		balloon_alert(user, "lenses set to drill")
-		icon_state = "surgicaldrill_a"
-	else
-		tool_behaviour = TOOL_CAUTERY
-		balloon_alert(user, "lenses set to mend")
-		icon_state = "cautery_a"
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between drill and cautery and gives feedback to the user.
+ */
+/obj/item/cautery/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_DRILL : TOOL_CAUTERY)
+	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
+	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode."
+	. += span_notice("It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode.")
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -112,7 +123,7 @@
 	wound_bonus = 10
 	bare_wound_bonus = 10
 
-/obj/item/surgicaldrill/Initialize()
+/obj/item/surgicaldrill/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/eyestab)
 
@@ -155,7 +166,7 @@
 	wound_bonus = 10
 	bare_wound_bonus = 15
 
-/obj/item/scalpel/Initialize()
+/obj/item/scalpel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
 	AddElement(/datum/element/eyestab)
@@ -194,7 +205,7 @@
 	wound_bonus = 15
 	bare_wound_bonus = 10
 
-/obj/item/circular_saw/Initialize()
+/obj/item/circular_saw/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
@@ -251,7 +262,7 @@
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel_a"
+	icon_state = "e_scalpel"
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.7
@@ -260,47 +271,74 @@
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_EDGED
 
+/obj/item/scalpel/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force + 1, \
+		throwforce_on = throwforce, \
+		throw_speed_on = throw_speed, \
+		sharpness_on = sharpness, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/scalpel/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_SCALPEL)
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between saw and scalpel and updates the light / gives feedback to the user.
+ */
+/obj/item/scalpel/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	if(active)
 		tool_behaviour = TOOL_SAW
-		balloon_alert(user, "enabled bone-cutting mode")
 		set_light_range(2)
-		force += 1 //we don't want to ruin sharpened stuff
-		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		balloon_alert(user, "disabled bone-cutting mode")
 		set_light_range(1)
-		force -= 1
-		icon_state = "scalpel_a"
+
+	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
+	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode."
+	. += span_notice("It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode.")
 
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "retractor_a"
+	icon_state = "adv_retractor"
 	toolspeed = 0.7
 
-/obj/item/retractor/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_RETRACTOR)
-		tool_behaviour = TOOL_HEMOSTAT
-		balloon_alert(user, "gears set to clamp")
-		icon_state = "hemostat_a"
-	else
-		tool_behaviour = TOOL_RETRACTOR
-		balloon_alert(user, "gears set to retract")
-		icon_state = "retractor_a"
+/obj/item/retractor/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between retractor and hemostat and gives feedback to the user.
+ */
+/obj/item/retractor/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
+	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
+	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/retractor/advanced/examine()
 	. = ..()
-	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
+	. += span_notice("It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"].")
 
 /obj/item/shears
 	name = "amputation shears"

@@ -8,7 +8,7 @@
 	wander = 0
 	healable = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
@@ -149,7 +149,7 @@
 	to_chat(src, span_userdanger("You turned off!"))
 	update_appearance()
 
-/mob/living/simple_animal/bot/Initialize()
+/mob/living/simple_animal/bot/Initialize(mapload)
 	. = ..()
 	GLOB.bots_list += src
 	// Give bots a fancy new ID card that can hold any access.
@@ -308,6 +308,9 @@
 	show_controls(user)
 
 /mob/living/simple_animal/bot/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	unlock_with_id(user)
@@ -898,7 +901,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	use_power = NO_POWER_USE
 	anchored = FALSE
 
-/obj/machinery/bot_core/Initialize()
+/obj/machinery/bot_core/Initialize(mapload)
 	. = ..()
 	if(!isbot(loc))
 		return INITIALIZE_HINT_QDEL

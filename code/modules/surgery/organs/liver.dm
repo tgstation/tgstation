@@ -23,7 +23,7 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
 
-/obj/item/organ/liver/Initialize()
+/obj/item/organ/liver/Initialize(mapload)
 	. = ..()
 	// If the liver handles foods like a clown, it honks like a bike horn
 	// Don't think about it too much.

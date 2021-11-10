@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 	var/obj/item/contains_type
 
-/obj/item/a_gift/Initialize()
+/obj/item/a_gift/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)

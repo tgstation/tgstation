@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/static/radial_shuffle = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_shuffle")
 	var/static/radial_pickup = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup")
 
-/obj/item/tcgcard_deck/Initialize()
+/obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/storage/concrete/tcg)
 
@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 /obj/item/tcgcard_deck/proc/flip_deck()
 	flipped = !flipped
 	var/list/temp_deck = contents.Copy()
-	contents = reverseRange(temp_deck)
+	contents = reverse_range(temp_deck)
 	//Now flip the cards to their opposite positions.
 	for(var/a in 1 to contents.len)
 		var/obj/item/tcgcard/nu_card = contents[a]
@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"epic" = 30,
 		"legendary" = 5)
 
-/obj/item/cardpack/Initialize()
+/obj/item/cardpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.4, 1)
 	//Pass by refrance moment
@@ -411,7 +411,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
-/obj/item/storage/card_binder/Initialize()
+/obj/item/storage/card_binder/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/tcgcard))
@@ -437,7 +437,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			weight += rarity_table[chance]
 		var/random = rand(weight)
 		for(var/bracket in rarity_table)
-			//Steals blatently from pickweight(), sorry buddy I need the index
+			//Steals blatently from pick_weight(), sorry buddy I need the index
 			random -= rarity_table[bracket]
 			if(random <= 0)
 				rarity = bracket
@@ -565,7 +565,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			totalCards++
 			cardsByCount[id] += 1
 	var/toSend = "Out of [totalCards] cards"
-	for(var/id in sortList(cardsByCount, /proc/cmp_num_string_asc))
+	for(var/id in sort_list(cardsByCount, /proc/cmp_num_string_asc))
 		if(id)
 			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][id]
 			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"

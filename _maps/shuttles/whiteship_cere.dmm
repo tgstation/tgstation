@@ -79,7 +79,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
+/obj/effect/spawner/random/exotic/ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
@@ -102,7 +102,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "as" = (

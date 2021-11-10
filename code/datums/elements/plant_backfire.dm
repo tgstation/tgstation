@@ -7,14 +7,12 @@
 	id_arg_index = 2
 	/// Whether we stop the current action if backfire is triggered (EX: returning CANCEL_ATTACK_CHAIN)
 	var/cancel_action = FALSE
-	/// The callback of the backfire effect of the plant.
-	var/datum/callback/backfire_callback
 	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE. Mobs with a trait in this list will be considered safe. List of traits.
 	var/extra_traits
 	/// Any plant genes we want to check that are required for our plant to be dangerous. Plants without a gene in this list will be considered safe. List of typepaths.
 	var/extra_genes
 
-/datum/element/plant_backfire/Attach(datum/target, backfire_callback, cancel_action = FALSE, extra_traits, extra_genes)
+/datum/element/plant_backfire/Attach(datum/target, cancel_action = FALSE, extra_traits, extra_genes)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
@@ -22,7 +20,6 @@
 	src.cancel_action = cancel_action
 	src.extra_traits = extra_traits
 	src.extra_genes = extra_genes
-	src.backfire_callback = backfire_callback
 
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
 	RegisterSignal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
@@ -43,7 +40,7 @@
 
 	if(plant_safety_check(source, user))
 		return
-	backfire_callback.Invoke(source, user)
+	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
 	if(cancel_action)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -58,7 +55,7 @@
 
 	if(plant_safety_check(source, user))
 		return
-	backfire_callback.Invoke(source, user)
+	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
 
 /*
  * Checks before we throw the plant if we're okay to continue.
@@ -72,7 +69,7 @@
 	var/mob/living/thrower = arguments[4] // 4th arg = mob/thrower
 	if(plant_safety_check(source, thrower))
 		return
-	backfire_callback.Invoke(source, thrower)
+	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, thrower)
 	if(cancel_action)
 		return COMPONENT_CANCEL_THROW
 

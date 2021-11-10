@@ -175,6 +175,10 @@
 		return //Return if there's still sources left, no sense clearing the list or bothering anyone about it
 
 	alarms_of_our_type -= source_area.name
+
+	if(!length(alarms_of_our_type))
+		alarms -= alarm_type
+
 	SEND_SIGNAL(src, COMSIG_ALARM_CLEARED, alarm_type, source_area)
 
 ///Does what it says on the tin, exists for signal hooking

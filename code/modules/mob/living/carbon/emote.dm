@@ -46,60 +46,12 @@
 	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
-/datum/emote/living/carbon/moan
-	key = "moan"
-	key_third_person = "moans"
-	message = "moans!"
-	message_mime = "appears to moan!"
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/carbon/roll
-	key = "roll"
-	key_third_person = "rolls"
-	message = "rolls."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/scratch
-	key = "scratch"
-	key_third_person = "scratches"
-	message = "scratches."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
-/datum/emote/living/carbon/sign
-	key = "sign"
-	key_third_person = "signs"
-	message_param = "signs the number %t."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/sign/select_param(mob/user, params)
-	. = ..()
-	if(!isnum(text2num(params)))
-		return message
-
-/datum/emote/living/carbon/sign/signal
-	key = "signal"
-	key_third_person = "signals"
-	message_param = "raises %t fingers."
-	mob_type_allowed_typecache = list(/mob/living/carbon/human)
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/tail
-	key = "tail"
-	message = "waves their tail."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
-
-/datum/emote/living/carbon/wink
-	key = "wink"
-	key_third_person = "winks"
-	message = "winks."
-
+	
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
 	hands_use_check = TRUE
-
+	
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!length(user.get_empty_held_indexes()))
@@ -109,23 +61,13 @@
 	if(user.put_in_hands(N))
 		to_chat(user, span_notice("You make a circle with your hand."))
 
-/datum/emote/living/carbon/slap
-	key = "slap"
-	key_third_person = "slaps"
-	hands_use_check = TRUE
-	cooldown = 3 SECONDS // to prevent endless table slamming
-
-/datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/slapper/N = new(user)
-	if(user.put_in_hands(N))
-		to_chat(user, span_notice("You ready your slapping hand."))
-	else
-		qdel(N)
-		to_chat(user, span_warning("You're incapable of slapping in your current state."))
-
+/datum/emote/living/carbon/moan
+	key = "moan"
+	key_third_person = "moans"
+	message = "moans!"
+	message_mime = "appears to moan!"
+	emote_type = EMOTE_AUDIBLE
+	
 /datum/emote/living/carbon/noogie
 	key = "noogie"
 	key_third_person = "noogies"
@@ -142,3 +84,62 @@
 		qdel(noogie)
 		to_chat(user, span_warning("You're incapable of noogie'ing in your current state."))
 
+/datum/emote/living/carbon/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/sign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	hands_use_check = TRUE
+	
+/datum/emote/living/carbon/sign/select_param(mob/user, params)
+	. = ..()
+	if(!isnum(text2num(params)))
+		return message
+
+/datum/emote/living/carbon/sign/signal
+	key = "signal"
+	key_third_person = "signals"
+	message_param = "raises %t fingers."
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+	hands_use_check = TRUE
+	
+/datum/emote/living/carbon/slap
+	key = "slap"
+	key_third_person = "slaps"
+	hands_use_check = TRUE
+	cooldown = 3 SECONDS // to prevent endless table slamming
+	
+/datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/slapper/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, span_notice("You ready your slapping hand."))
+	else
+		qdel(N)
+		to_chat(user, span_warning("You're incapable of slapping in your current state."))
+
+/datum/emote/living/carbon/tail
+	key = "tail"
+	message = "waves their tail."
+	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+
+/datum/emote/living/carbon/wink
+	key = "wink"
+	key_third_person = "winks"
+	message = "winks."

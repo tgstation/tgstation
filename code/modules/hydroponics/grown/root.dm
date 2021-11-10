@@ -44,7 +44,7 @@
 	plantname = "Parsnip"
 	product = /obj/item/food/grown/parsnip
 	icon_dead = "carrot-dead"
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/aluminium = 0.05)
 
 /obj/item/food/grown/parsnip

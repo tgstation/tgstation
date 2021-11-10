@@ -82,7 +82,7 @@
 	. = ..()
 	. += span_notice("Alt-click to pump it.")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)
@@ -202,7 +202,7 @@
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 
-/obj/item/gun/ballistic/shotgun/hook/Initialize()
+/obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 

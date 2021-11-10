@@ -93,32 +93,16 @@
 
 /obj/machinery/atmospherics/pipe/proc/update_pipe_icon()
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
+	var/connections = NONE
 	var/bitfield = NONE
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/connected_dir = get_dir(src, node)
-		switch(connected_dir)
-			if(NORTH)
-				bitfield |= NORTH_FULLPIPE
-			if(SOUTH)
-				bitfield |= SOUTH_FULLPIPE
-			if(EAST)
-				bitfield |= EAST_FULLPIPE
-			if(WEST)
-				bitfield |= WEST_FULLPIPE
-	for(var/cardinal in GLOB.cardinals)
-		if(initialize_directions & cardinal && !(bitfield & cardinal))
-			switch(cardinal)
-				if(NORTH)
-					bitfield |= NORTH_SHORTPIPE
-				if(SOUTH)
-					bitfield |= SOUTH_SHORTPIPE
-				if(EAST)
-					bitfield |= EAST_SHORTPIPE
-				if(WEST)
-					bitfield |= WEST_SHORTPIPE
+		connections |= connected_dir
+	bitfield = CARDINAL_TO_FULLPIPES(connections)
+	bitfield |= CARDINAL_TO_SHORTPIPES(initialize_directions & ~connections)
 	icon_state = "[bitfield]_[piping_layer]"
 
 /obj/machinery/atmospherics/pipe/update_icon()

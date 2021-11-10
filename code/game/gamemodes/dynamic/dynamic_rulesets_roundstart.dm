@@ -15,9 +15,9 @@
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 5
-	cost = 8 // Avoid raising traitor threat above 10, as it is the default low cost ruleset.
+	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 24)
 	var/autotraitor_cooldown = (15 MINUTES)
 	COOLDOWN_DECLARE(autotraitor_cooldown_check)
@@ -92,7 +92,7 @@
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
-	antag_datum = /datum/antagonist/brother/
+	antag_datum = /datum/antagonist/brother
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
@@ -492,23 +492,21 @@
 /datum/dynamic_ruleset/roundstart/families
 	name = "Families"
 	persistent = TRUE
+	antag_datum = /datum/antagonist/gang
 	antag_flag = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
-	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_candidates = 6 // gotta have 'em ALL
-	weight = 2
-	cost = 30
-	requirements = list(101,101,101,101,101,70,40,10,10,10)
+	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
+	required_candidates = 9
+	weight = 1
+	cost = 19
+	requirements = list(101,101,40,40,30,20,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
-	minimum_players = 36
-	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
 /datum/dynamic_ruleset/roundstart/families/pre_execute(population)
 	..()
 	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gangs_to_generate = (get_antag_cap(population) / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.use_dynamic_timing = TRUE
 	return handler.pre_setup_analogue()
@@ -561,22 +559,25 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops
-	name = "Clown Ops"
+	name = "Clown Operatives"
 	antag_datum = /datum/antagonist/nukeop/clownop
+	antag_flag = ROLE_CLOWN_OPERATIVE
+	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
 	if(.)
-		for(var/obj/machinery/nuclearbomb/syndicate/S in GLOB.nuke_list)
-			var/turf/T = get_turf(S)
-			if(T)
-				qdel(S)
-				new /obj/machinery/nuclearbomb/syndicate/bananium(T)
-		for(var/datum/mind/V in assigned)
-			V.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
-			V.special_role = ROLE_CLOWN_OPERATIVE
+		var/obj/machinery/nuclearbomb/syndicate/syndicate_nuke = locate() in GLOB.nuke_list
+		if(syndicate_nuke)
+			var/turf/nuke_turf = get_turf(syndicate_nuke)
+			if(nuke_turf)
+				new /obj/machinery/nuclearbomb/syndicate/bananium(nuke_turf)
+				qdel(syndicate_nuke)
+		for(var/datum/mind/clowns in assigned)
+			clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+			clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 
 //////////////////////////////////////////////

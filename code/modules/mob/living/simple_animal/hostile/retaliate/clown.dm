@@ -29,7 +29,7 @@
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
 
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
@@ -69,7 +69,7 @@
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
-/mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize()
+/mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/snailcrawl)
 
@@ -131,7 +131,7 @@
 	obj_damage = 5
 	loot = list(/obj/item/clothing/suit/hooded/bloated_human, /obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
-/mob/living/simple_animal/hostile/retaliate/clown/fleshclown/Initialize()
+/mob/living/simple_animal/hostile/retaliate/clown/fleshclown/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -316,7 +316,7 @@
 	///This ability lets you fire a single random item from your pouch.
 	var/obj/effect/proc_holder/regurgitate/my_regurgitate
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize()
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize(mapload)
 	. = ..()
 	my_regurgitate = new
 	AddAbility(my_regurgitate)

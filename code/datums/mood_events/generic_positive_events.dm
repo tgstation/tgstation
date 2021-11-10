@@ -116,11 +116,11 @@
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
 
-/datum/mood_event/fan_clown_pin
+/datum/mood_event/clown_enjoyer_pin
 	description = "<span class='nicegreen'>I love showing off my clown pin!</span>\n"
 	mood_change = 1
 
-/datum/mood_event/fan_mime_pin
+/datum/mood_event/mime_fan_pin
 	description = "<span class='nicegreen'>I love showing off my mime pin!</span>\n"
 	mood_change = 1
 
@@ -232,8 +232,12 @@
 	mood_change = 1.5
 	timeout = 2 MINUTES
 
-/datum/mood_event/kiss/add_effects(mob/beau)
-	if(beau)
+/datum/mood_event/kiss/add_effects(mob/beau, direct)
+	if(!beau)
+		return
+	if(direct)
+		description = "<span class='nicegreen'>[beau.name] gave me a kiss, ahh!!</span>\n"
+	else
 		description = "<span class='nicegreen'>[beau.name] blew a kiss at me, I must be a real catch!</span>\n"
 
 /datum/mood_event/honorbound

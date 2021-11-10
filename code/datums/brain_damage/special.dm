@@ -45,7 +45,7 @@
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
-	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, FALSE)
+	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, name)
 
 /datum/brain_trauma/special/bluespace_prophet
 	name = "Bluespace Prophecy"
@@ -104,9 +104,16 @@
 	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
 	var/mob/living/carbon/seer
 
-/obj/effect/hallucination/simple/bluespace_stream/Initialize()
+/obj/effect/hallucination/simple/bluespace_stream/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 300)
+
+/obj/effect/hallucination/simple/bluespace_stream/Destroy()
+	if(!QDELETED(linked_to))
+		qdel(linked_to)
+	linked_to = null
+	seer = null
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/effect/hallucination/simple/bluespace_stream/attack_hand(mob/user, list/modifiers)
@@ -378,7 +385,7 @@
 	image_state = "secbot-c"
 	var/victim
 
-/obj/effect/hallucination/simple/securitron/Initialize()
+/obj/effect/hallucination/simple/securitron/Initialize(mapload)
 	. = ..()
 	name = pick("officer Beepsky", "officer Johnson", "officer Pingsky")
 	START_PROCESSING(SSfastprocess, src)

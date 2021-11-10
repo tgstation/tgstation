@@ -40,6 +40,8 @@
 	/// If specified, the singularity will slowly move to this target
 	var/atom/target
 
+
+
 /datum/component/singularity/Initialize(
 	bsa_targetable = TRUE,
 	consume_range = 0,
@@ -85,7 +87,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
 

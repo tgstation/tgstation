@@ -15,7 +15,7 @@
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
 
-/obj/vehicle/ridden/wheelchair/Initialize()
+/obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
 	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)
@@ -25,7 +25,7 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
-/obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
+/obj/vehicle/ridden/wheelchair/atom_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
@@ -78,7 +78,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
 /obj/vehicle/ridden/wheelchair/gold
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, he's been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"

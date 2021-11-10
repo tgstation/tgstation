@@ -6,15 +6,16 @@
 /proc/is_banned_from(player_ckey, list/roles)
 	if(!player_ckey)
 		return
-	var/client/C = GLOB.directory[player_ckey]
-	if(C)
-		if(!C.ban_cache)
-			build_ban_cache(C)
+	var/client/player_client = GLOB.directory[player_ckey]
+	if(player_client)
+		var/list/ban_cache = player_client.ban_cache || build_ban_cache(player_client)
+		if(!islist(ban_cache))
+			return // Disconnected while building the list.
 		if(islist(roles))
-			for(var/R in roles)
-				if(R in C.ban_cache)
+			for(var/role in roles)
+				if(role in ban_cache)
 					return TRUE //they're banned from at least one role, no need to keep checking
-		else if(roles in C.ban_cache)
+		else if(roles in ban_cache)
 			return TRUE
 	else
 		var/values = list(
@@ -82,26 +83,34 @@
 		. += list(list("id" = query_check_ban.item[1], "bantime" = query_check_ban.item[2], "round_id" = query_check_ban.item[3], "expiration_time" = query_check_ban.item[4], "duration" = query_check_ban.item[5], "applies_to_admins" = query_check_ban.item[6], "reason" = query_check_ban.item[7], "key" = query_check_ban.item[8], "ip" = query_check_ban.item[9], "computerid" = query_check_ban.item[10], "admin_key" = query_check_ban.item[11]))
 	qdel(query_check_ban)
 
-/proc/build_ban_cache(client/C)
+
+/proc/build_ban_cache(client/player_client)
 	if(!SSdbcore.Connect())
 		return
-	if(C && istype(C))
-		C.ban_cache = list()
-		var/is_admin = FALSE
-		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
-			is_admin = TRUE
-		var/datum/db_query/query_build_ban_cache = SSdbcore.NewQuery(
-			"SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = :ckey AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
-			list("ckey" = C.ckey)
-		)
-		if(!query_build_ban_cache.warn_execute())
-			qdel(query_build_ban_cache)
-			return
-		while(query_build_ban_cache.NextRow())
-			if(is_admin && !text2num(query_build_ban_cache.item[2]))
-				continue
-			C.ban_cache[query_build_ban_cache.item[1]] = TRUE
+	if(QDELETED(player_client))
+		return
+	var/ckey = player_client.ckey
+	var/list/ban_cache = list()
+	var/is_admin = FALSE
+	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
+		is_admin = TRUE
+	var/datum/db_query/query_build_ban_cache = SSdbcore.NewQuery(
+		"SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = :ckey AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())",
+		list("ckey" = ckey)
+	)
+	if(!query_build_ban_cache.warn_execute())
 		qdel(query_build_ban_cache)
+		return
+	while(query_build_ban_cache.NextRow())
+		if(is_admin && !text2num(query_build_ban_cache.item[2]))
+			continue
+		ban_cache[query_build_ban_cache.item[1]] = TRUE
+	qdel(query_build_ban_cache)
+	if(QDELETED(player_client)) // Disconnected while working with the DB.
+		return
+	player_client.ban_cache = ban_cache
+	return ban_cache
+
 
 /datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration = 1440, applies_to_admins, reason, edit_id, page, admin_key)
 	var/panel_height = 620
@@ -110,7 +119,7 @@
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	var/tgui_fancy = usr.client.prefs.tgui_fancy
+	var/tgui_fancy = usr.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy)
 	if(tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
 		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
@@ -239,7 +248,8 @@
 		for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 			var/label_class = department.label_class
 			var/department_name = department.department_name
-			output += "<div class='column'><label class='rolegroup [label_class]'>[department_name]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [label_class]'>[tgui_fancy ? "<input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""] \
+			[department_name]</label><div class='content'>"
 			for(var/datum/job/job_datum as anything in department.department_jobs)
 				if(break_counter > 0 && (break_counter % 3 == 0))
 					output += "<br>"
@@ -266,7 +276,7 @@
 			"Abstract" = list("Appearance", "Emote", "Deadchat", "OOC"),
 			)
 		for(var/department in other_job_lists)
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in other_job_lists[department])
 				if(break_counter > 0 && (break_counter % 3 == 0))
@@ -295,6 +305,7 @@
 				ROLE_BROTHER,
 				ROLE_CHANGELING,
 				ROLE_CULTIST,
+				ROLE_FAMILIES,
 				ROLE_HERETIC,
 				ROLE_HIVE,
 				ROLE_INTERNAL_AFFAIRS,
@@ -306,13 +317,16 @@
 				ROLE_REV,
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
+				ROLE_SENTIENT_DISEASE,
+				ROLE_SPIDER,
+				ROLE_SWARMER,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
 				ROLE_WIZARD,
 			),
 		)
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))
@@ -494,7 +508,7 @@
 		if(query_check_adminban_count.NextRow())
 			var/adminban_count = text2num(query_check_adminban_count.item[1])
 			var/max_adminbans = MAX_ADMINBANS_PER_ADMIN
-			if(R_EVERYTHING && !(R_EVERYTHING & rank.can_edit_rights)) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
+			if(check_rights(R_PERMISSIONS, show_msg = FALSE) && (rank.can_edit_rights & R_EVERYTHING) == R_EVERYTHING) //edit rights are a more effective way to check hierarchical rank since many non-headmins have R_PERMISSIONS now
 				max_adminbans = MAX_ADMINBANS_PER_HEADMIN
 			if(adminban_count >= max_adminbans)
 				to_chat(usr, span_danger("You've already logged [max_adminbans] admin ban(s) or more. Do not abuse this function!"), confidential = TRUE)

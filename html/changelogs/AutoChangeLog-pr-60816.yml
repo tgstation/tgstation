@@ -1,4 +1,0 @@
-author: "Rohesie"
-delete-after: True
-changes: 
-  - bugfix: "Buckling to nearby objects and roundstart shuttle buckling now result in the proper facing direction."

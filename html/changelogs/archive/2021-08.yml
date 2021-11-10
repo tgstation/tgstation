@@ -387,3 +387,325 @@
       has been added to the top of the integrated circuit UI to access these variables.
   - code_imp: Moved all the integrated circuit core files into a new subfolder called
       core
+2021-08-15:
+  Ghilker:
+  - bugfix: constructed atmos devices now show the correct color in the name (no longer
+      all grey)
+  - qol: the healium crystal now fix the air instead of refilling it (that role is
+      still available with the proto nitrate one), the crystal is not made with O2
+      instead of freon
+  - expansion: Add crystal foam recipe to crystallizer, a crystal that when broken
+      will release a tick foam that closes any and all breaches that it encounters
+      (it won't refill the air tho)
+  Rohesie:
+  - bugfix: Buckling to nearby objects and roundstart shuttle buckling now result
+      in the proper facing direction.
+  Wayland-Smithy:
+  - bugfix: Fixed new ticket ahelp message double sanitizing.
+2021-08-16:
+  Colovorat:
+  - bugfix: Cyborg emergency reboot module now is no longer dropped if revive is succesful
+  - bugfix: Controller shell extra button now works properly
+  Couls:
+  - bugfix: bright white spheres when attacking things with an item that has a light
+      source attached
+  - bugfix: inventory and action buttons creating light sources
+  Ghommie:
+  - bugfix: freezers will now actually protect their contents from explosions once
+      like iamgoofball intended almost 4 years ago.
+  Time-Green:
+  - bugfix: moths will burn
+2021-08-17:
+  Ghommie:
+  - qol: Wormhole projectors now fire blue wormholes with left mouse btton and orange
+      ones with right mouse button.
+  GreatKingWombat:
+  - bugfix: Defined the in-hand state for the chaplains' unholy pitchfork. The in-hand
+      sprites will now actually appear.
+  SmArtKar:
+  - bugfix: NTNet Transmitter now works
+  Timberpoes:
+  - admin: Admins can now find "banned account in connection history" admin alerts
+      mirrored to the suspicious logins log file.
+  Watermelon914:
+  - bugfix: Fixed freezers protecting their contents after being exploded.
+2021-08-18:
+  Cyberboss:
+  - bugfix: The insufficient black market credits message now properly displays.
+  EOBGames:
+  - code_imp: Management would like to announce that in accordance with new company
+      policy, the Toxins Lab will henceforth be known as the Ordnance Lab. In addition,
+      a number of company protocols have been rewritten with this in mind.
+  Watermelon914:
+  - refactor: Refactors connect_loc_behalf and caltrops to both be components. This
+      will likely solve a lot of current issues with connect_loc_behalf as storing
+      states will be much more stable on it.
+2021-08-19:
+  GoldenAlpharex:
+  - bugfix: Space-proof beret now actually appears to have been made into a beret,
+      instead of a reality-bending bunch of letters.
+  Maurukas:
+  - bugfix: The intercom in Deltastation's toxin range has been relocated closer to
+      the implosion compressor
+  Moltovz:
+  - bugfix: fixed a broken bee in botany.
+  Potato-Masher:
+  - bugfix: Fixes the Deltastation Engineering console being wired to the wrong powernet,
+      allowing the Ampcheck program to function as intended.
+  - bugfix: Added a missing length of cable to the tramstation kitchen, as well as
+      the absent salt/pepper shakers.
+  SmArtKar:
+  - bugfix: Beach Biodome now has an oven and a griddle
+  jughu:
+  - bugfix: fixes wizard failing to spawn without a spellbook when you roll a d20
+2021-08-20:
+  BarrelOfNapkins:
+  - bugfix: if a character is blind, they can feel how full they feel while eating
+  Fikou:
+  - bugfix: fixes service achievements
+  Ghilker:
+  - bugfix: fixes thermomachine abuse by slowing the exchange ratio based on the moles
+      amount on the ports (both if cooling, only main if not)
+  Gurkenglas:
+  - bugfix: The intern responsible for NTNet circuit components not working has been
+      sacked.
+  Improvedname:
+  - bugfix: Auto rifle ammo crates have a name now
+  Krysonism:
+  - bugfix: Fixed an exploit that allowed SaturnX enjoyers to become permanently invisible.
+  Pepsiman0:
+  - bugfix: 'the chem mass spectrometer is now a proper machine that is now: buildable,
+      deconstructable, movable and upgradable. (the research for the board is in the
+      basic bio tech node)'
+  PositiveEntropy, Kryson, TetraZeta:
+  - imageadd: Ports new Hypospray, Combat Autoinjector, Pestle, Mortar and Dropper
+      sprites from Shiptest!
+  - imageadd: Adds a new sprite for pill bottles!
+  ViktorKoL:
+  - bugfix: corrected Fiery Rebirth's and Curse of Corrosion's heretic research descriptions
+  - bugfix: fixed heretic research progression after unlocking the Lonely Ritual
+  Watermelon914:
+  - bugfix: Fixed the circuit duplicator not working.
+  Wayland-Smithy:
+  - bugfix: Fixed microwave's attack_hand_secondary return value.
+  timothymtorres:
+  - qol: Mulebots no longer turn off power when the panel is opened with a screwdriver.
+  - bugfix: Player controlled mulebot mobility is now affected by motor wires.
+  - bugfix: Fix fire being extinguished by pAIs, borgs, or simple animals by walking
+      over the mob.
+2021-08-21:
+  BraveMole:
+  - code_imp: prevent possible QDEL_IN harddel
+  Gamer025:
+  - code_imp: Failsafe is more robust now and the game can actually recover from an
+      deleted MC
+  Ghilker:
+  - bugfix: fix crystallizer from getting stuck on same amount of gases, limits the
+      allowed amount of allowed gas inside by double the recipe amount per type
+  MMMiracles:
+  - bugfix: Solar assemblies can no longer be built on top of existing solar panels.
+  SpookyTheFox:
+  - bugfix: tweaked soda dispenser reagent temperatures
+  Thunder12345:
+  - admin: The add component option in view variables now uses a tgui list that can
+      be searched.
+  Time-Green:
+  - bugfix: lowered mothwings are now visible again
+  aaaa1023:
+  - spellcheck: fixed a few typos in sleeping carp "recall teachings" text. Also changed
+      a line in it to be less awkward.
+2021-08-22:
+  AMonkeyThatCodes:
+  - bugfix: Moving aside your mask will no longer make you impervious to disease
+  Arkatos:
+  - bugfix: Fixed several messages which were not showing properly about finding a
+      rabbit in a hat, rattling your bones, denying sect membership or cooking sausages.
+  Melbert:
+  - bugfix: Some mask slot items won't prevent you from breathing properly due to
+      a runtime error
+  Watermelon914:
+  - admin: Adds component removals and mass component removals to the VV menu.
+2021-08-23:
+  Timberpoes:
+  - bugfix: Fixed runtime in monkey AI which would prevent monkey from pickpocketing
+      weapons or picking weapons off the ground.
+  vincentiusvin:
+  - bugfix: fixes hot ice igniting using 100x the actual number of the sheets
+  - bugfix: fixes hot ice being ignitable with a condenser
+2021-08-24:
+  Fikou:
+  - bugfix: fixes stun baton switching exploit
+  Melbert:
+  - refactor: Various toggle/transforming items (energy swords / shields, the cleaving
+      saw, switchblades - to name a few) are now handled via component (the transforming
+      component).
+  - code_imp: Slightly cleaned up the code surrounding various transforming items.
+      Comments, better vars, etc.
+  - bugfix: The Syndicate Jaws of Life no longer become normal Jaws of Life on use
+  Pepsiman0:
+  - bugfix: you can now smash a bottle of beer or ale on someone's head
+  Wayland-Smithy:
+  - bugfix: Fixed dash abilities, like from Hiero Club, null owner refs.
+  esainane:
+  - bugfix: The HFR now places its side components in the correct orientation when
+      constructed by using a Multitool on the rapid HFR boxes. The core still needs
+      rotating if your design requires it, and is best done before you step away unless
+      you want to disassemble and move a side component.
+2021-08-25:
+  AccountName5:
+  - bugfix: Fixed bug that prevented you from placing vertical bridge pipes on horizontal
+      smart pipes.
+  Colovorat:
+  - bugfix: Cables from protolathe and autolathe should merge just fine now
+  Ghommie:
+  - bugfix: roundstart offstation antagonists such as wizards and nuke ops no longer
+      have quirks (either from preferences or hardcore random) assigned to them or
+      count toward the hardcore random score.
+  - bugfix: Fixes the lone operative event hardly ever rolling even if the disk is
+      left on the same place for hours because of dynamic.
+  Kryson, AMonkeyThatCodes:
+  - imageadd: Replaces the lobby menu with sprites instead of HTML
+  softcerv:
+  - bugfix: stargazers can now form slime links again.
+2021-08-26:
+  Ghommie:
+  - bugfix: Fixes monkey being unable to access right click functions on several objects
+      such as stacks and storages.
+  - bugfix: Outgoing comms console messages to allied stations will not be shown again
+      as incoming messages.
+  - bugfix: Fixes traits added by quirks not being removed when those are deleted
+      (like from eigenstasium).
+  Krysonism:
+  - expansion: 'The spores of a new rare mushroom occasionally spawns in maint: the
+      odious puffball! Gross.'
+  Nari Harimoto:
+  - bugfix: smart pipes will no longer occassionally be buggy when placing atmos pipes
+      across roundstart pipes
+  TiviPlus:
+  - refactor: Area based lighting can be varedited and changed now
+  Watermelon914:
+  - admin: Made admin only shells not interactable to non-admins
+  tralezab:
+  - imageadd: better fish and fish food sprites
+  wesoda25:
+  - bugfix: Repairing clothing now immediately updates the sprite
+2021-08-27:
+  Nari Harimoto:
+  - bugfix: minor edits to some walls in icebox maint so all edges touch
+  Sealed101:
+  - bugfix: The long-presumed-missing CMO's rubber stamp has been returned to Delta
+      station's CMO office. Hail bureaucracy!
+  TiviPlus:
+  - bugfix: Fixed an exploit
+  bobbahbrown:
+  - admin: Add Requests Manager to view all prayers/centcom and syndicate requests/and
+      nuke code requests within a round.
+  esainane:
+  - spellcheck: The HFR now correctly describes the recipe cooling modifier as adjusting
+      the maximum cooling, rather than the minimum cooling.
+  - bugfix: Temperature Control Units now display their color when set or changed,
+      rather than always displaying as grey.
+  mokulus:
+  - code_imp: Treat DreamMaker warnings as errors in CI
+  timothymtorres:
+  - bugfix: Fixed crayon and spraycan text input to behave properly
+  tralezab:
+  - bugfix: Honorbound followers can now perform surgery.
+  - bugfix: Honorbound followers can no longer punch the innocents.
+  - bugfix: fixes heart attack message spam for synthetic organs!
+2021-08-28:
+  Couls:
+  - rscadd: TGUI autolathe
+  - expansion: You can now input a custom amount to print(hard limit at 50 or maximum
+      stack size)
+  - expansion: Can now search and change categories while the autolathe is busy, line
+      up those designs!
+  Ghilker:
+  - bugfix: error when typing the mole efficiency (instead of 0.1 it was 0.001, didn't
+      push the change)
+  - bugfix: infinite power consumption (capped)
+  - bugfix: efficiency not being tied to laser tiers (issue connected to infinite
+      power consumption)
+  tralezab:
+  - bugfix: fixes field generators not being interactable
+2021-08-29:
+  Fikou:
+  - bugfix: colossus bolts no longer instantly explode you if youre in a car/mech
+2021-08-30:
+  Arkatos:
+  - refactor: Cyborg Station Alerts UI now uses tgui.
+  - refactor: AI Station Alerts UI now uses tgui.
+  IndieanaJones:
+  - expansion: Spider nurses and broodmothers can now place down sealed webs by webbing
+      an already webbed tile, allowing them to make weak walls.
+  - qol: Tarantulas now use right-click to charge as opposed to a button ability.  Said
+      button ability is now removed.
+  - balance: Spiders have received some slight balance changes to make them less oppressive
+      when they have the upper hand whilst letting them slightly handle atmos changes.  One
+      major change is that broodmothers now take 15 seconds to lay eggs as opposed
+      to 10 seconds.
+  - qol: Spiders can see further in the dark now.
+  Y0SH1M4S73R:
+  - bugfix: Variables within an SDQL spell list variable can have their names changed
+      without causing a cascade of errors
+  - refactor: SDQL spell query execution has been moved to a component
+  - admin: The parse error handling for SDQL spells has been improved significantly
+  - admin: Projectile SDQL spells can now fire any projectile
+  - admin: Touch SDQL spells can now use any touch attack item
+  esainane:
+  - bugfix: Smart pipes now calculate their direction properly, and construction code
+      checks direction logic properly. This fixes many problems with atmospherics
+      construction.
+  - bugfix: Smart pipe construction now no longer tries to work around irrelevant
+      pipes which are on completely different layers and do not interact with the
+      new pipe in any way.
+  - bugfix: Smart pipes with less than two allowed directions can no longer be built.
+      The pipe would be invisible, but still interact in weird ways.
+  - bugfix: One tile can no longer have more than one atmospheric component ready
+      to connect in the same direction and layer. This prevents the scenario where
+      a temperature pump is placed in a manner which looks like it's going to connect
+      to a horizontal bridge pipe, but actually turns the vertical plasma input pipe
+      behind it into a manifold, ruptures the connected plasma canister, and sets
+      Toxins on fire.
+  - qol: Smart pipes are now much, much smarter. During construction, if a smart pipe
+      would block placement of a component, it will see if permitted connectivity
+      can be reconfigured to make room for other components. This includes negotiation
+      with other smart pipes, preferring to create pipe crossings where available,
+      or create an opposing corner pipe if not. The RPD can now also reconfigure allowed
+      connectivity for existing smart pipes manually. Smart pipes can never be reconfigured
+      to have less than two allowed directions, and active connections cannot be reconfigured.
+      Automatic reconfiguration will never cause a smart pipe to permit connectivity
+      that was not previously permitted.
+  - bugfix: Multi-layer pipe components can trigger smart pipe negotiation where relevant.
+  - refactor: Rearranged some atmospherics pipe code. Fewer redundant loops, add and
+      use documented and centralized helpers for bit manipulation where sensible.
+      Make bitfield assumptions explicit.
+  - code_imp: made a small part of the documentation in the area less wrong dear god
+      my eyes the goggles do nothing
+  tralezab:
+  - spellcheck: Changed the wording on antag panel policy a little bit.
+2021-08-31:
+  AMonekyThatCodes:
+  - refactor: Adds basic mobs, a replacement for simple mobs that will hopefully destroy
+      the subtype. This is so far applied to cockroaches (and their variants)
+  JohnFulpWillard:
+  - bugfix: Hardcore random traitors now get their hardcore random points for greentexting.
+  Mothblocks:
+  - admin: Admins can now give players a popup if they are not responding to tickets.
+  Shroopy:
+  - bugfix: Female uniforms now update color correctly.
+  - code_imp: Female clothing generation now takes greyscale_colors as an arg, which
+      is null by default if the clothing item doesn't use GAGS.
+  Y0SH1M4S73R:
+  - bugfix: Traitors that are unable to receive equipment required for specific objectives
+      will be able to order that equipment from the uplink. Other antagonists that
+      are unable to receive such equipment can call in a pod containing that equipment,
+      unless they somehow have an unlocked uplink on their person, in which case they
+      can order it from the uplink.
+  YakumoChen:
+  - bugfix: Naive clowns now worry less about their "sleeping" pets.
+  aaaa1023:
+  - spellcheck: fixed misspellings of "aggression" in the descriptions of Gelatinous
+      Ooze, NT combat defib and misspelling in heretic rust spell.
+  dragomagol:
+  - admin: gives brainwash victims a hud icon

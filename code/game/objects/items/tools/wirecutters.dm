@@ -39,7 +39,7 @@
 		"yellow" = "#d58c18"
 	)
 
-/obj/item/wirecutters/Initialize()
+/obj/item/wirecutters/Initialize(mapload)
 	if(random_color)
 		var/our_color = pick(wirecutter_colors)
 		set_greyscale(colors=list(wirecutter_colors[our_color]))

@@ -74,7 +74,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ah" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -224,7 +224,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/engine)
 "au" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -910,18 +910,6 @@
 "bF" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bridge)
-"bG" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/rack,
-/obj/item/storage/box/lights/mixed,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/firealarm/directional/south,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned/cargo)
 "bH" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/oil,
@@ -968,7 +956,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/abandoned/crew)
 "bP" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast door"
@@ -1254,7 +1242,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
 "cs" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -1697,23 +1685,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/abandoned/bar)
-"dd" = (
-/obj/structure/closet/secure_closet/freezer{
-	locked = 0;
-	name = "fridge"
-	},
-/obj/item/food/sausage,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/food/sandwich,
-/obj/effect/turf_decal/trimline/white/filled/line{
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/abandoned/bar)
 "de" = (
 /obj/machinery/porta_turret/centcom_shuttle/weak{
 	dir = 4;
@@ -1722,7 +1693,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
 "df" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast door"
@@ -1750,6 +1721,35 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
+"sR" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/rack,
+/obj/item/storage/box/lights/mixed,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/spawner/random/maintenance/two,
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
+"NF" = (
+/obj/structure/closet/secure_closet/freezer{
+	locked = 0;
+	name = "fridge"
+	},
+/obj/item/food/sausage,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/food/sandwich,
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/abandoned/bar)
 
 (1,1,1) = {"
 aa
@@ -1905,7 +1905,7 @@ ac
 aE
 aZ
 bs
-bG
+sR
 bU
 ck
 cA
@@ -1946,7 +1946,7 @@ bW
 cm
 cC
 cT
-dd
+NF
 df
 "}
 (12,1,1) = {"

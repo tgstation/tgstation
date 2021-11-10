@@ -17,7 +17,7 @@
 	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
 
-/obj/item/reagent_containers/syringe/Initialize()
+/obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
@@ -273,7 +273,7 @@
 
 /obj/item/reagent_containers/syringe/contraband/saturnx
 	list_reagents = list(/datum/reagent/drug/saturnx = 15)
- 
+
 /obj/item/reagent_containers/syringe/contraband/methamphetamine
 	list_reagents = list(/datum/reagent/drug/methamphetamine = 15)
 

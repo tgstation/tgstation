@@ -98,7 +98,7 @@
 	max_charges = 4
 	school = SCHOOL_EVOCATION
 
-/obj/item/gun/magic/staff/spellblade/Initialize()
+/obj/item/gun/magic/staff/spellblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 15, 125, 0, hitsound)
 

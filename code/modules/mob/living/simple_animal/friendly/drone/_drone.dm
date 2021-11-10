@@ -154,7 +154,7 @@
 		/obj/item/clothing/mask,
 	)
 
-/mob/living/simple_animal/drone/Initialize()
+/mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)

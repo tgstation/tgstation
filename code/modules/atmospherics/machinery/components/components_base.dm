@@ -11,6 +11,8 @@
 	var/shift_underlay_only = TRUE
 	///Stores the component pipeline
 	var/list/datum/pipeline/parents
+	///If this is queued for a rebuild this var signifies whether parents should be updated after it's done
+	var/update_parents_after_rebuild = FALSE
 	///Stores the component gas mixture
 	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
@@ -29,7 +31,7 @@
 		A.volume = 200
 		airs[i] = A
 
-/obj/machinery/atmospherics/components/Initialize()
+/obj/machinery/atmospherics/components/Initialize(mapload)
 	. = ..()
 
 	if(hide)
@@ -97,6 +99,11 @@
 /obj/machinery/atmospherics/components/on_construction()
 	. = ..()
 	update_parents()
+
+/obj/machinery/atmospherics/components/rebuild_pipes()
+	. = ..()
+	if(update_parents_after_rebuild)
+		update_parents()
 
 /obj/machinery/atmospherics/components/get_rebuild_targets()
 	var/list/to_return = list()
@@ -191,6 +198,9 @@
  */
 /obj/machinery/atmospherics/components/proc/update_parents()
 	if(!SSair.initialized)
+		return
+	if(rebuilding)
+		update_parents_after_rebuild = TRUE
 		return
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]

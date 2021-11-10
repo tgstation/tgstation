@@ -33,8 +33,7 @@
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
-		for(var/port_id in SSshuttle.stationary)
-			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
+		for(var/obj/docking_port/stationary/S as anything in SSshuttle.stationary)
 			if(S.id == shuttleId)
 				jumpto_ports[S.id] = TRUE
 
@@ -379,7 +378,7 @@
 			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
-	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in sortList(L)
+	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in sort_list(L)
 	if(QDELETED(src) || QDELETED(target) || !isliving(target))
 		return
 	playsound(src, "terminal_type", 25, FALSE)

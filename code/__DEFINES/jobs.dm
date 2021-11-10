@@ -81,6 +81,9 @@
 #define JOB_BOLD_SELECT_TEXT (1<<5)
 /// Reopens this position if we lose the player at roundstart.
 #define JOB_REOPEN_ON_ROUNDSTART_LOSS (1<<6)
+/// If the player with this job can have quirks assigned to him or not. Relevant for new player joinable jobs and roundstart antags.
+#define JOB_ASSIGN_QUIRKS (1<<7)
+
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

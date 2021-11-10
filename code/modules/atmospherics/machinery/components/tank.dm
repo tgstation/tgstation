@@ -11,7 +11,7 @@
 	layer = ABOVE_WINDOW_LAYER
 
 	custom_materials = list(/datum/material/iron=20000) // plasteel is not a material to prevent two bugs: one where the default pressure is 1.5 times higher as plasteel's material modifier is added, and a second one where the tank names could be "plasteel plasteel" tanks
-	material_flags = MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_GREYSCALE | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 
 	pipe_flags = PIPING_ONE_PER_TURF
 	device_type = QUATERNARY
@@ -57,7 +57,7 @@
 	/// The typecache of types which are allowed to merge internal storage
 	var/static/list/merger_typecache
 
-/obj/machinery/atmospherics/components/tank/Initialize()
+/obj/machinery/atmospherics/components/tank/Initialize(mapload)
 	. = ..()
 
 	if(!knob_overlays)
@@ -89,9 +89,12 @@
 	if(gas_type)
 		FillToPressure(gas_type)
 
-	setPipingLayer(piping_layer)
 	QUEUE_SMOOTH(src)
 	QUEUE_SMOOTH_NEIGHBORS(src)
+
+	// Mapped in tanks should automatically connect to adjacent pipenets in the direction set in dir
+	if(mapload)
+		initialize_directions = dir
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -132,7 +135,6 @@
 	air_contents.assert_gas(gastype)
 	air_contents.gases[gastype][MOLES] += moles_to_add
 	air_contents.archive()
-	update_parents()
 
 /obj/machinery/atmospherics/components/tank/process_atmos()
 	if(air_contents.react(src))
@@ -231,8 +233,6 @@
 		if(dir & initialize_directions & merger.members[src])
 			ToggleSidePort(dir)
 
-	update_parents()
-
 ///////////////////////////////////////////////////////////////////
 // Appearance stuff
 
@@ -298,7 +298,7 @@
 /obj/machinery/atmospherics/components/tank/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	. = TRUE
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return
 	if(!tool.tool_start_check(user, amount=0))
 		return
@@ -345,7 +345,7 @@
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
 
-/obj/machinery/atmospherics/components/tank/air/Initialize()
+/obj/machinery/atmospherics/components/tank/air/Initialize(mapload)
 	. = ..()
 	FillToPressure(/datum/gas/oxygen, safety_margin=(O2STANDARD * 0.5))
 	FillToPressure(/datum/gas/nitrogen, safety_margin=(N2STANDARD * 0.5))
@@ -353,7 +353,7 @@
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
 
-/obj/machinery/atmospherics/components/tank/toxins
+/obj/machinery/atmospherics/components/tank/plasma
 	gas_type = /datum/gas/plasma
 
 /obj/machinery/atmospherics/components/tank/nitrogen
@@ -546,5 +546,6 @@
 	var/list/new_custom_materials = list()
 	new_custom_materials[material_end_product] = 20000
 	new_tank.set_custom_materials(new_custom_materials)
+	new_tank.on_construction(new_tank.pipe_color, new_tank.piping_layer)
 	to_chat(user, "<span class='notice'>[new_tank] has been sealed and is ready to accept gases.</span>")
 	qdel(src)

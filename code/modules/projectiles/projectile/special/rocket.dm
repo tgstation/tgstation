@@ -7,7 +7,7 @@
 
 /obj/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
-	explosion(target, devastation_range = -1, light_impact_range = 2)
+	explosion(target, devastation_range = -1, light_impact_range = 2, explosion_cause = src)
 	return BULLET_ACT_HIT
 
 /// PM9 HEDP rocket
@@ -53,9 +53,9 @@
 
 /obj/projectile/bullet/a84mm/he/do_boom(atom/target, blocked=0)
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4)
+		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4, explosion_cause = src)
 	else
-		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4)
+		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4,  explosion_cause = src)
 
 /// PM9 weak rocket
 /obj/projectile/bullet/a84mm/weak
@@ -66,9 +66,9 @@
 
 /obj/projectile/bullet/a84mm/weak/do_boom(atom/target, blocked=0)
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
-		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4)
+		explosion(target, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4, explosion_cause = src)
 	else
-		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4)
+		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4, explosion_cause = src)
 
 /// Mech BRM-6 missile
 /obj/projectile/bullet/a84mm_br
@@ -99,7 +99,7 @@
 	..()
 	for(var/i in sturdy)
 		if(istype(target, i))
-			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2)
+			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 			return BULLET_ACT_HIT
 	//if(istype(target, /turf/closed) || ismecha(target))
 	new /obj/item/broken_missile(get_turf(src), 1)

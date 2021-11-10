@@ -52,12 +52,12 @@
 				if(!do_after(user, 5 SECONDS * item.toolspeed, source))
 					return
 				user.balloon_alert(user, "burned off rust")
-				qdel(src)
+				Detach(source)
 				return
 		if(TOOL_RUSTSCRAPER)
 			user.balloon_alert(user, "scraping off rust...")
 			if(!do_after(user, 2 SECONDS * item.toolspeed, source))
 				return
 			user.balloon_alert(user, "scraped off rust")
-			qdel(src)
+			Detach(source)
 			return

@@ -8,7 +8,7 @@
 	horizontal = FALSE
 	delivery_icon = null
 
-/obj/structure/closet/crate/bin/Initialize()
+/obj/structure/closet/crate/bin/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

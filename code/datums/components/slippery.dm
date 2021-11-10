@@ -25,6 +25,9 @@
 		COMSIG_ATOM_ENTERED = .proc/Slip_on_wearer,
 	)
 
+	/// The connect_loc_behalf component for the holder_connections list.
+	var/datum/weakref/holder_connect_loc_behalf
+
 /datum/component/slippery/Initialize(knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
@@ -33,14 +36,18 @@
 	src.callback = callback
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
-	if(ismovable(parent))
-		AddElement(/datum/element/connect_loc_behalf, parent, default_connections)
 
-	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	add_connect_loc_behalf_to_parent()
+	if(ismovable(parent))
+		if(isitem(parent))
+			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/Slip)
+
+/datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
+	if(ismovable(parent))
+		AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
 
 /datum/component/slippery/InheritComponent(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
 	if(component)
@@ -86,7 +93,8 @@
 
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
-		AddElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+		qdel(GetComponent(/datum/component/connect_loc_behalf))
+		AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
 		RegisterSignal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /*
@@ -113,9 +121,11 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(user, COMSIG_PARENT_PREQDELETED)
-	if(holder)
-		RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
-		holder = null
+
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	add_connect_loc_behalf_to_parent()
+
+	holder = null
 
 /*
  * The slip proc, but for equipped items.
@@ -132,9 +142,7 @@
 
 /datum/component/slippery/UnregisterFromParent()
 	. = ..()
-	if(holder)
-		RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
-	RemoveElement(/datum/element/connect_loc_behalf, parent, default_connections)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
 /datum/component/slippery/clowning

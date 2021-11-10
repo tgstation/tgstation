@@ -17,7 +17,7 @@
 	throw_speed = 0
 	var/charges = 1
 
-/obj/item/melee/touch_attack/Initialize()
+/obj/item/melee/touch_attack/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

@@ -9,14 +9,19 @@
 	equip_delay_other = 25
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = 250)
+	gender = PLURAL
 	var/vision_flags = 0
-	var/darkness_view = 2//Base human is 2
-	var/invis_view = SEE_INVISIBLE_LIVING //admin only for now
-	var/invis_override = 0 //Override to allow glasses to set higher than normal see_invis
+	var/darkness_view = 2 // Base human is 2
+	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
+	/// Override to allow glasses to set higher than normal see_invis
+	var/invis_override = 0
 	var/lighting_alpha
-	var/list/icon/current = list() //the current hud icons
-	var/vision_correction = FALSE //does wearing these glasses correct some of our vision defects?
-	var/glass_colour_type //colors your vision when worn
+	/// The current hud icons
+	var/list/icon/current = list()
+	/// Does wearing these glasses correct some of our vision defects?
+	var/vision_correction = FALSE
+	/// Colors your vision when worn
+	var/glass_colour_type
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -38,8 +43,12 @@
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(. && user)
 		user.update_sight()
+		if(iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -56,16 +65,18 @@
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.client)
-			if(H.client.prefs)
-				if(src == H.glasses)
-					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
-					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, span_notice("You will now see glasses colors."))
-					else
-						to_chat(H, span_notice("You will no longer see glasses colors."))
-					H.update_glasses_color(src, 1)
+		var/mob/living/carbon/human/human_user = user
+
+		if (human_user.glasses != src)
+			return ..()
+
+		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
+			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will now see glasses colors."))
+		else
+			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
+			to_chat(human_user, span_notice("You will no longer see glasses colors."))
+		human_user.update_glasses_color(src, TRUE)
 	else
 		return ..()
 
@@ -81,7 +92,7 @@
 
 
 /mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if(client?.prefs.uses_glasses_colour && glasses_equipped)
+	if (HAS_TRAIT(src, TRAIT_SEE_GLASS_COLORS) && glasses_equipped)
 		add_client_colour(G.glass_colour_type)
 	else
 		remove_client_colour(G.glass_colour_type)
@@ -202,7 +213,7 @@
 	inhand_icon_state = "glasses"
 	vision_correction = TRUE //corrects nearsightedness
 
-/obj/item/clothing/glasses/regular/Initialize()
+/obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
 	var/static/list/loc_connections = list(
@@ -222,7 +233,7 @@
 			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
 			take_damage(100, sound_effect = FALSE)
 
-/obj/item/clothing/glasses/regular/obj_destruction(damage_flag)
+/obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
 	. = ..()
 	vision_correction = FALSE
 
@@ -434,7 +445,7 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/thermal/syndi/Initialize()
+/obj/item/clothing/glasses/thermal/syndi/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -551,3 +562,15 @@
 		xray = !xray
 		var/mob/living/carbon/human/H = user
 		H.update_sight()
+
+/obj/item/clothing/glasses/osi
+	name = "O.S.I. Sunglasses"
+	desc = "There's no such thing as good news! Just bad news and... weird news.."
+	icon_state = "osi_glasses"
+	inhand_icon_state = "osi_glasses"
+
+/obj/item/clothing/glasses/phantom
+	name = "Phantom Thief Mask"
+	desc = "Lookin' cool."
+	icon_state = "phantom_glasses"
+	inhand_icon_state = "phantom_glasses"

@@ -170,11 +170,6 @@
 	// From the list of radios, find all mobs who can hear those.
 	var/list/receive = get_mobs_in_radio_ranges(radios)
 
-	// Cut out mobs with clients who are admins and have radio chatter disabled.
-	for(var/mob/R in receive)
-		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO))
-			receive -= R
-
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/M in GLOB.player_list)
 		if(M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)

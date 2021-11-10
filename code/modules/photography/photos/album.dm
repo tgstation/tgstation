@@ -14,7 +14,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/persistence_id
 
-/obj/item/storage/photo_album/Initialize()
+/obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/photo))

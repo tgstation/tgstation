@@ -111,6 +111,10 @@
 	name = "\improper Hotel Staff Room"
 	icon_state = "crew_quarters"
 
+/area/ruin/space/has_grav/hotel/storeroom
+	name = "\improper Hotel Staff Storage"
+	icon_state = "crew_quarters"
+
 
 
 
@@ -262,11 +266,11 @@
 
 /area/ruin/space/has_grav/ancientstation/proto
 	name = "\improper Delta Station Prototype Lab"
-	icon_state = "toxlab"
+	icon_state = "ordlab"
 
 /area/ruin/space/has_grav/ancientstation/rnd
 	name = "Delta Station Research and Development"
-	icon_state = "toxlab"
+	icon_state = "ordlab"
 
 /area/ruin/space/has_grav/ancientstation/deltaai
 	name = "\improper Delta Station AI Core"

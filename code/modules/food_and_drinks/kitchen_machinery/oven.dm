@@ -30,7 +30,7 @@
 	///Current state of smoke coming from the oven
 	var/smoke_state = OVEN_SMOKE_STATE_NONE
 
-/obj/machinery/oven/Initialize()
+/obj/machinery/oven/Initialize(mapload)
 	. = ..()
 	oven_loop = new(src)
 	add_tray_to_oven(new /obj/item/plate/oven_tray(src)) //Start with a tray
@@ -142,6 +142,8 @@
 	return TRUE
 
 /obj/machinery/oven/proc/update_baking_audio()
+	if(!oven_loop)
+		return
 	if(!open && used_tray?.contents.len)
 		oven_loop.start()
 	else

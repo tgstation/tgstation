@@ -40,9 +40,9 @@
 	name = "Incinerator Air Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/incinerator
 
-/obj/item/circuitboard/computer/atmos_control/toxinsmix
-	name = "Toxins Mixing Air Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/toxinsmix
+/obj/item/circuitboard/computer/atmos_control/ordnancemix
+	name = "Ordnance Mixing Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/ordnancemix
 
 /obj/item/circuitboard/computer/atmos_control/tank
 	name = "Tank Control (Computer Board)"
@@ -52,9 +52,9 @@
 	name = "Oxygen Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/oxygen_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/toxin_tank
+/obj/item/circuitboard/computer/atmos_control/tank/plasma_tank
 	name = "Plasma Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/toxin_tank
+	build_path = /obj/machinery/computer/atmos_control/tank/plasma_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/air_tank
 	name = "Mixed Air Supply Control (Computer Board)"
@@ -281,7 +281,7 @@
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
+/obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)
 	. = ..()
 	GLOB.syndicate_shuttle_boards += src
 

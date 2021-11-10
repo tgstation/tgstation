@@ -20,21 +20,23 @@
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	overlay_plane = FLOOR_PLANE
-	immunity_type = WEATHER_LAVA
+	immunity_type = TRAIT_LAVA_IMMUNE
 
 
-/datum/weather/floor_is_lava/weather_act(mob/living/L)
-	if(issilicon(L))
-		return
-	if(istype(L.buckled, /obj/structure/bed))
-		return
-	for(var/obj/structure/O in L.loc)
-		if(O.density)
-			return
-	if(L.loc.density)
-		return
-	if(!L.client) //Only sentient people are going along with it!
-		return
-	if(L.movement_type & FLYING)
-		return
-	L.adjustFireLoss(3)
+/datum/weather/floor_is_lava/can_weather_act(mob/living/mob_to_check)
+	if(!mob_to_check.client) //Only sentient people are going along with it!
+		return FALSE
+	. = ..()
+	if(!. || issilicon(mob_to_check) || istype(mob_to_check.buckled, /obj/structure/bed))
+		return FALSE
+	var/turf/mob_turf = get_turf(mob_to_check)
+	if(mob_turf.density) //Walls are not floors.
+		return FALSE
+	for(var/obj/structure/structure_to_check in mob_turf)
+		if(structure_to_check.density)
+			return FALSE
+	if(mob_to_check.movement_type & FLYING)
+		return FALSE
+
+/datum/weather/floor_is_lava/weather_act(mob/living/victim)
+	victim.adjustFireLoss(3)

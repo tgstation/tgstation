@@ -358,11 +358,12 @@
 	var/health_cost = 0 //The amount of health taken from the user when invoking the spell
 	var/datum/action/innate/cult/blood_spell/source
 
-/obj/item/melee/blood_magic/New(loc, spell)
-	source = spell
-	uses = source.charges
-	health_cost = source.health_cost
-	..()
+/obj/item/melee/blood_magic/Initialize(mapload, spell)
+	. = ..()
+	if(spell)
+		source = spell
+		uses = source.charges
+		health_cost = source.health_cost
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
@@ -376,7 +377,7 @@
 			source.desc = source.base_desc
 			source.desc += "<br><b><u>Has [uses] use\s remaining</u></b>."
 			source.UpdateButtonIcon()
-	..()
+	return ..()
 
 /obj/item/melee/blood_magic/attack_self(mob/living/user)
 	afterattack(user, user, TRUE)

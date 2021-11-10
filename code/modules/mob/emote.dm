@@ -1,9 +1,15 @@
-#define BEYBLADE_PUKE_THRESHOLD 30 //How confused a carbon must be before they will vomit
-#define BEYBLADE_PUKE_NUTRIENT_LOSS 60 //How must nutrition is lost when a carbon pukes
-#define BEYBLADE_DIZZINESS_PROBABILITY 20 //How often a carbon becomes penalized
-#define BEYBLADE_DIZZINESS_VALUE 10 //How long the screenshake lasts
-#define BEYBLADE_CONFUSION_INCREMENT 10 //How much confusion a carbon gets when penalized
-#define BEYBLADE_CONFUSION_LIMIT 40 //A max for how penalized a carbon will be for beyblading
+///How confused a carbon must be before they will vomit
+#define BEYBLADE_PUKE_THRESHOLD 30
+///How must nutrition is lost when a carbon pukes
+#define BEYBLADE_PUKE_NUTRIENT_LOSS 60
+///How often a carbon becomes penalized
+#define BEYBLADE_DIZZINESS_PROBABILITY 20
+///How long the screenshake lasts
+#define BEYBLADE_DIZZINESS_VALUE 10
+///How much confusion a carbon gets when penalized
+#define BEYBLADE_CONFUSION_INCREMENT 10
+///A max for how penalized a carbon will be for beyblading
+#define BEYBLADE_CONFUSION_LIMIT 40
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
 /mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
@@ -49,7 +55,7 @@
 			if(P.can_run_emote(user, status_check = FALSE , intentional = TRUE))
 				keys += P.key
 
-	keys = sortList(keys)
+	keys = sort_list(keys)
 	message += keys.Join(", ")
 	message += "."
 	message = message.Join("")
@@ -118,7 +124,6 @@
 		user.Dizzy(BEYBLADE_DIZZINESS_VALUE)
 		if(current_confusion < BEYBLADE_CONFUSION_LIMIT)
 			user.add_confusion(BEYBLADE_CONFUSION_INCREMENT)
-
 
 #undef BEYBLADE_PUKE_THRESHOLD
 #undef BEYBLADE_PUKE_NUTRIENT_LOSS

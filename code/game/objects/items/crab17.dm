@@ -48,7 +48,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.")
+	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [atom_integrity]</b>.")
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
@@ -87,7 +87,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(WEAKREF(src), 8 MINUTES) //Self-destruct after 8 min
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
 	SSeconomy.market_crashing = TRUE
 
 

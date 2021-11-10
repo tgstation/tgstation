@@ -48,7 +48,7 @@
 					changelings[C] = (CHANGELING_PHEROMONE_MAX_DISTANCE ** 2) - (distance ** 2)
 
 	if(changelings.len)
-		scan_target = pickweight(changelings) //Point at a 'random' changeling, biasing heavily towards closer ones.
+		scan_target = pick_weight(changelings) //Point at a 'random' changeling, biasing heavily towards closer ones.
 	else
 		scan_target = null
 

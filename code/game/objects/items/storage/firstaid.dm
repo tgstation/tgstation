@@ -152,7 +152,7 @@
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
-	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
+	desc = "A specialized medical kit for when the ordnance lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
 	inhand_icon_state = "firstaid-ointment"
 	damagetype_healed = BURN
@@ -338,7 +338,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
-	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+	STR.set_holdable(list(/obj/item/reagent_containers/pill))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -492,7 +492,7 @@
 	name = "bottle of maintenance pills"
 	desc = "An old pill bottle. It smells musty."
 
-/obj/item/storage/pill_bottle/maintenance_pill/Initialize()
+/obj/item/storage/pill_bottle/maintenance_pill/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/pill/P = locate() in src
 	name = "bottle of [P.name]s"
@@ -554,7 +554,7 @@
 		/obj/item/food/icecream
 		))
 
-/obj/item/storage/organbox/Initialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 	create_reagents(100, TRANSPARENT)
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)

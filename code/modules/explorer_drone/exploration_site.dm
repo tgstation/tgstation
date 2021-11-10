@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 		category_weights[modifier] += distance*distance_modifiers[modifier]
 	var/min_events_amount = CEILING(0.4*distance+0.2,1)
 	for(var/i in 1 to rand(min_events_amount,min_events_amount+2))
-		var/chosen_category = pickweight(category_weights)
+		var/chosen_category = pick_weight(category_weights)
 		var/datum/exploration_event/event = generate_event(site_traits,chosen_category)
 		if(event)
 			add_event(event)

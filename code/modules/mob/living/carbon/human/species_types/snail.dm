@@ -62,8 +62,9 @@
 /obj/item/storage/backpack/snail/dropped(mob/user, silent)
 	. = ..()
 	emptyStorage()
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
-/obj/item/storage/backpack/snail/Initialize()
+/obj/item/storage/backpack/snail/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "snailshell")
