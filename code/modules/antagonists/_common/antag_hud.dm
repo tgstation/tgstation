@@ -14,7 +14,11 @@
 	var/list/antag_hud_images = list()
 	var/index = 1
 
+	var/datum/mind/mind
+
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud/New(key, datum/mind/mind)
+	src.mind = mind
+
 	antag_hud_images = get_antag_hud_images(mind)
 
 	var/image/first_antagonist = get_antag_image(1) || image(icon('icons/blanks/32x32.dmi', "nothing"), mind.current)
@@ -32,6 +36,8 @@
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud/Destroy()
 	QDEL_LIST(antag_hud_images)
 	STOP_PROCESSING(SSantag_hud, src)
+	mind.antag_hud = null
+	mind = null
 
 	return ..()
 
