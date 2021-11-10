@@ -1,7 +1,7 @@
 ///each cell in a spatial_grid is this many turfs in length and width
 #define SPATIAL_GRID_CELLSIZE 15
 
-#define SPATIAL_GRID_CELLS_PER_SIDE ROUND_UP(world.maxx / SPATIAL_GRID_CELLSIZE)
+#define SPATIAL_GRID_CELLS_PER_SIDE(world_bounds) ROUND_UP((world_bounds) / SPATIAL_GRID_CELLSIZE)
 
 #define SPATIAL_GRID_CHANNELS 2
 

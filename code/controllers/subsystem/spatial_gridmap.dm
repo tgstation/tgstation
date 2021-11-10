@@ -52,8 +52,14 @@ SUBSYSTEM_DEF(spatial_grid)
 	///everything that spawns before us is added to this list until we initialize
 	var/list/waiting_to_add_by_type = list(RECURSIVE_CONTENTS_HEARING_SENSITIVE = list(), RECURSIVE_CONTENTS_CLIENT_MOBS = list())
 
+	var/cells_on_x_axis = 0
+	var/cells_on_y_axis = 0
 /datum/controller/subsystem/spatial_grid/Initialize(start_timeofday)
 	. = ..()
+
+	cells_on_x_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxx)
+	cells_on_y_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxy)
+
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
 		propogate_spatial_grid_to_new_z(null, z_level)
 		CHECK_TICK_HIGH_PRIORITY
@@ -69,12 +75,14 @@ SUBSYSTEM_DEF(spatial_grid)
 			waiting_to_add_by_type[channel_type] -= movable
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/propogate_spatial_grid_to_new_z)
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, .proc/after_world_bounds_expanded)
 
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
 	RegisterSignal(waiting_movable, COMSIG_PARENT_PREQDELETED, .proc/queued_item_deleted, override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
 	waiting_to_add_by_type[type] += waiting_movable
 
+///removes an initialized and probably deleted movable from our pre init queue before we're initialized
 /datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)
 	if(exclusive_type)
 		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
@@ -93,6 +101,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	for(var/type in waiting_to_add_by_type)
 		waiting_to_add_by_type[type] -= movable_to_remove
 
+///if a movable is inside our pre init queue before we're initialized and it gets deleted we need to remove that reference with this proc
 /datum/controller/subsystem/spatial_grid/proc/queued_item_deleted(atom/movable/movable_being_deleted)
 	SIGNAL_HANDLER
 	remove_from_pre_init_queue(movable_being_deleted, null)
@@ -101,20 +110,51 @@ SUBSYSTEM_DEF(spatial_grid)
 /datum/controller/subsystem/spatial_grid/proc/propogate_spatial_grid_to_new_z(datum/controller/subsystem/processing/dcs/fucking_dcs, datum/space_level/z_level)
 	SIGNAL_HANDLER
 
-	var/cells_per_side = SPATIAL_GRID_CELLS_PER_SIDE
-
 	var/list/new_cell_grid = list()
 
 	grids_by_z_level += list(new_cell_grid)
 
-	for(var/y in 1 to cells_per_side)
+	for(var/y in 1 to cells_on_y_axis)
 		new_cell_grid += list(list())
-		for(var/x in 1 to cells_per_side)
+		for(var/x in 1 to cells_on_x_axis)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
 
+///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed
+/datum/controller/subsystem/spatial_grid/proc/after_world_bounds_expanded(datum/controller/subsystem/processing/dcs/fucking_dcs, has_expanded_world_maxx, has_expanded_world_maxy)
+	SIGNAL_HANDLER
+	var/old_x_axis = cells_on_x_axis
+	var/old_y_axis = cells_on_y_axis
+
+	cells_on_x_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxx)
+	cells_on_y_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxy)
+
+	for(var/z_level in 1 to length(grids_by_z_level))
+		var/list/z_level_gridmap = grids_by_z_level[z_level]
+
+		for(var/cell_row_for_expanded_y_axis in 1 to cells_on_y_axis)
+
+			if(cell_row_for_expanded_y_axis > old_y_axis)//we are past the old length of the number of rows, so add to the list
+				z_level_gridmap += list(list())
+
+			//now we know theres a row at this position, so add cells to it that need to be added and update the ones that already exist
+			var/list/cell_row = z_level_gridmap[cell_row_for_expanded_y_axis]
+
+			for(var/grid_cell_for_expanded_x_axis in 1 to cells_on_x_axis)
+
+				if(grid_cell_for_expanded_x_axis > old_x_axis)
+					var/datum/spatial_grid_cell/new_cell_inserted = new(grid_cell_for_expanded_x_axis, cell_row_for_expanded_y_axis, z_level)
+					cell_row += new_cell_inserted
+					continue
+
+				//now we know the cell index we're at contains an already existing cell that needs its x and y values updated
+				var/datum/spatial_grid_cell/old_cell_that_needs_updating = cell_row[grid_cell_for_expanded_x_axis]
+				old_cell_that_needs_updating.cell_x = grid_cell_for_expanded_x_axis
+				old_cell_that_needs_updating.cell_y = cell_row_for_expanded_y_axis
+
+
 #define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) / SPATIAL_GRID_CELLSIZE), 1)
-#define BOUNDING_BOX_MAX(center_coord) min(ROUND_UP((center_coord + range) / SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+#define BOUNDING_BOX_MAX(center_coord, axis_size) min(ROUND_UP((center_coord + range) / SPATIAL_GRID_CELLSIZE), axis_size)
 
 /**
  * https://en.wikipedia.org/wiki/Range_searching#Orthogonal_range_searching
@@ -137,20 +177,22 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	. = list()
 
-	var/static/grid_cells_per_axis = SPATIAL_GRID_CELLS_PER_SIDE//im going to assume this doesnt change at runtime
+	//cache for sanic speeds
+	var/cells_on_y_axis = src.cells_on_y_axis
+	var/cells_on_x_axis = src.cells_on_x_axis
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
 	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y))
-				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x))
+			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
 
 					. += grid_level[row][x_index].client_contents
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y))
-				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x))
+			for(var/row in BOUNDING_BOX_MIN(center_y) to BOUNDING_BOX_MAX(center_y, cells_on_y_axis))
+				for(var/x_index in BOUNDING_BOX_MIN(center_x) to BOUNDING_BOX_MAX(center_x, cells_on_x_axis))
 
 					. += grid_level[row][x_index].hearing_contents
 
@@ -173,15 +215,13 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/list/intersecting_grid_cells = list()
 
-	var/static/grid_cells_per_axis = world.maxx / SPATIAL_GRID_CELLSIZE//im going to assume this doesnt change at runtime
-
 	//the minimum x and y cell indexes to test
 	var/min_x = max(ROUND_UP((center_x - range) / SPATIAL_GRID_CELLSIZE), 1)
 	var/min_y = max(ROUND_UP((center_y - range) / SPATIAL_GRID_CELLSIZE), 1)//calculating these indices only takes around 2 microseconds
 
 	//the maximum x and y cell indexes to test
-	var/max_x = min(ROUND_UP((center_x + range) / SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
-	var/max_y = min(ROUND_UP((center_y + range) / SPATIAL_GRID_CELLSIZE), grid_cells_per_axis)
+	var/max_x = min(ROUND_UP((center_x + range) / SPATIAL_GRID_CELLSIZE), cells_on_x_axis)
+	var/max_y = min(ROUND_UP((center_y + range) / SPATIAL_GRID_CELLSIZE), cells_on_y_axis)
 
 	var/list/grid_level = grids_by_z_level[center_turf.z]
 

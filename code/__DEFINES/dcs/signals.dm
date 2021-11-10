@@ -8,6 +8,8 @@
 
 ///from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
+///from base of /datum/parsed_map/proc/_load_impl()
+#define COMSIG_GLOB_EXPANDED_WORLD_BOUNDS "!expanded_world_bounds"
 /// called after a successful var edit somewhere in the world: (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"
 /// called after an explosion happened : (epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
