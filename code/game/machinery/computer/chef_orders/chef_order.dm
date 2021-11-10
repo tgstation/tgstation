@@ -33,7 +33,7 @@
 /obj/machinery/computer/chef_order/proc/get_total_cost()
 	. = 0
 	for(var/datum/orderable_item/item as anything in grocery_list)
-		. += (grocery_list[item] * item.cost_per_order)
+		. += grocery_list[item] * item.cost_per_order
 
 /obj/machinery/computer/chef_order/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -70,7 +70,7 @@
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in order_datums
 	switch(action)
 		if("cart_set")
-			grocery_list[wanted_item] = clamp(params["amt"], 0, 50)
+			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 			update_static_data(chef)
