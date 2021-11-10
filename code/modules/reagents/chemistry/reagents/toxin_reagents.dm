@@ -60,7 +60,7 @@
 		exposed_mob.domutcheck()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.apply_effect(5 * REM * delta_time, EFFECT_IRRADIATE, 0)
+	C.adjustToxLoss(0.5 * delta_time * REM)
 	return ..()
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -407,7 +407,7 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	C.damageoverlaytemp = 60
@@ -422,7 +422,7 @@
 	toxpwr = 0.5
 	taste_description = "burning"
 	ph = 13
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(2 * REM * delta_time)
@@ -467,7 +467,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 	ph = 2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	switch(current_cycle)
@@ -545,10 +545,14 @@
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation += 4 * REM * delta_time
+	if (!HAS_TRAIT(M, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(M))
+		M.AddComponent(/datum/component/irradiated)
+	else
+		M.adjustToxLoss(1 * REM * delta_time)
+
 	..()
 
 /datum/reagent/toxin/histamine
@@ -560,7 +564,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(30, delta_time))
@@ -614,7 +618,7 @@
 	color = "#F0FFF0"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	///Mob Size of the current mob sprite.
 	var/current_size = RESIZE_DEFAULT_SIZE
 
@@ -735,7 +739,7 @@
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	if(DT_PROB(13, delta_time))
@@ -768,7 +772,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0 // undetectable, I guess?
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 10)
@@ -786,7 +790,7 @@
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/sodium_thiopental/on_mob_add(mob/living/L, amount)
 	. = ..()
@@ -886,7 +890,7 @@
 	overdose_threshold = 29
 	toxpwr = 0
 	taste_description = "vomit"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	.=..()
@@ -910,7 +914,7 @@
 	color = "#191919"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 11)
@@ -1090,7 +1094,7 @@
 	toxpwr = 0
 	var/actual_toxpwr = 5
 	var/delay = 30
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle > delay)

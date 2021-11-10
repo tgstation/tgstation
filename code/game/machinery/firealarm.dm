@@ -10,6 +10,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire_bitem"
 	result_path = /obj/machinery/firealarm
+	pixel_shift = 26
 
 /obj/machinery/firealarm
 	name = "fire alarm"
@@ -18,7 +19,7 @@
 	icon_state = "fire0"
 	max_integrity = 250
 	integrity_failure = 0.4
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
@@ -41,13 +42,9 @@
 
 /obj/machinery/firealarm/Initialize(mapload, dir, building)
 	. = ..()
-	if(dir)
-		src.setDir(dir)
 	if(building)
 		buildstage = 0
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
@@ -368,20 +365,7 @@
 	detecting = !detecting
 	to_chat(user, span_notice("You [ detecting ? "enable" : "disable" ] [src]'s detecting unit!"))
 
-/obj/machinery/firealarm/directional/north
-	pixel_y = 26
-
-/obj/machinery/firealarm/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/firealarm/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/firealarm/directional/west
-	dir = EAST
-	pixel_x = -26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 
 /*
  * Return of Party button

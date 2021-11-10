@@ -72,7 +72,6 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	flags_1 |= RAD_NO_CONTAMINATE_1
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))

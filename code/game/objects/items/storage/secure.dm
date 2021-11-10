@@ -151,7 +151,7 @@
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i = 0, i < STR.max_items - 2, i++)
+	for(var/i in 1 to STR.max_items - 2)
 		new /obj/item/stack/spacecash/c1000(src)
 
 
@@ -171,21 +171,7 @@
 	anchored = TRUE
 	density = FALSE
 
-/obj/item/storage/secure/safe/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/item/storage/secure/safe/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/item/storage/secure/safe/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/item/storage/secure/safe/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
@@ -221,9 +207,11 @@
 It is made out of the same material as the station's Black Box and is designed to resist all conventional weaponry. \
 There appears to be a small amount of surface corrosion. It doesn't look like it could withstand much of an explosion."
 	can_hack_open = FALSE
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 100, RAD = 100, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 70, BIO = 100, FIRE = 80, ACID = 70)
 	max_integrity = 300
 	color = "#ffdd33"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()

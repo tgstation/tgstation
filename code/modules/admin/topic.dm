@@ -1489,7 +1489,7 @@
 			already_wanted = 1
 
 		if(already_wanted)
-			src.admincaster_wanted_message.criminal  = GLOB.news_network.wanted_issue.criminal
+			src.admincaster_wanted_message.criminal = GLOB.news_network.wanted_issue.criminal
 			src.admincaster_wanted_message.body = GLOB.news_network.wanted_issue.body
 		src.admincaster_screen = 14
 		src.access_news_network()

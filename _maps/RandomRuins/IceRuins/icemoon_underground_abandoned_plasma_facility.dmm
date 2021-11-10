@@ -1239,7 +1239,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "su" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
@@ -1595,7 +1595,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/smooth_large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -2681,7 +2681,9 @@
 "Rd" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot_white,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/smooth{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/plasma_facility/operations)
 "Rf" = (
 /obj/effect/decal/cleanable/dirt,

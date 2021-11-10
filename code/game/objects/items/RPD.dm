@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -611,6 +611,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
+
+				var/turf/target_turf = get_turf(attack_target)
+				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					return
+
 				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))

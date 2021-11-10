@@ -1,6 +1,8 @@
 #define MAX_ADMINBANS_PER_ADMIN 1
 #define MAX_ADMINBANS_PER_HEADMIN 3
 
+#define MAX_REASON_LENGTH 600
+
 //checks client ban cache or DB ban table if ckey is banned from one or more roles
 //doesn't return any details, use only for if statements
 /proc/is_banned_from(player_ckey, list/roles)
@@ -113,6 +115,9 @@
 
 
 /datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration = 1440, applies_to_admins, reason, edit_id, page, admin_key)
+	if (duration == BAN_PANEL_PERMANENT)
+		duration = null
+
 	var/panel_height = 620
 	if(edit_id)
 		panel_height = 240
@@ -201,7 +206,7 @@
 		<div class='column'>
 			Reason
 			<br>
-			<textarea class='reason' name='reason'>[reason]</textarea>
+			<textarea class='reason' name='reason' maxlength='[MAX_REASON_LENGTH]'>[reason]</textarea>
 		</div>
 	</div>
 	"}
@@ -411,6 +416,8 @@
 	reason = href_list["reason"]
 	if(!reason)
 		error_state += "No reason was provided."
+	if(length(reason) > MAX_REASON_LENGTH)
+		error_state += "Reason cannot be more than [MAX_REASON_LENGTH] characters."
 	if(href_list["editid"])
 		edit_id = href_list["editid"]
 		if(href_list["mirroredit"])
@@ -445,10 +452,12 @@
 				roles_to_ban += "Server"
 			if("role")
 				href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Abstract", "Service", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
-				if(href_list[href_list.len] == "roleban_delimiter")
+				var/delimiter_pos = href_list.Find("roleban_delimiter")
+				if(href_list.len == delimiter_pos)
 					error_state += "Role ban was selected but no roles to ban were selected."
+				else if(delimiter_pos == 0)
+					error_state += "roleban_delimiter not found in href. Report this to coders."
 				else
-					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
 						roles_to_ban |= key
@@ -669,7 +678,7 @@
 		while(query_unban_search_bans.NextRow())
 			var/ban_id = query_unban_search_bans.item[1]
 			var/ban_datetime = query_unban_search_bans.item[2]
-			var/ban_round_id  = query_unban_search_bans.item[3]
+			var/ban_round_id = query_unban_search_bans.item[3]
 			var/role = query_unban_search_bans.item[4]
 			var/expiration_time = query_unban_search_bans.item[5]
 			//we don't cast duration as num because if the duration is large enough to be converted to scientific notation by byond then the + character gets lost when passed through href causing SQL to interpret '4.321e 007' as '4'
@@ -1002,7 +1011,6 @@
 	if(player_client)
 		build_ban_cache(player_client)
 		to_chat(player_client, span_boldannounce("[banned_player_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
-		to_chat(player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 		if(GLOB.admin_datums[player_client.ckey] || GLOB.deadmins[player_client.ckey])
 			is_admin = TRUE
 		if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
@@ -1012,8 +1020,9 @@
 		if(other_player_client.address == banned_player_ip || other_player_client.computer_id == banned_player_cid)
 			build_ban_cache(other_player_client)
 			to_chat(other_player_client, span_boldannounce("[banned_other_message]<br><span class='danger'>To appeal this ban go to [appeal_url]"), confidential = TRUE)
-			to_chat(other_player_client, "<video controls width=\"250\" autoplay ><source src=\"https://www.tgstation13.download/byond/ban.mp4\" type=\"video/mp4\">Sorry, your browser does not support embedded videos</video>");
 			if(GLOB.admin_datums[other_player_client.ckey] || GLOB.deadmins[other_player_client.ckey])
 				is_admin = TRUE
 			if(kick_banned_players && (!is_admin || (is_admin && applies_to_admins)))
 				qdel(other_player_client)
+
+#undef MAX_REASON_LENGTH

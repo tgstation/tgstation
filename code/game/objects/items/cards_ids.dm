@@ -33,39 +33,6 @@
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/card/data
-	name = "data card"
-	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has a stripe running down the middle."
-	icon_state = "data_1"
-	obj_flags = UNIQUE_RENAME
-	var/function = "storage"
-	var/data = "null"
-	var/special = null
-	inhand_icon_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	var/detail_color = COLOR_ASSEMBLY_ORANGE
-
-/obj/item/card/data/Initialize(mapload)
-	.=..()
-	update_appearance()
-
-/obj/item/card/data/update_overlays()
-	. = ..()
-	if(detail_color == COLOR_FLOORTILE_GRAY)
-		return
-	var/mutable_appearance/detail_overlay = mutable_appearance('icons/obj/card.dmi', "[icon_state]-color")
-	detail_overlay.color = detail_color
-	. += detail_overlay
-
-/obj/item/card/data/full_color
-	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has the entire card colored."
-	icon_state = "data_2"
-
-/obj/item/card/data/disk
-	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one inexplicibly looks like a floppy disk."
-	icon_state = "data_3"
-
 /*
  * ID CARDS
  */
@@ -80,7 +47,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	/// Cached icon that has been built for this card. Intended for use in chat.
@@ -174,12 +141,8 @@
 		return FALSE
 
 	var/wildcard_allocated
-	var/datum/id_trim/try_trim = ispath(trim) ? SSid_access.trim_singletons_by_path[trim] : trim
-
-	var/list/wildcard_overrides = try_trim?.get_common_wildcard_overrides()
-
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = (wildcard in wildcard_overrides) ? ACCESS_FLAG_COMMON : SSid_access.get_access_flag(wildcard)
+		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/flag_name in new_wildcard_limits)
 			var/limit_flags = SSid_access.wildcard_flags_by_wildcard[flag_name]
@@ -206,13 +169,9 @@
  */
 /obj/item/card/id/proc/add_wildcards(list/wildcard_list, try_wildcard = null, mode = ERROR_ON_FAIL)
 	var/wildcard_allocated
-
-	var/list/wildcard_overrides = trim?.get_common_wildcard_overrides()
-
 	// Iterate through each wildcard in our list. Get its access flag. Then iterate over wildcard slots and try to fit it in.
 	for(var/wildcard in wildcard_list)
-		var/wildcard_flag = (wildcard in wildcard_overrides) ? ACCESS_FLAG_COMMON : SSid_access.get_access_flag(wildcard)
-
+		var/wildcard_flag = SSid_access.get_access_flag(wildcard)
 		wildcard_allocated = FALSE
 		for(var/flag_name in wildcard_slots)
 			if(flag_name == WILDCARD_NAME_FORCED)
@@ -565,7 +524,7 @@
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
 
-	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove = FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
 
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
@@ -813,7 +772,7 @@
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
 			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(loc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
+	if(istype(loc, /obj/item/pda) || istype(loc, /obj/item/storage/wallet))
 		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
 		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 

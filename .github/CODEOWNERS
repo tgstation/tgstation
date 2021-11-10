@@ -1,8 +1,10 @@
 # This list auto requests reviews from the specified org members
 # when a PR that modifies the file in question is opened
-# This list is alphabetized by User -> Filename KEEP IT THAT WAY
-# In the event that multiple org members are to be informed of changes
-# to the same file or dir, add them to the end under Multiple Owners
+# This list is alphabetized by User -> Filename and separated into sections for Maintainers/Contributors KEEP IT THAT WAY
+# In the event that people are to be informed of changes
+# to the same file or dir, add them to the end of under Multiple Owners
+
+# MAINTAINERS
 
 # Cobby
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
@@ -34,20 +36,8 @@
 
 # LemonInTheDark
 
-/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/__DEFINES/atmospherics/ @LemonInTheDark
 /code/modules/atmospherics/ @LemonInTheDark
-
-# MrStonedOne
-
-/SQL/database_changelog.txt @MrStonedOne
-/code/__DEFINES/MC.dm @MrStonedOne
-/code/controllers/admin.dm @MrStonedOne
-/code/controllers/master.dm @MrStonedOne
-/code/controllers/failsafe.dm @MrStonedOne
-/code/controllers/subsystem.dm @MrStonedOne
-/code/controllers/subsystem/timer.dm @MrStonedOne
-/code/controllers/configuration/entries @MrStonedOne
-/config/ @MrStonedOne
 
 # Mothblocks
 
@@ -66,10 +56,6 @@
 /code/datums/components/ @ninjanomnom
 /code/datums/elements/ @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
-
-# ShizCalev
-
-/sound/ @ShizCalev
 
 # stylemistake
 
@@ -90,13 +76,37 @@
 
 /code/modules/wiremod/ @Watermelon914
 
-# JohnFulpWillard
+# CONTRIBUTORS
+
+# Ghilker
+
+/code/__DEFINES/atmospherics/ @Ghilker
+/code/modules/atmospherics/ @Ghilker
+
+# JohnFulpWizard
 
 /goon/ @JohnFulpWillard
 
-# Multiple Owners
+# MrStonedOne
 
-/icons/ @Twaticus @ShizCalev @Krysonism
+/SQL/database_changelog.txt @MrStonedOne
+/code/__DEFINES/MC.dm @MrStonedOne
+/code/controllers/admin.dm @MrStonedOne
+/code/controllers/master.dm @MrStonedOne
+/code/controllers/failsafe.dm @MrStonedOne
+/code/controllers/subsystem.dm @MrStonedOne
+/code/controllers/subsystem/timer.dm @MrStonedOne
+/code/controllers/configuration/entries @MrStonedOne
+/config/ @MrStonedOne
+
+# NamelessFairy
+
+/code/modules/capture_the_flag/ @NamelessFairy
+/_maps/map_files/CTF/ @NamelessFairy
+
+# MULTIPLE OWNERS
+
+/icons/ @Twaticus @Krysonism
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /_maps/ @EOBGames @ShizCalev @Maurukas
 /tools/build/ @MrStonedOne @stylemistake
