@@ -58,16 +58,6 @@
 	else
 		return 0
 
-/obj/machinery/power/proc/add_delayedload(amount)
-	if(powernet)
-		powernet.delayedload += amount
-
-/obj/machinery/power/proc/delayed_surplus()
-	if(powernet)
-		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
-	else
-		return 0
-
 /obj/machinery/power/proc/newavail()
 	if(powernet)
 		return powernet.newavail
