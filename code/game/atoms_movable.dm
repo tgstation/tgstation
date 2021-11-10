@@ -454,10 +454,7 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 				)
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
-			if(!entering_loc.Enter(src))
-				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
-				return
-			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+			if(!entering_loc.Enter(src) || SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
 	else
@@ -481,7 +478,7 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 	else // Else there's just one loc to be exited.
 		oldloc.Exited(src, direction)
 
-	if(!loc || (loc == oldloc && oldloc != newloc))
+	if(!loc || loc == oldloc)
 		last_move = 0
 		return
 
