@@ -230,9 +230,6 @@
 
 /* INCAPACITATED */
 
-/// Proc that checks if a mob/living currently has the incapacitated status effect.
-/mob/living/proc/is_incapacitated()
-	return has_status_effect(STATUS_EFFECT_INCAPACITATED)
 
 /// Proc that returns the remaining duration of the status efect in deciseconds.
 /mob/living/proc/amount_incapacitated()
