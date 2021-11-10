@@ -43,7 +43,9 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+#include "achievements.dm"
 #include "anchored_mobs.dm"
+#include "anonymous_themes.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "bloody_footprints.dm"
@@ -70,6 +72,7 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "keybinding_init.dm"
+#include "load_map_security.dm"
 #include "machine_disassembly.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"

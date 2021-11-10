@@ -113,7 +113,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "hu" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "hW" = (
@@ -676,7 +676,7 @@
 /area/shuttle/pirate)
 "QU" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 4

@@ -233,7 +233,7 @@
 
 	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
 	if(!hand)
-		hand =  get_empty_held_index_for_side(RIGHT_HANDS)
+		hand = get_empty_held_index_for_side(RIGHT_HANDS)
 	if(hand)
 		if(put_in_hand(I, hand, forced))
 			return TRUE

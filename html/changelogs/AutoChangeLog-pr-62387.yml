@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - balance: "Due to budget cuts, the RPDs can't place transit tube under dense objects like windows anymore."

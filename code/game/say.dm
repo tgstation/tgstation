@@ -61,12 +61,18 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/endspanpart = "</span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[say_emphasis(lang_treat(speaker, message_language, raw_message, spans, message_mods))]</span></span>"
-
+	var/messagepart
 	var/languageicon = ""
-	var/datum/language/D = GLOB.language_datum_instances[message_language]
-	if(istype(D) && D.display_icon(src))
-		languageicon = "[D.get_icon()] "
+	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
+	else
+		messagepart = lang_treat(speaker, message_language, raw_message, spans, message_mods)
+
+		var/datum/language/D = GLOB.language_datum_instances[message_language]
+		if(istype(D) && D.display_icon(src))
+			languageicon = "[D.get_icon()] "
+
+	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
@@ -93,11 +99,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!input)
 		input = "..."
 
+	var/say_mod = message_mods[MODE_CUSTOM_SAY_EMOTE]
+	if (!say_mod)
+		say_mod = say_mod(input, message_mods)
+
 	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
 	var/spanned = attach_spans(input, spans)
-	return "[say_mod(input, message_mods)], \"[spanned]\""
+	return "[say_mod], \"[spanned]\""
 
 /// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
@@ -116,20 +126,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 #undef ENCODE_HTML_EMPHASIS
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list(), no_quote = FALSE)
+	var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual
 	if(has_language(language))
-		var/atom/movable/AM = speaker.GetSource()
-		if(AM) //Basically means "if the speaker is virtual"
-			return no_quote ? raw_message : AM.say_quote(raw_message, spans, message_mods)
-		else
-			return no_quote ? raw_message : speaker.say_quote(raw_message, spans, message_mods)
+		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
 	else if(language)
-		var/atom/movable/AM = speaker.GetSource()
 		var/datum/language/D = GLOB.language_datum_instances[language]
 		raw_message = D.scramble(raw_message)
-		if(AM)
-			return no_quote ? raw_message : AM.say_quote(raw_message, spans, message_mods)
-		else
-			return no_quote ? raw_message : speaker.say_quote(raw_message, spans, message_mods)
+		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
 	else
 		return "makes a strange sound."
 

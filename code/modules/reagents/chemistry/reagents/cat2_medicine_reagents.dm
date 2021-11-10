@@ -299,7 +299,7 @@
 
 /datum/reagent/medicine/c2/seiver //a bit of a gray joke
 	name = "Seiver"
-	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
+	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will remove amounts of toxins, while coder temperatures will heal larger amounts of toxins only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
 	inverse_chem_val = 0.3
 	ph = 3.7
@@ -325,13 +325,13 @@
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
-	if(radcalc > 0)
-		//no cost percent healing if you are SUPER cold (on top of cost healing)
-		if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
-			M.radiation = round(M.radiation * (0.75**(REM * delta_time)))
-		else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
-			M.radiation = round(M.radiation * (0.90**(REM * delta_time)))
-		M.radiation -= radcalc * normalise_creation_purity()
+	if(radcalc > 0 && HAS_TRAIT(M, TRAIT_IRRADIATED))
+		radcalc *= normalise_creation_purity()
+		// no cost percent healing if you are SUPER cold (on top of cost healing)
+		if(chemtemp < radbonustemp*0.1)
+			M.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)))
+		else if(chemtemp < radbonustemp)
+			M.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)))
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!

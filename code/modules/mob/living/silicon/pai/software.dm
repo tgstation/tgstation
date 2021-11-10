@@ -13,18 +13,19 @@
 															"digital messenger" = 5,
 															"atmosphere sensor" = 5,
 															"photography module" = 5,
+															"camera zoom" = 10,
+															"printer module" = 10,
 															"remote signaler" = 10,
 															"medical records" = 10,
 															"security records" = 10,
-															"camera zoom" = 10,
 															"host scan" = 10,
 															"medical HUD" = 20,
 															"security HUD" = 20,
 															"loudness booster" = 20,
 															"newscaster" = 20,
-															"internal gps" = 35,
 															"door jack" = 25,
 															"encryption keys" = 25,
+															"internal gps" = 35,
 															"universal translator" = 35
 															)
 
@@ -70,7 +71,8 @@
 				left_part = softwareDoor()
 			if("hostscan")
 				left_part = softwareHostScan()
-
+			if("printer module")
+				left_part = softwarePrinter()
 
 	//usr << browse_rsc('windowbak.png') // This has been moved to the mob's Login() proc
 
@@ -271,6 +273,10 @@
 					internal_gps = new(src)
 				internal_gps.attack_self(src)
 
+			if("printermodule")
+				aicamera.paiprint(usr)
+
+
 		paiInterface()
 
 // MENUS
@@ -305,6 +311,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 		if(s == "internal gps")
 			dat += "<a href='byond://?src=[REF(src)];software=internalgps;sub=0'>Internal GPS</a> <br>"
+		if(s == "printer module")
+			dat += "<a href='byond://?src=[REF(src)];software=printermodule;sub=0'>Printer Module</a> <br>"
 
 	dat += "<br>"
 
@@ -572,3 +580,6 @@
 	dat += "<br><br>"
 	dat += "Messages: <hr> [aiPDA.tnote]"
 	return dat
+
+/mob/living/silicon/pai/proc/softwarePrinter()
+	aicamera.paiprint(usr)

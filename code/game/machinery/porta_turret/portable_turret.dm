@@ -39,7 +39,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	power_channel = AREA_USAGE_EQUIP //drains power from the EQUIPMENT channel
 	max_integrity = 160 //the turret's health
 	integrity_failure = 0.5
-	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 90, ACID = 90)
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
@@ -552,7 +552,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 			if(allowed(perp)) //if the perp has security access, return 0
 				return 0
-			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
+			if(perp.is_holding_item_of_type(/obj/item/gun) || perp.is_holding_item_of_type(/obj/item/melee/baton))
 				threatcount += 4
 
 			if(istype(perp.belt, /obj/item/gun) || istype(perp.belt, /obj/item/melee/baton))
@@ -751,7 +751,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy/raven
-	stun_projectile =  /obj/projectile/beam/laser
+	stun_projectile = /obj/projectile/beam/laser
 	stun_projectile_sound = 'sound/weapons/laser.ogg'
 	faction = list("neutral","silicon","turret")
 
@@ -768,7 +768,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
-	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 80, BIO = 0, FIRE = 90, ACID = 90)
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)
@@ -878,10 +878,7 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
 	. = ..()
 	if(built)
-		setDir(ndir)
 		locked = FALSE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
 
 /obj/machinery/turretid/Destroy()
@@ -903,7 +900,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= WEAKREF(T)
-	
+
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && !(machine_stat & BROKEN))
@@ -1029,9 +1026,11 @@ DEFINE_BITFIELD(turret_flags, list(
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
 	desc = "Used for building turret control panels."
-	icon_state = "apc"
+	icon = 'icons/obj/machines/turret_control.dmi'
+	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	pixel_shift = 29
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()

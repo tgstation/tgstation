@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Random names (such as from the secrets panel) will no longer override your preferences."

@@ -52,6 +52,9 @@
 #define COOLDOWN_CIRCUIT_PATHFIND_DIF "circuit_pathfind_different"
 #define COOLDOWN_CIRCUIT_TARGET_INTERCEPT "circuit_target_intercept"
 
+// mob cooldowns
+#define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
+
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"

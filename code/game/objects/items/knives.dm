@@ -1,5 +1,5 @@
 // Knife Template, should not appear in game normaly //
-/obj/item/knife 
+/obj/item/knife
 	name = "knife"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife"
@@ -19,7 +19,7 @@
 	attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	var/bayonet = FALSE //Can this be attached to a gun?
 	wound_bonus = 5
 	bare_wound_bonus = 15
@@ -153,7 +153,7 @@
 	throwforce = 12
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	custom_materials = list(/datum/material/glass=400)
 
 /obj/item/knife/shiv/carrot

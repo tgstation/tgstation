@@ -22,7 +22,7 @@
 
 /obj/item/circuit_component/gps/input_received(datum/port/input/port)
 
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 
 	x_pos.set_output(location?.x)
 	y_pos.set_output(location?.y)

@@ -134,7 +134,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 100
-	playsound(src,'sound/spookoween/insane_low_laugh.ogg', 200, 1)
+	playsound(src,'sound/voice/insane_low_laugh.ogg', 200, 1)
 	visible_message(span_warning("[src] starts picking up speed!"))
 	color = "#FF0000"
 	set_varspeed(0)

@@ -333,7 +333,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			client.screen |= r_hand
 
 	if(l_hand)
-		hands_overlays +=  l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		hands_overlays += l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.plane = ABOVE_HUD_PLANE
