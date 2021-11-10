@@ -210,7 +210,7 @@
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM, force = move_force)
 	if(now_pushing)
-		return TRUE
+		return
 	if(moving_diagonally) // No pushing in diagonal move
 		return
 	if(!client && (mob_size < MOB_SIZE_SMALL))
@@ -263,6 +263,7 @@
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE
+	return TRUE
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)

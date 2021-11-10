@@ -438,11 +438,12 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 				return
 	else
 		var/enter_return_value = newloc.Enter(src)
-		if(!enter_return_value || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
+		if((enter_return_value != TRUE) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
+			if(can_pass_diagonally && !(enter_return_value & BUMP_MOVE_DEALT_WITH))
+				Move(get_step(loc, can_pass_diagonally), can_pass_diagonally)
+				return
 			SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 			return
-		else if((enter_return_value & BUMP_MOVE_DEALT_WITH) && can_pass_diagonally) //We cannot get to our final destination, but we can move a little
-			Move(get_step(loc, can_pass_diagonally), can_pass_diagonally)
 
 	SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 
