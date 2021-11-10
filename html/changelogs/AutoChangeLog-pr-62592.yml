@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the emissive appearances (basically what you can see even in complete darkness) and possibly other overlays of vending machines being removed when the wire panel is opened/closed."

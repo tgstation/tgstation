@@ -221,6 +221,7 @@
 		"comp_light",
 		"comp_list_literal",
 		"comp_logic",
+		"comp_matscanner",
 		"comp_mmi",
 		"comp_module",
 		"comp_multiplexer",

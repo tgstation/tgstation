@@ -1,5 +1,0 @@
-author: "GoldenAlpharex, with some oversight from Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "Maps will now correctly be loaded at the start of a round. Hurray!"
-  - code_imp: "Improved the code for loading map configs and made it more documented, while also removing a way to delete config files while I was at it."

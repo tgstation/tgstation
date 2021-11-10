@@ -153,3 +153,192 @@
   Y0SH1M4S73R:
   - admin: Added the color matrix editor. It is available from a dropdown option in
       an atom's View Variables menu as well as when editing an existing color matrix.
+2021-11-07:
+  Archanial:
+  - bugfix: mapload works
+  Bumtickley00:
+  - bugfix: Cold seiver now quickly heals your radiation instead of quickly killing
+      you
+  Ghommie:
+  - bugfix: Fixed the emissive appearances (basically what you can see even in complete
+      darkness) and possibly other overlays of vending machines being removed when
+      the wire panel is opened/closed.
+  - bugfix: Fixed the random double bed sheets spawners spawning normal bedsheets.
+  - bugfix: Fixed double bed sheets other than the standard white one looking like
+      single bed sheets when dyed.
+  GoldenAlpharex, with some oversight from Timberpoes:
+  - bugfix: Maps will now correctly be loaded at the start of a round. Hurray!
+  - code_imp: Improved the code for loading map configs and made it more documented,
+      while also removing a way to delete config files while I was at it.
+  JohnFulpWillard:
+  - bugfix: Godmoded shades should no longer spawn from posessed blades spawning spirits
+      too fast.
+  Mickyan:
+  - imageadd: Added fallback icons for clothing inhands
+2021-11-08:
+  AndrewL97:
+  - rscadd: unit test for map load
+  - rscadd: directory param to map load + whitelist for data and _maps
+  - rscadd: advertising for mojave sun in tg commit logs
+  Nyksia:
+  - bugfix: aliens can no longer clear eggs before the hugger bursts out
+  Ryll/Shaps:
+  - balance: Being launched into a solid atom by Sleeping Carp's Wave Kick has been
+      fixed to no longer deal far more damage and wounding power than originally intended,
+      and can no longer cause outright compound fractures in healthy targets.
+  - bugfix: Throwing someone you have in a neckgrab or are choking will now properly
+      throw them harder than normal.
+  Timberpoes:
+  - bugfix: Items with dash actions and the Bluespace Prophecy trauma now utilise
+      proper teleportation code, disallowing teleportation to and from teleport restricted
+      areas.
+  Toastgoats:
+  - spellcheck: Fixed a typo on the singulo toy.
+  axietheaxolotl:
+  - bugfix: CentCom's suit using an old icon, and fixed the gas mask and helmet's
+      icon not showing
+  esainane:
+  - bugfix: TramStation now has a ticket dispenser by the HoP line, replacing one
+      of two very close gas vendors.
+  - bugfix: TramStation's Engineering Console now has a cable to connect it to the
+      main powernet.
+  tralezab:
+  - bugfix: anonymous names doesn't break anymore! it works! hip hip hooray!
+2021-11-09:
+  Ghommie:
+  - bugfix: Randomized reagent recipes (so far only metalgen and the secret sauce)
+      should no longer from time to time require reagents that are normally TOO hard
+      (emphasis on TOO) to get or unobtainable by non-antag players (e.g. most mutation
+      toxins, syndie stims, godblood, spores)
+  GoldenAlpharex:
+  - bugfix: Fixed certain preferences being reset to their default values when trying
+      to change them, due to the dropdown menu of options changing numbers into text
+      and due to that not being supported by numeric preferences. AKA, changing pixel
+      scaling method will work again.
+  JohnFulpWillard:
+  - refactor: Bot emagging has been refactored, and as such, their cover can be closed
+      if forced open by emag if the bot itself hasn't been emagged.
+  - bugfix: Sergeant-At-Armsky can now be found in Delta's Armory!
+  Melbert:
+  - bugfix: Chaplains can no longer select admin only null rods.
+  Mothblocks:
+  - qol: Cult pylons, rod of asclepius, and space dragon rifts will now give you an
+      alert as feedback for when you are being healed by them.
+  - admin: Adds a panel for "known alts", which let you write down confirmed, valid
+      alts between two people so that they don't show in suspicious connection history.
+  PositiveEntropy, Naevii:
+  - imageadd: Ports BeeStation cloak designs!
+  Ryll/Shaps:
+  - rscadd: Yawns can now propagate and cause other nearby mobs who see it to yawn
+      as well.
+  ShizCalev:
+  - bugfix: Radioactive microlasers will no longer irradiate humans wearing radiation
+      proof clothing.
+  V2LenKagamine:
+  - bugfix: You now drop food trash items on use, putting the actual "Trash" in the
+      same hand you used the item in.
+  Watermelon914:
+  - admin: Admin circuits are now abstract so that they don't appear in lockers when
+      attached to custom shells and such.
+  esainane:
+  - refactor: Wall mounted and directional objects have undergone major internal simplification.
+      Please report anything unusual!
+  - bugfix: You can no longer stack an indefinite amount of Intercoms on the same
+      wall.
+  - bugfix: Defibrillator Mounts, Bluespace Gas Vendors, Turret Controlers, and Ticket
+      Machines are now considered wall items.
+  - bugfix: Wall mounted items on top of the wall now consistently check against other
+      items on top of the wall, and items coming out of the wall now consistently
+      check against other items coming out of the wall.
+  - bugfix: The various directional pixel offsets within an APC, Fire Extinguisher
+      Cabinet, Intercom, or Newscaster have been made consistent with each other.
+  - bugfix: The pixel offsets of Intercoms, Fire Alarms, Fire Extinguisher Cabinets,
+      Flashers, and Newscasters have been made consistent between roundstart and constructed
+      instances.
+  - bugfix: Constructed Turret Controls will no longer oddly overhang the wall they
+      were placed on.
+  - qol: Defibrillator mounts now better indicate which side of the wall they are
+      on.
+  - bugfix: Some instances where there were multiple identical lights on the same
+      tile have been fixed to only have one.
+  - imageadd: Turret Control frames now have a dedicated icon, rather than literally
+      using the APC image.
+2021-11-10:
+  ATHATH:
+  - bugfix: Quantum pads can teleport non-living things again.
+  - bugfix: Quantum pads can teleport creatures who aren't buckled to something again.
+      Creatures who are buckled to something unanchored can still be teleported by
+      quantum pads, but creatures who are buckled to something anchored cannot.
+  - bugfix: Quantum pads can no longer involuntarily teleport ghosts, although ghosts
+      can still click on a quantum pad to teleport to that quantum pad's destination
+      pad.
+  ArcaneMusic:
+  - expansion: Cargo can now purchase individual tanks of exodrone fuel for around
+      3 crates worth of credits.
+  Ghommie:
+  - bugfix: 'Fixed missing award icons in the achievement menu sprite: All achievements
+      outside the misc category have been given their own icons and should no longer
+      use the base background one.'
+  Guillaume Prata:
+  - bugfix: A small mistake on our contract with Nakamura Engineering made them supply
+      the station with Rad Insulated Atmos Hardsuits. The mistake was fixed so please
+      don't stand near the SM or the HFR with the hardsuit, it was never made for
+      that.
+  - bugfix: You can't put a PKA inside your Mining hardsuit helmet anymore but you
+      can put it in your hardsuit instead!
+  - balance: Pneumatic airlocks seals are normal sized now and can be printed at the
+      Science lathe.
+  - balance: After dealing with another weekly subverted Engborg spacing the armory.
+      CentCom's Robotics division decided to downgrade the Engborg RCD by removing
+      it's Reinforced Wall deconstruction.
+  Iamgoofball:
+  - bugfix: Fixes a grave oversight of being able to type with boxing gloves on.
+  JohnFulpWillard:
+  - admin: Silicon activity is now logged in silicon logs rather than being stuffed
+      into game.log
+  LemonInTheDark:
+  - bugfix: Fixed shoving being agressively weird, please report any oddities it's
+      a bit of a headache getting behavior to match and I'm flying a bit blind
+  Melbert:
+  - admin: Admins can now tell when other admins are readied up in the pre-game lobby.
+      Check adminwho or view your stat panel.
+  - bugfix: Icebox chapel maint is no longer spaced, literally
+  - bugfix: 'Icebox science: You can no longer peer into the science break room from
+      maintenance, the loose light fixture has been relocated to a wall, and scientists
+      can escape their own maintenance. Also the extra deconstructive analyzer was
+      killed.'
+  NamelessFairy:
+  - admin: Bans will nolonger play a video
+  Paxilmaniac:
+  - bugfix: a misplaced pipe in tramstation's atmospherics that was causing wrenched
+      down portable scrubbers to melt has been removed
+  That REALLY Good Soda Flavor:
+  - qol: You can drag a headset onto yourself to open the menu.
+  Timberpoes:
+  - refactor: Refactor parts of the job assignment system, unifying job eligibility
+      checks.
+  - qol: Adds improved logging for job assignment.
+  Wallem:
+  - qol: Ants have become easier to pour in tiles with vents, pipes or cables.
+  - bugfix: Makes ants incapable of affecting the afterlife.
+  - bugfix: Ants, gibs, and garbage cleanable decals now properly show up above pipes.
+  Watermelon914:
+  - bugfix: Fixed the response signal not being able to be connected to regular signals.
+  antropod:
+  - bugfix: fixed chem analyzer not showing impure reagents that don't have impure
+      chem (like multiver)
+  jjpark-kb:
+  - bugfix: 'metastation: placed some missing pipes and removed random wire in library'
+  jlsnow301:
+  - bugfix: Virology's PanD.E.M.I.C 2200 should no longer bluescreen
+  - refactor: The Pandemic machine has been refreshed and is more helpful, intuitive
+      to use.
+  timothymtorres:
+  - expansion: The smoker quirk has new side effects that cause a person's lungs to
+      have 25% less max health and healing.  They also gain a 50% resistance from
+      lung damage caused from smoking.
+  - expansion: Exotic cigarette brands now deal different amounts of lung damage.
+      This applies to syndicate, shady jim's, xeno, and Little Timmy's Candy brands.
+  - bugfix: Fixed Havana cigars running out of nicotine. As a result of increasing
+      the starting nicotine amount, the total `chem_volume` was increased to allow
+      room for other chems to still be injected.

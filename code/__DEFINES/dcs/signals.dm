@@ -684,7 +684,10 @@
 #define COMSIG_CARBON_HUGGED "carbon_hugged"
 ///When a carbon mob is headpatted, this is called on the carbon that is headpatted. (mob/living/headpatter)
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
-///When a carbon mob is disarmed, this is called on objects that have unique behavior when the target is shoved into it (obj/structure/table, obj/machinery/disposal/bin)
+///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
+#define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
+	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
+///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 #define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
 	#define COMSIG_CARBON_SHOVE_HANDLED (1<<0)
 
