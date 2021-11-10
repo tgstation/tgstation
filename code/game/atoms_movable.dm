@@ -394,17 +394,18 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 		moving_diagonally = TRUE
 		if(set_dir_on_move)
 			setDir(direction) //We first set the direction to prevent going through dir sensible object
-		if(direction & NORTH)
-			can_pass_diagonally = get_step(loc, NORTH)?.Enter(src) ? NORTH : NONE
-		if(!can_pass_diagonally && (direction & EAST))
-			can_pass_diagonally = get_step(loc, EAST)?.Enter(src) ? EAST : NONE
-		if(!can_pass_diagonally && (direction & WEST))
-			can_pass_diagonally = get_step(loc, WEST)?.Enter(src) ? WEST : NONE
-		if(!can_pass_diagonally && (direction & SOUTH))
-			can_pass_diagonally = get_step(loc, SOUTH)?.Enter(src) ? SOUTH : NONE
-		moving_diagonally = FALSE
-		if(!can_pass_diagonally)
+		if((direction & NORTH) && get_step(loc, NORTH)?.Enter(src))
+			can_pass_diagonally = NORTH
+		else if((direction & EAST) && get_step(loc, EAST)?.Enter(src))
+			can_pass_diagonally =  EAST
+		else if((direction & WEST) && get_step(loc, WEST)?.Enter(src))
+			can_pass_diagonally = WEST
+		else if((direction & SOUTH) && get_step(loc, SOUTH)?.Enter(src))
+			can_pass_diagonally = SOUTH
+		else
+			moving_diagonally = FALSE
 			return
+		moving_diagonally = FALSE
 
 	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
 
