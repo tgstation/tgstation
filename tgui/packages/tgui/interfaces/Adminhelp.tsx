@@ -60,7 +60,7 @@ export const Adminhelp = (props, context) => {
               content="Submit"
               textAlign="center"
               onClick={() => act("ahelp", {
-                requestforadmin: requestforadmin,
+                urgent: requestforadmin,
                 message: ahelpMessage,
               })}
             />
