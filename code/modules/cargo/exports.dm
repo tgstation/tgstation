@@ -43,7 +43,7 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/to_delete = list()
 	for(var/atom/movable/thing as anything in reverse_range(contents))
 		var/sold = FALSE
-		for(var/datum/export/export in GLOB.exports_list)
+		for(var/datum/export/export as anything in GLOB.exports_list)
 			if(export.applies_to(thing, apply_elastic))
 				sold = export.sell_object(thing, report, dry_run, apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
