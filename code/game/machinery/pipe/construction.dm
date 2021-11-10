@@ -303,7 +303,7 @@ Buildable meters
 	. = ..()
 	. += span_notice("The pipe layer is set to [piping_layer].")
 	. += span_notice("You can change the pipe layer by Alt-Clicking the device.")
-	. += span_notice("You can rotate the device by using it in hand.")
+	. += span_notice("You can rotate it by using it in hand.")
 
 /obj/item/pipe/AltClick(mob/user)
 	. = ..()
