@@ -29,7 +29,7 @@
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
 			balloon_alert(intAI, "transferred to a card")
-			balloon_alert("AI transferred to card")
+			balloon_alert(user, "AI transferred to card")
 			ai = null
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
@@ -46,7 +46,7 @@
 			if(!do_after(user, 5 SECONDS, target = src))
 				balloon_alert(user, "interrupted!")
 				return
-			balloon_alert("AI transferred to suit")
+			balloon_alert(user, "AI transferred to suit")
 			ai_enter_mod(intAI)
 			card.AI = null
 
@@ -77,11 +77,8 @@
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	cell.charge = max(0, cell.charge - CELL_PER_STEP)
 	var/atom/movable/mover = wearer || src
-	if(mover == wearer)
-		var/mob/relayed = mover.loc
-		if(istype(relayed) && relayed.buckled)
-			relayed = relayed.buckled
-		return relayed.relaymove(mover, direction)
+	if(mover == wearer && ismovable(mover.loc))
+		return mover.loc.relaymove(mover, direction)
 	return step(mover, direction)
 
 #undef CARDINAL_DELAY

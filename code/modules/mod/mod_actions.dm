@@ -1,6 +1,7 @@
 /datum/action/item_action/mod
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
+	check_flags = AB_CHECK_CONSCIOUS
 	var/obj/item/mod/control/mod
 
 /datum/action/item_action/mod/New(Target)
@@ -24,11 +25,6 @@
 	..()
 	if(mob_to_grant)
 		Grant(mob_to_grant)
-
-/datum/action/item_action/mod/IsAvailable()
-	if(mod.ai && usr == mod.ai && !mod.ai.stat)
-		return TRUE
-	return ..()
 
 /datum/action/item_action/mod/deploy
 	name = "Deploy MODsuit"

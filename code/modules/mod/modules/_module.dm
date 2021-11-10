@@ -31,6 +31,8 @@
 	var/list/incompatible_modules = list()
 	/// Cooldown after use
 	var/cooldown_time = 0
+	/// The mouse button needed to use this module
+	var/used_signal
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -104,8 +106,14 @@
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				return
 		else
-			balloon_alert(mod.wearer, "[src] activated, middle-click or alt-click to use")
-			RegisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_special_click)
+			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
+			switch(used_button)
+				if(MIDDLE_CLICK)
+					used_signal = COMSIG_MOB_MIDDLECLICKON
+				if(ALT_CLICK)
+					used_signal = COMSIG_MOB_ALTCLICKON
+			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
+			RegisterSignal(mod.wearer, used_signal, .proc/on_special_click)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
@@ -121,7 +129,7 @@
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else
 			balloon_alert(mod.wearer, "[src] deactivated")
-			UnregisterSignal(mod.wearer, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+			UnregisterSignal(mod.wearer, used_signal)
 	mod.wearer.update_inv_back()
 	return TRUE
 

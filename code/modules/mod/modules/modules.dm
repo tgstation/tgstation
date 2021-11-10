@@ -856,7 +856,7 @@
 /obj/item/circuit_component/mod/proc/equip_check()
 	SIGNAL_HANDLER
 
-	if(!attached_module.mod.wearer)
+	if(!attached_module.mod?.wearer)
 		return
 	wearer.set_output(attached_module.mod.wearer)
 

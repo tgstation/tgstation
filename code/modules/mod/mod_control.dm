@@ -467,6 +467,7 @@
 		return
 	if(!cell)
 		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
+		return
 	var/remaining_cell = cell.charge/cell.maxcharge
 	switch(remaining_cell)
 		if(0.75 to INFINITY)
