@@ -234,7 +234,10 @@
 /// Proc that returns the remaining duration of the status efect in deciseconds.
 /mob/living/proc/amount_incapacitated()
 	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(STATUS_EFFECT_INCAPACITATED)
-	return incapacitated_status_effect?.duration - world.time || 0
+	if incapacitated_status_effect
+		return incapacitated_status_effect.duration - world.time
+	else
+		return 0
 
 /** Proc that actually applies the status effect.
  * Applies the Incapacitated status effect to a mob/living.
