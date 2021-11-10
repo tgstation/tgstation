@@ -25,8 +25,8 @@ GLOBAL_LIST_INIT(departmental_sec_keys, list(
 			DEPSEC_OUTFIT = /datum/outfit/job/security,
 			DEPSEC_DESTINATION = /area/security
 		)
-	)
-)
+	))
+
 /datum/job/security_officer
 	title = "Security Officer"
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
