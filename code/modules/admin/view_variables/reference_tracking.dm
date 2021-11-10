@@ -30,8 +30,8 @@
 	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
 	log_reftracker("Finished searching globals")
 
-	 //Yes we do actually need to do this. The searcher refuses to read weird lists
-	 //And global.vars is a really weird list
+	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	//And global.vars is a really weird list
 	var/global_vars = list()
 	for(var/key in global.vars)
 		global_vars[key] = global.vars[key]

@@ -120,8 +120,8 @@
 	//Lets check static vars now, since those can be a real headache
 	testbed.static_test = victim
 
-	 //Yes we do actually need to do this. The searcher refuses to read weird lists
-	 //And global.vars is a really weird list
+	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	//And global.vars is a really weird list
 	var/global_vars = list()
 	for(var/key in global.vars)
 		global_vars[key] = global.vars[key]
