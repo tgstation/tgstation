@@ -859,7 +859,7 @@
 	..()
 	if(!QDELETED(chosen_item) && get_turf(religious_tool) == chosen_item.loc) //check if the same item is still there
 		apply_spirit_holding(chosen_item)
-		playsound(get_turf(religious_tool), 'sound/spookoween/chain_rattling.ogg', 50, TRUE)
+		playsound(get_turf(religious_tool), 'sound/misc/chain_rattling.ogg', 50, TRUE)
 		chosen_item = null //our lord and savior no longer cares about this item
 		return TRUE
 	chosen_item = null
