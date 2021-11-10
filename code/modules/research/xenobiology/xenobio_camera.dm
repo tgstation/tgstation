@@ -23,7 +23,6 @@
 		return
 	var/area/new_area = get_area(.)
 	if(new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
-		to_chat(rider || src, "oh god oh fuck")
 		return FALSE
 
 /obj/machinery/computer/camera_advanced/xenobio
