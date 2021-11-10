@@ -119,7 +119,7 @@
 
 	//Lets check static vars now, since those can be a real headache
 	testbed.static_test = victim
-	victim.DoSearchVar(testbed, "Sixth Run", search_time = 7)
+	victim.DoSearchVar(global.vars, "Sixth Run", search_time = 7)
 
-	TEST_ASSERT(victim.found_refs["static_test"], "The ref-tracking tool failed to find a natively global variable")
+	TEST_ASSERT(victim.found_refs[global.vars], "The ref-tracking tool failed to find a natively global variable")
 	SSgarbage.should_save_refs = FALSE
