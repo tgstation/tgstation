@@ -40,11 +40,9 @@
 /obj/item/stock_parts/cell/get_cell()
 	return src
 
-/obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
+/obj/item/stock_parts/cell/Initialize(mapload)
 	. = ..()
 	create_reagents(5, INJECTABLE | DRAINABLE)
-	if (override_maxcharge)
-		maxcharge = override_maxcharge
 	charge = maxcharge
 	if(ratingdesc)
 		desc += " This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
@@ -136,7 +134,7 @@
 	charge /= 2
 	maxcharge = max(maxcharge/2, chargerate)
 	if (prob(10))
-		rigged = TRUE //broken batterys are dangerous
+		rigged = TRUE //broken batteries are dangerous
 		corrupted = TRUE
 
 /obj/item/stock_parts/cell/emp_act(severity)
