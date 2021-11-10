@@ -31,8 +31,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_elimination_hijack = ELIMINATION_NEUTRAL
 	///If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
-	///What is the configuration of this antagonist's hud icon, such as it's screen position and style, so thatit doesn't break other in-game hud icons.
-	var/antag_hud_type
 	///Name of the antag hud we provide to this mob.
 	var/antag_hud_name
 	/// If set to true, the antag will not be added to the living antag list.
@@ -111,22 +109,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
 	SIGNAL_HANDLER
 	return
-
-// Adds the specified antag hud to the player. Usually called in an antag datum file
-// MOTHBLOCKS TODO: add_antag_hud
-/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
-	// var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	// hud.join_hud(mob_override)
-	// set_antag_hud(mob_override, antag_hud_name)
-
-
-// Removes the specified antag hud from the player. Usually called in an antag datum file
-// MOTHBLOCKS TODO: remove_antag_hud
-/datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
-	// var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	// hud.leave_hud(mob_override)
-	// set_antag_hud(mob_override, null)
-
 
 /// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
 /datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message, removing = TRUE)
