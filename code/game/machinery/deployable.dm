@@ -14,6 +14,7 @@
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
+	generic_can_allow_through = FALSE
 	var/proj_pass_rate = 50 //How many projectiles will pass the cover. Lower means stronger cover
 	var/bar_material = METAL
 

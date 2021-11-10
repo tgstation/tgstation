@@ -54,6 +54,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/tmp/datum/lighting_corner/lighting_corner_SW
 	var/tmp/datum/lighting_corner/lighting_corner_NW
 
+	///lazylist of all movables on this turf that are either dense or have nongeneric_CanPass = TRUE. used by turf/Enter() to sort through blocking contents
+	var/list/bumpable_contents
 
 	///Which directions does this turf block the vision of, taking into account both the turf's opacity and the movable opacity_sources.
 	var/directional_opacity = NONE
@@ -308,24 +310,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
-//TODOKYLER: move this shit where it all belongs
-
-/atom/movable
-	///if TRUE, this does not have special checks on whether to allow an object onto our turf
-	var/generic_can_allow_through = TRUE
-
-#define IS_BUMPABLE(atom/movable/movable) (movable.density || !movable.generic_can_allow_through)
-
-/turf
-	var/list/bumpable_contents
-
-/turf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-
-	if(IS_BUMPABLE(arrived))
-		LAZYSET(bumpable_contents, arrived)
-
-//There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
@@ -336,19 +320,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/movement_direction = get_dir(src, mover)
 	if((mover.movement_type & PHASING) || canPassSelf = CanPass(mover, movement_direction))
 
-		//var/list/cross_blocking_contents = list()
-		//SEND_SIGNAL(src, COMSIG_TURF_ENTER, mover, cross_blocking_contents) //option one (holy fuck memory usage everything overrides CanAllowThrough())
-
-		//var/list/contents_to_check = (contents - mover) - mover.loc
-
-		for(var/atom/movable/contents_movable as anything in contents)
+		for(var/atom/movable/contents_movable as anything in bumpable_contents)
 			if(contents_movable == mover || contents_movable == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 
 			if(!contents_movable.CanPass(mover, movement_direction))
 				if(!firstbump || ((contents_movable.layer > firstbump.layer || contents_movable.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
 					firstbump = contents_movable
-					//break //TODOKYLER: maybe?
 
 		/*
 		for(var/atom/movable/contents_movable as anything in contents) //current

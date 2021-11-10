@@ -334,8 +334,8 @@
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_BE_PURE(TRUE) //fuck you this should be pure
-	if(!density) //all dense objects are stored in the blockable contents list on the turf
+	SHOULD_BE_PURE(TRUE)
+	if(!density)
 		return TRUE
 
 	//if we are dense, then check if we will let them pass anyways

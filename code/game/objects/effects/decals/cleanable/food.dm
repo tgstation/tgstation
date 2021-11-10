@@ -30,6 +30,7 @@
 	name = "salt pile"
 	desc = "A sizable pile of table salt. Someone must be upset."
 	icon_state = "salt_pile"
+	generic_can_allow_through = FALSE
 	var/safepasses = 3 //how many times can this salt pile be passed before dissipating
 
 /obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/mover, border_dir)
