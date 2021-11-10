@@ -1217,20 +1217,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	return
 
 /obj/machinery/power/apc/surplus()
-	if(terminal)
-		return terminal.surplus()
-	else
-		return 0
+	return terminal?.surplus()
 
 /obj/machinery/power/apc/add_load(amount)
-	if(terminal?.powernet)
-		terminal.add_load(amount)
+	terminal?.add_load(amount)
 
 /obj/machinery/power/apc/avail(amount)
-	if(terminal)
-		return terminal.avail(amount)
-	else
-		return 0
+	return terminal?.avail(amount)
 
 /obj/machinery/power/apc/process()
 	if(icon_update_needed)
