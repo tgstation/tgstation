@@ -165,7 +165,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The list of gasses that cause the SM to shoot nuclear particles, and their odds to do so in %
 	var/list/nuclear_gas = list(
 		/datum/gas/bz = 30,
-		/datum/gas/antinoblium = 100,
+		/datum/gas/antinoblium = 60,
 	)
 
 	///The last air sample's total molar count, will always be above or equal to 0
@@ -581,8 +581,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
 				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
-			//Maintaining a high antinoblium_multiplier will heal the SM.
-			damage = max(damage - log(10, antinoblium_multiplier), 0)
 			//Check for holes in the SM inner chamber
 			for(var/turf/open/space/turf_to_check in RANGE_TURFS(1, loc))
 				if(LAZYLEN(turf_to_check.atmos_adjacent_turfs))
@@ -736,7 +734,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			nuclear_chance += nuclear_gas[gas_id] * gas_comp[gas_id]
 			nuclear_comp += gas_comp[gas_id]
 		if(nuclear_comp >= 0.4 && prob(nuclear_chance))
-			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 100% chance per tick
+			fire_nuclear_particle()        // Start to emit radballs at a maximum of 100% chance per tick
 
 		//Power * 0.55 * a value between 1 and 0.8
 		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
