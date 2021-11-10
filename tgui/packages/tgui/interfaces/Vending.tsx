@@ -249,7 +249,7 @@ const ProductStock = (props) => {
 const ProductColorSelect = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
   const { user } = data;
-  const { free, product, productStock } = props;
+  const { product, productStock } = props;
 
   return (
     <Button
@@ -257,7 +257,7 @@ const ProductColorSelect = (props, context) => {
       tooltip="Change color"
       disabled={
         productStock?.amount === 0
-        || (!free && (!user || product.price > user.cash))
+        || (!user || product.price > user.cash)
       }
       onClick={() => act('select_colors', { ref: product.ref })}
     />
@@ -275,6 +275,10 @@ const ProductButton = (props, context) => {
   return custom ? (
     <Button
       fluid
+      disabled={
+        productStock.amount === 0
+        || (!user || product.price > user.cash)
+      }
       content={access ? 'FREE' : product.price + ' cr'}
       onClick={() =>
         act('dispense', {
@@ -286,7 +290,7 @@ const ProductButton = (props, context) => {
       fluid
       disabled={
         productStock.amount === 0
-        || (!free && (!user || product.price > user.cash))
+        || (!user || product.price > user.cash)
       }
       content={free && discount ? `${redPrice} cr` : `${product.price} cr`}
       onClick={() =>
