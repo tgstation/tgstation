@@ -115,7 +115,7 @@
 						to_chat(src, span_warning("[L] is restraining [P], you cannot push past."))
 					return TRUE
 
-	if(dir & (dir - 1)) //no mob swap during diagonal moves.
+	if(moving_diagonally) //no mob swap during diagonal moves.
 		return
 
 	if(!M.buckled && !M.has_buckled_mobs())
@@ -211,8 +211,8 @@
 /mob/living/proc/PushAM(atom/movable/AM, force = move_force)
 	if(now_pushing)
 		return TRUE
-	if(dir & (dir - 1)) // No pushing in diagonal move
-		return TRUE
+	if(moving_diagonally) // No pushing in diagonal move
+		return
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE

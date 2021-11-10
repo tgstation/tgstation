@@ -34,6 +34,8 @@
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
+	///TRUE if we should not push or shuffle on bump/enter
+	var/moving_diagonally = FALSE
 	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
@@ -374,6 +376,9 @@
 	loc = new_loc
 	Moved(old_loc)
 
+#define SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)\
+if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
+
 /atom/movable/Move(atom/newloc, direction, glide_size_override)
 	var/atom/movable/pullee = pulling
 	if(!moving_from_pull)
@@ -386,6 +391,7 @@
 
 	var/can_pass_diagonally = NONE
 	if (direction & (direction - 1)) //Check if the first part of the diagonal move is possible
+		moving_diagonally = TRUE
 		if(set_dir_on_move)
 			setDir(direction) //We first set the direction to prevent going through dir sensible object
 		if(direction & NORTH)
@@ -396,11 +402,9 @@
 			can_pass_diagonally = get_step(loc, WEST)?.Enter(src) ? WEST : NONE
 		if(!can_pass_diagonally && (direction & SOUTH))
 			can_pass_diagonally = get_step(loc, SOUTH)?.Enter(src) ? SOUTH : NONE
+		moving_diagonally = FALSE
 		if(!can_pass_diagonally)
 			return
-
-	if(set_dir_on_move)
-		setDir(direction &~ can_pass_diagonally) //We don't want to have a diagonal direction, so we take the direction of our last hypothetical cardinal move
 
 	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
 
@@ -409,8 +413,10 @@
 		old_locs = locs // locs is a special list, this is effectively the same as .Copy() but with less steps
 		for(var/atom/exiting_loc as anything in old_locs)
 			if(!exiting_loc.Exit(src, direction))
+				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
 	else if(!loc.Exit(src, direction))
+		SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 		return
 
 	var/list/new_locs
@@ -425,15 +431,20 @@
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
+				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
 			if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
 	else
 		var/enter_return_value = newloc.Enter(src)
 		if(!enter_return_value || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
+			SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 			return
 		else if((enter_return_value & BUMP_MOVE_DEALT_WITH) && can_pass_diagonally) //We cannot get to our final destination, but we can move a little
 			Move(get_step(loc, can_pass_diagonally), can_pass_diagonally)
+
+	SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 
 	var/atom/oldloc = loc
 	move_stacks++
