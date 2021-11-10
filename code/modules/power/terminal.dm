@@ -16,6 +16,11 @@
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
+	RegisterSignal(loc, COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_cable_link)
+	RegisterSignal(get_step(loc, dir), COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_reverse_cable_link)
+
+	connect_to_network()
+
 /obj/machinery/power/terminal/Destroy()
 	if(master)
 		master.disconnect_terminal()
@@ -28,6 +33,19 @@
 /obj/machinery/power/proc/can_terminal_dismantle()
 	. = FALSE
 
+/obj/machinery/power/terminal/proc/block_cable_link(source_turf, direction_from_turf)
+	SIGNAL_HANDLER
+	// Constructed terminals find and set their dir during initialization.
+	// Mapped terminals are presumed to have the correct direction set from the start.
+	if (direction_from_turf == dir)
+		return PREVENT_CABLE_LINK
+
+/obj/machinery/power/terminal/proc/block_reverse_cable_link(source_turf, direction_from_turf)
+	SIGNAL_HANDLER
+	// As above, but we know this is coming from the turf we're pointing at.
+	if (direction_from_turf == turn(dir, 180))
+		return PREVENT_CABLE_LINK
+
 /obj/machinery/power/apc/can_terminal_dismantle()
 	. = FALSE
 	if(opened)
@@ -37,7 +55,6 @@
 	. = FALSE
 	if(panel_open)
 		. = TRUE
-
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I)
 	if(isturf(loc))

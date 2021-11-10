@@ -58,52 +58,27 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
-	var/under_thing = NONE
 	if(clear_before_updating)
 		linked_dirs = 0
-	var/obj/machinery/power/search_parent
-	for(var/obj/machinery/power/P in loc)
-		if(istype(P, /obj/machinery/power/terminal))
-			under_thing = UNDER_TERMINAL
-			search_parent = P
-			break
-		if(istype(P, /obj/machinery/power/smes))
-			under_thing = UNDER_SMES
-			search_parent = P
-			break
 	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
-		//don't link from smes to its terminal
-		if(under_thing)
-			switch(under_thing)
-				if(UNDER_SMES)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
-					//Why null or equal to the search parent?
-					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
-					//but the cable underneath it is ready to link.
-					//I don't believe null is even a valid state for a smes terminal while the game is actually running
-					//So in the rare case that this happens, we also shouldn't connect
-					//This might break.
-					if(term && (!term.master || term.master == search_parent))
-						continue
-				if(UNDER_TERMINAL)
-					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.terminal || S.terminal == search_parent))
-						continue
-		var/inverse = turn(check_dir, 180)
-		for(var/obj/structure/cable/C in TB)
+		// don't link from power machinery to its terminal
+		if (SEND_SIGNAL(loc, COMSIG_POWERNET_CABLE_CHECK_BLOCK, check_dir) & PREVENT_CABLE_LINK)
+			continue
+		var/turf/other_turf = get_step(src, check_dir)
+		var/inverse_dir = turn(check_dir, 180)
+		for(var/obj/structure/cable/C in other_turf)
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
-				C.linked_dirs |= inverse
-				C.update_appearance()
+				C.linked_dirs |= inverse_dir
+				C.update_appearance(UPDATE_ICON)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
 	for(var/check_dir in GLOB.cardinals)
-		var/inverse = turn(check_dir, 180)
 		if(linked_dirs & check_dir)
+			var/inverse = turn(check_dir, 180)
 			var/TB = get_step(loc, check_dir)
 			for(var/obj/structure/cable/C in TB)
 				if(cable_layer & C.cable_layer)

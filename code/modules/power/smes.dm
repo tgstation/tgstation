@@ -279,8 +279,6 @@
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
 		update_appearance()
 
-
-
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
 /obj/machinery/power/smes/proc/refund_unused_power()
