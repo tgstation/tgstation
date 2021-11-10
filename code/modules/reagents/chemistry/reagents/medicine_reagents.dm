@@ -88,7 +88,6 @@
 	M.slurring = 0
 	M.jitteriness = 0
 	M.hallucination = 0
-	M.radiation = 0
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM * delta_time, FALSE, TRUE)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -440,29 +439,45 @@
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"
-	description = "Efficiently restores low radiation damage."
+	description = "Heals low toxin damage while the patient is irradiated, and will halt the damaging effects of radiation."
 	reagent_state = LIQUID
 	color = "#BAA15D"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	ph = 12 //It's a reducing agent
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/medicine/potass_iodide/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+
+/datum/reagent/medicine/potass_iodide/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	return ..()
+
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.radiation > 0)
-		M.radiation -= min(8 * REM * delta_time, M.radiation)
+	if (HAS_TRAIT(M, TRAIT_IRRADIATED))
+		M.adjustToxLoss(-1 * REM * delta_time)
+
 	..()
 
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
-	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
+	description = "Reduces massive amounts of toxin damage while purging other chemicals from the body."
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 1 //One of the best buffers, NEVERMIND!
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/medicine/pen_acid/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+
+/datum/reagent/medicine/pen_acid/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	return ..()
+
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation -= (max(M.radiation - RAD_MOB_SAFE, 0) / 50) * REM * delta_time
 	M.adjustToxLoss(-2 * REM * delta_time, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -993,7 +1008,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	ph = 8.7
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
@@ -1088,7 +1103,7 @@
 	color = "#555555"
 	overdose_threshold = 30
 	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustBruteLoss(-5 * REM * delta_time, 0) //A ton of healing - this is a 50 telecrystal investment.
@@ -1190,7 +1205,7 @@
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C1151D"
 	overdose_threshold = 30
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
@@ -1224,7 +1239,7 @@
 	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#AE151D"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
@@ -1259,7 +1274,7 @@
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
 	color = "#000000"
 	self_consuming = TRUE
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
 	..()
@@ -1274,7 +1289,7 @@
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/L)
 	. = ..()

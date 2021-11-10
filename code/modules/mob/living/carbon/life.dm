@@ -246,11 +246,6 @@
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
-	//TRITIUM
-	if(breath_gases[/datum/gas/tritium])
-		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
-		radiation += tritium_partialpressure/10
-
 	//NITRYL
 	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
@@ -381,45 +376,42 @@
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 
-/mob/living/carbon/handle_mutations_and_radiation(delta_time, times_fired)
-	if(dna?.temporary_mutations.len)
-		for(var/mut in dna.temporary_mutations)
-			if(dna.temporary_mutations[mut] < world.time)
-				if(mut == UI_CHANGED)
-					if(dna.previous["UI"])
-						dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
-						updateappearance(mutations_overlay_update=1)
-						dna.previous.Remove("UI")
-					dna.temporary_mutations.Remove(mut)
-					continue
-				if(mut == UF_CHANGED)
-					if(dna.previous["UF"])
-						dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
-						updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-						dna.previous.Remove("UF")
-					dna.temporary_mutations.Remove(mut)
-					continue
-				if(mut == UE_CHANGED)
-					if(dna.previous["name"])
-						real_name = dna.previous["name"]
-						name = real_name
-						dna.previous.Remove("name")
-					if(dna.previous["UE"])
-						dna.unique_enzymes = dna.previous["UE"]
-						dna.previous.Remove("UE")
-					if(dna.previous["blood_type"])
-						dna.blood_type = dna.previous["blood_type"]
-						dna.previous.Remove("blood_type")
-					dna.temporary_mutations.Remove(mut)
-					continue
-		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM?.timed)
-				dna.remove_mutation(HM.type)
+/mob/living/carbon/handle_mutations(time_since_irradiated, delta_time, times_fired)
+	if(!dna?.temporary_mutations.len)
+		return
 
-	radiation = max(radiation - (RAD_LOSS_PER_SECOND * delta_time), 0)
-	if(radiation > RAD_MOB_SAFE)
-		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT*delta_time)
-
+	for(var/mut in dna.temporary_mutations)
+		if(dna.temporary_mutations[mut] < world.time)
+			if(mut == UI_CHANGED)
+				if(dna.previous["UI"])
+					dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
+					updateappearance(mutations_overlay_update=1)
+					dna.previous.Remove("UI")
+				dna.temporary_mutations.Remove(mut)
+				continue
+			if(mut == UF_CHANGED)
+				if(dna.previous["UF"])
+					dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
+					updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+					dna.previous.Remove("UF")
+				dna.temporary_mutations.Remove(mut)
+				continue
+			if(mut == UE_CHANGED)
+				if(dna.previous["name"])
+					real_name = dna.previous["name"]
+					name = real_name
+					dna.previous.Remove("name")
+				if(dna.previous["UE"])
+					dna.unique_enzymes = dna.previous["UE"]
+					dna.previous.Remove("UE")
+				if(dna.previous["blood_type"])
+					dna.blood_type = dna.previous["blood_type"]
+					dna.previous.Remove("blood_type")
+				dna.temporary_mutations.Remove(mut)
+				continue
+	for(var/datum/mutation/human/HM in dna.mutations)
+		if(HM?.timed)
+			dna.remove_mutation(HM.type)
 
 /*
 Alcohol Poisoning Chart

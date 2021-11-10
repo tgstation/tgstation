@@ -10,6 +10,7 @@
 	icon_state = "cameracase"
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
+	wall_external = TRUE
 
 /obj/structure/camera_assembly
 	name = "camera assembly"

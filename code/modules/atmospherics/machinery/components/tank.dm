@@ -330,7 +330,7 @@
 		to_chat(user, span_warning("The tank seems to be pressurized, are you sure this is a good idea?"))
 		unsafe = TRUE
 
-	if(!tool.use_tool(src, user, time_taken, volume =  60))
+	if(!tool.use_tool(src, user, time_taken, volume = 60))
 		return
 
 	if(unsafe)

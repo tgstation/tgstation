@@ -11,7 +11,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	maxbodytemp = INFINITY
 	minbodytemp = 0
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
 	pass_flags = PASSFLAPS
@@ -45,7 +45,8 @@
 	var/on = TRUE
 	var/open = FALSE//Maint panel
 	var/locked = TRUE
-	var/hacked = FALSE //Used to differentiate between being hacked by silicons and emagged by humans.
+	///If the bot is hacked by silicons or emagged by humans.
+	var/hacked = FALSE
 	var/text_hack = "" //Custom text returned to a silicon upon hacking a bot.
 	var/text_dehack = "" //Text shown when resetting a bots hacked status to normal.
 	var/text_dehack_fail = "" //Shown when a silicon tries to reset a bot emagged with the emag item, which cannot be reset.
@@ -58,7 +59,7 @@
 	var/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = BOT_IDLE //Standardizes the vars that indicate the bot is busy with its function.
 	var/tries = 0 //Number of times the bot tried and failed to move.
-	var/remote_disabled = 0 //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
+	var/remote_disabled = FALSE //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_key = null //which channels can the bot listen to
@@ -79,7 +80,7 @@
 
 	var/beacon_freq = FREQ_NAV_BEACON
 	var/model = "" //The type of bot it is.
-	var/bot_type = 0 //The type of bot it is, for radio control.
+	var/bot_type = NONE //The type of bot it is, for radio control.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC //The type of data HUD the bot uses. Diagnostic by default.
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface. This is in order of the defines for the mode defines in robots.dm, in order
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
@@ -209,12 +210,11 @@
 /mob/living/simple_animal/bot/emag_act(mob/user)
 	if(locked) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		locked = FALSE
-		emagged = 1
 		to_chat(user, span_notice("You bypass [src]'s controls."))
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
-		emagged = 2
-		remote_disabled = 1 //Manually emagging the bot locks out the AI built in panel.
+		emagged = TRUE
+		remote_disabled = TRUE //Manually emagging the bot locks out the AI built in panel.
 		locked = TRUE //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
@@ -274,7 +274,7 @@
 		ignorelistcleanuptimer++
 
 	if(!on || client)
-		return
+		return FALSE
 
 	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, salute_delay)
@@ -286,10 +286,10 @@
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
 		if(BOT_RESPONDING) //Called by the AI.
 			call_mode()
-			return
+			return FALSE
 		if(BOT_SUMMON) //Called to a location
 			bot_summon()
-			return
+			return FALSE
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
@@ -330,29 +330,29 @@
 	to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 	return TRUE
 
-/mob/living/simple_animal/bot/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+/mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
 			open = !open
 			to_chat(user, span_notice("The maintenance panel is now [open ? "opened" : "closed"]."))
 		else
 			to_chat(user, span_warning("The maintenance panel is locked!"))
-	else if(W.GetID())
+	else if(attacking_item.GetID())
 		unlock_with_id(user)
-	else if(istype(W, /obj/item/paicard))
-		insertpai(user, W)
-	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
+	else if(istype(attacking_item, /obj/item/paicard))
+		insertpai(user, attacking_item)
+	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
 			to_chat(user, span_warning("Close the access panel before manipulating the personality slot!"))
 		else
 			to_chat(user, span_notice("You attempt to pull [paicard] free..."))
 			if(do_after(user, 30, target = src))
 				if (paicard)
-					user.visible_message(span_notice("[user] uses [W] to pull [paicard] out of [bot_name]!"),span_notice("You pull [paicard] out of [bot_name] with [W]."))
+					user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [bot_name]!"),span_notice("You pull [paicard] out of [bot_name] with [attacking_item]."))
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(health >= maxHealth)
 				to_chat(user, span_warning("[src] does not need a repair!"))
 				return
@@ -360,11 +360,11 @@
 				to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
 				return
 
-			if(W.use_tool(src, user, 0, volume=40))
+			if(attacking_item.use_tool(src, user, 0, volume=40))
 				adjustHealth(-10)
 				user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 		else
-			if(W.force) //if force is non-zero
+			if(attacking_item.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
 			..()
 
@@ -531,8 +531,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
-		for(var/step_number = 0, step_number < step_count,step_number++)
-			addtimer(CALLBACK(src, .proc/bot_step), BOT_STEP_DELAY*step_number)
+		for(var/step_number in 1 to step_count)
+			addtimer(CALLBACK(src, .proc/bot_step), BOT_STEP_DELAY*(step_number-1))
 	else
 		return FALSE
 	return TRUE
@@ -728,7 +728,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!on || emagged == 2 || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!on || emagged || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client)
 		bot_control_message(command, user)
@@ -823,7 +823,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
-	if((istype(A, /obj/machinery/door/airlock) ||  istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
+	if((istype(A, /obj/machinery/door/airlock) || istype(A, /obj/machinery/door/window)) && (!isnull(access_card)))
 		var/obj/machinery/door/D = A
 		if(D.check_access(access_card))
 			D.open()
@@ -871,8 +871,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("remote")
 			remote_disabled = !remote_disabled
 		if("hack")
-			if(emagged != 2)
-				emagged = 2
+			if(!emagged)
+				emagged = TRUE
 				hacked = TRUE
 				locked = TRUE
 				to_chat(usr, span_warning("[text_hack]"))
@@ -911,7 +911,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return TRUE
 	// 0 for access, 1 for denied.
-	if(emagged == 2) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
+	if(emagged) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
 		if(!hacked) //Manually emagged by a human - access denied to all.
 			return TRUE
 		else if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
@@ -921,7 +921,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/hack(mob/user)
 	var/hack
 	if(issilicon(user) || isAdminGhostAI(user)) //Allows silicons or admins to toggle the emag status of a bot.
-		hack += "[emagged == 2 ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
+		hack += "[emagged ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[emagged ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!locked) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
 		hack += "Remote network control radio: <A href='?src=[REF(src)];operation=remote'>[remote_disabled ? "Disconnected" : "Connected"]</A><BR>"

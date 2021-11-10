@@ -69,6 +69,13 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
+	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
+
+/datum/antagonist/cult/on_removal()
+	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
+
+	return ..()
+
 /datum/antagonist/cult/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 

@@ -11,10 +11,13 @@
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 
+/obj/item/radio/intercom/prison
+	name = "prison intercom"
+	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	prison_radio = TRUE
+
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
-	if(building)
-		setDir(ndir)
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
@@ -137,9 +140,10 @@
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
-	pixel_shift = 29
-	inverse = TRUE
+	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -147,14 +151,5 @@
 	frequency = 1481
 	broadcasting = TRUE
 
-/obj/item/radio/intercom/directional/north
-	pixel_y = 22
-
-/obj/item/radio/intercom/directional/south
-	pixel_y = -28
-
-/obj/item/radio/intercom/directional/east
-	pixel_x = 28
-
-/obj/item/radio/intercom/directional/west
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)

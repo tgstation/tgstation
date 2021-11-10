@@ -5,7 +5,7 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
-	baton_type = /obj/item/melee/energy/sword/saber
+	weapon = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
 	var/block_chance = 50
 	weapon_force = 30
@@ -16,7 +16,7 @@
 	desc = "An adorable looking secbot with four toy swords taped to its arms"
 	health = 50
 	maxHealth = 50
-	baton_type = /obj/item/toy/sword
+	weapon = /obj/item/toy/sword
 	weapon_force = 0
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
@@ -145,6 +145,6 @@
 
 	do_sparks(3, TRUE, src)
 	for(var/IS = 0 to 4)
-		drop_part(baton_type, Tsec)
+		drop_part(weapon, Tsec)
 	new /obj/effect/decal/cleanable/oil(Tsec)
 	qdel(src)
