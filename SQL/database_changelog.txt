@@ -2,9 +2,9 @@ Any time you make a change to the schema files, remember to increment the databa
 
 The latest database version is 5.19; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 18);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 19);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 18);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 19);
 
 In any query remember to add a prefix to the table names if you use one.
 
