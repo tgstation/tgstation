@@ -71,7 +71,7 @@
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in order_datums
 	switch(action)
 		if("cart_set")
-			grocery_list[wanted_item] = params["amt"]
+			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 			update_static_data(chef)
