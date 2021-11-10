@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - admin: "Priming grenades are now logged in individual's attack logs."
