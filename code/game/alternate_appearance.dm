@@ -84,6 +84,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
+	QDEL_NULL(image)
 	if(ghost_appearance)
 		QDEL_NULL(ghost_appearance)
 
