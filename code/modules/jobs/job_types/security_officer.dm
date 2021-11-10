@@ -221,9 +221,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer/supply
 	suit = /obj/item/clothing/suit/armor/vest/supply
 	ears = /obj/item/radio/headset/headset_sec/alt/department/supply
-	gloves = null
 	head = /obj/item/clothing/head/helmet/guard
-	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/job/security/medical
 	name = "Orderly"
@@ -231,9 +229,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer/medical
 	suit = /obj/item/clothing/suit/armor/vest/medical
 	ears = /obj/item/radio/headset/headset_sec/alt/department/med
-	gloves = null
 	head = /obj/item/clothing/head/helmet/guard
-	shoes = /obj/item/clothing/shoes/sneakers/white
 
 /datum/outfit/job/security/engineering
 	name = "Engineering Guard"
@@ -241,9 +237,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer/engineering
 	suit = /obj/item/clothing/suit/armor/vest/engineering
 	ears = /obj/item/radio/headset/headset_sec/alt/department/engi
-	gloves = null
 	head = /obj/item/clothing/head/helmet/guard
-	shoes = /obj/item/clothing/shoes/workboots
 
 /datum/outfit/job/security/science
 	name = "Science Guard"
@@ -251,9 +245,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer/science
 	suit = /obj/item/clothing/suit/armor/vest/science
 	ears = /obj/item/radio/headset/headset_sec/alt/department/sci
-	gloves = null
 	head = /obj/item/clothing/head/helmet/science
-	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/job/security/service
 	name = "Bouncer"
@@ -261,9 +253,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	uniform = /obj/item/clothing/under/rank/security/officer/service
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	ears = /obj/item/radio/headset/headset_sec/alt/department/service
-	gloves = null
 	head = /obj/item/clothing/head/helmet/guard
-	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
