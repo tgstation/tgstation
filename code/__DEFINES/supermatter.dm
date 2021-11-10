@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 2
+#define CO2_HEAT_PENALTY 6
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
@@ -30,7 +30,6 @@
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 #define PROTO_NITRATE_HEAT_RESISTANCE 5
-#define CO2_HEAT_RESISTANCE -2
 
 /// The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed be default.
 #define MIASMA_CONSUMPTION_RATIO_MIN 0

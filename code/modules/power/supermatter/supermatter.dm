@@ -136,7 +136,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
 		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
 		/datum/gas/proto_nitrate = PROTO_NITRATE_HEAT_RESISTANCE,
-		/datum/gas/carbon_dioxide = CO2_HEAT_RESISTANCE
 	)
 	///The list of gases mapped against their powermix ratio
 	var/list/gas_powermix = list(
@@ -606,10 +605,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(consumed_miasma)
 				removed.gases[/datum/gas/miasma][MOLES] -= consumed_miasma
 				matter_power += consumed_miasma * MIASMA_POWER_GAIN
-
-		if(gas_comp[/datum/gas/carbon_dioxide] > 0.6 && prob(5))
-			dynamic_heat_resistance = max(dynamic_heat_resistance - gas_comp[/datum/gas/carbon_dioxide] * 2, 0.25)
-			dynamic_heat_modifier += gas_comp[/datum/gas/carbon_dioxide] * 5
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
