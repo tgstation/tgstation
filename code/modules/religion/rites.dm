@@ -698,7 +698,7 @@
 	to_chat(user, span_warning("[used_for_blade] reshapes into a ceremonial blade!"))
 	if(!used_for_blade.use(5))//use 5 of the material
 		return
-	var/obj/item/ceremonial_blade/blade =  new(altar_turf)
+	var/obj/item/ceremonial_blade/blade = new(altar_turf)
 	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = MINERAL_MATERIAL_AMOUNT * 5))
 	return TRUE
 

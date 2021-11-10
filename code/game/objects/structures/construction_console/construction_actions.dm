@@ -131,7 +131,7 @@
 	button_icon_state = "build_fan"
 	structure_name = "fans"
 	structure_path = /obj/structure/fans/tiny
-	place_sound =  'sound/machines/click.ogg'
+	place_sound = 'sound/machines/click.ogg'
 
 /datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
 	to_chat(owner, span_notice("Tiny fan placed. [remaining] fans remaining."))

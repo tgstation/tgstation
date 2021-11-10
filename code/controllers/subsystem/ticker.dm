@@ -35,8 +35,12 @@ SUBSYSTEM_DEF(ticker)
 	var/gametime_offset = 432000 //Deciseconds to add to world.time for station time.
 	var/station_time_rate_multiplier = 12 //factor of station time progressal vs real time.
 
-	var/totalPlayers = 0 //used for pregame stats on statpanel
-	var/totalPlayersReady = 0 //used for pregame stats on statpanel
+	/// Num of players, used for pregame stats on statpanel
+	var/totalPlayers = 0
+	/// Num of ready players, used for pregame stats on statpanel (only viewable by admins)
+	var/totalPlayersReady = 0
+	/// Num of ready admins, used for pregame stats on statpanel (only viewable by admins)
+	var/total_admins_ready = 0
 
 	var/queue_delay = 0
 	var/list/queued_players = list() //used for join queues when the server exceeds the hard population cap
@@ -157,10 +161,12 @@ SUBSYSTEM_DEF(ticker)
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = LAZYLEN(GLOB.new_player_list)
 			totalPlayersReady = 0
-			for(var/i in GLOB.new_player_list)
-				var/mob/dead/new_player/player = i
+			total_admins_ready = 0
+			for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
+					if(player.client?.holder)
+						++total_admins_ready
 
 			if(start_immediately)
 				timeLeft = 0
@@ -527,6 +533,7 @@ SUBSYSTEM_DEF(ticker)
 
 	totalPlayers = SSticker.totalPlayers
 	totalPlayersReady = SSticker.totalPlayersReady
+	total_admins_ready = SSticker.total_admins_ready
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players

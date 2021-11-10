@@ -41,7 +41,7 @@
 
 	var/static/list/officers = list("Captain", "Head of Personnel", "Head of Security")
 	var/static/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
-	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
+	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" = "Det.", "Security Officer" = "Officer")
 	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
 	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
 	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
@@ -137,7 +137,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
-	if(weapon && emagged == 2)
+	if(weapon && emagged)
 		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
@@ -186,11 +186,12 @@
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 
-	if(emagged == 2)
-		if(weapon)
-			weapon.force = weapon_orig_force
-		if(user)
-			to_chat(user, span_danger("[src] buzzes and beeps."))
+	if(!emagged)
+		return
+	if(weapon)
+		weapon.force = weapon_orig_force
+	if(user)
+		to_chat(user, span_danger("[src] buzzes and beeps."))
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
@@ -207,9 +208,8 @@
 	if(mode == BOT_CLEANING)
 		return
 
-	if(emagged == 2) //Emag functions
+	if(emagged) //Emag functions
 		if(isopenturf(loc))
-
 			for(var/mob/living/carbon/victim in loc)
 				if(victim != target)
 					UnarmedAttack(victim) // Acid spray
@@ -226,7 +226,7 @@
 		if(!process_scan(target))
 			target = null
 
-	if(!target && emagged == 2) // When emagged, target humans who slipped on the water and melt their faces off
+	if(!target && emagged) // When emagged, target humans who slipped on the water and melt their faces off
 		target = scan(/mob/living/carbon)
 
 	if(!target && pests) //Search for pests to exterminate first.
@@ -295,8 +295,8 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/remains
-		)
+		/obj/effect/decal/remains,
+	)
 
 	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood
@@ -343,7 +343,7 @@
 			living_target.death()
 		living_target = null
 
-	else if(emagged == 2) //Emag functions
+	else if(emagged) //Emag functions
 		if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job
@@ -397,9 +397,9 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"})
+			Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
+			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+			Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| isAdminGhostAI(user))
 		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
