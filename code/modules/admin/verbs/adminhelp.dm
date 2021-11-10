@@ -234,7 +234,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
 		if(extra_message)
 			message_to_send += " ([extra_message])"
-		to_chat(initiator, span_boldwarning("Sent an urgent message to admins through TGS."))
+		to_chat(initiator, span_boldwarning("Sent a notification to admins through TGS."))
 
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")

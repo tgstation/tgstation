@@ -14,7 +14,7 @@ export const Adminhelp = (props, context) => {
     adminCount,
     bannedFromUrgentAhelp,
   } = data;
-  const [requestforadmin, setRequestForAdmin] = useLocalState(context, "requestforadmin", false);
+  const [requestForAdmin, setRequestForAdmin] = useLocalState(context, "request_for_admin", false);
   const [ahelpMessage, setAhelpMessage] = useLocalState(context, "ahelp_message", "");
   return (
     <Window
@@ -43,8 +43,8 @@ export const Adminhelp = (props, context) => {
                 <Button
                   mt={1}
                   content="Request an admin?"
-                  onClick={() => setRequestForAdmin(!requestforadmin)}
-                  icon={requestforadmin? 'check-square-o' : 'square-o'}
+                  onClick={() => setRequestForAdmin(!requestForAdmin)}
+                  icon={requestForAdmin? 'check-square-o' : 'square-o'}
                   disabled={bannedFromUrgentAhelp}
                   fluid
                   textAlign="center"
@@ -60,7 +60,7 @@ export const Adminhelp = (props, context) => {
               content="Submit"
               textAlign="center"
               onClick={() => act("ahelp", {
-                urgent: requestforadmin,
+                urgent: requestForAdmin,
                 message: ahelpMessage,
               })}
             />
