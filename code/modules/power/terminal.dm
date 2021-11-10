@@ -11,13 +11,28 @@
 	var/obj/machinery/power/master = null
 
 
-/obj/machinery/power/terminal/Initialize(mapload)
+/obj/machinery/power/terminal/Initialize(mapload, obj/machinery/power/new_master, blocks_cables=TRUE)
 	. = ..()
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
-	RegisterSignal(loc, COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_cable_link)
-	RegisterSignal(get_step(loc, dir), COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_reverse_cable_link)
+	// Assume that all mapped terminals are already given the appropriate direction
+	if (new_master)
+		master = new_master
+
+		if (loc == new_master.loc)
+			// If we overlap our new master, such as being mastered from an APC, match their direction
+			dir = new_master.dir
+		else
+			// Otherwise, direct our cables towards them
+			dir = get_dir(src, new_master)
+
+	if (blocks_cables)
+		// Terminals, especially ones that block, are relatively rare compared to power cables.
+		// We register twice here so we only need to fire off one signal when connecting cables -
+		// something which needs to happen a lot.
+		RegisterSignal(loc, COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_cable_link)
+		RegisterSignal(get_step(loc, dir), COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_reverse_cable_link)
 
 	connect_to_network()
 

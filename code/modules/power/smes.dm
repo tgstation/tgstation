@@ -144,8 +144,8 @@
 					span_notice("You build the power terminal."))
 
 				//build the terminal and link it to the network
-				make_terminal(T)
-				terminal.connect_to_network()
+				terminal = new/obj/machinery/power/terminal(T, src)
+				set_machine_stat(machine_stat & ~BROKEN)
 				connect_to_network()
 		return
 
@@ -190,20 +190,9 @@
 		disconnect_terminal()
 	return ..()
 
-// create a terminal object pointing towards the SMES
-// wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T)
-	terminal = new/obj/machinery/power/terminal(T)
-	terminal.setDir(get_dir(T,src))
-	terminal.master = src
-	set_machine_stat(machine_stat & ~BROKEN)
-
 /obj/machinery/power/smes/disconnect_terminal()
-	if(terminal)
-		terminal.master = null
-		terminal = null
-		atom_break()
-
+	terminal = null
+	atom_break()
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()

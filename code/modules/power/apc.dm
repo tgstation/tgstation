@@ -259,7 +259,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	if(cell)
 		QDEL_NULL(cell)
 	if(terminal)
-		disconnect_terminal()
+		QDEL_NULL(terminal)
 	. = ..()
 
 /obj/machinery/power/apc/handle_atom_del(atom/A)
@@ -267,13 +267,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		cell = null
 		update_appearance()
 		updateUsrDialog()
-
-/obj/machinery/power/apc/proc/make_terminal()
-	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.setDir(dir)
-	terminal.master = src
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
@@ -309,7 +302,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 
 	update_appearance()
 
-	make_terminal()
+	terminal = new /obj/machinery/power/terminal(loc, src, FALSE)
 
 	addtimer(CALLBACK(src, .proc/update), 5)
 
@@ -650,8 +643,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 					return
 				C.use(10)
 				to_chat(user, span_notice("You add cables to the APC frame."))
-				make_terminal()
-				terminal.connect_to_network()
+				terminal = new/obj/machinery/power/terminal(loc, src)
 	else if (istype(W, /obj/item/electronics/apc) && opened)
 		if (has_electronics)
 			to_chat(user, span_warning("There is already a board inside the [src]!"))
