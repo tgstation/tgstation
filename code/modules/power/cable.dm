@@ -133,8 +133,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(isobserver(user))
 		. += get_power_info()
 
-
-/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
+/*
+ * Items usable on a cable:
+ *   - Wirecutters cut the cable.
+ *   - Multitools display the power in the powernet.
+ */
+/obj/structure/cable/attackby(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
@@ -158,14 +162,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		return span_danger("Total power: [display_power(powernet.avail)]\nLoad: [display_power(powernet.load)]\nExcess power: [display_power(surplus())]")
 	else
 		return span_danger("The cable is not powered.")
-
-
-// Items usable on a cable :
-//   - Wirecutters : cut it duh !
-//   - Multitool : get the power currently passing through the cable
-//
-/obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
 
 
 // shock the user with probability prb
