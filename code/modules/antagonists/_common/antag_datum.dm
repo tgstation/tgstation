@@ -113,17 +113,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return
 
 // Adds the specified antag hud to the player. Usually called in an antag datum file
+// MOTHBLOCKS TODO: add_antag_hud
 /datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
-	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.join_hud(mob_override)
-	set_antag_hud(mob_override, antag_hud_name)
+	// var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	// hud.join_hud(mob_override)
+	// set_antag_hud(mob_override, antag_hud_name)
 
 
 // Removes the specified antag hud from the player. Usually called in an antag datum file
+// MOTHBLOCKS TODO: remove_antag_hud
 /datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
-	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.leave_hud(mob_override)
-	set_antag_hud(mob_override, null)
+	// var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	// hud.leave_hud(mob_override)
+	// set_antag_hud(mob_override, null)
 
 
 /// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
@@ -169,6 +171,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.client.holder.auto_deadmin()
 	if(!soft_antag && owner.current.stat != DEAD)
 		owner.current.add_to_current_living_antags()
+
+	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
 /**
  * Proc that checks the sent mob aganst the banlistfor this antagonist.
@@ -217,6 +221,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 	qdel(src)
 
 /**

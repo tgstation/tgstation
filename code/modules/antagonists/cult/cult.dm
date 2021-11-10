@@ -212,6 +212,7 @@
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
 	show_in_antagpanel = FALSE //Feel free to add this later
+	antag_hud_name = "cultmaster"
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
 	var/datum/action/innate/cult/master/pulse/throwing = new
@@ -225,7 +226,9 @@
 /datum/antagonist/cult/master/on_gain()
 	. = ..()
 	var/mob/living/current = owner.current
-	set_antag_hud(current, "cultmaster")
+
+	// MOTHBLOCKS TODO: Update cultmaster HUD
+	// set_antag_hud(current, "cultmaster")
 
 /datum/antagonist/cult/master/greet()
 	to_chat(owner.current, "<span class='warningplain'><span class='cultlarge'>You are the cult's Master</span>. As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
