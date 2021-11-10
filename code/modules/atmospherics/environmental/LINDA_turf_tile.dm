@@ -242,7 +242,9 @@
 
 /turf/open/process_cell(fire_count)
 	if(archived_cycle < fire_count) //archive self if not already done
-		archive()
+		air.archive()
+		archived_cycle = SSair.times_fired
+		temperature_archived = temperature
 
 	current_cycle = fire_count
 	var/cached_ticker = significant_share_ticker
@@ -259,12 +261,12 @@
 	max_share = 0 //Gotta reset our tracker
 	#endif
 
-	for(var/t in adjacent_turfs)
-		var/turf/open/enemy_tile = t
-
+	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
-		enemy_tile.archive()
+		enemy_tile.air.archive()
+		enemy_tile.archived_cycle = SSair.times_fired
+		enemy_tile.temperature_archived = enemy_tile.temperature
 
 	/******************* GROUP HANDLING START *****************************************************************/
 
@@ -311,7 +313,8 @@
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
-		archive()
+		archived_cycle = SSair.times_fired
+		temperature_archived = temperature
 		if(our_air.compare(planetary_mix))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
