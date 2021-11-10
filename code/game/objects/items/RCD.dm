@@ -811,6 +811,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return .
 
 /obj/item/construction/rcd/borg/syndicate
+	name = "syndicate RCD"
+	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
 	energyfactor = 66
