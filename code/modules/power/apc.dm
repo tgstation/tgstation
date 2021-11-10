@@ -584,11 +584,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		var/shock_source = null
 		metal += LAZYACCESS(W.custom_materials, GET_MATERIAL_REF(/datum/material/iron))//This prevents wooden rolling pins from shocking the user
 
-		if(cell || terminal) //The mob gets shocked by whichever powersource has the most electricity
-			if(cell && terminal)
-				shock_source = cell.charge > terminal.powernet.avail ? cell : terminal.powernet
-			else
-				shock_source = terminal?.powernet || cell
+		//The mob gets shocked by whichever powersource has the most electricity
+		if(cell && terminal)
+			shock_source = cell.charge > terminal.powernet.avail ? cell : terminal.powernet
+		else
+			shock_source = terminal?.powernet || cell
 
 		if(shock_source && metal && (panel_open || opened)) //Now you're cooking with electricity
 			if(electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
