@@ -222,7 +222,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
 		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
-		MessageNoRecipient(msg_raw)
+		MessageNoRecipient(msg_raw, urgent)
 		send_message_to_tgs(msg, urgent)
 	GLOB.ahelp_tickets.active_tickets += src
 
@@ -230,7 +230,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/message_to_send = message
 
 	if(urgent)
-		message_to_send = "[message] - This ahelp is URGENT"
+		message_to_send = "[message] - Requested an admin"
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
 		if(extra_message)
 			message_to_send += " ([extra_message])"
@@ -293,7 +293,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc/discord
-/datum/admin_help/proc/MessageNoRecipient(msg)
+/datum/admin_help/proc/MessageNoRecipient(msg, urgent = FALSE)
 	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	var/ref_src = "[REF(src)]"
 	//Message to be sent to all admins
@@ -317,7 +317,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		type = MESSAGE_TYPE_ADMINPM,
 		html = span_adminnotice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"),
 		confidential = TRUE)
-	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey)
+	SSblackbox.LogAhelp(id, "Ticket Opened", msg, null, initiator.ckey, urgent = urgent)
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
@@ -546,54 +546,104 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	deltimer(adminhelptimerid)
 	adminhelptimerid = 0
 
-// Used for methods where input via arg doesn't work
-/client/proc/get_adminhelp()
-	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null
-	adminhelp(msg)
+GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
-/client/verb/adminhelp(msg as message)
-	set category = "Admin"
-	set name = "Adminhelp"
+/datum/admin_help_ui_handler
+	var/list/ahelp_cooldowns = list()
 
+/datum/admin_help_ui_handler/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/admin_help_ui_handler/ui_data(mob/user)
+	. = list()
+	var/list/admins = get_admin_counts(R_BAN)
+	.["adminCount"] = length(admins["present"])
+
+/datum/admin_help_ui_handler/ui_static_data(mob/user)
+	. = list()
+	.["bannedFromUrgentAhelp"] = is_banned_from(user.ckey, "Urgent Adminhelp")
+
+/datum/admin_help_ui_handler/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Adminhelp")
+		ui.open()
+		ui.set_autoupdate(FALSE)
+
+/datum/admin_help_ui_handler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/client/user = usr.client
+	if(user.adminhelptimerid)
+		return
+	var/message = sanitize_text(trim(params["message"]), null)
+	var/urgent = sanitize_integer(params["urgent"], FALSE, TRUE, FALSE)
+	var/list/admins = get_admin_counts(R_BAN)
+	if(length(admins["present"]) != 0 || is_banned_from(user.ckey, "Urgent Adminhelp"))
+		urgent = FALSE
+
+	perform_adminhelp(user, message, urgent)
+	ui.close()
+
+/datum/admin_help_ui_handler/proc/perform_adminhelp(client/user, message, urgent)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return
 
+	if(!message)
+		return
+
 	//handle muting and automuting
-	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, span_danger("Error: Admin-PM: You cannot send adminhelps (Muted)."), confidential = TRUE)
+	if(user.prefs.muted & MUTE_ADMINHELP)
+		to_chat(user, span_danger("Error: Admin-PM: You cannot send adminhelps (Muted)."), confidential = TRUE)
 		return
-	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
-		return
-
-	msg = trim(msg)
-
-	if(!msg)
+	if(user.handle_spam_prevention(message, MUTE_ADMINHELP))
 		return
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/list/admins = get_admin_counts(R_BAN)
+
+	if(urgent)
+		if((ahelp_cooldowns?[user.ckey] || 0) > world.time)
+			urgent = FALSE // Prevent abuse
+		else
+			ahelp_cooldowns[user.ckey] = world.time + CONFIG_GET(number/urgent_ahelp_cooldown) * (1 SECONDS)
+
+	if(user.current_ticket)
+		if(urgent)
+			var/sanitized_message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
+			user.current_ticket.send_message_to_tgs(sanitized_message, TRUE)
+		user.current_ticket.MessageNoRecipient(message, urgent)
+		user.current_ticket.TimeoutVerb()
+		return
+
+	new /datum/admin_help(message, user, FALSE, urgent)
+
+/client/verb/no_tgui_adminhelp(message as message)
+	set name = "NoTguiAdminhelp"
+	set hidden = TRUE
+
+	if(adminhelptimerid)
+		return
+
+	message = trim(message)
 	var/urgent = FALSE
-	if(length(admins["present"]) == 0 && COOLDOWN_FINISHED(src, urgent_ahelp_cooldown))
-		urgent = alert(src, "There are no admins on. Is this an urgent ahelp that requires immediate attention? Abuse and misuse can lead to punishment.", \
+	var/list/admins = get_admin_counts(R_BAN)
+	if(!is_banned_from(ckey, "Urgent Adminhelp") && length(admins["present"]) == 0 && (GLOB.admin_help_ui_handler.ahelp_cooldowns?[ckey] || 0) <= world.time)
+		urgent = alert(src, "There are no admins on. Is this an ahelp reporting a rulebreak? Pressing yes when it isn't can lead to punishments.", \
 			"No admins on", "No", "Yes") == "Yes"
 
 	var/list/potentially_new_admins = get_admin_counts(R_BAN)
 	if(length(potentially_new_admins["present"]) != 0)
 		urgent = FALSE
 
-	if(urgent)
-		COOLDOWN_START(src, urgent_ahelp_cooldown, CONFIG_GET(number/urgent_ahelp_cooldown) * (1 SECONDS))
+	GLOB.admin_help_ui_handler.perform_adminhelp(src, message, urgent)
 
-	if(current_ticket)
-		if(urgent)
-			var/sanitized_message = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
-			current_ticket.send_message_to_tgs(sanitized_message, TRUE)
-		current_ticket.MessageNoRecipient(msg)
-		current_ticket.TimeoutVerb()
-		return
-
-	new /datum/admin_help(msg, src, FALSE, urgent)
+/client/verb/adminhelp()
+	set category = "Admin"
+	set name = "Adminhelp"
+	GLOB.admin_help_ui_handler.ui_interact(mob)
+	to_chat(src, span_boldnotice("Adminhelp failing to open or work? <a href='?src=[REF(src)];tguiless_adminhelp=1'>Click here</a>"))
 
 
 //
