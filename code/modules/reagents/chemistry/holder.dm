@@ -169,6 +169,9 @@
 	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small amount problems.
 		return FALSE
 
+	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
+		return FALSE
+
 	var/datum/reagent/glob_reagent = GLOB.chemical_reagents_list[reagent]
 	if(!glob_reagent)
 		stack_trace("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
@@ -481,7 +484,8 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+				continue
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
 					R.expose_single(reagent, target, methods, part, show_message)
@@ -506,7 +510,8 @@
 				transfer_amount = reagent.volume
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -891,7 +896,7 @@
 
 			if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other)
 				if(meets_temp_requirement && meets_ph_requirement)
-					possible_reactions  += reaction
+					possible_reactions += reaction
 				else
 					LAZYADD(failed_but_capable_reactions, reaction)
 

@@ -15,8 +15,6 @@
 #define CLEAN_TYPE_RADIATION (1 << 4)
 /// Cleans diseases off of the cleanable atom.
 #define CLEAN_TYPE_DISEASE (1 << 5)
-/// Special type, add this flag to make some cleaning processes non-instant. Currently only used for showers when removing radiation.
-#define CLEAN_TYPE_WEAK (1 << 6)
 /// Cleans paint off of the cleanable atom.
 #define CLEAN_TYPE_PAINT (1 << 7)
 /// Cleans acid off of the cleanable atom.
@@ -31,4 +29,4 @@
 #define CLEAN_WASH (CLEAN_TYPE_BLOOD | CLEAN_TYPE_RUNES | CLEAN_TYPE_DISEASE | CLEAN_TYPE_ACID | CLEAN_TYPE_LIGHT_DECAL)
 #define CLEAN_SCRUB (CLEAN_WASH | CLEAN_TYPE_FINGERPRINTS | CLEAN_TYPE_FIBERS | CLEAN_TYPE_PAINT | CLEAN_TYPE_HARD_DECAL)
 #define CLEAN_RAD CLEAN_TYPE_RADIATION
-#define CLEAN_ALL (ALL & ~CLEAN_TYPE_WEAK)
+#define CLEAN_ALL ALL

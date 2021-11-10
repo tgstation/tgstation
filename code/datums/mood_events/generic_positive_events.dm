@@ -253,3 +253,14 @@
 	description = "<span class='nicegreen'>This taste seems oddly nostalgic...</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
+
+/datum/mood_event/observed_soda_spill
+	description = span_nicegreen("Ahaha! It's always funny to see someone get sprayed by a can of soda.\n")
+	mood_change = 2
+	timeout = 30 SECONDS
+
+/datum/mood_event/observed_soda_spill/add_effects(mob/spilled_mob, atom/soda_can)
+	if(!spilled_mob)
+		return
+
+	description = span_nicegreen("Ahaha! [spilled_mob] spilled [spilled_mob.p_their()] [soda_can ? soda_can.name : "soda"] all over [spilled_mob.p_them()]self! Classic.\n")

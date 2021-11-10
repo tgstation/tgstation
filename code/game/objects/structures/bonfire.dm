@@ -62,6 +62,8 @@
 	if(used_item.get_temperature())
 		start_burning()
 	if(grill)
+		if(istype(used_item, /obj/item/melee/roastingstick))
+			return FALSE
 		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
 				used_item.forceMove(get_turf(src))

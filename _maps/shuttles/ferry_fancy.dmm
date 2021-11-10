@@ -10,7 +10,7 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "d" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "e" = (
@@ -90,11 +90,11 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/transport)
 "q" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 "r" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/pod/light,
 /area/shuttle/transport)
 

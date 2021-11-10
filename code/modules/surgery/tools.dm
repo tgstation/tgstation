@@ -189,7 +189,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	mob_throw_hit_sound =  'sound/weapons/pierce.ogg'
+	mob_throw_hit_sound = 'sound/weapons/pierce.ogg'
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -350,7 +350,7 @@
 	icon_state = "shears"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	toolspeed  = 1
+	toolspeed = 1
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 6

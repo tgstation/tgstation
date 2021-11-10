@@ -2,7 +2,7 @@
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
-	should_supress_view_changes  = FALSE
+	should_supress_view_changes = FALSE
 
 	// Docking cameras should only interact with their current z-level.
 	move_up_action = null

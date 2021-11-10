@@ -18,7 +18,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	baseturfs = /turf/open/openspace
 	can_atmos_pass_vertical = ATMOS_PASS_YES
 	baseturfs = /turf/open/openspace
-	intact = FALSE //this means wires go on top
+	overfloor_placed = FALSE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE

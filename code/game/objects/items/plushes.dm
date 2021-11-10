@@ -236,8 +236,7 @@
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
-		to_chat(world, "lover != Brutus")
-		return //why are we considering someone we don't love?
+		CRASH("plushie heartbroken by a plushie that is not their lover")
 
 	scorned.Add(Brutus)
 	Brutus.scorned_by(src)

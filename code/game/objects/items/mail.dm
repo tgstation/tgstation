@@ -10,7 +10,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
-	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
@@ -202,6 +202,7 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()

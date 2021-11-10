@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixed abductor and advanced tools' recycling results being heavily diminished or taken from their basic counterparts"

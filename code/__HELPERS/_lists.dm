@@ -315,6 +315,12 @@
 		. = L[L.len]
 		L.len--
 
+/// Returns the top (last) element from the list, does not remove it from the list. Stack functionality.
+/proc/peek(list/target_list)
+	var/list_length = length(target_list)
+	if(list_length != 0)
+		return target_list[list_length]
+
 /proc/popleft(list/L)
 	if(L.len)
 		. = L[1]
@@ -657,3 +663,25 @@
 		if(condition.Invoke(i))
 			. |= i
 
+///Returns a list with all weakrefs resolved
+/proc/recursive_list_resolve(list/list_to_resolve)
+	. = list()
+	for(var/element in list_to_resolve)
+		if(istext(element))
+			. += element
+			var/possible_assoc_value = list_to_resolve[element]
+			if(possible_assoc_value)
+				.[element] = recursive_list_resolve_element(possible_assoc_value)
+		else
+			. += list(recursive_list_resolve_element(element))
+
+///Helper for /proc/recursive_list_resolve
+/proc/recursive_list_resolve_element(element)
+	if(islist(element))
+		var/list/inner_list = element
+		return recursive_list_resolve(inner_list)
+	else if(isweakref(element))
+		var/datum/weakref/ref = element
+		return ref.resolve()
+	else
+		return element

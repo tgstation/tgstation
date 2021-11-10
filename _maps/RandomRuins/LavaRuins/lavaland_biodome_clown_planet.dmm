@@ -1000,7 +1000,7 @@
 /area/ruin/powered/clownplanet)
 "os" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "pv" = (

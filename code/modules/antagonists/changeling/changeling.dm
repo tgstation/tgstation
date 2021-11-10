@@ -4,7 +4,7 @@
 
 /datum/antagonist/changeling
 	name = "Changeling"
-	roundend_category  = "changelings"
+	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
@@ -709,7 +709,7 @@
 	var/list/memories = list()
 
 	for(var/memory_key as anything in user?.mind.memories)
-		var/datum/memory/memory =  user.mind.memories[memory_key]
+		var/datum/memory/memory = user.mind.memories[memory_key]
 		memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories

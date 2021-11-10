@@ -9,7 +9,7 @@
 	desc = "A machine given the thankless job of trying to sell wayfinding pinpointers. They point to common locations."
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
-	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, FIRE = 100, ACID = 80)
 	payment_department = ACCOUNT_CIV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
@@ -274,7 +274,7 @@
 	. = ..()
 	var/msg = "Its tracking indicator reads "
 	if(target)
-		var/obj/machinery/navbeacon/wayfinding/B  = target
+		var/obj/machinery/navbeacon/wayfinding/B = target
 		msg += "\"[B.codes["wayfinding"]]\"."
 	else
 		msg = "Its tracking indicator is blank."

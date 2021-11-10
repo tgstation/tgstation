@@ -118,7 +118,7 @@
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/meatball = 1
 	)
-	result =  /obj/item/food/rawkhinkali
+	result = /obj/item/food/rawkhinkali
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/meatbun

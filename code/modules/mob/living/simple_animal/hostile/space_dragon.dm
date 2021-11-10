@@ -540,7 +540,7 @@
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	max_integrity = 300
 	icon = 'icons/obj/carp_rift.dmi'
 	icon_state = "carp_rift_carpspawn"
@@ -568,6 +568,15 @@
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
+
+	AddComponent( \
+		/datum/component/aura_healing, \
+		range = 0, \
+		simple_heal = 5, \
+		limit_to_trait = TRAIT_HEALS_FROM_CARP_RIFTS, \
+		healing_color = COLOR_BLUE, \
+	)
+
 	START_PROCESSING(SSobj, src)
 
 // Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
@@ -598,13 +607,6 @@
 	return ..()
 
 /obj/structure/carp_rift/process(delta_time)
-	// Heal carp on our loc.
-	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
-		if("carp" in hostilehere.faction)
-			hostilehere.adjustHealth(-5 * delta_time)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
-			H.color = "#0000FF"
-
 	// If we're fully charged, just start mass spawning carp and move around.
 	if(charge_state == CHARGE_COMPLETED)
 		if(DT_PROB(1.25, delta_time))
@@ -655,7 +657,7 @@
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_YELLOW)
 		update_light()
-		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)

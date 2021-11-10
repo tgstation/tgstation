@@ -174,7 +174,7 @@
 	name = "Fruit Salad snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
+		/datum/reagent/water = 5,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/orangejuice = 5,
 		/datum/reagent/consumable/limejuice = 5,

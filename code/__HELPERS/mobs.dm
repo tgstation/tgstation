@@ -435,6 +435,15 @@ GLOBAL_LIST_EMPTY(species_list)
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
+/// Returns if the given target is a human. Like, a REAL human.
+/// Not a moth, not a felinid (which are human subtypes), but a human.
+/proc/ishumanbasic(target)
+	if (!ishuman(target))
+		return FALSE
+	
+	var/mob/living/carbon/human/human_target = target
+	return human_target.dna?.species?.type == /datum/species/human
+
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
 	var/turf/T = get_turf(target)
 	if(!T)
