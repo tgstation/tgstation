@@ -13,10 +13,10 @@
 
 	if(battery_module && battery_module.battery && battery_module.battery.charge)
 		var/obj/item/stock_parts/cell/cell = battery_module.battery
-		if(cell.use(amount JOULES))
+		if(cell.use(amount KILOJOULES))
 			return TRUE
 		else // Discharge the cell anyway.
-			cell.use(min(amount JOULES, cell.charge))
+			cell.use(min(amount KILOJOULES, cell.charge))
 			return FALSE
 	return FALSE
 

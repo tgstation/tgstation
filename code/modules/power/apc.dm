@@ -1271,7 +1271,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 
 	if(cell && !shorted)
 		// draw power from cell as before to power the area
-		var/cellused = min(cell.charge, lastused_total JOULES) // clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, lastused_total KILOJOULES) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
 		if(excess > lastused_total) // if power excess recharge the cell
@@ -1282,7 +1282,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 
 		else // no excess, and not enough per-apc
 			if((cell.charge WATTS + excess) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.charge = min(cell.maxcharge, cell.charge + excess JOULES) //recharge with what we can
+				cell.charge = min(cell.maxcharge, cell.charge + excess KILOJOULES) //recharge with what we can
 				add_load(excess) // so draw what we can from the grid
 				charging = APC_NOT_CHARGING
 
@@ -1330,7 +1330,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		if(chargemode && charging == APC_CHARGING && operating)
 			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is capped to % per second constant
-				var/ch = min(excess JOULES, cell.maxcharge JOULES)
+				var/ch = min(excess KILOJOULES, cell.maxcharge KILOJOULES)
 				add_load(ch WATTS) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 

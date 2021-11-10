@@ -18,7 +18,7 @@
 	density = TRUE
 	///Whether this accumulator should connect to and power a powernet
 	var/wants_powernet = TRUE
-	///The amount of energy that is currently inside the machine before being converted to electricity
+	///The amount of energy that is currently inside the machine before being converted to electricity, in energy units (WattTicks)
 	var/stored_energy = 0
 
 /obj/machinery/power/energy_accumulator/proc/get_stored_joules()

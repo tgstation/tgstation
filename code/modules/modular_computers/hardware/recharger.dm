@@ -20,7 +20,7 @@
 		return
 
 	if(use_power(charge_rate, charging=1))
-		cell.give(charge_rate JOULES)
+		cell.give(charge_rate KILOJOULES)
 
 
 /obj/item/computer_hardware/recharger/apc_recharger

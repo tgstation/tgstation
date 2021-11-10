@@ -45,7 +45,7 @@
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	charge = maxcharge
 	if(ratingdesc)
-		desc += " This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
+		desc += " This one has a rating of [display_kilojoules(maxcharge)], and you should not swallow it."
 	update_appearance()
 
 /obj/item/stock_parts/cell/create_reagents(max_vol, flags)
@@ -70,7 +70,9 @@
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100*charge/maxcharge
 
-// use power from a cell
+/*
+ * Use an amount of energy from a cell, specified in kilojoules.
+ */
 /obj/item/stock_parts/cell/use(amount)
 	if(rigged && amount > 0)
 		explode()
@@ -82,7 +84,9 @@
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return TRUE
 
-// recharge the cell
+/*
+ * Return or recharge an amount of energy to a cell, specified in kilojoules.
+ */
 /obj/item/stock_parts/cell/proc/give(amount)
 	if(rigged && amount > 0)
 		explode()
