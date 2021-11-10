@@ -12,6 +12,9 @@
 	/// Callback to invoke on our parent when we try to return unused power to it
 	var/datum/callback/refunding_callback
 
+	/// If our input and output powernets are somehow cyclically reachable (or the same), this will prevent an infinite loop
+	var/currently_refunding_excess = FALSE
+
 /datum/component/power_refundee/Initialize(datum/callback/refund_callback)
 	var/obj/machinery/power/machine = parent
 	if (!istype(machine))
@@ -49,4 +52,10 @@
 
 /datum/component/power_refundee/proc/handle_refund(powernet)
 	SIGNAL_HANDLER
+	// Prevent recursion/powernet graph loops
+	if (currently_refunding_excess)
+		return
+	currently_refunding_excess = TRUE
+	// Invoke the refunding callback
 	call(parent, refunding_callback)(powernet)
+	currently_refunding_excess = FALSE

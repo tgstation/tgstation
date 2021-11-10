@@ -76,12 +76,20 @@
 	nodes[M] = M
 	SEND_SIGNAL(M, COMSIG_POWERNET_CABLE_ATTACHED, src)
 
+/datum/powernet/proc/pre_reset()
+	// See if there's a surplus of power remaining in the powernet.
+	// If there is, we might be able to return it to suppliers such as the SMES.
+	netexcess = avail - load
+
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
-	//see if there's a surplus of power remaining in the powernet and stores unused power in the SMES
-	netexcess = avail - load
+	// Providers always supply the maximum amount of power they can, and reduce any storage by this amount.
+	// To avoid energy being burned where it doesn't make sense to, any unused energy is refunded to
+	// power nodes that have registered for the COMSIG_POWERNET_DO_REFUND signal at the start of the next power tick.
+	// This means that SMES units don't deplete as rapidly as they can.
 
+	// If we had excess power in the last cycle...
 	if(netexcess > 100)
 		// Ask all entities capable of handling refunds to retake some of the power that was used
 		SEND_SIGNAL(src, COMSIG_POWERNET_DO_REFUND)

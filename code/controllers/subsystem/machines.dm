@@ -29,8 +29,14 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/fire(resumed = FALSE)
 	if (!resumed)
+		// Prepare to reset the power state.
+		// Get all powernets into a consistent state before reconciliation.
+		// This is done to avoid race conditions in cases such as refunding power to upstream powernets.
 		for(var/datum/powernet/powernet as anything in powernets)
-			powernet.reset() //reset the power state.
+			powernet.pre_reset()
+		// Fully reset the power state.
+		for(var/datum/powernet/powernet as anything in powernets)
+			powernet.reset()
 		src.currentrun = processing.Copy()
 
 	//cache for sanic speed (lists are references anyways)
