@@ -3,15 +3,13 @@
 	var/antag_datum_type
 
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/I, antag_datum_type)
-	. = ..(key, I, NONE)
-
 	src.antag_datum_type = antag_datum_type
+	return ..(key, I, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/mobShouldSee(mob/M)
-	return M.mind?.has_antag_datum(antag_datum_type)
+	return !!M.mind?.has_antag_datum(antag_datum_type)
 
 /// An alternate appearance that will show all the antagonists this mob has
-// TODO: process (with custom SS)
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud
 	var/list/antag_hud_images = list()
 	var/index = 1

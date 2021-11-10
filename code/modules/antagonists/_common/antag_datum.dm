@@ -56,6 +56,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///button to access antag interface
 	var/datum/action/antag_info/info_button
 
+	/// The HUD shown to teammates, created by `add_team_hud`
+	var/datum/atom_hud/alternate_appearance/team_hud
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
@@ -64,6 +67,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+	QDEL_NULL(team_hud)
 	owner = null
 	return ..()
 
@@ -388,6 +392,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/hijack_speed()
 	var/datum/objective/hijack/H = locate() in objectives
 	return H?.hijack_speed_override || hijack_speed
+
+/// Adds a HUD that will show you other members with the same antagonist.
+/// If an antag typepath is passed to `antag_to_check`, will check that, otherwise will use the source type.
+/datum/antagonist/proc/add_team_hud(mob/target, antag_to_check)
+	QDEL_NULL(team_hud)
+
+	team_hud = target.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
+		"antag_team_hud_[REF(src)]",
+		image('icons/mob/hud.dmi', target, antag_hud_name),
+		antag_to_check || type,
+	)
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

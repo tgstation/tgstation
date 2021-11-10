@@ -142,6 +142,8 @@
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
 
+	add_team_hud(current)
+
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
@@ -220,13 +222,6 @@
 	QDEL_NULL(throwing)
 	return ..()
 
-/datum/antagonist/cult/master/on_gain()
-	. = ..()
-	var/mob/living/current = owner.current
-
-	// MOTHBLOCKS TODO: Update cultmaster HUD
-	// set_antag_hud(current, "cultmaster")
-
 /datum/antagonist/cult/master/greet()
 	to_chat(owner.current, "<span class='warningplain'><span class='cultlarge'>You are the cult's Master</span>. As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
 	targets, such as a location or a noncultist, to direct the cult to them, and, finally, you are capable of summoning the entire living cult to your location <b><i>once</i></b>. Use these abilities to direct the cult to victory at any cost.</span>")
@@ -246,6 +241,7 @@
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
+	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()

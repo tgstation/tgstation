@@ -99,6 +99,7 @@
 	if(starter_gangster)
 		package_spawner.Grant(owner.current)
 		package_spawner.my_gang_datum = src
+	add_team_hud(mob_override || owner.current, /datum/antagonist/gang)
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	if(starter_gangster)

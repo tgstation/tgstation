@@ -52,6 +52,9 @@
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
 
+/datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
+
 /datum/antagonist/nukeop/proc/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
 		nuke_team.memorized_code = random_nukecode()

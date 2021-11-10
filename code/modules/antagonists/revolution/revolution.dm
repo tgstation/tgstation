@@ -31,6 +31,7 @@
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	add_team_hud(M, /datum/antagonist/rev)
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
