@@ -241,12 +241,12 @@
  * * amount - Amount of time the status effect should be applied for, in deciseconds.
  * * ignore_canstun - If TRUE, the mob's resistance to stuns is ignored.
  */
-/mob/living/proc/Incapacitate(amount, ignore_canstun = FALSE)
+/mob/living/proc/incapacitate(amount, ignore_canstun = FALSE)
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	if(absorb_stun(amount, ignore_canstun))
 		return
-	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = is_incapacitated()
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(STATUS_EFFECT_INCAPACITATED)
 	if(incapacitated_status_effect)
 		incapacitated_status_effect.duration = max(world.time + amount, incapacitated_status_effect.duration)
 	else if(amount > 0)
@@ -262,7 +262,7 @@
 /mob/living/proc/set_incapacitated(amount, ignore_canstun = FALSE)
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
-	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = is_incapacitated()
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(STATUS_EFFECT_INCAPACITATED)
 	if(amount <= 0)
 		if(incapacitated_status_effect)
 			qdel(incapacitated_status_effect)
@@ -286,7 +286,7 @@
 		return
 	if(absorb_stun(amount, ignore_canstun))
 		return
-	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = is_incapacitated()
+	var/datum/status_effect/incapacitating/incapacitated/incapacitated_status_effect = has_status_effect(STATUS_EFFECT_INCAPACITATED)
 	if(incapacitated_status_effect)
 		incapacitated_status_effect.duration += amount
 	else if(amount > 0)
