@@ -635,62 +635,63 @@
 	// And yet people still believe...
 	icon_state = "poster37_legit"
 
-//Posters ported from Beestation, and inspired by Aspev's SS13 "Safety Moth" artworks!
+//Posters ported from Beestation, and inspired by AspEv's SS13 "Safety Moth" artworks!
 //Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982)
+//All credit for the original safetymoth artwork goes to AspEv
 /obj/structure/sign/poster/official/moth_poison
 	name = "Safety Moth - Poisoning"
-	desc = "This informational poster uses Safety Moth™ to tell the viewer not to poison the station donuts. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to tell the viewer not to poison the station donuts."
 	icon_state = "poster38_legit"
 
 /obj/structure/sign/poster/official/moth_boh
 	name = "Safety Moth - BoH"
-	desc = "This informational poster uses Safety Moth™ to inform the viewer of the dangers of Bags of Holding: never put one inside another, and be careful around teleporters! It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to inform the viewer of the dangers of Bags of Holding: never put one inside another, and be careful around teleporters!"
 	icon_state = "poster39_legit"
 
 /obj/structure/sign/poster/official/moth_hardhat
 	name = "Safety Moth - Hardhats"
-	desc = "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\" It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
 	icon_state = "poster40_legit"
 
 /obj/structure/sign/poster/official/moth_plasfire
 	name = "Safety Moth - Smokey?"
-	desc = "This informational poster uses Safety Moth™ to promote safe handling of plasma, or promoting crew to combat plasmafires. We can't tell. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to promote safe handling of plasma, or promoting crew to combat plasmafires. We can't tell."
 	icon_state = "poster41_legit"
 
 /obj/structure/sign/poster/official/moth_piping
 	name = "Safety Moth - Piping"
-	desc = "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\" It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
 	icon_state = "poster42_legit"
 
 /obj/structure/sign/poster/official/moth_sm
 	name = "Safety Moth - Supermatter"
-	desc = "This informational poster uses Safety Moth™ to promote proper safety equipment when working near or staring into a Supermatter Crystal. \"Not everything that glows is a lamp-friend!\" It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to promote proper safety equipment when working near or staring into a Supermatter Crystal. \"Not everything that glows is a lamp-friend!\""
 	icon_state = "poster43_legit"
 
 /obj/structure/sign/poster/official/moth_meth
 	name = "Safety Moth - Methamphetamine"
-	desc = "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't even be making this. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't even be making this."
 	icon_state = "poster44_legit"
 
 /obj/structure/sign/poster/official/moth_epi
 	name = "Safety Moth - Epinephrine"
-	desc = "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\" It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
 	icon_state = "poster45_legit"
 
 /obj/structure/sign/poster/official/moth_delam
 	name = "Safety Moth - Delamination Safety Precautions"
-	desc = "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
 	icon_state = "poster46_legit"
 
-//These are contraband instead of official, but we may as well keep them with the Aspev posters
+//These are contraband instead of official, but we may as well keep them with the AspEv posters
 /obj/structure/sign/poster/contraband/safetypill
 	name = "Safety Pill - Methamphetamine"
-	desc = "A decommisioned poster that uses Safety Pill™ to promote less-than-legal chemicals. This is one of the reasons we stopped outsourcing these posters. It's signed by 'AspEv'."
+	desc = "A decommisioned poster that uses Safety Pill™ to promote less-than-legal chemicals. This is one of the reasons we stopped outsourcing these posters."
 	icon_state = "poster49"
 
 /obj/structure/sign/poster/contraband/syndiemoth
 	name = "Syndie Moth - Nuclear Operation"
-	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense. It's signed by 'AspEv'."
+	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
 	icon_state = "poster50"	//syndies stay winning, they get a nice rounded 50
 //End of Aspev posters
 
