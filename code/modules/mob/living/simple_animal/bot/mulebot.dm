@@ -244,7 +244,7 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
-	data["power"] = on
+	data["on"] = on
 	data["locked"] = locked
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["mode"] = mode ? mode_name[mode] : "Ready"
@@ -280,7 +280,7 @@
 			if(usr.has_unlimited_silicon_privilege)
 				locked = !locked
 				. = TRUE
-		if("on")
+		if("power")
 			if(on)
 				turn_off()
 			else if(open)

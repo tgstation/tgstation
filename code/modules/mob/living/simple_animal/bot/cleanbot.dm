@@ -185,6 +185,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
+
 	if(!emagged)
 		return
 	if(weapon)

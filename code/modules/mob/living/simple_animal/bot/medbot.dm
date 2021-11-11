@@ -52,14 +52,14 @@
 	/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
 	var/damagetype_healer = BRUTE
 	/// If active, the bot will transmit a critical patient alert to MedHUD users.
-	var/crit_alerts = TRUE
+	var/declare_crit = TRUE
 	/// Prevents spam of critical patient alerts.
 	var/declare_cooldown = FALSE
 	/// If enabled, the Medibot will not move automatically.
 	var/stationary_mode = FALSE
 
-	/// silences the medbot if FALSE
-	var/speaker = TRUE
+	/// silences the medbot if TRUE
+	var/shut_up = FALSE
 	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
 	///Is the medbot currently tending wounds
@@ -84,7 +84,7 @@
 	skin = "bezerk"
 	damagetype_healer = "all"
 	heal_threshold = 0
-	crit_alerts = FALSE
+	declare_crit = 0
 	heal_amount = 5
 
 /mob/living/simple_animal/bot/medbot/update_icon_state()
@@ -157,8 +157,8 @@
 	var/list/data = ..()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["heal_threshold"] = heal_threshold
-		data["custom_controls"]["speaker"] = speaker
-		data["custom_controls"]["crit_alerts"] = crit_alerts
+		data["custom_controls"]["speaker"] = !shut_up
+		data["custom_controls"]["crit_alerts"] = declare_crit
 		data["custom_controls"]["stationary_mode"] = stationary_mode
 		data["custom_controls"]["sync_tech"] = TRUE
 	return data
@@ -177,9 +177,9 @@
 			if(heal_threshold > 75)
 				heal_threshold = 75
 		if("speaker")
-			speaker = !speaker
+			shut_up = !shut_up
 		if("crit_alerts")
-			crit_alerts = !crit_alerts
+			declare_crit = !declare_crit
 		if("stationary_mode")
 			stationary_mode = !stationary_mode
 			path = list()
@@ -208,7 +208,7 @@
 	..()
 	if(!emagged)
 		return
-	crit_alerts = FALSE
+	declare_crit = FALSE
 	if(user)
 		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
 	audible_message(span_danger("[src] buzzes oddly!"))
@@ -359,7 +359,7 @@
 		soft_reset()
 
 	if(QDELETED(patient))
-		if(speaker && prob(1))
+		if(!shut_up && prob(1))
 			if(emagged && prob(30))
 				var/list/i_need_scissors = list('sound/voice/medbot/fuck_you.ogg', 'sound/voice/medbot/turn_off.ogg', 'sound/voice/medbot/im_different.ogg', 'sound/voice/medbot/close.ogg', 'sound/voice/medbot/shindemashou.ogg')
 				playsound(src, pick(i_need_scissors), 70)
@@ -444,7 +444,7 @@
 			if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
 				return FALSE // Skip over them if they have no exposed flesh.
 
-	if(crit_alerts && C.health <= 0) //Critical condition! Call for help!
+	if(declare_crit && C.health <= 0) //Critical condition! Call for help!
 		declare(C)
 
 	//They're injured enough for it!
