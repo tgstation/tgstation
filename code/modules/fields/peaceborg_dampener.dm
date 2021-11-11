@@ -3,9 +3,6 @@
 //Only use square radius for this!
 /datum/proximity_monitor/advanced/peaceborg_dampener
 	name = "\improper Hyperkinetic Dampener Field"
-	setup_edge_turfs = TRUE
-	setup_field_turfs = TRUE
-	requires_processing = TRUE
 	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
 	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
@@ -20,10 +17,14 @@
 	var/list/obj/projectile/staging = list()
 	// lazylist that keeps track of the overlays added to the edge of the field
 	var/list/edgeturf_effects
-	use_host_turf = TRUE
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/New()
+	..()
+	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
 	projector = null
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
@@ -91,24 +92,13 @@
 	projector.restore_projectile(P)
 	tracked -= P
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
-	if(!is_turf_in_field(get_turf(AM), src))
-		if(istype(AM, /obj/projectile))
-			if(AM in tracked)
-				release_projectile(AM)
-			else
-				capture_projectile(AM, FALSE)
-	return ..()
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
+	if(istype(movable, /obj/projectile) && get_dist(movable, host) > current_range)
+		if(movable in tracked)
+			release_projectile(movable)
+		else
+			capture_projectile(movable, FALSE)
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_crossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
-	if(istype(AM, /obj/projectile) && !(AM in tracked) && staging[AM] && !is_turf_in_field(staging[AM], src))
-		capture_projectile(AM)
-	staging -= AM
-	return ..()
-
-/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, border_dir)
-	if(istype(AM, /obj/projectile))
-		staging[AM] = get_turf(AM)
-	. = ..()
-	if(!.)
-		staging -= AM //This one ain't goin' through.
+/datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_crossed(atom/movable/movable, turf/location)
+	if(istype(movable, /obj/projectile) && !(movable in tracked))
+		capture_projectile(movable)

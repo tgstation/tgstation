@@ -427,9 +427,6 @@
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 #define COMSIG_TURF_EXPOSE "turf_expose"
-///from base of /turf/Enter(). Called right after turf.CanPass(). Movables have Cross() signals so they don't need this: (atom/movable)
-#define COMSIG_TURF_CANPASS "turf_canpass"
-	#define COMPONENT_CANNOT_PASS 1 //YOU. SHALL. NOT. PASS.
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
 #define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"

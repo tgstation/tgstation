@@ -4,7 +4,7 @@
  * Good for components, though it carries some overhead. Can't be an element as that may lead to bugs.
  */
 /datum/component/connect_range
-	dupe_mode = COMPONENT_DUPE_SELECTIVE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
@@ -23,19 +23,14 @@
 	src.range = range
 	src.works_in_containers = works_in_containers
 
-/datum/component/connect_range/CheckDupeComponent(datum/component/component, atom/movable/tracked, list/connections, range, works_in_containers)
-	if(src.tracked != tracked)
-		return FALSE
-
+/datum/component/connect_range/InheritComponent(datum/component/component, original, atom/movable/tracked, list/connections, range, works_in_containers)
 	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
-		return FALSE
-
-	if(src.range != range) //Update the range
+	if(src.tracked != tracked || !compare_list(src.connections, connections))
+		return
+	if(src.range != range || src.works_in_containers != works_in_containers) //Update range and works_in_containers
 		src.range = range
+		src.works_in_containers = works_in_containers
 		update_signals(tracked, tracked.loc, TRUE)
-
-	return TRUE
 
 /datum/component/connect_range/RegisterWithParent()
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)

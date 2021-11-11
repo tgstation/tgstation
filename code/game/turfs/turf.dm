@@ -329,7 +329,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
 	var/border_dir = get_dir(src, mover)
-	var/canPassSelf = CanPass(mover, border_dir) && !(SEND_SIGNAL(src, COMSIG_TURF_CANPASS, mover, border_dir) & COMPONENT_CANNOT_PASS)
+	var/canPassSelf = CanPass(mover, border_dir)
 	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/atom/movable/thing as anything in contents)
 			if(QDELETED(mover))

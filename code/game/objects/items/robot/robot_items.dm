@@ -683,11 +683,6 @@
 /obj/item/borg/projectile_dampen/process(delta_time)
 	process_recharge(delta_time)
 	process_usage(delta_time)
-	update_location()
-
-/obj/item/borg/projectile_dampen/proc/update_location()
-	if(dampening_field)
-		dampening_field.HandleMove()
 
 /obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
 	var/usage = 0

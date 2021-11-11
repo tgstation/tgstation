@@ -1,6 +1,5 @@
 /datum/proximity_monitor/advanced/gravity
 	name = "modified gravity zone"
-	setup_field_turfs = TRUE
 	var/gravity_value = 0
 	var/list/modified_turfs = list()
 

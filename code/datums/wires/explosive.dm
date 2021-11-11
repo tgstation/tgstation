@@ -48,7 +48,7 @@
 	else if(istype(S,/obj/item/assembly/prox_sensor))
 		var/obj/item/grenade/chem_grenade/G = holder
 		G.landminemode = S
-		S.proximity_monitor.wire = TRUE
+		S.proximity_monitor.set_ignore_if_not_on_turf(FALSE)
 	fingerprint = S.fingerprintslast
 	return ..()
 
