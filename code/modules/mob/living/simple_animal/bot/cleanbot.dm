@@ -18,7 +18,6 @@
 	path_image_color = "#993299"
 
 	hackables = "cleaning software"
-	model = "Cleanbot"
 
 	var/blood = 1
 	var/trash = 0

@@ -21,7 +21,6 @@
 	layer = ABOVE_MOB_LAYER
 
 	hackables = "cleaning service protocols"
-	model = "Cleanbot"
 
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target

@@ -9,7 +9,6 @@
 	maxHealth = 25
 
 	hackables = "floor construction protocols"
-	model = "Floorbot"
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT

@@ -46,8 +46,6 @@
 	// Window width-height, 0 is default size.
 	var/window_width = 0
 	var/window_height = 0
-	///The type of Bot this is.
-	var/model = ""
 	///The inserted (if any) pAI in this bot.
 	var/obj/item/paicard/paicard
 	///If a pAI is allowed to be inserted into this bot.

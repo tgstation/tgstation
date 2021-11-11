@@ -77,25 +77,25 @@
 
 //Bot types
 /// Secutritrons (Beepsky)
-#define SEC_BOT (1<<0)
+#define SEC_BOT "Securitron"
 /// ED-209s
-#define ADVANCED_SEC_BOT (1<<1)
+#define ADVANCED_SEC_BOT "ED-209"
 /// MULEbots
-#define MULE_BOT (1<<2)
+#define MULE_BOT "MULEbot"
 /// Floorbots
-#define FLOOR_BOT (1<<3)
+#define FLOOR_BOT "Floorbot"
 /// Cleanbots
-#define CLEAN_BOT (1<<4)
+#define CLEAN_BOT "Cleanbot"
 /// Medibots
-#define MED_BOT (1<<5)
+#define MED_BOT "Medibot"
 /// Honkbots & ED-Honks
-#define HONK_BOT (1<<6)
+#define HONK_BOT "Honkbot"
 /// Firebots
-#define FIRE_BOT (1<<7)
+#define FIRE_BOT "Firebot"
 /// Hygienebots
-#define HYGIENE_BOT (1<<8)
+#define HYGIENE_BOT "Hygienebot"
 /// Vibe bots
-#define VIBE_BOT (1<<9)
+#define VIBE_BOT "Vibebot"
 
 //Mode defines. If you add a new one make sure you update mode_name in /mob/living/simple_animal/bot
 /// Idle

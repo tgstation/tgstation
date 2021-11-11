@@ -27,7 +27,6 @@
 	radio_channel = RADIO_CHANNEL_MEDICAL
 
 	hackables = "healt processor circuits"
-	model = "Medibot"
 	bot_type = MED_BOT
 	bot_core = /obj/machinery/bot_core/medbot
 	window_id = "automed"

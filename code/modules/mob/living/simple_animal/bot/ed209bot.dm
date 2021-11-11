@@ -10,7 +10,6 @@
 	mob_size = MOB_SIZE_LARGE
 
 	bot_type = ADVANCED_SEC_BOT
-	model = "ED-209"
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
 	hackables = "combat inhibitors"

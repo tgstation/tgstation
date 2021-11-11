@@ -15,7 +15,6 @@
 	maxHealth = 25
 
 	hackables = "fire safety protocols"
-	model = "Firebot"
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT

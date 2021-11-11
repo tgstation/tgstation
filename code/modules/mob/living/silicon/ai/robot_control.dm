@@ -41,7 +41,7 @@
 			continue
 		var/list/robot_data = list(
 			name = B.name,
-			model = B.model,
+			model = B.bot_type,
 			mode = B.get_mode(),
 			hacked = B.bot_status_flags & BOT_HACKED,
 			location = get_area_name(B, TRUE),

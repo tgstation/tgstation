@@ -11,7 +11,6 @@
 	pass_flags = PASSMOB | PASSFLAPS
 
 	hackables = "sound control systems"
-	model = "Honkbot"
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT

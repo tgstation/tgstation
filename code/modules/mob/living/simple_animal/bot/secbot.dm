@@ -11,7 +11,6 @@
 	pass_flags = PASSMOB | PASSFLAPS
 
 	hackables = "target identification systems"
-	model = "Securitron"
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
