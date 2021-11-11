@@ -838,14 +838,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["custom_controls"] = list()
 	data["emagged"] = emagged
 	data["locked"] = locked
-	data["maintenance_hatch"] = open
 	data["pai"] = list()
 	data["settings"] = list()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		data["pai"]["card_inserted"] = paicard
 		data["pai"]["allow_pai"] = allow_pai
-		data["settings"]["airplane_mode"] = !remote_disabled
-		data["settings"]["power_switch"] = on
+		data["pai"]["card_inserted"] = paicard
+		data["settings"]["airplane_mode"] = remote_disabled
+		data["settings"]["maintenance_lock"] = !open
+		data["settings"]["power"] = on
 		data["settings"]["patrol_station"] = auto_patrol
 	return data
 
@@ -862,15 +862,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(locked && !(issilicon(usr) || isAdminGhostAI(usr)))
 		return
 	switch(action)
-		if("power_switch")
+		if("power")
 			on = !on
 			update_appearance()
-		if("maintenance_hatch")
+		if("maintenance")
 			open = !open
-		if("patrol_station")
+		if("patrol")
 			auto_patrol = !auto_patrol
 			bot_reset()
-		if("airplane_mode")
+		if("airplane")
 			remote_disabled = !remote_disabled
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))
