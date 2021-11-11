@@ -17,6 +17,8 @@
 	var/armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	/// Resistance flags shared across the MOD pieces.
 	var/resistance_flags = NONE
+	/// Alternate layer used by the helmet
+	var/alternate_layer = NECK_LAYER
 	/// Max heat protection shared across the MOD pieces.
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	/// Max cold protection shared across the MOD pieces.
@@ -49,7 +51,6 @@
 			UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 			SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 			SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
-			ALTERNATE_LAYER = NECK_LAYER,
 		),
 		CHESTPLATE_FLAGS = list(
 			UNSEALED_CLOTHING = THICKMATERIAL,
@@ -132,6 +133,7 @@
 	skins = list("prototype")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	alternate_layer = null
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 2

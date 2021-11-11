@@ -1097,7 +1097,7 @@
 	organ = stored_organ
 
 /obj/projectile/organ/Destroy()
-	QDEL_NULL(organ)
+	organ = null
 	return ..()
 
 /obj/projectile/organ/on_hit(atom/target)

@@ -138,7 +138,15 @@
 	activating = FALSE
 	return TRUE
 
-/obj/item/mod/control/proc/seal_part(obj/item/part, seal)
+/obj/item/mod/control/proc/seal_part(obj/item/clothing/part, seal)
+	if(seal)
+		part.clothing_flags |= part.visor_flags
+		part.flags_inv |= part.visor_flags_inv
+		part.flags_cover |= part.visor_flags_cover
+	else
+		part.flags_cover &= ~part.visor_flags_cover
+		part.flags_inv &= ~part.visor_flags_inv
+		part.clothing_flags &= ~part.visor_flags
 	if(part == boots)
 		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
 		wearer.update_inv_shoes()
@@ -147,26 +155,14 @@
 		wearer.update_inv_gloves()
 	if(part == chestplate)
 		chestplate.icon_state = "[skin]-chestplate[seal ? "-sealed" : ""]"
-		if(seal)
-			chestplate.clothing_flags |= chestplate.visor_flags
-			chestplate.flags_inv |= chestplate.visor_flags_inv
-		else
-			chestplate.clothing_flags &= ~chestplate.visor_flags
-			chestplate.flags_inv &= ~chestplate.visor_flags_inv
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_w_uniform()
 	if(part == helmet)
 		helmet.icon_state = "[skin]-helmet[seal ? "-sealed" : ""]"
 		if(seal)
-			helmet.flags_cover |= helmet.visor_flags_cover
-			helmet.flags_inv |= helmet.visor_flags_inv
-			helmet.clothing_flags |= helmet.visor_flags
 			helmet.alternate_worn_layer = null
 		else
-			helmet.flags_cover &= ~helmet.visor_flags_cover
-			helmet.flags_inv &= ~helmet.visor_flags_inv
-			helmet.clothing_flags &= ~helmet.visor_flags
-			helmet.alternate_worn_layer = initial(helmet.alternate_worn_layer)
+			helmet.alternate_worn_layer = helmet.alternate_layer
 		wearer.update_inv_head()
 		wearer.update_inv_wear_mask()
 		wearer.update_hair()

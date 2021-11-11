@@ -22,6 +22,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
+	alternate_worn_layer = BODY_FRONT_LAYER
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
@@ -99,6 +100,8 @@
 		cell = new cell(src)
 	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
 	helmet.mod = src
+	helmet.alternate_layer = theme.alternate_layer
+	helmet.alternate_worn_layer = helmet.alternate_layer
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/armor/mod(src)
 	chestplate.mod = src
@@ -389,7 +392,6 @@
 		part.visor_flags_inv = category[SEALED_INVISIBILITY] || NONE
 		part.flags_cover = category[UNSEALED_COVER] || NONE
 		part.visor_flags_cover = category[SEALED_COVER] || NONE
-		part.alternate_worn_layer = category[ALTERNATE_LAYER]
 
 /obj/item/mod/control/proc/quick_module(mob/user)
 	if(!length(modules))
@@ -408,7 +410,7 @@
 	if(!pick)
 		return
 	var/module_reference = display_names[pick]
-	var/obj/item/mod/module/selected_module = locate(module_reference) in mod_parts
+	var/obj/item/mod/module/selected_module = locate(module_reference) in modules
 	if(!istype(selected_module) || user.incapacitated())
 		return
 	selected_module.on_select()
