@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
 	if(clear_before_updating)
-		linked_dirs = 0
+		linked_dirs = NONE
 	for(var/check_dir in GLOB.cardinals)
 		// don't link from power machinery to its terminal
 		if (SEND_SIGNAL(loc, COMSIG_POWERNET_CABLE_CHECK_BLOCK, check_dir) & PREVENT_CABLE_LINK)
@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				if(cable_layer & C.cable_layer)
 					C.linked_dirs &= ~inverse
 					C.update_appearance()
+	linked_dirs = NONE
 
 /obj/structure/cable/Destroy() // called when a cable is deleted
 	Disconnect_cable()
@@ -717,7 +718,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 	cable_layer ^= CL
 
-	Connect_cable(TRUE)
+	Connect_cable()
 
 	Reload()
 
