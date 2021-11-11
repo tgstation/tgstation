@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "spraycanning stuff now updates its sprites on the mob"
