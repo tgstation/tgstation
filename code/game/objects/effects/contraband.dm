@@ -649,12 +649,12 @@
 
 /obj/structure/sign/poster/official/moth_boh
 	name = "Safety Moth - BoH"
-	desc = "This informational poster uses Safety Moth(TM) to inform the viewer of the dangers of Bags of Holding. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to inform the viewer of the dangers of Bags of Holding: never put one inside another, and be careful around teleporters! It's signed by 'AspEv'."
 	icon_state = "poster39_legit"
 
 /obj/structure/sign/poster/official/moth_hardhat
 	name = "Safety Moth - Hardhats"
-	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to wear hardhats in cautious areas. It's like a lamp for your head! It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\" It's signed by 'AspEv'."
 	icon_state = "poster40_legit"
 
 /obj/structure/sign/poster/official/moth_plasfire
@@ -664,27 +664,27 @@
 
 /obj/structure/sign/poster/official/moth_piping
 	name = "Safety Moth - Piping"
-	desc = "This informational poster uses Safety Moth(TM) to tell atmospheric technicians correct types of piping to be used. Proper pipe placement prevents poor performance! It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\" It's signed by 'AspEv'."
 	icon_state = "poster42_legit"
 
 /obj/structure/sign/poster/official/moth_sm
 	name = "Safety Moth - Supermatter"
-	desc = "This informational poster uses Safety Moth(TM) to promote proper safety equipment when working near a Supermatter Crystal. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to promote proper safety equipment when working near or staring into a Supermatter Crystal. \"Not everything that glows is a lamp-friend!\" It's signed by 'AspEv'."
 	icon_state = "poster43_legit"
 
 /obj/structure/sign/poster/official/moth_meth
 	name = "Safety Moth - Methamphetamine"
-	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to seek CMO approval before cooking methamphetamine. You shouldn't even be making this. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't even be making this. It's signed by 'AspEv'."
 	icon_state = "poster44_legit"
 
 /obj/structure/sign/poster/official/moth_epi
 	name = "Safety Moth - Epinephrine"
-	desc = "This informational poster uses Safety Moth(TM) to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\" It's signed by 'AspEv'."
 	icon_state = "poster45_legit"
 
 /obj/structure/sign/poster/official/moth_delam
 	name = "Safety Moth - Delamination Safety Precautions"
-	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated. Running away might be a better strategy. It's signed by 'AspEv'."
+	desc = "This informational poster uses Safety Moth(TM) to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy. It's signed by 'AspEv'."
 	icon_state = "poster46_legit"
 
 //These are contraband instead of official, but we may as well keep them with the Aspev posters
@@ -695,7 +695,7 @@
 
 /obj/structure/sign/poster/contraband/syndiemoth
 	name = "Syndie Moth - Nuclear Operation"
-	desc = "A Syndicate-commissioned poster that uses Syndie Moth(TM?) to tell the viewer to keep the nuclear authentication disk unsecured. No, we aren't doing that. It's signed by 'AspEv'."
+	desc = "A Syndicate-commissioned poster that uses Syndie Moth(TM?) to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense. It's signed by 'AspEv'."
 	icon_state = "poster50"	//syndies stay winning, they get a nice rounded 50
 //End of Aspev posters
 
