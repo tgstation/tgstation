@@ -1,0 +1,5 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Antag HUDs will no longer clear on deconversion if the player was another antag."
+  - qol: "Antag HUDs (as seen by admins and at the round end) will now animate between all antagonists, rather than just choosing the most latest."
