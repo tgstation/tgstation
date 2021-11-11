@@ -9,9 +9,10 @@
 	3. [Issue Managers](#issue-managers)
 5. [Development Guides](#development-guides)
 6. [Pull Request Process](#pull-request-process)
-7. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
-8. [Banned content](#banned-content)
-9. [A word on Git](#a-word-on-git)
+7. [Good Boy Points](#good-boy-points)
+8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
+9. [Banned content](#banned-content)
+10. [A word on Git](#a-word-on-git)
 
 ## Reporting Issues
 
@@ -108,6 +109,8 @@ Things you **CAN'T** do:
 
 [UI Development](../tgui/README.md)
 
+[AI Datums](../code/datums/ai/making_your_ai.md)
+
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
@@ -131,6 +134,20 @@ There is no strict process when it comes to merging pull requests. Pull requests
 * While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
 * After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
+
+## Good Boy Points
+
+Each GitHub account has a score known as Good Boy Points, or GBP. This is a system we use to ensure that the codebase stays maintained and that contributors fix bugs as well as add features.
+
+The GBP gain or loss for a PR depends on the type of changes the PR makes, represented by the tags assigned to the PR by the tgstation github bot or maintainers. Generally speaking, fixing bugs, updating sprites, or improving maps increases your GBP score, while adding mechanics, or rebalancing things will cost you GBP.
+
+The GBP change of a PR is the sum of greatest positive and lowest negative values it has. For example, a PR that has tags worth +10, +4, -1, -7, will net 3 GBP (10 - 7).
+
+Negative GBP increases the likelihood of a maintainer closing your PR. With that chance being higher the lower your GBP is. Be sure to use the proper tags in the changelog to prevent unnecessary GBP loss. Maintainers reserve the right to change tags as they deem appropriate.
+
+There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
+
+You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
 
 ## Porting features/sprites/sounds/tools from other codebases
 

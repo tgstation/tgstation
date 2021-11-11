@@ -145,3 +145,4 @@ actioninja = Game Master
 bobbahbrown = Game Master
 Jaredfogle = Game Master
 WaylandSmithy = Game Master
+NamelessFairy = Game Master

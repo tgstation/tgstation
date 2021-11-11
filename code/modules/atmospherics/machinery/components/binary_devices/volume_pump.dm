@@ -94,7 +94,7 @@
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
 /**
- * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Called in atmos_init(), used to change or remove the radio frequency from the component
  * Arguments:
  * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
  */
@@ -105,7 +105,7 @@
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /**
- * Called in atmosinit(), send the component status to the radio device connected
+ * Called in atmos_init(), send the component status to the radio device connected
  */
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -133,7 +133,7 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
+/obj/machinery/atmospherics/components/binary/volume_pump/atmos_init()
 	. = ..()
 
 	set_frequency(frequency)

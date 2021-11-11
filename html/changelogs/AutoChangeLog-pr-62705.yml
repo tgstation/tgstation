@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - expansion: "The weapon description for energy guns now takes in consideration the number of pellets the selected mode has."

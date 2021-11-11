@@ -318,7 +318,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			GLOB.data_core.manifest_inject(new_character)
 
 		if(tgui_alert(new_character,"Would you like an active AI to announce this character?",,list("No","Yes"))=="Yes")
-			AnnounceArrival(new_character, new_character.mind.assigned_role.title)
+			announce_arrival(new_character, new_character.mind.assigned_role.title)
 
 	var/msg = span_adminnotice("[admin] has respawned [player_key] as [new_character.real_name].")
 	message_admins(msg)
@@ -453,7 +453,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
-	var/datum/skill_panel/SP  = new(usr, target_mind)
+	var/datum/skill_panel/SP = new(usr, target_mind)
 	SP.ui_interact(usr)
 
 /datum/admins/proc/show_lag_switch_panel()

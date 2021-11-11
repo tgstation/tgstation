@@ -68,7 +68,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed)
 	. = ..()
 	GLOB.glowshrooms++
-	if(newseed)
+	if(istype(newseed))
 		myseed = newseed
 		myseed.forceMove(src)
 	else
@@ -76,12 +76,13 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 	modify_max_integrity(GLOWSHROOM_BASE_INTEGRITY + ((100 - GLOWSHROOM_BASE_INTEGRITY) / 100 * myseed.endurance)) //goes up to 100 with peak endurance
 
-	var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-	if(ispath(G)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
-		myseed.genes -= G
-		G = new G
-		myseed.genes += G
-	set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+	var/datum/plant_gene/trait/glow/our_glow_gene = myseed.get_gene(/datum/plant_gene/trait/glow)
+	if(ispath(our_glow_gene)) // Seeds were ported to initialize so their genes are still typepaths here, luckily their initializer is smart enough to handle us doing this
+		myseed.genes -= our_glow_gene
+		our_glow_gene = new our_glow_gene
+		myseed.genes += our_glow_gene
+	if(istype(our_glow_gene))
+		set_light(our_glow_gene.glow_range(myseed), our_glow_gene.glow_power(myseed), our_glow_gene.glow_color)
 	setDir(calc_dir())
 	base_icon_state = initial(icon_state)
 	if(!floor)
@@ -104,9 +105,11 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/glowshroom/Destroy()
-	. = ..()
+	if(isatom(myseed))
+		QDEL_NULL(myseed)
 	GLOB.glowshrooms--
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /**
  * Causes glowshroom spreading across the floor/walls.
@@ -219,7 +222,9 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 /obj/structure/glowshroom/proc/Decay(amount)
 	myseed.adjust_endurance(-amount * endurance_decay_rate)
 	take_damage(amount)
-	if (myseed.endurance <= MIN_PLANT_ENDURANCE) // Plant is gone
+	// take_damage could qdel our shroom, so check beforehand
+	// if our endurance dropped before the min plant endurance, then delete our shroom anyways
+	if (!QDELETED(src) && myseed.endurance <= MIN_PLANT_ENDURANCE)
 		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

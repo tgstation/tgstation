@@ -69,6 +69,10 @@ Difficulty: Hard
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 
+/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
@@ -235,7 +239,7 @@ Difficulty: Hard
 				SLEEP_CHECK_DEATH(6 - WENDIGO_ENRAGED * 2)
 		if("Spiral")
 			var/shots_spiral = WENDIGO_SPIRAL_SHOTCOUNT
-			var/angle_to_target = Get_Angle(src, target)
+			var/angle_to_target = get_angle(src, target)
 			var/spiral_direction = pick(-1, 1)
 			for(var/shot in 1 to shots_spiral)
 				var/shots_per_tick = 5 - WENDIGO_ENRAGED * 3

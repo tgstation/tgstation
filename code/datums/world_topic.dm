@@ -90,6 +90,8 @@
 	keyword = "Comms_Console"
 	require_comms_key = TRUE
 
+	var/list/timers
+
 /datum/world_topic/comms_console/Run(list/input)
 	// Reject comms messages from other servers that are not on our configured network,
 	// if this has been configured. (See CROSS_COMMS_NETWORK in comms.txt)
@@ -97,10 +99,58 @@
 	if (configured_network && configured_network != input["network"])
 		return
 
+	// We can't add the timer without the timer ID, but we can't get the timer ID without the timer!
+	// To solve this, we just use a list that we mutate later.
+	var/list/data = list("input" = input)
+	var/timer_id = addtimer(CALLBACK(src, .proc/receive_cross_comms_message, data), CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+	data["timer_id"] = timer_id
+
+	LAZYADD(timers, timer_id)
+
+	to_chat(
+		GLOB.admins,
+		span_adminnotice( \
+			"<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
+			the following message (will autoapprove in [DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br> \
+			[html_encode(input["message"])]" \
+		)
+	)
+
+/datum/world_topic/comms_console/Topic(href, list/href_list)
+	. = ..()
+	if (.)
+		return
+
+	if (href_list["reject_cross_comms_message"])
+		if (!usr.client?.holder)
+			log_game("[key_name(usr)] tried to reject an incoming cross-comms message without being an admin.")
+			message_admins("[key_name(usr)] tried to reject an incoming cross-comms message without being an admin.")
+			return
+
+		var/timer_id = href_list["reject_cross_comms_message"]
+		if (!(timer_id in timers))
+			to_chat(usr, span_warning("It's too late!"))
+			return
+
+		deltimer(timer_id)
+		LAZYREMOVE(timers, timer_id)
+
+		log_admin("[key_name(usr)] has cancelled the incoming cross-comms message.")
+		message_admins("[key_name(usr)] has cancelled the incoming cross-comms message.")
+
+		return TRUE
+
+/datum/world_topic/comms_console/proc/receive_cross_comms_message(list/data)
+	var/list/input = data["input"]
+	var/timer_id = data["timer_id"]
+
+	LAZYREMOVE(timers, timer_id)
+
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
-	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.override_cooldown()
+	for(var/obj/machinery/computer/communications/communications_console in GLOB.machines)
+		communications_console.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"

@@ -111,6 +111,10 @@
 	name = "\improper Hotel Staff Room"
 	icon_state = "crew_quarters"
 
+/area/ruin/space/has_grav/hotel/storeroom
+	name = "\improper Hotel Staff Storage"
+	icon_state = "crew_quarters"
+
 
 
 

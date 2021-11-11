@@ -58,7 +58,7 @@
 		while(query_search_admin_logs.NextRow())
 			var/datetime = query_search_admin_logs.item[1]
 			var/round_id = query_search_admin_logs.item[2]
-			var/admin_key  = query_search_admin_logs.item[3]
+			var/admin_key = query_search_admin_logs.item[3]
 			operation = query_search_admin_logs.item[4]
 			target = query_search_admin_logs.item[5]
 			var/log = query_search_admin_logs.item[6]
@@ -304,6 +304,9 @@
 	D.deactivate() //after logs so the deadmined admin can see the message.
 
 /datum/admins/proc/auto_deadmin()
+	if (owner.prefs.read_preference(/datum/preference/toggle/bypass_deadmin_in_centcom) && is_centcom_level(owner.mob.z))
+		return FALSE
+
 	to_chat(owner, span_interface("You are now a normal player."), confidential = TRUE)
 	var/old_owner = owner
 	deactivate()

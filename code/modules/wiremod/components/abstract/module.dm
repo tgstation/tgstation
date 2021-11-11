@@ -6,6 +6,7 @@
 /obj/item/circuit_component/module
 	display_name = "Module"
 	desc = "A component that has other components within it, acting like a function. Use it in your hand to control the amount of input and output ports it has, as well as being able to access the integrated circuit contained inside."
+	category = "Abstract"
 
 	var/obj/item/integrated_circuit/module/internal_circuit
 
@@ -44,6 +45,19 @@
 	if(ispath(type, /obj/item/circuit_component/module_output))
 		return attached_module.output_component
 
+	return ..()
+
+/obj/item/integrated_circuit/module/add_component(obj/item/circuit_component/to_add, mob/living/user)
+	if(to_add.circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		balloon_alert(user, "doesn't fit into module!")
+		return
+	. = ..()
+	if(attached_module)
+		attached_module.circuit_size += to_add.circuit_size
+
+/obj/item/integrated_circuit/module/remove_component(obj/item/circuit_component/to_remove)
+	if(attached_module)
+		attached_module.circuit_size -= to_remove.circuit_size
 	return ..()
 
 /obj/item/integrated_circuit/module/Destroy()

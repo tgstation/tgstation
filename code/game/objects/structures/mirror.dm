@@ -9,21 +9,7 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 
-/obj/structure/mirror/directional/north
-	dir = SOUTH
-	pixel_y = 28
-
-/obj/structure/mirror/directional/south
-	dir = NORTH
-	pixel_y = -28
-
-/obj/structure/mirror/directional/east
-	dir = WEST
-	pixel_x = 28
-
-/obj/structure/mirror/directional/west
-	dir = EAST
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -142,21 +128,19 @@
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
 	if(!choosable_races.len)
-		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = speciestype
-			if(initial(S.changesource_flags) & MIRROR_MAGIC)
-				choosable_races += initial(S.id)
-		choosable_races = sortList(choosable_races)
+		for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+			if(initial(species_type.changesource_flags) & MIRROR_MAGIC)
+				choosable_races += initial(species_type.name)
+		choosable_races = sort_list(choosable_races)
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
 	choosable_races = get_selectable_species().Copy()
 	return ..()
 
 /obj/structure/mirror/magic/badmin/Initialize(mapload)
-	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_BADMIN)
-			choosable_races += initial(S.id)
+	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+		if(initial(species_type.changesource_flags) & MIRROR_BADMIN)
+			choosable_races += initial(species_type.name)
 	return ..()
 
 /obj/structure/mirror/magic/attack_hand(mob/user, list/modifiers)
@@ -208,7 +192,7 @@
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
 
 			if(MUTCOLORS in H.dna.species.species_traits)
-				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
+				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change",H.dna.features["mcolor"]) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				if(new_mutantcolor)
@@ -259,21 +243,21 @@
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
-				var/new_hair_color = input(H, "Choose your hair color", "Hair Color","#"+H.hair_color) as color|null
+				var/new_hair_color = input(H, "Choose your hair color", "Hair Color",H.hair_color) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				if(new_hair_color)
 					H.hair_color = sanitize_hexcolor(new_hair_color)
 					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 				if(H.gender == "male")
-					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color","#"+H.facial_hair_color) as color|null
+					var/new_face_color = input(H, "Choose your facial hair color", "Hair Color",H.facial_hair_color) as color|null
 					if(new_face_color)
 						H.facial_hair_color = sanitize_hexcolor(new_face_color)
 						H.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
 				H.update_hair()
 
 		if(BODY_ZONE_PRECISE_EYES)
-			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
+			var/new_eye_color = input(H, "Choose your eye color", "Eye Color",H.eye_color) as color|null
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(new_eye_color)

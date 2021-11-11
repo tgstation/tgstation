@@ -1,5 +1,0 @@
-author: "twilightwanderer"
-delete-after: True
-changes: 
-  - rscadd: "Adding the ability to use a large number of characters in the chat client."
-  - code_imp: "In the chat client code, the standard text checking procedures have been replaced by special chat text checking procedures."

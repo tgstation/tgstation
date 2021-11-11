@@ -9,7 +9,6 @@
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	var/next_beep = 0 //Prevents spamming of the construction sound
 	max_integrity = 200
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
@@ -41,7 +40,8 @@
 		if(W.use_tool(src, user, 40, volume=100))
 			to_chat(user, span_notice("You slice apart the girder."))
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
 			qdel(src)
 			return
 
@@ -240,7 +240,8 @@
 			state = GIRDER_DISASSEMBLED
 			to_chat(user, span_notice("You disassemble the girder."))
 			var/obj/item/stack/sheet/iron/M = new (loc, 2)
-			M.add_fingerprint(user)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 

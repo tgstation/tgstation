@@ -43,7 +43,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "ak" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
@@ -817,7 +817,7 @@
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "cQ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/tcommsat/oldaisat)
 "cR" = (

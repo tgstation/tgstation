@@ -7,7 +7,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 #define PDA_SCANNER_MEDICAL 1
 #define PDA_SCANNER_FORENSICS 2 //unused
 #define PDA_SCANNER_REAGENT 3
-#define PDA_SCANNER_HALOGEN 4
 #define PDA_SCANNER_GAS 5
 #define PDA_SPAM_DELAY     2 MINUTES
 
@@ -26,7 +25,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	actions_types = list(/datum/action/item_action/toggle_light)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_range = 2.3
@@ -35,15 +34,29 @@ GLOBAL_LIST_EMPTY(PDAs)
 	light_on = FALSE
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 
-	//Main variables
-	var/owner = null // String name of owner
-	var/default_cartridge = 0 // Access level defined by cartridge
-	var/obj/item/cartridge/cartridge = null //current cartridge
-	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
-	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
-	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
-	var/font_mode = "font-family:monospace;" //The currently selected font.
-	var/background_color = "#808000" //The currently selected background color.
+	/// String name of owner
+	var/owner = null
+	/// Access level defined by cartridge
+	var/default_cartridge = 0
+	/// Current cartridge
+	var/obj/item/cartridge/cartridge = null
+	/// Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/mode = 0
+	/// Icon to be overlayed for message alerts. Taken from the pda icon file.
+	var/icon_alert = "pda-r"
+	/// Icon to be overlayed when an active pAI is slotted in.
+	var/icon_pai = "pai_overlay"
+	/// Same as above but for an inactive pAI.
+	var/icon_inactive_pai = "pai_off_overlay"
+	/**
+	 * This int tells DM which font is currently selected and lets DM know when the last font has been selected
+	 * so that it can cycle back to the first font when "toggle font" is pressed again.
+	 */
+	var/font_index = 0
+	/// The currently selected font.
+	var/font_mode = "font-family:monospace;"
+	/// The currently selected background color.
+	var/background_color = "#808000"
 
 	#define FONT_MONO "font-family:monospace;"
 	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
@@ -85,7 +98,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-	var/overlays_x_offset = 0 //x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -180,26 +192,20 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/update_overlays()
 	. = ..()
-	if(!initial(icon))
+	var/init_icon = initial(icon)
+	if(!init_icon)
 		return
-	var/mutable_appearance/overlay = new(initial(icon))
-	overlay.pixel_x = overlays_x_offset
 	if(id)
-		overlay.icon_state = "id_overlay"
-		. += new /mutable_appearance(overlay)
+		. += mutable_appearance(init_icon, "id_overlay")
 	if(inserted_item)
-		overlay.icon_state = "insert_overlay"
-		. += new /mutable_appearance(overlay)
+		. += mutable_appearance(init_icon, "insert_overlay")
 	if(light_on)
-		overlay.icon_state = "light_overlay"
-		. += new /mutable_appearance(overlay)
+		. += mutable_appearance(init_icon, "light_overlay")
 	if(pai)
 		if(pai.pai)
-			overlay.icon_state = "pai_overlay"
-			. += new /mutable_appearance(overlay)
+			. += mutable_appearance(init_icon, icon_pai)
 		else
-			overlay.icon_state = "pai_off_overlay"
-			. += new /mutable_appearance(overlay)
+			. += mutable_appearance(init_icon, icon_inactive_pai)
 
 /obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
@@ -321,8 +327,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=53'>[PDAIMG(notes)]Newscaster Access </a></li>"
 					if (cartridge.access & CART_REAGENT_SCANNER)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Reagent Scan'>[PDAIMG(reagent)][scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
-					if (cartridge.access & CART_ENGINE)
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Halogen Counter'>[PDAIMG(reagent)][scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
 					if (cartridge.access & CART_ATMOS)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=Gas Scan'>[PDAIMG(reagent)][scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
 					if (cartridge.access & CART_REMOTE_DOOR)
@@ -462,7 +466,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"])
+	if(!href_list["close"] && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -566,13 +570,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_REAGENT_SCANNER))
 					scanmode = PDA_SCANNER_REAGENT
-			if("Halogen Counter")
-				if(scanmode == PDA_SCANNER_HALOGEN)
-					scanmode = PDA_SCANNER_NONE
-				else if((!isnull(cartridge)) && (cartridge.access & CART_ENGINE))
-					scanmode = PDA_SCANNER_HALOGEN
-				if(!silent)
-					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -764,6 +761,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
 		return
 
+	var/list/soft_filter_result = is_soft_ic_filtered_for_pdas(message)
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to send it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[html_encode(message)]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term in PDA messages. Message: \"[message]\"")
+
 	if(prob(1))
 		message += "\nSent from my PDA"
 	// Send the signal
@@ -808,7 +812,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Show it to ghosts
 	var/ghost_message = span_name("[owner] </span><span class='game say'>PDA Message</span> --> [span_name("[target_text]")]: <span class='message'>[signal.format_message()]")
 	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+		if(isobserver(M) && (M.client?.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
@@ -1096,15 +1100,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
-			if(PDA_SCANNER_HALOGEN)
-				C.visible_message(span_notice("[user] analyzes [C]'s radiation levels."))
-
-				user.show_message(span_notice("Analyzing Results for [C]:"))
-				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
-				else
-					user.show_message(span_notice("No radiation detected."))
-
 /obj/item/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -1126,11 +1121,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 			A.analyzer_act(user, src)
 
 	if (!scanmode && istype(A, /obj/item/paper) && owner)
-		var/obj/item/paper/PP = A
-		if (!PP.info)
+		var/obj/item/paper/paper = A
+		if (!paper.get_info_length())
 			to_chat(user, span_warning("Unable to scan! Paper is blank."))
 			return
-		notehtml = PP.info
+		notehtml = paper.info
+		if(paper.add_info)
+			for(var/index in 1 to length(paper.add_info))
+				var/list/style = paper.add_info_style[index]
+				notehtml += PAPER_MARK_TEXT(paper.add_info[index], style[ADD_INFO_COLOR], style[ADD_INFO_FONT])
 		note = replacetext(notehtml, "<BR>", "\[br\]")
 		note = replacetext(note, "<li>", "\[*\]")
 		note = replacetext(note, "<ul>", "\[list\]")
@@ -1215,7 +1214,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 		plist[avoid_assoc_duplicate_keys(pda.owner, namecounts)] = pda
 
-	var/choice = tgui_input_list(user, "Please select a PDA", "PDA Messenger", sortList(plist))
+	var/choice = tgui_input_list(user, "Please select a PDA", "PDA Messenger", sort_list(plist))
 
 	if (!choice)
 		return
@@ -1264,7 +1263,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		sortmode = /proc/cmp_pdaname_asc
 
-	for(var/obj/item/pda/P in sortList(GLOB.PDAs, sortmode))
+	for(var/obj/item/pda/P in sort_list(GLOB.PDAs, sortmode))
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P
@@ -1277,6 +1276,5 @@ GLOBAL_LIST_EMPTY(PDAs)
 #undef PDA_SCANNER_MEDICAL
 #undef PDA_SCANNER_FORENSICS
 #undef PDA_SCANNER_REAGENT
-#undef PDA_SCANNER_HALOGEN
 #undef PDA_SCANNER_GAS
 #undef PDA_SPAM_DELAY

@@ -434,9 +434,6 @@
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -444,6 +441,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aO" = (
@@ -536,9 +534,7 @@
 	pixel_y = -5
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ba" = (
@@ -810,7 +806,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bL" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Emergency Recovery Airlock"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -850,7 +846,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bR" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Emergency Recovery Airlock"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -1266,7 +1262,7 @@
 /area/shuttle/escape/brig)
 "cH" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "hg" = (

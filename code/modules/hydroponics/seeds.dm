@@ -44,7 +44,7 @@
 	var/rarity = 0
 	/// The type of plants that this plant can mutate into.
 	var/list/mutatelist
-	/// Plant genes are stored here, see plant_genes.dm for more info.
+	/// Starts as a list of paths, is converted to a list of types on init. Plant gene datums are stored here, see plant_genes.dm for more info.
 	var/list/genes = list()
 	/// A list of reagents to add to product.
 	var/list/reagents_add
@@ -90,14 +90,24 @@
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
 		reagents_from_genes() //quality coding
 
+/obj/item/seeds/Destroy()
+	// No AS ANYTHING here, because the list/genes could have typepaths in it.
+	for(var/datum/plant_gene/gene in genes)
+		gene.on_removed(src)
+		qdel(gene)
+
+	genes.Cut()
+	return ..()
+
 /obj/item/seeds/examine(mob/user)
 	. = ..()
 	. += span_notice("Use a pen on it to rename it or change its description.")
 	if(reagents_add && user.can_see_reagents())
 		. += span_notice("- Plant Reagents -")
-		for(var/datum/plant_gene/reagent/G in genes)
-			. += span_notice("- [G.get_name()] -")
+		for(var/datum/plant_gene/reagent/reagent_gene in genes)
+			. += span_notice("- [reagent_gene.get_name()] -")
 
+/// Copy all the variables from one seed to a new instance of the same seed and return it.
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/copy_seed = new type(null, TRUE)
 	// Copy all the stats
@@ -115,10 +125,10 @@
 	copy_seed.desc = desc
 	copy_seed.productdesc = productdesc
 	copy_seed.genes = list()
-	for(var/datum/plant_gene/plant_genes in genes)
-		copy_seed.genes += plant_genes.Copy()
-	for(var/datum/plant_gene/trait/traits in genes)
-		traits.on_new_seed(copy_seed)
+	for(var/datum/plant_gene/gene in genes)
+		var/datum/plant_gene/copied_gene = gene.Copy()
+		copy_seed.genes += copied_gene
+		copied_gene.on_new_seed(copy_seed)
 
 	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	return copy_seed
@@ -130,18 +140,6 @@
 	reagents_add = list()
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
-
-///This proc adds a mutability_flag to a gene
-/obj/item/seeds/proc/set_mutability(typepath, mutability)
-	var/datum/plant_gene/g = get_gene(typepath)
-	if(g)
-		g.mutability_flags |=  mutability
-
-///This proc removes a mutability_flag from a gene
-/obj/item/seeds/proc/unset_mutability(typepath, mutability)
-	var/datum/plant_gene/g = get_gene(typepath)
-	if(g)
-		g.mutability_flags &=  ~mutability
 
 /obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
 	adjust_lifespan(rand(-lifemut,lifemut))

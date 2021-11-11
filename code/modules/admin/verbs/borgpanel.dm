@@ -7,7 +7,7 @@
 		return
 
 	if (!istype(borgo, /mob/living/silicon/robot))
-		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sortNames(GLOB.silicon_mobs)
+		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sort_names(GLOB.silicon_mobs)
 	if (!istype(borgo, /mob/living/silicon/robot))
 		to_chat(usr, span_warning("Borg is required for borgpanel"), confidential = TRUE)
 
@@ -195,7 +195,7 @@
 		if ("slavetoai")
 			var/mob/living/silicon/ai/newai = locate(params["slavetoai"]) in GLOB.ai_list
 			if (newai && newai != borg.connected_ai)
-				borg.notify_ai(DISCONNECT)
+				borg.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
 				if(borg.shell)
 					borg.undeploy()
 				borg.set_connected_ai(newai)
@@ -203,7 +203,7 @@
 				message_admins("[key_name_admin(user)] slaved [ADMIN_LOOKUPFLW(borg)] to the AI [ADMIN_LOOKUPFLW(newai)].")
 				log_admin("[key_name(user)] slaved [key_name(borg)] to the AI [key_name(newai)].")
 			else if (params["slavetoai"] == "null")
-				borg.notify_ai(DISCONNECT)
+				borg.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
 				if(borg.shell)
 					borg.undeploy()
 				borg.set_connected_ai(null)

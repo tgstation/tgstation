@@ -7,7 +7,7 @@
 #define LANGUAGE_EXTENSION "language specific"
 
 //Message modes. Each one defines a radio channel, more or less.
-//if you use ! as a mode key for some ungodly reason, change the first character for ionnum() so get_message_mode() doesn't freak out with state law prompts - shiz.
+//if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
 #define MODE_HEADSET "headset"
 #define MODE_ROBOT "robot"
 
@@ -53,6 +53,10 @@
 #define MODE_MAFIA "mafia"
 
 #define MODE_SING "sing"
+
+#define MODE_CUSTOM_SAY_EMOTE "custom_say"
+
+#define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"

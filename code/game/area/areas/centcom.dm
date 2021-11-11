@@ -26,6 +26,18 @@
 /area/centcom/ferry
 	name = "CentCom Transport Shuttle Dock"
 
+/area/centcom/briefing
+	name = "CentCom Briefing Room"
+
+/area/centcom/briefing/storage
+	name = "CentCom Briefing Room Storage"
+
+/area/centcom/admin
+	name = "CentCom Administrative Office"
+
+/area/centcom/admin/storage
+	name = "CentCom Administrative Office Storage"
+
 /area/centcom/prison
 	name = "Admin Prison"
 
