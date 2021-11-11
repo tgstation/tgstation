@@ -51,7 +51,6 @@
 			var/turf/T = get_step(src, d)
 			for(var/obj/machinery/power/terminal/term in T)
 				if(term && term.dir == turn(d, 180))
-					dir = d
 					terminal = term
 					break dir_loop
 
@@ -84,23 +83,6 @@
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-		update_appearance()
-		return
-
-	//changing direction using wrench
-	if(default_change_direction_wrench(user, I))
-		terminal = null
-		var/turf/T = get_step(src, dir)
-		for(var/obj/machinery/power/terminal/term in T)
-			if(term && term.dir == turn(dir, 180))
-				terminal = term
-				terminal.master = src
-				to_chat(user, span_notice("Terminal found."))
-				break
-		if(!terminal)
-			to_chat(user, span_alert("No power terminal found."))
-			return
-		set_machine_stat(machine_stat & ~BROKEN)
 		update_appearance()
 		return
 
