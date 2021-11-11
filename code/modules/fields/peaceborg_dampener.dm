@@ -6,7 +6,6 @@
 	setup_edge_turfs = TRUE
 	setup_field_turfs = TRUE
 	requires_processing = TRUE
-	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
 	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
@@ -17,21 +16,20 @@
 	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
 	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
 	var/obj/item/borg/projectile_dampen/projector = null
-	var/list/obj/projectile/tracked
-	var/list/obj/projectile/staging
+	var/list/obj/projectile/tracked = list()
+	var/list/obj/projectile/staging = list()
+	// lazylist that keeps track of the overlays added to the edge of the field
+	var/list/edgeturf_effects
 	use_host_turf = TRUE
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
-	tracked = list()
-	staging = list()
-	return ..()
-
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
+	projector = null
 	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
 	if(!istype(projector))
 		qdel(src)
+		return
 	var/list/ranged = list()
 	for(var/obj/projectile/P in range(current_range, get_turf(host)))
 		ranged += P
@@ -47,17 +45,19 @@
 				do_sparks(5, 0, L)
 	..()
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/T)
-	..()
-	var/image/I = get_edgeturf_overlay(get_edgeturf_direction(T))
-	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
-	F.appearance = I.appearance
-	F.invisibility = 0
-	F.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	F.layer = 5
+/datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/target)
+	var/image/overlay = get_edgeturf_overlay(get_edgeturf_direction(target))
+	var/obj/effect/abstract/effect = new(target) // Makes the field visible to players.
+	effect.appearance = overlay.appearance
+	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	effect.layer = ABOVE_ALL_MOB_LAYER
+	LAZYSET(edgeturf_effects, target, effect)
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/T)
-	..()
+/datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/target)
+	var/obj/effect/abstract/effect = LAZYACCESS(edgeturf_effects, target)
+	LAZYREMOVE(edgeturf_effects, target)
+	if(effect)
+		qdel(effect)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/proc/get_edgeturf_overlay(direction)
 	switch(direction)
