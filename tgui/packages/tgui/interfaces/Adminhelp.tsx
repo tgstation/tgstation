@@ -28,6 +28,7 @@ export const Adminhelp = (props, context) => {
         <Stack vertical fill>
           <Stack.Item grow>
             <TextArea
+              autoFocus
               height="100%"
               value={ahelpMessage}
               placeholder="Admin help"
