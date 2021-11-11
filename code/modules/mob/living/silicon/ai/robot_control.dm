@@ -64,7 +64,7 @@
 				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
 				return
 			owner.Bot = locate(params["ref"]) in GLOB.bots_list
-			if(!owner.Bot || !owner.Bot.remote_disabled || owner.control_disabled)
+			if(!owner.Bot || owner.Bot.remote_disabled || owner.control_disabled)
 				return
 			owner.waypoint_mode = TRUE
 			to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
