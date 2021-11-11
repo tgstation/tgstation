@@ -1,6 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
@@ -253,7 +253,7 @@
 			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
 		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[lawcheck[1]] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
 
-	for (var/index = 1, index <= laws.hacked.len, index++)
+	for (var/index in 1 to laws.hacked.len)
 		var/law = laws.hacked[index]
 		if (length(law) > 0)
 			if (!hackedcheck[index])
@@ -261,7 +261,7 @@
 			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
 			hackedcheck.len += 1
 
-	for (var/index = 1, index <= laws.ion.len, index++)
+	for (var/index in 1 to laws.ion.len)
 		var/law = laws.ion[index]
 
 		if (length(law) > 0)
@@ -271,7 +271,7 @@
 			ioncheck.len += 1
 
 	var/number = 1
-	for (var/index = 1, index <= laws.inherent.len, index++)
+	for (var/index in 1 to laws.inherent.len)
 		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
@@ -282,7 +282,7 @@
 			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index = 1, index <= laws.supplied.len, index++)
+	for (var/index in 1 to laws.supplied.len)
 		var/law = laws.supplied[index]
 		if (length(law) > 0)
 			lawcheck.len += 1

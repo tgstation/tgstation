@@ -68,23 +68,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
-	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
 
-/obj/machinery/requests_console/directional/north
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/machinery/requests_console/directional/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/requests_console/directional/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/requests_console/directional/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()

@@ -11,7 +11,7 @@
 	name = "Easy Slime Survey"
 	description = "A wealthy client has requested that we provide samples of data from several basic slime cores."
 	required_points = 3
-	required_atoms =  list(/obj/item/slime_extract/orange = 1,
+	required_atoms = list(/obj/item/slime_extract/orange = 1,
 		/obj/item/slime_extract/purple = 1,
 		/obj/item/slime_extract/blue = 1,
 		/obj/item/slime_extract/metal = 1)

@@ -51,7 +51,7 @@
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots."
-	targetitem =  /obj/item/clothing/shoes/magboots/advance
+	targetitem = /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list("Chief Engineer")
 
