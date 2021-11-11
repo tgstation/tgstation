@@ -658,7 +658,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/start_patrol()
 
 	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
-		auto_patrol = 0
+		auto_patrol = FALSE
 		tries = 0
 		speak("Unable to start patrol.")
 
