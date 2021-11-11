@@ -1031,6 +1031,8 @@
 	construction_time = 15 SECONDS
 	build_path = /obj/item/mod/construction/armor
 	category = list("MOD Construction", "Equipment")
+	research_icon = 'icons/obj/mod.dmi'
+	research_icon_state = "armor"
 
 /datum/design/mod_armor/New()
 	. = ..()
@@ -1038,6 +1040,7 @@
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	name = "MOD [theme.name] armor"
 	desc = "External armor for a Modular Suit. [theme.desc]"
+	research_icon_state = "[theme.default_skin]-armor"
 
 /datum/design/mod_armor/engineering
 	id = "mod_armor_engineering"

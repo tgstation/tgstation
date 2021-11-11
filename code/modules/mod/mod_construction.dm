@@ -32,8 +32,10 @@
 
 /obj/item/mod/construction/armor/Initialize(mapload)
 	. = ..()
-	name = "MOD [initial(theme.name)] armor plates"
-	icon_state = "[initial(theme.default_skin)]-armor"
+	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
+	name = "MOD [used_theme.name] armor plates"
+	desc = "[desc] [used_theme.desc]"
+	icon_state = "[used_theme.default_skin]-armor"
 
 /obj/item/mod/construction/armor/engineering
 	theme = /datum/mod_theme/engineering
