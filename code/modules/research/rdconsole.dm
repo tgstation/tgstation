@@ -306,6 +306,9 @@ Nothing else in the console has ID requirements.
 		if ("researchNode")
 			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
 				return TRUE
+			if(issilicon(usr))
+				to_chat(usr, "Silicons are banned from researching anything under the United Space Rights convention of 2561.")
+				return FALSE
 			research_node(params["node_id"], usr)
 			return TRUE
 		if ("ejectDisk")
