@@ -195,7 +195,7 @@
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
-	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
+	icon_state = "[base_icon][power ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
@@ -244,7 +244,7 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
-	data["on"] = on
+	data["power"] = power
 	data["locked"] = locked
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["mode"] = mode ? mode_name[mode] : "Ready"
@@ -281,7 +281,7 @@
 				locked = !locked
 				. = TRUE
 		if("power")
-			if(on)
+			if(power)
 				turn_off()
 			else if(open)
 				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
@@ -349,54 +349,54 @@
 			ejectpairemote(user)
 
 // TODO: remove this; PDAs currently depend on it
-/mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
-	var/ai = issilicon(user)
-	var/dat
-	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
-	dat += "<b>ID:</b> [id]<BR>"
-	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
-	dat += "<h3>Status</h3>"
-	dat += "<div class='statusDisplay'>"
-	switch(mode)
-		if(BOT_IDLE)
-			dat += "<span class='good'>Ready</span>"
-		if(BOT_DELIVER)
-			dat += "<span class='good'>[mode_name[BOT_DELIVER]]</span>"
-		if(BOT_GO_HOME)
-			dat += "<span class='good'>[mode_name[BOT_GO_HOME]]</span>"
-		if(BOT_BLOCKED)
-			dat += "<span class='average'>[mode_name[BOT_BLOCKED]]</span>"
-		if(BOT_NAV,BOT_WAIT_FOR_NAV)
-			dat += "<span class='average'>[mode_name[BOT_NAV]]</span>"
-		if(BOT_NO_ROUTE)
-			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
-	dat += "</div>"
+// /mob/living/simple_animal/bot/mulebot/get_controls(mob/user)
+// 	var/ai = issilicon(user)
+// 	var/dat
+// 	dat += "<h3>Multiple Utility Load Effector Mk. V</h3>"
+// 	dat += "<b>ID:</b> [id]<BR>"
+// 	dat += "<b>Power:</b> [on ? "On" : "Off"]<BR>"
+// 	dat += "<h3>Status</h3>"
+// 	dat += "<div class='statusDisplay'>"
+// 	switch(mode)
+// 		if(BOT_IDLE)
+// 			dat += "<span class='good'>Ready</span>"
+// 		if(BOT_DELIVER)
+// 			dat += "<span class='good'>[mode_name[BOT_DELIVER]]</span>"
+// 		if(BOT_GO_HOME)
+// 			dat += "<span class='good'>[mode_name[BOT_GO_HOME]]</span>"
+// 		if(BOT_BLOCKED)
+// 			dat += "<span class='average'>[mode_name[BOT_BLOCKED]]</span>"
+// 		if(BOT_NAV,BOT_WAIT_FOR_NAV)
+// 			dat += "<span class='average'>[mode_name[BOT_NAV]]</span>"
+// 		if(BOT_NO_ROUTE)
+// 			dat += "<span class='bad'>[mode_name[BOT_NO_ROUTE]]</span>"
+// 	dat += "</div>"
 
-	var/load_message = get_load_name()
-	dat += "<b>Current Load:</b> <i>[load_message ? load_message : "None"]</i><BR>"
-	dat += "<b>Destination:</b> [!destination ? "<i>None</i>" : destination]<BR>"
-	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
+// 	var/load_message = get_load_name()
+// 	dat += "<b>Current Load:</b> <i>[load_message ? load_message : "None"]</i><BR>"
+// 	dat += "<b>Destination:</b> [!destination ? "<i>None</i>" : destination]<BR>"
+// 	dat += "<b>Power level:</b> [cell ? cell.percent() : 0]%"
 
-	if(locked && !ai && !isAdminGhostAI(user))
-		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
-	else
-		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
+// 	if(locked && !ai && !isAdminGhostAI(user))
+// 		dat += "&nbsp;<br /><div class='notice'>Controls are locked</div><A href='byond://?src=[REF(src)];op=unlock'>Unlock Controls</A>"
+// 	else
+// 		dat += "&nbsp;<br /><div class='notice'>Controls are unlocked</div><A href='byond://?src=[REF(src)];op=lock'>Lock Controls</A><BR><BR>"
 
-		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
-		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
-		if(load)
-			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
-		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=power'>Toggle Power</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=stop'>Stop</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=go'>Proceed</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=home'>Return to Home</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=destination'>Set Destination</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=setid'>Set Bot ID</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=sethome'>Set Home</A><BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=autopick'>Toggle Auto Pickup Crate</A> ([auto_pickup ? "On":"Off"])<BR>"
+// 		dat += "<A href='byond://?src=[REF(src)];op=report'>Toggle Delivery Reporting</A> ([report_delivery ? "On" : "Off"])<BR>"
+// 		if(load)
+// 			dat += "<A href='byond://?src=[REF(src)];op=unload'>Unload Now</A><BR>"
+// 		dat += "<div class='notice'>The maintenance hatch is closed.</div>"
 
-	return dat
+// 	return dat
 
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
@@ -549,7 +549,7 @@
 	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
-	if(!on)
+	if(!power)
 		return
 	if(!has_power())
 		turn_off()
@@ -566,7 +566,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
-	if(!on || client || (num_steps <= 0) || !has_power())
+	if(!power || client || (num_steps <= 0) || !has_power())
 		return PROCESS_KILL
 	num_steps--
 
@@ -659,7 +659,7 @@
 
 // starts bot moving to current destination
 /mob/living/simple_animal/bot/mulebot/proc/start()
-	if(!on)
+	if(!power)
 		return
 	if(destination == home_destination)
 		mode = BOT_GO_HOME
@@ -670,7 +670,7 @@
 // starts bot moving to home
 // sends a beacon query to find
 /mob/living/simple_animal/bot/mulebot/proc/start_home()
-	if(!on)
+	if(!power)
 		return
 	INVOKE_ASYNC(src, .proc/do_start_home)
 
@@ -766,7 +766,7 @@
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
 /mob/living/simple_animal/bot/mulebot/proc/get_nav()
-	if(!on || wires.is_cut(WIRE_BEACON))
+	if(!power || wires.is_cut(WIRE_BEACON))
 		return
 
 	for(var/obj/machinery/navbeacon/NB in GLOB.deliverybeacons)
@@ -833,7 +833,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
 	SIGNAL_HANDLER
 
-	if(!on)
+	if(!power)
 		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
 	if((cell && (cell.charge < cell_move_power_usage)) || !has_power())

@@ -18,10 +18,10 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
-	var/blood = 1
-	var/trash = 0
-	var/pests = 0
-	var/drawn = 0
+	var/clean_blood = TRUE
+	var/clean_trash = FALSE
+	var/clean_pests = FALSE
+	var/clean_graffiti = FALSE
 
 	var/list/target_types
 	var/obj/effect/decal/cleanable/target
@@ -103,7 +103,7 @@
 
 	chosen_name = name
 	get_targets()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[power]"
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
@@ -127,12 +127,12 @@
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[power]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[power]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
@@ -185,7 +185,6 @@
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
-
 	if(!emagged)
 		return
 	if(weapon)
@@ -229,7 +228,7 @@
 	if(!target && emagged) // When emagged, target humans who slipped on the water and melt their faces off
 		target = scan(/mob/living/carbon)
 
-	if(!target && pests) //Search for pests to exterminate first.
+	if(!target && clean_pests) //Search for pests to exterminate first.
 		target = scan(/mob/living/simple_animal)
 
 	if(!target) //Search for decals then.
@@ -238,10 +237,10 @@
 	if(!target) //Checks for remains
 		target = scan(/obj/effect/decal/remains)
 
-	if(!target && trash) //Then for trash.
+	if(!target && clean_trash) //Then for trash.
 		target = scan(/obj/item/trash)
 
-	if(!target && trash) //Search for dead mices.
+	if(!target && clean_trash) //Search for dead mices.
 		target = scan(/obj/item/food/deadmouse)
 
 	if(!target && auto_patrol) //Search for cleanables it can see.
@@ -298,19 +297,19 @@
 		/obj/effect/decal/remains,
 	)
 
-	if(blood)
+	if(clean_blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood
 		target_types += /obj/effect/decal/cleanable/blood
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
-	if(pests)
+	if(clean_pests)
 		target_types += /mob/living/basic/cockroach
 		target_types += /mob/living/simple_animal/mouse
 
-	if(drawn)
+	if(clean_graffiti)
 		target_types += /obj/effect/decal/cleanable/crayon
 
-	if(trash)
+	if(clean_trash)
 		target_types += /obj/item/trash
 		target_types += /obj/item/food/deadmouse
 
@@ -330,7 +329,7 @@
 			target = null
 
 		mode = BOT_IDLE
-		icon_state = "cleanbot[on]"
+		icon_state = "cleanbot[power]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [A]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
@@ -370,7 +369,7 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	on = FALSE
+	power = FALSE
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
@@ -387,42 +386,38 @@
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
 	bot_core_type = /obj/machinery/bot_core/cleanbot/medbay
-	on = FALSE
+	power = FALSE
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
-/mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-			Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
-			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-			Maintenance panel panel is [open ? "opened" : "closed"]"})
-	if(!locked || issilicon(user)|| isAdminGhostAI(user))
-		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"
-		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
-		dat += "<BR><BR>Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
-	return dat
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
+	var/list/data = ..()
 
-/mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)
-	if(..())
-		return 1
-	if(href_list["operation"])
-		switch(href_list["operation"])
-			if("blood")
-				blood = !blood
-			if("pests")
-				pests = !pests
-			if("trash")
-				trash = !trash
-			if("drawn")
-				drawn = !drawn
-		get_targets()
-		update_controls()
+	if(!locked || issilicon(user)|| isAdminGhostAI(user))
+		data["custom_controls"]["clean_blood"] = clean_blood
+		data["custom_controls"]["clean_trash"] = clean_trash
+		data["custom_controls"]["clean_graffiti"] = clean_graffiti
+		data["custom_controls"]["clean_pests"] = clean_pests
+	return data
+
+// Actions received from TGUI
+/mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
+	. = ..()
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+		return
+	switch(action)
+		if("clean_blood")
+			clean_blood = !clean_blood
+		if("clean_pests")
+			clean_pests = !clean_pests
+		if("clean_trash")
+			clean_trash = !clean_trash
+		if("clean_graffiti")
+			clean_graffiti = !clean_graffiti
+	get_targets()
+	return
 
 /obj/machinery/bot_core/cleanbot/medbay
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

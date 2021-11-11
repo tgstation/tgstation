@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user)
 	..()
-	icon_state = "ed209[on]"
+	icon_state = "ed209[power]"
 	set_weapon()
 
 /mob/living/simple_animal/bot/secbot/ed209/handle_automated_action()
@@ -118,6 +118,6 @@
 				mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/ed209/RangedAttack(atom/A)
-	if(!on)
+	if(!power)
 		return
 	shoot_at(A)

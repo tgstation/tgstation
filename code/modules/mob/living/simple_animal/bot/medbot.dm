@@ -89,7 +89,7 @@
 
 /mob/living/simple_animal/bot/medbot/update_icon_state()
 	. = ..()
-	if(!on)
+	if(!power)
 		icon_state = "[base_icon_state]0"
 		return
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
@@ -154,31 +154,21 @@
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/medbot/ui_data(mob/user)
-	var/list/data = list()
-	data["hack"] = hack(user)
-	data["maintenance_open"] = open
-	data["locked"] = locked
-	data["controls"] = list()
-	data["pai"] = showpai(user)
+	var/list/data = ..()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		data["controls"]["heal_threshold"] = heal_threshold
-		data["controls"]["speaker"] = speaker
-		data["controls"]["crit_alerts"] = crit_alerts
-		data["controls"]["auto_patrol"] = auto_patrol
-		data["controls"]["stationary_mode"] = stationary_mode
-		data["controls"]["sync_tech"] = TRUE
+		data["custom_controls"]["heal_threshold"] = heal_threshold
+		data["custom_controls"]["speaker"] = speaker
+		data["custom_controls"]["crit_alerts"] = crit_alerts
+		data["custom_controls"]["stationary_mode"] = stationary_mode
+		data["custom_controls"]["sync_tech"] = TRUE
 	return data
 
 // Actions received from TGUI
 /mob/living/simple_animal/bot/medbot/ui_act(action, params)
 	. = ..()
-	if(.)
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
-		if("toggle_lock")
-			locked = !locked
-		if("toggle_maintenance")
-			open = !open
 		if("heal_threshold")
 			var/adjust_num = round(text2num(params["threshold"]))
 			heal_threshold = adjust_num
@@ -206,8 +196,6 @@
 				heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
 				if(oldheal_amount < heal_amount)
 					speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
-			else
-				speak("No new surgical research detected. Aborting.")
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -220,7 +208,7 @@
 	..()
 	if(!emagged)
 		return
-	declare_crit = FALSE
+	crit_alerts = FALSE
 	if(user)
 		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
 	audible_message(span_danger("[src] buzzes oddly!"))
@@ -497,7 +485,7 @@
 		chemscan(src, A)
 
 /mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
-	if(!on)
+	if(!power)
 		return
 
 	if(!istype(C))
@@ -554,7 +542,7 @@
 				span_userdanger("[src] is trying to tend your wounds!"))
 
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
-				if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
+				if((get_dist(src, patient) <= 1) && (power) && assess_patient(patient))
 					var/healies = heal_amount
 					var/obj/item/storage/firstaid/FA = firstaid
 					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
@@ -583,7 +571,7 @@
 			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
-	on = FALSE
+	power = FALSE
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 

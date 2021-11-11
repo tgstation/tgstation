@@ -55,7 +55,7 @@
 	walk_to(src,0)
 	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
 	do_sparks(3, TRUE, src)
-	on = FALSE
+	power = FALSE
 	new /obj/effect/particle_effect/foam(loc)
 
 	..()
@@ -67,12 +67,12 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][on ? "-on" : null]"
+	icon_state = "[base_icon_state][power ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
-	if(on)
+	if(power)
 		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
@@ -205,22 +205,21 @@
 	washing = FALSE
 	update_appearance()
 
-
-
-/mob/living/simple_animal/bot/hygienebot/get_controls(mob/user)
-	var/list/dat = list()
-	dat += hack(user)
-	dat += showpai(user)
-	dat += {"
-			<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
-			Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
-			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-			Maintenance panel is [open ? "opened" : "closed"]"}
-
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/hygienebot/ui_data(mob/user)
+	var/list/data = list()
+	data["custom_controls"] = list()
+	data["emagged"] = emagged
+	data["locked"] = locked
+	data["maintenance_open"] = open
+	data["pai"] = list()
+	data["settings"] = list()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
-
-	return dat.Join("")
+		data["pai"]["card_inserted"] = paicard
+		data["pai"]["allow_pai"] = allow_pai
+		data["settings"]["remote_enabled"] = remote_enabled
+		data["settings"]["power"] = power
+	return data
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
 	if((emagged) && L.stat != DEAD)
