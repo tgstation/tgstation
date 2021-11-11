@@ -307,6 +307,7 @@
 /obj/item/mod/module/magboot
 	name = "MOD magnetic stability module"
 	desc = "A module granting magnetic stability to the wearer, protecting them from forces pushing them away."
+	icon_state = "magnet"
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = 10
@@ -343,6 +344,7 @@
 /obj/item/mod/module/holster
 	name = "MOD holster module"
 	desc = "A module that can instantly holster a gun inside the MOD."
+	icon_state = "holster"
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = 20
@@ -536,7 +538,10 @@
 	set_light_flags(light_flags & ~LIGHT_ATTACHED)
 	set_light_on(active)
 
-/obj/item/mod/module/flashlight/on_active_process(delta_time)
+/obj/item/mod/module/flashlight/on_process(delta_time)
+	. = ..()
+	if(!.)
+		return
 	active_power_cost = base_power * light_range
 
 /obj/item/mod/module/flashlight/generate_worn_overlay()
@@ -570,6 +575,7 @@
 /obj/item/mod/module/reagent_scanner
 	name = "MOD reagent scanner module"
 	desc = "A module that enables internal reagent scanners in the MOD."
+	icon_state = "scanner"
 	module_type = MODULE_TOGGLE
 	complexity = 1
 	active_power_cost = 5
