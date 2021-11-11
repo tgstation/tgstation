@@ -39,3 +39,14 @@
 		return FALSE
 
 	return is_admin(preferences.parent)
+
+/datum/preference/toggle/bypass_deadmin_in_centcom
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "bypass_deadmin_in_centcom"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/bypass_deadmin_in_centcom/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	return is_admin(preferences.parent)

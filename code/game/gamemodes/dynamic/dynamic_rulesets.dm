@@ -4,7 +4,7 @@
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	// If you want to change this variable name, the force latejoin/midround rulesets
-	// to not use sortNames.
+	// to not use sort_names.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
 	var/ruletype = ""

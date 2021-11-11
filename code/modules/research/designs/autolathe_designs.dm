@@ -17,7 +17,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/mop
-	category = list("initial","Tools","Tool Designs")
+	category = list("initial", "Equipment", "Tools", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/broom
@@ -349,7 +349,7 @@
 	id = "kitchen_knife"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 12000)
-	build_path = /obj/item/kitchen/knife
+	build_path = /obj/item/knife/kitchen
 	category = list("initial","Dinnerware")
 
 /datum/design/plastic_knife
@@ -357,7 +357,7 @@
 	id = "plastic_knife"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 100)
-	build_path = /obj/item/kitchen/knife/plastic
+	build_path = /obj/item/knife/plastic
 	category = list("initial", "Tool Designs","Dinnerware")
 
 /datum/design/fork
@@ -773,6 +773,14 @@
 	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
 
+/datum/design/status_display_frame
+	name = "Status Display Frame"
+	id = "status_display_frame"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
+	build_path = /obj/item/wallframe/status_display
+	category = list("initial", "Construction")
+
 /datum/design/bounty_board_frame
 	name = "Bounty Board Frame"
 	id = "bountyboard_frame"
@@ -925,7 +933,7 @@
 	id = "cleaver"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 18000)
-	build_path = /obj/item/kitchen/knife/butcher
+	build_path = /obj/item/knife/butcher
 	category = list("hacked", "Dinnerware")
 
 /datum/design/spraycan

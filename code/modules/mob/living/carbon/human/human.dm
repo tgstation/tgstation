@@ -383,8 +383,7 @@
 /mob/living/carbon/human/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE) && user)
-		var/obj/item/bodypart/the_part = get_bodypart(target_zone) || get_bodypart(BODY_ZONE_CHEST)
-
+		var/obj/item/bodypart/the_part = get_bodypart(target_zone || user.zone_selected)
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
@@ -473,7 +472,6 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
-	rad_act(current_size * 3)
 
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
@@ -801,7 +799,7 @@
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
 
-		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sortList(options)
+		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
 		if(result)
 			if(result == "Clear")
 				dna.remove_all_mutations()
@@ -825,7 +823,7 @@
 			var/qname = initial(quirk_type.name)
 			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type
 
-		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sortList(options)
+		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sort_list(options)
 		if(result)
 			if(result == "Clear")
 				for(var/datum/quirk/q in quirks)

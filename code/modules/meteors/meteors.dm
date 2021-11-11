@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		max_i--
 		if(max_i<=0)
 			return
-	var/Me = pickweight(meteortypes)
+	var/Me = pick_weight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart, pickedgoal)
 	M.dest = pickedgoal
 
@@ -278,7 +278,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
-	radiation_pulse(src, 500)
+	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
 
 //Meaty Ore
 /obj/effect/meteor/meaty

@@ -44,7 +44,7 @@
 	if(!tastes)
 		tastes = list("[name]" = 1) //This happens first else the component already inits
 
-	if(new_seed)
+	if(istype(new_seed))
 		seed = new_seed.Copy()
 
 	else if(ispath(seed))
@@ -73,6 +73,11 @@
 
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
+
+/obj/item/food/grown/Destroy()
+	if(isatom(seed))
+		QDEL_NULL(seed)
+	return ..()
 
 /obj/item/food/grown/MakeEdible()
 	AddComponent(/datum/component/edible,\

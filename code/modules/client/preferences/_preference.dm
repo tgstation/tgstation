@@ -424,31 +424,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return data
 
-/// A preference that represents an RGB color of something, crunched down to 3 hex numbers.
-/// Was used heavily in the past, but doesn't provide as much range and only barely conserves space.
-/datum/preference/color_legacy
-	abstract_type = /datum/preference/color_legacy
-
-/datum/preference/color_legacy/deserialize(input, datum/preferences/preferences)
-	return sanitize_hexcolor(input)
-
-/datum/preference/color_legacy/create_default_value()
-	return random_short_color()
-
-/datum/preference/color_legacy/is_valid(value)
-	var/static/regex/is_legacy_color = regex(@"^[0-9a-fA-F]{3}$")
-	return findtext(value, is_legacy_color)
-
 /// A preference that represents an RGB color of something.
 /// Will give the value as 6 hex digits, without a hash.
 /datum/preference/color
 	abstract_type = /datum/preference/color
 
 /datum/preference/color/deserialize(input, datum/preferences/preferences)
-	return sanitize_color(input)
+	return sanitize_hexcolor(input)
 
 /datum/preference/color/create_default_value()
 	return random_color()
+
+/datum/preference/color/serialize(input)
+	return sanitize_hexcolor(input)
 
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)

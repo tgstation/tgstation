@@ -60,7 +60,7 @@
 
 
 
-	var/proj_type =  /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
+	var/proj_type = /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
 
 
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you

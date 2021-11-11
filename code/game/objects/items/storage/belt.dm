@@ -38,7 +38,7 @@
 	content_overlays = TRUE
 	custom_premium_price = PAYCHECK_MEDIUM * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
-	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -243,7 +243,7 @@
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/food/donut,
-		/obj/item/kitchen/knife/combat,
+		/obj/item/knife/combat,
 		/obj/item/flashlight/seclite,
 		/obj/item/melee/baton/telescopic,
 		/obj/item/radio,
@@ -312,7 +312,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/reagent_containers/food/drinks/bottle,
 		/obj/item/stack/medical,
-		/obj/item/kitchen/knife,
+		/obj/item/knife,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/gps,
 		/obj/item/storage/bag/ore,

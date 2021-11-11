@@ -99,9 +99,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		var/prizeselect
 		if(prize_override)
-			prizeselect = pickweight(prize_override)
+			prizeselect = pick_weight(prize_override)
 		else
-			prizeselect = pickweight(GLOB.arcade_prize_pool)
+			prizeselect = pick_weight(GLOB.arcade_prize_pool)
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))
@@ -124,9 +124,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
 		if(override)
-			empprize = pickweight(prize_override)
+			empprize = pick_weight(prize_override)
 		else
-			empprize = pickweight(GLOB.arcade_prize_pool)
+			empprize = pick_weight(GLOB.arcade_prize_pool)
 		new empprize(loc)
 	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 

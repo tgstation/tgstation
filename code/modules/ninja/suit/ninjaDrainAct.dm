@@ -157,7 +157,7 @@
 		return INVALID_DRAIN
 	AI_notify_hack()
 	if(do_after(ninja, 200))
-		for(var/datum/data/record/rec in sortRecord(GLOB.data_core.general, sortBy, order))
+		for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
 			for(var/datum/data/record/security_record in GLOB.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)

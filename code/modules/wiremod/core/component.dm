@@ -16,6 +16,9 @@
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
 
+	/// The category of the component in the UI
+	var/category = COMPONENT_DEFAULT_CATEGORY
+
 	/// The colour this circuit component appears in the UI
 	var/ui_color = "blue"
 
@@ -45,11 +48,14 @@
 	/// The power usage whenever this component receives an input
 	var/power_usage_per_input = 1
 
-	// Whether the component is removable or not. Only affects user UI
+	/// Whether the component is removable or not. Only affects user UI
 	var/removable = TRUE
 
-	// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
+	/// Defines which shells support this component. Only used as an informational guide, does not restrict placing these components in circuits.
 	var/required_shells = null
+
+	/// Determines the amount of space this circuit occupies in an integrated circuit.
+	var/circuit_size = 1
 
 	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
 	var/ui_buttons = null
@@ -72,13 +78,14 @@
 		name = "[lowertext(display_name)] [COMPONENT_DEFAULT_NAME]"
 	populate_options()
 	populate_ports()
-	if(circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL)
+	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !trigger_input)
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL, order = 2)
-	if(circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)
+	if((circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL) && !trigger_output)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
 		ui_color = "orange"
-
+	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		desc += " Incompatible with module components."
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
@@ -93,6 +100,11 @@
 	QDEL_LIST(output_ports)
 	QDEL_LIST(input_ports)
 	return ..()
+
+/obj/item/circuit_component/examine(mob/user)
+	. = ..()
+	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
+		. += span_notice("It's incompatible with module components.")
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.
@@ -216,6 +228,14 @@
 		trigger_output.set_output(COMPONENT_SIGNAL)
 	return TRUE
 
+/obj/item/circuit_component/proc/set_circuit_size(new_size)
+	if(parent)
+		parent.current_size -= circuit_size
+
+	circuit_size = new_size
+
+	if(parent)
+		parent.current_size += circuit_size
 
 /**
  * Called whether this circuit component should receive an input.
@@ -241,7 +261,7 @@
 		if(!cell?.use(power_usage_per_input))
 			return FALSE
 
-	if((circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
+	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
 
 	return TRUE
@@ -265,10 +285,13 @@
 
 /// Called when this component is about to be added to an integrated_circuit.
 /obj/item/circuit_component/proc/add_to(obj/item/integrated_circuit/added_to)
+	if(circuit_flags & CIRCUIT_FLAG_ADMIN)
+		ADD_TRAIT(added_to, TRAIT_CIRCUIT_UNDUPABLE, src)
 	return TRUE
 
 /// Called when this component is removed from an integrated_circuit.
 /obj/item/circuit_component/proc/removed_from(obj/item/integrated_circuit/removed_from)
+	REMOVE_TRAIT(removed_from, TRAIT_CIRCUIT_UNDUPABLE, src)
 	return
 
 /**

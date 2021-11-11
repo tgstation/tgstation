@@ -73,7 +73,7 @@
 			fish_data["temp_max"] = initial(fish_behaviour.required_temperature_max)
 			fish_data["icon"] = sanitize_css_class_name("[initial(fish_behaviour.icon)][initial(fish_behaviour.icon_state)]")
 			fish_data["color"] = initial(fish_behaviour.color)
-			fish_data["source"] = initial(fish_behaviour.availible_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
+			fish_data["source"] = initial(fish_behaviour.available_in_random_cases) ? "[AQUARIUM_COMPANY] Fish Packs" : "Unknown"
 			var/datum/reagent/food_type = initial(fish_behaviour.food)
 			if(food_type != /datum/reagent/consumable/nutriment)
 				fish_data["feed"] = initial(food_type.name)

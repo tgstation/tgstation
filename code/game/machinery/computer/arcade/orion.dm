@@ -235,6 +235,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 				fuel = 60
 				settlers = list("Harry","Larry","Bob")
 		if("continue")
+			if (gameStatus == ORION_STATUS_START)
+				return
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(gamer)
 				xp_gained += 34
@@ -328,7 +330,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
  */
 /obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 	if(!path)
-		event = pickweightAllowZero(events)
+		event = pick_weight_allow_zero(events)
 	else
 		for(var/datum/orion_event/instance as anything in events)
 			if(instance.type == path)

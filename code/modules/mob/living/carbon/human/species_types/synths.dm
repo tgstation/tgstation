@@ -3,7 +3,7 @@
 	id = SPECIES_SYNTH
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
+	species_traits = list(NOTRANSSTING, NO_DNA_COPY) //all of these + whatever we inherit from the real species
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,

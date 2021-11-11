@@ -63,7 +63,7 @@
 
 
 					if(!isnull(GLOB.data_core.general))
-						for(var/datum/data/record/R in sortRecord(GLOB.data_core.general, sortBy, order))
+						for(var/datum/data/record/R in sort_record(GLOB.data_core.general, sortBy, order))
 							var/blood_type = ""
 							var/b_dna = ""
 							for(var/datum/data/record/E in GLOB.data_core.medical)
@@ -444,7 +444,7 @@
 
 			else if(href_list["new"])
 				if((istype(active1, /datum/data/record) && !( istype(active2, /datum/data/record) )))
-					var/datum/data/record/R = new /datum/data/record(  )
+					var/datum/data/record/R = new /datum/data/record()
 					R.fields["name"] = active1.fields["name"]
 					R.fields["id"] = active1.fields["id"]
 					R.name = text("Medical Record #[]", R.fields["id"])

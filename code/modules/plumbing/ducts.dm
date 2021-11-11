@@ -163,6 +163,7 @@ All the important duct code:
 	update_appearance()
 	if(ispath(drop_on_wrench))
 		new drop_on_wrench(drop_location())
+		drop_on_wrench = null
 	if(!QDELETED(src))
 		qdel(src)
 

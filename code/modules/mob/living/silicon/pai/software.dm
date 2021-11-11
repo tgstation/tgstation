@@ -13,18 +13,19 @@
 															"digital messenger" = 5,
 															"atmosphere sensor" = 5,
 															"photography module" = 5,
+															"camera zoom" = 10,
+															"printer module" = 10,
 															"remote signaler" = 10,
 															"medical records" = 10,
 															"security records" = 10,
-															"camera zoom" = 10,
 															"host scan" = 10,
 															"medical HUD" = 20,
 															"security HUD" = 20,
 															"loudness booster" = 20,
 															"newscaster" = 20,
-															"internal gps" = 35,
 															"door jack" = 25,
 															"encryption keys" = 25,
+															"internal gps" = 35,
 															"universal translator" = 35
 															)
 
@@ -70,7 +71,8 @@
 				left_part = softwareDoor()
 			if("hostscan")
 				left_part = softwareHostScan()
-
+			if("printer module")
+				left_part = softwarePrinter()
 
 	//usr << browse_rsc('windowbak.png') // This has been moved to the mob's Login() proc
 
@@ -145,7 +147,7 @@
 				radio.attack_self(src)
 
 			if("image") // Set pAI card display face
-				var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
+				var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
 				switch(newImage)
 					if(null)
 						card.emotion_icon = "null"
@@ -271,6 +273,10 @@
 					internal_gps = new(src)
 				internal_gps.attack_self(src)
 
+			if("printermodule")
+				aicamera.paiprint(usr)
+
+
 		paiInterface()
 
 // MENUS
@@ -305,6 +311,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 		if(s == "internal gps")
 			dat += "<a href='byond://?src=[REF(src)];software=internalgps;sub=0'>Internal GPS</a> <br>"
+		if(s == "printer module")
+			dat += "<a href='byond://?src=[REF(src)];software=printermodule;sub=0'>Printer Module</a> <br>"
 
 	dat += "<br>"
 
@@ -400,7 +408,7 @@
 /mob/living/silicon/pai/proc/softwareManifest()
 	. += "<h2>Crew Manifest</h2><br><br>"
 	if(GLOB.data_core.general)
-		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
+		for(var/datum/data/record/t in sort_record(GLOB.data_core.general))
 			. += "[t.fields["name"]] - [t.fields["rank"]]<BR>"
 	. += "</body></html>"
 	return .
@@ -411,7 +419,7 @@
 		if(0)
 			. += "<h3>Medical Records</h3><HR>"
 			if(GLOB.data_core.general)
-				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					. += "<A href='?src=[REF(src)];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
@@ -433,7 +441,7 @@
 		if(0)
 			. += "<h3>Security Records</h3><HR>"
 			if(GLOB.data_core.general)
-				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					. += "<A href='?src=[REF(src)];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<h3>Security Record</h3>"
@@ -572,3 +580,6 @@
 	dat += "<br><br>"
 	dat += "Messages: <hr> [aiPDA.tnote]"
 	return dat
+
+/mob/living/silicon/pai/proc/softwarePrinter()
+	aicamera.paiprint(usr)

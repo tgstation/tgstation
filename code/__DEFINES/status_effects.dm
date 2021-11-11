@@ -42,6 +42,8 @@
 #define STATUS_EFFECT_LIGHTNINGORB /datum/status_effect/lightningorb //Speed from a lightning orb!
 
 #define STATUS_EFFECT_MAYHEM /datum/status_effect/mayhem //Total bloodbath. Activated by orb of mayhem pickup/bottle of mayhem item.
+///Has had their health buffed 10% to 30% depending if the effect has been reapplied.
+#define STATUS_EFFECT_HEALTH_BUFFED /datum/status_effect/limited_buff/health_buff
 
 /////////////
 // DEBUFFS //

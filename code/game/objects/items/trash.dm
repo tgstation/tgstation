@@ -91,7 +91,7 @@
 
 /obj/item/trash/can/food/peaches
 	name = "canned peaches"
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan_empty"
 
 /obj/item/trash/can/food/peaches/maint
@@ -100,7 +100,7 @@
 
 /obj/item/trash/can/food/beans
 	name = "tin of beans"
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "beans_empty"
 
 /obj/item/trash/can/Initialize(mapload)
@@ -116,3 +116,8 @@
 /obj/item/trash/cnds
 	name = "\improper C&Ds packet"
 	icon_state = "cnds"
+
+/obj/item/trash/can/food/envirochow
+	name = "dog eat dog envirochow"
+	icon = 'icons/obj/food/canned.dmi'
+	icon_state = "envirochow_empty"

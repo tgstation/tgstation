@@ -185,7 +185,7 @@
 
 	if(keycheck(user) && the_secway.eddie_murphy)
 		if(COOLDOWN_FINISHED(src, message_cooldown))
-			the_secway.visible_message(span_warning("[src] sputters and refuses to move!"))
+			the_secway.visible_message(span_warning("[the_secway] sputters and refuses to move!"))
 			playsound(get_turf(the_secway), 'sound/effects/stall.ogg', 70)
 			COOLDOWN_START(src, message_cooldown, 0.75 SECONDS)
 		return COMPONENT_DRIVER_BLOCK_MOVE

@@ -100,7 +100,7 @@
 /turf/open/lava/plasma/mafia,
 /area/mafia)
 "x" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	max_integrity = 9999;
 	opacity = 0
 	},
@@ -122,7 +122,7 @@
 /turf/open/lava/plasma/mafia,
 /area/mafia)
 "A" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	max_integrity = 9999
 	},
 /obj/machinery/door/poddoor/preopen{

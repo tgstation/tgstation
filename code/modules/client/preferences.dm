@@ -97,14 +97,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		middleware += new middleware_type(src)
 
 	if(istype(C))
-		if(!IsGuestKey(C.key))
+		if(!is_guest_key(C.key))
 			load_path(C.ckey)
 			unlock_content = !!C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
 
 	// give them default keybinds and update their movement keys
-	key_bindings = deepCopyList(GLOB.default_hotkeys)
+	key_bindings = deep_copy_list(GLOB.default_hotkeys)
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 	randomise = get_default_randomization()
 
@@ -114,8 +114,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	randomise_appearance_prefs() //let's create a random character then - rather than a fat, bald and naked man.
-
-	C?.set_macros()
+	if(C)
+		apply_all_client_preferences()
+		C.set_macros()
 
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -247,14 +248,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (isnull(requested_preference))
 				return FALSE
 
-			if (!istype(requested_preference, /datum/preference/color) \
-				&& !istype(requested_preference, /datum/preference/color_legacy) \
-			)
+			if (!istype(requested_preference, /datum/preference/color))
 				return FALSE
 
 			var/default_value = read_preference(requested_preference.type)
-			if (istype(requested_preference, /datum/preference/color_legacy))
-				default_value = expand_three_digit_color(default_value)
 
 			// Yielding
 			var/new_color = input(
@@ -410,8 +407,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	if (!client)
 		return
 
-	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/plane_master/plane_master = new plane_master_type
+	for (var/plane_master_type in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/plane_master = new plane_master_type()
 		plane_master.screen_loc = "[assigned_map]:CENTER"
 		client?.screen |= plane_master
 

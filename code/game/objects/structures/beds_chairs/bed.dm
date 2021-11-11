@@ -54,6 +54,11 @@
 	resistance_flags = NONE
 	var/foldabletype = /obj/item/roller
 
+
+/obj/structure/bed/roller/examine(mob/user)
+	. = ..()
+	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
+
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
@@ -223,3 +228,9 @@
 /obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+
+//Double Beds, for luxurious sleeping, i.e. the captain and maybe heads- if people use this for ERP, send them to skyrat
+/obj/structure/bed/double
+	name = "double bed"
+	desc = "A luxurious double bed, for those too important for small dreams."
+	icon_state = "bed_double"
