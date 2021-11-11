@@ -54,7 +54,7 @@
 		if(mode == BOT_PATROL)
 			bot_patrol()
 
-	if(power)
+	if(on)
 		Vibe()
 
 	else

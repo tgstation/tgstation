@@ -89,7 +89,7 @@
 
 /mob/living/simple_animal/bot/medbot/update_icon_state()
 	. = ..()
-	if(!power)
+	if(!on)
 		icon_state = "[base_icon_state]0"
 		return
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
@@ -485,7 +485,7 @@
 		chemscan(src, A)
 
 /mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
-	if(!power)
+	if(!on)
 		return
 
 	if(!istype(C))
@@ -542,7 +542,7 @@
 				span_userdanger("[src] is trying to tend your wounds!"))
 
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
-				if((get_dist(src, patient) <= 1) && (power) && assess_patient(patient))
+				if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 					var/healies = heal_amount
 					var/obj/item/storage/firstaid/FA = firstaid
 					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
@@ -571,7 +571,7 @@
 			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
-	power = FALSE
+	on = FALSE
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 

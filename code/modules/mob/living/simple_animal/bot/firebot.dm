@@ -62,7 +62,7 @@
 	internal_ext.refill()
 
 /mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!power)
+	if(!on)
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
@@ -72,7 +72,7 @@
 		return ..()
 
 /mob/living/simple_animal/bot/firebot/RangedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!power)
+	if(!on)
 		return
 	if(internal_ext)
 		internal_ext.afterattack(A, src)
@@ -285,7 +285,7 @@
 
 /mob/living/simple_animal/bot/firebot/update_icon_state()
 	. = ..()
-	if(!power)
+	if(!on)
 		icon_state = "firebot0"
 		return
 	if(IsStun() || IsParalyzed() || stationary_mode) //Bot has yellow light to indicate stationary mode.
@@ -295,7 +295,7 @@
 
 
 /mob/living/simple_animal/bot/firebot/explode()
-	power = FALSE
+	on = FALSE
 	visible_message(span_boldannounce("[src] blows apart!"))
 
 	var/atom/Tsec = drop_location()

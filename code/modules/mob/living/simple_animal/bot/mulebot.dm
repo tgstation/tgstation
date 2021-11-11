@@ -195,7 +195,7 @@
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
-	icon_state = "[base_icon][power ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
+	icon_state = "[base_icon][on ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
@@ -244,7 +244,7 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
-	data["power"] = power
+	data["power"] = on
 	data["locked"] = locked
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["mode"] = mode ? mode_name[mode] : "Ready"
@@ -281,7 +281,7 @@
 				locked = !locked
 				. = TRUE
 		if("power")
-			if(power)
+			if(on)
 				turn_off()
 			else if(open)
 				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
@@ -549,7 +549,7 @@
 	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
-	if(!power)
+	if(!on)
 		return
 	if(!has_power())
 		turn_off()
@@ -566,7 +566,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
-	if(!power || client || (num_steps <= 0) || !has_power())
+	if(!on || client || (num_steps <= 0) || !has_power())
 		return PROCESS_KILL
 	num_steps--
 
@@ -659,7 +659,7 @@
 
 // starts bot moving to current destination
 /mob/living/simple_animal/bot/mulebot/proc/start()
-	if(!power)
+	if(!on)
 		return
 	if(destination == home_destination)
 		mode = BOT_GO_HOME
@@ -670,7 +670,7 @@
 // starts bot moving to home
 // sends a beacon query to find
 /mob/living/simple_animal/bot/mulebot/proc/start_home()
-	if(!power)
+	if(!on)
 		return
 	INVOKE_ASYNC(src, .proc/do_start_home)
 
@@ -766,7 +766,7 @@
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
 /mob/living/simple_animal/bot/mulebot/proc/get_nav()
-	if(!power || wires.is_cut(WIRE_BEACON))
+	if(!on || wires.is_cut(WIRE_BEACON))
 		return
 
 	for(var/obj/machinery/navbeacon/NB in GLOB.deliverybeacons)
@@ -833,7 +833,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
 	SIGNAL_HANDLER
 
-	if(!power)
+	if(!on)
 		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
 	if((cell && (cell.charge < cell_move_power_usage)) || !has_power())

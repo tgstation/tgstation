@@ -42,7 +42,7 @@
 	var/list/player_access = list() //Additonal access the bots gets when player controlled
 	var/emagged = FALSE
 	var/list/prev_access = list()
-	var/power = TRUE
+	var/on = TRUE
 	var/open = FALSE//Maint panel
 	var/locked = TRUE
 	///If the bot is hacked by silicons or emagged by humans.
@@ -59,7 +59,7 @@
 	var/list/ignore_list = list() //List of unreachable targets for an ignore-list enabled bot to ignore.
 	var/mode = BOT_IDLE //Standardizes the vars that indicate the bot is busy with its function.
 	var/tries = 0 //Number of times the bot tried and failed to move.
-	var/remote_enabled = TRUE //If disabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
+	var/remote_disabled = FALSE //If enabled, the AI cannot *Remotely* control a bot. It can still control it through cameras.
 	var/mob/living/silicon/ai/calling_ai //Links a bot to the AI calling it.
 	var/obj/item/radio/Radio //The bot's radio, for speaking to people.
 	var/radio_key = null //which channels can the bot listen to
@@ -108,7 +108,7 @@
 			return "<b>pAI Controlled</b>"
 		else
 			return "<b>Autonomous</b>"
-	else if(!power)
+	else if(!on)
 		return "<span class='bad'>Inactive</span>"
 	else if(!mode)
 		return "<span class='good'>Idle</span>"
@@ -121,7 +121,7 @@
 /mob/living/simple_animal/bot/proc/get_mode_ui()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return paicard ? "pAI Controlled" : "Autonomous"
-	else if(!power)
+	else if(!on)
 		return "Inactive"
 	else if(!mode)
 		return "Idle"
@@ -131,22 +131,22 @@
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return FALSE
-	power = TRUE
+	on = TRUE
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
-	set_light_on(power)
+	set_light_on(on)
 	update_appearance()
 	to_chat(src, span_boldnotice("You turned on!"))
 	diag_hud_set_botstat()
 	return TRUE
 
 /mob/living/simple_animal/bot/proc/turn_off()
-	power = FALSE
+	on = FALSE
 	ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
-	set_light_on(power)
+	set_light_on(on)
 	bot_reset() //Resets an AI's call, should it exist.
 	to_chat(src, span_userdanger("You turned off!"))
 	update_appearance()
@@ -214,7 +214,7 @@
 		return
 	if(!locked && open) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		emagged = TRUE
-		remote_enabled = FALSE //Manually emagging the bot locks out the AI built in panel.
+		remote_disabled = TRUE //Manually emagging the bot locks out the AI built in panel.
 		locked = TRUE //Access denied forever!
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
@@ -273,13 +273,13 @@
 	else
 		ignorelistcleanuptimer++
 
-	if(!power || client)
+	if(!on || client)
 		return FALSE
 
 	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, salute_delay)
 		for(var/mob/living/simple_animal/bot/B in view(5, src))
-			if(!B.commissioned && B.power)
+			if(!B.commissioned && B.on)
 				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
 				break
 
@@ -381,14 +381,14 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	var/was_on = power
+	var/was_on = on
 	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message(span_notice("[paicard] is flies out of [bot_name]!"),span_warning("You are forcefully ejected from [bot_name]!"))
 		ejectpai(0)
-	if(power)
+	if(on)
 		turn_off()
 	addtimer(CALLBACK(src, .proc/emp_reset, was_on), severity*30 SECONDS)
 
@@ -403,7 +403,7 @@
 	text_dehack_fail = "You fail to reset [name]."
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-	if((!power) || (!message))
+	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
 		Radio.talk_into(src, message, channel)
@@ -574,7 +574,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(path?.len) //Ensures that a valid path is calculated!
 		var/end_area = get_area_name(waypoint)
-		if(!power)
+		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
@@ -731,7 +731,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!power || emagged || !remote_enabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!on || emagged || remote_disabled) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client)
 		bot_control_message(command, user)
@@ -844,8 +844,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		data["pai"]["card_inserted"] = paicard
 		data["pai"]["allow_pai"] = allow_pai
-		data["settings"]["remote_enabled"] = remote_enabled
-		data["settings"]["power"] = power
+		data["settings"]["remote_enabled"] = !remote_disabled
+		data["settings"]["power"] = on
 		data["settings"]["auto_patrol"] = auto_patrol
 	return data
 
@@ -854,10 +854,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	// Not working for some reason - allowed(usr) evaluates to true
-	// if(!bot_core.allowed(usr) || !usr.has_unlimited_silicon_privilege)
-	// 	to_chat(usr, span_warning("Access denied."))
-	// 	return
+	if(!bot_core.allowed(usr) && !usr.has_unlimited_silicon_privilege)
+		to_chat(usr, span_warning("Access denied."))
+		return
 	if(action == "lock")
 		locked = !locked
 	else if (action == "maintenance")
@@ -866,13 +865,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 	switch(action)
 		if("power")
-			power = !power
+			on = !on
 			update_appearance()
 		if("auto_patrol")
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
-			remote_enabled = !remote_enabled
+			remote_disabled = !remote_disabled
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))
 				return
@@ -901,7 +900,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return
 
 /mob/living/simple_animal/bot/update_icon_state()
-	icon_state = "[initial(icon_state)][power]"
+	icon_state = "[initial(icon_state)][on]"
 	return ..()
 
 // Machinery to simplify topic and access calls

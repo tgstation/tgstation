@@ -103,7 +103,7 @@
 
 	chosen_name = name
 	get_targets()
-	icon_state = "cleanbot[power]"
+	icon_state = "cleanbot[on]"
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
@@ -127,12 +127,12 @@
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[power]"
+	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[power]"
+	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
@@ -329,7 +329,7 @@
 			target = null
 
 		mode = BOT_IDLE
-		icon_state = "cleanbot[power]"
+		icon_state = "cleanbot[on]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [A]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
@@ -369,7 +369,7 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	power = FALSE
+	on = FALSE
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
@@ -386,7 +386,7 @@
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
 	bot_core_type = /obj/machinery/bot_core/cleanbot/medbay
-	power = FALSE
+	on = FALSE
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)

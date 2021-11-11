@@ -56,7 +56,7 @@
 
 
 /mob/living/simple_animal/bot/secbot/grievous/handle_automated_action()
-	if(!power)
+	if(!on)
 		return
 	switch(mode)
 		if(BOT_IDLE) // idle

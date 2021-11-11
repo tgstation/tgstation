@@ -55,7 +55,7 @@
 	walk_to(src,0)
 	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
 	do_sparks(3, TRUE, src)
-	power = FALSE
+	on = FALSE
 	new /obj/effect/particle_effect/foam(loc)
 
 	..()
@@ -67,12 +67,12 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][power ? "-on" : null]"
+	icon_state = "[base_icon_state][on ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
-	if(power)
+	if(on)
 		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
@@ -217,8 +217,8 @@
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		data["pai"]["card_inserted"] = paicard
 		data["pai"]["allow_pai"] = allow_pai
-		data["settings"]["remote_enabled"] = remote_enabled
-		data["settings"]["power"] = power
+		data["settings"]["remote_enabled"] = !remote_disabled
+		data["settings"]["on"] = on
 	return data
 
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
