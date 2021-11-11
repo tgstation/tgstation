@@ -263,3 +263,128 @@
       tile have been fixed to only have one.
   - imageadd: Turret Control frames now have a dedicated icon, rather than literally
       using the APC image.
+2021-11-10:
+  ATHATH:
+  - bugfix: Quantum pads can teleport non-living things again.
+  - bugfix: Quantum pads can teleport creatures who aren't buckled to something again.
+      Creatures who are buckled to something unanchored can still be teleported by
+      quantum pads, but creatures who are buckled to something anchored cannot.
+  - bugfix: Quantum pads can no longer involuntarily teleport ghosts, although ghosts
+      can still click on a quantum pad to teleport to that quantum pad's destination
+      pad.
+  ArcaneMusic:
+  - expansion: Cargo can now purchase individual tanks of exodrone fuel for around
+      3 crates worth of credits.
+  Ghommie:
+  - bugfix: 'Fixed missing award icons in the achievement menu sprite: All achievements
+      outside the misc category have been given their own icons and should no longer
+      use the base background one.'
+  Guillaume Prata:
+  - bugfix: A small mistake on our contract with Nakamura Engineering made them supply
+      the station with Rad Insulated Atmos Hardsuits. The mistake was fixed so please
+      don't stand near the SM or the HFR with the hardsuit, it was never made for
+      that.
+  - bugfix: You can't put a PKA inside your Mining hardsuit helmet anymore but you
+      can put it in your hardsuit instead!
+  - balance: Pneumatic airlocks seals are normal sized now and can be printed at the
+      Science lathe.
+  - balance: After dealing with another weekly subverted Engborg spacing the armory.
+      CentCom's Robotics division decided to downgrade the Engborg RCD by removing
+      it's Reinforced Wall deconstruction.
+  Iamgoofball:
+  - bugfix: Fixes a grave oversight of being able to type with boxing gloves on.
+  JohnFulpWillard:
+  - admin: Silicon activity is now logged in silicon logs rather than being stuffed
+      into game.log
+  LemonInTheDark:
+  - bugfix: Fixed shoving being agressively weird, please report any oddities it's
+      a bit of a headache getting behavior to match and I'm flying a bit blind
+  Melbert:
+  - admin: Admins can now tell when other admins are readied up in the pre-game lobby.
+      Check adminwho or view your stat panel.
+  - bugfix: Icebox chapel maint is no longer spaced, literally
+  - bugfix: 'Icebox science: You can no longer peer into the science break room from
+      maintenance, the loose light fixture has been relocated to a wall, and scientists
+      can escape their own maintenance. Also the extra deconstructive analyzer was
+      killed.'
+  NamelessFairy:
+  - admin: Bans will nolonger play a video
+  Paxilmaniac:
+  - bugfix: a misplaced pipe in tramstation's atmospherics that was causing wrenched
+      down portable scrubbers to melt has been removed
+  That REALLY Good Soda Flavor:
+  - qol: You can drag a headset onto yourself to open the menu.
+  Timberpoes:
+  - refactor: Refactor parts of the job assignment system, unifying job eligibility
+      checks.
+  - qol: Adds improved logging for job assignment.
+  Wallem:
+  - qol: Ants have become easier to pour in tiles with vents, pipes or cables.
+  - bugfix: Makes ants incapable of affecting the afterlife.
+  - bugfix: Ants, gibs, and garbage cleanable decals now properly show up above pipes.
+  Watermelon914:
+  - bugfix: Fixed the response signal not being able to be connected to regular signals.
+  antropod:
+  - bugfix: fixed chem analyzer not showing impure reagents that don't have impure
+      chem (like multiver)
+  jjpark-kb:
+  - bugfix: 'metastation: placed some missing pipes and removed random wire in library'
+  jlsnow301:
+  - bugfix: Virology's PanD.E.M.I.C 2200 should no longer bluescreen
+  - refactor: The Pandemic machine has been refreshed and is more helpful, intuitive
+      to use.
+  timothymtorres:
+  - expansion: The smoker quirk has new side effects that cause a person's lungs to
+      have 25% less max health and healing.  They also gain a 50% resistance from
+      lung damage caused from smoking.
+  - expansion: Exotic cigarette brands now deal different amounts of lung damage.
+      This applies to syndicate, shady jim's, xeno, and Little Timmy's Candy brands.
+  - bugfix: Fixed Havana cigars running out of nicotine. As a result of increasing
+      the starting nicotine amount, the total `chem_volume` was increased to allow
+      room for other chems to still be injected.
+2021-11-11:
+  ATHATH:
+  - bugfix: The gluttony sin ruin is no longer radioactive.
+  Ghilker:
+  - expansion: add the manual crafting of many atmos devices by the crafting menu
+  Ghommie:
+  - expansion: Added a reagents scanner circuit component.
+  - bugfix: Fixed non-human and non-silicon mobs being unable to mine rock walls when
+      bumping into them.
+  - bugfix: The phobia of authority will no longer make mobs afraid of regular id
+      cards.
+  - expansion: Added a material scanner circuit component.
+  - bugfix: Stops the "You lack optic scanners, you get stunned" singularity event
+      from affecting blinded or dead mobs.
+  - bugfix: Blob structures can no longer be animated with bolts of animation.
+  - bugfix: Chimps no longer get grumpy when you hug them or throw things with no
+      throw force at them.
+  Guillaume Prata:
+  - balance: Due to budget cuts, the RPDs can't place transit tube under dense objects
+      like windows anymore.
+  JohnFulpWillard:
+  - admin: Priming grenades are now logged in individual's attack logs.
+  Justice12354:
+  - bugfix: Cyborgs can now shake up compromised carbons with the hugging module.
+  Krysonism:
+  - imageadd: The irradiated status effect has a new alert sprite.
+  LemonInTheDark:
+  - balance: The nob + antinob hfr fuel type is now limited to 1e8 instead of 1e8
+      * 1.2
+  Mothblocks:
+  - bugfix: Random names (such as from the secrets panel) will no longer override
+      your preferences.
+  Paxilmaniac:
+  - qol: the whiteship of tram station has been made much shorter, allowing for less
+      lag on movement and easier docking
+  Tastyfish:
+  - bugfix: The "Choking (No N2O)" alert now functions correctly.
+  darkmanx37:
+  - qol: Adamantine will now use it's own texture with color consistent to one of
+      the adamantine slime.
+  - imageadd: Adamantine textures.
+  remuluson2:
+  - rscadd: Added antivirus-protection to plasmaman suits and all its variants(the
+      entire set).
+  softcerv:
+  - bugfix: fixes the fall chance on mending globules to properly work as intended.

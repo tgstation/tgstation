@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Icebox science: You can no longer peer into the science break room from maintenance, the loose light fixture has been relocated to a wall, and scientists can escape their own maintenance. Also the extra deconstructive analyzer was killed."

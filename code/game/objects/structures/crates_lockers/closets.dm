@@ -74,7 +74,12 @@
 	. = ..()
 	update_appearance()
 	PopulateContents()
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/locker_carbon)
+	if(QDELETED(src)) //It turns out populate contents has a 1 in 100 chance of qdeling src on /obj/structure/closet/emcloset
+		return //Why
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -679,19 +684,22 @@
 /obj/structure/closet/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_carbon(obj/structure/closet/closet, mob/living/carbon/shover, mob/living/carbon/target)
+/obj/structure/closet/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
+	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
+		return
+	if(!opened && !shove_blocked)
+		return
 	if(opened)
 		target.forceMove(src)
-	if(!(locked || welded))
-		toggle()
+	else
+		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (locker/crate)")
-	if(locked || welded)
-		return
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 #undef LOCKER_FULL

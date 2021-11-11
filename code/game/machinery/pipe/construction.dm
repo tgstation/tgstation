@@ -299,6 +299,27 @@ Buildable meters
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
 
+/obj/item/pipe/examine(mob/user)
+	. = ..()
+	. += span_notice("The pipe layer is set to [piping_layer].")
+	. += span_notice("You can change the pipe layer by Alt-Clicking the device.")
+	. += span_notice("You can rotate it by using it in hand.")
+
+/obj/item/pipe/AltClick(mob/user)
+	. = ..()
+	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+	set_piping_layer(layer_to_set)
+	visible_message("You set the pipe layer to [piping_layer].")
+
+/obj/item/pipe/trinary/flippable/examine(mob/user)
+	. = ..()
+	. += span_notice("You can flip the device by Ctrl-Clicking it.")
+
+/obj/item/pipe/trinary/flippable/CtrlClick(mob/user)
+	. = ..()
+	do_a_flip()
+	visible_message("You flip the device.")
+
 /obj/item/pipe_meter
 	name = "meter"
 	desc = "A meter that can be wrenched on pipes, or attached to the floor with screws."

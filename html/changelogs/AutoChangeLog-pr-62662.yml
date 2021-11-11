@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - expansion: "The smoker quirk has new side effects that cause a person's lungs to have 25% less max health and healing.  They also gain a 50% resistance from lung damage caused from smoking."
-  - expansion: "Exotic cigarette brands now deal different amounts of lung damage. This applies to syndicate, shady jim's, xeno, and Little Timmy's Candy brands."
-  - bugfix: "Fixed Havana cigars running out of nicotine. As a result of increasing the starting nicotine amount, the total `chem_volume` was increased to allow room for other chems to still be injected."

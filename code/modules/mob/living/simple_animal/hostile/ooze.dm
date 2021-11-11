@@ -361,7 +361,7 @@
 	name = "mending globule"
 	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
+	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
 	nodamage = TRUE
 	damage = 0
 
@@ -371,7 +371,7 @@
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "globule"
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
+	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall_chance" = 0.5)
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
