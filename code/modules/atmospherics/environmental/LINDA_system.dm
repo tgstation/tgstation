@@ -149,5 +149,5 @@
 	turf_mixture.parse_gas_string(text)
 
 	air.merge(turf_mixture)
-	archive()
+	LINDA_CYCLE_ARCHIVE(src)
 	SSair.add_to_active(src)
