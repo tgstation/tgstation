@@ -37,7 +37,7 @@
 
 	data["robots"] = list()
 	for(var/mob/living/simple_animal/bot/B in GLOB.bots_list)
-		if(B.z != ai_zlevel || B.bot_status_flags & BOT_AI_REMOTE_DISABLED) //Only non-emagged bots on the same Z-level are detected!
+		if(B.z != ai_zlevel || !(B.bot_status_flags & BOT_AI_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
 		var/list/robot_data = list(
 			name = B.name,
@@ -64,14 +64,14 @@
 				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
 				return
 			owner.Bot = locate(params["ref"]) in GLOB.bots_list
-			if(!owner.Bot || owner.Bot.bot_status_flags & BOT_AI_REMOTE_DISABLED || owner.control_disabled)
+			if(!owner.Bot || !(owner.Bot.bot_status_flags & BOT_AI_REMOTE_ENABLED) || owner.control_disabled)
 				return
 			owner.waypoint_mode = TRUE
 			to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
 			. = TRUE
 		if("interface") //Remotely connect to a bot!
 			owner.Bot = locate(params["ref"]) in GLOB.bots_list
-			if(!owner.Bot || owner.Bot.bot_status_flags & BOT_AI_REMOTE_DISABLED || owner.control_disabled)
+			if(!owner.Bot || !(owner.Bot.bot_status_flags & BOT_AI_REMOTE_ENABLED) || owner.control_disabled)
 				return
 			owner.Bot.attack_ai(usr)
 			. = TRUE

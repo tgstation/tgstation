@@ -756,7 +756,7 @@ Code:
 		var/botcount = 0
 		for(var/B in GLOB.bots_list) //Git da botz
 			var/mob/living/simple_animal/bot/Bot = B
-			if(!(Bot.bot_status_flags & BOT_MODE_ON) || Bot.z != zlevel || Bot.bot_status_flags & BOT_AI_REMOTE_DISABLED || !(Bot.bot_type in bot_access)) //Only non-emagged bots on the same Z-level are detected!
+			if(!(Bot.bot_status_flags & BOT_MODE_ON) || Bot.z != zlevel || !(Bot.bot_status_flags & BOT_AI_REMOTE_ENABLED) || !(Bot.bot_type in bot_access)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=[REF(src)];op=control;bot=[REF(Bot)]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"
 			botcount++

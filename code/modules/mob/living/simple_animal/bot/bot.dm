@@ -28,12 +28,12 @@
 	light_range = 3
 	light_power = 0.9
 
-	/// Will other (noncommissioned) bots salute this bot?
+	///Will other (noncommissioned) bots salute this bot?
 	var/commissioned = FALSE
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
 
-	///The core this bot uses, usually only used to set access?
+	///The core this bot uses, usually only used to set access? This is a hack and should be removed eventually.
 	var/obj/machinery/bot_core/bot_core = /obj/machinery/bot_core
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
@@ -58,8 +58,8 @@
 	///All initial access this bot started with.
 	var/list/prev_access = list()
 	///Bot-related status flags on the Bot to deal with how they act.
-	var/bot_status_flags = BOT_MODE_ON | BOT_COVER_LOCKED
-//	Selections: SECBOT_MODE_ON | BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_EMAGGED | BOT_HACKED | BOT_AI_REMOTE_DISABLED
+	var/bot_status_flags = BOT_MODE_ON | BOT_COVER_LOCKED | BOT_AI_REMOTE_ENABLED
+//	Selections: SECBOT_MODE_ON | BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_EMAGGED | BOT_HACKED | BOT_AI_REMOTE_ENABLED
 
 	///Small name of what the bot gets messed with when getting hacked/emagged.
 	var/hackables = "system circuits"
@@ -238,14 +238,15 @@
 	if(prob(50))
 		drop_part(robot_arm, location_destroyed)
 
-/mob/living/simple_animal/bot/emag_act(mob/user)
+/mob/living/simple_animal/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(bot_status_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		bot_status_flags &= ~BOT_COVER_LOCKED
 		to_chat(user, span_notice("You bypass [src]'s controls."))
 		return
 	if(!(bot_status_flags & BOT_COVER_LOCKED) && bot_status_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		bot_status_flags |= BOT_EMAGGED
-		bot_status_flags &= ~(BOT_AI_REMOTE_DISABLED|BOT_COVER_LOCKED) //Manually emagging the bot locks out the AI built in panel.
+		bot_status_flags &= ~(BOT_AI_REMOTE_ENABLED|BOT_COVER_LOCKED) //Manually emagging the bot locks out the AI built in panel.
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -754,7 +755,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!(bot_status_flags & BOT_MODE_ON) || bot_status_flags & BOT_EMAGGED || bot_status_flags & BOT_AI_REMOTE_DISABLED) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!(bot_status_flags & BOT_MODE_ON) || bot_status_flags & BOT_EMAGGED || !(bot_status_flags & BOT_AI_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client)
 		bot_control_message(command, user)
@@ -895,7 +896,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			auto_patrol = !auto_patrol
 			bot_reset()
 		if("remote")
-			bot_status_flags ^= BOT_AI_REMOTE_DISABLED
+			bot_status_flags ^= BOT_AI_REMOTE_ENABLED
 		if("hack")
 			if(!(bot_status_flags & BOT_EMAGGED))
 				bot_status_flags |= (BOT_EMAGGED|BOT_HACKED|BOT_COVER_LOCKED)
@@ -947,7 +948,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		hack += "[bot_status_flags & BOT_EMAGGED ? "Software compromised! Unit may exhibit dangerous or erratic behavior." : "Unit operating normally. Release safety lock?"]<BR>"
 		hack += "Harm Prevention Safety System: <A href='?src=[REF(src)];operation=hack'>[bot_status_flags & BOT_EMAGGED ? "<span class='bad'>DANGER</span>" : "Engaged"]</A><BR>"
 	else if(!(bot_status_flags & BOT_COVER_LOCKED)) //Humans with access can use this option to hide a bot from the AI's remote control panel and PDA control.
-		hack += "Remote network control radio: <A href='?src=[REF(src)];operation=remote'>[bot_status_flags & BOT_AI_REMOTE_DISABLED ? "Disconnected" : "Connected"]</A><BR>"
+		hack += "Remote network control radio: <A href='?src=[REF(src)];operation=remote'>[bot_status_flags & BOT_AI_REMOTE_ENABLED ? "Connected" : "Disconnected"]</A><BR>"
 	return hack
 
 /mob/living/simple_animal/bot/proc/showpai(mob/user)

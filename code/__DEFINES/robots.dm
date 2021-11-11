@@ -69,8 +69,8 @@
 #define BOT_EMAGGED (1<<3)
 ///The Bot has been hacked by a Silicon, emagging them, but revertable.
 #define BOT_HACKED (1<<4)
-///The Bot is prevented from being used remotely by an AI.
-#define BOT_AI_REMOTE_DISABLED (1<<5)
+///The Bot can be remotely accessed by an AI while this is on.
+#define BOT_AI_REMOTE_ENABLED (1<<5)
 
 /// Default view range for finding targets.
 #define DEFAULT_SCAN_RANGE 7
