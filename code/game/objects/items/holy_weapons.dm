@@ -155,7 +155,7 @@
 	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
-			if(!chaplain_spawnable)
+			if(!initial(nullrod_type.chaplain_spawnable))
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))

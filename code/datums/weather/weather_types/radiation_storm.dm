@@ -38,6 +38,9 @@
 	var/mob/living/carbon/human/H = L
 	if(!H.dna || HAS_TRAIT(H, TRAIT_GENELESS))
 		return
+		
+	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+		return
 
 	if (SSradiation.wearing_rad_protected_clothing(H))
 		return

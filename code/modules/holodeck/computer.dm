@@ -170,6 +170,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			if(program_to_load)
 				load_program(program_to_load)
 		if("safety")
+			if (!(obj_flags & EMAGGED) || !issilicon(usr))
+				return
 			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED,FALSE)

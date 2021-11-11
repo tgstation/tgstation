@@ -413,7 +413,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/proc/fire_cascade(atom/centre,max_range)
 	playsound(get_turf(centre), 'sound/items/welder.ogg', 75, TRUE)
 	var/_range = 1
-	for(var/i = 0, i <= max_range,i++)
+	for(var/i in 0 to max_range)
 		for(var/turf/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)

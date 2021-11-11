@@ -28,7 +28,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(QDELETED(src))
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = trim(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	var/raw_msg = msg
 
 	var/list/filter_result = is_ooc_filtered(msg)

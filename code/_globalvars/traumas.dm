@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/rank/medical/chief_medical_officer, /obj/item/clothing/under/rank/engineering/chief_engineer,
 		/obj/item/clothing/under/rank/centcom/officer, /obj/item/clothing/under/rank/centcom/commander,
 		/obj/item/melee/baton/telescopic, /obj/item/card/id/advanced/silver, /obj/item/card/id/advanced/gold,
-		/obj/item/card/id/advanced/centcom, /obj/machinery/door/airlock/command, /obj/item/card/id/advanced,
+		/obj/item/card/id/advanced/centcom, /obj/machinery/door/airlock/command,
 		/obj/item/toy/figure/captain, /obj/item/toy/figure/ce,
 		/obj/item/toy/figure/dsquad, /obj/item/toy/figure/hop, /obj/item/toy/figure/hos, /obj/item/toy/figure/rd,
 		/obj/item/toy/figure/cmo, /obj/item/stamp/captain, /obj/item/stamp/hop, /obj/item/stamp/hos, /obj/item/stamp/ce,
