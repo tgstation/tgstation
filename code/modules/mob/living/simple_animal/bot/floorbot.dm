@@ -19,12 +19,12 @@
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection
-	var/placecustom = FALSE
+	var/replacetiles = FALSE
 	var/placetiles = FALSE
 	var/maxtiles = 100
 	var/obj/item/stack/tile/tilestack
-	var/repairdamage = TRUE
-	var/tilehull = FALSE
+	var/fixfloors = TRUE
+	var/autotile = FALSE
 	var/max_targets = 50
 	var/turf/target
 	var/oldloc = null
@@ -135,10 +135,10 @@
 /mob/living/simple_animal/bot/floorbot/ui_data(mob/user)
 	var/list/data = ..()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		data["custom_controls"]["tile_hull"] = tilehull
+		data["custom_controls"]["tile_hull"] = autotile
 		data["custom_controls"]["place_tiles"] =  placetiles
-		data["custom_controls"]["place_custom"] = placecustom
-		data["custom_controls"]["repair_damage"] = repairdamage
+		data["custom_controls"]["place_custom"] = replacetiles
+		data["custom_controls"]["repair_damage"] = fixfloors
 		data["custom_controls"]["traction_magnets"] = HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		data["custom_controls"]["tile_stack"] = 0
 		data["custom_controls"]["line_mode"] = FALSE
@@ -155,13 +155,13 @@
 		return
 	switch(action)
 		if("place_custom")
-			placecustom = !placecustom
+			replacetiles = !replacetiles
 		if("place_tiles")
 			placetiles = !placetiles
 		if("repair_damage")
-			repairdamage = !repairdamage
+			fixfloors = !fixfloors
 		if("tile_hull")
-			tilehull = !tilehull
+			autotile = !autotile
 		if("traction_magnets")
 			toggle_magnet(!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT), FALSE)
 		if("eject_tiles")
@@ -338,8 +338,8 @@
 		visible_message(span_notice("[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] "))
 		mode = BOT_REPAIRING
 		if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING)
-			if(tilehull) //Build the floor and include a tile.
-				if(placecustom && tilestack)
+			if(autotile) //Build the floor and include a tile.
+				if(replacetiles && tilestack)
 					tilestack.place_tile(target_turf)
 					if(!tilestack)
 						speak("Requesting refill of custom floor tiles to continue replacing.")
@@ -351,7 +351,7 @@
 	else
 		var/turf/open/floor/F = target_turf
 		var/success = FALSE
-		var/was_replacing = placecustom
+		var/was_replacing = replacetiles
 
 		if(F.broken || F.burnt || isplatingturf(F))
 			toggle_magnet()
@@ -360,7 +360,7 @@
 			if(do_after(src, 50, target = F) && mode == BOT_REPAIRING)
 				success = TRUE
 
-		else if(placecustom && tilestack && F.type != tilestack.turf_type)
+		else if(replacetiles && tilestack && F.type != tilestack.turf_type)
 			toggle_magnet()
 			mode = BOT_REPAIRING
 			visible_message(span_notice("[src] begins replacing the floor tiles."))
@@ -384,7 +384,7 @@
 	icon_state = "[toolbox_color]floorbot[on]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
-	on =FALSE
+	on = FALSE
 	target = null
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()

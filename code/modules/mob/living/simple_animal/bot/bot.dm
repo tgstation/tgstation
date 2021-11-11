@@ -838,15 +838,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["custom_controls"] = list()
 	data["emagged"] = emagged
 	data["locked"] = locked
-	data["maintenance_open"] = open
+	data["maintenance_hatch"] = open
 	data["pai"] = list()
 	data["settings"] = list()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
 		data["pai"]["card_inserted"] = paicard
 		data["pai"]["allow_pai"] = allow_pai
-		data["settings"]["remote_enabled"] = !remote_disabled
-		data["settings"]["power"] = on
-		data["settings"]["auto_patrol"] = auto_patrol
+		data["settings"]["airplane_mode"] = !remote_disabled
+		data["settings"]["power_switch"] = on
+		data["settings"]["patrol_station"] = auto_patrol
 	return data
 
 // Actions received from TGUI
@@ -859,18 +859,18 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 	if(action == "lock")
 		locked = !locked
-	else if (action == "maintenance")
-		open = !open
 	if(locked && !(issilicon(usr) || isAdminGhostAI(usr)))
 		return
 	switch(action)
-		if("power")
+		if("power_switch")
 			on = !on
 			update_appearance()
-		if("auto_patrol")
+		if("maintenance_hatch")
+			open = !open
+		if("patrol_station")
 			auto_patrol = !auto_patrol
 			bot_reset()
-		if("remote")
+		if("airplane_mode")
 			remote_disabled = !remote_disabled
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))

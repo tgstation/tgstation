@@ -280,7 +280,7 @@
 			if(usr.has_unlimited_silicon_privilege)
 				locked = !locked
 				. = TRUE
-		if("power")
+		if("on")
 			if(on)
 				turn_off()
 			else if(open)

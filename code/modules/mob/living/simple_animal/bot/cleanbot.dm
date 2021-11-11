@@ -18,10 +18,10 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
-	var/clean_blood = TRUE
-	var/clean_trash = FALSE
-	var/clean_pests = FALSE
-	var/clean_graffiti = FALSE
+	var/blood = TRUE
+	var/trash = FALSE
+	var/pests = FALSE
+	var/drawn = FALSE
 
 	var/list/target_types
 	var/obj/effect/decal/cleanable/target
@@ -228,7 +228,7 @@
 	if(!target && emagged) // When emagged, target humans who slipped on the water and melt their faces off
 		target = scan(/mob/living/carbon)
 
-	if(!target && clean_pests) //Search for pests to exterminate first.
+	if(!target && pests) //Search for pests to exterminate first.
 		target = scan(/mob/living/simple_animal)
 
 	if(!target) //Search for decals then.
@@ -237,10 +237,10 @@
 	if(!target) //Checks for remains
 		target = scan(/obj/effect/decal/remains)
 
-	if(!target && clean_trash) //Then for trash.
+	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
 
-	if(!target && clean_trash) //Search for dead mices.
+	if(!target && trash) //Search for dead mices.
 		target = scan(/obj/item/food/deadmouse)
 
 	if(!target && auto_patrol) //Search for cleanables it can see.
@@ -297,19 +297,19 @@
 		/obj/effect/decal/remains,
 	)
 
-	if(clean_blood)
+	if(blood)
 		target_types += /obj/effect/decal/cleanable/xenoblood
 		target_types += /obj/effect/decal/cleanable/blood
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
-	if(clean_pests)
+	if(pests)
 		target_types += /mob/living/basic/cockroach
 		target_types += /mob/living/simple_animal/mouse
 
-	if(clean_graffiti)
+	if(drawn)
 		target_types += /obj/effect/decal/cleanable/crayon
 
-	if(clean_trash)
+	if(trash)
 		target_types += /obj/item/trash
 		target_types += /obj/item/food/deadmouse
 
@@ -396,10 +396,10 @@
 	var/list/data = ..()
 
 	if(!locked || issilicon(user)|| isAdminGhostAI(user))
-		data["custom_controls"]["clean_blood"] = clean_blood
-		data["custom_controls"]["clean_trash"] = clean_trash
-		data["custom_controls"]["clean_graffiti"] = clean_graffiti
-		data["custom_controls"]["clean_pests"] = clean_pests
+		data["custom_controls"]["clean_blood"] = blood
+		data["custom_controls"]["clean_trash"] = trash
+		data["custom_controls"]["clean_graffiti"] = drawn
+		data["custom_controls"]["pest_control"] = pests
 	return data
 
 // Actions received from TGUI
@@ -409,13 +409,13 @@
 		return
 	switch(action)
 		if("clean_blood")
-			clean_blood = !clean_blood
-		if("clean_pests")
-			clean_pests = !clean_pests
+			blood = !blood
+		if("pest_control")
+			pests = !pests
 		if("clean_trash")
-			clean_trash = !clean_trash
+			trash = !trash
 		if("clean_graffiti")
-			clean_graffiti = !clean_graffiti
+			drawn = !drawn
 	get_targets()
 	return
 
