@@ -342,3 +342,49 @@
   - bugfix: Fixed Havana cigars running out of nicotine. As a result of increasing
       the starting nicotine amount, the total `chem_volume` was increased to allow
       room for other chems to still be injected.
+2021-11-11:
+  ATHATH:
+  - bugfix: The gluttony sin ruin is no longer radioactive.
+  Ghilker:
+  - expansion: add the manual crafting of many atmos devices by the crafting menu
+  Ghommie:
+  - expansion: Added a reagents scanner circuit component.
+  - bugfix: Fixed non-human and non-silicon mobs being unable to mine rock walls when
+      bumping into them.
+  - bugfix: The phobia of authority will no longer make mobs afraid of regular id
+      cards.
+  - expansion: Added a material scanner circuit component.
+  - bugfix: Stops the "You lack optic scanners, you get stunned" singularity event
+      from affecting blinded or dead mobs.
+  - bugfix: Blob structures can no longer be animated with bolts of animation.
+  - bugfix: Chimps no longer get grumpy when you hug them or throw things with no
+      throw force at them.
+  Guillaume Prata:
+  - balance: Due to budget cuts, the RPDs can't place transit tube under dense objects
+      like windows anymore.
+  JohnFulpWillard:
+  - admin: Priming grenades are now logged in individual's attack logs.
+  Justice12354:
+  - bugfix: Cyborgs can now shake up compromised carbons with the hugging module.
+  Krysonism:
+  - imageadd: The irradiated status effect has a new alert sprite.
+  LemonInTheDark:
+  - balance: The nob + antinob hfr fuel type is now limited to 1e8 instead of 1e8
+      * 1.2
+  Mothblocks:
+  - bugfix: Random names (such as from the secrets panel) will no longer override
+      your preferences.
+  Paxilmaniac:
+  - qol: the whiteship of tram station has been made much shorter, allowing for less
+      lag on movement and easier docking
+  Tastyfish:
+  - bugfix: The "Choking (No N2O)" alert now functions correctly.
+  darkmanx37:
+  - qol: Adamantine will now use it's own texture with color consistent to one of
+      the adamantine slime.
+  - imageadd: Adamantine textures.
+  remuluson2:
+  - rscadd: Added antivirus-protection to plasmaman suits and all its variants(the
+      entire set).
+  softcerv:
+  - bugfix: fixes the fall chance on mending globules to properly work as intended.
