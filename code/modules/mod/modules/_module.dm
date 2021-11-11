@@ -112,6 +112,8 @@
 					used_signal = COMSIG_MOB_MIDDLECLICKON
 				if(ALT_CLICK)
 					used_signal = COMSIG_MOB_ALTCLICKON
+				if(RIGHT_CLICK)
+					used_signal = COMSIG_MOB_ATTACK_RANGED_SECONDARY
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 			RegisterSignal(mod.wearer, used_signal, .proc/on_special_click)
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)

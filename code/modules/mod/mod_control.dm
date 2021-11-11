@@ -22,7 +22,6 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
-	alternate_worn_layer = BODY_FRONT_LAYER
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
@@ -122,10 +121,9 @@
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 		switch(theme.type)
-			if(/datum/mod_theme/prototype)
-				piece.color = COLOR_ASSEMBLY_PURPLE
 			if(/datum/mod_theme/syndicate)
 				piece.color = COLOR_THEME_OPERATIVE
+	update_flags()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
@@ -169,7 +167,7 @@
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
-	if(!cell?.charge && active && !activating)
+	if((!cell || !cell.charge) && active && !activating)
 		power_off()
 		return PROCESS_KILL
 	var/malfunctioning_charge_drain = 0
@@ -373,6 +371,26 @@
 			continue
 		. += module_icons
 
+/obj/item/mod/control/proc/update_flags()
+	for(var/obj/item/clothing/part as anything in mod_parts)
+		var/used_category
+		if(part == helmet)
+			used_category = HELMET_FLAGS
+		if(part == chestplate)
+			used_category = CHESTPLATE_FLAGS
+		if(part == gauntlets)
+			used_category = GAUNTLETS_FLAGS
+		if(part == boots)
+			used_category = BOOTS_FLAGS
+		var/list/category = theme.clothing_flags[used_category]
+		part.clothing_flags = category[UNSEALED_CLOTHING] || NONE
+		part.visor_flags = category[SEALED_CLOTHING] || NONE
+		part.flags_inv = category[UNSEALED_INVISIBILITY] || NONE
+		part.visor_flags_inv = category[SEALED_INVISIBILITY] || NONE
+		part.flags_cover = category[UNSEALED_COVER] || NONE
+		part.visor_flags_cover = category[SEALED_COVER] || NONE
+		part.alternate_worn_layer = category[ALTERNATE_LAYER]
+
 /obj/item/mod/control/proc/quick_module(mob/user)
 	if(!length(modules))
 		return
@@ -384,7 +402,7 @@
 		display_names[module.name] = REF(module)
 		var/image/module_image = image(icon = module.icon, icon_state = module.icon_state)
 		items += list(module.name = module_image)
-	if(!length(quick_module_list))
+	if(!length(items))
 		return
 	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
 	if(!pick)
