@@ -62,8 +62,7 @@
 /datum/element/deliver_first/proc/on_emag(obj/structure/closet/target, mob/emagger)
 	SIGNAL_HANDLER
 	emagger.balloon_alert(emagger, "delivery lock bypassed")
-	target.RemoveElement(/datum/element/deliver_first)
-	playsound(target, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	remove_lock(target)
 
 ///signal called before opening target, blocks opening
 /datum/element/deliver_first/proc/on_pre_open(obj/structure/closet/target, mob/living/user, force)
@@ -86,6 +85,10 @@
 		//noice, delivered!
 		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		cargo_account.adjust_money(payment)
+	remove_lock(target)
+
+///called to remove the element in a flavorful way, either from delivery or from emagging/breaking open the crate
+/datum/element/deliver_first/proc/remove_lock(obj/structure/closet/target)
 	target.visible_message(span_notice("[target]'s delivery lock self destructs, spewing sparks from the mechanism!"))
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, target.loc)
