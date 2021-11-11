@@ -43,9 +43,6 @@
 	var/window_id = "bot_control"
 	///Popup title used in the bot's UI panel.
 	var/window_name = "Protobot 1.0"
-	// Window width-height, 0 is default size.
-	var/window_width = 0
-	var/window_height = 0
 	///The inserted (if any) pAI in this bot.
 	var/obj/item/paicard/paicard
 	///If a pAI is allowed to be inserted into this bot.
