@@ -29,8 +29,10 @@
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
 
-	/// the traitor's current progression points. Used to determine what objectives they get and what they can purchase from their uplink.
-	var/datum/objective/progression_points
+	/// The amount of telecrystals contained in this traitor has
+	var/telecrystals = 0
+	/// The amount of experience points this traitor has
+	var/experience_points = 0
 
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank

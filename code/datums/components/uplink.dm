@@ -19,25 +19,16 @@
 	var/locked = TRUE
 	/// Whether this uplink allows restricted items to be accessed
 	var/allow_restricted = TRUE
-	/// The amount of telecrystals contained in this uplink
-	var/telecrystals = 0
-	/// The amount of experience points this uplink has
-	var/experience_points = 0
 	/// Current owner of the uplink
 	var/owner = null
 	/// Uplink flags
 	var/uplink_flag = NONE
 	/// Purchase log, listing all the purchases this uplink has made
 	var/datum/uplink_purchase_log/purchase_log
-	var/hidden_crystals = 0
-	var/unlock_note
+	/// The current linked uplink handler.
+	var/datum/uplink_handler
+	/// Code to unlock the uplink.
 	var/unlock_code
-	var/failsafe_code
-	var/compact_mode = FALSE
-	var/debug = FALSE
-	///Instructions on how to access the uplink based on location
-	var/unlock_text
-	var/list/previous_attempts
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, progression_points = UPLINK_HAS_PROGRESSION)
 	if(!isitem(parent))
@@ -79,9 +70,6 @@
 	lockable |= U.lockable
 	active |= U.active
 	uplink_flag |= U.uplink_flag
-	telecrystals += U.telecrystals
-	if(purchase_log && U.purchase_log)
-		purchase_log.MergeWithAndDel(U.purchase_log)
 
 /datum/component/uplink/Destroy()
 	purchase_log = null
