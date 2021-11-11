@@ -18,10 +18,10 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	path_image_color = "#993299"
 
-	var/blood = TRUE
-	var/trash = FALSE
-	var/pests = FALSE
-	var/drawn = FALSE
+	var/blood = 1
+	var/trash = 0
+	var/pests = 0
+	var/drawn = 0
 
 	var/list/target_types
 	var/obj/effect/decal/cleanable/target
