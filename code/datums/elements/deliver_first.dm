@@ -33,7 +33,7 @@
 	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
 	UnregisterSignal(target, list(
 		COMSIG_PARENT_EXAMINE,
-		COMSIG_AREA_ENTERED,
+		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_EMAG_ACT,
 		COMSIG_CLOSET_PRE_OPEN,
 		COMSIG_CLOSET_POST_OPEN,
@@ -86,4 +86,9 @@
 		//noice, delivered!
 		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		cargo_account.adjust_money(payment)
-	target.RemoveElement(/datum/element/deliver_first)
+	target.visible_message(span_notice("[target]'s delivery lock self destructs, spewing sparks from the mechanism!"))
+	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(4, 0, target.loc)
+	spark_system.start()
+	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	target.RemoveElement(/datum/element/deliver_first, goal_area_type, payment)

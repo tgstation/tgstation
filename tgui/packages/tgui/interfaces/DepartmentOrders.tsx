@@ -3,8 +3,8 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-// 4x crate value
-const COST_UPPER_BOUND = 6000;
+// 15x crate value
+const COST_UPPER_BOUND = 3000;
 
 type Pack = {
   name: string;

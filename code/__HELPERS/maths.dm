@@ -123,16 +123,3 @@
 			return "centuple"
 		else //It gets too tedious to use latin prefixes from here.
 			return "[number]-tuple"
-
-/**
- * ## returns the position from 0 to 1 that y should be in, given x progress from 0 to 1 in the inbetweening.
- *
- * shitty graph representation of y (return value) for whatever value x is:
- *
- * ![image](https://cdn.discordapp.com/attachments/590280000977240105/904943207375314944/unknown.png)
- */
-/proc/ease_in_out_circ(x)
-	if(x < 0.5)
-		return (1 - sqrt(1 - (2 * x) ** 2)) / 2
-	else
-		return(sqrt(1 - (-2 * x + 2) ** 2) + 1) / 2;

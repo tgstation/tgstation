@@ -138,8 +138,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	//maximum fairly expensive crate at 3000
 	var/max = CARGO_CRATE_VALUE * 15
 	credits = clamp(credits, min, max)
-	var/time_x = (credits - min)/(max - min) //convert to between 0 and 1
-	var/time_y = ease_in_out_circ(time_x) + 1 //convert "0 to 1 x" to "1 to 2 y"
+	var/time_y = (credits - min)/(max - min) + 1 //convert to between 1 and 2
 	time_y = 10 MINUTES * time_y
 	GLOB.department_order_cooldowns[type] = world.time + time_y
 
