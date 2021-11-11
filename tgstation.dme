@@ -1902,6 +1902,7 @@
 #include "code\modules\antagonists\gang\themes.dm"
 #include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
+#include "code\modules\antagonists\hypnotized\hypnotized.dm"
 #include "code\modules\antagonists\magic_servant\servant.dm"
 #include "code\modules\antagonists\malf_ai\datum_malf_ai.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"

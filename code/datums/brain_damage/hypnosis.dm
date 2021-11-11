@@ -5,7 +5,7 @@
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
-
+	var/datum/antagonist/hypnotized/antagonist
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
 
@@ -33,6 +33,16 @@
 	to_chat(owner, "<span class='boldwarning'>You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority.</span>")
 	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert("hypnosis", /atom/movable/screen/alert/hypnosis)
+	owner.mind.add_antag_datum(/datum/antagonist/hypnotized)
+	antagonist = owner.mind.has_antag_datum(/datum/antagonist/hypnotized)
+	antagonist.trauma = src
+
+	// Add the phrase to objectives
+	var/datum/objective/fixation = new ()
+	fixation.explanation_text = hypnotic_phrase
+	fixation.completed = TRUE
+	antagonist.objectives = list(fixation)
+
 	hypno_alert.desc = "\"[hypnotic_phrase]\"... your mind seems to be fixated on this concept."
 	..()
 
