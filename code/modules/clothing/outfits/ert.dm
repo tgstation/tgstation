@@ -33,8 +33,8 @@
 	name = "ERT Commander"
 
 	id = /obj/item/card/id/advanced/centcom/ert
-	suit = /obj/item/clothing/suit/space/hardsuit/ert
-	suit_store = /obj/item/gun/energy/e_gun
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert
+	// suit_store = /obj/item/gun/energy/e_gun
 	back = /obj/item/storage/backpack/ert
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
@@ -68,8 +68,8 @@
 	name = "ERT Security"
 
 	id = /obj/item/card/id/advanced/centcom/ert/security
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
-	suit_store = /obj/item/gun/energy/e_gun/stun
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
+	// suit_store = /obj/item/gun/energy/e_gun/stun
 	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
@@ -105,8 +105,8 @@
 	name = "ERT Medic"
 
 	id = /obj/item/card/id/advanced/centcom/ert/medical
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
-	suit_store = /obj/item/gun/energy/e_gun
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/med
+	// suit_store = /obj/item/gun/energy/e_gun
 	back = /obj/item/storage/backpack/ert/medical
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
@@ -146,8 +146,8 @@
 	name = "ERT Engineer"
 
 	id = /obj/item/card/id/advanced/centcom/ert/engineer
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
-	suit_store = /obj/item/gun/energy/e_gun
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
+	// suit_store = /obj/item/gun/energy/e_gun
 	back = /obj/item/storage/backpack/ert/engineer
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded/upgraded = 1,
@@ -218,7 +218,7 @@
 /datum/outfit/centcom/ert/commander/inquisitor
 	name = "Inquisition Commander"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
 )
@@ -227,8 +227,8 @@
 /datum/outfit/centcom/ert/security/inquisitor
 	name = "Inquisition Security"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
-	suit_store = /obj/item/gun/energy/e_gun/stun
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+	// suit_store = /obj/item/gun/energy/e_gun/stun
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -239,7 +239,7 @@
 /datum/outfit/centcom/ert/medic/inquisitor
 	name = "Inquisition Medic"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -252,8 +252,8 @@
 	name = "ERT Chaplain"
 
 	id = /obj/item/card/id/advanced/centcom/ert/chaplain
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor // Chap role always gets this suit
-	suit_store = /obj/item/gun/energy/e_gun
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor // Chap role always gets this suit
+	// suit_store = /obj/item/gun/energy/e_gun
 	back = /obj/item/storage/backpack/cultpack
 	backpack_contents = list(
 		/obj/item/nullrod = 1,
@@ -284,7 +284,7 @@
 	name = "ERT Janitor"
 
 	id = /obj/item/card/id/advanced/centcom/ert/janitor
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
 	back = /obj/item/storage/backpack/ert/janitor
 	backpack_contents = list(
 		/obj/item/grenade/clusterbuster/cleaner = 1,
@@ -325,7 +325,7 @@
 	name = "ERT Clown"
 
 	id = /obj/item/card/id/advanced/centcom/ert/clown
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/clown
+	// suit = /obj/item/clothing/suit/space/hardsuit/ert/clown
 	back = /obj/item/storage/backpack/ert/clown
 	backpack_contents = list(
 		/obj/item/gun/ballistic/revolver/reverse = 1,
@@ -494,8 +494,8 @@
 	id = /obj/item/card/id/advanced/black/deathsquad
 	id_trim = /datum/id_trim/centcom/deathsquad
 	uniform = /obj/item/clothing/under/rank/centcom/commander
-	suit = /obj/item/clothing/suit/space/hardsuit/deathsquad
-	suit_store = /obj/item/tank/internals/emergency_oxygen/double
+	// suit = /obj/item/clothing/suit/space/hardsuit/deathsquad
+	// suit_store = /obj/item/tank/internals/emergency_oxygen/double
 	back = /obj/item/storage/backpack/security
 	backpack_contents = list(
 		/obj/item/ammo_box/a357 = 1,

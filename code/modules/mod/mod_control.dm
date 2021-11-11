@@ -186,20 +186,15 @@
 /obj/item/mod/control/equipped(mob/user, slot)
 	..()
 	if(slot == ITEM_SLOT_BACK)
-		wearer = user
-		RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-		RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-		update_cell_alert()
+		set_wearer(user)
 	else if(wearer)
+		unset_wearer()
 		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
-		wearer = null
 
 /obj/item/mod/control/dropped(mob/user)
 	. = ..()
 	if(wearer)
-		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
-		wearer.clear_alert("mod_charge")
-		wearer = null
+		unset_wearer()
 
 /obj/item/mod/control/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_BACK)
@@ -373,6 +368,17 @@
 		if(!length(module_icons))
 			continue
 		. += module_icons
+
+/obj/item/mod/control/proc/set_wearer(mob/user)
+	wearer = user
+	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+	update_cell_alert()
+
+/obj/item/mod/control/proc/unset_wearer()
+	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
+	wearer.clear_alert("mod_charge")
+	wearer = null
 
 /obj/item/mod/control/proc/update_flags()
 	for(var/obj/item/clothing/part as anything in mod_parts)

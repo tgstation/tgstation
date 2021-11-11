@@ -187,8 +187,6 @@
 		var/obj/item/card/id/id_card = H.wear_id
 		if(istype(id_card) && !SSid_access.apply_trim_to_card(id_card, id_trim))
 			WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
-	if(suit_store)
-		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)
 
 	if(undershirt)
 		H.undershirt = initial(undershirt.name)
@@ -199,6 +197,16 @@
 			U.attach_accessory(new accessory(H))
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
+
+	if(ispath(back, /obj/item/mod/control))
+		var/obj/item/mod/control/mod = H.back
+		if(istype(mod))
+			if(visualsOnly)
+				mod.set_wearer(H) //we need to set wearer manually since it doesnt call equipped
+			mod.quick_activation()
+
+	if(suit_store)
+		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
@@ -224,11 +232,6 @@
 					number = 1
 				for(var/i in 1 to number)
 					H.equip_to_slot_or_del(new path(H),ITEM_SLOT_BACKPACK, TRUE)
-
-		if(ispath(back, /obj/item/mod/control))
-			var/obj/item/mod/control/mod = H.back
-			if(istype(mod))
-				mod.quick_activation()
 
 	post_equip(H, visualsOnly)
 

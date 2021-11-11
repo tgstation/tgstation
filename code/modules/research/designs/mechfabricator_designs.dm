@@ -1032,7 +1032,7 @@
 	build_path = /obj/item/mod/construction/armor
 	category = list("MOD Construction", "Equipment")
 	research_icon = 'icons/obj/mod.dmi'
-	research_icon_state = "armor"
+	research_icon_state = "standard-armor"
 
 /datum/design/mod_armor/New()
 	. = ..()
@@ -1040,25 +1040,27 @@
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	name = "MOD [theme.name] armor"
 	desc = "External armor for a Modular Suit. [theme.desc]"
-	research_icon_state = "[theme.default_skin]-armor"
 
 /datum/design/mod_armor/engineering
 	id = "mod_armor_engineering"
 	build_path = /obj/item/mod/construction/armor/engineering
 	materials = list(/datum/material/iron = 6000, /datum/material/gold = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	research_icon_state = "engineering-armor"
 
 /datum/design/mod_armor/atmospheric
 	id = "mod_armor_atmospheric"
 	build_path = /obj/item/mod/construction/armor/atmospheric
 	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	research_icon_state = "atmospheric-armor"
 
 /datum/design/mod_armor/medical
 	id = "mod_armor_medical"
 	build_path = /obj/item/mod/construction/armor/medical
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	research_icon_state = "medical-armor"
 
 /datum/design/mod_paint_kit
 	name = "MOD paint kit"

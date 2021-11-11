@@ -77,15 +77,16 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
 
-/datum/outfit/job/ce/rig
-	name = "Chief Engineer (Hardsuit)"
+/datum/outfit/job/ce/mod
+	name = "Chief Engineer (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/advanced
+	backpack_contents = null
 	glasses = /obj/item/clothing/glasses/meson/engine
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
+	suit = null
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/magboots/advance
-
 	internals_slot = ITEM_SLOT_SUITSTORE

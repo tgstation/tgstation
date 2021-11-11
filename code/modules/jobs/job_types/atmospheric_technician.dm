@@ -58,10 +58,11 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 
-/datum/outfit/job/atmos/rig
-	name = "Atmospheric Technician (Hardsuit)"
+/datum/outfit/job/atmos/mod
+	name = "Atmospheric Technician (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/atmos
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/atmospheric
+	backpack_contents = null
 	mask = /obj/item/clothing/mask/gas/atmos
 	internals_slot = ITEM_SLOT_SUITSTORE

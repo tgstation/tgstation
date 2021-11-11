@@ -77,10 +77,13 @@
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-/datum/outfit/job/cmo/hardsuit
+/datum/outfit/job/cmo/mod
 	name = "Chief Medical Officer (Hardsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/engineering
+	backpack_contents = null
+	suit = null
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen/paramedic
+	internals_slot = ITEM_SLOT_SUITSTORE

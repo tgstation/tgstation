@@ -100,9 +100,9 @@
 		return
 	celestial_charter.name_type = special_charter
 
-/datum/outfit/job/captain/hardsuit
-	name = "Captain (Hardsuit)"
+/datum/outfit/job/captain/mod
+	name = "Captain (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
-	suit_store = /obj/item/tank/internals/oxygen
+/*	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
+	suit_store = /obj/item/tank/internals/oxygen */
 	mask = /obj/item/clothing/mask/gas/atmos/captain

@@ -172,13 +172,11 @@
 /datum/outfit/nuclear_operative
 	name = "Nuclear Operative (Preview only)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	head = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 
 /datum/outfit/nuclear_operative_elite
 	name = "Nuclear Operative (Elite, Preview only)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	head = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	l_hand = /obj/item/modular_computer/tablet/nukeops
 	r_hand = /obj/item/shield/energy
