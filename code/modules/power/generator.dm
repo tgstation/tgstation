@@ -18,7 +18,8 @@
 /obj/machinery/power/generator/Initialize(mapload)
 	. = ..()
 	find_circs()
-	connect_to_network()
+	if (!mapload)
+		connect_to_network()
 	SSair.start_processing_machine(src)
 	update_appearance()
 
@@ -30,6 +31,9 @@
 	kill_circs()
 	SSair.stop_processing_machine(src)
 	return ..()
+
+/obj/machinery/power/generator/should_have_node()
+	return TRUE
 
 /obj/machinery/power/generator/update_overlays()
 	. = ..()

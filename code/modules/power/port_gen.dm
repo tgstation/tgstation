@@ -91,7 +91,7 @@
 
 /obj/machinery/power/port_gen/pacman/Initialize(mapload)
 	. = ..()
-	if(anchored)
+	if(anchored && !mapload)
 		connect_to_network()
 
 	var/obj/S = sheet_path

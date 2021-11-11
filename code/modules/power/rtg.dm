@@ -19,7 +19,8 @@
 
 /obj/machinery/power/rtg/Initialize(mapload)
 	. = ..()
-	connect_to_network()
+	if (!mapload)
+		connect_to_network()
 
 /obj/machinery/power/rtg/process()
 	..()
@@ -31,6 +32,9 @@
 		part_level += SP.rating
 
 	power_gen = initial(power_gen) * part_level
+
+/obj/machinery/power/rtg/should_have_node()
+	return TRUE
 
 /obj/machinery/power/rtg/examine(mob/user)
 	. = ..()

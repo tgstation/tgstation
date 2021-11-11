@@ -19,7 +19,8 @@
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	Make(S)
-	connect_to_network()
+	if (!mapload)
+		connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/sun_update)
 
 /obj/machinery/power/tracker/Destroy()
