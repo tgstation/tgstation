@@ -9,19 +9,18 @@
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
+	combat_mode = TRUE
 
-	hackables = "target identification systems"
+	window_id = "autosec"
+	window_name = "Automatic Security Unit v1.6"
+	bot_core = /obj/machinery/bot_core/secbot
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	bot_core = /obj/machinery/bot_core/secbot
-	window_id = "autosec"
-	window_name = "Automatic Security Unit v1.6"
 	allow_pai = FALSE
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	hackables = "target identification systems"
 	path_image_color = "#FF0000"
-
-	combat_mode = TRUE
 
 	///The tool this Secbot will use to make arrests
 	var/obj/item/weapon = /obj/item/melee/baton/security

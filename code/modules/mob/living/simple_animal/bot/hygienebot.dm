@@ -5,22 +5,22 @@
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
+	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
+	layer = ABOVE_MOB_LAYER
 	density = FALSE
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
-	radio_key = /obj/item/encryptionkey/headset_service
-	radio_channel = RADIO_CHANNEL_SERVICE //Service
-	bot_type = HYGIENE_BOT
-	bot_core = /obj/machinery/bot_core/hygienebot
+
 	window_id = "autoclean"
 	window_name = "Automatic Crew Cleaner X2"
-	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
-	path_image_color = "#993299"
+	bot_core = /obj/machinery/bot_core/hygienebot
+	radio_key = /obj/item/encryptionkey/headset_service
+	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	allow_pai = FALSE
-	layer = ABOVE_MOB_LAYER
-
+	bot_type = HYGIENE_BOT
 	hackables = "cleaning service protocols"
+	path_image_color = "#993299"
 
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target

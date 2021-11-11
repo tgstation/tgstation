@@ -20,19 +20,18 @@
 	health = 20
 	maxHealth = 20
 	pass_flags = PASSMOB | PASSFLAPS
-
 	status_flags = (CANPUSH | CANSTUN)
 
-	radio_key = /obj/item/encryptionkey/headset_med
-	radio_channel = RADIO_CHANNEL_MEDICAL
-
-	hackables = "healt processor circuits"
-	bot_type = MED_BOT
-	bot_core = /obj/machinery/bot_core/medbot
 	window_id = "automed"
 	window_name = "Automatic Medical Unit v1.1"
+	bot_core = /obj/machinery/bot_core/medbot
+	radio_key = /obj/item/encryptionkey/headset_med
+	radio_channel = RADIO_CHANNEL_MEDICAL
+	bot_type = MED_BOT
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
+	hackables = "healt processor circuits"
 	path_image_color = "#DDDDFF"
+
 	/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
 	/// drop determining variable

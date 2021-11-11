@@ -10,14 +10,14 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
-	hackables = "sound control systems"
+	window_id = "autohonk"
+	window_name = "Honkomatic Bike Horn Unit v1.0.7"
+	bot_core = /obj/machinery/bot_core/honkbot
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
-	bot_core = /obj/machinery/bot_core/honkbot
-	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.7"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
+	hackables = "sound control systems"
 	path_image_color = "#FF69B4"
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound

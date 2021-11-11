@@ -9,10 +9,11 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
-	bot_type = ADVANCED_SEC_BOT
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
+	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
+
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'

@@ -5,10 +5,12 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
+
 	weapon = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
-	var/block_chance = 50
 	weapon_force = 30
+
+	var/block_chance = 50
 
 
 /mob/living/simple_animal/bot/secbot/grievous/toy //A toy version of general beepsky!

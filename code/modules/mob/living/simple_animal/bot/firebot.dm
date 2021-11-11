@@ -14,13 +14,13 @@
 	health = 25
 	maxHealth = 25
 
-	hackables = "fire safety protocols"
+	window_id = "autoextinguisher"
+	window_name = "Mobile Fire Extinguisher v1.0"
+	bot_core = /obj/machinery/bot_core/firebot
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
-	bot_core = /obj/machinery/bot_core/firebot
-	window_id = "autoextinguisher"
-	window_name = "Mobile Fire Extinguisher v1.0"
+	hackables = "fire safety protocols"
 	path_image_color = "#FFA500"
 
 	var/atom/target_fire

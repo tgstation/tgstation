@@ -25,18 +25,15 @@
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
 
+	bot_core = /obj/machinery/bot_core/mulebot
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
-
 	bot_type = MULE_BOT
-	bot_core = /obj/machinery/bot_core/mulebot
-	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
+	path_image_color = "#7F5200"
 
 	var/network_id = NETWORK_BOTS_CARGO
 	/// unique identifier in case there are multiple mulebots.
 	var/id
-
-	path_image_color = "#7F5200"
 
 	var/base_icon = "mulebot" /// icon_state to use in update_icon_state
 	var/atom/movable/load /// what we're transporting

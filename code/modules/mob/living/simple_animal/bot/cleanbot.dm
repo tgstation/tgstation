@@ -4,20 +4,20 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "cleanbot0"
+	pass_flags = PASSMOB | PASSFLAPS
 	density = FALSE
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
+
+	window_id = "autoclean"
+	window_name = "Automatic Station Cleaner v1.4"
+	bot_core = /obj/machinery/bot_core/cleanbot
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
-	bot_core = /obj/machinery/bot_core/cleanbot
-	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.4"
-	pass_flags = PASSMOB | PASSFLAPS
-	path_image_color = "#993299"
-
 	hackables = "cleaning software"
+	path_image_color = "#993299"
 
 	var/blood = 1
 	var/trash = 0

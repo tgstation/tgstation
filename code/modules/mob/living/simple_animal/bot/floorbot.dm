@@ -8,13 +8,13 @@
 	health = 25
 	maxHealth = 25
 
-	hackables = "floor construction protocols"
+	window_id = "autofloor"
+	window_name = "Automatic Station Floor Repairer v1.1"
+	bot_core = /obj/machinery/bot_core/floorbot
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
-	bot_core = /obj/machinery/bot_core/floorbot
-	window_id = "autofloor"
-	window_name = "Automatic Station Floor Repairer v1.1"
+	hackables = "floor construction protocols"
 	path_image_color = "#FFA500"
 
 	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
