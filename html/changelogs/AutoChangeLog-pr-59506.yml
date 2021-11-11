@@ -1,0 +1,5 @@
+author: "KathyRyals"
+delete-after: True
+changes: 
+  - rscadd: "Felinids don't like getting sprayed with water."
+  - code_imp: "Adds a new status effect, incapacitated, which causes your do_afters to stop."
