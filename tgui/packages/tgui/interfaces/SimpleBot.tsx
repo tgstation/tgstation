@@ -1,18 +1,10 @@
 import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
-import {
-  Button,
-  Icon,
-  Knob,
-  LabeledControls,
-  NoticeBox,
-  Section,
-  Stack,
-  Tooltip,
-} from '../components';
+import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type SimpleBotContext = {
+  can_hack: number;
   locked: number;
   emagged: number;
   pai: Pai;
@@ -41,51 +33,100 @@ export const SimpleBot = (_, context) => {
   const { locked } = data;
 
   return (
-    <Window width={600} height={250}>
+    <Window width={600} height={300}>
       <Window.Content>
-        <Section fill title="Controls" buttons={<LockDisplay />}>
-          {locked ? (
-            <NoticeBox>Locked!</NoticeBox>
-          ) : (
-            <Stack fill vertical>
-              <Stack.Item>
-                <SettingsDisplay />
-              </Stack.Item>
-              <Stack.Divider />
-              <Stack.Item>
+        <Stack fill vertical>
+          <Stack.Item>
+            <Section title="Settings" buttons={<TabDisplay />}>
+              <SettingsDisplay />
+            </Section>
+          </Stack.Item>
+          {!locked && (
+            <Stack.Item grow>
+              <Section fill scrollable title="Controls">
                 <ControlsDisplay />
-              </Stack.Item>
-              <Stack.Item>
-                <PaiDisplay />
-              </Stack.Item>
-            </Stack>
+              </Section>
+            </Stack.Item>
           )}
-        </Section>
+        </Stack>
       </Window.Content>
     </Window>
   );
 };
 
 /** Creates a lock button at the top of the controls */
-const LockDisplay = (_, context) => {
+const TabDisplay = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { locked } = data;
+  const { can_hack, locked, pai } = data;
+  const { allow_pai } = pai;
+
+  return (
+    <>
+      {!!can_hack && <HackButton />}
+      {!!allow_pai && <PaiButton />}
+      <Button.Checkbox
+        checked={locked}
+        icon={locked ? 'lock' : 'lock-open'}
+        onClick={() => act('lock')}
+        tooltip={`${locked ? 'Unlock' : 'Lock'} the bot control panel.`}>
+        Controls Lock
+      </Button.Checkbox>
+    </>
+  );
+};
+
+/** If user is a bad silicon, they can press this button to hack the bot */
+const HackButton = (_, context) => {
+  const { act, data } = useBackend<SimpleBotContext>(context);
+  const { can_hack, emagged } = data;
 
   return (
     <Button.Checkbox
-      checked={locked}
-      icon={locked ? 'lock' : 'lock-open'}
-      onClick={() => act('lock')}>
-      Controls Lock
+      icon="virus"
+      disabled={!can_hack}
+      onClick={() => act('hack')}
+      selected={emagged}
+      tooltip="Detects malware in the bot operating system.">
+      {emagged ? "Malfunctional" : "Systems Nominal"}
     </Button.Checkbox>
   );
+
+};
+
+/** Creates a button indicating PAI status and offers the eject action */
+const PaiButton = (_, context) => {
+  const { act, data } = useBackend<SimpleBotContext>(context);
+  const { allow_pai, card_inserted } = data.pai;
+
+  if (!card_inserted) {
+    return (
+      <Button.Checkbox
+        icon="robot"
+        tooltip={multiline`Insert an active PAI card to control this device.`}>
+        No PAI Inserted
+      </Button.Checkbox>
+    );
+  } else {
+    return (
+      <Button.Confirm
+        disabled={!allow_pai || !card_inserted}
+        icon="eject"
+        onClick={() => act('eject_pai')}
+        tooltip={multiline`Ejects the current PAI.`}>
+        Eject PAI
+      </Button.Confirm>
+    );
+  }
 };
 
 /** Displays the bot's standard settings: Power, patrol, etc. */
 const SettingsDisplay = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { airplane_mode, patrol_station, power, maintenance_lock } =
-    data.settings;
+  const { locked, settings } = data;
+  const { airplane_mode, patrol_station, power, maintenance_lock } = settings;
+  if (locked) {
+    return <NoticeBox>Locked!</NoticeBox>;
+  }
 
   return (
     <LabeledControls>
@@ -159,7 +200,9 @@ const ControlsDisplay = (_, context) => {
             key={control[0]}
             label={control[0]
               .replace('_', ' ')
-              .replace(/^\w/, (c) => c.toUpperCase())}>
+              .replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+                letter.toUpperCase()
+            )}>
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );
@@ -169,7 +212,7 @@ const ControlsDisplay = (_, context) => {
 };
 
 /** Helper function which identifies which button to create.
- * Might need some fine tuning if you are using sliders rather than booleans.
+ * Might need some fine tuning if you are using more advanced controls.
  */
 const ControlHelper = (props, context) => {
   const { act } = useBackend<SimpleBotContext>(context);
@@ -177,8 +220,11 @@ const ControlHelper = (props, context) => {
   if (control[0] === 'sync_tech') {
     /** Control is for sync - this is medbot specific */
     return <MedbotSync />;
-  } else if (control[1] === 0 || control[1] === 1) {
-    /** Control is an on/off toggle */
+  } else if (control[0] === 'heal_threshold') {
+    /** Control is a threshold - this is medbot specific */
+    return <MedbotThreshold control={control} />;
+  } else {
+    /** Control is a boolean of some type */
     return (
       <Icon
         color={control[1] ? 'good' : 'gray'}
@@ -187,21 +233,16 @@ const ControlHelper = (props, context) => {
         onClick={() => act(control[0])}
       />
     );
-  } else if (control[1] > 1) {
-    /** Control is a threshold - this is medbot specific */
-    return <MedbotThreshold control={control} />;
-  } else {
-    return <Icon name="bug" />;
   }
 };
 
 /** Small button to sync medbots with research. */
 const MedbotSync = (_, context) => {
   const { act } = useBackend<SimpleBotContext>(context);
-
   return (
     <Tooltip
-      content={multiline`Synchronize surgical data with research network. Improves Tending Efficiency.`}>
+      content={multiline`Synchronize surgical data with research network.
+       Improves Tending Efficiency.`}>
       <Icon
         color="purple"
         name="cloud-download-alt"
@@ -212,43 +253,26 @@ const MedbotSync = (_, context) => {
   );
 };
 
-/** Knob button for medbot healing thresholds */
+/** Slider button for medbot healing thresholds */
 const MedbotThreshold = (props, context) => {
   const { act } = useBackend<SimpleBotContext>(context);
   const { control } = props;
 
   return (
-    <Knob
-      minValue={5}
-      maxValue={75}
-      color={getColor(control[1])}
-      step={5}
-      value={control[1]}
-      onDrag={(_, value) => act(control[0], { threshold: value })}
-    />
-  );
-};
-
-/** Color helper for medbot's threshold.
- * Ranges weren't working.
- */
-const getColor = (value: number) => {
-  if (value < 15) {
-    return 'good';
-  } else if (value < 50) {
-    return 'average';
-  } else {
-    return 'bad';
-  }
-};
-
-/** TODO: Finish this section */
-const PaiDisplay = (_, context) => {
-  const { act, data } = useBackend<SimpleBotContext>(context);
-
-  return (
-    <Section fill title="PAI Information">
-      <NoticeBox>No PAI Loaded!</NoticeBox>
-    </Section>
+    <Tooltip content={multiline`Adjusts the sensitivity for damage treatment.`}>
+      <Slider
+        minValue={5}
+        maxValue={75}
+        ranges={{
+          good: [-Infinity, 15],
+          average: [15, 55],
+          bad: [55, Infinity],
+        }}
+        step={5}
+        unit="%"
+        value={control[1]}
+        onChange={(_, value) => act(control[0], { threshold: value })}
+      />
+    </Tooltip>
   );
 };
