@@ -256,8 +256,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		webhook_info["avatar_url"] = CONFIG_GET(string/adminhelp_webhook_pfp)
 	// Uncomment when servers are moved to TGS4
 	// send2chat("[initiator_ckey] | [message_content]", "ahelp", TRUE)
+	var/list/headers = list()
+	headers["Content-Type"] = "application/json"
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_POST, "[CONFIG_GET(string/adminhelp_webhook_url)]", json_encode(webhook_info))
+	request.prepare(RUSTG_HTTP_METHOD_POST, "[CONFIG_GET(string/adminhelp_webhook_url)]", json_encode(webhook_info), headers)
 	request.begin_async()
 
 /datum/admin_help/Destroy()
