@@ -5,7 +5,8 @@ import { Window } from "../layouts";
 
 type AdminhelpData = {
   adminCount: number,
-  bannedFromUrgentAhelp: BooleanLike
+  bannedFromUrgentAhelp: BooleanLike,
+  urgentAhelpPromptMessage: string,
 }
 
 export const Adminhelp = (props, context) => {
@@ -13,6 +14,7 @@ export const Adminhelp = (props, context) => {
   const {
     adminCount,
     bannedFromUrgentAhelp,
+    urgentAhelpPromptMessage,
   } = data;
   const [requestForAdmin, setRequestForAdmin] = useLocalState(context, "request_for_admin", false);
   const [ahelpMessage, setAhelpMessage] = useLocalState(context, "ahelp_message", "");
@@ -38,9 +40,7 @@ export const Adminhelp = (props, context) => {
           {adminCount <= 0 && (
             <Stack.Item>
               <NoticeBox info>
-                There are no admins currently on.
-                Do not press the button below if your ahelp is
-                a joke or a request, use it only for cases of rulebreak.
+                {urgentAhelpPromptMessage}
                 <Button
                   mt={1}
                   content="Request an admin?"

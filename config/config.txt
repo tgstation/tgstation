@@ -565,6 +565,9 @@ URGENT_AHELP_COOLDOWN 300
 ## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
 #URGENT_AHELP_MESSAGE Ban ban ban ban
 
+## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
+#URGENT_AHELP_USER_PROMPT This'll ping the admins!
+
 ## Sets an MOTD of the server.
 ## You can use this multiple times, and the MOTDs will be appended in order.
 ## Based on config directory, so "motd.txt" points to "config/motd.txt"

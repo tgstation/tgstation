@@ -562,6 +562,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 /datum/admin_help_ui_handler/ui_static_data(mob/user)
 	. = list()
 	.["bannedFromUrgentAhelp"] = is_banned_from(user.ckey, "Urgent Adminhelp")
+	.["urgentAhelpPromptMessage"] = CONFIG_GET(string/urgent_ahelp_user_prompt)
 
 /datum/admin_help_ui_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -630,7 +631,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	var/urgent = FALSE
 	var/list/admins = get_admin_counts(R_BAN)
 	if(!is_banned_from(ckey, "Urgent Adminhelp") && length(admins["present"]) == 0 && (GLOB.admin_help_ui_handler.ahelp_cooldowns?[ckey] || 0) <= world.time)
-		urgent = alert(src, "There are no admins on. Is this an ahelp reporting a rulebreak? Pressing yes when it isn't can lead to punishments.", \
+		urgent = alert(src, "Request an admin? [CONFIG_GET(string/urgent_ahelp_user_prompt)]", \
 			"No admins on", "No", "Yes") == "Yes"
 
 	var/list/potentially_new_admins = get_admin_counts(R_BAN)
