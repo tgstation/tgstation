@@ -315,11 +315,24 @@
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			if(ishuman(M))
-				var/mob/living/carbon/human/grabbed_human = M
-				var/grabbed_by_hands = (zone_selected == "l_arm" || zone_selected == "r_arm") && grabbed_human.usable_hands > 0
-				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
-								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
-				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				var/message = "passively"
+				var/message_target = "passively"
+				var/verb_third = "grabs"
+				var/verb_first = "grab"
+				switch(zone_selected)
+					if(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+						message = "by [grabbed_human.p_their()] hands"
+						message_target = "by your hands"
+					if(BODY_ZONE_PRECISE_GROIN)
+						if(!isnull(grabbed_human.getorgan(/obj/item/organ/tail)))
+							message = "by [grabbed_human.p_their()] tail"
+							message_target = "by your tail! Ow ouch"
+							verb_third = "tugs"
+							verb_first = "tug"
+							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailtugged", /datum/mood_event/tailtugged) // Animals are not toys.
+				grabbed_human.visible_message(span_warning("[src] [verb_third] [message]!"), \
+								span_warning("[src] [verb_third] [message_target]!"), null, null, src)
+				to_chat(src, span_notice("You [verb_first] [message]!"))
 			else
 				M.visible_message(span_warning("[src] grabs [M] passively!"), \
 								span_warning("[src] grabs you passively!"), null, null, src)
