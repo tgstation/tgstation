@@ -347,27 +347,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				if(!firstbump || ((contents_movable.layer > firstbump.layer || contents_movable.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
 					firstbump = contents_movable
 
-		/*
-		for(var/atom/movable/contents_movable as anything in contents) //current
-			if(QDELETED(mover))
-				return FALSE //We were deleted, do not attempt to proceed with movement.
-			if(contents_movable == mover || contents_movable == mover.loc) // Multi tile objects and moving out of other objects
-				continue
-
-			//one override of Cross(), which is stairs. most difficulty is in CanPass(), which is also overridden once (railings)
-			// but is complicated
-			// oh god pass_flags_self and CanAllowThrough() might make this too hard
-			if(!contents_movable.Cross(mover))
-				if(mover.movement_type & PHASING)
-					mover.Bump(contents_movable)//if contents_movable.Cross(mover) returns FALSE, then Bump()
-					continue
-				else
-					if(!firstbump || ((contents_movable.layer > firstbump.layer || contents_movable.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-						firstbump = contents_movable
-						break
-
-			*/
-	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
+	if(QDELETED(mover))
 		return FALSE
 	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
 		firstbump = src
@@ -379,11 +359,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	//melting
-	if(isobj(arrived) && air && air.temperature > T0C)
-		var/obj/O = arrived
-		if(O.obj_flags & FROZEN)
-			O.make_unfrozen()
 	if(!arrived.zfalling)
 		zFall(arrived)
 

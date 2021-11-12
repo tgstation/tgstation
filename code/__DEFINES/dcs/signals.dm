@@ -762,6 +762,8 @@
 #define COMSIG_OBJ_HIDE "obj_hide"
 /// from /obj/item/toy/crayon/spraycan/afterattack: (color_is_dark)
 #define COMSIG_OBJ_PAINTED "obj_painted"
+/// from /obj/proc/make_unfrozen()
+#define COMSIG_OBJ_UNFREEZE "obj_unfreeze"
 
 // /obj/machinery signals
 
