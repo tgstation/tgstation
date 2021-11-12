@@ -157,7 +157,7 @@ const CodewordsSection = (props, context) => {
               <BlockQuote>
                 New access to restricted channels has provided you with
                 intercepted syndicate codewords. Syndicate agents will
-                respond as if you're one of their own.
+                respond as if you&apos;re one of their own.
                 Proceed with caution, however, as everyone is a potential
                 foe.
                 <span style={badstyle}>
