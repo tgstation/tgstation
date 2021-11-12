@@ -241,7 +241,7 @@
 		return
 	if (!user || user.incapacitated())
 		return
-	if(!(user.mind.assigned_role.title in U.restricted_roles))
+	if(U.restricted_roles.len && !(user.mind.assigned_role.title in U.restricted_roles))
 		return
 
 	if(telecrystals < U.cost || U.limited_stock == 0)
