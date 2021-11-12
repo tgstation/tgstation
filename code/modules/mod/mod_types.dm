@@ -1,6 +1,9 @@
 /obj/item/mod/control/pre_equipped
 	cell = /obj/item/stock_parts/cell/high
 
+/obj/item/mod/control/pre_equipped/standard
+	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight)
+
 /obj/item/mod/control/pre_equipped/engineering
 	theme = /datum/mod_theme/engineering
 	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/rad_protection, /obj/item/mod/module/flashlight, /obj/item/mod/module/magboot)

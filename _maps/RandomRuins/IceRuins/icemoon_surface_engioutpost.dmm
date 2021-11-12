@@ -367,7 +367,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "bz" = (
-/obj/item/clothing/suit/space/hardsuit/engine,
+/obj/item/mod/control/pre_equipped/engineering,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bA" = (
