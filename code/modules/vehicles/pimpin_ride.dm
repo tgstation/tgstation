@@ -150,10 +150,10 @@
 	greyscale_colors = "#ffffff#6aa3ff#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/buffer/install(obj/vehicle/ridden/janicart/installee)
-	installee._AddElement(list(/datum/element/cleaning))
+	installee.AddElement(/datum/element/cleaning)
 
 /obj/item/janicart_upgrade/buffer/uninstall(obj/vehicle/ridden/janicart/installee)
-	installee._RemoveElement(list(/datum/element/cleaning))
+	installee.RemoveElement(/datum/element/cleaning)
 
 /obj/item/janicart_upgrade/vacuum
 	name = "vacuum upgrade"
@@ -161,7 +161,7 @@
 	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)
-	installee._AddComponent(list(/datum/component/vacuum, installee.trash_bag))
+	installee.AddComponent(/datum/component/vacuum, installee.trash_bag)
 
 /obj/item/janicart_upgrade/vacuum/uninstall(obj/vehicle/ridden/janicart/installee)
 	qdel(installee.GetComponent(/datum/component/vacuum))

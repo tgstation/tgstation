@@ -214,3 +214,6 @@
 
 	/// Whether or not this client has standard hotkeys enabled
 	var/hotkeys = TRUE
+
+	/// Whether or not this client has the combo HUD enabled
+	var/combo_hud_enabled = FALSE

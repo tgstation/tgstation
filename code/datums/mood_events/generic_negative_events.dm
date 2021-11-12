@@ -356,3 +356,8 @@
 	description = span_warning("Ow ouch! Stop tugging me by the tail so hard! I'm not a toy!\n")
 	mood_change = -2
 	timeout = 2 MINUTES
+
+/datum/mood_event/watersprayed
+	description = "<span class='boldwarning'>I hate being sprayed with water!</span>\n"
+	mood_change = -5
+	timeout = 30 SECONDS

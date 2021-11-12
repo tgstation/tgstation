@@ -244,14 +244,12 @@
 
 /datum/antagonist/ert/families
 	name = "Space Police Responder"
-	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
 	suicide_cry = "FOR THE SPACE POLICE!!"
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
@@ -263,7 +261,6 @@
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		H.infodisplay -= H.wanted_lvl
