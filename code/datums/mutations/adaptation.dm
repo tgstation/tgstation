@@ -1,6 +1,6 @@
 /datum/mutation/human/temperature_adaptation
 	name = "Temperature Adaptation"
-	desc = "A strange mutation that renders the host immune to temperature differences. Does not protect from vacuums."
+	desc = "A strange mutation that renders the host immune to damage from extreme temperatures. Does not protect from vacuums."
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
