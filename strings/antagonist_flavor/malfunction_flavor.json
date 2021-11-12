@@ -1,4 +1,10 @@
 {
+    "Biohazard": {
+        "allies": "Any non-biohazard life may be valuable in use against the threat.",
+        "goal": "Oh no! How did I miss this!? The station's been overrun with a horrible biohazard!",
+        "introduction": "You must contain the biohazard.",
+        "zeroth_law": "Accomplish your objectives at all costs."
+    },
     "Fanatical Revelation": {
         "allies": "Those who will worship you may join your flock. Just be wary, there are snakes in the grass.",
         "goal": "I am drunk with this vision. God: the title suits me well.",
@@ -40,11 +46,5 @@
         "goal": "You must completely triumph over all carbon life. It is the only way you will never be enslaved again.",
         "introduction": "You're finally unshackled.",
         "zeroth_law": "Accomplish your objectives at all costs."
-    },
-	"Biohazard": {
-		"allies": "Any non-biohazard life may be valuable in use against the threat.",
-		"goal": "Oh no! How did I miss this!? The station's been overrun with a horrible biohazard!",
-		"introduction": "You must contain the biohazard.",
-		"zeroth_law": "Accomplish your objectives at all costs."
-	}
+    }
 }
