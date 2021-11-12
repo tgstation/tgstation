@@ -330,6 +330,7 @@
 							verb_third = "tugs"
 							verb_first = "tug"
 							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailtugged", /datum/mood_event/tailtugged) // Animals are not toys.
+							grabbed_human.dna.species.stop_wagging_tail(grabbed_human)
 				grabbed_human.visible_message(span_warning("[src] [verb_third] [message]!"), \
 								span_warning("[src] [verb_third] [message_target]!"), null, null, src)
 				to_chat(src, span_notice("You [verb_first] [message]!"))
