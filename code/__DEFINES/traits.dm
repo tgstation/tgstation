@@ -713,7 +713,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MOD_TRAIT "mod"
 /// Trait applied by element
 #define ELEMENT_TRAIT(source) "element_trait_[source]"
-/// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
+/// Trait granted by [/obj/item/clothing/head/hooded/berserker]
 #define BERSERK_TRAIT "berserk_trait"
 /// Trait granted by [/obj/item/rod_of_asclepius]
 #define HIPPOCRATIC_OATH_TRAIT "hippocratic_oath"

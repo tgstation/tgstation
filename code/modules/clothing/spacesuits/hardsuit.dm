@@ -62,7 +62,6 @@
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_helmet)
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
-	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
 	/// Whether the helmet is on.
 	var/helmet_on = FALSE
@@ -81,32 +80,7 @@
 		. += span_notice("The helmet on [src] seems to be malfunctioning. Its light bulb needs to be replaced.")
 
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/tank/jetpack/suit))
-		if(jetpack)
-			to_chat(user, span_warning("[src] already has a jetpack installed."))
-			return
-		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING)) //Make sure the player is not wearing the suit before applying the upgrade.
-			to_chat(user, span_warning("You cannot install the upgrade to [src] while wearing it."))
-			return
-
-		if(user.transferItemToLoc(I, src))
-			jetpack = I
-			to_chat(user, span_notice("You successfully install the jetpack into [src]."))
-			return
-	else if(!cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!jetpack)
-			to_chat(user, span_warning("[src] has no jetpack installed."))
-			return
-		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
-			to_chat(user, span_warning("You cannot remove the jetpack from [src] while wearing it."))
-			return
-
-		jetpack.turn_off(user)
-		jetpack.forceMove(drop_location())
-		jetpack = null
-		to_chat(user, span_notice("You successfully remove the jetpack from [src]."))
-		return
-	else if(istype(I, /obj/item/light) && helmettype)
+	if(istype(I, /obj/item/light) && helmettype)
 		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 			to_chat(user, span_warning("You cannot replace the bulb in the helmet of [src] while wearing it."))
 			return
@@ -123,21 +97,6 @@
 			to_chat(user, span_notice("You have successfully repaired [src]'s helmet."))
 			new /obj/item/light/bulb/broken(drop_location())
 	return ..()
-
-/obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
-	..()
-	if(jetpack)
-		if(slot == ITEM_SLOT_OCLOTHING)
-			for(var/X in jetpack.actions)
-				var/datum/action/A = X
-				A.Grant(user)
-
-/obj/item/clothing/suit/space/hardsuit/dropped(mob/user)
-	..()
-	if(isatom(jetpack))
-		for(var/X in jetpack.actions)
-			var/datum/action/A = X
-			A.Remove(user)
 
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
@@ -239,7 +198,6 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
-	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
 
 	//Mining hardsuit
@@ -402,7 +360,6 @@
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
 	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/hyper
 
 //Elite Syndie suit
@@ -614,7 +571,6 @@
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	armor = list(MELEE = 45, BULLET = 25, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 100, FIRE = 95, ACID = 95, WOUND = 25)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
-	jetpack = /obj/item/tank/jetpack/suit
 	cell = /obj/item/stock_parts/cell/super
 
 	//SWAT MKII
@@ -922,47 +878,6 @@
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
 
-//Carpsuit, bestsuit, lovesuit
-/obj/item/clothing/head/helmet/space/hardsuit/carp
-	name = "carp helmet"
-	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
-	icon_state = "carp_helm"
-	inhand_icon_state = "syndicate"
-	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy as a space carp
-	light_system = NO_LIGHT_SUPPORT
-	light_range = 0 //luminosity when on
-	actions_types = list()
-	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
-
-/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
-
-/obj/item/clothing/suit/space/hardsuit/carp
-	name = "carp space suit"
-	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
-	icon_state = "carp_suit"
-	inhand_icon_state = "space_suit_syndicate"
-	slowdown = 0 //Space carp magic, never stop believing
-	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
-
-/obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if (slot == ITEM_SLOT_HEAD)
-		user.faction |= "carp"
-
-/obj/item/clothing/head/helmet/space/hardsuit/carp/dropped(mob/living/carbon/human/user)
-	..()
-	if (user.head == src)
-		user.faction -= "carp"
-
-/obj/item/clothing/suit/space/hardsuit/carp/old
-	name = "battered carp space suit"
-	desc = "It's covered in bite marks and scratches, yet seems to be still perfectly functional."
-	slowdown = 1
-
 //Combat medic
 /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
 	name = "endemic combat medic helmet"
@@ -1010,7 +925,6 @@
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
-	jetpack = /obj/item/tank/jetpack/suit
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi/setup_shielding()
 	AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-red")
