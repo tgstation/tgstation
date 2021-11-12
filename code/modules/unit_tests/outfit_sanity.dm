@@ -33,7 +33,6 @@
 		CHECK_OUTFIT_SLOT(r_pocket, ITEM_SLOT_RPOCKET)
 		if (ispath(outfit.back, /obj/item/mod/control))
 			var/obj/item/mod/control/mod = H.back
-			mod.set_wearer(H)
 			mod.quick_activation()
 		CHECK_OUTFIT_SLOT(suit_store, ITEM_SLOT_SUITSTORE)
 		if (outfit.backpack_contents || outfit.box)
