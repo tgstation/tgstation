@@ -552,3 +552,9 @@
 
 /datum/config_entry/string/urgent_ahelp_user_prompt
 	default = "There are no admins currently on. Do not press the button below if your ahelp is a joke or a request, use it only for cases of obvious grief."
+
+/datum/config_entry/string/adminhelp_webhook_url
+
+/datum/config_entry/string/adminhelp_webhook_pfp
+
+/datum/config_entry/string/adminhelp_webhook_name

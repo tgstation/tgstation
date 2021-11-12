@@ -230,18 +230,35 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/message_to_send = message
 
 	if(urgent)
-		message_to_send = "[message] - Requested an admin"
+		var/extra_message_to_send = "[message] - Requested an admin"
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
 		if(extra_message)
-			message_to_send += " ([extra_message])"
+			extra_message_to_send += " ([extra_message])"
 		to_chat(initiator, span_boldwarning("Sent a notification to admins through TGS."))
-
+		send2adminchat_webhook()
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord."), confidential = TRUE)
 		heard_by_no_admins = TRUE
+
+/proc/send2adminchat_webhook(message)
+	if(!CONFIG_GET(string/adminhelp_webhook_url))
+		return
+	var/message_content = replacetext(replacetext(message, "\proper", ""), "\improper", "")
+	message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message, "`", ""), " ```$1``` ")
+	var/list/webhook_info = list()
+	webhook_info["content"] = message_content
+	if(CONFIG_GET(string/adminhelp_webhook_name))
+		webhook_info["username"] = CONFIG_GET(string/adminhelp_webhook_name)
+	if(CONFIG_GET(string/adminhelp_webhook_pfp))
+		webhook_info["avatar_url"] = CONFIG_GET(string/adminhelp_webhook_pfp)
+	// Uncomment when servers are moved to TGS4
+	// send2chat("[initiator_ckey] | [message_content]", "ahelp", TRUE)
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_POST, "[CONFIG_GET(string/adminhelp_webhook_url)]", json_encode(webhook_info))
+	request.begin_async()
 
 /datum/admin_help/Destroy()
 	RemoveActive()
