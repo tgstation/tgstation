@@ -354,8 +354,8 @@
 	background_icon_state = "bg_demon"
 
 /datum/action/item_action/berserk_mode/Trigger()
-	if(istype(target, /obj/item/clothing/head/helmet/space/hardsuit/berserker))
-		var/obj/item/clothing/head/helmet/space/hardsuit/berserker/berzerk = target
+	if(istype(target, /obj/item/clothing/head/hooded/berserker))
+		var/obj/item/clothing/head/hooded/berserker/berzerk = target
 		if(berzerk.berserk_active)
 			to_chat(owner, span_warning("You are already berserk!"))
 			return
