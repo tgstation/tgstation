@@ -494,7 +494,8 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/clothing/suit/space/hardsuit/cybersun,
+/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (
