@@ -82,6 +82,7 @@ const HackButton = (_, context) => {
 
   return (
     <Button.Checkbox
+      danger
       icon="user-secret"
       onClick={() => act('hack')}
       selected={emagged}
