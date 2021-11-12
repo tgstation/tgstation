@@ -792,9 +792,6 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
-/obj/machinery/computer/cryopod{
-	pixel_y = 32
-	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "afG" = (
@@ -11314,10 +11311,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"cvC" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/carpet,
-/area/hallway/secondary/entry)
 "cvE" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/l3closet/scientist,
@@ -12031,18 +12024,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/smooth,
 /area/command/gateway)
-"cKs" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/cryopod{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/commons/locker)
 "cKC" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -27088,8 +27069,8 @@
 "imK" = (
 /obj/machinery/icecream_vat,
 /obj/machinery/airalarm/kitchen_cold_room{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen/coldroom)
@@ -54409,11 +54390,6 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron,
 /area/maintenance/port/central)
-"sOR" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/carpet,
-/area/hallway/secondary/entry)
 "sOV" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
@@ -55445,18 +55421,6 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating,
 /area/service/janitor)
-"tfY" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/cryopod{
-	dir = 4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/commons/locker)
 "tgg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -90207,9 +90171,9 @@ aSb
 xgH
 arc
 qqP
-cKs
-cKs
-cKs
+aDH
+aDH
+aDH
 aUD
 sZY
 aKl
@@ -90464,9 +90428,9 @@ aSd
 vIq
 aBx
 qqP
-tfY
-tfY
-tfY
+aDH
+aDH
+aDH
 aUD
 aks
 aKl
