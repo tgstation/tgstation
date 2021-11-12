@@ -316,8 +316,6 @@
 		/obj/item/hatchet,
 		/obj/item/shovel/spade,
 		/obj/item/extinguisher/mini)
-	emag_modules = list(
-	)//none for now lmao
 	model_select_icon = "service"
 	cyborg_base_icon = "botany"
 	hat_offset = -2
