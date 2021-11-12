@@ -114,92 +114,6 @@
 		if (user.stat < UNCONSCIOUS && prob(10))
 			user.emote("scream")
 
-	//Engineering
-/obj/item/clothing/head/helmet/space/hardsuit/engine
-	name = "engineering hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	icon_state = "hardsuit0-engineering"
-	inhand_icon_state = "eng_helm"
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
-	hardsuit_type = "engineering"
-	resistance_flags = FIRE_PROOF
-
-/obj/item/clothing/head/helmet/space/hardsuit/engine/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
-
-/obj/item/clothing/suit/space/hardsuit/engine
-	name = "engineering hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
-	icon_state = "hardsuit-engineering"
-	inhand_icon_state = "eng_hardsuit"
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
-	resistance_flags = FIRE_PROOF
-
-/obj/item/clothing/suit/space/hardsuit/engine/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
-
-/obj/item/clothing/suit/space/hardsuit/engine/equipped(mob/user, slot)
-	. = ..()
-	AddComponent(/datum/component/geiger_sound)
-
-/obj/item/clothing/suit/space/hardsuit/engine/dropped()
-	. = ..()
-	qdel(GetComponent(/datum/component/geiger_sound))
-
-	//Atmospherics
-/obj/item/clothing/head/helmet/space/hardsuit/atmos
-	name = "atmospherics hardsuit helmet"
-	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
-	icon_state = "hardsuit0-atmospherics"
-	inhand_icon_state = "atmo_helm"
-	hardsuit_type = "atmospherics"
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
-	heat_protection = HEAD //Uncomment to enable firesuit protection
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/space/hardsuit/atmos
-	name = "atmospherics hardsuit"
-	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
-	icon_state = "hardsuit-atmospherics"
-	inhand_icon_state = "atmo_hardsuit"
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS //Uncomment to enable firesuit protection
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/atmos
-
-/obj/item/clothing/suit/space/hardsuit/atmos/equipped(mob/user, slot)
-	. = ..()
-	AddComponent(/datum/component/geiger_sound)
-
-/obj/item/clothing/suit/space/hardsuit/atmos/dropped()
-	. = ..()
-	qdel(GetComponent(/datum/component/geiger_sound))
-
-	//Chief Engineer's hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/engine/elite
-	name = "advanced hardsuit helmet"
-	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
-	icon_state = "hardsuit0-white"
-	inhand_icon_state = "ce_helm"
-	hardsuit_type = "white"
-	armor = list(MELEE = 40, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
-	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/space/hardsuit/engine/elite
-	icon_state = "hardsuit-white"
-	name = "advanced hardsuit"
-	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
-	inhand_icon_state = "ce_hardsuit"
-	armor = list(MELEE = 40, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
-	cell = /obj/item/stock_parts/cell/super
-
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
 	name = "mining hardsuit helmet"
@@ -406,28 +320,6 @@
 	strip_delay = 1000
 	equip_delay_other = 1000
 
-//The Owl Hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
-	name = "owl hardsuit helmet"
-	desc = "A dual-mode advanced helmet designed for any crime-fighting situation. It is in travel mode."
-	alt_desc = "A dual-mode advanced helmet designed for any crime-fighting situation. It is in combat mode."
-	icon_state = "hardsuit1-owl"
-	inhand_icon_state = "s_helmet"
-	hardsuit_type = "owl"
-	visor_flags_inv = 0
-	visor_flags = 0
-	on = FALSE
-
-/obj/item/clothing/suit/space/hardsuit/syndi/owl
-	name = "owl hardsuit"
-	desc = "A dual-mode advanced hardsuit designed for any crime-fighting situation. It is in travel mode."
-	alt_desc = "A dual-mode advanced hardsuit designed for any crime-fighting situation. It is in combat mode."
-	icon_state = "hardsuit1-owl"
-	inhand_icon_state = "s_suit"
-	hardsuit_type = "owl"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
-
-
 	//Wizard hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/wizard
 	name = "gem-encrusted hardsuit helmet"
@@ -458,81 +350,6 @@
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
-
-
-	//Medical hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/medical
-	name = "medical hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low pressure environment. Built with lightweight materials for extra comfort, but does not protect the eyes from intense light."
-	icon_state = "hardsuit0-medical"
-	inhand_icon_state = "medical_helm"
-	hardsuit_type = "medical"
-	flash_protect = FLASH_PROTECTION_NONE
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-
-/obj/item/clothing/suit/space/hardsuit/medical
-	name = "medical hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
-	icon_state = "hardsuit-medical"
-	inhand_icon_state = "medical_hardsuit"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical)
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
-	slowdown = 0.5
-
-	//Research Director hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/rd
-	name = "prototype hardsuit helmet"
-	desc = "A prototype helmet designed for research in a hazardous, low pressure environment. Scientific data flashes across the visor."
-	icon_state = "hardsuit0-rd"
-	hardsuit_type = "rd"
-	resistance_flags = ACID_PROOF | FIRE_PROOF
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 100, BIO = 100, FIRE = 60, ACID = 80, WOUND = 15)
-	var/explosion_detection_dist = 21
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_research_scanner)
-
-/obj/item/clothing/head/helmet/space/hardsuit/rd/Initialize(mapload)
-	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
-
-/obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if (slot == ITEM_SLOT_HEAD)
-		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.add_hud_to(user)
-
-/obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
-	..()
-	if (user.head == src)
-		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.remove_hud_from(user)
-
-/obj/item/clothing/head/helmet/space/hardsuit/rd/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range,
-		light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
-	SIGNAL_HANDLER
-
-	var/turf/T = get_turf(src)
-	if(T.z != epicenter.z)
-		return
-	if(get_dist(epicenter, T) > explosion_detection_dist)
-		return
-	display_visor_message("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]")
-
-/obj/item/clothing/suit/space/hardsuit/rd
-	name = "prototype hardsuit"
-	desc = "A prototype suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous research materials."
-	icon_state = "hardsuit-rd"
-	inhand_icon_state = "hardsuit-rd"
-	resistance_flags = ACID_PROOF | FIRE_PROOF
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/energy/wormhole_projector,
-	/obj/item/hand_tele, /obj/item/aicard)
-	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 100, BIO = 100, FIRE = 60, ACID = 80, WOUND = 15)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
-	cell = /obj/item/stock_parts/cell/super
 
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
@@ -877,25 +694,6 @@
 	icon_state = "hardsuit0-inq"
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
-
-//Combat medic
-/obj/item/clothing/head/helmet/space/hardsuit/combatmedic
-	name = "endemic combat medic helmet"
-	desc = "The integrated helmet of the combat medic hardsuit, this has a bright, glowing facemask."
-	icon_state = "hardsuit0-combatmedic"
-	inhand_icon_state = "hardsuit0-combatmedic"
-	armor = list(MELEE = 35, BULLET = 10, LASER = 20, ENERGY = 30, BOMB = 5, BIO = 100, FIRE = 65, ACID = 75)
-	hardsuit_type = "combatmedic"
-
-/obj/item/clothing/suit/space/hardsuit/combatmedic
-	name = "endemic combat medic hardsuit"
-	desc = "The standard issue hardsuit of infectious disease officers, before the formation of ERT teams. This model is labeled 'Veradux'."
-	icon_state = "combatmedic"
-	inhand_icon_state = "combatmedic"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
-	armor = list(MELEE = 35, BULLET = 10, LASER = 20, ENERGY = 30, BOMB = 5, BIO = 100, FIRE = 65, ACID = 75)
-	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
-	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)
 
 /////////////SHIELDED//////////////////////////////////
 

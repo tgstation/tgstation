@@ -603,6 +603,13 @@
 	name = "MOD advanced reagent scanner module"
 	complexity = 0
 	removable = FALSE
+	var/explosion_detection_dist = 21
+
+/obj/item/mod/module/reagent_scanner/advanced/on_equip()
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+
+/obj/item/mod/module/reagent_scanner/advanced/on_unequip()
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
 /obj/item/mod/module/reagent_scanner/advanced/on_activation()
 	. = ..()
@@ -615,6 +622,17 @@
 	if(!.)
 		return
 	mod.wearer.research_scanner--
+
+/obj/item/mod/module/reagent_scanner/advanced/proc/sense_explosion(datum/source, turf/epicenter,
+	devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+	SIGNAL_HANDLER
+	var/turf/wearer_turf = get_turf(mod.wearer)
+	if(wearer_turf.z != epicenter.z)
+		return
+	if(get_dist(epicenter, wearer_turf) > explosion_detection_dist)
+		return
+	to_chat(mod.wearer, span_notice("Explosion detected! Epicenter: [devastation_range], Outer: [heavy_impact_range], Shock: [light_impact_range]"))
+
 
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
