@@ -1,0 +1,7 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "The Mix to Incinerator pipeline no longer interferes with HFR construction in Tram atmospherics."
+  - qol: "Adds N2 to Pure pump and pipes in Tram atmospherics."
+  - qol: "Recolours Mix to Incinerator pipeline to dark rather than orange in Tram atmospherics to match colouring scheme on other stations."
+  - qol: "Renames old N2 to Pure pump to Air to Pure to reflect that it gives air mix not N2."
