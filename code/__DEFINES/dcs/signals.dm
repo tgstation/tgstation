@@ -684,7 +684,7 @@
 #define COMSIG_CARBON_HUGGED "carbon_hugged"
 ///When a carbon mob is headpatted, this is called on the carbon that is headpatted. (mob/living/headpatter)
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
-///When a carbon mob is headpatted, this is called on the carbon that is tailpulled. (mob/living/tailpuller)
+///When a carbon mob is has their tail pulled, this is called on the carbon that is the target. (mob/living/tailpuller)
 #define COMSIG_CARBON_TAILPULL "carbon_tailpulled"
 ///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
 #define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
