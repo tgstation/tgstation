@@ -805,6 +805,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_transform_hydroponics
+	name = "Cyborg Upgrade (Botany Model)"
+	id = "borg_transform_hydroponics"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/transform/hydroponics
+	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/uranium = 1000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_upgrade_selfrepair
 	name = "Cyborg Upgrade (Self-repair)"
 	id = "borg_upgrade_selfrepair"

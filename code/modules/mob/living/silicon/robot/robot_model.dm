@@ -301,6 +301,27 @@
 	cyborg_base_icon = "clown"
 	hat_offset = -2
 
+/obj/item/robot_model/hydroponics
+	name = "Hydroponics"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/borg/apparatus/plant_storage,
+		/obj/item/geneshears,
+		/obj/item/plant_analyzer,
+		/obj/item/gun/energy/floragun,
+		/obj/item/cultivator,
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/secateurs,
+		/obj/item/hatchet,
+		/obj/item/shovel/spade,
+		/obj/item/extinguisher/mini)
+	emag_modules = list(
+	)//none for now lmao
+	model_select_icon = "service"
+	cyborg_base_icon = "botany"
+	hat_offset = -2
+
 /obj/item/robot_model/engineering
 	name = "Engineering"
 	basic_modules = list(

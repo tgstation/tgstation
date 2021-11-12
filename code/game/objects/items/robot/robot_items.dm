@@ -1005,6 +1005,58 @@
 		to_chat(user, span_notice("[src] is empty."))
 	return
 
+/////////////////////
+//plant storage bag// //shamelessly copy/pasted organ bag code
+/////////////////////
+
+/obj/item/borg/apparatus/plant_storage
+	name = "hydroponics transport bag"
+	desc = "A container for holding body parts."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "evidenceobj"
+	item_flags = NONE
+	storable = list(/obj/item/food/grown,
+					/obj/item/seeds,
+					/obj/item/graft)
+
+/obj/item/borg/apparatus/plant_storage/examine()
+	. = ..()
+	. += "The hydroponics bag currently contains:"
+	if(stored)
+		var/obj/item/flora = stored
+		. += flora.name
+	else
+		. += "Nothing."
+	. += span_notice(" <i>Alt-click</i> will drop the currently stored flora. ")
+
+/obj/item/borg/apparatus/plant_storage/update_overlays()
+	. = ..()
+	icon_state = null // hides the original icon (otherwise it's drawn underneath)
+	var/mutable_appearance/bag
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		var/mutable_appearance/stored_flora = new /mutable_appearance(stored)
+		stored_flora.layer = FLOAT_LAYER
+		stored_flora.plane = FLOAT_PLANE
+		stored_flora.pixel_x = 0
+		stored_flora.pixel_y = 0
+		. += stored_flora
+		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
+	else
+		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
+	. += bag
+
+/obj/item/borg/apparatus/plant_storage/AltClick(mob/living/silicon/robot/user)
+	. = ..()
+	if(stored)
+		var/obj/item/flora = stored
+		user.visible_message(span_notice("[user] dumps [flora] from [src]."), span_notice("You dump [flora] from [src]."))
+		cut_overlays()
+		flora.forceMove(get_turf(src))
+	else
+		to_chat(user, span_notice("[src] is empty."))
+	return
+
 ////////////////////////////
 //engi circuitboard holder//
 ////////////////////////////

@@ -1235,6 +1235,7 @@
 	description = "Botanical tools"
 	prereq_ids = list("adv_engi", "biotech")
 	design_ids = list(
+		"borg_transform_hydroponics",
 		"biogenerator",
 		"flora_gun",
 		"hydro_tray",

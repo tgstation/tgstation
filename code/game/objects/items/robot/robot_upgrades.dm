@@ -674,6 +674,12 @@
 	icon_state = "cyborg_upgrade3"
 	new_model = /obj/item/robot_model/clown
 
+/obj/item/borg/upgrade/transform/hydroponics
+	name = "borg model picker (hydroponics)"
+	desc = "Transforms a cyborg into a mechanical botanical master."
+	icon_state = "cyborg_upgrade3"
+	new_model = /obj/item/robot_model/hydroponics
+
 /obj/item/borg/upgrade/circuit_app
 	name = "circuit manipulation apparatus"
 	desc = "An engineering cyborg upgrade allowing for manipulation of circuit boards."

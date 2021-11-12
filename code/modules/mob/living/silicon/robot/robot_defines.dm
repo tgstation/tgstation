@@ -156,6 +156,10 @@
 	set_model = /obj/item/robot_model/clown
 	icon_state = "clown"
 
+/mob/living/silicon/robot/model/hydroponics
+	set_model = /obj/item/robot_model/hydroponics
+	icon_state = "hydroponics"
+
 /mob/living/silicon/robot/model/engineering
 	set_model = /obj/item/robot_model/engineering
 	icon_state = "engineer"
