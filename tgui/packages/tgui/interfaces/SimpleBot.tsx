@@ -78,12 +78,11 @@ const TabDisplay = (_, context) => {
 /** If user is a bad silicon, they can press this button to hack the bot */
 const HackButton = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { can_hack, emagged } = data;
+  const { emagged } = data;
 
   return (
     <Button.Checkbox
-      icon="virus"
-      disabled={!can_hack}
+      icon="user-secret"
       onClick={() => act('hack')}
       selected={emagged}
       tooltip="Detects malware in the bot operating system.">
@@ -96,7 +95,7 @@ const HackButton = (_, context) => {
 /** Creates a button indicating PAI status and offers the eject action */
 const PaiButton = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { allow_pai, card_inserted } = data.pai;
+  const { card_inserted } = data.pai;
 
   if (!card_inserted) {
     return (
@@ -109,7 +108,7 @@ const PaiButton = (_, context) => {
   } else {
     return (
       <Button.Confirm
-        disabled={!allow_pai || !card_inserted}
+        disabled={!card_inserted}
         icon="eject"
         onClick={() => act('eject_pai')}
         tooltip={multiline`Ejects the current PAI.`}>
@@ -201,8 +200,7 @@ const ControlsDisplay = (_, context) => {
             label={control[0]
               .replace('_', ' ')
               .replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-                letter.toUpperCase()
-            )}>
+                letter.toUpperCase())}>
             <ControlHelper control={control} />
           </LabeledControls.Item>
         );

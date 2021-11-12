@@ -835,6 +835,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/ui_data(mob/user)
 	var/list/data = list()
+	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = emagged
 	data["locked"] = locked
