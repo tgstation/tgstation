@@ -1011,7 +1011,7 @@
 
 /obj/item/borg/apparatus/plant_storage
 	name = "hydroponics transport bag"
-	desc = "A container for holding body parts."
+	desc = "A bag for transporting flora"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	item_flags = NONE
