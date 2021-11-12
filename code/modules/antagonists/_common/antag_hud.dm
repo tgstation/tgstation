@@ -74,8 +74,6 @@
 		image.icon = icon('icons/blanks/32x32.dmi', "nothing")
 	else
 		for (var/datum/antagonist/antagonist as anything in mind?.antag_datums)
-			if (isnull(antagonist.antag_hud_name))
-				continue
 			image.icon = icon(antagonist.hud_icon, get_antag_image(index).icon_state)
 
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud/proc/update_antag_hud_images(datum/mind/source)
