@@ -6,7 +6,7 @@
 	health = 150
 	maxHealth = 150
 
-	weapon = /obj/item/melee/energy/sword/saber
+	baton_type = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
 	weapon_force = 30
 
@@ -18,7 +18,7 @@
 	desc = "An adorable looking secbot with four toy swords taped to its arms"
 	health = 50
 	maxHealth = 50
-	weapon = /obj/item/toy/sword
+	baton_type = /obj/item/toy/sword
 	weapon_force = 0
 
 /mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
@@ -129,21 +129,9 @@
 		else
 			continue
 
-
 /mob/living/simple_animal/bot/secbot/grievous/explode()
-
-	walk_to(src,0)
-	visible_message(span_boldannounce("[src] lets out a huge cough as it blows apart!"))
-	var/atom/Tsec = drop_location()
-
-	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
-	Sa.build_step = 1
-	Sa.add_overlay("hs_hole")
-	Sa.created_name = name
-	new /obj/item/assembly/prox_sensor(Tsec)
-
-	do_sparks(3, TRUE, src)
-	for(var/IS = 0 to 4)
-		drop_part(weapon, Tsec)
-	new /obj/effect/decal/cleanable/oil(Tsec)
 	..()
+	var/atom/Tsec = drop_location()
+	//Parent is dropping the weapon, so let's drop 3 more to make up for it.
+	for(var/IS = 0 to 3)
+		drop_part(weapon, Tsec)

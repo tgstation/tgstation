@@ -22,8 +22,10 @@
 	hackables = "target identification systems"
 	path_image_color = "#FF0000"
 
-	///The tool this Secbot will use to make arrests
-	var/obj/item/weapon = /obj/item/melee/baton/security
+	///The type of baton this Secbot will use
+	var/baton_type = /obj/item/melee/baton/security
+	///The weapon (from baton_type) that will be used to make arrests.
+	var/obj/item/weapon
 	///Their current target
 	var/mob/living/carbon/target
 	///Name of their last target to prevent spamming
@@ -96,7 +98,7 @@
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
-	weapon = new weapon()
+	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
@@ -305,7 +307,7 @@
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
 	var/threat = 5
 
 	if(harm)
@@ -492,7 +494,7 @@
 		secbot_assembly.add_overlay("hs_hole")
 		secbot_assembly.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
-		drop_part(weapon, Tsec)
+		drop_part(baton_type, Tsec)
 
 	do_sparks(3, TRUE, src)
 
