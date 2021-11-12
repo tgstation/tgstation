@@ -7,7 +7,7 @@
 		display_names[piece.name] = REF(piece)
 		var/image/piece_image = image(icon = piece.icon, icon_state = piece.icon_state)
 		items += list(piece.name = piece_image)
-	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return
 	var/part_reference = display_names[pick]

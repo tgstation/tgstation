@@ -29,10 +29,13 @@
 		CHECK_OUTFIT_SLOT(ears, ITEM_SLOT_EARS)
 		CHECK_OUTFIT_SLOT(glasses, ITEM_SLOT_EYES)
 		CHECK_OUTFIT_SLOT(id, ITEM_SLOT_ID)
-		CHECK_OUTFIT_SLOT(suit_store, ITEM_SLOT_SUITSTORE)
 		CHECK_OUTFIT_SLOT(l_pocket, ITEM_SLOT_LPOCKET)
 		CHECK_OUTFIT_SLOT(r_pocket, ITEM_SLOT_RPOCKET)
-
+		if (ispath(outfit.back, /obj/item/mod/control))
+			var/obj/item/mod/control/mod = H.back
+			mod.set_wearer(H)
+			mod.quick_activation()
+		CHECK_OUTFIT_SLOT(suit_store, ITEM_SLOT_SUITSTORE)
 		if (outfit.backpack_contents || outfit.box)
 			var/list/backpack_contents = outfit.backpack_contents?.Copy()
 			if (outfit.box)

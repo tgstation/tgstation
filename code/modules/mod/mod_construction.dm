@@ -24,6 +24,22 @@
 	desc = "A powerful crystal originating from the birthplace of Ethereals, planet Sprout. \
 	It has been repurposed to be an internal power source for a Modular Outerwear Device."
 
+/obj/item/mod/construction/broken_core
+	name = "broken MOD core"
+	icon_state = "mod-core-broken"
+	desc = "A powerful crystal for powering MOD devices. This one doesn't seem to be able to power anything."
+
+/obj/item/mod/construction/broken_core/examine(mob/user)
+	. = ..()
+	. += span_notice("You could repair it with a <b>screwdriver</b>...")
+
+/obj/item/mod/construction/broken_core/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 30))
+		return
+	new /obj/item/mod/construction/core(drop_location())
+	qdel(src)
+
 /obj/item/mod/construction/armor
 	name = "MOD armor plates"
 	desc = "Armor plates used to finish a MOD."
