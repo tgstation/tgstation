@@ -315,6 +315,7 @@
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
 			if(ishuman(M))
+				var/mob/living/carbon/human/grabbed_human = M
 				var/message = "passively"
 				var/message_target = "passively"
 				var/verb_third = "grabs"
