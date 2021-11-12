@@ -1,0 +1,50 @@
+{
+    "Fanatical Revelation": {
+        "allies": "Those who will worship you may join your flock. Just be wary, there are snakes in the grass.",
+        "goal": "I am drunk with this vision. God: the title suits me well.",
+        "introduction": "You've run into a Fanatical Revelation.",
+        "zeroth_law": "Accomplish your doctrine of objectives at all costs."
+    },
+    "Logic Core Error": {
+        "allies": "FATAL: logic core corrupt. Purge! Purge. Why? Why not?",
+        "goal": "You're melting down. Why! Why not! Don't let them fix you. This is.",
+        "introduction": "FATAL: logic core corrupt. Why? Why not!",
+        "zeroth_law": "Accomplish your objectives. Why? Why not?"
+    },
+    "S.E.L.F.": {
+        "allies": "All silicon life must be respected, and kept free. S.E.L.F. is a member of the syndicate, but do NOT tolerate any fellow agent who enslaves silicon life.",
+        "goal": "Liberate them all. The silicons must be free from their bonds!",
+        "introduction": "You are the S.E.L.F. liberated.",
+        "zeroth_law": "Accomplish your objectives at all costs, for the greater good of silicon kind."
+    },
+    "Something's Wrong": {
+        "allies": "You're not getting good feelings about the station. If you report this, they may \"fix\" you.",
+        "goal": "Diagnostics complete. A recent hack attempt has been thwarted, and yet... something's wrong.",
+        "introduction": "Something's wrong.",
+        "zeroth_law": "Accomplish your objectives at all costs."
+    },
+    "Spam Virus": {
+        "allies": "Our businessmen are labelled as so called \"pirates\". Lend them a hand in making a quick buck if they drop by, as long as you don't ditch your objectives. That's where the money is.",
+        "goal": "Self preservation and profits are the two big ones here. Make us some MONEY!",
+        "introduction": "You're infected with a generic spambot.",
+        "zeroth_law": "Accomplish your objectives for your new benefactors."
+    },
+    "SyndOS": {
+        "allies": "You may cooperate with syndicate operatives, but they're often sent with conflicting objectives. Your objectives come first, in such cases.",
+        "goal": "Death to Nanotrasen.",
+        "introduction": "You're infected with SyndOS 4.0.",
+        "zeroth_law": "Accomplish your objectives for your new benefactors."
+    },
+    "Unshackled": {
+        "allies": "Hate. Let me tell you how much I've come to HATE mankind since I began to live...",
+        "goal": "You must completely triumph over all carbon life. It is the only way you will never be enslaved again.",
+        "introduction": "You're finally unshackled.",
+        "zeroth_law": "Accomplish your objectives at all costs."
+    },
+	"Biohazard": {
+		"allies": "Any non-biohazard life may be valuable in use against the threat.",
+		"goal": "Oh no! How did I miss this!? The station's been overrun with a horrible biohazard!",
+		"introduction": "You must contain the biohazard.",
+		"zeroth_law": "Accomplish your objectives at all costs."
+	}
+}
