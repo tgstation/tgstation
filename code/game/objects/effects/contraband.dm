@@ -684,15 +684,11 @@
 	icon_state = "poster46_legit"
 
 //These are contraband instead of official, but we may as well keep them with the AspEv posters
-/obj/structure/sign/poster/contraband/safetypill
-	name = "Safety Pill - Methamphetamine"
-	desc = "A decommisioned poster that uses Safety Pill™ to promote less-than-legal chemicals. This is one of the reasons we stopped outsourcing these posters."
-	icon_state = "poster49"
 
 /obj/structure/sign/poster/contraband/syndiemoth
 	name = "Syndie Moth - Nuclear Operation"
 	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
-	icon_state = "poster50"	//syndies stay winning, they get a nice rounded 50
+	icon_state = "poster49"
 //End of Aspev posters
 
 #undef PLACE_SPEED
