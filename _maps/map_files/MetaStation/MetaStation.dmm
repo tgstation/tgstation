@@ -9726,6 +9726,11 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
 /area/service/bar)
+"cfr" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space,
+/area/space/nearstation)
 "cfu" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/camera/directional/east{
@@ -14904,11 +14909,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"dms" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space,
-/area/space/nearstation)
 "dmu" = (
 /obj/structure/table,
 /obj/item/folder,
@@ -108356,7 +108356,7 @@ aaa
 aaa
 aaa
 tdI
-jpI
+ihY
 lHu
 eMZ
 dls
@@ -108613,7 +108613,7 @@ aaa
 aaa
 aaa
 tdI
-ihY
+jpI
 lHu
 dUA
 dUA
@@ -109893,7 +109893,7 @@ aaa
 aaa
 aaa
 aaa
-dms
+cfr
 aaa
 aaa
 aaa
