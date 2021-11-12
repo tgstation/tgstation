@@ -208,6 +208,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(team)
 		team.remove_member(owner)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
+
+	// Remove HUDs that they should no longer see
+	var/mob/living/current = owner.current
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+		if (!antag_hud.mobShouldSee(current))
+			antag_hud.remove_hud_from(owner.current)
+
 	qdel(src)
 
 /**
@@ -406,7 +413,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	)
 
 	// Add HUDs that they couldn't see before
-	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud in GLOB.active_alternate_appearances)
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
 		if (antag_hud.mobShouldSee(owner.current))
 			antag_hud.add_hud_to(owner.current)
 
