@@ -405,6 +405,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 		antag_to_check || type,
 	)
 
+	// Add HUDs that they couldn't see before
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud in GLOB.active_alternate_appearances)
+		if (antag_hud.mobShouldSee(owner.current))
+			antag_hud.add_hud_to(owner.current)
+
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
 	antagpanel_category = "Custom"
