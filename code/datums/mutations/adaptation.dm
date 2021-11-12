@@ -30,7 +30,7 @@
 
 /datum/mutation/human/pressure_adaptation
 	name = "Pressure Adaptation"
-	desc = "A strange mutation that renders the host immune to the vacuums. Does not protect from temperature."
+	desc = "A strange mutation that renders the host immune to damage from both low and high pressure environments. Does not protect from temperature, including the cold of space."
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your body feels numb!</span>"
