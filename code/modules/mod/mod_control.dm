@@ -189,7 +189,6 @@
 		set_wearer(user)
 	else if(wearer)
 		unset_wearer()
-		UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 
 /obj/item/mod/control/dropped(mob/user)
 	. = ..()

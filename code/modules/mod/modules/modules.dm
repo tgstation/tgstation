@@ -148,6 +148,7 @@
 	if(!isliving(target))
 		return
 	healthscan(mod.wearer, target)
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
@@ -172,6 +173,7 @@
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/stealth/on_deactivation()
 	. = ..()
@@ -368,10 +370,12 @@
 			holstered = holding
 			balloon_alert(mod.wearer, "weapon holstered")
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+			drain_power(use_power_cost)
 	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
 		balloon_alert(mod.wearer, "weapon drawn")
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
+		drain_power(use_power_cost)
 
 /obj/item/mod/module/holster/on_uninstall()
 	if(holstered)
@@ -407,6 +411,7 @@
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
 	INVOKE_ASYNC(tether, /obj/projectile.proc/fire)
+	drain_power(use_power_cost)
 
 /obj/projectile/tether
 	name = "tether"
@@ -632,13 +637,14 @@
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/gps
 	name = "MOD internal GPS module"
 	desc = "A module that extends a GPS."
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = 20
+	active_power_cost = 5
 	device = /obj/item/gps/mod
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
@@ -671,6 +677,7 @@
 	if(!.)
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/quick_carry
 	name = "MOD quick carry module"
@@ -715,7 +722,7 @@
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
 	if(!drain_power(use_power_cost*levels))
 		return
-	new /obj/effect/temp_visual/mook_dust(get_turf(mod.wearer))
+	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
 	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
 	return COMPONENT_NO_Z_DAMAGE
@@ -750,7 +757,7 @@
 	desc = "A module that extends a piercing injector."
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	use_power_cost = 25
+	active_power_cost = 5
 	device = /obj/item/reagent_containers/syringe/mod
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
@@ -895,6 +902,7 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		drain_power(use_power_cost)
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
@@ -908,6 +916,7 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		drain_power(use_power_cost)
 
 /obj/item/mod/module/bikehorn
 	name = "MOD bike horn module"
@@ -923,6 +932,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/drill
 	name = "MOD drill module"
@@ -955,6 +965,7 @@
 	if(istype(target, /turf/closed/mineral))
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
+		drain_power(use_power_cost)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -1011,6 +1022,7 @@
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(mod.drop_location())
 		ores -= ore
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/microwave_beam
 	name = "MOD microwave beam module"
@@ -1042,6 +1054,7 @@
 	var/datum/effect_system/spark_spread/spark_effect_two = new()
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/organ_thrower
 	name = "MOD organ thrower module"
@@ -1070,6 +1083,7 @@
 		organ.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [organ]")
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
+		drain_power(use_power_cost)
 		return
 	if(!length(organ_list))
 		return
@@ -1079,6 +1093,7 @@
 	projectile.firer = mod.wearer
 	playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 	INVOKE_ASYNC(projectile, /obj/projectile.proc/fire)
+	drain_power(use_power_cost)
 
 /obj/projectile/organ
 	name = "organ"
@@ -1303,6 +1318,7 @@
 		return
 	dna = mod.wearer.dna.unique_enzymes
 	balloon_alert(mod.wearer, "dna updated")
+	drain_power(use_power_cost)
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
 	. = ..()

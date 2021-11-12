@@ -13,7 +13,7 @@
 	var/idle_power_cost = 0
 	/// Power use when active
 	var/active_power_cost = 0
-	/// Power use when used
+	/// Power use when used, we call it manually
 	var/use_power_cost = 0
 	/// ID used by their TGUI
 	var/tgui_id
@@ -139,7 +139,7 @@
 /obj/item/mod/module/proc/on_use()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		return FALSE
-	if(!drain_power(use_power_cost))
+	if(!check_power(use_power_cost))
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
@@ -176,9 +176,14 @@
 
 /// Drains power from the suit cell
 /obj/item/mod/module/proc/drain_power(amount)
-	if(!mod.cell || (mod.cell.charge < amount))
+	if(!check_power(amount))
 		return FALSE
 	mod.cell.charge = max(0, mod.cell.charge - amount)
+	return TRUE
+
+/obj/item/mod/module/proc/check_power(amount)
+	if(!mod.cell || (mod.cell.charge < amount))
+		return FALSE
 	return TRUE
 
 /// Adds additional things to the MODsuit ui_data()
