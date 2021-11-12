@@ -77,7 +77,6 @@
 
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/prototype
-	backpack_contents = null
 	suit = null
 	mask = /obj/item/clothing/mask/breath
 	l_hand = null

@@ -40,6 +40,13 @@
 	max_combined_w_class = 30
 	max_items = 21
 
+/obj/item/mod/module/storage/bluespace
+	name = "MOD bluespace storage module"
+	icon_state = "storage_large"
+	max_w_class = WEIGHT_CLASS_GIGANTIC
+	max_combined_w_class = 60
+	max_items = 21
+
 /obj/item/mod/module/visor
 	name = "MOD visor module"
 	desc = "A module installed to the helmet, allowing access to different views."
