@@ -156,6 +156,35 @@
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
 
+//roshambo!
+/datum/emote/living/carbon/human/rock
+	key = "rock"
+	key_third_person = "rocks"
+	message = "plays rock."
+	message_param = "plays rock at %t."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/paper
+	key = "paper"
+	key_third_person = "papers"
+	message = "plays paper."
+	message_param = "plays paper at %t."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/scissors
+	key = "rock"
+	key_third_person = "rocks"
+	message = "plays scissors."
+	message_param = "plays scissors at %t."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/shotgun
+	key = "shotgun"
+	key_third_person = "shotguns"
+	message = "plays shotgun. Wait, that's against the rules!"
+	message_param = "plays shotgun at %t. Wait, that's against the rules!"
+	hands_use_check = TRUE
+
 ///Snowflake emotes only for le epic chimp
 /datum/emote/living/carbon/human/monkey
 
