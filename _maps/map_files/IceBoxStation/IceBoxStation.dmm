@@ -10529,11 +10529,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
-"bZw" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/iron,
-/area/commons/locker)
 "bZC" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/green{
@@ -13995,11 +13990,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/cargo/request{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
+	},
+/obj/machinery/computer/department_orders/security{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/security/office)
@@ -29295,11 +29290,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"lcq" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/iron,
-/area/commons/dorms)
 "lcz" = (
 /obj/effect/turf_decal/tile/red/full,
 /obj/effect/turf_decal/siding/white/corner,
@@ -30371,10 +30361,10 @@
 /turf/open/floor/iron/white,
 /area/science/lab)
 "lIj" = (
-/obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
 	},
+/obj/machinery/computer/department_orders/medical,
 /turf/open/floor/iron,
 /area/medical/medbay/aft)
 "lIw" = (
@@ -30647,10 +30637,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
-"lPE" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron,
-/area/commons/dorms)
 "lPM" = (
 /obj/structure/chair{
 	dir = 1
@@ -34640,10 +34626,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"nQn" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron,
-/area/security/prison)
 "nQw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold/dark,
@@ -34756,10 +34738,10 @@
 /turf/open/floor/iron/dark,
 /area/science/breakroom)
 "nSm" = (
-/obj/machinery/computer/chef_order{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/modular_computer/console/preset/cargochat/service{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -44967,10 +44949,6 @@
 	},
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
-"tjn" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron,
-/area/commons/locker)
 "tjs" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -50412,9 +50390,6 @@
 /turf/open/floor/iron,
 /area/science/storage)
 "vUo" = (
-/obj/machinery/computer/cargo/request{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -50423,6 +50398,9 @@
 	},
 /obj/machinery/bounty_board/directional/south,
 /obj/machinery/light/directional/south,
+/obj/machinery/computer/department_orders/science{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/science/lab)
 "vUu" = (
@@ -50688,7 +50666,6 @@
 /turf/open/floor/iron/freezer,
 /area/command/heads_quarters/captain)
 "wbm" = (
-/obj/machinery/computer/cargo/request,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -50699,6 +50676,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/machinery/computer/department_orders/engineering,
 /turf/open/floor/iron/dark,
 /area/engineering/lobby)
 "wbB" = (
@@ -51925,10 +51903,10 @@
 /turf/open/floor/iron,
 /area/service/janitor)
 "wIs" = (
-/obj/machinery/computer/cargo/request{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/computer/department_orders/service{
 	dir = 4
 	},
 /turf/open/floor/plating,
