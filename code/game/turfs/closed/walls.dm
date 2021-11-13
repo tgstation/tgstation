@@ -270,7 +270,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
+/turf/closed/wall/get_dumping_location()
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)

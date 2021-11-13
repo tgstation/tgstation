@@ -505,8 +505,8 @@
 //Tries to dump content
 /datum/component/storage/proc/dump_content_at(atom/dest_object, mob/M)
 	var/atom/A = parent
-	var/atom/dump_destination = dest_object.get_dumping_location()
-	if(A.Adjacent(M) && dump_destination && M.Adjacent(dump_destination))
+	var/atom/dump_destination = get_dumping_location(dest_object)
+	if(M.CanReach(A) && dump_destination && M.CanReach(dump_destination))
 		if(locked)
 			to_chat(M, span_warning("[parent] seems to be locked!"))
 			return FALSE
@@ -514,6 +514,12 @@
 			playsound(A, "rustle", 50, TRUE, -5)
 			return TRUE
 	return FALSE
+
+/datum/component/storage/proc/get_dumping_location(atom/dest_object)
+	var/datum/component/storage/storage = dest_object.GetComponent(/datum/component/storage)
+	if(isitem(dest_object) && storage)
+		return storage.real_location()
+	return dest_object.get_dumping_location()
 
 //This proc is called when you want to place an item into the storage item.
 /datum/component/storage/proc/attackby(datum/source, obj/item/I, mob/M, params)

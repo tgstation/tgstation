@@ -163,6 +163,7 @@
 		return
 	sharers += WEAKREF(freeloader)
 	freeloader.client.screen += button
+	freeloader.actions += src
 	freeloader.update_action_buttons()
 
 //Removes our action button from the screen of another player
@@ -174,6 +175,7 @@
 			sharers -= freeloader_reference
 			break
 	freeloader.client.screen -= button
+	freeloader.actions -= src
 	freeloader.update_action_buttons()
 
 //Presets for item actions

@@ -5,9 +5,6 @@
 	var/rummage_if_nodrop = TRUE
 	var/component_type = /datum/component/storage/concrete
 
-/obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
-	return src
-
 /obj/item/storage/Initialize(mapload)
 	. = ..()
 	PopulateContents()

@@ -24,7 +24,6 @@
 		break
 	..()
 	if(mob_to_grant)
-		Unshare(mob_to_grant)
 		Grant(mob_to_grant)
 
 /datum/action/item_action/mod/deploy
