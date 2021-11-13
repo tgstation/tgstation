@@ -9095,9 +9095,9 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "bwp" = (
@@ -10622,9 +10622,9 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "cea" = (
@@ -11314,10 +11314,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"cvC" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/carpet,
-/area/hallway/secondary/entry)
 "cvE" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/l3closet/scientist,
@@ -14757,7 +14753,9 @@
 /area/security/checkpoint/science)
 "dJI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+	dir = 4;
+	external_pressure_bound = 140;
+	pressure_checks = 0
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
@@ -27088,8 +27086,8 @@
 "imK" = (
 /obj/machinery/icecream_vat,
 /obj/machinery/airalarm/kitchen_cold_room{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen/coldroom)
@@ -40167,9 +40165,9 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "nsl" = (
@@ -44825,9 +44823,9 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/cable,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "pbL" = (
@@ -50678,10 +50676,6 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
-"roS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/closed/wall/r_wall,
-/area/engineering/supermatter)
 "roW" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -54409,11 +54403,6 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron,
 /area/maintenance/port/central)
-"sOR" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/carpet,
-/area/hallway/secondary/entry)
 "sOV" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/decal/cleanable/dirt,
@@ -99215,7 +99204,7 @@ dXs
 juA
 oms
 wKG
-roS
+jnv
 pbw
 cdH
 pbw
@@ -99472,7 +99461,7 @@ dXs
 vJc
 jnv
 pjK
-roS
+jnv
 gCO
 gCO
 gCO
@@ -99986,7 +99975,7 @@ jDY
 wgc
 bQM
 fXp
-roS
+bQM
 dJI
 dJI
 dJI
@@ -100243,7 +100232,7 @@ jDY
 kZu
 wKG
 oAv
-roS
+bQM
 bwh
 nsh
 bwh

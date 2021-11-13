@@ -10530,10 +10530,10 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "bZw" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/iron,
-/area/commons/locker)
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/closed/wall/r_wall,
+/area/engineering/supermatter)
 "bZC" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/green{
@@ -14174,8 +14174,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "dpu" = (
@@ -14240,8 +14240,8 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "dqv" = (
@@ -29295,11 +29295,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"lcq" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/assistant,
-/turf/open/floor/iron,
-/area/commons/dorms)
 "lcz" = (
 /obj/effect/turf_decal/tile/red/full,
 /obj/effect/turf_decal/siding/white/corner,
@@ -30647,10 +30642,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
-"lPE" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron,
-/area/commons/dorms)
 "lPM" = (
 /obj/structure/chair{
 	dir = 1
@@ -31256,8 +31247,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "mfO" = (
@@ -34640,10 +34631,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"nQn" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron,
-/area/security/prison)
 "nQw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold/dark,
@@ -44967,10 +44954,6 @@
 	},
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
-"tjn" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron,
-/area/commons/locker)
 "tjs" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -45993,7 +45976,7 @@
 /area/commons/toilet)
 "tKE" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter)
 "tKJ" = (
@@ -46018,10 +46001,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/misc_lab)
-"tLr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/closed/wall/r_wall,
-/area/engineering/supermatter)
 "tMj" = (
 /obj/structure/table,
 /obj/item/wrench,
@@ -51224,8 +51203,8 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "wpo" = (
@@ -53450,7 +53429,9 @@
 /area/engineering/atmos)
 "xws" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+	dir = 4;
+	external_pressure_bound = 140;
+	pressure_checks = 0
 	},
 /turf/open/floor/engine,
 /area/engineering/supermatter)
@@ -83648,7 +83629,7 @@ mZc
 ydg
 wOE
 hua
-tLr
+vho
 wpm
 mfM
 wpm
@@ -84419,7 +84400,7 @@ mZc
 hjf
 gvi
 dJP
-tKE
+bZw
 xws
 xws
 xws
@@ -84676,7 +84657,7 @@ mZc
 iWj
 hua
 mWg
-tLr
+gvi
 doK
 dqa
 doK
