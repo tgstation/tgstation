@@ -595,13 +595,14 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	if(.)
 		return
 	var/client/user = usr.client
-	if(user.adminhelptimerid)
-		return
 	var/message = sanitize_text(trim(params["message"]), null)
 	var/urgent = sanitize_integer(params["urgent"], FALSE, TRUE, FALSE)
 	var/list/admins = get_admin_counts(R_BAN)
 	if(length(admins["present"]) != 0 || is_banned_from(user.ckey, "Urgent Adminhelp"))
 		urgent = FALSE
+
+	if(user.adminhelptimerid)
+		return
 
 	perform_adminhelp(user, message, urgent)
 	ui.close()
