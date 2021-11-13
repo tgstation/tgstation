@@ -195,7 +195,12 @@
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
 
-/obj/machinery/door/firedoor/emag_act(mob/user)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
+	if(!istype(digital_crowbar))
+		return //emags get out
+	if(obj_flags &= EMAGGED || !user || digital_crowbar.charges < 1)
+		return
+	digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	open()
 

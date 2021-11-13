@@ -68,7 +68,7 @@
  * the alarm sound based on the state of an area variable.
  */
 /obj/machinery/firealarm/proc/set_status()
-	if(my_area.fire || LAZYLEN(my_area.active_firelocks))
+	if((my_area.fire || LAZYLEN(my_area.active_firelocks) && !(obj_flags & EMAGGED)))
 		soundloop.start()
 		set_light(l_power = 0.8)
 	else
@@ -130,14 +130,15 @@
 		alarm()
 
 /obj/machinery/firealarm/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
 	obj_flags |= EMAGGED
 	update_appearance()
 	if(user)
 		user.visible_message(span_warning("Sparks fly out of [src]!"),
-							span_notice("You override [src], damaging the thermal sensors of all nearby firelocks."))
+							span_notice("You override [src], disabling the speaker."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-		firelock.emag_act(user)
+	set_status()
 
 /**
  * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level
