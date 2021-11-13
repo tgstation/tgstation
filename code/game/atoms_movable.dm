@@ -425,7 +425,6 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 			can_pass_diagonally = WEST
 		else if((direction & SOUTH) && get_step(loc, SOUTH)?.Enter(src) && get_step(loc, SOUTH).Exit(src, direction & ~SOUTH))
 			can_pass_diagonally = SOUTH
-			can_pass_diagonally = SOUTH
 		else
 			moving_diagonally = FALSE
 			return
