@@ -748,7 +748,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 
 ///From the market_crash event
-#define MARKET_CRASH_EVEN_TRAIT "crashed_market_event"
+#define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
 
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
