@@ -47,14 +47,17 @@
 	..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/target)
+	. = ..()
 	var/image/overlay = get_edgeturf_overlay(get_edgeturf_direction(target))
 	var/obj/effect/abstract/effect = new(target) // Makes the field visible to players.
-	effect.appearance = overlay.appearance
+	effect.icon = overlay.icon
+	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
 	LAZYSET(edgeturf_effects, target, effect)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/target)
+	. = ..()
 	var/obj/effect/abstract/effect = LAZYACCESS(edgeturf_effects, target)
 	LAZYREMOVE(edgeturf_effects, target)
 	if(effect)

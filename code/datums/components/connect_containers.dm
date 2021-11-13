@@ -19,7 +19,8 @@
 	update_signals(tracked)
 
 /datum/component/connect_containers/UnregisterFromParent()
-	unregister_signals(tracked)
+	UnregisterSignal(tracked, COMSIG_MOVABLE_MOVED)
+	unregister_signals(tracked.loc)
 	tracked = null
 
 /datum/component/connect_containers/proc/update_signals(atom/movable/listener)
@@ -28,15 +29,15 @@
 
 	for(var/atom/movable/container as anything in get_nested_locs(listener))
 		RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-		for (var/signal in connections)
+		for(var/signal in connections)
 			parent.RegisterSignal(container, signal, connections[signal])
 
 /datum/component/connect_containers/proc/unregister_signals(atom/movable/location)
 	if(!ismovable(location))
 		return
 
-	UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
-	for(var/atom/movable/container as anything in get_nested_locs(location))
+	var/list/all_containers = get_nested_locs(location) + location
+	for(var/atom/movable/container as anything in all_containers)
 		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
 		parent.UnregisterSignal(container, connections)
 

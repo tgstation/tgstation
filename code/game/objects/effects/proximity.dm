@@ -22,6 +22,7 @@
 		//Remove the old connect components if the host isn't tracked anymore.
 		qdel(GetComponent(/datum/component/connect_range))
 		qdel(GetComponent(/datum/component/connect_containers))
+		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 	if(R)
 		hasprox_receiver = R
 	else if(hasprox_receiver == host) //Default case
@@ -29,6 +30,7 @@
 	host = H
 	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved)
 	AddComponent(/datum/component/connect_containers, host, containers_connections)
+	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	SetRange(current_range,TRUE)
 
 /datum/proximity_monitor/Destroy()
@@ -62,4 +64,5 @@
 
 /datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived)
 	SIGNAL_HANDLER
-	hasprox_receiver?.HasProximity(arrived)
+	if(source != host)
+		hasprox_receiver?.HasProximity(arrived)

@@ -28,15 +28,18 @@
 //Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
 /datum/proximity_monitor/advanced/proc/recalculate_field()
 	var/list/new_turfs = update_new_turfs()
+
 	var/list/new_field_turfs = new_turfs[FIELD_TURFS_KEY]
+	var/list/new_edge_turfs = new_turfs[EDGE_TURFS_KEY]
+
 	for(var/turf/old_turf as anything in field_turfs)
 		if(!(old_turf in new_field_turfs))
 			cleanup_field_turf(old_turf)
-	for(var/turf/new_turf as anything in new_field_turfs)
-		setup_field_turf(new_turf)
-	var/list/new_edge_turfs = new_turfs[FIELD_TURFS_KEY]
 	for(var/turf/old_turf as anything in edge_turfs)
 		cleanup_edge_turf(old_turf)
+
+	for(var/turf/new_turf as anything in new_field_turfs)
+		setup_field_turf(new_turf)
 	for(var/turf/new_turf as anything in new_edge_turfs)
 		setup_edge_turf(new_turf)
 
@@ -54,8 +57,9 @@
 		if(movable != host)
 			return
 		//Cleanup the field if the host was on a turf but isn't anymore.
-		if(!isturf(host.loc) && isturf(old_loc))
-			cleanup_field()
+		if(!isturf(host.loc))
+			if(isturf(old_loc))
+				cleanup_field()
 			return
 	recalculate_field()
 
@@ -66,25 +70,23 @@
 	else
 		field_turf_uncrossed(gone, source)
 
-/datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/T)
-	return
+/datum/proximity_monitor/advanced/proc/setup_field_turf(turf/target)
+	field_turfs |= target
 
-/datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/T)
-	return
+/datum/proximity_monitor/advanced/proc/cleanup_field_turf(turf/target)
+	field_turfs -= target
 
-/datum/proximity_monitor/advanced/proc/setup_field_turf(turf/T)
-	return
+/datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/target)
+	edge_turfs |= target
 
-/datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/T)
-	return
+/datum/proximity_monitor/advanced/proc/cleanup_edge_turf(turf/target)
+	edge_turfs -= target
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
-	if(!istype(host))
-		return FALSE
 	. = list(FIELD_TURFS_KEY = list(), EDGE_TURFS_KEY = list())
 	if(ignore_if_not_on_turf && !isturf(host.loc))
 		return
-	var/turf/center = get_turf(host.loc)
+	var/turf/center = get_turf(host)
 	for(var/turf/target in RANGE_TURFS(current_range, center))
 		if(get_dist(center, target) == current_range)
 			.[EDGE_TURFS_KEY] += target
@@ -155,15 +157,19 @@
 	var/set_edgeturf_color = "#ffaaff"
 
 /datum/proximity_monitor/advanced/debug/setup_edge_turf(turf/target)
+	. = ..()
 	target.color = set_edgeturf_color
 
 /datum/proximity_monitor/advanced/debug/cleanup_edge_turf(turf/target)
+	. = ..()
 	target.color = initial(target.color)
 
 /datum/proximity_monitor/advanced/debug/setup_field_turf(turf/target)
+	. = ..()
 	target.color = set_fieldturf_color
 
 /datum/proximity_monitor/advanced/debug/cleanup_field_turf(turf/target)
+	. = ..()
 	target.color = initial(target.color)
 
 #undef FIELD_TURFS_KEY

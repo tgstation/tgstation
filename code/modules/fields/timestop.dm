@@ -173,10 +173,10 @@
 		m.Stun(20, ignore_canstun = TRUE)
 
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
+	. = ..()
 	for(var/i in T.contents)
 		freeze_atom(i)
 	freeze_turf(T)
-	return ..()
 
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
