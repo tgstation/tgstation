@@ -57,6 +57,9 @@
 
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
+	
+	///Is the thing's name initialised yet. Allows varedited map pump / part names to work.
+	var/name_initialised = FALSE
 
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
@@ -461,7 +464,9 @@
 	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/update_name()
-	name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
+	if(!name_initialised)
+		name = "[GLOB.pipe_color_name[pipe_color]] [name]"
+		name_initialised = TRUE
 	return ..()
 
 /obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
