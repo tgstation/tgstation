@@ -70,15 +70,17 @@
 #define CELL_PER_STEP 25
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer && (HAS_TRAIT(wearer, TRAIT_RESTRAINED) || !wearer.has_gravity())))
+	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer && (HAS_TRAIT(wearer, TRAIT_RESTRAINED))))
 		return FALSE
 	var/timemodifier = ((direction in GLOB.cardinals) ? CARDINAL_DELAY : DIAGONAL_DELAY) * wearer ? WEARER_DELAY : LONE_DELAY
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	cell.charge = max(0, cell.charge - CELL_PER_STEP)
+	if(ismovable(wearer?.loc))
+		return wearer.loc.relaymove(wearer, direction)
+	if(wearer && !wearer.Process_Spacemove(direction))
+		return FALSE
 	var/atom/movable/mover = wearer || src
-	if(mover == wearer && ismovable(mover.loc))
-		return mover.loc.relaymove(mover, direction)
 	return step(mover, direction)
 
 #undef CARDINAL_DELAY

@@ -33,7 +33,7 @@
 		CHECK_OUTFIT_SLOT(r_pocket, ITEM_SLOT_RPOCKET)
 		if (ispath(outfit.back, /obj/item/mod/control))
 			var/obj/item/mod/control/mod = H.back
-			mod.quick_activation()
+			mod.quick_activation() //we need to activate the mod to extend a suit on which we can mount suit storage
 		CHECK_OUTFIT_SLOT(suit_store, ITEM_SLOT_SUITSTORE)
 		if (outfit.backpack_contents || outfit.box)
 			var/list/backpack_contents = outfit.backpack_contents?.Copy()
