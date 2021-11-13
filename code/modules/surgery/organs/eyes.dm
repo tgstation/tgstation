@@ -381,6 +381,7 @@
 
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
 	if(!islist(eye_lighting))
+		eye_lighting = list()
 		regenerate_light_effects()
 	if((eye_lighting.len < light_beam_distance) || !on_mob)
 		regenerate_light_effects()

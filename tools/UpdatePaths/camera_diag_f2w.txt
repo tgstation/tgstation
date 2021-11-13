@@ -1,0 +1,4 @@
+/obj/machinery/camera/@SUBTYPES {dir=5} : @OLD {@OLD;dir=10}
+/obj/machinery/camera/@SUBTYPES {dir=10} : @OLD {@OLD;dir=5}
+/obj/machinery/camera/@SUBTYPES {dir=6} : @OLD {@OLD;dir=9}
+/obj/machinery/camera/@SUBTYPES {dir=9} : @OLD {@OLD;dir=6}

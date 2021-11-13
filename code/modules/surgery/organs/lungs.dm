@@ -57,6 +57,11 @@
 	var/plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/plas_damage_type = TOX
 
+	var/tritium_irradiation_moles_min = 1
+	var/tritium_irradiation_moles_max = 15
+	var/tritium_irradiation_probability_min = 10
+	var/tritium_irradiation_probability_max = 60
+
 	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
 	var/cold_level_2_threshold = 200
@@ -122,6 +127,10 @@
 	//Vars for n2o and healium induced euphorias.
 	var/n2o_euphoria = EUPHORIA_LAST_FLAG
 	var/healium_euphoria = EUPHORIA_LAST_FLAG
+
+	//Handle subtypes' breath processing
+	handle_gas_override(breather,breath_gases, gas_breathed)
+
 	//-- OXY --//
 
 	//Too much oxygen! //Yes, some species may not like it.
@@ -165,13 +174,13 @@
 	if(safe_nitro_min)
 		if(N2_pp < safe_nitro_min)
 			gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
-			breather.throw_alert("nitro", /atom/movable/screen/alert/not_enough_nitro)
+			breather.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
-			breather.clear_alert("nitro")
+			breather.clear_alert("not_enough_nitro")
 
 	//Exhale
 	breath_gases[/datum/gas/nitrogen][MOLES] -= gas_breathed
@@ -279,10 +288,20 @@
 
 	// Tritium
 		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
-		if (trit_pp > 50)
-			breather.radiation += trit_pp/2 //If you're breathing in half an atmosphere of radioactive gas, you fucked up.
-		else
-			breather.radiation += trit_pp/10
+		// If you're breathing in half an atmosphere of radioactive gas, you fucked up.
+		if (trit_pp > tritium_irradiation_moles_min && SSradiation.can_irradiate_basic(breather))
+			var/lerp_scale = min(tritium_irradiation_moles_max, trit_pp - tritium_irradiation_moles_min) / (tritium_irradiation_moles_max - tritium_irradiation_moles_min)
+			var/chance = LERP(tritium_irradiation_probability_min, tritium_irradiation_probability_max, lerp_scale)
+			if (prob(chance))
+				breather.AddComponent(/datum/component/irradiated)
+
+		gas_breathed = breath_gases[/datum/gas/tritium][MOLES]
+
+		if (trit_pp > 0)
+			var/ratio = gas_breathed * 15
+			breather.adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+
+		breath_gases[/datum/gas/tritium][MOLES] -= gas_breathed
 
 	// Nitryl
 		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
@@ -427,6 +446,9 @@
 
 	return TRUE
 
+///override this for breath handling unique to lung subtypes, breath_gas is the list of gas in the breath while gas breathed is just what is being added or removed from that list, just as they are when this is called in check_breath()
+/obj/item/organ/lungs/proc/handle_gas_override(mob/living/carbon/human/breather, list/breath_gas, gas_breathed)
+	return
 
 /obj/item/organ/lungs/proc/handle_too_little_breath(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0
@@ -497,7 +519,7 @@
 	icon_state = "lungs-plasma"
 
 	safe_oxygen_min = 0 //We don't breathe this
-	safe_plasma_min = 16 //We breathe THIS!
+	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
 
 /obj/item/organ/lungs/slime
@@ -609,3 +631,19 @@
 		suffers_miasma = FALSE
 
 #undef GAS_TOLERANCE
+
+/obj/item/organ/lungs/ethereal
+	name = "aeration reticulum"
+	desc = "These exotic lungs seem crunchier than most."
+	icon_state = "lungs_ethereal"
+	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
+	heat_level_2_threshold = 473
+	heat_level_3_threshold = 1073
+
+
+/obj/item/organ/lungs/ethereal/handle_gas_override(mob/living/carbon/human/breather, list/breath_gases, gas_breathed)
+	// H2O electrolysis
+	gas_breathed = breath_gases[/datum/gas/water_vapor][MOLES]
+	breath_gases[/datum/gas/oxygen][MOLES] += gas_breathed
+	breath_gases[/datum/gas/hydrogen][MOLES] += gas_breathed*2
+	breath_gases[/datum/gas/water_vapor][MOLES] -= gas_breathed

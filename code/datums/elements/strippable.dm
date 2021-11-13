@@ -150,7 +150,7 @@
 
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
-		span_userdanger("[user] tries to remove your [item.name]]."),
+		span_userdanger("[user] tries to remove your [item.name]."),
 		ignored_mobs = user,
 	)
 

@@ -1,5 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - balance: "Growing vats can now be set to regrow the sample upon completion."
-  - balance: "Increased the volume of growing vats from 200 to 300u."

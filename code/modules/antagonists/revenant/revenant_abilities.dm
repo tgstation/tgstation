@@ -257,7 +257,7 @@
 
 	if(!isplatingturf(T) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
-		if(floor.intact && floor.floor_tile)
+		if(floor.overfloor_placed && floor.floor_tile)
 			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0

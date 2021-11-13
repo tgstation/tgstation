@@ -61,7 +61,7 @@
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
@@ -201,7 +201,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
@@ -223,3 +223,16 @@
 	inhand_icon_state = "techpriesthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/det_suit/kim
+	name = "aerostatic bomber jacket"
+	desc = "A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses."
+	icon_state = "aerostatic_bomber_jacket"
+	inhand_icon_state = "aerostatic_bomber_jacket"
+
+/obj/item/clothing/suit/det_suit/disco
+	name = "disco ass blazer"
+	desc = "Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve."
+	icon_state = "jamrock_blazer"
+	inhand_icon_state = "jamrock_blazer"
+

@@ -28,6 +28,18 @@
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	update_appearance()
 
+/obj/structure/closet/crate/update_overlays()
+	. = ..()
+	if(broken)
+		. += "securecrateemag"
+		return
+	if(locked)
+		. += "securecrater"
+		return
+	if(secure)
+		. += "securecrateg"
+		return
+
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!istype(mover, /obj/structure/closet))
@@ -96,11 +108,17 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/maint
 
+/obj/structure/closet/crate/maint/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_QDEL
+
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
+	new /obj/effect/spawner/random/structure/crate_empty(loc)
 	for(var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 
@@ -127,6 +145,7 @@
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/trashcart/Moved()
 	. = ..()

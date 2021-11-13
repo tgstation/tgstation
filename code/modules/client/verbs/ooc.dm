@@ -28,13 +28,20 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(QDELETED(src))
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = trim(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	var/raw_msg = msg
 
 	var/list/filter_result = is_ooc_filtered(msg)
 	if (filter_result)
 		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
+
+	var/list/soft_filter_result = is_soft_ooc_filtered(msg)
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
 
 	if(!msg)
 		return

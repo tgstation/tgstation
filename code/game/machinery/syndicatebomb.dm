@@ -27,7 +27,7 @@
 	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE //delay wire pulsed?
-	var/delayedlittle  = FALSE //activation wire pulsed?
+	var/delayedlittle = FALSE //activation wire pulsed?
 	var/obj/effect/countdown/syndicatebomb/countdown
 
 	var/next_beep

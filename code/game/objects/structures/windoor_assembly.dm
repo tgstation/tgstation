@@ -105,10 +105,12 @@
 				if(W.use_tool(src, user, 40, volume=50))
 					to_chat(user, span_notice("You disassemble the windoor assembly."))
 					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
-					RG.add_fingerprint(user)
+					if (!QDELETED(RG))
+						RG.add_fingerprint(user)
 					if(secure)
 						var/obj/item/stack/rods/R = new (get_turf(src), 4)
-						R.add_fingerprint(user)
+						if (!QDELETED(R))
+							R.add_fingerprint(user)
 					qdel(src)
 				return
 

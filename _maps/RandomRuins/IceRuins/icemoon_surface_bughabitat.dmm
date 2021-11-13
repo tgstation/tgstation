@@ -1,0 +1,703 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/obj/machinery/door/airlock/public,
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface)
+"ax" = (
+/obj/effect/turf_decal/stripes/white/line{
+	color = "#236F26";
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"aR" = (
+/obj/item/reagent_containers/syringe/syriniver,
+/obj/effect/turf_decal/siding/wideplating/dark/corner,
+/obj/effect/turf_decal/tile/dark/anticorner,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"bu" = (
+/obj/effect/spawner/random/food_or_drink/snack,
+/mob/living/basic/cockroach,
+/turf/open/floor/grass/snow/basalt/safe,
+/area/ruin/bughabitat)
+"bQ" = (
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"cK" = (
+/mob/living/simple_animal/ant,
+/turf/open/floor/grass,
+/area/ruin/bughabitat)
+"eM" = (
+/obj/structure/chair/pew/right{
+	dir = 8
+	},
+/obj/item/bedsheet{
+	pixel_y = 13
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"eN" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/machinery/biogenerator,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 5
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"fI" = (
+/obj/effect/decal/remains/human,
+/obj/item/clipboard,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"fO" = (
+/turf/open/floor/grass/snow,
+/area/ruin/bughabitat)
+"fP" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"hk" = (
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/grass/snow,
+/area/ruin/bughabitat)
+"hy" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/suit/toggle/labcoat,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"hM" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"ih" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"kv" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/item/shovel,
+/turf/open/floor/grass/snow,
+/area/ruin/bughabitat)
+"lj" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 6
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"lE" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"lG" = (
+/obj/machinery/space_heater,
+/turf/open/floor/carpet/neon/simple/lime,
+/area/ruin/bughabitat)
+"ma" = (
+/obj/structure/statue/snow/snowman,
+/turf/open/floor/grass/snow,
+/area/icemoon/surface)
+"mM" = (
+/obj/machinery/light/warm/directional/west,
+/obj/structure/tank_holder/oxygen,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"of" = (
+/obj/structure/sink{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"ot" = (
+/mob/living/basic/cockroach,
+/obj/item/seeds/soya,
+/turf/open/floor/grass/snow/basalt/safe,
+/area/ruin/bughabitat)
+"oZ" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"qV" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/item/wallframe/camera,
+/obj/item/stack/cable_coil/cut,
+/turf/open/floor/grass,
+/area/ruin/bughabitat)
+"ri" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/grass,
+/area/ruin/bughabitat)
+"rE" = (
+/obj/effect/spawner/random/structure/chair_flipped,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"sl" = (
+/obj/machinery/light/warm/directional/east,
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"sr" = (
+/obj/machinery/plumbing/growing_vat,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"st" = (
+/obj/machinery/light_switch/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"tI" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"uB" = (
+/mob/living/simple_animal/butterfly,
+/obj/structure/chair/pew/left{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"va" = (
+/obj/item/book/manual/wiki/cytology,
+/obj/structure/table,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"wC" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"wL" = (
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 10
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"xq" = (
+/mob/living/simple_animal/butterfly,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"yz" = (
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"yC" = (
+/obj/machinery/door/window/eastleft,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"zJ" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"AL" = (
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"Bs" = (
+/turf/closed/wall/ice,
+/area/ruin/bughabitat)
+"BK" = (
+/obj/structure/table/rolling,
+/obj/item/petri_dish/random,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Cb" = (
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Cv" = (
+/obj/machinery/light/warm/directional/east,
+/obj/structure/closet,
+/obj/item/food/cheese,
+/obj/item/stack/rods/ten,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Du" = (
+/obj/machinery/door/airlock/public,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Ea" = (
+/obj/machinery/door/window/northright,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Fq" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Ft" = (
+/turf/open/floor/grass,
+/area/ruin/bughabitat)
+"Gg" = (
+/obj/item/trash/shrimp_chips,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"HA" = (
+/turf/closed/wall,
+/area/ruin/bughabitat)
+"HU" = (
+/obj/machinery/light/warm/directional/east,
+/obj/item/clothing/suit/hooded/wintercoat/hydro,
+/turf/open/floor/carpet/neon/simple/lime,
+/area/ruin/bughabitat)
+"IX" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Jr" = (
+/obj/machinery/door/airlock/public{
+	dir = 4
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/closed/mineral/random/snow,
+/area/ruin/bughabitat)
+"Kc" = (
+/obj/structure/table,
+/obj/machinery/light_switch/directional/south,
+/obj/machinery/cell_charger,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26"
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Kq" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/carpet/neon/simple/lime,
+/area/ruin/bughabitat)
+"Ku" = (
+/obj/structure/table,
+/obj/item/construction/plumbing/research,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Ly" = (
+/obj/structure/table,
+/obj/item/stack/ducts/fifty{
+	amount = 23
+	},
+/mob/living/simple_animal/butterfly,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Nv" = (
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"Ou" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/obj/item/plunger,
+/mob/living/simple_animal/mouse,
+/obj/machinery/light/small/blacklight/directional/south,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Pt" = (
+/obj/machinery/light/warm/directional/west,
+/obj/machinery/door/window/northright,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 9
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Qd" = (
+/turf/open/floor/grass/snow,
+/area/icemoon/surface)
+"Qp" = (
+/obj/effect/turf_decal/siding/wideplating/dark/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"QV" = (
+/obj/structure/table,
+/obj/structure/windoor_assembly{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"RJ" = (
+/obj/structure/window/reinforced/spawner/east,
+/mob/living/basic/cockroach,
+/turf/open/floor/grass/snow/basalt/safe,
+/area/ruin/bughabitat)
+"RR" = (
+/turf/open/floor/carpet/neon/simple/lime,
+/area/ruin/bughabitat)
+"Tn" = (
+/obj/item/coin/silver,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"Tp" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/wideplating/light{
+	color = "#236F26";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"Tr" = (
+/obj/item/pen/fountain,
+/turf/open/floor/iron,
+/area/ruin/bughabitat)
+"VM" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"VQ" = (
+/obj/item/coin/silver,
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+"Xn" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface)
+"Xt" = (
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/grass/snow/basalt/safe,
+/area/ruin/bughabitat)
+"ZT" = (
+/obj/effect/spawner/structure/window/hollow/directional{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/ruin/bughabitat)
+
+(1,1,1) = {"
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+"}
+(2,1,1) = {"
+Xn
+Qd
+Xn
+Xn
+Xn
+Xn
+Xn
+Qd
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+"}
+(3,1,1) = {"
+Xn
+Qd
+Bs
+HA
+HA
+HA
+Bs
+ih
+Bs
+HA
+Bs
+HA
+HA
+HA
+Qd
+Xn
+"}
+(4,1,1) = {"
+Xn
+Xn
+HA
+bu
+ot
+Pt
+of
+bQ
+wL
+Du
+Cb
+rE
+Gg
+HA
+Qd
+Xn
+"}
+(5,1,1) = {"
+Xn
+Qd
+HA
+RJ
+Xt
+zJ
+AL
+AL
+Kc
+HA
+ZT
+QV
+ZT
+Bs
+Xn
+Xn
+"}
+(6,1,1) = {"
+Xn
+Qd
+Bs
+cK
+Ft
+Ea
+aR
+hM
+wC
+HA
+RR
+RR
+lG
+Bs
+Xn
+Xn
+"}
+(7,1,1) = {"
+Xn
+Xn
+HA
+qV
+ri
+zJ
+Qp
+fP
+xq
+Du
+HU
+Kq
+Xn
+as
+Xn
+Xn
+"}
+(8,1,1) = {"
+Xn
+Xn
+HA
+fO
+fO
+Ea
+oZ
+Tn
+Fq
+HA
+HA
+HA
+Bs
+Bs
+Qd
+Xn
+"}
+(9,1,1) = {"
+Xn
+Qd
+HA
+hk
+kv
+eN
+Tp
+yC
+lj
+hy
+mM
+IX
+VM
+Bs
+ma
+Xn
+"}
+(10,1,1) = {"
+Xn
+Qd
+Bs
+va
+Ly
+Ku
+sr
+AL
+Nv
+oZ
+AL
+lE
+st
+HA
+Qd
+Xn
+"}
+(11,1,1) = {"
+Xn
+Qd
+HA
+Cb
+Tr
+sl
+fI
+AL
+AL
+AL
+VQ
+HA
+yz
+HA
+Qd
+Xn
+"}
+(12,1,1) = {"
+Xn
+Qd
+HA
+Bs
+HA
+HA
+Cb
+AL
+AL
+AL
+tI
+HA
+Ou
+Bs
+Xn
+Xn
+"}
+(13,1,1) = {"
+Xn
+Qd
+Qd
+Qd
+Qd
+Bs
+BK
+uB
+eM
+ax
+Cv
+HA
+HA
+HA
+Qd
+Xn
+"}
+(14,1,1) = {"
+Xn
+Xn
+Qd
+Qd
+Qd
+HA
+HA
+Bs
+Bs
+Jr
+Bs
+Bs
+Qd
+Qd
+Qd
+Xn
+"}
+(15,1,1) = {"
+Xn
+Xn
+Qd
+Qd
+Qd
+Qd
+Xn
+Xn
+Xn
+Xn
+Xn
+Qd
+Qd
+Qd
+Qd
+Xn
+"}
+(16,1,1) = {"
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+"}

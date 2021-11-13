@@ -20,7 +20,7 @@
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
-	for(var/i = 0, i < codelen, i++)
+	for(var/i in 1 to codelen)
 		var/dig = pick(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer

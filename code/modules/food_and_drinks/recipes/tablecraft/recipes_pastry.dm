@@ -467,6 +467,28 @@
 	result = /obj/item/food/cookie/sugar
 	subcategory = CAT_PASTRY
 
+/datum/crafting_recipe/food/spookyskull
+	time = 15
+	name = "Skull cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/milk = 5
+	)
+	result = /obj/item/food/cookie/sugar/spookyskull
+	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/spookycoffin
+	time = 15
+	name = "Coffin cookie"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/coffee = 5
+	)
+	result = /obj/item/food/cookie/sugar/spookycoffin
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/fortunecookie
 	time = 15
 	name = "Fortune cookie"

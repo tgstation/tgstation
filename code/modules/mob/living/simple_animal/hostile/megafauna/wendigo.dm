@@ -69,6 +69,10 @@ Difficulty: Hard
 	/// Stores the last scream time so it doesn't spam it
 	COOLDOWN_DECLARE(scream_cooldown)
 
+/mob/living/simple_animal/hostile/megafauna/wendigo/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'

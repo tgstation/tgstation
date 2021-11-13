@@ -3,6 +3,7 @@
 	desc = "All the finest of miscellaneous electronics one could ever need! Not responsible for any injuries caused by reckless misuse of parts."
 	icon_state = "parts"
 	icon_deny = "parts-deny"
+	panel_type = "panel10"
 	products = list(
 		/obj/item/assembly/prox_sensor = 5,
 		/obj/item/assembly/igniter = 3,

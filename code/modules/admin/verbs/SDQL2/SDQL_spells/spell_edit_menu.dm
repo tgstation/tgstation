@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 	var/mob/living/target_mob
 	var/obj/effect/proc_holder/spell/target_spell
 	var/spell_type
-	var/list/saved_vars = list("query" = "")
+	var/list/saved_vars = list("query" = "", "suppress_message_admins" = FALSE)
 	var/list/list_vars = list()
 	var/list/parse_result = null
 	var/alert
@@ -199,6 +199,8 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			"query_self" = "TARGETS is null.",
 			"query_targeted" = "TARGETS is replaced with a list containing a reference(s) to the targeted mob(s).",
 			"query_targeted_touch" = "TARGETS is replaced with a list containing a reference to the atom hit with the touch attack.",
+			"suppress_message_admins" = "If this is true, the spell will not print out its query to admins' chat panels.\n\
+				The query will still be output to the game log.",
 			"charge_type" = "How the spell's charge works. This affects how charge_max is used.\n\
 				When set to \"recharge\", charge_max is the time in deciseconds between casts of the spell.\n\
 				When set to \"charges\", the user can only use the spell a number of times equal to charge_max.\n\
@@ -269,6 +271,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 	if(!executor)
 		CRASH("[sample]'s SDQL executor component went missing!")
 	saved_vars["query"] = executor.query
+	saved_vars["suppress_message_admins"] = executor.suppress_message_admins
 	load_list_var(executor.scratchpad, "scratchpad")
 	for(var/V in sample.vars&editable_spell_vars)
 		if(islist(sample.vars[V]))
@@ -486,6 +489,12 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				continue
 			result_vars[V] = temp_vars[V]
 			continue
+		if(V == "suppress_message_admins")
+			if(!isnum(temp_vars[V]))
+				parse_errors += "The value of \"suppress_message_admins\" must be a number"
+				continue
+			result_vars[V] = !!temp_vars[V]
+			continue
 		if(!(V in editable_spell_vars))
 			parse_errors += "\"[V]\" is not an editable variable"
 			continue
@@ -567,7 +576,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				if(!(temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_NAMED))
 					parse_errors += "[V]/[W] did not have the LIST_VAR_FLAGS_NAMED flag set; it has been set"
 					temp_list_vars[V][W]["flags"] |= LIST_VAR_FLAGS_NAMED
-				if(temp_list_vars & ~(LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_TYPED))
+				if(temp_list_vars[V][W]["flags"] & ~(LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_TYPED))
 					parse_errors += "[V]/[W] has unused bit flags set; they have been unset"
 					temp_list_vars[V][W]["flags"] &= LIST_VAR_FLAGS_NAMED | LIST_VAR_FLAGS_TYPED
 				if(!(temp_list_vars[V][W]["flags"] & LIST_VAR_FLAGS_TYPED))
@@ -903,6 +912,8 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 	for(var/V in saved_vars+list_vars)
 		if(V == "query")
 			executor.vv_edit_var("query", saved_vars["query"])
+		else if(V == "suppress_message_admins")
+			executor.vv_edit_var("suppress_message_admins", saved_vars["suppress_message_admins"])
 		else if(V == "scratchpad")
 			var/list/new_scratchpad = generate_list_var("scratchpad")
 			if(new_scratchpad)

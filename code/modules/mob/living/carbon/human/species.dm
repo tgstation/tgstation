@@ -1216,32 +1216,26 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *
  * Arguments:
  * - [source][/mob/living/carbon/human]: The mob requesting handling
+ * - time_since_irradiated: The amount of time since the mob was first irradiated
  * - delta_time: The amount of time that has passed since the last tick
- * - times_fired: The number of times SSmobs has fired
  */
-/datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/source, delta_time, times_fired)
-	if(HAS_TRAIT(source, TRAIT_RADIMMUNE))
-		source.radiation = 0
-		return TRUE
-
-	. = FALSE
-	var/radiation = source.radiation
-	if(radiation > RAD_MOB_KNOCKDOWN && DT_PROB(RAD_MOB_KNOCKDOWN_PROB, delta_time))
+/datum/species/proc/handle_radiation(mob/living/carbon/human/source, time_since_irradiated, delta_time)
+	if(time_since_irradiated > RAD_MOB_KNOCKDOWN && DT_PROB(RAD_MOB_KNOCKDOWN_PROB, delta_time))
 		if(!source.IsParalyzed())
 			source.emote("collapse")
 		source.Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
 		to_chat(source, span_danger("You feel weak."))
 
-	if(radiation > RAD_MOB_VOMIT && DT_PROB(RAD_MOB_VOMIT_PROB, delta_time))
+	if(time_since_irradiated > RAD_MOB_VOMIT && DT_PROB(RAD_MOB_VOMIT_PROB, delta_time))
 		source.vomit(10, TRUE)
 
-	if(radiation > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
+	if(time_since_irradiated > RAD_MOB_MUTATE && DT_PROB(RAD_MOB_MUTATE_PROB, delta_time))
 		to_chat(source, span_danger("You mutate!"))
 		source.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 		source.emote("gasp")
 		source.domutcheck()
 
-	if(radiation > RAD_MOB_HAIRLOSS && DT_PROB(RAD_MOB_HAIRLOSS_PROB, delta_time))
+	if(time_since_irradiated > RAD_MOB_HAIRLOSS && DT_PROB(RAD_MOB_HAIRLOSS_PROB, delta_time))
 		if(!(source.hairstyle == "Bald") && (HAIR in species_traits))
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
 			addtimer(CALLBACK(src, .proc/go_bald, source), 5 SECONDS)
@@ -2133,4 +2127,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Given a human, will adjust it before taking a picture for the preferences UI.
 /// This should create a CONSISTENT result, so the icons don't randomly change.
 /datum/species/proc/prepare_human_for_preview(mob/living/carbon/human/human)
+	return
+
+/// Returns the species's scream sound.
+/datum/species/proc/get_scream_sound(mob/living/carbon/human/human)
 	return

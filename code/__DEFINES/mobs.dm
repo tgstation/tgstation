@@ -396,6 +396,7 @@
 #define DEFIB_FAIL_FAILING_BRAIN (1<<6)
 #define DEFIB_FAIL_NO_BRAIN (1<<7)
 #define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
+#define DEFIB_NOGRAB_AGHOST (1<<9)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
 #define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
@@ -414,6 +415,8 @@
 #define EXAMINE_MORE_WINDOW 1 SECONDS
 /// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
 #define EYE_CONTACT_WINDOW 2 SECONDS
+/// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
+#define YAWN_PROPAGATION_EXAMINE_WINDOW 2 SECONDS
 
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5
