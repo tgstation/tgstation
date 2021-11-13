@@ -1,4 +1,0 @@
-author: "CocaColaTastesGood"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit in chef order console that let players potentially lag the server."
