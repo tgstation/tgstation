@@ -598,7 +598,7 @@
 			. += "There's a [note.name] pinned to the front..."
 			. += note.examine(user)
 	if(seal)
-		. += "It's been braced with a pneumatic seal."
+		. += "It's been braced with \a [seal]."
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
