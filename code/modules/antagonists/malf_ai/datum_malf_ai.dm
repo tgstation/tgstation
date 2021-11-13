@@ -104,8 +104,6 @@
 			objectives += yandere_two
 
 /datum/antagonist/malf_ai/greet()
-	to_chat(owner.current, span_alertsyndie("You are the [owner.special_role]."))
-	owner.announce_objectives()
 	if(should_give_codewords)
 		give_codewords()
 
@@ -143,15 +141,8 @@
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
-	to_chat(malf_mob, "<U><B>The Syndicate have provided you with the following codewords to identify fellow agents:</B></U>")
-	to_chat(malf_mob, "<B>Code Phrase</B>: [span_blue("[phrases]")]")
-	to_chat(malf_mob, "<B>Code Response</B>: [span_red("[responses]")]")
-
 	antag_memory += "<b>Code Phrase</b>: [span_blue("[phrases]")]<br>"
 	antag_memory += "<b>Code Response</b>: [span_red("[responses]")]<br>"
-
-	to_chat(malf_mob, "Use the codewords during regular conversation to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	to_chat(malf_mob, span_alertwarning("You memorize the codewords, allowing you to recognise them when heard."))
 
 /datum/antagonist/malf_ai/proc/add_law_zero()
 	var/mob/living/silicon/ai/malf_ai = owner.current

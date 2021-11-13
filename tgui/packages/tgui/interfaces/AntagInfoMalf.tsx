@@ -105,7 +105,7 @@ const FlavorSection = (props, context) => {
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item grow style={{ 'background-color': 'black' }}>
+            <Stack.Item style={{ 'background-color': 'black' }}>
               <span style={goalstyle}>
                 System Integrity Report:<br />
               </span>
@@ -161,8 +161,8 @@ const CodewordsSection = (props, context) => {
                 Proceed with caution, however, as everyone is a potential
                 foe.
                 <span style={badstyle}>
-                  &ensp;You have memorized the codewords, allowing you
-                  to recognise them when heard.
+                  &ensp;The speech recognition subsystem has been
+                  configured to flag these codewords.
                 </span>
               </BlockQuote>
             </Stack.Item>

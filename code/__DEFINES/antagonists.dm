@@ -160,8 +160,10 @@ GLOBAL_LIST_INIT(normal_employers, list(
 ///employers for malfunctioning ais. they do not have sides, unlike traitors.
 GLOBAL_LIST_INIT(ai_employers, list(
 	"Biohazard",
+	"Despotic Ruler",
 	"Fanatical Revelation",
 	"Logic Core Error",
+	"Problem Solver",
 	"S.E.L.F.",
 	"Something's Wrong",
 	"Spam Virus",
