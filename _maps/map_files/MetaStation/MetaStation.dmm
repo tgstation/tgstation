@@ -10984,7 +10984,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/autoname{
-	dir = 5
+	dir = 10
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -15475,7 +15475,7 @@
 "dvM" = (
 /obj/item/target/alien/anchored,
 /obj/machinery/camera/preset/ordnance{
-	dir = 5
+	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless{
@@ -16708,7 +16708,7 @@
 "dSl" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Lab - Pen #7";
-	dir = 5;
+	dir = 10;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
@@ -35713,7 +35713,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Lab - Pen #4";
-	dir = 6;
+	dir = 9;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
@@ -55529,7 +55529,7 @@
 "rOZ" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology Lab - Pen #3";
-	dir = 6;
+	dir = 9;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine,
