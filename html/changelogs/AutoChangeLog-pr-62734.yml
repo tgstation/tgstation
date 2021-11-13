@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "The account registration device should no longer create ID cards that cause vending machines to bluescreen."

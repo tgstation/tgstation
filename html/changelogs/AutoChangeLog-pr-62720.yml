@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "When it gets too much, ending it all with an atmospherics piece will now always do something special."

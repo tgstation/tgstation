@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Scrubbers attached to the dorms public scrubber stations won't immediately self-destruct from thermomachine waste heat anymore."

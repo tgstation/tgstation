@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscadd: "replaced the request consoles in each department with department order consoles, which order for free on a cooldown. cargo gets these orders and delivers the crates, which are locked until delivery. upon delivery, cargo gets paid the value of the crate, and can then sell the crate back on the shuttle."
-  - balance: "cargo doesn't start with a budget, other departments get what their budget was split up amongst them"

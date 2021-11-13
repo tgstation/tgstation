@@ -417,3 +417,45 @@
   jlsnow301:
   - rscadd: Vending machines now have nicer welcome screens
   - refactor: Vending machine UIs now do not hide bank balance information while scrolling
+2021-11-13:
+  CocaColaTastesGood:
+  - bugfix: Fixes an exploit in chef order console that let players potentially lag
+      the server.
+  - bugfix: Fixes an exploit that allowed players to purchase role restricted uplink
+      items that they shouldn't be able too.
+  KathyRyals:
+  - rscadd: You can now pull on a felinid's tail to make them happy!
+  Mothblocks:
+  - bugfix: Fixed traitor uplinks not letting you buy items that aren't restricted.
+  NamelessFairy:
+  - bugfix: CTF Downtowns bar stools face the right way now
+  - bugfix: CTF Downtowns bar stools have been bolted onto to the floor for insurance
+      purposes
+  RandomGamer123:
+  - bugfix: Scrubbers attached to the dorms public scrubber stations won't immediately
+      self-destruct from thermomachine waste heat anymore.
+  - bugfix: The Mix to Incinerator pipeline no longer interferes with HFR construction
+      in Tram atmospherics.
+  - qol: Adds N2 to Pure pump and pipes in Tram atmospherics.
+  - qol: Recolours Mix to Incinerator pipeline to dark rather than orange in Tram
+      atmospherics to match colouring scheme on other stations.
+  - qol: Renames old N2 to Pure pump to Air to Pure to reflect that it gives air mix
+      not N2.
+  Timberpoes:
+  - bugfix: The account registration device should no longer create ID cards that
+      cause vending machines to bluescreen.
+  - rscdel: Cryostasis pods have been removed from all maps and code.
+  Toastgoats:
+  - imageadd: Resprited hatchet inhands and made them face outwards.
+  esainane:
+  - spellcheck: Fixed a typo when resetting a multilayer cable
+  - bugfix: Some diagonal cameras are back to being placed on walls, instead of floating.
+  - bugfix: When it gets too much, ending it all with an atmospherics piece will now
+      always do something special.
+  tralezab:
+  - rscadd: replaced the request consoles in each department with department order
+      consoles, which order for free on a cooldown. cargo gets these orders and delivers
+      the crates, which are locked until delivery. upon delivery, cargo gets paid
+      the value of the crate, and can then sell the crate back on the shuttle.
+  - balance: cargo doesn't start with a budget, other departments get what their budget
+      was split up amongst them
