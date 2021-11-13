@@ -423,7 +423,8 @@
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You pull on [src]'s tail!"))
 		to_chat(src, span_notice("[M] pulls on your tail!"))
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
+		if(!HAS_TRAIT(src, TRAIT_BADTOUCH)) //so bad mood trait isn't bypassed by tail yanking
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
 	else
 		SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
 		SEND_SIGNAL(M, COMSIG_CARBON_HUG, M, src)
