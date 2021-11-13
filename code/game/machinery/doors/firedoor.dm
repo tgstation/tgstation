@@ -98,13 +98,15 @@
  */
 /obj/machinery/door/firedoor/proc/remove_from_areas()
 	reset() //This handles some alert/alarm clearing
-	if(affecting_areas)
-		for(var/area/place in affecting_areas)
-			LAZYREMOVE(place.firedoors, src)
-			LAZYREMOVE(place.active_firelocks, src)
-			if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
-				for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
-					fire_panel.set_status()
+	if(!affecting_areas)
+		return
+	for(var/area/place in affecting_areas)
+		LAZYREMOVE(place.firedoors, src)
+		LAZYREMOVE(place.active_firelocks, src)
+		if(LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
+			continue
+		for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
+			fire_panel.set_status()
 
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
@@ -390,13 +392,13 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/targetloc = get_turf(src)
 		if(disassembled || prob(40))
-			var/obj/structure/firelock_frame/fatal = new assemblytype(targetloc)
+			var/obj/structure/firelock_frame/unbuilt_lock = new assemblytype(targetloc)
 			if(disassembled)
-				fatal.constructionStep = CONSTRUCTION_PANEL_OPEN
+				unbuilt_lock.constructionStep = CONSTRUCTION_PANEL_OPEN
 			else
-				fatal.constructionStep = CONSTRUCTION_NO_CIRCUIT
-				fatal.update_integrity(fatal.max_integrity * 0.5)
-			fatal.update_appearance()
+				unbuilt_lock.constructionStep = CONSTRUCTION_NO_CIRCUIT
+				unbuilt_lock.update_integrity(unbuilt_lock.max_integrity * 0.5)
+			unbuilt_lock.update_appearance()
 		else
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
@@ -502,14 +504,14 @@
 	icon_state = "[base_icon_state][constructionStep]"
 	return ..()
 
-/obj/structure/firelock_frame/attackby(obj/item/object, mob/user)
+/obj/structure/firelock_frame/attackby(obj/item/attacking_object, mob/user)
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			if(object.tool_behaviour == TOOL_CROWBAR)
-				object.play_tool_sound(src)
+			if(attacking_object.tool_behaviour == TOOL_CROWBAR)
+				attacking_object.play_tool_sound(src)
 				user.visible_message(span_notice("[user] begins removing the circuit board from [src]..."), \
 					span_notice("You begin prying out the circuit board from [src]..."))
-				if(!object.use_tool(src, user, DEFAULT_STEP_TIME))
+				if(!attacking_object.use_tool(src, user, DEFAULT_STEP_TIME))
 					return
 				if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 					return
@@ -520,14 +522,14 @@
 				constructionStep = CONSTRUCTION_NO_CIRCUIT
 				update_appearance()
 				return
-			if(object.tool_behaviour == TOOL_WRENCH)
+			if(attacking_object.tool_behaviour == TOOL_WRENCH)
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					to_chat(user, span_warning("There's already a firelock there."))
 					return
-				object.play_tool_sound(src)
+				attacking_object.play_tool_sound(src)
 				user.visible_message(span_notice("[user] starts bolting down [src]..."), \
 					span_notice("You begin bolting [src]..."))
-				if(!object.use_tool(src, user, DEFAULT_STEP_TIME))
+				if(!attacking_object.use_tool(src, user, DEFAULT_STEP_TIME))
 					return
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 					return
@@ -540,8 +542,8 @@
 					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
-			if(istype(object, /obj/item/stack/sheet/plasteel))
-				var/obj/item/stack/sheet/plasteel/plasteel_sheet = object
+			if(istype(attacking_object, /obj/item/stack/sheet/plasteel))
+				var/obj/item/stack/sheet/plasteel/plasteel_sheet = attacking_object
 				if(reinforced)
 					to_chat(user, span_warning("[src] is already reinforced."))
 					return
@@ -561,27 +563,27 @@
 					reinforced = 1
 				return
 		if(CONSTRUCTION_NO_CIRCUIT)
-			if(istype(object, /obj/item/electronics/firelock))
-				user.visible_message(span_notice("[user] starts adding [object] to [src]..."), \
+			if(istype(attacking_object, /obj/item/electronics/firelock))
+				user.visible_message(span_notice("[user] starts adding [attacking_object] to [src]..."), \
 					span_notice("You begin adding a circuit board to [src]..."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(!do_after(user, DEFAULT_STEP_TIME, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 					return
-				qdel(object)
+				qdel(attacking_object)
 				user.visible_message(span_notice("[user] adds a circuit to [src]."), \
-					span_notice("You insert and secure [object]."))
+					span_notice("You insert and secure [attacking_object]."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				constructionStep = CONSTRUCTION_PANEL_OPEN
 				return
-			if(object.tool_behaviour == TOOL_WELDER)
-				if(!object.tool_start_check(user, amount=1))
+			if(attacking_object.tool_behaviour == TOOL_WELDER)
+				if(!attacking_object.tool_start_check(user, amount=1))
 					return
 				user.visible_message(span_notice("[user] begins cutting apart [src]'s frame..."), \
 					span_notice("You begin slicing [src] apart..."))
 
-				if(object.use_tool(src, user, DEFAULT_STEP_TIME, volume=50, amount=1))
+				if(attacking_object.use_tool(src, user, DEFAULT_STEP_TIME, volume=50, amount=1))
 					if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 						return
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
@@ -592,8 +594,8 @@
 						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
 					qdel(src)
 				return
-			if(istype(object, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/raspberrypi = object
+			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))
+				var/obj/item/electroadaptive_pseudocircuit/raspberrypi = attacking_object
 				if(!raspberrypi.adapt_circuit(user, DEFAULT_STEP_TIME * 0.5))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \

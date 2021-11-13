@@ -296,6 +296,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	for(var/obj/machinery/light/L in src)
 		L.update()
+	for(var/obj/machinery/firealarm/firepanel in firealarms)
+		firepanel.set_status()
 
 /**
  * Update the icon state of the area

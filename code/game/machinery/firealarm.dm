@@ -65,7 +65,7 @@
  *
  * This proc exists to be called by areas and firelocks
  * so that it may update its icon and start or stop playing
- * the alarm sound based on the my_area.fire var.
+ * the alarm sound based on the state of an area variable.
  */
 /obj/machinery/firealarm/proc/set_status()
 	if(my_area.fire || LAZYLEN(my_area.active_firelocks))
