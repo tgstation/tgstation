@@ -788,3 +788,10 @@
 
 /obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
 		return
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed
+	icon_state = "cur_fancy-closed"
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed/Initialize(mapload)
+	. = ..()
+	close()
