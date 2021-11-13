@@ -119,8 +119,8 @@
 		return
 
 	if(throw_mode)
-		changeNext_move(CLICK_CD_THROW)
-		throw_item(A)
+		if(throw_item(A))
+			changeNext_move(CLICK_CD_THROW)
 		return
 
 	var/obj/item/W = get_active_held_item()
