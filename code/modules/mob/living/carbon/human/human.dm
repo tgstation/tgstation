@@ -48,7 +48,7 @@
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
-	if(levels > 1) // falling off one level
+	if(levels > 1) // you're not The One
 		return ..()
 	var/obj/item/organ/external/wings/gliders = src.getorgan(/obj/item/organ/external/wings)
 	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
