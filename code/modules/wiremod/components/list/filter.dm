@@ -76,7 +76,7 @@
 		index += 1
 		var/list/result = SScircuit_component.execute_instant_run()
 		if(!result)
-			visible_message("[src] starts to overheat!")
+			balloon_alert_to_viewers("[src] starts to overheat!")
 			on_failed.set_output(COMPONENT_SIGNAL)
 			return
 		if(result["accept_entry"])
