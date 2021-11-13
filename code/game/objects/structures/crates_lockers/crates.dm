@@ -113,7 +113,7 @@
 /obj/structure/closet/crate/maint
 
 /obj/structure/closet/crate/maint/Initialize(mapload)
-	. = ..()
+	..()
 	return INITIALIZE_HINT_QDEL
 
 /obj/structure/closet/crate/maint/PopulateContents()
