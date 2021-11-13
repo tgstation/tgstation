@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
 	canSmoothWith = list(SMOOTH_GROUP_INDUSTRIAL_LIFT)
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	obj_flags = CAN_BE_HIT
 
 	var/id = null //ONLY SET THIS TO ONE OF THE LIFT'S PARTS. THEY'RE CONNECTED! ONLY ONE NEEDS THE SIGNAL!
 	var/pass_through_floors = FALSE //if true, the elevator works through floors
@@ -164,6 +164,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		COMSIG_ATOM_EXITED =.proc/UncrossedRemoveItemFromLift,
 		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
 		COMSIG_ATOM_CREATED = .proc/AddItemOnLift,
+		COMSIG_TURF_PRE_ZMOVE_CHECK_OUT = .proc/block_z_move_down,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
@@ -171,6 +172,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
 
+/obj/structure/industrial_lift/proc/block_z_move_down(turf/source_turf, atom/movable/arriving_movable, direction, turf/old_turf)
+	SIGNAL_HANDLER
+	if(direction == DOWN)
+		return COMPONENT_BLOCK_Z_OUT_DOWN
 
 /obj/structure/industrial_lift/proc/UncrossedRemoveItemFromLift(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER

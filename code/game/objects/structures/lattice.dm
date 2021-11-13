@@ -10,13 +10,15 @@
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_LATTICE)
 	canSmoothWith = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_WALLS)
 	var/number_of_mats = 1
 	var/build_material = /obj/item/stack/rods
-
+	var/list/loc_connections = list(
+		COMSIG_TURF_PRE_ZMOVE_CHECK_OUT = .proc/block_z_move_down
+	)
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()
@@ -32,6 +34,13 @@
 			continue
 		stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z])")
 		return INITIALIZE_HINT_QDEL
+
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/lattice/proc/block_z_move_down(turf/source_turf, atom/movable/arriving_movable, direction, turf/old_turf)
+	SIGNAL_HANDLER
+	if(direction == DOWN)
+		return COMPONENT_BLOCK_Z_OUT_DOWN
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
@@ -79,7 +88,16 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_CATWALK, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_CATWALK)
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	obj_flags = CAN_BE_HIT
+	loc_connections = list(
+		COMSIG_TURF_PRE_ZMOVE_CHECK_OUT = .proc/block_z_move_down,
+		COMSIG_TURF_PRE_ZMOVE_CHECK_IN = .proc/block_z_move_up,
+	)
+
+/obj/structure/lattice/catwalk/proc/block_z_move_up(turf/source_turf, atom/movable/arriving_movable, direction, turf/old_turf)
+	SIGNAL_HANDLER
+	if(direction == UP)
+		return COMPONENT_BLOCK_Z_IN_DOWN
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
@@ -107,7 +125,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_LATTICE, SMOOTH_GROUP_OPEN_FLOOR)
 	canSmoothWith = list(SMOOTH_GROUP_LATTICE)
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	obj_flags = CAN_BE_HIT
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/structure/lattice/lava/deconstruction_hints(mob/user)

@@ -60,16 +60,36 @@
 	icon_state = "lattice-255"
 	plane = FLOOR_PLANE
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	obj_flags = CAN_BE_HIT
 	var/id
 	var/open = FALSE
 	var/hidden = FALSE
+	var/static/list/z_move_blocking_connections = list(
+		COMSIG_TURF_PRE_ZMOVE_CHECK_OUT = .proc/block_z_move_down,
+		COMSIG_TURF_PRE_ZMOVE_CHECK_IN = .proc/block_z_move_up
+	)
 
 /obj/structure/pitgrate/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, .proc/OnButtonPressed)
+
+	AddElement(/datum/element/connect_loc, z_move_blocking_connections)
 	if(hidden)
 		update_openspace()
+
+/obj/structure/pitgrate/proc/block_z_move_down(turf/source_turf, atom/movable/arriving_movable, direction, turf/old_turf)
+	SIGNAL_HANDLER
+	if(open)
+		return
+	if(direction == DOWN)
+		return COMPONENT_BLOCK_Z_OUT_DOWN
+
+/obj/structure/pitgrate/proc/block_z_move_up(turf/source_turf, atom/movable/arriving_movable, direction, turf/old_turf)
+	SIGNAL_HANDLER
+	if(open)
+		return
+	if(direction == UP)
+		return COMPONENT_BLOCK_Z_IN_UP
 
 /obj/structure/pitgrate/proc/OnButtonPressed(datum/source,obj/machinery/button/button)
 	SIGNAL_HANDLER
@@ -89,10 +109,8 @@
 	var/talpha
 	if(open)
 		talpha = 0
-		obj_flags &= ~(BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP)
 	else
 		talpha = 255
-		obj_flags |= BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	plane = ABOVE_LIGHTING_PLANE //What matters it's one above openspace, so our animation is not dependant on what's there. Up to revision with 513
 	animate(src,alpha = talpha,time = 10)
 	addtimer(CALLBACK(src,.proc/reset_plane),10)

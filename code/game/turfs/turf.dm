@@ -277,7 +277,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
 	var/turf/target = get_step_multiz(src, DOWN)
-	if(!target || (!isobj(A) && !ismob(A)))
+	if(!target || !istype(A))
 		return FALSE
 	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
 		return FALSE

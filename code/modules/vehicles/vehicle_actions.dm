@@ -283,7 +283,7 @@
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger()
 	if(world.time > next_ollie)
 		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
-		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
+		//vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
 		if (vehicle.grinding)
 			return
 		var/mob/living/rider = owner

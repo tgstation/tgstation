@@ -7,12 +7,14 @@
 		return ELEMENT_INCOMPATIBLE
 
 	var/obj/target_obj = target
-	if(target_obj.obj_flags & FREEZE_PROOF)
+	if((target_obj.obj_flags & FREEZE_PROOF) || HAS_TRAIT(target_obj, TRAIT_FROZEN))
 		return ELEMENT_INCOMPATIBLE
 
 	target_obj.name = "frozen [target_obj.name]"
 	target_obj.add_atom_colour(GLOB.freon_color_matrix, TEMPORARY_COLOUR_PRIORITY)
 	target_obj.alpha -= 25
+
+	ADD_TRAIT(target_obj, TRAIT_FROZEN, TRAIT_GENERIC)
 
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(target, COMSIG_MOVABLE_POST_THROW, .proc/shatter_on_throw)
@@ -20,6 +22,7 @@
 
 /datum/element/frozen/Detach(datum/source, ...)
 	var/obj/obj_source = source
+	REMOVE_TRAIT(obj_source, TRAIT_FROZEN, TRAIT_GENERIC)
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 	obj_source.alpha += 25

@@ -433,6 +433,17 @@
 #define COMSIG_TURF_MULTIZ_DEL "turf_multiz_del"
 ///from base of turf/multiz_turf_new: (turf/source, direction)
 #define COMSIG_TURF_MULTIZ_NEW "turf_multiz_new"
+
+/// from base /turf/zPassIn(): (atom/movable/A, direction, turf/source)
+#define COMSIG_TURF_PRE_ZMOVE_CHECK_IN "turf_pre_zmove_check_in"
+	#define COMPONENT_BLOCK_Z_IN_DOWN DOWN
+	#define COMPONENT_BLOCK_Z_IN_UP UP
+
+/// from base /turf/zPassOut(): (atom/movable/A, direction, turf/destination)
+#define COMSIG_TURF_PRE_ZMOVE_CHECK_OUT "turf_pre_zmove_check_out"
+	#define COMPONENT_BLOCK_Z_OUT_DOWN DOWN
+	#define COMPONENT_BLOCK_Z_OUT_UP UP
+
 ///from base of turf/proc/onShuttleMove(): (turf/new_turf)
 #define COMSIG_TURF_ON_SHUTTLE_MOVE "turf_on_shuttle_move"
 ///from /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)

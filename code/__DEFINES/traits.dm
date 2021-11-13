@@ -303,6 +303,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_COAGULATING "coagulating"
 /// From anti-convulsant medication against seizures.
 #define TRAIT_ANTICONVULSANT "anticonvulsant"
+/// marks this obj as frozen
+#define TRAIT_FROZEN "frozen"
 /// The holder of this trait has antennae or whatever that hurt a ton when noogied
 #define TRAIT_ANTENNAE "antennae"
 /// Blowing kisses actually does damage to the victim

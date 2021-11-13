@@ -5,7 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
 	anchored = TRUE
-	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	obj_flags = CAN_BE_HIT
 	var/obj/structure/ladder/down   //the ladder below this one
 	var/obj/structure/ladder/up     //the ladder above this one
 	var/crafted = FALSE
@@ -22,6 +22,10 @@
 		src.down = down
 		down.up = src
 		down.update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_PRE_ZMOVE_CHECK_OUT = .proc/block_z_move_down
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/Destroy(force)
@@ -51,6 +55,11 @@
 				L.update_appearance()
 
 	update_appearance()
+
+/obj/structure/ladder/proc/block_z_move_down(turf/source_turf, atom/movable/arriving_movable, direction, turf/old_turf)
+	SIGNAL_HANDLER
+	if(direction == DOWN)
+		return COMPONENT_BLOCK_Z_OUT_DOWN
 
 /obj/structure/ladder/proc/disconnect()
 	if(up && up.down == src)
