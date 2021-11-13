@@ -61,7 +61,7 @@
 	if(ismob(A))
 		var/mob/M = A
 		if(MobBump(M))
-			return BUMP_MOVE_DEALT_WITH
+			return TURF_ENTER_ALREADY_MOVED
 	if(isobj(A))
 		var/obj/O = A
 		if(ObjBump(O))
@@ -69,7 +69,7 @@
 	if(ismovable(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM, move_force))
-			return BUMP_MOVE_DEALT_WITH
+			return TURF_ENTER_ALREADY_MOVED
 
 /mob/living/Bumped(atom/movable/AM)
 	..()

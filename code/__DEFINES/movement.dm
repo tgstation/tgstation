@@ -15,4 +15,5 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// Not very readable but it works
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
 
-#define BUMP_MOVE_DEALT_WITH (1<<1)
+#define TURF_CAN_ENTER (1<<0)
+#define TURF_ENTER_ALREADY_MOVED (1<<1)
