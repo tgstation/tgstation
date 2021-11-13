@@ -275,7 +275,7 @@
 			. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(amount>0 && prob(10))
+	if(amount > 0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()
 
