@@ -251,7 +251,7 @@
 				traitor_won = FALSE
 			count++
 
-	result += "<br>Faction: <B>[employer]</B>"
+	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
