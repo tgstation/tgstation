@@ -25,6 +25,13 @@
 
 	COOLDOWN_DECLARE(detect_cooldown)
 
+	///Trick to get the glowing overlay visible from a distance
+	luminosity = 1
+	///X offset for the overlay lights, so that they line up with the thin border firelocks
+	var/light_xoffset = 0
+	///Y offset for the overlay lights, so that they line up with the thin border firelocks
+	var/light_yoffset = 0
+
 	var/boltslocked = TRUE
 	///List of areas we handle. See CalculateAffectingAreas()
 	var/list/affecting_areas
@@ -59,6 +66,14 @@
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
+
+/**
+ * Sets the offset for the warning lights.
+ *
+ * Used for special firelocks with light overlays that don't line up to their sprite.
+ */
+/obj/machinery/door/firedoor/proc/set_offset()
+	return
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
@@ -353,17 +368,19 @@
 	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
 
 /obj/machinery/door/firedoor/update_overlays()
-	cut_overlays()
 	. = ..()
 	if(welded)
 		. += density ? "welded" : "welded_open"
 	if(alarm_type && powered())
-		if(!warn_lights)
-			warn_lights = new()
-		warn_lights.icon = icon
-		warn_lights.icon_state = "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]"
-		warn_lights.plane = ABOVE_LIGHTING_PLANE
-		add_overlay(warn_lights)
+		var/mutable_appearance/hazards
+		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
+		hazards.pixel_x = light_xoffset
+		hazards.pixel_y = light_yoffset
+		. += hazards
+		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", alpha = src.alpha)
+		hazards.pixel_x = light_xoffset
+		hazards.pixel_y = light_yoffset
+		. += hazards
 
 /**
  * Corrects the current state of the door, based on if alarm_type is set.
@@ -432,21 +449,25 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	set_offset()
 
-/obj/machinery/door/firedoor/border_only/update_overlays()
-	if(alarm_type && powered())
-		if(!warn_lights)
-			warn_lights = new()
-		switch(dir) //Thin firelocks hug the edge of the sprite and so there's no real room for the lights without this
-			if(NORTH)
-				warn_lights.pixel_y = 2
-			if(SOUTH)
-				warn_lights.pixel_y = -2
-			if(EAST)
-				warn_lights.pixel_x = 2
-			if(WEST)
-				warn_lights.pixel_x = -2
-	return ..()
+/obj/machinery/door/firedoor/border_only/set_offset()
+	light_xoffset = 0
+	light_yoffset = 0
+	switch(dir)
+		if(NORTH)
+			light_yoffset = 2
+		if(SOUTH)
+			light_yoffset = -2
+		if(EAST)
+			light_xoffset = 2
+		if(WEST)
+			light_xoffset = -2
+	update_icon()
+
+/obj/machinery/door/firedoor/border_only/Moved()
+	. = ..()
+	set_offset()
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
