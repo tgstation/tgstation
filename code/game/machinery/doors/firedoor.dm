@@ -428,7 +428,7 @@
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/door/firedoor/update_overlays()
+/obj/machinery/door/firedoor/border_only/update_overlays()
 	if(alarm_type && powered())
 		if(!warn_lights)
 			warn_lights = new()

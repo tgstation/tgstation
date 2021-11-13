@@ -134,7 +134,7 @@
 	update_appearance()
 	if(user)
 		user.visible_message(span_warning("Sparks fly out of [src]!"),
-							span_notice("You emag [src], disabling the thermal sensors of nearby firelocks."))
+							span_notice("You override [src], damaging the thermal sensors of all nearby firelocks."))
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
 		firelock.emag_act(user)
