@@ -12969,7 +12969,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/machinery/camera{
 	c_tag = "Service-Botany Top 3";
-	dir = 6
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/service/hydroponics)
@@ -14261,7 +14261,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Service-Hallway Top 1";
-	dir = 10
+	dir = 5
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -18008,7 +18008,7 @@
 /obj/machinery/deepfryer,
 /obj/machinery/camera{
 	c_tag = "Service-Kitchen Top";
-	dir = 10
+	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
@@ -23833,7 +23833,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/camera{
 	c_tag = "Atmospherics South West";
-	dir = 5
+	dir = 10
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -24649,7 +24649,7 @@
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/camera{
 	c_tag = "Atmospherics South East";
-	dir = 9
+	dir = 6
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -25062,7 +25062,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Departure Lounge Holding Area";
-	dir = 6
+	dir = 9
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
@@ -25454,7 +25454,7 @@
 /obj/machinery/bounty_board/directional/west,
 /obj/machinery/camera{
 	c_tag = "Research Lobby";
-	dir = 5;
+	dir = 10;
 	network = list("ss13","rd")
 	},
 /obj/machinery/light/directional/west,
@@ -28173,7 +28173,7 @@
 /obj/item/flashlight,
 /obj/machinery/camera{
 	c_tag = "Departure Lounge Emergency EVA";
-	dir = 6
+	dir = 9
 	},
 /obj/item/radio/off,
 /turf/open/floor/iron/white,
@@ -32689,7 +32689,7 @@
 "mTd" = (
 /obj/machinery/camera{
 	c_tag = "Science - Server Room";
-	dir = 10;
+	dir = 5;
 	name = "science camera";
 	network = list("ss13","rd")
 	},
@@ -44616,7 +44616,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/camera{
 	c_tag = "Departure Lounge West";
-	dir = 5
+	dir = 10
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/corner{
@@ -50018,7 +50018,7 @@
 "vNE" = (
 /obj/machinery/camera{
 	c_tag = "Service-Hallway Top 2";
-	dir = 10
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -52263,7 +52263,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera{
 	c_tag = "Service-Ultils Top";
-	dir = 10
+	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -53866,7 +53866,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Service-Botany Top 2";
-	dir = 5
+	dir = 10
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/firealarm/directional/west,
