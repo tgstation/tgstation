@@ -683,6 +683,7 @@ What a mess.*/
 				G.fields["name"] = "New Record"
 				G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 				G.fields["rank"] = "Unassigned"
+				G.fields["trim"] = "Unassigned"
 				G.fields["gender"] = "Male"
 				G.fields["age"] = "Unknown"
 				G.fields["species"] = "Human"
@@ -919,6 +920,7 @@ What a mess.*/
 					if("Change Rank")
 						if(active1)
 							active1.fields["rank"] = strip_html(href_list["rank"])
+							active1.fields["trim"] = active1.fields["rank"]
 							if(href_list["rank"] in SSjob.station_jobs)
 								active1.fields["real_rank"] = href_list["real_rank"]
 
