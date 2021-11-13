@@ -290,25 +290,22 @@
 	return FALSE
 
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //on right we let people click normally, so they can put stuff in storage or whatever
-		return ..()
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the panel first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return TRUE
+			return FALSE
 		install(attacking_item, user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
 			balloon_alert(user, "open the panel first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return TRUE
+			return FALSE
 		if(cell)
 			balloon_alert(user, "cell already installed!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-			return TRUE
+			return FALSE
 		attacking_item.forceMove(src)
 		cell = attacking_item
 		balloon_alert(user, "cell installed")

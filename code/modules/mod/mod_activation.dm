@@ -128,7 +128,7 @@
 	if(do_after(wearer,2 SECONDS,wearer,IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_INCAPACITATED))
 		to_chat(wearer, span_notice("Systems [active ? "shut down. Parts unsealed. Goodbye" : "started up. Parts sealed. Welcome"], [wearer]."))
 		if(ai)
-			to_chat(ai, span_notice("SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\""))
+			to_chat(ai, span_notice("<b>SYSTEMS [active ? "DEACTIVATED. GOODBYE" : "ACTIVATED. WELCOME"]: \"[ai]\"</b>"))
 		finish_activation(!active)
 		if(active)
 			playsound(src, 'sound/machines/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
@@ -173,7 +173,7 @@
 	if(on)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_equip()
-		START_PROCESSING(SSobj,src)
+		START_PROCESSING(SSobj, src)
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_unequip()

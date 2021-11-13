@@ -66,7 +66,7 @@
 	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/job/engineer/mod
-	name = "Station Engineer (MOD)"
+	name = "Station Engineer (MODsuit)"
 
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/engineering

@@ -16,17 +16,20 @@
 	storage.max_combined_w_class = max_combined_w_class
 	storage.max_items = max_items
 	storage.allow_big_nesting = TRUE
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/mod/module/storage/on_install()
 	var/datum/component/storage/modstorage = mod.AddComponent(/datum/component/storage, storage)
 	modstorage.max_w_class = max_w_class
 	modstorage.max_combined_w_class = max_combined_w_class
 	modstorage.max_items = max_items
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 
 /obj/item/mod/module/storage/on_uninstall()
 	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
 	storage.slaves -= modstorage
 	qdel(modstorage)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
