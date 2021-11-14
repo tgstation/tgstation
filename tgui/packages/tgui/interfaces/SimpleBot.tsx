@@ -294,8 +294,8 @@ const FloorbotTiles = (props, context) => {
 
   return (
     <Button
-      icon={control[1] ? 'eject' : ''}
       disabled={!control[1]}
+      icon={control[1] ? 'eject' : ''}
       onClick={() => act('eject_tiles')}
       tooltip="Number of floor tiles contained in the bot.">
       {control[1] ? `${control[1]}` : 'Empty'}
@@ -314,8 +314,7 @@ const FloorbotLine = (props, context) => {
         color={control[1] ? 'good' : 'gray'}
         name={control[1] ? 'compass' : 'toggle-off'}
         onClick={() => act('line_mode')}
-        size={!control[1] ? 2 : 1.5}
-        tooltip="Number of floor tiles contained in the bot.">
+        size={!control[1] ? 2 : 1.5}>
         {' '}
         {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
       </Icon>
