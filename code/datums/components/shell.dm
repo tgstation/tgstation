@@ -95,7 +95,7 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	if(!attached_circuit?.admin_only)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !attached_circuit?.admin_only)
 		remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
@@ -265,13 +265,13 @@
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
-	RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
+	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !circuitboard.admin_only)
+		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
 	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
-	attached_circuit.set_shell(parent_atom)
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
 	attached_circuit.set_locked(FALSE)
@@ -279,8 +279,11 @@
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
 		attached_circuit.on = parent_atom.anchored
 
-	if(circuitboard.loc != parent_atom)
+	if((shell_flags & SHELL_FLAG_CIRCUIT_FIXED) || circuitboard.admin_only)
+		circuitboard.moveToNullspace()
+	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
+	attached_circuit.set_shell(parent_atom)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.
@@ -293,7 +296,7 @@
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY,
 	))
-	if(attached_circuit.loc == parent)
+	if(attached_circuit.loc == parent || (!QDELETED(attached_circuit) && attached_circuit.loc == null))
 		var/atom/parent_atom = parent
 		attached_circuit.forceMove(parent_atom.drop_location())
 

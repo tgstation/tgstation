@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - refactor: "Bot emagging has been refactored, and as such, their cover can be closed if forced open by emag if the bot itself hasn't been emagged."
-  - bugfix: "Sergeant-At-Armsky can now be found in Delta's Armory!"

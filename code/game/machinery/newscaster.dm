@@ -193,6 +193,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	icon_state = "newscaster"
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/newscaster
+	pixel_shift = 30
 
 
 /obj/machinery/newscaster
@@ -221,40 +222,16 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 
-/obj/machinery/newscaster/directional/north
-	pixel_y = 32
-
-/obj/machinery/newscaster/directional/south
-	pixel_y = -28
-
-/obj/machinery/newscaster/directional/east
-	pixel_x = 28
-
-/obj/machinery/newscaster/directional/west
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/security_unit/directional/north
-	pixel_y = 32
-
-/obj/machinery/newscaster/security_unit/directional/south
-	pixel_y = -28
-
-/obj/machinery/newscaster/security_unit/directional/east
-	pixel_x = 28
-
-/obj/machinery/newscaster/security_unit/directional/west
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()
-	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 	GLOB.allCasters += src
 	unit_no = GLOB.allCasters.len

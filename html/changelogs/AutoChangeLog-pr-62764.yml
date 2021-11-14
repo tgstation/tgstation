@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "space adaptation has been split into two mutations. pressure adaptation giving you full immunity to pressure and temperature adaptation giving you full immunity to temperature. these are not compatible with each other."

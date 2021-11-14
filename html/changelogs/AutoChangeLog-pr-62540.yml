@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer challenge multiple elite mining mobs at once and get potentially warped between two arenas because of it."
+  - bugfix: "You can now lose against elite mining mobs even if you can't die (cough cough Memento Mori) if you're over the minus 200 health threshold. Be careful not to bite the dust."
