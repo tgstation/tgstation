@@ -205,22 +205,6 @@
 	washing = FALSE
 	update_appearance()
 
-// Variables sent to TGUI
-/mob/living/simple_animal/bot/hygienebot/ui_data(mob/user)
-	var/list/data = list()
-	data["custom_controls"] = list()
-	data["emagged"] = emagged
-	data["locked"] = locked
-	data["maintenance_open"] = open
-	data["pai"] = list()
-	data["settings"] = list()
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		data["pai"]["card_inserted"] = paicard
-		data["pai"]["allow_pai"] = allow_pai
-		data["settings"]["remote_enabled"] = !remote_disabled
-		data["settings"]["on"] = on
-	return data
-
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
 	if((emagged) && L.stat != DEAD)
 		return FALSE

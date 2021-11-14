@@ -21,7 +21,7 @@ type Settings = {
   power: number;
   airplane_mode: number;
   maintenance_lock: number;
-  patrol_station?: number;
+  patrol_station: number;
 };
 
 type Controls = {
