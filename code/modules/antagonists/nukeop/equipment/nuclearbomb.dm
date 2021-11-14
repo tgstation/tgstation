@@ -599,7 +599,7 @@ GLOBAL_VAR(station_nuke_source)
 		var/mob/living/victim = _victim
 		to_chat(victim, span_userdanger("You are shredded to atoms!"))
 		if(victim.stat != DEAD && victim.z == z)
-			victim.dust()
+			victim.gib()
 
 /*
 This is here to make the tiles around the station mininuke change when it's armed.
