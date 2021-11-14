@@ -42,7 +42,8 @@
 #define RACEMUT /datum/mutation/human/race
 #define RADIOACTIVE /datum/mutation/human/radioactive
 #define SHOCKTOUCH /datum/mutation/human/shock
-#define SPACEMUT /datum/mutation/human/space_adaptation
+#define TEMPADAPT /datum/mutation/human/temperature_adaptation
+#define PRESSUREADAPT /datum/mutation/human/pressure_adaptation
 #define SPASTIC /datum/mutation/human/spastic
 #define SPIDER_WEB /datum/mutation/human/webbing
 #define STIMMED /datum/mutation/human/stimmed
