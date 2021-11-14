@@ -82,7 +82,7 @@
 				attached = locate() in T
 				if(!attached)
 					to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
-				else
+				else if(do_after(user, 5 SECONDS, target = src))
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
 						"[user] attaches \the [src] to the cable.", \
@@ -90,7 +90,7 @@
 						span_hear("You hear some wires being connected to something."))
 			else
 				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
-		else
+		else if(do_after(user, 5 SECONDS, target = src))
 			set_mode(DISCONNECTED)
 			user.visible_message( \
 				"[user] detaches \the [src] from the cable.", \
@@ -176,11 +176,10 @@
 	if(!attached)
 		set_mode(DISCONNECTED)
 
-	release_heat()
-
 	if(mode != OPERATING)
 		return
 
+	release_heat()
 	drain_power()
 
 	if(internal_heat > max_heat * ALERT / 100)
