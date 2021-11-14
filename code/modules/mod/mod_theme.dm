@@ -38,7 +38,7 @@
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// Total list of selectable skins for the MOD.
-	var/list/skins = list("standard")
+	var/list/skins = list("standard", "civilian")
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
@@ -103,6 +103,17 @@
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 
+/datum/mod_theme/mining
+	name = "mining"
+	desc = "A high-power Nanotrasen mining suit, supporting more complexity at a bigger drain."
+	default_skin = "mining"
+	skins = list("mining")
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	cell_drain = 10
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+
 /datum/mod_theme/medical
 	name = "medical"
 	desc = "A lightweight suit by DeForest Medical Corporation, allows for easier movement."
@@ -166,12 +177,59 @@
 	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."
 	default_skin = "advanced"
 	skins = list("syndicate")
-	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
 	siemens_coefficient = 0
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	slowdown_inactive = 1
 	slowdown_active = 0
 	ui_theme = "syndicate"
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	clothing_flags = list(
+		HELMET_FLAGS = list(
+			UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE,
+			UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+			UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+		),
+		CHESTPLATE_FLAGS = list(
+			UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+		),
+		GAUNTLETS_FLAGS = list(
+			UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+		),
+		BOOTS_FLAGS = list(
+			UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+		),
+	)
+
+/datum/mod_theme/elite
+	name = "elite"
+	desc = "An elite suit upgraded by Cybersun Industries, offering upgraded armor values."
+	default_skin = "advanced"
+	skins = list("elite")
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	siemens_coefficient = 0
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	slowdown_inactive = 1
+	slowdown_active = 0
+	ui_theme = "syndicate"
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster/elite)
+	clothing_flags = list(
+		HELMET_FLAGS = list(
+			UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE,
+			UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+			UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+		),
+		CHESTPLATE_FLAGS = list(
+			UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+		),
+		GAUNTLETS_FLAGS = list(
+			UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+		),
+		BOOTS_FLAGS = list(
+			UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+		),
+	)
 
 /datum/mod_theme/debug
 	name = "debug"
@@ -211,7 +269,7 @@
 
 /datum/mod_theme/admin
 	name = "administrative"
-	desc = "Strangely nostalgic."
+	desc = "A suit made of adminium. Who comes up with these stupid mineral names?"
 	default_skin = "debug"
 	skins = list("debug")
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 100)

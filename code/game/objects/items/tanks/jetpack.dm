@@ -143,7 +143,7 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
-	full_speed = FALSE //moves at hardsuit jetpack speeds
+	full_speed = FALSE //moves at modsuit jetpack speeds
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
 	if(rand(0,250) == 0)

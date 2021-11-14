@@ -78,5 +78,6 @@
 
 /datum/outfit/job/miner/equipped/mod
 	name = "Shaft Miner (Equipment + MODsuit)"
-//	suit = /obj/item/clothing/suit/space/hardsuit/mining
+	back = /obj/item/mod/control/pre_equipped/mining
+	suit = null
 	mask = /obj/item/clothing/mask/breath

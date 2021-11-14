@@ -582,8 +582,8 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/suit/hooded/berserker
-	name = "berserker hardsuit"
-	desc = "Voices echo from the hardsuit, driving the user insane. Is not space-proof."
+	name = "berserker armor"
+	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
 	icon_state = "berserker"
 	hoodtype = /obj/item/clothing/head/hooded/berserker
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)

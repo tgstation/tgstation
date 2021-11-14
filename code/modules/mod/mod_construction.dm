@@ -43,7 +43,7 @@
 /obj/item/mod/construction/armor
 	name = "MOD armor plates"
 	desc = "Armor plates used to finish a MOD."
-	icon_state = "armor"
+	icon_state = "standard-armor"
 	var/datum/mod_theme/theme = /datum/mod_theme
 
 /obj/item/mod/construction/armor/Initialize(mapload)
@@ -61,6 +61,9 @@
 
 /obj/item/mod/construction/armor/medical
 	theme = /datum/mod_theme/medical
+
+/obj/item/mod/construction/armor/mining
+	theme = /datum/mod_theme/mining
 
 /obj/item/mod/paint
 	name = "MOD paint kit"

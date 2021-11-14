@@ -1,5 +1,5 @@
 /**
- * The shielded component causes the parent item to nullify a certain number of attacks against the wearer, see: shielded hardsuits.
+ * The shielded component causes the parent item to nullify a certain number of attacks against the wearer, see: shielded vests.
  */
 
 /datum/component/shielded

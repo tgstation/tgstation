@@ -406,7 +406,7 @@
 	head = /obj/item/clothing/head/helmet/space/chronos
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/debug //Debug objs plus hardsuit
+/datum/outfit/debug //Debug objs plus MODsuit
 	name = "Debug outfit"
 
 	id = /obj/item/card/id/advanced/debug

@@ -55,7 +55,7 @@
 	desc = "A module installed to the helmet, allowing access to different views."
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 10
+	active_power_cost = 5
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS
 	var/hud_type
@@ -373,7 +373,7 @@
 		if(!holding)
 			balloon_alert(mod.wearer, "nothing to holster!")
 			return
-		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY || holding.weapon_weight > WEAPON_MEDIUM)
+		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY)
 			balloon_alert(mod.wearer, "it doesn't fit!")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
@@ -508,7 +508,7 @@
 
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
-	desc = "A module that shields the MOD from EMP's, taking a power cost for that."
+	desc = "A module that shields the MOD from EMPs, taking a power cost for that."
 	complexity = 1
 	idle_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
@@ -525,7 +525,7 @@
 	icon_state = "flashlight"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = 15
+	active_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
@@ -534,7 +534,7 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
-	var/base_power = 3
+	var/base_power = 2
 	var/min_range = 2
 	var/max_range = 5
 
@@ -615,23 +615,19 @@
 	removable = FALSE
 	var/explosion_detection_dist = 21
 
-/obj/item/mod/module/reagent_scanner/advanced/on_equip()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
-
-/obj/item/mod/module/reagent_scanner/advanced/on_unequip()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
-
 /obj/item/mod/module/reagent_scanner/advanced/on_activation()
 	. = ..()
 	if(!.)
 		return
 	mod.wearer.research_scanner++
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation()
 	. = ..()
 	if(!.)
 		return
 	mod.wearer.research_scanner--
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
 /obj/item/mod/module/reagent_scanner/advanced/proc/sense_explosion(datum/source, turf/epicenter,
 	devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
@@ -1335,10 +1331,12 @@
 /obj/item/mod/module/dna_lock/on_install()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
 	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
+	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
 
 /obj/item/mod/module/dna_lock/on_uninstall()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
+	UnregisterSignal(mod, COMSIG_ATOM_EMAG_ACT)
 
 /obj/item/mod/module/dna_lock/on_use()
 	. = ..()
@@ -1354,7 +1352,16 @@
 		return
 	on_emp(src, severity)
 
+/obj/item/mod/module/dna_lock/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	on_emag(src, user, emag_card)
+
 /obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity)
+	SIGNAL_HANDLER
+
+	dna = null
+
+/obj/item/mod/module/dna_lock/proc/on_emag(datum/source, mob/user, obj/item/card/emag/emag_card)
 	SIGNAL_HANDLER
 
 	dna = null
@@ -1366,3 +1373,42 @@
 		return
 	balloon_alert(mod.wearer, "dna locked!")
 	return MOD_CANCEL_ACTIVATE
+
+/obj/item/mod/module/armor_booster
+	name = "MOD armor booster module"
+	desc = "A module that uses the suit's power to boost armor. To increase efficiency, some parts of the armor are retracted."
+	idle_power_cost = 5
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/armor_booster)
+	var/remove_pressure_protection = TRUE
+	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
+	var/list/spaceproofed = list()
+
+/obj/item/mod/module/armor_booster/on_equip()
+	var/list/parts = mod.mod_parts + mod
+	for(var/obj/item/part as anything in parts)
+		part.armor = part.armor.modifyRating(arglist(armor_values))
+		if(!remove_pressure_protection || !isclothing(part))
+			continue
+		var/obj/item/clothing/clothing_part = part
+		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
+			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
+			spaceproofed[clothing_part] = TRUE
+
+/obj/item/mod/module/armor_booster/on_unequip()
+	var/list/parts = mod.mod_parts + mod
+	var/list/removed_armor = armor_values.Copy()
+	for(var/value in removed_armor)
+		value = -value
+	for(var/obj/item/part as anything in parts)
+		part.armor = part.armor.modifyRating(arglist(removed_armor))
+		if(!remove_pressure_protection || !isclothing(part))
+			continue
+		var/obj/item/clothing/clothing_part = part
+		if(spaceproofed[clothing_part])
+			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
+	spaceproofed = list()
+
+/obj/item/mod/module/armor_booster/elite
+	name = "MOD elite armor booster module"
+	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)

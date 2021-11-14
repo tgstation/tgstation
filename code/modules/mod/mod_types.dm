@@ -17,6 +17,11 @@
 	cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/rad_protection, /obj/item/mod/module/jetpack, /obj/item/mod/module/flashlight)
 
+/obj/item/mod/control/pre_equipped/mining
+	theme = /datum/mod_theme/mining
+	cell = /obj/item/stock_parts/cell/high/plus
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/orebag, /obj/item/mod/module/flashlight, /obj/item/mod/module/magboot, /obj/item/mod/module/drill)
+
 /obj/item/mod/control/pre_equipped/medical
 	theme = /datum/mod_theme/medical
 	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/flashlight, /obj/item/mod/module/health_analyzer, /obj/item/mod/module/quick_carry)
@@ -39,7 +44,12 @@
 /obj/item/mod/control/pre_equipped/nuclear
 	theme = /datum/mod_theme/syndicate
 	cell = /obj/item/stock_parts/cell/hyper
-	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/visor/thermal, /obj/item/mod/module/flashlight)
+	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/visor/thermal, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
+
+/obj/item/mod/control/pre_equipped/elite
+	theme = /datum/mod_theme/elite
+	cell = /obj/item/stock_parts/cell/bluespace
+	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/visor/thermal, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
 
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug
