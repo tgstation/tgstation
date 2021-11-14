@@ -139,11 +139,11 @@
 		data["custom_controls"]["place_tiles"] =  placetiles
 		data["custom_controls"]["place_custom"] = replacetiles
 		data["custom_controls"]["repair_damage"] = fixfloors
-		data["custom_controls"]["traction_magnets"] = HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
+		data["custom_controls"]["traction_magnets"] = !!HAS_TRAIT_FROM(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		data["custom_controls"]["tile_stack"] = 0
 		data["custom_controls"]["line_mode"] = FALSE
 		if(tilestack)
-			data["custom_controls"]["tile_stack"] = tilestack.amount/maxtiles
+			data["custom_controls"]["tile_stack"] = tilestack.amount
 		if(targetdirection)
 			data["custom_controls"]["line_mode"] = dir2text(targetdirection)
 	return data

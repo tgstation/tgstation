@@ -1,6 +1,6 @@
 import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
-import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from '../components';
+import { Button, Icon, LabeledControls, Section, Slider, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type SimpleBotContext = {
@@ -30,10 +30,10 @@ type Controls = {
 
 export const SimpleBot = (_, context) => {
   const { data } = useBackend<SimpleBotContext>(context);
-  const { locked } = data;
+  const { can_hack, locked } = data;
 
   return (
-    <Window width={600} height={300}>
+    <Window width={450} height={300}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -41,7 +41,7 @@ export const SimpleBot = (_, context) => {
               <SettingsDisplay />
             </Section>
           </Stack.Item>
-          {!locked && (
+          {(!locked || can_hack) && (
             <Stack.Item grow>
               <Section fill scrollable title="Controls">
                 <ControlsDisplay />
@@ -64,13 +64,14 @@ const TabDisplay = (_, context) => {
     <>
       {!!can_hack && <HackButton />}
       {!!allow_pai && <PaiButton />}
-      <Button.Checkbox
-        checked={locked}
+      <Button
+        color="transparent"
         icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('lock')}
-        tooltip={`${locked ? 'Unlock' : 'Lock'} the bot control panel.`}>
+        selected={locked}
+        tooltip={`${locked ? 'Unlock' : 'Lock'} the control panel.`}>
         Controls Lock
-      </Button.Checkbox>
+      </Button>
     </>
   );
 };
@@ -81,16 +82,19 @@ const HackButton = (_, context) => {
   const { emagged } = data;
 
   return (
-    <Button.Checkbox
-      danger
-      icon="user-secret"
+    <Button
+      color="danger"
+      icon={emagged ? 'bug' : 'lock'}
       onClick={() => act('hack')}
-      selected={emagged}
-      tooltip="Detects malware in the bot operating system.">
-      {emagged ? "Malfunctional" : "Systems Nominal"}
-    </Button.Checkbox>
+      selected={!emagged}
+      tooltip={
+        !emagged
+          ? 'Unlocks the safety protocols.'
+          : 'Resets the bot operating system.'
+      }>
+      {emagged ? 'Malfunctional' : 'Safety Lock'}
+    </Button>
   );
-
 };
 
 /** Creates a button indicating PAI status and offers the eject action */
@@ -100,21 +104,22 @@ const PaiButton = (_, context) => {
 
   if (!card_inserted) {
     return (
-      <Button.Checkbox
+      <Button
+        color="transparent"
         icon="robot"
         tooltip={multiline`Insert an active PAI card to control this device.`}>
         No PAI Inserted
-      </Button.Checkbox>
+      </Button>
     );
   } else {
     return (
-      <Button.Confirm
+      <Button
         disabled={!card_inserted}
         icon="eject"
         onClick={() => act('eject_pai')}
         tooltip={multiline`Ejects the current PAI.`}>
         Eject PAI
-      </Button.Confirm>
+      </Button>
     );
   }
 };
@@ -122,11 +127,8 @@ const PaiButton = (_, context) => {
 /** Displays the bot's standard settings: Power, patrol, etc. */
 const SettingsDisplay = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { locked, settings } = data;
+  const { settings } = data;
   const { airplane_mode, patrol_station, power, maintenance_lock } = settings;
-  if (locked) {
-    return <NoticeBox>Locked!</NoticeBox>;
-  }
 
   return (
     <LabeledControls>
@@ -193,10 +195,11 @@ const ControlsDisplay = (_, context) => {
   const { custom_controls } = data;
 
   return (
-    <LabeledControls>
+    <LabeledControls wrap>
       {Object.entries(custom_controls).map((control) => {
         return (
           <LabeledControls.Item
+            pb={1}
             key={control[0]}
             label={control[0]
               .replace('_', ' ')
@@ -222,6 +225,10 @@ const ControlHelper = (props, context) => {
   } else if (control[0] === 'heal_threshold') {
     /** Control is a threshold - this is medbot specific */
     return <MedbotThreshold control={control} />;
+  } else if (control[0] === 'tile_stack') {
+    return <FloorbotTiles control={control} />;
+  } else if (control[0] === 'line_mode') {
+    return <FloorbotLine control={control} />;
   } else {
     /** Control is a boolean of some type */
     return (
@@ -238,6 +245,7 @@ const ControlHelper = (props, context) => {
 /** Small button to sync medbots with research. */
 const MedbotSync = (_, context) => {
   const { act } = useBackend<SimpleBotContext>(context);
+
   return (
     <Tooltip
       content={multiline`Synchronize surgical data with research network.
@@ -272,6 +280,42 @@ const MedbotThreshold = (props, context) => {
         value={control[1]}
         onChange={(_, value) => act(control[0], { threshold: value })}
       />
+    </Tooltip>
+  );
+};
+
+/** Tile stacks for floorbots - shows number and eject button */
+const FloorbotTiles = (props, context) => {
+  const { act } = useBackend<SimpleBotContext>(context);
+  const { control } = props;
+
+  return (
+    <Button
+      icon={control[1] ? 'eject' : ''}
+      disabled={!control[1]}
+      onClick={() => act('eject_tiles')}
+      tooltip="Number of floor tiles contained in the bot.">
+      {control[1] ? `${control[1]}` : 'Empty'}
+    </Button>
+  );
+};
+
+/** Direction indicator for floorbot when line mode is chosen. */
+const FloorbotLine = (props, context) => {
+  const { act } = useBackend<SimpleBotContext>(context);
+  const { control } = props;
+
+  return (
+    <Tooltip content="Enables straight line tiling mode.">
+      <Icon
+        color={control[1] ? 'good' : 'gray'}
+        name={control[1] ? 'compass' : 'toggle-off'}
+        onClick={() => act('line_mode')}
+        size={!control[1] ? 2 : 1.5}
+        tooltip="Number of floor tiles contained in the bot.">
+        {' '}
+        {control[1] ? control[1].toString().charAt(0).toUpperCase() : ''}
+      </Icon>
     </Tooltip>
   );
 };
