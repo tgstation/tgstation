@@ -386,6 +386,8 @@
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 		drain_power(use_power_cost)
+	else
+		balloon_alert(mod.wearer, "holster full!")
 
 /obj/item/mod/module/holster/on_uninstall()
 	if(holstered)
@@ -656,6 +658,7 @@
 	if(!.)
 		return
 	if(dispense_time && !do_after(mod.wearer, dispense_time, src))
+		balloon_alert(mod.wearer, "interrupted!")
 		return
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
@@ -1377,14 +1380,23 @@
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
 	desc = "A module that uses the suit's power to boost armor. To increase efficiency, some parts of the armor are retracted."
-	idle_power_cost = 5
+	module_type = MODULE_TOGGLE
+	active_power_cost = 5
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
+	overlay_state_active = "module_armorbooster"
 	var/remove_pressure_protection = TRUE
+	var/activation_time = 3 SECONDS
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
 	var/list/spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/on_equip()
+/obj/item/mod/module/armor_booster/on_activation()
+	if(!do_after(mod.wearer, activation_time, src))
+		balloon_alert(mod.wearer, "interrupted!")
+		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
 		part.armor = part.armor.modifyRating(arglist(armor_values))
@@ -1395,7 +1407,13 @@
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_unequip()
+/obj/item/mod/module/armor_booster/on_deactivation()
+	if(!do_after(mod.wearer, activation_time, src))
+		balloon_alert(mod.wearer, "interrupted!")
+		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/list/parts = mod.mod_parts + mod
 	var/list/removed_armor = armor_values.Copy()
 	for(var/value in removed_armor)
@@ -1412,3 +1430,4 @@
 /obj/item/mod/module/armor_booster/elite
 	name = "MOD elite armor booster module"
 	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
+	overlay_state_active = "module_armorbooster_elite"

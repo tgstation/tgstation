@@ -68,13 +68,13 @@
 /datum/outfit/clown_operative
 	name = "Clown Operative (Preview only)"
 
-	back = /obj/item/mod/control/pre_equipped/nuclear
+	back = /obj/item/mod/control/pre_equipped/syndicate_empty
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas/clown_hat
 
 /datum/outfit/clown_operative_elite
 	name = "Clown Operative (Elite, Preview only)"
 
-	back = /obj/item/mod/control/pre_equipped/nuclear
+	back = /obj/item/mod/control/pre_equipped/syndicate_empty
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas/clown_hat

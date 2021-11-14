@@ -93,10 +93,9 @@
 		return FALSE
 	if(!mod.active || mod.activating || !mod.cell?.charge)
 		return FALSE
-	active = TRUE
 	if(module_type == MODULE_ACTIVE)
-		if(mod.selected_module)
-			mod.selected_module.on_deactivation()
+		if(mod.selected_module && !mod.selected_module.on_deactivation())
+			return
 		mod.selected_module = src
 		if(device)
 			if(mod.wearer.put_in_hands(device))
@@ -116,6 +115,7 @@
 					used_signal = COMSIG_MOB_ATTACK_RANGED_SECONDARY
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 			RegisterSignal(mod.wearer, used_signal, .proc/on_special_click)
+	active = TRUE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	mod.wearer.update_inv_back()
 	return TRUE
