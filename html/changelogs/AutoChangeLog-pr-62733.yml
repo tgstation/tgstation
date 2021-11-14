@@ -1,5 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes: 
-  - expansion: "The option to choose your body type is now available to all characters (with a gendered species)"
-  - bugfix: "You can no longer access the body type option on genderless species by setting your gender to other then changing species."

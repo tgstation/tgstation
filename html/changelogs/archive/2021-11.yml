@@ -459,3 +459,27 @@
       the value of the crate, and can then sell the crate back on the shuttle.
   - balance: cargo doesn't start with a budget, other departments get what their budget
       was split up amongst them
+2021-11-14:
+  Ghommie:
+  - bugfix: Fixed some potential issues that may lock the economy subsystem in "market
+      crashing" mode or accidentally clear it.
+  Iamgoofball:
+  - balance: Nerfs the felinid tail grab mood buff.
+  JohnFulpWillard:
+  - bugfix: Changelings no longer get sent to Argentina when using last resort
+  - bugfix: Blind people and those without eyes are no longer affected by changeling's
+      last resort explosion.
+  Nanotrasen Medi-Sciences Division:
+  - qol: The medical holobarrier is slightly transparent to convey you can move through
+      it, as well as more animated!
+  TheFakeElon:
+  - code_imp: protects the filename global regex
+  Thunder12345:
+  - expansion: The option to choose your body type is now available to all characters
+      (with a gendered species)
+  - bugfix: You can no longer access the body type option on genderless species by
+      setting your gender to other then changing species.
+  necromanceranne:
+  - bugfix: You now only go on click cooldown if you actually threw something.
+  timothymtorres:
+  - qol: Crates that spawn in maintenance are now more randomized
