@@ -1,7 +1,5 @@
 
-#define PICTURE_SIZE_HARD_LIMIT 21
-/// Let the picture size be exploited a little, but not above the hard limit, through circuits.
-#define PICTURE_SIZE_CIRCUIT_BONUS 2
+#define CAMERA_PICTURE_SIZE_HARD_LIMIT 21
 
 /obj/item/camera
 	name = "camera"
@@ -69,8 +67,8 @@
 	if (isnull(desired_y))
 		return
 
-	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), PICTURE_SIZE_HARD_LIMIT)
-	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), PICTURE_SIZE_HARD_LIMIT)
+	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 
 /obj/item/camera/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -171,8 +169,8 @@
 	if(!isturf(target_turf))
 		blending = FALSE
 		return FALSE
-	size_x = clamp(size_x, 0, PICTURE_SIZE_HARD_LIMIT)
-	size_y = clamp(size_y, 0, PICTURE_SIZE_HARD_LIMIT)
+	size_x = clamp(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	size_y = clamp(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
@@ -296,8 +294,8 @@
 	return ..()
 
 /obj/item/circuit_component/camera/proc/sanitize_picture_size()
-	camera.picture_size_x = clamp(adjust_size_x, camera.picture_size_x_min, camera.picture_size_x_max + PICTURE_SIZE_CIRCUIT_BONUS)
-	camera.picture_size_y = clamp(adjust_size_y, camera.picture_size_y_min, camera.picture_size_y_max + PICTURE_SIZE_CIRCUIT_BONUS)
+	camera.picture_size_x = clamp(adjust_size_x, camera.picture_size_x_min, camera.picture_size_x_max)
+	camera.picture_size_y = clamp(adjust_size_y, camera.picture_size_y_min, camera.picture_size_y_max)
 
 /obj/item/circuit_component/camera/proc/on_image_captured(obj/item/camera/source, atom/target, mob/user)
 	SIGNAL_HANDLER
@@ -315,5 +313,4 @@
 		return
 	INVOKE_ASYNC(camera, /obj/item/camera.proc/captureimage, target, null, camera.picture_size_y  - 1, camera.picture_size_y - 1)
 
-#undef PICTURE_SIZE_HARD_LIMIT
-#undef PICTURE_SIZE_CIRCUIT_BONUS
+#undef CAMERA_PICTURE_SIZE_HARD_LIMIT
