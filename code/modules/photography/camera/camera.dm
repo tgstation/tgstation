@@ -282,8 +282,8 @@
 	picture_target = add_input_port("Picture Target", PORT_TYPE_ATOM)
 	picture_coord_x = add_input_port("Picture Coordinate X", PORT_TYPE_NUMBER)
 	picture_coord_y = add_input_port("Picture Coordinate Y", PORT_TYPE_NUMBER)
-	adjust_size_x = add_input_port("Picture Size X", PORT_TYPE_NUMBER, .proc/sanitize_picture_size)
-	adjust_size_y = add_input_port("Picture Size Y", PORT_TYPE_NUMBER, .proc/sanitize_picture_size)
+	adjust_size_x = add_input_port("Picture Size X", PORT_TYPE_NUMBER, trigger = .proc/sanitize_picture_size)
+	adjust_size_y = add_input_port("Picture Size Y", PORT_TYPE_NUMBER, trigger = .proc/sanitize_picture_size)
 
 /obj/item/circuit_component/camera/register_shell(atom/movable/shell)
 	. = ..()
