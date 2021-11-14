@@ -171,7 +171,7 @@
 		cached_results["fire"] += burned_fuel * 10
 
 	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY)
-		radiation_pulse(location, max_range = sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 2, threshold = 10 * INVERSE(10 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 50)
+		radiation_pulse(location, max_range = min(sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 1.5, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 50)
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -861,7 +861,7 @@
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var consumed_amount = min(air.temperature / 280 * cached_gases[/datum/gas/bz][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES] / (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
+	var consumed_amount = min(air.temperature / 2240 * cached_gases[/datum/gas/bz][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES] / (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 
@@ -873,7 +873,7 @@
 	cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
 	cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 	energy_released += consumed_amount * 60000
-	radiation_pulse(location, max_range = sqrt(consumed_amount) / 2, threshold = 10 * INVERSE(10 + consumed_amount), chance = 50)
+	radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
 	for(var/mob/living/carbon/L in location)
 		L.hallucination += consumed_amount
 	if(energy_released)
@@ -914,7 +914,7 @@
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
 	energy_released += produced_amount * 10000
-	radiation_pulse(location, max_range = sqrt(produced_amount) / 2, threshold = 10 * INVERSE(10 + produced_amount), chance = 50)
+	radiation_pulse(location, max_range = min(sqrt(produced_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + produced_amount), chance = 50)
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
