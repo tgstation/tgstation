@@ -1,6 +1,6 @@
 import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
-import { Button, Icon, LabeledControls, Section, Slider, Stack, Tooltip } from '../components';
+import { Button, Icon, LabeledControls, NoticeBox, Section, Slider, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type SimpleBotContext = {
@@ -31,6 +31,7 @@ type Controls = {
 export const SimpleBot = (_, context) => {
   const { data } = useBackend<SimpleBotContext>(context);
   const { can_hack, locked } = data;
+  const access = (!locked || can_hack);
 
   return (
     <Window width={450} height={300}>
@@ -38,10 +39,12 @@ export const SimpleBot = (_, context) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section title="Settings" buttons={<TabDisplay />}>
-              <SettingsDisplay />
+              {!access
+                ? (<NoticeBox>Locked!</NoticeBox>)
+                : (<SettingsDisplay />)}
             </Section>
           </Stack.Item>
-          {(!locked || can_hack) && (
+          {access && (
             <Stack.Item grow>
               <Section fill scrollable title="Controls">
                 <ControlsDisplay />
