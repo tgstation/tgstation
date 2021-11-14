@@ -123,9 +123,6 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-		switch(theme.type)
-			if(/datum/mod_theme/syndicate)
-				piece.color = COLOR_THEME_OPERATIVE
 	update_flags()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
@@ -531,10 +528,7 @@
 	if(part.loc == wearer)
 		return
 	if(modules.Find(part))
-		var/obj/item/mod/module/module = part
-		if(module.module_type == MODULE_TOGGLE || module.module_type == MODULE_ACTIVE)
-			module.on_deactivation()
-		uninstall(module)
+		uninstall(part)
 		return
 	if(mod_parts.Find(part))
 		conceal(wearer, part)

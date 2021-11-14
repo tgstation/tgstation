@@ -61,8 +61,11 @@
 	cell = /obj/item/stock_parts/cell/infinite/abductor
 	initial_modules = list(/obj/item/mod/module/storage/bluespace, /obj/item/mod/module/welding, /obj/item/mod/module/stealth/ninja, /obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/magboot/advanced, /obj/item/mod/module/jetpack)
 
-/obj/item/mod/control/pre_equipped/syndicate_empty //for prefs menu
+//these exist for the prefs menu
+/obj/item/mod/control/pre_equipped/syndicate_empty
 	theme = /datum/mod_theme/syndicate
-	cell = /obj/item/stock_parts/cell/hyper
+
+/obj/item/mod/control/pre_equipped/syndicate_empty/elite
+	theme = /datum/mod_theme/elite
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)

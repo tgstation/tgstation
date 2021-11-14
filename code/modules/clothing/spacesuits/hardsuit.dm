@@ -412,69 +412,7 @@
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
 
-/////////////SHIELDED//////////////////////////////////
-
-/obj/item/clothing/suit/space/hardsuit/shielded
-	name = "shielded hardsuit"
-	desc = "A hardsuit with built in energy shielding. Will rapidly recharge when not under fire."
-	icon_state = "hardsuit-hos"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
-	allowed = null
-	armor = list(MELEE = 30, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-
 /obj/item/clothing/suit/space/hardsuit/shielded/setup_shielding()
 	AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-old")
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-
-//////Syndicate Version
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi
-	name = "blood-red hardsuit"
-	desc = "An advanced hardsuit with built in energy shielding."
-	icon_state = "hardsuit1-syndi"
-	inhand_icon_state = "syndie_hardsuit"
-	hardsuit_type = "syndi"
-	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
-	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
-	slowdown = 0
-
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-red")
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
-	name = "blood-red hardsuit helmet"
-	desc = "An advanced hardsuit helmet with built in energy shielding."
-	icon_state = "hardsuit1-syndi"
-	inhand_icon_state = "syndie_helm"
-	hardsuit_type = "syndi"
-	armor = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
-
-///SWAT version
-/obj/item/clothing/suit/space/hardsuit/shielded/swat
-	name = "death commando spacesuit"
-	desc = "An advanced hardsuit favored by commandos for use in special operations."
-	icon_state = "deathsquad"
-	inhand_icon_state = "swat_suit"
-	hardsuit_type = "syndi"
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
-	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
-	dog_fashion = /datum/dog_fashion/back/deathsquad
-
-/obj/item/clothing/suit/space/hardsuit/shielded/swat/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 4, recharge_start_delay = 1.5 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-old")
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/swat
-	name = "death commando helmet"
-	desc = "A tactical helmet with built in energy shielding."
-	icon_state = "deathsquad"
-	inhand_icon_state = "deathsquad"
-	hardsuit_type = "syndi"
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
-	strip_delay = 130
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	actions_types = list()

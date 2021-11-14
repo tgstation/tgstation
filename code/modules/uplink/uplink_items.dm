@@ -1298,14 +1298,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/mod/control/pre_equipped/traitor
 	cost = 8
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
-/*
+
 /datum/uplink_item/suits/modsuit/elite
 	name = "Elite Syndicate MODsuit"
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-*/
 
 // Devices and Tools
 /datum/uplink_item/device_tools

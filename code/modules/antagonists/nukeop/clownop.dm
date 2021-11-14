@@ -69,12 +69,20 @@
 	name = "Clown Operative (Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/syndicate_empty
-	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas/clown_hat
+
+/datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
+	booster.active = TRUE
+	H.update_inv_back()
 
 /datum/outfit/clown_operative_elite
 	name = "Clown Operative (Elite, Preview only)"
 
-	back = /obj/item/mod/control/pre_equipped/syndicate_empty
-	gloves = /obj/item/clothing/gloves/color/black
+	back = /obj/item/mod/control/pre_equipped/syndicate_empty/elite
 	mask = /obj/item/clothing/mask/gas/clown_hat
+
+/datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/mod/module/armor_booster/elite/booster = locate() in H.back
+	booster.active = TRUE
+	H.update_inv_back()

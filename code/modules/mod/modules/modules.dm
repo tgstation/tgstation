@@ -1384,10 +1384,10 @@
 	active_power_cost = 5
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
-	cooldown_time = 5 SECONDS
+	cooldown_time = 0.5 SECONDS
 	overlay_state_active = "module_armorbooster"
 	var/remove_pressure_protection = TRUE
-	var/added_slowdown = 0.5
+	var/added_slowdown = -0.5
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
 	var/list/spaceproofed = list()
 
@@ -1415,8 +1415,8 @@
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
 	var/list/removed_armor = armor_values.Copy()
-	for(var/value in removed_armor)
-		value = -value
+	for(var/armor_type in removed_armor)
+		removed_armor[armor_type] = -removed_armor[armor_type]
 	for(var/obj/item/part as anything in parts)
 		part.armor = part.armor.modifyRating(arglist(removed_armor))
 		if(!remove_pressure_protection || !isclothing(part))
@@ -1430,4 +1430,7 @@
 	name = "MOD elite armor booster module"
 	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
 	overlay_state_active = "module_armorbooster_elite"
-	added_slowdown = 0.25
+	added_slowdown = -0.25
+
+// TODO energy shield
+// AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-red")
