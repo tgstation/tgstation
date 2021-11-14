@@ -1,4 +1,0 @@
-author: "softcerv"
-delete-after: True
-changes: 
-  - bugfix: "fixes the fall chance on mending globules to properly work as intended."
