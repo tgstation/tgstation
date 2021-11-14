@@ -49,7 +49,6 @@ export const Adminhelp = (props, context) => {
                   disabled={bannedFromUrgentAhelp}
                   fluid
                   textAlign="center"
-                  tooltip="Examples of bad ahelps to use this button for: TC trades, joke ahelps, "
                 />
               </NoticeBox>
             </Stack.Item>
