@@ -1080,7 +1080,7 @@
 	build_path = /obj/item/mod/module
 	category = list("MOD Modules")
 
-/datum/design/mod_armor/New()
+/datum/design/module/New()
 	. = ..()
 	var/obj/item/mod/module/module = build_path
 	desc = "[initial(module.desc)] It uses [initial(module.complexity)] complexity."
@@ -1185,7 +1185,7 @@
 	id = "mod_constructor"
 	build_path = /obj/item/mod/module/constructor
 
-/datum/design/quick_carry
+/datum/design/module/mod_quick_carry
 	name = "MOD Module: Quick Carry"
 	id = "mod_quick_carry"
 	build_path = /obj/item/mod/module/quick_carry
@@ -1207,7 +1207,6 @@
 
 /datum/design/module/mod_microwave_beam
 	name = "MOD Module: Microwave Beam"
-	desc = "A microwave beam for microwaving at range!"
 	id = "mod_microwave_beam"
 	build_path = /obj/item/mod/module/microwave_beam
 

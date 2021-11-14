@@ -90,8 +90,10 @@
 /// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
 	if(!mod.active || mod.activating || !mod.cell?.charge)
+		balloon_alert(mod.wearer, "unpowered!")
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.on_deactivation())

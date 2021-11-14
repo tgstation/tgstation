@@ -657,7 +657,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(dispense_time && !do_after(mod.wearer, dispense_time, src))
+	if(dispense_time && !do_after(mod.wearer, dispense_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
 		return
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
@@ -1384,19 +1384,19 @@
 	active_power_cost = 5
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
+	cooldown_time = 5 SECONDS
 	overlay_state_active = "module_armorbooster"
 	var/remove_pressure_protection = TRUE
-	var/activation_time = 3 SECONDS
+	var/added_slowdown = 0.5
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
 	var/list/spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/on_activation()
-	if(!do_after(mod.wearer, activation_time, src))
-		balloon_alert(mod.wearer, "interrupted!")
-		return FALSE
 	. = ..()
 	if(!.)
 		return
+	mod.slowdown += added_slowdown
+	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
 	for(var/obj/item/part as anything in parts)
 		part.armor = part.armor.modifyRating(arglist(armor_values))
@@ -1408,12 +1408,11 @@
 			spaceproofed[clothing_part] = TRUE
 
 /obj/item/mod/module/armor_booster/on_deactivation()
-	if(!do_after(mod.wearer, activation_time, src))
-		balloon_alert(mod.wearer, "interrupted!")
-		return FALSE
 	. = ..()
 	if(!.)
 		return
+	mod.slowdown -= added_slowdown
+	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
 	var/list/removed_armor = armor_values.Copy()
 	for(var/value in removed_armor)
@@ -1431,3 +1430,4 @@
 	name = "MOD elite armor booster module"
 	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
 	overlay_state_active = "module_armorbooster_elite"
+	added_slowdown = 0.25

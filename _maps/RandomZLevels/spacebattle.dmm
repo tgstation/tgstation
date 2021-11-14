@@ -46,7 +46,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "am" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "an" = (
@@ -126,7 +126,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aJ" = (
@@ -224,7 +224,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "be" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bf" = (
@@ -1914,8 +1914,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hq" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit,
-/obj/item/clothing/head/helmet/space/hardsuit,
+/obj/item/mod/control/pre_equipped/standard,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "hr" = (
