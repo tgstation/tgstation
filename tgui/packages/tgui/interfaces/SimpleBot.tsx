@@ -202,7 +202,7 @@ const ControlsDisplay = (_, context) => {
       {Object.entries(custom_controls).map((control) => {
         return (
           <LabeledControls.Item
-            pb={1}
+            pb={2}
             key={control[0]}
             label={control[0]
               .replace('_', ' ')
