@@ -82,11 +82,12 @@ const TabDisplay = (_, context) => {
 /** If user is a bad silicon, they can press this button to hack the bot */
 const HackButton = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { emagged } = data;
+  const { can_hack, emagged } = data;
 
   return (
     <Button
       color="danger"
+      disabled={!can_hack}
       icon={emagged ? 'bug' : 'lock'}
       onClick={() => act('hack')}
       selected={!emagged}
@@ -269,7 +270,7 @@ const MedbotThreshold = (props, context) => {
   const { control } = props;
 
   return (
-    <Tooltip content={multiline`Adjusts the sensitivity for damage treatment.`}>
+    <Tooltip content="Adjusts the sensitivity for damage treatment.">
       <Slider
         minValue={5}
         maxValue={75}
