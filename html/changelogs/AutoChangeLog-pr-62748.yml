@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - rscadd: "All of your favorite simple bot friends aboard the station now have a much better interface in TGUI"
+  - qol: "You can now lock and unlock bots, including their maintenance hatches, via the UI."
