@@ -43,7 +43,7 @@
 	if(istype(selection))
 		show_picture(user, selection)
 
-/obj/item/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
+/obj/item/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture)
 	var/number = stored.len
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
@@ -53,7 +53,7 @@
 	name = "Cyborg photo camera"
 	var/printcost = 2
 
-/obj/item/camera/siliconcam/robot_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
+/obj/item/camera/siliconcam/robot_camera/after_picture(mob/user, datum/picture/picture)
 	var/mob/living/silicon/robot/C = loc
 	if(istype(C) && istype(C.connected_ai))
 		var/number = C.connected_ai.aicamera.stored.len

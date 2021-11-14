@@ -931,6 +931,9 @@
 	///stops the bible chain from continuing. When all of the effects of the bible smacking have been moved to a signal we can kill this
 	#define COMSIG_END_BIBLE_CHAIN (1<<0)
 
+///from /obj/item/camera/captureimage(): (atom/target, mob/user)
+#define COMSIG_CAMERA_IMAGE_CAPTURED "camera_image_captured"
+
 /// Admin helps
 /// From /datum/admin_help/RemoveActive().
 /// Fired when an adminhelp is made inactive either due to closing or resolving.
