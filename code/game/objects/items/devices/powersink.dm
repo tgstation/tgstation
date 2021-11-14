@@ -82,7 +82,7 @@
 				attached = locate() in T
 				if(!attached)
 					to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
-				else if(do_after(user, 5 SECONDS, target = src))
+				else if(do_after(user, 5 SECONDS, target = src) && attached)
 					set_mode(CLAMPED_OFF)
 					user.visible_message( \
 						"[user] attaches \the [src] to the cable.", \
