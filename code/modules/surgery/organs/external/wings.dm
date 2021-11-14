@@ -192,9 +192,7 @@
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
 
 /obj/item/organ/external/wings/moth/can_soften_fall()
-	if (burnt)
-		return FALSE
-	return TRUE
+	return !burnt
 
 ///Check if we can flutter around
 /obj/item/organ/external/wings/moth/proc/update_float_move()
