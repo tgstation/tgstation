@@ -808,7 +808,8 @@
 	if(trim_assignment_override)
 		return trim_assignment_override
 	else if(ispath(trim))
-		return SSid_access.trim_singletons_by_path[trim].assignment
+		var/datum/id_trim/trim_singleton = SSid_access.trim_singletons_by_path[trim]
+		return trim_singleton.assignment
 
 	return ..()
 
