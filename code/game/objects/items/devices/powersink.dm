@@ -176,10 +176,11 @@
 	if(!attached)
 		set_mode(DISCONNECTED)
 
+	release_heat()
+
 	if(mode != OPERATING)
 		return
 
-	release_heat()
 	drain_power()
 
 	if(internal_heat > max_heat * ALERT / 100)
