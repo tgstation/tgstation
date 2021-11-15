@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color, include_crunch = FALSE)
 
 	for(var/blocknum in 1 to DNA_UNI_IDENTITY_BLOCKS)
-		. += (L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters))
+		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
 /datum/dna/proc/generate_unique_features()
 	. = ""
