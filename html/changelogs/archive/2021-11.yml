@@ -342,3 +342,177 @@
   - bugfix: Fixed Havana cigars running out of nicotine. As a result of increasing
       the starting nicotine amount, the total `chem_volume` was increased to allow
       room for other chems to still be injected.
+2021-11-11:
+  ATHATH:
+  - bugfix: The gluttony sin ruin is no longer radioactive.
+  Ghilker:
+  - expansion: add the manual crafting of many atmos devices by the crafting menu
+  Ghommie:
+  - expansion: Added a reagents scanner circuit component.
+  - bugfix: Fixed non-human and non-silicon mobs being unable to mine rock walls when
+      bumping into them.
+  - bugfix: The phobia of authority will no longer make mobs afraid of regular id
+      cards.
+  - expansion: Added a material scanner circuit component.
+  - bugfix: Stops the "You lack optic scanners, you get stunned" singularity event
+      from affecting blinded or dead mobs.
+  - bugfix: Blob structures can no longer be animated with bolts of animation.
+  - bugfix: Chimps no longer get grumpy when you hug them or throw things with no
+      throw force at them.
+  Guillaume Prata:
+  - balance: Due to budget cuts, the RPDs can't place transit tube under dense objects
+      like windows anymore.
+  JohnFulpWillard:
+  - admin: Priming grenades are now logged in individual's attack logs.
+  Justice12354:
+  - bugfix: Cyborgs can now shake up compromised carbons with the hugging module.
+  Krysonism:
+  - imageadd: The irradiated status effect has a new alert sprite.
+  LemonInTheDark:
+  - balance: The nob + antinob hfr fuel type is now limited to 1e8 instead of 1e8
+      * 1.2
+  Mothblocks:
+  - bugfix: Random names (such as from the secrets panel) will no longer override
+      your preferences.
+  Paxilmaniac:
+  - qol: the whiteship of tram station has been made much shorter, allowing for less
+      lag on movement and easier docking
+  Tastyfish:
+  - bugfix: The "Choking (No N2O)" alert now functions correctly.
+  darkmanx37:
+  - qol: Adamantine will now use it's own texture with color consistent to one of
+      the adamantine slime.
+  - imageadd: Adamantine textures.
+  remuluson2:
+  - rscadd: Added antivirus-protection to plasmaman suits and all its variants(the
+      entire set).
+  softcerv:
+  - bugfix: fixes the fall chance on mending globules to properly work as intended.
+2021-11-12:
+  CocaColaTastesGood:
+  - bugfix: Fixes an exploit that allowed players to spawn crates marked as special.
+  Fikou:
+  - qol: spraycanning stuff now updates its sprites on the mob
+  Ghommie:
+  - expansion: The weapon description for energy guns now takes in consideration the
+      number of pellets the selected mode has.
+  Ghommie and MrDoomBringer:
+  - balance: The Syndicate's Robotics Division is glad to announce their line of Syndicate
+      Saboteur cyborgs hasn't been affected by CentCom's Robotics decision to downgrade
+      the Engiborg RCDs. This is because The Syndicate is not CentCom or Nanotrasen
+      despite what some tinfoil hat-wearing billies-bobs may say.
+  KathyRyals:
+  - rscadd: Felinids don't like getting sprayed with water.
+  - code_imp: Adds a new status effect, incapacitated, which causes your do_afters
+      to stop.
+  Melbert:
+  - rscadd: 'Kilostation: Cargo / Drone Bay remap, departures expansion.'
+  Mothblocks:
+  - bugfix: Antag HUDs will no longer clear on deconversion if the player was another
+      antag.
+  - qol: Antag HUDs (as seen by admins and at the round end) will now animate between
+      all antagonists, rather than just choosing the most latest.
+  Y0SH1M4S73R:
+  - bugfix: The color matrix editor now logs all modifications it makes to colors.
+  jlsnow301:
+  - rscadd: Vending machines now have nicer welcome screens
+  - refactor: Vending machine UIs now do not hide bank balance information while scrolling
+2021-11-13:
+  CocaColaTastesGood:
+  - bugfix: Fixes an exploit in chef order console that let players potentially lag
+      the server.
+  - bugfix: Fixes an exploit that allowed players to purchase role restricted uplink
+      items that they shouldn't be able too.
+  KathyRyals:
+  - rscadd: You can now pull on a felinid's tail to make them happy!
+  Mothblocks:
+  - bugfix: Fixed traitor uplinks not letting you buy items that aren't restricted.
+  NamelessFairy:
+  - bugfix: CTF Downtowns bar stools face the right way now
+  - bugfix: CTF Downtowns bar stools have been bolted onto to the floor for insurance
+      purposes
+  RandomGamer123:
+  - bugfix: Scrubbers attached to the dorms public scrubber stations won't immediately
+      self-destruct from thermomachine waste heat anymore.
+  - bugfix: The Mix to Incinerator pipeline no longer interferes with HFR construction
+      in Tram atmospherics.
+  - qol: Adds N2 to Pure pump and pipes in Tram atmospherics.
+  - qol: Recolours Mix to Incinerator pipeline to dark rather than orange in Tram
+      atmospherics to match colouring scheme on other stations.
+  - qol: Renames old N2 to Pure pump to Air to Pure to reflect that it gives air mix
+      not N2.
+  Timberpoes:
+  - bugfix: The account registration device should no longer create ID cards that
+      cause vending machines to bluescreen.
+  - rscdel: Cryostasis pods have been removed from all maps and code.
+  Toastgoats:
+  - imageadd: Resprited hatchet inhands and made them face outwards.
+  esainane:
+  - spellcheck: Fixed a typo when resetting a multilayer cable
+  - bugfix: Some diagonal cameras are back to being placed on walls, instead of floating.
+  - bugfix: When it gets too much, ending it all with an atmospherics piece will now
+      always do something special.
+  tralezab:
+  - rscadd: replaced the request consoles in each department with department order
+      consoles, which order for free on a cooldown. cargo gets these orders and delivers
+      the crates, which are locked until delivery. upon delivery, cargo gets paid
+      the value of the crate, and can then sell the crate back on the shuttle.
+  - balance: cargo doesn't start with a budget, other departments get what their budget
+      was split up amongst them
+2021-11-14:
+  Ghommie:
+  - bugfix: Fixed some potential issues that may lock the economy subsystem in "market
+      crashing" mode or accidentally clear it.
+  Iamgoofball:
+  - balance: Nerfs the felinid tail grab mood buff.
+  JohnFulpWillard:
+  - bugfix: Changelings no longer get sent to Argentina when using last resort
+  - bugfix: Blind people and those without eyes are no longer affected by changeling's
+      last resort explosion.
+  Nanotrasen Medi-Sciences Division:
+  - qol: The medical holobarrier is slightly transparent to convey you can move through
+      it, as well as more animated!
+  TheFakeElon:
+  - code_imp: protects the filename global regex
+  Thunder12345:
+  - expansion: The option to choose your body type is now available to all characters
+      (with a gendered species)
+  - bugfix: You can no longer access the body type option on genderless species by
+      setting your gender to other then changing species.
+  necromanceranne:
+  - bugfix: You now only go on click cooldown if you actually threw something.
+  timothymtorres:
+  - qol: Crates that spawn in maintenance are now more randomized
+2021-11-15:
+  Arturlang:
+  - bugfix: The witchunter hat no longer hides your hair
+  Fikou:
+  - balance: space adaptation has been split into two mutations. pressure adaptation
+      giving you full immunity to pressure and temperature adaptation giving you full
+      immunity to temperature. these are not compatible with each other.
+  Ghilker:
+  - balance: Increase the CO2 SM heat penalty to 6
+  Ghommie:
+  - bugfix: You can no longer challenge multiple elite mining mobs at once and get
+      potentially warped between two arenas because of it.
+  - bugfix: You can now lose against elite mining mobs even if you can't die (cough
+      cough Memento Mori) if you're over the minus 200 health threshold. Be careful
+      not to bite the dust.
+  Ghommie (Thanks to dorsisdwarf for the idea):
+  - balance: The detomatix cart now sends forged messages (name and job of the message
+      can also be forged) that can explode a PDA when someone tries to reply to them
+      or access the message menu of the PDA UI up to 10 seconds after receiving it
+      instead of detonating the PDA right off the bat. Because of this and the possibility
+      that a portion of these messages goes "unreplied", the TC cost of the item has
+      also been reduced to 4 and the number of charges upped to 6.
+  Mothblocks:
+  - bugfix: Team antag HUDs will now properly display when they should, and won't
+      display when they shouldn't.
+  - bugfix: Antag HUDs will now properly show on round end again.
+  jlsnow301:
+  - rscadd: All of your favorite simple bot friends aboard the station now have a
+      much better interface in TGUI
+  - qol: You can now lock and unlock bots, including their maintenance hatches, via
+      the UI.
+  tralezab:
+  - expansion: Traitor Flavor now displays on round end!

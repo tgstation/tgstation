@@ -1,5 +1,0 @@
-author: "darkmanx37"
-delete-after: True
-changes: 
-  - qol: "Adamantine will now use it's own texture with color consistent to one of the adamantine slime."
-  - imageadd: "Adamantine textures."

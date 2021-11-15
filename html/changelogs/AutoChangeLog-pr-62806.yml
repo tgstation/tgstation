@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - balance: "Gives Space Pirates a bonus to hijack speed on the shuttle, and allows them to hijack."

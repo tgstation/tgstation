@@ -3,7 +3,6 @@
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
-	antag_hud_type = ANTAG_HUD_WIZ
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
@@ -22,7 +21,6 @@
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
 	antagpanel_category = "Wizard"
-	antag_hud_type = ANTAG_HUD_WIZ
 	antag_hud_name = "apprentice"
 	show_in_roundend = FALSE
 	show_name_in_check_antagonists = TRUE
@@ -38,12 +36,11 @@
 
 /datum/antagonist/wizard_minion/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/current_mob = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, current_mob)
 	current_mob.faction |= ROLE_WIZARD
+	add_team_hud(current_mob)
 
 /datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/last_mob = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, last_mob)
 	last_mob.faction -= ROLE_WIZARD
 
 /datum/antagonist/wizard_minion/on_gain()
@@ -90,7 +87,6 @@
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
 	wiz_team.master_wizard = src
-	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
 	if(!owner)
@@ -191,12 +187,11 @@
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	M.faction |= ROLE_WIZARD
+	add_team_hud(M)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	M.faction -= ROLE_WIZARD
 
 

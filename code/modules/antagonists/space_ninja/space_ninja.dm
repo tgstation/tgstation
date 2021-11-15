@@ -2,7 +2,6 @@
 	name = "Space Ninja"
 	antagpanel_category = "Space Ninja"
 	job_rank = ROLE_NINJA
-	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "space_ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
@@ -14,14 +13,6 @@
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
-
-/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/ninja = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, ninja)
-
-/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/ninja = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, ninja)
 
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.

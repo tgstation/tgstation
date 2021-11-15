@@ -67,6 +67,9 @@
 ///from SSsecurity_level when the security level changes : (new_level)
 #define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
 
+///from SSshuttle when the supply shuttle starts spawning orders : ()
+#define COMSIG_SUPPLY_SHUTTLE_BUY "supply_shuttle_buy"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
@@ -684,6 +687,8 @@
 #define COMSIG_CARBON_HUGGED "carbon_hugged"
 ///When a carbon mob is headpatted, this is called on the carbon that is headpatted. (mob/living/headpatter)
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
+///When a carbon mob has their tail pulled, this is called on the carbon that is the target. (mob/living/tailpuller)
+#define COMSIG_CARBON_TAILPULL "carbon_tailpulled"
 ///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
 #define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
 	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
@@ -939,6 +944,15 @@
 #define COMSIG_CLOSET_INSERT "closet_insert"
 	///used to interrupt insertion
 	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
+
+///From open: (forced)
+#define COMSIG_CLOSET_PRE_OPEN "closet_pre_open"
+	#define BLOCK_OPEN (1<<0)
+///From open: (forced)
+#define COMSIG_CLOSET_POST_OPEN "closet_post_open"
+
+///a deliver_first element closet was successfully delivered
+#define COMSIG_CLOSET_DELIVERED "crate_delivered"
 
 ///Eigenstasium
 ///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
@@ -1568,3 +1582,10 @@
 
 /// Called when a techweb design is removed (datum/design/removed_design, custom)
 #define COMSIG_TECHWEB_REMOVE_DESIGN "techweb_remove_design"
+
+// Antagonist signals
+/// Called on the mind when an antagonist is being gained, after the antagonist list has updated (datum/antagonist/antagonist)
+#define COMSIG_ANTAGONIST_GAINED "antagonist_gained"
+
+/// Called on the mind when an antagonist is being removed, after the antagonist list has updated (datum/antagonist/antagonist)
+#define COMSIG_ANTAGONIST_REMOVED "antagonist_removed"
