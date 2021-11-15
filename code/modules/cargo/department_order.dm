@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	var/id = text2path(params["id"])
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!pack)
+		say("Something went wrong. A report has been sent to NT code monkeys.")
 		CRASH("requested supply pack id \"[id]\" not found!")
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
