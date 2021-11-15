@@ -171,7 +171,7 @@
 	. = list()
 	for(var/atom/checked_atom as anything in atoms)
 		if (typecache[checked_atom.type])
-			. += atom
+			. += checked_atom
 
 ///return a new list with atoms that are not in the typecache list
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
@@ -179,7 +179,7 @@
 	. = list()
 	for(var/atom/checked_atom as anything in atoms)
 		if(!typecache[checked_atom.type])
-			. += atom
+			. += checked_atom
 
 ///similar to typecache_filter_list and typecache_filter_list_reverse but it supports an inclusion list and and exclusion list
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)

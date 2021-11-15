@@ -351,7 +351,7 @@
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
 	var/list/viewing = list()
 	for(var/viewer as anything in viewers(target))
-		if(viewerb.client)
+		if(viewer.client)
 			viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
