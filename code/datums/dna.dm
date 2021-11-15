@@ -1,38 +1,47 @@
-///Setter macro used to modify dna blocks. For convenience, use SET_UI_BLOCK for identity and SET_UF_BLOCK for features.
-#define SET_DNA_BLOCK(string, blocknum, input, len_by_block) string = copytext(string, 1, len_by_block[blocknum]) + input + (blocknum < len_by_block.len ? copytext(string, len_by_block[blocknum+1]) : 0)
-
-#define SET_UI_BLOCK(string, blocknum, input) SET_DNA_BLOCK(string, blocknum, input, GLOB.total_ui_len_by_block)
-#define SET_UF_BLOCK(string, blocknum, input) SET_DNA_BLOCK(string, blocknum, input, GLOB.total_uf_len_by_block)
 
 /**
- * List of unique indentity blocks whose length is different than the default dna block size.
- * IF YOU ADD ANY UNIQUE IDENTITY BLOCK WHOSE SIZE IS DIFFERENT THAN DNA_BLOCK_SIZE, INCLUDE IT HERE.
+ * Some identity blocks (basically pieces of the unique_identity string variable of the dna datum, commonly abbreviated with ui)
+ * may have a length that differ from standard length of 3 ASCII characters. This list is necessary
+ * for these non-standard blocks to work, as well as the entire unique identity string.
+ * Should you add a new ui block which size differ from the standard (again, 3 ASCII characters), like for example, a color,
+ * please do not forget to also include it in this list in the following format:
+ *  "[dna block number]" = dna block size,
+ * Failure to do that may result in bugs. Thanks.
  */
 GLOBAL_LIST_INIT(identity_block_lengths, list(
 		"[DNA_HAIR_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 		"[DNA_FACIAL_HAIR_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 		"[DNA_EYE_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 	))
-///Ditto but for features. IF YOU ADD ANY UNIQUE FEATURE BLOCK OF SIZE DIFFERENT THAN DNA_BLOCK_SIZE, INCLUDE IT HERE.
+
+/**
+ * The same rules of the above also apply here, with the exception that this is for the unique_features string variable
+ * (commonly abbreviated with uf) and its blocks. Both ui and uf have a standard block length of 3 ASCII characters.
+ */
 GLOBAL_LIST_INIT(features_block_lengths, list(
 		"[DNA_MUTANT_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 		"[DNA_ETHEREAL_COLOR_BLOCK]" = DNA_BLOCK_SIZE_COLOR,
 	))
-///A list containing the total length of the unique identifier dna string up to a given block (excluding the block itself).
-GLOBAL_LIST(total_ui_len_by_block)
-///Ditto but for unique features.
-GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 
-///Populates both ui and uf len by block lists.
-/proc/populate_total_dna_len_by_block()
-	GLOB.total_ui_len_by_block = list()
+/**
+ * A list of numbers that keeps track of where ui blocks start in the unique_identity string variable of the dna datum.
+ * Commonly used by the GET_UI_BLOCK macro and the datum/dna/set_uni_identity_block proc.
+ */
+GLOBAL_LIST_INIT(total_ui_len_by_block, populate_total_ui_len_by_block())
+
+/proc/populate_total_ui_len_by_block()
+	. = list()
 	var/total_block_len = 1
 	for(var/blocknumber in 1 to DNA_UNI_IDENTITY_BLOCKS)
-		GLOB.total_ui_len_by_block += total_block_len
+		. += total_block_len
 		total_block_len += GET_UI_BLOCK_LEN(blocknumber)
 
+///Ditto but for unique features. Used by the GET_UF_BLOCK macro and the datum/dna/set_uni_feature_block proc.
+GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
+
+/proc/populate_total_uf_len_by_block()
 	. = list()
-	total_block_len = 1
+	var/total_block_len = 1
 	for(var/blocknumber in 1 to DNA_FEATURE_BLOCKS)
 		. += total_block_len
 		total_block_len += GET_UF_BLOCK_LEN(blocknumber)
@@ -197,7 +206,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 		L[DNA_MONKEY_TAIL_BLOCK] = construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len)
 
 	for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
-		. += (L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters))
+		. += L[blocknum] || random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters)
 
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
@@ -251,6 +260,18 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, GLOB.hex_characters)
 	return .
 
+///Setter macro used to modify unique identity blocks.
+/datum/dna/proc/set_uni_identity_block(blocknum, input)
+	var/precesing_blocks = copytext(unique_identity, 1, GLOB.total_ui_len_by_block[blocknum])
+	var/succeeding_blocks = blocknum < GLOB.total_ui_len_by_block.len ? copytext(unique_identity, GLOB.total_ui_len_by_block[blocknum+1]) : ""
+	unique_identity = precesing_blocks + input + succeeding_blocks
+
+///Setter macro used to modify unique features blocks.
+/datum/dna/proc/set_uni_feature_block(blocknum, input)
+	var/precesing_blocks = copytext(unique_features, 1, GLOB.total_uf_len_by_block[blocknum])
+	var/succeeding_blocks = blocknum < GLOB.total_uf_len_by_block.len ? copytext(unique_features, GLOB.total_uf_len_by_block[blocknum+1]) : ""
+	unique_features = precesing_blocks + input + succeeding_blocks
+
 /datum/dna/proc/update_ui_block(blocknumber)
 	if(!blocknumber)
 		CRASH("UI block index is null")
@@ -259,25 +280,25 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 	var/mob/living/carbon/human/H = holder
 	switch(blocknumber)
 		if(DNA_HAIR_COLOR_BLOCK)
-			SET_UI_BLOCK(unique_identity, blocknumber, sanitize_hexcolor(H.hair_color, include_crunch = FALSE))
+			set_uni_identity_block( blocknumber, sanitize_hexcolor(H.hair_color, include_crunch = FALSE))
 		if(DNA_FACIAL_HAIR_COLOR_BLOCK)
-			SET_UI_BLOCK(unique_identity, blocknumber, sanitize_hexcolor(H.facial_hair_color, include_crunch = FALSE))
+			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.facial_hair_color, include_crunch = FALSE))
 		if(DNA_SKIN_TONE_BLOCK)
-			SET_UI_BLOCK(unique_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
+			set_uni_identity_block(blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
 		if(DNA_EYE_COLOR_BLOCK)
-			SET_UI_BLOCK(unique_identity, blocknumber, sanitize_hexcolor(H.eye_color, include_crunch = FALSE))
+			set_uni_identity_block(blocknumber, sanitize_hexcolor(H.eye_color, include_crunch = FALSE))
 		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
-					SET_UI_BLOCK(unique_identity, blocknumber, construct_block(G_MALE, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_MALE, 3))
 				if(FEMALE)
-					SET_UI_BLOCK(unique_identity, blocknumber, construct_block(G_FEMALE, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_FEMALE, 3))
 				else
-					SET_UI_BLOCK(unique_identity, blocknumber, construct_block(G_PLURAL, 3))
+					set_uni_identity_block(blocknumber, construct_block(G_PLURAL, 3))
 		if(DNA_FACIAL_HAIRSTYLE_BLOCK)
-			SET_UI_BLOCK(unique_identity, blocknumber, construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len))
+			set_uni_identity_block(blocknumber, construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len))
 		if(DNA_HAIRSTYLE_BLOCK)
-			SET_UI_BLOCK(unique_identity, blocknumber, construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len))
+			set_uni_identity_block(blocknumber, construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len))
 
 /datum/dna/proc/update_uf_block(blocknumber)
 	if(!blocknumber)
@@ -286,35 +307,35 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 		CRASH("Non-human mobs shouldn't have DNA")
 	switch(blocknumber)
 		if(DNA_MUTANT_COLOR_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, sanitize_hexcolor(features["mcolor"], include_crunch = FALSE))
+			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["mcolor"], include_crunch = FALSE))
 		if(DNA_ETHEREAL_COLOR_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, sanitize_hexcolor(features["ethcolor"], include_crunch = FALSE))
+			set_uni_feature_block(blocknumber, sanitize_hexcolor(features["ethcolor"], include_crunch = FALSE))
 		if(DNA_LIZARD_MARKINGS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.body_markings_list.Find(features["body_markings"]), GLOB.body_markings_list.len))
 		if(DNA_LIZARD_TAIL_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_lizard.Find(features["tail_lizard"]), GLOB.tails_list_lizard.len))
 		if(DNA_SNOUT_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.snouts_list.Find(features["snout"]), GLOB.snouts_list.len))
 		if(DNA_HORNS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.horns_list.Find(features["horns"]), GLOB.horns_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.horns_list.Find(features["horns"]), GLOB.horns_list.len))
 		if(DNA_FRILLS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.frills_list.Find(features["frills"]), GLOB.frills_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.frills_list.Find(features["frills"]), GLOB.frills_list.len))
 		if(DNA_SPINES_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.spines_list.Find(features["spines"]), GLOB.spines_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.spines_list.Find(features["spines"]), GLOB.spines_list.len))
 		if(DNA_HUMAN_TAIL_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.tails_list_human.Find(features["tail_human"]), GLOB.tails_list_human.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_human.Find(features["tail_human"]), GLOB.tails_list_human.len))
 		if(DNA_EARS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.ears_list.Find(features["ears"]), GLOB.ears_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.ears_list.Find(features["ears"]), GLOB.ears_list.len))
 		if(DNA_MOTH_WINGS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.moth_wings_list.Find(features["moth_wings"]), GLOB.moth_wings_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.moth_wings_list.Find(features["moth_wings"]), GLOB.moth_wings_list.len))
 		if(DNA_MOTH_ANTENNAE_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.moth_antennae_list.Find(features["moth_antennae"]), GLOB.moth_antennae_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.moth_antennae_list.Find(features["moth_antennae"]), GLOB.moth_antennae_list.len))
 		if(DNA_MOTH_MARKINGS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.moth_markings_list.Find(features["moth_markings"]), GLOB.moth_markings_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.moth_markings_list.Find(features["moth_markings"]), GLOB.moth_markings_list.len))
 		if(DNA_MUSHROOM_CAPS_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_MONKEY_TAIL_BLOCK)
-			SET_UF_BLOCK(unique_features, blocknumber, construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len))
+			set_uni_feature_block(blocknumber, construct_block(GLOB.tails_list_monkey.Find(features["tail_monkey"]), GLOB.tails_list_monkey.len))
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)
@@ -683,14 +704,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 	if(!has_dna())
 		CRASH("[src] does not have DNA")
 	var/num = rand(1, DNA_UNI_IDENTITY_BLOCKS)
-	SET_UI_BLOCK(dna.unique_identity, num, random_string(GET_UI_BLOCK_LEN(num), GLOB.hex_characters))
+	dna.set_uni_feature_block(num, random_string(GET_UI_BLOCK_LEN(num), GLOB.hex_characters))
 	updateappearance(mutations_overlay_update=1)
 
 /mob/living/carbon/proc/random_mutate_unique_features()
 	if(!has_dna())
 		CRASH("[src] does not have DNA")
 	var/num = rand(1, DNA_FEATURE_BLOCKS)
-	SET_UF_BLOCK(dna.unique_features, num, random_string(GET_UF_BLOCK_LEN(num), GLOB.hex_characters))
+	dna.set_uni_feature_block(num, random_string(GET_UF_BLOCK_LEN(num), GLOB.hex_characters))
 	updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 
 /mob/living/carbon/proc/clean_dna()
@@ -713,11 +734,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 	if(ui)
 		for(var/blocknum in 1 to DNA_UNI_IDENTITY_BLOCKS)
 			if(prob(probability))
-				SET_UI_BLOCK(M.dna.unique_identity, blocknum, random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters))
+				M.dna.set_uni_feature_block(blocknum, random_string(GET_UI_BLOCK_LEN(blocknum), GLOB.hex_characters))
 	if(uf)
 		for(var/blocknum in 1 to DNA_FEATURE_BLOCKS)
 			if(prob(probability))
-				SET_UF_BLOCK(M.dna.unique_features, blocknum, random_string(GET_UF_BLOCK_LEN(blocknum), GLOB.hex_characters))
+				M.dna.set_uni_feature_block(blocknum, random_string(GET_UF_BLOCK_LEN(blocknum), GLOB.hex_characters))
 	if(ui || uf)
 		M.updateappearance(mutcolor_update=uf, mutations_overlay_update=1)
 
@@ -825,7 +846,3 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_dna_len_by_block())
 		qdel(eyes)
 		visible_message(span_notice("[src] looks up and their eyes melt away!"), "<span class>='userdanger'>I understand now.</span>")
 		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)
-
-#undef SET_DNA_BLOCK
-#undef SET_UI_BLOCK
-#undef SET_UF_BLOCK
