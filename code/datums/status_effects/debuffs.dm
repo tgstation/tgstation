@@ -455,8 +455,8 @@
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.adjustStaminaLoss(10 * repetitions)
 		carbon_owner.adjustFireLoss(5 * repetitions)
-		for(var/mob/living/carbon/victim in range(1,carbon_owner))
-			if(IS_HERETIC(victim) || victim == carbon_owner)
+		for(var/mob/living/carbon/victim in ohearers(1,carbon_owner))
+			if(IS_HERETIC(victim))
 				continue
 			victim.apply_status_effect(type,repetitions-1)
 			break
@@ -750,9 +750,8 @@
 					range = 7
 
 				var/list/mob/living/targets = list()
-				for(var/mob/M in oview(owner, range))
-					if(isliving(M))
-						targets += M
+				for(var/mob/living/M in oview(owner, range))
+					targets += M
 				if(LAZYLEN(targets))
 					to_chat(owner, span_warning("Your arm spasms!"))
 					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
@@ -769,7 +768,7 @@
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				var/list/turf/targets = list()
-				for(var/turf/T in oview(owner, 3))
+				for(var/turf/T in oview(3, get_turf(owner)))
 					targets += T
 				if(LAZYLEN(targets) && I)
 					to_chat(owner, span_warning("Your arm spasms!"))

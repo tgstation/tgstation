@@ -167,10 +167,8 @@
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(owner.is_blind())
 		return TRUE
-	for(var/mob/M in oview(owner, 7))
-		if(!isliving(M)) //ghosts ain't people
-			continue
-		if((istype(M, /mob/living/simple_animal/pet)) || M.ckey)
+	for(var/mob/living/checked_mob in oview(owner, 7))
+		if((istype(checked_mob, /mob/living/simple_animal/pet)) || checked_mob.ckey)
 			return FALSE
 	return TRUE
 

@@ -118,12 +118,12 @@ SUBSYSTEM_DEF(explosions)
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
 	var/list/wipe_colours = list()
-	for(var/turf/T in spiral_range_turfs(max_range, epicenter))
-		wipe_colours += T
-		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+	for(var/turf/checked_turf as anything in spiral_range_turfs(max_range, epicenter))
+		wipe_colours += checked_turf
+		var/dist = cheap_hypotenuse(checked_turf.x, checked_turf.y, x0, y0)
 
 		if(newmode == "Yes")
-			var/turf/TT = T
+			var/turf/TT = checked_turf
 			while(TT != epicenter)
 				TT = get_step_towards(TT,epicenter)
 				if(TT.density)

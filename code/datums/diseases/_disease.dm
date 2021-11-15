@@ -114,7 +114,7 @@
 
 	var/turf/T = affected_mob.loc
 	if(istype(T))
-		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
+		for(var/mob/living/carbon/C in ohearers(spread_range, affected_mob))
 			var/turf/V = get_turf(C)
 			if(disease_air_spread_walk(T, V))
 				C.AirborneContractDisease(src, force_spread)

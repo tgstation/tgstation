@@ -699,7 +699,7 @@
 		return
 	if(rustle_sound)
 		playsound(parent, "rustle", 50, TRUE, -5)
-	for(var/mob/viewing in viewers(user, null))
+	for(var/mob/viewing as anything in viewers(user))
 		if(M == viewing)
 			to_chat(usr, span_notice("You put [I] [insert_preposition]to [parent]."))
 		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...

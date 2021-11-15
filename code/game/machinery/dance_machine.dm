@@ -452,13 +452,13 @@
 	if(world.time < stop && active)
 		var/sound/song_played = sound(selection.song_path)
 
-		for(var/mob/M in range(10,src))
+		for(var/mob/M as anything in hearers(10,src))
 			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
 			if(!(M in rangers))
-				rangers[M] = TRUE
+				rangers += M
 				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played, use_reverb = FALSE)
-		for(var/mob/L in rangers)
+		for(var/mob/L as anything in rangers)
 			if(get_dist(src,L) > 10)
 				rangers -= L
 				if(!L || !L.client)
@@ -475,6 +475,6 @@
 /obj/machinery/jukebox/disco/process()
 	. = ..()
 	if(active)
-		for(var/mob/living/M in rangers)
+		for(var/mob/living/M as anything in rangers)
 			if(prob(5+(allowed(M)*4)) && (M.mobility_flags & MOBILITY_MOVE))
 				dance(M)

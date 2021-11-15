@@ -421,7 +421,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		return PROCESS_KILL
 
 	var/list/targets = list()
-	for(var/mob/A in view(scan_range, base))
+	for(var/mob/A as anything in hearers(scan_range, base))
 		if(A.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 

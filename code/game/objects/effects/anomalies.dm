@@ -133,18 +133,18 @@
 	for(var/obj/O in orange(4, src))
 		if(!O.anchored)
 			step_towards(O,src)
-	for(var/mob/living/M in range(0, src))
+	for(var/mob/living/M in get_turf(src))
 		gravShock(M)
-	for(var/mob/living/M in orange(4, src))
+	for(var/mob/living/M in orange(4, get_turf(src)))
 		if(!M.mob_negates_gravity())
 			step_towards(M,src)
-	for(var/obj/O in range(0,src))
+	for(var/obj/O in get_turf(src))
 		if(!O.anchored)
 			if(isturf(O.loc))
 				var/turf/T = O.loc
 				if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 					continue
-			var/mob/living/target = locate() in view(4,src)
+			var/mob/living/target = locate() in hearers(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 5, 10)
 
@@ -205,7 +205,7 @@
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
 	canshock = TRUE
-	for(var/mob/living/M in range(0, src))
+	for(var/mob/living/M in get_turf(src))
 		mobShock(M)
 
 /obj/effect/anomaly/flux/update_overlays()
@@ -245,7 +245,7 @@
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
-	for(var/mob/living/M in range(1,src))
+	for(var/mob/living/M in hearers(1,src))
 		do_teleport(M, locate(M.x, M.y, M.z), 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/Bumped(atom/movable/AM)
@@ -274,7 +274,7 @@
 			priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 			var/list/flashers = list()
-			for(var/mob/living/carbon/C in viewers(TO, null))
+			for(var/mob/living/carbon/C in viewers(TO))
 				if(C.flash_act())
 					flashers += C
 
@@ -373,11 +373,9 @@
 	grav(rand(0,3), rand(2,3), 50, 25)
 
 	//Throwing stuff around!
-	for(var/obj/O in range(2,src))
-		if(O == src)
-			return //DON'T DELETE YOURSELF GOD DAMN
+	for(var/obj/O in orange(2,src))
 		if(!O.anchored)
-			var/mob/living/target = locate() in view(4,src)
+			var/mob/living/target = locate() in hearers(4,src)
 			if(target && !target.stat)
 				O.throw_at(target, 7, 5)
 		else

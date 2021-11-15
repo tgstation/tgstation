@@ -898,7 +898,7 @@
 		if(T)
 			turfs_to_check += T
 
-		for(var/t in turfs_to_check)
+		for(var/checked_turf in turfs_to_check)
 			T = t
 			if(T.density)
 				pressure_resistance_prob_delta -= 20

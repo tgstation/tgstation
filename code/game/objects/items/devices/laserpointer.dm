@@ -134,30 +134,31 @@
 			outmsg = span_warning("You miss the lens of [C] with [src]!")
 
 	//catpeople
-	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(!isfelinid(H) || H.incapacitated() || H.is_blind())
-			continue
-		if(user.body_position == STANDING_UP)
-			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
-			if(prob(effectchance * diode.rating))
-				H.visible_message(span_warning("[H] makes a grab for the light!"),span_userdanger("LIGHT!"))
-				H.Move(targloc)
-				log_combat(user, H, "moved with a laser pointer",src)
+	for(var/mob/checked_mob as anything in viewers(1, targloc))
+		if(checked_mob.incapacitated())
+			return
+		var/mob/living/carbon/human/human = checked_mob
+		if(isfelinid(human) && !human.eye_blind) // person is a cat
+			if(user.body_position == STANDING_UP)
+				human.setDir(get_dir(human,targloc)) // kitty always looks at the light
+				if(prob(effectchance * diode.rating))
+					human.visible_message(span_warning("[H] makes a grab for the light!"),span_userdanger("LIGHT!"))
+					human.Move(targloc)
+					log_combat(user, human, "moved with a laser pointer",src)
+				else
+					human.visible_message(span_notice("[human] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
 			else
-				H.visible_message(span_notice("[H] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
-		else
-			H.visible_message(span_notice("[H] stares at the light."), span_warning("You stare at the light..."))
-
-	//cats!
-	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
-		if(prob(effectchance * diode.rating))
-			if(C.resting)
-				C.set_resting(FALSE, instant = TRUE)
-			C.visible_message(span_notice("[C] pounces on the light!"),span_warning("LIGHT!"))
-			C.Move(targloc)
-			C.Immobilize(1 SECONDS)
-		else
-			C.visible_message(span_notice("[C] looks uninterested in your games."),span_warning("You spot [user] shining [src] at you. How insulting!"))
+				human.visible_message(span_notice("[human] stares at the light."), span_warning("You stare at the light..."))
+		else if(iscat(checked_mob)) //cats!
+			var/mob/living/simple_animal/pet/cat/cat = checked_mob
+			if(prob(effectchance * diode.rating))
+				if(cat.resting)
+					cat.set_resting(FALSE, instant = TRUE)
+				cat.visible_message("<span class='notice'>[cat] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
+				cat.Move(targloc)
+				cat.Immobilize(1 SECONDS)
+			else
+				cat.visible_message("<span class='notice'>[cat] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
 	//laser pointer image
 	icon_state = "pointer_[pointer_icon_state]"

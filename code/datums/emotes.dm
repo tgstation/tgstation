@@ -113,7 +113,7 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list)
 			if(!ghost.client || isnewplayer(ghost))
 				continue
-			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 
 	if(emote_type == EMOTE_AUDIBLE)

@@ -373,9 +373,7 @@ If you make a derivative work from this code, you must include this notification
 	var/falling = 0
 
 	for (var/obj/O in oview(1, A))
-		if (O.density == 1)
-			if (O == A)
-				continue
+		if (O.density)
 			if (O == D)
 				continue
 			if (O.opacity)

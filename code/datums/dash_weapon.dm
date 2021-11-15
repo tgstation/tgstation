@@ -36,7 +36,7 @@
 		return FALSE
 
 	var/turf/target_turf = get_turf(target)
-	if(target in view(user.client.view, user))
+	if(user in viewers(user.client.view, target))
 		if(!do_teleport(user, target_turf, no_effects = TRUE))
 			user.balloon_alert(user, "dash blocked by location!")
 			return FALSE

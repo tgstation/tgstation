@@ -44,7 +44,7 @@
 		viewing = FALSE //they are further than our viewrange they are not viewing us
 		out_of_view()
 		return//so we're not searching everything in view every tick
-	if(obsession in view(7, owner))
+	if(owner in oviewers(7, obsession))
 		viewing = TRUE
 	else
 		viewing = FALSE
@@ -88,7 +88,7 @@
 /datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
 	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS)
 		return
-	switch(rand(1, 100)) 
+	switch(rand(1, 100))
 		if(1 to 40)
 			INVOKE_ASYNC(owner, /mob.proc/emote, pick("blink", "blink_r"))
 			owner.blur_eyes(10)

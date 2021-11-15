@@ -154,10 +154,11 @@
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
 	last_camera_turf = get_turf(cam_location)
 
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
-
-	for(var/turf/visible_turf in visible_things)
-		visible_turfs += visible_turf
+	if(active_camera.isXray())
+		visible_turfs += RANGE_TURFS(active_camera.view_range, active_camera)
+	else
+		for(var/turf/checked_turf in view(active_camera, get_turf(active_camera)))
+			visible_turf += checked_turf
 
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1

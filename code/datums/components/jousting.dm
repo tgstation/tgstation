@@ -47,7 +47,7 @@
 	if((requires_mount && ((requires_mob_riding && !ismob(user.buckled)) || (!user.buckled))) || !current_direction || (current_tile_charge < min_tile_charge))
 		return
 	var/turf/target_turf = get_step(user, current_direction)
-	if(target in range(1, target_turf))
+	if(get_dist(target, target_turf) <= 1)
 		var/knockdown_chance = (target_buckled? mounted_knockdown_chance_per_tile : unmounted_knockdown_chance_per_tile) * current
 		var/knockdown_time = (target_buckled? mounted_knockdown_time : unmounted_knockdown_time)
 		var/damage = (target_buckled? mounted_damage_boost_per_tile : unmounted_damage_boost_per_tile) * current

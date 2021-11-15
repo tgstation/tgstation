@@ -139,7 +139,7 @@
 		return
 
 	var/fraction = 1/initial(reagent_divisor)
-	for(var/obj/O in range(0,src))
+	for(var/obj/O in get_turf(src))
 		if(O.type == src.type)
 			continue
 		if(isturf(O.loc))
@@ -149,7 +149,7 @@
 		if(lifetime % reagent_divisor)
 			reagents.expose(O, VAPOR, fraction)
 	var/hit = 0
-	for(var/mob/living/L in range(0,src))
+	for(var/mob/living/L in get_turf(src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.

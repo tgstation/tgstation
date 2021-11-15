@@ -81,7 +81,7 @@
 	if(!first_turf)
 		return
 
-	possible_turfs -= (possible_turfs & range(first_turf, 3))
+	possible_turfs -= (possible_turfs & RANGE_TURFS(3, first_turf))
 
 	var/turf/second_turf = pick(possible_turfs)
 	if(!second_turf)

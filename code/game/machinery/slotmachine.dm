@@ -325,7 +325,7 @@
 		amount = dispense(amount, cointype, null, 0)
 
 	else
-		var/mob/living/target = locate() in range(2, src)
+		var/mob/living/target = locate() in hearers(2, src)
 
 		amount = dispense(amount, cointype, target, 1)
 
