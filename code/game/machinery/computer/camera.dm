@@ -158,7 +158,7 @@
 		visible_turfs += RANGE_TURFS(active_camera.view_range, active_camera)
 	else
 		for(var/turf/checked_turf in view(active_camera, get_turf(active_camera)))
-			visible_turf += checked_turf
+			visible_turfs += checked_turf
 
 	var/list/bbox = get_bbox_of_atoms(visible_turfs)
 	var/size_x = bbox[3] - bbox[1] + 1
