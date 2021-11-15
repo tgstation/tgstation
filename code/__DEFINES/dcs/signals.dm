@@ -513,7 +513,7 @@
 #define COMSIG_MOB_LOGIN "mob_login"
 ///from base of /mob/Logout(): ()
 #define COMSIG_MOB_LOGOUT "mob_logout"
-///from base of mob/set_stat(): (new_stat)
+///from base of mob/set_stat(): (new_stat, old_stat)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"
 ///from base of mob/clickon(): (atom/A, params)
 #define COMSIG_MOB_CLICKON "mob_clickon"
