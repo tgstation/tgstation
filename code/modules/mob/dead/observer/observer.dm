@@ -566,7 +566,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(bootime > world.time)
 		return
-	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
+	var/obj/machinery/light/L = locate() in view(1, src)
 	if(L)
 		L.flicker()
 		bootime = world.time + 600

@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
-			for (var/obj/item/radio/intercom/I in view(MODE_RANGE_INTERCOM, null))
+			for (var/obj/item/radio/intercom/I in view(MODE_RANGE_INTERCOM, src))
 				I.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 

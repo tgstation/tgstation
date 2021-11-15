@@ -196,10 +196,10 @@
 	var/turf/center = get_turf(target)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
 	var/list/drakewalls = list()
-	for(var/turf/T in walled)
+	for(var/turf/T as anything in walled)
 		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
 	var/list/indestructible_turfs = list()
-	for(var/turf/T in RANGE_TURFS(2, center))
+	for(var/turf/T as anything in RANGE_TURFS(2, center))
 		if(istype(T, /turf/open/indestructible))
 			continue
 		if(!istype(T, /turf/closed/indestructible))
@@ -213,7 +213,7 @@
 	while(amount > 0)
 		var/list/empty = indestructible_turfs.Copy() // can't place safe turfs on turfs that weren't changed to be open
 		var/any_attack = FALSE
-		for(var/turf/T in turfs)
+		for(var/turf/T as anything in turfs)
 			for(var/mob/living/L in T.contents)
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield

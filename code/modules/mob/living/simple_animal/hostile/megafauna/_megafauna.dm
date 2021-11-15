@@ -172,7 +172,7 @@
 	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
 	if(!grant_achievement.len)
-		for(var/mob/living/L in view(7,src))
+		for(var/mob/living/L in oviewers(7,src))
 			grant_achievement += L
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)

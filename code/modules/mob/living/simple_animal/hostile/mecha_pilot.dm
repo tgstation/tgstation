@@ -102,7 +102,7 @@
 	//Find a new mecha
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
-	for(var/obj/vehicle/sealed/mecha/combat/C in range(vision_range,src))
+	for(var/obj/vehicle/sealed/mecha/combat/C in view(vision_range,src))
 		if(is_valid_mecha(C))
 			GiveTarget(C)
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
@@ -199,7 +199,7 @@
 	if(!.)
 		return
 	if(!mecha)
-		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
+		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in view(vision_range, src))
 			if(is_valid_mecha(mecha_in_range))
 				GiveTarget(mecha_in_range) //Let's nab it!
 				minimum_distance = 1

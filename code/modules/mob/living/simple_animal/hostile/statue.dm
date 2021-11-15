@@ -131,14 +131,11 @@
 
 	// This loop will, at most, loop twice.
 	for(var/atom/check in check_list)
-		for(var/mob/living/M in viewers(world.view + 1, check) - src)
-			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
-				if(!M.is_blind())
-					return M
+		for(var/mob/living/M in viewers(world.view + 1, check))
+			if(M != src && M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege && !M.eye_blind)
+				return M
 		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			for(var/O in M.occupants)
-				var/mob/mechamob = O
-				if(mechamob.client && !mechamob.is_blind())
+				if(M.occupant?.client && !mechamob.is_blind())
 					return mechamob
 	return null
 

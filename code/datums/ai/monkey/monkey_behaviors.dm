@@ -126,7 +126,7 @@
 	var/mob/living/target = null
 
 	// flee from anyone who attacked us and we didn't beat down
-	for(var/mob/living/L in view(living_pawn, MONKEY_FLEE_VISION))
+	for(var/mob/living/L in view(MONKEY_FLEE_VISION, living_pawn))
 		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && L.stat == CONSCIOUS)
 			target = L
 			break
@@ -285,7 +285,7 @@
 	controller.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 	var/mob/living/living_pawn = controller.pawn
 
-	for(var/mob/living/L in view(living_pawn, MONKEY_ENEMY_VISION))
+	for(var/mob/living/L in view(MONKEY_ENEMY_VISION, living_pawn))
 		if(!HAS_AI_CONTROLLER_TYPE(L, /datum/ai_controller/monkey))
 			continue
 

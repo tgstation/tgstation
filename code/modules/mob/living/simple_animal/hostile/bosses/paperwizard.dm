@@ -135,7 +135,7 @@
 			original.copies -= src
 			for(var/c in original.copies)
 				qdel(c)
-		for(var/mob/living/L in range(5,src))
+		for(var/mob/living/L in ohearers(5,src))
 			if(L == original || istype(L, type))
 				continue
 			L.adjustBruteLoss(50)

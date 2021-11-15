@@ -522,8 +522,8 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
-	for(var/mob/living/simple_animal/pet/P in range(1, src))
-		if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
+	for(var/mob/living/simple_animal/pet/P in ohearers(1, src))
+		if(!istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
 			visible_message(span_warning("[src] devours [P]!"), \
 			"<span class='cult big bold'>DELICIOUS SOULS</span>")
 			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)

@@ -203,7 +203,7 @@
 	. = ..()
 	if(stat == DEAD || !isturf(loc))
 		return
-	for(var/mob/living/carbon/human/victim in range(src, 1)) //Only for corpse right next to/on same tile
+	for(var/mob/living/carbon/human/victim in viewers(1, src)) //Only for corpse right next to/on same tile
 		switch(victim.stat)
 			if(UNCONSCIOUS, HARD_CRIT)
 				infest(victim)

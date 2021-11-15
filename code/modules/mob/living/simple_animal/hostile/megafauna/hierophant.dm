@@ -383,8 +383,7 @@ Difficulty: Hard
 /proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
 	playsound(original,'sound/machines/airlockopen.ogg', 200, TRUE)
 	var/last_dist = 0
-	for(var/t in spiral_range_turfs(burst_range, original))
-		var/turf/T = t
+	for(var/turf/T as anything in spiral_range_turfs(burst_range, original))
 		if(!T)
 			continue
 		var/dist = get_dist(original, T)
@@ -423,7 +422,7 @@ Difficulty: Hard
 		visible_message(span_hierophant("\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\""))
 		visible_message(span_hierophant_warning("[src] shrinks, releasing a massive burst of energy!"))
 		var/list/stored_nearby = list()
-		for(var/mob/living/L in view(7,src))
+		for(var/mob/living/L in oviewers(7,src))
 			stored_nearby += L // store the people to grant the achievements to once we die
 		hierophant_burst(null, get_turf(src), 10)
 		set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid

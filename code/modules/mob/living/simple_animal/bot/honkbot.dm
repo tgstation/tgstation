@@ -294,10 +294,8 @@
 		var/judgement_criteria = judgement_criteria()
 		threatlevel = C.assess_threat(judgement_criteria)
 
-		if(threatlevel <= 3)
-			if(C in view(4,src)) //keep the range short for patrolling
-				if(!limiting_spam)
-					bike_horn()
+		if(threatlevel <= 3 && get_dist(C, src) <= 4 && !limiting_spam)
+			bike_horn()
 
 		else if(threatlevel >= 10)
 			bike_horn() //just spam the shit outta this

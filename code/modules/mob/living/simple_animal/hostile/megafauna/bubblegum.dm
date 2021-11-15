@@ -372,7 +372,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_pools(turf/T, range)
 	. = list()
-	for(var/obj/effect/decal/cleanable/nearby in view(T, range))
+	for(var/obj/effect/decal/cleanable/nearby in view(range, T))
 		if(nearby.can_bloodcrawl_in())
 			. += nearby
 

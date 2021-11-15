@@ -631,7 +631,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/simple_animal/parrot/proc/search_for_item()
 	var/item
-	for(var/atom/movable/AM in view(src))
+	for(var/atom/movable/AM as obj|mob in view(src))
 		//Skip items we already stole or are wearing or are too big
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
@@ -802,7 +802,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return
 
 	if(icon_state == icon_living)
-		for(var/atom/movable/AM in view(src,1))
+		for(var/atom/movable/AM in view(1,src))
 			for(var/perch_path in desired_perches)
 				if(istype(AM, perch_path))
 					src.forceMove(AM.loc)
@@ -829,7 +829,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		return
 
 	if(!buckled)
-		for(var/mob/living/carbon/human/H in view(src,1))
+		for(var/mob/living/carbon/human/H in view(1,src))
 			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
 			perch_on_human(H)
