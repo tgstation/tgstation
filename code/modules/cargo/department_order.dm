@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 		target_group["packs"] += list(list(
 			"name" = pack.name,
 			"cost" = pack.get_cost(),
-			"id" = pack.type,
+			"id" = pack.id,
 			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
 		))
 	data["supplies"] = supply_data
@@ -106,6 +106,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	. = TRUE
 	var/id = text2path(params["id"])
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
+	if(!pack)
+		CRASH("requested supply pack id \"[id]\" not found!")
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
 	var/ckey = usr.ckey
