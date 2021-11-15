@@ -227,9 +227,11 @@
 		for(var/obj/item/fish/victim in parent.current_aquarium.contents)
 			var/datum/component/aquarium_content/content_component = victim.GetComponent(/datum/component/aquarium_content)
 			var/datum/aquarium_behaviour/fish/fish_properties = content_component.properties
+			if(istype(fish_properties, /datum/aquarium_behaviour/fish/emulsijack))
+				continue //no team killing
 			fish_properties.adjust_health((fish_properties.health - 3) * delta_time) //the victim may heal a bit but this will quickly kill
 			emulsified = TRUE
 	if(emulsified)
 		adjust_health((health + 3) * delta_time)
 		last_feeding = world.time //emulsijack feeds on the emulsion!
-	process_health(delta_time)
+	..()
