@@ -111,7 +111,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	use_power(1000)
 
 	var/flashed = FALSE
-	for (var/mob/living/L in hearers(range, src))
+	for (var/mob/living/L as anything in hearers(range, src))
 		if(L.flash_act(affect_silicon = 1))
 			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
 			L.Paralyze(strength)
