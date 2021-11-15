@@ -246,6 +246,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		G.fields["name"] = H.real_name
 		G.fields["rank"] = assignment
 		G.fields["trim"] = assignment
+		G.fields["initial_rank"] = assignment
 		G.fields["age"] = H.age
 		G.fields["species"] = H.dna.species.name
 		G.fields["fingerprint"] = md5(H.dna.unique_identity)
@@ -294,6 +295,7 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		L.fields["name"] = H.real_name
 		L.fields["rank"] = assignment
 		L.fields["trim"] = assignment
+		G.fields["initial_rank"] = assignment
 		L.fields["age"] = H.age
 		L.fields["gender"] = H.gender
 		if(H.gender == "male")
