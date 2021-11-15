@@ -20,7 +20,6 @@
 	owner.announce_objectives()
 
 /datum/antagonist/abductee/proc/give_objective()
-	var/mob/living/carbon/human/
 	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 	var/datum/objective/abductee/O = new objtype()
 	objectives += O
