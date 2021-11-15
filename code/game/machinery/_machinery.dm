@@ -23,7 +23,7 @@
  *  power_channel (num)
  *     What channel to draw from when drawing power for power mode
  *     Possible Values:
- *        AREA_USAGE_EQUIP:0 -- Equipment Channel
+ *        AREA_USAGE_EQUIP:1 -- Equipment Channel
  *        AREA_USAGE_LIGHT:2 -- Lighting Channel
  *        AREA_USAGE_ENVIRON:3 -- Environment Channel
  *
