@@ -145,6 +145,7 @@
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
 	desc = "A module with a microchip health analyzer to instantly scan vitals at a range."
+	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = 25
@@ -476,6 +477,7 @@
 /obj/item/mod/module/rad_protection
 	name = "MOD radiation protection module"
 	desc = "A module that lets the MOD scan for radiation and protects the user from it."
+	icon_state = "radshield"
 	complexity = 2
 	idle_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
@@ -511,6 +513,7 @@
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
 	desc = "A module that shields the MOD from EMPs, taking a power cost for that."
+	icon_state = "empshield"
 	complexity = 1
 	idle_power_cost = 10
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
@@ -669,6 +672,7 @@
 /obj/item/mod/module/gps
 	name = "MOD internal GPS module"
 	desc = "A module that extends a GPS."
+	icon_state = "gps"
 	module_type = MODULE_ACTIVE
 	complexity = 1
 	active_power_cost = 5
@@ -709,7 +713,6 @@
 /obj/item/mod/module/quick_carry
 	name = "MOD quick carry module"
 	desc = "A module that redirects power to arms, allowing for quicker carrying."
-	icon_state = "constructor"
 	complexity = 1
 	idle_power_cost = 3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
@@ -782,6 +785,7 @@
 /obj/item/mod/module/injector
 	name = "MOD injector module"
 	desc = "A module that extends a piercing injector."
+	icon_state = "injector"
 	module_type = MODULE_ACTIVE
 	complexity = 1
 	active_power_cost = 5
@@ -948,6 +952,7 @@
 /obj/item/mod/module/bikehorn
 	name = "MOD bike horn module"
 	desc = "A bike horn for honking."
+	icon_state = "bikehorn"
 	module_type = MODULE_USABLE
 	complexity = 1
 	use_power_cost = 25
@@ -1005,6 +1010,7 @@
 /obj/item/mod/module/orebag
 	name = "MOD ore bag module"
 	desc = "An integrated ore storage system that allows the MODsuit to automatically collect and deposit ore."
+	icon_state = "ore"
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = 25
@@ -1324,6 +1330,7 @@
 /obj/item/mod/module/dna_lock
 	name = "MOD DNA lock module"
 	desc = "A module that locks the MODsuit's activation to the wearer's DNA. Shorted out by EMPs."
+	icon_state = "dnalock"
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = 100

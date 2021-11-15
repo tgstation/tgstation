@@ -313,11 +313,12 @@
 		wires.interact(user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/mod/paint))
-		if(paint(user, attacking_item))
+		if(active || activating)
+			balloon_alert(user, "suit is active!")
+		else if(paint(user, attacking_item))
 			balloon_alert(user, "suit painted")
-			qdel(attacking_item)
 		else
-			balloon_alert(user, "no skins!")
+			balloon_alert(user, "not painted!")
 		return TRUE
 	else if(open && attacking_item.GetID())
 		update_access(user, attacking_item)
@@ -377,6 +378,7 @@
 	wearer = null
 
 /obj/item/mod/control/proc/update_flags()
+	var/list/used_skin = theme.clothing_flags[skin]
 	for(var/obj/item/clothing/part as anything in mod_parts)
 		var/used_category
 		if(part == helmet)
@@ -387,7 +389,7 @@
 			used_category = GAUNTLETS_FLAGS
 		if(part == boots)
 			used_category = BOOTS_FLAGS
-		var/list/category = theme.clothing_flags[used_category]
+		var/list/category = used_skin[used_category]
 		part.clothing_flags = category[UNSEALED_CLOTHING] || NONE
 		part.visor_flags = category[SEALED_CLOTHING] || NONE
 		part.flags_inv = category[UNSEALED_INVISIBILITY] || NONE
@@ -420,22 +422,18 @@
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(length(theme.skins) <= 1)
 		return FALSE
-	var/list/display_names = list()
 	var/list/skins = list()
 	for(var/mod_skin in theme.skins)
-		display_names[mod_skin] = REF(mod_skin)
-		var/image/skin_image = image(icon = icon, icon_state = "[mod_skin]-control")
-		skins += list(mod_skin = skin_image)
+		skins[mod_skin] = image(icon = icon, icon_state = "[mod_skin]-control")
 	var/pick = show_radial_menu(user, src, skins, custom_check = FALSE, require_near = TRUE)
 	if(!pick || !user.is_holding(paint))
 		return FALSE
-	var/skin_reference = display_names[pick]
-	var/new_skin = locate(skin_reference) in theme.skins
-	skin = new_skin
+	skin = pick
 	var/list/skin_updating = mod_parts.Copy() + src
 	for(var/obj/item/piece as anything in skin_updating)
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	wearer?.update_icons()
+	update_flags()
+	wearer?.regenerate_icons()
 	return TRUE
 
 /obj/item/mod/control/proc/shock(mob/living/user)
