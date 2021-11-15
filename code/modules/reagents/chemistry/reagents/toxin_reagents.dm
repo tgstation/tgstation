@@ -34,7 +34,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutagen
-	name = "Unstable mutagen"
+	name = "Unstable Mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1000,7 +1000,7 @@
 
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric acid"
+	name = "Sulphuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
@@ -1046,7 +1046,7 @@
 	exposed_turf.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
-	name = "Fluorosulfuric acid"
+	name = "Fluorosulfuric Acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1070,7 +1070,7 @@
 	..()
 
 /datum/reagent/toxin/acid/nitracid
-	name = "Nitric acid"
+	name = "Nitric Acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY

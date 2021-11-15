@@ -821,7 +821,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grape_soda
-	name = "Grape soda"
+	name = "Grape Soda"
 	description = "Beloved by children and teetotalers."
 	color = "#E6CDFF"
 	taste_description = "grape soda"
@@ -981,7 +981,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/prunomix
-	name = "pruno mixture"
+	name = "Pruno Mixture"
 	color = "#E78108"
 	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	taste_description = "garbage"
