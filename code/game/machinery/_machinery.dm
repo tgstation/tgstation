@@ -160,7 +160,7 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 	
-	if((resistance_flags & INDESTRUCTIBLE) && component_parts){
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 	}
 	
