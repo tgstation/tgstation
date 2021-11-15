@@ -49,12 +49,7 @@
 			. = "es"
 		else
 			switch(copytext_char(pluralize, -1))
-				if("s")
-					. = "es"
-				if("x")
-					. = "es"
-				if("z")
-					. = "es"
+				if("s", "x", "z")
 				else
 					. = "s"
 
