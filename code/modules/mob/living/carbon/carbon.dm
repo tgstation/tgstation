@@ -1322,17 +1322,16 @@
 
 // Checks to see how many hands this person has to sign with.
 /mob/living/carbon/proc/check_signables_state()
-	var/mob/living/carbon/mute = src
-	var/obj/item/bodypart/left_arm = mute.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/right_arm = mute.get_bodypart(BODY_ZONE_R_ARM)
+	var/obj/item/bodypart/left_arm = src.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/right_arm = src.get_bodypart(BODY_ZONE_R_ARM)
 	var/empty_indexes = get_empty_held_indexes()
 	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && ((!left_arm || left_arm.bodypart_disabled) || (!right_arm || right_arm.bodypart_disabled))))//All existing hands full, can't sign
-		return 1 // These aren't booleans
+		return SIGN_HANDS_FULL // These aren't booleans
 	if((!left_arm || left_arm.bodypart_disabled) && (!right_arm || right_arm.bodypart_disabled))//Can't sign with no arms!
-		return 2
-	if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
-		return 3
-	if(mute.handcuffed) // Cuffed, usually will show visual effort to sign
-		return 4
+		return SIGN_ARMLESS
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+	if(src.handcuffed) // Cuffed, usually will show visual effort to sign
+		return SIGN_CUFFED
 	if(length(empty_indexes) == 1 || (!left_arm || left_arm.bodypart_disabled) || (!right_arm || right_arm.bodypart_disabled)) // One arm gone
-		return 0
+		return SIGN_ONE_HAND

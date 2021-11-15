@@ -199,9 +199,9 @@
 			if(!istype(G))
 				return FALSE
 			switch(mute.check_signables_state())
-				if(0) // One hand full
+				if(SIGN_ONE_HAND) // One hand full
 					message = stars(message)
-				if(1 to 4)
+				if(SIGN_HANDS_FULL to SIGN_CUFFED)
 					return FALSE
 	if(!spans)
 		spans = list(M.speech_span)

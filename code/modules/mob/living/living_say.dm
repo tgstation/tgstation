@@ -331,18 +331,18 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/mob/living/carbon/mute = src
 		if(istype(mute))
 			switch(mute.check_signables_state())
-				if(0) // One arm
+				if(SIGN_ONE_HAND) // One arm
 					message = stars(message)
-				if(1) // Full hands
+				if(SIGN_HANDS_FULL) // Full hands
 					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
-				if(2) // No arms
+				if(SIGN_ARMLESS) // No arms
 					to_chat(src, span_warning("You can't sign with no hands!"))
 					return FALSE
-				if(3) // Hands Blocked or Emote Mute traits
+				if(SIGN_TRAIT_BLOCKED) // Hands Blocked or Emote Mute traits
 					to_chat(src, span_warning("You can't sign at the moment!"))
 					return FALSE
-				if(4) // Cuffed
+				if(SIGN_CUFFED) // Cuffed
 					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
 					return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
