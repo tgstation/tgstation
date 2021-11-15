@@ -65,7 +65,7 @@
 /obj/machinery/plumbing/bottler/interact(mob/user)
 	. = ..()
 	if(!valid_output_configuration)
-		to_chat(user, span_warning("Output location error condition warning is flashing on the display"))
+		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
 	wanted_amount = clamp(round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1), 1, 100)
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
