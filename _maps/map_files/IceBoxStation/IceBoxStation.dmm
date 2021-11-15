@@ -10034,10 +10034,10 @@
 	},
 /area/maintenance/port/aft)
 "bTv" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/white/smooth_large,
 /area/service/kitchen/diner)
 "bTx" = (
@@ -10102,11 +10102,11 @@
 /area/maintenance/port/aft)
 "bUz" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
 "bUI" = (
@@ -24819,10 +24819,10 @@
 /area/engineering/engine_smes)
 "iNZ" = (
 /obj/effect/turf_decal/tile/red/full,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
 "iOA" = (
@@ -35926,12 +35926,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "oAV" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/white/smooth_large,
 /area/service/kitchen/diner)
 "oBc" = (
@@ -40996,11 +40996,11 @@
 /turf/open/floor/iron/white,
 /area/maintenance/port/fore)
 "rpY" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/white{
 	dir = 5
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron/white/smooth_large,
 /area/service/kitchen/diner)
 "rqn" = (

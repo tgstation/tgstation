@@ -104,9 +104,9 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ay" = (
-/obj/structure/chair/stool/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "az" = (
@@ -665,10 +665,10 @@
 	},
 /area/maintenance/department/chapel)
 "cG" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/stone,
 /area/service/bar/atrium)
 "cJ" = (
@@ -1509,9 +1509,9 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "gQ" = (
-/obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "gR" = (
@@ -2129,6 +2129,10 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
+"ju" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/wood/parquet,
+/area/service/bar/atrium)
 "jv" = (
 /obj/structure/falsewall,
 /turf/open/floor/plating,
@@ -5899,6 +5903,11 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"yk" = (
+/obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/wood/parquet,
+/area/service/bar/atrium)
 "yp" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -6346,11 +6355,11 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "zY" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/stone,
 /area/service/bar/atrium)
 "Aa" = (
@@ -9159,11 +9168,11 @@
 	},
 /area/maintenance/aft)
 "KA" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/stone,
 /area/service/bar/atrium)
 "KB" = (
@@ -11808,13 +11817,13 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "UD" = (
-/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/stone,
 /area/service/bar/atrium)
 "UG" = (
@@ -49800,7 +49809,7 @@ YM
 sU
 CY
 BA
-nl
+ju
 nl
 fz
 YM
@@ -50057,7 +50066,7 @@ di
 nl
 BA
 jT
-sU
+yk
 sy
 ev
 sy
