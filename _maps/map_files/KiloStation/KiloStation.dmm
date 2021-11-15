@@ -54886,7 +54886,10 @@
 	pixel_x = 8
 	},
 /obj/machinery/button/door/directional/north{
-	pixel_x = -8
+	id = "kitchen";
+	name = "Serving Hatch Toggle";
+	pixel_x = -8;
+	req_access_txt = "28"
 	},
 /turf/open/floor/iron/dark,
 /area/service/kitchen)

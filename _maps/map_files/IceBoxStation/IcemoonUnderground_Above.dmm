@@ -5160,9 +5160,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "uU" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/wood/parquet,
-/area/service/bar/atrium)
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/explored)
 "uV" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -6059,11 +6059,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
-"yP" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/wood/parquet,
-/area/service/bar/atrium)
 "yT" = (
 /obj/structure/railing{
 	dir = 1
@@ -7587,6 +7582,12 @@
 "EC" = (
 /obj/machinery/door/window/westleft{
 	name = "Exterior Access"
+	},
+/obj/structure/sign/warning/vacuum{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -11739,6 +11740,12 @@
 "Uc" = (
 /obj/machinery/door/window/westright{
 	name = "Exterior Access"
+	},
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -54210,10 +54217,10 @@ ak
 ak
 ak
 Et
+uU
 mv
 mv
-mv
-Et
+uU
 Et
 fK
 Hn

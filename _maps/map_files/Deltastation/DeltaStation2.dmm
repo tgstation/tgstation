@@ -7920,7 +7920,7 @@
 /area/service/chapel/office)
 "boa" = (
 /obj/machinery/button/door/directional/north{
-	id = "teleportershutters";
+	id = "teleporterhubshutters";
 	name = "Teleporter Shutters";
 	req_access_txt = "19"
 	},
