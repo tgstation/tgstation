@@ -232,4 +232,4 @@
 	if(emulsified)
 		adjust_health((health + 3) * delta_time)
 		last_feeding = world.time //emulsijack feeds on the emulsion!
-	process_health()
+	process_health(delta_time)

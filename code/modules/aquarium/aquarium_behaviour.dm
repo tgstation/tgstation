@@ -236,11 +236,11 @@
 
 /datum/aquarium_behaviour/fish/process(delta_time)
 	set waitfor = FALSE
-	process_health()
+	process_health(delta_time)
 	if(status != FISH_DEAD && ready_to_reproduce())
 		try_to_reproduce()
 
-/datum/aquarium_behaviour/fish/proc/process_health()
+/datum/aquarium_behaviour/fish/proc/process_health(delta_time)
 	var/health_change_per_second = 0
 	if(!proper_environment())
 		health_change_per_second -= 3 //Dying here
@@ -249,8 +249,6 @@
 	else
 		health_change_per_second += 0.5 //Slowly healing
 	adjust_health(health + health_change_per_second * delta_time)
-		return FALSE
-	return TRUE
 
 /datum/aquarium_behaviour/fish/proc/adjust_health(amt)
 	health = clamp(amt, 0, initial(health))

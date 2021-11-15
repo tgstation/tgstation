@@ -42,8 +42,9 @@
 /obj/item/storage/fish_case/syndicate
 	name = "ominous fish case"
 
-/obj/item/storage/fish_case/syndicate/select_fish_type()
-	return pick(/datum/aquarium_behaviour/fish/donkfish, /datum/aquarium_behaviour/fish/emulsijack)
+/obj/item/storage/fish_case/syndicate/PopulateContents()
+	. = ..()
+	generate_fish(src, pick(/datum/aquarium_behaviour/fish/donkfish, /datum/aquarium_behaviour/fish/emulsijack))
 
 ///Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog
