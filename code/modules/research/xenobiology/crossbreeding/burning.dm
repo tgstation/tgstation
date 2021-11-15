@@ -68,12 +68,11 @@ Burning extracts:
 
 /obj/item/slimecross/burning/blue/do_effect(mob/user)
 	user.visible_message(span_danger("[src] flash-freezes the area!"))
-	for(var/turf/open/T in range(3, get_turf(user)))
+	for(var/turf/open/T in view(3, get_turf(user)))
 		T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
-	for(var/mob/living/carbon/M in range(5, get_turf(user)))
-		if(M != user)
-			M.bodytemperature = BODYTEMP_COLD_DAMAGE_LIMIT + 10 //Not quite cold enough to hurt.
-			to_chat(M, span_danger("You feel a chill run down your spine, and the floor feels a bit slippery with frost..."))
+	for(var/mob/living/carbon/M in ohearers(5, user))
+		M.bodytemperature = BODYTEMP_COLD_DAMAGE_LIMIT + 10 //Not quite cold enough to hurt.
+		to_chat(M, span_danger("You feel a chill run down your spine, and the floor feels a bit slippery with frost..."))
 	..()
 
 /obj/item/slimecross/burning/metal
@@ -81,7 +80,7 @@ Burning extracts:
 	effect_desc = "Instantly destroys walls around you."
 
 /obj/item/slimecross/burning/metal/do_effect(mob/user)
-	for(var/turf/closed/wall/W in range(1,get_turf(user)))
+	for(var/turf/closed/wall/W in RANGE_TURFS(1, user))
 		W.dismantle_wall(1)
 		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
 	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
@@ -94,14 +93,13 @@ Burning extracts:
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
 	user.visible_message(span_danger("[src] explodes into an electrical field!"))
 	playsound(get_turf(src), 'sound/weapons/zapbang.ogg', 50, TRUE)
-	for(var/mob/living/M in range(4,get_turf(user)))
-		if(M != user)
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				C.electrocute_act(25,src)
-			else
-				M.adjustFireLoss(25)
-			to_chat(M, span_danger("You feel a sharp electrical pulse!"))
+	for(var/mob/living/M in ohearers(4, user))
+		var/mob/living/carbon/C = M
+		if(istype(C))
+			C.electrocute_act(25,src)
+		else
+			M.adjustFireLoss(25)
+		to_chat(M, span_danger("You feel a sharp electrical pulse!"))
 	..()
 
 /obj/item/slimecross/burning/darkpurple
@@ -152,7 +150,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/bluespace/do_effect(mob/user)
 	user.visible_message(span_danger("[src] sparks, and lets off a shockwave of bluespace energy!"))
-	for(var/mob/living/L in range(1, get_turf(user)))
+	for(var/mob/living/L in RANGE_TURFS(1, user))
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
@@ -197,7 +195,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
-	for(var/mob/living/simple_animal/slime/S in view(7, get_turf(user)))
+	for(var/mob/living/simple_animal/slime/S in hearers(7, get_turf(user)))
 		if(user in S.Friends)
 			var/friendliness = S.Friends[user]
 			S.clear_friends()
@@ -292,7 +290,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
 	user.visible_message(span_danger("[src] lets off a hypnotizing pink glow!"))
-	for(var/mob/living/carbon/C in view(7, get_turf(user)))
+	for(var/mob/living/carbon/C in hearers(7, get_turf(user)))
 		C.reagents.add_reagent(/datum/reagent/pax,5)
 	..()
 

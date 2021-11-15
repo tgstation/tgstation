@@ -148,7 +148,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_turrets(minimum = 2, maximum = size * 2)
 	playsound(src, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
 	var/list/possiblelocations = list()
-	for(var/turf/T in oview(src, 4)) //Only place the turrets on open turfs
+	for(var/turf/T in oview(4, src)) //Only place the turrets on open turfs
 		if(T.is_blocked_turf())
 			continue
 		possiblelocations += T

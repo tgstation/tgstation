@@ -129,11 +129,11 @@
 
 /// Stun people around Nar'Sie that aren't cultists
 /obj/narsie/proc/mesmerize()
-	for (var/mob/living/carbon/victim in viewers(NARSIE_CONSUME_RANGE, src))
-		if (victim.stat == CONSCIOUS)
-			if (!IS_CULTIST(victim))
-				to_chat(victim, span_cult("You feel conscious thought crumble away in an instant as you gaze upon [src]..."))
-				victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)
+	for (var/mob/living/carbon/victim in hearers(NARSIE_CONSUME_RANGE, src))
+		if (victim.stat == CONSCIOUS || iscultist(victim))
+			continue
+		to_chat(victim, span_cult("You feel conscious thought crumble away in an instant as you gaze upon [src]..."))
+		victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)
 
 /// Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 /obj/narsie/proc/pickcultist()

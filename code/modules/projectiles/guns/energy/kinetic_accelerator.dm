@@ -399,10 +399,8 @@
 		return
 	new /obj/effect/temp_visual/explosion/fast(target_turf)
 	if(turf_aoe)
-		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
-			if(ismineralturf(T))
-				var/turf/closed/mineral/M = T
-				M.gets_drilled(K.firer, TRUE)
+		for(var/turf/closed/mineral/M in RANGE_TURFS(1, target_turf) - target_turf)
+			M.gets_drilled(K.firer, TRUE)
 	if(modifier)
 		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
 			var/armor = L.run_armor_check(K.def_zone, K.flag, "", "", K.armour_penetration)

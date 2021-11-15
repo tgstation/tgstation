@@ -528,7 +528,7 @@
  * force will make hallucinations ignore meson protection.
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
-	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
+	for(var/mob/living/carbon/human/human in view(HALLUCINATION_HFR(heat_output), src))
 		if(!force && istype(human.glasses, /obj/item/clothing/glasses/meson))
 			continue
 		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))

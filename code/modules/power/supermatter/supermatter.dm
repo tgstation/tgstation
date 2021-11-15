@@ -727,7 +727,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// Defaults to a value less than 1. Over time the psyCoeff goes to 0 if
 	// no supermatter soothers are nearby.
 	var/psy_coeff_diff = -0.05
-	for(var/mob/living/carbon/human/seen_by_sm in view(src, HALLUCINATION_RANGE(power)))
+	for(var/mob/living/carbon/human/seen_by_sm in viewers(HALLUCINATION_RANGE(power), src))
 		// Someone (generally a Psychologist), when looking at the SM
 		// within hallucination range makes it easier to manage.
 		if(HAS_TRAIT(seen_by_sm, TRAIT_SUPERMATTER_SOOTHER) || (seen_by_sm.mind && HAS_TRAIT(seen_by_sm.mind, TRAIT_SUPERMATTER_SOOTHER)))
@@ -1106,7 +1106,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
 	for(var/mob/living/near_mob in range(10))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_SUPERMATTER)
-		if(near_mob in view())
+		if(near_mob in viewers(get_turf(src)))
 			near_mob.show_message(span_danger("As \the [src] slowly stops resonating, you find your skin covered in new radiation burns."), MSG_VISUAL,
 				span_danger("The unearthly ringing subsides and you notice you have new radiation burns."), MSG_AUDIBLE)
 		else
@@ -1167,7 +1167,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		step_towards(movable_atom,center)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
-	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
+	var/turf/local_turf = pick(RANGE_TURFS(anomalyrange, anomalycenter) - anomalycenter)
 	if(!local_turf)
 		return
 	switch(type)

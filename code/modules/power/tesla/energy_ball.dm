@@ -192,7 +192,7 @@
 			return
 	if(!iscarbon(A))
 		return
-	for(var/obj/machinery/power/energy_accumulator/grounding_rod/GR in orange(src, 2))
+	for(var/obj/machinery/power/energy_accumulator/grounding_rod/GR in orange(2, src))
 		if(GR.anchored)
 			return
 	var/mob/living/carbon/C = A

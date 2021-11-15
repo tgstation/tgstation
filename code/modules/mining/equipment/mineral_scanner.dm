@@ -63,11 +63,15 @@
 
 /proc/mineral_scan_pulse(turf/T, range = world.view)
 	var/list/minerals = list()
-	for(var/turf/closed/mineral/M in RANGE_TURFS(range, T))
+	var/list/parsedrange = getviewsize(range)
+	var/list/parsedrange = getviewsize(range)
+	var/xrange = (parsedrange[1] - 1) / 2
+	var/yrange = (parsedrange[2] - 1) / 2
+	for(var/turf/closed/mineral/M in RECT_TURFS(xrange, yrange, T))
 		if(M.scan_state)
 			minerals += M
 	if(LAZYLEN(minerals))
-		for(var/turf/closed/mineral/M in minerals)
+		for(var/turf/closed/mineral/M as anything in minerals)
 			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
 			if(oldC)
 				qdel(oldC)

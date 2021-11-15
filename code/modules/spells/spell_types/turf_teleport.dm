@@ -17,7 +17,7 @@
 	playsound(get_turf(user), sound1, 50,TRUE)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
-		for(var/turf/T as anything in RANGE_TURFS(outer_tele_radius, target))
+		for(var/turf/T as anything in (RANGE_TURFS(outer_tele_radius, target)-RANGE_TURFS(inner_tele_radius, target)))
 			if(T in RANGE_TURFS(inner_tele_radius, target))
 				continue
 			if(isspaceturf(T) && !include_space)
@@ -31,11 +31,7 @@
 			turfs += T
 
 		if(!turfs.len)
-			var/list/turfs_to_pick_from = list()
-			for(var/turf/T as anything in RANGE_TURFS(outer_tele_radius, target))
-				if(!(T in RANGE_TURFS(inner_tele_radius, target)))
-					turfs_to_pick_from += T
-			turfs += pick(/turf in turfs_to_pick_from)
+			turfs += RANGE_TURFS(outer_tele_radius, target)-RANGE_TURFS(inner_tele_radius, target)
 
 		var/turf/picked = pick(turfs)
 

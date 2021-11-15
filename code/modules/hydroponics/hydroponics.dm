@@ -500,7 +500,7 @@
  * * Range - The Oview range of trays to which to look for plants to donate reagents.
  */
 /obj/machinery/hydroponics/proc/pollinate(range = 1)
-	for(var/obj/machinery/hydroponics/T in oview(src, range))
+	for(var/obj/machinery/hydroponics/T in oview(range, src))
 		//Here is where we check for window blocking.
 		if(!Adjacent(T) && range <= 1)
 			continue

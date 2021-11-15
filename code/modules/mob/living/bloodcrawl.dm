@@ -89,7 +89,7 @@
 		to_chat(src, span_warning("<b>AAH! THEIR FLESH! IT BURNS!</b>"))
 		adjustBruteLoss(25) //I can't use adjustHealth() here because bloodcrawl affects /mob/living and adjustHealth() only affects simple mobs
 		var/found_bloodpool = FALSE
-		for(var/obj/effect/decal/cleanable/target in range(1,get_turf(victim)))
+		for(var/obj/effect/decal/cleanable/target in view(1,get_turf(victim)))
 			if(target.can_bloodcrawl_in())
 				victim.forceMove(get_turf(target))
 				victim.visible_message(span_warning("[target] violently expels [victim]!"))

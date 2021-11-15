@@ -126,11 +126,7 @@
 		var/effective_size = round(created_volume/48)
 		playsound(T, 'sound/effects/pray.ogg', 80, FALSE, effective_size)
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,T))
-			var/deity
-			if(GLOB.deity)
-				deity = GLOB.deity
-			else
-				deity = "Christ"
+			var/deity = GLOB.diety || "Christ"
 			to_chat(R, span_userdanger("The power of [deity] compels you!"))
 			R.stun(20)
 			R.reveal(100)

@@ -720,7 +720,7 @@
 
 	if(ismob(target))
 		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
-		for(var/mob/living/iter_mob in view(src, 7))
+		for(var/mob/living/iter_mob in view(7, src))
 			if(iter_mob != target)
 				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
 

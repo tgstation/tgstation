@@ -43,8 +43,8 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/orange/do_effect(mob/user)
 	user.visible_message(span_danger("[src] shatters, and lets out a jet of heat!"))
-	for(var/turf/T in orange(get_turf(user),2))
-		if(get_dist(get_turf(user), T) > 1)
+	for(var/turf/open/T as anything in (RANGE_TURFS(2, user)-RANGE_TURFS(1,user)))
+		if(!locate(/obj/effect/hotspot) in T)
 			new /obj/effect/hotspot(T)
 	..()
 
@@ -77,9 +77,8 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/metal/do_effect(mob/user)
 	user.visible_message(span_danger("[src] melts like quicksilver, and surrounds [user] in a wall!"))
-	for(var/turf/T in orange(get_turf(user),1))
-		if(get_dist(get_turf(user), T) > 0)
-			new /obj/effect/forcefield/slimewall(T)
+	for(var/turf/T as anything in (RANGE_TURFS(2, user)-get_turf(user)))
+		new /obj/effect/forcefield/slimewall(T)
 	..()
 
 /obj/item/slimecross/chilling/yellow
@@ -231,7 +230,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
 	var/slimesfound = FALSE
-	for(var/mob/living/simple_animal/slime/S in view(get_turf(user), 7))
+	for(var/mob/living/simple_animal/slime/S in hearers(7, user))
 		slimesfound = TRUE
 		S.docile = TRUE
 	if(slimesfound)

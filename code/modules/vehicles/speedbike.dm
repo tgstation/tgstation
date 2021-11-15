@@ -64,6 +64,6 @@
 	. = ..()
 	if(!has_buckled_mobs())
 		return
-	for(var/atom/A in range(2, src))
+	for(var/atom/A as anything in range(2, src))
 		if(!(A in buckled_mobs))
 			Bump(A)

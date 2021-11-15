@@ -45,7 +45,7 @@
 	spawn_mob()
 
 /obj/structure/lavaland/ash_walker/proc/consume()
-	for(var/mob/living/H in view(src, 1)) //Only for corpse right next to/on same tile
+	for(var/mob/living/H in hearers(1, src)) //Only for corpse right next to/on same tile
 		if(H.stat)
 			for(var/obj/item/W in H)
 				if(!H.dropItemToGround(W))
@@ -83,7 +83,7 @@
 				ashies.players_spawned -= deliverykey
 			H.gib()
 			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
-			for(var/mob/living/L in view(src, 5))
+			for(var/mob/living/L in viewers(5, src))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
 					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
 				else

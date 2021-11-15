@@ -43,7 +43,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/orange/core_effect_before(mob/living/target, mob/user)
 	target.visible_message(span_warning("The [src] boils over!"))
-	for(var/turf/targetturf in RANGE_TURFS(1,target))
+	for(var/turf/open/targetturf in RANGE_TURFS(1,target))
 		if(!locate(/obj/effect/hotspot) in targetturf)
 			new /obj/effect/hotspot(targetturf)
 
@@ -227,7 +227,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/oil/core_effect(mob/living/target, mob/user)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	for(var/mob/living/L in view(user,7))
+	for(var/mob/living/L in viewer(7, user))
 		L.flash_act()
 
 /obj/item/slimecross/regenerative/black

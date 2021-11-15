@@ -102,7 +102,7 @@
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
 	// If the object is obscured, close it.
-	if(viewcheck && !(src_object in view(src)))
+	if(viewcheck && !((src_object in src) || (src in viewers(src_object))))
 		return UI_CLOSE
 	var/dist = get_dist(src_object, src)
 	// Open and interact if 1-0 tiles away.

@@ -30,8 +30,8 @@
 		return FALSE
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && Adjacent(C))
+	for(var/mob/living/C in oview(1,src))
+		if(Adjacent(C))
 			choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sort_names(choices)

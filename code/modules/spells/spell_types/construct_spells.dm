@@ -335,7 +335,7 @@
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/cult/sac(T)
-	for(var/obj/O in range(src,1))
+	for(var/obj/O in range(1, src))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
 			O.take_damage(90, BRUTE, MELEE, 0)
 			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))

@@ -38,14 +38,12 @@
 
 		var/list/accessible = list(epicenter)
 		for(var/i in 1 to affected_range)
-			var/list/turflist = list()
-			for(var/turf/T in (orange(i, epicenter) - orange(i-1, epicenter)))
-				turflist |= T
-			for(var/turf/T in turflist)
+			var/list/turflist = RANGE_TURFS(i, epicenter) - RANGE_TURFS(i-1, epicenter)
+			for(var/turf/T as anything in turflist)
 				if(!(get_dir(T,epicenter) in GLOB.cardinals) && (abs(T.x - epicenter.x) == abs(T.y - epicenter.y) ))
 					turflist.Remove(T)
 					turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
-			for(var/turf/T in turflist)
+			for(var/turf/T as anything in turflist)
 				if(accessible[T])
 					continue
 				for(var/thing in T.get_atmos_adjacent_turfs(alldir = TRUE))
@@ -58,7 +56,7 @@
 					break
 		var/list/reactable = accessible
 		for(var/turf/T in accessible)
-			for(var/atom/A in T.get_all_contents())
+			for(var/atom/A as anything in T.get_all_contents())
 				if(!(A in viewable))
 					continue
 				reactable |= A
@@ -66,8 +64,7 @@
 				T.hotspot_expose(extra_heat*2, 5)
 		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
 			return
-		for(var/thing in reactable)
-			var/atom/A = thing
+		for(var/atom/A as anything in reactable)
 			var/distance = max(1,get_dist(A, epicenter))
 			var/fraction = 0.5/(2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
 			splash_holder.expose(A, TOUCH, fraction)

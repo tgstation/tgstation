@@ -60,7 +60,7 @@
 		to_chat(user, span_warning("You can't get the words out!"))
 		return
 	do_sparks(4, FALSE, target.loc)
-	for(var/mob/living/L in view(src, 7))
+	for(var/mob/living/L in viewers(7, get_turf(src)))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
 	var/atom/A = target.anti_magic_check()
