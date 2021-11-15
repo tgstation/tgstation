@@ -100,20 +100,30 @@
 		if(!isnewplayer(M))
 			body += "<br><br>"
 			body += "<b>Transformation:</b><br>"
-			if(!isobserver(M))
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Observer</A> | "
+			if(isobserver(M))
+				body += "<b>Ghost</b> | "
+			else
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Make Ghost</A> | "
 
-			if(!ishuman(M))
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Human</A> "
+			if(ishuman(M) && !ismonkey(M))
+				body += "<b>Human</b> | "
+			else
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Make Human</A> | "
 
-			if(!ismonkey(M))
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(M)]'>Monkey</A> | "
+			if(ismonkey(M))
+				body += "<b>Monkey</b> | "
+			else
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(M)]'>Make Monkey</A> | "
 
-			if(!iscyborg(M))
-				body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(M)]'>Cyborg</A> | "
+			if(iscyborg(M))
+				body += "<b>Cyborg</b> | "
+			else
+				body += "<A href='?_src_=holder;[HrefToken()];simplemake=robot;mob=[REF(M)]'>Make Cyborg</A> | "
 
-			if(!isAI(M))
-				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>AI Core</A> | "
+			if(isAI(M))
+				body += "<b>AI</b>"
+			else
+				body += "<A href='?_src_=holder;[HrefToken()];makeai=[REF(M)]'>Make AI</A>"
 
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"

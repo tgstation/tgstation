@@ -83,10 +83,15 @@
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-	if(!transfer_after)
-		mind.active = FALSE
+	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	. = our_AI
 
-	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	if(mind)
+		if(!transfer_after)
+			mind.active = FALSE
+		mind.transfer_to(our_AI)
+	else if(transfer_after)
+		our_AI.key = key
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)
