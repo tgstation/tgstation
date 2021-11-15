@@ -807,7 +807,7 @@
 	pixel_y = 22
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/explored)
+/area/cargo/warehouse)
 "dK" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -5159,10 +5159,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"uU" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/wood/parquet,
-/area/service/bar/atrium)
 "uV" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -5289,13 +5285,6 @@
 "vC" = (
 /turf/closed/wall/ice,
 /area/mine/production)
-"vD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
-/turf/open/floor/plating,
-/area/icemoon/underground/explored)
 "vE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
@@ -6059,11 +6048,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
-"yP" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/wood/parquet,
-/area/service/bar/atrium)
 "yT" = (
 /obj/structure/railing{
 	dir = 1
@@ -6623,13 +6607,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
-"AU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/plating,
-/area/icemoon/underground/explored)
 "AW" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/iron/dark/side{
@@ -7366,7 +7343,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/underground/explored)
+/area/cargo/warehouse)
 "DK" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
@@ -11877,7 +11854,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth,
-/area/icemoon/underground/explored)
+/area/mine/eva)
 "UH" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
@@ -12791,7 +12768,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/smooth,
-/area/icemoon/underground/explored)
+/area/mine/eva)
 "Yu" = (
 /obj/structure/fence{
 	dir = 4
@@ -36516,10 +36493,10 @@ VW
 RT
 PG
 Fp
-HQ
-vD
+Kq
+zL
 UG
-AU
+hR
 nM
 ns
 IN
