@@ -327,7 +327,7 @@
 	popup.open()
 
 /obj/machinery/computer/bookmanagement/proc/findscanner(viewrange)
-	return locate(/obj/machinery/libraryscanner) in range(viewrange, get_turf(src)))
+	return locate(/obj/machinery/libraryscanner) in range(viewrange, get_turf(src))
 
 /obj/machinery/computer/bookmanagement/proc/print_forbidden_lore(mob/user)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))

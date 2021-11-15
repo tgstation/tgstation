@@ -26,7 +26,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define QUEUE_SMOOTH(thing_to_queue) if(thing_to_queue.smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)) {SSicon_smooth.add_to_queue(thing_to_queue)}
 
-#define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/atom/neighbor as anything in orange(1, thing_to_queue)) {if(neighbor.smooth) QUEUE_SMOOTH(neighbor)}
+#define QUEUE_SMOOTH_NEIGHBORS(thing_to_queue) for(var/neighbor in orange(1, thing_to_queue)) {var/atom/atom_neighbor = neighbor; QUEUE_SMOOTH(atom_neighbor)}
 
 
 /**SMOOTHING GROUPS

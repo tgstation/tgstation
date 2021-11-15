@@ -36,7 +36,7 @@
 			if(attack_same || !faction_check_mob(M))
 				enemies |= WEAKREF(M)
 			if(istype(M, /mob/living/simple_animal/hostile/retaliate))
-				var/mob/simple_animal/hostile/retaliate/H = M
+				var/mob/living/simple_animal/hostile/retaliate/H = M
 				if(attack_same && H.attack_same)
 					H.enemies |= enemies
 		else if(ismecha(A))

@@ -347,7 +347,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/oh_yeah/New(mob/living/carbon/C, forced = TRUE)
 	set waitfor = FALSE
 	. = ..()
-	var/turf/closed/wall/wall
 	var/turf/closed/wall/wall = locate() in spiral_range_turfs(7, target)
 	if(!wall)
 		return INITIALIZE_HINT_QDEL
