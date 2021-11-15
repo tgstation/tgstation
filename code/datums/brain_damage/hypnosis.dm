@@ -53,6 +53,7 @@
 	to_chat(owner, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[hypnotic_phrase]' no longer feels important to you."))
 	owner.clear_alert("hypnosis")
 	..()
+	owner.mind.remove_antag_datum(/datum/antagonist/hypnotized)
 
 /datum/brain_trauma/hypnosis/on_life(delta_time, times_fired)
 	..()
