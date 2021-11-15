@@ -348,9 +348,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	. = ..()
 	var/turf/closed/wall/wall
-	for(var/turf/closed/wall/W in range(7,target))
-		wall = W
-		break
+	var/turf/closed/wall/wall = locate() in spiral_range_turfs(7, target)
 	if(!wall)
 		return INITIALIZE_HINT_QDEL
 	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
@@ -544,9 +542,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/image/A = null
 	var/list/mob_pool = list()
 
-	for(var/mob/living/carbon/human/M in view(7,target))
-		if(M != target)
-			mob_pool += M
+	for(var/mob/living/carbon/human/M in ohearers(7,target))
+		mob_pool += M
 	if(!mob_pool.len)
 		return
 
@@ -837,14 +834,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
-	for(var/mob/living/carbon/H in view(target))
-		if(H == target)
-			continue
+	for(var/mob/living/carbon/H in ohearers(target))
 		if(!person)
 			person = H
-		else
-			if(get_dist(target,H)<get_dist(target,person))
-				person = H
+		else if(get_dist(target,H)<get_dist(target,person))
+			person = H
 
 	// Get person to affect if radio hallucination
 	var/is_radio = !person || force_radio
@@ -878,7 +872,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/mobpool = list()
 	var/mob/living/carbon/human/other
 	var/close_other = FALSE
-	for(var/mob/living/carbon/human/H in oview(target, 7))
+	for(var/mob/living/carbon/human/H in oview(7, target))
 		if(get_dist(H, target) <= 1)
 			other = H
 			close_other = TRUE
@@ -1288,7 +1282,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	//Flashes of danger
 
 	var/list/possible_points = list()
-	for(var/turf/open/floor/F in view(target,world.view))
+	for(var/turf/open/floor/F in view(world.view, target))
 		possible_points += F
 	if(possible_points.len)
 		var/turf/open/floor/danger_point = pick(possible_points)

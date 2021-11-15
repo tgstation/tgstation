@@ -219,7 +219,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	if(L.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
 		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
 
-		for(var/mob/living/M in oview(4, SD.affected_mob))
+		for(var/mob/living/M in ohearers(4, SD.affected_mob))
 			if(is_source_facing_target(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
 				M.AirborneContractDisease(SD, TRUE)
 

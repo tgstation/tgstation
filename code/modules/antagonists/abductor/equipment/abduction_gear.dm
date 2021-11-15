@@ -265,13 +265,13 @@
 	radio_off(target, user)
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
-	if( !(user in (viewers(7,target))) )
+	if(!(user in (viewers(7,target))) )
 		return
 
 	var/turf/targloc = get_turf(target)
 
-	var/mob/living/carbon/human/M
-	for(M in view(2,targloc))
+
+	for(var/mob/living/carbon/human/M in hearers(2,targloc))
 		if(M == user)
 			continue
 		to_chat(user, span_notice("You silence [M]'s radio devices."))

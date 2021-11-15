@@ -83,7 +83,7 @@
 
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
-	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
+	for(var/mob/living/possessable in viewers(effect_range, get_turf(src)))
 		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
 			bodies += possessable
 
@@ -115,7 +115,7 @@
 	var/effect_range = 5
 
 /obj/effect/fun_balloon/scatter/effect()
-	for(var/mob/living/M in range(effect_range, get_turf(src)))
+	for(var/mob/living/M in hearers(effect_range, get_turf(src)))
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)

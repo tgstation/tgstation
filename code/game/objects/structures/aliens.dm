@@ -355,9 +355,9 @@
 			if(kill)
 				child.Die()
 			else
-				for(var/mob/M in range(1,src))
-					if(CanHug(M))
-						child.Leap(M)
+				for(var/mob/living/carbon/carbon in ohearers(1,src))
+					if(CanHug(carbon))
+						child.Leap(carbon)
 						break
 
 /obj/structure/alien/egg/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

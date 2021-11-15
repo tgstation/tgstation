@@ -293,7 +293,7 @@
 				chance = (URANIUM_IRRADIATION_CHANCE / 3),
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 			)
-			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
+			for(var/turf/open/floor/mineral/uranium/T in (RANGE_TURFS(1,src)-src))
 				T.radiate()
 			last_event = world.time
 			active = FALSE

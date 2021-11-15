@@ -32,10 +32,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 /obj/structure/spawner/lavaland/Initialize(mapload)
 	. = ..()
 	emitted_light = new(loc)
-	for(var/F in RANGE_TURFS(1, src))
-		if(ismineralturf(F))
-			var/turf/closed/mineral/M = F
-			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
+	for(var/turf/closed/mineral/M in RANGE_TURFS(1, src))
+		M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	GLOB.tendrils += src
 
@@ -52,7 +50,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 
 	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
 		if(SSachievements.achievements_enabled)
-			for(var/mob/living/L in view(7,src))
+			for(var/mob/living/L in hearers(7,src))
 				if(L.stat || !L.client)
 					continue
 				L.client.give_award(/datum/award/achievement/boss/tendril_exterminator, L)

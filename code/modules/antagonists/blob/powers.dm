@@ -18,7 +18,7 @@
 				if(M.client)
 					to_chat(src, span_warning("There is someone too close to place your blob core!"))
 					return FALSE
-			for(var/mob/living/M in view(13, src))
+			for(var/mob/living/M in hearers(13, src))
 				if(ROLE_BLOB in M.faction)
 					continue
 				if(M.client)
@@ -212,7 +212,7 @@
 	if(world.time < last_attack)
 		return
 	var/list/possibleblobs = list()
-	for(var/obj/structure/blob/AB in range(T, 1))
+	for(var/obj/structure/blob/AB in range(1, T))
 		possibleblobs += AB
 	if(!possibleblobs.len)
 		to_chat(src, span_warning("There is no blob adjacent to the target tile!"))

@@ -173,7 +173,7 @@
 	for(var/i in 1 to 4)
 		chant(i)
 		var/list/destinations = list()
-		for(var/turf/T in orange(1, owner))
+		for(var/turf/T as anything in (RANGE_TURFS(1, owner) - get_turf(owner)))
 			if(!T.is_blocked_turf(TRUE))
 				destinations += T
 		if(!LAZYLEN(destinations))
@@ -281,7 +281,7 @@
 
 	var/datum/antagonist/cult/C = caller.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 
-	if(target in view(7, get_turf(ranged_ability_user)))
+	if(ranged_ability_user in viewers(7, get_turf(target)))
 		if(C.cult_team.blood_target)
 			to_chat(ranged_ability_user, span_cult("The cult has already designated a target!"))
 			return FALSE
@@ -454,7 +454,7 @@
 	var/turf/T = get_turf(ranged_ability_user)
 	if(!isturf(T))
 		return FALSE
-	if(target in view(7, get_turf(ranged_ability_user)))
+	if(ranged_ability_user in viewers(7, get_turf(target)))
 		var/mob/mob_target = target
 		var/is_cultist = istype(mob_target) && IS_CULTIST(mob_target)
 		if((!(is_cultist || istype(target, /obj/structure/destructible/cult)) || target == caller) && !(attached_action.throwing))

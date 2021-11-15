@@ -35,9 +35,8 @@
 /datum/action/innate/cult/blood_magic/Activate()
 	var/rune = FALSE
 	var/limit = RUNELESS_MAX_BLOODCHARGE
-	for(var/obj/effect/rune/empower/R in range(1, owner))
+	if(locate(/obj/effect/rune/empower) in range(1, owner))
 		rune = TRUE
-		break
 	if(rune)
 		limit = MAX_BLOODCHARGE
 	if(spells.len >= limit)
@@ -257,7 +256,7 @@
 	var/turf/T = get_turf(ranged_ability_user)
 	if(!isturf(T))
 		return FALSE
-	if(target in view(7, get_turf(ranged_ability_user)))
+	if(ranged_ability_user in viewers(7, get_turf(target)))
 		var/mob/living/carbon/human/human_target = target
 		if(!istype(human_target) || IS_CULTIST(human_target))
 			return
@@ -291,11 +290,11 @@
 		charges--
 		SEND_SOUND(owner, sound('sound/magic/smoke.ogg',0,1,25))
 		owner.whisper(invocation, language = /datum/language/common)
-		for(var/obj/effect/rune/R in range(5,owner))
+		for(var/obj/effect/rune/R in range(5, owner))
 			R.conceal()
-		for(var/obj/structure/destructible/cult/S in range(5,owner))
+		for(var/obj/structure/destructible/cult/S in range(5, owner))
 			S.conceal()
-		for(var/turf/open/floor/engine/cult/T  in range(5,owner))
+		for(var/turf/open/floor/engine/cult/T in RANGE_TURFS(5, owner))
 			if(!T.realappearance)
 				continue
 			T.realappearance.alpha = 0
@@ -314,7 +313,7 @@
 			R.reveal()
 		for(var/obj/structure/destructible/cult/S in range(6,owner))
 			S.reveal()
-		for(var/turf/open/floor/engine/cult/T  in range(6,owner))
+		for(var/turf/open/floor/engine/cult/T in RANGE_TURFS(6,owner))
 			if(!T.realappearance)
 				continue
 			T.realappearance.alpha = initial(T.realappearance.alpha)
@@ -777,7 +776,7 @@
 	var/temp = 0
 	var/turf/T = get_turf(target)
 	if(T)
-		for(var/obj/effect/decal/cleanable/blood/B in view(T, 2))
+		for(var/obj/effect/decal/cleanable/blood/B in view(2, T))
 			if(B.blood_state == BLOOD_STATE_HUMAN)
 				if(B.bloodiness == 100) //Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
 					temp += 30
@@ -785,7 +784,7 @@
 					temp += max((B.bloodiness**2)/800,1)
 				new /obj/effect/temp_visual/cult/turf/floor(get_turf(B))
 				qdel(B)
-		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(T, 2))
+		for(var/obj/effect/decal/cleanable/trail_holder/TH in view(2, T))
 			qdel(TH)
 		if(temp)
 			user.Beam(T,icon_state="drainbeam", time = 15)

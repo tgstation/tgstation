@@ -18,19 +18,20 @@
 	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, 1)
 
 	explosion(user, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
-	for(var/mob/living/carbon/human/blinded_humans in range(2, user))
-		var/obj/item/organ/eyes/eyes = blinded_humans.getorganslot(ORGAN_SLOT_EYES)
-		if(!eyes || blinded_humans.is_blind())
-			continue
-		to_chat(blinded_humans, span_userdanger("You are blinded by a shower of blood!"))
-		blinded_humans.Stun(20)
-		blinded_humans.blur_eyes(20)
-		blinded_humans.add_confusion(3)
-
-	for(var/mob/living/silicon/blinded_silicons in range(2,user))
-		to_chat(blinded_silicons, span_userdanger("Your sensors are disabled by a shower of blood!"))
-		blinded_silicons.Paralyze(60)
-
+	for(var/mob/living/atom in hearers(2, user))
+		if(ishuman(atom))
+			var/mob/living/carbon/human/blinded_humans = atom
+			var/obj/item/organ/eyes/eyes = blinded_humans.getorganslot(ORGAN_SLOT_EYES)
+			if(!eyes || blinded_humans.is_blind())
+				continue
+			to_chat(blinded_humans, span_userdanger("You are blinded by a shower of blood!"))
+			blinded_humans.Stun(20)
+			blinded_humans.blur_eyes(20)
+			blinded_humans.add_confusion(3)
+		else if(issilicon(atom))
+			var/mob/living/silicon/blinded_silicons = atom
+			to_chat(blinded_silicons, span_userdanger("Your sensors are disabled by a shower of blood!"))
+			blinded_silicons.Paralyze(60)
 	var/turf/user_turf = get_turf(user)
 	user.transfer_observers_to(user_turf) // user is about to be deleted, store orbiters on the turf
 	user.gib()

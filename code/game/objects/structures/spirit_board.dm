@@ -65,7 +65,7 @@
 
 	//mobs in range check
 	var/users_in_range = 0
-	for(var/mob/living/L in orange(1,src))
+	for(var/mob/living/L in oviewers(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))//no playing with braindeads or corpses or handcuffed dudes.
 				to_chat(M, span_warning("[L] doesn't seem to be paying attention..."))

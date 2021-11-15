@@ -102,7 +102,7 @@
 	for(var/obj/item/I in user)
 		if(I != src)
 			user.dropItemToGround(I)
-	for(var/turf/T in RANGE_TURFS(1, user))
+	for(var/turf/T as anything in RANGE_TURFS(1, user))
 		new /obj/effect/temp_visual/hierophant/blast/visual(T, user, TRUE)
 	user.dropItemToGround(src) //Drop us last, so it goes on top of their stuff
 	qdel(user)
@@ -188,11 +188,11 @@
 		user.log_message("teleported self from [AREACOORD(source)] to [beacon]", LOG_GAME)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
-		for(var/t in RANGE_TURFS(1, T))
+		for(var/turf/t as anything in RANGE_TURFS(1, T))
 			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
-		for(var/t in RANGE_TURFS(1, source))
+		for(var/turf/t as anything in RANGE_TURFS(1, source))
 			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
-		for(var/mob/living/L in range(1, source))
+		for(var/mob/living/L in hearers(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user)
 		sleep(6) //at this point the blasts detonate
 		if(beacon)
@@ -764,7 +764,7 @@
 		return
 	if(is_type_in_typecache(target, banned_turfs))
 		return
-	if(target in view(user.client.view, get_turf(user)))
+	if(user in viewers(user.client.view, get_turf(target)))
 		var/turf/open/T = get_turf(target)
 		if(!istype(T))
 			return

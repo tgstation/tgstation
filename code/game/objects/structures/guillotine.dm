@@ -145,11 +145,9 @@
 			// The crowd is pleased
 			// The delay is to making large crowds have a longer laster applause
 			var/delay_offset = 0
-			for(var/mob/M in viewers(src, 7))
-				var/mob/living/carbon/human/C = M
-				if (ishuman(M))
-					addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
-					delay_offset++
+			for(var/mob/living/carbon/human/C in viewers(src, 7))
+				addtimer(CALLBACK(C, /mob/.proc/emote, "clap"), delay_offset * 0.3)
+				delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")

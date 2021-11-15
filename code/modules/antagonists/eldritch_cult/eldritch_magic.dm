@@ -234,7 +234,7 @@
 	if(!can_target(targets[1], user))
 		return FALSE
 
-	for(var/mob/living/carbon/human/C in range(1,targets[1]))
+	for(var/mob/living/carbon/human/C in hearers(1,targets[1]))
 		targets |= C
 
 
@@ -414,7 +414,7 @@
 	playsound(get_turf(centre), 'sound/items/welder.ogg', 75, TRUE)
 	var/_range = 1
 	for(var/i in 0 to max_range)
-		for(var/turf/T in spiral_range_turfs(_range,centre))
+		for(var/turf/open/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
 			for(var/mob/living/livies in T.contents - centre)
@@ -520,7 +520,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user
-	for(var/mob/living/carbon/target in view(7,user))
+	for(var/mob/living/carbon/target in ohearers(7,user))
 		if(target.stat == DEAD || !target.on_fire)
 			continue
 		//This is essentially a death mark, use this to finish your opponent quicker.
@@ -706,7 +706,7 @@
 		target.mind.transfer_to(outside, TRUE)
 		target.forceMove(outside)
 		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
-		for(var/mob/living/carbon/human/humie in view(9,outside)-target)
+		for(var/mob/living/carbon/human/humie in (viewers(9,outside)-target))
 			if(IS_HERETIC(humie) || IS_HERETIC_MONSTER(humie))
 				continue
 			SEND_SIGNAL(humie, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)

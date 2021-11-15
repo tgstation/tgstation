@@ -40,13 +40,8 @@
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/list/atoms_in_range = list()
 
-	for(var/A in range(1, src))
-		var/atom/atom_in_range = A
-		if(istype(atom_in_range,/area))
-			continue
-		if(istype(atom_in_range,/turf)) // we dont want turfs
-			continue
-		if(istype(atom_in_range,/mob/living))
+	for(var/atom/atom_in_range as mob|obj in range(1, src))
+		if(isliving(atom_in_range))
 			var/mob/living/living_in_range = atom_in_range
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
 				continue

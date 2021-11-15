@@ -63,7 +63,7 @@
 
 /proc/mineral_scan_pulse(turf/T, range = world.view)
 	var/list/minerals = list()
-	for(var/turf/closed/mineral/M in range(range, T))
+	for(var/turf/closed/mineral/M in RANGE_TURFS(range, T))
 		if(M.scan_state)
 			minerals += M
 	if(LAZYLEN(minerals))

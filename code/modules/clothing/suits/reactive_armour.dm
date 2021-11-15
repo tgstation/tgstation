@@ -147,10 +147,9 @@
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out jets of flame!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
-	for(var/mob/living/carbon/carbon_victim in range(6, owner))
-		if(carbon_victim != owner)
-			carbon_victim.adjust_fire_stacks(8)
-			carbon_victim.IgniteMob()
+	for(var/mob/living/carbon/carbon_victim in ohearers(6, owner))
+		carbon_victim.adjust_fire_stacks(8)
+		carbon_victim.IgniteMob()
 	owner.set_fire_stacks(-20)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
@@ -269,8 +268,8 @@
 	owner.visible_message(span_danger("[src] blocks [attack_text], converting the attack into a wave of force!"))
 	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
-	for(var/atom/movable/repulsed in range(owner_turf, 7))
-		if(repulsed == owner || repulsed.anchored || thrown_items[repulsed])
+	for(var/atom/movable/repulsed as mob|obj in orange(7, owner_turf))
+		if(repulsed.anchored || thrown_items[repulsed])
 			continue
 		var/throwtarget = get_edge_target_turf(owner_turf, get_dir(owner_turf, get_step_away(repulsed, owner_turf)))
 		repulsed.safe_throw_at(throwtarget, 10, 1, force = repulse_force)

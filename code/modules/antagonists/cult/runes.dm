@@ -612,7 +612,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/raise_dead/fail_invoke()
 	..()
 	rune_in_use = FALSE
-	for(var/mob/living/M in range(1,src))
+	for(var/mob/living/M in hearers(1,src))
 		if(IS_CULTIST(M) && M.stat == DEAD)
 			M.visible_message(span_warning("[M] twitches."))
 
@@ -923,7 +923,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/duration = intensity*10
 	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
-	for(var/mob/living/L in range(src, 3))
+	for(var/mob/living/L in viewers(3, src))
 		L.Paralyze(30)
 	empulse(T, 0.42*(intensity), 1)
 	var/list/images = list()

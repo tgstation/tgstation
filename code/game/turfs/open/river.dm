@@ -72,8 +72,7 @@
 	var/list/cardinal_turfs = list()
 	var/list/diagonal_turfs = list()
 	var/logged_turf_type
-	for(var/F in RANGE_TURFS(1, src) - src)
-		var/turf/T = F
+	for(var/T as anything in RANGE_TURFS(1, src) - src)
 		var/area/new_area = get_area(T)
 		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)) || (T.turf_flags & NO_LAVA_GEN) )
 			continue
@@ -82,18 +81,16 @@
 			var/turf/closed/mineral/M = T
 			logged_turf_type = M.turf_type
 
-		if(get_dir(src, F) in GLOB.cardinals)
-			cardinal_turfs += F
+		if(get_dir(src, T) in GLOB.cardinals)
+			cardinal_turfs += T
 		else
-			diagonal_turfs += F
+			diagonal_turfs += T
 
-	for(var/F in cardinal_turfs) //cardinal turfs are always changed but don't always spread
-		var/turf/T = F
+	for(var/turf/T as anything in cardinal_turfs) //cardinal turfs are always changed but don't always spread
 		if(!istype(T, logged_turf_type) && T.ChangeTurf(type, baseturfs, CHANGETURF_IGNORE_AIR) && prob(probability))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 
-	for(var/F in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
-		var/turf/T = F
+	for(var/turf/T as anything in diagonal_turfs) //diagonal turfs only sometimes change, but will always spread if changed
 		if(!istype(T, logged_turf_type) && prob(probability) && T.ChangeTurf(type, baseturfs, CHANGETURF_IGNORE_AIR))
 			T.Spread(probability - prob_loss, prob_loss, whitelisted_area)
 		else if(ismineralturf(T))
