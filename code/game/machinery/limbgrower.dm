@@ -267,6 +267,7 @@
 	desc = "It grows new limbs using Synthflesh. This alien model seems more efficient"
 	obj_flags = CAN_BE_HIT
 	flags_1 = NODECONSTRUCT_1
+	circuit = /obj/item/circuitboard/machine/limbgrower/fullupgrade
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user)
