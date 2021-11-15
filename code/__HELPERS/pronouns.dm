@@ -50,6 +50,7 @@
 		else
 			switch(copytext_char(pluralize, -1))
 				if("s", "x", "z")
+					. = "es"
 				else
 					. = "s"
 
