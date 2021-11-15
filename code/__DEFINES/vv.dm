@@ -2,6 +2,7 @@
 #define VV_TEXT "Text"
 #define VV_MESSAGE "Mutiline Text"
 #define VV_COLOR "Color"
+#define VV_COLOR_MATRIX "Color Matrix"
 #define VV_ICON "Icon"
 #define VV_ATOM_REFERENCE "Atom Reference"
 #define VV_DATUM_REFERENCE "Datum Reference"
@@ -88,8 +89,8 @@
 #define VV_HK_TRIGGER_EMP "empulse"
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
-#define VV_HK_RADIATE "radiate"
 #define VV_HK_EDIT_FILTERS "edit_filters"
+#define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 #define VV_HK_ADD_AI "add_ai"
 
 // /atom/movable

@@ -1296,25 +1296,25 @@
 				return FALSE
 		if(NAMEOF(src, machine))
 			set_machine(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, focus))
 			set_focus(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, nutrition))
 			set_nutrition(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, dizziness))
 			set_dizziness(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-			. =  TRUE
+			. = TRUE
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -1399,7 +1399,7 @@
 	var/list/memories = list()
 
 	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory =  user.mind.memories[memory_key]
+		var/datum/memory/memory = user.mind.memories[memory_key]
 		memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories

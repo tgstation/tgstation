@@ -575,7 +575,7 @@
 	supplementary_reagents = list(
 		/datum/reagent/consumable/honey = 4,
 		/datum/reagent/consumable/korta_nectar = 3,
-		/datum/reagent/consumable/red_queen =  3,
+		/datum/reagent/consumable/red_queen = 3,
 		/datum/reagent/consumable/ethanol/champagne = 2,
 		/datum/reagent/consumable/ethanol/sugar_rush = 2,
 		/datum/reagent/consumable/sugar = 1,
@@ -630,7 +630,7 @@
 		/datum/reagent/ants,
 		/datum/reagent/medicine/omnizine)
 
-	supplementary_reagents  = list(
+	supplementary_reagents = list(
 		/datum/reagent/toxin/venom = 6,
 		/datum/reagent/drug/kronkaine = 4,
 		/datum/reagent/consumable/nutriment/peptides = 3,

@@ -23,7 +23,7 @@
  *  power_channel (num)
  *     What channel to draw from when drawing power for power mode
  *     Possible Values:
- *        AREA_USAGE_EQUIP:0 -- Equipment Channel
+ *        AREA_USAGE_EQUIP:1 -- Equipment Channel
  *        AREA_USAGE_LIGHT:2 -- Lighting Channel
  *        AREA_USAGE_ENVIRON:3 -- Environment Channel
  *
@@ -146,7 +146,7 @@
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
-		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	. = ..()
 	GLOB.machines += src
 
