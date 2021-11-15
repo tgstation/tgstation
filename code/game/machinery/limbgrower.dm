@@ -264,9 +264,9 @@
 	return TRUE
 
 /obj/machinery/limgrower/fullupgrade //Inherently cheaper organ production. This is to NEVER be inherently emagged, no valids.
-desc = "It grows new limbs using Synthflesh. This alien model seems more efficient"
-obj_flags = CAN_BE_HIT
-flags_1 = NODECONSTRUCT_1
+	desc = "It grows new limbs using Synthflesh. This alien model seems more efficient"
+	obj_flags = CAN_BE_HIT
+	flags_1 = NODECONSTRUCT_1
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user)
