@@ -27,7 +27,7 @@
 	. = ..()
 	. += span_notice("A small screen indicates that it will fill for [wanted_amount]u.")
 	if(!valid_output_configuration)
-		. += span_warning("Output location error condition warning is flashing on the display")
+		. += span_warning("A flashing notification on the screen reads: \"Output location error!\"")
 
 /obj/machinery/plumbing/bottler/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
