@@ -137,9 +137,9 @@
 
 	if(self_sustaining)
 		if(powered())
-			TRAY_ADJUST_WATER(src, rand(1,2) * delta_time * 0.5)
-			TRAY_ADJUST_WEEDS(src, -0.5 * delta_time)
-			TRAY_ADJUST_PESTS(src, -0.5 * delta_time)
+			adjust_waterlevel(rand(1,2) * delta_time * 0.5)
+			adjust_weedlevel(-0.5 * delta_time)
+			adjust_pestlevel(-0.5 * delta_time)
 		else
 			set_self_sustaining(FALSE)
 			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
@@ -165,7 +165,7 @@
 
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-				TRAY_ADJUST_HEALTH(src, -rand(1,3))
+				adjust_plant_health(-rand(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
@@ -174,35 +174,35 @@
 				var/lightAmt = currentTurf.get_lumcount()
 				var/is_fungus = myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 				if(lightAmt < (is_fungus ? 0.2 : 0.4))
-					TRAY_ADJUST_HEALTH(src, (is_fungus ? -1 : -2) / rating)
+					adjust_plant_health((is_fungus ? -1 : -2) / rating)
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			TRAY_ADJUST_WATER(src, -rand(1,6) / rating)
+			adjust_waterlevel(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
 			if(waterlevel <= 10 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-				TRAY_ADJUST_HEALTH(src, -rand(0,1) / rating)
+				adjust_plant_health(-rand(0,1) / rating)
 				if(waterlevel <= 0)
-					TRAY_ADJUST_HEALTH(src, -rand(0,2) / rating)
+					adjust_plant_health(-rand(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
 			else if(waterlevel > 10 && reagents.total_volume > 0)
-				TRAY_ADJUST_HEALTH(src, rand(1,2) / rating)
+				adjust_plant_health(rand(1,2) / rating)
 				if(myseed && prob(myseed.weed_chance))
-					TRAY_ADJUST_WEEDS(src, myseed.weed_rate)
+					adjust_weedlevel(myseed.weed_rate)
 				else if(prob(5))  //5 percent chance the weed population will increase
-					TRAY_ADJUST_WEEDS(src, 1 / rating)
+					adjust_weedlevel(1 / rating)
 
 //Toxins/////////////////////////////////////////////////////////////////
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
-				TRAY_ADJUST_HEALTH(src, -1 / rating)
-				TRAY_ADJUST_TOXIC(src, -rating * 2)
+				adjust_plant_health(-1 / rating)
+				adjust_toxic(-rating * 2)
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
-				TRAY_ADJUST_HEALTH(src, -3)
-				TRAY_ADJUST_TOXIC(src, -rating * 3)
+				adjust_plant_health(-3)
+				adjust_toxic(-rating * 3)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
@@ -212,8 +212,8 @@
 						myseed.adjust_potency(-rand(2,6)) //Pests eat leaves and nibble on fruit, lowering potency.
 						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 				else
-					TRAY_ADJUST_HEALTH(src, 2 / rating)
-					TRAY_ADJUST_PESTS(src, -1 / rating)
+					adjust_plant_health(2 / rating)
+					adjust_pestlevel(-1 / rating)
 
 			else if(pestlevel >= 4)
 				if(!myseed.get_gene(/datum/plant_gene/trait/carnivory))
@@ -222,13 +222,13 @@
 						myseed.set_potency(min((myseed.potency), CARNIVORY_POTENCY_MIN, MAX_PLANT_POTENCY))
 
 				else
-					TRAY_ADJUST_HEALTH(src, 1 / rating)
+					adjust_plant_health(1 / rating)
 					if(prob(50))
-						TRAY_ADJUST_PESTS(src, -1 / rating)
+						adjust_pestlevel(-1 / rating)
 
 			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/carnivory))
 				if(prob(5))
-					TRAY_ADJUST_PESTS(src, -1 / rating)
+					adjust_pestlevel(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -259,11 +259,11 @@
 			// Plant dies if plant_health <= 0
 			if(plant_health <= 0)
 				plantdies()
-				TRAY_ADJUST_WEEDS(src, 1 / rating) // Weeds flourish
+				adjust_weedlevel(1 / rating) // Weeds flourish
 
 			// If the plant is too old, lose health fast
 			if(age > myseed.lifespan)
-				TRAY_ADJUST_HEALTH(src, -rand(1,5) / rating)
+				adjust_plant_health(-rand(1,5) / rating)
 
 			// Harvest code
 			if(age > myseed.production && (age - lastproduce) > myseed.production && plant_status == HYDROTRAY_PLANT_GROWING)
@@ -272,10 +272,10 @@
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
-				TRAY_ADJUST_PESTS(src, 1 / rating)
+				adjust_pestlevel(1 / rating)
 		else
 			if(waterlevel > 10 && reagents.total_volume > 0 && prob(10))  // If there's no plant, the percentage chance is 10%
-				TRAY_ADJUST_WEEDS(src, 1 / rating)
+				adjust_weedlevel(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
 		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
@@ -394,7 +394,7 @@
 
 	var/difference = new_waterlevel - waterlevel
 	if(difference > 0)
-		TRAY_ADJUST_TOXIC(src, -round(difference/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
+		adjust_toxic(-round(difference/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/set_plant_health(new_plant_health, update_icon = TRUE, forced = FALSE)
 	if(plant_health == new_plant_health || ((!myseed || plant_status == HYDROTRAY_PLANT_DEAD) && !forced))
@@ -417,6 +417,49 @@
 		return
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_PLANT_STATUS, new_plant_status)
 	plant_status = new_plant_status
+
+// The following procs adjust the hydroponics tray variables, and make sure that the stat doesn't go out of bounds.
+
+/**
+ * Adjust water.
+ * Raises or lowers tray water values by a set value. Adding water will dillute toxicity from the tray.
+ * * adjustamt - determines how much water the tray will be adjusted upwards or downwards.
+ */
+/obj/machinery/hydroponics/proc/adjust_waterlevel(amt)
+	set_waterlevel(clamp(waterlevel + amt, 0, maxwater), FALSE)
+
+/**
+ * Adjust Health.
+ * Raises the tray's plant_health stat by a given amount, with total health determined by the seed's endurance.
+ * * adjustamt - Determines how much the plant_health will be adjusted upwards or downwards.
+ */
+/obj/machinery/hydroponics/proc/adjust_plant_health(amt)
+	set_plant_health(clamp(plant_health + amt, 0, myseed?.endurance), FALSE)
+
+/**
+ * Adjust toxicity.
+ * Raises the plant's toxic stat by a given amount.
+ * * adjustamt - Determines how much the toxic will be adjusted upwards or downwards.
+ */
+/obj/machinery/hydroponics/proc/adjust_toxic(amt)
+	set_toxic(clamp(toxic + amt, 0, MAX_TRAY_TOXINS), FALSE)
+
+/**
+ * Adjust Pests.
+ * Raises the tray's pest level stat by a given amount.
+ * * adjustamt - Determines how much the pest level will be adjusted upwards or downwards.
+ */
+/obj/machinery/hydroponics/proc/adjust_pestlevel(amt)
+	set_pestlevel(clamp(pestlevel + amt, 0, MAX_TRAY_PESTS), FALSE)
+
+
+/**
+ * Adjust Weeds.
+ * Raises the plant's weed level stat by a given amount.
+ * * adjustamt - Determines how much the weed level will be adjusted upwards or downwards.
+ */
+/obj/machinery/hydroponics/proc/adjust_weedlevel (amt)
+	set_weedlevel(clamp(weedlevel + amt, 0, MAX_TRAY_WEEDS), FALSE)
 
 /obj/machinery/hydroponics/examine(user)
 	. = ..()
@@ -617,7 +660,7 @@
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 				var/water_amt = reagent_source.reagents.get_reagent_amount(/datum/reagent/water) * transfer_amount / reagent_source.reagents.total_volume
-				TRAY_ADJUST_WATER(H, round(water_amt))
+				H.adjust_waterlevel(round(water_amt))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt)
 			reagent_source.reagents.trans_to(H.reagents, transfer_amount, transfered_by = user)
 			lastuser = WEAKREF(user)
@@ -675,7 +718,7 @@
 
 			snip.forceMove(drop_location())
 			myseed.grafted = TRUE
-			TRAY_ADJUST_HEALTH(src, -5)
+			adjust_plant_health(-5)
 			return
 
 	else if(istype(O, /obj/item/geneshears))
@@ -709,7 +752,7 @@
 					qdel(gene)
 					break
 		myseed.reagents_from_genes()
-		TRAY_ADJUST_HEALTH(src, -15)
+		adjust_plant_health(-15)
 		to_chat(user, span_notice("You carefully shear the genes off of the [myseed.plantname], leaving the plant looking weaker."))
 		update_appearance()
 		return

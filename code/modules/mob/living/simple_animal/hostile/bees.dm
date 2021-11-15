@@ -206,9 +206,9 @@
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
-	TRAY_ADJUST_HEALTH(Hydro, growth*0.5)
+	Hydro.adjust_plant_health(growth*0.5)
 	if(prob(BEE_POLLINATE_PEST_CHANCE))
-		TRAY_ADJUST_PESTS(Hydro, -10)
+		Hydro.adjust_pestlevel(-10)
 	if(prob(BEE_POLLINATE_YIELD_CHANCE))
 		Hydro.myseed.adjust_yield(1)
 		Hydro.yieldmod = 2
