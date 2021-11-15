@@ -1,5 +1,21 @@
 #define PEN_ROTATIONS 2
 
+/datum/action/innate/uplink
+	name = "Open Uplink"
+	desc = "Open your innate syndicate uplink"
+	icon_icon = 'icons/obj/radio.dmi'
+	button_icon_state = "radio"
+	var/datum/component/uplink/linked_uplink
+
+/datum/action/innate/uplink/New(Target, uplink)
+	. = ..()
+	linked_uplink = uplink
+
+/datum/action/innate/uplink/Trigger()
+	. = ..()
+	if(linked_uplink)
+		linked_uplink.interact(src, owner)
+
 /**
  * Uplinks
  *
@@ -29,26 +45,31 @@
 	///Instructions on how to access the uplink based on location
 	var/unlock_text
 	var/list/previous_attempts
+	var/datum/action/innate/uplink/uplink_action
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
-	if(!isitem(parent))
+
+	if(isitem(parent))
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+		if(istype(parent, /obj/item/implant))
+			RegisterSignal(parent, COMSIG_IMPLANT_ACTIVATED, .proc/implant_activation)
+			RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
+			RegisterSignal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
+			RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
+		else if(istype(parent, /obj/item/pda))
+			RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
+			RegisterSignal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
+		else if(istype(parent, /obj/item/radio))
+			RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
+		else if(istype(parent, /obj/item/pen))
+			RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
+	else if(isliving(parent))
+		var/mob/living/living_parent = parent
+		uplink_action = new(uplink = src)
+		uplink_action.Grant(living_parent)
+	else
 		return COMPONENT_INCOMPATIBLE
-
-
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
-	if(istype(parent, /obj/item/implant))
-		RegisterSignal(parent, COMSIG_IMPLANT_ACTIVATED, .proc/implant_activation)
-		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
-		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
-		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
-	else if(istype(parent, /obj/item/pda))
-		RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
-		RegisterSignal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
-	else if(istype(parent, /obj/item/radio))
-		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
-	else if(istype(parent, /obj/item/pen))
-		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 	if(_owner)
 		owner = _owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -77,6 +98,8 @@
 
 /datum/component/uplink/Destroy()
 	purchase_log = null
+	if(uplink_action)
+		qdel(uplink_action)
 	return ..()
 
 /datum/component/uplink/proc/update_items(user)
@@ -154,7 +177,11 @@
 
 
 /datum/component/uplink/ui_state(mob/user)
-	return GLOB.inventory_state
+	if(isitem(parent))
+		return GLOB.inventory_state
+	else if(isliving(parent))
+		return GLOB.conscious_state
+	return GLOB.never_state
 
 /datum/component/uplink/ui_interact(mob/user, datum/tgui/ui)
 	active = TRUE
@@ -376,3 +403,41 @@
 	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.
+
+/datum/component/uplink/golem
+	var/mob/living/carbon/human/human_owner
+	var/health_per_telecrystal = 20
+
+/datum/component/uplink/golem/Initialize(_owner, _lockable, _enabled, uplink_flag, starting_tc)
+	if(ishuman(parent))
+		human_owner = parent
+		. = ..()
+	else
+		return COMPONENT_INCOMPATIBLE
+
+/datum/component/uplink/golem/ui_data(mob/user)
+	if(!user.mind)
+		return
+	var/list/data = list()
+	data["telecrystals"] = max(round(human_owner.health / health_per_telecrystal), 0)
+	data["lockable"] = lockable
+	data["compactMode"] = compact_mode
+	return data
+
+/datum/component/uplink/golem/MakePurchase(mob/user, datum/uplink_item/U)
+	if(!istype(U))
+		return
+	if (!user || user.incapacitated())
+		return
+
+	if(human_owner.health < U.cost * health_per_telecrystal || U.limited_stock == 0)
+		return
+	human_owner.adjustCloneLoss(U.cost * health_per_telecrystal / CONFIG_GET(number/damage_multiplier))
+
+	U.purchase(user, src)
+
+	if(U.limited_stock > 0)
+		U.limited_stock -= 1
+
+	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
+	return TRUE

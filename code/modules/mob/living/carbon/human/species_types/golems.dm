@@ -1269,3 +1269,31 @@
 /datum/species/golem/mhydrogen/on_species_loss(mob/living/carbon/C)
 	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 	return ..()
+
+/datum/species/golem/telecrystal
+	name = "Telecrystal Golem"
+	id = SPECIES_GOLEM_TELECRYSTAL
+	fixed_mut_color = "#ff3333"
+	species_language_holder = /datum/language_holder/golem/telecrystal
+	info_text = "As a <span class='danger'>Telecrystal Golem</span>, you are a living syndicate uplink capable of drawing upon your own life force to purchase restricted equipment."
+	prefix = "Telecrystal"
+	meat = /obj/item/stack/telecrystal
+	inherent_factions = list("syndicate")
+	changesource_flags = MIRROR_BADMIN
+	var/datum/component/uplink/golem/inherent_uplink
+
+/datum/species/golem/telecrystal/random_name(gender, unique, lastname)
+	var/list/letters = list()
+	var/last_letter
+	for(var/letter_index in 1 to rand(2,3))
+		last_letter = pick(GLOB.phonetic_alphabet - last_letter)
+		letters += last_letter
+	return "[prefix] [letters.Join(" ")]"
+
+/datum/species/golem/telecrystal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	inherent_uplink = C.AddComponent(/datum/component/uplink/golem, C.key, FALSE, TRUE, UPLINK_TELECRYSTAL_GOLEM)
+
+/datum/species/golem/telecrystal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	qdel(inherent_uplink)

@@ -73,6 +73,7 @@
 		/obj/item/stack/sheet/cotton/durathread = /datum/species/golem/durathread,
 		/obj/item/stack/sheet/mineral/snow = /datum/species/golem/snow,
 		/obj/item/stack/sheet/mineral/metal_hydrogen= /datum/species/golem/mhydrogen,
+		/obj/item/stack/telecrystal = /datum/species/golem/telecrystal,
 	)
 
 	if(!istype(I, /obj/item/stack))

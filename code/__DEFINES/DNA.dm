@@ -299,3 +299,4 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_GOLEM_BONE "bone_golem"
 #define SPECIES_GOLEM_SNOW "snow_golem"
 #define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
+#define SPECIES_GOLEM_TELECRYSTAL "telecrystal_golem"

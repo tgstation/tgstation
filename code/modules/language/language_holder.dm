@@ -370,6 +370,14 @@ Key procs
 							/datum/language/terrum = list(LANGUAGE_ATOM),
 							/datum/language/narsie = list(LANGUAGE_ATOM))
 
+/datum/language_holder/golem/telecrystal
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/terrum = list(LANGUAGE_ATOM),
+								/datum/language/codespeak = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/terrum = list(LANGUAGE_ATOM),
+							/datum/language/codespeak = list(LANGUAGE_ATOM))
+
 /datum/language_holder/fly
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/buzzwords = list(LANGUAGE_ATOM))

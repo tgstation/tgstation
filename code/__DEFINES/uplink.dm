@@ -8,3 +8,6 @@
 
 /// This item is purchasable to clown ops
 #define UPLINK_CLOWN_OPS (1 << 2)
+
+/// This item is purchasable to telecrystal golems
+#define UPLINK_TELECRYSTAL_GOLEM (1 << 3)
