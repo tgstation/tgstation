@@ -142,7 +142,7 @@
 			if(user.body_position == STANDING_UP)
 				human.setDir(get_dir(human,targloc)) // kitty always looks at the light
 				if(prob(effectchance * diode.rating))
-					human.visible_message(span_warning("[H] makes a grab for the light!"),span_userdanger("LIGHT!"))
+					human.visible_message(span_warning("[human] makes a grab for the light!"),span_userdanger("LIGHT!"))
 					human.Move(targloc)
 					log_combat(user, human, "moved with a laser pointer",src)
 				else
