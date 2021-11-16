@@ -149,7 +149,7 @@ const ProductDisplay = (_, context) => {
           <Box fontSize="16px" color="green">
             {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
           </Box>
-        )
+      )
       }>
       <Table>
         {inventory.map((product) => (
