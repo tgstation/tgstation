@@ -101,7 +101,7 @@
 
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
-	if(bot_status_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			. += span_notice("It has \a [cell] installed.")
 			. += span_info("You can use a <b>crowbar</b> to remove it.")
@@ -144,7 +144,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		. = ..()
 		update_appearance()
-	else if(istype(I, /obj/item/stock_parts/cell) && bot_status_flags & BOT_COVER_OPEN)
+	else if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
 			return
@@ -154,7 +154,7 @@
 		diag_hud_set_mulebotcell()
 		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
 						span_notice("You insert [cell] into [src]."))
-	else if(I.tool_behaviour == TOOL_CROWBAR && bot_status_flags & BOT_COVER_OPEN && !user.combat_mode)
+	else if(I.tool_behaviour == TOOL_CROWBAR && bot_cover_flags & BOT_COVER_OPEN && !user.combat_mode)
 		if(!cell)
 			to_chat(user, span_warning("[src] doesn't have a power cell!"))
 			return
@@ -167,7 +167,7 @@
 						span_notice("You pry [cell] out of [src]."))
 		cell = null
 		diag_hud_set_mulebotcell()
-	else if(is_wire_tool(I) && bot_status_flags & BOT_COVER_OPEN)
+	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + I.force * 2))
@@ -181,21 +181,21 @@
 		return ..()
 
 /mob/living/simple_animal/bot/mulebot/emag_act(mob/user)
-	if(!(bot_status_flags & BOT_EMAGGED))
-		bot_status_flags |= BOT_EMAGGED
-	if(!(bot_status_flags & BOT_COVER_OPEN))
-		bot_status_flags ^= BOT_COVER_LOCKED
-		to_chat(user, span_notice("You [bot_status_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] [src]'s controls!"))
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+		bot_cover_flags |= BOT_COVER_EMAGGED
+	if(!(bot_cover_flags & BOT_COVER_OPEN))
+		bot_cover_flags ^= BOT_COVER_LOCKED
+		to_chat(user, span_notice("You [bot_cover_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] [src]'s controls!"))
 	flick("[base_icon]-emagged", src)
 	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
-	icon_state = "[base_icon][bot_status_flags & BOT_MODE_ON ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
+	icon_state = "[base_icon][bot_mode_flags & BOT_MODE_ON ? wires.is_cut(WIRE_AVOIDANCE) : 0]"
 
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
-	if(bot_status_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_OPEN)
 		. += "[base_icon]-hatch"
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
@@ -225,7 +225,7 @@
 			wires.cut_random()
 
 /mob/living/simple_animal/bot/mulebot/interact(mob/user)
-	if(bot_status_flags & BOT_COVER_OPEN && !isAI(user))
+	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
 		wires.interact(user)
 	else
 		if(wires.is_cut(WIRE_RX) && isAI(user))
@@ -268,18 +268,18 @@
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
 	. = ..()
 
-	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
-				bot_status_flags ^= BOT_COVER_LOCKED
+				bot_cover_flags ^= BOT_COVER_LOCKED
 				. = TRUE
 		if("power")
-			if(bot_status_flags & BOT_MODE_ON)
+			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
-			else if(bot_status_flags & BOT_COVER_OPEN)
+			else if(bot_cover_flags & BOT_COVER_OPEN)
 				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
 				return
 			else if(cell)
@@ -495,7 +495,7 @@
 	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/handle_automated_action()
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(!has_power())
 		turn_off()
@@ -512,7 +512,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /mob/living/simple_animal/bot/mulebot/process()
-	if(!(bot_status_flags & BOT_MODE_ON) || client || (num_steps <= 0) || !has_power())
+	if(!(bot_mode_flags & BOT_MODE_ON) || client || (num_steps <= 0) || !has_power())
 		return PROCESS_KILL
 	num_steps--
 
@@ -605,7 +605,7 @@
 
 // starts bot moving to current destination
 /mob/living/simple_animal/bot/mulebot/proc/start()
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(destination == home_destination)
 		mode = BOT_GO_HOME
@@ -616,7 +616,7 @@
 // starts bot moving to home
 // sends a beacon query to find
 /mob/living/simple_animal/bot/mulebot/proc/start_home()
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	INVOKE_ASYNC(src, .proc/do_start_home)
 
@@ -712,7 +712,7 @@
 
 //Update navigation data. Called when commanded to deliver, return home, or a route update is needed...
 /mob/living/simple_animal/bot/mulebot/proc/get_nav()
-	if(!(bot_status_flags & BOT_MODE_ON) || wires.is_cut(WIRE_BEACON))
+	if(!(bot_mode_flags & BOT_MODE_ON) || wires.is_cut(WIRE_BEACON))
 		return
 
 	for(var/obj/machinery/navbeacon/NB in GLOB.deliverybeacons)
@@ -779,7 +779,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/check_pre_step(datum/source)
 	SIGNAL_HANDLER
 
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return COMPONENT_MOB_BOT_BLOCK_PRE_STEP
 
 	if((cell && (cell.charge < cell_move_power_usage)) || !has_power())

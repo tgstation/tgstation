@@ -55,7 +55,7 @@
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
-	if(bot_status_flags & BOT_EMAGGED)
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		projectile = /obj/projectile/beam
 	else
 		projectile = /obj/projectile/beam/disabler
@@ -98,11 +98,11 @@
 		var/mob/toshoot = pick(targets)
 		if(toshoot)
 			targets -= toshoot
-			if(prob(50) && !(bot_status_flags & BOT_EMAGGED)) // Temporarily emags it
-				bot_status_flags |= BOT_EMAGGED
+			if(prob(50) && !(bot_cover_flags & BOT_COVER_EMAGGED)) // Temporarily emags it
+				bot_cover_flags |= BOT_COVER_EMAGGED
 				set_weapon()
 				shoot_at(toshoot)
-				bot_status_flags &= ~BOT_EMAGGED
+				bot_cover_flags &= ~BOT_COVER_EMAGGED
 				set_weapon()
 			else
 				shoot_at(toshoot)
@@ -114,6 +114,6 @@
 				mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/ed209/RangedAttack(atom/A)
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	shoot_at(A)

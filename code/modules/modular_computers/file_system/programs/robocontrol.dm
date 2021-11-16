@@ -37,7 +37,7 @@
 
 	for(var/B in GLOB.bots_list)
 		var/mob/living/simple_animal/bot/Bot = B
-		if(!(Bot.bot_status_flags & BOT_MODE_ON) || Bot.z != zlevel || !(Bot.bot_status_flags & BOT_AI_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+		if(!(Bot.bot_mode_flags & BOT_MODE_ON) || Bot.z != zlevel || !(Bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
 		else if(computer) //Also, the inserted ID must have access to the bot type
 			var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null

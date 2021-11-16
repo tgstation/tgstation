@@ -40,7 +40,7 @@
 /mob/living/simple_animal/bot/honkbot/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	auto_patrol = TRUE
+	bot_mode_flags |= BOT_MODE_AUTOPATROL
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/clown_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/clown]
@@ -82,7 +82,7 @@
 	var/final = NONE
 	if(check_records)
 		final |= JUDGE_RECORDCHECK
-	if(bot_status_flags & BOT_EMAGGED)
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		final |= JUDGE_EMAGGED
 	return final
 
@@ -109,7 +109,7 @@
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
 	..()
-	if(!(bot_status_flags & BOT_EMAGGED))
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!"))
@@ -124,13 +124,13 @@
 	return ..()
 
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(bot_status_flags & BOT_EMAGGED)
+		if(bot_cover_flags & BOT_COVER_EMAGGED)
 			honk_attack(A)
 		else
 			if(!C.IsParalyzed() || arrest_type)
@@ -151,7 +151,7 @@
 	..()
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
-	if (bot_status_flags & BOT_EMAGGED) //emagged honkbots will spam short and memorable sounds.
+	if (bot_cover_flags & BOT_COVER_EMAGGED) //emagged honkbots will spam short and memorable sounds.
 		if (!limiting_spam)
 			playsound(src, "honkbot_e", 50, FALSE)
 			limiting_spam = TRUE // prevent spam
@@ -187,7 +187,7 @@
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				limiting_spam = TRUE
-			if (bot_status_flags & BOT_EMAGGED) // you really don't want to hit an emagged honkbot
+			if (bot_cover_flags & BOT_COVER_EMAGGED) // you really don't want to hit an emagged honkbot
 				threatlevel = 6 // will never let you go
 			else
 				//HONK once, then leave
@@ -217,7 +217,7 @@
 
 			walk_to(src,0)
 			look_for_perp()
-			if(!mode && auto_patrol)
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL)
 				mode = BOT_START_PATROL
 
 		if(BOT_HUNT)
@@ -333,7 +333,7 @@
 
 /mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(ismob(AM) && (bot_status_flags & BOT_MODE_ON)) //only if its online
+	if(ismob(AM) && (bot_mode_flags & BOT_MODE_ON)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
 			if(!istype(C) || !C || in_range(src, target))

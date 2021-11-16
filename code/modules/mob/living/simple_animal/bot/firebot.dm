@@ -62,7 +62,7 @@
 	internal_ext.refill()
 
 /mob/living/simple_animal/bot/firebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
@@ -72,7 +72,7 @@
 		return ..()
 
 /mob/living/simple_animal/bot/firebot/RangedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(internal_ext)
 		internal_ext.afterattack(A, src)
@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/bot/firebot/emag_act(mob/user)
 	..()
-	if(!(bot_status_flags & BOT_EMAGGED))
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
@@ -126,7 +126,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/firebot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["extinguish_fires"] = extinguish_fires
 		data["custom_controls"]["extinguish_people"] = extinguish_people
 		data["custom_controls"]["stationary_mode"] = stationary_mode
@@ -135,7 +135,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/firebot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("extinguish_fires")
@@ -150,7 +150,7 @@
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.on_fire || (bot_status_flags & BOT_EMAGGED && !M.on_fire))
+		if(M.on_fire || (bot_cover_flags & BOT_COVER_EMAGGED && !M.on_fire))
 			return TRUE
 
 	else if(isturf(target))
@@ -198,7 +198,7 @@
 		old_target_fire = target_fire
 
 	// Target reached ENGAGE WATER CANNON
-	if(target_fire && (get_dist(src, target_fire) <= (bot_status_flags & BOT_EMAGGED ? 1 : 2))) // Make the bot spray water from afar when not emagged
+	if(target_fire && (get_dist(src, target_fire) <= (bot_cover_flags & BOT_COVER_EMAGGED ? 1 : 2))) // Make the bot spray water from afar when not emagged
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
@@ -240,7 +240,7 @@
 	if(path.len > 8 && target_fire)
 		frustration++
 
-	if(auto_patrol && !target_fire)
+	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !target_fire)
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
 			start_patrol()
 
@@ -281,7 +281,7 @@
 
 /mob/living/simple_animal/bot/firebot/update_icon_state()
 	. = ..()
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		icon_state = "firebot0"
 		return
 	if(IsStun() || IsParalyzed() || stationary_mode) //Bot has yellow light to indicate stationary mode.
@@ -291,7 +291,7 @@
 
 
 /mob/living/simple_animal/bot/firebot/explode()
-	bot_status_flags &= ~BOT_MODE_ON
+	bot_mode_flags &= ~BOT_MODE_ON
 	visible_message(span_boldannounce("[src] blows apart!"))
 
 	var/atom/Tsec = drop_location()

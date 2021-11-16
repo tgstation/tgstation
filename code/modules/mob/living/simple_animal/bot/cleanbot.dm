@@ -60,7 +60,7 @@
 		user.transferItemToLoc(W, src)
 		weapon = W
 		weapon_orig_force = weapon.force
-		if(!(bot_status_flags & BOT_EMAGGED))
+		if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 			weapon.force = weapon.force / 2
 		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state))
 
@@ -138,7 +138,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
-	if(weapon && bot_status_flags & BOT_EMAGGED)
+	if(weapon && bot_cover_flags & BOT_COVER_EMAGGED)
 		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
@@ -162,13 +162,13 @@
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID())
-		if(bot_core.allowed(user) && !(bot_status_flags & BOT_COVER_OPEN) && !(bot_status_flags & BOT_EMAGGED))
-			bot_status_flags ^= BOT_COVER_LOCKED
-			to_chat(user, span_notice("You [bot_status_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] \the [src] behaviour controls."))
+		if(bot_core.allowed(user) && !(bot_cover_flags & BOT_COVER_OPEN) && !(bot_cover_flags & BOT_COVER_EMAGGED))
+			bot_cover_flags ^= BOT_COVER_LOCKED
+			to_chat(user, span_notice("You [bot_cover_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] \the [src] behaviour controls."))
 		else
-			if(bot_status_flags & BOT_EMAGGED)
+			if(bot_cover_flags & BOT_COVER_EMAGGED)
 				to_chat(user, span_warning("ERROR"))
-			if(bot_status_flags & BOT_COVER_OPEN)
+			if(bot_cover_flags & BOT_COVER_OPEN)
 				to_chat(user, span_warning("Please close the access panel before locking it."))
 			else
 				to_chat(user, span_notice("\The [src] doesn't seem to respect your authority."))
@@ -182,7 +182,7 @@
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 
-	if(!(bot_status_flags & BOT_EMAGGED))
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(weapon)
 		weapon.force = weapon_orig_force
@@ -204,7 +204,7 @@
 	if(mode == BOT_CLEANING)
 		return
 
-	if(bot_status_flags & BOT_EMAGGED) //Emag functions
+	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		if(isopenturf(loc))
 			for(var/mob/living/carbon/victim in loc)
 				if(victim != target)
@@ -222,7 +222,7 @@
 		if(!process_scan(target))
 			target = null
 
-	if(!target && bot_status_flags & BOT_EMAGGED) // When emagged, target humans who slipped on the water and melt their faces off
+	if(!target && bot_cover_flags & BOT_COVER_EMAGGED) // When emagged, target humans who slipped on the water and melt their faces off
 		target = scan(/mob/living/carbon)
 
 	if(!target && pests) //Search for pests to exterminate first.
@@ -240,7 +240,7 @@
 	if(!target && trash) //Search for dead mices.
 		target = scan(/obj/item/food/deadmouse)
 
-	if(!target && auto_patrol) //Search for cleanables it can see.
+	if(!target && bot_mode_flags & BOT_MODE_AUTOPATROL) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
 			start_patrol()
 
@@ -339,7 +339,7 @@
 			living_target.death()
 		living_target = null
 
-	else if(bot_status_flags & BOT_EMAGGED) //Emag functions
+	else if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		if(istype(A, /mob/living/carbon))
 			var/mob/living/carbon/victim = A
 			if(victim.stat == DEAD)//cleanbots always finish the job
@@ -366,7 +366,7 @@
 		..()
 
 /mob/living/simple_animal/bot/cleanbot/explode()
-	bot_status_flags &= ~BOT_MODE_ON
+	bot_mode_flags &= ~BOT_MODE_ON
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
@@ -380,7 +380,7 @@
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
 	bot_core = /obj/machinery/bot_core/cleanbot/medbay
-	bot_status_flags = BOT_COVER_LOCKED
+	bot_mode_flags = BOT_COVER_LOCKED
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
@@ -389,7 +389,7 @@
 /mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
 	var/list/data = ..()
 
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user)|| isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user)|| isAdminGhostAI(user))
 		data["custom_controls"]["clean_blood"] = blood
 		data["custom_controls"]["clean_trash"] = trash
 		data["custom_controls"]["clean_graffiti"] = drawn
@@ -399,7 +399,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("clean_blood")

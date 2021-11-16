@@ -53,7 +53,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
 	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
-	auto_patrol = TRUE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
 
 /mob/living/simple_animal/bot/secbot/beepsky/officer
@@ -64,7 +64,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	health = 45
-	auto_patrol = FALSE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
@@ -87,7 +87,8 @@
 	desc = "A beefy variant of the standard securitron model."
 	health = 50
 	faction = list("nanotrasenprivate")
-	bot_status_flags = BOT_MODE_ON | BOT_COVER_LOCKED | BOT_EMAGGED
+	bot_mode_flags = BOT_MODE_ON
+	bot_cover_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
@@ -146,7 +147,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["check_id"] = security_mode_flags & SECBOT_CHECK_IDS
 		data["custom_controls"]["check_weapons"] = security_mode_flags & SECBOT_CHECK_WEAPONS
 		data["custom_controls"]["check_warrants"] = security_mode_flags & SECBOT_CHECK_RECORDS
@@ -157,7 +158,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("check_id")
@@ -182,7 +183,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
 	var/final = FALSE
-	if(bot_status_flags & BOT_EMAGGED)
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		final |= JUDGE_EMAGGED
 	if(bot_type == ADVANCED_SEC_BOT)
 		final |= JUDGE_IGNOREMONKEYS
@@ -216,7 +217,7 @@
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
 	..()
-	if(!(bot_status_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
+	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
 	if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
 		return
@@ -226,7 +227,7 @@
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-	if(!(bot_status_flags & BOT_EMAGGED))
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
@@ -243,7 +244,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
@@ -275,7 +276,7 @@
 	addtimer(CALLBACK(src, .proc/handcuff_target, target), 60)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
-	if(!(bot_status_flags & BOT_MODE_ON) || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!(bot_mode_flags & BOT_MODE_ON) || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
@@ -319,7 +320,7 @@
 		if(BOT_IDLE) // idle
 			walk_to(src,0)
 			look_for_perp() // see if any criminals are in range
-			if(!mode && auto_patrol) // still idle, and set to patrol
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 
 		if(BOT_HUNT) // hunting for perp

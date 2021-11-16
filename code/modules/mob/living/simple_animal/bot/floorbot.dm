@@ -108,7 +108,7 @@
 
 /mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
-	if(!(bot_status_flags & BOT_EMAGGED))
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("[src] buzzes and beeps."))
@@ -129,7 +129,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/floorbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["tile_hull"] = autotile
 		data["custom_controls"]["place_tiles"] =  placetiles
 		data["custom_controls"]["place_custom"] = replacetiles
@@ -146,7 +146,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/floorbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("place_custom")
@@ -188,7 +188,7 @@
 		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
-	if(!target && bot_status_flags & BOT_EMAGGED)
+	if(!target && bot_cover_flags & BOT_COVER_EMAGGED)
 		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
 			if(isspaceturf(T)) //Check for space
@@ -212,14 +212,14 @@
 			process_type = REPLACE_TILE //The target must be a tile. The floor must already have a floortile.
 			target = scan(/turf/open/floor)
 
-	if(!target && bot_status_flags & BOT_EMAGGED) //We are emagged! Time to rip up the floors!
+	if(!target && bot_cover_flags & BOT_COVER_EMAGGED) //We are emagged! Time to rip up the floors!
 		process_type = TILE_EMAG
 		target = scan(/turf/open/floor)
 
 
 	if(!target)
 
-		if(auto_patrol)
+		if(bot_mode_flags & BOT_MODE_AUTOPATROL)
 			if(mode == BOT_IDLE || mode == BOT_START_PATROL)
 				start_patrol()
 
@@ -234,9 +234,9 @@
 					target = null
 					path = list()
 					return
-			if(isturf(target) && !(bot_status_flags & BOT_EMAGGED))
+			if(isturf(target) && !(bot_cover_flags & BOT_COVER_EMAGGED))
 				repair(target)
-			else if(bot_status_flags & BOT_EMAGGED && isfloorturf(target))
+			else if(bot_cover_flags & BOT_COVER_EMAGGED && isfloorturf(target))
 				var/turf/open/floor/F = target
 				toggle_magnet()
 				mode = BOT_REPAIRING
@@ -379,7 +379,7 @@
 	icon_state = "[toolbox_color]floorbot[get_bot_flag(BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
-	bot_status_flags &= ~BOT_MODE_ON
+	bot_mode_flags &= ~BOT_MODE_ON
 	target = null
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()

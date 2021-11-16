@@ -55,25 +55,28 @@
 #define BOT_STEP_DELAY 4
 /// Maximum times a bot will retry to step from its position
 #define BOT_STEP_MAX_RETRIES 5
+/// Default view range for finding targets.
+#define DEFAULT_SCAN_RANGE 7
 //Amount of time that must pass after a Commissioned bot gets saluted to get another.
 #define BOT_COMMISSIONED_SALUTE_DELAY (60 SECONDS)
 
-//Bot defines to indicate being hacked/emagged
+//Bot mode defines displaying how Bots act
 ///The Bot is currently active, and will do whatever it is programmed to do.
 #define BOT_MODE_ON (1<<0)
-///The Bot's cover is open and can be modified/emagged by anyone.
-#define BOT_COVER_OPEN (1<<1)
-///The Bot's cover is locked, and cannot be opened without unlocking it.
-#define BOT_COVER_LOCKED (1<<2)
-///The Bot is emagged.
-#define BOT_EMAGGED (1<<3)
-///The Bot has been hacked by a Silicon, emagging them, but revertable.
-#define BOT_HACKED (1<<4)
-///The Bot can be remotely accessed by an AI while this is on.
-#define BOT_AI_REMOTE_ENABLED (1<<5)
+///The Bot is currently set to automatically patrol the station.
+#define BOT_MODE_AUTOPATROL (1<<1)
+///The Bot is currently allowed to be remote controlled by Silicon.
+#define BOT_MODE_REMOTE_ENABLED (1<<2)
 
-/// Default view range for finding targets.
-#define DEFAULT_SCAN_RANGE 7
+//Bot cover defines indicating the Bot's status
+///The Bot's cover is open and can be modified/emagged by anyone.
+#define BOT_COVER_OPEN (1<<0)
+///The Bot's cover is locked, and cannot be opened without unlocking it.
+#define BOT_COVER_LOCKED (1<<1)
+///The Bot is emagged.
+#define BOT_COVER_EMAGGED (1<<2)
+///The Bot has been hacked by a Silicon, emagging them, but revertable.
+#define BOT_COVER_HACKED (1<<3)
 
 //Bot types
 /// Secutritrons (Beepsky)

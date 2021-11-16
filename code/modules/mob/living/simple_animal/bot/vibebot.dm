@@ -15,11 +15,12 @@
 
 	window_id = "vibebot"
 	window_name = "Discomatic Vibe Bot v1.05"
+	hackables = "vibing scanners"
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = VIBE_BOT
 	data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC // show jobs
-	auto_patrol = TRUE
 	path_image_color = "#2cac12"
 
 
@@ -46,10 +47,10 @@
 	if(!.)
 		return
 
-	if(bot_status_flags & BOT_MODE_ON)
+	if(bot_mode_flags & BOT_MODE_ON)
 		Vibe()
 
-	if(!auto_patrol)
+	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL))
 		return
 
 	if(mode == BOT_IDLE || mode == BOT_START_PATROL)

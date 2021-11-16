@@ -58,14 +58,14 @@
 
 
 /mob/living/simple_animal/bot/secbot/grievous/handle_automated_action()
-	if(!(bot_status_flags & BOT_MODE_ON))
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	switch(mode)
 		if(BOT_IDLE) // idle
 			update_appearance()
 			walk_to(src,0)
 			look_for_perp() // see if any criminals are in range
-			if(!mode && auto_patrol) // still idle, and set to patrol
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 		if(BOT_HUNT) // hunting for perp
 			update_appearance()

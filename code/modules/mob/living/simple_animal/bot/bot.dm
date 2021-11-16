@@ -54,9 +54,14 @@
 	var/list/player_access = list()
 	///All initial access this bot started with.
 	var/list/prev_access = list()
-	///Bot-related status flags on the Bot to deal with how they act.
-	var/bot_status_flags = BOT_MODE_ON | BOT_COVER_LOCKED | BOT_AI_REMOTE_ENABLED
-//	Selections: SECBOT_MODE_ON | BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_EMAGGED | BOT_HACKED | BOT_AI_REMOTE_ENABLED
+
+	///Bot-related mode flags on the Bot indicating how they will act.
+	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
+//	Selections: BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
+
+	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.
+	var/bot_cover_flags = BOT_COVER_LOCKED
+//	Selections: BOT_COVER_OPEN | BOT_COVER_LOCKED | BOT_COVER_EMAGGED | BOT_COVER_HACKED
 
 	///Small name of what the bot gets messed with when getting hacked/emagged.
 	var/hackables = "system circuits"
@@ -84,8 +89,6 @@
 	var/radio_key = null
 	///The bot's default radio channel
 	var/radio_channel = RADIO_CHANNEL_COMMON
-	///Whether the bot will automatically patrol
-	var/auto_patrol = FALSE
 	///Turf a bot is summoned to navitage towards.
 	var/turf/patrol_target
 	///Turf of a user summoning a bot towards their location.
@@ -129,7 +132,7 @@
 			return "<b>pAI Controlled</b>"
 		else
 			return "<b>Autonomous</b>"
-	else if(!(bot_status_flags & BOT_MODE_ON))
+	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "<span class='bad'>Inactive</span>"
 	else if(!mode)
 		return "<span class='good'>Idle</span>"
@@ -142,7 +145,7 @@
 /mob/living/simple_animal/bot/proc/get_mode_ui()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		return paicard ? "pAI Controlled" : "Autonomous"
-	else if(!(bot_status_flags & BOT_MODE_ON))
+	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "Inactive"
 	else if(!mode)
 		return "Idle"
@@ -152,28 +155,28 @@
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return FALSE
-	bot_status_flags |= BOT_MODE_ON
+	bot_mode_flags |= BOT_MODE_ON
 	REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
-	set_light_on(bot_status_flags & BOT_MODE_ON ? TRUE : FALSE)
+	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
 	balloon_alert(src, "turned on")
 	diag_hud_set_botstat()
 	return TRUE
 
 /mob/living/simple_animal/bot/proc/turn_off()
-	bot_status_flags &= ~BOT_MODE_ON
+	bot_mode_flags &= ~BOT_MODE_ON
 	ADD_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, POWER_LACK_TRAIT)
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, POWER_LACK_TRAIT)
-	set_light_on(bot_status_flags & BOT_MODE_ON ? TRUE : FALSE)
+	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
 	balloon_alert(src, "turned off")
 	update_appearance()
 
 /mob/living/simple_animal/bot/proc/get_bot_flag(checked_flag)
-	if(bot_status_flags & checked_flag)
+	if(bot_mode_flags & checked_flag)
 		return TRUE
 	return FALSE
 
@@ -237,13 +240,14 @@
 
 /mob/living/simple_animal/bot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
-	if(bot_status_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
-		bot_status_flags &= ~BOT_COVER_LOCKED
+	if(bot_cover_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
+		bot_cover_flags &= ~BOT_COVER_LOCKED
 		to_chat(user, span_notice("You bypass [src]'s controls."))
 		return
-	if(!(bot_status_flags & BOT_COVER_LOCKED) && bot_status_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
-		bot_status_flags |= BOT_EMAGGED
-		bot_status_flags &= ~(BOT_AI_REMOTE_ENABLED|BOT_COVER_LOCKED) //Manually emagging the bot locks out the AI built in panel.
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
+		bot_cover_flags |= BOT_COVER_EMAGGED
+		bot_cover_flags &= ~BOT_COVER_LOCKED //Manually emagging the bot locks out the panel.
+		bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -262,16 +266,16 @@
 			. += "[src]'s parts look very loose!"
 	else
 		. += "[src] is in pristine condition."
-	. += span_notice("Its maintenance panel is [bot_status_flags & BOT_COVER_OPEN ? "open" : "closed"].")
-	. += span_info("You can use a <b>screwdriver</b> to [bot_status_flags & BOT_COVER_OPEN ? "close" : "open"] it.")
-	if(bot_status_flags & BOT_COVER_OPEN)
-		. += span_notice("Its control panel is [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
+	. += span_notice("Its maintenance panel is [bot_cover_flags & BOT_COVER_OPEN ? "open" : "closed"].")
+	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_OPEN ? "close" : "open"] it.")
+	if(bot_cover_flags & BOT_COVER_OPEN)
+		. += span_notice("Its control panel is [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
 		var/is_sillycone = issilicon(user)
-		if(!(bot_status_flags & BOT_EMAGGED) && (is_sillycone || user.Adjacent(src)))
-			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_status_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
+		if(!(bot_cover_flags & BOT_COVER_EMAGGED) && (is_sillycone || user.Adjacent(src)))
+			. += span_info("Alt-click [is_sillycone ? "" : "or use your ID on "]it to [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]lock its control panel.")
 	if(paicard)
 		. += span_notice("It has a pAI device installed.")
-		if(!(bot_status_flags & BOT_COVER_OPEN))
+		if(!(bot_cover_flags & BOT_COVER_OPEN))
 			. += span_info("You can use a <b>hemostat</b> to remove it.")
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -301,13 +305,13 @@
 	else
 		ignorelistcleanuptimer++
 
-	if(!(bot_status_flags & BOT_MODE_ON) || client)
+	if(!(bot_mode_flags & BOT_MODE_ON) || client)
 		return FALSE
 
 	if(commissioned && COOLDOWN_FINISHED(src, next_salute_check))
 		COOLDOWN_START(src, next_salute_check, BOT_COMMISSIONED_SALUTE_DELAY)
 		for(var/mob/living/simple_animal/bot/B in view(5, src))
-			if(!B.commissioned && B.bot_status_flags & BOT_MODE_ON)
+			if(!B.commissioned && B.bot_mode_flags & BOT_MODE_ON)
 				visible_message("<b>[B]</b> performs an elaborate salute for [src]!")
 				break
 
@@ -348,24 +352,24 @@
 	unlock_with_id(user)
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
-	if(bot_status_flags & BOT_EMAGGED)
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		to_chat(user, span_danger("ERROR"))
 		return
-	if(bot_status_flags & BOT_COVER_OPEN)
-		to_chat(user, span_warning("Please close the access panel before [bot_status_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
+	if(bot_cover_flags & BOT_COVER_OPEN)
+		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
 	if(!bot_core.allowed(user))
 		to_chat(user, span_warning("Access denied."))
 		return
-	bot_status_flags ^= BOT_COVER_LOCKED
-	to_chat(user, span_notice("Controls are now [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]."))
+	bot_cover_flags ^= BOT_COVER_LOCKED
+	to_chat(user, span_notice("Controls are now [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]."))
 	return TRUE
 
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!(bot_status_flags & BOT_COVER_LOCKED))
-			bot_status_flags ^= BOT_COVER_OPEN
-			to_chat(user, span_notice("The maintenance panel is now [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
+		if(!(bot_cover_flags & BOT_COVER_LOCKED))
+			bot_cover_flags ^= BOT_COVER_OPEN
+			to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
 		else
 			to_chat(user, span_warning("The maintenance panel is locked!"))
 	else if(attacking_item.GetID())
@@ -373,7 +377,7 @@
 	else if(istype(attacking_item, /obj/item/paicard))
 		insertpai(user, attacking_item)
 	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
-		if(bot_status_flags & BOT_COVER_OPEN)
+		if(bot_cover_flags & BOT_COVER_OPEN)
 			to_chat(user, span_warning("Close the access panel before manipulating the personality slot!"))
 		else
 			to_chat(user, span_notice("You attempt to pull [paicard] free..."))
@@ -387,7 +391,7 @@
 			if(health >= maxHealth)
 				to_chat(user, span_warning("[src] does not need a repair!"))
 				return
-			if(!(bot_status_flags & BOT_COVER_OPEN))
+			if(!(bot_cover_flags & BOT_COVER_OPEN))
 				to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
 				return
 
@@ -409,14 +413,14 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	var/was_on = bot_status_flags & BOT_MODE_ON ? TRUE : FALSE
+	var/was_on = bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE
 	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai(0)
-	if(bot_status_flags & BOT_MODE_ON)
+	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
 	addtimer(CALLBACK(src, .proc/emp_reset, was_on), severity * 30 SECONDS)
 
@@ -426,7 +430,7 @@
 		turn_on()
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-	if((!(bot_status_flags & BOT_MODE_ON)) || (!message))
+	if((!(bot_mode_flags & BOT_MODE_ON)) || (!message))
 		return
 	if(channel && internal_radio.channels[channel])// Use radio if we have channel key
 		internal_radio.talk_into(src, message, channel)
@@ -595,7 +599,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(path?.len) //Ensures that a valid path is calculated!
 		var/end_area = get_area_name(waypoint)
-		if(!(bot_status_flags & BOT_MODE_ON))
+		if(!(bot_mode_flags & BOT_MODE_ON))
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
@@ -655,13 +659,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/start_patrol()
 
 	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
-		auto_patrol = FALSE
+		bot_mode_flags &= ~BOT_MODE_AUTOPATROL
 		tries = 0
 		speak("Unable to start patrol.")
 
 		return
 
-	if(!auto_patrol) //A bot not set to patrol should not be patrolling.
+	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL)) //A bot not set to patrol should not be patrolling.
 		mode = BOT_IDLE
 		return
 
@@ -720,7 +724,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		patrol_target = nearest_beacon_loc
 		destination = next_destination
 	else
-		auto_patrol = FALSE
+		bot_mode_flags &= ~BOT_MODE_AUTOPATROL
 		mode = BOT_IDLE
 		speak("Disengaging patrol mode.")
 
@@ -752,7 +756,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 //PDA control. Some bots, especially MULEs, may have more parameters.
 /mob/living/simple_animal/bot/proc/bot_control(command, mob/user, list/user_access = list())
-	if(!(bot_status_flags & BOT_MODE_ON) || bot_status_flags & BOT_EMAGGED || !(bot_status_flags & BOT_AI_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
+	if(!(bot_mode_flags & BOT_MODE_ON) || bot_cover_flags & BOT_COVER_EMAGGED || !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Emagged bots do not respect anyone's authority! Bots with their remote controls off cannot get commands.
 		return TRUE //ACCESS DENIED
 	if(client)
 		bot_control_message(command, user)
@@ -760,10 +764,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	switch(command)
 		if("patroloff")
 			bot_reset() //HOLD IT!! //OBJECTION!!
-			auto_patrol = FALSE
+			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
 
 		if("patrolon")
-			auto_patrol = TRUE
+			bot_mode_flags |= BOT_MODE_AUTOPATROL
 
 		if("summon")
 			bot_reset()
@@ -857,17 +861,17 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/data = list()
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
-	data["emagged"] = bot_status_flags & BOT_EMAGGED
-	data["locked"] = bot_status_flags & BOT_COVER_LOCKED
+	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
+	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["pai"] = list()
 	data["settings"] = list()
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["pai"]["allow_pai"] = allow_pai
 		data["pai"]["card_inserted"] = paicard
-		data["settings"]["airplane_mode"] = !(bot_status_flags & BOT_AI_REMOTE_ENABLED)
-		data["settings"]["maintenance_lock"] = !(bot_status_flags & BOT_COVER_OPEN)
-		data["settings"]["power"] = bot_status_flags & BOT_MODE_ON
-		data["settings"]["patrol_station"] = auto_patrol
+		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
+		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
+		data["settings"]["power"] = bot_mode_flags & BOT_MODE_ON
+		data["settings"]["patrol_station"] = bot_mode_flags & BOT_MODE_AUTOPATROL
 	return data
 
 // Actions received from TGUI
@@ -879,35 +883,35 @@ Pass a positive integer as an argument to override a bot's default speed.
 		to_chat(usr, span_warning("Access denied."))
 		return
 	if(action == "lock")
-		bot_status_flags ^= BOT_COVER_LOCKED
-	if(bot_status_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
+		bot_cover_flags ^= BOT_COVER_LOCKED
+	if(bot_cover_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
 		return
 	switch(action)
 		if("power")
-			if(bot_status_flags & BOT_MODE_ON)
+			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else
 				turn_on()
 		if("maintenance")
-			bot_status_flags ^= BOT_COVER_OPEN
+			bot_cover_flags ^= BOT_COVER_OPEN
 		if("patrol")
-			auto_patrol = !auto_patrol
+			bot_mode_flags ^= BOT_MODE_AUTOPATROL
 			bot_reset()
 		if("airplane")
-			bot_status_flags ^= BOT_AI_REMOTE_ENABLED
+			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))
 				return
-			if(!(bot_status_flags & BOT_EMAGGED))
-				bot_status_flags |= (BOT_EMAGGED|BOT_HACKED|BOT_COVER_LOCKED)
+			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
 				log_game("Safety lock of [src] was disabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
-			else if(!(bot_status_flags & BOT_HACKED))
+			else if(!(bot_cover_flags & BOT_COVER_HACKED))
 				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
 			else
-				bot_status_flags &= ~(BOT_EMAGGED|BOT_HACKED)
+				bot_cover_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 				to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
 				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
@@ -935,8 +939,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return TRUE
 	// 0 for access, 1 for denied.
-	if(bot_status_flags & BOT_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
-		if(!(bot_status_flags & BOT_HACKED)) //Manually emagged by a human - access denied to all.
+	if(bot_cover_flags & BOT_COVER_EMAGGED) //An emagged bot cannot be controlled by humans, silicons can if one hacked it.
+		if(!(bot_cover_flags & BOT_COVER_HACKED)) //Manually emagged by a human - access denied to all.
 			return TRUE
 		else if(!issilicon(user) && !isAdminGhostAI(user)) //Bot is hacked, so only silicons and admins are allowed access.
 			return TRUE
@@ -949,7 +953,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(!allow_pai || !key)
 		to_chat(user, span_warning("[src] is not compatible with [card]!"))
 		return
-	if(bot_status_flags & BOT_COVER_LOCKED || !(bot_status_flags & BOT_COVER_OPEN))
+	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
 		to_chat(user, span_warning("The personality slot is locked."))
 		return
 	if(!card.pai || !card.pai.mind)
