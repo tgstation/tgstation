@@ -87,7 +87,7 @@
 	var/datum/port/input/sustain_value
 	/// If set the last held note will decay
 	var/datum/port/input/note_decay
-	/// The list of instruments which sound can be synthetized.
+	/// The list of instruments which sound can be synthesized.
 	var/datum/port/input/option/selected_instrument
 	/// Whether a song is currently playing
 	var/datum/port/output/is_playing
@@ -96,7 +96,7 @@
 	/// Sent when a song has finished playing
 	var/datum/port/output/stopped_playing
 
-	/// The synthetizer this circut is attached to.
+	/// The synthesizer this circut is attached to.
 	var/obj/item/instrument/piano_synth/synth
 
 /obj/item/circuit_component/synth/populate_ports()
