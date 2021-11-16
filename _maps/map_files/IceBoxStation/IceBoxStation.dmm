@@ -38510,13 +38510,6 @@
 	},
 /turf/open/floor/carpet,
 /area/service/library)
-"pTi" = (
-/obj/machinery/airalarm/mixingchamber{
-	dir = 1;
-	pixel_y = 10
-	},
-/turf/closed/wall/r_wall,
-/area/science/mixing/chamber)
 "pTk" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/neutral{
@@ -41077,7 +41070,7 @@
 /area/command/heads_quarters/ce)
 "rsc" = (
 /obj/machinery/airalarm/engine{
-	dir = 4;
+	dir = 8;
 	pixel_x = -23
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -52563,6 +52556,9 @@
 /area/commons/storage/art)
 "xgw" = (
 /obj/machinery/door/firedoor/heavy,
+/obj/machinery/airalarm/mixingchamber{
+	pixel_y = -24
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "xgy" = (
@@ -104002,7 +103998,7 @@ bEs
 ert
 ert
 xgw
-pTi
+dGF
 pEL
 dGF
 dGF

@@ -1,5 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Team antag HUDs will now properly display when they should, and won't display when they shouldn't."
-  - bugfix: "Antag HUDs will now properly show on round end again."

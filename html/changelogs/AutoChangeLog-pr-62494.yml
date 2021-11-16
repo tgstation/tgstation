@@ -1,4 +1,0 @@
-author: "Ghommie (Thanks to dorsisdwarf for the idea)"
-delete-after: True
-changes: 
-  - balance: "The detomatix cart now sends forged messages (name and job of the message can also be forged) that can explode a PDA when someone tries to reply to them or access the message menu of the PDA UI up to 10 seconds after receiving it instead of detonating the PDA right off the bat. Because of this and the possibility that a portion of these messages goes \"unreplied\", the TC cost of the item has also been reduced to 4 and the number of charges upped to 6."

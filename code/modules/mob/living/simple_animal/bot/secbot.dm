@@ -143,54 +143,23 @@
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
-/mob/living/simple_animal/bot/secbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-		<TT><B>Securitron v1.6 controls</B></TT><BR><BR>
-		Status: []<BR>
-		Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>
-		Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]"},
-
-		"<A href='?src=[REF(src)];power=1'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A>")
-
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
-		dat += text({"<BR>
-		Arrest Unidentifiable Persons: []<BR>
-		Arrest for Unauthorized Weapons: []<BR>
-		Arrest for Warrant: []<BR>
-		Operating Mode: []<BR>
-		Report Arrests[]<BR>
-		Auto Patrol: []"},
-
-		"<A href='?src=[REF(src)];operation=idcheck'>[security_mode_flags & SECBOT_CHECK_IDS ? "Yes" : "No"]</A>",
-		"<A href='?src=[REF(src)];operation=weaponscheck'>[security_mode_flags & SECBOT_CHECK_WEAPONS ? "Yes" : "No"]</A>",
-		"<A href='?src=[REF(src)];operation=ignorerec'>[security_mode_flags & SECBOT_CHECK_RECORDS ? "Yes" : "No"]</A>",
-		"<A href='?src=[REF(src)];operation=switchmode'>[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arrest" : "Detain"]</A>",
-		"<A href='?src=[REF(src)];operation=declarearrests'>[security_mode_flags & SECBOT_DECLARE_ARRESTS ? "Yes" : "No"]</A>",
-		"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>")
-
-	return dat
-
-/mob/living/simple_animal/bot/secbot/Topic(href, href_list)
+// Actions received from TGUI
+/mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(.)
-		return TRUE
-
-	switch(href_list["operation"])
-		if("idcheck")
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+		return
+	switch(action)
+		if("check_id")
 			security_mode_flags ^= SECBOT_CHECK_IDS
-		if("weaponscheck")
+		if("check_weapons")
 			security_mode_flags ^= SECBOT_CHECK_WEAPONS
-		if("ignorerec")
+		if("check_warrants")
 			security_mode_flags ^= SECBOT_CHECK_RECORDS
-		if("switchmode")
+		if("handcuff_targets")
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
-		if("declarearrests")
+		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
-
-	update_controls()
+	return
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()

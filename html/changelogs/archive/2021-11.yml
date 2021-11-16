@@ -483,3 +483,71 @@
   - bugfix: You now only go on click cooldown if you actually threw something.
   timothymtorres:
   - qol: Crates that spawn in maintenance are now more randomized
+2021-11-15:
+  Arturlang:
+  - bugfix: The witchunter hat no longer hides your hair
+  Fikou:
+  - balance: space adaptation has been split into two mutations. pressure adaptation
+      giving you full immunity to pressure and temperature adaptation giving you full
+      immunity to temperature. these are not compatible with each other.
+  Ghilker:
+  - balance: Increase the CO2 SM heat penalty to 6
+  Ghommie:
+  - bugfix: You can no longer challenge multiple elite mining mobs at once and get
+      potentially warped between two arenas because of it.
+  - bugfix: You can now lose against elite mining mobs even if you can't die (cough
+      cough Memento Mori) if you're over the minus 200 health threshold. Be careful
+      not to bite the dust.
+  Ghommie (Thanks to dorsisdwarf for the idea):
+  - balance: The detomatix cart now sends forged messages (name and job of the message
+      can also be forged) that can explode a PDA when someone tries to reply to them
+      or access the message menu of the PDA UI up to 10 seconds after receiving it
+      instead of detonating the PDA right off the bat. Because of this and the possibility
+      that a portion of these messages goes "unreplied", the TC cost of the item has
+      also been reduced to 4 and the number of charges upped to 6.
+  Mothblocks:
+  - bugfix: Team antag HUDs will now properly display when they should, and won't
+      display when they shouldn't.
+  - bugfix: Antag HUDs will now properly show on round end again.
+  jlsnow301:
+  - rscadd: All of your favorite simple bot friends aboard the station now have a
+      much better interface in TGUI
+  - qol: You can now lock and unlock bots, including their maintenance hatches, via
+      the UI.
+  tralezab:
+  - expansion: Traitor Flavor now displays on round end!
+2021-11-16:
+  FernandoJ8:
+  - qol: changes the access requirement of chem lockers from chemistry access to pharmacy
+      access
+  Ghommie:
+  - expansion: Hydroponics tray USB port.
+  - expansion: Double beds can now hold two people at a time.
+  - balance: Double beds and double bedsheets, being double the size of normal beds
+      and bedsheets, just like their names suggest, now also cost double the materials
+      to craft and give double the materials when deconstructed.
+  Iamgoofball:
+  - balance: Gives Space Pirates a bonus to hijack speed on the shuttle, and allows
+      them to hijack.
+  Mickyan:
+  - balance: Wings now allow falling short distances without taking damage (you will
+      still suffer from knockdown)
+  RandomGamer123:
+  - bugfix: Fixes the HFR (and other indestructible machinery with component parts)
+      from being able to be blown up by external sources under special conditions.
+  - bugfix: Fixes the nuke disk from being able to be made inaccessible by being placed
+      in the center of the HFR.
+  Thunder12345:
+  - bugfix: Atheists will no longer mistakenly attempt to get closer to a god they
+      do not believe in when committing suicide with their fedora
+  Watermelon914:
+  - bugfix: Fixed the foreach and filter circuit component not functioning correctly.
+  itseasytosee:
+  - imageadd: added a sprite for the sectile when worn on your belt.
+  - expansion: The Nanotrasen High Impact Weapons Division would like to apologize
+      for manufacturing a large quantity of dud onboard nuclear warheads. Following
+      a recall, we expect that the replacement batch of warheads will be 900% more
+      likely to Anhilate all life within its radius.
+  tralezab:
+  - bugfix: cargo consoles aren't breaking when department orders buys a canister.
+      seriously though who buys canisters man

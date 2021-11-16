@@ -78,24 +78,6 @@
 	last_found = world.time
 	limiting_spam = FALSE
 
-/mob/living/simple_animal/bot/honkbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-			<TT><B>Honkomatic Bike Horn Unit v1.0.7 controls</B></TT><BR><BR>
-			Status: []<BR>
-			Behaviour controls are [bot_status_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]<BR>
-			Maintenance panel panel is [bot_status_flags & BOT_COVER_OPEN ? "opened" : "closed"]"},
-
-			"<A href='?src=[REF(src)];power=[TRUE]'>[bot_status_flags & BOT_MODE_ON ? "On" : "Off"]</A>" )
-
-	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
-		dat += text({"<BR> Auto Patrol: []"},
-
-			"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return dat
-
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
 	var/final = NONE
 	if(check_records)

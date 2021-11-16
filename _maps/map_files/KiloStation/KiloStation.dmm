@@ -49430,7 +49430,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/airalarm/engine{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/engine,

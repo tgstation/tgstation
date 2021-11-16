@@ -18322,7 +18322,7 @@
 "cFL" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = -23
 	},
 /turf/open/floor/iron,

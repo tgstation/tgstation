@@ -34554,7 +34554,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/meter,
 /obj/machinery/airalarm/engine{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/structure/cable/layer3,
@@ -58028,7 +58027,7 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/mixingchamber{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/open/floor/iron/white,
