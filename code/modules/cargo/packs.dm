@@ -2393,7 +2393,7 @@
 		new item(C)
 
 /datum/supply_pack/costumes_toys/mafia
-	name = "Mafia Starter Pack"
+	name = "Mafioso Starter Pack"
 	desc = "This crate contains everything you need to set up your own racketeering operation."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list()
