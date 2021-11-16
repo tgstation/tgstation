@@ -176,8 +176,6 @@
 		if(!QDELETED(card))
 			card.update_appearance()
 		return
-	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
-		paiInterface()
 	if(hackprogress >= 100)
 		hackprogress = 0
 		var/obj/machinery/door/D = hacking_cable.machine
@@ -238,7 +236,7 @@
 
 /datum/action/innate/pai/software/Trigger()
 	..()
-	P.paiInterface()
+	P.ui_act()
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"
