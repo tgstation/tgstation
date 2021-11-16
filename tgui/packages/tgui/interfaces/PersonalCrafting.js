@@ -1,13 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import {
-  Button,
-  Dimmer,
-  Icon,
-  LabeledList,
-  Section,
-  Stack,
-  Tabs,
-} from '../components';
+import { Button, Dimmer, Icon, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const PersonalCrafting = (props, context) => {
