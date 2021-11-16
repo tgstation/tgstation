@@ -62,14 +62,19 @@ type CustomInput = {
   img: string;
 };
 
-export const Vending = (props, context) => {
+export const Vending = (_, context) => {
+  const { data } = useBackend<VendingData>(context);
+  const { onstation } = data;
+
   return (
     <Window width={450} height={600}>
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item>
-            <UserDetails />
-          </Stack.Item>
+          {!!onstation && (
+            <Stack.Item>
+              <UserDetails />
+            </Stack.Item>
+          )}
           <Stack.Item grow>
             <ProductDisplay />
           </Stack.Item>
@@ -82,11 +87,9 @@ export const Vending = (props, context) => {
 /** Displays user details if an ID is present and the user is on the station */
 const UserDetails = (_, context) => {
   const { data } = useBackend<VendingData>(context);
-  const { user, onstation } = data;
+  const { user } = data;
 
-  if (!onstation) {
-    return <NoticeBox>Error!</NoticeBox>;
-  } else if (!user) {
+  if (!user) {
     return (
       <NoticeBox>No ID detected! Contact the Head of Personnel.</NoticeBox>
     );
@@ -115,6 +118,7 @@ const UserDetails = (_, context) => {
 const ProductDisplay = (_, context) => {
   const { data } = useBackend<VendingData>(context);
   const {
+    onstation,
     user,
     product_records = [],
     coin_records = [],
@@ -141,9 +145,11 @@ const ProductDisplay = (_, context) => {
       scrollable
       title="Products"
       buttons={
-        <Box fontSize="16px" color="green">
-          {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
-        </Box>
+        !!onstation && (
+          <Box fontSize="16px" color="green">
+            {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
+          </Box>
+        )
       }>
       <Table>
         {inventory.map((product) => (
@@ -175,8 +181,8 @@ const VendingRow = (props, context) => {
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled
     = productStock.amount === 0
-    || !user
-    || (free && discount ? redPrice : product.price) > user.cash;
+    || !user && onstation
+    || (free && discount ? redPrice : product.price) > user?.cash;
 
   return (
     <Table.Row>
@@ -188,10 +194,7 @@ const VendingRow = (props, context) => {
       </Table.Cell>
       <Table.Cell>
         {!!productStock?.colorable && (
-          <ProductColorSelect
-            disabled={disabled}
-            product={product}
-          />
+          <ProductColorSelect disabled={disabled} product={product} />
         )}
       </Table.Cell>
       <Table.Cell collapsing textAlign="right">
@@ -275,28 +278,37 @@ const ProductStock = (props) => {
 /** The main button to purchase an item. */
 const ProductButton = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
-  const { access } = data;
-  const { custom, discount, disabled, free, product, redPrice } = props;
+  const { access, onstation } = data;
+  const { custom, discount, disabled, product, redPrice } = props;
+  const customPrice = access ? 'FREE' : product.price + ' cr';
+  let standardPrice;
+  if (!onstation) {
+    standardPrice = "FREE";
+  } else if (discount) {
+    standardPrice = `${redPrice} cr`;
+  } else {
+    standardPrice = `${product.price} cr`;
+  }
 
   return custom ? (
     <Button
       fluid
       disabled={disabled}
-      content={access ? 'FREE' : product.price + ' cr'}
       onClick={() =>
         act('dispense', {
           'item': product.name,
         })}
-    />
+    >{customPrice}
+    </Button>
   ) : (
     <Button
       fluid
       disabled={disabled}
-      content={free && discount ? `${redPrice} cr` : `${product.price} cr`}
       onClick={() =>
         act('vend', {
           'ref': product.ref,
         })}
-    />
+    >{standardPrice}
+    </Button>
   );
 };
