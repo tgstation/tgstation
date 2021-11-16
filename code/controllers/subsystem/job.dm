@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(!player.client)
 			JobDebug("FOC player client no longer exists, Player: [player]")
-			return
+			continue
 		// Initial screening check. Does the player even have the job enabled, if they do - Is it at the correct priority level?
 		var/player_job_level = player.client?.prefs.job_preferences[job.title]
 		if(isnull(player_job_level))
