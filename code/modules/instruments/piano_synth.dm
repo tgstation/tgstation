@@ -5,13 +5,13 @@
 	icon_state = "synth"
 	inhand_icon_state = "synth"
 	allowed_instrument_ids = "piano"
-	var/circuit_shell = TRUE
+	var/circuit_type = /obj/item/circuit_component/synth
+	var/shell_capacity = SHELL_CAPACITY_SMALL
 
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
 	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
-	if(circuit_shell)
-		AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/synth), SHELL_CAPACITY_SMALL)
+	AddComponent(/datum/component/shell, list(new circuit_type), shell_capacity)
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"
@@ -26,7 +26,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_ASSISTANT * 2.5
 	instrument_range = 1
-	circuit_shell = FALSE
+	circuit_type = /obj/item/circuit_component/synth/headphones
+	shell_capacity = SHELL_CAPACITY_TINY
 
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
 	. = ..()
@@ -182,3 +183,7 @@
 
 /obj/item/circuit_component/synth/proc/set_sustain_decay()
 	synth.song.full_sustain_held_note = !!synth.song.full_sustain_held_note
+
+/obj/item/circuit_component/synth/headphones
+	display_name = "Headphones"
+	desc = "An advanced electronic device that plays music into your ears."
