@@ -26,7 +26,7 @@
 	/// Purchase log, listing all the purchases this uplink has made
 	var/datum/uplink_purchase_log/purchase_log
 	/// The current linked uplink handler.
-	var/datum/uplink_handler
+	var/datum/uplink_handler/uplink_handler
 	/// Code to unlock the uplink.
 	var/unlock_code
 
@@ -164,7 +164,14 @@
 			if(!(initial(item_path.purchasable_from) & uplink_flag))
 				return
 
-			if(initial(item_path.progression_minimum) > progression)
+			if(uplink_handler.progression_points < initial(item_path.progression_minimum))
+				return
+
+			if(uplink_handler.progression)
+
+			if(initial(item_path.limited_stock))
+				var/initial_stock = item_path.limited_stock
+
 
 		if("lock")
 			active = FALSE
