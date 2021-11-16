@@ -75,9 +75,9 @@ GLOBAL_VAR(station_nuke_source)
 	switch(off_station)
 		if(0)
 			if(get_antag_minds(/datum/antagonist/nukeop).len && syndies_escaped())
-				return CINEMATIC_ANNIHILATION
-			else
 				return CINEMATIC_NUKE_WIN
+			else
+				return CINEMATIC_ANNIHILATION
 		if(1)
 			return CINEMATIC_NUKE_MISS
 		if(2)
