@@ -3,8 +3,6 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 
-	///how many times a this movable had movement procs called on it since Moved() was last called
-	var/move_stacks = 0
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
@@ -372,17 +370,16 @@
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
 	var/atom/old_loc = loc
-	move_stacks++
 	loc = new_loc
 	Moved(old_loc)
 
 #define BENCHMARK_LOOP while(world.timeofday < end_time)
 #define BENCHMARK_RESET iterations = 0; end_time = world.timeofday + duration
-#define BENCHMARK_MESSAGE(message) message_admins("[message] got [iterations] iterations in 1 seconds!"); BENCHMARK_RESET
+#define BENCHMARK_MESSAGE(message) message_admins("[message] got [iterations] iterations in 30 seconds!"); BENCHMARK_RESET
 
 /atom/movable/proc/benchmark()
 	var/iterations = 0
-	var/duration = 1 SECONDS
+	var/duration = 30 SECONDS
 	var/end_time = world.timeofday + duration
 
 	BENCHMARK_LOOP
@@ -399,9 +396,6 @@
 
 	BENCHMARK_MESSAGE("diag move")
 
-#define SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)\
-if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
-
 /atom/movable/Move(atom/newloc, direction, glide_size_override)
 	var/atom/movable/pullee = pulling
 	if(!moving_from_pull)
@@ -417,30 +411,41 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 		moving_diagonally = TRUE
 		if(set_dir_on_move)
 			setDir(direction) //We first set the direction to prevent going through dir sensible object
-		if((direction & NORTH) && get_step(loc, NORTH)?.Enter(src) && get_step(loc, NORTH).Exit(src, direction & ~NORTH))
+		if((direction & NORTH) && get_step(loc, NORTH)?.Exit(src, direction & ~NORTH) && get_step(loc, NORTH).Enter(src))
 			can_pass_diagonally = NORTH
-		else if((direction & SOUTH) && get_step(loc, SOUTH)?.Enter(src) && get_step(loc, SOUTH).Exit(src, direction & ~SOUTH))
+		else if((direction & SOUTH) && get_step(loc, SOUTH)?.Exit(src, direction & ~SOUTH) && get_step(loc, SOUTH).Enter(src))
 			can_pass_diagonally = SOUTH
-		else if((direction & EAST) && get_step(loc, EAST)?.Enter(src) && get_step(loc, EAST).Exit(src, direction & ~EAST))
+		else if((direction & EAST) && get_step(loc, EAST)?.Exit(src, direction & ~EAST) && get_step(loc, EAST).Enter(src))
 			can_pass_diagonally =  EAST
-		else if((direction & WEST) && get_step(loc, WEST)?.Enter(src) && get_step(loc, WEST).Exit(src, direction & ~WEST))
+		else if((direction & WEST) && get_step(loc, WEST)?.Exit(src, direction & ~WEST) && get_step(loc, WEST).Enter(src))
 			can_pass_diagonally = WEST
 		else
 			moving_diagonally = FALSE
 			return
 		moving_diagonally = FALSE
+		///Properly enter and exit the can_pass_diagonally tile
+		loc.Exited(src, can_pass_diagonally)
+		get_step(loc, can_pass_diagonally).Entered(src, loc, null)
+		Moved(loc, can_pass_diagonally)
+		if(set_dir_on_move)
+			setDir(direction &~ can_pass_diagonally)
+	
+	else if(set_dir_on_move)
+		setDir(direction)
 
 	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
-
 	var/list/old_locs
 	if(is_multi_tile_object && isturf(loc))
 		old_locs = locs // locs is a special list, this is effectively the same as .Copy() but with less steps
 		for(var/atom/exiting_loc as anything in old_locs)
 			if(!exiting_loc.Exit(src, direction))
-				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
+	
 	else if(!loc.Exit(src, direction))
-		SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
+		if(can_pass_diagonally)
+			loc = get_step(loc, can_pass_diagonally)
+			if(set_dir_on_move)
+				setDir(can_pass_diagonally)
 		return
 	var/atom/oldloc
 	var/list/new_locs
@@ -455,30 +460,16 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src) || SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
-				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
 	else
 		var/enter_return_value = newloc.Enter(src)
 		if(!(enter_return_value & TURF_CAN_ENTER) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
-			if(!can_pass_diagonally || (enter_return_value & TURF_ENTER_ALREADY_MOVED))
-				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
-				return
-			//We are not able to make the last diag move, but we can make the first one
-			newloc = get_step(loc, can_pass_diagonally)
-			direction = can_pass_diagonally
-			can_pass_diagonally = NONE
-		///Properly enter and exit the can_pass_diagonally tile
-		if(can_pass_diagonally)
-			oldloc = loc
-			loc = get_step(loc, can_pass_diagonally)
-			oldloc.Exited(src, can_pass_diagonally)
-			loc.Entered(src, oldloc, old_locs)
-			move_stacks++
-			Moved(oldloc, can_pass_diagonally)
-			
-
-	SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
-
+			if(can_pass_diagonally && !(enter_return_value & TURF_ENTER_ALREADY_MOVED))
+				loc = get_step(loc, can_pass_diagonally)
+				if(set_dir_on_move)
+					setDir(can_pass_diagonally)
+			return
+	
 	oldloc = loc
 	loc = newloc
 
@@ -510,7 +501,6 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
-	move_stacks++
 	Moved(oldloc, direction)
 
 	if(pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
@@ -548,13 +538,6 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 		newtonian_move(movement_dir)
 	if (length(client_mobs_in_contents))
 		update_parallax_contents()
-
-	move_stacks--
-	if(move_stacks > 0) //we want only the first Moved() call in the stack to send this signal, all the other ones have an incorrect old_loc
-		return
-	if(move_stacks < 0)
-		stack_trace("move_stacks is negative in Moved()!")
-		move_stacks = 0 //setting it to 0 so that we dont get every movable with negative move_stacks runtiming on every movement
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs)
 
@@ -696,7 +679,6 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
-	move_stacks++
 	var/atom/oldloc = loc
 	if(destination)
 		if(pulledby)
