@@ -582,6 +582,9 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	. = list()
 	.["bannedFromUrgentAhelp"] = is_banned_from(user.ckey, "Urgent Adminhelp")
 	.["urgentAhelpPromptMessage"] = CONFIG_GET(string/urgent_ahelp_user_prompt)
+	var/webhook_url = CONFIG_GET(string/adminhelp_webhook_url)
+	if(webhook_url)
+		.["urgentAhelpEnabled"] = TRUE
 
 /datum/admin_help_ui_handler/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -648,17 +651,8 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		return
 
 	message = trim(message)
-	var/urgent = FALSE
-	var/list/admins = get_admin_counts(R_BAN)
-	if(!is_banned_from(ckey, "Urgent Adminhelp") && length(admins["present"]) == 0 && (GLOB.admin_help_ui_handler.ahelp_cooldowns?[ckey] || 0) <= world.time)
-		urgent = alert(src, "Request an admin? [CONFIG_GET(string/urgent_ahelp_user_prompt)]", \
-			"No admins on", "No", "Yes") == "Yes"
 
-	var/list/potentially_new_admins = get_admin_counts(R_BAN)
-	if(length(potentially_new_admins["present"]) != 0)
-		urgent = FALSE
-
-	GLOB.admin_help_ui_handler.perform_adminhelp(src, message, urgent)
+	GLOB.admin_help_ui_handler.perform_adminhelp(src, message, FALSE)
 
 /client/verb/adminhelp()
 	set category = "Admin"
