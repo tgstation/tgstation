@@ -427,7 +427,7 @@
 		loc.Exited(src, can_pass_diagonally)
 		get_step(loc, can_pass_diagonally).Entered(src, loc, null)
 		Moved(loc, can_pass_diagonally)
-		if(set_dir_on_move)
+		if(set_dir_on_move) //We want to set the direction to be the one of the "second" diagonal move, aka not can_pass_diagonally
 			setDir(direction &~ can_pass_diagonally)
 	
 	else if(set_dir_on_move)
@@ -465,9 +465,9 @@
 		var/enter_return_value = newloc.Enter(src)
 		if(!(enter_return_value & TURF_CAN_ENTER) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
 			if(can_pass_diagonally && !(enter_return_value & TURF_ENTER_ALREADY_MOVED))
-				loc = get_step(loc, can_pass_diagonally)
-				if(set_dir_on_move)
-					setDir(can_pass_diagonally)
+				loc = get_step(loc, can_pass_diagonally)//We failed to finish our diagonal move. We actually move the loc now to properly finish the first move
+				if(set_dir_on_move) 					//we didn't do it earlier because it allows to push/shuffle diagonally
+					setDir(can_pass_diagonally)			//We also set the dir correctly so it doesn't look weird
 			return
 	
 	oldloc = loc
