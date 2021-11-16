@@ -28,7 +28,7 @@
 			var/obj/item/seeds/starthistle/harvestseeds = Copy()
 			harvestseeds.forceMove(output_loc)
 
-	parent.update_tray()
+	parent.update_tray(user, seed_count)
 
 // Corpse flower
 /obj/item/seeds/starthistle/corpse_flower

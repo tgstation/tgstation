@@ -1,0 +1,5 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "Special air alarms (syndicate, ruins, unlocked, engine, etc) should now all be facing the correct direction."
+  - bugfix: "IceBox's Mixing Chamber air alarm is now placed on the correct tile."
