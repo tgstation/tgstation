@@ -76814,8 +76814,8 @@
 /area/security/execution/transfer)
 "qLa" = (
 /obj/machinery/light/directional/north,
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
+/obj/machinery/computer/cargo/request{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)

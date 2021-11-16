@@ -50894,12 +50894,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
+/obj/machinery/computer/cargo/request{
+	dir = 8
 	},
-/obj/item/pen,
 /turf/open/floor/iron,
 /area/cargo/office)
 "rvc" = (
