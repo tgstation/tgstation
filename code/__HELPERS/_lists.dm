@@ -416,10 +416,10 @@
 				return_list += wordlist[i]
 			bit = bit << 1
 	else
-        //"(1 << 23) << 1" is 0 because byond:tm:, and probably floats.
-        //Since we start at 0, this is the only way bit can be lower than 1.
-        //The alternative is to either move the check in the for loop with a break or hardcode a number to check for
-        for(var/bit=1, bit != 0, bit = bit << 1)
+		//"(1 << 23) << 1" is 0 because byond:tm:, and probably floats.
+		//Since we start at 0, this is the only way bit can be lower than 1.
+		//The alternative is to either move the check in the for loop with a break or hardcode a number to check for
+		for(var/bit=1, bit != 0, bit = bit << 1)
 			if(bitfield & bit)
 				return_list += bit
 
