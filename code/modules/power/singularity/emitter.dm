@@ -78,11 +78,10 @@
 	. = ..()
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
-	if (welded)
-		if (!anchored)
+	if(welded)
+		if(!anchored)
 			set_anchored(TRUE)
-		if (!mapload)
-			connect_to_network()
+		connect_to_network()
 
 	sparks = new
 	sparks.attach(src)

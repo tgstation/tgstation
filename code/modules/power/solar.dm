@@ -36,8 +36,7 @@
 	panel.icon_state = "solar_panel"
 	panel.layer = FLY_LAYER
 	Make(S)
-	if (!mapload)
-		connect_to_network()
+	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
 
 /obj/machinery/power/solar/Destroy()
@@ -318,13 +317,9 @@
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
-	if (!mapload)
-		connect_to_network()
+	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)
-
-/obj/machinery/power/solar_control/should_have_node()
-	return TRUE
 
 /obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)

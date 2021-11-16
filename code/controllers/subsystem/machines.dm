@@ -18,9 +18,6 @@ SUBSYSTEM_DEF(machines)
 	powernets.Cut()
 
 	for(var/obj/structure/cable/power_cable as anything in GLOB.cable_list)
-		power_cable.Connect_cable()
-
-	for(var/obj/structure/cable/power_cable as anything in GLOB.cable_list)
 		if(!power_cable.powernet)
 			var/datum/powernet/new_powernet = new()
 			new_powernet.add_cable(power_cable)

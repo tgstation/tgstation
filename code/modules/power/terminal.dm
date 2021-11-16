@@ -33,6 +33,14 @@
 		// something which needs to happen a lot.
 		RegisterSignal(loc, COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_cable_link)
 		RegisterSignal(get_step(loc, dir), COMSIG_POWERNET_CABLE_CHECK_BLOCK, .proc/block_reverse_cable_link)
+		// Race checking: If the powernet initialized first, we have to clean up.
+		// Terminals, especially ones that block, are relatively rare compared to power cables,
+		// so we perform our full search here rather than in each Connect_cable()
+		for(var/obj/structure/cable/cable in loc)
+			if (cable.linked_dirs & dir)
+				cable.Connect_cable(TRUE)
+
+	connect_to_network()
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)

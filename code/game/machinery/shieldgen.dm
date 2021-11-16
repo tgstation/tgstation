@@ -285,7 +285,7 @@
 
 /obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
-	if(anchored && !mapload)
+	if(anchored)
 		connect_to_network()
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 

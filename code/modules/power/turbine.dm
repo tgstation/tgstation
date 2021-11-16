@@ -173,19 +173,15 @@
 // The outlet is pointed at the direction of the turbine component
 	outturf = get_step(src, dir)
 	locate_machinery()
-	if (!compressor)
+	if(!compressor)
 		atom_break()
-	if (!mapload)
-		connect_to_network()
+	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
-
-/obj/machinery/power/turbine/should_have_node()
-	return TRUE
 
 /obj/machinery/power/turbine/examine(mob/user)
 	. = ..()
