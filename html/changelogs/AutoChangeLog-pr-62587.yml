@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - qol: "(Slower) Mobs won't look so jittery while being moved by the tram anymore."
+  - qol: "This also applies to the tram itself."

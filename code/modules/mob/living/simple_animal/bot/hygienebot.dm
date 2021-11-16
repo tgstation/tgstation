@@ -205,23 +205,6 @@
 	washing = FALSE
 	update_appearance()
 
-
-
-/mob/living/simple_animal/bot/hygienebot/get_controls(mob/user)
-	var/list/dat = list()
-	dat += hack(user)
-	dat += showpai(user)
-	dat += {"
-			<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
-			Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
-			Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-			Maintenance panel is [open ? "opened" : "closed"]"}
-
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
-
-	return dat.Join("")
-
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
 	if((emagged) && L.stat != DEAD)
 		return FALSE

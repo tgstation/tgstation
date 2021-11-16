@@ -420,7 +420,7 @@
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
-							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
+							"targets" = list(STRINGIFY_PDA_TARGET(customrecepient.owner, customrecepient.ownjob))
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)

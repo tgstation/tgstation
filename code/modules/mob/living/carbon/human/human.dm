@@ -48,11 +48,15 @@
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
-	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1) // falling off one level
+	if(stat != CONSCIOUS || levels > 1) // you're not The One
 		return ..()
-	visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
-					span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
-	Knockdown(levels * 40)
+	var/obj/item/organ/external/wings/gliders = getorgan(/obj/item/organ/external/wings)
+	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+		visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
+						span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
+		Knockdown(levels * 40)
+		return
+	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -290,8 +294,8 @@
 							"name" = "Security Citation",
 							"job" = "Citation Server",
 							"message" = message,
-							"targets" = list("[P.owner] ([P.ownjob])"),
-							"automated" = 1
+							"targets" = list(STRINGIFY_PDA_TARGET(P.owner, P.ownjob)),
+							"automated" = TRUE
 						))
 						signal.send_to_receivers()
 						usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)

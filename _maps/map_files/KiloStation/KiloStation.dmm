@@ -2081,7 +2081,7 @@
 /area/maintenance/starboard)
 "ajq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/service{
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -11887,11 +11887,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/computer/cargo/request{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
+	},
+/obj/machinery/computer/department_orders/science{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/science/research)
@@ -12079,6 +12079,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"bhQ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/commons/locker)
 "bhT" = (
 /obj/machinery/chem_dispenser{
 	layer = 2.7
@@ -20972,7 +20980,7 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "cmB" = (
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer/department_orders/engineering{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -27655,6 +27663,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
+"dGT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/commons/locker)
 "dHr" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -32669,10 +32682,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/computer/cargo/request{
+/obj/structure/disposalpipe/segment,
+/obj/machinery/computer/department_orders/medical{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "fuO" = (
@@ -35354,6 +35367,11 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
+"gyK" = (
+/obj/structure/flora/grass/jungle,
+/obj/structure/chair,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
 "gyT" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -49412,7 +49430,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/airalarm/engine{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/engine,
@@ -68030,13 +68047,12 @@
 /turf/closed/wall/rust,
 /area/cargo/drone_bay)
 "ski" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/cryopod,
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/commons/locker)
 "sko" = (
@@ -70007,11 +70023,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/computer/cargo/request{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/computer/department_orders/security{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/security/office)
@@ -73630,13 +73646,12 @@
 	},
 /area/maintenance/port/fore)
 "usn" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/cryopod,
+/obj/structure/chair/stool,
 /turf/open/floor/iron/dark,
 /area/commons/locker)
 "usI" = (
@@ -80754,16 +80769,12 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "xbU" = (
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/cryopod,
-/obj/machinery/computer/cryopod{
-	pixel_y = 24
-	},
+/obj/structure/chair/stool,
 /turf/open/floor/iron/dark,
 /area/commons/locker)
 "xbZ" = (
@@ -104871,7 +104882,7 @@ fSW
 rOO
 afe
 usn
-kcq
+dGT
 eoj
 lmP
 riz
@@ -105128,7 +105139,7 @@ bwD
 agm
 aoH
 ski
-kcq
+dGT
 haI
 jbj
 oVx
@@ -105385,7 +105396,7 @@ bwO
 kwO
 afe
 xbU
-kcq
+bhQ
 kCl
 lmP
 tKx
@@ -105393,7 +105404,7 @@ tNZ
 dNK
 erP
 cOg
-cBv
+gyK
 bUv
 szb
 ttf

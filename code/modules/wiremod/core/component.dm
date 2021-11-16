@@ -275,6 +275,12 @@
 /obj/item/circuit_component/proc/get_location()
 	return get_turf(src) || get_turf(parent?.shell)
 
+/obj/item/circuit_component/balloon_alert(mob/viewer, text)
+	if(parent)
+		return parent.balloon_alert(viewer, text)
+	return ..()
+
+
 /// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)
 	SHOULD_NOT_SLEEP(TRUE)
