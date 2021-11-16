@@ -45,8 +45,6 @@
 	var/window_name = "Protobot 1.0"
 	///The inserted (if any) pAI in this bot.
 	var/obj/item/paicard/paicard
-	///If a pAI is allowed to be inserted into this bot.
-	var/allow_pai = TRUE
 	///The type of bot it is, for radio control.
 	var/bot_type = NONE
 
@@ -56,8 +54,8 @@
 	var/list/prev_access = list()
 
 	///Bot-related mode flags on the Bot indicating how they will act.
-	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
-//	Selections: BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
+	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
+//	Selections: BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
 
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging.
 	var/bot_cover_flags = BOT_COVER_LOCKED
@@ -112,12 +110,24 @@
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
 	var/list/mode_name = list(
-		"In Pursuit","Preparing to Arrest", "Arresting",
-		"Beginning Patrol", "Patrolling", "Summoned by PDA",
-		"Cleaning", "Repairing", "Proceeding to work site", "Healing",
-		"Proceeding to AI waypoint", "Navigating to Delivery Location", "Navigating to Home",
-		"Waiting for clear path", "Calculating navigation path", "Pinging beacon network",
-		"Unable to reach destination", "Chasing filth",
+		"In Pursuit",
+		"Preparing to Arrest",
+		"Arresting",
+		"Beginning Patrol",
+		"Patrolling",
+		"Summoned by PDA",
+		"Cleaning",
+		"Repairing",
+		"Proceeding to work site",
+		"Healing",
+		"Proceeding to AI waypoint",
+		"Navigating to Delivery Location",
+		"Navigating to Home",
+		"Waiting for clear path",
+		"Calculating navigation path",
+		"Pinging beacon network",
+		"Unable to reach destination",
+		"Chasing filth",
 	)
 	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
 	var/path_image_icon = 'icons/mob/aibots.dmi'
@@ -866,7 +876,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["pai"] = list()
 	data["settings"] = list()
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
-		data["pai"]["allow_pai"] = allow_pai
+		data["pai"]["allow_pai"] = bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE
 		data["pai"]["card_inserted"] = paicard
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
 		data["settings"]["maintenance_lock"] = !(bot_cover_flags & BOT_COVER_OPEN)
@@ -950,7 +960,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
-	if(!allow_pai || !key)
+	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || !key)
 		to_chat(user, span_warning("[src] is not compatible with [card]!"))
 		return
 	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))

@@ -37501,10 +37501,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Maintenance - East Tram Tunnel 4"
 	},
-/mob/living/simple_animal/bot/secbot{
-	auto_patrol = 1;
-	name = "Officer Tunnel Rat"
-	},
+/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /turf/open/floor/iron,
 /area/maintenance/tram/right)
 "mna" = (
@@ -62158,11 +62155,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/medbot{
-	auto_patrol = 1;
-	desc = "A little medical robot. He looks somewhat overwhelmed.";
-	name = "Emergency T.R.A.M Unit"
-	},
+/mob/living/simple_animal/bot/medbot/autopatrol,
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
 "vMl" = (

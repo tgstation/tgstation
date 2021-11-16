@@ -70,6 +70,9 @@
 	///Cooldown to track last time we were tipped/righted and said a voice line, to avoid spam
 	COOLDOWN_DECLARE(last_tipping_action_voice)
 
+/mob/living/simple_animal/bot/medbot/autopatrol
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
+
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."

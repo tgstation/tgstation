@@ -53,6 +53,9 @@
 
 	var/ascended = FALSE // if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
 
+/mob/living/simple_animal/bot/cleanbot/autopatrol
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
+
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
 	if(in_range(src, user))

@@ -22143,11 +22143,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/mob/living/simple_animal/bot/medbot{
-	auto_patrol = 1;
-	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
-	name = "Inspector Johnson"
-	},
+/mob/living/simple_animal/bot/medbot/autopatrol,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -27969,11 +27965,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/cleanbot{
-	auto_patrol = 1;
-	icon_state = "cleanbot1";
-	name = "Mopficcer Sweepsky"
-	},
+/mob/living/simple_animal/bot/cleanbot/autopatrol,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "hPP" = (

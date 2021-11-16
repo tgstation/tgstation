@@ -718,7 +718,7 @@
 		menu += "Model: [active_bot.bot_type]<BR>"
 		menu += "Location: [get_area(active_bot)]<BR>"
 		menu += "Mode: [active_bot.get_mode()]"
-		if(active_bot.allow_pai)
+		if(active_bot.bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE)
 			menu += "<BR>pAI: "
 			if(active_bot.paicard && active_bot.paicard.pai)
 				menu += "[active_bot.paicard.pai.name]"

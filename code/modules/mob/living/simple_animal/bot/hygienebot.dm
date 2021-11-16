@@ -17,7 +17,7 @@
 	bot_core = /obj/machinery/bot_core/hygienebot
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
-	allow_pai = FALSE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
 	bot_type = HYGIENE_BOT
 	hackables = "cleaning service protocols"
 	path_image_color = "#993299"

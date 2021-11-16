@@ -50,6 +50,17 @@
 
 /** Simple Animal BOT defines */
 
+//Assembly defines
+#define ASSEMBLY_FIRST_STEP 1
+#define ASSEMBLY_SECOND_STEP 2
+#define ASSEMBLY_THIRD_STEP 3
+#define ASSEMBLY_FOURTH_STEP 4
+#define ASSEMBLY_FIFTH_STEP 5
+#define ASSEMBLY_SIXTH_STEP 6
+#define ASSEMBLY_SEVENTH_STEP 7
+#define ASSEMBLY_EIGHTH_STEP 8
+#define ASSEMBLY_NINTH_STEP 9
+
 //Bot defines, placed here so they can be read by other things!
 /// Delay between movemements
 #define BOT_STEP_DELAY 4
@@ -67,6 +78,8 @@
 #define BOT_MODE_AUTOPATROL (1<<1)
 ///The Bot is currently allowed to be remote controlled by Silicon.
 #define BOT_MODE_REMOTE_ENABLED (1<<2)
+///The Bot is allowed to have a pAI placed in control of it.
+#define BOT_MODE_PAI_CONTROLLABLE (1<<3)
 
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.
@@ -101,6 +114,8 @@
 #define VIBE_BOT "Vibebot"
 
 //Mode defines. If you add a new one make sure you update mode_name in /mob/living/simple_animal/bot
+
+// General Bot modes //
 /// Idle
 #define BOT_IDLE 0
 /// Found target, hunting
@@ -115,6 +130,8 @@
 #define BOT_SUMMON 5
 /// Currently moving
 #define BOT_MOVING 6
+
+// Unique modes //
 /// Secbot - At target, preparing to arrest
 #define BOT_PREP_ARREST 7
 /// Secbot - Arresting target
@@ -153,16 +170,3 @@
 #define SECBOT_CHECK_RECORDS (1<<3)
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
-
-/** Misc Robot defines */
-
-//Assembly defines
-#define ASSEMBLY_FIRST_STEP 1
-#define ASSEMBLY_SECOND_STEP 2
-#define ASSEMBLY_THIRD_STEP 3
-#define ASSEMBLY_FOURTH_STEP 4
-#define ASSEMBLY_FIFTH_STEP 5
-#define ASSEMBLY_SIXTH_STEP 6
-#define ASSEMBLY_SEVENTH_STEP 7
-#define ASSEMBLY_EIGHTH_STEP 8
-#define ASSEMBLY_NINTH_STEP 9

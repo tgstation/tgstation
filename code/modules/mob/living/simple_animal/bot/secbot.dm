@@ -17,7 +17,7 @@
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	allow_pai = FALSE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
 	path_image_color = "#FF0000"
