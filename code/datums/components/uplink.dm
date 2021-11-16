@@ -241,7 +241,7 @@
 		return
 	if (!user || user.incapacitated())
 		return
-	if(!(user.mind.assigned_role.title in U.restricted_roles))
+	if(U.restricted_roles.len && !(user.mind.assigned_role.title in U.restricted_roles))
 		return
 
 	if(telecrystals < U.cost || U.limited_stock == 0)
@@ -304,7 +304,7 @@
 	interact(null, user)
 	to_chat(user, span_hear("The PDA softly beeps."))
 	user << browse(null, "window=pda")
-	master.mode = 0
+	master.ui_mode = PDA_UI_HUB
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()

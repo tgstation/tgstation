@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	if (partners.len)
 		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
 			if (pda.owner in partners)
-				targets += "[pda.owner] ([pda.ownjob])"
+				targets += STRINGIFY_PDA_TARGET(pda.owner, pda.ownjob)
 
 	if (!targets.len)
 		return
