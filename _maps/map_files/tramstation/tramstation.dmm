@@ -6586,11 +6586,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
-"aMM" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/maintenance/tram/left)
 "aMP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -6621,14 +6616,14 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
 "aNb" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "aNc" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "aNd" = (
@@ -8369,21 +8364,6 @@
 	dir = 1
 	},
 /area/service/bar)
-"bgj" = (
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/floor/iron,
-/area/maintenance/tram/left)
 "bgn" = (
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
@@ -11914,8 +11894,8 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "cJa" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "cJe" = (
@@ -21439,15 +21419,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
-"gex" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
-/obj/structure/lattice/catwalk,
-/obj/machinery/door/poddoor/shutters{
-	id = "trammaintdock"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/central)
 "geF" = (
 /obj/structure/railing{
 	dir = 4
@@ -32694,10 +32665,10 @@
 /area/hallway/secondary/construction/engineering)
 "kmQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "knj" = (
@@ -34026,7 +33997,6 @@
 "kQu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/maintenance/port/central)
@@ -35726,10 +35696,10 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "lBw" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "lBE" = (
@@ -42373,10 +42343,10 @@
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "ohM" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /mob/living/basic/cockroach,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "oim" = (
@@ -44274,7 +44244,7 @@
 /area/service/hydroponics)
 "oRZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/lattice/catwalk,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "oSa" = (
@@ -56438,10 +56408,10 @@
 /area/maintenance/central)
 "txq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "tyc" = (
@@ -60427,9 +60397,9 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "uXw" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "uYl" = (
@@ -63780,12 +63750,12 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "wtb" = (
-/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "wtm" = (
@@ -89877,8 +89847,8 @@ tpS
 tpS
 tpS
 kQu
-gex
-bgj
+hsL
+ljS
 kmQ
 oRZ
 oRZ
@@ -90905,13 +90875,13 @@ tpS
 tpS
 tpS
 kQu
-gex
-bgj
-aMM
-aMM
-aMM
-aMM
-aMM
+hsL
+ljS
+oRZ
+oRZ
+oRZ
+oRZ
+oRZ
 rUb
 fDW
 nia
@@ -91933,8 +91903,8 @@ tpS
 tpS
 tpS
 kQu
-gex
-bgj
+hsL
+ljS
 txq
 oRZ
 oRZ
