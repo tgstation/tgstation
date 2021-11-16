@@ -409,7 +409,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	var/was_on = bot_status_flags & BOT_MODE_ON
+	var/was_on = bot_status_flags & BOT_MODE_ON ? TRUE : FALSE
 	stat |= EMPED
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
