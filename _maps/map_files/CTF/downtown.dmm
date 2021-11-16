@@ -63,7 +63,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "bs" = (
-/obj/structure/chair/stool/bar{
+/obj/structure/chair/stool/bar/directional/south{
 	item_chair = null;
 	resistance_flags = 64
 	},
@@ -1384,9 +1384,9 @@
 /area/ctf)
 "Am" = (
 /obj/structure/window/reinforced/fulltile{
+	atom_integrity = 5000;
 	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
+	name = "hardened window"
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -1620,7 +1620,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/structure/chair/stool/bar/directional/south,
+/obj/structure/chair/stool/bar/directional/north{
+	item_chair = null;
+	resistance_flags = 64
+	},
 /turf/open/floor/iron,
 /area/ctf)
 "DE" = (
@@ -3683,9 +3686,9 @@ xs
 td
 Bh
 ql
-hU
+go
 ql
-hU
+go
 QC
 td
 mB
@@ -3835,9 +3838,9 @@ BH
 Am
 Ug
 ql
-hU
+go
 ql
-hU
+go
 QC
 Am
 Ad
@@ -4180,7 +4183,7 @@ dO
 sZ
 Dm
 ql
-hU
+go
 td
 qT
 yX

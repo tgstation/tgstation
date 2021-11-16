@@ -196,9 +196,11 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
+	//Is this airlock actually radioactive?
+	var/actually_radioactive = TRUE
 
 /obj/machinery/door/airlock/uranium/process()
-	if(world.time > last_event+20)
+	if(actually_radioactive && world.time > last_event+20)
 		if(prob(50))
 			radiate()
 		last_event = world.time
@@ -216,6 +218,12 @@
 /obj/machinery/door/airlock/uranium/glass
 	opacity = FALSE
 	glass = TRUE
+
+/obj/machinery/door/airlock/uranium/safe
+	actually_radioactive = FALSE
+
+/obj/machinery/door/airlock/uranium/glass/safe
+	actually_radioactive = FALSE
 
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"

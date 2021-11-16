@@ -1,5 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - refactor: "Refactor parts of the job assignment system, unifying job eligibility checks."
-  - qol: "Adds improved logging for job assignment."

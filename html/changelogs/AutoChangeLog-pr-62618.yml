@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed shoving being agressively weird, please report any oddities it's a bit of a headache getting behavior to match and I'm flying a bit blind"

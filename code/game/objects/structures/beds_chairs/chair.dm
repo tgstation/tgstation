@@ -173,6 +173,7 @@
 	max_integrity = 70
 	buildstackamount = 2
 	item_chair = null
+	// The mutable appearance used for the overlay over buckled mobs.
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/comfy/Initialize(mapload)
@@ -181,7 +182,7 @@
 	return ..()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
-	return mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
+	return mutable_appearance(icon, "[icon_state]_armrest")
 
 /obj/structure/chair/comfy/Destroy()
 	QDEL_NULL(armrest)
@@ -222,9 +223,6 @@
 	icon_state = "shuttle_chair"
 	buildstacktype = /obj/item/stack/sheet/mineral/titanium
 
-/obj/structure/chair/comfy/shuttle/GetArmrest()
-	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
-
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
 		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
@@ -235,9 +233,6 @@
 	desc = "A luxurious chair, the many purple scales reflect the light in a most pleasing manner."
 	icon_state = "carp_chair"
 	buildstacktype = /obj/item/stack/sheet/animalhide/carp
-
-/obj/structure/chair/comfy/carp/GetArmrest()
-	return mutable_appearance('icons/obj/chairs.dmi', "carp_chair_armrest")
 
 /obj/structure/chair/office
 	anchored = FALSE

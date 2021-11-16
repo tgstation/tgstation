@@ -1,4 +1,0 @@
-author: "antropod"
-delete-after: True
-changes: 
-  - bugfix: "fixed chem analyzer not showing impure reagents that don't have impure chem (like multiver)"

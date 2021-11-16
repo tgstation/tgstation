@@ -623,12 +623,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Recreation Area"
 	icon_state = "rec"
 
-/area/commons/cryopods
-	name = "\improper Cryopod Room"
-	icon_state = "cryopod"
-
 // Commons - Vacant Rooms
-
 /area/commons/vacant_room
 	name = "\improper Vacant Room"
 	icon_state = "vacant_room"

@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the response signal not being able to be connected to regular signals."
