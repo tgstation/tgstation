@@ -76813,11 +76813,10 @@
 /turf/open/floor/iron,
 /area/security/execution/transfer)
 "qLa" = (
-/obj/machinery/computer/cargo/request{
-	icon_state = "computer";
-	dir = 8
+/obj/machinery/light/directional/north,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "qLc" = (

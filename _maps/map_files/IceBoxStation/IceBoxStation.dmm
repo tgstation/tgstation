@@ -15130,10 +15130,10 @@
 /turf/open/openspace,
 /area/science/xenobiology)
 "dQC" = (
+/mob/living/carbon/human/species/monkey,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "dQS" = (
@@ -15891,10 +15891,10 @@
 /turf/open/floor/iron/white,
 /area/science/lab)
 "ekN" = (
+/mob/living/carbon/human/species/monkey,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "ekV" = (
@@ -29290,11 +29290,11 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "ldQ" = (
+/mob/living/carbon/human/species/monkey,
 /obj/machinery/camera/directional/east{
 	c_tag = "Genetics Monkey Pen";
 	network = list("ss13","rd")
 	},
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/engine,
 /area/science/genetics)
 "len" = (
@@ -34562,7 +34562,9 @@
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/entry)
 "nQF" = (
-/obj/machinery/computer/cargo/request,
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
 /turf/open/floor/iron,
 /area/cargo/office)
 "nQI" = (
@@ -36330,11 +36332,11 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "oKN" = (
+/mob/living/simple_animal/pet/penguin/baby,
 /obj/item/toy/snowball{
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/mob/living/simple_animal/pet/penguin/baby,
 /turf/open/floor/plating/asteroid/snow/standard_air,
 /area/science/research)
 "oKR" = (
@@ -52246,11 +52248,11 @@
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /mob/living/simple_animal/pet/dog/corgi/ian{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)

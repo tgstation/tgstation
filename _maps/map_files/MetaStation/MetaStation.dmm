@@ -5287,7 +5287,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/construction/storage_wing)
 "aXq" = (
@@ -16207,20 +16206,10 @@
 /turf/open/floor/wood,
 /area/command/heads_quarters/hop)
 "dIN" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/westleft{
-	dir = 2;
-	name = "Cargo Desk";
-	req_access_txt = "50"
+/obj/machinery/door/airlock{
+	id_tag = "AuxToilet1";
+	name = "Unit 1"
 	},
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/paper/crumpled{
-	pixel_x = 7
-	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/commons/toilet/auxiliary)
 "dIW" = (
@@ -19292,6 +19281,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/service/theater)
+"eKu" = (
+/obj/effect/turf_decal/trimline/brown/filled/corner,
+/turf/open/floor/iron,
+/area/construction/storage_wing)
 "eKx" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
@@ -20203,23 +20196,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/security/execution/education)
-"faT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/westleft{
-	dir = 2;
-	name = "Cargo Desk";
-	req_access_txt = "50"
-	},
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/paper/crumpled{
-	pixel_x = 7
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/hallway/primary/port)
 "fbk" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
 	dir = 8
@@ -63426,15 +63402,6 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
-"uFQ" = (
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/computer/cargo/request{
-	icon_state = "computer";
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/cargo/sorting)
 "uFV" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -87876,7 +87843,7 @@ biy
 afs
 blW
 bnM
-faT
+rJv
 rJv
 rJv
 rJv
@@ -93519,8 +93486,8 @@ wcm
 mVk
 aUk
 uwx
-aXq
-uFQ
+eKu
+iFZ
 svm
 eGZ
 fxy
