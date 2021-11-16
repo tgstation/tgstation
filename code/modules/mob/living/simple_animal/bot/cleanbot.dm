@@ -389,7 +389,7 @@
 /mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
 	var/list/data = ..()
 
-	if(!locked || issilicon(user)|| isAdminGhostAI(user))
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user)|| isAdminGhostAI(user))
 		data["custom_controls"]["clean_blood"] = blood
 		data["custom_controls"]["clean_trash"] = trash
 		data["custom_controls"]["clean_graffiti"] = drawn
@@ -399,7 +399,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
 	. = ..()
-	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("clean_blood")

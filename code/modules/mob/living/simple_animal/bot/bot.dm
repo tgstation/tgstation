@@ -857,16 +857,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/list/data = list()
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
-	data["emagged"] = emagged
-	data["locked"] = locked
+	data["emagged"] = bot_status_flags & BOT_EMAGGED
+	data["locked"] = bot_status_flags & BOT_COVER_LOCKED
 	data["pai"] = list()
 	data["settings"] = list()
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["pai"]["allow_pai"] = allow_pai
 		data["pai"]["card_inserted"] = paicard
-		data["settings"]["airplane_mode"] = remote_disabled
-		data["settings"]["maintenance_lock"] = !open
-		data["settings"]["power"] = on
+		data["settings"]["airplane_mode"] = !(bot_status_flags & BOT_AI_REMOTE_ENABLED)
+		data["settings"]["maintenance_lock"] = !(bot_status_flags & BOT_COVER_OPEN)
+		data["settings"]["power"] = bot_status_flags & BOT_MODE_ON
 		data["settings"]["patrol_station"] = auto_patrol
 	return data
 
@@ -879,15 +879,17 @@ Pass a positive integer as an argument to override a bot's default speed.
 		to_chat(usr, span_warning("Access denied."))
 		return
 	if(action == "lock")
-		locked = !locked
-	if(locked && !(issilicon(usr) || isAdminGhostAI(usr)))
+		bot_status_flags ^= BOT_COVER_LOCKED
+	if(bot_status_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
 		return
 	switch(action)
 		if("power")
-			bot_status_flags ^= BOT_MODE_ON
-			update_appearance()
+			if(bot_status_flags & BOT_MODE_ON)
+				turn_off()
+			else
+				turn_on()
 		if("maintenance")
-			open = !open
+			bot_status_flags ^= BOT_COVER_OPEN
 		if("patrol")
 			auto_patrol = !auto_patrol
 			bot_reset()
@@ -910,10 +912,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
 		if("eject_pai")
-			if((bot_status_flags & BOT_COVER_LOCKED) && !(issilicon(usr) || isAdminGhostAI(usr)))
-				return
 			if(paicard)
-				to_chat(usr, span_notice("You eject [paicard] from [bot_name]."))
+				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
 				ejectpai(usr)
 	return
 

@@ -145,10 +145,21 @@
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/medbot/ui_data(mob/user)
+	var/list/data = ..()
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+		data["custom_controls"]["heal_threshold"] = heal_threshold
+		data["custom_controls"]["speaker"] = !shut_up
+		data["custom_controls"]["crit_alerts"] = declare_crit
+		data["custom_controls"]["stationary_mode"] = stationary_mode
+		data["custom_controls"]["sync_tech"] = TRUE
+	return data
+
 // Actions received from TGUI
 /mob/living/simple_animal/bot/medbot/ui_act(action, params)
 	. = ..()
-	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("heal_threshold")
@@ -570,7 +581,7 @@
 	if(declare_cooldown > world.time)
 		return
 	var/area/location = get_area(src)
-	speak("Medical emergency! [crit_patient || "A patient"] is in critical condition at [location]!",radio_channel)
+	speak("Medical emergency! [crit_patient || "A patient"] is in critical condition at [location]!", radio_channel)
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot

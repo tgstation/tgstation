@@ -143,10 +143,21 @@
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/secbot/ui_data(mob/user)
+	var/list/data = ..()
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
+		data["custom_controls"]["check_id"] = security_mode_flags & SECBOT_CHECK_IDS
+		data["custom_controls"]["check_weapons"] = security_mode_flags & SECBOT_CHECK_WEAPONS
+		data["custom_controls"]["check_warrants"] = security_mode_flags & SECBOT_CHECK_RECORDS
+		data["custom_controls"]["handcuff_targets"] = security_mode_flags & SECBOT_HANDCUFF_TARGET
+		data["custom_controls"]["arrest_alert"] = security_mode_flags & SECBOT_DECLARE_ARRESTS
+	return data
+
 // Actions received from TGUI
 /mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("check_id")

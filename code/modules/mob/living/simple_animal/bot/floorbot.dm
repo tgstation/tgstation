@@ -129,7 +129,7 @@
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/floorbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_status_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["tile_hull"] = autotile
 		data["custom_controls"]["place_tiles"] =  placetiles
 		data["custom_controls"]["place_custom"] = replacetiles
@@ -146,7 +146,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/floorbot/ui_act(action, params)
 	. = ..()
-	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_status_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("place_custom")
