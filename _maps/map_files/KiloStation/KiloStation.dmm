@@ -13078,20 +13078,7 @@
 /turf/open/floor/iron/dark,
 /area/hallway/primary/starboard)
 "bpL" = (
-/obj/effect/turf_decal/tile/brown,
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/machinery/computer/cargo/request,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bpM" = (
