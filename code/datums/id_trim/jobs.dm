@@ -21,10 +21,13 @@
 	var/config_job
 	/// An ID card with an access in this list can apply this trim to IDs or use it as a job template when adding access to a card. If the list is null, cannot be used as a template. Should be Head of Staff or ID Console accesses or it may do nothing.
 	var/list/template_access
-	/// The typepath to the job datum from the id_trim.
-	var/datum/job/job
+	/// The typepath to the job datum from the id_trim. This is converted to one of the job singletons in New().
+	var/datum/job/job = /datum/job/unassigned
 
 /datum/id_trim/job/New()
+	if(ispath(job))
+		job = SSjob.GetJobType(job)
+
 	if(isnull(job_changes))
 		job_changes = SSmapping.config.job_changes
 

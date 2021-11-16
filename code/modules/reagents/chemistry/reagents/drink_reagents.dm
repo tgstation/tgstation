@@ -226,7 +226,7 @@
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 0.3))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
 		if(myseed)
 			myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
@@ -601,8 +601,8 @@
 /datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)

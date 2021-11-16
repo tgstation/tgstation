@@ -720,7 +720,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!holder)
 		return
 
-	if(has_antag_hud())
+	if(combo_hud_enabled)
 		toggle_combo_hud()
 
 	holder.deactivate()

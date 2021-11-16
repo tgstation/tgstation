@@ -1,0 +1,6 @@
+author: "Paxilmaniac"
+delete-after: True
+changes: 
+  - balance: "the marine ert is no longer as vulnerable to atmospheric problems as before"
+  - imageadd: "a new centcom themed combat uniform"
+  - imageadd: "objectively better looking marine armor"
