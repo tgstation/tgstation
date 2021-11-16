@@ -70,7 +70,7 @@
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/lift_master/proc/MoveLiftHorizontal(going, z, set_glide_size = 8)
+/datum/lift_master/proc/MoveLiftHorizontal(going, z, gliding_amount = 8)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
@@ -93,12 +93,12 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, set_glide_size)
+					lift_platform?.travel(going, gliding_amount)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, set_glide_size)
+					lift_platform?.travel(going, gliding_amount)
 	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x in max_x to min_x step -1)
@@ -106,12 +106,12 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, set_glide_size)
+					lift_platform?.travel(going, gliding_amount)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going, set_glide_size)
+					lift_platform?.travel(going, gliding_amount)
 	set_controls(UNLOCKED)
 
 ///Check destination turfs
@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
-/obj/structure/industrial_lift/proc/travel(going, new_glide_size = 8)
+/obj/structure/industrial_lift/proc/travel(going, gliding_amount = 8)
 	var/list/things2move = LAZYCOPY(lift_load)
 	var/turf/destination
 	if(!isturf(going))
@@ -286,10 +286,10 @@ GLOBAL_LIST_EMPTY(lifts)
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
 
-	set_glide_size(new_glide_size)
+	set_glide_size(gliding_amount)
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things2move)
-		thing.set_glide_size(new_glide_size) //matches the glide size of the moving platform to stop them from jittering on it.
+		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
