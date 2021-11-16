@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Dimmer, Icon, LabeledList, Section, Stack, Tabs } from '../components';
+import {
+  Button,
+  Dimmer,
+  Icon,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 export const PersonalCrafting = (props, context) => {
@@ -94,13 +102,14 @@ export const PersonalCrafting = (props, context) => {
                 </>
               }>
               <Section fill scrollable>
-                {!!busy && (
+                {busy ? (
                   <Dimmer fontSize="32px">
                     <Icon name="cog" spin={1} />
                     {' Crafting...'}
                   </Dimmer>
+                ) : (
+                  <CraftingList craftables={shownRecipes} />
                 )}
-                <CraftingList craftables={shownRecipes} />
               </Section>
             </Section>
           </Stack.Item>
