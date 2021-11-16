@@ -37068,7 +37068,7 @@
 /obj/item/crowbar/red,
 /obj/machinery/camera{
 	c_tag = "Bar Storage";
-	dir = 5;
+	dir = 10;
 	name = "bar camera"
 	},
 /turf/open/floor/iron/dark,
