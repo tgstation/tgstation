@@ -419,12 +419,12 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 			setDir(direction) //We first set the direction to prevent going through dir sensible object
 		if((direction & NORTH) && get_step(loc, NORTH)?.Enter(src) && get_step(loc, NORTH).Exit(src, direction & ~NORTH))
 			can_pass_diagonally = NORTH
+		else if((direction & SOUTH) && get_step(loc, SOUTH)?.Enter(src) && get_step(loc, SOUTH).Exit(src, direction & ~SOUTH))
+			can_pass_diagonally = SOUTH
 		else if((direction & EAST) && get_step(loc, EAST)?.Enter(src) && get_step(loc, EAST).Exit(src, direction & ~EAST))
 			can_pass_diagonally =  EAST
 		else if((direction & WEST) && get_step(loc, WEST)?.Enter(src) && get_step(loc, WEST).Exit(src, direction & ~WEST))
 			can_pass_diagonally = WEST
-		else if((direction & SOUTH) && get_step(loc, SOUTH)?.Enter(src) && get_step(loc, SOUTH).Exit(src, direction & ~SOUTH))
-			can_pass_diagonally = SOUTH
 		else
 			moving_diagonally = FALSE
 			return
@@ -442,7 +442,7 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 	else if(!loc.Exit(src, direction))
 		SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 		return
-
+	var/atom/oldloc
 	var/list/new_locs
 	if(is_multi_tile_object && isturf(newloc))
 		new_locs = block(
@@ -460,16 +460,26 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 	else
 		var/enter_return_value = newloc.Enter(src)
 		if(!(enter_return_value & TURF_CAN_ENTER) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
-			if(can_pass_diagonally && !(enter_return_value & TURF_ENTER_ALREADY_MOVED))
-				Move(get_step(loc, can_pass_diagonally), can_pass_diagonally)
+			if(!can_pass_diagonally || (enter_return_value & TURF_ENTER_ALREADY_MOVED))
+				SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 				return
-			SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
-			return
+			//We are not able to make the last diag move, but we can make the first one
+			newloc = get_step(loc, can_pass_diagonally)
+			direction = can_pass_diagonally
+			can_pass_diagonally = NONE
+		///Properly enter and exit the can_pass_diagonally tile
+		if(can_pass_diagonally)
+			oldloc = loc
+			loc = get_step(loc, can_pass_diagonally)
+			oldloc.Exited(src, can_pass_diagonally)
+			loc.Entered(src, oldloc, old_locs)
+			move_stacks++
+			Moved(oldloc, can_pass_diagonally)
+			
 
 	SET_CARDINAL_DIR(set_dir_on_move, direction, can_pass_diagonally)
 
-	var/atom/oldloc = loc
-	move_stacks++
+	oldloc = loc
 	loc = newloc
 
 	if(old_locs) // This condition will only be true if it is a multi-tile object.
@@ -500,6 +510,7 @@ if(set_dir_on_move){setDir(direction &~ can_pass_diagonally)}
 	if(glide_size_override)
 		set_glide_size(glide_size_override)
 
+	move_stacks++
 	Moved(oldloc, direction)
 
 	if(pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
