@@ -1,0 +1,4 @@
+author: "esainane"
+delete-after: True
+changes: 
+  - bugfix: "Some diagonal cameras are back to being placed on walls, instead of floating. For real this time, honest."
