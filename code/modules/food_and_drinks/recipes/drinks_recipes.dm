@@ -322,8 +322,8 @@
 	results = list(/datum/reagent/consumable/ethanol/snowwhite = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/beer = 1, /datum/reagent/consumable/lemon_lime = 1)
 
-/datum/chemical_reaction/drink/irishcarbomb
-	results = list(/datum/reagent/consumable/ethanol/irishcarbomb = 2)
+/datum/chemical_reaction/drink/irishslammer
+	results = list(/datum/reagent/consumable/ethanol/irishslammer = 2)
 	required_reagents = list(/datum/reagent/consumable/ethanol/ale = 1, /datum/reagent/consumable/ethanol/irish_cream = 1)
 
 /datum/chemical_reaction/drink/syndicatebomb

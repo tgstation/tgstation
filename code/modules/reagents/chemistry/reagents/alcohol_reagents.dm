@@ -1259,16 +1259,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			changeling.chem_charges = clamp(changeling.chem_charges, 0, changeling.chem_storage)
 	return ..()
 
-/datum/reagent/consumable/ethanol/irishcarbomb
-	name = "Irish Car Bomb"
-	description = "Mmm, tastes like the free Irish state."
+/datum/reagent/consumable/ethanol/irishslammer
+	name = "Irish Slammer"
+	description = "Mmm, tastes like the Emerald Isle."
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 25
 	quality = DRINK_GOOD
 	taste_description = "the spirit of Ireland"
-	glass_icon_state = "irishcarbomb"
-	glass_name = "Irish Car Bomb"
-	glass_desc = "An Irish car bomb."
+	glass_icon_state = "irishslammer"
+	glass_name = "Irish Slammer"
+	glass_desc = "An Irish slammer."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/syndicatebomb

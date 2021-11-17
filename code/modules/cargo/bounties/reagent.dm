@@ -50,7 +50,7 @@
 		/datum/reagent/consumable/ethanol/grog,\
 		/datum/reagent/consumable/ethanol/hooch,\
 		/datum/reagent/consumable/ethanol/iced_beer,\
-		/datum/reagent/consumable/ethanol/irishcarbomb,\
+		/datum/reagent/consumable/ethanol/irishslammer,\
 		/datum/reagent/consumable/ethanol/manhattan,\
 		/datum/reagent/consumable/ethanol/margarita,\
 		/datum/reagent/consumable/ethanol/gargle_blaster,\
