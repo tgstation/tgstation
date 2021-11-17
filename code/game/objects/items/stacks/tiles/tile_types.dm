@@ -1124,3 +1124,30 @@
 
 /obj/item/stack/tile/catwalk_tile/sixty
 	amount = 60
+
+// Glass floors
+/obj/item/stack/tile/glass
+	name = "glass floor"
+	singular_name = "glass floor tile"
+	desc = "Glass window floors, to let you see... Whatever that is down there."
+	icon_state = "tile_glass"
+	turf_type = /turf/open/floor/glass
+	inhand_icon_state = "tile-glass"
+	merge_type = /obj/item/stack/tile/glass
+	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+
+/obj/item/stack/tile/glass/sixty
+	amount = 60
+
+/obj/item/stack/tile/rglass
+	name = "reinforced glass floor"
+	singular_name = "reinforced glass floor tile"
+	desc = "Reinforced glass window floors. These bad boys are 50% stronger than their predecessors!"
+	icon_state = "tile_rglass"
+	inhand_icon_state = "tile-rglass"
+	turf_type = /turf/open/floor/glass/reinforced
+	merge_type = /obj/item/stack/tile/rglass
+	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+
+/obj/item/stack/tile/rglass/sixty
+	amount = 60

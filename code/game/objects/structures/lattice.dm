@@ -23,7 +23,7 @@
 	. += deconstruction_hints(user)
 
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
-	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i>, <i>glass sheets</i>, or a <i>tile</i>.")
+	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.")
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()

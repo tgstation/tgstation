@@ -126,24 +126,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 				to_chat(user, span_warning("You need one floor tile to build a floor!"))
 		else
 			to_chat(user, span_warning("The plating is going to need some support! Place iron rods first."))
-	if(istype(C, /obj/item/stack/sheet/glass) || (istype(C, /obj/item/stack/sheet/rglass)))
-		var/obj/item/stack/sheet/clear = C
-		var/obj/structure/lattice/lat = locate(/obj/structure/lattice, src)
-		if(!lat)
-			to_chat(user, span_warning("You can't build a floor without some lattice supports!"))
-			return
-		if(istype(lat, /obj/structure/lattice/catwalk))
-			return
-		to_chat(user, span_notice("You start to create a glass floor using the lattice as a frame."))
-		if(do_after(user, 5 SECONDS, target = src))
-			if(istype(clear, /obj/item/stack/sheet/rglass))
-				PlaceOnTop(/turf/open/floor/glass/reinforced, flags = CHANGETURF_INHERIT_AIR)
-				to_chat(user, span_notice("You build a reinforced glass floor."))
-			else
-				PlaceOnTop(/turf/open/floor/glass, flags = CHANGETURF_INHERIT_AIR)
-				to_chat(user, span_notice("You build a glass floor."))
-			playsound(src, 'sound/items/deconstruct.ogg', 60, TRUE)
-			clear.use(1)
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
