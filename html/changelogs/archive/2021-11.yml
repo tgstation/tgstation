@@ -551,3 +551,37 @@
   tralezab:
   - bugfix: cargo consoles aren't breaking when department orders buys a canister.
       seriously though who buys canisters man
+2021-11-17:
+  Ghommie:
+  - qol: (Slower) Mobs won't look so jittery while being moved by the tram anymore.
+  - qol: This also applies to the tram itself.
+  GoldenAlpharex:
+  - code_imp: Improved the comfy chair's armrest code.
+  Krysonism:
+  - expansion: Small and large plates have been added to the kitchen vend.
+  - expansion: Plates will now break when thrown.
+  - expansion: Carpskin suits and fedoras can now be crafted using carp scales.
+  LordVollkorn:
+  - bugfix: Pure Inacusiate is now humanly possible to create
+  - bugfix: Truly pure Multiver is much easier to achieve now
+  Paxilmaniac:
+  - balance: the marine ert is no longer as vulnerable to atmospheric problems as
+      before
+  - imageadd: a new centcom themed combat uniform
+  - imageadd: objectively better looking marine armor
+  RaveRadbury:
+  - qol: You can now load plates onto trays
+  UnokiAs:
+  - imageadd: New barrier grenade sprite
+  - qol: Easier to differentiate the barrier grenade and flashbang
+  WarlockD:
+  - rscadd: Added /datum/design/component/list_assoc_literal
+  esainane:
+  - bugfix: UpdatePaths will now handle lists that contain strings.
+  - bugfix: Some diagonal cameras are back to being placed on walls, instead of floating.
+      For real this time, honest.
+  - bugfix: Special air alarms (syndicate, ruins, unlocked, engine, etc) should now
+      all be facing the correct direction.
+  - bugfix: IceBox's Mixing Chamber air alarm is now placed on the correct tile.
+  tralezab:
+  - rscadd: Added two new fish to the aquarium
