@@ -949,10 +949,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 13
-	},
+/obj/machinery/duct,
 /turf/open/floor/wood/tile,
 /area/service/theater)
 "eA" = (
@@ -2932,6 +2929,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/duct,
 /turf/open/floor/wood/tile,
 /area/service/theater)
 "mJ" = (
@@ -3208,6 +3206,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/theater)
 "nO" = (
@@ -3233,6 +3232,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "nU" = (
@@ -5091,6 +5091,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "uB" = (
@@ -7383,7 +7384,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/theater)
 "DI" = (
@@ -8699,7 +8699,6 @@
 "IF" = (
 /obj/machinery/holopad,
 /obj/effect/landmark/start/clown,
-/obj/machinery/duct,
 /turf/open/floor/wood/tile,
 /area/service/theater)
 "IH" = (
@@ -12046,6 +12045,13 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/service/bar)
+"VE" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/service)
 "VG" = (
 /obj/machinery/shower{
 	dir = 4
@@ -12375,6 +12381,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/small/directional/east,
+/obj/machinery/duct,
 /turf/open/floor/wood/tile,
 /area/service/theater)
 "Xc" = (
@@ -12422,7 +12429,6 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/cable,
 /obj/effect/landmark/event_spawn,
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/theater)
 "Xk" = (
@@ -48521,7 +48527,7 @@ Et
 qJ
 LA
 Ji
-Ji
+VE
 Ji
 Ji
 PO

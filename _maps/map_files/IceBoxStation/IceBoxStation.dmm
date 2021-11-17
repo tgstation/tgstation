@@ -9670,6 +9670,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "bMY" = (
@@ -14493,7 +14494,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "dxt" = (
@@ -35195,6 +35195,7 @@
 /area/security/prison)
 "ogs" = (
 /obj/machinery/holopad,
+/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "ogL" = (
@@ -35669,7 +35670,6 @@
 /obj/machinery/reagentgrinder{
 	pixel_y = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "orL" = (
@@ -47132,7 +47132,6 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Service-Botany Top 1"
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "uoh" = (
