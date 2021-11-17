@@ -1,3 +1,6 @@
+#define OPENSPACE_HAS_TRANSPARENCY 1
+#define OPENSPACE_HAS_BOTTOM_Z 0
+
 GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
 
 /atom/movable/openspace_backdrop
@@ -37,7 +40,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 /turf/open/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, FALSE)
+	AddElement(/datum/element/turf_z_transparency, OPENSPACE_HAS_BOTTOM_Z, OPENSPACE_HAS_TRANSPARENCY)
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
@@ -181,3 +184,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/icemoon/ruins
 	protect_ruin = FALSE
 	drill_below = FALSE
+
+#undef OPENSPACE_HAS_TRANSPARENCY
+#undef OPENSPACE_HAS_BOTTOM_Z
