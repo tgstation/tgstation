@@ -380,6 +380,6 @@
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
 
-/obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
+/obj/item/clothing/suit/armor/vest/hop_formal/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
