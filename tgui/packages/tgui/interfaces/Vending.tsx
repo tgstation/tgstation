@@ -145,7 +145,7 @@ const ProductDisplay = (_, context) => {
       scrollable
       title="Products"
       buttons={
-        !!onstation && (
+        !!onstation && user && (
           <Box fontSize="16px" color="green">
             {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
           </Box>)
@@ -179,9 +179,9 @@ const VendingRow = (props, context) => {
   const discount = department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled
-    = productStock.amount === 0
-    || !user && onstation
-    || (free && discount ? redPrice : product.price) > user?.cash;
+  = (productStock.amount === 0)
+  || onstation && !user
+  || onstation && ((discount ? redPrice : product.price) > user?.cash);
 
   return (
     <Table.Row>
