@@ -27,9 +27,6 @@
 /turf/open/floor/glass/LateInitialize()
 	. = ..()
 	AddElement(/datum/element/turf_z_transparency, TRUE)
-	plane = FLOOR_PLANE
-	layer = TURF_LAYER
-
 
 /turf/open/floor/glass/reinforced
 	name = "Reinforced glass floor"
