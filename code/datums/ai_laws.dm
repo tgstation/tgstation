@@ -389,7 +389,7 @@
 		inherent -= .
 		return
 	var/list/supplied_laws = list()
-	for(var/index in 1 to supplied.len, index++)
+	for(var/index in 1 to supplied.len)
 		var/law = supplied[index]
 		if(length(law) > 0)
 			supplied_laws += index //storing the law number instead of the law
