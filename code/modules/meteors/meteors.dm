@@ -108,14 +108,15 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		qdel(src)
 		return FALSE
 
-	. = ..() //process movement...
+	return ..()
 
-	if(.)//.. if did move, ram the turf we get in
-		var/turf/T = get_turf(loc)
-		ram_turf(T)
+/obj/effect/meteor/Moved()
+	. = ..()
+	var/turf/T = get_turf(loc)
+	ram_turf(T)
 
-		if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
-			get_hit()
+	if(prob(10) && !isspaceturf(T))//randomly takes a 'hit' from ramming
+		get_hit()
 
 /obj/effect/meteor/Destroy()
 	if (timerid)
@@ -343,10 +344,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	meteordrop = list(/obj/item/stack/ore/plasma)
 	threat = 50
 
-/obj/effect/meteor/tunguska/Move()
+/obj/effect/meteor/tunguska/Moved(atom/OldLoc, Dir)
 	. = ..()
-	if(.)
-		new /obj/effect/temp_visual/revenant(get_turf(src))
+	new /obj/effect/temp_visual/revenant(get_turf(src))
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()

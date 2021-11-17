@@ -18,6 +18,7 @@ Buildable meters
 	icon_state = "simple"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
+	set_dir_on_move = FALSE
 	///Piping layer that we are going to be on
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///Type of pipe-object made, selected from the RPD
@@ -113,11 +114,6 @@ Buildable meters
 /obj/item/pipe/trinary/flippable/do_a_flip()
 	setDir(turn(dir, flipped ? 45 : -45))
 	flipped = !flipped
-
-/obj/item/pipe/Move()
-	var/old_dir = dir
-	..()
-	setDir(old_dir) //pipes changing direction when moved is just annoying and buggy
 
 // Convert dir of fitting into dir of built component
 /obj/item/pipe/proc/fixed_dir()

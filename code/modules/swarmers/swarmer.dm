@@ -85,8 +85,7 @@
 	. = ..()
 	if(!LAZYLEN(dronelist))
 		return
-	for(var/d in dronelist)
-		var/mob/living/simple_animal/hostile/drone = d
+	for(var/mob/living/simple_animal/hostile/drone as anything in dronelist)
 		if(!drone.target && !HAS_TRAIT(drone, TRAIT_IMMOBILIZED) && isturf(drone.loc))
 			step_to(drone, src)
 

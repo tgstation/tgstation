@@ -10,6 +10,7 @@
 	density = FALSE
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	max_integrity = 200
+	set_dir_on_move = FALSE
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename
 
@@ -40,11 +41,6 @@
 	update_appearance()
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-
-/obj/structure/disposalconstruct/Move()
-	var/old_dir = dir
-	..()
-	setDir(old_dir) //pipes changing direction when moved is just annoying and buggy
 
 /obj/structure/disposalconstruct/update_icon_state()
 	if(ispath(pipe_type, /obj/machinery/disposal/bin))

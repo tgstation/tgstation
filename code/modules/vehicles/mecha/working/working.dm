@@ -8,10 +8,9 @@
 	QDEL_NULL(box)
 	return ..()
 
-/obj/vehicle/sealed/mecha/working/Move()
+/obj/vehicle/sealed/mecha/working/Moved(atom/OldLoc, Dir)
 	. = ..()
-	if(.)
-		collect_ore()
+	collect_ore()
 
 /**
  * Handles collecting ore.

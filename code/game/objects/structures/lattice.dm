@@ -84,11 +84,11 @@
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")
 
-/obj/structure/lattice/catwalk/Move()
+/obj/structure/lattice/catwalk/Moved(atom/OldLoc, Dir)
+	. = ..()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
 		C.deconstruct()
-	..()
 
 /obj/structure/lattice/catwalk/deconstruct()
 	var/turf/T = loc

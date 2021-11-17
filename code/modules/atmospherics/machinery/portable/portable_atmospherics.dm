@@ -84,10 +84,9 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/Move()
+/obj/machinery/portable_atmospherics/Moved(atom/OldLoc, Dir)
 	. = ..()
-	if(.)
-		disconnect()
+	disconnect()
 
 /**
  * Allow the portable machine to be disconnected from the connector
