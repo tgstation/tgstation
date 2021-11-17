@@ -193,31 +193,32 @@
 /obj/item/cartridge/proc/generate_menu(mob/user)
 	if(!host_pda)
 		return
-	switch(host_pda.mode)
-		if(40) //signaller
+	switch(host_pda.ui_mode)
+		if(PDA_UI_SIGNALER)
 			menu = "<h4>[PDAIMG(signaler)] Remote Signaling System</h4>"
 
 			menu += {"
-<a href='byond://?src=[REF(src)];choice=Send Signal'>Send Signal</A><BR>
-Frequency:
-<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=-10'>-</a>
-<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(radio.frequency)]
-<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=2'>+</a>
-<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=10'>+</a><br>
-<br>
-Code:
-<a href='byond://?src=[REF(src)];choice=Signal Code;scode=-5'>-</a>
-<a href='byond://?src=[REF(src)];choice=Signal Code;scode=-1'>-</a>
-[radio.code]
-<a href='byond://?src=[REF(src)];choice=Signal Code;scode=1'>+</a>
-<a href='byond://?src=[REF(src)];choice=Signal Code;scode=5'>+</a><br>"}
-		if (41) //crew manifest
+				<a href='byond://?src=[REF(src)];choice=Send Signal'>Send Signal</A><BR>
+				Frequency:
+				<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=-10'>-</a>
+				<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=-2'>-</a>
+				[format_frequency(radio.frequency)]
+				<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=2'>+</a>
+				<a href='byond://?src=[REF(src)];choice=Signal Frequency;sfreq=10'>+</a><br>
+				<br>
+				Code:
+				<a href='byond://?src=[REF(src)];choice=Signal Code;scode=-5'>-</a>
+				<a href='byond://?src=[REF(src)];choice=Signal Code;scode=-1'>-</a>
+				[radio.code]
+				<a href='byond://?src=[REF(src)];choice=Signal Code;scode=1'>+</a>
+				<a href='byond://?src=[REF(src)];choice=Signal Code;scode=5'>+</a><br>
+			"}
+		if (PDA_UI_CREW_MANIFEST)
 			menu = "<h4>[PDAIMG(notes)] Crew Manifest</h4>"
 			menu += "<center>[GLOB.data_core.get_manifest_html(monochrome=TRUE)]</center>"
 
 
-		if (42) //status displays
+		if (PDA_UI_STATUS_DISPLAY)
 			menu = "<h4>[PDAIMG(status)] Station Status Display Interlink</h4>"
 
 			menu += "\[ <A HREF='?src=[REF(src)];choice=Status;statdisp=blank'>Clear</A> \]<BR>"
@@ -230,7 +231,7 @@ Code:
 			menu += " <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			menu += " <A HREF='?src=[REF(src)];choice=Status;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
 
-		if (43)
+		if (PDA_UI_POWER_MONITOR)
 			menu = "<h4>[PDAIMG(power)] Power Monitors - Please select one</h4><BR>"
 			powmonitor = null
 			powermonitors = list()
@@ -262,7 +263,7 @@ Code:
 
 				menu += "</FONT>"
 
-		if (433)
+		if (PDA_UI_POWER_MONITOR_SELECTED)
 			menu = "<h4>[PDAIMG(power)] Power Monitor </h4><BR>"
 			if(!powmonitor || !powmonitor.get_powernet())
 				menu += span_danger("No connection<BR>")
@@ -283,24 +284,24 @@ Code:
 
 					var/list/S = list(" Off","AOff","  On", " AOn")
 					var/list/chg = list("N","C","F")
-//Neither copytext nor copytext_char is appropriate here; neither 30 UTF-8 code units nor 30 code points equates to 30 columns of output.
-//Some glyphs are very tall or very wide while others are small or even take up no space at all.
-//Emojis can take modifiers which are many characters but render as only one glyph.
-//A proper solution here (as far as Unicode goes, maybe not ideal as far as markup goes, a table would be better)
-//would be to use <span style="width: NNNpx; overflow: none;">[A.area.name]</span>
+					//Neither copytext nor copytext_char is appropriate here; neither 30 UTF-8 code units nor 30 code points equates to 30 columns of output.
+					//Some glyphs are very tall or very wide while others are small or even take up no space at all.
+					//Emojis can take modifiers which are many characters but render as only one glyph.
+					//A proper solution here (as far as Unicode goes, maybe not ideal as far as markup goes, a table would be better)
+					//would be to use <span style="width: NNNpx; overflow: none;">[A.area.name]</span>
 					for(var/obj/machinery/power/apc/A in L)
 						menu += copytext_char(add_trailing(A.area.name, 30, " "), 1, 30)
 						menu += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_leading(display_power(A.lastused_total), 6, " ")]  [A.cell ? "[add_leading(round(A.cell.percent()), 3, " ")]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 				menu += "</FONT></PRE>"
 
-		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
+		if (PDA_UI_MED_RECORDS)
 			menu = "<h4>[PDAIMG(medical)] Medical Record List</h4>"
 			if(GLOB.data_core.general)
 				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					menu += "<a href='byond://?src=[REF(src)];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 			menu += "<br>"
-		if(441)
+		if(PDA_UI_MED_RECORD_SELECTED)
 			menu = "<h4>[PDAIMG(medical)] Medical Record</h4>"
 
 			if(active1 in GLOB.data_core.general)
@@ -337,14 +338,14 @@ Code:
 				menu += "<b>Record Lost!</b><br>"
 
 			menu += "<br>"
-		if (45) //security records
+		if (PDA_UI_SEC_RECORDS)
 			menu = "<h4>[PDAIMG(cuffs)] Security Record List</h4>"
 			if(GLOB.data_core.general)
 				for (var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					menu += "<a href='byond://?src=[REF(src)];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 			menu += "<br>"
-		if(451)
+		if(PDA_UI_SEC_RECORD_SELECTED)
 			menu = "<h4>[PDAIMG(cuffs)] Security Record</h4>"
 
 			if(active1 in GLOB.data_core.general)
@@ -367,12 +368,13 @@ Code:
 				menu += text("<BR>\nCrimes:")
 
 				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
+					<tr>
+					<th>Crime</th>
+					<th>Details</th>
+					<th>Author</th>
+					<th>Time Added</th>
+					</tr>
+				"}
 				for(var/datum/data/crime/c in active3.fields["crim"])
 					menu += "<tr><td>[c.crimeName]</td>"
 					menu += "<td>[c.crimeDetails]</td>"
@@ -387,7 +389,7 @@ Code:
 
 			menu += "<br>"
 
-		if (47) //quartermaster order records
+		if (PDA_UI_SUPPLY_RECORDS)
 			menu = "<h4>[PDAIMG(crate)] Supply Record Interlink</h4>"
 
 			menu += "<BR><B>Supply shuttle</B><BR>"
@@ -418,7 +420,7 @@ Code:
 				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
-		if (48) // quartermaster ore logs
+		if (PDA_UI_SILO_LOGS)
 			menu = list("<h4>[PDAIMG(crate)] Ore Silo Logs</h4>")
 			if (GLOB.ore_silo_default)
 				var/list/logs = GLOB.silo_access_logs[REF(GLOB.ore_silo_default)]
@@ -436,7 +438,7 @@ Code:
 				menu += "<b>No ore silo detected!</b>"
 			menu = jointext(menu, "")
 
-		if (49) //janitorial locator
+		if (PDA_UI_JANNIE_LOCATOR)
 			menu = "<h4>[PDAIMG(bucket)] Persistent Custodial Object Locator</h4>"
 
 			var/turf/cl = get_turf(src)
@@ -498,7 +500,7 @@ Code:
 				menu += "ERROR: Unable to determine current location."
 			menu += "<br><br><A href='byond://?src=[REF(src)];choice=49'>Refresh GPS Locator</a>"
 
-		if (53) // Newscaster
+		if (PDA_UI_NEWSCASTER)
 			menu = "<h4>[PDAIMG(notes)] Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=[REF(src)];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
 			var/datum/newscaster/feed_channel/current
@@ -520,10 +522,10 @@ Code:
 					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
 			menu += "<br> <A href='byond://?src=[REF(src)];choice=Newscaster Message'>Post Message</a>"
 
-		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
+		if (PDA_UI_BOTS_ACCESS)
 			menu = "<h4>[PDAIMG(medbot)] Bots Interlink</h4>"
 			bot_control()
-		if (55) // Emoji Guidebook for mimes
+		if (PDA_UI_EMOJI_GUIDE)
 			menu = "<h4>[PDAIMG(emoji)] Emoji Guidebook</h4>"
 			var/static/list/emoji_icon_states
 			var/static/emoji_table
@@ -539,7 +541,7 @@ Code:
 			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Your PDA supports the following emoji:<br>"
 			menu += emoji_table
 
-		if (99) //Newscaster message permission error
+		if (PDA_UI_NEWSCASTER_ERROR) //Newscaster message permission error
 			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 
 	return menu
@@ -557,7 +559,7 @@ Code:
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
-			host_pda.mode = 441
+			host_pda.ui_mode = PDA_UI_MED_RECORD_SELECTED
 			if(!active2)
 				active1 = null
 
@@ -565,7 +567,7 @@ Code:
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
-			host_pda.mode = 451
+			host_pda.ui_mode = PDA_UI_SEC_RECORD_SELECTED
 			if(!active3)
 				active1 = null
 
@@ -599,13 +601,13 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			host_pda.mode = 433
+			host_pda.ui_mode = PDA_UI_POWER_MONITOR_SELECTED
 
 		if("Supply Orders")
-			host_pda.mode =47
+			host_pda.ui_mode = PDA_UI_SUPPLY_RECORDS
 
 		if("Newscaster Access")
-			host_pda.mode = 53
+			host_pda.ui_mode = PDA_UI_NEWSCASTER
 
 		if("Newscaster Message")
 			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
@@ -615,16 +617,16 @@ Code:
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != host_pda_owner_name)
-				host_pda.mode = 99
+				host_pda.ui_mode = PDA_UI_NEWSCASTER_ERROR
 				host_pda.Topic(null,list("choice"="Refresh"))
 				return
 			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
-			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
+			host_pda.Topic(null,list("choice"=num2text(host_pda.ui_mode)))
 			return
 
 		if("Newscaster Switch Channel")
 			current_channel = host_pda.msg_input()
-			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
+			host_pda.Topic(null,list("choice"=num2text(host_pda.ui_mode)))
 			return
 
 	//emoji previews

@@ -36,7 +36,9 @@
 	silent = TRUE
 	ttone = "silence"
 
-/obj/item/pda/mime/msg_input(mob/living/U = usr)
+/obj/item/pda/mime/msg_input(mob/living/U = usr, rigged = FALSE)
+	if(rigged)
+		return ..()
 	if(emped || toff)
 		return
 	var/emojis = emoji_sanitize(stripped_input(U, "Please enter emojis", name))

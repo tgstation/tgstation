@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 #endif
 
-#ifdef REFERENCE_TRACKING_LOG
+#ifdef REFERENCE_TRACKING
 #define log_reftracker(msg) log_world("## REF SEARCH [msg]")
 #else
 #define log_reftracker(msg)

@@ -81,7 +81,7 @@
 	icon_state = "witchhunterhat"
 	inhand_icon_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEEYES|HIDEHAIR
+	flags_inv = HIDEEYES
 
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
@@ -531,6 +531,10 @@
 	attack_verb_continuous = list("enlightens", "redpills")
 	attack_verb_simple = list("enlighten", "redpill")
 	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Fits in pockets. Can be worn on the head, obviously."
+
+/obj/item/nullrod/fedora/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"

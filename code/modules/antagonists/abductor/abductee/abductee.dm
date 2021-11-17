@@ -8,7 +8,6 @@
 	name = "Abductee"
 	roundend_category = "abductees"
 	antagpanel_category = "Other"
-	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductee"
 
 /datum/antagonist/abductee/on_gain()
@@ -27,11 +26,3 @@
 	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 	var/datum/objective/abductee/O = new objtype()
 	objectives += O
-
-/datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)

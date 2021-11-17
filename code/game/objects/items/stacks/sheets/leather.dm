@@ -291,6 +291,8 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4), \
 	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1), \
 	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2), \
+	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3), \
+	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()
