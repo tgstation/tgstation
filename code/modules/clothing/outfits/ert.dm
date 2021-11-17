@@ -548,9 +548,9 @@
 	belt = /obj/item/storage/belt/military/assault/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	l_pocket = /obj/item/knife/combat
-	r_pocket = /obj/item/lighter
-	uniform = /obj/item/clothing/under/syndicate/combat
-	mask = /obj/item/clothing/mask/cigarette/robustgold
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine
 
 /datum/outfit/centcom/ert/marine/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
@@ -568,8 +568,6 @@
 	id = /obj/item/card/id/advanced/centcom/ert/security
 	suit = /obj/item/clothing/suit/armor/vest/marine/security
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	r_pocket = /obj/item/grenade/smokebomb
-	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine/security
 
 /datum/outfit/centcom/ert/marine/security/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
@@ -589,15 +587,13 @@
 	suit = /obj/item/clothing/suit/armor/vest/marine/medic
 	suit_store = /obj/item/storage/belt/holster/detective/full/ert
 	back = /obj/item/storage/backpack/ert/medical
-	r_pocket = /obj/item/healthanalyzer
-	mask = /obj/item/food/lollipop
+	l_pocket = /obj/item/healthanalyzer
 	head = /obj/item/clothing/head/helmet/marine/medic
 	backpack_contents = list(
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/firstaid/regular = 1,
 		/obj/item/storage/firstaid/advanced = 1,
 )
-	uniform = /obj/item/clothing/under/syndicate/camo
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 
@@ -617,13 +613,11 @@
 	id = /obj/item/card/id/advanced/centcom/ert/engineer
 	suit = /obj/item/clothing/suit/armor/vest/marine/engineer
 	suit_store = /obj/item/gun/ballistic/shotgun/lethal
-	mask = /obj/item/clothing/mask/cigarette/robustgold
 	head = /obj/item/clothing/head/helmet/marine/engineer
 	back = /obj/item/deployable_turret_folded
-	uniform = /obj/item/clothing/under/syndicate/camo
+	uniform = /obj/item/clothing/under/rank/centcom/military/eng
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
-	r_pocket = /obj/item/rcd_ammo/large
 
 /datum/outfit/centcom/ert/marine/engineer/post_equip(mob/living/carbon/human/equipper, visualsOnly = FALSE)
 	..()

@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "cargo consoles aren't breaking when department orders buys a canister. seriously though who buys canisters man"
