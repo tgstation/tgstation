@@ -38014,10 +38014,6 @@
 	dir = 1;
 	name = "Scrubbers multi deck pipe adapter"
 	},
-/obj/machinery/camera{
-	c_tag = "Secure - Vault";
-	dir = 9
-	},
 /turf/open/floor/catwalk_floor,
 /area/ai_monitored/command/nuke_storage)
 "muS" = (
