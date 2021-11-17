@@ -47533,7 +47533,6 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "pYQ" = (
-/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
@@ -61415,7 +61414,6 @@
 /turf/open/floor/iron,
 /area/cargo/miningdock)
 "vtQ" = (
-/obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
