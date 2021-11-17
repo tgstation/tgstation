@@ -1,0 +1,4 @@
+author: "Archemagus (aka Laxesh)"
+delete-after: True
+changes: 
+  - bugfix: "Now floorbot, will try to fix floors, not only when emagged."
