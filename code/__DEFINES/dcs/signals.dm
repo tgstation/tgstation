@@ -914,6 +914,8 @@
 #define COMSIG_ITEM_OFFER_TAKEN "item_offer_taken"
 	///Interrupts the offer acceptance
 	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
+/// from base of obj/effect/attackby(): (/obj/effect/hit, /mob/living/attacker, params)
+#define COMSIG_ITEM_ATTACK_EFFECT "item_effect_attacked"
 
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
