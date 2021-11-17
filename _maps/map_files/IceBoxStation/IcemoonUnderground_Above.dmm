@@ -1893,7 +1893,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Mining B-1 Hallway";
-	dir = 5
+	dir = 10
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -2341,7 +2341,7 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/machinery/camera{
 	c_tag = "Service-Bar 2";
-	dir = 6
+	dir = 9
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood/parquet,
@@ -2653,7 +2653,7 @@
 /obj/item/instrument/saxophone,
 /obj/machinery/camera{
 	c_tag = "Service-Theater";
-	dir = 6
+	dir = 9
 	},
 /obj/machinery/light/directional/north,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
@@ -3404,7 +3404,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/camera{
 	c_tag = "Xenobiology Pens Hall - Fore";
-	dir = 6;
+	dir = 9;
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/iron/white,
@@ -6489,7 +6489,7 @@
 "At" = (
 /obj/machinery/camera{
 	c_tag = "Service-Hallway Bottom 1";
-	dir = 6
+	dir = 9
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
@@ -8043,7 +8043,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/camera{
 	c_tag = "Service-Botany Bottom 1";
-	dir = 6
+	dir = 9
 	},
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/plating,
@@ -9829,7 +9829,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Chemistry Lab North";
-	dir = 6;
+	dir = 9;
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/stripes/end,
@@ -10380,7 +10380,7 @@
 /obj/machinery/vending/cigarette,
 /obj/machinery/camera{
 	c_tag = "Service-Bar 3";
-	dir = 6
+	dir = 9
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/machinery/status_display/evac/directional/west,

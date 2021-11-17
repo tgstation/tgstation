@@ -1303,6 +1303,7 @@
 #include "code\game\objects\items\maintenance_loot.dm"
 #include "code\game\objects\items\manuals.dm"
 #include "code\game\objects\items\mop.dm"
+#include "code\game\objects\items\nitrium_crystals.dm"
 #include "code\game\objects\items\paint.dm"
 #include "code\game\objects\items\paiwire.dm"
 #include "code\game\objects\items\pet_carrier.dm"

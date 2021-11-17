@@ -1,0 +1,4 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscdel: "change the name of the \"Cosa Nostra Starter Pack\" to a more generic \"Mafioso Starter Pack\", remove racist innuendo in the description"

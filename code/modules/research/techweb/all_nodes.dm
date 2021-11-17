@@ -220,6 +220,7 @@
 		"comp_length",
 		"comp_light",
 		"comp_list_literal",
+		"comp_list_assoc_literal",
 		"comp_logic",
 		"comp_matscanner",
 		"comp_mmi",
