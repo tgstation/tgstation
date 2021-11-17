@@ -53,5 +53,5 @@
 /datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/component/uplink/purchaser_uplink)
 	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
 	uplink_box.name = "Uplink Implant Box"
-	new /obj/item/implanter/uplink(uplink_box, purchaser_uplink.uplink_flag)
+	new /obj/item/implanter/uplink(uplink_box, purchaser_uplink.uplink_handler.uplink_flag)
 	return uplink_box

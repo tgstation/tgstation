@@ -589,7 +589,7 @@
 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 	return pre_asset
 
-GLOBAL_LIST_EMPTY_TYPED(uplink_items, /datum/uplink_item)
+GLOBAL_LIST_EMPTY_TYPED(uplink_items_by_type, /datum/uplink_item)
 
 /// Sends information needed for uplinks
 /datum/asset/json/uplink
@@ -615,7 +615,7 @@ GLOBAL_LIST_EMPTY_TYPED(uplink_items, /datum/uplink_item)
 			"limited_stock" = item.limited_stock,
 			"restricted_roles" = item.restricted_roles
 		))
-		uplink_items[item_path] = item
+		GLOB.uplink_items_by_type[item_path] = item
 
 	data["items"] = items
 	data["categories"] = categories

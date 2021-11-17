@@ -188,9 +188,9 @@ GLOBAL_VAR(antag_prototypes)
 		if(U)
 			uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
-				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.telecrystals]</a> TC"
+				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
 			else
-				uplink_info += ", [U.telecrystals] TC"
+				uplink_info += ", [U.uplink_handler.telecrystals] TC"
 		else
 			uplink_info += "<a href='?src=[REF(src)];common=uplink'>give</a>"
 		uplink_info += "." //hiel grammar

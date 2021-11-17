@@ -14,25 +14,21 @@
 	item = /obj/effect/gibspawner/generic // non-tangible item because techwebs use this path to determine illegal tech
 	cost = 0
 
-/datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/component/uplink/U)
-	var/list/uplink_items = U.uplink_items
+/datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/component/uplink/uplink)
 	var/list/possible_items = list()
-	for(var/category in uplink_items)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			if(src == I || !I.item)
-				continue
-			if(U.telecrystals < I.cost)
-				continue
-			if(I.limited_stock == 0)
-				continue
-			possible_items += I
+	for(var/datum/uplink_item/item_path as anything in GLOB.uplink_items_by_type)
+		var/datum/uplink_item/uplink_item = GLOB.uplink_items_by_type[item_path]
+		if(src == uplink_item || !uplink_item.item)
+			continue
+		if(!uplink.uplink_handler.can_purchase_item(uplink))
+			continue
+		possible_items += uplink_item
 
 	if(possible_items.len)
-		var/datum/uplink_item/I = pick(possible_items)
-		log_uplink("[key_name(user)] purchased a random uplink item from [U.parent]'s uplink with [U.telecrystals] telecrystals remaining")
-		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
-		U.MakePurchase(user, I)
+		var/datum/uplink_item/uplink_item = pick(possible_items)
+		log_uplink("[key_name(user)] purchased a random uplink item from [uplink.parent]'s uplink with [uplink.uplink_handler.telecrystals] telecrystals remaining")
+		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(uplink_item.name))
+		uplink.uplink_handler.purchase_item(user, uplink_item)
 
 /datum/uplink_item/bundles_tc/telecrystal
 	name = "1 Raw Telecrystal"

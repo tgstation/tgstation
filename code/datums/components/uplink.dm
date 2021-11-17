@@ -30,6 +30,15 @@
 	/// Used for pen uplink
 	var/list/previous_attempts
 
+	// Not modular variables. These variables should be removed sometime in the future
+
+	/// The unlock text that is sent to the traitor with this uplink. This is not modular and not recommended to expand upon
+	var/unlock_text
+	/// The unlock note that is sent to the traitor with this uplink. This is not modular and not recommended to expand upon
+	var/unlock_note
+	/// The failsafe code that causes this uplink to blow up.
+	var/failsafe_code
+
 /datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, progression_points = UPLINK_HAS_PROGRESSION, datum/uplink_handler/uplink_handler_override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -63,12 +72,21 @@
 		uplink_handler.uplink_flag = uplink_flag
 		uplink_handler.telecrystals = starting_tc
 		uplink_handler.progression_points = progression_points
-	src.uplink_handler = uplink_handler
+	else
+		uplink_handler = uplink_handler_override
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
 
 	previous_attempts = list()
+
+/// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
+/datum/component/uplink/proc/add_telecrystals(telecrystals_added)
+	set_telecrystals(uplink_handler.telecrystals + telecrystals_added)
+
+/// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
+/datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
+	uplink_handler.telecrystals = new_telecrystal_amount
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -101,7 +119,6 @@
 	if(locked)
 		return
 	active = TRUE
-	update_items(user)
 	if(user)
 		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
@@ -126,17 +143,26 @@
 		return
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
-	data["lockable"] = lockable
-	data["expPoints"] = uplink_handler.experience_points
-	data["uplinkFlag"] = uplink_handler.uplink_flag
+	data["progression_points"] = uplink_handler.progression_points
+	data["uplink_flag"] = uplink_handler.uplink_flag
 	if(uplink_handler.has_objectives)
-		data["hasObjectives"] = TRUE
+		data["has_objectives"] = TRUE
+		var/list/potential_objectives = list()
+		for(var/datum/traitor_objective/objective as anything in uplink_handler.potential_objectives)
+			potential_objectives += list(objective.uplink_ui_data(user))
+		var/list/active_objectives = list()
+		for(var/datum/traitor_objective/objective as anything in uplink_handler.active_objectives)
+			active_objectives += list(objective.uplink_ui_data(user))
+		data["potential_objectives"] = potential_objectives
+		data["active_objectives"] = active_objectives
 
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
 	data["lockable"] = lockable
+	data["assigned_role"] = uplink_handler.assigned_role
+	data["debug"] = uplink_handler.debug_mode
 	return data
 
 /datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -151,7 +177,7 @@
 			if(!ispath(item_path, /datum/uplink_item))
 				return
 
-			var/datum/uplink_item/item = uplink_items[item_path]
+			var/datum/uplink_item/item = GLOB.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item)
 		if("lock")
 			active = FALSE
@@ -187,7 +213,7 @@
 /datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
 	SIGNAL_HANDLER
 
-	uplink.telecrystals += telecrystals
+	uplink.add_telecrystals(uplink_handler.telecrystals)
 	return COMPONENT_DELETE_NEW_IMPLANT
 
 // PDA signal responses

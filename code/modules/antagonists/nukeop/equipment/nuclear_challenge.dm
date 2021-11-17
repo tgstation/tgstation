@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	var/tc_per_nukie = round(tc_to_distribute / (length(orphans)+length(uplinks)))
 
 	for (var/datum/component/uplink/uplink in uplinks)
-		uplink.telecrystals += tc_per_nukie
+		uplink.add_telecrystals(tc_per_nukie)
 		tc_to_distribute -= tc_per_nukie
 
 	for (var/mob/living/L in orphans)

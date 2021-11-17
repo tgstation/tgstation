@@ -1,49 +1,5 @@
-GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
-/proc/get_uplink_items(uplink_flag, allow_sales = TRUE, allow_restricted = TRUE)
-	var/list/filtered_uplink_items = list()
-	var/list/sale_items = list()
-
-	for(var/path in GLOB.uplink_items)
-		var/datum/uplink_item/I = new path
-		if(!I.item)
-			continue
-		if (!(I.purchasable_from & uplink_flag))
-			continue
-		if (I.restricted && !allow_restricted)
-			continue
-
-		if(!filtered_uplink_items[I.category])
-			filtered_uplink_items[I.category] = list()
-		filtered_uplink_items[I.category][I.name] = I
-		if(I.limited_stock < 0 && !I.cant_discount && I.item && I.cost > 1)
-			sale_items += I
-	if(allow_sales)
-		var/datum/team/nuclear/nuclear_team
-		if (uplink_flag & UPLINK_NUKE_OPS) // uplink code kind of needs a redesign
-			nuclear_team = locate() in GLOB.antagonist_teams // the team discounts could be in a GLOB with this design but it would make sense for them to be team specific...
-		if (!nuclear_team)
-			create_uplink_sales(3, "Discounted Gear", 1, sale_items, filtered_uplink_items)
-		else
-			if (!nuclear_team.team_discounts)
-				// create 5 unlimited stock discounts
-				create_uplink_sales(5, "Discounted Team Gear", -1, sale_items, filtered_uplink_items)
-				// Create 10 limited stock discounts
-				create_uplink_sales(10, "Limited Stock Team Gear", 1, sale_items, filtered_uplink_items)
-				nuclear_team.team_discounts = list("Discounted Team Gear" = filtered_uplink_items["Discounted Team Gear"], "Limited Stock Team Gear" = filtered_uplink_items["Limited Stock Team Gear"])
-			else
-				for(var/cat in nuclear_team.team_discounts)
-					for(var/item in nuclear_team.team_discounts[cat])
-						var/datum/uplink_item/D = nuclear_team.team_discounts[cat][item]
-						var/datum/uplink_item/O = filtered_uplink_items[initial(D.category)][initial(D.name)]
-						O.refundable = FALSE
-
-				filtered_uplink_items["Discounted Team Gear"] = nuclear_team.team_discounts["Discounted Team Gear"]
-				filtered_uplink_items["Limited Stock Team Gear"] = nuclear_team.team_discounts["Limited Stock Team Gear"]
-
-
-	return filtered_uplink_items
-
+// TODO: Work into reworked uplinks.
 /proc/create_uplink_sales(num, category_name, limited_stock, sale_items, uplink_items)
 	if (num <= 0)
 		return
