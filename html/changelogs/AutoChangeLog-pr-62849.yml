@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Quantum pads have had their blueprint tweaked by Nanotrasen's finest Bluespace Technicians, and will no longer break the laws of teleportation by teleporting themselves when they shouldn't."
