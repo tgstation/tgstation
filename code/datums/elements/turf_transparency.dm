@@ -2,9 +2,10 @@
 /datum/element/turf_z_transparency
 	element_flags = ELEMENT_DETACH
 	var/show_bottom_level = FALSE
+	var/is_openspace = FALSE
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_z_transparency/Attach(datum/target, show_bottom_level = TRUE)
+/datum/element/turf_z_transparency/Attach(datum/target, show_bottom_level = TRUE, is_openspace = FALSE)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -13,8 +14,9 @@
 
 	src.show_bottom_level = show_bottom_level
 
-	our_turf.plane = OPENSPACE_PLANE
-	our_turf.layer = OPENSPACE_LAYER
+	if(is_openspace)
+		our_turf.plane = OPENSPACE_PLANE
+		our_turf.layer = OPENSPACE_LAYER
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
