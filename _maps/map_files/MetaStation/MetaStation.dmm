@@ -30895,7 +30895,6 @@
 	name = "Warehouse";
 	req_one_access_txt = "31;48"
 	},
-/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
