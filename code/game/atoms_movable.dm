@@ -411,10 +411,6 @@
 				return
 	
 	else if(!loc.Exit(src, direction))
-		if(can_pass_diagonally)
-			loc = get_step(loc, can_pass_diagonally)
-			if(set_dir_on_move)
-				setDir(can_pass_diagonally)
 		return
 	
 	var/atom/oldloc
