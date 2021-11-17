@@ -21,16 +21,16 @@
 	var/allow_restricted = TRUE
 	/// Current owner of the uplink
 	var/owner = null
-	/// Uplink flags
-	var/uplink_flag = NONE
 	/// Purchase log, listing all the purchases this uplink has made
 	var/datum/uplink_purchase_log/purchase_log
 	/// The current linked uplink handler.
 	var/datum/uplink_handler/uplink_handler
 	/// Code to unlock the uplink.
 	var/unlock_code
+	/// Used for pen uplink
+	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, progression_points = UPLINK_HAS_PROGRESSION)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, progression_points = UPLINK_HAS_PROGRESSION, datum/uplink_handler/uplink_handler_override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -48,65 +48,52 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
-	if(_owner)
-		owner = _owner
+	if(owner)
+		src.owner = owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 		if(GLOB.uplink_purchase_logs_by_key[owner])
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
-	lockable = _lockable
-	active = _enabled
-	src.uplink_flag = uplink_flag
-	update_items()
-	telecrystals = starting_tc
+	src.lockable = lockable
+	src.active = enabled
+	if(!uplink_handler_override)
+		uplink_handler = new()
+		uplink_handler.has_objectives = FALSE
+		uplink_handler.uplink_flag = uplink_flag
+		uplink_handler.telecrystals = starting_tc
+		uplink_handler.progression_points = progression_points
+	src.uplink_handler = uplink_handler
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
 
 	previous_attempts = list()
 
-/datum/component/uplink/InheritComponent(datum/component/uplink/U)
-	lockable |= U.lockable
-	active |= U.active
-	uplink_flag |= U.uplink_flag
+/datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
+	lockable |= uplink.lockable
+	active |= uplink.active
+	uplink_handler.uplink_flag |= uplink.uplink_handler.uplink_flag
 
 /datum/component/uplink/Destroy()
 	purchase_log = null
 	return ..()
 
-/datum/component/uplink/proc/update_special_equipment(mob/user, updated_items)
-	if(!user?.mind?.failed_special_equipment)
-		return
-	for(var/obj/item/equipment_path as anything in user.mind.failed_special_equipment)
-		var/datum/uplink_item/special_equipment/equipment_uplink_item = new
-		if(!updated_items[equipment_uplink_item.category])
-			updated_items[equipment_uplink_item.category] = list()
-		var/list/name_words = splittext(initial(equipment_path.name), " ")
-		var/capitalized_name
-		for(var/i in 1 to name_words.len)
-			name_words[i] = capitalize(name_words[i])
-		capitalized_name = name_words.Join(" ")
-		equipment_uplink_item.item = equipment_path
-		equipment_uplink_item.name = capitalized_name
-		equipment_uplink_item.desc = initial(equipment_path.desc)
-		updated_items[equipment_uplink_item.category][equipment_uplink_item.name] = equipment_uplink_item
-
-/datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
+/datum/component/uplink/proc/load_tc(mob/user, obj/item/stack/telecrystal/telecrystals, silent = FALSE)
 	if(!silent)
-		to_chat(user, span_notice("You slot [TC] into [parent] and charge its internal uplink."))
-	var/amt = TC.amount
-	telecrystals += amt
-	TC.use(amt)
+		to_chat(user, span_notice("You slot [telecrystals] into [parent] and charge its internal uplink."))
+	var/amt = telecrystals.amount
+	uplink_handler.telecrystals += amt
+	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
-/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/item, mob/user)
 	SIGNAL_HANDLER
-
 	if(!active)
 		return //no hitting everyone/everything just to try to slot tcs in!
-	if(istype(I, /obj/item/stack/telecrystal))
-		LoadTC(user, I)
+
+	if(istype(item, /obj/item/stack/telecrystal))
+		load_tc(user, item)
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -138,10 +125,13 @@
 	if(!user.mind)
 		return
 	var/list/data = list()
-	data["telecrystals"] = telecrystals
+	data["telecrystals"] = uplink_handler.telecrystals
 	data["lockable"] = lockable
-	data["compactMode"] = compact_mode
-	data["expPoints"] = experience_points
+	data["expPoints"] = uplink_handler.experience_points
+	data["uplinkFlag"] = uplink_handler.uplink_flag
+	if(uplink_handler.has_objectives)
+		data["hasObjectives"] = TRUE
+
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -149,7 +139,7 @@
 	data["lockable"] = lockable
 	return data
 
-/datum/component/uplink/ui_act(action, params)
+/datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -161,48 +151,14 @@
 			if(!ispath(item_path, /datum/uplink_item))
 				return
 
-			if(!(initial(item_path.purchasable_from) & uplink_flag))
-				return
-
-			if(uplink_handler.progression_points < initial(item_path.progression_minimum))
-				return
-
-			if(uplink_handler.progression)
-
-			if(initial(item_path.limited_stock))
-				var/initial_stock = item_path.limited_stock
-
-
+			var/datum/uplink_item/item = uplink_items[item_path]
+			uplink_handler.purchase_item(ui.user, item)
 		if("lock")
 			active = FALSE
 			locked = TRUE
-			telecrystals += hidden_crystals
-			hidden_crystals = 0
 			SStgui.close_uis(src)
-		if("compact_toggle")
-			compact_mode = !compact_mode
-			return TRUE
-
-/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
-	if(!istype(U))
-		return
-	if (!user || user.incapacitated())
-		return
-
-	if(telecrystals < U.cost || U.limited_stock == 0)
-		return
-	telecrystals -= U.cost
-
-	U.purchase(user, src)
-
-	if(U.limited_stock > 0)
-		U.limited_stock -= 1
-
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
-	return TRUE
 
 // Implant signal responses
-
 /datum/component/uplink/proc/implant_activation()
 	SIGNAL_HANDLER
 

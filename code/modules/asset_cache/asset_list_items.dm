@@ -615,7 +615,7 @@ GLOBAL_LIST_EMPTY_TYPED(uplink_items, /datum/uplink_item)
 			"limited_stock" = item.limited_stock,
 			"restricted_roles" = item.restricted_roles
 		))
-		uplink_items += item
+		uplink_items[item_path] = item
 
 	data["items"] = items
 	data["categories"] = categories

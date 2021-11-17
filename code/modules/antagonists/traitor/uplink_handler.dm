@@ -12,28 +12,30 @@
 	var/uplink_flag = NONE
 	/// The amount of experience points this traitor has
 	var/progression_points = 0
+	/// Associative array of uplink item = stock left
+	var/list/item_stock = list()
+	/// Whether this uplink handler has objectives.
+	var/has_objectives = TRUE
 	/// Current objectives taken
 	var/list/current_objectives = list()
 	/// Potential objectives that can be taken
 	var/list/potential_objectives = list()
-	/// Associative array of uplink item = stock left
-	var/list/item_stock = list()
 
 /datum/uplink_handler/proc/purchase_item(mob/user, datum/uplink_item/to_purchase)
-	if(!(item_path.purchasable_from & uplink_flag))
+	if(!(to_purchase.purchasable_from & uplink_flag))
 		return
 
-	if(initial(item_path.limited_stock) != -1)
-		var/initial_stock = item_path.limited_stock
+	if(to_purchase.limited_stock != -1 && !(to_purchase.path in item_stock))
+		item_stock[to_purchase.path] = to_purchase.limited_stock
 
-
-	if(telecrystals < to_purchase.cost || to_purchase.limited_stock == 0 || experience_points < to_purchase.progression_minimum)
+	var/stock = item_stock[to_purchase.path] || INFINITY
+	if(telecrystals < to_purchase.cost || stock <= 0 || experience_points < to_purchase.progression_minimum)
 		return
 	telecrystals -= to_purchase.cost
 	to_purchase.purchase(user, src)
 
-	if(to_purchase.limited_stock > 0)
-		to_purchase.limited_stock -= 1
+	if(to_purchase.path in item_stock)
+		item_stock[to_purchase.path] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
 	return TRUE
