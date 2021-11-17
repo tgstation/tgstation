@@ -358,7 +358,7 @@
 		return
 	inserted_list = inserted_list.Copy()
 
-	for(var/i = 1, i < inserted_list.len, ++i)
+	for(var/i in 1 to inserted_list.len)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 	return inserted_list
@@ -368,7 +368,7 @@
 	if(!inserted_list)
 		return
 
-	for(var/i = 1, i < inserted_list.len, ++i)
+	for(var/i in 1 to inserted_list.len)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 ///Return a list with no duplicate entries
@@ -411,7 +411,7 @@
 	if(islist(wordlist))
 		var/max = min(wordlist.len, 24)
 		var/bit = 1
-		for(var/i = 1, i <= max, i++)
+		for(var/i in 1 to max)
 			if(bitfield & bit)
 				return_list += wordlist[i]
 			bit = bit << 1
@@ -472,7 +472,7 @@
 			return //no need to move
 		from_index += len //we want to shift left instead of right
 
-		for(var/i = 0, i < distance, ++i)
+		for(var/i in 1 to distance)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -480,7 +480,7 @@
 		if(from_index > to_index)
 			from_index += len
 
-		for(var/i = 0, i < len, ++i)
+		for(var/i in 1 to len)
 			inserted_list.Insert(to_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(from_index, from_index + 1)
@@ -496,7 +496,7 @@
 		else
 			from_index += len
 
-		for(var/i = 0, i < distance, ++i)
+		for(var/i in 1 to distance)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -506,7 +506,7 @@
 			to_index = from_index
 			from_index = a
 
-		for(var/i = 0, i < len, ++i)
+		for(var/i in 1 to len)
 			inserted_list.Swap(from_index++, to_index++)
 
 ///replaces reverseList ~Carnie
