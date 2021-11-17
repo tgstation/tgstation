@@ -145,3 +145,9 @@
 	desc = "A formal black tuxedo. It exudes classiness."
 	icon_state = "tuxedo"
 	inhand_icon_state = "tuxedo"
+
+/obj/item/clothing/under/suit/carpskin
+	name = "carpskin suit"
+	desc = "An luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
+	icon_state = "carpskin_suit"
+	inhand_icon_state = "carpskin_suit"
