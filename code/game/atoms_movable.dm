@@ -373,6 +373,25 @@
 	loc = new_loc
 	Moved(old_loc)
 
+/**
+ * The move proc is responsible for (in order):
+ * - Checking if you can move out of the current loc (The exit proc, which calls on_exit through the connect_loc)
+ * - Checking if you can move into the new loc (The enter proc, which calls on_enter through the connect_loc and is also overwritten by some atoms)
+ *   This is where most bumps take place
+ * - If you can do both, then it changes the loc var calls Exited on the old loc, and Entered on the new loc
+ * - After that, it does some area checks, calls Moved and handle pulling/buckled mobs.area
+ * 
+ * A diagonal move is slightly different as everything is called twice (once for each direction)
+ * In order of calling:
+ * - Check if you can exit the current loc
+ * - Check if it's a diagonal move
+ * - If yes, take a cardinal move, check if you could exit the turf in that direction, and then if you can enter it (This calls on_exit and on_enter)
+ * - "Simulate" a cardinal move by calling Exited, Entered and Moved. We are not changing the loc here because this would mess with pushing/shuffling
+ * - Check if you can enter the final new loc
+ * - Do the rest of the Move proc normally
+ * 
+ * Warning : Doesn't support well multi-tile diagonal moves
+ */
 /atom/movable/Move(atom/newloc, direction, glide_size_override)
 	var/atom/movable/pullee = pulling
 	if(!moving_from_pull)
@@ -382,6 +401,23 @@
 
 	if(!direction)
 		direction = get_dir(src, newloc)
+
+	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
+	var/list/old_locs
+	if(is_multi_tile_object && isturf(loc))
+		old_locs = locs // locs is a special list, this is effectively the same as .Copy() but with less steps
+		for(var/atom/exiting_loc as anything in old_locs)
+			if(!exiting_loc.Exit(src, direction))
+				return
+	
+	else if(!loc.Exit(src, direction))
+		if(can_pass_diagonally)
+			loc = get_step(loc, can_pass_diagonally)
+			if(set_dir_on_move)
+				setDir(can_pass_diagonally)
+		return
+	
+	var/atom/oldloc
 
 	var/can_pass_diagonally = NONE
 	if (direction & (direction - 1)) //Check if the first part of the diagonal move is possible
@@ -400,31 +436,19 @@
 			moving_diagonally = FALSE
 			return
 		moving_diagonally = FALSE
-		///Properly enter and exit the can_pass_diagonally tile
+		//Properly enter and exit the can_pass_diagonally tile. We don't change the loc here because this would mess with pushing/shuffling
 		loc.Exited(src, can_pass_diagonally)
-		get_step(loc, can_pass_diagonally).Entered(src, loc, null)
+		oldloc = get_step(loc, can_pass_diagonally) //This might looks weird, but it will be the old loc for the rest of the move proc.
+		oldloc.Entered(src, loc, null)
 		Moved(loc, can_pass_diagonally)
 		if(set_dir_on_move) //We want to set the direction to be the one of the "second" diagonal move, aka not can_pass_diagonally
 			setDir(direction &~ can_pass_diagonally)
 	
-	else if(set_dir_on_move)
-		setDir(direction)
+	else 
+		oldloc = loc
+		if(set_dir_on_move)
+			setDir(direction)
 
-	var/is_multi_tile_object = bound_width > 32 || bound_height > 32
-	var/list/old_locs
-	if(is_multi_tile_object && isturf(loc))
-		old_locs = locs // locs is a special list, this is effectively the same as .Copy() but with less steps
-		for(var/atom/exiting_loc as anything in old_locs)
-			if(!exiting_loc.Exit(src, direction))
-				return
-	
-	else if(!loc.Exit(src, direction))
-		if(can_pass_diagonally)
-			loc = get_step(loc, can_pass_diagonally)
-			if(set_dir_on_move)
-				setDir(can_pass_diagonally)
-		return
-	var/atom/oldloc
 	var/list/new_locs
 	if(is_multi_tile_object && isturf(newloc))
 		new_locs = block(
@@ -442,12 +466,11 @@
 		var/enter_return_value = newloc.Enter(src)
 		if(!(enter_return_value & TURF_CAN_ENTER) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
 			if(can_pass_diagonally && !(enter_return_value & TURF_ENTER_ALREADY_MOVED))
-				loc = get_step(loc, can_pass_diagonally)//We failed to finish our diagonal move. We actually move the loc now to properly finish the first move
+				loc =  oldloc							//We failed to finish our diagonal move. 
 				if(set_dir_on_move) 					//we didn't do it earlier because it allows to push/shuffle diagonally
 					setDir(can_pass_diagonally)			//We also set the dir correctly so it doesn't look weird
 			return
 	
-	oldloc = loc
 	loc = newloc
 
 	if(old_locs) // This condition will only be true if it is a multi-tile object.
