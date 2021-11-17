@@ -16,7 +16,7 @@
 	window_id = "vibebot"
 	window_name = "Discomatic Vibe Bot v1.05"
 	hackables = "vibing scanners"
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
+	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = VIBE_BOT

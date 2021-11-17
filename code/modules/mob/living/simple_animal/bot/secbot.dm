@@ -17,7 +17,7 @@
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
+	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	hackables = "target identification systems"
 	path_image_color = "#FF0000"
@@ -45,7 +45,7 @@
 	var/fair_market_price_arrest = 25
 	///Charged each time the violator is stunned on detain
 	var/fair_market_price_detain = 5
-	/// Force of the harmbaton used on them
+	///Force of the harmbaton used on them
 	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
@@ -64,7 +64,7 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	health = 45
-	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED
+	bot_mode_flags = ~BOT_MODE_AUTOPATROL
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr

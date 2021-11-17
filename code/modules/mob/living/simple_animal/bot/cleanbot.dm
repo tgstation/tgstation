@@ -56,6 +56,10 @@
 /mob/living/simple_animal/bot/cleanbot/autopatrol
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE
 
+/mob/living/simple_animal/bot/cleanbot/medbay
+	name = "Scrubs, MD"
+	bot_core = /obj/machinery/bot_core/cleanbot/medbay
+	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
 	if(in_range(src, user))
@@ -379,11 +383,6 @@
 
 	do_sparks(3, TRUE, src)
 	..()
-
-/mob/living/simple_animal/bot/cleanbot/medbay
-	name = "Scrubs, MD"
-	bot_core = /obj/machinery/bot_core/cleanbot/medbay
-	bot_mode_flags = BOT_COVER_LOCKED
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
