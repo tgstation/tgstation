@@ -61,8 +61,11 @@
 		ReplaceWithLattice()
 	return TRUE
 
-/turf/open/floor/glass/wrench_act(mob/living/user, obj/item/tool)
+/turf/open/floor/glass/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if(permanent_tile)
+		to_chat(user, span_warning("There's nothing to weld!"))
+		return
 	if(welded_screws)
 		user.visible_message(span_warning("[user] begins unwelding the glass floor screws!"), span_notice("You begin unwelding the screws on the glass floor..."))
 		if(tool.use_tool(src, user, 10 SECONDS, volume=85))
