@@ -150,4 +150,4 @@
 /obj/vehicle/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(trailer)
-		trailer.Move(Oldloc, Dir)
+		trailer.Move(OldLoc, Dir)

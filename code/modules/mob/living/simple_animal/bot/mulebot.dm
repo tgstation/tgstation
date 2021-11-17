@@ -530,10 +530,10 @@
 
 /mob/living/simple_animal/bot/mulebot/Moved(atom/OldLoc, Dir)
 	. = ..()
-	if(bloodiness) //Bloodiness is added on run_voer
-		var/obj/effect/decal/cleanable/blood/tracks/B = new(oldLoc)
+	if(bloodiness) //Bloodiness is added on run_over
+		var/obj/effect/decal/cleanable/blood/tracks/B = new(OldLoc)
 		B.add_blood_DNA(return_blood_DNA())
-		B.setDir(direct)
+		B.setDir(Dir)
 		bloodiness--
 
 	for(var/mob/living/carbon/human/future_pancake in loc)
