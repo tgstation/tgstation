@@ -22,8 +22,6 @@
 	 * If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 	**/
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	///Our gas mix
-	var/datum/gas_mixture/turf/air
 
 /turf/open
 	//used for spacewind
@@ -36,6 +34,8 @@
 	var/datum/excited_group/excited_group
 	///Are we active?
 	var/excited = FALSE
+	///Our gas mix
+	var/datum/gas_mixture/turf/air
 
 	///If there is an active hotspot on us store a reference to it here
 	var/obj/effect/hotspot/active_hotspot
@@ -140,6 +140,12 @@
 /turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature)
 	SEND_SIGNAL(src, COMSIG_TURF_EXPOSE, air, exposed_temperature)
 	check_atmos_process(src, air, exposed_temperature) //Manually do this to avoid needing to use elements, don't want 200 second atom init times
+
+/turf/proc/archive()
+	temperature_archived = temperature
+
+/turf/open/archive()
+	LINDA_CYCLE_ARCHIVE(src)
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
@@ -522,7 +528,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 
 /turf/proc/conductivity_directions()
 	if(archived_cycle < SSair.times_fired)
-		LINDA_CYCLE_ARCHIVE(src)
+		archive()
 	return ALL_CARDINALS
 
 ///Returns a set of directions that we should be conducting in, NOTE, atmos_supeconductivity is ACTUALLY inversed, don't worrry about it
@@ -567,7 +573,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 				continue
 
 			if(neighbor.archived_cycle < SSair.times_fired)
-				LINDA_CYCLE_ARCHIVE(neighbor)
+				neighbor.archive()
 
 			neighbor.neighbor_conduct_with_src(src)
 
