@@ -33,7 +33,7 @@ GLOBAL_VAR(string_filename_current_key)
 /proc/strings_subkey_lookup(match, group1)
 	return pick_list(GLOB.string_filename_current_key, group1)
 
-/proc/load_strings_file(filepath, directory)
+/proc/load_strings_file(filepath, directory = STRING_DIRECTORY)
 	if(IsAdminAdvancedProcCall())
 		return
 
