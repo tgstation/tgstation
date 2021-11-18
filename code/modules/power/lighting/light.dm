@@ -373,7 +373,7 @@
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
 	var/area/local_area = get_area(src)
-	return local_area.lightswitch && local_area.power_light
+	return local_area && local_area.lightswitch && local_area.power_light
 
 // returns whether this light has emergency power
 // can also return if it has access to a certain amount of that power
