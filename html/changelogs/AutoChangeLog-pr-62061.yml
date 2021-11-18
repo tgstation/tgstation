@@ -1,7 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscdel: "removed nitryl"
-  - rscdel: "removed stimulum"
-  - balance: "merged the two into nitryum that shares the two gases features and that can make a crystal of itself in the crystallizer, the gas is made with trit, nitrogen and bz at over 1500 K"
-  - balance: "the gas effect can be chosen by the partial pressure of the gas, low pressure and you have the old nitryl effect, higher and you'll have both"

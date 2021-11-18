@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - bugfix: "The correct cinematic now plays when nuke ops fail to escape the station after blowing it up."
