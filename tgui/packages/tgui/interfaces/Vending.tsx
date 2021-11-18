@@ -145,7 +145,8 @@ const ProductDisplay = (_, context) => {
       scrollable
       title="Products"
       buttons={
-        !!onstation && user && (
+        !!onstation
+        && user && (
           <Box fontSize="16px" color="green">
             {(user && user.cash) || 0} cr <Icon name="coins" color="gold" />
           </Box>)
@@ -165,7 +166,7 @@ const ProductDisplay = (_, context) => {
 };
 
 /** An individual listing for an item.
- * Uses a table layout - Labeledlist might be better,
+ * Uses a table layout. Labeledlist might be better,
  * but you cannot use item icons as labels currently.
  */
 const VendingRow = (props, context) => {
@@ -179,9 +180,9 @@ const VendingRow = (props, context) => {
   const discount = department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled
-  = (productStock.amount === 0)
-  || onstation && !user
-  || onstation && ((discount ? redPrice : product.price) > user?.cash);
+    = productStock.amount === 0
+    || (onstation && !user)
+    || (onstation && (discount ? redPrice : product.price) > user?.cash);
 
   return (
     <Table.Row>
@@ -282,7 +283,7 @@ const ProductButton = (props, context) => {
   const customPrice = access ? 'FREE' : product.price + ' cr';
   let standardPrice;
   if (!onstation) {
-    standardPrice = "FREE";
+    standardPrice = 'FREE';
   } else if (discount) {
     standardPrice = `${redPrice} cr`;
   } else {
@@ -296,8 +297,8 @@ const ProductButton = (props, context) => {
       onClick={() =>
         act('dispense', {
           'item': product.name,
-        })}
-    >{customPrice}
+        })}>
+      {customPrice}
     </Button>
   ) : (
     <Button
@@ -306,8 +307,8 @@ const ProductButton = (props, context) => {
       onClick={() =>
         act('vend', {
           'ref': product.ref,
-        })}
-    >{standardPrice}
+        })}>
+      {standardPrice}
     </Button>
   );
 };
