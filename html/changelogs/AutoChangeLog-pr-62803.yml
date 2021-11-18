@@ -1,0 +1,6 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "The crew monitor and crew manifest now correctly sort custom jobs according to ID trim."
+  - refactor: "Data cores now internally track ID trim when HoP updates cards, as well as initial job."
+  - admin: "The secrets manifest now also shows the registered trim for each player."
