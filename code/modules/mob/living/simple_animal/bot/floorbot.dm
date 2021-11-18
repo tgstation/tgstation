@@ -188,7 +188,7 @@
 		audible_message("[src] makes an excited booping beeping sound!")
 
 	//Normal scanning procedure. We have tiles loaded, are not emagged.
-	if(!target && bot_cover_flags & BOT_COVER_EMAGGED)
+	if(!target && !(bot_cover_flags & BOT_COVER_EMAGGED))
 		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
 			if(isspaceturf(T)) //Check for space

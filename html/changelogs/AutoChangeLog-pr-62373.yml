@@ -1,0 +1,4 @@
+author: "phasenoisepon"
+delete-after: True
+changes: 
+  - rscadd: "Wooden pews now require a wrench in hand to be rotated"

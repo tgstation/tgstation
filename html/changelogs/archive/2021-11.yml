@@ -551,3 +551,67 @@
   tralezab:
   - bugfix: cargo consoles aren't breaking when department orders buys a canister.
       seriously though who buys canisters man
+2021-11-17:
+  Ghommie:
+  - qol: (Slower) Mobs won't look so jittery while being moved by the tram anymore.
+  - qol: This also applies to the tram itself.
+  GoldenAlpharex:
+  - code_imp: Improved the comfy chair's armrest code.
+  Krysonism:
+  - expansion: Small and large plates have been added to the kitchen vend.
+  - expansion: Plates will now break when thrown.
+  - expansion: Carpskin suits and fedoras can now be crafted using carp scales.
+  LordVollkorn:
+  - bugfix: Pure Inacusiate is now humanly possible to create
+  - bugfix: Truly pure Multiver is much easier to achieve now
+  Paxilmaniac:
+  - balance: the marine ert is no longer as vulnerable to atmospheric problems as
+      before
+  - imageadd: a new centcom themed combat uniform
+  - imageadd: objectively better looking marine armor
+  RaveRadbury:
+  - qol: You can now load plates onto trays
+  UnokiAs:
+  - imageadd: New barrier grenade sprite
+  - qol: Easier to differentiate the barrier grenade and flashbang
+  WarlockD:
+  - rscadd: Added /datum/design/component/list_assoc_literal
+  esainane:
+  - bugfix: UpdatePaths will now handle lists that contain strings.
+  - bugfix: Some diagonal cameras are back to being placed on walls, instead of floating.
+      For real this time, honest.
+  - bugfix: Special air alarms (syndicate, ruins, unlocked, engine, etc) should now
+      all be facing the correct direction.
+  - bugfix: IceBox's Mixing Chamber air alarm is now placed on the correct tile.
+  tralezab:
+  - rscadd: Added two new fish to the aquarium
+2021-11-18:
+  Archemagus (aka Laxesh):
+  - bugfix: Now floorbot, will try to fix floors, not only when emagged.
+  Ghilker:
+  - rscdel: change the name of the "Cosa Nostra Starter Pack" to a more generic "Mafioso
+      Starter Pack", remove racist innuendo in the description
+  - rscdel: removed nitryl
+  - rscdel: removed stimulum
+  - balance: merged the two into nitryum that shares the two gases features and that
+      can make a crystal of itself in the crystallizer, the gas is made with trit,
+      nitrogen and bz at over 1500 K
+  - balance: the gas effect can be chosen by the partial pressure of the gas, low
+      pressure and you have the old nitryl effect, higher and you'll have both
+  Ghommie:
+  - bugfix: Fixed some issues with the PDA UI, such as the skill tracker app and the
+      messages list of the messenger app being inaccessible.
+  - balance: The HoS, warden and officers no longer spawn with a stunbaton in their
+      bags.
+  GoldenAlpharex:
+  - bugfix: Quantum pads have had their blueprint tweaked by Nanotrasen's finest Bluespace
+      Technicians, and will no longer break the laws of teleportation by teleporting
+      themselves when they shouldn't.
+  esainane:
+  - admin: The camera report verb now works... at least as well as it used to.
+  itseasytosee:
+  - bugfix: The correct cinematic now plays when nuke ops fail to escape the station
+      after blowing it up.
+  tralezab:
+  - bugfix: fixes an oversight where mime and clown couldn't use their own department
+      orders console
