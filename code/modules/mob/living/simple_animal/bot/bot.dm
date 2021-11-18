@@ -128,6 +128,7 @@
 		"Pinging beacon network",
 		"Unable to reach destination",
 		"Chasing filth",
+		"No Route",
 	)
 	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
 	var/path_image_icon = 'icons/mob/aibots.dmi'
