@@ -103,6 +103,7 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
 /mob/living/simple_animal/bot/proc/get_mode()
+	speak("[mode]")
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		if(paicard)
 			return "<b>pAI Controlled</b>"
@@ -113,6 +114,8 @@
 	else if(!mode)
 		return "<span class='good'>Idle</span>"
 	else
+		if(mode > mode_name.len) // This is extremely hacky
+			mode = BOT_IDLE
 		return "<span class='average'>[mode_name[mode]]</span>"
 
 /**
@@ -831,6 +834,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(D.check_access(access_card))
 			D.open()
 			frustration = 0
+
+/mob/living/simple_animal/bot/proc/get_controls(mob/M)
+	return "PROTOBOT - NOT FOR USE"
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/ui_data(mob/user)
