@@ -1,0 +1,4 @@
+author: "Archanial"
+delete-after: True
+changes: 
+  - bugfix: "fixed stealthadmin nicknames should load now"

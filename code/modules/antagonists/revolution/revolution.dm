@@ -192,7 +192,7 @@
 	// Otherwise, the R gets cut off.
 	final_icon.Scale(64, 64)
 
-	var/icon/rev_head_icon = icon('icons/mob/hud.dmi', "rev_head")
+	var/icon/rev_head_icon = icon('icons/mob/huds/antag_hud.dmi', "rev_head")
 	rev_head_icon.Scale(48, 48)
 	rev_head_icon.Crop(1, 1, 64, 64)
 	rev_head_icon.Shift(EAST, 10)
