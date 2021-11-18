@@ -58,7 +58,7 @@
 			if(stomach)
 				reagent_amount += stomach.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/irishcarbomb)
 				stomach.reagents.del_reagent(/datum/reagent/consumable/ethanol/irishcarbomb)
-			if(reagent_amount >= 10)
+			if(reagent_amount >= 30)
 				message_admins("[ADMIN_LOOKUPFLW(forced_mob)] was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.")
 				forced_mob.log_message("was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.", LOG_GAME)
 				audible_message(span_userdanger("You hear a rattling sound coming from the engine. That can't be good..."), null, 1)
