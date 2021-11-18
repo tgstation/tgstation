@@ -68,7 +68,7 @@
 /obj/item/clothing/head/hunter
 	name = "bounty hunting hat"
 	desc = "Ain't nobody gonna cheat the hangman in my town."
-	icon_state = "z"
+	icon_state = "cowboy"
 	worn_icon_state = "hunter"
 	inhand_icon_state = "hunter"
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
@@ -79,35 +79,30 @@
 	desc = "People with ropes around their necks don't always hang."
 	icon_state = "cowboy_hat_black"
 	inhand_icon_state = "cowboy_hat_black"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/cowboy_hat_white
 	name = "ten-gallon hat"
 	desc = "There are two kinds of people in the world those with guns and those that dig. You dig?"
 	icon_state = "cowboy_hat_white"
 	inhand_icon_state = "cowboy_hat_white"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/cowboy_hat_grey
 	name = "drifter hat"
 	desc = "The hat for an assistant with no name."
 	icon_state = "cowboy_hat_grey"
 	inhand_icon_state = "cowboy_hat_grey"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/cowboy_hat_red
 	name = "deputy hat"
 	desc = "Don't let the garish coloration fool you. This hat has seen some terrible things."
 	icon_state = "cowboy_hat_red"
 	inhand_icon_state = "cowboy_hat_red"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/cowboy_hat_brown
 	name = "sheriff hat"
 	desc = "Reach for the skies, pardner."
 	icon_state = "cowboy_hat_brown"
 	inhand_icon_state = "cowboy_hat_brown"
-	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
