@@ -832,9 +832,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			D.open()
 			frustration = 0
 
-/mob/living/simple_animal/bot/proc/get_controls(mob/M)
-	return "PROTOBOT - NOT FOR USE"
-
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/ui_data(mob/user)
 	var/list/data = list()
