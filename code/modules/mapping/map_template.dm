@@ -82,6 +82,11 @@
 
 	SSatoms.InitializeAtoms(areas + turfs + movables, returns_created_atoms ? created_atoms : null)
 
+	for(var/area/area as anything in areas)
+		if(area.static_lighting)
+			// We gotta get those lighting objects generated, yo
+			area.create_area_lighting_objects()
+
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
