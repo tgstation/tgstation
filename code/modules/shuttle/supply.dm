@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(!AM.anchored || istype(AM, /obj/vehicle/sealed/mecha))
+			if(!AM.anchored)
 				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
