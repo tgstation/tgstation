@@ -14,7 +14,7 @@
 		return TRUE
 
 	// I'm not sure why these are snowflaked to early return but they are
-	if(istype(weapon /obj/item/mop) || istype(weapon, /obj/item/soap))
+	if(istype(weapon, /obj/item/mop) || istype(weapon, /obj/item/soap))
 		return
 
 	return ..()
