@@ -97,10 +97,11 @@ const SystemDisplay = () => {
 };
 
 const SystemWallpaper = (_, context) => {
-  const { act, data } = useBackend<PaiInterfaceData>(context);
+  const { data } = useBackend<PaiInterfaceData>(context);
   const { emagged } = data;
 
   const owner = !emagged ? 'NANOTRASEN' : ' SYNDICATE';
+  const eyebrows = !emagged ? "/\\ ' /\\" : ' \\\\ // ';
 
   const paiAscii = [
     ' ________  ________  ___',
@@ -117,7 +118,7 @@ const SystemWallpaper = (_, context) => {
     '                             .--.       .-.',
     "       ,;;``;;-;,,..___.,,.-/   `;_//,.'   )",
     "     .' ;;  `;  :; `;;  ;;  `.       '/   .'",
-    "    ,;  `;   ;   `  `;  `;   ,`    /\\ ' /\\`;",
+    `    ,;  ';   ;   '  ';  ';   ,'    ${eyebrows}';`, // lol
     "   /'     `      \\   `     ;','   ( d\\__b_),`",
     "  /   /       .,;;)       ', (    .'     __\\`",
     " ;:.  \\     ,_   /         ', ' .'_      \\/;",
@@ -149,18 +150,17 @@ const SystemDirectives = (_, context) => {
         </LabeledList.Item>
         {master.name && (
           <>
-            <LabeledList.Item label="DNA Signature">
+            <LabeledList.Item label="Signature">
               {master.dna || 'None.'}
             </LabeledList.Item>
 
-            <LabeledList.Item label="Prime Directive">
+            <LabeledList.Item label="Primary">
               Serve your master.
             </LabeledList.Item>
           </>
         )}
-        <LabeledList.Item
-          label={`${master.name ? 'Secondary' : ''} Directives`}>
-          {directives}
+        <LabeledList.Item label={master.name ? 'Secondary' : 'Directive'}>
+          <Box wrap>{directives}</Box>
         </LabeledList.Item>
       </LabeledList>
     </Section>
