@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - admin: "The camera report verb now works... at least as well as it used to."
