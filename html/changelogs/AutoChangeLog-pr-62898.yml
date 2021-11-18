@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Cyborgs who perform research is now logged in the RD's server console, rather than showing up as Unknown."
