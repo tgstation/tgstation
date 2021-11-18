@@ -92,6 +92,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return verb_ask
 	else if(ending == "!")
 		return verb_exclaim
+	else if(ending == "~")
+		return verb_sexy
 	else
 		return verb_say
 
