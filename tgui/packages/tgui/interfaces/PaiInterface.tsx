@@ -1,5 +1,6 @@
 import { useBackend, useSharedState } from '../backend';
 import {
+  Box,
   Button,
   LabeledList,
   Icon,
@@ -13,6 +14,7 @@ import { Window } from '../layouts';
 
 type PaiInterfaceData = {
   directives: string;
+  emagged: number;
   master: Master;
   pda: PDA;
   ram: number;
@@ -49,12 +51,13 @@ export const PaiInterface = (props, context) => {
     <Window title="PAI Software Interface v2.4" width={380} height={480}>
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item>
-            <TabDisplay tab={tab} tabHandler={setTabHandler} />
-          </Stack.Item>
           <Stack.Item grow>
             {tab === 1 && <SystemDisplay />}
-            {tab === 2 && <AvailableDisplay />}
+            {tab === 2 && <InstalledDisplay />}
+            {tab === 3 && <AvailableDisplay />}
+          </Stack.Item>
+          <Stack.Item>
+            <TabDisplay tab={tab} tabHandler={setTabHandler} />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -66,11 +69,14 @@ const TabDisplay = (props) => {
   const { tab, tabHandler } = props;
 
   return (
-    <Tabs>
+    <Tabs fluid>
       <Tabs.Tab icon="list" onClick={() => tabHandler(1)} selected={tab === 1}>
         System
       </Tabs.Tab>
       <Tabs.Tab icon="list" onClick={() => tabHandler(2)} selected={tab === 2}>
+        Installed
+      </Tabs.Tab>
+      <Tabs.Tab icon="list" onClick={() => tabHandler(3)} selected={tab === 3}>
         Download
       </Tabs.Tab>
     </Tabs>
@@ -80,13 +86,54 @@ const TabDisplay = (props) => {
 const SystemDisplay = () => {
   return (
     <Stack fill vertical>
+      <Stack.Item grow={2}>
+        <SystemWallpaper />
+      </Stack.Item>
       <Stack.Item grow>
         <SystemDirectives />
       </Stack.Item>
-      <Stack.Item grow={2}>
-        <SystemInstalled />
-      </Stack.Item>
     </Stack>
+  );
+};
+
+const SystemWallpaper = (_, context) => {
+  const { act, data } = useBackend<PaiInterfaceData>(context);
+  const { emagged } = data;
+
+  const owner = !emagged ? 'NANOTRASEN' : ' SYNDICATE';
+
+  const paiAscii = [
+    ' ________  ________  ___',
+    ' |\\   __  \\|\\   __  \\|\\  \\',
+    ' \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\     Interface',
+    '  \\ \\   ____\\ \\   __  \\ \\  \\     Version 2.4',
+    '   \\ \\  \\___|\\ \\  \\ \\  \\ \\  \\',
+    '    \\ \\__\\    \\ \\__\\ \\__\\ \\__\\     Property of',
+    `     \\|__|     \\|__|\\|__|\\|__|      ${owner}`,
+    '',
+  ].join('\n');
+
+  const floofAscii = [
+    '                             .--.       .-.',
+    "       ,;;``;;-;,,..___.,,.-/   `;_//,.'   )",
+    "     .' ;;  `;  :; `;;  ;;  `.       '/   .'",
+    "    ,;  `;   ;   `  `;  `;   ,`    /\\ ' /\\`;",
+    "   /'     `      \\   `     ;','   ( d\\__b_),`",
+    "  /   /       .,;;)       ', (    .'     __\\`",
+    " ;:.  \\     ,_   /         ', ' .'_      \\/;",
+    ",   ,;'      `;;/       /    ';,\\ `-..__._,'",
+    ";:.  /____  ..-'--.    /-'    ..---. ._._/ ---.",
+    "|    ;' ;'|        \\--/;' ,' /      \\   ,      \\",
+    "`.fL__;,__/-..__)_)/  `--'--'`-._)_)/ --\\.._)_)/",
+  ].join('\n');
+
+  return (
+    <Section fill>
+      <pre>
+        <Box color={!emagged ? 'blue' : 'crimson'}>{paiAscii}</Box>
+        <Box color={!emagged ? 'gold' : 'limegreen'}>{floofAscii}</Box>
+      </pre>
+    </Section>
   );
 };
 
@@ -98,18 +145,29 @@ const SystemDirectives = (_, context) => {
     <Section fill scrollable title="System Info">
       <LabeledList>
         <LabeledList.Item label="Master">
-          {master.name || 'None'}
+          {master.name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item label="Signature">
-          {master.dna || 'None'}
+        {master.name && (
+          <>
+            <LabeledList.Item label="DNA Signature">
+              {master.dna || 'None.'}
+            </LabeledList.Item>
+
+            <LabeledList.Item label="Prime Directive">
+              Serve your master.
+            </LabeledList.Item>
+          </>
+        )}
+        <LabeledList.Item
+          label={`${master.name ? 'Secondary' : ''} Directives`}>
+          {directives}
         </LabeledList.Item>
-        <LabeledList.Item label="Directives">{directives}</LabeledList.Item>
       </LabeledList>
     </Section>
   );
 };
 
-const SystemInstalled = (_, context) => {
+const InstalledDisplay = (_, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { installed } = data.software;
 
@@ -146,9 +204,9 @@ const AvailableMemory = (_, context) => {
           minValue={0}
           maxValue={100}
           ranges={{
-            good: [75, 100],
-            average: [50, 75],
-            bad: [0, 25],
+            good: [67, 100],
+            average: [34, 66],
+            bad: [0, 33],
           }}
           value={ram}
         />
@@ -176,22 +234,18 @@ const AvailableSoftware = (_, context) => {
             label={software.name.replace(/^\w/, (c) => c.toUpperCase())}
             key={software.name}
             buttons={
-              <Stack fill>
-                {installed.includes(software.toString()) && (
-                  <Stack.Item>
-                    <Icon mt={0.7} color="purple" name="microchip" />
-                  </Stack.Item>
-                )}
-                <Stack.Item>
-                  <Button
-                    disabled={installed.includes(software.toString())}
-                    fluid
-                    width={5}>
-                    {software.value}
-                    <Icon ml={1} name="microchip" />
-                  </Button>
-                </Stack.Item>
-              </Stack>
+              <Button
+                disabled={installed.includes(software.name)}
+                fluid
+                onClick={() => act('buy', { selection: software.name })}
+                width={5}>
+                {software.value}
+                <Icon
+                  color={installed.includes(software.name) && 'purple'}
+                  ml={1}
+                  name="microchip"
+                />
+              </Button>
             }
           />
         );

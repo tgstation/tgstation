@@ -40,6 +40,7 @@
 /mob/living/silicon/pai/ui_data(mob/user)
 	var/list/data = list()
 	data["directives"] = laws.supplied
+	data["image"] = card.emotion_icon
 	data["master"] = list()
 	data["pda"] = list()
 	data["ram"] = ram
@@ -63,10 +64,10 @@
 		return
 	switch(action)
 		if("buy") // Purchasing new software
-			if(available_software.Find(params) && !software.Find(params))
-				var/cost = available_software[params]
+			if(available_software.Find(params["selection"]) && !software.Find(params["selection"]))
+				var/cost = available_software[params["selection"]]
 				if(ram >= cost)
-					software.Add(params)
+					software.Add(params["selection"])
 					ram -= cost
 					var/datum/hud/pai/pAIhud = hud_used
 					pAIhud?.update_software_buttons()
@@ -98,7 +99,7 @@
 			else
 				to_chat(src, span_warning("You are not being carried by anyone!"))
 				return 0 // FALSE ? If you return here you won't call paiinterface() below
-		if("pda_power")
+		if("pda_off")
 			if(!isnull(aiPDA))
 				aiPDA.toff = !aiPDA.toff
 		if("pda_silent")
@@ -107,8 +108,9 @@
 		if("pda_message")
 			if(silent)
 				return tgui_alert(usr,"Communications circuits remain uninitialized.")
-			var/target = locate(params) in GLOB.PDAs
-			aiPDA.create_message(src, target)
+			var/target = locate(params["target"]) in GLOB.PDAs
+			if(target)
+				aiPDA.create_message(src, target)
 		if("medicalrecord") // Accessing medical records
 			medicalActive1 = find_record("id", params, GLOB.data_core.general)
 			if(medicalActive1)
