@@ -171,13 +171,19 @@
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
+		var/telekinesis = !user.CanReach(src)
+		var/atom/location = telekinesis ? drop_location() : user.drop_location()
 		if(get_amount() < 2)
 			to_chat(user, span_warning("You need at least two gauzes to do this!"))
 			return
-		new /obj/item/stack/sheet/cloth(user.drop_location())
-		user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
-			span_notice("You cut [src] into pieces of cloth with [I]."), \
+		new /obj/item/stack/sheet/cloth(location)
+		if(telekinesis)
+			visible_message(span_notice("[I] cuts [src] into pieces of cloth."), \
 			span_hear("You hear cutting."))
+		else
+			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
+				span_notice("You cut [src] into pieces of cloth with [I]."), \
+				span_hear("You hear cutting."))
 		use(2)
 	else
 		return ..()
