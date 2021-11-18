@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - qol: "Tracking beacons are now randomized (except arrivals) and added to several new areas for all maps."

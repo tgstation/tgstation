@@ -352,10 +352,9 @@
 ///wrapper for flick_overlay(), flicks to everyone who can see the target atom
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
 	var/list/viewing = list()
-	for(var/viewer in viewers(target))
-		var/mob/viewer_mob = viewer
-		if(viewer_mob.client)
-			viewing += viewer_mob.client
+	for(var/mob/viewer as anything in viewers(target))
+		if(viewer.client)
+			viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
 ///Get active players who are playing in the round
@@ -579,7 +578,7 @@
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/possible_loc = list()
 
-	for(var/turf/found_turf in RANGE_TURFS(range, center))
+	for(var/turf/found_turf as anything in RANGE_TURFS(range, center))
 		// We check if both the turf is a floor, and that it's actually in the area.
 		// We also want a location that's clear of any obstructions.
 		if (specific_area && !istype(get_area(found_turf), specific_area))
