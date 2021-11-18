@@ -151,11 +151,11 @@
  * cultist - the target doing the hitting, can be the same as target
  */
 /datum/component/cult_ritual_item/proc/do_purge_holywater(mob/living/target, mob/living/cultist)
-	// allows cultists to be rescued from the clutches of ordained religion
+	// Allows cultists to be rescued from the clutches of ordained religion
 	to_chat(cultist, span_cult("You remove the taint from [target] using [parent]."))
 	var/holy_to_unholy = target.reagents.get_reagent_amount(/datum/reagent/water/holywater)
 	target.reagents.del_reagent(/datum/reagent/water/holywater)
-	//For carbons we also want to clear out the stomach of any holywater
+	// For carbonss we also want to clear out the stomach of any holywater
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/organ/stomach/belly = carbon_target.getorganslot(ORGAN_SLOT_STOMACH)
@@ -346,7 +346,7 @@
 	if(summon_objective.check_completion())
 		to_chat(cultist, span_cultlarge("\"I am already here. There is no need to try to summon me now.\""))
 		return FALSE
-	var/confirm_final = tgui_alert(cultist, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", list("My life for Nar'Sie!", "No"))
+	var/confirm_final = tgui_alert(cultist, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence.", "Are you prepared for the final battle?", list("My life for Nar'Sie!", "No"))
 	if(confirm_final == "No")
 		to_chat(cultist, span_cult("You decide to prepare further before scribing the rune."))
 		return
@@ -355,8 +355,7 @@
 		return FALSE
 	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [initial(our_area.name)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES)
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
-		var/obj/structure/emergency_shield/cult/narsie/shield = new(shielded_turf)
-		LAZYADD(shields, shield)
+		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
 
 	return TRUE
 
@@ -436,7 +435,7 @@
  *
  * cultist - the mob making the rune
  * cult_team - the team of the mob making the rune
- * fail_if_last_site - whether the check fails if it's the last site in the summonning list.
+ * fail_if_last_site - whether the check fails if it's the last site in the summoning list.
  */
 /datum/component/cult_ritual_item/proc/check_if_in_ritual_site(mob/living/cultist, datum/team/cult/cult_team, fail_if_last_site = FALSE)
 	var/datum/objective/eldergod/summon_objective = locate() in cult_team.objectives

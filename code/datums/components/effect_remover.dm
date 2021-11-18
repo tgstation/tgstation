@@ -9,7 +9,7 @@
 	var/success_forcesay
 	/// Callback invoked with removal is done.
 	var/datum/callback/on_clear_callback
-	/// A typecache of all effects we can clear with out item.
+	/// A typecache of all effects we can clear with our item.
 	var/list/obj/effect/effects_we_clear
 
 /datum/component/effect_remover/Initialize(
