@@ -302,6 +302,9 @@
 		return FALSE
 	switch(type)
 		if("ready")
+			// Send a full update when the user manually refreshes the UI
+			if (initialized)
+				send_full_update()
 			initialized = TRUE
 		if("pingReply")
 			initialized = TRUE
