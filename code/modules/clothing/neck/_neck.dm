@@ -213,7 +213,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	var/datum/export_report/ex = export_item_and_contents(I, dry_run=TRUE)
+	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
@@ -223,11 +223,6 @@
 		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user),true_price)
-			for(var/i in ex.exported_atoms_ref)
-				var/atom/movable/AM = i
-				if(QDELETED(AM))
-					continue
-				qdel(AM)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
 

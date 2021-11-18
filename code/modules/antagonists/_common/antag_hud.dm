@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	for (var/datum/antagonist/antagonist as anything in mind?.antag_datums)
 		if (isnull(antagonist.antag_hud_name))
 			continue
-		final_antag_hud_images += image('icons/mob/hud.dmi', mind.current, antagonist.antag_hud_name)
+		final_antag_hud_images += image(antagonist.hud_icon, mind.current, antagonist.antag_hud_name)
 
 	return final_antag_hud_images
 
@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	if (antag_hud_images.len == 0)
 		image.icon = icon('icons/blanks/32x32.dmi', "nothing")
 	else
-		image.icon = icon('icons/mob/hud.dmi', get_antag_image(index).icon_state)
+		image.icon = icon(get_antag_image(index).icon, get_antag_image(index).icon_state)
 
 /datum/atom_hud/alternate_appearance/basic/antagonist_hud/proc/update_antag_hud_images(datum/mind/source)
 	SIGNAL_HANDLER

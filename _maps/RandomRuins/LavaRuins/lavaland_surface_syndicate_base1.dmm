@@ -39,7 +39,7 @@
 /area/ruin/syndicate_lava_base/main)
 "ag" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/red{
@@ -336,8 +336,8 @@
 /area/ruin/syndicate_lava_base/cargo)
 "dL" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/structure/closet/crate,
 /obj/item/extinguisher{
@@ -997,7 +997,6 @@
 /area/ruin/syndicate_lava_base/testlab)
 "eN" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
@@ -1419,7 +1418,7 @@
 "fu" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/table,
@@ -1514,8 +1513,8 @@
 /obj/structure/closet/l3closet,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1970,7 +1969,7 @@
 /area/ruin/syndicate_lava_base/virology)
 "gU" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/sink{
@@ -2249,7 +2248,7 @@
 /area/ruin/syndicate_lava_base/main)
 "hx" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -2388,8 +2387,8 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/dormitories)
@@ -2410,8 +2409,8 @@
 /obj/structure/table/wood,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/dormitories)
@@ -2761,8 +2760,8 @@
 /area/ruin/syndicate_lava_base/dormitories)
 "iB" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
@@ -3140,8 +3139,8 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/dormitories)
@@ -3164,8 +3163,8 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/syndicate_lava_base/dormitories)
@@ -4184,7 +4183,7 @@
 /area/ruin/syndicate_lava_base/medbay)
 "lL" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/machinery/light/small/directional/west,
@@ -4246,7 +4245,7 @@
 /area/ruin/syndicate_lava_base/arrivals)
 "lU" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/chair/stool/directional/south,
@@ -5031,7 +5030,7 @@
 /area/ruin/syndicate_lava_base/engineering)
 "nH" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/machinery/light/small/directional/west,
@@ -5231,8 +5230,8 @@
 "nU" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
