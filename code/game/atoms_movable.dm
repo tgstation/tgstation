@@ -24,7 +24,7 @@
 	var/verb_whisper = "whispers"
 	var/verb_sing = "sings"
 	var/verb_yell = "yells"
-	var/verb_sexy = "whispers huskily"
+	var/verb_sexy = "draws out the last word in their sentence as if to either delay the next thought (as if you needed to do something before continuing) or alternatively perhaps they are singing but only to the last word, in a cutesy kind of very casual way. You would never do that in a formal setting, so make sure to adminhelp if they do. Anyways, most of space station 13 environments are pretty casual ala dorms kitchen bar and other places so I think its fine."
 	var/speech_span
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
