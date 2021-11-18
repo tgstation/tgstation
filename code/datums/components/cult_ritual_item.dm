@@ -74,6 +74,8 @@
  * Usually, this will include various instructions on how to use the thing.
  */
 /datum/component/cult_ritual_item/proc/on_examine(datum/source, mob/examiner, list/examine_text)
+	SIGNAL_HANDLER
+
 	if(!IS_CULTIST(examiner))
 		return
 
@@ -84,6 +86,8 @@
  * Allows the user to begin scribing runes.
  */
 /datum/component/cult_ritual_item/proc/try_scribe_rune(datum/source, mob/user)
+	SIGNAL_HANDLER
+
 	if(!isliving(user))
 		return
 
@@ -104,6 +108,8 @@
  * to purge them of all holy water in their system, transforming it into unholy water.
  */
 /datum/component/cult_ritual_item/proc/try_purge_holywater(datum/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(!IS_CULTIST(user) || !IS_CULTIST(target))
 		return
 
@@ -120,6 +126,8 @@
  * Allows the ritual items to unanchor cult buildings or destroy rune girders.
  */
 /datum/component/cult_ritual_item/proc/try_hit_object(datum/source, obj/structure/target, mob/cultist)
+	SIGNAL_HANDLER
+
 	if(!isliving(cultist) || !IS_CULTIST(cultist))
 		return
 
@@ -136,6 +144,8 @@
  * Allows the ritual items to remove runes.
  */
 /datum/component/cult_ritual_item/proc/try_clear_rune(datum/source, obj/effect/target, mob/living/cultist, params)
+	SIGNAL_HANDLER
+
 	if(!isliving(cultist) || !IS_CULTIST(cultist))
 		return
 
