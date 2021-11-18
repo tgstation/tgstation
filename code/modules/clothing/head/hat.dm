@@ -82,7 +82,7 @@
 
 /obj/item/clothing/head/cowboy_hat_white
 	name = "ten-gallon hat"
-	desc = "There are two kinds of people in the world those with guns and those that dig. You dig?"
+	desc = "There are two kinds of people in the world: those with guns and those that dig. You dig?"
 	icon_state = "cowboy_hat_white"
 	inhand_icon_state = "cowboy_hat_white"
 
