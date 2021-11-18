@@ -210,21 +210,18 @@ SUBSYSTEM_DEF(job)
 	job.current_positions++
 	return TRUE
 
-/datum/controller/subsystem/job/proc/FreeRole(rank)
-	if(!rank)
-		return
-	JobDebug("Freeing role: [rank]")
-	var/datum/job/job = GetJob(rank)
-	if(!job)
-		return FALSE
-	job.current_positions = max(0, job.current_positions - 1)
-
 /datum/controller/subsystem/job/proc/FindOccupationCandidates(datum/job/job, level)
 	JobDebug("Running FOC, Job: [job], Level: [job_priority_level_to_string(level)]")
 	var/list/candidates = list()
 	for(var/mob/dead/new_player/player in unassigned)
+		if(!player)
+			JobDebug("FOC player no longer exists.")
+			continue
+		if(!player.client)
+			JobDebug("FOC player client no longer exists, Player: [player]")
+			continue
 		// Initial screening check. Does the player even have the job enabled, if they do - Is it at the correct priority level?
-		var/player_job_level = player.client.prefs.job_preferences[job.title]
+		var/player_job_level = player.client?.prefs.job_preferences[job.title]
 		if(isnull(player_job_level))
 			JobDebug("FOC player job not enabled, Player: [player]")
 			continue

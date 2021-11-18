@@ -1,4 +1,0 @@
-author: "CocaColaTastesGood"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit that allowed players to purchase role restricted uplink items that they shouldn't be able too."
