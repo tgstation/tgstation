@@ -47921,12 +47921,12 @@
 /turf/open/floor/iron,
 /area/maintenance/port)
 "ijb" = (
-/obj/machinery/biogenerator,
 /obj/machinery/door/window/eastleft{
 	name = "Hydroponics Biogenerator";
 	req_access_txt = "35"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
 /turf/open/floor/plating,
 /area/service/hydroponics)
 "ijt" = (
@@ -56709,7 +56709,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_access_txt = "31"
+	req_one_access_txt = "31;48"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -61142,10 +61142,6 @@
 /area/science/genetics)
 "lXi" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining{
-	name = "Cargo Bay";
-	req_access_txt = "31"
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -61155,6 +61151,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/mining{
+	name = "Cargo Bay";
+	req_one_access_txt = "31;48"
+	},
 /turf/open/floor/iron,
 /area/cargo/office)
 "lXm" = (
@@ -83748,7 +83748,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/door/airlock/mining/glass{
-	name = "Mining Office";
+	name = "Delivery Office";
 	req_one_access_txt = "48;50"
 	},
 /obj/structure/disposalpipe/segment,
