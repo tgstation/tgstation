@@ -279,13 +279,14 @@
 				lawsync = FALSE
 				O.set_connected_ai(null)
 			else
-				O.notify_ai(NEW_BORG)
+				O.notify_ai(AI_NOTIFICATION_NEW_BORG)
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
+					O.log_current_laws()
 
 			brainmob.mind?.remove_antags_for_borging()
 			O.job = "Cyborg"
@@ -337,10 +338,11 @@
 			else
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
-				O.notify_ai(AI_SHELL)
+				O.notify_ai(AI_NOTIFICATION_AI_SHELL)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
+				O.log_current_laws()
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)

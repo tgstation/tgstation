@@ -70,7 +70,7 @@
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/lift_master/proc/MoveLiftHorizontal(going, z)
+/datum/lift_master/proc/MoveLiftHorizontal(going, z, gliding_amount = 8)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
@@ -93,12 +93,12 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x in max_x to min_x step -1)
@@ -106,12 +106,12 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 	set_controls(UNLOCKED)
 
 ///Check destination turfs
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	base_icon_state = "catwalk"
 	density = FALSE
 	anchored = TRUE
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
 	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	plane = FLOOR_PLANE
@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
-/obj/structure/industrial_lift/proc/travel(going)
+/obj/structure/industrial_lift/proc/travel(going, gliding_amount = 8)
 	var/list/things2move = LAZYCOPY(lift_load)
 	var/turf/destination
 	if(!isturf(going))
@@ -285,8 +285,11 @@ GLOBAL_LIST_EMPTY(lifts)
 			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
+
+	set_glide_size(gliding_amount)
 	forceMove(destination)
 	for(var/atom/movable/thing as anything in things2move)
+		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
@@ -496,7 +499,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		return PROCESS_KILL
 	else
 		travel_distance--
-		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
+		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
 
 /**
  * Handles moving the tram
@@ -522,7 +525,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
 		other_tram_part.set_travelling(TRUE)
 		other_tram_part.from_where = to_where
-	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
+	lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
 	travel_distance--
 
 	START_PROCESSING(SStramprocess, src)

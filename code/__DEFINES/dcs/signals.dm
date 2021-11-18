@@ -67,6 +67,9 @@
 ///from SSsecurity_level when the security level changes : (new_level)
 #define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
 
+///from SSshuttle when the supply shuttle starts spawning orders : ()
+#define COMSIG_SUPPLY_SHUTTLE_BUY "supply_shuttle_buy"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
@@ -182,8 +185,6 @@
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"
 ///from base of atom/emag_act(): (/mob/user)
 #define COMSIG_ATOM_EMAG_ACT "atom_emag_act"
-///from base of atom/rad_act(intensity)
-#define COMSIG_ATOM_RAD_ACT "atom_rad_act"
 ///from base of atom/narsie_act(): ()
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
@@ -215,15 +216,6 @@
 #define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
-///from proc/get_rad_contents(): ()
-#define COMSIG_ATOM_RAD_PROBE "atom_rad_probe"
-	#define COMPONENT_BLOCK_RADIATION (1<<0)
-///from base of datum/radiation_wave/radiate(): (strength)
-#define COMSIG_ATOM_RAD_CONTAMINATING "atom_rad_contam"
-	#define COMPONENT_BLOCK_CONTAMINATION (1<<0)
-///from base of datum/radiation_wave/check_obstructions(): (datum/radiation_wave, width)
-#define COMSIG_ATOM_RAD_WAVE_PASSING "atom_rad_wave_pass"
-	#define COMPONENT_RAD_WAVE_HANDLED (1<<0)
 ///from internal loop in atom/movable/proc/CanReach(): (list/next)
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
 	#define COMPONENT_ALLOW_REACH (1<<0)
@@ -278,6 +270,9 @@
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
+///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
+#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
 ///from base of [/datum/reagents/proc/add_reagent] - Sent before the reagent is added: (reagenttype, amount, reagtemp, data, no_react)
 #define COMSIG_REAGENTS_PRE_ADD_REAGENT "reagents_pre_add_reagent"
 	/// Prevents the reagent from being added.
@@ -308,6 +303,7 @@
 #define COMSIG_REAGENTS_EXPOSE_TURF "reagents_expose_turf"
 ///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
 #define COMSIG_REAGENTS_CRAFTING_PING "reagents_crafting_ping"
+
 
 // Lighting:
 ///from base of [atom/proc/set_light]: (l_range, l_power, l_color, l_on)
@@ -633,6 +629,10 @@
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
+/// from /proc/healthscan(): (list/scan_results, advanced, mob/user, mode)
+/// Consumers are allowed to mutate the scan_results list to add extra information
+#define COMSIG_LIVING_HEALTHSCAN "living_healthscan"
+
 ///sent from borg recharge stations: (amount, repairs)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
 ///sent from borg mobs to itself, for tools to catch an upcoming destroy() due to safe decon (rather than detonation)
@@ -691,6 +691,14 @@
 #define COMSIG_CARBON_HUGGED "carbon_hugged"
 ///When a carbon mob is headpatted, this is called on the carbon that is headpatted. (mob/living/headpatter)
 #define COMSIG_CARBON_HEADPAT "carbon_headpatted"
+///When a carbon mob has their tail pulled, this is called on the carbon that is the target. (mob/living/tailpuller)
+#define COMSIG_CARBON_TAILPULL "carbon_tailpulled"
+///Before a carbon mob is shoved, sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target)
+#define COMSIG_CARBON_DISARM_PRESHOVE "carbon_disarm_preshove"
+	#define COMSIG_CARBON_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
+///When a carbon mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+#define COMSIG_CARBON_DISARM_COLLIDE "carbon_disarm_collision"
+	#define COMSIG_CARBON_SHOVE_HANDLED (1<<0)
 
 ///When a carbon slips. Called on /turf/open/handle_slip()
 #define COMSIG_ON_CARBON_SLIP "carbon_slip"
@@ -941,6 +949,15 @@
 	///used to interrupt insertion
 	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
 
+///From open: (forced)
+#define COMSIG_CLOSET_PRE_OPEN "closet_pre_open"
+	#define BLOCK_OPEN (1<<0)
+///From open: (forced)
+#define COMSIG_CLOSET_POST_OPEN "closet_post_open"
+
+///a deliver_first element closet was successfully delivered
+#define COMSIG_CLOSET_DELIVERED "crate_delivered"
+
 ///Eigenstasium
 ///From base of [/datum/controller/subsystem/eigenstates/proc/use_eigenlinked_atom]: (var/target)
 #define COMSIG_EIGENSTATE_ACTIVATE "eigenstate_activate"
@@ -1169,6 +1186,29 @@
 #define COMSIG_SEED_ON_GROW "plant_on_grow"
 ///called when a seed is planted in a tray (obj/machinery/hydroponics)
 #define COMSIG_SEED_ON_PLANTED "plant_on_plant"
+
+//Hydro tray
+///from base of /obj/machinery/hydroponics/set_seed() : (obj/item/new_seed)
+#define COMSIG_HYDROTRAY_SET_SEED "hydrotray_set_seed"
+///from base of /obj/machinery/hydroponics/set_self_sustaining() : (new_value)
+#define COMSIG_HYDROTRAY_SET_SELFSUSTAINING "hydrotray_set_selfsustaining"
+///from base of /obj/machinery/hydroponics/set_weedlevel() : (new_value)
+#define COMSIG_HYDROTRAY_SET_WEEDLEVEL "hydrotray_set_weedlevel"
+///from base of /obj/machinery/hydroponics/set_pestlevel() : (new_value)
+#define COMSIG_HYDROTRAY_SET_PESTLEVEL "hydrotray_set_pestlevel"
+///from base of /obj/machinery/hydroponics/set_waterlevel() : (new_value)
+#define COMSIG_HYDROTRAY_SET_WATERLEVEL "hydrotray_set_waterlevel"
+///from base of /obj/machinery/hydroponics/set_plant_health() : (new_value)
+#define COMSIG_HYDROTRAY_SET_PLANT_HEALTH "hydrotray_set_plant_health"
+///from base of /obj/machinery/hydroponics/set_toxic() : (new_value)
+#define COMSIG_HYDROTRAY_SET_TOXIC "hydrotray_set_toxic"
+///from base of /obj/machinery/hydroponics/set_plant_status() : (new_value)
+#define COMSIG_HYDROTRAY_SET_PLANT_STATUS "hydrotray_set_plant_status"
+///from base of /obj/machinery/hydroponics/update_tray() : (mob/user, product_count)
+#define COMSIG_HYDROTRAY_ON_HARVEST "hydrotray_on_harvest"
+///from base of /obj/machinery/hydroponics/plantdies()
+#define COMSIG_HYDROTRAY_PLANT_DEATH "hydrotray_plant_death"
+
 
 //Gibs
 
@@ -1541,8 +1581,38 @@
 #define COMSIG_SAMPLE_GROWTH_COMPLETED "sample_growth_completed"
 	#define SPARE_SAMPLE (1<<0)
 
+// Radiation signals
+
+/// From the radiation subsystem, called before a potential irradiation.
+/// This does not guarantee radiation can reach or will succeed, but merely that there's a radiation source within range.
+/// (datum/radiation_pulse_information/pulse_information, insulation_to_target)
+#define COMSIG_IN_RANGE_OF_IRRADIATION "in_range_of_irradiation"
+
+/// Fired when the target could be irradiated, right before the chance check is rolled.
+/// (datum/radiation_pulse_information/pulse_information)
+#define COMSIG_IN_THRESHOLD_OF_IRRADIATION "pre_potential_irradiation_within_range"
+	#define CANCEL_IRRADIATION (1 << 0)
+
+	/// If this is flipped, then minimum exposure time will not be checked.
+	/// If it is not flipped, and the pulse information has a minimum exposure time, then
+	/// the countdown will begin.
+	#define SKIP_MINIMUM_EXPOSURE_TIME_CHECK (1 << 1)
+
+/// Fired when scanning something with a geiger counter.
+/// (mob/user, obj/item/geiger_counter/geiger_counter)
+#define COMSIG_GEIGER_COUNTER_SCAN "geiger_counter_scan"
+	/// If not flagged by any handler, will report the subject as being free of irradiation
+	#define COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL (1 << 0)
+
 /// Called when a techweb design is researched (datum/design/researched_design, custom)
 #define COMSIG_TECHWEB_ADD_DESIGN "techweb_add_design"
 
 /// Called when a techweb design is removed (datum/design/removed_design, custom)
 #define COMSIG_TECHWEB_REMOVE_DESIGN "techweb_remove_design"
+
+// Antagonist signals
+/// Called on the mind when an antagonist is being gained, after the antagonist list has updated (datum/antagonist/antagonist)
+#define COMSIG_ANTAGONIST_GAINED "antagonist_gained"
+
+/// Called on the mind when an antagonist is being removed, after the antagonist list has updated (datum/antagonist/antagonist)
+#define COMSIG_ANTAGONIST_REMOVED "antagonist_removed"

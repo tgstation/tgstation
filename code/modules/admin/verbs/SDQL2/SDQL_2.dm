@@ -983,8 +983,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 /proc/SDQL_testout(list/query_tree, indent = 0)
 	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
 	var/spaces = ""
-	for(var/s = 0, s < indent, s++)
-		spaces += whitespace
+	if(indent > 0)
+		for(var/i in 1 to indent)
+			spaces += whitespace
 
 	for(var/item in query_tree)
 		if(istype(item, /list))

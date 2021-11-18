@@ -475,7 +475,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				if(!can_target(target, user, TRUE))
 					continue
 				possible_targets += target
-			for(var/i=1,i<=max_targets,i++)
+			for(var/i in 1 to max_targets)
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
