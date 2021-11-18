@@ -1,4 +1,4 @@
-import { sortBy } from "common/collections";
+import { sortBy } from 'common/collections';
 import { useBackend } from '../backend';
 import { Box, Button, Dropdown, Flex, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -26,7 +26,7 @@ export const Photocopier = (props, context) => {
               No inserted toner cartridge.
             </Box>
           </Section>
-        )},
+        )}
         {forms_exist ? (
           <Blanks />
         ) : (
@@ -35,7 +35,7 @@ export const Photocopier = (props, context) => {
               No forms found. Please contact your system administrator.
             </Box>
           </Section>  
-        )},
+        )}
         {has_item ? (
           <Options />
         ) : (
@@ -44,7 +44,7 @@ export const Photocopier = (props, context) => {
               No inserted item.
             </Box>
           </Section>
-        )},
+        )}
         {!!isAI && (
           <AIOptions />
         )}
@@ -209,7 +209,8 @@ const Blanks = (props, context) => {
       />
       <Box mt={0.4}>
         {visibleBlanks.map(blank => (
-          <Button key={blank.code}
+          <Button
+            key={blank.code}
             disabled={!has_toner}
             onClick={() => act("print_blank", {
               name: blank.name,
