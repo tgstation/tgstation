@@ -91,7 +91,7 @@
 //Since it requires silver - I don't want to make it too hard
 /datum/chemical_reaction/medicine/lenturi
 	results = list(/datum/reagent/medicine/c2/lenturi = 5)
-	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
+	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/acetone = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 	required_temp = 200
 	optimal_temp = 300
 	overheat_temp = 500
