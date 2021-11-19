@@ -634,11 +634,11 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 			ahelp_cooldowns[user.ckey] = world.time + CONFIG_GET(number/urgent_ahelp_cooldown) * (1 SECONDS)
 
 	if(user.current_ticket)
+		user.current_ticket.TimeoutVerb()
 		if(urgent)
 			var/sanitized_message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
 			user.current_ticket.send_message_to_tgs(sanitized_message, TRUE)
 		user.current_ticket.MessageNoRecipient(message, urgent)
-		user.current_ticket.TimeoutVerb()
 		return
 
 	new /datum/admin_help(message, user, FALSE, urgent)
