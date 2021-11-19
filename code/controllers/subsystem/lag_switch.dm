@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(lag_switch)
 	var/slowmode_cooldown = 3 SECONDS
 
 /datum/controller/subsystem/lag_switch/Initialize(start_timeofday)
-	for(var/i = 1, i <= measures.len, i++)
+	for(var/i in 1 to measures.len)
 		measures[i] = FALSE
 	var/auto_switch_pop = CONFIG_GET(number/auto_lag_switch_pop)
 	if(auto_switch_pop)
@@ -124,10 +124,10 @@ SUBSYSTEM_DEF(lag_switch)
 		message_admins("Lag Switch enabling automatic measures now.")
 		log_admin("Lag Switch enabling automatic measures now.")
 		veto_timer_id = null
-		for(var/i = 1, i <= auto_measures.len, i++)
+		for(var/i in 1 to auto_measures.len)
 			set_measure(auto_measures[i], state)
 		return TRUE
 
-	for(var/i = 1, i <= measures.len, i++)
+	for(var/i in 1 to measures.len)
 		set_measure(i, state)
 	return TRUE
