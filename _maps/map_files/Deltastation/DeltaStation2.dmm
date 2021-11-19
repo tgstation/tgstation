@@ -4158,7 +4158,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "aTM" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -4255,7 +4255,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "aVd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/prisoner,
@@ -4488,7 +4488,7 @@
 	name = "service camera"
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "aYX" = (
 /obj/machinery/airalarm/directional/south,
 /obj/item/kirbyplants/random,
@@ -10583,7 +10583,7 @@
 	},
 /obj/item/paper_bin,
 /obj/item/pen,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/service/hydroponics)
 "bVc" = (
 /obj/structure/disposalpipe/segment{
@@ -30193,7 +30193,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "ebE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -31990,7 +31990,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/grimy,
-/area/maintenance/department/crew_quarters/bar)
+/area/service/bar)
 "epr" = (
 /obj/machinery/conveyor{
 	id = "cargodisposals"
@@ -56389,6 +56389,12 @@
 "kXz" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/computer/shuttle/mining/common,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: EXTERNAL AIRLOCK";
+	pixel_y = 32
+	},
 /turf/open/floor/iron/smooth_large,
 /area/hallway/secondary/entry)
 "kXB" = (
@@ -60295,6 +60301,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"lYw" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/sign/warning/pods{
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "lYD" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -62153,7 +62171,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "mwL" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
@@ -63329,7 +63347,7 @@
 /obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "mMX" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/blue{
@@ -67007,7 +67025,7 @@
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "nKN" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
@@ -69057,10 +69075,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
-"okK" = (
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/space/basic,
-/area/space)
 "okV" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -70085,7 +70099,7 @@
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "oxN" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
@@ -70827,7 +70841,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "oHv" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
@@ -82839,7 +82853,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/hydroponics)
 "sbQ" = (
 /obj/structure/sign/directions/security{
 	dir = 4;
@@ -84080,7 +84094,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "ssB" = (
 /turf/closed/wall,
 /area/cargo/warehouse)
@@ -85308,7 +85322,7 @@
 /obj/machinery/food_cart,
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/iron/dark,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "sHV" = (
 /obj/structure/chair/office{
 	dir = 1
@@ -87410,10 +87424,6 @@
 /obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/service/library)
-"tpi" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "tpq" = (
 /obj/structure/sign/directions/engineering,
 /obj/structure/sign/directions/evac{
@@ -99119,7 +99129,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/service/kitchen)
 "wvy" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
@@ -104179,6 +104189,13 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
+"xQP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "xQQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -137212,7 +137229,7 @@ abf
 aaO
 aaO
 abf
-adq
+ads
 aaO
 aec
 aaO
@@ -138240,7 +138257,7 @@ abf
 aaO
 aaO
 abf
-adq
+ads
 aaO
 jnv
 aaO
@@ -138497,7 +138514,7 @@ aad
 aaa
 aaa
 aad
-okK
+aaa
 aaO
 ehy
 aaO
@@ -138510,7 +138527,7 @@ ehy
 aaO
 aaa
 aad
-okK
+aaa
 aaa
 aaa
 abf
@@ -141849,7 +141866,7 @@ fKC
 aaO
 niL
 aaO
-adq
+ads
 abf
 aaO
 aaO
@@ -142091,7 +142108,7 @@ aaa
 aaO
 nLP
 aaO
-aca
+xQP
 abC
 qho
 acX
@@ -142605,7 +142622,7 @@ aaa
 aaO
 eWo
 aaO
-wSp
+lYw
 abD
 kZt
 adb
@@ -142866,7 +142883,7 @@ abf
 aaO
 aaO
 abf
-aaO
+ads
 aaO
 lDn
 aaO
@@ -142877,7 +142894,7 @@ sNI
 aaO
 lDn
 aaO
-aaO
+ads
 abf
 aaO
 aaO
@@ -143120,17 +143137,17 @@ aaa
 aaa
 aaa
 aaa
+qYo
 aaa
-aaa
-aaa
+qYo
 aaa
 aaO
 ehy
 aaO
-tpi
-tpi
-tpi
-tpi
+aaO
+aaO
+aaO
+aaO
 aaO
 ehy
 aaO
@@ -143378,16 +143395,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+qYo
+qYo
+qYo
 aaO
 aej
 aaO
+qYo
 aaa
 aaa
-aaa
-aaa
+qYo
 aaO
 aej
 aaO
@@ -144198,7 +144215,7 @@ omL
 dlQ
 wkk
 epn
-hDj
+aXI
 ctX
 aQB
 sAH
@@ -144679,7 +144696,7 @@ aaa
 aaa
 aaa
 aaa
-tpi
+aaO
 aaO
 aaO
 aUo
@@ -145434,16 +145451,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+qYo
+qYo
+qYo
 aaO
 lDn
 aaO
+qYo
 aaa
 aaa
-aaa
-aaa
+qYo
 aaO
 lDn
 aaO
@@ -145690,9 +145707,9 @@ aaa
 aaa
 aaa
 aaa
+qYo
 aaa
-aaa
-aaa
+qYo
 aaa
 aaO
 ehy
@@ -145950,7 +145967,7 @@ aaO
 aaO
 aaO
 abf
-aaO
+ads
 aaO
 aej
 aaO
@@ -145961,7 +145978,7 @@ gYG
 aaO
 aej
 aaO
-aaO
+ads
 abf
 aaO
 aaO
@@ -149047,16 +149064,16 @@ aeF
 aeF
 aeF
 aeF
-atR
+aig
 aPD
 qSy
 fkI
 aPD
-atR
+aig
 aPD
 pXI
 aPD
-atR
+aig
 nlp
 ljQ
 iBh
