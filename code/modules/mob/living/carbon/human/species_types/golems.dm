@@ -86,14 +86,22 @@
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems. Your unique mineral makeup makes you immune to most types of magic."
 	prefix = "Adamantine"
 	special_names = null
-
-/datum/species/golem/adamantine/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
-
-/datum/species/golem/adamantine/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
-	..()
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_ANTIMAGIC,
+	)
 
 //The suicide bombers of golemkind
 /datum/species/golem/plasma
@@ -200,14 +208,22 @@
 	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks have a higher chance of stunning. Being made of silver, your body is immune to most types of magic."
 	prefix = "Silver"
 	special_names = list("Surfer", "Chariot", "Lining")
-
-/datum/species/golem/silver/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-
-/datum/species/golem/silver/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-	..()
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_HOLY,
+	)
 
 //Harder to stun, deals more damage, massively slowpokes, but gravproof and obstructive. Basically, The Wall.
 /datum/species/golem/plasteel
@@ -226,17 +242,26 @@
 	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 	prefix = "Plasteel"
 	special_names = null
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_HOLY,
+		TRAIT_NOMOBSWAP, //THE WALL THE WALL THE WALL, NOTHING ON ERF CAN MAKE IT FALL
+	)
 
 /datum/species/golem/plasteel/negates_gravity(mob/living/carbon/human/H)
 	return TRUE
-
-/datum/species/golem/plasteel/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	ADD_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //THE WALL THE WALL THE WALL
-
-/datum/species/golem/plasteel/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_NOMOBSWAP, SPECIES_TRAIT) //NOTHING ON ERF CAN MAKE IT FALL
-	..()
 
 //Immune to ash storms
 /datum/species/golem/titanium
@@ -248,14 +273,22 @@
 	burnmod = 0.9
 	prefix = "Titanium"
 	special_names = list("Dioxide")
-
-/datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
-
-/datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_ASHSTORM_IMMUNE,
+	)
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
@@ -267,16 +300,24 @@
 	burnmod = 0.8
 	prefix = "Plastitanium"
 	special_names = null
-
-/datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	ADD_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
-	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
-
-/datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	REMOVE_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
-	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE,
+		TRAIT_CHUNKYFINGERS,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_NODISMEMBER,
+		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_LAVA_IMMUNE,
+		TRAIT_SNOWSTORM_IMMUNE, //They don't suffer from cold, this is for lava rivers.
+	)
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
@@ -755,6 +796,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
 		TRAIT_CHUNKYFINGERS,
+		TRAIT_HOLY,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	armor = 15 //feels no pain, but not too resistant
@@ -765,14 +807,6 @@
 	punchdamagehigh = 8 // not as heavy as stone
 	prefix = "Cloth"
 	special_names = null
-
-/datum/species/golem/cloth/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
-	ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-
-/datum/species/golem/cloth/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
-	..()
 
 /datum/species/golem/cloth/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -1201,6 +1235,7 @@
 		TRAIT_GENELESS,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_NODISMEMBER,
+		TRAIT_SNOWSTORM_IMMUNE,
 	)
 
 	var/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/ball
@@ -1217,7 +1252,6 @@
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	ADD_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 	ball = new
 	ball.charge_counter = 0
 	C.AddSpell(ball)
@@ -1227,7 +1261,6 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	REMOVE_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 	if(ball)
 		C.RemoveSpell(ball)
 	if(cryo)
@@ -1260,12 +1293,5 @@
 		TRAIT_GENELESS,
 		TRAIT_NODISMEMBER,
 		TRAIT_CHUNKYFINGERS,
+		TRAIT_ANTIMAGIC,
 	)
-
-/datum/species/golem/mhydrogen/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	. = ..()
-	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
-
-/datum/species/golem/mhydrogen/on_species_loss(mob/living/carbon/C)
-	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
-	return ..()
