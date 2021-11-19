@@ -286,10 +286,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.expose(smoker, INGEST, min(to_smoke / reagents.total_volume, 1))
 	var/obj/item/organ/lungs/lungs = smoker.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs && !(lungs.organ_flags & ORGAN_SYNTHETIC))
-		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm)
+		var/smoker_resistance = HAS_TRAIT(smoker, TRAIT_SMOKER) ? 0.5 : 1
+		smoker.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm*smoker_resistance)
 	if(!reagents.trans_to(smoker, to_smoke, methods = INGEST, ignore_stomach = TRUE))
 		reagents.remove_any(to_smoke)
-
 
 /obj/item/clothing/mask/cigarette/process(delta_time)
 	var/turf/location = get_turf(src)
@@ -383,14 +383,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 60
 	smoketime = 2 MINUTES
 	smoke_all = TRUE
+	lung_harm = 1.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/medicine/omnizine = 15)
 
 /obj/item/clothing/mask/cigarette/shadyjims
 	desc = "A Shady Jim's Super Slims cigarette."
+	lung_harm = 1.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/toxin/lipolicide = 4, /datum/reagent/ammonia = 2, /datum/reagent/toxin/plantbgone = 1, /datum/reagent/toxin = 1.5)
 
 /obj/item/clothing/mask/cigarette/xeno
 	desc = "A Xeno Filtered brand cigarette."
+	lung_harm = 2
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
 // Rollies.
@@ -477,6 +480,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "candyoff"
 	type_butt = /obj/item/food/candy_trash
 	heat = 473.15 // Lowered so that the sugar can be carmalized, but not burnt.
+	lung_harm = 0.5
 	list_reagents = list(/datum/reagent/consumable/sugar = 20)
 
 /obj/item/clothing/mask/cigarette/candy/nicotine
@@ -529,8 +533,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 30 MINUTES
-	chem_volume = 50
-	list_reagents =list(/datum/reagent/drug/nicotine = 15)
+	chem_volume = 60
+	list_reagents =list(/datum/reagent/drug/nicotine = 45)
 
 /obj/item/cigbutt
 	name = "cigarette butt"

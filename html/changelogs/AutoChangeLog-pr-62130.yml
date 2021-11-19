@@ -1,4 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - rscadd: "custom say emotes, or in other words, radio emotes. The format is for example \"screams and shouts*damnit!\" with any relevant radio keys, language keys and all that used as normal, for example, \";,o screams and shouts*damnit!\" or you can use just the emote, ie, \";screams!*\""

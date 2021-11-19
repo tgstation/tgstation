@@ -1,0 +1,4 @@
+author: "raffclar"
+delete-after: True
+changes: 
+  - bugfix: "When a TGUI web page is refreshed, send new data to that page."

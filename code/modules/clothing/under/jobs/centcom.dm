@@ -44,3 +44,15 @@
 	icon_state = "centcom_skirt"
 	inhand_icon_state = "dg_suit"
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/centcom/military
+	name = "tactical combat uniform"
+	desc = "A dark colored uniform worn by CentCom's conscripted military forces."
+	icon_state = "military"
+	inhand_icon_state = "bl_suit"
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
+
+/obj/item/clothing/under/rank/centcom/military/eng
+	name = "tactical engineering uniform"
+	desc = "A dark colored uniform worn by CentCom's regular military engineers."
+	icon_state = "military_eng"

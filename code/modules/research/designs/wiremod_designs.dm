@@ -183,10 +183,20 @@
 	id = "comp_direction"
 	build_path = /obj/item/circuit_component/direction
 
+/datum/design/component/reagentscanner
+	name = "Reagents Scanner"
+	id = "comp_reagents"
+	build_path = /obj/item/circuit_component/reagentscanner
+
 /datum/design/component/health
 	name = "Health Component"
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
+
+/datum/design/component/matscanner
+	name = "Material Scanner"
+	id = "comp_matscanner"
+	build_path = /obj/item/circuit_component/matscanner
 
 /datum/design/component/split
 	name = "Split Component"
@@ -272,6 +282,11 @@
 	name = "List Literal Component"
 	id = "comp_list_literal"
 	build_path = /obj/item/circuit_component/list_literal
+
+/datum/design/component/list_assoc_literal
+	name = "Associative List Literal"
+	id = "comp_list_assoc_literal"
+	build_path = /obj/item/circuit_component/list_literal/assoc_literal
 
 /datum/design/component/typecast
 	name = "Typecast Component"

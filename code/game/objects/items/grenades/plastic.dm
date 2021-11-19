@@ -84,6 +84,9 @@
 	aim_dir = get_dir(user,bomb_target)
 	if(!flag)
 		return
+	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		return
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
 

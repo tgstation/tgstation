@@ -101,6 +101,11 @@
 	QDEL_LIST(input_ports)
 	return ..()
 
+/obj/item/circuit_component/drop_location()
+	if(parent?.shell)
+		return parent.shell.drop_location()
+	return ..()
+
 /obj/item/circuit_component/examine(mob/user)
 	. = ..()
 	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
@@ -265,6 +270,16 @@
 		return FALSE
 
 	return TRUE
+
+/// Called when trying to get the physical location of this object
+/obj/item/circuit_component/proc/get_location()
+	return get_turf(src) || get_turf(parent?.shell)
+
+/obj/item/circuit_component/balloon_alert(mob/viewer, text)
+	if(parent)
+		return parent.balloon_alert(viewer, text)
+	return ..()
+
 
 /// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)

@@ -20,7 +20,7 @@
 	. = ..()
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	code = ""
-	for(var/i = 0, i < codelen, i++)
+	for(var/i in 1 to codelen)
 		var/dig = pick(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
@@ -38,8 +38,8 @@
 			for(var/i = 1, i <= length_input, i += length(char)) //put the guess into a list
 				char = input[i]
 				sanitised += text2num(char)
-			for(var/i = 1, i <= length(sanitised) - 1, i++) //compare each digit in the guess to all those following it
-				for(var/j = i + 1, j <= length(sanitised), j++)
+			for(var/i in 1 to length(sanitised) - 1) //compare each digit in the guess to all those following it
+				for(var/j in i + 1 to length(sanitised))
 					if(sanitised[i] == sanitised[j])
 						sanitycheck = FALSE //if a digit is repeated, reject the input
 			if(input == code)
