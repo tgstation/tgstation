@@ -73,7 +73,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(has_sensor > NO_SENSORS)
-		if(severity <= EMP_HEAVY)
+		if(severity >= EMP_HEAVY)
 			has_sensor = BROKEN_SENSORS
 			if(ismob(loc))
 				var/mob/M = loc
