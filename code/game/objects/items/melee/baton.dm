@@ -358,6 +358,7 @@
 	var/cell_hit_cost = 1000
 	var/can_remove_cell = TRUE
 	var/convertible = TRUE //if it can be converted with a conversion kit
+	var/scramble_time
 
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
@@ -549,6 +550,16 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
+	if (cell.charge >= cell_hit_cost)
+		for(var/loops = 1, loops < rand(6,12), loops++)
+			scramble_mode()
+			scramble_time = rand(5,15)/10
+			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops SECONDS)
+
+/obj/item/melee/baton/security/proc/scramble_mode()
+	active = !active
+	playsound(src, "sparks", 75, TRUE, -1)
+	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
