@@ -1,0 +1,6 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some logic errors in vendor prices. Offstation items are free once again. Discounted items still give"
+  - bugfix: "Crafting while in the crafting menu now properly dims the entire crafting list."
+  - bugfix: "Mulebots no longer runtime"
