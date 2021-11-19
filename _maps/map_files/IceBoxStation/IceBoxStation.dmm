@@ -11160,6 +11160,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/fire{
+	pixel_x = 32
+	},
 /turf/open/floor/iron,
 /area/science/mixing)
 "cjS" = (
@@ -25325,12 +25328,13 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/sign/warning/fire{
-	pixel_x = 32
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/mixingchamber{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/open/floor/iron/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "iZt" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -52680,9 +52684,6 @@
 /area/commons/storage/art)
 "xgw" = (
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/airalarm/mixingchamber{
-	pixel_y = -24
-	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "xgy" = (
