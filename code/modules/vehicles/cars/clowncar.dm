@@ -54,10 +54,6 @@
 		if(forced_mob.has_reagent(/datum/reagent/consumable/ethanol/irishcarbomb))
 			var/reagent_amount = forced_mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/irishcarbomb)
 			forced_mob.reagents.del_reagent(/datum/reagent/consumable/ethanol/irishcarbomb)
-			var/obj/item/organ/stomach/stomach = forced_mob.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach)
-				reagent_amount += stomach.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/irishcarbomb)
-				stomach.reagents.del_reagent(/datum/reagent/consumable/ethanol/irishcarbomb)
 			if(reagent_amount >= 30)
 				message_admins("[ADMIN_LOOKUPFLW(forced_mob)] was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.")
 				forced_mob.log_message("was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.", LOG_GAME)
@@ -65,8 +61,8 @@
 				addtimer(CALLBACK(src, .proc/irish_car_bomb), 5 SECONDS)
 
 /obj/vehicle/sealed/car/clowncar/proc/irish_car_bomb()
-	src.dump_mobs(FALSE) // the mobs must be dumped or else they won't explode
-	explosion(src, 2, 5, 10, 10) // half a max cap. yep
+	dump_mobs(randomstep = FALSE) // the mobs must be dumped or else they won't explode
+	explosion(src, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 10, flame_range = 10) // half a max cap. yep
 
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()
