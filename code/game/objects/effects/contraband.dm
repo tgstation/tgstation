@@ -446,7 +446,7 @@
 /obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
 	name = "Syndie Moth - Nuclear Operation"
 	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
-	icon_state = "poster50"	//syndies stay winning, they get a nice rounded 50
+	icon_state = "poster_aspev_syndie"	//Syndies mark the end of an era; down with numbered poster icon_states
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
@@ -650,27 +650,27 @@
 /obj/structure/sign/poster/official/moth_hardhat
 	name = "Safety Moth - Hardhats"
 	desc = "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
-	icon_state = "poster38_legit"
+	icon_state = "poster_legit_aspev_hardhat"
 
 /obj/structure/sign/poster/official/moth_piping
 	name = "Safety Moth - Piping"
 	desc = "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
-	icon_state = "poster392_legit"
+	icon_state = "poster_legit_aspev_piping"
 
 /obj/structure/sign/poster/official/moth_meth
 	name = "Safety Moth - Methamphetamine"
 	desc = "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
-	icon_state = "poster40_legit"
+	icon_state = "poster_legit_aspev_meth"
 
 /obj/structure/sign/poster/official/moth_epi
 	name = "Safety Moth - Epinephrine"
 	desc = "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
-	icon_state = "poster41_legit"
+	icon_state = "poster_legit_aspev_epi"
 
 /obj/structure/sign/poster/official/moth_delam
 	name = "Safety Moth - Delamination Safety Precautions"
 	desc = "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
-	icon_state = "poster42_legit"
+	icon_state = "poster_legit_aspev_delam"
 //End of AspEv posters
 
 
