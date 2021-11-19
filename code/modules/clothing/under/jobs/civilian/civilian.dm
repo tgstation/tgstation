@@ -152,14 +152,14 @@
 /obj/item/clothing/under/rank/civilian/lawyer/beige
 	name = "good lawyer's suit"
 	desc = "A tacky suit perfect for a CRIMINAL lawyer!"
-	icon_state = "black_suit_fem"
+	icon_state = "good_suit"
 	inhand_icon_state = "black_suit_fem"
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/beige/skirt
 	name = "good lawyer's suitskirt"
 	desc = "A tacky suitskirt perfect for a CRIMINAL lawyer!"
-	icon_state = "black_suit_fem_skirt"
+	icon_state = "good_suit_skirt"
 	inhand_icon_state = "black_suit_fem_skirt"
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	dying_key = DYE_REGISTRY_JUMPSKIRT
