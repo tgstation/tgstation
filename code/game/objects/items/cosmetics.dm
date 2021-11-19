@@ -258,7 +258,10 @@
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_parent = user
-		human_parent.override_skin_tone = powder_color
+		if(removal_mode)
+			human_parent.override_skin_tone = NULL
+		else
+			human_parent.override_skin_tone = powder_color
 		human_parent.update_body()
 		src.visible_message("[user] suddenly changes color!","You suddenly change color!")
 	return ..()
