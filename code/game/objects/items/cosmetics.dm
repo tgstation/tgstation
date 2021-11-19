@@ -283,7 +283,7 @@
 		removal_mode = TRUE
 		return
 
-obj/item/ntp_kit/AltClick(mob/user)
+/obj/item/ntp_kit/AltClick(mob/user)
 	if(!isturf(loc) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		select_colour(user)
 	else
