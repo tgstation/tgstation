@@ -615,3 +615,38 @@
   tralezab:
   - bugfix: fixes an oversight where mime and clown couldn't use their own department
       orders console
+2021-11-19:
+  ATHATH:
+  - bugfix: Hulk punches now count as unarmed attacks for the purposes of blocking.
+  - bugfix: Martial arts that grant their users the ability to block unarmed and melee
+      attacks while they're in throw mode can now block hulk punches.
+  Archanial:
+  - bugfix: fixed stealthadmin nicknames should load now
+  Farquaar:
+  - imageadd: Added a contraband advert for a seedy lumber company
+  Ghommie:
+  - expansion: The "Ian's Adventure" station trait now makes Ian deadchat controllable
+      and gives him a couple extra lives (to survive early round tiding)
+  - bugfix: Cargo exports will now start deleting items only after everything is sold.
+      This will fix issues such as unachievable exports (like machine ones) and getting
+      less credits than what export scanners says.
+  - bugfix: Pacifists can no longer attach c4 to other living creatures.
+  JohnFulpWillard:
+  - bugfix: Cyborgs who perform research is now logged in the RD's server console,
+      rather than showing up as Unknown.
+  Tastyfish:
+  - bugfix: The crew monitor and crew manifest now correctly sort custom jobs according
+      to ID trim.
+  - refactor: Data cores now internally track ID trim when HoP updates cards, as well
+      as initial job.
+  - admin: The secrets manifest now also shows the registered trim for each player.
+  necromanceranne:
+  - bugfix: Having the bad touch trait correctly prevents you from gaining a good
+      mood event from being tail pulled.
+  phasenoisepon:
+  - rscadd: Wooden pews now require a wrench in hand to be rotated
+  timothymtorres:
+  - qol: Tracking beacons are now randomized (except arrivals) and added to several
+      new areas for all maps.
+  twilightwanderer:
+  - rscadd: Added a system of forms and the ability to print them

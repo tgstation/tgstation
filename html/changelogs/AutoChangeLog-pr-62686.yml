@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Cargo exports will now start deleting items only after everything is sold. This will fix issues such as unachievable exports (like machine ones) and getting less credits than what export scanners says."
