@@ -620,9 +620,9 @@
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2, clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal > TINT_LIGHTER && tinttotal <= TINT_DARKENED)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 100, 0, 255))
-	else if(tinttotal > TINT_NONE && tinttotal <= TINT_LIGHTER)
+	else if(tinttotal > TINT_MINIMAL && tinttotal <= TINT_LIGHTER)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 0, clamp(tinttotal * 100, 0, 255))
-	else if(tinttotal <= TINT_NONE)
+	else if(tinttotal <= TINT_MINIMAL)
 		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
