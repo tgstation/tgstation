@@ -21,8 +21,8 @@
 	/// The amount of power used in the last minute
 	var/power_used_in_minute = 0
 
-	/// The last time power was taken from the grid.
-	var/power_used_last = 0
+	/// The cooldown time to reset the power_used_in_minute to 0
+	COOLDOWN_DECLARE(power_used_cooldown)
 
 	/// The maximum power that the shell can use in a minute before entering overheating and destroying itself.
 	var/max_power_use_in_minute = 20000
@@ -273,19 +273,21 @@
 
 /datum/component/shell/proc/override_power_usage(datum/source, power_to_use)
 	SIGNAL_HANDLER
-	if(world.time - power_used_last > 1 MINUTES)
+	if(COOLDOWN_FINISHED(src, power_used_cooldown))
 		power_used_in_minute = 0
 
 	var/area/location = get_area(parent)
-	if(location.powered(AREA_USAGE_EQUIP))
-		if(power_used_in_minute > max_power_use_in_minute)
-			explosion(parent, 0, 0, 1, explosion_cause = attached_circuit)
-			remove_circuit()
-			return
-		location.use_power(power_to_use, AREA_USAGE_EQUIP)
-		power_used_in_minute += power_to_use
-		power_used_last = world.time
-		return COMPONENT_OVERRIDE_POWER_USAGE
+	if(!location.powered(AREA_USAGE_EQUIP))
+		return
+
+	if(power_used_in_minute > max_power_use_in_minute)
+		explosion(parent, light_impact_range = 1, explosion_cause = attached_circuit)
+		remove_circuit()
+		return
+	location.use_power(power_to_use, AREA_USAGE_EQUIP)
+	power_used_in_minute += power_to_use
+	COOLDOWN_START(src, power_used_cooldown, 1 MINUTES)
+	return COMPONENT_OVERRIDE_POWER_USAGE
 
 /**
  * Attaches a circuit to the parent. Doesn't do any checks to see for any existing circuits so that should be done beforehand.
