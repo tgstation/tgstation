@@ -30,7 +30,7 @@
 		relay_render_to_plane(mymob, render_relay_plane)
 
 ///Things rendered on "openspace"; holes in multi-z
-/atom/movable/screen/plane_master/openspace
+/atom/movable/screen/plane_master/openspace_backdrop
 	name = "open space backdrop plane master"
 	plane = OPENSPACE_BACKDROP_PLANE
 	appearance_flags = PLANE_MASTER
