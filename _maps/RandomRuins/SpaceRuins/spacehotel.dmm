@@ -1787,7 +1787,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/hotel/bar)
 "gr" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -2351,7 +2351,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hotel/bar)
 "hZ" = (
@@ -4143,7 +4143,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hotel/custodial)
 "mF" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

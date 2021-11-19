@@ -329,9 +329,9 @@
 		radcalc *= normalise_creation_purity()
 		// no cost percent healing if you are SUPER cold (on top of cost healing)
 		if(chemtemp < radbonustemp*0.1)
-			M.adjustToxLoss(radcalc * (0.9**(REM * delta_time)))
+			M.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)))
 		else if(chemtemp < radbonustemp)
-			M.adjustToxLoss(radcalc * (0.75**(REM * delta_time)))
+			M.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)))
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
@@ -373,7 +373,7 @@
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	mytray.adjustToxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
+	mytray.adjust_toxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
 #define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 

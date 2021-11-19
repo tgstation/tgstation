@@ -157,7 +157,7 @@
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] =  "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
+	.["visible"] = "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
 	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
 
 	return .
@@ -521,7 +521,7 @@
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse [trait_check ? ", but your body quickly recovers..." : "!"]"))
+		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
 	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
 

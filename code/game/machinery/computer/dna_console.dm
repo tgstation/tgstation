@@ -959,8 +959,8 @@
 
 		// Combines two mutations from the console to try and create a new mutation
 		// ---------------------------------------------------------------------- //
-		// params["firstref"] -  ATOM Ref of first mutation for combination
-		// params["secondref"] -  ATOM Ref of second mutation for combination
+		// params["firstref"] - ATOM Ref of first mutation for combination
+		// params["secondref"] - ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_console")
 			// GUARD CHECK - We're running a research-type operation. If, for some
@@ -1005,8 +1005,8 @@
 
 		// Combines two mutations from the disk to try and create a new mutation
 		// ---------------------------------------------------------------------- //
-		// params["firstref"] -  ATOM Ref of first mutation for combination
-		// params["secondref"] -  ATOM Ref of second mutation for combination
+		// params["firstref"] - ATOM Ref of first mutation for combination
+		// params["secondref"] - ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_disk")
 			// GUARD CHECK - This code shouldn't even be callable without a diskette
@@ -1786,7 +1786,7 @@
 	// No code will ever null this list, we can safely Cut it.
 	tgui_genetic_makeup.Cut()
 
-	for(var/i=1, i <= NUMBER_OF_BUFFERS, i++)
+	for(var/i in 1 to NUMBER_OF_BUFFERS)
 		if(genetic_makeup_buffer[i])
 			tgui_genetic_makeup["[i]"] = genetic_makeup_buffer[i].Copy()
 		else

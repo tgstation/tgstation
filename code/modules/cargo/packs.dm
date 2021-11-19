@@ -2393,8 +2393,8 @@
 		new item(C)
 
 /datum/supply_pack/costumes_toys/mafia
-	name = "Cosa Nostra Starter Pack"
-	desc = "This crate contains everything you need to set up your own ethnicity-based racketeering operation."
+	name = "Mafioso Starter Pack"
+	desc = "This crate contains everything you need to set up your own racketeering operation."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list()
 	contraband = TRUE
@@ -2524,6 +2524,13 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/exodrone)
 	crate_name = "exodrone crate"
+
+/datum/supply_pack/misc/exploration_fuel
+	name = "Drone Fuel Pellet"
+	desc = "A fresh tank of exploration drone fuel."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/fuel_pellet)
+	crate_name = "exodrone fuel crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"

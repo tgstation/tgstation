@@ -169,8 +169,7 @@
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/atom_checked = thing
+	for(var/atom/atom_checked as anything in atoms)
 		if (typecache[atom_checked.type])
 			. += atom_checked
 
@@ -178,16 +177,16 @@
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/atom/atom as anything in atoms)
-		if(!typecache[atom.type])
-			. += atom
+	for(var/atom/atom_checked as anything in atoms)
+		if(!typecache[atom_checked.type])
+			. += atom_checked
 
 ///similar to typecache_filter_list and typecache_filter_list_reverse but it supports an inclusion list and and exclusion list
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/atom/atom as anything in atoms)
-		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
-			. += atom
+	for(var/atom/atom_checked as anything in atoms)
+		if(typecache_include[atom_checked.type] && !typecache_exclude[atom_checked.type])
+			. += atom_checked
 
 ///Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
@@ -358,7 +357,7 @@
 		return
 	inserted_list = inserted_list.Copy()
 
-	for(var/i = 1, i < inserted_list.len, ++i)
+	for(var/i in 1 to inserted_list.len - 1)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 	return inserted_list
@@ -368,7 +367,7 @@
 	if(!inserted_list)
 		return
 
-	for(var/i = 1, i < inserted_list.len, ++i)
+	for(var/i in 1 to inserted_list.len - 1)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 ///Return a list with no duplicate entries
@@ -411,7 +410,7 @@
 	if(islist(wordlist))
 		var/max = min(wordlist.len, 24)
 		var/bit = 1
-		for(var/i = 1, i <= max, i++)
+		for(var/i in 1 to max)
 			if(bitfield & bit)
 				return_list += wordlist[i]
 			bit = bit << 1
@@ -472,7 +471,7 @@
 			return //no need to move
 		from_index += len //we want to shift left instead of right
 
-		for(var/i = 0, i < distance, ++i)
+		for(var/i in 1 to distance)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -480,7 +479,7 @@
 		if(from_index > to_index)
 			from_index += len
 
-		for(var/i = 0, i < len, ++i)
+		for(var/i in 1 to len)
 			inserted_list.Insert(to_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(from_index, from_index + 1)
@@ -496,7 +495,7 @@
 		else
 			from_index += len
 
-		for(var/i = 0, i < distance, ++i)
+		for(var/i in 1 to distance)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -506,7 +505,7 @@
 			to_index = from_index
 			from_index = a
 
-		for(var/i = 0, i < len, ++i)
+		for(var/i in 1 to len)
 			inserted_list.Swap(from_index++, to_index++)
 
 ///replaces reverseList ~Carnie

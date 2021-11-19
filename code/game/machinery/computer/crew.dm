@@ -231,7 +231,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		if (id_card)
 			entry["name"] = id_card.registered_name
 			entry["assignment"] = id_card.assignment
-			entry["ijob"] = jobs[id_card.assignment]
+			var/trim_assignment = id_card.get_trim_assignment()
+			if (jobs[trim_assignment])
+				entry["ijob"] = jobs[trim_assignment]
 
 		// Binary living/dead status
 		if (sensor_mode >= SENSOR_LIVING)

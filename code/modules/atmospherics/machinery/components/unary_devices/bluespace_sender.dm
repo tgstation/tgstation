@@ -49,7 +49,7 @@
 	if(on && is_operational)
 		icon_state = "[base_icon]_on"
 		return ..()
-	icon_state =  "[base_icon]_off"
+	icon_state = "[base_icon]_off"
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()

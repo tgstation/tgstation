@@ -28,7 +28,7 @@
 	name = "mobl"
 	var/master = null
 
-	var/list/container = list(  )
+	var/list/container = list()
 
 /obj/effect/overlay/thermite
 	name = "thermite"

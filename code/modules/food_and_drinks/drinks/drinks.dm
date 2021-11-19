@@ -426,7 +426,7 @@
 	var/datum/reagent/random_reagent = new reagent_id
 	list_reagents = list(random_reagent.type = 50)
 	. = ..()
-	desc +=  span_notice("The writing reads '[random_reagent.name]'.")
+	desc += span_notice("The writing reads '[random_reagent.name]'.")
 	update_appearance()
 
 

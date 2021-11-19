@@ -120,11 +120,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
 		hotelRoomTempEmpty.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 		var/turfNumber = 1
-		for(var/i=0, i<hotelRoomTemp.width, i++)
-			for(var/j=0, j<hotelRoomTemp.height, j++)
+		for(var/x in 0 to hotelRoomTemp.width-1)
+			for(var/y in 0 to hotelRoomTemp.height-1)
 				for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
 					if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
-						A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
+						A.forceMove(locate(roomReservation.bottom_left_coords[1] + x, roomReservation.bottom_left_coords[2] + y, roomReservation.bottom_left_coords[3]))
 				turfNumber++
 		for(var/obj/item/abstracthotelstorage/S in storageTurf)
 			if((S.roomNumber == roomNumber) && (S.parentSphere == src))
@@ -165,8 +165,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(activeRooms.len)
 		for(var/x in activeRooms)
 			var/datum/turf_reservation/room = activeRooms[x]
-			for(var/i=0, i<hotelRoomTemp.width, i++)
-				for(var/j=0, j<hotelRoomTemp.height, j++)
+			for(var/i in 0 to hotelRoomTemp.width-1)
+				for(var/j in 0 to hotelRoomTemp.height-1)
 					for(var/atom/movable/A in locate(room.bottom_left_coords[1] + i, room.bottom_left_coords[2] + j, room.bottom_left_coords[3]))
 						if(ismob(A))
 							var/mob/M = A
@@ -417,10 +417,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	storageObj.roomNumber = roomnumber
 	storageObj.parentSphere = parentSphere
 	storageObj.name = "Room [roomnumber] Storage"
-	for(var/i=0, i<parentSphere.hotelRoomTemp.width, i++)
-		for(var/j=0, j<parentSphere.hotelRoomTemp.height, j++)
+	for(var/x in 0 to parentSphere.hotelRoomTemp.width-1)
+		for(var/y in 0 to parentSphere.hotelRoomTemp.height-1)
 			var/list/turfContents = list()
-			for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + i, reservation.bottom_left_coords[2] + j, reservation.bottom_left_coords[3]))
+			for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + x, reservation.bottom_left_coords[2] + y, reservation.bottom_left_coords[3]))
 				if(ismob(A) && !isliving(A))
 					continue //Don't want to store ghosts
 				turfContents += A
