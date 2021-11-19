@@ -554,7 +554,7 @@
 		scramble_mode()
 		for(var/loops in 1 to rand(6,12))
 			scramble_time = rand(5,15)/10
-			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops SECONDS)
+			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
 	active = !active
