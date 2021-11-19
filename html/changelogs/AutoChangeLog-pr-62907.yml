@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Shells that require anchoring to work now take their power from the room's APC rather than their cell. They can still use their cell as a backup battery. If they take too much power in a short period of time, they'll blow up and eject the circuit. You can examine the shell to see if it requires a cell to function."
