@@ -1238,3 +1238,11 @@
 	build_path = /obj/item/razor
 	category = list("initial","Medical")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/ntp_kit
+	name = "NTP kit"
+	id = "ntp_kit"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 50)
+	build_path = /obj/item/ntp_kit
+	category = list("hacked", "Medical")
