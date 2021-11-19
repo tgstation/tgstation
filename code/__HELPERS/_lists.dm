@@ -273,6 +273,7 @@
 	var/item
 	for(item in list_to_pick)
 		if(!list_to_pick[item])
+			stack_trace("Weight of zero passed to `pick_weight` instead of `pick_weight_allow_zero`. Item: [item]")
 			list_to_pick[item] = 1
 		total += list_to_pick[item]
 
