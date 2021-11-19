@@ -37843,17 +37843,24 @@
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "mmz" = (
+/obj/structure/safe,
+/obj/item/clothing/head/bearpelt,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/item/ammo_box/a357,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/effect/turf_decal/bot_white/left,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/bot_white/left,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
 "mmY" = (
@@ -38283,6 +38290,12 @@
 /area/medical/morgue)
 "muJ" = (
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	dir = 1
+	},
 /turf/open/floor/catwalk_floor,
 /area/ai_monitored/command/nuke_storage)
 "muS" = (
