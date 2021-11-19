@@ -1,0 +1,6 @@
+author: "TacticalTortoise"
+delete-after: True
+changes: 
+  - bugfix: "Deltastation - Teleporter room shutter button opened the wrong shutter"
+  - bugfix: "Iceboxstation - Service exit to Iceland was not properly marked"
+  - bugfix: "Kilostation - Kitchen shutters were not affected by button"
