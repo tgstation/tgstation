@@ -259,7 +259,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_parent = user
 		if(removal_mode)
-			human_parent.override_skin_tone = NULL
+			human_parent.override_skin_tone = ""
 		else
 			human_parent.override_skin_tone = powder_color
 		human_parent.update_body()
