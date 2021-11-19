@@ -287,7 +287,7 @@
 	inhand_icon_state = "sunglasses"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 1
+	tint = 0.25
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	dog_fashion = /datum/dog_fashion/head
 
@@ -356,7 +356,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron = 250)
-	tint = 2
+	tint = 2.75
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
@@ -612,7 +612,7 @@
 
 /obj/item/clothing/glasses/salesman/proc/moodshift(atom/movable/source, amount)
 	SIGNAL_HANDLER
-	if(amount < SANITY_UNSTABLE)	
+	if(amount < SANITY_UNSTABLE)
 		icon_state = "salesman_fzz"
 		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
 		bigshot.update_inv_glasses()
