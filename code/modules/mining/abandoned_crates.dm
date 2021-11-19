@@ -44,12 +44,10 @@
 						sanitycheck = FALSE //if a digit is repeated, reject the input
 			if(input == code)
 				to_chat(user, span_notice("The crate unlocks!"))
-				locked = FALSE
-				cut_overlays()
-				add_overlay("securecrateg")
-				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				if(!spawned_loot)
 					spawn_loot()
+				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
+				togglelock()
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
 				to_chat(user, span_notice("You leave the crate alone."))
 			else
@@ -104,17 +102,26 @@
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
+		return
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
-	if(locked)
+	if(!locked)
+		tamperproof = initial(tamperproof) //reset the anti-tampering when the lock is re-enabled.
+		return ..()
+	if(tamperproof)
 		boom(user)
-	else
-		if (qdel_on_open)
-			qdel(src)
-		..()
+		return
+	if (qdel_on_open)
+		qdel(src)
+		return
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
-	boom()
+	if(locked)
+		boom()
+		return
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
