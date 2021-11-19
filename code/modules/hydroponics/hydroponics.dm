@@ -941,8 +941,8 @@
 /obj/machinery/hydroponics/soil/update_status_light_overlays()
 	return // Has no lights
 
-/obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_SHOVEL && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
+/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/O, mob/user, params)
+	if(O.tool_behaviour == TOOL_SHOVEL) //Spades can still uproot plants on left click
 		to_chat(user, span_notice("You clear up [src]!"))
 		qdel(src)
 	else
