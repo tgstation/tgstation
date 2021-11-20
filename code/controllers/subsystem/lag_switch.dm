@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(lag_switch)
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
 	/// List of measures that toggle automatically
-	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML)
+	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML, DISABLE_PARALLAX)
 	/// Timer ID for the automatic veto period
 	var/veto_timer_id
 	/// Cooldown between say verb uses when slowmode is enabled
@@ -111,6 +111,9 @@ SUBSYSTEM_DEF(lag_switch)
 				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been disabled by an admin."))
 		if(DISABLE_NON_OBSJOBS)
 			world.update_status()
+		if(DISABLE_PARALLAX)
+			for (var/mob/mob as anything in GLOB.mob_list)
+				mob.hud_used?.update_parallax_pref()
 
 	return TRUE
 
