@@ -27,13 +27,6 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	// Initialize all our rune types if it wasn't already done.
-	if(!LAZYLEN(GLOB.rune_types))
-		for(var/obj/effect/rune/rune as anything in subtypesof(/obj/effect/rune))
-			if(!initial(rune.can_be_scribed))
-				continue
-			LAZYSET(GLOB.rune_types, initial(rune.cultist_name), rune) // Uses the cultist name for displaying purposes
-
 	src.examine_message = examine_message
 
 	if(islist(turfs_that_boost_us))

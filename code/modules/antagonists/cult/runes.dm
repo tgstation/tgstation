@@ -1,10 +1,22 @@
 
 /// list of mobs OR minds that have been sacrificed
 GLOBAL_LIST(sacrificed)
-/// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
-GLOBAL_LIST(rune_types)
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
+/// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
+GLOBAL_LIST_INIT(rune_types, generate_rune_types())
+
+/// Returns an associated list of rune types. [rune.cultist_name] = [typepath]
+/proc/generate_rune_types()
+	RETURN_TYPE(/list)
+
+	var/list/runes = list()
+	for(var/obj/effect/rune/rune as anything in subtypesof(/obj/effect/rune))
+		if(!initial(rune.can_be_scribed))
+			continue
+		runes[initial(rune.cultist_name)] = rune // Uses the cultist name for displaying purposes
+
+	return runes
 
 /*
 
