@@ -1,0 +1,113 @@
+// All signals. Format:
+// When the signal is called: (signal arguments)
+// All signals send the source datum of the signal as the first argument
+
+// global signals
+// These are signals which can be listened to by any component on any parent
+// start global signals with "!", this used to be necessary but now it's just a formatting choice
+
+///from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
+#define COMSIG_GLOB_NEW_Z "!new_z"
+/// called after a successful var edit somewhere in the world: (list/args)
+#define COMSIG_GLOB_VAR_EDIT "!var_edit"
+/// called after an explosion happened : (epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+#define COMSIG_GLOB_EXPLOSION "!explosion"
+/// Called from base of /mob/Initialise : (mob)
+#define COMSIG_GLOB_MOB_CREATED "!mob_created"
+/// mob died somewhere : (mob/living, gibbed)
+#define COMSIG_GLOB_MOB_DEATH "!mob_death"
+/// global living say plug - use sparingly: (mob/speaker , message)
+#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
+/// called by datum/cinematic/play() : (datum/cinematic/new_cinematic)
+#define COMSIG_GLOB_PLAY_CINEMATIC "!play_cinematic"
+	#define COMPONENT_GLOB_BLOCK_CINEMATIC (1<<0)
+/// ingame button pressed (/obj/machinery/button/button)
+#define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
+/// job subsystem has spawned and equipped a new mob
+#define COMSIG_GLOB_JOB_AFTER_SPAWN "!job_after_spawn"
+/// job datum has been called to deal with the aftermath of a latejoin spawn
+#define COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN "!job_after_latejoin_spawn"
+/// crewmember joined the game (mob/living, rank)
+#define COMSIG_GLOB_CREWMEMBER_JOINED "!crewmember_joined"
+/// Random event is trying to roll. (/datum/round_event_control/random_event)
+/// Called by (/datum/round_event_control/preRunEvent).
+#define COMSIG_GLOB_PRE_RANDOM_EVENT "!pre_random_event"
+	/// Do not allow this random event to continue.
+	#define CANCEL_PRE_RANDOM_EVENT (1<<0)
+/// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
+#define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
+/// a trapdoor remote has sent out a signal to link with a trapdoor
+#define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
+	///successfully linked to a trapdoor!
+	#define LINKED_UP (1<<0)
+/// an obj/item is created! (obj/item/created_item)
+#define COMSIG_GLOB_NEW_ITEM "!new_item"
+/// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
+#define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+/// a weather event of some kind occured
+#define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
+#define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
+#define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
+#define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
+/// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
+#define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
+///global mob logged in signal! (/mob/added_player)
+#define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
+
+/// signals from globally accessible objects
+
+///from SSJob when DivideOccupations is called
+#define COMSIG_OCCUPATIONS_DIVIDED "occupations_divided"
+
+///from SSsun when the sun changes position : (azimuth)
+#define COMSIG_SUN_MOVED "sun_moved"
+
+///from SSsecurity_level when the security level changes : (new_level)
+#define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
+
+///from SSshuttle when the supply shuttle starts spawning orders : ()
+#define COMSIG_SUPPLY_SHUTTLE_BUY "supply_shuttle_buy"
+
+/// Admin helps
+/// From /datum/admin_help/RemoveActive().
+/// Fired when an adminhelp is made inactive either due to closing or resolving.
+#define COMSIG_ADMIN_HELP_MADE_INACTIVE "admin_help_made_inactive"
+
+/// Called when the player replies. From /client/proc/cmd_admin_pm().
+#define COMSIG_ADMIN_HELP_REPLIED "admin_help_replied"
+
+//Gibs
+///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
+#define COMSIG_GIBS_STREAK "gibs_streak"
+
+/// Called on mobs when they step in blood. (blood_amount, blood_state, list/blood_DNA)
+#define COMSIG_STEP_ON_BLOOD "step_on_blood"
+
+//Mood
+///called when you send a mood event from anywhere in the code.
+#define COMSIG_ADD_MOOD_EVENT "add_mood"
+///Mood event that only RnD members listen for
+#define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood"
+///called when you clear a mood event from anywhere in the code.
+#define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
+
+//NTnet
+
+///called on an object by its NTNET connection component on receive. (data(datum/netdata))
+#define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"
+///called on an object by its NTNET connection component on a port update (hardware_id, port))
+#define COMSIG_COMPONENT_NTNET_PORT_UPDATE "ntnet_port_update"
+/// called when packet was accepted by the target (datum/netdata, error_code)
+#define COMSIG_COMPONENT_NTNET_ACK "ntnet_ack"
+/// called when packet was not acknoledged by the target (datum/netdata, error_code)
+#define COMSIG_COMPONENT_NTNET_NAK "ntnet_nack"
+
+// Some internal NTnet signals used on ports
+///called on an object by its NTNET connection component on a port distruction (port, list/data))
+#define COMSIG_COMPONENT_NTNET_PORT_DESTROYED "ntnet_port_destroyed"
+///called on an object by its NTNET connection component on a port distruction (port, list/data))
+#define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
+
+
