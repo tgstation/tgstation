@@ -1,3 +1,4 @@
+/// Antag datum associated with the hypnosis brain trauma, used for displaying objectives and antag hud
 /datum/antagonist/hypnotized
 	name = "Hypnotized Victim"
 	job_rank = ROLE_HYPNOTIZED
