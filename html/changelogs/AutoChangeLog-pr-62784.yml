@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Having the bad touch trait correctly prevents you from gaining a good mood event from being tail pulled."

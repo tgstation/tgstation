@@ -909,7 +909,7 @@
 /area/awaymission/wildwest/mines)
 "dY" = (
 /obj/structure/table/wood,
-/obj/item/food/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dZ" = (
@@ -919,12 +919,12 @@
 /area/awaymission/wildwest/mines)
 "ea" = (
 /obj/structure/table/wood,
-/obj/item/food/donut/jelly,
+/obj/item/food/donut/jelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eb" = (
 /obj/structure/table/wood,
-/obj/item/food/donut,
+/obj/item/food/donut/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ec" = (
@@ -1070,7 +1070,7 @@
 "eG" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/coffee,
-/obj/item/food/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eH" = (
@@ -1715,10 +1715,6 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
-"Gw" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/carpet,
-/area/awaymission/wildwest/mines)
 "Kh" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
