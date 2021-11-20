@@ -507,7 +507,7 @@ const AvailableRow = (props, context) => {
           disabled={ram < software.value || purchased}
           onClick={() => act('buy', { selection: software.name })}
           tooltip={<SoftwareInfo software={software.name} />}>
-          <Icon ml={1} name="download" />
+          <Icon ml={0.7} name="download" />
         </Button>
       </Table.Cell>
     </Table.Row>
