@@ -279,7 +279,7 @@
 	if(!can_scribe_rune(tool, cultist))
 		return FALSE
 
-	if(ispath(rune_to_scribe, /obj/effect/rune/summon) && (!is_station_level(our_turf.z) || istype(our_area, /area/space)))
+	if(ispath(rune_to_scribe, /obj/effect/rune/summon) && (!is_station_level(our_turf.z) || istype(get_area(cultist), /area/space)))
 		to_chat(cultist, span_cultitalic("The veil is not weak enough here to summon a cultist, you must be on station!"))
 		return
 
