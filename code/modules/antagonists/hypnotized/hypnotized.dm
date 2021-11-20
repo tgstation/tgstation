@@ -12,6 +12,5 @@
 	var/datum/brain_trauma/hypnosis/trauma
 
 /datum/antagonist/hypnotized/Destroy()
-	if(trauma)
-		qdel(trauma)
-	. = ..()
+	QDEL_NULL(trauma)
+	return ..()
