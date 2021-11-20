@@ -9,13 +9,13 @@
 /datum/component/cult_ritual_item
 	/// Whether we are currently being used to draw a rune.
 	var/drawing_a_rune = FALSE
-	/// The message displayed on examine, if supplied.
+	/// The message displayed when the parent is examined, if supplied.
 	var/examine_message
-	/// A list of turfs that we scribe runes at double speed on
+	/// A list of turfs that we scribe runes at double speed on.
 	var/list/turfs_that_boost_us
-	/// A list of all shields surrounding us while drawing runes.
+	/// A list of all shields surrounding us while drawing certain runes (Nar'sie).
 	var/list/obj/structure/emergency_shield/cult/narsie/shields
-	/// The action associated with our item
+	/// An item action associated with our parent, to quick-draw runes.
 	var/datum/action/item_action/linked_action
 
 /datum/component/cult_ritual_item/Initialize(
@@ -112,7 +112,6 @@
 		return
 
 	INVOKE_ASYNC(src, .proc/do_purge_holywater, user)
-
 
 /*
  * Signal proc for [COMSIG_ITEM_ATTACK_OBJ].
@@ -244,7 +243,6 @@
  */
 /datum/component/cult_ritual_item/proc/do_scribe_rune(obj/item/tool, mob/living/cultist)
 	var/turf/our_turf = get_turf(cultist)
-	var/area/our_area = get_area(cultist)
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/chosen_keyword
@@ -277,7 +275,6 @@
 			return FALSE
 
 	our_turf = get_turf(cultist) //we may have moved. adjust as needed...
-	our_area = get_area(cultist)
 
 	if(!can_scribe_rune(tool, cultist))
 		return FALSE
@@ -291,7 +288,7 @@
 			var/wait = 6000 - (world.time - SSticker.round_start_time)
 			to_chat(cultist, span_cultitalic("The veil is not yet weak enough for this rune - it will be available in [DisplayTimeText(wait)]."))
 			return
-		if(!check_if_in_ritual_site(our_area, user_team, TRUE))
+		if(!check_if_in_ritual_site(cultist, user_team, TRUE))
 			return
 
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
@@ -353,10 +350,9 @@
 	if(confirm_final == "No")
 		to_chat(cultist, span_cult("You decide to prepare further before scribing the rune."))
 		return
-	var/area/our_area = get_area(cultist)
 	if(!check_if_in_ritual_site(cultist, cult_team))
 		return FALSE
-	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [initial(our_area.name)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES)
+	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [get_area(cultist)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES)
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
 
