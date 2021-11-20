@@ -5,6 +5,7 @@
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
+	/// Associated antag datum, used for displaying objectives and antag hud
 	var/datum/antagonist/hypnotized/antagonist
 	var/hypnotic_phrase = ""
 	var/regex/target_phrase
