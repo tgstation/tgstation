@@ -952,6 +952,50 @@
 	var/goal = 0
 	/// Number of gulag points earned.
 	var/points = 0
+	/// If the card was made through the temporary hold locker
+	var/timed = FALSE
+	/// Locker assigned to the card when generated through a temporary hold locker
+	var/obj/structure/closet/secure_closet/brig/assigned_locker
+	/// Time to assign to the card when they pass through the security gate
+	var/time_to_assign
+	/// Time left on a card if assigned through temporary hold
+	var/time_left = 0
+
+/obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
+	..()
+	var/list/id_access = C.GetAccess()
+	if(ACCESS_BRIG in id_access)
+		if(!timed)
+			time_to_assign = input(user,"Set sentence time in seconds.","Set sentence time in seconds.",0) as num|null
+			if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				return
+			else
+				to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+				registered_name = "Prisoner #13-[rand(100,999)]"
+				timed = TRUE
+		else
+			timed = FALSE
+			registered_name = initial(registered_name)
+			to_chat(user, "Restating prisoner ID to default parameters.")
+		
+/obj/item/card/id/advanced/prisoner/proc/start_timer()
+	say("Sentence started, welcome to the corporate rehabilitation center, [registered_name]!")
+	START_PROCESSING(SSobj, src)
+
+/obj/item/card/id/advanced/prisoner/examine(mob/user)
+	. = ..()
+	if(timed)
+		if(time_left <= 0)
+			. += span_notice("The digital timer on the card has zero seconds remaining. You leave a changed man, but a free man nonetheless.")
+		else
+			. += span_notice("The digital timer on the card has [time_left] seconds remaining. Don't do the crime if you can't do the time.")
+
+/obj/item/card/id/advanced/prisoner/process(delta_time)
+	if(timed)
+		time_left -= delta_time
+		if(time_left <= 0)
+			say("Sentence time has been served. Thank you for your cooperation in our corporate rehabilitation program!")
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/card/id/advanced/prisoner/attack_self(mob/user)
 	to_chat(usr, span_notice("You have accumulated [points] out of the [goal] points you need for freedom."))
