@@ -11,8 +11,6 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
-	window_id = "autosec"
-	window_name = "Automatic Security Unit v1.6"
 	bot_core = /obj/machinery/bot_core/secbot
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel

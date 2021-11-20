@@ -39,10 +39,6 @@
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
 	///People currently looking into a bot's UI panel.
 	var/list/users = list()
-	///The ID of the UI this bot's panel will use.
-	var/window_id = "bot_control"
-	///Popup title used in the bot's UI panel.
-	var/window_name = "Protobot 1.0"
 	///The inserted (if any) pAI in this bot.
 	var/obj/item/paicard/paicard
 	///The type of bot it is, for radio control.

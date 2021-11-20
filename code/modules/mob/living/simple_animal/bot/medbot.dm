@@ -22,8 +22,6 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 
-	window_id = "automed"
-	window_name = "Automatic Medical Unit v1.1"
 	bot_core = /obj/machinery/bot_core/medbot
 	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL

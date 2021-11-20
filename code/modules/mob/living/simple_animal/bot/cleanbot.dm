@@ -10,8 +10,6 @@
 	health = 25
 	maxHealth = 25
 
-	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.4"
 	bot_core = /obj/machinery/bot_core/cleanbot
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service

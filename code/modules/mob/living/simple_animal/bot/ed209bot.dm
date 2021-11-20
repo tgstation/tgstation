@@ -9,8 +9,6 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
-	window_id = "autoed209"
-	window_name = "Automatic Security Unit v2.6"
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
 

@@ -10,8 +10,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
-	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.7"
 	bot_core = /obj/machinery/bot_core/honkbot
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.

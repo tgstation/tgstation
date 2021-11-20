@@ -12,8 +12,6 @@
 	health = 100
 	maxHealth = 100
 
-	window_id = "autoclean"
-	window_name = "Automatic Crew Cleaner X2"
 	bot_core = /obj/machinery/bot_core/hygienebot
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service

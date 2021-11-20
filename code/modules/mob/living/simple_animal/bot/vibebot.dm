@@ -13,8 +13,6 @@
 	light_range = 7
 	light_power = 3
 
-	window_id = "vibebot"
-	window_name = "Discomatic Vibe Bot v1.05"
 	hackables = "vibing scanners"
 	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
