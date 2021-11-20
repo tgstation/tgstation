@@ -47,8 +47,10 @@
 	var/screen // Which screen our main window displays
 	var/subscreen // Which specific function of the main screen is being displayed
 
-	var/secHUD = 0 // Toggles whether the Security HUD is active or not
-	var/medHUD = 0 // Toggles whether the Medical  HUD is active or not
+	var/secHUD = FALSE // Toggles whether the Security HUD is active or not
+	var/medHUD = FALSE // Toggles whether the Medical  HUD is active or not
+
+	var/languages_granted = FALSE // Toggles whether universal translator has been activated. Cannot be reversed
 
 	var/datum/data/record/medicalActive1 // Datacore record declarations for record software
 	var/datum/data/record/medicalActive2

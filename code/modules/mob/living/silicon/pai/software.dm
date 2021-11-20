@@ -41,6 +41,7 @@
 	var/list/data = list()
 	data["directives"] = laws.supplied
 	data["image"] = card.emotion_icon
+	data["languages"] = languages_granted
 	data["master"] = list()
 	data["pda"] = list()
 	data["ram"] = ram
@@ -77,7 +78,7 @@
 				to_chat(usr, span_notice("Software not found."))
 		if("radio") // Configuring onboard radio
 			radio.attack_self(src)
-		if("image") // Set pAI card display face
+		if("change_image") // Set pAI card display face
 			var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
 			switch(newImage)
 				if(null)
@@ -87,45 +88,42 @@
 				else
 					card.emotion_icon = "[lowertext(newImage)]"
 				card.update_appearance()
-		if("news")
+		if("newscaster")
 			newscaster.ui_interact(src)
-		if("camzoom")
+		if("camera_zoom")
 			aicamera.adjust_zoom(usr)
-		if("signaler")
+		if("remote_signaler")
 			signaler.ui_interact(src)
-		if("directive")
+		if("check_dna")
 			if(iscarbon(card.loc))
 				CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 			else
 				to_chat(src, span_warning("You are not being carried by anyone!"))
 				return 0 // FALSE ? If you return here you won't call paiinterface() below
-		if("pda_off")
-			if(!isnull(aiPDA))
-				aiPDA.toff = !aiPDA.toff
-		if("pda_silent")
-			if(!isnull(aiPDA))
+		if("pda")
+			if(params["pda"] == "power")
+				if(!isnull(aiPDA))
+					aiPDA.toff = !aiPDA.toff
+			if(params["pda"] == "silent")
+				if(!isnull(aiPDA))
 				aiPDA.silent = !aiPDA.silent
-		if("pda_message")
-			if(silent)
-				return tgui_alert(usr,"Communications circuits remain uninitialized.")
-			var/target = locate(params["target"]) in GLOB.PDAs
-			if(target)
-				aiPDA.create_message(src, target)
-		if("medicalrecord") // Accessing medical records
+			if(params["pda"] == "message")
+				cmd_send_pdamesg(usr)
+		if("medical_records") // Accessing medical records
 			medicalActive1 = find_record("id", params, GLOB.data_core.general)
 			if(medicalActive1)
 				medicalActive2 = find_record("id", params, GLOB.data_core.medical)
 			if(!medicalActive2)
 				medicalActive1 = null
 				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
-		if("securityrecord")
+		if("security_records")
 			securityActive1 = find_record("id", params, GLOB.data_core.general)
 			if(securityActive1)
 				securityActive2 = find_record("id", params, GLOB.data_core.security)
 			if(!securityActive2)
 				securityActive1 = null
 				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
-		if("securityhud")
+		if("security_hud")
 			secHUD = !secHUD
 			if(secHUD)
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
@@ -133,7 +131,7 @@
 			else
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 				sec.remove_hud_from(src)
-		if("medicalhud")
+		if("medical_hud")
 			medHUD = !medHUD
 			if(medHUD)
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
@@ -141,26 +139,28 @@
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
 				med.remove_hud_from(src)
-		if("hostscan")
-			if(params == "toggle")
+		if("host_scan")
+			if(params == "toggle-on")
 				var/mob/living/silicon/pai/pAI = usr
 				pAI.hostscan.attack_self(usr)
-			if(params == "toggle2")
+			if(params == "toggle-off")
 				var/mob/living/silicon/pai/pAI = usr
 				pAI.hostscan.toggle_mode()
-		if("encryptionkeys")
+		if("encryption_keys")
 			encryptmod = !encryptmod
 			radio.subspace_transmission = !radio.subspace_transmission
-		if("translator")
-			grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
-		if("doorjack")
-			if(params == "jack")
+		if("universal_translator")
+			if(!languages_granted)
+				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
+				languages_granted = TRUE
+		if("door_jack")
+			if(params["jack"] == "jack")
 				if(hacking_cable?.machine)
 					hackdoor = hacking_cable.machine
 					hackloop()
-			if(params == "cancel")
+			if(params["jack"]  == "cancel")
 				hackdoor = null
-			if(params == "cable")
+			if(params["jack"]  == "cable")
 				qdel(hacking_cable) //clear any old cables
 				hacking_cable = new
 				var/transfered_to_mob
@@ -172,15 +172,15 @@
 				if(!transfered_to_mob)
 					hacking_cable.forceMove(drop_location())
 					hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
-		if("loudness")
+		if("loudness_booster")
 			if(!internal_instrument)
 				internal_instrument = new(src)
 			internal_instrument.interact(src) // Open Instrument
-		if("internalgps")
+		if("internal_gps")
 			if(!internal_gps)
 				internal_gps = new(src)
 			internal_gps.attack_self(src)
-		if("printermodule")
+		if("printer_module")
 			aicamera.paiprint(usr)
 	return
 

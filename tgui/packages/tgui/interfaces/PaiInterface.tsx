@@ -7,14 +7,18 @@ import {
   ProgressBar,
   Section,
   Stack,
+  Table,
   Tabs,
   Tooltip,
+  NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
 
 type PaiInterfaceData = {
   directives: string;
   emagged: number;
+  image: string;
+  languages: number;
   master: Master;
   pda: PDA;
   ram: number;
@@ -157,16 +161,35 @@ const SystemWallpaper = (_, context) => {
 };
 
 const SystemInfo = (_, context) => {
-  const { data } = useBackend<PaiInterfaceData>(context);
-  const { master } = data;
+  const { act, data } = useBackend<PaiInterfaceData>(context);
+  const { image, master } = data;
 
   return (
-    <Section fill scrollable title="System Info">
+    <Section
+      buttons={
+        <Button
+          icon={getIconHelper(image)}
+          onClick={() => act('change_image')}
+          tooltip="Change your display image"
+        />
+      }
+      fill
+      scrollable
+      title="System Info">
       <LabeledList>
         <LabeledList.Item label="Master">
           {master.name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item label="DNA">{master.dna || 'None.'}</LabeledList.Item>
+        <LabeledList.Item label="DNA">
+          {master.dna || (
+            <Button
+              icon="dna"
+              onClick={() => act('check_dna')}
+              tooltip="Requests your master's DNA. Must be carried in hand.">
+              Request
+            </Button>
+          )}
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );
@@ -179,7 +202,7 @@ const DirectiveDisplay = (_, context) => {
     <Stack fill vertical>
       <Stack.Item>
         <Section title="Logic Core">
-          <Box color="lightslategray">
+          <Box color="label">
             {DIRECTIVE_COMPREHENSION}
             <br />
             <br />
@@ -211,7 +234,7 @@ const InstalledDisplay = (_, context) => {
   const [softwareSelected, setSoftwareSelected] = useSharedState(
     context,
     'software',
-    'Select a Program'
+    ''
   );
   const setSoftwareHandler = (software: string) => {
     setSoftwareSelected(software);
@@ -219,10 +242,10 @@ const InstalledDisplay = (_, context) => {
 
   return (
     <Stack fill vertical>
-      <Stack.Item>
+      <Stack.Item grow>
         <InstalledSoftware softwareHandler={setSoftwareHandler} />
       </Stack.Item>
-      <Stack.Item grow>
+      <Stack.Item grow={2}>
         <InstalledInfo software={softwareSelected} />
       </Stack.Item>
     </Stack>
@@ -235,16 +258,20 @@ const InstalledSoftware = (props, context) => {
   const { softwareHandler } = props;
 
   return (
-    <Section scrollable title="Installed Software">
-      {installed.map((software, index) => {
-        return (
-          <Button key={software} onClick={() => softwareHandler(software)}>
-            {software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-              letter.toUpperCase()
-            )}
-          </Button>
-        );
-      })}
+    <Section fill scrollable title="Installed Software">
+      {!installed.length ? (
+        <NoticeBox>Nothing installed!</NoticeBox>
+      ) : (
+        installed.map((software, index) => {
+          return (
+            <Button key={software} onClick={() => softwareHandler(software)}>
+              {software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+                letter.toUpperCase()
+              )}
+            </Button>
+          );
+        })
+      )}
     </Section>
   );
 };
@@ -257,12 +284,142 @@ const InstalledInfo = (props, context) => {
     <Section
       fill
       scrollable
-      title={software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-        letter.toUpperCase()
-      )}>
-      {getSoftwareInfo(software)}
+      title={
+        !software
+          ? 'Select a Program'
+          : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+              letter.toUpperCase()
+            )
+      }>
+      {software && (
+        <Stack fill vertical>
+          <Stack.Item>
+            <SoftwareInfo software={software} />
+          </Stack.Item>
+          <Stack.Item>
+            <SoftwareButtons software={software} />
+          </Stack.Item>
+        </Stack>
+      )}
     </Section>
   );
+};
+
+const SoftwareInfo = (props) => {
+  const { software } = props;
+
+  switch (software) {
+    case 'crew manifest':
+      return 'A tool that allows you to view the crew manifest.';
+    case 'digital messenger':
+      return 'A tool that allows you to send messages to other crew members.';
+    case 'atmospheric sensor':
+      return 'A tool that allows you to analyze atmospheric contents.';
+    case 'photography module':
+      return 'A portable camera module.';
+    case 'camera zoom':
+      return 'A tool that allows you to zoom in on your camera.';
+    case 'printer module':
+      return 'A portable printer module for photographs.';
+    case 'remote signaler':
+      return 'A remote signalling device to transmit and receive codes.';
+    case 'medical records':
+      return 'A tool that allows you to view station medical records.';
+    case 'security records':
+      return 'A tool that allows you to view station security records, warrants.';
+    case 'host scan':
+      return 'A tool that scans the health data while held.';
+    case 'medical HUD':
+      return 'Allows you to view medical status using an overlay HUD.';
+    case 'security HUD':
+      return 'Allows you to view security records using an overlay HUD.';
+    case 'loudness booster':
+      return 'Synthesizes instruments, plays sounds and imported songs.';
+    case 'newscaster':
+      return 'A tool that allows you to broadcast news to other crew members.';
+    case 'door jack':
+      return 'A tool that allows you to open doors.';
+    case 'encryption keys':
+      return 'A tool that allows you to decrypt and speak on other radio frequencies.';
+    case 'internal gps':
+      return 'A tool that allows you to track your location.';
+    case 'universal translator':
+      return 'Translation module for non-common languages.';
+    default:
+      return 'No information available.';
+  }
+};
+
+const SoftwareButtons = (props, context) => {
+  const { act, data } = useBackend<PaiInterfaceData>(context);
+  const { languages, pda } = data;
+  const { software } = props;
+
+  switch (software) {
+    case 'digital messenger':
+      return (
+        <>
+          <Button
+            icon="power-off"
+            onClick={() => act('pda', { pda: 'power' })}
+            selected={!pda.power}>
+            Power
+          </Button>
+          <Button
+            icon="volume-mute"
+            onClick={() => act('pda', { pda: 'silent' })}
+            selected={pda.silent}>
+            Silent
+          </Button>
+          <Button
+            icon="envelope"
+            onClick={() => act('pda', { pda: 'message' })}>
+            Message
+          </Button>
+        </>
+      );
+    case 'door_jack':
+      return (
+        <>
+          <Button
+            icon="power-off"
+            onClick={() => act('door_jack', { jack: 'cable' })}
+            selected={!pda.power}>
+            Hack
+          </Button>
+          <Button
+            icon="power-off"
+            onClick={() => act('door_jack', { jack: 'jack' })}
+            selected={!pda.power}>
+            Hack
+          </Button>
+          <Button
+            icon="power-off"
+            onClick={() => act('door_jack', { jack: 'cancel' })}
+            selected={!pda.power}>
+            Hack
+          </Button>
+        </>
+      );
+    case 'universal translator':
+      return (
+        <Button
+          icon="download"
+          onClick={() => act(software.toLowerCase().replace(/ /g, '_'))}
+          disabled={!!languages}>
+          {!languages ? 'Install' : 'Installed'}
+        </Button>
+      );
+    default:
+      return (
+        <Button
+          icon="power-off"
+          onClick={() => act(software.toLowerCase().replace(/ /g, '_'))}
+          tooltip="Attempts to toggle the module's power.">
+          Toggle
+        </Button>
+      );
+  }
 };
 
 const AvailableDisplay = () => {
@@ -312,79 +469,72 @@ const AvailableSoftware = (_, context) => {
   });
 
   return (
-    <LabeledList>
+    <Table>
       {convertedList.map((software) => {
         return <AvailableRow key={software.name} software={software} />;
       })}
-    </LabeledList>
+    </Table>
   );
 };
 
 const AvailableRow = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
+  const { ram } = data;
   const { installed } = data.software;
   const { software } = props;
+  const purchased = installed.includes(software.name);
 
   return (
-    <LabeledList.Item
-      label={software.name.replace(/^\w/, (c) => c.toUpperCase())}
-      buttons={
-        <Button
-          disabled={installed.includes(software.name)}
-          fluid
-          onClick={() => act('buy', { selection: software.name })}
-          tooltip={getSoftwareInfo(software.name)}
-          width={5}>
-          {software.value}
+    <Table.Row>
+      <Table.Cell>
+        <Box color="label">
+          {software.name.replace(/^\w/, (c) => c.toUpperCase())}
+        </Box>
+      </Table.Cell>
+      <Table.Cell width={8} />
+      <Table.Cell>
+        <Box color={ram < software.value && 'bad'} textAlign="right">
+          {!purchased && software.value}{' '}
           <Icon
-            color={installed.includes(software.name) && 'purple'}
-            ml={1}
+            color={purchased || !(ram < software.value) ? 'purple' : 'bad'}
             name="microchip"
           />
+        </Box>
+      </Table.Cell>
+
+      <Table.Cell>
+        <Button
+          disabled={ram < software.value || purchased}
+          onClick={() => act('buy', { selection: software.name })}
+          tooltip={<SoftwareInfo software={software.name} />}>
+          <Icon ml={1} name="download" />
         </Button>
-      }
-    />
+      </Table.Cell>
+    </Table.Row>
   );
 };
 
-/** Helper functions */
-const getSoftwareInfo = (software: string) => {
-  switch (software) {
-    case 'crew manifest':
-      return 'A tool that allows you to view the crew manifest.';
-    case 'digital messenger':
-      return 'A tool that allows you to send messages to other crew members.';
-    case 'atmospheric sensor':
-      return 'A tool that allows you to analyze atmospheric contents.';
-    case 'photography module':
-      return 'A portable camera module.';
-    case 'camera zoom':
-      return 'A tool that allows you to zoom in on your camera.';
-    case 'printer module':
-      return 'A portable printer module for photographs.';
-    case 'remote signaler':
-      return 'A remote signalling device to transmit and receive codes.';
-    case 'medical records':
-      return 'A tool that allows you to view station medical records.';
-    case 'security records':
-      return 'A tool that allows you to veiw station security records, warrants.';
-    case 'host scan':
-      return 'A tool that scans the health data while held.';
-    case 'medical HUD':
-      return 'Allows you to view medical status using an overlay HUD.';
-    case 'security HUD':
-      return 'Allows you to view security records using an overlay HUD.';
-    case 'loudness booster':
-      return 'Synthesizes instruments, plays sounds and imported songs.';
-    case 'newscaster':
-      return 'A tool that allows you to broadcast news to other crew members.';
-    case 'door jack':
-      return 'A tool that allows you to open doors.';
-    case 'encryption keys':
-      return 'A tool that allows you to decrypt and speak on other radio frequencies.';
-    case 'internal gps':
-      return 'A tool that allows you to track your location.';
+const getIconHelper = (image: string) => {
+  switch (image) {
+    case 'angry':
+      return 'angry';
+    case 'cat':
+      return 'cat';
+    case 'extremely-happy':
+      return 'grin-beam';
+    case 'laugh':
+      return 'grin-squint';
+    case 'happy':
+      return 'smile';
+    case 'off':
+      return 'power-off';
+    case 'sad':
+      return 'frown';
+    case 'sunglasses':
+      return 'sun';
+    case 'what':
+      return 'question';
     default:
-      return 'No information available.';
+      return 'meh';
   }
 };
