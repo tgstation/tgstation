@@ -10,6 +10,7 @@
 	show_name_in_check_antagonists = TRUE
 
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
+	/// Brain trauma associated with this antag datum
 	var/datum/brain_trauma/hypnosis/trauma
 
 /datum/antagonist/hypnotized/Destroy()
