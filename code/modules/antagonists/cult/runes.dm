@@ -1,5 +1,5 @@
 
-/// list of mobs OR minds that have been sacrificed
+/// list of weakrefs to mobs OR minds that have been sacrificed
 GLOBAL_LIST(sacrificed)
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
@@ -306,14 +306,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
 	if(sacrificial.mind)
-		LAZYADD(GLOB.sacrificed, sacrificial.mind)
+		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
 		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
 			if(sac_objective.target == sacrificial.mind)
 				sac_objective.sacced = TRUE
 				sac_objective.update_explanation_text()
 				big_sac = TRUE
 	else
-		LAZYADD(GLOB.sacrificed, sacrificial)
+		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(get_turf(src))
 	for(var/M in invokers)
