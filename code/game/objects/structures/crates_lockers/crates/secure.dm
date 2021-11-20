@@ -19,9 +19,8 @@
 	if(user)
 		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
 		log_bomber(user, "has detonated a", src)
-	for(var/atom/movable/content as anything in src)
-		if(!isliving(content))
-			qdel(content)
+	for(var/obj/loot in src)
+		SSexplosions.high_mov_atom += loot
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
