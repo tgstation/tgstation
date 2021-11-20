@@ -548,7 +548,7 @@
 	default = 300
 
 /datum/config_entry/string/urgent_ahelp_message
-	default = "No message provided"
+	default = "This ahelp is urgent!"
 
 /datum/config_entry/string/urgent_ahelp_user_prompt
 	default = "There are no admins currently on. Do not press the button below if your ahelp is a joke, a request or a question. Use it only for cases of obvious grief."

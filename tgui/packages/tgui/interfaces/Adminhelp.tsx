@@ -80,9 +80,10 @@ export const Adminhelp = (props, context) => {
                         setCurrentlyInputting(true);
                       }
                     }}
-                    color={requestForAdmin? "orange" : "blue"}
-                    icon={requestForAdmin? 'check-square-o' : 'square-o'}
+                    color={requestForAdmin ? "orange" : "blue"}
+                    icon={requestForAdmin ? "check-square-o" : "square-o"}
                     disabled={bannedFromUrgentAhelp}
+                    tooltip={bannedFromUrgentAhelp ? "You are banned from using urgent ahelps." : null}
                     fluid
                     textAlign="center"
                   />

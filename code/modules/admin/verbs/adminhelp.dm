@@ -234,13 +234,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
 		if(extra_message)
 			extra_message_to_send += " ([extra_message])"
-		to_chat(initiator, span_boldwarning("Sent a notification to admins through TGS."))
+		to_chat(initiator, span_boldwarning("Notified admins to prioritize your ticket"))
 		send2adminchat_webhook("RELAY: [initiator_ckey] | Ticket #[id]: [extra_message_to_send]")
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
-		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord."), confidential = TRUE)
+		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent to admins who are available through IRC or Discord."), confidential = TRUE)
 		heard_by_no_admins = TRUE
 
 /proc/send2adminchat_webhook(message)
@@ -597,20 +597,20 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	. = ..()
 	if(.)
 		return
-	var/client/user = usr.client
-	var/message = sanitize_text(trim(params["message"]), null)
-	var/urgent = sanitize_integer(params["urgent"], FALSE, TRUE, FALSE)
+	var/client/user_client = usr.client
+	var/message = sanitize_text(trim(params["message"]))
+	var/urgent = !!params["urgent"]
 	var/list/admins = get_admin_counts(R_BAN)
-	if(length(admins["present"]) != 0 || is_banned_from(user.ckey, "Urgent Adminhelp"))
+	if(length(admins["present"]) != 0 || is_banned_from(user_client.ckey, "Urgent Adminhelp"))
 		urgent = FALSE
 
-	if(user.adminhelptimerid)
+	if(user_client.adminhelptimerid)
 		return
 
-	perform_adminhelp(user, message, urgent)
+	perform_adminhelp(user_client, message, urgent)
 	ui.close()
 
-/datum/admin_help_ui_handler/proc/perform_adminhelp(client/user, message, urgent)
+/datum/admin_help_ui_handler/proc/perform_adminhelp(client/user_client, message, urgent)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return
@@ -619,29 +619,29 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		return
 
 	//handle muting and automuting
-	if(user.prefs.muted & MUTE_ADMINHELP)
-		to_chat(user, span_danger("Error: Admin-PM: You cannot send adminhelps (Muted)."), confidential = TRUE)
+	if(user_client.prefs.muted & MUTE_ADMINHELP)
+		to_chat(user_client, span_danger("Error: Admin-PM: You cannot send adminhelps (Muted)."), confidential = TRUE)
 		return
-	if(user.handle_spam_prevention(message, MUTE_ADMINHELP))
+	if(user_client.handle_spam_prevention(message, MUTE_ADMINHELP))
 		return
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adminhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	if(urgent)
-		if((ahelp_cooldowns?[user.ckey] || 0) > world.time)
+		if(!COOLDOWN_FINISHED(src, ahelp_cooldowns?[user_client.ckey]))
 			urgent = FALSE // Prevent abuse
 		else
-			ahelp_cooldowns[user.ckey] = world.time + CONFIG_GET(number/urgent_ahelp_cooldown) * (1 SECONDS)
+			COOLDOWN_START(src, ahelp_cooldowns[user_client.ckey], CONFIG_GET(number/urgent_ahelp_cooldown) * (1 SECONDS))
 
-	if(user.current_ticket)
-		user.current_ticket.TimeoutVerb()
+	if(user_client.current_ticket)
+		user_client.current_ticket.TimeoutVerb()
 		if(urgent)
 			var/sanitized_message = sanitize(copytext_char(message, 1, MAX_MESSAGE_LEN))
-			user.current_ticket.send_message_to_tgs(sanitized_message, TRUE)
-		user.current_ticket.MessageNoRecipient(message, urgent)
+			user_client.current_ticket.send_message_to_tgs(sanitized_message, urgent = TRUE)
+		user_client.current_ticket.MessageNoRecipient(message, urgent)
 		return
 
-	new /datum/admin_help(message, user, FALSE, urgent)
+	new /datum/admin_help(message, user_client, FALSE, urgent)
 
 /client/verb/no_tgui_adminhelp(message as message)
 	set name = "NoTguiAdminhelp"
