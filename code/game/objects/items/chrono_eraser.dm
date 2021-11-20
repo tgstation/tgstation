@@ -188,7 +188,7 @@
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
 
-		for(var/i=1, i<=CHRONO_FRAME_COUNT, i++)
+		for(var/i in 1 to CHRONO_FRAME_COUNT)
 			var/icon/removing_frame = icon('icons/obj/chronos.dmi', "erasing", SOUTH, i)
 			var/icon/mob_icon = icon(mob_snapshot)
 			mob_icon.Blend(removing_frame, ICON_MULTIPLY)

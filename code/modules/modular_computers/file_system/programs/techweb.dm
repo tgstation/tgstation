@@ -197,6 +197,8 @@
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))

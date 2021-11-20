@@ -1,5 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the HFR (and other indestructible machinery with component parts) from being able to be blown up by external sources under special conditions."
-  - bugfix: "Fixes the nuke disk from being able to be made inaccessible by being placed in the center of the HFR."

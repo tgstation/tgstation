@@ -8,7 +8,6 @@
 	name = "donut"
 	desc = "Goes great with robust coffee."
 	icon = 'icons/obj/food/donuts.dmi'
-	icon_state = "donut"
 	bite_consumption = 5
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
@@ -61,6 +60,7 @@
 
 //Use this donut ingame
 /obj/item/food/donut/plain
+	icon_state = "donut"
 
 /obj/item/food/donut/chaos
 	name = "chaos donut"
@@ -161,7 +161,6 @@
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jelly"
-	decorated_icon = "jelly_homer"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
@@ -177,6 +176,7 @@
 		reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/food/donut/jelly/plain //use this ingame to avoid inheritance related crafting issues.
+	decorated_icon = "jelly_homer"
 
 /obj/item/food/donut/jelly/berry
 	name = "pink jelly donut"
@@ -254,11 +254,11 @@
 /obj/item/food/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
-	icon_state = "jelly"
 	extra_reagent = /datum/reagent/toxin/slimejelly
 	foodtypes = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR | BREAKFAST
 
 /obj/item/food/donut/jelly/slimejelly/plain
+	icon_state = "jelly"
 
 /obj/item/food/donut/jelly/slimejelly/berry
 	name = "pink jelly donut"
