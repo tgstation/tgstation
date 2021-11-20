@@ -14,5 +14,7 @@
 #define SLOWMODE_SAY 6
 /// Disables parallax, as if everyone had disabled their preference, TRAIT_BYPASS_MEASURES exempted
 #define DISABLE_PARALLAX 7
+/// Disables footsteps, TRAIT_BYPASS_MEASURES exempted
+#define DISABLE_FOOTSTEPS 8
 
-#define MEASURES_AMOUNT 7 // The total number of switches defined above
+#define MEASURES_AMOUNT 8 // The total number of switches defined above

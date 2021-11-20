@@ -112,8 +112,18 @@ SUBSYSTEM_DEF(lag_switch)
 		if(DISABLE_NON_OBSJOBS)
 			world.update_status()
 		if(DISABLE_PARALLAX)
+			if (state)
+				to_chat(world, span_boldannounce("Parallax has been disabled for performance concerns."))
+			else
+				to_chat(world, span_boldannounce("Parallax has been re-enabled."))
+
 			for (var/mob/mob as anything in GLOB.mob_list)
 				mob.hud_used?.update_parallax_pref()
+		if (DISABLE_FOOTSTEPS)
+			if (state)
+				to_chat(world, span_boldannounce("Footstep sounds have been disabled for performance concerns."))
+			else
+				to_chat(world, span_boldannounce("Footstep sounds have been re-enabled."))
 
 	return TRUE
 
