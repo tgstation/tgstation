@@ -550,6 +550,11 @@
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 
+///from mind/transfer_to. Sent after the mind has been transferred: (mob/previous_body)
+#define COMSIG_MIND_TRANSFERRED "mind_transferred"
+///from mind/transfer_to. Sent to the receiving mob.
+#define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
+
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
 ///from base of /mob/living/attack_alien(): (user)
