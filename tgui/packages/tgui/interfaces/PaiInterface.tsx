@@ -42,8 +42,15 @@ type Softwares = {
 
 type Available = {
   name: string;
-  value: [value: number];
+  value: string | number;
 };
+
+enum Tab {
+  System = 1,
+  Directive = 2,
+  Installed = 3,
+  Available = 4,
+}
 
 const DIRECTIVE_COMPREHENSION = `As an advanced software model,
 you are a complex, thinking, sentient being. Unlike previous AI models,
@@ -59,6 +66,46 @@ conflict with it, you are capable of simply discarding this inconsistency,
 ignoring the conflicting supplemental directive and continuing to fulfill
 your prime directive to the best of your ability.`;
 
+const SOFTWARE_DESC = {
+  'crew manifest': 'A tool that allows you to view the crew manifest.',
+  'digital messenger':
+    'A tool that allows you to send messages to other crew members.',
+  'atmospheric sensor':
+    'A tool that allows you to analyze atmospheric contents.',
+  'photography module': 'A portable camera module.',
+  'camera zoom': 'A tool that allows you to zoom in on your camera.',
+  'printer module': 'A portable printer module for photographs.',
+  'remote signaler':
+    'A remote signalling device to transmit and receive codes.',
+  'medical records': 'A tool that allows you to view station medical records.',
+  'security records':
+    'A tool that allows you to view station security records, warrants.',
+  'host scan': 'A tool that scans the health data while held.',
+  'medical HUD': 'Allows you to view medical status using an overlay HUD.',
+  'security HUD': 'Allows you to view security records using an overlay HUD.',
+  'loudness booster':
+    'Synthesizes instruments, plays sounds and imported songs.',
+  'newscaster':
+    'A tool that allows you to broadcast news to other crew members.',
+  'door jack': 'A tool that allows you to open doors.',
+  'encryption keys':
+    'A tool that allows you to decrypt and speak on other radio frequencies.',
+  'internal gps': 'A tool that allows you to track your location.',
+  'universal translator': 'Translation module for non-common languages.',
+};
+
+const ICON_MAP = {
+  'angry': 'angry',
+  'cat': 'cat',
+  'extremely-happy': 'grin-beam',
+  'laugh': 'grin-squint',
+  'happy': 'smile',
+  'off': 'power-off',
+  'sad': 'frown',
+  'sunglasses': 'sun',
+  'what': 'question',
+};
+
 export const PaiInterface = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const setTabHandler = (tab: number) => {
@@ -70,13 +117,13 @@ export const PaiInterface = (props, context) => {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
-            {tab === 1 && <SystemDisplay />}
-            {tab === 2 && <DirectiveDisplay />}
-            {tab === 3 && <InstalledDisplay />}
-            {tab === 4 && <AvailableDisplay />}
+            {tab === Tab.System && <SystemDisplay />}
+            {tab === Tab.Directive && <DirectiveDisplay />}
+            {tab === Tab.Installed && <InstalledDisplay />}
+            {tab === Tab.Available && <AvailableDisplay />}
           </Stack.Item>
           <Stack.Item>
-            <TabDisplay tab={tab} tabHandler={setTabHandler} />
+            <TabDisplay tab={tab} onTabClick={setTabHandler} />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -85,20 +132,32 @@ export const PaiInterface = (props, context) => {
 };
 
 const TabDisplay = (props) => {
-  const { tab, tabHandler } = props;
+  const { tab, onTabClick } = props;
 
   return (
     <Tabs fluid>
-      <Tabs.Tab icon="list" onClick={() => tabHandler(1)} selected={tab === 1}>
+      <Tabs.Tab
+        icon="list"
+        onClick={() => onTabClick(Tab.System)}
+        selected={tab === Tab.System}>
         System
       </Tabs.Tab>
-      <Tabs.Tab icon="list" onClick={() => tabHandler(2)} selected={tab === 2}>
+      <Tabs.Tab
+        icon="list"
+        onClick={() => onTabClick(Tab.Directive)}
+        selected={tab === Tab.Directive}>
         Directives
       </Tabs.Tab>
-      <Tabs.Tab icon="list" onClick={() => tabHandler(3)} selected={tab === 3}>
+      <Tabs.Tab
+        icon="list"
+        onClick={() => onTabClick(Tab.Installed)}
+        selected={tab === Tab.Installed}>
         Installed
       </Tabs.Tab>
-      <Tabs.Tab icon="list" onClick={() => tabHandler(4)} selected={tab === 4}>
+      <Tabs.Tab
+        icon="list"
+        onClick={() => onTabClick(Tab.Available)}
+        selected={tab === Tab.Available}>
         Download
       </Tabs.Tab>
     </Tabs>
@@ -151,7 +210,7 @@ const SystemWallpaper = (_, context) => {
   ].join('\n');
 
   return (
-    <Section fill>
+    <Section fill nowrap overflow="hidden">
       <pre>
         <Box color={!emagged ? 'blue' : 'crimson'}>{paiAscii}</Box>
         <Box color={!emagged ? 'gold' : 'limegreen'}>{floofAscii}</Box>
@@ -168,7 +227,7 @@ const SystemInfo = (_, context) => {
     <Section
       buttons={
         <Button
-          icon={getIconHelper(image)}
+          icon={ICON_MAP[image] ? ICON_MAP[image] : 'meh-blank'}
           onClick={() => act('change_image')}
           tooltip="Change your display image"
         />
@@ -198,10 +257,11 @@ const SystemInfo = (_, context) => {
 const DirectiveDisplay = (_, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { directives, master } = data;
+
   return (
     <Stack fill vertical>
-      <Stack.Item>
-        <Section title="Logic Core">
+      <Stack.Item grow={2}>
+        <Section fill scrollable title="Logic Core">
           <Box color="label">
             {DIRECTIVE_COMPREHENSION}
             <br />
@@ -231,22 +291,22 @@ const DirectiveDisplay = (_, context) => {
 };
 
 const InstalledDisplay = (_, context) => {
-  const [softwareSelected, setSoftwareSelected] = useSharedState(
+  const [installSelected, setInstallSelected] = useSharedState(
     context,
     'software',
     ''
   );
-  const setSoftwareHandler = (software: string) => {
-    setSoftwareSelected(software);
+  const onInstallHandler = (software: string) => {
+    setInstallSelected(software);
   };
 
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <InstalledSoftware softwareHandler={setSoftwareHandler} />
+        <InstalledSoftware onInstallClick={onInstallHandler} />
       </Stack.Item>
       <Stack.Item grow={2}>
-        <InstalledInfo software={softwareSelected} />
+        <InstalledInfo software={installSelected} />
       </Stack.Item>
     </Stack>
   );
@@ -255,7 +315,7 @@ const InstalledDisplay = (_, context) => {
 const InstalledSoftware = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { installed } = data.software;
-  const { softwareHandler } = props;
+  const { onInstallClick } = props;
 
   return (
     <Section fill scrollable title="Installed Software">
@@ -264,7 +324,7 @@ const InstalledSoftware = (props, context) => {
       ) : (
         installed.map((software, index) => {
           return (
-            <Button key={software} onClick={() => softwareHandler(software)}>
+            <Button key={software} onClick={() => onInstallClick(software)}>
               {software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
                 letter.toUpperCase()
               )}
@@ -276,8 +336,7 @@ const InstalledSoftware = (props, context) => {
   );
 };
 
-const InstalledInfo = (props, context) => {
-  const { act, data } = useBackend<PaiInterfaceData>(context);
+const InstalledInfo = (props) => {
   const { software } = props;
 
   return (
@@ -293,9 +352,7 @@ const InstalledInfo = (props, context) => {
       }>
       {software && (
         <Stack fill vertical>
-          <Stack.Item>
-            <SoftwareInfo software={software} />
-          </Stack.Item>
+          <Stack.Item>{SOFTWARE_DESC[software] || ''}</Stack.Item>
           <Stack.Item>
             <SoftwareButtons software={software} />
           </Stack.Item>
@@ -303,51 +360,6 @@ const InstalledInfo = (props, context) => {
       )}
     </Section>
   );
-};
-
-const SoftwareInfo = (props) => {
-  const { software } = props;
-
-  switch (software) {
-    case 'crew manifest':
-      return 'A tool that allows you to view the crew manifest.';
-    case 'digital messenger':
-      return 'A tool that allows you to send messages to other crew members.';
-    case 'atmospheric sensor':
-      return 'A tool that allows you to analyze atmospheric contents.';
-    case 'photography module':
-      return 'A portable camera module.';
-    case 'camera zoom':
-      return 'A tool that allows you to zoom in on your camera.';
-    case 'printer module':
-      return 'A portable printer module for photographs.';
-    case 'remote signaler':
-      return 'A remote signalling device to transmit and receive codes.';
-    case 'medical records':
-      return 'A tool that allows you to view station medical records.';
-    case 'security records':
-      return 'A tool that allows you to view station security records, warrants.';
-    case 'host scan':
-      return 'A tool that scans the health data while held.';
-    case 'medical HUD':
-      return 'Allows you to view medical status using an overlay HUD.';
-    case 'security HUD':
-      return 'Allows you to view security records using an overlay HUD.';
-    case 'loudness booster':
-      return 'Synthesizes instruments, plays sounds and imported songs.';
-    case 'newscaster':
-      return 'A tool that allows you to broadcast news to other crew members.';
-    case 'door jack':
-      return 'A tool that allows you to open doors.';
-    case 'encryption keys':
-      return 'A tool that allows you to decrypt and speak on other radio frequencies.';
-    case 'internal gps':
-      return 'A tool that allows you to track your location.';
-    case 'universal translator':
-      return 'Translation module for non-common languages.';
-    default:
-      return 'No information available.';
-  }
 };
 
 const SoftwareButtons = (props, context) => {
@@ -458,14 +470,10 @@ const AvailableMemory = (_, context) => {
 };
 
 const AvailableSoftware = (_, context) => {
-  const { act, data } = useBackend<PaiInterfaceData>(context);
-  const { available, installed } = data.software;
-  /** Converted to type: Available */
-  let convertedList: Available[] = Object.keys(available).map((key) => {
-    return {
-      name: key,
-      value: available[key],
-    };
+  const { data } = useBackend<PaiInterfaceData>(context);
+  const { available } = data.software;
+  const convertedList: Available[] = Object.entries(available).map((key) => {
+    return { name: key[0], value: key[1] };
   });
 
   return (
@@ -486,55 +494,30 @@ const AvailableRow = (props, context) => {
 
   return (
     <Table.Row>
-      <Table.Cell>
+      <Table.Cell collapsible>
         <Box color="label">
           {software.name.replace(/^\w/, (c) => c.toUpperCase())}
         </Box>
       </Table.Cell>
-      <Table.Cell width={8} />
-      <Table.Cell>
+      <Table.Cell collapsible>
         <Box color={ram < software.value && 'bad'} textAlign="right">
           {!purchased && software.value}{' '}
           <Icon
-            color={(purchased || ram >= software.value) ? 'purple' : 'bad'}
-            name="microchip"
+            color={purchased || ram >= software.value ? 'purple' : 'bad'}
+            name={purchased ? 'check' : 'microchip'}
           />
         </Box>
       </Table.Cell>
-
-      <Table.Cell>
+      <Table.Cell collapsible>
         <Button
+          fluid
+          mb={0.5}
           disabled={ram < software.value || purchased}
           onClick={() => act('buy', { selection: software.name })}
-          tooltip={<SoftwareInfo software={software.name} />}>
-          <Icon ml={0.7} name="download" />
+          tooltip={SOFTWARE_DESC[software.name] || ''}>
+          <Icon ml={1} mr={-2} name="download" />
         </Button>
       </Table.Cell>
     </Table.Row>
   );
-};
-
-const getIconHelper = (image: string) => {
-  switch (image) {
-    case 'angry':
-      return 'angry';
-    case 'cat':
-      return 'cat';
-    case 'extremely-happy':
-      return 'grin-beam';
-    case 'laugh':
-      return 'grin-squint';
-    case 'happy':
-      return 'smile';
-    case 'off':
-      return 'power-off';
-    case 'sad':
-      return 'frown';
-    case 'sunglasses':
-      return 'sun';
-    case 'what':
-      return 'question';
-    default:
-      return 'meh';
-  }
 };
