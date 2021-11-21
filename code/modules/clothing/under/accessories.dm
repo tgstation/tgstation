@@ -439,3 +439,30 @@
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += "The dogtag has a listing of allergies : [display]"
+
+/obj/item/clothing/accessory/pride
+	name = "rainbow pride pin"
+	desc = "A pin to show off your sexuality! Happy pride!"
+	icon_state = "pride"
+
+/obj/item/clothing/accessory/pride/bi
+	name = "bisexual pin"
+	icon_state = "pride_bi"
+
+/obj/item/clothing/accessory/pride/trans
+	name = "transgender pin"
+	desc = "A pin to show off your solidarity with trans people! Trans rights!"
+	icon_state = "pride_trans"
+
+/obj/item/clothing/accessory/pride/pan
+	name = "pansexual pin"
+	icon_state = "pride_pan"
+
+/obj/item/clothing/accessory/pride/ace
+	name = "asexual pin"
+	icon_state = "pride_ace"
+
+/obj/item/clothing/accessory/pride/enby
+	name = "non-binary pin"
+	icon_state = "pride_enby"
+	desc = "A pin to show off your chosen gender identity, or in this case, the lack thereof!"
