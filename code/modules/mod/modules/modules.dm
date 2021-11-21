@@ -1439,5 +1439,31 @@
 	overlay_state_active = "module_armorbooster_elite"
 	added_slowdown = -0.25
 
-// TODO energy shield
-// AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-red")
+/obj/item/mod/module/energy_shield
+	name = "MOD energy shield module"
+	desc = "A module creating an energy shield around the user."
+	complexity = 3
+	idle_power_cost = 10
+	use_power_cost = 25
+	incompatible_modules = list(/obj/item/mod/module/energy_shield)
+	var/max_charges = 3
+	var/recharge_start_delay = 20 SECONDS
+	var/charge_increment_delay = 1 SECONDS
+	var/charge_recovery = 1
+	var/lose_multiple_charges = FALSE
+	var/shield_icon = "shield-red"
+
+/obj/item/mod/module/energy_shield/on_equip()
+	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, shield_icon = shield_icon)
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
+
+/obj/item/mod/module/energy_shield/on_unequip()
+	qdel(mod.GetComponent(/datum/component/shielded))
+	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
+
+/obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
+	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
+		drain_power(use_power_cost)
+		return TRUE
+	return FALSE

@@ -62,9 +62,18 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/lost_wearer)
 	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/check_recharge_rune)
+	var/atom/shield = parent
+	if(ismob(shield.loc))
+		var/mob/holder = shield.loc
+		if(holder.is_holding(parent) && !shield_inhand)
+			return
+		set_wearer(holder)
 
 /datum/component/shielded/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_HIT_REACT, COMSIG_PARENT_ATTACKBY))
+	var/atom/shield = parent
+	if(shield.loc == wearer)
+		lost_wearer(src, wearer)
 
 // Handle recharging, if we want to
 /datum/component/shielded/process(delta_time)
@@ -96,12 +105,7 @@
 	if(slot == ITEM_SLOT_HANDS && !shield_inhand)
 		lost_wearer(source, user)
 		return
-
-	wearer = user
-	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/lost_wearer)
-	if(current_charges)
-		wearer.update_appearance(UPDATE_ICON)
+	set_wearer(source, user)
 
 /// Either we've been dropped or our wearer has been QDEL'd. Either way, they're no longer our problem
 /datum/component/shielded/proc/lost_wearer(datum/source, mob/user)
@@ -111,6 +115,13 @@
 		UnregisterSignal(wearer, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_QDELETING))
 		wearer.update_appearance(UPDATE_ICON)
 		wearer = null
+
+/datum/component/shielded/proc/set_wearer(mob/user)
+	wearer = user
+	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/lost_wearer)
+	if(current_charges)
+		wearer.update_appearance(UPDATE_ICON)
 
 /// Used to draw the shield overlay on the wearer
 /datum/component/shielded/proc/on_update_overlays(atom/parent_atom, list/overlays)
