@@ -21,7 +21,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	creation_time = world.time
 
 /obj/structure/mirror/examine(mob/user)
-	if(!ut_reference || desc != initial(desc)) //I'm really not a fan of hardcoding this, but I don't see another way to do this
+	if(!ut_reference || desc != initial(desc))
 		return ..()
 	else if(user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE) && user.key)
 		desc = "It's me, [user.key]." //uses the player's OOC name, not their IC one
