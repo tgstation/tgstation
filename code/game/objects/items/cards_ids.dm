@@ -959,9 +959,9 @@
 	/// Time left on a card till they can leave.
 	var/time_left = 0
 
-/obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
+/obj/item/card/id/advanced/prisoner/attackby(var/obj/item/card/id/card, mob/user)
 	..()
-	var/list/id_access = C.GetAccess()
+	var/list/id_access = card.GetAccess()
 	if(ACCESS_BRIG in id_access)
 		if(timed)
 			timed = FALSE
@@ -970,13 +970,11 @@
 			STOP_PROCESSING(SSobj, src)
 			to_chat(user, "Restating prisoner ID to default parameters.")
 			return
-		else
-			time_to_assign = input(user,"Set sentence time in seconds.","Set sentence time in seconds.",0) as num|null
-			if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-				return
-			to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
-			registered_name = "Prisoner #13-[rand(100,999)]"
-			timed = TRUE
+		time_to_assign = input(user,"Set sentence time in seconds.","Set sentence time in seconds.",0) as num|null
+		if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			return
+		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+		timed = TRUE
 		
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")

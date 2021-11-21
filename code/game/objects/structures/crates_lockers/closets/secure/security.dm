@@ -190,12 +190,14 @@
 	..()
 	if(!assigned_id && istype(C, /obj/item/card/id/advanced/prisoner))
 		assigned_id = C
+		name = "genpop storage locker - [C.registered_name]"
 		say("Prisoner ID linked to locker.")
 		return
 	if(C == assigned_id)
-		say("Linked prisoner ID detected. Unlocking locker and resetting ID.")
 		locked = FALSE
 		assigned_id = initial(assigned_id)
+		name = initial(name)
+		say("Linked prisoner ID detected. Unlocking locker and resetting ID.")
 		update_appearance()
 
 /obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
