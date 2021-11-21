@@ -55,30 +55,3 @@
 #define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 ///global mob logged in signal! (/mob/added_player)
 #define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
-
-/// Admin helps
-/// From /datum/admin_help/RemoveActive().
-/// Fired when an adminhelp is made inactive either due to closing or resolving.
-#define COMSIG_ADMIN_HELP_MADE_INACTIVE "admin_help_made_inactive"
-
-/// Called when the player replies. From /client/proc/cmd_admin_pm().
-#define COMSIG_ADMIN_HELP_REPLIED "admin_help_replied"
-
-//NTnet
-
-///called on an object by its NTNET connection component on receive. (data(datum/netdata))
-#define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"
-///called on an object by its NTNET connection component on a port update (hardware_id, port))
-#define COMSIG_COMPONENT_NTNET_PORT_UPDATE "ntnet_port_update"
-/// called when packet was accepted by the target (datum/netdata, error_code)
-#define COMSIG_COMPONENT_NTNET_ACK "ntnet_ack"
-/// called when packet was not acknoledged by the target (datum/netdata, error_code)
-#define COMSIG_COMPONENT_NTNET_NAK "ntnet_nack"
-
-// Some internal NTnet signals used on ports
-///called on an object by its NTNET connection component on a port distruction (port, list/data))
-#define COMSIG_COMPONENT_NTNET_PORT_DESTROYED "ntnet_port_destroyed"
-///called on an object by its NTNET connection component on a port distruction (port, list/data))
-#define COMSIG_COMPONENT_NTNET_PORT_UPDATED "ntnet_port_updated"
-
-
