@@ -1,4 +1,4 @@
-// All signals. Format:
+// Global signals. Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -56,20 +56,6 @@
 ///global mob logged in signal! (/mob/added_player)
 #define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
 
-/// signals from globally accessible objects
-
-///from SSJob when DivideOccupations is called
-#define COMSIG_OCCUPATIONS_DIVIDED "occupations_divided"
-
-///from SSsun when the sun changes position : (azimuth)
-#define COMSIG_SUN_MOVED "sun_moved"
-
-///from SSsecurity_level when the security level changes : (new_level)
-#define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
-
-///from SSshuttle when the supply shuttle starts spawning orders : ()
-#define COMSIG_SUPPLY_SHUTTLE_BUY "supply_shuttle_buy"
-
 /// Admin helps
 /// From /datum/admin_help/RemoveActive().
 /// Fired when an adminhelp is made inactive either due to closing or resolving.
@@ -77,21 +63,6 @@
 
 /// Called when the player replies. From /client/proc/cmd_admin_pm().
 #define COMSIG_ADMIN_HELP_REPLIED "admin_help_replied"
-
-//Gibs
-///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
-#define COMSIG_GIBS_STREAK "gibs_streak"
-
-/// Called on mobs when they step in blood. (blood_amount, blood_state, list/blood_DNA)
-#define COMSIG_STEP_ON_BLOOD "step_on_blood"
-
-//Mood
-///called when you send a mood event from anywhere in the code.
-#define COMSIG_ADD_MOOD_EVENT "add_mood"
-///Mood event that only RnD members listen for
-#define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood"
-///called when you clear a mood event from anywhere in the code.
-#define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 //NTnet
 

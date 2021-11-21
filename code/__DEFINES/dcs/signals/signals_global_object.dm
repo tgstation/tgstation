@@ -1,0 +1,20 @@
+/// signals from globally accessible objects
+
+///from SSJob when DivideOccupations is called
+#define COMSIG_OCCUPATIONS_DIVIDED "occupations_divided"
+
+///from SSsun when the sun changes position : (azimuth)
+#define COMSIG_SUN_MOVED "sun_moved"
+
+///from SSsecurity_level when the security level changes : (new_level)
+#define COMSIG_SECURITY_LEVEL_CHANGED "security_level_changed"
+
+///from SSshuttle when the supply shuttle starts spawning orders : ()
+#define COMSIG_SUPPLY_SHUTTLE_BUY "supply_shuttle_buy"
+
+//Gibs
+///from base of /obj/effect/decal/cleanable/blood/gibs/streak(): (list/directions, list/diseases)
+#define COMSIG_GIBS_STREAK "gibs_streak"
+
+/// Called on mobs when they step in blood. (blood_amount, blood_state, list/blood_DNA)
+#define COMSIG_STEP_ON_BLOOD "step_on_blood"

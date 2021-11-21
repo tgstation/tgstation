@@ -1,3 +1,7 @@
+// Atom x_act() procs signals. Format:
+// When the signal is called: (signal arguments)
+// All signals send the source datum of the signal as the first argument
+
 ///from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
 ///from base of atom/emp_act(): (severity)

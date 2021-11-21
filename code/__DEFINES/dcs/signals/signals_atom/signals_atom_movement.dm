@@ -1,4 +1,4 @@
-// All signals. Format:
+// Atom movement signals. Format:
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
@@ -30,10 +30,6 @@
 #define COMSIG_LIVING_PUSHING_MOVABLE "living_pushing_movable"
 ///from base of [/atom/proc/interact]: (mob/user)
 #define COMSIG_ATOM_UI_INTERACT "atom_ui_interact"
-///called on /living when attempting to pick up an item, from base of /mob/living/put_in_hand_check(): (obj/item/I)
-#define COMSIG_LIVING_TRY_PUT_IN_HAND "living_try_put_in_hand"
-	/// Can't pick up
-	#define COMPONENT_LIVING_CANT_PUT_IN_HAND (1<<0)
 ///from base of atom/relaymove(): (mob/living/user, direction)
 #define COMSIG_ATOM_RELAYMOVE "atom_relaymove"
 	///prevents the "you cannot move while buckled! message"
