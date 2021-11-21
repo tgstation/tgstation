@@ -1,0 +1,5 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - bugfix: "People with robotic limbs are now incapable of using Sign Language if their limbs are disabled."
+  - refactor: "Refactored Sign Language"
