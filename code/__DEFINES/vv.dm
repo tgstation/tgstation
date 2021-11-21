@@ -76,6 +76,7 @@
 #define VV_HK_EXPOSE "expose"
 #define VV_HK_CALLPROC "proc_call"
 #define VV_HK_MARK "mark"
+#define VV_HK_TAG "tag"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_REMOVECOMPONENT "removecomponent"
 #define VV_HK_MASS_REMOVECOMPONENT "massremovecomponent"
