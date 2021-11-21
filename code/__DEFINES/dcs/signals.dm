@@ -1482,6 +1482,10 @@
 /// Called when the integrated circuit is locked.
 #define COMSIG_CIRCUIT_SET_LOCKED "circuit_set_locked"
 
+/// Called before power is used in an integrated circuit (power_to_use)
+#define COMSIG_CIRCUIT_PRE_POWER_USAGE "circuit_pre_power_usage"
+	#define COMPONENT_OVERRIDE_POWER_USAGE (1<<0)
+
 /// Called right before the integrated circuit data is converted to json. Allows modification to the data right before it is returned.
 #define COMSIG_CIRCUIT_PRE_SAVE_TO_JSON "circuit_pre_save_to_json"
 

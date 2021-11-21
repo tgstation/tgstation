@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Non-deadminned admins are now exempt from all chat filters."

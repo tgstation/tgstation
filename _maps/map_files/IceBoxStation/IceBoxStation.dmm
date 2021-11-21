@@ -6236,7 +6236,7 @@
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/spray/cleaner,
-/obj/structure/reagent_dispensers/virusfood/directional/south,
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /turf/open/floor/iron/white,
 /area/medical/virology)
@@ -11160,6 +11160,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/fire{
+	pixel_x = 32
+	},
 /turf/open/floor/iron,
 /area/science/mixing)
 "cjS" = (
@@ -11456,7 +11459,7 @@
 /area/hallway/primary/central)
 "cpJ" = (
 /obj/machinery/computer/security,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -20099,7 +20102,7 @@
 /area/maintenance/aft)
 "grr" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
@@ -21338,7 +21341,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "gYL" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/closet/secure_closet/security/science,
 /obj/effect/turf_decal/tile/red{
@@ -25325,12 +25328,13 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/structure/sign/warning/fire{
-	pixel_x = 32
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/mixingchamber{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/open/floor/iron/white,
-/area/science/mixing)
+/area/science/mixing/chamber)
 "iZt" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -33728,7 +33732,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/machinery/airalarm/directional/east,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "nsE" = (
@@ -34189,7 +34193,7 @@
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
 "nFX" = (
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_y = 4
@@ -40649,7 +40653,7 @@
 /area/service/chapel)
 "rcF" = (
 /obj/machinery/light/directional/east,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
@@ -52680,9 +52684,6 @@
 /area/commons/storage/art)
 "xgw" = (
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/airalarm/mixingchamber{
-	pixel_y = -24
-	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "xgy" = (
@@ -52868,7 +52869,7 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "xkb" = (
@@ -52963,7 +52964,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "xlX" = (
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Security Post - Cargo"
