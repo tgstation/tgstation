@@ -197,18 +197,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
-		/obj/item/clothing/suit/space/hardsuit/wizard,
-		/obj/item/clothing/head/wizard,
-		/obj/item/clothing/head/helmet/space/hardsuit/wizard,
-		/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
-		/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard))
-
+		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard))
 		if(clothes_req) //clothes check
-			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
+			var/passes_req = FALSE
+			if(istype(H.back, /obj/item/mod/control))
+				var/obj/item/mod/control/mod = H.back
+				if(istype(mod.theme, /datum/mod_theme/wizard))
+					passes_req = TRUE
+			if(!passes_req && !is_type_in_typecache(H.wear_suit, casting_clothes))
 				to_chat(H, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!is_type_in_typecache(H.head, casting_clothes))
+			if(!passes_req && !is_type_in_typecache(H.head, casting_clothes))
 				to_chat(H, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 	else

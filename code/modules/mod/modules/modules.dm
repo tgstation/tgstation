@@ -1451,11 +1451,13 @@
 	var/charge_increment_delay = 1 SECONDS
 	var/charge_recovery = 1
 	var/lose_multiple_charges = FALSE
+	var/recharge_path = null
 	var/shield_icon = "shield-red"
+	var/charges
 
 /obj/item/mod/module/energy_shield/on_equip()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, shield_icon = shield_icon)
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
 /obj/item/mod/module/energy_shield/on_unequip()
@@ -1467,3 +1469,12 @@
 		drain_power(use_power_cost)
 		return TRUE
 	return FALSE
+
+/obj/item/mod/module/energy_shield/wizard
+	name = "MOD battlemage shield module"
+	idle_power_cost = 0 //magic
+	use_power_cost = 0 //magic too
+	max_charges = 15
+	recharge_start_delay = 0 SECONDS
+	charge_recovery = 8
+	recharge_path = /obj/item/wizard_armour_charge

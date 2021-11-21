@@ -421,11 +421,11 @@
 	desc = "A collection of wands that allow for a wide variety of utility. Wands have a limited number of charges, so be conservative with their use. Comes in a handy belt."
 	item_path = /obj/item/storage/belt/wands/full
 	category = "Defensive"
-/*
+
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
 	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
-	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
+	item_path = /obj/item/mod/control/pre_equipped/wizard
 	category = "Defensive"
 
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -434,7 +434,21 @@
 		new /obj/item/tank/internals/oxygen(get_turf(user)) //i need to BREATHE
 		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit
-*/
+
+/datum/spellbook_entry/item/battlemage
+	name = "Battlemage Shield Module"
+	desc = "A powerful shield that can be installed in the Mastercrafted Armor. The shield can completely negate sixteen attacks before being permanently depleted."
+	item_path = /obj/item/mod/module/energy_shield/wizard
+	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/item/battlemage_charge
+	name = "Battlemage Armour Charges"
+	desc = "A powerful defensive rune, it will grant eight additional charges to a battlemage shield."
+	item_path = /obj/item/wizard_armour_charge
+	category = "Defensive"
+	cost = 1
+
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
@@ -483,27 +497,7 @@
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
 	item_path = /obj/item/singularityhammer
-/*
-/datum/spellbook_entry/item/battlemage
-	name = "Battlemage Armour"
-	desc = "An ensorceled suit of armour, protected by a powerful shield. The shield can completely negate sixteen attacks before being permanently depleted."
-	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
-	limit = 1
-	category = "Defensive"
 
-/datum/spellbook_entry/item/battlemage/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	. = ..()
-	if(.)
-		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
-		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit
-
-/datum/spellbook_entry/item/battlemage_charge
-	name = "Battlemage Armour Charges"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
-	item_path = /obj/item/wizard_armour_charge
-	category = "Defensive"
-	cost = 1
-*/
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
 	desc = "A strange whistle that will transport you to a distant safe place on the station. There is a window of vulnerability at the beginning of every use."

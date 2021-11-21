@@ -51,6 +51,11 @@
 	cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/visor/thermal, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
 
+/obj/item/mod/control/pre_equipped/wizard
+	theme = /datum/mod_theme/wizard
+	cell = /obj/item/stock_parts/cell/crystal_cell/wizard
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity)
+
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug
 	cell = /obj/item/stock_parts/cell/bluespace

@@ -23,6 +23,8 @@
 	var/shield_inhand = FALSE
 	/// Should the shield lose charges equal to the damage dealt by a hit?
 	var/lose_multiple_charges = FALSE
+	/// The item we use for recharging
+	var/recharge_path
 	/// The cooldown tracking when we were last hit
 	COOLDOWN_DECLARE(recently_hit_cd)
 	/// The cooldown tracking when we last replenished a charge
@@ -30,7 +32,7 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, recharge_path = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -39,6 +41,7 @@
 	src.charge_increment_delay = charge_increment_delay
 	src.charge_recovery = charge_recovery
 	src.lose_multiple_charges = lose_multiple_charges
+	src.recharge_path = recharge_path
 	src.shield_icon_file = shield_icon_file
 	src.shield_icon = shield_icon
 	src.shield_inhand = shield_inhand
@@ -169,16 +172,13 @@
 	if(current_charges <= 0)
 		owner.visible_message(span_warning("[owner]'s shield overloads!"))
 
-/datum/component/shielded/proc/check_recharge_rune(datum/source, obj/item/wizard_armour_charge/recharge_rune, mob/living/user)
+/datum/component/shielded/proc/check_recharge_rune(datum/source, obj/item/recharge_rune, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(!istype(recharge_rune))
+	if(!istype(recharge_rune, recharge_path))
 		return
 	. = COMPONENT_NO_AFTERATTACK
-	if(!istype(parent, /obj/item/clothing/suit/space/hardsuit/shielded/wizard))
-		to_chat(user, span_warning("The rune can only be used on battlemage armour!"))
-		return
 
-	current_charges += recharge_rune.restored_charges
+	current_charges += charge_recovery
 	to_chat(user, span_notice("You charge \the [parent]. It can now absorb [current_charges] hits."))
 	qdel(recharge_rune)

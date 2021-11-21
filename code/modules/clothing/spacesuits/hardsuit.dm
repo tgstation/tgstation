@@ -411,8 +411,3 @@
 	icon_state = "hardsuit0-inq"
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
-
-/obj/item/clothing/suit/space/hardsuit/shielded/setup_shielding()
-	AddComponent(/datum/component/shielded, max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, shield_icon = "shield-old")
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded
