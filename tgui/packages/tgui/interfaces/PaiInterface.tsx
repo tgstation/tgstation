@@ -227,7 +227,7 @@ const SystemInfo = (_, context) => {
     <Section
       buttons={
         <Button
-          icon={ICON_MAP[image] ? ICON_MAP[image] : 'meh-blank'}
+          icon={ICON_MAP[image] || 'meh-blank'}
           onClick={() => act('change_image')}
           tooltip="Change your display image"
         />
