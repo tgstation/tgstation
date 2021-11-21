@@ -431,12 +431,11 @@
 		else
 			moving_diagonally = FALSE
 			return
-		moving_diagonally = FALSE
-		//Properly enter and exit the can_pass_diagonally tile. We don't change the loc here because this would mess with pushing/shuffling
-		loc.Exited(src, can_pass_diagonally)
-		oldloc = get_step(loc, can_pass_diagonally) //This might looks weird, but it will be the old loc for the rest of the move proc.
-		oldloc.Entered(src, loc, null)
-		Moved(loc, can_pass_diagonally)
+		oldloc = loc
+		loc = get_step(loc, can_pass_diagonally)
+		oldloc.Exited(src, can_pass_diagonally)
+		loc.Entered(src, loc, null)
+		Moved(oldloc, can_pass_diagonally)
 		if(set_dir_on_move) //We want to set the direction to be the one of the "second" diagonal move, aka not can_pass_diagonally
 			setDir(direction &~ can_pass_diagonally)
 	
@@ -457,14 +456,14 @@
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src) || SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, entering_loc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
+				moving_diagonally = FALSE
 				return
 	else
 		var/enter_return_value = newloc.Enter(src)
 		if(!(enter_return_value & TURF_CAN_ENTER) || (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, newloc) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE))
-			if(can_pass_diagonally && !(enter_return_value & TURF_ENTER_ALREADY_MOVED))
-				loc =  oldloc							//We failed to finish our diagonal move. 
-				if(set_dir_on_move) 					//we didn't do it earlier because it allows to push/shuffle diagonally
-					setDir(can_pass_diagonally)			//We also set the dir correctly so it doesn't look weird
+			if(can_pass_diagonally && !(enter_return_value & TURF_ENTER_ALREADY_MOVED) && set_dir_on_move)
+				setDir(can_pass_diagonally)			//We also set the dir correctly so it doesn't look weird
+			moving_diagonally = FALSE
 			return
 	
 	loc = newloc
@@ -477,6 +476,7 @@
 
 	if(!loc || loc == oldloc)
 		last_move = 0
+		moving_diagonally = FALSE
 		return
 
 	var/area/oldarea = get_area(oldloc)
@@ -512,7 +512,7 @@
 			check_pulling()
 
 	last_move = direction
-
+	moving_diagonally = FALSE
 	if(has_buckled_mobs() && !handle_buckled_mob_movement(loc, direction)) //movement failed due to buckled mob(s)
 		return FALSE
 	return TRUE
