@@ -45,7 +45,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	change_appearance(user)
 
 //Mirror man, mirror man, does whatever a mirror can.
-/obj/structure/mirror/change_appearance(mob/living/carbon/human/stylist)
+/obj/structure/mirror/proc/change_appearance(mob/living/carbon/human/stylist)
 	//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 	//this is largely copypasted from there.
 
