@@ -7,13 +7,13 @@
  * * target_datum - The datum you want to create a tag for. Should be the datum itself, not a weakref
  */
 /datum/admins/proc/add_tagged_datum(datum/target_datum)
-	for(var/datum/weakref/iter_weakref as anything in tagged_datums)
-		var/datum/resolved_ref = iter_weakref.resolve()
-		if(resolved_ref == target_datum)
-			to_chat(owner, span_warning("[target_datum] is already tagged!"))
-			return
-
 	var/datum/weakref/new_weakref = WEAKREF(target_datum)
+
+	if(LAZYFIND(tagged_datums, new_weakref))
+		new_weakref = null // needed?
+		to_chat(owner, span_warning("[target_datum] is already tagged!"))
+		return
+
 	LAZYADD(tagged_datums, new_weakref)
 	RegisterSignal(target_datum, COMSIG_PARENT_QDELETING, .proc/handle_tagged_del)
 	to_chat(owner, span_notice("[target_datum] has been tagged."))
@@ -24,7 +24,7 @@
 
 	if(owner)
 		to_chat(owner, span_boldnotice("Tagged datum [source] ([source.type]) has been deleted."))
-	remove_tagged_datum(source)
+	remove_tagged_datum(source, silent = TRUE)
 
 /**
  * Attempts to remove the specified datum from [/datum/admins/var/tagged_datums] if it exists
@@ -33,8 +33,9 @@
  *
  * Arguments:
  * * target_datum - The datum you want to remove from the tagged_datums list. Can also be the specific weakref used in said list.
+ * * silent - If TRUE, won't print messages to the owner's chat
  */
-/datum/admins/proc/remove_tagged_datum(datum/target_datum)
+/datum/admins/proc/remove_tagged_datum(datum/target_datum, silent=FALSE)
 	if(isnull(target_datum))
 		return
 
@@ -44,22 +45,22 @@
 	if(isweakref(target_datum)) // no need to iterate and resolve each weakref
 		if(LAZYFIND(tagged_datums, target_datum))
 			LAZYREMOVE(tagged_datums, target_datum)
-			qdel(target_datum)
-			to_chat(owner, span_notice("[target_datum] has been untagged."))
-		else
+			if(!silent)
+				to_chat(owner, span_notice("[target_datum] has been untagged."))
+		else if(!silent)
 			to_chat(owner, span_warning("[target_datum] was not already tagged."))
 		return
 	else // we have to actually resolve each tagged weakref to see which one is ours
 		for(var/datum/weakref/iter_weakref as anything in tagged_datums)
-			var/datum/resolved_ref = iter_weakref.resolve()
-			if(resolved_ref == target_datum)
+			if(iter_weakref.resolve() == target_datum)
 				LAZYREMOVE(tagged_datums, iter_weakref)
-				qdel(iter_weakref)
 				UnregisterSignal(target_datum, COMSIG_PARENT_QDELETING)
-				to_chat(owner, span_notice("[target_datum] has been untagged."))
+				if(!silent)
+					to_chat(owner, span_notice("[target_datum] has been untagged."))
 				return
 
-		to_chat(owner, span_warning("[target_datum] was not already tagged."))
+		if(!silent)
+			to_chat(owner, span_warning("[target_datum] was not already tagged."))
 
 /// Simply removes all of the weakref's that don't resolve to anything.
 /datum/admins/proc/clear_nulled_tags()
@@ -68,7 +69,6 @@
 	for(var/datum/weakref/iter_weakref as anything in tagged_datums)
 		if(!iter_weakref.resolve())
 			LAZYREMOVE(tagged_datums, iter_weakref)
-			qdel(iter_weakref)
 			cleared_nulls++
 
 	if(cleared_nulls)
