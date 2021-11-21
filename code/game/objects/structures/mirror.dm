@@ -9,6 +9,8 @@
 	max_integrity = 200
 	integrity_failure = 0.5
 	var/creation_time
+	///Should our description be able to be changed by the undertale easter egg? Make this false if the default description is not "It's you!". I'd check for a description of "It's you!" directly, but I've been directly told not to do that for some reason.
+	var/ut_reference = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
@@ -19,15 +21,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	creation_time = world.time
 
 /obj/structure/mirror/examine(mob/user)
+	if(!ut_reference || desc != initial(desc)) //I'm really not a fan of hardcoding this, but I don't see another way to do this
+		return ..()
+	else if(user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE) && user.key)
+		desc = "It's me, [user.key]." //uses the player's OOC name, not their IC one
+	else if(SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+		desc = "Still just you, [user.real_name]."
+	else if(world.time >= creation_time + 60 MINUTES)
+		desc = "Despite everything, it's still you."
 	. = ..()
-	if(desc != "It's you!") //I'm really not a fan of hardcoding this, but I don't see another way to do this
-		return
-	if(user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE) && user.key)
-		return "It's me, [user.key]." //uses the player's OOC name, not their IC one
-	if(SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-		return "Still just you, [user.real_name]."
-	if(world.time >= creation_time + 60 MINUTES)
-		return "Despite everything, it's still you."
+	desc = initial(desc)
 
 /obj/structure/mirror/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -144,6 +147,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	desc = "Turn and face the strange."
 	icon_state = "magic_mirror"
 	var/list/choosable_races = list()
+	ut_reference = FALSE
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
