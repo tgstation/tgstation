@@ -142,18 +142,18 @@ If you make a derivative work from this code, you must include this notification
 	to_chat(A, span_danger("You start spinning around with [D]!"))
 	A.emote("scream")
 
-	for (var/i in 1 to 20)
+	for (var/i = 0, i < 20, i++)
 		var/delay = 5
 		switch (i)
-			if (18 to INFINITY)
+			if (17 to INFINITY)
 				delay = 0.25
-			if (15 to 17)
+			if (14 to 16)
 				delay = 0.5
-			if (10 to 14)
+			if (9 to 13)
 				delay = 1
-			if (6 to 9)
+			if (5 to 8)
 				delay = 2
-			if (1 to 5)
+			if (0 to 4)
 				delay = 3
 
 		if (A && D)
@@ -227,7 +227,7 @@ If you make a derivative work from this code, you must include this notification
 
 	FlipAnimation()
 
-	for (var/i in 1 to 3)
+	for (var/i = 0, i < 3, i++)
 		if (A && D)
 			A.pixel_y += 3
 			D.pixel_y += 3
@@ -332,7 +332,7 @@ If you make a derivative work from this code, you must include this notification
 		return
 	var/turf/T = get_turf(A)
 	if (T && isturf(T) && D && isturf(D.loc))
-		for (var/i in 1 to 4)
+		for (var/i = 0, i < 4, i++)
 			A.setDir(turn(A.dir, 90))
 
 		A.forceMove(D.loc)

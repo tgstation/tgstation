@@ -42,9 +42,9 @@
 		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
 
 
-	for(var/i in 1 to gibtypes.len)
+	for(var/i = 1, i<= gibtypes.len, i++)
 		if(gibamounts[i])
-			for(var/j in 1 to gibamounts[i])
+			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
 				gib = new gibType(loc, diseases)
 
