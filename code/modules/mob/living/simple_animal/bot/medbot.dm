@@ -27,7 +27,7 @@
 	radio_channel = RADIO_CHANNEL_MEDICAL
 	bot_type = MED_BOT
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
-	hackables = "healt processor circuits"
+	hackables = "health processor circuits"
 	path_image_color = "#DDDDFF"
 
 	/// drop determining variable
