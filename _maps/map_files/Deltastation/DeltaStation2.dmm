@@ -46055,6 +46055,7 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/machinery/duct,
+/obj/effect/landmark/start/cook,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "hVo" = (
@@ -58959,11 +58960,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"ltD" = (
-/turf/closed/wall,
-/area/service/kitchen/coldroom{
-	dir = 8
-	})
 "ltH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -64115,7 +64111,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/cook,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "mPP" = (
@@ -137092,7 +137087,7 @@ vyr
 kEi
 kEi
 kEi
-ltD
+uUt
 iZr
 xuk
 ipZ
