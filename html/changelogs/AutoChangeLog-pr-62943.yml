@@ -1,0 +1,4 @@
+author: "Colovorat"
+delete-after: True
+changes: 
+  - expansion: "Stun Batong now turns off/on constantly for short time after emp"
