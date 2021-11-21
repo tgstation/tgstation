@@ -15,8 +15,14 @@
  */
 /obj/item/gun/blastcannon
 	name = "blast cannon"
-	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
-	icon_state = "empty_blastcannon"
+	desc = "A surprisingly portable device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
+	icon = 'icons/obj/guns/wide_guns.dmi'
+	icon_state = "blastcannon_empty"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	base_pixel_x = -2
+	pixel_x = -2
 	inhand_icon_state = "blastcannon_empty"
 	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -84,7 +90,11 @@
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
+	icon_state = "[base_icon_state]_[bomb ? "loaded" : "empty"]"
+	inhand_icon_state = icon_state
+	if(isliving(loc))
+		var/mob/living/cannoneer = loc
+		cannoneer.update_appearance()
 	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
@@ -134,6 +144,7 @@
 	message_admins("Blastcannon transfer valve opened by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(current_turf)] while aiming at [ADMIN_VERBOSEJMP(target_turf)] (target).")
 	log_game("Blastcannon transfer valve opened by [key_name(user)] at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).")
 	bomb.toggle_valve()
+	update_appearance()
 	return
 
 
