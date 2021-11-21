@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/structure/fireaxecabinet,
 	/obj/structure/mirror,
 	/obj/structure/noticeboard,
-	/obj/structure/reagent_dispensers/peppertank,
+	/obj/structure/reagent_dispensers/wall,
 	/obj/structure/sign,
 	/obj/structure/sign/picture_frame
 	)))

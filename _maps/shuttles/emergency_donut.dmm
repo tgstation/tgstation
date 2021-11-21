@@ -195,7 +195,7 @@
 "aK" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aL" = (

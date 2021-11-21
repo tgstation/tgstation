@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Hulk punches now count as unarmed attacks for the purposes of blocking."
-  - bugfix: "Martial arts that grant their users the ability to block unarmed and melee attacks while they're in throw mode can now block hulk punches."
