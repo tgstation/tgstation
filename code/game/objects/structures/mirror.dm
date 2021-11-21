@@ -64,8 +64,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	var/new_facial_hair_style = input(stylist, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
 	if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return //no tele-grooming
-	if(new_style)
-		stylist.facial_hairstyle = new_style
+	if(new_facial_hair_style)
+		stylist.facial_hairstyle = new_facial_hair_style
 		stylist.update_hair()
 		curse(stylist)
 
@@ -264,16 +264,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 						stylist.gender = MALE //we'll update their gender to match their body type- if they want their gender to not match their body type, they can change that using the gender-changing function of the mirror
 				else
 					return
-			H.dna.update_ui_block(DNA_GENDER_BLOCK)
-			H.update_body()
-			H.update_mutations_overlay() //(hulk male/female)
+			stylist.dna.update_ui_block(DNA_GENDER_BLOCK)
+			stylist.update_body()
+			stylist.update_mutations_overlay() //(hulk male/female)
 			curse(stylist)
 
 		if("hairstyle")
 			..()
 		
 		if("hair color")
-			var/new_hair_color = input(stylist, "What is the color of our hair again?", "Hair Color",H.hair_color) as color|null
+			var/new_hair_color = input(stylist, "What is the color of our hair again?", "Hair Color",stylist.hair_color) as color|null
 			if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			
