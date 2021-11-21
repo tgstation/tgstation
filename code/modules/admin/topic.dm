@@ -690,6 +690,8 @@
 			return
 
 		var/mob/our_mob = locate(href_list["makeai"])
+		if(!istype(our_mob))
+			return
 		if(isAI(our_mob))
 			to_chat(usr, "That's already an AI.", confidential = TRUE)
 			return
@@ -712,6 +714,8 @@
 			return
 
 		var/mob/our_mob = locate(href_list["makerobot"])
+		if(!istype(our_mob))
+			return
 		if(iscyborg(our_mob))
 			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
 			return
