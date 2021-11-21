@@ -216,6 +216,7 @@
 		changed_name = custom_name
 	else if(pref_source && pref_source.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
 		apply_pref_name(/datum/preference/name/cyborg, pref_source)
+		custom_name = real_name
 		return //built in camera handled in proc
 	else
 		changed_name = get_standard_name()
@@ -656,6 +657,17 @@
 		toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
 
 
+/**
+ * Fully update the name of a cyborg/shell.
+ *
+ * Overrides and calls [/mob/proc/fully_replace_character_name].
+ * Updates the borg's name, real_name, and its camera's identification tag.
+ * It is called on cyborg initialization, model changes and renames (i.e., renaming board)
+ *
+ * Arguments:
+ * * oldname — The to-be-replaced real_name
+ * * newname — The new name
+ */
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	. = ..()
 	if(!.)
@@ -663,7 +675,6 @@
 	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
-	custom_name = newname
 
 
 /mob/living/silicon/robot/proc/ResetModel()
