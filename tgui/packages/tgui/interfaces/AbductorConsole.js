@@ -1,7 +1,7 @@
 import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
-import { GenericUplink } from './Uplink';
+import { GenericUplink } from "./Uplink/GenericUplink";
 
 export const AbductorConsole = (props, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);

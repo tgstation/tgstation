@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { GenericUplink } from './Uplink';
+import { GenericUplink } from "./Uplink/GenericUplink";
 
 export const MalfunctionModulePicker = (props, context) => {
   const { act, data } = useBackend(context);
