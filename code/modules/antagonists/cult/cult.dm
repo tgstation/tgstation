@@ -383,13 +383,13 @@
 
 /datum/objective/sacrifice/proc/on_target_body_del()
 	SIGNAL_HANDLER
-	find_target()
+	INVOKE_ASYNC(src, .proc/find_target)
 
 /datum/objective/sacrifice/proc/on_mind_transfer(datum/source, mob/previous_body)
 	SIGNAL_HANDLER
 	//If, for some reason, the mind was transferred to a ghost (better safe than sorry), find a new target.
 	if(!isliving(target.current))
-		find_target()
+		INVOKE_ASYNC(src, .proc/find_target)
 		return
 	UnregisterSignal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
