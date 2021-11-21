@@ -496,7 +496,7 @@ const AvailableRow = (props, context) => {
         <Box color={ram < software.value && 'bad'} textAlign="right">
           {!purchased && software.value}{' '}
           <Icon
-            color={purchased || !(ram < software.value) ? 'purple' : 'bad'}
+            color={(purchased || ram >= software.value) ? 'purple' : 'bad'}
             name="microchip"
           />
         </Box>
