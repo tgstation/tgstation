@@ -461,6 +461,7 @@
 /obj/item/clothing/accessory/pride/ace
 	name = "asexual pin"
 	icon_state = "pride_ace"
+	desc = "A pin to show off your sexuality, or in this case, the lack thereof!"
 
 /obj/item/clothing/accessory/pride/enby
 	name = "non-binary pin"
