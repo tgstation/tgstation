@@ -42,10 +42,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	if(!ishuman(user))
 		return
 
-	mirror_stuff(user)
+	change_appearance(user)
 
 //Mirror man, mirror man, does whatever a mirror can.
-/obj/structure/mirror/mirror_stuff(mob/living/carbon/human/stylist)
+/obj/structure/mirror/change_appearance(mob/living/carbon/human/stylist)
 	//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 	//this is largely copypasted from there.
 
@@ -167,7 +167,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			choosable_races += initial(species_type.name)
 	return ..()
 
-/obj/structure/mirror/magic/mirror_stuff(mob/living/carbon/human/stylist)
+/obj/structure/mirror/magic/change_appearance(mob/living/carbon/human/stylist)
 	var/choice = input(stylist, "Something to change?", "Magical Grooming") as null|anything in list("name", "species", "color", "gender", "sex", "hairstyle", "hair color", "eyes")
 
 	if(!stylist.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
