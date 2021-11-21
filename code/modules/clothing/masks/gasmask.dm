@@ -160,6 +160,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
+	tint = 0.25
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"

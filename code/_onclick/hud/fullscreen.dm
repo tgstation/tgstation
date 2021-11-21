@@ -1,6 +1,4 @@
-/mob/proc/overlay_fullscreen(category, type, severity, overlay_alpha)
-	if(!overlay_alpha)
-		overlay_alpha = 255
+/mob/proc/overlay_fullscreen(category, type, severity, overlay_alpha = 255)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)
 		// needs to be recreated
