@@ -43,18 +43,13 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = new (src, freezerange)
-	chronofield.immune = immune
-	chronofield.check_anti_magic = check_anti_magic
-	chronofield.check_holy = check_holy
-	chronofield.recalculate_field()
+	chronofield = new (src, freezerange, TRUE, immune, check_anti_magic, check_holy)
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/magic
 	check_anti_magic = TRUE
 
 /datum/proximity_monitor/advanced/timestop
-	name = "chronofield"
 	var/list/immune = list()
 	var/list/frozen_things = list()
 	var/list/frozen_mobs = list() //cached separately for processing
@@ -65,8 +60,12 @@
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New()
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy)
 	..()
+	src.immune = immune
+	src.check_anti_magic = check_anti_magic
+	src.check_holy = check_holy
+	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()

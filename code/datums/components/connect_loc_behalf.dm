@@ -70,7 +70,8 @@
 	if(isnull(tracked_loc))
 		return
 
-	parent.UnregisterSignal(tracked_loc, connections)
+	for(var/signal in connections)
+		parent.UnregisterSignal(tracked_loc, signal)
 
 	tracked_loc = null
 

@@ -308,9 +308,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
 		message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
 		shake_everyone()
-	gravity_field = new(src, 2)
-	gravity_field.gravity_value = 6
-	gravity_field.recalculate_field()
+	gravity_field = new(src, 2, TRUE, 6)
 
 	complete_state_update()
 

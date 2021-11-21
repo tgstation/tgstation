@@ -2,7 +2,6 @@
 //Projectile dampening field that slows projectiles and lowers their damage for an energy cost deducted every 1/5 second.
 //Only use square radius for this!
 /datum/proximity_monitor/advanced/peaceborg_dampener
-	name = "\improper Hyperkinetic Dampener Field"
 	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
 	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
@@ -18,8 +17,10 @@
 	// lazylist that keeps track of the overlays added to the edge of the field
 	var/list/edgeturf_effects
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/New()
+/datum/proximity_monitor/advanced/peaceborg_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, obj/item/borg/projectile_dampen/projector)
 	..()
+	src.projector = projector
+	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
@@ -40,7 +41,7 @@
 	for(var/mob/living/silicon/robot/R in range(current_range, get_turf(host)))
 		if(R.has_buckled_mobs())
 			for(var/mob/living/L in R.buckled_mobs)
-				L.visible_message(span_warning("[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!")) //I know it's bad.
+				L.visible_message(span_warning("[L] is knocked off of [R] by the charge in [R]'s chassis induced by the hyperkinetic dampener field!")) //I know it's bad.
 				L.Paralyze(10)
 				R.unbuckle_mob(L)
 				do_sparks(5, 0, L)

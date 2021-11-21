@@ -37,12 +37,12 @@
 /proc/get_nested_locs(atom/movable/atom_on_location, include_turf = FALSE)
 	. = list()
 	var/atom/location = atom_on_location.loc
-	var/turf/turf = get_turf(atom_on_location)
-	while(location && location != turf)
+	var/turf/our_turf = get_turf(atom_on_location)
+	while(location && location != our_turf)
 		. += location
 		location = location.loc
-	if(location && include_turf) //At this point, only the turf is left, provided it exists.
-		. += location
+	if(our_turf && include_turf) //At this point, only the turf is left, provided it exists.
+		. += our_turf
 
 ///Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.

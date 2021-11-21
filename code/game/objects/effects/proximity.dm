@@ -3,11 +3,14 @@
 	var/atom/host
 	///The atom that will receive HasProximity calls.
 	var/atom/hasprox_receiver
+	///The range of the proximity monitor. Things moving wihin it will trigger HasProximity calls.
 	var/current_range
 	///If we don't check turfs in range if the host's loc isn't a turf
 	var/ignore_if_not_on_turf
-	var/list/loc_connections = list(
+	///The signals of the connect range component, needed to monitor the turfs in range.
+	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_EXITED =.proc/on_uncrossed,
 	)
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
@@ -18,10 +21,7 @@
 /datum/proximity_monitor/proc/SetHost(atom/H,atom/R)
 	if(H == host)
 		return
-	if(host)
-		//Remove the old connect components if the host isn't tracked anymore.
-		qdel(GetComponent(/datum/component/connect_range))
-		qdel(GetComponent(/datum/component/connect_containers))
+	if(host) //No need to delete the connect range and containers comps. They'll be updated with the new tracked host.
 		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 	if(R)
 		hasprox_receiver = R
@@ -31,7 +31,7 @@
 	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved)
 	AddComponent(/datum/component/connect_containers, host, containers_connections)
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	SetRange(current_range,TRUE)
+	SetRange(current_range, TRUE)
 
 /datum/proximity_monitor/Destroy()
 	host = null
@@ -44,11 +44,8 @@
 	. = TRUE
 	current_range = range
 
-	if(range > 0)
-		//If the connect_range component exists already, this will just update its range. No errors or duplicates.
-		AddComponent(/datum/component/connect_range, host, loc_connections, range, !ignore_if_not_on_turf)
-	else
-		qdel(GetComponent(/datum/component/connect_range))
+	//If the connect_range component exists already, this will just update its range. No errors or duplicates.
+	AddComponent(/datum/component/connect_range, host, loc_connections, range, !ignore_if_not_on_turf)
 
 /datum/proximity_monitor/proc/on_moved(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
@@ -61,6 +58,10 @@
 	ignore_if_not_on_turf = does_ignore
 	//Update the ignore_if_not_on_turf
 	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, ignore_if_not_on_turf)
+
+/datum/proximity_monitor/proc/on_uncrossed()
+	SIGNAL_HANDLER
+	return //Used by the advanced subtype for effect fields.
 
 /datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived)
 	SIGNAL_HANDLER

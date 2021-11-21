@@ -642,11 +642,8 @@
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	var/mob/living/silicon/robot/owner = get_host()
-	dampening_field = new(owner, field_radius)
-	dampening_field.projector = src
-	dampening_field.recalculate_field()
-	if(owner)
-		owner.model.allow_riding = FALSE
+	dampening_field = new(owner, field_radius, TRUE, src)
+	owner?.model.allow_riding = FALSE
 	active = TRUE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()

@@ -328,8 +328,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/border_dir = get_dir(src, mover)
-	var/canPassSelf = CanPass(mover, border_dir)
+	var/canPassSelf = CanPass(mover, get_dir(src, mover))
 	if(canPassSelf || (mover.movement_type & PHASING))
 		for(var/atom/movable/thing as anything in contents)
 			if(QDELETED(mover))

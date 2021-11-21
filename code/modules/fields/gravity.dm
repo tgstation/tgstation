@@ -1,7 +1,11 @@
 /datum/proximity_monitor/advanced/gravity
-	name = "modified gravity zone"
 	var/gravity_value = 0
 	var/list/modified_turfs = list()
+
+/datum/proximity_monitor/advanced/gravity/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, gravity)
+	. = ..()
+	gravity_value = gravity
+	recalculate_field()
 
 /datum/proximity_monitor/advanced/gravity/setup_field_turf(turf/T)
 	. = ..()

@@ -1,17 +1,12 @@
 #define FIELD_TURFS_KEY "field_turfs"
 #define EDGE_TURFS_KEY "edge_turfs"
 
-//Movable and easily code-modified fields! Allows for custom AOE effects that affect movement and anything inside of them, and can do custom turf effects!
-//Supports automatic recalculation/reset on movement.
-//If there's any way to make this less CPU intensive than I've managed, gimme a call or do it yourself! - kevinz000
-
+/**
+ * Movable and easily code-modified fields! Allows for custom AOE effects that affect movement
+ * and anything inside of them, and can do custom turf effects!
+ * Supports automatic recalculation/reset on movement.
+ */
 /datum/proximity_monitor/advanced
-	var/name = "\improper Energy Field"
-	loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-		COMSIG_ATOM_EXITED =.proc/on_uncrossed,
-	)
-
 	var/list/turf/field_turfs = list()
 	var/list/turf/edge_turfs = list()
 
@@ -63,8 +58,7 @@
 			return
 	recalculate_field()
 
-/datum/proximity_monitor/advanced/proc/on_uncrossed(turf/source, atom/movable/gone, direction)
-	SIGNAL_HANDLER
+/datum/proximity_monitor/advanced/on_uncrossed(turf/source, atom/movable/gone, direction)
 	if(get_dist(source, host) == current_range)
 		field_edge_uncrossed(gone, source)
 	else
@@ -151,7 +145,6 @@
 
 //DEBUG FIELDS
 /datum/proximity_monitor/advanced/debug
-	name = "\improper Color Matrix Field"
 	current_range = 5
 	var/set_fieldturf_color = "#aaffff"
 	var/set_edgeturf_color = "#ffaaff"
