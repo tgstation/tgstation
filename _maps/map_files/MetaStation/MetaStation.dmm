@@ -18916,11 +18916,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"ezs" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ezz" = (
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/camera/directional/south{
@@ -121846,7 +121841,7 @@ dlV
 vFO
 rhT
 lMJ
-ezs
+lMJ
 rrt
 aaa
 aaa
