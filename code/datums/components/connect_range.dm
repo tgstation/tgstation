@@ -8,6 +8,10 @@
 
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
+	/**
+	 * The atom the component is tracking. The component will delete itself if the tracked is deleted.
+	 * Signals will also be updated whenever it moves (if it's a movable).
+	 */
 	var/atom/tracked
 
 	/// The component will hook into signals only on turfs not farther from tracked than this.
@@ -19,13 +23,17 @@
 	if(!isatom(tracked) || isarea(tracked) || range < 0)
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
-	src.tracked = tracked
-	src.range = range
+	set_tracked(tracked)
 	src.works_in_containers = works_in_containers
+
+/datum/component/connect_range/Destroy()
+	set_tracked(null)
+	return ..()
 
 /datum/component/connect_range/InheritComponent(datum/component/component, original, atom/tracked, list/connections, range, works_in_containers)
 	// Not equivalent. Checks if they are not the same list via shallow comparison.
 	if(!compare_list(src.connections, connections))
+		stack_trace("connect_range component attached to [parent] tried to inherit another connect_range component with different connections")
 		return
 	if(src.tracked != tracked)
 		set_tracked(tracked)
@@ -36,16 +44,10 @@
 	src.range = range
 	src.works_in_containers = works_in_containers
 	//Re-register the signals with the new settings.
-	update_signals(tracked)
+	update_signals(src.tracked)
 
-/datum/component/connect_range/RegisterWithParent()
-	set_tracked(tracked, TRUE)
-
-/datum/component/connect_range/UnregisterFromParent()
-	set_tracked(null)
-
-/datum/component/connect_range/proc/set_tracked(atom/new_tracked, first_run = FALSE)
-	if(tracked && !first_run) //Unregister the signals from the old tracked and its surroundings
+/datum/component/connect_range/proc/set_tracked(atom/new_tracked)
+	if(tracked) //Unregister the signals from the old tracked and its surroundings
 		unregister_signals(isturf(tracked) ? tracked : tracked.loc)
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
@@ -98,8 +100,7 @@
 		return
 	var/turf/previous_turf = get_turf(location)
 	for(var/turf/target_turf in RANGE_TURFS(range, previous_turf))
-		for(var/signal in connections)
-			parent.UnregisterSignal(target_turf, signal)
+		parent.UnregisterSignal(target_turf, connections)
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)
 	SIGNAL_HANDLER
