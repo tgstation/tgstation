@@ -685,7 +685,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
 		if(AH)
 			AH.AddInteraction(message)
-			if(!noBlackbox)
+			if(log_in_blackbox)
 				SSblackbox.LogAhelp(AH.id, "Interaction", message, what, usr.ckey)
 			return AH
 
