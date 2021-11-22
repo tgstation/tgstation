@@ -549,6 +549,17 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
+	if (cell.charge >= cell_hit_cost)
+		var/scramble_time
+		scramble_mode()
+		for(var/loops in 1 to rand(6,12))
+			scramble_time = rand(5,15)/10
+			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
+
+/obj/item/melee/baton/security/proc/scramble_mode()
+	active = !active
+	playsound(src, "sparks", 75, TRUE, -1)
+	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high

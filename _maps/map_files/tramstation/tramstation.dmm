@@ -12516,7 +12516,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "cSD" = (
@@ -12587,7 +12587,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "cTH" = (
@@ -19831,7 +19831,7 @@
 /area/maintenance/central)
 "fAM" = (
 /obj/structure/table/wood,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
@@ -22590,7 +22590,7 @@
 /area/hallway/primary/central)
 "gCm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
 "gCn" = (
@@ -26159,7 +26159,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/landmark/start/depsec/medical,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
@@ -33083,7 +33083,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/prisoner/management,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/escape)
 "krk" = (
@@ -33374,7 +33374,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
@@ -41566,7 +41566,7 @@
 	network = list("ss13","rd","Security")
 	},
 /obj/effect/landmark/start/depsec/science,
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
 "nMD" = (
@@ -48605,7 +48605,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 3
 	},
-/obj/structure/reagent_dispensers/virusfood/directional/east,
+/obj/structure/reagent_dispensers/wall/virusfood/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "qpj" = (
@@ -51283,12 +51283,9 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 5
 	},
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
+/obj/machinery/computer/cargo/request{
+	dir = 8
 	},
-/obj/item/pen,
 /turf/open/floor/iron,
 /area/cargo/office)
 "rvc" = (
@@ -62549,7 +62546,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -65038,7 +65035,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/structure/rack,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/iron,

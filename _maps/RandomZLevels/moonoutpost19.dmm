@@ -2706,7 +2706,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gi" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
