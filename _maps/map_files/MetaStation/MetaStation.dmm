@@ -5211,6 +5211,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/construction/storage_wing)
 "aXq" = (
@@ -6462,6 +6463,15 @@
 /obj/structure/light_construct/small/directional/east,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
+"bmA" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/obj/machinery/computer/cargo/request{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/cargo/sorting)
 "bmC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19186,10 +19196,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/service/theater)
-"eKu" = (
-/obj/effect/turf_decal/trimline/brown/filled/corner,
-/turf/open/floor/iron,
-/area/construction/storage_wing)
 "eKx" = (
 /obj/machinery/conveyor_switch/oneway{
 	dir = 8;
@@ -93588,8 +93594,8 @@ wcm
 mVk
 aUk
 uwx
-eKu
-iFZ
+aXq
+bmA
 svm
 eGZ
 fxy
