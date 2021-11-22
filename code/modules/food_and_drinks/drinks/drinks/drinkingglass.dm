@@ -88,7 +88,7 @@
 	else
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/get_glass_icon(datum/reagent/largest_reagent)
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
 	return largest_reagent?.shot_glass_icon_state
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
