@@ -608,6 +608,10 @@
 
 	name = "[name_string][assignment_string]"
 
+/// Returns the trim assignment name.
+/obj/item/card/id/proc/get_trim_assignment()
+	return trim?.assignment || assignment
+
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
@@ -799,6 +803,15 @@
 		return
 
 	. += mutable_appearance(trim_icon_file, trim_icon_state)
+
+/obj/item/card/id/advanced/get_trim_assignment()
+	if(trim_assignment_override)
+		return trim_assignment_override
+	else if(ispath(trim))
+		var/datum/id_trim/trim_singleton = SSid_access.trim_singletons_by_path[trim]
+		return trim_singleton.assignment
+
+	return ..()
 
 /obj/item/card/id/advanced/silver
 	name = "silver identification card"
