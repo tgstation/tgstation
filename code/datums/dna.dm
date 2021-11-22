@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(features_block_lengths, list(
 
 /**
  * A list of numbers that keeps track of where ui blocks start in the unique_identity string variable of the dna datum.
- * Commonly used by the GET_UI_BLOCK macro and the datum/dna/set_uni_identity_block proc.
+ * Commonly used by the datum/dna/set_uni_identity_block and datum/dna/get_uni_identity_block procs.
  */
 GLOBAL_LIST_INIT(total_ui_len_by_block, populate_total_ui_len_by_block())
 
@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(total_ui_len_by_block, populate_total_ui_len_by_block())
 		. += total_block_len
 		total_block_len += GET_UI_BLOCK_LEN(blocknumber)
 
-///Ditto but for unique features. Used by the GET_UF_BLOCK macro and the datum/dna/set_uni_feature_block proc.
+///Ditto but for unique features. Used by the datum/dna/set_uni_feature_block and datum/dna/get_uni_feature_block procs.
 GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /proc/populate_total_uf_len_by_block()
@@ -531,7 +531,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(!has_dna())
 		return
 
-	switch(deconstruct_block(GET_UI_BLOCK(dna.unique_identity, DNA_GENDER_BLOCK), 3))
+	switch(deconstruct_block(get_uni_identity_block(dna.unique_identity, DNA_GENDER_BLOCK), 3))
 		if(G_MALE)
 			gender = MALE
 		if(G_FEMALE)
@@ -542,47 +542,47 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	..()
 	var/structure = dna.unique_identity
-	hair_color = sanitize_hexcolor(GET_UI_BLOCK(structure, DNA_HAIR_COLOR_BLOCK))
-	facial_hair_color = sanitize_hexcolor(GET_UI_BLOCK(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	skin_tone = GLOB.skin_tones[deconstruct_block(GET_UI_BLOCK(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
-	eye_color = sanitize_hexcolor(GET_UI_BLOCK(structure, DNA_EYE_COLOR_BLOCK))
-	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(GET_UI_BLOCK(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
-	hairstyle = GLOB.hairstyles_list[deconstruct_block(GET_UI_BLOCK(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
+	hair_color = sanitize_hexcolor(get_uni_identity_block(structure, DNA_HAIR_COLOR_BLOCK))
+	facial_hair_color = sanitize_hexcolor(get_uni_identity_block(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
+	skin_tone = GLOB.skin_tones[deconstruct_block(get_uni_identity_block(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
+	eye_color = sanitize_hexcolor(get_uni_identity_block(structure, DNA_EYE_COLOR_BLOCK))
+	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
+	hairstyle = GLOB.hairstyles_list[deconstruct_block(get_uni_identity_block(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	var/features = dna.unique_features
 	if(dna.features["mcolor"])
-		dna.features["mcolor"] = sanitize_hexcolor(GET_UF_BLOCK(features, DNA_MUTANT_COLOR_BLOCK))
+		dna.features["mcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_MUTANT_COLOR_BLOCK))
 	if(dna.features["ethcolor"])
-		dna.features["ethcolor"] = sanitize_hexcolor(GET_UF_BLOCK(features, DNA_ETHEREAL_COLOR_BLOCK))
+		dna.features["ethcolor"] = sanitize_hexcolor(get_uni_feature_block(features, DNA_ETHEREAL_COLOR_BLOCK))
 	if(dna.features["body_markings"])
-		dna.features["body_markings"] = GLOB.body_markings_list[deconstruct_block(GET_UF_BLOCK(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.body_markings_list.len)]
+		dna.features["body_markings"] = GLOB.body_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_MARKINGS_BLOCK), GLOB.body_markings_list.len)]
 	if(dna.features["tail_lizard"])
-		dna.features["tail_lizard"] = GLOB.tails_list_lizard[deconstruct_block(GET_UF_BLOCK(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
+		dna.features["tail_lizard"] = GLOB.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
 	if(dna.features["snout"])
-		dna.features["snout"] = GLOB.snouts_list[deconstruct_block(GET_UF_BLOCK(features, DNA_SNOUT_BLOCK), GLOB.snouts_list.len)]
+		dna.features["snout"] = GLOB.snouts_list[deconstruct_block(get_uni_feature_block(features, DNA_SNOUT_BLOCK), GLOB.snouts_list.len)]
 	if(dna.features["horns"])
-		dna.features["horns"] = GLOB.horns_list[deconstruct_block(GET_UF_BLOCK(features, DNA_HORNS_BLOCK), GLOB.horns_list.len)]
+		dna.features["horns"] = GLOB.horns_list[deconstruct_block(get_uni_feature_block(features, DNA_HORNS_BLOCK), GLOB.horns_list.len)]
 	if(dna.features["frills"])
-		dna.features["frills"] = GLOB.frills_list[deconstruct_block(GET_UF_BLOCK(features, DNA_FRILLS_BLOCK), GLOB.frills_list.len)]
+		dna.features["frills"] = GLOB.frills_list[deconstruct_block(get_uni_feature_block(features, DNA_FRILLS_BLOCK), GLOB.frills_list.len)]
 	if(dna.features["spines"])
-		dna.features["spines"] = GLOB.spines_list[deconstruct_block(GET_UF_BLOCK(features, DNA_SPINES_BLOCK), GLOB.spines_list.len)]
+		dna.features["spines"] = GLOB.spines_list[deconstruct_block(get_uni_feature_block(features, DNA_SPINES_BLOCK), GLOB.spines_list.len)]
 	if(dna.features["tail_human"])
-		dna.features["tail_human"] = GLOB.tails_list_human[deconstruct_block(GET_UF_BLOCK(features, DNA_HUMAN_TAIL_BLOCK), GLOB.tails_list_human.len)]
+		dna.features["tail_human"] = GLOB.tails_list_human[deconstruct_block(get_uni_feature_block(features, DNA_HUMAN_TAIL_BLOCK), GLOB.tails_list_human.len)]
 	if(dna.features["ears"])
-		dna.features["ears"] = GLOB.ears_list[deconstruct_block(GET_UF_BLOCK(features, DNA_EARS_BLOCK), GLOB.ears_list.len)]
+		dna.features["ears"] = GLOB.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), GLOB.ears_list.len)]
 	if(dna.features["moth_wings"])
-		var/genetic_value = GLOB.moth_wings_list[deconstruct_block(GET_UF_BLOCK(features, DNA_MOTH_WINGS_BLOCK), GLOB.moth_wings_list.len)]
+		var/genetic_value = GLOB.moth_wings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_WINGS_BLOCK), GLOB.moth_wings_list.len)]
 		dna.features["original_moth_wings"] = genetic_value
 		dna.features["moth_wings"] = genetic_value
 	if(dna.features["moth_antennae"])
-		var/genetic_value = GLOB.moth_antennae_list[deconstruct_block(GET_UF_BLOCK(features, DNA_MOTH_ANTENNAE_BLOCK), GLOB.moth_antennae_list.len)]
+		var/genetic_value = GLOB.moth_antennae_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_ANTENNAE_BLOCK), GLOB.moth_antennae_list.len)]
 		dna.features["original_moth_antennae"] = genetic_value
 		dna.features["moth_antennae"] = genetic_value
 	if(dna.features["moth_markings"])
-		dna.features["moth_markings"] = GLOB.moth_markings_list[deconstruct_block(GET_UF_BLOCK(features, DNA_MOTH_MARKINGS_BLOCK), GLOB.moth_markings_list.len)]
+		dna.features["moth_markings"] = GLOB.moth_markings_list[deconstruct_block(get_uni_feature_block(features, DNA_MOTH_MARKINGS_BLOCK), GLOB.moth_markings_list.len)]
 	if(dna.features["caps"])
-		dna.features["caps"] = GLOB.caps_list[deconstruct_block(GET_UF_BLOCK(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
+		dna.features["caps"] = GLOB.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
 	if(dna.features["tail_monkey"])
-		dna.features["tail_monkey"] = GLOB.tails_list_monkey[deconstruct_block(GET_UF_BLOCK(features, DNA_MONKEY_TAIL_BLOCK), GLOB.tails_list_monkey.len)]
+		dna.features["tail_monkey"] = GLOB.tails_list_monkey[deconstruct_block(get_uni_feature_block(features, DNA_MONKEY_TAIL_BLOCK), GLOB.tails_list_monkey.len)]
 
 	for(var/obj/item/organ/external/external_organ in internal_organs)
 		external_organ.mutate_feature(features, src)
@@ -759,6 +759,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		value = values
 	return value
 
+/proc/get_uni_identity_block(identity, blocknum)
+	return copytext(identity, GLOB.total_ui_len_by_block[blocknum], LAZYACCESS(GLOB.total_ui_len_by_block, blocknum+1))
+
+/proc/get_uni_feature_block(features, blocknum)
+	return copytext(features, GLOB.total_uf_len_by_block[blocknum], LAZYACCESS(GLOB.total_uf_len_by_block, blocknum+1))
+
 /////////////////////////// DNA HELPER-PROCS
 
 /mob/living/carbon/human/proc/something_horrible(ignore_stability)
@@ -835,7 +841,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			if(5)
 				to_chat(src, span_phobia("LOOK UP!"))
 				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)
-
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
 	if(!is_blind())
