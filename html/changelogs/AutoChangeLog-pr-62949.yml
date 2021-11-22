@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Abandoned crates no longer delete living mobs or indestructible objects inside them when exploding."
+  - bugfix: "They also no longer explode when deconstructed/emagged while unlocked."
+  - bugfix: "Their anti-tampering mechanism will now properly reactive if locked again after being unlocked."
