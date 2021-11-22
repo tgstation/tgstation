@@ -450,7 +450,7 @@
 
 /obj/item/clothing/accessory/pride
 	name = "rainbow pride pin"
-	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion."
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
 
 /obj/item/clothing/accessory/pride/bi
@@ -459,7 +459,7 @@
 
 /obj/item/clothing/accessory/pride/trans
 	name = "transgender pin"
-	desc = "A pin to show off your solidarity with trans people! Trans rights!"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored pin, saying that they stand in 'solidarity' with trans people."
 	icon_state = "pride_trans"
 
 /obj/item/clothing/accessory/pride/pan
