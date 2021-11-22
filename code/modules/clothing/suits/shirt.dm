@@ -11,10 +11,10 @@
 	. = ..()
 	if(wash_count <= 5)
 		transform *= TRANSFORM_USING_VARIABLE(0.8, 1)
-		washer.balloon_alert_to_viewers("\the [src] appears to have shrunk down after a long machine washing.")
+		washer.balloon_alert_to_viewers("\the [src] appears to have shrunken after being washed.")
 		wash_count += 1
 	else
-		washer.balloon_alert_to_viewers("\the [src] appears to have imploded due to repeat washing. Tiny strands of energy from the wash-dimension linger.")
+		washer.balloon_alert_to_viewers("\the [src] implodes due to repeated washing.")
 		qdel(src)
 
 /obj/item/clothing/suit/nerdshirt
