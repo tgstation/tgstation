@@ -40,8 +40,8 @@
 	if(!do_after(user, 3 SECONDS, target))
 		return
 	var/gradient_key = beard_or_hair == "Hair" ? GRADIENT_HAIR_KEY : GRADIENT_FACIAL_HAIR_KEY
-	LAZYSETLEN(human_target.grad_style, 2)
-	LAZYSETLEN(human_target.grad_color, 2)
+	LAZYSETLEN(human_target.grad_style, GRADIENTS_LEN)
+	LAZYSETLEN(human_target.grad_color, GRADIENTS_LEN)
 	human_target.grad_style[gradient_key] = new_grad_style
 	human_target.grad_color[gradient_key] = sanitize_hexcolor(new_grad_color)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
