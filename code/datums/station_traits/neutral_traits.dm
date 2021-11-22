@@ -125,5 +125,5 @@
 /datum/station_trait/colored_assistants/New()
 	. = ..()
 
-	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - GLOB.colored_assistant)
+	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type

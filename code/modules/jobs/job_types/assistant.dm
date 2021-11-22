@@ -1,4 +1,4 @@
-GLOBAL_DATUM_INIT(colored_assistant, /datum/colored_assistant, get_configured_colored_assistant())
+GLOBAL_DATUM(colored_assistant, /datum/colored_assistant)
 
 /*
 Assistant
@@ -45,8 +45,11 @@ Assistant
 
 /datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
 	var/static/jumpsuit_number = 0
-
 	jumpsuit_number += 1
+
+	if (isnull(GLOB.colored_assistant))
+		var/configured_type = get_configured_colored_assistant_type()
+		GLOB.colored_assistant = new configured_type
 
 	var/index = (jumpsuit_number % GLOB.colored_assistant.jumpsuits.len) + 1
 
@@ -68,8 +71,8 @@ Assistant
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
 
-/proc/get_configured_colored_assistant()
-	return CONFIG_GET(flag/grey_assistants) ? new /datum/colored_assistant/grey : new /datum/colored_assistant/random
+/proc/get_configured_colored_assistant_type()
+	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/random
 
 /// Defines a style of jumpsuit/jumpskirt for assistants.
 /// Jumpsuit and jumpskirt lists should match in colors, as they are used interchangably.
