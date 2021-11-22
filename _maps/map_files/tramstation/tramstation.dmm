@@ -35579,6 +35579,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/item/paper{
+	info = "<center><b>INTRUSTIONAL GUIDE TO PROCESSING NEW INMATES</center></b> <br> <br> To process inmates through this genpop system, please see the below described listas to proper processing procedures: <br> 1.Swipe new prisoner ID on a genpop locker to link them together. Store the inmate's equipment in this locker. <br> 2.Swipe your ID on the prisoner ID and assign a time for their sentencing. Attach ID to inmate. <br> 3.Process inmate through the labeled security gate, either willingly or by force. This will activate the timer on their card and start their sentencing. <br> 4.Once their sentence is over, their ID will allow them to pass through the gate once again and they will be able to freely collect their belongings. <br> 5.Escort the newly ex-inmate out through the front brig doors back out into the station.";
+	name = "Genpop - Inmate Processing and You"
+	},
 /turf/open/floor/iron,
 /area/security/prison)
 "ltr" = (
@@ -49238,7 +49242,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/machinery/camera/directional/east{
-	c_tag = "Security - Main East;
+	c_tag = "Security - Main East";
 	network = list("ss13","Security")
 	},
 /turf/open/floor/iron,
@@ -57759,7 +57763,7 @@
 /area/security/processing)
 "tMR" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Security - Main West;
+	c_tag = "Security - Main West";
 	network = list("ss13","Security")
 	},
 /turf/open/openspace,
