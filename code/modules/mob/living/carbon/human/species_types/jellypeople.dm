@@ -3,12 +3,12 @@
 	name = "Jellyperson"
 	id = SPECIES_JELLYPERSON
 	default_color = "00FF90"
+	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_TOXINLOVER,
-		say_mod = "chirps"
 	)
 	mutantlungs = /obj/item/organ/lungs/slime
 	meat = /obj/item/food/meat/slab/human/mutant/slime
