@@ -403,12 +403,12 @@
 	src.job = job.title
 
 	if(fully_randomize)
-		if(require_human)
-			player_client.prefs.randomise_appearance_prefs(~RANDOMIZE_SPECIES)
-		else
-			player_client.prefs.randomise_appearance_prefs()
-
 		player_client.prefs.apply_prefs_to(src)
+
+		if(require_human)
+			randomize_human_appearance(~RANDOMIZE_SPECIES)
+		else
+			randomize_human_appearance()
 
 		if (require_human)
 			set_species(/datum/species/human)

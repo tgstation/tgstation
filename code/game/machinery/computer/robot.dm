@@ -51,7 +51,7 @@
 			charge = R.cell ? round(R.cell.percent()) : null,
 			module = R.model ? "[R.model.name] Model" : "No Model Detected",
 			synchronization = R.connected_ai,
-			emagged =  R.emagged,
+			emagged = R.emagged,
 			ref = REF(R)
 		)
 		data["cyborgs"] += list(cyborg_data)

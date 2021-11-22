@@ -42,4 +42,4 @@
 	power_mod = 0.1
 	cooldown_mod = 0.5
 	spans = list("clown")
-	speech_sound = 'sound/spookoween/scary_horn2.ogg'
+	speech_sound = 'sound/misc/scary_horn.ogg'

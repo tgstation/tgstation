@@ -330,7 +330,7 @@
 		to_chat(user, span_warning("The tank seems to be pressurized, are you sure this is a good idea?"))
 		unsafe = TRUE
 
-	if(!tool.use_tool(src, user, time_taken, volume =  60))
+	if(!tool.use_tool(src, user, time_taken, volume = 60))
 		return
 
 	if(unsafe)
@@ -404,17 +404,14 @@
 /obj/machinery/atmospherics/components/tank/miasma
 	gas_type = /datum/gas/miasma
 
-/obj/machinery/atmospherics/components/tank/nitryl
-	gas_type = /datum/gas/nitryl
+/obj/machinery/atmospherics/components/tank/nitrium
+	gas_type = /datum/gas/nitrium
 
 /obj/machinery/atmospherics/components/tank/pluoxium
 	gas_type = /datum/gas/pluoxium
 
 /obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
-
-/obj/machinery/atmospherics/components/tank/stimulum
-	gas_type = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/components/tank/tritium
 	gas_type = /datum/gas/tritium

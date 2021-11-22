@@ -466,7 +466,6 @@
 	damage = 0
 	nodamage = TRUE // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
-	flag = MAGIC // and most importantly, love is magic~
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer)

@@ -35,7 +35,7 @@
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
-		for(var/i = 0, i < 3, i++)
+		for(var/i in 1 to 3)
 			sleep(3)
 			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
 		return(BRUTELOSS)
@@ -219,7 +219,7 @@
 		SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
 		our_alert_ref = WEAKREF(our_guy.throw_alert("shoealert", /atom/movable/screen/alert/shoes/knotted))
 
-	else if(tied ==  SHOES_UNTIED)
+	else if(tied == SHOES_UNTIED)
 		var/wiser = TRUE // did we stumble and realize our laces are undone?
 		switch(rand(1, 1000))
 			if(1) // .1% chance to trip and fall over (note these are per step while our laces are undone)
