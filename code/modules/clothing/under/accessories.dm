@@ -112,6 +112,14 @@
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
+/obj/item/clothing/accessory/vest_sheriff
+	name = "sheriff vest"
+	desc = "Now you just have to pick your favourite deputy."
+	icon_state = "vest_sheriff"
+	inhand_icon_state = "vest_sheriff"
+	minimize_when_attached = TRUE
+	attachment_slot = null
+
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"
 	desc = "The best part of a maid costume."

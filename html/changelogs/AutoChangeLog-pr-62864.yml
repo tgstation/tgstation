@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some issues with the PDA UI, such as the skill tracker app and the messages list of the messenger app being inaccessible."

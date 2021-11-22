@@ -605,7 +605,7 @@
 	. = ..()
 	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
 
-	for(var/j = 0, j < carriers_to_make, j++)
+	for(var/j in 1 to carriers_to_make)
 		if (!candidates.len)
 			break
 		var/mob/carrier = pick_n_take(candidates)

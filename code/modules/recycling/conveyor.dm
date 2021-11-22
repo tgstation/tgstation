@@ -1,5 +1,3 @@
-//conveyor2 is pretty much like the original, except it supports corners, but not diverters.
-//note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
 #define MAX_CONVEYOR_ITEMS_MOVE 30
 GLOBAL_LIST_EMPTY(conveyors_by_id)
 
@@ -11,7 +9,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	subsystem_type = /datum/controller/subsystem/processing/conveyors
 	var/operating = 0 // 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1 // true if can operate (no broken segments in this belt run)
 	var/forwards // this is the default (forward) direction, set by the map dir
