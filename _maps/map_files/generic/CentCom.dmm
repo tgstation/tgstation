@@ -965,16 +965,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
-"ed" = (
-/obj/structure/closet/abductor,
-/obj/item/storage/box/alienhandcuffs,
-/obj/item/reagent_containers/glass/beaker/synthflesh,
-/obj/item/disk/design_disk/limbs/ethereal,
-/obj/item/disk/design_disk/limbs/felinid,
-/obj/item/disk/design_disk/limbs/lizard,
-/obj/item/disk/design_disk/limbs/plasmaman,
-/turf/open/floor/plating/abductor,
-/area/abductor_ship)
 "eh" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/ert_spawn,
@@ -14901,10 +14891,6 @@
 /obj/structure/closet/abductor,
 /obj/item/storage/box/alienhandcuffs,
 /obj/item/reagent_containers/glass/beaker/synthflesh,
-/obj/item/disk/design_disk/limbs/plasmaman,
-/obj/item/disk/design_disk/limbs/lizard,
-/obj/item/disk/design_disk/limbs/felinid,
-/obj/item/disk/design_disk/limbs/ethereal,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "RU" = (
@@ -18959,7 +18945,7 @@ aa
 aa
 ks
 kP
-ed
+RQ
 lG
 lj
 mw
@@ -19016,7 +19002,7 @@ aa
 aa
 ks
 kP
-ed
+RQ
 lG
 lj
 mw
