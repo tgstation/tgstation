@@ -25,3 +25,8 @@
 #define COMSIG_TRY_STORAGE_RETURN_INVENTORY "storage_return_inventory"
 ///(obj/item/insertion_candidate, mob/user, silent) - returns bool
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"
+
+//from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
+#define COMSIG_STORAGE_ENTERED "storage_entered"
+//from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
+#define COMSIG_STORAGE_EXITED "storage_exited"

@@ -2,11 +2,6 @@
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
-//from base of atom/movable/on_enter_storage(): (datum/component/storage/concrete/master_storage)
-#define COMSIG_STORAGE_ENTERED "storage_entered"
-//from base of atom/movable/on_exit_storage(): (datum/component/storage/concrete/master_storage)
-#define COMSIG_STORAGE_EXITED "storage_exited"
-
 ///signal sent out by an atom when it checks if it can be pulled, for additional checks
 #define COMSIG_ATOM_CAN_BE_PULLED "movable_can_be_pulled"
 	#define COMSIG_ATOM_CANT_PULL (1 << 0)

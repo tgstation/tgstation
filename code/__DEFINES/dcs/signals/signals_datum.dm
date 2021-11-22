@@ -24,12 +24,6 @@
 /// fires on the target datum when an element is attached to it  (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
-/*******Component Specific Signals*******/
-
-//Customizable
-///called when an atom with /datum/component/customizable_reagent_holder is customized (obj/item/I)
-#define COMSIG_ATOM_CUSTOMIZED "atom_customized"
-
 // Merger datum signals
 /// Called on the object being added to a merger group: (datum/merger/new_merger)
 #define COMSIG_MERGER_ADDING "comsig_merger_adding"
