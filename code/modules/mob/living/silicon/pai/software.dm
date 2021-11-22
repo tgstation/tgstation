@@ -273,11 +273,11 @@
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
 	var/mob/living/silicon/pai/pai = usr
-	pai.visible_message(span_notice("Brute force security override in progress..."), span_notice("You begin overriding the airlock security protocols."), span_hear("You hear the faint buzzing of a wire jack inside of a door."))
+	pai.visible_message(span_notice("Brute-force security override in progress..."), span_notice("You begin overriding the airlock security protocols."), span_hear("You hear the faint buzzing coming from inside a door."))
 	var/turf/T = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [T.loc].</b></font>")
 		else
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress. Unable to pinpoint location.</b></font>")
 	hacking = TRUE
