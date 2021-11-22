@@ -196,9 +196,9 @@
 	. = ..()
 	if(chems.has_reagent(type, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
-			mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 6))
-			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
-		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
+			mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(1 * REM * delta_time)
