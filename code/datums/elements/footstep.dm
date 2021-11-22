@@ -161,3 +161,5 @@
 	if(!istype(source_loc))
 		return
 	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+
+#undef SHOULD_DISABLE_FOOTSTEPS
