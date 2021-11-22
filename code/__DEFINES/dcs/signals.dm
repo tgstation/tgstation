@@ -270,6 +270,9 @@
 ///from base of [/datum/controller/subsystem/materials/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"
 
+///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
+#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
 ///from base of [/datum/reagents/proc/add_reagent] - Sent before the reagent is added: (reagenttype, amount, reagtemp, data, no_react)
 #define COMSIG_REAGENTS_PRE_ADD_REAGENT "reagents_pre_add_reagent"
 	/// Prevents the reagent from being added.
@@ -300,6 +303,7 @@
 #define COMSIG_REAGENTS_EXPOSE_TURF "reagents_expose_turf"
 ///from base of [/datum/component/personal_crafting/proc/del_reqs]: ()
 #define COMSIG_REAGENTS_CRAFTING_PING "reagents_crafting_ping"
+
 
 // Lighting:
 ///from base of [atom/proc/set_light]: (l_range, l_power, l_color, l_on)
@@ -1477,6 +1481,10 @@
 
 /// Called when the integrated circuit is locked.
 #define COMSIG_CIRCUIT_SET_LOCKED "circuit_set_locked"
+
+/// Called before power is used in an integrated circuit (power_to_use)
+#define COMSIG_CIRCUIT_PRE_POWER_USAGE "circuit_pre_power_usage"
+	#define COMPONENT_OVERRIDE_POWER_USAGE (1<<0)
 
 /// Called right before the integrated circuit data is converted to json. Allows modification to the data right before it is returned.
 #define COMSIG_CIRCUIT_PRE_SAVE_TO_JSON "circuit_pre_save_to_json"
