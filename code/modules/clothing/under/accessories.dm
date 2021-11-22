@@ -450,7 +450,7 @@
 
 /obj/item/clothing/accessory/pride
 	name = "rainbow pride pin"
-	desc = "A pin to show off your sexuality! Happy pride!"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion."
 	icon_state = "pride"
 
 /obj/item/clothing/accessory/pride/bi
