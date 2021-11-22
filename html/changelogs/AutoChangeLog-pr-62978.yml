@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a mistake that made space bartenders sad (drinking glasses looking all the same regardless of drink)."

@@ -13070,9 +13070,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-05"
-	},
+/obj/machinery/computer/cargo/request,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bpM" = (
@@ -31815,7 +31813,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Warden's Office"
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -33487,7 +33485,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/item/crowbar,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/structure/cable,
@@ -38395,7 +38393,7 @@
 /area/maintenance/starboard/aft)
 "hJF" = (
 /obj/structure/closet/secure_closet/detective,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/structure/cable,
 /obj/item/book/manual/wiki/detective,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -38697,7 +38695,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -42318,7 +42316,7 @@
 	pixel_x = 6
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
@@ -44008,7 +44006,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/machinery/camera/directional/east{
 	c_tag = "Science Security Post";
 	name = "science camera";
@@ -46351,7 +46349,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/virusfood/directional/south,
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "kwT" = (
@@ -53754,7 +53752,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 10
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/item/screwdriver,
 /obj/machinery/firealarm/directional/south{
 	pixel_x = -3
@@ -55315,7 +55313,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/iron/dark,
 /area/security/brig)
 "nLl" = (
@@ -69752,7 +69750,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/hos)
 "sSm" = (
@@ -73221,7 +73219,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/medical)
 "uiI" = (
@@ -75148,7 +75146,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/item/storage/box/firingpins,
 /obj/item/storage/box/firingpins,
 /obj/item/storage/lockbox/loyalty,
