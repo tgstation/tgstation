@@ -214,8 +214,14 @@ SUBSYSTEM_DEF(job)
 	JobDebug("Running FOC, Job: [job], Level: [job_priority_level_to_string(level)]")
 	var/list/candidates = list()
 	for(var/mob/dead/new_player/player in unassigned)
+		if(!player)
+			JobDebug("FOC player no longer exists.")
+			continue
+		if(!player.client)
+			JobDebug("FOC player client no longer exists, Player: [player]")
+			continue
 		// Initial screening check. Does the player even have the job enabled, if they do - Is it at the correct priority level?
-		var/player_job_level = player.client.prefs.job_preferences[job.title]
+		var/player_job_level = player.client?.prefs.job_preferences[job.title]
 		if(isnull(player_job_level))
 			JobDebug("FOC player job not enabled, Player: [player]")
 			continue

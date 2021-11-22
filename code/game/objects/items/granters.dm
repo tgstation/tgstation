@@ -52,7 +52,7 @@
 		return FALSE
 	on_reading_start(user)
 	reading = TRUE
-	for(var/i=1, i<=pages_to_mastery, i++)
+	for(var/i in 1 to pages_to_mastery)
 		if(!turn_page(user))
 			on_reading_stopped()
 			reading = FALSE
