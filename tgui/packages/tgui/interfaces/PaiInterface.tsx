@@ -13,9 +13,11 @@ import {
   NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 
 type PaiInterfaceData = {
   directives: string;
+  door_jack: string | null;
   emagged: number;
   image: string;
   languages: number;
@@ -71,8 +73,9 @@ const SOFTWARE_DESC = {
   'digital messenger':
     'A tool that allows you to send messages to other crew members.',
   'atmospheric sensor':
-    'A tool that allows you to analyze atmospheric contents.',
-  'photography module': 'A portable camera module.',
+    'A tool that allows you to analyze local atmospheric contents.',
+  'photography module':
+    'A portable camera module. Engage, then click to shoot.',
   'camera zoom': 'A tool that allows you to zoom in on your camera.',
   'printer module': 'A portable printer module for photographs.',
   'remote signaler':
@@ -80,7 +83,7 @@ const SOFTWARE_DESC = {
   'medical records': 'A tool that allows you to view station medical records.',
   'security records':
     'A tool that allows you to view station security records, warrants.',
-  'host scan': 'A tool that scans the health data while held.',
+  'host scan': 'A portable health analyzer. Must be held to use.',
   'medical HUD': 'Allows you to view medical status using an overlay HUD.',
   'security HUD': 'Allows you to view security records using an overlay HUD.',
   'loudness booster':
@@ -226,11 +229,21 @@ const SystemInfo = (_, context) => {
   return (
     <Section
       buttons={
-        <Button
-          icon={ICON_MAP[image] || 'meh-blank'}
-          onClick={() => act('change_image')}
-          tooltip="Change your display image"
-        />
+        <>
+          <Button
+            disabled={!master.dna}
+            icon="dna"
+            onClick={() => act('check_dna')}
+            tooltip="Verifies your master's DNA. Must be carried in hand.">
+            Verify
+          </Button>
+          <Button
+            icon={ICON_MAP[image] || 'meh-blank'}
+            onClick={() => act('change_image')}
+            tooltip="Change your display image.">
+            Display
+          </Button>
+        </>
       }
       fill
       scrollable
@@ -239,16 +252,7 @@ const SystemInfo = (_, context) => {
         <LabeledList.Item label="Master">
           {master.name || 'None.'}
         </LabeledList.Item>
-        <LabeledList.Item label="DNA">
-          {master.dna || (
-            <Button
-              icon="dna"
-              onClick={() => act('check_dna')}
-              tooltip="Requests your master's DNA. Must be carried in hand.">
-              Request
-            </Button>
-          )}
-        </LabeledList.Item>
+        <LabeledList.Item label="DNA">{master.dna || 'None.'}</LabeledList.Item>
       </LabeledList>
     </Section>
   );
@@ -364,8 +368,9 @@ const InstalledInfo = (props) => {
 
 const SoftwareButtons = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
-  const { languages, pda } = data;
+  const { door_jack, languages, pda } = data;
   const { software } = props;
+  logger.log(door_jack);
 
   switch (software) {
     case 'digital messenger':
@@ -384,35 +389,58 @@ const SoftwareButtons = (props, context) => {
             Silent
           </Button>
           <Button
+            disabled={!pda.power}
             icon="envelope"
             onClick={() => act('pda', { pda: 'message' })}>
             Message
           </Button>
         </>
       );
-    case 'door_jack':
+    case 'door jack':
       return (
         <>
           <Button
-            icon="power-off"
-            onClick={() => act('door_jack', { jack: 'cable' })}
-            selected={!pda.power}>
-            Hack
+            disabled={door_jack}
+            icon="plug"
+            onClick={() => act('door_jack', { jack: 'cable' })}>
+            Extend Cable
           </Button>
           <Button
-            icon="power-off"
-            onClick={() => act('door_jack', { jack: 'jack' })}
-            selected={!pda.power}>
-            Hack
+            color="bad"
+            disabled={!door_jack}
+            icon="door-open"
+            onClick={() => act('door_jack', { jack: 'jack' })}>
+            Hack Door
           </Button>
           <Button
-            icon="power-off"
-            onClick={() => act('door_jack', { jack: 'cancel' })}
-            selected={!pda.power}>
-            Hack
+            disabled={!door_jack}
+            icon="unlink"
+            onClick={() => act('door_jack', { jack: 'cancel' })}>
+            Cancel
           </Button>
         </>
       );
+    case 'host scan': {
+      return (
+        <>
+          <Button
+            icon="search"
+            onClick={() => act('host_scan', { scan: 'scan' })}>
+            Host Scan
+          </Button>
+          <Button
+            icon="cog"
+            onClick={() => act('host_scan', { scan: 'wounds' })}>
+            Toggle Wounds
+          </Button>
+          <Button
+            icon="cog"
+            onClick={() => act('host_scan', { scan: 'limbs' })}>
+            Toggle Limbs
+          </Button>
+        </>
+      );
+    }
     case 'universal translator':
       return (
         <Button

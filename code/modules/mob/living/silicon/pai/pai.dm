@@ -31,6 +31,8 @@
 	var/obj/item/paicard/card // The card we inhabit
 	var/hacking = FALSE //Are we hacking a door?
 
+	var/emagged = FALSE // Changes display on true
+
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakDoubleExclamation = "alarms"
@@ -170,7 +172,7 @@
 	if(hacking_cable && hacking_cable.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
 		hackprogress = clamp(hackprogress + (2 * delta_time), 0, 100)
 	else
-		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
+		to_chat(src, span_notice("Door Jack: Connection to airlock has been lost. Hack aborted."))
 		hackprogress = 0
 		hacking = FALSE
 		hackdoor = null
@@ -183,6 +185,7 @@
 		var/obj/machinery/door/D = hacking_cable.machine
 		D.open()
 		hacking = FALSE
+		QDEL_NULL(hacking_cable)
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -340,6 +343,7 @@
 	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
 	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
 	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
+	pai.emagged = TRUE
 	pai.master = null
 	pai.master_dna = null
 	pai.laws.supplied[1] = "None." // Sets supplemental directive to this

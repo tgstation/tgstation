@@ -40,12 +40,13 @@
 /mob/living/silicon/pai/ui_data(mob/user)
 	var/list/data = list()
 	data["directives"] = laws.supplied
+	data["door_jack"] = hacking_cable || null
+	data["emagged"] = emagged
 	data["image"] = card.emotion_icon
 	data["languages"] = languages_granted
 	data["master"] = list()
 	data["pda"] = list()
 	data["ram"] = ram
-	data["stat"] = stat
 	data["software"] = list()
 	if(aiPDA)
 		data["pda"]["power"] = aiPDA.toff
@@ -64,7 +65,7 @@
 	if(.)
 		return
 	switch(action)
-		if("buy") // Purchasing new software
+		if("buy")
 			if(available_software.Find(params["selection"]) && !software.Find(params["selection"]))
 				var/cost = available_software[params["selection"]]
 				if(ram >= cost)
@@ -76,9 +77,9 @@
 					to_chat(usr, span_notice("Insufficient RAM available."))
 			else
 				to_chat(usr, span_notice("Software not found."))
-		if("radio") // Configuring onboard radio
-			radio.attack_self(src)
-		if("change_image") // Set pAI card display face
+		if("camera_zoom")
+			aicamera.adjust_zoom(usr)
+		if("change_image")
 			var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
 			switch(newImage)
 				if(null)
@@ -87,50 +88,46 @@
 					card.emotion_icon = "extremely-happy"
 				else
 					card.emotion_icon = "[lowertext(newImage)]"
-				card.update_appearance()
-		if("newscaster")
-			newscaster.ui_interact(src)
-		if("camera_zoom")
-			aicamera.adjust_zoom(usr)
-		if("remote_signaler")
-			signaler.ui_interact(src)
+			card.update_appearance()
 		if("check_dna")
+			if(!master_dna)
+				to_chat(src, span_warning("You do not have a master DNA to compare to!"))
+				return FALSE
 			if(iscarbon(card.loc))
 				CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 			else
 				to_chat(src, span_warning("You are not being carried by anyone!"))
-				return 0 // FALSE ? If you return here you won't call paiinterface() below
-		if("pda")
-			if(params["pda"] == "power")
-				if(!isnull(aiPDA))
-					aiPDA.toff = !aiPDA.toff
-			if(params["pda"] == "silent")
-				if(!isnull(aiPDA))
-				aiPDA.silent = !aiPDA.silent
-			if(params["pda"] == "message")
-				cmd_send_pdamesg(usr)
-		if("medical_records") // Accessing medical records
-			medicalActive1 = find_record("id", params, GLOB.data_core.general)
-			if(medicalActive1)
-				medicalActive2 = find_record("id", params, GLOB.data_core.medical)
-			if(!medicalActive2)
-				medicalActive1 = null
-				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
-		if("security_records")
-			securityActive1 = find_record("id", params, GLOB.data_core.general)
-			if(securityActive1)
-				securityActive2 = find_record("id", params, GLOB.data_core.security)
-			if(!securityActive2)
-				securityActive1 = null
-				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
-		if("security_hud")
-			secHUD = !secHUD
-			if(secHUD)
-				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.add_hud_to(src)
-			else
-				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.remove_hud_from(src)
+				return FALSE // FALSE ? If you return here you won't call paiinterface() below
+		if("crew_manifest")
+			ai_roster()
+		if("door_jack")
+			if(params["jack"] == "jack")
+				if(hacking_cable?.machine)
+					hackdoor = hacking_cable.machine
+					hackloop()
+			if(params["jack"]  == "cancel")
+				hackdoor = null
+				QDEL_NULL(hacking_cable)
+			if(params["jack"]  == "cable")
+				extendcable()
+		if("encryption_keys")
+			encryptmod = !encryptmod
+			radio.subspace_transmission = !radio.subspace_transmission
+		if("host_scan")
+			if(params["scan"] == "scan")
+				hostscan()
+			if(params["scan"] == "wounds")
+				hostscan.attack_self(usr)
+			if(params["scan"] == "limbs")
+				hostscan.toggle_mode()
+		if("internal_gps")
+			if(!internal_gps)
+				internal_gps = new(src)
+			internal_gps.attack_self(src)
+		if("loudness_booster")
+			if(!internal_instrument)
+				internal_instrument = new(src)
+			internal_instrument.interact(src) // Open Instrument
 		if("medical_hud")
 			medHUD = !medHUD
 			if(medHUD)
@@ -139,61 +136,64 @@
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
 				med.remove_hud_from(src)
-		if("host_scan")
-			if(params == "toggle-on")
-				var/mob/living/silicon/pai/pAI = usr
-				pAI.hostscan.attack_self(usr)
-			if(params == "toggle-off")
-				var/mob/living/silicon/pai/pAI = usr
-				pAI.hostscan.toggle_mode()
-		if("encryption_keys")
-			encryptmod = !encryptmod
-			radio.subspace_transmission = !radio.subspace_transmission
+		if("medical_records") // Accessing medical records
+			medicalActive1 = find_record("id", params, GLOB.data_core.general)
+			if(medicalActive1)
+				medicalActive2 = find_record("id", params, GLOB.data_core.medical)
+			if(!medicalActive2)
+				medicalActive1 = null
+				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
+		if("newscaster")
+			newscaster.ui_interact(src)
+		if("pda")
+			if(!isnull(aiPDA))
+				return FALSE
+			if(params["pda"] == "power")
+				aiPDA.toff = !aiPDA.toff
+			if(params["pda"] == "silent")
+				aiPDA.silent = !aiPDA.silent
+			if(params["pda"] == "message")
+				cmd_send_pdamesg(usr)
+		if("photography_module")
+			aicamera.toggle_camera_mode(usr)
+		if("printer_module")
+			aicamera.paiprint(usr)
+		if("radio")
+			radio.attack_self(src)
+		if("remote_signaler")
+			signaler.ui_interact(src)
+		if("security_hud")
+			secHUD = !secHUD
+			if(secHUD)
+				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+				sec.add_hud_to(src)
+			else
+				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
+				sec.remove_hud_from(src)
+		if("security_records")
+			securityActive1 = find_record("id", params, GLOB.data_core.general)
+			if(securityActive1)
+				securityActive2 = find_record("id", params, GLOB.data_core.security)
+			if(!securityActive2)
+				securityActive1 = null
+				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
 		if("universal_translator")
 			if(!languages_granted)
 				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
 				languages_granted = TRUE
-		if("door_jack")
-			if(params["jack"] == "jack")
-				if(hacking_cable?.machine)
-					hackdoor = hacking_cable.machine
-					hackloop()
-			if(params["jack"]  == "cancel")
-				hackdoor = null
-			if(params["jack"]  == "cable")
-				qdel(hacking_cable) //clear any old cables
-				hacking_cable = new
-				var/transfered_to_mob
-				if(isliving(card.loc))
-					var/mob/living/L = card.loc
-					if(L.put_in_hands(hacking_cable))
-						transfered_to_mob = TRUE
-						L.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
-				if(!transfered_to_mob)
-					hacking_cable.forceMove(drop_location())
-					hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
-		if("loudness_booster")
-			if(!internal_instrument)
-				internal_instrument = new(src)
-			internal_instrument.interact(src) // Open Instrument
-		if("internal_gps")
-			if(!internal_gps)
-				internal_gps = new(src)
-			internal_gps.attack_self(src)
-		if("printer_module")
-			aicamera.paiprint(usr)
 	return
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	if(!istype(M))
 		return
+	to_chat(P, span_notice("Requesting a DNA sample."))
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message(span_notice("[M] presses [M.p_their()] thumb against [P]."),\
 						span_notice("You press your thumb against [P]."),\
 						span_notice("[P] makes a sharp clicking sound as it extracts DNA material from [M]."))
 		if(!M.has_dna())
-			to_chat(P, "<b>No DNA detected</b>")
+			to_chat(P, "<b>No DNA detected.</b>")
 			return
 		to_chat(P, "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
 		if(M.dna.unique_enzymes == P.master_dna)
@@ -202,17 +202,6 @@
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
 		to_chat(P, span_warning("[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly."))
-
-// // -=-=-=-= Software =-=-=-=-=- //
-
-// // Crew Manifest
-// /mob/living/silicon/pai/proc/softwareManifest()
-// 	. += "<h2>Crew Manifest</h2><br><br>"
-// 	if(GLOB.data_core.general)
-// 		for(var/datum/data/record/t in sort_record(GLOB.data_core.general))
-// 			. += "[t.fields["name"]] - [t.fields["rank"]]<BR>"
-// 	. += "</body></html>"
-// 	return .
 
 // // Medical Records
 // /mob/living/silicon/pai/proc/softwareMedicalRecord()
@@ -257,15 +246,34 @@
 // 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
 // 	return .
 
-// // Encryption Keys
-// /mob/living/silicon/pai/proc/softwareEncryptionKeys()
-// 	var/dat = {"<h3>Encryption Key Firmware</h3><br>
-// 				When enabled, this device will be able to use up to two (2) encryption keys for departmental channel access.<br><br>
-// 				The device is currently [encryptmod ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[encryptmod ? "" : "<a href='byond://?src=[REF(src)];software=encryptionkeys;sub=0;toggle=1'>Activate Encryption Key Ports</a><br>"]"}
-// 	return dat
+// Host Scan supporting proc
+/mob/living/silicon/pai/proc/hostscan()
+	var/mob/living/silicon/pai/pAI = usr
+	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
+	if(holder)
+		pAI.hostscan.attack(holder, pAI)
+	else
+		to_chat(usr, span_warning("You are not being carried by anyone!"))
+		return FALSE
+
+// Extend cable supporting proc
+/mob/living/silicon/pai/proc/extendcable()
+	QDEL_NULL(hacking_cable) //clear any old cables
+	hacking_cable = new
+	var/transfered_to_mob
+	if(isliving(card.loc))
+		var/mob/living/L = card.loc
+		if(L.put_in_hands(hacking_cable))
+			transfered_to_mob = TRUE
+			L.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
+		if(!transfered_to_mob)
+			hacking_cable.forceMove(drop_location())
+			hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
+	var/mob/living/silicon/pai/pai = usr
+	pai.visible_message(span_notice("Brute force security override in progress..."), span_notice("You begin overriding the airlock security protocols."), span_hear("You hear the faint buzzing of a wire jack inside of a door."))
 	var/turf/T = get_turf(src)
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
@@ -273,6 +281,3 @@
 		else
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	hacking = TRUE
-
-/mob/living/silicon/pai/proc/softwarePrinter()
-	aicamera.paiprint(usr)
