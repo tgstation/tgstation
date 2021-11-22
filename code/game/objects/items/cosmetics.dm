@@ -281,7 +281,6 @@
 		else
 			human_parent.override_skin_tone = powder_color
 		human_parent.update_body()
-		visible_message("[user] suddenly changes color!","You suddenly change color!")
 	return ..()
 
 /obj/item/ntp_kit/proc/select_colour(mob/user)
