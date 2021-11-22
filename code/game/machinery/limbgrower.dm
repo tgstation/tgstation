@@ -274,7 +274,7 @@
 	for(var/id in SSresearch.techweb_designs)
         var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
         if((found_design.build_type & LIMBGROWER) && !("emagged" in found_design.category))
-            stored_research.add_design(found_design)
+            stored_research.add_design(found_design )
 
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user)
