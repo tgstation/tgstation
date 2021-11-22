@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Missing HUD icons (Defib, clown/mime fan) once again show up."
