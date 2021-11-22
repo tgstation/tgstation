@@ -678,7 +678,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		C = what
 	if(istype(C) && C.current_ticket)
 		C.current_ticket.AddInteraction(message)
-		if(!noBlackbox)
+		if(log_in_blackbox)
 			SSblackbox.LogAhelp(C.current_ticket.id, "Interaction", message, C.ckey, usr.ckey)
 		return C.current_ticket
 	if(istext(what)) //ckey
