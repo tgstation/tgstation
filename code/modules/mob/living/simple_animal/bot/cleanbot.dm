@@ -23,6 +23,7 @@
 	var/pests = 0
 	var/drawn = 0
 
+	var/base_icon = "cleanbot" /// icon_state to use in update_icon_state
 	var/list/target_types
 	var/obj/effect/decal/cleanable/target
 	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
@@ -103,7 +104,7 @@
 
 	chosen_name = name
 	get_targets()
-	icon_state = "cleanbot[on]"
+	update_icon_state()
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/jani_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/janitor]
@@ -125,15 +126,13 @@
 		drop_part(weapon, Tsec)
 	return ..()
 
-/mob/living/simple_animal/bot/cleanbot/turn_on()
-	..()
-	icon_state = "cleanbot[on]"
-	bot_core.updateUsrDialog()
-
-/mob/living/simple_animal/bot/cleanbot/turn_off()
-	..()
-	icon_state = "cleanbot[on]"
-	bot_core.updateUsrDialog()
+/mob/living/simple_animal/bot/cleanbot/update_icon_state()
+	. = ..()
+	switch(mode)
+		if(BOT_CLEANING)
+			icon_state = "[base_icon]-c"
+		else
+			icon_state = "[base_icon][on]"
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
@@ -165,18 +164,7 @@
 		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
-	if(W.GetID())
-		if(bot_core.allowed(user) && !open && !emagged)
-			locked = !locked
-			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] \the [src] behaviour controls."))
-		else
-			if(emagged)
-				to_chat(user, span_warning("ERROR"))
-			if(open)
-				to_chat(user, span_warning("Please close the access panel before locking it."))
-			else
-				to_chat(user, span_notice("\The [src] doesn't seem to respect your authority."))
-	else if(istype(W, /obj/item/knife) && !user.combat_mode)
+	if(istype(W, /obj/item/knife) && !user.combat_mode)
 		to_chat(user, span_notice("You start attaching \the [W] to \the [src]..."))
 		if(do_after(user, 25, target = src))
 			deputize(W, user)
@@ -320,8 +308,8 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(ismopable(A))
-		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
+		update_icon_state()
 
 		var/turf/T = get_turf(A)
 		if(do_after(src, 1, target = T))
@@ -330,7 +318,7 @@
 			target = null
 
 		mode = BOT_IDLE
-		icon_state = "cleanbot[on]"
+		update_icon_state()
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message(span_danger("[src] sprays hydrofluoric acid at [A]!"))
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
