@@ -972,9 +972,9 @@
 	/// Time left on a card till they can leave.
 	var/time_left = 0
 
-/obj/item/card/id/advanced/prisoner/attackby(var/obj/item/card/id/card, mob/user)
+/obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
-	var/list/id_access = card.GetAccess()
+	var/list/id_access = C.GetAccess()
 	if(ACCESS_BRIG in id_access)
 		if(timed)
 			timed = FALSE
