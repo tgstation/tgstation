@@ -233,14 +233,32 @@
 		..()
 
 
-
+/**
+ * Inhaler that allows people to change color on use. Customizable colors.
+ *
+ * NTP_kit uses new var in human override_skin_tone to set custom skintones.
+ * It has 2 functionalities:
+ * - Set override_skin_tone
+ * - Remove override_skin_tone
+ * Color is changed by using alt-click which uses code stolen from a spraycan color picker.
+ * Ctrl-click changes the modes between coloring and removing.
+ *
+ * Currently there are no restrictions on chosen color as long as it's a valid hex.
+ * When override_skin_tone is null then the color doesnt have any effect.
+ *
+ * It is avaliable in hacked autolathe for 500 glass, 500 iron, 500 plastic and 50 silver.
+ * Or you can buy a party crate.
+ *
+ */
 /obj/item/ntp_kit
 	name = "NTP kit"
 	desc = "Hero of NT-sponsored parties for the high command. Lasts entire night, morning and burial.<br>There is something written on its side.<br>"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "ntp_kit"
 	w_class = WEIGHT_CLASS_NORMAL
+	/// Boolean that checks if the kit is removing paint on use.
 	var/removal_mode = FALSE
+	/// Color that will be applied to the person that uses the kit.
 	var/powder_color = "#00B7EF"
 
 /obj/item/ntp_kit/examine(mob/user)
@@ -251,7 +269,7 @@
 	. = ..()
 	. += span_notice("To use: <br>- Adjust the color with the sliders.<br>- Inhale.<br>")
 	. += span_warning("Usage nullifies insurance clause B12 and permit circular-74")
-	. += span_notice("<br>To remove the color, hold the button for 3 seconds and inhale again.")
+	. += span_notice("<br>To switch mode, hold the button for 3 seconds and inhale again.")
 
 /obj/item/ntp_kit/attack_self(mob/user, modifiers)
 	var/freq = rand(24750, 26550)

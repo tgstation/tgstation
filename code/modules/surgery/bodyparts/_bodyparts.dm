@@ -55,6 +55,7 @@
 	var/burn_reduction = 0
 	//Coloring and proper item icon update
 	var/skin_tone = ""
+	///Overrides normal skin_tone when not empty. Used for custom skin color. Uses Hex color.
 	var/override_skin_tone = ""
 	var/body_gender = ""
 	var/species_id = ""
