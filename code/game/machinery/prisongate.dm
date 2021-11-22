@@ -79,5 +79,4 @@
     return FALSE
             
 #undef SPAM_CD
-
         
