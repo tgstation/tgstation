@@ -151,7 +151,9 @@
 
 /obj/item/organ/external/update_name()
 	. = ..()
-	name = "[friendly_name ? friendly_name : feature_key] ([sprite_datum.name])"
+	name = "[friendly_name ? friendly_name : feature_key]"
+	if(sprite_datum)
+		name += " ([sprite_datum.name])"
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
