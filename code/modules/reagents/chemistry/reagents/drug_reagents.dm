@@ -426,13 +426,13 @@
 	M.AdjustUnconscious(-10 * REM * delta_time)
 	M.AdjustParalyzed(-10 * REM * delta_time)
 	M.AdjustImmobilized(-10 * REM * delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 1.5 * REM * delta_time)
 
 /datum/reagent/drug/maint/tar/overdose_process(mob/living/M, delta_time, times_fired)
 	. = ..()
 
 	M.adjustToxLoss(5 * REM * delta_time)
-	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 4 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time)
 
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
