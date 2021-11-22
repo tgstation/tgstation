@@ -667,9 +667,9 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 //Use this proc when an admin takes action that may be related to an open ticket on what
 //what can be a client, ckey, or mob
-//noBlacbox: Do not log this message with the blackbox system, this message
-//should be logged with a different proc call
-/proc/admin_ticket_log(what, message, noBlackbox = FALSE)
+//log_in_blackbox: Whether or not this message with the blackbox system.
+//If disabled, this message should be logged with a different proc call
+/proc/admin_ticket_log(what, message, log_in_blackbox = TRUE)
 	var/client/C
 	var/mob/Mob = what
 	if(istype(Mob))
