@@ -19,13 +19,19 @@ SUBSYSTEM_DEF(move_manager)
 		return FALSE
 	return our_info.remove_subsystem(subsystem)
 
-///Returns 1 if we're using the subsystem, 0 otherwise
+///Returns the subsystem's loop if we're processing on it, null otherwise
 /datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_owner, datum/controller/subsystem/movement/subsystem)
 	var/datum/movement_packet/packet = packet_owner.move_packet
 	if(!packet)
-		return FALSE
-	var/datum/move_loop/active_loop = packet.running_loop
-	return (active_loop && active_loop == packet.existing_loops[subsystem])
+		return
+	var/datum/move_loop/linked_loop = packet.existing_loops[subsystem]
+	if(!linked_loop)
+		return
+	if(linked_loop.flags & MOVEMENT_LOOP_IGNORE_PRECEDENCE)
+		return linked_loop
+	if(linked_loop != packet.running_loop)
+		return
+	return linked_loop
 
 ///A packet of information that describes the current state of a moving object
 /datum/movement_packet
@@ -55,7 +61,8 @@ SUBSYSTEM_DEF(move_manager)
 /datum/movement_packet/proc/add_loop(datum/controller/subsystem/movement/subsystem, datum/move_loop/loop_type, precedence, flags, datum/extra_info)
 	var/datum/move_loop/existing_loop = existing_loops[subsystem]
 	if(existing_loop && existing_loop.precedence > precedence)
-		return //Give up
+		if(!(existing_loop.flags & MOVEMENT_LOOP_IGNORE_PRECEDENCE) && !(flags & MOVEMENT_LOOP_IGNORE_PRECEDENCE))
+			return //Give up
 
 	var/datum/move_loop/new_loop = new loop_type(src, subsystem, parent, precedence, flags, extra_info) //Pass the mob to move and ourselves in via new
 	var/list/arguments = args.Copy(6) //Just send the args we've not already dealt with
@@ -73,6 +80,9 @@ SUBSYSTEM_DEF(move_manager)
 
 ///Attempts to contest the current running move loop. Returns TRUE if it succeeds, FALSE otherwise
 /datum/movement_packet/proc/contest_running_loop(datum/move_loop/contestant)
+	if(contestant.flags & MOVEMENT_LOOP_IGNORE_PRECEDENCE)
+		return
+
 	if(!running_loop)
 		var/datum/controller/subsystem/movement/contesting_subsystem = contestant.controller
 		running_loop = contestant
@@ -100,6 +110,8 @@ SUBSYSTEM_DEF(move_manager)
 	var/datum/move_loop/favorite
 	for(var/datum/controller/subsystem/movement/owner as anything in existing_loops)
 		var/datum/move_loop/checking = existing_loops[owner]
+		if(checking.flags & MOVEMENT_LOOP_IGNORE_PRECEDENCE)
+			continue
 		if(favorite && favorite.precedence < checking.precedence)
 			continue
 		favorite = checking
@@ -113,6 +125,8 @@ SUBSYSTEM_DEF(move_manager)
 	if(loop_to_remove == running_loop)
 		remove_from.remove_loop(loop_to_remove)
 		running_loop = null
+	if(loop_to_remove.flags & MOVEMENT_LOOP_IGNORE_PRECEDENCE)
+		remove_from.remove_loop(loop_to_remove)
 	if(QDELETED(src))
 		return
 	if(existing_loops[remove_from] == loop_to_remove)

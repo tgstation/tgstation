@@ -28,3 +28,5 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 //Movement loop flags
 ///Should the loop act immediately following its addition?
 #define MOVEMENT_LOOP_START_FAST (1<<0)
+///Do we not use the precedence system?
+#define MOVEMENT_LOOP_IGNORE_PRECEDENCE (1<<1)
