@@ -62427,20 +62427,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"tNL" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 4
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 1
-	},
-/area/engineering/atmos)
 "tNZ" = (
 /obj/item/storage/fancy/candle_box{
 	pixel_y = 5
@@ -116162,7 +116148,7 @@ jBW
 fKb
 qCV
 cMU
-tNL
+cMU
 hcO
 izf
 izf
