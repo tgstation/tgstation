@@ -56,6 +56,7 @@
 	if(!pin)
 		pin = new
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
@@ -92,9 +93,6 @@
 /obj/item/gun/blastcannon/update_icon_state()
 	icon_state = "[base_icon_state]_[bomb ? "loaded" : "empty"]"
 	inhand_icon_state = icon_state
-	if(ismob(loc))
-		var/mob/cannoneer = loc
-		cannoneer.update_inv_hands()
 	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
