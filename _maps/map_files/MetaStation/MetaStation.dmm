@@ -21748,11 +21748,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"fwb" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "fwC" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
@@ -41535,14 +41530,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "mBd" = (
-/obj/item/beacon,
 /obj/structure/cable,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -47479,18 +47467,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/science/research)
-"oyG" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/random/trash/garbage{
-	spawn_scatter_radius = 1
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/science/xenobiology)
 "oyK" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -63863,7 +63839,6 @@
 "urd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
@@ -118521,8 +118496,8 @@ aaf
 aaa
 aaa
 aaa
-fwb
-nYJ
+rrt
+rrt
 lMJ
 lMJ
 vIJ
@@ -118778,7 +118753,7 @@ aaf
 aaa
 aaa
 aaa
-fwb
+rrt
 aaa
 aaa
 vyX
@@ -119033,7 +119008,7 @@ aaf
 aaf
 aaf
 aaa
-fwb
+rrt
 aox
 aox
 aox
@@ -119290,7 +119265,7 @@ deP
 deP
 lMJ
 aaa
-fwb
+rrt
 lAu
 lAu
 lMJ
@@ -119804,7 +119779,7 @@ piV
 deP
 lMJ
 aaa
-nYJ
+rrt
 lAu
 lAu
 lMJ
@@ -120061,7 +120036,7 @@ mfM
 deP
 lMJ
 aaa
-fwb
+rrt
 aox
 aox
 aox
@@ -120318,7 +120293,7 @@ deP
 deP
 lMJ
 aaa
-fwb
+rrt
 lAu
 lAu
 lMJ
@@ -120832,7 +120807,7 @@ jiR
 deP
 lMJ
 aaa
-fwb
+rrt
 lAu
 lAu
 lMJ
@@ -121089,7 +121064,7 @@ lSa
 deP
 lMJ
 aaa
-fwb
+rrt
 aox
 aox
 aox
@@ -121348,7 +121323,7 @@ lMJ
 aaa
 aaa
 aaa
-fwb
+rrt
 aaa
 aaa
 dbv
@@ -121605,7 +121580,7 @@ lMJ
 aaa
 aaa
 aaa
-fwb
+rrt
 aaa
 aaa
 dbv
@@ -121862,9 +121837,9 @@ lMJ
 aaa
 aaa
 aaa
-lMJ
-nYJ
-fwb
+rrt
+rrt
+rrt
 rhT
 gbO
 dlV
@@ -122396,7 +122371,7 @@ dlV
 lxk
 vFO
 vFO
-oyG
+urd
 rhT
 aaa
 aaa
