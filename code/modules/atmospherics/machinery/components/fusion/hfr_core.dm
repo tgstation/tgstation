@@ -76,8 +76,6 @@
 	var/power_output = 0
 	///Instability effects how chaotic the behavior of the reaction is
 	var/instability = 0
-	///Amount of radiation that the machine can output
-	var/rad_power = 0
 	///Difference between the gases temperature and the internal temperature of the reaction
 	var/delta_temperature = 0
 	///Energy from the reaction lost from the molecule colliding between themselves.
@@ -173,6 +171,15 @@
 	radio.listening = 0
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
+	
+	RegisterSignal(src.loc, COMSIG_ATOM_ENTERED, .proc/on_entered)
+
+	for(var/atom/movable/movable_object in src.loc)
+		SEND_SIGNAL(movable_object, COMSIG_MOVABLE_SECLUDED_LOCATION)
+
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(arrived, COMSIG_MOVABLE_SECLUDED_LOCATION) // to prevent stationloving items (eg. nuke disk) being teleported onto core
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/Destroy()
 	unregister_signals(TRUE)

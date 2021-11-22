@@ -152,66 +152,50 @@
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/simple_animal/bot/medbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += "<TT><B>Medical Unit Controls v1.1</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>"
-	dat += "Maintenance panel panel is [open ? "opened" : "closed"]<BR>"
-	dat += "<br>Behaviour controls are [locked ? "locked" : "unlocked"]<hr>"
+// Variables sent to TGUI
+/mob/living/simple_animal/bot/medbot/ui_data(mob/user)
+	var/list/data = ..()
 	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += "<TT>Healing Threshold: "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-10'>--</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=-5'>-</a> "
-		dat += "[heal_threshold] "
-		dat += "<a href='?src=[REF(src)];adj_threshold=5'>+</a> "
-		dat += "<a href='?src=[REF(src)];adj_threshold=10'>++</a>"
-		dat += "</TT><br>"
-		dat += "The speaker switch is [shut_up ? "off" : "on"]. <a href='?src=[REF(src)];togglevoice=[1]'>Toggle</a><br>"
-		dat += "Critical Patient Alerts: <a href='?src=[REF(src)];critalerts=1'>[declare_crit ? "Yes" : "No"]</a><br>"
-		dat += "Patrol Station: <a href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</a><br>"
-		dat += "Stationary Mode: <a href='?src=[REF(src)];stationary=1'>[stationary_mode ? "Yes" : "No"]</a><br>"
-		dat += "<a href='?src=[REF(src)];hptech=1'>Search for Technological Advancements</a><br>"
+		data["custom_controls"]["heal_threshold"] = heal_threshold
+		data["custom_controls"]["speaker"] = !shut_up
+		data["custom_controls"]["crit_alerts"] = declare_crit
+		data["custom_controls"]["stationary_mode"] = stationary_mode
+		data["custom_controls"]["sync_tech"] = TRUE
+	return data
 
-	return dat
-
-/mob/living/simple_animal/bot/medbot/Topic(href, href_list)
-	if(..())
-		return 1
-
-	if(href_list["adj_threshold"])
-		var/adjust_num = text2num(href_list["adj_threshold"])
-		heal_threshold += adjust_num
-		if(heal_threshold < 5)
-			heal_threshold = 5
-		if(heal_threshold > 75)
-			heal_threshold = 75
-
-	else if(href_list["togglevoice"])
-		shut_up = !shut_up
-
-	else if(href_list["critalerts"])
-		declare_crit = !declare_crit
-
-	else if(href_list["stationary"])
-		stationary_mode = !stationary_mode
-		path = list()
-		update_appearance()
-
-	else if(href_list["hptech"])
-		var/oldheal_amount = heal_amount
-		var/tech_boosters
-		for(var/i in linked_techweb.researched_designs)
-			var/datum/design/surgery/healing/D = SSresearch.techweb_design_by_id(i)
-			if(!istype(D))
-				continue
-			tech_boosters++
-		if(tech_boosters)
-			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
-			if(oldheal_amount < heal_amount)
-				speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
-	update_controls()
+// Actions received from TGUI
+/mob/living/simple_animal/bot/medbot/ui_act(action, params)
+	. = ..()
+	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+		return
+	switch(action)
+		if("heal_threshold")
+			var/adjust_num = round(text2num(params["threshold"]))
+			heal_threshold = adjust_num
+			if(heal_threshold < 5)
+				heal_threshold = 5
+			if(heal_threshold > 75)
+				heal_threshold = 75
+		if("speaker")
+			shut_up = !shut_up
+		if("crit_alerts")
+			declare_crit = !declare_crit
+		if("stationary_mode")
+			stationary_mode = !stationary_mode
+			path = list()
+			update_appearance()
+		if("sync_tech")
+			var/oldheal_amount = heal_amount
+			var/tech_boosters
+			for(var/index in linked_techweb.researched_designs)
+				var/datum/design/surgery/healing/design = SSresearch.techweb_design_by_id(index)
+				if(!istype(design))
+					continue
+				tech_boosters++
+			if(tech_boosters)
+				heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
+				if(oldheal_amount < heal_amount)
+					speak("New knowledge found! Surgical efficacy improved to [round(heal_amount/initial(heal_amount)*100)]%!")
 	return
 
 /mob/living/simple_animal/bot/medbot/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -222,15 +206,16 @@
 
 /mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
-		declare_crit = 0
-		if(user)
-			to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
-		audible_message(span_danger("[src] buzzes oddly!"))
-		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		if(user)
-			oldpatient = user
+	if(!emagged)
+		return
+	declare_crit = FALSE
+	if(user)
+		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
+	audible_message(span_danger("[src] buzzes oddly!"))
+	flick("medibot_spark", src)
+	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	if(user)
+		oldpatient = user
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -445,7 +430,7 @@
 	if(C.suiciding)
 		return FALSE //Kevorkian school of robotic medical assistants.
 
-	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
+	if(emagged) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
 	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
@@ -542,7 +527,7 @@
 		if(damagetype_healer == "all" && potential_methods.len)
 			treatment_method = pick(potential_methods)
 
-		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
+		if(!treatment_method && !emagged) //If they don't need any of that they're probably cured!
 			if(C.maxHealth - C.get_organic_health() < heal_threshold)
 				to_chat(src, span_notice("[C] is healthy! Your programming prevents you from tending the wounds of anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 5] for oxygen damage.)"))
 
@@ -562,7 +547,7 @@
 					var/obj/item/storage/firstaid/FA = firstaid
 					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
 						healies *= 1.1
-					if(emagged == 2)
+					if(emagged)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 						patient.apply_damage_type((healies*1),treatment_method)
 						log_combat(src, patient, "pretended to tend wounds on", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")

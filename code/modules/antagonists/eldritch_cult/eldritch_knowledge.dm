@@ -281,7 +281,7 @@
 					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
-				var/datum/mind/targeted =  temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/datum/mind/targeted = temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
 				for(var/datum/team/team as anything in teams)
 					if(targeted in team.members)

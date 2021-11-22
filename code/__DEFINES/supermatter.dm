@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 0.1
+#define CO2_HEAT_PENALTY 6
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
@@ -70,9 +70,10 @@
 #define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
-#define DETONATION_RADS 200
 #define DETONATION_HALLUCINATION 600
 
+/// All humans within this range will be irradiated
+#define DETONATION_RADIATION_RANGE 20
 
 #define WARNING_DELAY 60
 

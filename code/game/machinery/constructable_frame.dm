@@ -44,7 +44,7 @@
 			hasContent = TRUE
 
 		if(hasContent)
-			. +=  "[requires]."
+			. += "[requires]."
 		else
 			. += "It does not require any more components."
 

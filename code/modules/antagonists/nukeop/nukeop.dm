@@ -3,7 +3,6 @@
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
-	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
@@ -20,14 +19,6 @@
 	var/preview_outfit_behind = /datum/outfit/nuclear_operative
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 	var/nuke_icon_state = "nuclearbomb_base"
-
-/datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -60,6 +51,9 @@
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
+
+/datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/antagonist/nukeop/proc/assign_nuke()
 	if(nuke_team && !nuke_team.tracked_nuke)
@@ -381,7 +375,7 @@
 			parts += "<B>[syndicate_name] operatives have destroyed [station_name()]!</B>"
 		if(NUKE_RESULT_NOSURVIVORS)
 			parts += "<span class='neutraltext big'>Total Annihilation</span>"
-			parts +=  "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
+			parts += "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 		if(NUKE_RESULT_WRONG_STATION)
 			parts += "<span class='redtext big'>Crew Minor Victory</span>"
 			parts += "<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"

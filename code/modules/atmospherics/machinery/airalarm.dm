@@ -49,6 +49,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
+	pixel_shift = 24
 
 #define AALARM_MODE_SCRUBBING 1
 #define AALARM_MODE_VENTING 2 //makes draught
@@ -74,7 +75,7 @@
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 0.33
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 90, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/danger_level = 0
@@ -106,8 +107,7 @@
 		/datum/gas/hypernoblium = new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor = new/datum/tlv/dangerous,
 		/datum/gas/tritium = new/datum/tlv/dangerous,
-		/datum/gas/stimulum = new/datum/tlv/dangerous,
-		/datum/gas/nitryl = new/datum/tlv/dangerous,
+		/datum/gas/nitrium = new/datum/tlv/dangerous,
 		/datum/gas/pluoxium = new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon = new/datum/tlv/dangerous,
 		/datum/gas/hydrogen = new/datum/tlv/dangerous,
@@ -128,8 +128,6 @@
 	if(nbuild)
 		buildstage = AIRALARM_BUILD_NO_CIRCUIT
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
 
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
@@ -455,10 +453,9 @@
 						/datum/gas/water_vapor,
 						/datum/gas/hypernoblium,
 						/datum/gas/nitrous_oxide,
-						/datum/gas/nitryl,
+						/datum/gas/nitrium,
 						/datum/gas/tritium,
 						/datum/gas/bz,
-						/datum/gas/stimulum,
 						/datum/gas/pluoxium,
 						/datum/gas/freon,
 						/datum/gas/hydrogen,
@@ -818,8 +815,7 @@
 		/datum/gas/hypernoblium = new/datum/tlv/no_checks,
 		/datum/gas/water_vapor = new/datum/tlv/no_checks,
 		/datum/gas/tritium = new/datum/tlv/no_checks,
-		/datum/gas/stimulum = new/datum/tlv/no_checks,
-		/datum/gas/nitryl = new/datum/tlv/no_checks,
+		/datum/gas/nitrium = new/datum/tlv/no_checks,
 		/datum/gas/pluoxium = new/datum/tlv/no_checks,
 		/datum/gas/freon = new/datum/tlv/no_checks,
 		/datum/gas/hydrogen = new/datum/tlv/no_checks,
@@ -845,8 +841,7 @@
 		/datum/gas/hypernoblium = new/datum/tlv(-1, -1, 1000, 1000), // Hyper-Noblium is inert and nontoxic
 		/datum/gas/water_vapor = new/datum/tlv/dangerous,
 		/datum/gas/tritium = new/datum/tlv/dangerous,
-		/datum/gas/stimulum = new/datum/tlv/dangerous,
-		/datum/gas/nitryl = new/datum/tlv/dangerous,
+		/datum/gas/nitrium = new/datum/tlv/dangerous,
 		/datum/gas/pluoxium = new/datum/tlv(-1, -1, 1000, 1000), // Unlike oxygen, pluoxium does not fuel plasma/tritium fires
 		/datum/gas/freon = new/datum/tlv/dangerous,
 		/datum/gas/hydrogen = new/datum/tlv/dangerous,
@@ -886,21 +881,7 @@
 /obj/machinery/airalarm/away //general away mission access
 	req_access = list(ACCESS_AWAY_GENERAL)
 
-/obj/machinery/airalarm/directional/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 24
-
-/obj/machinery/airalarm/directional/south
-	dir = NORTH
-	pixel_y = -24
-
-/obj/machinery/airalarm/directional/east
-	dir = WEST
-	pixel_x = 24
-
-/obj/machinery/airalarm/directional/west
-	dir = EAST
-	pixel_x = -24
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm"

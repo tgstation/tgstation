@@ -56,7 +56,7 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
@@ -680,3 +680,4 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
+
