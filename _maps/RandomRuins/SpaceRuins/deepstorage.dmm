@@ -166,6 +166,7 @@
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/away{
+	dir = 1;
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -364,6 +365,7 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/machinery/airalarm/away{
+	dir = 1;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -787,7 +789,7 @@
 "ch" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/away{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -833,6 +835,7 @@
 "cm" = (
 /obj/structure/table,
 /obj/machinery/airalarm/away{
+	dir = 1;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -884,6 +887,7 @@
 "cs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/away{
+	dir = 1;
 	pixel_y = 23
 	},
 /turf/open/floor/iron/freezer,
@@ -1108,7 +1112,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/storage)
 "cS" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
@@ -1229,7 +1233,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
@@ -1464,7 +1468,7 @@
 	pixel_x = 4
 	},
 /obj/machinery/airalarm/away{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/iron/dark,
@@ -1659,7 +1663,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ex" = (
 /obj/structure/table,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1988,6 +1992,7 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/away{
+	dir = 1;
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2021,7 +2026,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/away{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2226,7 +2231,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "fU" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Bunker entrance";
 	network = list("bunker1")
 	},
@@ -2328,7 +2333,7 @@
 /obj/machinery/washing_machine,
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/away{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2633,6 +2638,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/away{
+	dir = 1;
 	pixel_y = 23
 	},
 /turf/open/floor/light,

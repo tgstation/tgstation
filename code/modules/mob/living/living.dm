@@ -1208,7 +1208,7 @@
 			Robot.connected_ai.disconnect_shell()
 		if(Robot.mmi)
 			qdel(Robot.mmi)
-		Robot.notify_ai(NEW_BORG)
+		Robot.notify_ai(AI_NOTIFICATION_NEW_BORG)
 	else
 		for(var/obj/item/item in src)
 			if(!dropItemToGround(item))

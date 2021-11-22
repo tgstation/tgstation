@@ -976,6 +976,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE
+	sentience_type = SENTIENCE_BOSS //This is so players can't mindswap into ghost poly to become a literal god
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	butcher_results = list(/obj/item/ectoplasm = 1)
 

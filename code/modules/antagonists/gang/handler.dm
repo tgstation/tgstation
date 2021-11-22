@@ -161,7 +161,7 @@ GLOBAL_VAR(families_override_theme)
 			log_game("[gangbanger] was not a human, and thus has lost their gangster role.")
 			replacement_gangsters++
 	if(replacement_gangsters)
-		for(var/j = 0, j < replacement_gangsters, j++)
+		for(var/j in 1 to replacement_gangsters)
 			if(!antag_candidates.len)
 				log_game("Unable to find more replacement gangsters. Not all of the gangs will spawn.")
 				break

@@ -5,7 +5,6 @@
 	ui_name = "AntagInfoHeretic"
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
-	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
@@ -182,7 +181,6 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
 
@@ -191,7 +189,6 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"
 

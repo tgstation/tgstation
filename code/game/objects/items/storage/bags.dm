@@ -321,8 +321,9 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.max_w_class = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	STR.set_holdable(list(
+		/obj/item/plate,
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
 		/obj/item/clothing/mask/cigarette,

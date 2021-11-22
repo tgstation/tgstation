@@ -767,7 +767,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 	auto_propagate_cut_cable(src) // update the powernets
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
-	to_chat(user, span_warning("You pust reset button."))
+	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active

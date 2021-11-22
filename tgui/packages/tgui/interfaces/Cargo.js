@@ -354,18 +354,28 @@ const CargoCart = (props, context) => {
                   <b>[Paid Privately]</b>
                 )}
               </Table.Cell>
-              <Table.Cell collapsing textAlign="right">
-                {formatMoney(entry.cost)} cr
-              </Table.Cell>
-              <Table.Cell collapsing>
-                {can_send &&(
-                  <Button
-                    icon="minus"
-                    onClick={() => act('remove', {
-                      id: entry.id,
-                    })} />
-                )}
-              </Table.Cell>
+              {entry.dep_order && (
+                <Table.Cell collapsing textAlign="right">
+                  {formatMoney(entry.cost)} cr earned on delivery
+                </Table.Cell>
+              ) || (
+                <>
+                  <Table.Cell collapsing textAlign="right">
+                    {formatMoney(entry.cost)} cr
+                  </Table.Cell>
+                  <Table.Cell collapsing>
+                    {can_send &&(
+                      <Button
+                        icon="minus"
+                        onClick={() => act('remove', {
+                          id: entry.id,
+                        })} />
+                    )}
+                  </Table.Cell>
+                </>
+              )}
+
+
             </Table.Row>
           ))}
         </Table>

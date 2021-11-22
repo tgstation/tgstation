@@ -82,13 +82,15 @@
 
 /obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
 	. = ..()
+	if(QDELETED(src))
+		return
 	bogdanoff = user
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
 	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
-	SSeconomy.market_crashing = TRUE
+	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -159,7 +161,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	explosion(src, light_impact_range = 1, flame_range = 2)
-	SSeconomy.market_crashing = FALSE
+	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()

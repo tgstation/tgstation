@@ -19,7 +19,6 @@
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
-	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
 	ui_name = "AntagInfoTraitor"
@@ -187,7 +186,6 @@
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
 
-	add_antag_hud(antag_hud_type, antag_hud_name, datum_owner)
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	if(should_give_codewords)
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
@@ -196,7 +194,6 @@
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, datum_owner)
 	handle_clown_mutation(datum_owner, removing = FALSE)
 
 	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
@@ -250,6 +247,8 @@
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				traitor_won = FALSE
 			count++
+
+	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"

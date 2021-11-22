@@ -39,7 +39,7 @@
 	if(!step_to(src, get_step(src, direction), 0))
 		return
 	if(mapload)
-		for (var/i = 1, i < range, i++)
+		for (var/i in 1 to range)
 			new /obj/effect/decal/cleanable/xenoblood/xsplatter(loc)
 			if (!step_to(src, get_step(src, direction), 0))
 				break
