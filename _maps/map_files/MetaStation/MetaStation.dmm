@@ -2063,16 +2063,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port/fore)
-"aqI" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "aqK" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -6007,7 +5997,6 @@
 	name = "Mixed Air Tank In"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/effect/spawner/random/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "bgn" = (
@@ -7400,15 +7389,6 @@
 /obj/effect/spawner/random/food_or_drink/cups,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
-"byD" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "byF" = (
 /turf/open/floor/plating/airless,
 /area/solars/starboard/aft)
@@ -12831,16 +12811,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/break_room)
-"cLG" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "cLH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
@@ -14218,15 +14188,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"daN" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "daV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -15634,10 +15595,6 @@
 /area/maintenance/starboard/aft)
 "dwD" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden/layer5,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/left{
 	dir = 8
 	},
@@ -16897,10 +16854,6 @@
 	dir = 4
 	},
 /obj/item/crowbar,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "dSI" = (
@@ -17580,10 +17533,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer5,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "edY" = (
@@ -18320,23 +18269,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"eqd" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 1
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "eql" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/camera/autoname/directional/east,
@@ -18661,15 +18593,6 @@
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
 /area/maintenance/starboard/aft)
-"euB" = (
-/obj/structure/lattice,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "euC" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/circuit/green,
@@ -18805,10 +18728,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ewV" = (
@@ -18999,12 +18918,7 @@
 /area/maintenance/starboard)
 "ezs" = (
 /obj/structure/lattice,
-/obj/structure/grille/broken,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
 /turf/open/space/basic,
 /area/space/nearstation)
 "ezz" = (
@@ -19173,7 +19087,6 @@
 "eCP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/meter,
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "eDa" = (
@@ -21414,17 +21327,6 @@
 /obj/machinery/computer/station_alert,
 /turf/open/floor/iron/dark,
 /area/engineering/main)
-"foO" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "fpm" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -23112,14 +23014,6 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
-"fPL" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "fPR" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -24931,14 +24825,6 @@
 	req_access_txt = "24"
 	},
 /turf/open/floor/iron/dark,
-/area/engineering/atmos)
-"gzz" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
 /area/engineering/atmos)
 "gzA" = (
 /obj/item/assembly/signaler{
@@ -27221,10 +27107,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "hop" = (
@@ -28744,17 +28626,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/medical/virology)
-"hSm" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron/dark,
-/area/engineering/atmos)
 "hSw" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -28991,10 +28862,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/locker)
-"hWj" = (
-/obj/effect/spawner/random/structure/grille,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "hXg" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -29355,15 +29222,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
-"idd" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "idk" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -29812,11 +29670,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible{
 	dir = 8
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ilN" = (
@@ -30899,10 +30752,6 @@
 /turf/open/floor/iron/white,
 /area/security/prison)
 "iEh" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/right{
 	dir = 1
 	},
@@ -32150,19 +31999,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"jci" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
-/obj/machinery/meter,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "jcs" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/plating/airless,
@@ -32261,10 +32097,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer5,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/dark/textured,
 /area/engineering/atmos)
 "jfE" = (
@@ -32278,15 +32110,6 @@
 /obj/structure/bookcase,
 /turf/open/floor/wood,
 /area/command/bridge)
-"jgm" = (
-/obj/structure/grille,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "jgz" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -34517,10 +34340,6 @@
 	dir = 1;
 	name = "Mix to Engine"
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "jYe" = (
@@ -34790,10 +34609,6 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "kcH" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/left{
 	dir = 1
 	},
@@ -35037,10 +34852,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden/layer5,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/railing,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/right{
 	dir = 8
 	},
@@ -35699,10 +35510,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ktO" = (
@@ -36287,14 +36094,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/wood,
 /area/service/bar)
-"kDE" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "kDJ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -36509,10 +36308,6 @@
 /area/engineering/atmos)
 "kHL" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/orange/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "kHZ" = (
@@ -37003,7 +36798,6 @@
 	name = "Mixed Air Tank Out"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
-/obj/effect/spawner/random/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "kPG" = (
@@ -37217,20 +37011,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/cargo/storage)
-"kUB" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/brown/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "kUD" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -38577,16 +38357,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/brig)
-"ltC" = (
-/obj/structure/lattice,
-/obj/structure/grille/broken,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "ltH" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -38810,19 +38580,6 @@
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "lye" = (
-/turf/open/floor/iron,
-/area/engineering/atmos)
-"lyg" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "lyj" = (
@@ -40552,7 +40309,6 @@
 "mdw" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /obj/machinery/meter,
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "mdB" = (
@@ -41895,11 +41651,6 @@
 /area/ai_monitored/turret_protected/ai)
 "mCQ" = (
 /obj/machinery/air_sensor/atmos/mix_tank,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "mCT" = (
@@ -41907,20 +41658,6 @@
 	dir = 1
 	},
 /obj/machinery/meter,
-/turf/open/floor/iron,
-/area/engineering/atmos)
-"mCX" = (
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "mDa" = (
@@ -42079,17 +41816,6 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
 /area/service/theater)
-"mEU" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 4
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "mEX" = (
 /obj/machinery/bookbinder,
 /turf/open/floor/wood,
@@ -42558,16 +42284,6 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"mME" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
-/obj/structure/lattice,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "mMX" = (
 /obj/structure/chair{
 	dir = 1
@@ -46502,10 +46218,6 @@
 /area/maintenance/port/fore)
 "obe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
@@ -48368,10 +48080,6 @@
 /area/space/nearstation)
 "oIp" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/hidden/layer5,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/medium{
 	dir = 8
 	},
@@ -48470,10 +48178,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "oKH" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
@@ -49725,10 +49429,6 @@
 	name = "Radiation Shutters Control";
 	req_access_txt = "24"
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron/dark/textured,
 /area/engineering/atmos)
 "pgX" = (
@@ -49775,10 +49475,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "pit" = (
@@ -49895,10 +49591,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "plr" = (
@@ -50362,10 +50054,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 1
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "prS" = (
@@ -50684,7 +50372,6 @@
 "pyC" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/machinery/meter,
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "pyS" = (
@@ -51817,11 +51504,6 @@
 	dir = 8;
 	name = "Air to Mix"
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "pSS" = (
@@ -52524,7 +52206,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 1
 	},
-/obj/effect/spawner/random/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "qfe" = (
@@ -54005,10 +53686,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 4
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "qFh" = (
@@ -54595,11 +54272,6 @@
 	dir = 6
 	},
 /obj/structure/lattice/catwalk,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
 "qSl" = (
@@ -54889,10 +54561,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "qZG" = (
@@ -59983,11 +59651,6 @@
 "sQw" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/catwalk,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
 "sQE" = (
@@ -60737,10 +60400,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tee" = (
@@ -60792,14 +60451,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
-"tfI" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/engine/vacuum,
-/area/engineering/atmos)
 "tfJ" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/directional/east,
@@ -61001,7 +60652,6 @@
 "tiZ" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/effect/spawner/random/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "tjc" = (
@@ -61133,18 +60783,13 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /obj/machinery/computer/cargo/request{
-	icon_state = "computer";
-	dir = 1
+	dir = 1;
+	icon_state = "computer"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "tmf" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "tmg" = (
@@ -61652,10 +61297,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tum" = (
@@ -62795,22 +62436,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
-"tNc" = (
-/obj/effect/turf_decal/siding/yellow{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "tNy" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -63296,10 +62921,6 @@
 "tYt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/layer_manifold/orange/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "tYy" = (
@@ -63509,14 +63130,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
-"uch" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron/dark,
-/area/engineering/atmos)
 "ucj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -64247,6 +63860,15 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/construction/storage_wing)
+"urd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "urh" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /obj/structure/cable,
@@ -64383,11 +64005,6 @@
 "utt" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
 "utC" = (
@@ -68242,11 +67859,6 @@
 /area/maintenance/solars/starboard/aft)
 "vKn" = (
 /obj/machinery/light/small/directional/south,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/engine/n2o,
 /area/engineering/atmos)
 "vKp" = (
@@ -70351,19 +69963,6 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/white,
 /area/science/storage)
-"wBq" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line,
-/obj/effect/turf_decal/trimline/yellow/warning,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "wBw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -71701,14 +71300,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"wZB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "wZI" = (
 /turf/closed/wall,
 /area/security/office)
@@ -71874,14 +71465,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
-"xdc" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/lattice,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "xdf" = (
 /obj/structure/table,
 /obj/item/storage/box/hug{
@@ -74169,13 +73752,6 @@
 /obj/machinery/computer/secure_data,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
-"xWN" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "xXA" = (
 /obj/machinery/computer/security/mining{
 	dir = 1
@@ -74438,20 +74014,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
-"ybQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
-	dir = 1
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
-	dir = 4
-	},
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "ycy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -116123,11 +115685,11 @@ xca
 fXQ
 nXY
 vNT
-hWj
-hWj
-hWj
-hWj
-hWj
+deP
+deP
+deP
+deP
+deP
 aaf
 aaa
 aaa
@@ -116384,7 +115946,7 @@ tiZ
 oXw
 oEu
 oEu
-hWj
+deP
 aaf
 aaa
 aaa
@@ -116641,7 +116203,7 @@ scK
 ens
 hdc
 nUU
-hWj
+deP
 aaf
 aaa
 aaa
@@ -116898,7 +116460,7 @@ qfd
 nnX
 ntZ
 oEu
-hWj
+deP
 aaf
 aaa
 aaa
@@ -117151,11 +116713,11 @@ suk
 scZ
 xFh
 aaf
-hWj
-hWj
-hWj
-hWj
-hWj
+deP
+deP
+deP
+deP
+deP
 aaf
 lMJ
 lMJ
@@ -117181,7 +116743,7 @@ vqh
 vqh
 vqh
 qeW
-rrt
+lMJ
 rrt
 rrt
 aaa
@@ -117412,7 +116974,7 @@ tiZ
 ldE
 sRI
 sRI
-hWj
+deP
 aaf
 aaa
 aaa
@@ -117669,7 +117231,7 @@ scK
 wrH
 ntx
 uKH
-hWj
+deP
 aaf
 aaa
 aaa
@@ -117926,7 +117488,7 @@ qfd
 shx
 mTn
 sRI
-hWj
+deP
 aaf
 aaa
 aaa
@@ -118179,11 +117741,11 @@ tzw
 scZ
 xFh
 aaf
-hWj
-hWj
-hWj
-hWj
-hWj
+deP
+deP
+deP
+deP
+deP
 aaf
 lMJ
 lMJ
@@ -118209,7 +117771,7 @@ cRi
 cRi
 cRi
 cRi
-rrt
+lMJ
 rrt
 rrt
 aaa
@@ -118440,7 +118002,7 @@ bge
 ssK
 iXC
 iXC
-hWj
+deP
 aaf
 aaa
 aaa
@@ -118697,7 +118259,7 @@ scK
 hki
 wkJ
 ewV
-hWj
+deP
 aaf
 aaa
 aaa
@@ -118725,7 +118287,7 @@ qKh
 aaa
 aaa
 aaa
-rrt
+lMJ
 aaa
 aaa
 aaa
@@ -118954,7 +118516,7 @@ kPx
 qFW
 hAn
 iXC
-hWj
+deP
 aaf
 aaa
 aaa
@@ -118983,7 +118545,7 @@ pMS
 lMJ
 lMJ
 lMJ
-fwb
+rrt
 aaa
 aaa
 aaa
@@ -119207,11 +118769,11 @@ mFv
 pTM
 jMk
 aaf
-hWj
-hWj
-hWj
-hWj
-hWj
+deP
+deP
+deP
+deP
+deP
 aaf
 aaa
 aaa
@@ -119239,8 +118801,8 @@ dlV
 cDE
 vyX
 aaa
-kDE
-fwb
+aaa
+rrt
 aaa
 aaa
 aaa
@@ -119499,7 +119061,7 @@ rhT
 qSg
 sQw
 aSy
-fwb
+rrt
 aaa
 aaa
 aaa
@@ -119751,10 +119313,10 @@ oez
 vwv
 obl
 hPF
-oyG
+urd
 dbv
 gWT
-xdc
+lAu
 rbD
 lMJ
 aaa
@@ -120013,7 +119575,7 @@ dbv
 oXm
 utt
 nsj
-fwb
+rrt
 aaa
 aaa
 aaa
@@ -120213,22 +119775,22 @@ lMJ
 aox
 lMJ
 hMq
-fPL
-eqd
+cor
+bgM
 lye
-foO
+lye
 prP
-kUB
+hpn
 lye
-wBq
+lGq
 kcH
-tNc
+rfN
 grx
-mCX
+uuF
 qZC
-jci
+wia
 lye
-ybQ
+wLr
 pik
 uzC
 gcA
@@ -120267,10 +119829,10 @@ dSl
 dlV
 dLg
 fgz
-mME
-xdc
+nsj
+lAu
 rbD
-fwb
+rrt
 aaa
 aaa
 aaa
@@ -120470,7 +120032,7 @@ aaa
 aox
 aaa
 hMq
-fPL
+cor
 bgM
 lye
 lye
@@ -120527,7 +120089,7 @@ dbv
 kVO
 sQw
 tHt
-nYJ
+rrt
 aaa
 aaa
 aaa
@@ -120727,7 +120289,7 @@ aaa
 aox
 aaa
 hMq
-fPL
+cor
 bgM
 pex
 aFq
@@ -120749,7 +120311,7 @@ vXh
 sxZ
 cor
 lMJ
-deP
+jMk
 deP
 deP
 deP
@@ -120984,11 +120546,11 @@ lMJ
 aox
 lMJ
 hMq
-fPL
+cor
 bgM
 kyz
 dIE
-lyg
+gZv
 gZv
 ogd
 cup
@@ -120996,11 +120558,11 @@ iEh
 rfN
 grx
 uuF
-cLG
+elN
 pDE
 lye
 bzg
-xWN
+lye
 uzC
 lwA
 pFE
@@ -121041,7 +120603,7 @@ dbv
 oXm
 utt
 nsj
-fwb
+rrt
 aaa
 aaa
 aaa
@@ -121254,10 +120816,10 @@ edU
 tYt
 tuk
 jYd
-wZB
-xWN
+wCh
+lye
 dSC
-xWN
+lye
 kHI
 lGf
 fsc
@@ -121296,9 +120858,9 @@ vFO
 vFO
 dbv
 gWT
-xdc
+lAu
 rbD
-nYJ
+rrt
 aaa
 aaa
 aaa
@@ -121555,7 +121117,7 @@ rhT
 gCa
 sQw
 vCz
-fwb
+rrt
 aaa
 aaa
 aaa
@@ -121810,7 +121372,7 @@ vFO
 dbv
 aaa
 aaa
-euB
+lMJ
 aaa
 aaa
 aaa
@@ -122067,7 +121629,7 @@ vFO
 dbv
 aaa
 aaa
-aqI
+rrt
 aaa
 aaa
 aaa
@@ -122283,19 +121845,19 @@ bJI
 jaI
 tHX
 epW
-daN
-mEU
-gzz
+wCh
+uzC
+lye
 uzC
 tIm
-hSm
-idd
-euB
+sxZ
+cor
+lMJ
 scK
 uFF
 tmf
 vKn
-jgm
+deP
 lMJ
 aaa
 aaa
@@ -123313,23 +122875,23 @@ lye
 caT
 uuF
 lye
-gzz
+lye
 pSO
 ils
-uch
+wkj
 cor
-euB
-byD
+lMJ
+scK
 mCQ
-tfI
+jxI
 qQV
-jgm
-euB
-ltC
+deP
+lMJ
+nYJ
+lMJ
 rrt
-fwb
-fwb
-fwb
+rrt
+rrt
 lMJ
 lMJ
 rhT
@@ -124096,12 +123658,12 @@ lMJ
 lMJ
 lMJ
 lMJ
-fwb
-fwb
+rrt
+rrt
 nYJ
-fwb
-fwb
-fwb
+rrt
+rrt
+rrt
 lMJ
 lMJ
 vyX
@@ -124861,22 +124423,22 @@ gBU
 jNp
 xQU
 lMJ
-nYJ
-fwb
-fwb
-fwb
-fwb
+rrt
+rrt
+rrt
+rrt
+rrt
 lMJ
-fwb
-fwb
-nYJ
+rrt
+rrt
+rrt
 lAu
-nYJ
-fwb
-fwb
-fwb
-fwb
-fwb
+rrt
+rrt
+rrt
+rrt
+rrt
+rrt
 lMJ
 lMJ
 lMJ
@@ -125631,13 +125193,13 @@ aaa
 aaa
 aaa
 aaa
-nYJ
-fwb
-fwb
-fwb
-fwb
-fwb
-fwb
+rrt
+rrt
+rrt
+rrt
+rrt
+rrt
+rrt
 aaa
 aaa
 aaa
