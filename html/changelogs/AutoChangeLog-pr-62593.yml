@@ -1,4 +1,0 @@
-author: "esainane"
-delete-after: True
-changes: 
-  - bugfix: "All wall mounted dispensers - that is, the virus food dispenser and the pepper spray dispenser - are now considered wall items, instead of just the pepper spray dispenser. You can no longer use a metal sheet on it to turn it into a plumbed \"stationary dispenser\". You can still use metal sheets on mobile tanks to turn them into plumbed stationary dispensers."

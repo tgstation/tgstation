@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixed icebox ordnance burn chamber's air alarm working for the wrong area"

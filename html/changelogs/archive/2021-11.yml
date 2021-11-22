@@ -696,3 +696,34 @@
       locations. (mostly maint)
   - qol: Add several new cosmetic random spawners to Metastation that affect different
       locations. (mostly maint)
+2021-11-21:
+  Burgermancoding:
+  - code_imp: Change the description and name of the Mafia set from cargo back to
+      Cosa Nostra
+  Timberpoes:
+  - admin: Non-deadminned admins are now exempt from all chat filters.
+  Watermelon914:
+  - admin: Players can now send urgent ahelps when no admins are on for potentially
+      better responses.
+  Zytolg:
+  - expansion: Renovations on the Cosmos Space Hotel in the local sector have been
+      completed.
+  esainane:
+  - bugfix: All wall mounted dispensers - that is, the virus food dispenser and the
+      pepper spray dispenser - are now considered wall items, instead of just the
+      pepper spray dispenser. You can no longer use a metal sheet on it to turn it
+      into a plumbed "stationary dispenser". You can still use metal sheets on mobile
+      tanks to turn them into plumbed stationary dispensers.
+  vincentiusvin:
+  - bugfix: fixed icebox ordnance burn chamber's air alarm working for the wrong area
+2021-11-22:
+  Colovorat:
+  - expansion: Stun Batong now turns off/on constantly for short time after emp
+  GoldenAlpharex:
+  - bugfix: Votes now work again.
+  JohnFulpWillard:
+  - bugfix: Missing HUD icons (Defib, clown/mime fan) once again show up.
+  Wallem:
+  - bugfix: People with robotic limbs are now incapable of using Sign Language if
+      their limbs are disabled.
+  - refactor: Refactored Sign Language
