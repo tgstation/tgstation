@@ -6,6 +6,8 @@
 
 	feature_key = "wings"
 
+	friendly_name = "wings" //Because feature_key could be "wingsopen" if/when the organ gets removed
+
 /obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
 	if(!human.wear_suit)
 		return TRUE
@@ -167,6 +169,8 @@
 	var/burnt = FALSE
 	///Store our old sprite here for if our burned wings are healed
 	var/original_sprite = ""
+
+	friendly_name = "moth wings"
 
 /obj/item/organ/external/wings/moth/get_global_feature_list()
 	return GLOB.moth_wings_list

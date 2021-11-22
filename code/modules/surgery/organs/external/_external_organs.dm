@@ -32,6 +32,9 @@
 	///Reference to the limb we're inside of
 	var/obj/item/bodypart/ownerlimb
 
+	///Friendly version of feature_key (only used if feature_key is more than one word)
+	var/friendly_name = ""
+
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
 * For _mob_sprite we make a distinction between "Round Snout" and "round". Round Snout is the name of the sprite datum, while "round" would be part of the sprite
 * I'm sorry
@@ -40,6 +43,8 @@
 	. = ..()
 	if(mob_sprite)
 		set_sprite(mob_sprite)
+
+	update_name()
 
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = reciever.get_bodypart(zone)
@@ -65,6 +70,8 @@
 		ownerlimb = null
 
 	organ_owner.update_body_parts()
+
+	update_name()
 
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	. = ..()
@@ -142,6 +149,10 @@
 
 	set_sprite(feature_list[deconstruct_block(getblock(features, dna_block), feature_list.len)])
 
+/obj/item/organ/external/update_name()
+	. = ..()
+	name = "[friendly_name ? friendly_name : feature_key] ([sprite_datum.name])"
+
 ///The horns of a lizard!
 /obj/item/organ/external/horns
 	zone = BODY_ZONE_HEAD
@@ -215,6 +226,8 @@
 	var/burnt = FALSE
 	///Store our old sprite here for if our antennae wings are healed
 	var/original_sprite = ""
+
+	friendly_name = "antennae"
 
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
