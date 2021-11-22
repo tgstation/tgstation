@@ -3,7 +3,6 @@
 	name = "Jellyperson"
 	id = SPECIES_JELLYPERSON
 	default_color = "00FF90"
-	say_mod = "chirps"
 	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -408,7 +407,6 @@
 /datum/species/jelly/luminescent
 	name = "Luminescent"
 	id = SPECIES_LUMINESCENT
-	say_mod = "chirps"
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
