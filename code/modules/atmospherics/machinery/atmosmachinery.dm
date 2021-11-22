@@ -58,8 +58,8 @@
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
 	
-	///Is the thing's name initialised yet. Allows varedited map pump / part names to work.
-	var/name_initialised = FALSE
+	///keeps the name of the object from being overridden if it's vareditted. 
+	var/override_naming
 
 /obj/machinery/atmospherics/LateInitialize()
 	. = ..()
@@ -85,6 +85,11 @@
 	if(process)
 		SSair.start_processing_machine(src)
 	set_init_directions(init_dir)
+
+/obj/machinery/atmospherics/Initialize(mapload)
+	if(mapload && name != initial(name))
+		override_naming = TRUE
+	return ..()	
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
@@ -464,9 +469,13 @@
 	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/update_name()
-	if(!name_initialised)
-		name = "[GLOB.pipe_color_name[pipe_color]] [name]"
-		name_initialised = TRUE
+	if(!override_naming)
+		name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
+	return ..()
+
+/obj/machinery/atmospherics/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, name))
+		override_naming = TRUE
 	return ..()
 
 /obj/machinery/atmospherics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
