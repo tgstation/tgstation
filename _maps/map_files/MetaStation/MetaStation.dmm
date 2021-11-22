@@ -4651,9 +4651,6 @@
 	dir = 1;
 	name = "Mix Outlet Pump"
 	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "aQr" = (
@@ -13146,8 +13143,14 @@
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cOb" = (
-/obj/effect/landmark/start/atmospheric_technician,
 /obj/machinery/light/floor,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister,
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "cOd" = (
@@ -20385,9 +20388,7 @@
 	name = "Inner Pipe Access";
 	req_access_txt = "24"
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "eYI" = (
@@ -29657,9 +29658,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/green,
-/obj/machinery/atmospherics/pipe/layer_manifold/cyan/visible{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ilN" = (
@@ -47402,9 +47400,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "oxA" = (
@@ -49553,17 +49548,6 @@
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
-"plo" = (
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "plr" = (
 /obj/machinery/disposal/bin{
 	pixel_x = -2;
@@ -50025,6 +50009,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible{
 	dir = 1
 	},
+/obj/machinery/meter,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "prS" = (
@@ -50259,6 +50244,9 @@
 "pwF" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	name = "Unfiltered & Air to Mix"
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
@@ -51888,8 +51876,8 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "qaf" = (
-/obj/machinery/atmospherics/components/trinary/filter/atmos{
-	dir = 8
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -52077,9 +52065,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
-	dir = 6
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
@@ -53657,6 +53642,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "qFh" = (
@@ -54504,6 +54490,9 @@
 /area/engineering/atmos)
 "qYx" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/purple/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "qYy" = (
@@ -54523,17 +54512,6 @@
 /obj/machinery/drone_dispenser,
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
-"qZC" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "qZG" = (
 /obj/machinery/modular_computer/console/preset/research{
 	dir = 8
@@ -69004,8 +68982,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "wia" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "wii" = (
@@ -119743,9 +119723,9 @@ kcH
 rfN
 grx
 uuF
-qZC
+elN
 wia
-lye
+pik
 wLr
 pik
 uzC
@@ -120000,7 +119980,7 @@ obe
 rfN
 gVq
 uuF
-plo
+elN
 qaf
 cOb
 mCT
@@ -120257,9 +120237,9 @@ oKH
 rfN
 grx
 uuF
-plo
+elN
 wia
-lye
+pik
 wLr
 pik
 uzC
@@ -120516,7 +120496,7 @@ grx
 uuF
 elN
 pDE
-lye
+dtQ
 bzg
 lye
 uzC
@@ -122320,7 +122300,7 @@ lye
 lye
 nQE
 qdm
-qZk
+sxZ
 cor
 lMJ
 deP
@@ -122834,7 +122814,7 @@ lye
 lye
 pSO
 ils
-wkj
+sxZ
 cor
 lMJ
 scK
@@ -123348,7 +123328,7 @@ sMi
 mmJ
 hnF
 eYH
-wkj
+qZk
 jMk
 lMJ
 deP
