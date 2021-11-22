@@ -186,7 +186,7 @@
 #include "code\__DEFINES\dcs\signals\signals_global.dm"
 #include "code\__DEFINES\dcs\signals\signals_global_object.dm"
 #include "code\__DEFINES\dcs\signals\signals_greyscale.dm"
-#include "code\__DEFINES\dcs\signals\signals_hydrophonic.dm"
+#include "code\__DEFINES\dcs\signals\signals_hydroponic.dm"
 #include "code\__DEFINES\dcs\signals\signals_janitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_light_eater.dm"
 #include "code\__DEFINES\dcs\signals\signals_mood.dm"
