@@ -13,17 +13,17 @@ import {
   NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type PaiInterfaceData = {
   directives: string;
-  door_jack: string | null;
+  door_jack?: string;
   emagged: number;
   image: string;
   languages: number;
   master: Master;
   pda: PDA;
   ram: number;
+  records: Records;
   software: Softwares;
 };
 
@@ -35,6 +35,11 @@ type Master = {
 type PDA = {
   power: number;
   silent: number;
+};
+
+type Records = {
+  medical?: [];
+  security?: [];
 };
 
 type Softwares = {
@@ -134,6 +139,7 @@ export const PaiInterface = (props, context) => {
   );
 };
 
+/** Tabs at bottom of screen */
 const TabDisplay = (props) => {
   const { tab, onTabClick } = props;
 
@@ -180,6 +186,7 @@ const SystemDisplay = () => {
   );
 };
 
+/** Renders some ASCII art. Changes to red on emag. */
 const SystemWallpaper = (_, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { emagged } = data;
@@ -222,6 +229,9 @@ const SystemWallpaper = (_, context) => {
   );
 };
 
+/** Displays master info.
+ * You can check their DNA and change your image here.
+ */
 const SystemInfo = (_, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { image, master } = data;
@@ -258,6 +268,7 @@ const SystemInfo = (_, context) => {
   );
 };
 
+/** Shows the hardcoded PAI info along with any supplied orders. */
 const DirectiveDisplay = (_, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { directives, master } = data;
@@ -294,6 +305,10 @@ const DirectiveDisplay = (_, context) => {
   );
 };
 
+/** Renders two sections: A section of buttons and
+ * another section that displays the selected installed
+ * software info.
+ */
 const InstalledDisplay = (_, context) => {
   const [installSelected, setInstallSelected] = useSharedState(
     context,
@@ -316,6 +331,7 @@ const InstalledDisplay = (_, context) => {
   );
 };
 
+/** Iterates over installed software to render buttons. */
 const InstalledSoftware = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { installed } = data.software;
@@ -326,7 +342,7 @@ const InstalledSoftware = (props, context) => {
       {!installed.length ? (
         <NoticeBox>Nothing installed!</NoticeBox>
       ) : (
-        installed.map((software, index) => {
+        installed.map((software) => {
           return (
             <Button key={software} onClick={() => onInstallClick(software)}>
               {software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
@@ -340,6 +356,7 @@ const InstalledSoftware = (props, context) => {
   );
 };
 
+/** Software info for buttons clicked. */
 const InstalledInfo = (props) => {
   const { software } = props;
 
@@ -351,13 +368,13 @@ const InstalledInfo = (props) => {
         !software
           ? 'Select a Program'
           : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-              letter.toUpperCase()
-            )
-      }>
+            letter.toUpperCase())
+      }
+    >
       {software && (
         <Stack fill vertical>
           <Stack.Item>{SOFTWARE_DESC[software] || ''}</Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow>
             <SoftwareButtons software={software} />
           </Stack.Item>
         </Stack>
@@ -366,11 +383,13 @@ const InstalledInfo = (props) => {
   );
 };
 
+/** Once a software is selected, generates custom buttons or a default
+ * power toggle.
+ */
 const SoftwareButtons = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { door_jack, languages, pda } = data;
   const { software } = props;
-  logger.log(door_jack);
 
   switch (software) {
     case 'digital messenger':
@@ -441,6 +460,10 @@ const SoftwareButtons = (props, context) => {
         </>
       );
     }
+    case 'medical records':
+      return <RecordsDisplay record_type="medical" />;
+    case 'security records':
+      return <RecordsDisplay record_type="security" />;
     case 'universal translator':
       return (
         <Button
@@ -474,6 +497,7 @@ const AvailableDisplay = () => {
   );
 };
 
+/** Displays the remaining RAM left as a progressbar. */
 const AvailableMemory = (_, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { ram } = data;
@@ -481,22 +505,29 @@ const AvailableMemory = (_, context) => {
   return (
     <Tooltip content="Available System Memory">
       <Stack>
-        <Icon color="purple" mt={0.7} mr={1} name="microchip" />
-        <ProgressBar
-          minValue={0}
-          maxValue={100}
-          ranges={{
-            good: [67, 100],
-            average: [34, 66],
-            bad: [0, 33],
-          }}
-          value={ram}
-        />
+        <Stack.Item>
+          <Icon color="purple" mt={0.7} name="microchip" />
+        </Stack.Item>
+        <Stack.Item>
+          <ProgressBar
+            minValue={0}
+            maxValue={100}
+            ranges={{
+              good: [67, 100],
+              average: [34, 66],
+              bad: [0, 33],
+            }}
+            value={ram}
+          />
+        </Stack.Item>
       </Stack>
     </Tooltip>
   );
 };
 
+/** A list of available software.
+ *  creates table rows for each, like a vendor.
+ */
 const AvailableSoftware = (_, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { available } = data.software;
@@ -513,6 +544,7 @@ const AvailableSoftware = (_, context) => {
   );
 };
 
+/** A row for an individual software listing. */
 const AvailableRow = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { ram } = data;
@@ -521,7 +553,7 @@ const AvailableRow = (props, context) => {
   const purchased = installed.includes(software.name);
 
   return (
-    <Table.Row>
+    <Table.Row className="candystripe">
       <Table.Cell collapsible>
         <Box color="label">
           {software.name.replace(/^\w/, (c) => c.toUpperCase())}
@@ -547,5 +579,17 @@ const AvailableRow = (props, context) => {
         </Button>
       </Table.Cell>
     </Table.Row>
+  );
+};
+
+const RecordsDisplay = (props, context) => {
+  const { data } = useBackend<PaiInterfaceData>(context);
+  const { record_type } = props;
+  const { records } = data;
+
+  return (
+    <Section fill scrollable>
+      <Table />
+    </Section>
   );
 };

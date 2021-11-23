@@ -167,8 +167,6 @@
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 /mob/living/silicon/pai/proc/process_hack(delta_time, times_fired)
-
-
 	if(hacking_cable && hacking_cable.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
 		hackprogress = clamp(hackprogress + (2 * delta_time), 0, 100)
 	else

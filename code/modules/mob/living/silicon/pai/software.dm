@@ -1,8 +1,3 @@
-// TODO:
-// - Potentially roll HUDs and Records into one
-// - Shock collar/lock system for prisoner pAIs?
-
-
 /mob/living/silicon/pai/var/list/available_software = list(
 															//Nightvision
 															//T-Ray
@@ -35,6 +30,17 @@
 	if(!ui)
 		ui = new(user, src, "PaiInterface", name)
 		ui.open()
+
+// Static UI data
+/mob/living/silicon/pai/ui_static_data(mob/user)
+	var/list/data = list()
+	var/mob/living/silicon/pai/pai = user
+	data["records"] = list()
+	if("medical records" in pai.software)
+		data["records"]["medical"] = GLOB.data_core.get_general_records()
+	if("security records" in pai.software)
+		data["records"]["security"] = GLOB.data_core.get_security_records()
+	return data
 
 // Variables sent to TGUI
 /mob/living/silicon/pai/ui_data(mob/user)
@@ -136,13 +142,6 @@
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
 				med.remove_hud_from(src)
-		if("medical_records") // Accessing medical records
-			medicalActive1 = find_record("id", params, GLOB.data_core.general)
-			if(medicalActive1)
-				medicalActive2 = find_record("id", params, GLOB.data_core.medical)
-			if(!medicalActive2)
-				medicalActive1 = null
-				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
 		if("newscaster")
 			newscaster.ui_interact(src)
 		if("pda")
@@ -170,13 +169,6 @@
 			else
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 				sec.remove_hud_from(src)
-		if("security_records")
-			securityActive1 = find_record("id", params, GLOB.data_core.general)
-			if(securityActive1)
-				securityActive2 = find_record("id", params, GLOB.data_core.security)
-			if(!securityActive2)
-				securityActive1 = null
-				to_chat(usr, span_notice("Unable to locate requested security record. Record may have been deleted, or never have existed."))
 		if("universal_translator")
 			if(!languages_granted)
 				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)
@@ -202,49 +194,6 @@
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
 		to_chat(P, span_warning("[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly."))
-
-// // Medical Records
-// /mob/living/silicon/pai/proc/softwareMedicalRecord()
-// 	switch(subscreen)
-// 		if(0)
-// 			. += "<h3>Medical Records</h3><HR>"
-// 			if(GLOB.data_core.general)
-// 				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
-// 					. += "<A href='?src=[REF(src)];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
-// 		if(1)
-// 			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
-// 			if(medicalActive1 in GLOB.data_core.general)
-// 				. += "Name: [medicalActive1.fields["name"]] ID: [medicalActive1.fields["id"]]<BR>\nGender: [medicalActive1.fields["gender"]]<BR>\nAge: [medicalActive1.fields["age"]]<BR>\nFingerprint: [medicalActive1.fields["fingerprint"]]<BR>\nPhysical Status: [medicalActive1.fields["p_stat"]]<BR>\nMental Status: [medicalActive1.fields["m_stat"]]<BR>"
-// 			else
-// 				. += "<pre>Requested medical record not found.</pre><BR>"
-// 			if(medicalActive2 in GLOB.data_core.medical)
-// 				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=[REF(src)];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA (UE): <A href='?src=[REF(src)];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=[REF(src)];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=[REF(src)];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=[REF(src)];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=[REF(src)];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=[REF(src)];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
-// 			else
-// 				. += "<pre>Requested medical record not found.</pre><BR>"
-// 			. += "<BR>\n<A href='?src=[REF(src)];software=medicalrecord;sub=0'>Back</A><BR>"
-// 	return .
-
-// // Security Records
-// /mob/living/silicon/pai/proc/softwareSecurityRecord()
-// 	. = ""
-// 	switch(subscreen)
-// 		if(0)
-// 			. += "<h3>Security Records</h3><HR>"
-// 			if(GLOB.data_core.general)
-// 				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
-// 					. += "<A href='?src=[REF(src)];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
-// 		if(1)
-// 			. += "<h3>Security Record</h3>"
-// 			if(securityActive1 in GLOB.data_core.general)
-// 				. += "Name: <A href='?src=[REF(src)];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=[REF(src)];field=id'>[securityActive1.fields["id"]]</A><BR>\nGender: <A href='?src=[REF(src)];field=gender'>[securityActive1.fields["gender"]]</A><BR>\nAge: <A href='?src=[REF(src)];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=[REF(src)];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=[REF(src)];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
-// 			else
-// 				. += "<pre>Requested security record not found,</pre><BR>"
-// 			if(securityActive2 in GLOB.data_core.security)
-// 				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nCrimes: <A href='?src=[REF(src)];field=mcrim'>[securityActive2.fields["crim"]]</A><BR>\nDetails: <A href='?src=[REF(src)];field=crim_d'>[securityActive2.fields["crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=[REF(src)];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
-// 			else
-// 				. += "<pre>Requested security record not found,</pre><BR>"
-// 			. += "<BR>\n<A href='?src=[REF(src)];software=securityrecord;sub=0'>Back</A><BR>"
-// 	return .
 
 // Host Scan supporting proc
 /mob/living/silicon/pai/proc/hostscan()

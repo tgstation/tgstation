@@ -187,7 +187,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
 	return manifest_out
 
-
 /datum/datacore/proc/get_manifest_html(monochrome = FALSE)
 	var/list/manifest = get_manifest()
 	var/dat = {"
@@ -313,6 +312,30 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		L.fields["mindref"] = H.mind
 		locked += L
 	return
+
+/datum/datacore/proc/get_general_records()
+	if(!GLOB.data_core.general)
+		return FALSE
+	var/list/general_records_out = list()
+	for(var/datum/data/record/gen_record as anything in GLOB.data_core.general) // pain
+		var/list/crew_record = list()
+		crew_record["name"] = gen_record.fields["name"]
+		crew_record["physical_status"] = gen_record.fields["p_stat"]
+		crew_record["mental_status"] = gen_record.fields["m_stat"]
+		general_records_out += crew_record
+	return general_records_out
+
+/datum/datacore/proc/get_security_records()
+	if(!GLOB.data_core.security)
+		return FALSE
+	var/list/security_records_out = list()
+	for(var/datum/data/record/sec_record as anything in GLOB.data_core.security)
+		var/list/crew_record = list()
+		crew_record["name"] = sec_record.fields["name"]
+		crew_record["status"] = sec_record.fields["criminal"] // wanted status
+		crew_record["crimes"] = sec_record.fields["crim"]
+		security_records_out += crew_record
+	return security_records_out
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
 	var/datum/job/J = H.mind.assigned_role
