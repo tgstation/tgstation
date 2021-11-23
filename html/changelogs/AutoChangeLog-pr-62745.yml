@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - admin: "hypnotized players now have a visible antag hud, are visible in the check antag panel, and have objectives visible on the traitor panel"
+  - expansion: "hypnotized victims and their objectives are now visible on the round end report"

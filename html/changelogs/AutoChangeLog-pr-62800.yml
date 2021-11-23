@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - balance: "Wings now allow falling short distances without taking damage (you will still suffer from knockdown)"
