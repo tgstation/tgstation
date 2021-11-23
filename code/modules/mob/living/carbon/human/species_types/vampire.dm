@@ -106,18 +106,18 @@
 				return
 			COOLDOWN_START(V, drain_cooldown, 3 SECONDS)
 			if(victim.anti_magic_check(FALSE, TRUE, FALSE, 0))
-				to_chat(victim, span_warning("[H] tries to bite you, but stops before touching you!"))
+				victim.show_message(span_warning("[H] tries to bite you, but stops before touching you!"))
 				to_chat(H, span_warning("[victim] is blessed! You stop just in time to avoid catching fire."))
 				return
 			if(victim.has_reagent(/datum/reagent/consumable/garlic))
-				to_chat(victim, span_warning("[H] tries to bite you, but recoils in disgust!"))
+				victim.show_message(span_warning("[H] tries to bite you, but recoils in disgust!"))
 				to_chat(H, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
 				return
 			if(!do_after(H, 3 SECONDS, target = victim))
 				return
 			var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - H.blood_volume //How much capacity we have left to absorb blood
 			var/drained_blood = min(victim.blood_volume, VAMP_DRAIN_AMOUNT, blood_volume_difference)
-			to_chat(victim, span_danger("[H] is draining your blood!"))
+			victim.show_message(span_danger("[H] is draining your blood!"))
 			to_chat(H, span_notice("You drain some blood!"))
 			playsound(H, 'sound/items/drink.ogg', 30, TRUE, -2)
 			victim.blood_volume = clamp(victim.blood_volume - drained_blood, 0, BLOOD_VOLUME_MAXIMUM)
