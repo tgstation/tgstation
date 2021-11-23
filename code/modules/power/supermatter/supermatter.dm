@@ -1106,7 +1106,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
 	for(var/mob/living/near_mob in range(10))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_SUPERMATTER)
-		if (issilicon(near_mob))
+		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
 			continue
 		if(near_mob in view())
 			near_mob.show_message(span_danger("As \the [src] slowly stops resonating, you find your skin covered in new radiation burns."), MSG_VISUAL,
