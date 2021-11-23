@@ -943,7 +943,7 @@
 
 /obj/machinery/hydroponics/soil/attackby_secondary(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_SHOVEL) //Spades can still uproot plants on left click
-		to_chat(user, span_notice("You begin clearing up [src]..."))
+		balloon_alert(user, "clearing up soil...")
 		if(O.use_tool(src, user, 1 SECONDS, volume=50))
 			to_chat(user, span_notice("You clear up [src]!"))
 			qdel(src)
