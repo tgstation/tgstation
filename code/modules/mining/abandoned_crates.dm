@@ -107,8 +107,10 @@
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
 	if(!locked)
-		tamperproof = initial(tamperproof) //reset the anti-tampering when the lock is re-enabled.
-		return ..()
+		. = ..()
+		if(locked)
+			tamperproof = initial(tamperproof) //reset the anti-tampering when the lock is re-enabled.
+		return
 	if(tamperproof)
 		boom(user)
 		return
