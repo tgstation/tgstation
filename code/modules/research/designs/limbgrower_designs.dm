@@ -205,6 +205,14 @@
 	build_path = /obj/item/organ/tongue/ethereal
 	category = list(SPECIES_ETHEREAL)
 
+/datum/design/ethereal_lungs
+	name = "Aeration Reticulum"
+	id = "ethereallungs"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10, /datum/reagent/consumable/liquidelectricity/enriched = 20)
+	build_path = /obj/item/organ/lungs/ethereal
+	category = list(SPECIES_ETHEREAL)
+
 // Intentionally not growable by normal means - for balance conerns.
 /datum/design/ethereal_heart
 	name = "Crystal Core"
@@ -279,7 +287,7 @@
 
 /obj/item/disk/design_disk/limbs/ethereal
 	name = "Ethereal Limb Design Disk"
-	limb_designs = list(/datum/design/ethereal_stomach, /datum/design/ethereal_tongue)
+	limb_designs = list(/datum/design/ethereal_stomach, /datum/design/ethereal_tongue, /datum/design/ethereal_lungs)
 
 /datum/design/limb_disk/ethereal
 	name = "Ethereal Limb Design Disk"
