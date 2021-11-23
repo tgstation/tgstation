@@ -727,3 +727,39 @@
   - bugfix: People with robotic limbs are now incapable of using Sign Language if
       their limbs are disabled.
   - refactor: Refactored Sign Language
+2021-11-23:
+  ArcaneMusic:
+  - expansion: Laundry machines can shrink particularly old, worn t-shirts. Remember
+      kids, hand wash only.
+  AyyRobotics(Original PR), AzlanonPC(Sprites), Aspev(SafetyMoth):
+  - rscadd: Added Safety Mothposters!
+  - imageadd: Updated contraband.dmi to add new poster icons.
+  BlueMemesauce:
+  - qol: Adds Supply Request Consoles to cargo lobbies.
+  Colovorat:
+  - qol: Bonfire can be made with wood
+  Farquaar:
+  - imageadd: Due to lobbying pressure from the Yee-haw Conservation Society, Nanotrasen
+      vending machines now stock five new cowboy hats and an old-west vest.
+  Ghommie:
+  - bugfix: Fixed a mistake that made space bartenders sad (drinking glasses looking
+      all the same regardless of drink).
+  - bugfix: Hair gradient preference no longer shows for species that don't have hair
+  - bugfix: Abandoned crates no longer delete living mobs or indestructible objects
+      inside them when exploding.
+  - bugfix: They also no longer explode when deconstructed/emagged while unlocked.
+  - bugfix: Their anti-tampering mechanism will now properly reactive if locked again
+      after being unlocked.
+  GoldenAlpharex:
+  - bugfix: Areas loaded from map templates should generate their lighting objects
+      upon being loaded, which means that admin or game-spawned map templates will
+      now have functional lights.
+  Iamgoofball:
+  - expansion: The bureaucratic mistake station trait can now truly chose any job.
+  Melbert:
+  - bugfix: Harvesting plants says the correct number of produce again
+  - bugfix: Fixes random ice turf in icebox's bar
+  Ryll/Shaps:
+  - expansion: You can now *swear
+  axietheaxolotl:
+  - imageadd: new and redone HoP uniforms

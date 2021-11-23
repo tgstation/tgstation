@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - code_imp: "better logic for plural_s()"
