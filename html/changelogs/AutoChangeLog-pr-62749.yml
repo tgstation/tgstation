@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "You now only go on click cooldown if you actually threw something."

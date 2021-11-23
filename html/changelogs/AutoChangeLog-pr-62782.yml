@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Certain pumps/filters in atmospherics and engineering now show their more descriptive names which haven't been showing up properly for months."

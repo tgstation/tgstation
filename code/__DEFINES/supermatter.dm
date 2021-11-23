@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 0.1
+#define CO2_HEAT_PENALTY 6
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit

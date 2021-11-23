@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Crates that spawn in maintenance are now more randomized"

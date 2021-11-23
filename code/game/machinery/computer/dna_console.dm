@@ -1786,7 +1786,7 @@
 	// No code will ever null this list, we can safely Cut it.
 	tgui_genetic_makeup.Cut()
 
-	for(var/i=1, i <= NUMBER_OF_BUFFERS, i++)
+	for(var/i in 1 to NUMBER_OF_BUFFERS)
 		if(genetic_makeup_buffer[i])
 			tgui_genetic_makeup["[i]"] = genetic_makeup_buffer[i].Copy()
 		else

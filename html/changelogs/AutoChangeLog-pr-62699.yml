@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Changelings no longer get sent to Argentina when using last resort"
-  - bugfix: "Blind people and those without eyes are no longer affected by changeling's last resort explosion."
