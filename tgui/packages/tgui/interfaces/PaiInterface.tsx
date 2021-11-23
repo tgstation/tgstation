@@ -38,8 +38,8 @@ type PDA = {
 };
 
 type Records = {
-  medical?: [];
-  security?: [];
+  medical?: CrewRecord[];
+  security?: CrewRecord[];
 };
 
 type Softwares = {
@@ -50,6 +50,10 @@ type Softwares = {
 type Available = {
   name: string;
   value: string | number;
+};
+
+type CrewRecord = {
+  [name: string]: string;
 };
 
 enum Tab {
@@ -77,7 +81,7 @@ const SOFTWARE_DESC = {
   'crew manifest': 'A tool that allows you to view the crew manifest.',
   'digital messenger':
     'A tool that allows you to send messages to other crew members.',
-  'atmospheric sensor':
+  'atmosphere sensor':
     'A tool that allows you to analyze local atmospheric contents.',
   'photography module':
     'A portable camera module. Engage, then click to shoot.',
@@ -360,26 +364,78 @@ const InstalledSoftware = (props, context) => {
 const InstalledInfo = (props) => {
   const { software } = props;
 
+  /** Records get their own section here */
+  if (software === 'medical records') {
+    return <RecordsDisplay record_type="medical" />;
+  } else if (software === 'security records') {
+    return <RecordsDisplay record_type="security" />;
+  } else {
+    return (
+      <Section
+        fill
+        scrollable
+        title={
+          !software
+            ? 'Select a Program'
+            : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+                letter.toUpperCase()
+              )
+        }>
+        {software && (
+          <Stack fill vertical>
+            <Stack.Item>{SOFTWARE_DESC[software] || ''}</Stack.Item>
+            <Stack.Item grow>
+              <SoftwareButtons software={software} />
+            </Stack.Item>
+          </Stack>
+        )}
+      </Section>
+    );
+  }
+};
+
+/** Todo: Remove this entirely when records get a TGUI interface themselves */
+const RecordsDisplay = (props, context) => {
+  const { data } = useBackend<PaiInterfaceData>(context);
+  const { record_type } = props;
+  const { records = [] } = data;
+
   return (
     <Section
+      title="Name"
+      buttons={<RecordLabels record_type={record_type} />}
       fill
-      scrollable
-      title={
-        !software
-          ? 'Select a Program'
-          : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-            letter.toUpperCase())
-      }
-    >
-      {software && (
-        <Stack fill vertical>
-          <Stack.Item>{SOFTWARE_DESC[software] || ''}</Stack.Item>
-          <Stack.Item grow>
-            <SoftwareButtons software={software} />
-          </Stack.Item>
-        </Stack>
-      )}
+      scrollable>
+      <Table>
+        {records[record_type].map((record) => {
+          return (
+            <Table.Row className="candystripe" key={record}>
+              {Object.values(record).map((value) => {
+                return <Table.Cell key={value}>{value}</Table.Cell>;
+              })}
+            </Table.Row>
+          );
+        })}
+      </Table>
     </Section>
+  );
+};
+
+/** Renders the labels for the record viewer */
+const RecordLabels = (props) => {
+  const { record_type } = props;
+
+  return (
+    <Table>
+      <Table.Row>
+        <Table.Cell>
+          {record_type === 'medical' ? 'Physical Health' : 'Arrest Status'}
+        </Table.Cell>
+        <Table.Cell>
+          {record_type === 'medical' ? 'Mental Health' : 'Total Crimes'}
+        </Table.Cell>
+      </Table.Row>
+    </Table>
   );
 };
 
@@ -398,7 +454,7 @@ const SoftwareButtons = (props, context) => {
           <Button
             icon="power-off"
             onClick={() => act('pda', { pda: 'power' })}
-            selected={!pda.power}>
+            selected={pda.power}>
             Power
           </Button>
           <Button
@@ -408,7 +464,7 @@ const SoftwareButtons = (props, context) => {
             Silent
           </Button>
           <Button
-            disabled={!pda.power}
+            disabled={pda.power}
             icon="envelope"
             onClick={() => act('pda', { pda: 'message' })}>
             Message
@@ -460,10 +516,6 @@ const SoftwareButtons = (props, context) => {
         </>
       );
     }
-    case 'medical records':
-      return <RecordsDisplay record_type="medical" />;
-    case 'security records':
-      return <RecordsDisplay record_type="security" />;
     case 'universal translator':
       return (
         <Button
@@ -579,17 +631,5 @@ const AvailableRow = (props, context) => {
         </Button>
       </Table.Cell>
     </Table.Row>
-  );
-};
-
-const RecordsDisplay = (props, context) => {
-  const { data } = useBackend<PaiInterfaceData>(context);
-  const { record_type } = props;
-  const { records } = data;
-
-  return (
-    <Section fill scrollable>
-      <Table />
-    </Section>
   );
 };

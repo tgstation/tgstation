@@ -83,6 +83,10 @@
 					to_chat(usr, span_notice("Insufficient RAM available."))
 			else
 				to_chat(usr, span_notice("Software not found."))
+		if("atmosphere_sensor")
+			if(!atmos_analyzer)
+				atmos_analyzer = new(src)
+			atmos_analyzer.attack_self(src)
 		if("camera_zoom")
 			aicamera.adjust_zoom(usr)
 		if("change_image")
@@ -145,7 +149,7 @@
 		if("newscaster")
 			newscaster.ui_interact(src)
 		if("pda")
-			if(!isnull(aiPDA))
+			if(isnull(aiPDA))
 				return FALSE
 			if(params["pda"] == "power")
 				aiPDA.toff = !aiPDA.toff
@@ -222,8 +226,9 @@
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
 	var/mob/living/silicon/pai/pai = usr
-	pai.visible_message(span_notice("Brute-force security override in progress..."), span_notice("You begin overriding the airlock security protocols."), span_hear("You hear the faint buzzing coming from inside a door."))
 	var/turf/T = get_turf(src)
+	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
+	to_chat(pai, "You begin overriding the airlock security protocols.")
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [T.loc].</b></font>")

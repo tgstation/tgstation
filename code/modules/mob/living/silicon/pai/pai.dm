@@ -54,23 +54,16 @@
 
 	var/languages_granted = FALSE // Toggles whether universal translator has been activated. Cannot be reversed
 
-	var/datum/data/record/medicalActive1 // Datacore record declarations for record software
-	var/datum/data/record/medicalActive2
-
-	var/datum/data/record/securityActive1 // Could probably just combine all these into one
-	var/datum/data/record/securityActive2
-
 	var/obj/machinery/door/hackdoor // The airlock being hacked
 	var/hackprogress = 0 // Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
+	// Software
+	var/obj/item/analyzer/atmos_analyzer // Atmospheric analyzer
 	var/obj/item/assembly/signaler/internal/signaler // AI's signaler
-
 	var/obj/item/instrument/piano_synth/internal_instrument
 	var/obj/machinery/newscaster //pAI Newscaster
 	var/obj/item/healthanalyzer/hostscan //pAI healthanalyzer
-
-	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
-	var/obj/item/gps/pai/internal_gps = null
+	var/obj/item/gps/pai/internal_gps = null // Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
 
 	var/encryptmod = FALSE
 	var/holoform = FALSE
@@ -101,6 +94,8 @@
 		hacking_cable = null
 		if(!QDELETED(card))
 			card.update_appearance()
+	if(A == atmos_analyzer)
+		atmos_analyzer = null
 	if(A == internal_instrument)
 		internal_instrument = null
 	if(A == newscaster)
@@ -114,6 +109,7 @@
 	return ..()
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(internal_instrument)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(newscaster)
@@ -140,6 +136,7 @@
 	forceMove(P)
 	card = P
 	job = "Personal AI"
+	atmos_analyzer = new /obj/item/analyzer(src)
 	signaler = new /obj/item/assembly/signaler/internal(src)
 	hostscan = new /obj/item/healthanalyzer(src)
 	newscaster = new /obj/machinery/newscaster(src)
