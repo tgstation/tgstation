@@ -1393,7 +1393,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "PW" = (
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Qk" = (

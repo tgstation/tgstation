@@ -82,6 +82,14 @@
 
 	SSatoms.InitializeAtoms(areas + turfs + movables, returns_created_atoms ? created_atoms : null)
 
+	for(var/turf/unlit as anything in turfs)
+		if(unlit.always_lit)
+			continue
+		var/area/loc_area = unlit.loc
+		if(!loc_area.static_lighting)
+			continue
+		unlit.lighting_build_overlay()
+
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)

@@ -97,9 +97,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/list/soft_filter_result
 	if(client && !forced && !filterproof)
 		//The filter doesn't act on the sanitized message, but the raw message.
-		filter_result = is_ic_filtered(message)
+		filter_result = CAN_BYPASS_FILTER(src) ? null : is_ic_filtered(message)
 		if(!filter_result)
-			soft_filter_result = is_soft_ic_filtered(message)
+			soft_filter_result = CAN_BYPASS_FILTER(src) ? null : is_soft_ic_filtered(message)
 
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -327,24 +327,24 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
 	var/list/the_dead = list()
-	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
+	if(HAS_TRAIT(src, TRAIT_SIGN_LANG))	// Sign language
 		var/mob/living/carbon/mute = src
 		if(istype(mute))
-			var/empty_indexes = get_empty_held_indexes() //How many hands the player has empty
-			if(length(empty_indexes) == 1 || !mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))
-				message = stars(message)
-			if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (!mute.get_bodypart(BODY_ZONE_L_ARM) || !mute.get_bodypart(BODY_ZONE_R_ARM))))//All existing hands full, can't sign
-				mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!</span.?>", visible_message_flags = EMOTE_MESSAGE)
-				return FALSE
-			if(!mute.get_bodypart(BODY_ZONE_L_ARM) && !mute.get_bodypart(BODY_ZONE_R_ARM))//Can't sign with no arms!
-				to_chat(src, "<span class='warning'>You can't sign with no hands!</span.?>")
-				return FALSE
-			if(mute.handcuffed)//Can't sign when your hands are cuffed, but can at least make a visual effort to
-				mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!</span.?>", visible_message_flags = EMOTE_MESSAGE)
-				return FALSE
-			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
-				to_chat(src, "<span class='warning'>You can't sign at the moment!</span.?>")
-				return FALSE
+			switch(mute.check_signables_state())
+				if(SIGN_ONE_HAND) // One arm
+					message = stars(message)
+				if(SIGN_HANDS_FULL) // Full hands
+					mute.visible_message("tries to sign, but can't with [src.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
+					return FALSE
+				if(SIGN_ARMLESS) // No arms
+					to_chat(src, span_warning("You can't sign with no hands!"))
+					return FALSE
+				if(SIGN_TRAIT_BLOCKED) // Hands Blocked or Emote Mute traits
+					to_chat(src, span_warning("You can't sign at the moment!"))
+					return FALSE
+				if(SIGN_CUFFED) // Cuffed
+					mute.visible_message("tries to sign, but can't with [src.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+					return FALSE
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) //Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.

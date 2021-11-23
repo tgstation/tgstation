@@ -32,11 +32,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/raw_msg = msg
 
 	var/list/filter_result = is_ooc_filtered(msg)
-	if (filter_result)
+	if (!CAN_BYPASS_FILTER(usr) && filter_result)
 		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
 
-	var/list/soft_filter_result = is_soft_ooc_filtered(msg)
+	// Protect filter bypassers from themselves.
+	// Demote hard filter results to soft filter results if necessary due to the danger of accidentally speaking in OOC.
+	var/list/soft_filter_result = filter_result || is_soft_ooc_filtered(msg)
+
 	if (soft_filter_result)
 		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 			return

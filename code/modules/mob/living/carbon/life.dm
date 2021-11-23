@@ -246,10 +246,13 @@
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
-	//NITRYL
-	if(breath_gases[/datum/gas/nitryl])
-		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
-		adjustFireLoss(nitryl_partialpressure/4)
+	//NITRIUM
+	if(breath_gases[/datum/gas/nitrium])
+		var/nitrium_partialpressure = (breath_gases[/datum/gas/nitrium][MOLES]/breath.total_moles())*breath_pressure
+		if(nitrium_partialpressure > 0.5)
+			adjustFireLoss(nitrium_partialpressure * 0.15)
+		if(nitrium_partialpressure > 5)
+			adjustToxLoss(nitrium_partialpressure * 0.05)
 
 	//FREON
 	if(breath_gases[/datum/gas/freon])

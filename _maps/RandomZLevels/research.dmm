@@ -942,7 +942,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cG" = (
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -3884,7 +3884,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "iI" = (
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
