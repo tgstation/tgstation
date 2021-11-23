@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Areas loaded from map templates should generate their lighting objects upon being loaded, which means that admin or game-spawned map templates will now have functional lights."

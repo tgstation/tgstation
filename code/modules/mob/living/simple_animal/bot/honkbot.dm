@@ -84,24 +84,6 @@
 	text_dehack = "You reboot [name] and restore the sound control system."
 	text_dehack_fail = "[name] refuses to accept your authority!"
 
-/mob/living/simple_animal/bot/honkbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.7 controls</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
-
-"<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
-
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += text({"<BR> Auto Patrol: []"},
-
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return dat
-
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
 	var/final = NONE
 	if(check_records)

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some potential issues that may lock the economy subsystem in \"market crashing\" mode or accidentally clear it."

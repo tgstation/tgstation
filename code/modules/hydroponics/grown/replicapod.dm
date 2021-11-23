@@ -175,7 +175,7 @@
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
-		parent.update_tray()
+		parent.update_tray(user, seed_count)
 		return result
 
 	// Congratulations! %Do you want to build a pod man?%
@@ -200,5 +200,5 @@
 	podman.set_cloned_appearance()
 	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
-	parent.update_tray()
+	parent.update_tray(user, 1)
 	return result

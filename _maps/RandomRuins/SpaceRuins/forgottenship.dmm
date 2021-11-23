@@ -1129,7 +1129,7 @@
 "dh" = (
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
-	dir = 6;
+	dir = 9;
 	network = list("fsci");
 	screen_loc = ""
 	},

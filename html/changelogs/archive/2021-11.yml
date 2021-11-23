@@ -459,3 +459,271 @@
       the value of the crate, and can then sell the crate back on the shuttle.
   - balance: cargo doesn't start with a budget, other departments get what their budget
       was split up amongst them
+2021-11-14:
+  Ghommie:
+  - bugfix: Fixed some potential issues that may lock the economy subsystem in "market
+      crashing" mode or accidentally clear it.
+  Iamgoofball:
+  - balance: Nerfs the felinid tail grab mood buff.
+  JohnFulpWillard:
+  - bugfix: Changelings no longer get sent to Argentina when using last resort
+  - bugfix: Blind people and those without eyes are no longer affected by changeling's
+      last resort explosion.
+  Nanotrasen Medi-Sciences Division:
+  - qol: The medical holobarrier is slightly transparent to convey you can move through
+      it, as well as more animated!
+  TheFakeElon:
+  - code_imp: protects the filename global regex
+  Thunder12345:
+  - expansion: The option to choose your body type is now available to all characters
+      (with a gendered species)
+  - bugfix: You can no longer access the body type option on genderless species by
+      setting your gender to other then changing species.
+  necromanceranne:
+  - bugfix: You now only go on click cooldown if you actually threw something.
+  timothymtorres:
+  - qol: Crates that spawn in maintenance are now more randomized
+2021-11-15:
+  Arturlang:
+  - bugfix: The witchunter hat no longer hides your hair
+  Fikou:
+  - balance: space adaptation has been split into two mutations. pressure adaptation
+      giving you full immunity to pressure and temperature adaptation giving you full
+      immunity to temperature. these are not compatible with each other.
+  Ghilker:
+  - balance: Increase the CO2 SM heat penalty to 6
+  Ghommie:
+  - bugfix: You can no longer challenge multiple elite mining mobs at once and get
+      potentially warped between two arenas because of it.
+  - bugfix: You can now lose against elite mining mobs even if you can't die (cough
+      cough Memento Mori) if you're over the minus 200 health threshold. Be careful
+      not to bite the dust.
+  Ghommie (Thanks to dorsisdwarf for the idea):
+  - balance: The detomatix cart now sends forged messages (name and job of the message
+      can also be forged) that can explode a PDA when someone tries to reply to them
+      or access the message menu of the PDA UI up to 10 seconds after receiving it
+      instead of detonating the PDA right off the bat. Because of this and the possibility
+      that a portion of these messages goes "unreplied", the TC cost of the item has
+      also been reduced to 4 and the number of charges upped to 6.
+  Mothblocks:
+  - bugfix: Team antag HUDs will now properly display when they should, and won't
+      display when they shouldn't.
+  - bugfix: Antag HUDs will now properly show on round end again.
+  jlsnow301:
+  - rscadd: All of your favorite simple bot friends aboard the station now have a
+      much better interface in TGUI
+  - qol: You can now lock and unlock bots, including their maintenance hatches, via
+      the UI.
+  tralezab:
+  - expansion: Traitor Flavor now displays on round end!
+2021-11-16:
+  FernandoJ8:
+  - qol: changes the access requirement of chem lockers from chemistry access to pharmacy
+      access
+  Ghommie:
+  - expansion: Hydroponics tray USB port.
+  - expansion: Double beds can now hold two people at a time.
+  - balance: Double beds and double bedsheets, being double the size of normal beds
+      and bedsheets, just like their names suggest, now also cost double the materials
+      to craft and give double the materials when deconstructed.
+  Iamgoofball:
+  - balance: Gives Space Pirates a bonus to hijack speed on the shuttle, and allows
+      them to hijack.
+  Mickyan:
+  - balance: Wings now allow falling short distances without taking damage (you will
+      still suffer from knockdown)
+  RandomGamer123:
+  - bugfix: Fixes the HFR (and other indestructible machinery with component parts)
+      from being able to be blown up by external sources under special conditions.
+  - bugfix: Fixes the nuke disk from being able to be made inaccessible by being placed
+      in the center of the HFR.
+  Thunder12345:
+  - bugfix: Atheists will no longer mistakenly attempt to get closer to a god they
+      do not believe in when committing suicide with their fedora
+  Watermelon914:
+  - bugfix: Fixed the foreach and filter circuit component not functioning correctly.
+  itseasytosee:
+  - imageadd: added a sprite for the sectile when worn on your belt.
+  - expansion: The Nanotrasen High Impact Weapons Division would like to apologize
+      for manufacturing a large quantity of dud onboard nuclear warheads. Following
+      a recall, we expect that the replacement batch of warheads will be 900% more
+      likely to Anhilate all life within its radius.
+  tralezab:
+  - bugfix: cargo consoles aren't breaking when department orders buys a canister.
+      seriously though who buys canisters man
+2021-11-17:
+  Ghommie:
+  - qol: (Slower) Mobs won't look so jittery while being moved by the tram anymore.
+  - qol: This also applies to the tram itself.
+  GoldenAlpharex:
+  - code_imp: Improved the comfy chair's armrest code.
+  Krysonism:
+  - expansion: Small and large plates have been added to the kitchen vend.
+  - expansion: Plates will now break when thrown.
+  - expansion: Carpskin suits and fedoras can now be crafted using carp scales.
+  LordVollkorn:
+  - bugfix: Pure Inacusiate is now humanly possible to create
+  - bugfix: Truly pure Multiver is much easier to achieve now
+  Paxilmaniac:
+  - balance: the marine ert is no longer as vulnerable to atmospheric problems as
+      before
+  - imageadd: a new centcom themed combat uniform
+  - imageadd: objectively better looking marine armor
+  RaveRadbury:
+  - qol: You can now load plates onto trays
+  UnokiAs:
+  - imageadd: New barrier grenade sprite
+  - qol: Easier to differentiate the barrier grenade and flashbang
+  WarlockD:
+  - rscadd: Added /datum/design/component/list_assoc_literal
+  esainane:
+  - bugfix: UpdatePaths will now handle lists that contain strings.
+  - bugfix: Some diagonal cameras are back to being placed on walls, instead of floating.
+      For real this time, honest.
+  - bugfix: Special air alarms (syndicate, ruins, unlocked, engine, etc) should now
+      all be facing the correct direction.
+  - bugfix: IceBox's Mixing Chamber air alarm is now placed on the correct tile.
+  tralezab:
+  - rscadd: Added two new fish to the aquarium
+2021-11-18:
+  Archemagus (aka Laxesh):
+  - bugfix: Now floorbot, will try to fix floors, not only when emagged.
+  Ghilker:
+  - rscdel: change the name of the "Cosa Nostra Starter Pack" to a more generic "Mafioso
+      Starter Pack", remove racist innuendo in the description
+  - rscdel: removed nitryl
+  - rscdel: removed stimulum
+  - balance: merged the two into nitryum that shares the two gases features and that
+      can make a crystal of itself in the crystallizer, the gas is made with trit,
+      nitrogen and bz at over 1500 K
+  - balance: the gas effect can be chosen by the partial pressure of the gas, low
+      pressure and you have the old nitryl effect, higher and you'll have both
+  Ghommie:
+  - bugfix: Fixed some issues with the PDA UI, such as the skill tracker app and the
+      messages list of the messenger app being inaccessible.
+  - balance: The HoS, warden and officers no longer spawn with a stunbaton in their
+      bags.
+  GoldenAlpharex:
+  - bugfix: Quantum pads have had their blueprint tweaked by Nanotrasen's finest Bluespace
+      Technicians, and will no longer break the laws of teleportation by teleporting
+      themselves when they shouldn't.
+  esainane:
+  - admin: The camera report verb now works... at least as well as it used to.
+  itseasytosee:
+  - bugfix: The correct cinematic now plays when nuke ops fail to escape the station
+      after blowing it up.
+  tralezab:
+  - bugfix: fixes an oversight where mime and clown couldn't use their own department
+      orders console
+2021-11-19:
+  ATHATH:
+  - bugfix: Hulk punches now count as unarmed attacks for the purposes of blocking.
+  - bugfix: Martial arts that grant their users the ability to block unarmed and melee
+      attacks while they're in throw mode can now block hulk punches.
+  Archanial:
+  - bugfix: fixed stealthadmin nicknames should load now
+  Farquaar:
+  - imageadd: Added a contraband advert for a seedy lumber company
+  Ghommie:
+  - expansion: The "Ian's Adventure" station trait now makes Ian deadchat controllable
+      and gives him a couple extra lives (to survive early round tiding)
+  - bugfix: Cargo exports will now start deleting items only after everything is sold.
+      This will fix issues such as unachievable exports (like machine ones) and getting
+      less credits than what export scanners says.
+  - bugfix: Pacifists can no longer attach c4 to other living creatures.
+  JohnFulpWillard:
+  - bugfix: Cyborgs who perform research is now logged in the RD's server console,
+      rather than showing up as Unknown.
+  Tastyfish:
+  - bugfix: The crew monitor and crew manifest now correctly sort custom jobs according
+      to ID trim.
+  - refactor: Data cores now internally track ID trim when HoP updates cards, as well
+      as initial job.
+  - admin: The secrets manifest now also shows the registered trim for each player.
+  necromanceranne:
+  - bugfix: Having the bad touch trait correctly prevents you from gaining a good
+      mood event from being tail pulled.
+  phasenoisepon:
+  - rscadd: Wooden pews now require a wrench in hand to be rotated
+  timothymtorres:
+  - qol: Tracking beacons are now randomized (except arrivals) and added to several
+      new areas for all maps.
+  twilightwanderer:
+  - rscadd: Added a system of forms and the ability to print them
+2021-11-20:
+  BlueMemesauce:
+  - bugfix: Metastation Cargo Warehouse Airlocks will no longer have a chance to become
+      bolted or turn into a wall
+  Fhaxaris:
+  - rscadd: If a clown car picks up a person that drank more than 30u of Irish Car
+      Bomb, the clown car will explode five seconds later in a half max cap sized
+      explosion.
+  Ghommie:
+  - bugfix: Donuts found in sec vendors and boxes can now be used to make glazed donuts
+  - bugfix: Fixed emptied shot glasses having the drinking glass filling icon.
+  Guillaume Prata:
+  - balance: To improve the forensics efforts and professionalism our Security staff,
+      evidence bags are standard equipment given to every member of security now.
+  Melbert:
+  - bugfix: Icebox mining outpost's doors are powered properly
+  - bugfix: Icebox service sinks are plumbed correctly and don't have ducts sticking
+      out, also botany no longer has ducts around trays
+  - bugfix: Icebox kitchen now has universal enzyme
+  TacticalTortoise:
+  - bugfix: Deltastation - Teleporter room shutter button opened the wrong shutter
+  - bugfix: Iceboxstation - Service exit to Iceland was not properly marked
+  - bugfix: Kilostation - Kitchen shutters were not affected by button
+  TheBonded:
+  - bugfix: Aspiring xenobiologists and ambitious wizards can no longer mindswap into
+      ghost poly or otherwise make them sentient in an attempt to gain godmode + ghost
+      speed + the ability to go through walls.
+  Watermelon914:
+  - expansion: Shells that require anchoring to work now take their power from the
+      room's APC rather than their cell. They can still use their cell as a backup
+      battery. If they take too much power in a short period of time, they'll blow
+      up and eject the circuit. You can examine the shell to see if it requires a
+      cell to function.
+  jlsnow301:
+  - bugfix: Fixed some logic errors in vendor prices. Offstation items are free once
+      again. Discounted items still give
+  - bugfix: Crafting while in the crafting menu now properly dims the entire crafting
+      list.
+  - bugfix: Mulebots no longer runtime
+  raffclar:
+  - bugfix: When a TGUI web page is refreshed, send new data to that page.
+  timothymtorres:
+  - qol: Add several new cosmetic random spawners to Tramstation that affect different
+      locations. (mostly maint)
+  - qol: Add several new cosmetic random spawners to Metastation that affect different
+      locations. (mostly maint)
+2021-11-21:
+  Burgermancoding:
+  - code_imp: Change the description and name of the Mafia set from cargo back to
+      Cosa Nostra
+  Timberpoes:
+  - admin: Non-deadminned admins are now exempt from all chat filters.
+  Watermelon914:
+  - admin: Players can now send urgent ahelps when no admins are on for potentially
+      better responses.
+  Zytolg:
+  - expansion: Renovations on the Cosmos Space Hotel in the local sector have been
+      completed.
+  esainane:
+  - bugfix: All wall mounted dispensers - that is, the virus food dispenser and the
+      pepper spray dispenser - are now considered wall items, instead of just the
+      pepper spray dispenser. You can no longer use a metal sheet on it to turn it
+      into a plumbed "stationary dispenser". You can still use metal sheets on mobile
+      tanks to turn them into plumbed stationary dispensers.
+  vincentiusvin:
+  - bugfix: fixed icebox ordnance burn chamber's air alarm working for the wrong area
+2021-11-22:
+  Colovorat:
+  - expansion: Stun Batong now turns off/on constantly for short time after emp
+  GoldenAlpharex:
+  - bugfix: Votes now work again.
+  JohnFulpWillard:
+  - bugfix: Missing HUD icons (Defib, clown/mime fan) once again show up.
+  Wallem:
+  - bugfix: People with robotic limbs are now incapable of using Sign Language if
+      their limbs are disabled.
+  - refactor: Refactored Sign Language

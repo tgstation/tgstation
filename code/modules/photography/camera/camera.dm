@@ -253,7 +253,7 @@
 
 /obj/item/circuit_component/camera
 	display_name = "Camera"
-	desc = "A polaroid camera that takes pictures when triggered."
+	desc = "A polaroid camera that takes pictures when triggered. The picture coordinate ports are relative to the position of the camera."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	/// The atom that was photographed from either user click or trigger input.

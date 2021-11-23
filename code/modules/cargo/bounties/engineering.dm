@@ -15,10 +15,10 @@
 		return FALSE
 	return our_mix.gases[gas_type][MOLES] >= moles_required
 
-/datum/bounty/item/engineering/gas/nitryl_tank
-	name = "Full Tank of Nitryl"
-	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitryl so they can get started. (20 Moles)"
-	gas_type = /datum/gas/nitryl
+/datum/bounty/item/engineering/gas/nitrium_tank
+	name = "Full Tank of Nitrium"
+	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitrium so they can get started. (20 Moles)"
+	gas_type = /datum/gas/nitrium
 
 /datum/bounty/item/engineering/gas/freon_tank
 	name = "Full Tank of Freon"

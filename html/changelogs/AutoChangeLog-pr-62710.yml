@@ -1,4 +1,0 @@
-author: "TheFakeElon"
-delete-after: True
-changes: 
-  - code_imp: "protects the filename global regex"
