@@ -40,13 +40,17 @@ export const NtosSkillTracker = (props, context) => {
                       {skill.lvl_name}
                     </Table.Cell>
                     <Table.Cell textAlign="center">
-                      {!!skill.progress_percent ? (
-                        <ProgressBar value={skill.progress_percent}>{Math.round(skill.progress_percent * 100)}%</ProgressBar>
+                      {skill.progress_percent ? (
+                        <ProgressBar value={skill.progress_percent}>
+                          {Math.round(skill.progress_percent * 100)}%
+                        </ProgressBar>
                       ) : ('—')}
                     </Table.Cell>
                     <Table.Cell textAlign="center">
-                      {!!skill.overall_percent ? (
-                        <ProgressBar value={skill.overall_percent}>{Math.round(skill.overall_percent * 100)}%</ProgressBar>
+                      {skill.overall_percent ? (
+                        <ProgressBar value={skill.overall_percent}>
+                          {Math.round(skill.overall_percent * 100)}%
+                        </ProgressBar>
                       ) : ('—')}
                     </Table.Cell>
                   </Table.Row>
