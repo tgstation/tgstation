@@ -114,3 +114,16 @@
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
+
+/datum/station_trait/colored_assistants
+	name = "Colored Assistants"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 10
+	show_in_report = TRUE
+	report_message = "Due to a shortage in standard issue jumpsuits, we have provided your assistants with one of our backup supplies."
+
+/datum/station_trait/colored_assistants/New()
+	. = ..()
+
+	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
+	GLOB.colored_assistant = new new_colored_assistant_type
