@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section, Table, BlockQuote, ProgressBar } from '../components';
+import { Button, Section, Table, BlockQuote, ProgressBar, AnimatedNumber } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosSkillTracker = (props, context) => {
@@ -41,15 +41,23 @@ export const NtosSkillTracker = (props, context) => {
                     </Table.Cell>
                     <Table.Cell textAlign="center">
                       {skill.progress_percent ? (
-                        <ProgressBar value={skill.progress_percent}>
-                          {Math.round(skill.progress_percent * 100)}%
+                        <ProgressBar
+                          value={skill.progress_percent}
+                          ranges={{
+                            good: [0.75, 1.0],
+                          }}>
+                          <AnimatedNumber value={Math.round(skill.progress_percent * 100)} />%
                         </ProgressBar>
                       ) : ('—')}
                     </Table.Cell>
                     <Table.Cell textAlign="center">
                       {skill.overall_percent ? (
-                        <ProgressBar value={skill.overall_percent}>
-                          {Math.round(skill.overall_percent * 100)}%
+                        <ProgressBar
+                          value={skill.overall_percent}
+                          ranges={{
+                            good: [0.75, 1.0],
+                          }}>
+                          <AnimatedNumber value={Math.round(skill.overall_percent * 100)} />%
                         </ProgressBar>
                       ) : ('—')}
                     </Table.Cell>
@@ -57,8 +65,11 @@ export const NtosSkillTracker = (props, context) => {
                   {!!skill.reward && (
                     <Table.Row className="candystripe">
                       <Table.Cell textAlign="center" colspan="3">
-                        <Button icon="trophy" onClick={() => act('PRG_reward', { skill: skill.name })}>
-                          Contact the Professional {skill.title} Association
+                        <Button
+                          icon="trophy"
+                          style={{ margin: '8px' }}
+                          onClick={() => act('PRG_reward', { skill: skill.name })}>
+                            Contact the Professional {skill.title} Association
                         </Button>
                       </Table.Cell>
                     </Table.Row>
