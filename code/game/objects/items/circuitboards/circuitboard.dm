@@ -19,7 +19,7 @@
 	var/onstation = TRUE
 
 /obj/item/circuitboard/Initialize(mapload)
-	set_greyscale(new_config=/datum/greyscale_config/circuit)
+	set_greyscale(new_config = /datum/greyscale_config/circuit)
 	return ..()
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/machine)

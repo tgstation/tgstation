@@ -271,9 +271,9 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 1)
 
-/obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()
-	if (istype(I))
+	if (istype(multitool))
 		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
 		to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
 
@@ -373,8 +373,8 @@
 	needs_anchored = FALSE //wew lad
 	var/secure = FALSE
 
-/obj/item/circuitboard/machine/holopad/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_MULTITOOL)
+/obj/item/circuitboard/machine/holopad/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour == TOOL_MULTITOOL)
 		if(secure)
 			build_path = /obj/machinery/holopad
 			secure = FALSE
@@ -446,15 +446,15 @@
 	needs_anchored = FALSE
 	var/is_special_type = FALSE
 
-/obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/M)
-	build_path = M.base_build_path
+/obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
+	build_path = smartfridge.base_build_path
 	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
-		name = "[initial(M.name)] (Machine Board)" //if it's a unique type, give it a unique name.
+		name = "[initial(smartfridge.name)] (Machine Board)" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
 
-/obj/item/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(!is_special_type && I.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/circuitboard/machine/smartfridge/attackby(obj/item/item, mob/user, params)
+	if(!is_special_type && item.tool_behaviour == TOOL_SCREWDRIVER)
 		var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
 		position = (position == fridges_name_paths.len) ? 1 : (position + 1)
 		build_path = fridges_name_paths[position]
@@ -1104,8 +1104,8 @@
 		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/circuitboard/machine/processor/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime

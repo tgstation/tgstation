@@ -232,8 +232,8 @@
 	name = "Library Visitor Console (Computer Board)"
 	build_path = /obj/machinery/computer/libraryconsole
 
-/obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
