@@ -84,6 +84,9 @@
 			else
 				to_chat(usr, span_notice("Software not found."))
 		if("atmosphere_sensor")
+			if(!holoform)
+				to_chat(usr, span_notice("You must be mobile to do this!"))
+				return FALSE
 			if(!atmos_analyzer)
 				atmos_analyzer = new(src)
 			atmos_analyzer.attack_self(src)

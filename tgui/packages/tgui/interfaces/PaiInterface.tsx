@@ -53,7 +53,7 @@ type Available = {
 };
 
 type CrewRecord = {
-  [name: string]: string;
+  [key: string]: string;
 };
 
 enum Tab {
@@ -378,8 +378,7 @@ const InstalledInfo = (props) => {
           !software
             ? 'Select a Program'
             : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-                letter.toUpperCase()
-              )
+              letter.toUpperCase())
         }>
         {software && (
           <Stack fill vertical>
@@ -399,6 +398,7 @@ const RecordsDisplay = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { record_type } = props;
   const { records = [] } = data;
+  const convertedRecord: CrewRecord[] = records[record_type];
 
   return (
     <Section
@@ -407,14 +407,8 @@ const RecordsDisplay = (props, context) => {
       fill
       scrollable>
       <Table>
-        {records[record_type].map((record) => {
-          return (
-            <Table.Row className="candystripe" key={record}>
-              {Object.values(record).map((value) => {
-                return <Table.Cell key={value}>{value}</Table.Cell>;
-              })}
-            </Table.Row>
-          );
+        {convertedRecord.map((record) => {
+          return <RecordRow key={record} record={record} />;
         })}
       </Table>
     </Section>
@@ -436,6 +430,19 @@ const RecordLabels = (props) => {
         </Table.Cell>
       </Table.Row>
     </Table>
+  );
+};
+
+const RecordRow = (props) => {
+  const { record = [] } = props;
+  const convertedRecord = Object.values(record);
+
+  return (
+    <Table.Row className="candystripe">
+      {convertedRecord.map((value) => {
+        return <Table.Cell key={value}>{value}</Table.Cell>;
+      })}
+    </Table.Row>
   );
 };
 
