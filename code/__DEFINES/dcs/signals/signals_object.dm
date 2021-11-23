@@ -282,6 +282,11 @@
 ///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 
+// /obj/item/camera signals
+
+///from /obj/item/camera/captureimage(): (atom/target, mob/user)
+#define COMSIG_CAMERA_IMAGE_CAPTURED "camera_image_captured"
+
 // /obj/item/grenade signals
 
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
