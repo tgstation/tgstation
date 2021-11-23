@@ -4,7 +4,7 @@
 	category = PROGRAM_CATEGORY_MISC
 	program_icon_state = "generic"
 	extended_desc = "Scan and view your current marketable job skills."
-	size = 4
+	size = 2
 	tgui_id = "NtosSkillTracker"
 	program_icon = "medal"
 	usage_flags = PROGRAM_TABLET // Must be a handheld device to read read your chakras or whatever
