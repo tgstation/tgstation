@@ -941,15 +941,14 @@
 /obj/machinery/hydroponics/soil/update_status_light_overlays()
 	return // Has no lights
 
-/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_SHOVEL) //Spades can still uproot plants on left click
-		balloon_alert(user, "clearing up soil...")
-		if(O.use_tool(src, user, 1 SECONDS, volume=50))
-			balloon_alert(user, "cleared")
-			qdel(src)
+/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour == !TOOL_SHOVEL) //Spades can still uproot plants on left click
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	else
-		return ..()
+	balloon_alert(user, "clearing up soil...")
+	if(O.use_tool(src, user, 1 SECONDS, volume=50))
+		balloon_alert(user, "cleared")
+		qdel(src)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
