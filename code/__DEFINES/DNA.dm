@@ -86,6 +86,8 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
 
+#define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
+
 #define DNA_EYE_COLOR_BLOCK 4
 #define DNA_FACIAL_HAIR_COLOR_BLOCK 2
 #define DNA_FACIAL_HAIRSTYLE_BLOCK 6
