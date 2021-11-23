@@ -55,7 +55,7 @@
 	data["ram"] = ram
 	data["software"] = list()
 	if(aiPDA)
-		data["pda"]["power"] = aiPDA.toff
+		data["pda"]["power"] = !aiPDA.toff
 		data["pda"]["silent"] = aiPDA.silent
 	if(master)
 		data["master"]["name"] = master

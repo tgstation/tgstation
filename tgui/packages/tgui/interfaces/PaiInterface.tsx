@@ -1,17 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  Icon,
-  ProgressBar,
-  Section,
-  Stack,
-  Table,
-  Tabs,
-  Tooltip,
-  NoticeBox,
-} from '../components';
+import { Box, Button, LabeledList, Icon, ProgressBar, Section, Stack, Table, Tabs, Tooltip, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type PaiInterfaceData = {
@@ -398,7 +386,7 @@ const RecordsDisplay = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
   const { record_type } = props;
   const { records = [] } = data;
-  const convertedRecord: CrewRecord[] = records[record_type];
+  const convertedRecords: CrewRecord[] = records[record_type];
 
   return (
     <Section
@@ -407,7 +395,7 @@ const RecordsDisplay = (props, context) => {
       fill
       scrollable>
       <Table>
-        {convertedRecord.map((record) => {
+        {convertedRecords && convertedRecords.map((record) => {
           return <RecordRow key={record} record={record} />;
         })}
       </Table>
@@ -439,7 +427,7 @@ const RecordRow = (props) => {
 
   return (
     <Table.Row className="candystripe">
-      {convertedRecord.map((value) => {
+      {convertedRecord && convertedRecord.map((value) => {
         return <Table.Cell key={value}>{value}</Table.Cell>;
       })}
     </Table.Row>
@@ -471,7 +459,7 @@ const SoftwareButtons = (props, context) => {
             Silent
           </Button>
           <Button
-            disabled={pda.power}
+            disabled={!pda.power}
             icon="envelope"
             onClick={() => act('pda', { pda: 'message' })}>
             Message
