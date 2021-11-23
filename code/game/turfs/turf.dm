@@ -83,6 +83,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * Turf Initialize
  *
  * Doesn't call parent, see [/atom/proc/Initialize]
+ * Please note, space tiles do not run this code.
+ * This is done because it's called so often that any extra code just slows things down too much
+ * If you add something relevant here add it there too
+ * [/turf/open/space/Initialize]
  */
 /turf/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
