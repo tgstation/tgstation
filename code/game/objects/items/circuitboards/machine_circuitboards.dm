@@ -557,8 +557,8 @@
 		/obj/machinery/vending/tool = "YouTool",
 		/obj/machinery/vending/custom = "Custom Vendor")
 
-/obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/circuitboard/machine/vendor/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		var/static/list/display_vending_names_paths
 		if(!display_vending_names_paths)
 			display_vending_names_paths = list()
@@ -574,9 +574,9 @@
 	name = "[vending_names_paths[build_path]] Vendor (Machine Board)"
 	req_components = list(initial(typepath.refill_canister) = 1)
 
-/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
 	for(var/typepath in vending_names_paths)
-		if(istype(M, typepath))
+		if(istype(machine, typepath))
 			set_type(typepath)
 			break
 	return ..()
@@ -689,8 +689,8 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+/obj/item/circuitboard/machine/chem_master/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		var/new_name = "ChemMaster"
 		var/new_path = /obj/machinery/chem_master
 
