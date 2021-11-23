@@ -27,7 +27,7 @@
 			M.Paralyze(rand(100,200))
 
 	for(var/obj/machinery/light/L in range(4, user))
-		L.on = 1
+		L.on = TRUE
 		L.break_light_tube()
 		stoplag()
 	return TRUE
