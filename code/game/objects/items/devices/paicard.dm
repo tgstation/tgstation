@@ -64,6 +64,12 @@
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
+	data["candidates"] = list()
+	if(pai)
+		data["dna"] = pai.master_dna
+		data["emagged"] = pai.emagged
+		data["laws"] = pai.laws.supplied
+		data["master"] = pai.master
 
 	return data
 

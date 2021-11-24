@@ -31,6 +31,7 @@ SUBSYSTEM_DEF(pai)
 	var/list/available = list()
 	for(var/datum/pai_candidate/checked_candidate in SSpai.candidates)
 		available.Add(check_ready(checked_candidate))
+	return TRUE
 
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
 	var/datum/pai_candidate/candidate
