@@ -268,8 +268,6 @@
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
-	/// Whether this program has alerted any user that a nuke is armed. To prevent spam.
-	var/alerted_user = FALSE
 
 /datum/computer_file/program/radar/fission360/run_program(mob/living/user)
 	. = ..()
