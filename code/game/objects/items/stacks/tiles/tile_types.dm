@@ -1114,7 +1114,7 @@
 	amount = 60
 
 //Catwalk Tiles
-/obj/item/stack/tile/catwalk_tile //This is our base type, sprited to look maintinence-styled
+/obj/item/stack/tile/catwalk_tile //This is our base type, sprited to look maintenence-styled
 	name = "catwalk floor"
 	singular_name = "catwalk floor tile"
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
