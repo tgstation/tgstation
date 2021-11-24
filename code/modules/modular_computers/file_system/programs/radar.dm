@@ -349,6 +349,6 @@
 		to_chat(computer.loc, span_userdanger("Your [computer.name] vibrates and lets out an ominous alarm. Uh oh."))
 	else
 		computer.audible_message(
-			span_danger("[src] vibrates and lets out an ominous alarm. Uh oh."),
-			span_notice("[src] begins to vibrate rapidly. Wonder what that means..."),
+			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
+			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
 			)
