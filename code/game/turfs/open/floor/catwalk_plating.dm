@@ -5,7 +5,7 @@
  * you can screwdriver it to interact with the underneath stuff without destroying the tile...
  * unless you want to!
  */
-/turf/open/floor/catwalk_floor	//the base type, meant to look like a maintenence panel
+/turf/open/floor/catwalk_floor	//the base type, meant to look like a maintenance panel
 	icon = 'icons/turf/floors/catwalk_plating.dmi'
 	icon_state = "maint_below"
 	name = "catwalk floor"
