@@ -226,7 +226,7 @@
 	. = ..()
 	for(var/mob/living/carbon/human/sacrifices in atoms)
 		atoms -= sacrifices
-		sacrifices.gib()
+		sacrifices.spill_organs()
 
 
 ///////////////
