@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(pai)
 	var/comments
 	var/ready = FALSE
 
-/datum/controller/subsystem/pai/proc/findPAI(obj/item/pai_card/pai, mob/user)
+/datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/pai, mob/user)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
 		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector."))
 		return
@@ -71,11 +71,11 @@ SUBSYSTEM_DEF(pai)
 /datum/controller/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
 
-/datum/controller/subsystem/pai/proc/check_ready(datum/pai_candidate/C)
-	if(!C.ready)
+/datum/controller/subsystem/pai/proc/check_ready(datum/pai_candidate/candidate)
+	if(!candidate.ready)
 		return FALSE
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == C.key)
-			return C
+	for(var/mob/dead/observer/observer in GLOB.player_list)
+		if(observer.key == candidate.key)
+			return candidate
 	return FALSE
 

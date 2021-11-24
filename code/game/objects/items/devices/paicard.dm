@@ -61,12 +61,12 @@
 		ui = new(user, src, "PaiDownload", name)
 		ui.open()
 
+/obj/item/paicard/ui_state(mob/user)
+	return GLOB.inventory_state
+
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
-	if(!pai)
-		data["candidates"] = list() // not sure how i'd populate this: list of downloadable candidates
-		return data
 	data["can_holo"] = pai.canholo
 	data["dna"] = pai.master_dna
 	data["emagged"] = pai.emagged
@@ -79,19 +79,25 @@
 		data["radio"]["receive"] = pai.can_receive
 	return data
 
+/obj/item/paicard/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	if(!pai)
+		data["candidates"] = SSpai.candidates
+	return data
+
 /obj/item/paicard/ui_act(action, list/params)
 	. = ..()
 	if(.)
-		return
+		return FALSE
 	if(!usr || usr.stat)
-		return
+		return FALSE
+	if(loc != usr)
+		return FALSE
 	switch(action)
 		if("request")
 			if(!pai)
 				SSpai.findPAI(src, usr)
-		if(pai)
-			if(!(loc == usr))
-				return
 		if("set_dna")
 			if(pai.master_dna)
 				return
