@@ -22,7 +22,7 @@
 	bite_consumption = 6
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	eatverbs = list("bite","chew","gnaw","swallow","chomp")
+	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fishmeat/carp
@@ -297,7 +297,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
-	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
+	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_sausage/MakeGrillable()
@@ -311,7 +311,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
-	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
+	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
@@ -408,7 +408,7 @@
 		M.visible_message(span_suicide("[M] realizes [M.p_their()] body won't activate [src]!")
 		,span_warning("Your body won't activate [src]..."))
 		return SHAME
-	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	playsound(M, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
 	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
 	addtimer(CALLBACK(src, .proc/finish_suicide, M), 15) //you've eaten it, you can run now
 	return MANUAL_SUICIDE
@@ -456,7 +456,7 @@
 	icon_state = "stewedsoymeat"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("soy" = 1, "vegetables" = 1)
-	eatverbs = list("slurp","sip","inhale","drink")
+	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -740,7 +740,7 @@
 	foodtypes = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
 
 /obj/item/food/meat/slab/synthmeat/MakeGrillable()
-	AddComponent(/datum/component/grillable,/obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 /obj/item/food/meat/slab/meatproduct
 	name = "meat product"
 	icon_state = "meatproduct"

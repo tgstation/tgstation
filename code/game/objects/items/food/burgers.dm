@@ -164,7 +164,7 @@
 	switch(paranormal_activity)
 		if(97 to 100)
 			audible_message("[src] rattles a length of chain.")
-			playsound(loc,'sound/misc/chain_rattling.ogg', 300, TRUE)
+			playsound(loc, 'sound/misc/chain_rattling.ogg', 300, TRUE)
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
 		if(84 to 90)
@@ -176,11 +176,11 @@
 			var/obj/machinery/light/L = locate(/obj/machinery/light) in view(4, src)
 			L?.flicker()
 		if(62 to 64)
-			playsound(loc,pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
+			playsound(loc, pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
 		if(61)
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
-			playsound(loc,'sound/effects/splat.ogg', 200, TRUE)
+			playsound(loc, 'sound/effects/splat.ogg', 200, TRUE)
 
 		//If i was less lazy i would make the burger forcefeed itself to a nearby mob here.
 
