@@ -22,6 +22,9 @@
 GLOBAL_LIST_EMPTY(vampire_houses)
 
 /datum/preference/choiced/vampire_status/apply_to_human(mob/living/carbon/human/target, value)
+	if (!(relevant_species_trait in target.dna?.species.species_traits))
+		return
+
 	if(value != "Inoculated")
 		return
 

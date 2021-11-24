@@ -763,3 +763,52 @@
   - expansion: You can now *swear
   axietheaxolotl:
   - imageadd: new and redone HoP uniforms
+2021-11-24:
+  Ghilker:
+  - bugfix: fix message spam for manual pipe crafting
+  - code_imp: space heater now process on process_atmos()
+  Ghommie:
+  - spellcheck: Fixed a mistake in the Drone repair message feedback when repaired
+      by someone else.
+  - expansion: Handheld cameras (not the wallmounted security ones) can now be used
+      as circuit shells.
+  - bugfix: Lavaland ash storms once again replenish basalt turfs.
+  - bugfix: Vampire victims no longer receive messages about bloodsucking while unconscious.
+  Guillaume Prata:
+  - expansion: Ethereal lungs can be printed with a limb grower now.
+  LemonInTheDark:
+  - bugfix: Fixes the master controller dying in a rare case of the godslayer armor
+  Melbert:
+  - refactor: Refactored cult rune inscribing into a component
+  - refactor: Refactored null rod rune clearing into a component
+  Mothblocks:
+  - admin: The admin who adds a known alt is now logged in the table.
+  - rscadd: Added a station trait for varying colored assistant jumpsuits.
+  - admin: Added options to disable footstep sounds and parallax to the lag switch
+      panel.
+  - bugfix: Fixed comms console not acknowledging admin rejects.
+  - bugfix: Fix the space dragon's rift not healing the dragon.
+  OrionTheFox:
+  - bugfix: Catwalk Tiles will now properly show underfloor items
+  PositiveEntropy:
+  - imageadd: Resprites the Black, Red and Blue lawyer suits!
+  - expansion: Adds the Good Lawyer Suit, for those who truly want to be a CRIMINAL
+      lawyer!
+  - rscdel: Removes the Black Female Suit and Black Female Suit Skirt
+  RandomGamer123:
+  - bugfix: Certain pumps/filters in atmospherics and engineering now show their more
+      descriptive names which haven't been showing up properly for months.
+  Seris02:
+  - code_imp: better logic for plural_s()
+  Wallem:
+  - expansion: Glass & Reinforced glass floors are now craftable.
+  dragomagol:
+  - admin: hypnotized players now have a visible antag hud, are visible in the check
+      antag panel, and have objectives visible on the traitor panel
+  - expansion: hypnotized victims and their objectives are now visible on the round
+      end report
+  tralezab:
+  - rscdel: Batform is gone!
+  - rscadd: "...Replaced by vampire houses as a preference. Join your department as\
+      \ a vampire m\xE9nage!"
+  - bugfix: department order consoles include circuitboards
