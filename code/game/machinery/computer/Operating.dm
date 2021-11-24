@@ -14,9 +14,21 @@
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/operating/Initialize(mapload)
-	. = ..()
+	..()
 	linked_techweb = SSresearch.science_tech
 	find_table()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/operating/LateInitialize()
+	. = ..()
+
+	// MOTHBLOCKS TODO: Button on UI to view experiments
+	AddComponent( \
+		/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/dissection), \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK, \
+	)
 
 /obj/machinery/computer/operating/Destroy()
 	for(var/direction in GLOB.alldirs)
