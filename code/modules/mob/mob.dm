@@ -108,7 +108,7 @@
 			if(HUD_LIST_LIST)
 				hud_list[hud] = list()
 			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
+				var/image/I = image('icons/mob/huds/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 
@@ -1285,10 +1285,9 @@
 /mob/proc/set_stat(new_stat)
 	if(new_stat == stat)
 		return
-	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat)
 	. = stat
 	stat = new_stat
-
+	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
@@ -1298,25 +1297,25 @@
 				return FALSE
 		if(NAMEOF(src, machine))
 			set_machine(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, focus))
 			set_focus(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, nutrition))
 			set_nutrition(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, stat))
 			set_stat(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, dizziness))
 			set_dizziness(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-			. =  TRUE
+			. = TRUE
 		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-			. =  TRUE
+			. = TRUE
 
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
@@ -1399,7 +1398,7 @@
 	var/list/memories = list()
 
 	for(var/memory_key in user?.mind.memories)
-		var/datum/memory/memory =  user.mind.memories[memory_key]
+		var/datum/memory/memory = user.mind.memories[memory_key]
 		memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories

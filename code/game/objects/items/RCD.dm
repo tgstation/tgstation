@@ -780,7 +780,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
-	canRturf = TRUE
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
 	var/energyfactor = 72
 
@@ -812,9 +811,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return .
 
 /obj/item/construction/rcd/borg/syndicate
+	name = "syndicate RCD"
+	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
 	energyfactor = 66
+	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
 	matter = 160

@@ -104,3 +104,12 @@
 	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
 		return TRUE
 	return ..()
+
+/datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
+		return pick('sound/creatures/monkey/monkey_screech_1.ogg',
+					'sound/creatures/monkey/monkey_screech_2.ogg',
+					'sound/creatures/monkey/monkey_screech_3.ogg',
+					'sound/creatures/monkey/monkey_screech_4.ogg',
+					'sound/creatures/monkey/monkey_screech_5.ogg',
+					'sound/creatures/monkey/monkey_screech_6.ogg',
+					'sound/creatures/monkey/monkey_screech_7.ogg')

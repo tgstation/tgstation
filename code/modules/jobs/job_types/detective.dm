@@ -52,6 +52,7 @@
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
 		/obj/item/melee/baton = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		/obj/item/storage/box/evidence = 1,
 		)
 	belt = /obj/item/pda/detective

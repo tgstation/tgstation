@@ -249,4 +249,4 @@
 			continue
 
 		if (preference.is_randomizable())
-			preferences.write_preference(preference, preference.create_random_value(preferences))
+			preference.apply_to_human(src, preference.create_random_value(preferences))

@@ -43,7 +43,7 @@
 	/// Who's getting scanned?
 	var/mob/living/carbon/human/altPatient   //If scanning someone else, this will be the target.
 	/// Used to find the money.
-	var/obj/item/card/id/C          //the account of the person using the console.
+	var/obj/item/card/id/C //the account of the person using the console.
 
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
@@ -203,7 +203,7 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent =  round((altPatient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+	var/blood_percent = round((altPatient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 	var/blood_type = altPatient.dna.blood_type
 	var/blood_warning = " "
 

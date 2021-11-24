@@ -214,18 +214,14 @@
 	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
 		var/mob/living/carbon/mute = talking_movable
 		if(istype(mute))
-			var/empty_indexes = mute.get_empty_held_indexes() //How many hands the player has empty
-			var/obj/item/clothing/gloves/radio/radio_gloves = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
-			if(!istype(radio_gloves))
+			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
+			if(!istype(G))
 				return FALSE
-			if(length(empty_indexes) == 1)
-				message = stars(message)
-			if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
-				return FALSE
-			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
-				return FALSE
-			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
-				return FALSE
+			switch(mute.check_signables_state())
+				if(SIGN_ONE_HAND) // One hand full
+					message = stars(message)
+				if(SIGN_HANDS_FULL to SIGN_CUFFED)
+					return FALSE
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
@@ -315,7 +311,10 @@
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
-
+	var/filtered_mods = list()
+	if (message_mods[MODE_CUSTOM_SAY_EMOTE])
+		filtered_mods[MODE_CUSTOM_SAY_EMOTE] = message_mods[MODE_CUSTOM_SAY_EMOTE]
+		filtered_mods[MODE_CUSTOM_SAY_ERASE_INPUT] = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
 	if(message_mods[RADIO_EXTENSION] == MODE_L_HAND || message_mods[RADIO_EXTENSION] == MODE_R_HAND)
 		// try to avoid being heard double
 		if (loc == speaker && ismob(speaker))
@@ -325,7 +324,7 @@
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
 
-	talk_into(speaker, raw_message, , spans, language=message_language)
+	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
 /obj/item/radio/proc/can_receive(input_frequency, list/levels)
