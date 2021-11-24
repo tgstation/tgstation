@@ -945,7 +945,7 @@
 	if(weapon.tool_behaviour == !TOOL_SHOVEL) //Spades can still uproot plants on left click
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "clearing up soil...")
-	if(O.use_tool(src, user, 1 SECONDS, volume=50))
+	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
 		balloon_alert(user, "cleared")
 		qdel(src)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
