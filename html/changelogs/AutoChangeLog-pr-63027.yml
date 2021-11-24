@@ -1,0 +1,4 @@
+author: "tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "The captain is now at the top of the crew monitor again."
