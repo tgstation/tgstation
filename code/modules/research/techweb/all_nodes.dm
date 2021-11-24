@@ -327,7 +327,7 @@
 		"limbdesign_plasmaman",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
-	discount_experiments = list(/datum/experiment/scanning/random/cytology/easy = 1000, /datum/experiment/scanning/points/slime/expert = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/cytology/easy = 1000, /datum/experiment/dissection/xenomorph = 5000)
 
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -1795,7 +1795,7 @@
 	)
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/points/slime/hard)
+	required_experiments = list(/datum/experiment/dissection/xenomorph)
 	hidden = TRUE
 
 /datum/techweb_node/alien_engi

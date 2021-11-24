@@ -183,7 +183,7 @@
 		playsound(source, 'sound/machines/ping.ogg', 25)
 	else
 		playsound(source, 'sound/machines/buzz-sigh.ogg', 25)
-		source.say("All research for this dissection has already been performed.")
+		source.say("The dissection did not result in anything, either prior dissections have not been complete, or this one has already been researched.")
 
 /**
  * Announces a message to all experiment handlers

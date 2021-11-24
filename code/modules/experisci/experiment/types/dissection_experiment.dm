@@ -30,3 +30,10 @@
 
 /datum/experiment/dissection/nonhuman/is_valid_dissection(mob/target)
 	return ishuman(target) && !ishumanbasic(target)
+
+/datum/experiment/dissection/xenomorph
+	name = "Xenomorph Dissection Experiment"
+	description = "Our understanding of the xenomorph only scratches the surface. Send us research from dissecting a xenomorph."
+
+/datum/experiment/dissection/xenomorph/is_valid_dissection(mob/target)
+	return isalien(target)

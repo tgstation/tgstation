@@ -1,6 +1,9 @@
 /datum/surgery/dissection
 	name = "Dissection"
-	// MOTHBLOCKS TODO: target_mobtypes for xenos
+	target_mobtypes = list(
+		/mob/living/carbon/human,
+		/mob/living/carbon/alien,
+	)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_real_bodypart = TRUE
 	steps = list(
