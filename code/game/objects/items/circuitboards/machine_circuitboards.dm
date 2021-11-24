@@ -737,7 +737,7 @@
 
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
-	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
+	var/new_cost = input("Set a new cost for using this medical kiosk.", "New cost", custom_cost) as num|null
 	if(!new_cost || (loc != user))
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
 		return
