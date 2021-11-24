@@ -1170,7 +1170,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	else
 		visible_message(span_danger("[src] explodes!"), span_warning("You hear a loud *pop*!"))
 
-	target.client.give_award(/datum/award/achievement/misc/clickbait, target)
+	target.client?.give_award(/datum/award/achievement/misc/clickbait, target)
 
 	if(T)
 		T.hotspot_expose(700,125)
