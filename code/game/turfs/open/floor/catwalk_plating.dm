@@ -23,18 +23,21 @@
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 
+GLOBAL_LIST_INIT(catwalk_overlay_masterlist, list())	//Stores all the above_states for the different types of catwalk
+
 /turf/open/floor/catwalk_floor/update_overlays()
 	. = ..()
-	var/image/catwalk_overlay	///Per-tile instead of static, so we can have multiple different types of catwalk
-	if(isnull(catwalk_overlay))
-		catwalk_overlay = new()
-		catwalk_overlay.icon = icon
-		catwalk_overlay.icon_state = "[above_state]"
-		catwalk_overlay.plane = GAME_PLANE
-		catwalk_overlay.layer = CATWALK_LAYER
-		catwalk_overlay = catwalk_overlay.appearance
 	if(covered)
-		. += catwalk_overlay
+		if(above_state in GLOB.catwalk_overlay_masterlist)
+			. += GLOB.catwalk_overlay_masterlist[above_state]
+		else
+			var/image/catwalk_overlay = new()
+			catwalk_overlay.icon = icon
+			catwalk_overlay.icon_state = above_state
+			catwalk_overlay.plane = GAME_PLANE
+			catwalk_overlay.layer = CATWALK_LAYER
+			GLOB.catwalk_overlay_masterlist[above_state] = catwalk_overlay
+			. += catwalk_overlay
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
