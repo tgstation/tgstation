@@ -36,10 +36,10 @@
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/bed/attackby_secondary(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_WRENCH || (flags_1&NODECONSTRUCT_1))
+/obj/structure/bed/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour != TOOL_WRENCH || (flags_1&NODECONSTRUCT_1))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	W.play_tool_sound(src)
+	weapon.play_tool_sound(src)
 	deconstruct(TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
