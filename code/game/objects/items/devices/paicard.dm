@@ -52,61 +52,46 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Personal AI Device</B><BR>"
-	if(pai)
-		if(!pai.master_dna || !pai.master)
-			dat += "<a href='byond://?src=[REF(src)];setdna=1'>Imprint Master DNA</a><br>"
-		dat += "Installed Personality: [pai.name]<br>"
-		dat += "Prime directive: <br>[pai.laws.zeroth]<br>"
-		for(var/slaws in pai.laws.supplied)
-			dat += "Additional directives: <br>[slaws]<br>"
-		dat += "<a href='byond://?src=[REF(src)];setlaws=1'>Configure Directives</a><br>"
-		dat += "<br>"
-		dat += "<h3>Device Settings</h3><br>"
-		if(pai.radio)
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=[REF(src)];toggle_transmit=1'>\[[pai.can_transmit? "Disable" : "Enable"] Radio Transmission\]</a><br>"
-			dat += "Receive: <A href='byond://?src=[REF(src)];toggle_receive=1'>\[[pai.can_receive? "Disable" : "Enable"] Radio Reception\]</a><br>"
-		else
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
-				dat += "<A href='byond://?src=[REF(src)];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
-		dat += "<A href='byond://?src=[REF(src)];fix_speech=1'>\[Reset speech synthesis module\]</a><br>"
-		dat += "<A href='byond://?src=[REF(src)];wipe=1'>\[Wipe current pAI personality\]</a><br>"
-	else
-		dat += "No personality installed.<br>"
-		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
-		dat += "<A href='byond://?src=[REF(src)];request=1'>\[View available personalities\]</a><br>"
-	user << browse(dat, "window=paicard")
-	onclose(user, "paicard")
-	return
+	ui_interact()
 
-/obj/item/paicard/Topic(href, href_list)
+/obj/item/paicard/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaiDownload", name)
+		ui.open()
 
+/obj/item/paicard/ui_data(mob/user)
+	. = ..()
+	var/list/data = list()
+
+	return data
+
+/obj/item/paicard/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
 	if(!usr || usr.stat)
 		return
-
-	if(href_list["request"])
-		SSpai.findPAI(src, usr)
-
-	if(pai)
-		if(!(loc == usr))
-			return
-		if(href_list["setdna"])
+	switch(action)
+		if("request")
+			if(!pai)
+				SSpai.findPAI(src, usr)
+		if(pai)
+			if(!(loc == usr))
+				return
+		if("set_dna")
 			if(pai.master_dna)
 				return
 			if(!iscarbon(usr))
 				to_chat(usr, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
 			else
-				var/mob/living/carbon/M = usr
-				pai.master = M.real_name
-				pai.master_dna = M.dna.unique_enzymes
+				var/mob/living/carbon/master = usr
+				pai.master = master.real_name
+				pai.master_dna = master.dna.unique_enzymes
 				to_chat(pai, span_notice("You have been bound to a new master."))
 				pai.emittersemicd = FALSE
-		if(href_list["wipe"])
+		if("wipe_pai")
 			var/confirm = tgui_alert(usr, "Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No"))
 			if(confirm == "Yes")
 				if(pai)
@@ -115,12 +100,12 @@
 					to_chat(pai, span_userdanger("Your mental faculties leave you."))
 					to_chat(pai, span_rose("oblivion... "))
 					qdel(pai)
-		if(href_list["fix_speech"])
+		if("fix_speech")
 			pai.stuttering = 0
 			pai.slurring = 0
 			pai.derpspeech = 0
-		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
-			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving.
+		if("toggle_radio")
+			var/transmitting = params["option"] == "transmit" //it can't be both so if we know it's not transmitting it must be receiving.
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
 			if(transmitting)
 				pai.can_transmit = !pai.can_transmit
@@ -130,11 +115,11 @@
 			transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
 			to_chat(usr,span_warning("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
 			to_chat(pai,span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-		if(href_list["setlaws"])
+		if("set_laws")
 			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
-		if(href_list["toggle_holo"])
+		if("toggle_holo")
 			if(pai.canholo)
 				to_chat(pai, span_userdanger("Your owner has disabled your holomatrix projectors!"))
 				pai.canholo = FALSE
@@ -143,8 +128,7 @@
 				to_chat(pai, span_boldnotice("Your owner has enabled your holomatrix projectors!"))
 				pai.canholo = TRUE
 				to_chat(usr, span_notice("You enable your pAI's holomatrix!"))
-
-	attack_self(usr)
+	return
 
 // WIRE_SIGNAL = 1
 // WIRE_RECEIVE = 2

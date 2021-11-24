@@ -36,10 +36,14 @@
 	var/list/data = list()
 	var/mob/living/silicon/pai/pai = user
 	data["records"] = list()
+	data["software"] = list()
 	if("medical records" in pai.software)
 		data["records"]["medical"] = GLOB.data_core.get_general_records()
 	if("security records" in pai.software)
 		data["records"]["security"] = GLOB.data_core.get_security_records()
+	if(software)
+		data["software"]["available"] = available_software
+		data["software"]["installed"] = software
 	return data
 
 // Variables sent to TGUI
@@ -53,16 +57,12 @@
 	data["master"] = list()
 	data["pda"] = list()
 	data["ram"] = ram
-	data["software"] = list()
 	if(aiPDA)
 		data["pda"]["power"] = !aiPDA.toff
 		data["pda"]["silent"] = aiPDA.silent
 	if(master)
 		data["master"]["name"] = master
 		data["master"]["dna"] = master_dna
-	if(software)
-		data["software"]["available"] = available_software
-		data["software"]["installed"] = software
 	return data
 
 // Actions received from TGUI
@@ -127,6 +127,8 @@
 			encryptmod = !encryptmod
 			radio.subspace_transmission = !radio.subspace_transmission
 		if("host_scan")
+			if(!hostscan)
+				hostscan = new(src)
 			if(params["scan"] == "scan")
 				hostscan()
 			if(params["scan"] == "wounds")

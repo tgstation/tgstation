@@ -331,10 +331,10 @@ const InstalledSoftware = (props, context) => {
 
   return (
     <Section fill scrollable title="Installed Software">
-      {!installed.length ? (
+      {installed && !installed.length ? (
         <NoticeBox>Nothing installed!</NoticeBox>
       ) : (
-        installed.map((software) => {
+        installed && installed.map((software) => {
           return (
             <Button key={software} onClick={() => onInstallClick(software)}>
               {software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
@@ -584,7 +584,7 @@ const AvailableSoftware = (_, context) => {
 
   return (
     <Table>
-      {convertedList.map((software) => {
+      {convertedList && convertedList.map((software) => {
         return <AvailableRow key={software.name} software={software} />;
       })}
     </Table>
