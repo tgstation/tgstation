@@ -226,7 +226,7 @@
 	. = ..()
 	for(var/mob/living/carbon/human/sacrifices in atoms)
 		atoms -= sacrifices
-		sacrifices.spill_organs()
+		sacrifices.gib()
 
 
 ///////////////
@@ -260,7 +260,9 @@
 		if(heart.target && heart.target.stat == DEAD)
 			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
 			var/mob/living/carbon/human/current_target = heart.target
-			current_target.gib()
+			current_target.spill_organs()
+			current_target.adjustBruteLoss(250)
+			new /obj/effect/gibspawner/generic(get_turf(current_target))
 			heart.target = null
 			var/datum/antagonist/heretic/heretic_datum = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
