@@ -268,6 +268,7 @@
  * B would have a 30% chance of being picked,
  * C would have a 10% chance of being picked,
  * and D would have a 0% chance of being picked.
+ * You should only pass integers in.
  */
 /proc/pick_weight(list/list_to_pick)
 	var/total = 0
