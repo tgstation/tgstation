@@ -948,7 +948,7 @@
 	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
 		balloon_alert(user, "cleared")
 		qdel(src)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
