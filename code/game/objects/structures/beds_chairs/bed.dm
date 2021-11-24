@@ -37,11 +37,11 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/attackby_secondary(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-	else
-		return ..()
+	if(W.tool_behaviour != TOOL_WRENCH || (flags_1&NODECONSTRUCT_1))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	W.play_tool_sound(src)
+	deconstruct(TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /*
  * Roller beds
