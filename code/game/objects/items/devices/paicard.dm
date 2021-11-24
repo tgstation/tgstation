@@ -64,13 +64,19 @@
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
-	data["candidates"] = list()
-	if(pai)
-		data["dna"] = pai.master_dna
-		data["emagged"] = pai.emagged
-		data["laws"] = pai.laws.supplied
-		data["master"] = pai.master
-
+	if(!pai)
+		data["candidates"] = list() // not sure how i'd populate this: list of downloadable candidates
+		return data
+	data["can_holo"] = pai.canholo
+	data["dna"] = pai.master_dna
+	data["emagged"] = pai.emagged
+	data["laws"] = pai.laws.supplied
+	data["master"] = pai.master
+	data["name"] = pai.name
+	data["radio"] = list()
+	if(pai.radio)
+		data["radio"]["transmit"] = pai.can_transmit
+		data["radio"]["receive"] = pai.can_receive
 	return data
 
 /obj/item/paicard/ui_act(action, list/params)

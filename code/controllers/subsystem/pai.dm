@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(pai)
 	var/comments
 	var/ready = FALSE
 
-/datum/controller/subsystem/pai/proc/findPAI(/obj/item/pai_card/pai, mob/user)
+/datum/controller/subsystem/pai/proc/findPAI(obj/item/pai_card/pai, mob/user)
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
 		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector."))
 		return
@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(pai)
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()
 	for(var/datum/pai_candidate/checked_candidate in SSpai.candidates)
-		available.Add(check_ready(checked_candidate))
+		available.Add(check_ready(checked_candidate)) // This needs to be displayed on paicard.dm
 	return TRUE
 
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
