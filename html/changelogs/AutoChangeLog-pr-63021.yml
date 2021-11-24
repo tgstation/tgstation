@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Toy shotguns (and toy crossbows) can be fired with only one hand again."
