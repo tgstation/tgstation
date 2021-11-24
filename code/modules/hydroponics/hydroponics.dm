@@ -942,7 +942,7 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour == !TOOL_SHOVEL) //Spades can still uproot plants on left click
+	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "clearing up soil...")
 	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
