@@ -1,3 +1,32 @@
+/datum/experiment/scanning/points/slime
+	name = "Base Slime Experiment"
+	required_points = 1
+
+/datum/experiment/scanning/points/slime/hard
+	name = "Challenging Slime Survey"
+	description = "Another station has challenged your research team to collect several challenging slime cores, \
+		are you up to the task?"
+	required_points = 10
+	required_atoms = list(/obj/item/slime_extract/bluespace = 1,
+		/obj/item/slime_extract/sepia = 1,
+		/obj/item/slime_extract/cerulean = 1,
+		/obj/item/slime_extract/pyrite = 1,
+		/obj/item/slime_extract/red = 2,
+		/obj/item/slime_extract/green = 2,
+		/obj/item/slime_extract/pink = 2,
+		/obj/item/slime_extract/gold = 2)
+
+/datum/experiment/scanning/points/slime/expert
+	name = "Expert Slime Survey"
+	description = "The intergalactic society of xenobiologists are currently looking for samples of the most complex \
+		slime cores, we are tasking your station with providing them with everything they need."
+	required_points = 10
+	required_atoms = list(/obj/item/slime_extract/adamantine = 1,
+		/obj/item/slime_extract/oil = 1,
+		/obj/item/slime_extract/black = 1,
+		/obj/item/slime_extract/lightpink = 1,
+		/obj/item/slime_extract/rainbow = 10)
+
 /datum/experiment/scanning/random/cytology/easy
 	name = "Basic Cytology Scanning Experiment"
 	description = "A scientist needs vermin to test on, use the cytology equipment to grow some of these simple critters!"
