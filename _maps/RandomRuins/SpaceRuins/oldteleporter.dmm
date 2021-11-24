@@ -21,9 +21,7 @@
 	},
 /area/ruin/space/oldteleporter)
 "g" = (
-/obj/structure/light_construct/small{
-	dir = 1
-	},
+/obj/structure/light_construct/small/directional/north,
 /turf/open/floor/iron/airless{
 	icon_state = "damaged3"
 	},
@@ -43,9 +41,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "k" = (
-/obj/structure/light_construct/small{
-	dir = 4
-	},
+/obj/structure/light_construct/small/directional/east,
 /turf/open/floor/plating/airless,
 /area/ruin/space/oldteleporter)
 "l" = (
@@ -62,7 +58,7 @@
 	},
 /area/ruin/space/oldteleporter)
 "n" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 

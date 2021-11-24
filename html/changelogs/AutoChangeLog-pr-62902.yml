@@ -1,0 +1,4 @@
+author: "Пельмешка"
+delete-after: True
+changes: 
+  - bugfix: "You could see parallax over blackness"

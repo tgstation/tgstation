@@ -140,7 +140,7 @@
 
 	var/list/feature_list = get_global_feature_list()
 
-	set_sprite(feature_list[deconstruct_block(getblock(features, dna_block), feature_list.len)])
+	set_sprite(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns

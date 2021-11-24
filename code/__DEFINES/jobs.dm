@@ -4,6 +4,8 @@
 #define JOB_UNAVAILABLE_PLAYTIME 3
 #define JOB_UNAVAILABLE_ACCOUNTAGE 4
 #define JOB_UNAVAILABLE_SLOTFULL 5
+/// Job unavailable due to incompatibility with an antag role.
+#define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"

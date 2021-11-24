@@ -26,13 +26,6 @@
 	if(!is_in_use)
 		INVOKE_ASYNC(src, .proc/activate , user)
 
-/obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
-	. = ..()
-	if(istype(I,/obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
-		to_chat(user, span_danger("You disrupt the magic of [src] with [I]."))
-		qdel(src)
-
 /obj/effect/eldritch/proc/activate(mob/living/user)
 	is_in_use = TRUE
 	// Have fun trying to read this proc.

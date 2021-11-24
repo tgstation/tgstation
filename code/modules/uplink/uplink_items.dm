@@ -994,11 +994,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/explosives/detomatix
 	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
-			detonate PDAs of crewmembers who have their message feature enabled. \
+	desc = "When inserted into a personal digital assistant, this cartridge gives you the opportunity to \
+			send up to six forged messages that will make PDAs of crewmembers explode when they try to reply to them. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	item = /obj/item/cartridge/virus/syndicate
-	cost = 6
+	cost = 4
 	restricted = TRUE
 
 /datum/uplink_item/explosives/emp

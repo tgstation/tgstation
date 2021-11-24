@@ -205,7 +205,7 @@
 	qdel(GetComponent(/datum/component/geiger_sound))
 
 	//Atmospherics
-/obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
+/obj/item/clothing/head/helmet/space/hardsuit/atmos
 	name = "atmospherics hardsuit helmet"
 	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
 	icon_state = "hardsuit0-atmospherics"
@@ -215,7 +215,7 @@
 	heat_protection = HEAD //Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
-/obj/item/clothing/suit/space/hardsuit/engine/atmos
+/obj/item/clothing/suit/space/hardsuit/atmos
 	name = "atmospherics hardsuit"
 	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
 	icon_state = "hardsuit-atmospherics"
@@ -223,8 +223,15 @@
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS //Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/atmos
 
+/obj/item/clothing/suit/space/hardsuit/atmos/equipped(mob/user, slot)
+	. = ..()
+	AddComponent(/datum/component/geiger_sound)
+
+/obj/item/clothing/suit/space/hardsuit/atmos/dropped()
+	. = ..()
+	qdel(GetComponent(/datum/component/geiger_sound))
 
 	//Chief Engineer's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
@@ -261,7 +268,6 @@
 	heat_protection = HEAD
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 50, ACID = 75, WOUND = 15)
 	light_range = 7
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator)
 
 /obj/item/clothing/head/helmet/space/hardsuit/mining/Initialize(mapload)
 	. = ..()
@@ -292,7 +298,16 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	armor = list(MELEE = 30, BULLET = 5, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 50, ACID = 75, WOUND = 15)
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/ore, /obj/item/pickaxe)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/gun/energy/kinetic_accelerator,
+		/obj/item/mining_scanner,
+		/obj/item/pickaxe,
+		/obj/item/resonator,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/tank/internals,
+		)
+
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 

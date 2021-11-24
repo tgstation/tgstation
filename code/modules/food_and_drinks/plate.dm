@@ -11,8 +11,7 @@
 	///The max height offset the food can reach on the plate
 	var/max_height_offset = 5
 	///Offset of where the click is calculated from, due to how food is positioned in their DMIs.
-	var/placement_offset = -12
-
+	var/placement_offset = -15
 
 /obj/item/plate/attackby(obj/item/I, mob/user, params)
 	if(!IS_EDIBLE(I))
@@ -60,3 +59,51 @@
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	ItemRemovedFromPlate(moved_item)
+
+#define PLATE_SHARD_PIECES 5
+
+/obj/item/plate/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(.)
+		return
+	var/generator/scatter_gen = generator("circle", 0, 48, NORMAL_RAND)
+	var/scatter_turf = get_turf(hit_atom)
+
+	for(var/obj/item/scattered_item as anything in contents)
+		ItemRemovedFromPlate(scattered_item)
+		scattered_item.forceMove(scatter_turf)
+		var/list/scatter_vector = scatter_gen.Rand()
+		scattered_item.pixel_x = scatter_vector[1]
+		scattered_item.pixel_y = scatter_vector[2]
+
+	for(var/iteration in 1 to PLATE_SHARD_PIECES)
+		var/obj/item/plate_shard/shard = new(scatter_turf)
+		shard.icon_state = "[shard.base_icon_state][iteration]"
+		shard.pixel_x = rand(-4, 4)
+		shard.pixel_y = rand(-4, 4)
+	playsound(scatter_turf, 'sound/items/ceramic_break.ogg', 60, TRUE)
+	qdel(src)
+
+/obj/item/plate/large
+	name = "buffet plate"
+	desc = "A large plate made for the professional catering industry but also apppreciated by mukbangers and other persons of considerable size and heft."
+	icon_state = "plate_large"
+	max_items = 12
+	max_x_offset = 8
+	max_height_offset = 12
+
+/obj/item/plate/small
+	name = "appetizer plate"
+	desc = "A small plate, perfect for appetizers, desserts or trendy modern cusine."
+	icon_state = "plate_small"
+	max_items = 4
+	max_x_offset = 4
+	max_height_offset = 5
+
+/obj/item/plate_shard
+	name = "ceramic shard"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "plate_shard1"
+	base_icon_state = "plate_shard"
+	force = 5
+	throwforce = 5
+	sharpness = SHARP_EDGED
