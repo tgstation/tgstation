@@ -180,6 +180,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	SIGNAL_HANDLER
 	if(!(potential_rider in lift_load))
 		return
+	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
+		var/mob/living/hewhocanbeunbuckled = potential_rider
+		REMOVE_TRAIT(hewhocanbeunbuckled, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)		
 	LAZYREMOVE(lift_load, potential_rider)
 	UnregisterSignal(potential_rider, COMSIG_PARENT_QDELETING)
 
@@ -189,6 +192,9 @@ GLOBAL_LIST_EMPTY(lifts)
 		return
 	if(AM in lift_load)
 		return
+	if(isliving(AM) && !HAS_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED))
+		var/mob/living/hewhocannotbeunbuckled = AM
+		ADD_TRAIT(hewhocannotbeunbuckled, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)		
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
