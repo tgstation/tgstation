@@ -14839,6 +14839,18 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/security/prison)
+"dKV" = (
+/obj/structure/table/wood,
+/obj/item/clipboard{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/storage/box/pdas{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/command/heads_quarters/hop)
 "dKZ" = (
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 8
@@ -17578,6 +17590,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
+"eIT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/machinery/pdapainter{
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/command/heads_quarters/hop)
 "eJf" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/north,
@@ -35388,12 +35410,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/commons/dorms)
-"lnV" = (
-/obj/machinery/pdapainter{
-	pixel_y = 2
-	},
-/turf/open/floor/wood,
-/area/command/heads_quarters/hop)
 "lnX" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/trimline/purple/filled/corner,
@@ -45691,13 +45707,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
-"pml" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/command/heads_quarters/hop)
 "pmr" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -156310,7 +156319,7 @@ vGu
 hrn
 uMP
 srV
-lnV
+dKV
 fqS
 jOz
 gpw
@@ -157594,7 +157603,7 @@ lFD
 vGu
 aCz
 grP
-pml
+eIT
 aCR
 iMZ
 pRW
