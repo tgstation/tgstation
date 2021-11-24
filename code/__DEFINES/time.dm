@@ -142,7 +142,7 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 #define TIMEZONE_AKDT -8
 
 /// Alaska Standard Time
-#define TIMEZONE_AKDT -9
+#define TIMEZONE_AKST -9
 
 /// Hawaii-Aleutian Daylight Time
 #define TIMEZONE_HDT -9
