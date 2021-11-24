@@ -103,7 +103,7 @@
 /obj/structure/chair/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(weapon.tool_behaviour != TOOL_WRENCH || (flags_1&NODECONSTRUCT_1))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	I.play_tool_sound(src)
+	weapon.play_tool_sound(src)
 	deconstruct(TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	
