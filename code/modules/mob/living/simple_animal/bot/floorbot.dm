@@ -380,7 +380,7 @@
 				F.broken = FALSE
 				F.burnt = FALSE
 				F.icon_state = initial(F.icon_state)
-			else if(findtext(is_this_maints.name, "maint"))	//place catwalk if it's plating and we're in maints
+			else if(is_this_maints.area_flags == IS_MAINTINENCE_AREA)	//place catwalk if it's plating and we're in maints
 				F.PlaceOnTop(/turf/open/floor/catwalk_floor, flags = CHANGETURF_INHERIT_AIR)
 			else	//place normal tile if it's plating anywhere else
 				F = F.make_plating(TRUE) || F
