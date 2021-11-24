@@ -396,32 +396,32 @@
 		visible_message(span_notice("[src] fails to expand!"))
 	qdel(src)
 
-/obj/item/food/monkeycube/suicide_act(mob/living/M)
-	M.visible_message(span_suicide("[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!"))
-	var/eating_success = do_after(M, 1 SECONDS, src)
-	if(QDELETED(M)) //qdeletion: the nuclear option of self-harm
+/obj/item/food/monkeycube/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is putting [src] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+	var/eating_success = do_after(user, 1 SECONDS, src)
+	if(QDELETED(user)) //qdeletion: the nuclear option of self-harm
 		return SHAME
 	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
-		M.visible_message(span_suicide("[M] chickens out!"))
+		user.visible_message(span_suicide("[user] chickens out!"))
 		return SHAME
-	if(HAS_TRAIT(M, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
-		M.visible_message(span_suicide("[M] realizes [M.p_their()] body won't activate [src]!")
+	if(HAS_TRAIT(user, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
+		user.visible_message(span_suicide("[user] realizes [user.p_their()] body won't activate [src]!")
 		,span_warning("Your body won't activate [src]..."))
 		return SHAME
-	playsound(M, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
-	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
-	addtimer(CALLBACK(src, .proc/finish_suicide, M), 15) //you've eaten it, you can run now
+	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
+	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
+	addtimer(CALLBACK(src, .proc/finish_suicide, user), 15) //you've eaten it, you can run now
 	return MANUAL_SUICIDE
 
-/obj/item/food/monkeycube/proc/finish_suicide(mob/living/M) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
-	if(QDELETED(M) || QDELETED(src))
+/obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
+	if(QDELETED(user) || QDELETED(src))
 		return
-	if((src.loc != M)) //how the hell did you manage this
-		to_chat(M, span_warning("Something happened to [src]..."))
+	if((src.loc != user)) //how the hell did you manage this
+		to_chat(user, span_warning("Something happened to [src]..."))
 		return
 	Expand()
-	M.visible_message(span_danger("[M]'s torso bursts open as a primate emerges!"))
-	M.gib(null, TRUE, null, TRUE)
+	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
+	user.gib(null, TRUE, null, TRUE)
 
 /obj/item/food/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
@@ -1071,7 +1071,7 @@
 /obj/item/food/meat/rawcutlet/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/I, list/chosen_option, atom/original_atom)
+/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	..()
 	if(istype(original_atom, /obj/item/food/meat/slab))
 		var/obj/item/food/meat/slab/original_slab = original_atom
@@ -1093,7 +1093,7 @@
 /obj/item/food/meat/rawcutlet/plain/human/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain/human, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/plain/human/OnCreatedFromProcessing(mob/living/user, obj/item/I, list/chosen_option, atom/original_atom)
+/obj/item/food/meat/rawcutlet/plain/human/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	. = ..()
 	if(istype(original_atom, /obj/item/food/meat))
 		var/obj/item/food/meat/origin_meat = original_atom

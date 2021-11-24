@@ -185,7 +185,7 @@
 /obj/item/food/cake/birthday/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday, 5, 30)
 
-/obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/M) //super sekrit club
+/obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/microwave) //super sekrit club
 	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
 	qdel(src)
 

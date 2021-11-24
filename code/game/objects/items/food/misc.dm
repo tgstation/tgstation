@@ -107,7 +107,7 @@
 	bite_consumption = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtypes = JUNKFOOD
-	eatverbs = list("bite","nibble","gnaw","gobble","chomp")
+	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/loadedbakedpotato
@@ -211,7 +211,7 @@
 
 /obj/item/food/badrecipe/moldy/bacteria/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
 
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
@@ -497,9 +497,9 @@
 		return
 	if(prob(15))
 		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b>"))
+		to_chat(victim, span_colossus("<b>[pick("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")]</b>"))
 	else
-		to_chat(victim, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
+		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
 /obj/item/food/gumball
 	name = "gumball"
@@ -541,16 +541,16 @@
 	. = ..()
 	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
-/obj/item/food/butter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = W
-		if(!R.use(1))//borgs can still fail this if they have no metal
+/obj/item/food/butter/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/stack/rods))
+		var/obj/item/stack/rods/rods = item
+		if(!rods.use(1))//borgs can still fail this if they have no metal
 			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
 			return ..()
 		to_chat(user, span_notice("You stick the rod into the stick of butter."))
 		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
-		var/replace = (user.get_inactive_held_item() == R)
-		if(!R && replace)
+		var/replace = (user.get_inactive_held_item() == rods)
+		if(!rods && replace)
 			user.put_in_hands(new_item)
 		qdel(src)
 		return TRUE
@@ -618,7 +618,7 @@
 		icon_state = "[icon_state]_open"
 	return ..()
 
-/obj/item/food/canned/attack(mob/living/M, mob/user, def_zone)
+/obj/item/food/canned/attack(mob/living/target, mob/user, def_zone)
 	if (!is_drainable())
 		to_chat(user, span_warning("[src]'s lid hasn't been opened!"))
 		return FALSE
@@ -758,5 +758,5 @@
 		span_nicegreen("You chow down on [src]."),
 		span_notice("You hear sloppy eating noises."))
 	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet)//If there is no dog mom, we assume the pet fed itself.
-	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	qdel(src)
