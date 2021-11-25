@@ -13,12 +13,6 @@ SUBSYSTEM_DEF(move_manager)
 	var/list/arguments = args.Copy(2) //Drop the atom, since the movement packet already knows about it
 	return our_data.add_loop(arglist(arguments))
 
-/datum/controller/subsystem/move_manager/proc/remove_from_subsystem(atom/movable/thing_to_remove, datum/controller/subsystem/movement/subsystem = SSmovement)
-	var/datum/movement_packet/our_info = thing_to_remove.move_packet
-	if(!our_info)
-		return FALSE
-	return our_info.remove_subsystem(subsystem)
-
 ///Returns the subsystem's loop if we're processing on it, null otherwise
 /datum/controller/subsystem/move_manager/proc/processing_on(atom/movable/packet_owner, datum/controller/subsystem/movement/subsystem)
 	var/datum/movement_packet/packet = packet_owner.move_packet
