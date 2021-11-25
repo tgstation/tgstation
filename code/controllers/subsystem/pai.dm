@@ -9,10 +9,10 @@ SUBSYSTEM_DEF(pai)
 	var/list/pai_card_list = list()
 
 /datum/pai_candidate
-	var/name
-	var/key
-	var/description
 	var/comments
+	var/description
+	var/key
+	var/name
 	var/ready = FALSE
 
 /datum/controller/subsystem/pai/proc/findPAI(obj/item/paicard/pai, mob/user)
@@ -42,30 +42,33 @@ SUBSYSTEM_DEF(pai)
 		candidate = new /datum/pai_candidate()
 		candidate.key = user.key
 		candidates.Add(candidate)
-	ui_interact()
+	ui_interact(user)
+
+/datum/controller/subsystem/pai/ui_state(mob/user)
+	return GLOB.observer_state
 
 /datum/controller/subsystem/pai/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PaiSubmit", name)
+		ui = new(user, src, "PaiSubmit")
 		ui.open()
 
 /datum/controller/subsystem/pai/ui_act(action, list/params)
 	. = ..()
 	if(.)
 		return
-	switch(action)
-		if("submit")
-			var/datum/pai_candidate/candidate = locate(params["candidate"]) in candidates
-			if(candidate)
-				candidate.name = params["name"]
-				candidate.key = usr.ckey
-				candidate.description = params["description"]
-				candidate.ready = TRUE
-				for(var/obj/item/paicard/paicard in pai_card_list)
-					if(!paicard.pai)
-						paicard.alertUpdate()
+	if(action == "submit")
+		var/datum/pai_candidate/candidate = locate(params["candidate"]) in candidates
+		if(candidate)
+			candidate.comments = params["candidate"]["comments"]
+			candidate.description = params["candidate"]["description"]
+			candidate.key = usr.ckey
+			candidate.name = params["candidate"]["name"]
+			candidate.ready = TRUE
+			for(var/obj/item/paicard/paicard in pai_card_list)
+				if(!paicard.pai)
+					paicard.alertUpdate()
 	return
 
 /datum/controller/subsystem/pai/proc/spam_again()

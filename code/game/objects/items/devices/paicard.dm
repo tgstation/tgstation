@@ -58,7 +58,7 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PaiDownload", name)
+		ui = new(user, src, "PaiCard", name)
 		ui.open()
 
 /obj/item/paicard/ui_state(mob/user)
@@ -67,21 +67,23 @@
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
-	data["can_holo"] = pai.canholo
-	data["dna"] = pai.master_dna
-	data["emagged"] = pai.emagged
-	data["laws"] = pai.laws.supplied
-	data["master"] = pai.master
-	data["name"] = pai.name
-	data["radio"] = list()
-	if(pai.radio)
-		data["radio"]["transmit"] = pai.can_transmit
-		data["radio"]["receive"] = pai.can_receive
+	data["pai"] = list()
+	if(!pai)
+		return data
+	data["pai"]["can_holo"] = pai.canholo
+	data["pai"]["dna"] = pai.master_dna
+	data["pai"]["emagged"] = pai.emagged
+	data["pai"]["laws"] = pai.laws.supplied
+	data["pai"]["master"] = pai.master
+	data["pai"]["name"] = pai.name
+	data["pai"]["transmit"] = pai.can_transmit
+	data["pai"]["receive"] = pai.can_receive
 	return data
 
 /obj/item/paicard/ui_static_data(mob/user)
 	. = ..()
 	var/list/data = list()
+	data["candidates"] = list()
 	if(!pai)
 		data["candidates"] = SSpai.candidates
 	return data
