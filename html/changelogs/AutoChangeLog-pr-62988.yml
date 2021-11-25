@@ -1,4 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes: 
-  - bugfix: "Catwalk Tiles will now properly show underfloor items"

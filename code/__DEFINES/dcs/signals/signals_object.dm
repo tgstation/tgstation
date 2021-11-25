@@ -152,6 +152,8 @@
 #define COMSIG_ITEM_OFFER_TAKEN "item_offer_taken"
 	///Interrupts the offer acceptance
 	#define COMPONENT_OFFER_TAKE_INTERRUPT (1<<0)
+/// sent from obj/effect/attackby(): (/obj/effect/hit_effect, /mob/living/attacker, params)
+#define COMSIG_ITEM_ATTACK_EFFECT "item_effect_attacked"
 
 ///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_IN_USE "tool_in_use"
@@ -281,6 +283,11 @@
 
 ///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
+
+// /obj/item/camera signals
+
+///from /obj/item/camera/captureimage(): (atom/target, mob/user)
+#define COMSIG_CAMERA_IMAGE_CAPTURED "camera_image_captured"
 
 // /obj/item/grenade signals
 

@@ -535,3 +535,28 @@
 /obj/item/circuitboard/computer/exodrone_console
 	name = "Exploration odrone control console (Computer Board)"
 	build_path = /obj/machinery/computer/exodrone_control_console
+
+/obj/item/circuitboard/computer/service_orders
+	name = "Service Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/service
+
+/obj/item/circuitboard/computer/engineering_orders
+	name = "Engineering Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/engineering
+
+/obj/item/circuitboard/computer/science_orders
+	name = "Science Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/science
+
+/obj/item/circuitboard/computer/security_orders
+	name = "Security Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/security
+
+/obj/item/circuitboard/computer/medical_orders
+	name = "Medical Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/medical
