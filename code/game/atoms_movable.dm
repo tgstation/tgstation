@@ -219,9 +219,8 @@
 /// Returns a list of movables that should also be affected when src moves through zlevels, and src.
 /atom/movable/proc/get_z_move_affected(z_move_flags)
 	. = list(src)
-	if(!buckled_mobs)
-		return
-	. |= buckled_mobs
+	if(buckled_mobs)
+		. |= buckled_mobs
 	if(!(z_move_flags & ZMOVE_INCLUDE_PULLED))
 		return
 	for(var/mob/living/buckled as anything in buckled_mobs)
