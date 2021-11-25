@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_premium_price = PAYCHECK_HARD * 1.25
-	var/alert_cooldown ///don't spam alart messages.
+	var/alert_cooldown ///don't spam alert messages.
 	var/mob/living/silicon/pai/pai
 	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
@@ -52,13 +52,13 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	ui_interact()
+	ui_interact(user)
 
 /obj/item/paicard/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PaiCard", name)
+		ui = new(user, src, "PaiCard")
 		ui.open()
 
 /obj/item/paicard/ui_state(mob/user)
@@ -67,9 +67,12 @@
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
-	data["pai"] = list()
+	data["candidates"] = list()
 	if(!pai)
+		data["candidates"] = pool_candidates()
+		data["pai"] = null
 		return data
+	data["pai"] = list()
 	data["pai"]["can_holo"] = pai.canholo
 	data["pai"]["dna"] = pai.master_dna
 	data["pai"]["emagged"] = pai.emagged
@@ -78,14 +81,6 @@
 	data["pai"]["name"] = pai.name
 	data["pai"]["transmit"] = pai.can_transmit
 	data["pai"]["receive"] = pai.can_receive
-	return data
-
-/obj/item/paicard/ui_static_data(mob/user)
-	. = ..()
-	var/list/data = list()
-	data["candidates"] = list()
-	if(!pai)
-		data["candidates"] = SSpai.candidates
 	return data
 
 /obj/item/paicard/ui_act(action, list/params)
@@ -100,6 +95,26 @@
 		if("request")
 			if(!pai)
 				SSpai.findPAI(src, usr)
+		if("download")
+			var/datum/pai_candidate/candidate
+			for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
+				if(params["key"] == checked_candidate.key)
+					candidate = checked_candidate
+			var/obj/item/paicard/card = locate(src) in pai_card_list
+			if(card.pai)
+				return
+			if(istype(card, /obj/item/paicard) && istype(candidate, /datum/pai_candidate))
+				if(check_ready(candidate) != candidate)
+					return FALSE
+				var/mob/living/silicon/pai/pai = new(card)
+				if(!candidate.name)
+					pai.name = pick(GLOB.ninja_names)
+				else
+					pai.name = candidate.name
+				pai.real_name = pai.name
+				pai.key = candidate.key
+				card.setPersonality(pai)
+				SSpai.candidates -= candidate
 		if("set_dna")
 			if(pai.master_dna)
 				return
@@ -177,3 +192,16 @@
 	if(pai && !pai.holoform)
 		pai.emp_act(severity)
 
+/obj/item/paicard/proc/pool_candidates()
+	var/list/candidates = list()
+	if(length(SSpai.candidates))
+		for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
+			if(!checked_candidate.ready)
+				continue
+			var/list/candidate = list()
+			candidate["comments"] = checked_candidate.comments
+			candidate["description"] = checked_candidate.description
+			candidate["key"] = checked_candidate.key
+			candidate["name"] = checked_candidate.name
+			candidates += list(candidate)
+	return candidates

@@ -1,8 +1,8 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Section, Stack } from '../components';
+import { Box, Button, Input, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-type Candidate = {
+type CandidateData = {
   comments: string;
   description: string;
   name: string;
@@ -21,18 +21,18 @@ Keep in mind: Not entering information may lead to you not being selected.
 Press submit to alert PAI owners of your candidacy.`;
 
 export const PaiSubmit = (props, context) => {
-  const [input, setInput] = useLocalState<Candidate>(context, 'input', {
-    comments: '',
-    description: '',
-    name: '',
+  const { data } = useBackend<CandidateData>(context);
+  const [input, setInput] = useLocalState<CandidateData>(context, 'input', {
+    comments: data.comments || '',
+    description: data.description || '',
+    name: data.name || '',
   });
-
   const onChangeHandler = (e, value) => {
     setInput({ ...input, [value]: e.target.value });
   };
 
   return (
-    <Window width={400} height={460} title="PAI Candidacy Menu">
+    <Window width={400} height={460} title="pAI Candidacy Menu">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -65,38 +65,46 @@ const DetailsDisplay = () => {
 
 const InputDisplay = (props) => {
   const { input, onChangeHandler } = props;
+  const { comments, description, name } = input;
+
   return (
     <Section fill title="Input">
       <Stack fill vertical>
         <Stack.Item>
-          <Box bold color="label">
-            Name
-          </Box>
-          <Input
-            fluid
-            value={input.name}
-            onChange={(e) => onChangeHandler(e, 'name')}
-          />
+          <Tooltip content="The name of your PAI">
+            <Box bold color="label">
+              Name
+            </Box>
+            <Input
+              fluid
+              value={name}
+              onChange={(e) => onChangeHandler(e, 'name')}
+            />
+          </Tooltip>
         </Stack.Item>
         <Stack.Item>
-          <Box bold color="label">
-            Description
-          </Box>
-          <Input
-            fluid
-            value={input.description}
-            onChange={(e) => onChangeHandler(e, 'description')}
-          />
+          <Tooltip content="This describes how you will (mis)behave in game.">
+            <Box bold color="label">
+              Description
+            </Box>
+            <Input
+              fluid
+              value={description}
+              onChange={(e) => onChangeHandler(e, 'description')}
+            />
+          </Tooltip>
         </Stack.Item>
         <Stack.Item>
-          <Box bold color="label">
-            OOC Comments
-          </Box>
-          <Input
-            fluid
-            value={input.comments}
-            onChange={(e) => onChangeHandler(e, 'comments')}
-          />
+          <Tooltip content="Any other OOC comments about your PAI personality.">
+            <Box bold color="label">
+              OOC Comments
+            </Box>
+            <Input
+              fluid
+              value={comments}
+              onChange={(e) => onChangeHandler(e, 'comments')}
+            />
+          </Tooltip>
         </Stack.Item>
       </Stack>
     </Section>
@@ -104,7 +112,7 @@ const InputDisplay = (props) => {
 };
 
 const SubmitDisplay = (props, context) => {
-  const { act } = useBackend(context);
+  const { act } = useBackend<CandidateData>(context);
   const { input } = props;
   return (
     <Section fill>

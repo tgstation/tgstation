@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(pai)
 
 	flags = SS_NO_INIT|SS_NO_FIRE
 
+	var/datum/pai_candidate/candidate
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
 	var/spam_delay = 100
@@ -21,6 +22,7 @@ SUBSYSTEM_DEF(pai)
 		return
 	if(!ghost_spam)
 		ghost_spam = TRUE
+		to_chat(user, span_notice("You have requested PAI assistance."))
 		for(var/mob/dead/observer/ghost in GLOB.player_list)
 			if(!ghost.key)
 				continue
@@ -28,13 +30,9 @@ SUBSYSTEM_DEF(pai)
 				continue
 			to_chat(ghost, span_ghostalert("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one."))
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
-	var/list/available = list()
-	for(var/datum/pai_candidate/checked_candidate in SSpai.candidates)
-		available.Add(check_ready(checked_candidate)) // This needs to be displayed on paicard.dm
 	return TRUE
 
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
-	var/datum/pai_candidate/candidate
 	for(var/datum/pai_candidate/checked_candidate in candidates)
 		if(checked_candidate.key == user.key)
 			candidate = checked_candidate
@@ -54,22 +52,42 @@ SUBSYSTEM_DEF(pai)
 		ui = new(user, src, "PaiSubmit")
 		ui.open()
 
-/datum/controller/subsystem/pai/ui_act(action, list/params)
+/datum/controller/subsystem/pai/ui_static_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["comments"] = candidate.comments
+	data["description"] = candidate.description
+	data["name"] = candidate.name
+	return data
+
+/datum/controller/subsystem/pai/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 	if(action == "submit")
-		var/datum/pai_candidate/candidate = locate(params["candidate"]) in candidates
+		for(var/datum/pai_candidate/checked_candidate as anything in candidates)
+			if(checked_candidate.key == usr.key)
+				candidate = checked_candidate
 		if(candidate)
 			candidate.comments = params["candidate"]["comments"]
 			candidate.description = params["candidate"]["description"]
-			candidate.key = usr.ckey
 			candidate.name = params["candidate"]["name"]
 			candidate.ready = TRUE
-			for(var/obj/item/paicard/paicard in pai_card_list)
-				if(!paicard.pai)
-					paicard.alertUpdate()
+			ui.close()
+			submit_alert()
 	return
+
+/datum/controller/subsystem/pai/proc/submit_alert()
+	if(ghost_spam)
+		to_chat(usr, span_warning("You sent an alert to PAI cards too recently."))
+		return FALSE
+	ghost_spam = TRUE
+	for(var/obj/item/paicard/paicard in pai_card_list)
+		if(!paicard.pai)
+			paicard.alertUpdate()
+	to_chat(usr, span_notice("Your PAI candidacy has been submitted!"))
+	addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
+	return TRUE
 
 /datum/controller/subsystem/pai/proc/spam_again()
 	ghost_spam = FALSE
