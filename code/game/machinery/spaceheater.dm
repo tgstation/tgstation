@@ -187,7 +187,7 @@
 		return
 	on = !on
 	mode = HEATER_MODE_STANDBY
-	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+	user.visible_message(span_notice("[user] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
 	update_appearance()
 	if (on)
 		SSair.start_processing_machine(src)
