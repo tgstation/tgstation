@@ -1,5 +1,0 @@
-author: "TheBonded"
-delete-after: True
-changes: 
-  - qol: "Spades can now be used to dig up botanical soil plots as well as shovels."
-  - qol: "Digging up botanical soil plots has been changed to a right click action. Left clicking with a spade still uproots plants as expected."
