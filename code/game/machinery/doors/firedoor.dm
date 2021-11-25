@@ -25,8 +25,8 @@
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 	var/being_held_open = FALSE
-	var/knocksound = 'sound/effects/Glassknock.ogg'
-	var/bashsound = 'sound/effects/Glassbash.ogg'
+	var/knocksound = 'sound/effects/glassknock.ogg'
+	var/bashsound = 'sound/effects/glassbash.ogg'
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()

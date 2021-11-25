@@ -26,9 +26,9 @@
 	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/breaksound = "shatter"
-	var/knocksound = 'sound/effects/Glassknock.ogg'
-	var/bashsound = 'sound/effects/Glassbash.ogg'
-	var/hitsound = 'sound/effects/Glasshit.ogg'
+	var/knocksound = 'sound/effects/glassknock.ogg'
+	var/bashsound = 'sound/effects/glassbash.ogg'
+	var/hitsound = 'sound/effects/glasshit.ogg'
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
 
