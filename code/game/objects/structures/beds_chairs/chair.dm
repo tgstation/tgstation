@@ -100,12 +100,13 @@
 		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
 
 
-/obj/structure/chair/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour != TOOL_WRENCH)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if(flags_1&NODECONSTRUCT_1)
+		return TRUE
+	..()
 	weapon.play_tool_sound(src)
 	deconstruct(TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return TRUE
 	
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
