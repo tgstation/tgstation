@@ -121,6 +121,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
+	if(override_naming)
+		return
 	var/area/scrub_area = get_area(src)
 	name = "\proper [scrub_area.name] [name] [id_tag]"
 
