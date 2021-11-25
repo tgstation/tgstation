@@ -144,6 +144,7 @@
 
 	if(0 in levels)
 		signal_reaches_every_z_level = RADIO_NO_Z_LEVEL_RESTRICTION
+
 	// Assemble the list of radios
 	var/list/radios = list()
 	switch (transmission_method)
@@ -159,7 +160,7 @@
 			// Syndicate radios can hear all well-known radio channels
 			if (num2text(frequency) in GLOB.reverseradiochannels)
 				for(var/obj/item/radio/syndicate_radios in GLOB.all_radios["[FREQ_SYNDICATE]"])
-					if(syndicate_radios.can_receive(FREQ_SYNDICATE, list(syndicate_radios.z)))
+					if(syndicate_radios.can_receive(FREQ_SYNDICATE, RADIO_NO_Z_LEVEL_RESTRICTION))
 						radios |= syndicate_radios
 
 		if (TRANSMISSION_RADIO)
@@ -188,9 +189,11 @@
 	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 
-	//TODOKYLER: this causes runtimes when nulls get into this list. its probably better to make it do the typecheck since a runtime here leads to lost messages
-	//leaving it as as anything for now though to help find out how nulls get into the spatial grid (probably hard deletes)
 	for(var/atom/movable/hearer as anything in receive)
+		if(!hearer)
+			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
+			continue
+
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
