@@ -281,10 +281,10 @@ const ProductButton = (props, context) => {
   const { custom, discount, disabled, free, product, redPrice } = props;
   const customPrice = access ? 'FREE' : product.price + ' cr';
   let standardPrice = product.price + ' cr';
-  if (!free && discount) {
-    standardPrice = redPrice + ' cr';
-  } else if (free) {
+  if (free) {
     standardPrice = "FREE";
+  } else if (discount) {
+    standardPrice = redPrice + ' cr';
   }
   return custom ? (
     <Button
