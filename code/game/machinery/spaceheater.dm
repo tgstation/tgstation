@@ -186,9 +186,11 @@
 	if(!can_interact(user))
 		return
 	on = !on
+	mode = HEATER_MODE_STANDBY
+	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
 	update_appearance()
 	if (on)
-		START_PROCESSING(SSmachines, src)
+		SSair.start_processing_machine(src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
