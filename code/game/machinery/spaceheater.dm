@@ -185,12 +185,7 @@
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return
-	on = !on
-	mode = HEATER_MODE_STANDBY
-	user.visible_message(span_notice("[user] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
-	update_appearance()
-	if (on)
-		SSair.start_processing_machine(src)
+	toggle_space_heater_state()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
@@ -232,12 +227,7 @@
 
 	switch(action)
 		if("power")
-			on = !on
-			mode = HEATER_MODE_STANDBY
-			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
-			update_appearance()
-			if (on)
-				SSair.start_processing_machine(src)
+			toggle_space_heater_state()
 			. = TRUE
 		if("mode")
 			set_mode = params["mode"]
@@ -266,6 +256,14 @@
 	. = ..()
 	panel_open = TRUE
 	update_appearance()
+
+/obj/machinery/space_heater/proc/toggle_space_heater_state()
+	on = !on
+	mode = HEATER_MODE_STANDBY
+	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+	update_appearance()
+	if (on)
+		SSair.start_processing_machine(src)
 
 ///For use with heating reagents in a ghetto way
 /obj/machinery/space_heater/improvised_chem_heater
