@@ -214,7 +214,7 @@
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				if (!QDELETED(G))
 					G.add_fingerprint(user)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, span_notice("You successfully disassemble [src]."))
 				qdel(src)
 			return
@@ -270,7 +270,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
