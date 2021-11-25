@@ -41,7 +41,7 @@
 		return TRUE
 	..()
 	weapon.play_tool_sound(src)
-	deconstruct(TRUE)
+	deconstruct(disassembled = TRUE)
 	return TRUE
 
 /*
