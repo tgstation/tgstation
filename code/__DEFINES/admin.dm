@@ -140,3 +140,9 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 
 #define LIGHTNING_BOLT_DAMAGE 75
 #define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
+
+/// for asay pings, this is the index in the return list for [/proc/check_admin_pings] that contains the message modified with underlines for the spotted names
+#define ADMINSAY_PING_UNDERLINE_NAME_INDEX "!underlined_names"
+
+/// When passed in as the duration for ban_panel, will make the ban default to permanent
+#define BAN_PANEL_PERMANENT "permanent"

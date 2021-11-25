@@ -68,8 +68,11 @@
 	tackle.thrower = user
 
 ///See if we can tackle or not. If we can, leap!
-/datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, params)
+/datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/A, list/modifiers)
 	SIGNAL_HANDLER
+
+	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+		return
 
 	if(!user.throw_mode || user.get_active_held_item() || user.pulling || user.buckled || user.incapacitated())
 		return
@@ -99,9 +102,6 @@
 
 	user.face_atom(A)
 
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, ALT_CLICK) || LAZYACCESS(modifiers, SHIFT_CLICK) || LAZYACCESS(modifiers, CTRL_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
-		return
 
 	tackling = TRUE
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
@@ -454,7 +454,7 @@
 	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
-		for(var/i = 0, i < speed, i++)
+		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
 			shard.updateEmbedding()

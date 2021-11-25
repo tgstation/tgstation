@@ -1,9 +1,4 @@
 
-/datum/ai_behavior/find_and_set/cursed
-	//optional, don't use if you're changing search_tactic()
-	locate_path = /mob/living/carbon
-	bb_key_to_set = BB_CURSE_TARGET
-
 /datum/ai_behavior/item_move_close_and_attack/cursed
 	attack_sound = 'sound/items/haunted/ghostitemattack.ogg'
 	max_attempts = 4

@@ -39,7 +39,7 @@
 /area/survivalpod)
 "i" = (
 /obj/structure/toilet/secret{
-	secret_type = /obj/item/kitchen/knife/combat/survival
+	secret_type = /obj/item/knife/combat/survival
 	},
 /turf/open/floor/pod,
 /area/survivalpod)

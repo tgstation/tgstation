@@ -1,3 +1,5 @@
+#define SHOULD_DISABLE_FOOTSTEPS(source) ((SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))) || HAS_TRAIT(source, TRAIT_SILENT_FOOTSTEPS))
+
 ///Footstep element. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
@@ -92,6 +94,9 @@
 /datum/element/footstep/proc/play_simplestep(mob/living/source)
 	SIGNAL_HANDLER
 
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
+		return
+
 	var/turf/open/source_loc = prepare_step(source)
 	if(!source_loc)
 		return
@@ -115,7 +120,7 @@
 /datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(source, TRAIT_SILENT_FOOTSTEPS))
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/volume_multiplier = 1
@@ -149,7 +154,12 @@
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source)
 	SIGNAL_HANDLER
 
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
+		return
+
 	var/turf/open/source_loc = get_turf(source)
 	if(!istype(source_loc))
 		return
 	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+
+#undef SHOULD_DISABLE_FOOTSTEPS

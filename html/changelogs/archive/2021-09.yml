@@ -778,3 +778,208 @@
   necromanceranne:
   - bugfix: Stickmen flatguns now properly drop out of your hands when picked up,
       as intended.
+2021-09-25:
+  Fikou:
+  - bugfix: The Qualified Doctor skin for medborgs is now not the only option
+  Iamgoofball:
+  - bugfix: Fixes the logging text on respawn to correctly say it's respawn instead
+      of "abandon mob"
+  Maurukas:
+  - bugfix: Mapped in atmospheric tanks will now connect to pipenets in the appropriate
+      direction
+  - bugfix: Icebox, Runtime, and a number of ruins have had their gas tanks rotated
+      or repiped
+  Qustinnus:
+  - bugfix: Oozes can now eat food again
+  tralezab:
+  - bugfix: Fixes malfunctioning bots breaking when they ordered from the bar. Uh...
+      oops!
+  - expansion: Admin fully immerse smite now reminds the victim to roleplay correctly
+2021-09-26:
+  Guillaume Prata:
+  - bugfix: Huge scrubbers will use their own sprite instead of their little brother
+      one.
+  Krysonism:
+  - bugfix: The crate spawner spawns full crates rather than empty ones again. fix:The
+      neglected fern can actually spawn now
+  - bugfix: The neglected fern now has the standard 2-4 cell ines per sample rather
+      than 1.
+  Melbert:
+  - bugfix: Telescopic shields are bulky again when extended, and the balloon alerts
+      are shorter
+  MetalClone:
+  - rscadd: Added the handlebar moustache, available in the character setup
+  - rscadd: Added the handlebar moustache 2, available in the character setup
+  - imageadd: added both handlebar moustache icons
+  Mothblocks:
+  - bugfix: Fixed not being able to disable specific antagonists randomly.
+  Timberpoes:
+  - bugfix: Players can once again select AI eyes and blob eyes from the various orbit,
+      observe and jump menus.
+  - rscdel: Removed the research note download objective.
+  - rscadd: Added new master R&D servers to science departmental server rooms. This
+      server cannot be deconstructed via ordinary methods. This server cannot be rebuilt
+      if destroyed and cannot be repaired if sabotaged. If destroyed or sabotaged,
+      research point gain is halved for the rest of the shift.
+  - rscadd: Added a new antag objective for traitors and lings to steal the hard drive
+      from a master R&D server. Any other antag can steal it too, for fun. But only
+      traitors and lings and things that get traitor or ling objectives can get it
+      as a dedicated steal objective.
+  - rscadd: Added a new objective for the space ninja and interactions allowing them
+      to destroy the drive in the master R&D server or set the current research points
+      back to 0. Both of these interactions alert the AI and are performed by using
+      the gloves on an appropriate R&D server.
+  Watermelon914:
+  - qol: List Literal can now increase/decrease the amount of input ports from within
+      the UI now.
+  - qol: Module components can now have their integrated circuit and UI accessed from
+      within the integrated circuit. To add circuit components, the module still needs
+      to be disconnected.
+  - qol: Connecting ports together will feel more responsive especially if you have
+      bad internet speeds.
+  - qol: Circuit variables UI has been revamped and made better. You can now drag
+      and drop the setters and getters for each circuit variable and it will no longer
+      automatically close when you move the background. It also takes up less of the
+      screen.
+  - qol: The integrated circuits UI when initially opened will now be bigger.
+  - qol: You can now click to connect ports again
+  necromanceranne:
+  - admin: Meteor guns do damage once again.
+  tralezab:
+  - rscadd: Hauntium can now be worn by the undead!
+2021-09-27:
+  CRITAWAKETS:
+  - bugfix: Gets rid of the placeholder alien bed and replaces its appearance in Snowdin
+      with the proper alien bed.
+  JohnFulpWillard:
+  - bugfix: Traitors who aren't given codewords will no longer notice them when said
+      or have them in their antag menu.
+  Mothblocks:
+  - server: 'Added a new word filter configuration: word_filter.toml, which can specify
+      *why* words are banned.'
+  - bugfix: Emotes are now properly filtered.
+  - qol: For players, you will now see which word you said was filtered.
+  PositiveEntropy:
+  - imageadd: All folders are now resprited!
+  Ryll/Shaps:
+  - rscadd: Added a new achievement for cultists who like to mess with NT's shuttle
+      corps, "WHAT JUST HAPPENED".
+  Sheits:
+  - imageadd: resprites the smoke, forcewall, lightning and blind spells
+  Superlagg:
+  - qol: Paper bins now can directly insert their contents into computers.
+  - qol: Greatly reduced click cooldown on paper bins.
+  - qol: Paper bins can now pick up papers by clicking on them.
+  remove32:
+  - admin: now logging when you update available jobs!
+2021-09-28:
+  Fikou:
+  - rscadd: Secret Gateways can now be a thing enabled by config. They are not on
+      the repository, instead, loaded from a config folder.
+  - rscadd: Adds the secret and anti-phasing z level traits used by Secret Gateways,
+      secret prevents observers from looking at the z level in any way other than
+      observing through another player's eyes
+  - admin: admin loaded away missions can be secret as well
+  Ghilker:
+  - bugfix: fix gases not having an overlay
+  Ghommie:
+  - qol: You can now use backslashes to escape say text modifiers (e.g. a\\+b\\+c
+      = d will be outputted as a+b+c instead of abc with the middle letter b bolded).
+  - qol: Two new tips of the round, both concerning say"" syntax.
+  JohnFulpWillard:
+  - admin: Admins can now cancel out of sending an announcement.
+  JosephJomama:
+  - qol: You can now adjust shaft miners' jumpsuits to expose their chest.
+  - imageadd: New sprites for adjusted shaft miner's jumpsuit.
+  - spellcheck: The cargo tech jumpskirt now has correct punctuation.
+  Mothblocks:
+  - balance: The minimum threat for traitor related rulesets to be considered running
+      has been lowered to their cost.
+  Ryll/Shaps:
+  - admin: You can now ping other admins (or whatever other roles) in asay by using
+      @theirckey in your message
+  tralezab:
+  - rscadd: Hand a monkey an instrument. It'll play a cool song!
+  - qol: sparring sect now has an info button in the top right of the contract menu
+2021-09-29:
+  Arkatos:
+  - bugfix: Templates in the Plexagon Access Management app will now show correctly.
+  CRITAWAKETS:
+  - bugfix: Auxiliary base construction consoles now work, instead of deleting the
+      drone before it exists.
+  Fikou:
+  - bugfix: secret recipes are now actually secret
+  - admin: renames enable debug verbs to enable mapping verbs
+  Krysonism:
+  - expansion: Added new food, envirochow; it permanently increases the max hp of
+      animals.
+  Mooshimi:
+  - rscadd: shuttle windows can now be deconstructed
+  Mothblocks:
+  - bugfix: Fixed the beginning of words being filtered "e.g. lol filtering lollipop"
+  - admin: Check AI laws will no longer collapse the laws, making them unreadable.
+  NamelessFairy:
+  - bugfix: Gets rid of a genturf on icebox underground
+  Ported by Dragomagol, original PR by monster860:
+  - rscadd: Locker doors are now animated!
+  PositiveEntropy:
+  - imageadd: Adds new colo cup sprites, originally from the lean cup sprite. The
+      description of the colo cup item is also changed for only a single, mildly rare
+      variant.
+  Thunder12345:
+  - imageadd: CTF armour has a shiny new look
+  - code_imp: CTF shielded armour has been changed from a hardsuit to a vest to clear
+      the way for modsuits (coming 2021 by Fikou)
+  - code_imp: Any item of clothing can now be given an energy shield, not only hardsuits
+  - bugfix: CTF marksman outfits are now named correctly
+  Timberpoes:
+  - bugfix: Contractor drop pods are now actually clickable and you can place your
+      target into them without having to drag them to the tiny bit of pod where the
+      rubble overlaps it.
+  TiviPlus:
+  - bugfix: fixed some phasing things getting stuck on some objects
+  - bugfix: fixed changing a turf sometimes making an area dark
+  Zytolg:
+  - expansion: Adds the Homestead, Comms Outpost, and Plasma Facility to the Icewastes
+      Ruins Roster.
+  - code_imp: Adds area support for the Plasma Facility ruin.
+  twilightwanderer:
+  - rscadd: Adding the ability to use a large number of characters in the chat client.
+  - code_imp: In the chat client code, the standard text checking procedures have
+      been replaced by special chat text checking procedures.
+2021-09-30:
+  567Turtle:
+  - expansion: Filing cabinets can be constructed for 2 iron sheets
+  Arkatos:
+  - spellcheck: Fixed a few grammar mistakes in the nullrod radial menu descriptions
+      and better clarified some block chances of the certain nullrod variants.
+  - spellcheck: Fixed a misspelling of the word "availability" in the Plexagon HR
+      Core app description.
+  Iamgoofball:
+  - spellcheck: Fixed the Popularity Contest theme having references to Grove Street
+      Families, a long since removed Gang.
+  Mooshimi:
+  - code_imp: vendor code has less spaces and more tabs
+  Mothblocks:
+  - bugfix: New photographs taken will now properly save.
+  PositiveEntropy, Kryson, maxymax13, Salla:
+  - imageadd: Resprites iron and material chairs into new ones, originally from Yogstation!
+  TiviPlus:
+  - qol: grav anomalies now have a pretty effect
+  - refactor: Rendering has been refactored, remember to report bugs
+  Zytolg:
+  - bugfix: Monkies no longer play with the firelock switch in Kilostation Genetics
+      via the power of uninstallation.
+  - bugfix: Removes a duplicate table and pipes and cable from the Metastation Eng
+      Foyer.
+  carshalash:
+  - bugfix: thirteen look no longer puts you to sleep
+  esainane:
+  - bugfix: The Derelict now has one APC per area. Weird behavior as two APCs fight
+      for control over the same region should no longer be seen.
+  vincentiusvin:
+  - bugfix: fixed holosigns not counting towards the max limit and not being deleted
+      when clicking the creator.
+  - bugfix: NanoTrasen denies all allegations of unethically producing electrical
+      cables by forcing ill-equipped employees to lay them and materializing new cables
+      out of thin air. The reports were clearly exaggerated.

@@ -19,7 +19,7 @@
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return FALSE
-	var/damage_amount =  forced ? damage : damage * hit_percent
+	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage_amount, forced = forced)
@@ -104,9 +104,6 @@
 			Immobilize(effect * hit_percent)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
-		if(EFFECT_IRRADIATE)
-			if(!HAS_TRAIT(src, TRAIT_RADIMMUNE))
-				radiation += max(effect * hit_percent, 0)
 		if(EFFECT_SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(EFFECT_STUTTER)
@@ -115,14 +112,14 @@
 		if(EFFECT_EYE_BLUR)
 			blur_eyes(effect * hit_percent)
 		if(EFFECT_DROWSY)
-			drowsyness = max(drowsyness,(effect * hit_percent))
+			adjust_drowsyness(effect * hit_percent)
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
 	return TRUE
 
 /// applies multiple effects at once via [/mob/living/proc/apply_effect]
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
 	if(blocked >= 100)
 		return FALSE
 	if(stun)
@@ -135,8 +132,6 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
-	if(irradiate)
-		apply_effect(irradiate, EFFECT_IRRADIATE, blocked)
 	if(slur)
 		apply_effect(slur, EFFECT_SLUR, blocked)
 	if(stutter)

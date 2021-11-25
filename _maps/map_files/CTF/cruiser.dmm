@@ -60,7 +60,7 @@
 /turf/open/floor/pod/light,
 /area/ctf)
 "cK" = (
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
 	atom_integrity = 5000
@@ -72,12 +72,12 @@
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "dq" = (
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
 	atom_integrity = 5000
 	},
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
 	atom_integrity = 5000

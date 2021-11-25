@@ -19,7 +19,7 @@
 	src.allow_item_destruction = allow_item_destruction
 
 	// Just in case something is being created outside of station/centcom
-	if(!destination_in_bounds(parent))
+	if(!atom_in_bounds(parent))
 		relocate()
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
@@ -52,7 +52,7 @@
 /datum/component/stationloving/proc/on_parent_z_change(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 
-	if(destination_in_bounds(parent))
+	if(atom_in_bounds(parent))
 		return
 
 	var/turf/current_turf = get_turf(parent)
@@ -73,11 +73,11 @@
 
 	return COMPONENT_BLOCK_MARK_RETRIEVAL
 
-/// Checks whether a given destination is within bounds. Returns TRUE if it is, FALSE if it isn't.
-/datum/component/stationloving/proc/destination_in_bounds(atom/destination)
+/// Checks whether a given atom's turf is within bounds. Returns TRUE if it is, FALSE if it isn't.
+/datum/component/stationloving/proc/atom_in_bounds(atom/atom_to_check)
 	var/static/list/allowed_shuttles = typecacheof(list(/area/shuttle/syndicate, /area/shuttle/escape, /area/shuttle/pod_1, /area/shuttle/pod_2, /area/shuttle/pod_3, /area/shuttle/pod_4))
 	var/static/list/disallowed_centcom_areas = typecacheof(list(/area/abductor_ship, /area/awaymission/errorroom))
-	var/turf/destination_turf = get_turf(destination)
+	var/turf/destination_turf = get_turf(atom_to_check)
 	if (!destination_turf)
 		return FALSE
 	var/area/destination_area = destination_turf.loc
@@ -87,7 +87,7 @@
 		if (is_type_in_typecache(destination_area, disallowed_centcom_areas))
 			return FALSE
 		return TRUE
-	if (is_reserved_level(destination.z))
+	if (is_reserved_level(destination_turf.z))
 		if (is_type_in_typecache(destination_area, allowed_shuttles))
 			return TRUE
 

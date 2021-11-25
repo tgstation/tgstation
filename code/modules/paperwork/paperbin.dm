@@ -78,7 +78,7 @@
 		var/mob/living/living_mob = user
 		if(!(living_mob.mobility_flags & MOBILITY_PICKUP))
 			return
-	user.changeNext_move(CLICK_CD_MELEE)
+	user.changeNext_move(CLICK_CD_RAPID)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
 		return

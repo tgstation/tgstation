@@ -259,33 +259,33 @@ const SpeciesPageInner = (props: {
       <Stack.Item grow>
         <Stack fill>
           <Stack.Item>
-            <Stack vertical fill>
+            <Box height="calc(100vh - 170px)" overflowY="auto" pr={3}>
               {species.map(([speciesKey, species]) => {
                 return (
-                  <Stack.Item key={speciesKey}>
-                    <Button
-                      onClick={() => setSpecies(speciesKey)}
-                      selected={
-                        data.character_preferences.misc.species === speciesKey
-                      }
-                      tooltip={species.name}
-                      style={{
-                        height: "64px",
-                        width: "64px",
-                      }}
-                    >
-                      <Box
-                        className={classes([
-                          "species64x64",
-                          species.icon,
-                        ])}
-                        ml={-1}
-                      />
-                    </Button>
-                  </Stack.Item>
+                  <Button
+                    key={speciesKey}
+                    onClick={() => setSpecies(speciesKey)}
+                    selected={
+                      data.character_preferences.misc.species === speciesKey
+                    }
+                    tooltip={species.name}
+                    style={{
+                      display: "block",
+                      height: "64px",
+                      width: "64px",
+                    }}
+                  >
+                    <Box
+                      className={classes([
+                        "species64x64",
+                        species.icon,
+                      ])}
+                      ml={-1}
+                    />
+                  </Button>
                 );
               })}
-            </Stack>
+            </Box>
           </Stack.Item>
 
           <Stack.Item grow>

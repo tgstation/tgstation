@@ -6,6 +6,9 @@
 	minimum = -1
 	maximum = 240
 
+/datum/preference/numeric/fps/create_default_value()
+	return -1
+
 /datum/preference/numeric/fps/apply_to_client(client/client, value)
 	client.fps = (value < 0) ? RECOMMENDED_FPS : value
 

@@ -2,7 +2,6 @@
 	name = "Space Ninja"
 	antagpanel_category = "Space Ninja"
 	job_rank = ROLE_NINJA
-	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "space_ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
@@ -14,14 +13,6 @@
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
-
-/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/ninja = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, ninja)
-
-/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/ninja = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, ninja)
 
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
@@ -59,6 +50,9 @@
 /datum/objective/terror_message
 	explanation_text = "Use your gloves on a communication console in order to bring another threat to the station.  Note that the AI will be alerted once you begin!"
 
+/datum/objective/research_secrets
+	explanation_text = "Use your gloves on a research & development server to sabotage research efforts.  Note that the AI will be alerted once you begin!"
+
 /**
  * Proc that adds all the ninja's objectives to the antag datum.
  *
@@ -69,11 +63,9 @@
 	var/datum/objective/hijack = new /datum/objective/cyborg_hijack()
 	objectives += hijack
 
-	//Research stealing
-	var/datum/objective/download/research = new /datum/objective/download()
-	research.owner = owner
-	research.gen_amount_goal()
-	objectives += research
+	// Break into science and mess up their research. Only add this objective if the similar steal objective is possible.
+	var/datum/objective/research_secrets/sabotage_research = new /datum/objective/research_secrets()
+	objectives += sabotage_research
 
 	//Door jacks, flag will be set to complete on when the last door is hijacked
 	var/datum/objective/door_jack/doorobjective = new /datum/objective/door_jack()

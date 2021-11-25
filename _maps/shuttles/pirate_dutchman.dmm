@@ -386,7 +386,7 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/flying_dutchman)
 "pG" = (
-/obj/structure/window/shuttle/survival_pod,
+/obj/structure/window/reinforced/shuttle/survival_pod,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "rd" = (

@@ -216,7 +216,7 @@
 		<span id='maintable_data_archive'>
 		<table width='560' align='center' cellspacing='0' cellpadding='5' id='maintable_data'>"}
 
-	var/list/mobs = sortmobs()
+	var/list/mobs = sort_mobs()
 	var/i = 1
 	for(var/mob/M in mobs)
 		if(M.ckey)

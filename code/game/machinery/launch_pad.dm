@@ -1,3 +1,5 @@
+#define BEAM_FADE_TIME 1 SECONDS
+
 /obj/machinery/launchpad
 	name = "bluespace launchpad"
 	desc = "A bluespace pad able to thrust matter through bluespace, teleporting it to or from nearby locations."
@@ -12,12 +14,16 @@
 	var/stationary = TRUE //to prevent briefcase pad deconstruction and such
 	var/display_name = "Launchpad"
 	var/teleport_speed = 35
-	var/range = 15
+	var/range = 10
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/x_offset = 0
 	var/y_offset = 0
 	var/indicator_icon = "launchpad_target"
+	/// Determines if the bluespace launchpad is blatantly obvious on teleportation.
+	var/hidden = FALSE
+	/// The beam on teleportation
+	var/teleport_beam = "sm_arc_supercharged"
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = 0
@@ -108,6 +114,11 @@
 		y_offset = clamp(y, -range, range)
 	update_indicator()
 
+/obj/effect/ebeam/launchpad/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 0, flags = ANIMATION_PARALLEL, time = BEAM_FADE_TIME)
+
+
 /// Performs the teleport.
 /// sending - TRUE/FALSE depending on if the launch pad is teleporting *to* or *from* the target.
 /// alternate_log_name - An alternative name to use in logs, if `user` is not present..
@@ -132,6 +143,11 @@
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
+	if(!hidden)
+		playsound(target, 'sound/weapons/flash.ogg', 25, TRUE)
+		var/datum/effect_system/spark_spread/quantum/spark_system = new /datum/effect_system/spark_spread/quantum()
+		spark_system.set_up(5, TRUE, target)
+		spark_system.start()
 
 	sleep(teleport_speed)
 
@@ -143,6 +159,10 @@
 		return
 
 	teleporting = FALSE
+	if(!hidden)
+		// Takes twice as long to make sure it properly fades out.
+		Beam(target, icon_state = teleport_beam, time = BEAM_FADE_TIME*2, beam_type = /obj/effect/ebeam/launchpad)
+		playsound(target, 'sound/weapons/emitter2.ogg', 25, TRUE)
 
 	// use a lot of power
 	use_power(1000)
@@ -218,6 +238,7 @@
 	teleport_speed = 20
 	range = 8
 	stationary = FALSE
+	hidden = TRUE
 	var/closed = TRUE
 	var/obj/item/storage/briefcase/launchpad/briefcase
 
@@ -395,3 +416,5 @@
 			sending = FALSE
 			teleport(usr, our_pad)
 			. = TRUE
+
+#undef BEAM_FADE_TIME

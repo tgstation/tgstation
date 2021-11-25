@@ -70,8 +70,27 @@ export const SparringContract = (props, context) => {
           <Stack vertical fill>
             <Stack.Item>
               <Stack vertical>
-                <Stack.Item fontSize="16px">
-                  Weapons:
+                <Stack.Item>
+                  <Stack fill>
+                    <Stack.Item grow fontSize="16px">
+                      Weapons:
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        tooltip={multiline`
+                        The Chaplain's Deity wishes for honorable fighting.
+                        As such, it uses contracts. Signing your name will
+                        set the terms for the battle. Then, the person you
+                        intend to spar with must sign the other side. If terms
+                        are changed on an already signed contract, the
+                        signatures will erase and the new terms must be
+                        re-agreed upon.
+                        `}
+                        icon="info">
+                        Contract?
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
                 </Stack.Item>
                 <Stack.Item>
                   <Dropdown

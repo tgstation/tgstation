@@ -1,6 +1,7 @@
 /obj/item/dyespray
 	name = "hair dye spray"
 	desc = "A spray to dye your hair any gradients you'd like."
+	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/dyespray.dmi'
 	icon_state = "dyespray"
 
@@ -27,7 +28,7 @@
 	if(!new_grad_style)
 		return
 
-	var/new_grad_color = input(usr, "Choose a secondary hair color:", "Character Preference","#"+human_target.grad_color) as color|null
+	var/new_grad_color = input(usr, "Choose a secondary hair color:", "Character Preference",human_target.grad_color) as color|null
 	if(!new_grad_color)
 		return
 

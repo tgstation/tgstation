@@ -168,7 +168,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	offered_item = offer
 	if(give_alert_override)
 		give_alert_type = give_alert_override
@@ -231,6 +230,10 @@
 /datum/status_effect/offering/proc/dropped_item(obj/item/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/status_effect/offering/secret_handshake
+	id = "secret_handshake"
+	give_alert_type = /atom/movable/screen/alert/give/secret_handshake
 
 //this effect gives the user an alert they can use to surrender quickly
 /datum/status_effect/grouped/surrender

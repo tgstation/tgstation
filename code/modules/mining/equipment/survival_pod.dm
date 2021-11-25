@@ -82,7 +82,7 @@
 //Pod objects
 
 //Window
-/obj/structure/window/shuttle/survival_pod
+/obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "pod_window-0"
@@ -91,13 +91,13 @@
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 
-/obj/structure/window/shuttle/survival_pod/spawner/north
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/north
 	dir = NORTH
 
-/obj/structure/window/shuttle/survival_pod/spawner/east
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/east
 	dir = EAST
 
-/obj/structure/window/shuttle/survival_pod/spawner/west
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/west
 	dir = WEST
 
 /obj/structure/window/reinforced/survival_pod
@@ -186,6 +186,10 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "bed"
 
+/obj/structure/bed/double/pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "bed_double"
+
 //Survival Storage Unit
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
@@ -229,7 +233,7 @@
 	density = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 5
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))

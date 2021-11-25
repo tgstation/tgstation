@@ -52,6 +52,7 @@
 #define ROLE_MONKEY_HELMET "Monkey Mind Magnification Helmet"
 #define ROLE_REVENANT "Revenant"
 #define ROLE_BRAINWASHED "Brainwashed Victim"
+#define ROLE_HYPNOTIZED "Hypnotized Victim"
 #define ROLE_OVERTHROW "Syndicate Mutineer" //Role removed, left here for safety.
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
@@ -125,6 +126,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_FAMILY_HEAD_ASPIRANT = 0,
 	ROLE_LONE_OPERATIVE = 14,
 	ROLE_MALF_MIDROUND = 0,
+	ROLE_NIGHTMARE = 0,
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
 	ROLE_OPERATIVE_MIDROUND = 14,
@@ -134,6 +136,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
 	ROLE_SWARMER = 0,
+	ROLE_WIZARD_MIDROUND = 14,
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,

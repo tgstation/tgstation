@@ -56,7 +56,7 @@
 
 	var/num_lines = 0
 	msg += "<table style='width: 100%; table-layout: fixed'><tr>"
-	for(var/line in sortList(Lines))
+	for(var/line in sort_list(Lines))
 		msg += "<td>[line]</td>"
 
 		num_lines += 1
@@ -83,7 +83,14 @@
 			if(isobserver(C.mob))
 				msg += " - Observing"
 			else if(isnewplayer(C.mob))
-				msg += " - Lobby"
+				if(SSticker.current_state <= GAME_STATE_PREGAME)
+					var/mob/dead/new_player/lobbied_admin = C.mob
+					if(lobbied_admin.ready == PLAYER_READY_TO_PLAY)
+						msg += " - Lobby (Readied)"
+					else
+						msg += " - Lobby (Not readied)"
+				else
+					msg += " - Lobby"
 			else
 				msg += " - Playing"
 

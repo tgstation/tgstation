@@ -54,6 +54,11 @@
 	resistance_flags = NONE
 	var/foldabletype = /obj/item/roller
 
+
+/obj/structure/bed/roller/examine(mob/user)
+	. = ..()
+	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
+
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
@@ -215,12 +220,6 @@
 	. = ..()
 	update_owner(M)
 
-/obj/structure/bed/alien
-	name = "resting contraption"
-	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
-	icon_state = "abed"
-
-
 /obj/structure/bed/maint
 	name = "dirty mattress"
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
@@ -229,3 +228,23 @@
 /obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+
+//Double Beds, for luxurious sleeping, i.e. the captain and maybe heads- if people use this for ERP, send them to skyrat
+/obj/structure/bed/double
+	name = "double bed"
+	desc = "A luxurious double bed, for those too important for small dreams."
+	icon_state = "bed_double"
+	buildstackamount = 4
+	max_buckled_mobs = 2
+	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
+	var/mob/living/goldilocks
+
+/obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	if(buckled_mobs.len > 1 && !goldilocks) //Push the second buckled mob a bit higher from the normal lying position
+		target.pixel_y = target.base_pixel_y + 6
+		goldilocks = target
+
+/obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
+	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	if(target == goldilocks)
+		goldilocks = null

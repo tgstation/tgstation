@@ -157,7 +157,7 @@
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] =  "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
+	.["visible"] = "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
 	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
 
 	return .
@@ -341,7 +341,7 @@
 	attack_verb_continuous = list("beats")
 	attack_verb_simple = list("beat")
 
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 80, ACID = 80)
 
 	throwforce = 7
 	stamina_damage = 60
@@ -521,7 +521,7 @@
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse [trait_check ? ", but your body quickly recovers..." : "!"]"))
+		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
 	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
 
@@ -549,6 +549,17 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
+	if (cell.charge >= cell_hit_cost)
+		var/scramble_time
+		scramble_mode()
+		for(var/loops in 1 to rand(6,12))
+			scramble_time = rand(5,15)/10
+			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
+
+/obj/item/melee/baton/security/proc/scramble_mode()
+	active = !active
+	playsound(src, "sparks", 75, TRUE, -1)
+	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -562,7 +573,7 @@
 	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_HUGE
 	force = 3
 	throwforce = 5
 	cell_hit_cost = 2000

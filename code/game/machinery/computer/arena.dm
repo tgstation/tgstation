@@ -65,17 +65,6 @@
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
-	GenerateAntagHuds()
-
-/obj/machinery/computer/arena/proc/GenerateAntagHuds()
-	for(var/team in teams)
-		var/datum/atom_hud/antag/teamhud = team_huds[team]
-		if(!teamhud) //These will be shared between arenas because this stuff is expensive and cross arena fighting is not a thing anyway
-			teamhud = new
-			teamhud.icon_color = team_colors[team]
-			GLOB.huds += teamhud
-			team_huds[team] = teamhud
-			team_hud_index[team] = length(GLOB.huds)
 
 /**
  * Loads the arenas from config directory.
@@ -168,7 +157,7 @@
 		var/list/keys = list()
 		for(var/mob/M in GLOB.player_list)
 			keys += M.client
-		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
+		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sort_key(keys)
 		//Could be freeform if you want to add disconnected i guess
 		if(!selection)
 			return
@@ -193,10 +182,6 @@
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
-
-	var/datum/atom_hud/antag/team_hud = team_huds[team]
-	team_hud.join_hud(M)
-	set_antag_hud(M,"arena",team_hud_index[team])
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()

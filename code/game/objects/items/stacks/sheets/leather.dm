@@ -181,6 +181,14 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
 	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5), \
+	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4), \
+	new/datum/stack_recipe_list("cowboy hats", list( \
+		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy_hat_brown, 2), \
+		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy_hat_black, 2), \
+		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy_hat_white, 2), \
+		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy_hat_red, 2), \
+		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy_hat_grey, 2), \
+		)),
 ))
 
 /obj/item/stack/sheet/leather/get_main_recipes()
@@ -278,3 +286,23 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	..()
 	new /obj/item/stack/sheet/leather(drop_location(), amount)
 	qdel(src)
+
+/obj/item/stack/sheet/animalhide/carp
+	name = "carp scales"
+	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
+	singular_name = "carp scales"
+	icon_state = "sheet-carp"
+	inhand_icon_state = "sheet-carp"
+	merge_type = /obj/item/stack/sheet/animalhide/carp
+
+GLOBAL_LIST_INIT(carp_recipes, list ( \
+	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4), \
+	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1), \
+	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2), \
+	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3), \
+	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2), \
+	))
+
+/obj/item/stack/sheet/animalhide/carp/get_main_recipes()
+	. = ..()
+	. += GLOB.carp_recipes

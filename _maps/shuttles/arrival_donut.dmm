@@ -56,7 +56,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "o" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "p" = (

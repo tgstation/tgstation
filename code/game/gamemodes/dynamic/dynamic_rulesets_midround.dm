@@ -102,7 +102,7 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
+	candidates = poll_ghost_candidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag_override, antag_flag || antag_flag_override, poll_time = 300)
 
 	if(!candidates || candidates.len <= 0)
 		mode.dynamic_log("The ruleset [name] received no applications.")
@@ -146,7 +146,7 @@
 		notify_ghosts("[new_character] has been picked for the ruleset [name]!", source = new_character, action = NOTIFY_ORBIT, header="Something Interesting!")
 
 /datum/dynamic_ruleset/midround/from_ghosts/proc/generate_ruleset_body(mob/applicant)
-	var/mob/living/carbon/human/new_character = makeBody(applicant)
+	var/mob/living/carbon/human/new_character = make_body(applicant)
 	new_character.dna.remove_all_mutations()
 	return new_character
 
@@ -189,7 +189,7 @@
 	required_candidates = 1
 	weight = 7
 	cost = 10
-	requirements = list(50,40,30,20,10,10,10,10,10,10)
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	repeatable = TRUE
 
 	/// Whether or not this instance of sleeper agent should be randomly acceptable.
@@ -251,15 +251,13 @@
 	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
 	antag_flag_override = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
-	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_candidates = 6 // gotta have 'em ALL
-	weight = 1
-	cost = 25
-	requirements = list(101,101,101,101,101,80,50,30,10,10)
+	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
+	required_candidates = 9
+	weight = 2
+	cost = 19
+	requirements = list(101,101,40,40,30,20,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/families)
-	minimum_players = 36
-	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
@@ -276,11 +274,6 @@
 		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
 			candidates -= player
 
-/datum/dynamic_ruleset/midround/families/acceptable(population = 0, threat_level = 0)
-	. = ..()
-	if(GLOB.deaths_during_shift > round(mode.roundstart_pop_ready / 2))
-		return FALSE
-
 
 /datum/dynamic_ruleset/midround/families/ready(forced = FALSE)
 	if (required_candidates > living_players.len)
@@ -290,7 +283,6 @@
 /datum/dynamic_ruleset/midround/families/pre_execute()
 	..()
 	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.midround_ruleset = TRUE
 	handler.use_dynamic_timing = TRUE
@@ -328,6 +320,7 @@
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
 	required_type = /mob/living/silicon/ai
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
@@ -377,7 +370,7 @@
 	weight = 1
 	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	repeatable = TRUE
+	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
@@ -524,7 +517,7 @@
 				continue // No parent vent
 			// Stops Aliens getting stuck in small networks.
 			// See: Security, Virology
-			if(temp_vent_parent.other_atmosmch.len > 20)
+			if(temp_vent_parent.other_atmos_machines.len > 20)
 				vents += temp_vent
 	if(!vents.len)
 		return FALSE
@@ -861,7 +854,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
-	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5). 
+	cost = 3 // Doesn't have the same impact on rounds as revenants, dragons, sentient disease (10) or syndicate infiltrators (5).
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 

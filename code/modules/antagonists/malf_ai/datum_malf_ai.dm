@@ -6,12 +6,10 @@
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
 	job_rank = ROLE_MALF
-	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
-	var/should_equip = TRUE
 
 /datum/antagonist/malf_ai/on_gain()
 	if(owner.current && !isAI(owner.current))
@@ -101,7 +99,6 @@
 	. = ..()
 
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, datum_owner)
 
 	if(istype(datum_owner))
 		datum_owner.hack_software = TRUE
@@ -113,7 +110,6 @@
 	. = ..()
 
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, datum_owner)
 
 	if(istype(datum_owner))
 		datum_owner.hack_software = FALSE

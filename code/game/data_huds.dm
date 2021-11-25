@@ -230,10 +230,10 @@ FAN HUDs! For identifying other fans on-sight.
 	holder.icon_state = "hudfan_no"
 	var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	if(U)
-		if(istype(U.attached_accessory, /obj/item/clothing/accessory/fan_mime_pin))
-			holder.icon_state = "fan_mime_pin"
-		else if(istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
-			holder.icon_state = "fan_clown_pin"
+		if(istype(U.attached_accessory, /obj/item/clothing/accessory/mime_fan_pin))
+			holder.icon_state = "mime_fan_pin"
+		else if(istype(U.attached_accessory, /obj/item/clothing/accessory/clown_enjoyer_pin))
+			holder.icon_state = "clown_enjoyer_pin"
 
 /***********************************************
 Security HUDs! Basic mode shows only the job.
