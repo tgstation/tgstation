@@ -25,7 +25,7 @@
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
-	var/breaksound = "shatter"
+	var/break_sound = "shatter"
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 	var/hit_sound = 'sound/effects/glasshit.ogg'
@@ -277,7 +277,7 @@
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, breaksound, 70, TRUE)
+		playsound(src, break_sound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
@@ -736,7 +736,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	knock_sound = "pageturn"
 	bash_sound = 'sound/weapons/slashmiss.ogg'
-	breaksound = 'sound/items/poster_ripped.ogg'
+	break_sound = 'sound/items/poster_ripped.ogg'
 	hit_sound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
