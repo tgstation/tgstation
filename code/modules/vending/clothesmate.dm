@@ -91,6 +91,8 @@
 		/obj/item/clothing/accessory/waistcoat = 1,
 		/obj/item/clothing/head/that = 1,
 		/obj/item/clothing/head/fedora = 1,
+		/obj/item/clothing/head/cowboy_hat_white =1,
+		/obj/item/clothing/head/cowboy_hat_grey =1,
 		/obj/item/clothing/glasses/monocle = 1,
 		/obj/item/clothing/head/sombrero = 1,
 		/obj/item/clothing/suit/poncho = 1,

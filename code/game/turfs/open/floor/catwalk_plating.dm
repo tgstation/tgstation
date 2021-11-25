@@ -14,6 +14,7 @@
 	floor_tile = /obj/item/stack/tile/catwalk_tile
 	footstep = FOOTSTEP_CATWALK
 	overfloor_placed = TRUE
+	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	var/covered = TRUE
 
 
@@ -37,6 +38,10 @@
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	covered = !covered
+	if(!covered)
+		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	else
+		underfloor_accessibility = UNDERFLOOR_VISIBLE
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	update_icon(UPDATE_OVERLAYS)
 

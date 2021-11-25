@@ -1,5 +1,0 @@
-author: "UnokiAs"
-delete-after: True
-changes: 
-  - imageadd: "New barrier grenade sprite"
-  - qol: "Easier to differentiate the barrier grenade and flashbang"

@@ -200,5 +200,5 @@
 	podman.set_cloned_appearance()
 	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
-	parent.update_tray()
+	parent.update_tray(user, 1)
 	return result

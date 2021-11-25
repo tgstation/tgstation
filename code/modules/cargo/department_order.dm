@@ -12,7 +12,6 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	name = "department order console"
 	desc = "Used to order supplies for a department. Crates ordered this way will be locked until they reach their destination."
 	icon_screen = "supply"
-	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
 	///reference to the order we've made UNTIL it gets sent on the supply shuttle. this is so heads can cancel it
 	var/datum/supply_order/department_order
@@ -147,13 +146,15 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/service
 	name = "service order console"
+	circuit = /obj/item/circuitboard/computer/service_orders
 	department_delivery_area = /area/hallway/secondary/service
 	override_access = ACCESS_HOP
-	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR)
+	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_THEATRE)
 	dep_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
 
 /obj/machinery/computer/department_orders/engineering
 	name = "engineering order console"
+	circuit = /obj/item/circuitboard/computer/engineering_orders
 	department_delivery_area = /area/engineering/main
 	override_access = ACCESS_CE
 	req_one_access = REGION_ACCESS_ENGINEERING
@@ -161,6 +162,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/science
 	name = "science order console"
+	circuit = /obj/item/circuitboard/computer/science_orders
 	department_delivery_area = /area/science/research
 	override_access = ACCESS_RD
 	req_one_access = REGION_ACCESS_RESEARCH
@@ -168,6 +170,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/security
 	name = "security order console"
+	circuit = /obj/item/circuitboard/computer/security_orders
 	department_delivery_area = /area/security/brig
 	override_access = ACCESS_HOS
 	req_one_access = REGION_ACCESS_SECURITY
@@ -175,6 +178,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 /obj/machinery/computer/department_orders/medical
 	name = "medical order console"
+	circuit = /obj/item/circuitboard/computer/medical_orders
 	department_delivery_area = /area/medical/medbay/central
 	override_access = ACCESS_CMO
 	req_one_access = REGION_ACCESS_MEDBAY

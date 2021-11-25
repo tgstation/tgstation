@@ -588,6 +588,7 @@ CREATE TABLE `ticket` (
   `round_id` int(11) unsigned NULL,
   `ticket` smallint(11) unsigned NOT NULL,
   `action` varchar(20) NOT NULL DEFAULT 'Message',
+  `urgent` TINYINT(1) unsigned NOT NULL DEFAULT '0',
   `message` text NOT NULL,
   `timestamp` datetime NOT NULL,
   `recipient` varchar(32) DEFAULT NULL,
@@ -671,6 +672,7 @@ CREATE TABLE `known_alts` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `ckey1` VARCHAR(32) NOT NULL,
     `ckey2` VARCHAR(32) NOT NULL,
+    `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*',
     PRIMARY KEY (`id`),
     UNIQUE INDEX `unique_contraints` (`ckey1` , `ckey2`)
 );

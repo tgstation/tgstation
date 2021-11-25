@@ -34,7 +34,7 @@
 		tool_paths = string_list(tool_paths)
 
 /**
- * Run custom pre-craft checks for this recipe
+ * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client
  *
  * user: The /mob that initiated the crafting
  * collected_requirements: A list of lists of /obj/item instances that satisfy reqs. Top level list is keyed by requirement path.
@@ -50,7 +50,6 @@
 	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
 	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 		return TRUE
-	to_chat(user, span_boldwarning("You can't craft \a [name] without a pipe fitting!"))
 	return FALSE
 
 /datum/crafting_recipe/improv_explosive
@@ -1359,6 +1358,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/layer_adapter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1379,6 +1379,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/color_adapter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1399,6 +1400,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/he_pipe/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1419,6 +1421,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 1 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/he_junction/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1440,6 +1443,7 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/pressure_pump/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1460,6 +1464,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/manual_valve/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1481,6 +1486,7 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/vent/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1502,6 +1508,7 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/scrubber/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1523,6 +1530,7 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/filter/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1544,6 +1552,7 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/mixer/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1564,6 +1573,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/connector/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1584,6 +1594,7 @@
 		/obj/item/stack/sheet/iron = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/passive_vent/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1605,6 +1616,7 @@
 		/obj/item/stack/cable_coil = 5)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/injector/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)
@@ -1625,6 +1637,7 @@
 		/obj/item/stack/sheet/plasteel = 1)
 	time = 2 SECONDS
 	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
 
 /datum/crafting_recipe/he_exchanger/check_requirements(mob/user, list/collected_requirements)
 	return atmos_pipe_check(user, collected_requirements)

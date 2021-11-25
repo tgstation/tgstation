@@ -1258,7 +1258,7 @@
 /area/ruin/syndicate_lava_base/virology)
 "fj" = (
 /obj/structure/table/glass,
-/obj/structure/reagent_dispensers/virusfood/directional/north,
+/obj/structure/reagent_dispensers/wall/virusfood/directional/north,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
