@@ -152,6 +152,16 @@
 	cost = 7
 	limited_stock = 1
 
+/datum/uplink_item/device_tools/binary
+	name = "Binary Translator Key"
+	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
+			such as AI units and cyborgs, over their private binary channel. Caution should \
+			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
+	item = /obj/item/encryptionkey/binary
+	cost = 5
+	surplus = 75
+	restricted = TRUE
+
 // Low progression cost
 
 /datum/uplink_item/device_tools/emag
@@ -170,17 +180,6 @@
 	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
 	cost = 5
 	surplus = 90
-
-/datum/uplink_item/device_tools/binary
-	name = "Binary Translator Key"
-	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
-			such as AI units and cyborgs, over their private binary channel. Caution should \
-			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
-	progression_minimum = 20 MINUTES
-	item = /obj/item/encryptionkey/binary
-	cost = 5
-	surplus = 75
-	restricted = TRUE
 
 
 // Medium progression cost
@@ -213,7 +212,7 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 40 MINUTES
+	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 10
 
@@ -222,6 +221,6 @@
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 40 MINUTES
+	progression_minimum = 30 MINUTES
 	item = /obj/item/powersink
 	cost = 11
