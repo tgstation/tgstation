@@ -305,7 +305,7 @@ Buildable meters
 	. += span_notice("You can change the pipe layer by Alt-Clicking the device.")
 	. += span_notice("You can rotate it by using it in hand.")
 
-/obj/item/pipe/AltClick(mob/user)
+/obj/item/pipe/alt_click_secondary(mob/user)
 	. = ..()
 	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 	set_piping_layer(layer_to_set)
