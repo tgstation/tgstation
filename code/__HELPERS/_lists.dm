@@ -261,30 +261,16 @@
 	return result
 
 /**
- * Picks a random element from a list based on a weighting system:
- * 1. Adds up the total of weights for each element
- * 2. Gets a number between 1 and that total
- * 3. For each element in the list, subtracts its weighting from that number
- * 4. If that makes the number 0 or less, return that element.
- * Will output null sometimes if you use decimals (e.g. 0.1 instead of 10) as rand() uses integers, not floats
-**/
+ * Picks a random element from a list based on a weighting system.
+ * For example, given the following list:
+ * A = 6, B = 3, C = 1, D = 0
+ * A would have a 60% chance of being picked,
+ * B would have a 30% chance of being picked,
+ * C would have a 10% chance of being picked,
+ * and D would have a 0% chance of being picked.
+ * You should only pass integers in.
+ */
 /proc/pick_weight(list/list_to_pick)
-	var/total = 0
-	var/item
-	for(item in list_to_pick)
-		if(!list_to_pick[item])
-			list_to_pick[item] = 1
-		total += list_to_pick[item]
-
-	total = rand(1, total)
-	for(item in list_to_pick)
-		total -= list_to_pick[item]
-		if(total <= 0)
-			return item
-
-	return null
-///The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
-/proc/pick_weight_allow_zero(list/list_to_pick)
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
