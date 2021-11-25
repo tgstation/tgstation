@@ -351,6 +351,7 @@
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
+	update_appearance()
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
