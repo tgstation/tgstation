@@ -25,8 +25,8 @@
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 	var/being_held_open = FALSE
-	var/knocksound = 'sound/effects/glassknock.ogg'
-	var/bashsound = 'sound/effects/glassbash.ogg'
+	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glassbash.ogg'
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
@@ -95,11 +95,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(src, knocksound, 50, TRUE)
+		playsound(src, knock_sound, 50, TRUE)
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(src, bashsound, 100, TRUE)
+		playsound(src, bash_sound, 100, TRUE)
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
