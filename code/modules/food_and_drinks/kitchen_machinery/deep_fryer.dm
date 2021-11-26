@@ -153,6 +153,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(istype(frying_item, /obj/item/freeze_cube))
 		log_bomber(user, "put a freeze cube in a", src)
 		visible_message(span_userdanger("[src] starts glowing... Oh no..."))
+		playsound(src, 'sound/effects/pray_chaplain.ogg, 100)
 		add_filter("entropic_ray", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
 		addtimer(CALLBACK(src, .proc/blow_up), 5 SECONDS)
 	frying = new /obj/item/food/deepfryholder(src, frying_item)
