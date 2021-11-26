@@ -20,12 +20,7 @@
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
 	var/turf/below_turf = our_turf.below()
-	if(!below_turf)
-		our_turf.vis_contents.len = 0
-		if(!add_baseturf_underlay(our_turf))
-			our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			return FALSE
-	else
+	if(below_turf)
 		our_turf.vis_contents += below_turf
 	update_multi_z(our_turf)
 
@@ -41,7 +36,7 @@
 	var/turf/below_turf = our_turf.below()
 	if(!below_turf)
 		our_turf.vis_contents.len = 0
-		add_baseturf_underlay()
+		add_baseturf_underlay(our_turf)
 
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = TURF_LAYER-0.01)
@@ -70,8 +65,8 @@
 
 ///Called when there is no real turf below this turf
 /datum/element/turf_z_transparency/proc/add_baseturf_underlay(turf/our_turf)
-	if(istype(our_turf, /turf/open/openspace))
-		return FALSE
+	if(istype(our_turf, /turf/open/openspace)) // we don't ever want our bottom turf to be openspace
+		our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	var/turf/path = SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/open/space
 	if(!ispath(path))
 		path = text2path(path)
@@ -81,4 +76,3 @@
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER-0.02, plane = PLANE_SPACE)
 	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
 	our_turf.underlays += underlay_appearance
-	return TRUE
