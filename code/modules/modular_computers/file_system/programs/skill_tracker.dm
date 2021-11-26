@@ -55,14 +55,12 @@
 	if(.)
 		return
 
-	var/mob/user = usr
-
 	switch(action)
 		if("PRG_reward")
 			var/skill_type = find_skilltype(params["skill"])
 			if(skill_type)
 				var/datum/skill/skill = GetSkillRef(skill_type)
-				var/datum/mind/mind = user.mind
+				var/datum/mind/mind = ui.user.mind
 				var/new_level = mind.get_skill_level(skill_type)
 				skill.try_skill_reward(mind, new_level)
 				return TRUE
