@@ -27,17 +27,17 @@ GLOBAL_LIST_EMPTY(catwalk_overlay_masterlist)	//Stores all the above_states for 
 
 /turf/open/floor/catwalk_floor/update_overlays()
 	. = ..()
-	if(!covered)
+	if(!covered)	//will this reset the overlay or just leave it? should test this
 		return
-		if(!GLOB.catwalk_overlay_masterlist[above_state])
-			//Generate a new overlay and add it to the global list
-			var/image/catwalk_overlay = new()
-			catwalk_overlay.icon = icon
-			catwalk_overlay.icon_state = above_state
-			catwalk_overlay.plane = GAME_PLANE
-			catwalk_overlay.layer = CATWALK_LAYER
-			GLOB.catwalk_overlay_masterlist[above_state] = catwalk_overlay
-		. += GLOB.catwalk_overlay_masterlist[above_state]
+	if(!GLOB.catwalk_overlay_masterlist[above_state])
+		//Generate a new overlay and add it to the global list
+		var/image/catwalk_overlay = new()
+		catwalk_overlay.icon = icon
+		catwalk_overlay.icon_state = above_state
+		catwalk_overlay.plane = GAME_PLANE
+		catwalk_overlay.layer = CATWALK_LAYER
+		GLOB.catwalk_overlay_masterlist[above_state] = catwalk_overlay
+	. += GLOB.catwalk_overlay_masterlist[above_state]
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
