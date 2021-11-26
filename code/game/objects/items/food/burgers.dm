@@ -39,12 +39,13 @@
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
 	var/obj/item/food/patty/human/human_patty = locate(/obj/item/food/patty/human) in contents
-	if(LAZYLEN(human_patty.custom_materials))
-		for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
-			if(mob_meat_material.subjectname)
-				name = "[mob_meat_material.subjectname] burger"
-			else if(mob_meat_material.subjectjob)
-				name = "[mob_meat_material.subjectjob] burger"
+	if(!LAZYLEN(human_patty.custom_materials))
+		return
+	for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
+		if(mob_meat_material.subjectname)
+			name = "[mob_meat_material.subjectname] burger"
+		else if(mob_meat_material.subjectjob)
+			name = "[mob_meat_material.subjectjob] burger"
 
 /obj/item/food/burger/corgi
 	name = "corgi burger"
@@ -173,8 +174,8 @@
 		if(71 to 83)
 			step(src, dir)
 		if(65 to 70)
-			var/obj/machinery/light/L = locate(/obj/machinery/light) in view(4, src)
-			L?.flicker()
+			var/obj/machinery/light/light = locate(/obj/machinery/light) in view(4, src)
+			light?.flicker()
 		if(62 to 64)
 			playsound(loc, pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
 		if(61)

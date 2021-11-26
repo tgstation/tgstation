@@ -41,15 +41,19 @@
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/food/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..()) //was it caught by a mob?
-		var/turf/hit_turf = get_turf(hit_atom)
-		new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
-		if(prob(13)) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
-			if(chick_count < MAX_CHICKENS) //Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
-				new /mob/living/simple_animal/chick(hit_turf)
-				chick_count++
-		reagents.expose(hit_atom, TOUCH)
-		qdel(src)
+	if (..()) // was it caught by a mob?
+		return
+
+	var/turf/hit_turf = get_turf(hit_atom)
+	new /obj/effect/decal/cleanable/food/egg_smudge(hit_turf)
+	if(!prob(13)) //Roughly a 1/8 (12.5%) chance to make a chick, as in Minecraft. I decided not to include the chances for the creation of multiple chicks from the impact of one egg, since that'd probably require nested prob()s or something (and people might think that it was a bug, anyway).
+		return
+
+	if(chick_count < MAX_CHICKENS) //Chicken code uses this MAX_CHICKENS variable, so I figured that I'd use it again here. Even this check and the check in chicken code both use the MAX_CHICKENS variable, they use independent counter variables and thus are independent of each other.
+		new /mob/living/simple_animal/chick(hit_turf)
+		chick_count++
+	reagents.expose(hit_atom, TOUCH)
+	qdel(src)
 
 /obj/item/food/egg/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/toy/crayon))
@@ -71,12 +75,14 @@
 
 	else if(is_reagent_container(item))
 		var/obj/item/reagent_containers/dunk_test_container = item
-		if(dunk_test_container.is_drainable() && dunk_test_container.reagents.has_reagent(/datum/reagent/water))
-			to_chat(user, span_notice("You check if [src] is rotten."))
-			if(istype(src, /obj/item/food/egg/rotten))
-				to_chat(user, span_warning("[src] floats in the [dunk_test_container]!"))
-			else
-				to_chat(user, span_notice("[src] sinks into the [dunk_test_container]!"))
+		if (!dunk_test_container.is_drainable() || !dunk_test_container.reagents.has_reagent(/datum/reagent/water))
+			return
+
+		to_chat(user, span_notice("You check if [src] is rotten."))
+		if(istype(src, /obj/item/food/egg/rotten))
+			to_chat(user, span_warning("[src] floats in the [dunk_test_container]!"))
+		else
+			to_chat(user, span_notice("[src] sinks into the [dunk_test_container]!"))
 	else
 		..()
 

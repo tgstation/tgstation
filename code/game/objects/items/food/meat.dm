@@ -615,9 +615,9 @@
 
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
+	w_class = WEIGHT_CLASS_SMALL
 	var/subjectname = ""
 	var/subjectjob = null
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/meat/slab
 	name = "meat"
@@ -741,6 +741,7 @@
 
 /obj/item/food/meat/slab/synthmeat/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
 /obj/item/food/meat/slab/meatproduct
 	name = "meat product"
 	icon_state = "meatproduct"
@@ -1073,13 +1074,15 @@
 
 /obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	..()
-	if(istype(original_atom, /obj/item/food/meat/slab))
-		var/obj/item/food/meat/slab/original_slab = original_atom
-		var/mutable_appearance/filling = mutable_appearance(icon, "rawcutlet_coloration")
-		filling.color = original_slab.slab_color
-		add_overlay(filling)
-		name = "raw [original_atom.name] cutlet"
-		meat_type = original_atom.name
+	if(!istype(original_atom, /obj/item/food/meat/slab))
+		return
+
+	var/obj/item/food/meat/slab/original_slab = original_atom
+	var/mutable_appearance/filling = mutable_appearance(icon, "rawcutlet_coloration")
+	filling.color = original_slab.slab_color
+	add_overlay(filling)
+	name = "raw [original_atom.name] cutlet"
+	meat_type = original_atom.name
 
 /obj/item/food/meat/rawcutlet/plain
 	foodtypes = MEAT

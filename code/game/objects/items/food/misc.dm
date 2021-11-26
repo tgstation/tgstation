@@ -1,6 +1,16 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
+/obj/item/food/cheese
+	name = "cheese wedge"
+	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
+	icon_state = "cheesewedge"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("cheese" = 1)
+	foodtypes = DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+	/// used to determine how much health rats/regal rats recover when they eat it.
+	var/rat_heal = 10
 
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
@@ -25,17 +35,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
-
-/obj/item/food/cheese
-	name = "cheese wedge"
-	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
-	icon_state = "cheesewedge"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-	/// used to determine how much health rats/regal rats recover when they eat it.
-	var/rat_heal = 10
 
 /obj/item/food/cheese/Initialize(mapload)
 	. = ..()
@@ -400,13 +399,13 @@
 	icon_state = "lollipop_stick"
 	inhand_icon_state = "lollipop_stick"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //Honk
-	var/mutable_appearance/head
-	var/headcolor = rgb(0, 0, 0)
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
+	var/mutable_appearance/head
+	var/headcolor = rgb(0, 0, 0)
 
 /obj/item/food/lollipop/Initialize(mapload)
 	. = ..()
@@ -702,7 +701,7 @@
 				junkiness = junkiness,\
 				check_liked = CALLBACK(src, .proc/check_liked))
 
-/obj/item/food/rationpack/proc/check_liked(fraction, mob/M) //Nobody likes rationpacks. Nobody.
+/obj/item/food/rationpack/proc/check_liked(fraction, mob/mob) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED
 
 /obj/item/food/ant_candy

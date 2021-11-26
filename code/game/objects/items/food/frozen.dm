@@ -225,11 +225,13 @@
 	tastes = list("beetlejuice")
 	trash_type = /obj/item/popsicle_stick
 	w_class = WEIGHT_CLASS_SMALL
+	foodtypes = DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
 	var/bitecount = 0
-	foodtypes = DAIRY | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+
 
 /obj/item/food/popsicle/Initialize(mapload)
 	. = ..()
