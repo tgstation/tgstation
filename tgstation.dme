@@ -3694,6 +3694,7 @@
 #include "code\modules\shuttle\elevator.dm"
 #include "code\modules\shuttle\emergency.dm"
 #include "code\modules\shuttle\ferry.dm"
+#include "code\modules\shuttle\infiltrator.dm"
 #include "code\modules\shuttle\manipulator.dm"
 #include "code\modules\shuttle\medisim.dm"
 #include "code\modules\shuttle\monastery.dm"
