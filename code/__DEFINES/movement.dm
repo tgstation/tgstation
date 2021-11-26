@@ -18,15 +18,17 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 ///Similar to DELAY_TO_GLIDE_SIZE, except without the clamping, and it supports piping in an unrelated scalar
 #define MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, movement_disparity) (32 / ((delay) / world.tick_lag) * movement_disparity)
 
-//Movement subsystem precedence. Who gets to run over who
-// Lower numbers beat higher numbers
-// Pretty simple for now, if you want to add loops that run in parrael it's gonna need some modification
-#define MOVEMENT_SPACE_PRECEDENCE 2 //Very few things should override this
+//Movement subsystem priority. Only one loop can run at a time, this dictates that
+// Higher numbers beat lower numbers
 ///Standard, go lower then this if you want to override, higher otherwise
-#define MOVEMENT_DEFAULT_PRECEDENCE 10
+#define MOVEMENT_DEFAULT_PRIORITY 10
+///Very few things should override this
+#define MOVEMENT_SPACE_PRIORITY 100
+///Higher then the heavens
+#define MOVEMENT_ABOVE_SPACE_PRIORITY (MOVEMENT_SPACE_PRIORITY + 1)
 
 //Movement loop flags
 ///Should the loop act immediately following its addition?
 #define MOVEMENT_LOOP_START_FAST (1<<0)
-///Do we not use the precedence system?
-#define MOVEMENT_LOOP_IGNORE_PRECEDENCE (1<<1)
+///Do we not use the priority system?
+#define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<1)
