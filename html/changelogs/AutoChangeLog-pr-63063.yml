@@ -1,0 +1,4 @@
+author: "HarseTheef"
+delete-after: True
+changes: 
+  - bugfix: "The space heater right click toggle now works correctly."
