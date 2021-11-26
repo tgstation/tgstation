@@ -100,11 +100,11 @@
 			for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
 				if(params["key"] == checked_candidate.key)
 					candidate = checked_candidate
-			var/obj/item/paicard/card = locate(src) in pai_card_list
+			var/obj/item/paicard/card = locate(src) in SSpai.pai_card_list
 			if(card.pai)
 				return
 			if(istype(card, /obj/item/paicard) && istype(candidate, /datum/pai_candidate))
-				if(check_ready(candidate) != candidate)
+				if(SSpai.check_ready(candidate) != candidate)
 					return FALSE
 				var/mob/living/silicon/pai/pai = new(card)
 				if(!candidate.name)

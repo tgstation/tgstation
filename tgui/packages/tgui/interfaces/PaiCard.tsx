@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
-  Collapsible,
   LabeledList,
   NoticeBox,
   Section,
@@ -12,7 +12,7 @@ import { Window } from '../layouts';
 
 type PaiCardData = {
   candidates: Candidate[];
-  pai: Pai[];
+  pai: Pai[] | null;
 };
 
 type Candidate = {
@@ -48,28 +48,32 @@ const PaiDownload = (props, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { candidates = [] } = data;
   return (
-    <Stack fill vertical>
-      <Section
-        buttons={
-          <Button
-            icon="concierge-bell"
-            onClick={() => act('request')}
-            tooltip="Request candidates.">
-            Request
-          </Button>
-        }
-        fill
-        scrollable
-        title="Viewing pAI Candidates">
-        {!candidates.length ? (
-          <NoticeBox>None found!</NoticeBox>
-        ) : (
-          candidates.map((candidate) => {
-            return <CandidateDisplay candidate={candidate} key={candidate} />;
-          })
-        )}
-      </Section>
-    </Stack>
+    <Section
+      buttons={
+        <Button
+          icon="concierge-bell"
+          onClick={() => act('request')}
+          tooltip="Request candidates.">
+          Request
+        </Button>
+      }
+      fill
+      scrollable
+      title="Viewing pAI Candidates">
+      {!candidates.length ? (
+        <NoticeBox>None found!</NoticeBox>
+      ) : (
+        <Stack>
+          {candidates.map((candidate) => {
+            return (
+              <Stack.Item key={candidate}>
+                <CandidateDisplay candidate={candidate} />
+              </Stack.Item>
+            );
+          })}
+        </Stack>
+      )}
+    </Section>
   );
 };
 
@@ -78,23 +82,36 @@ const CandidateDisplay = (props, context) => {
   const { candidate } = props;
   const { comments, description, key, name } = candidate;
   return (
-    <Collapsible title={name}>
-      <LabeledList>
-        <Tooltip content="If entered, describes the playstyle of the pAI.">
-          <LabeledList.Item label="Description">{description}</LabeledList.Item>
-        </Tooltip>
-        <Tooltip content="Out of character comments.">
-          <LabeledList.Item label="Comments">{comments}</LabeledList.Item>
-        </Tooltip>
-      </LabeledList>
-      <Button
-        icon="download"
-        mt={1}
-        onClick={() => act('accept', { candidate: key })}
-        tooltip="Accepts this pAI candidate.">
-        Download
-      </Button>
-    </Collapsible>
+    <Box
+      style={{
+        'background': '#111111',
+        'border': '1px solid #4972a1',
+        'border-radius': '5px',
+        'padding': '1rem',
+      }}>
+      <Section
+        buttons={
+          <Button
+            icon="download"
+            onClick={() => act('download', { key })}
+            tooltip="Accepts this pAI candidate.">
+            Download
+          </Button>
+        }
+        scrollable
+        title={name}>
+        <LabeledList>
+          <Tooltip content="If entered, describes the playstyle of the pAI.">
+            <LabeledList.Item label="Description">
+              {description}
+            </LabeledList.Item>
+          </Tooltip>
+          <Tooltip content="Out of character comments.">
+            <LabeledList.Item label="Comments">{comments}</LabeledList.Item>
+          </Tooltip>
+        </LabeledList>
+      </Section>
+    </Box>
   );
 };
 

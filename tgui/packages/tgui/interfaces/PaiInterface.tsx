@@ -1,5 +1,17 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, Icon, ProgressBar, Section, Stack, Table, Tabs, Tooltip, NoticeBox } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  Icon,
+  ProgressBar,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+  Tooltip,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 
 type PaiInterfaceData = {
@@ -334,7 +346,8 @@ const InstalledSoftware = (props, context) => {
       {installed && !installed.length ? (
         <NoticeBox>Nothing installed!</NoticeBox>
       ) : (
-        installed && installed.map((software) => {
+        installed &&
+        installed.map((software) => {
           return (
             <Button key={software} onClick={() => onInstallClick(software)}>
               {software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
@@ -366,7 +379,8 @@ const InstalledInfo = (props) => {
           !software
             ? 'Select a Program'
             : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-              letter.toUpperCase())
+                letter.toUpperCase()
+              )
         }>
         {software && (
           <Stack fill vertical>
@@ -395,9 +409,10 @@ const RecordsDisplay = (props, context) => {
       fill
       scrollable>
       <Table>
-        {convertedRecords && convertedRecords.map((record) => {
-          return <RecordRow key={record} record={record} />;
-        })}
+        {convertedRecords &&
+          convertedRecords.map((record) => {
+            return <RecordRow key={record} record={record} />;
+          })}
       </Table>
     </Section>
   );
@@ -427,9 +442,10 @@ const RecordRow = (props) => {
 
   return (
     <Table.Row className="candystripe">
-      {convertedRecord && convertedRecord.map((value) => {
-        return <Table.Cell key={value}>{value}</Table.Cell>;
-      })}
+      {convertedRecord &&
+        convertedRecord.map((value) => {
+          return <Table.Cell key={value}>{value}</Table.Cell>;
+        })}
     </Table.Row>
   );
 };
@@ -584,9 +600,10 @@ const AvailableSoftware = (_, context) => {
 
   return (
     <Table>
-      {convertedList && convertedList.map((software) => {
-        return <AvailableRow key={software.name} software={software} />;
-      })}
+      {convertedList &&
+        convertedList.map((software) => {
+          return <AvailableRow key={software.name} software={software} />;
+        })}
     </Table>
   );
 };
