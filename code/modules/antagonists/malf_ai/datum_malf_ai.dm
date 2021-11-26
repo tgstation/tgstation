@@ -6,7 +6,6 @@
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
 	job_rank = ROLE_MALF
-	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	ui_name = "AntagInfoMalf"
 	///the name of the antag flavor this traitor has.
@@ -111,7 +110,6 @@
 	. = ..()
 
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, datum_owner)
 
 	if(istype(datum_owner))
 		datum_owner.hack_software = TRUE
@@ -123,7 +121,6 @@
 	. = ..()
 
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, datum_owner)
 
 	if(istype(datum_owner))
 		datum_owner.hack_software = FALSE

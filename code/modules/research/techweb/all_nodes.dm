@@ -220,6 +220,7 @@
 		"comp_length",
 		"comp_light",
 		"comp_list_literal",
+		"comp_list_assoc_literal",
 		"comp_logic",
 		"comp_matscanner",
 		"comp_mmi",
@@ -289,7 +290,7 @@
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/points/slime/calibration)
+	required_experiments = list(/datum/experiment/dissection/human)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -311,7 +312,7 @@
 		"smoke_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/scanning/points/slime/easy)
+	required_experiments = list(/datum/experiment/dissection/nonhuman)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
 
 /datum/techweb_node/xenoorgan_biotech
@@ -326,7 +327,11 @@
 		"limbdesign_plasmaman",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
-	discount_experiments = list(/datum/experiment/scanning/random/cytology/easy = 1000, /datum/experiment/scanning/points/slime/expert = 5000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/cytology/easy = 1000,
+		/datum/experiment/scanning/points/slime/hard = 5000,
+		/datum/experiment/dissection/xenomorph = 5000,
+	)
 
 /datum/techweb_node/bio_process
 	id = "bio_process"

@@ -400,6 +400,8 @@
 
 	var/require_human = CONFIG_GET(flag/enforce_human_authority) && (job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 
+	src.job = job.title
+
 	if(fully_randomize)
 		player_client.prefs.apply_prefs_to(src)
 

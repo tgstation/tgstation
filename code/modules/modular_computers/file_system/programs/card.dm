@@ -144,7 +144,7 @@
 			if(!computer || !card_slot2)
 				return TRUE
 			if(target_id_card)
-				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
+				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment, target_id_card.get_trim_assignment())
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()

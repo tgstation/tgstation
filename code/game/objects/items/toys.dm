@@ -3,7 +3,6 @@
  * Balloons
  * Fake singularity
  * Toy gun
- * Toy crossbow
  * Toy swords
  * Crayons
  * Snap pops

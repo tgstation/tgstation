@@ -94,13 +94,14 @@ export const PersonalCrafting = (props, context) => {
                 </>
               }>
               <Section fill scrollable>
-                {!!busy && (
+                {busy ? (
                   <Dimmer fontSize="32px">
                     <Icon name="cog" spin={1} />
                     {' Crafting...'}
                   </Dimmer>
+                ) : (
+                  <CraftingList craftables={shownRecipes} />
                 )}
-                <CraftingList craftables={shownRecipes} />
               </Section>
             </Section>
           </Stack.Item>

@@ -175,14 +175,24 @@
 	remove_mutations = list(NERVOUS)
 
 /obj/item/dnainjector/antifire
-	name = "\improper DNA injector (Anti-Fire)"
+	name = "\improper DNA injector (Anti-Temp Adaptation)"
 	desc = "Cures fire."
-	remove_mutations = list(SPACEMUT)
+	remove_mutations = list(TEMPADAPT)
 
 /obj/item/dnainjector/firemut
-	name = "\improper DNA injector (Fire)"
+	name = "\improper DNA injector (Temp Adaptation)"
 	desc = "Gives you fire."
-	add_mutations = list(SPACEMUT)
+	add_mutations = list(TEMPADAPT)
+
+/obj/item/dnainjector/antipressure
+	name = "\improper DNA injector (Anti-Pressure Adaptation)"
+	desc = "Cures fire."
+	remove_mutations = list(PRESSUREADAPT)
+
+/obj/item/dnainjector/pressuremut
+	name = "\improper DNA injector (Pressure Adaptation)"
+	desc = "Gives you fire."
+	add_mutations = list(PRESSUREADAPT)
 
 /obj/item/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"

@@ -2,12 +2,14 @@
 /datum/unit_test/find_reference_sanity
 
 /atom/movable/ref_holder
+	var/static/atom/movable/ref_test/static_test
 	var/atom/movable/ref_test/test
 	var/list/test_list = list()
 	var/list/test_assoc_list = list()
 
 /atom/movable/ref_holder/Destroy()
 	test = null
+	static_test = null
 	test_list.Cut()
 	test_assoc_list.Cut()
 	return ..()
@@ -108,4 +110,23 @@
 	victim.DoSearchVar(testbed, "Fifth Run", search_time = 6)
 	TEST_ASSERT(victim.found_refs[to_find_in_key], "The ref-tracking tool failed to find a nested assoc list key")
 	TEST_ASSERT(victim.found_refs[to_find_null_assoc_nested], "The ref-tracking tool failed to find a null key'd nested assoc list entry")
+	SSgarbage.should_save_refs = FALSE
+
+/datum/unit_test/find_reference_static_investigation/Run()
+	var/atom/movable/ref_test/victim = allocate(/atom/movable/ref_test)
+	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
+	SSgarbage.should_save_refs = TRUE
+
+	//Lets check static vars now, since those can be a real headache
+	testbed.static_test = victim
+
+	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	//And global.vars is a really weird list
+	var/global_vars = list()
+	for(var/key in global.vars)
+		global_vars[key] = global.vars[key]
+
+	victim.DoSearchVar(global_vars, "Sixth Run", search_time = 7)
+
+	TEST_ASSERT(victim.found_refs[global_vars], "The ref-tracking tool failed to find a natively global variable")
 	SSgarbage.should_save_refs = FALSE
