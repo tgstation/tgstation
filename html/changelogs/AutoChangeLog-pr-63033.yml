@@ -1,7 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - rscadd: "Added back dissection surgery, which can be used with an operating computer to perform experiments for research."
-  - rscadd: "Biological technology's requirement has been changed from scanning one grey slime extract to performing a dissection surgery."
-  - rscadd: "Advanced biotech's requirement has been changed from scanning three slime extracts to performing a dissection surgery on a nonhuman."
-  - rscadd: "Xeno-organ biology and Alien Biological Tools' now have additional discounts for performing a dissection surgery on a xenomorph."

@@ -835,3 +835,33 @@
   - bugfix: fixes non-chaplains being able to invoke rites
   "\u041F\u0435\u043B\u044C\u043C\u0435\u0448\u043A\u0430":
   - bugfix: You could see parallax over blackness
+2021-11-26:
+  BastardBlaster:
+  - bugfix: Cyborgs and those with rad immunity will no longer get the radiation burn
+      message when near something being dusted by the supermatter.
+  - spellcheck: Rewrote some messages when near something that was dusted by the SM
+  KathyRyals:
+  - balance: Heretics no longer gib their target when sacrificing them, instead outright
+      killing them and spilling all their organs everywhere in a gruesome manner.
+  Melbert:
+  - bugfix: Spading plants correctly updates the tray icon again
+  Mothblocks:
+  - rscadd: Added back dissection surgery, which can be used with an operating computer
+      to perform experiments for research.
+  - rscadd: Biological technology's requirement has been changed from scanning one
+      grey slime extract to performing a dissection surgery.
+  - rscadd: Advanced biotech's requirement has been changed from scanning three slime
+      extracts to performing a dissection surgery on a nonhuman.
+  - rscadd: Xeno-organ biology and Alien Biological Tools' now have additional discounts
+      for performing a dissection surgery on a xenomorph.
+  PositiveEntropy:
+  - imageadd: In no short effort of our best tailors, every Central Command outfit
+      have been either redesigned or reshaded! All of them!
+  TheBonded:
+  - qol: Chairs and beds are now deconstructed with right click, making them more
+      consistent with other object deconstructions.
+  itseasytosee:
+  - imageadd: added new sprites for the energy axe
+  jlsnow301:
+  - bugfix: 'Scams Deleted: You will no longer be charged full price for items listed
+      as discounted in the vendor.'

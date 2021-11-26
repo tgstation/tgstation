@@ -1,5 +1,0 @@
-author: "BastardBlaster"
-delete-after: True
-changes: 
-  - bugfix: "Cyborgs and those with rad immunity will no longer get the radiation burn message when near something being dusted by the supermatter."
-  - spellcheck: "Rewrote some messages when near something that was dusted by the SM"
