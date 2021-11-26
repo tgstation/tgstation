@@ -75,6 +75,3 @@
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 ///Called when a movable is teleported from `do_teleport()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
-///from base of atom/movable/newtonian_move(): (inertia_direction)
-#define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
-	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
