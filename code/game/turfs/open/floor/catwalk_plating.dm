@@ -7,7 +7,7 @@
  */
 /turf/open/floor/catwalk_floor
 	icon = 'icons/turf/floors/catwalk_plating.dmi'
-	icon_state = "catwalk_below"
+	icon_state = "catwalk_combined_mapping"
 	name = "catwalk floor"
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	baseturfs = /turf/open/floor/plating
