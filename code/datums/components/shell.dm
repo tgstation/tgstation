@@ -346,7 +346,7 @@
 	SIGNAL_HANDLER
 	if(!is_authorized(user))
 		return
-
+	
 	if (!(shell_flags & SHELL_FLAG_USB_PORT))
 		source.balloon_alert(user, "this shell has no usb ports")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
@@ -354,7 +354,11 @@
 	if (isnull(attached_circuit))
 		source.balloon_alert(user, "no circuit inside")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
-
+	
+	if(attached_circuit.locked)
+		source.balloon_alert(user, "circuit is locked")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+	
 	usb_cable.attached_circuit = attached_circuit
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 

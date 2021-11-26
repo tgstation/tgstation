@@ -152,7 +152,12 @@
 		if(user)
 			connecting_cable.balloon_alert(user, "too far away")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
-
+	
+	if (connectingcable.attached_circuit.locked)
+		if(user)
+			connecting_cable.balloon_alert(user, "shell is locked")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+	
 	usb_cable_ref = WEAKREF(connecting_cable)
 	attached_circuit = connecting_cable.attached_circuit
 
