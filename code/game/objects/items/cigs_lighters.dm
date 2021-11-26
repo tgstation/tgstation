@@ -292,10 +292,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.remove_any(to_smoke)
 
 /obj/item/clothing/mask/cigarette/process(delta_time)
-	var/turf/location = get_turf(src)
-	var/mob/living/M = loc
-	if(isliving(loc))
-		M.IgniteMob()
+	var/mob/living/user = isliving(loc) ? loc : null
+	user?.IgniteMob()
 	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
 		var/datum/gas_mixture/air = return_air()
 		if(!air || !air.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
@@ -304,10 +302,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	smoketime -= delta_time * (1 SECONDS)
 	if(smoketime <= 0)
-		new type_butt(location)
-		if(ismob(loc))
-			to_chat(M, span_notice("Your [name] goes out."))
-		qdel(src)
+		put_out(user)
 		return
 
 	open_flame(heat)
@@ -317,11 +312,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
-		user.visible_message(span_notice("[user] calmly drops and treads on \the [src], putting it out instantly."))
-		new type_butt(user.loc)
-		new /obj/effect/decal/cleanable/ash(user.loc)
-		qdel(src)
+		put_out(user, TRUE)
 	return ..()
+
+/obj/item/clothing/mask/cigarette/proc/put_out(mob/user, done_early = FALSE)
+	var/atom/location = drop_location()
+	if(done_early)
+		user.visible_message(span_notice("[user] calmly drops and treads on \the [src], putting it out instantly."))
+		new /obj/effect/decal/cleanable/ash(location)
+	else if(user)
+		to_chat(user, span_notice("Your [name] goes out."))
+	new type_butt(location)
+	qdel(src)
 
 /obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -563,44 +565,27 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 0
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
-	var/packeditem = FALSE
+	///name of the stuff packed inside this pipe
+	var/packeditem
 
 /obj/item/clothing/mask/cigarette/pipe/Initialize(mapload)
 	. = ..()
 	name = "empty [initial(name)]"
 
-/obj/item/clothing/mask/cigarette/pipe/Destroy()
+/obj/item/clothing/mask/cigarette/pipe/put_out(mob/user, done_early = FALSE)
+	if(done_early)
+		user.visible_message(span_notice("[user] puts out [src]."), span_notice("You put out [src]."))
+		name = "[packeditem]-packed [initial(name)]"
+	else
+		if(user)
+			to_chat(user, span_notice("Your [name] goes out."))
+		name = "empty [initial(name)]"
+		packeditem = null
+	lit = FALSE
+	icon_state = icon_off
+	inhand_icon_state = icon_off
+	user?.update_inv_wear_mask()
 	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clothing/mask/cigarette/pipe/process(delta_time)
-	if(isliving(loc))
-		var/mob/living/living_smoker = loc
-		living_smoker.IgniteMob()
-	if(!reagents.has_reagent(/datum/reagent/oxygen)) //cigarettes need oxygen
-		var/datum/gas_mixture/air = return_air()
-		if(!air?.has_gas(/datum/gas/oxygen, 1)) //or oxygen on a tile to burn
-			extinguish()
-			return
-
-	smoketime -= delta_time * (1 SECONDS)
-	if(smoketime <= 0)
-		if(ismob(loc))
-			var/mob/living/living_smoker = loc
-			to_chat(living_smoker, span_notice("Your [name] goes out."))
-			lit = FALSE
-			icon_state = icon_off
-			inhand_icon_state = icon_off
-			living_smoker.update_inv_wear_mask()
-			packeditem = FALSE
-			name = "empty [initial(name)]"
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	open_flame(heat)
-	if(reagents?.total_volume && COOLDOWN_FINISHED(src, drag_cooldown))
-		COOLDOWN_START(src, drag_cooldown, dragtime)
-		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/thing, mob/user, params)
 	if(!istype(thing, /obj/item/food/grown))
@@ -624,32 +609,24 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	to_chat(user, span_notice("You stuff [to_smoke] into [src]."))
 	smoketime = 13 MINUTES
-	packeditem = TRUE
-	name = "[to_smoke.name]-packed [initial(name)]"
+	packeditem = to_smoke.name
+	name = "[packeditem]-packed [initial(name)]"
 	if(to_smoke.reagents)
 		to_smoke.reagents.trans_to(src, to_smoke.reagents.total_volume, transfered_by = user)
 	qdel(to_smoke)
 
 
 /obj/item/clothing/mask/cigarette/pipe/attack_self(mob/user)
-	var/turf/location = get_turf(user)
-	if(lit)
-		user.visible_message(span_notice("[user] puts out [src]."), span_notice("You put out [src]."))
-		lit = FALSE
-		icon_state = icon_off
-		inhand_icon_state = icon_off
-		STOP_PROCESSING(SSobj, src)
+	var/atom/location = drop_location()
+	if(packeditem && !lit)
+		to_chat(user, span_notice("You empty [src] onto [location]."))
+		new /obj/effect/decal/cleanable/ash(location)
+		packeditem = null
+		smoketime = 0
+		reagents.clear_reagents()
+		name = "empty [initial(name)]"
 		return
-
-	if(smoketime <= 0)
-		return
-
-	to_chat(user, span_notice("You empty [src] onto [location]."))
-	new /obj/effect/decal/cleanable/ash(location)
-	packeditem = FALSE
-	smoketime = 0
-	reagents.clear_reagents()
-	name = "empty [initial(name)]"
+	return ..()
 
 /obj/item/clothing/mask/cigarette/pipe/cobpipe
 	name = "corn cob pipe"
