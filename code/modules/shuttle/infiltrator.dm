@@ -17,4 +17,4 @@
 
 /obj/docking_port/mobile/infiltrator/Destroy(force)
 	SSpoints_of_interest.remove_point_of_interest(src)
-	. = ..()
+	return ..()
