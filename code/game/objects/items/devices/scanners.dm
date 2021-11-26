@@ -165,16 +165,16 @@ GENE SCANNER
 		mob_status = span_alert("<b>Deceased</b>")
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
+	render_list += "[span_info("Analyzing results for [M]:")]\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
+	
+	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
+	
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-			render_list += "[span_alert("Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!")]\n"
+			render_list += "<span class='alert ml-1'><b>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</b></span>\n"
 		if(H.has_reagent(/datum/reagent/inverse/technetium))
 			advanced = TRUE
-
-	render_list += "[span_info("Analyzing results for [M]:")]\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
-
-	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
 
 	// Husk detection
 	if(advanced && HAS_TRAIT_FROM(M, TRAIT_HUSK, BURN))
@@ -184,36 +184,18 @@ GENE SCANNER
 	else if(HAS_TRAIT(M, TRAIT_HUSK))
 		render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
 
-	// Damage descriptions
-	if(brute_loss > 10)
-		render_list += "<span class='alert ml-1'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>\n"
-	if(fire_loss > 10)
-		render_list += "<span class='alert ml-1'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>\n"
-	if(oxy_loss > 10)
-		render_list += "<span class='info ml-1'>[span_alert("[oxy_loss > 50 ? "Severe" : "Minor"] oxygen deprivation detected.")]\n"
-	if(tox_loss > 10)
-		render_list += "<span class='alert ml-1'>[tox_loss > 50 ? "Severe" : "Minor"] amount of toxin damage detected.</span>\n"
 	if(M.getStaminaLoss())
-		render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span>\n"
 		if(advanced)
-			render_list += "<span class='info ml-1'>Fatigue Level: [M.getStaminaLoss()]%.</span>\n"
+			render_list += "<span class='alert ml-1'>Fatigue Level: [M.getStaminaLoss()]%.</span>\n"
+		else
+			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span>\n"
 	if (M.getCloneLoss())
-		render_list += "<span class='alert ml-1'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>\n"
 		if(advanced)
-			render_list += "<span class='info ml-1'>Cellular Damage Level: [M.getCloneLoss()].</span>\n"
-	if (!M.getorganslot(ORGAN_SLOT_BRAIN)) // brain not added to carbon/human check because it's funny to get to bully simple mobs
+			render_list += "<span class='alert ml-1'>Cellular damage level: [M.getCloneLoss()].</span>\n"
+		else
+			render_list += "<span class='alert ml-1'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>\n"
+	if (!M.getorganslot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span>\n"
-	if(ishuman(M))
-		var/mob/living/carbon/human/the_dude = M
-		var/datum/species/the_dudes_species = the_dude.dna.species
-		if (!(NOBLOOD in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_HEART))
-			render_list += "<span class='alert ml-1'>Subject lacks a heart.</span>\n"
-		if (!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_LUNGS))
-			render_list += "<span class='alert ml-1'>Subject lacks lungs.</span>\n"
-		if (!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_LIVER))
-			render_list += "<span class='alert ml-1'>Subject lacks a liver.</span>\n"
-		if (!(NOSTOMACH in the_dudes_species.species_traits) && !the_dude.getorganslot(ORGAN_SLOT_STOMACH))
-			render_list += "<span class='alert ml-1'>Subject lacks a stomach.</span>\n"
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
@@ -237,17 +219,42 @@ GENE SCANNER
 			render_list += "<span class='info ml-1'>Subject Major Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY)].</span>\n"
 			if(advanced)
 				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
-	if(advanced)
-		render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
 
 	if (HAS_TRAIT(M, TRAIT_IRRADIATED))
 		render_list += "<span class='alert ml-1'>Subject is irradiated. Supply toxin healing.</span>\n"
 
 	if(advanced && M.hallucinating())
 		render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
+		
+	//Eyes and ears
+	if(advanced && iscarbon(M))
+		var/mob/living/carbon/C = M
+
+		// Ear status
+		var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
+		if(istype(ears))
+			if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
+				render_list = "<span class='alert ml-2'>Subject is genetically deaf.\n</span>"
+			else if(HAS_TRAIT_FROM(C, TRAIT_DEAF, EAR_DAMAGE))
+				render_list = "<span class='alert ml-2'>Subject is deaf from ear damage.\n</span>"
+			else if(HAS_TRAIT(C, TRAIT_DEAF))
+				render_list = "<span class='alert ml-2'>Subject is deaf.\n</span>"
+			else
+				if(ears.damage)
+					render_list += "<span class='alert ml-2'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.\n</span>"
+				if(ears.deaf)
+					render_list += "<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.\n</span>"
+
+		// Eye status
+		var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
+		if(istype(eyes))
+			if(C.is_blind())
+				render_list += "<span class='alert ml-2'>Subject is blind.\n</span>"
+			else if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
+				render_list += "<span class='alert ml-2'>Subject is nearsighted.\n</span>"
 
 	// Body part damage report
-	if(iscarbon(M) && mode == SCANNER_VERBOSE)
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
@@ -264,57 +271,19 @@ GENE SCANNER
 							<td><font color='#00cc66'><b>[CEILING(tox_loss,1)]</b></font></td>\
 							<td><font color='#33ccff'><b>[CEILING(oxy_loss,1)]</b></font></td></tr>"
 
-			for(var/o in damaged)
-				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
-				dmgreport += "<tr><td><font color='#cc3333'>[capitalize(org.name)]:</font></td>\
-								<td><font color='#cc3333'>[(org.brute_dam > 0) ? "[CEILING(org.brute_dam,1)]" : "0"]</font></td>\
-								<td><font color='#ff9933'>[(org.burn_dam > 0) ? "[CEILING(org.burn_dam,1)]" : "0"]</font></td></tr>"
+			if(mode == SCANNER_VERBOSE)
+				for(var/o in damaged)
+					var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
+					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(org.name)]:</font></td>\
+									<td><font color='#cc3333'>[(org.brute_dam > 0) ? "[CEILING(org.brute_dam,1)]" : "0"]</font></td>\
+									<td><font color='#ff9933'>[(org.burn_dam > 0) ? "[CEILING(org.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
 			render_list += dmgreport // tables do not need extra linebreak
-
-	//Eyes and ears
-	if(advanced && iscarbon(M))
-		var/mob/living/carbon/C = M
-
-		// Ear status
-		var/obj/item/organ/ears/ears = C.getorganslot(ORGAN_SLOT_EARS)
-		var/message = "\n<span class='alert ml-2'>Subject does not have ears.</span>"
-		if(istype(ears))
-			message = ""
-			if(HAS_TRAIT_FROM(C, TRAIT_DEAF, GENETIC_MUTATION))
-				message = "\n<span class='alert ml-2'>Subject is genetically deaf.</span>"
-			else if(HAS_TRAIT_FROM(C, TRAIT_DEAF, EAR_DAMAGE))
-				message = "\n<span class='alert ml-2'>Subject is deaf from ear damage.</span>"
-			else if(HAS_TRAIT(C, TRAIT_DEAF))
-				message = "\n<span class='alert ml-2'>Subject is deaf.</span>"
-			else
-				if(ears.damage)
-					message += "\n<span class='alert ml-2'>Subject has [ears.damage > ears.maxHealth ? "permanent ": "temporary "]hearing damage.</span>"
-				if(ears.deaf)
-					message += "\n<span class='alert ml-2'>Subject is [ears.damage > ears.maxHealth ? "permanently ": "temporarily "] deaf.</span>"
-		render_list += "<span class='info ml-1'>Ear status:</span>[message == "" ? "\n<span class='info ml-2'>Healthy.</span>" : message]\n"
-
-		// Eye status
-		var/obj/item/organ/eyes/eyes = C.getorganslot(ORGAN_SLOT_EYES)
-		message = "\n<span class='alert ml-2'>Subject does not have eyes.</span>"
-		if(istype(eyes))
-			message = ""
-			if(C.is_blind())
-				message += "\n<span class='alert ml-2'>Subject is blind.</span>"
-			if(HAS_TRAIT(C, TRAIT_NEARSIGHT))
-				message += "\n<span class='alert ml-2'>Subject is nearsighted.</span>"
-			if(eyes.damage > 30)
-				message += "\n<span class='alert ml-2'>Subject has severe eye damage.</span>"
-			else if(eyes.damage > 20)
-				message += "\n<span class='alert ml-2'>Subject has significant eye damage.</span>"
-			else if(eyes.damage)
-				message += "\n<span class='alert ml-2'>Subject has minor eye damage.</span>"
-		render_list += "<span class='info ml-1'>Eye status:</span>[message == "" ? "\n<span class='info ml-2'>Healthy.</span>" : message]\n"
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		// Organ damage
+		// Organ damage, missing organs
 		if (H.internal_organs && H.internal_organs.len)
 			var/render = FALSE
 			var/toReport = "<span class='info ml-1'>Organs:</span>\
@@ -331,10 +300,47 @@ GENE SCANNER
 						[advanced ? "<td><font color='#ff3333'>[CEILING(organ.damage,1)]</font></td>" : ""]\
 						<td>[status]</td></tr>"
 
+			var/datum/species/the_dudes_species = H.dna.species
+			if (!H.getorganslot(ORGAN_SLOT_BRAIN)) // Surely there is a better way to do this?
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["brain"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			if (!(NOBLOOD in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_HEART))
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["heart"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			if (!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_LUNGS))
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["lungs"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			if (!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_LIVER))
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["liver"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			if (!(NOSTOMACH in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_STOMACH))
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["stomach"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			if (!H.getorganslot(ORGAN_SLOT_EARS))
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["ears"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			if (!H.getorganslot(ORGAN_SLOT_EYES))
+				render = TRUE
+				toReport += "<tr><td><font color='#cc3333'>["eyes"]:</font></td>\
+						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
+						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
+			
 			if (render)
 				render_list += toReport + "</table>" // tables do not need extra linebreak
 
-		//Genetic damage
+		//Genetic stability
 		if(advanced && H.has_dna())
 			render_list += "<span class='info ml-1'>Genetic Stability: [H.dna.stability]%.</span>\n"
 
@@ -372,7 +378,7 @@ GENE SCANNER
 			render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
 			for(var/k in wounded_part.wounds)
 				var/datum/wound/W = k
-				render_list += "<div class='ml-2'>Type: [W.name]\nSeverity: [W.severity_text()]\nRecommended Treatment: [W.treat_text]</div>\n" // less lines than in woundscan() so we don't overload people trying to get basic med info
+				render_list += "<div class='ml-2'>Type: [W.name]\nSeverity: [W.severity_text()]</div>\n" // less lines than in woundscan() so we don't overload people trying to get basic med info
 			render_list += "</span>"
 
 	for(var/thing in M.diseases)
@@ -458,8 +464,16 @@ GENE SCANNER
 
 		if(M.has_status_effect(/datum/status_effect/eigenstasium))
 			render_list += "<span class='notice ml-1'>Subject is temporally unstable. Stabilising agent is recommended to reduce disturbances.</span>\n"
-
+		
+		for(var/datum/quirk/quirky in M.quirks)
+			if(istype(quirky, /datum/quirk/item_quirk/allergic))
+				var/datum/quirk/item_quirk/allergic/allergies_quirk = quirky
+				var/allergies = allergies_quirk.allergy_string
+				render_list += "<span class='alert ml-1'>Subject is extremely allergic to the following chemicals:</span>\n"
+				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
+		
 		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
+		
 
 /obj/item/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
