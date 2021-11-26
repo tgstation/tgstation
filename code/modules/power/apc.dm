@@ -1497,7 +1497,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	for(var/obj/machinery/light/L in area)
 		L.on = TRUE
 		L.break_light_tube()
-		L.on = FALSE
 		stoplag()
 
 /obj/machinery/power/apc/proc/shock(mob/user, prb)
