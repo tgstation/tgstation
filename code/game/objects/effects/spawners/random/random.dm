@@ -62,9 +62,9 @@
 	if(loot?.len)
 		var/loot_spawned = 0
 		while((spawn_loot_count-loot_spawned) && loot.len)
-			var/lootspawn = pick_weight(loot)
+			var/lootspawn = pick_weight(fill_with_ones(loot))
 			while(islist(lootspawn))
-				lootspawn = pick_weight(lootspawn)
+				lootspawn = pick_weight(fill_with_ones(lootspawn))
 			if(!spawn_loot_double)
 				loot.Remove(lootspawn)
 			if(lootspawn && (spawn_scatter_radius == 0 || spawn_locations.len))
@@ -139,7 +139,22 @@
 		stat_table[item] /= loot_count
 
 /obj/item/loot_table_maker/proc/pick_loot(lootpool) //selects path from loot table and returns it
-	var/lootspawn = pick_weight(lootpool)
+	var/lootspawn = pick_weight(fill_with_ones(lootpool))
 	while(islist(lootspawn))
-		lootspawn = pick_weight(lootspawn)
+		lootspawn = pick_weight(fill_with_ones(lootspawn))
 	return lootspawn
+
+// Lets loot tables be both list(a, b, c), as well as list(a = 3, b = 2, c = 2)
+/proc/fill_with_ones(list/table)
+	if (!islist(table))
+		return table
+
+	var/list/final_table = list()
+
+	for (var/key in table)
+		if (table[key])
+			final_table[key] = table[key]
+		else
+			final_table[key] = 1
+
+	return final_table

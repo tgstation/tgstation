@@ -175,9 +175,8 @@ const VendingRow = (props, context) => {
   const { department, jobDiscount, onstation, user } = data;
   const free
     = !onstation
-    || product.price === 0
-    || (!product.premium && department && user);
-  const discount = department === user?.department;
+    || product.price === 0;
+  const discount = !product.premium && department === user?.department;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled
     = productStock.amount === 0
@@ -278,18 +277,15 @@ const ProductStock = (props) => {
 /** The main button to purchase an item. */
 const ProductButton = (props, context) => {
   const { act, data } = useBackend<VendingData>(context);
-  const { access, onstation } = data;
-  const { custom, discount, disabled, product, redPrice } = props;
+  const { access } = data;
+  const { custom, discount, disabled, free, product, redPrice } = props;
   const customPrice = access ? 'FREE' : product.price + ' cr';
-  let standardPrice;
-  if (!onstation) {
-    standardPrice = 'FREE';
+  let standardPrice = product.price + ' cr';
+  if (free) {
+    standardPrice = "FREE";
   } else if (discount) {
-    standardPrice = `${redPrice} cr`;
-  } else {
-    standardPrice = `${product.price} cr`;
+    standardPrice = redPrice + ' cr';
   }
-
   return custom ? (
     <Button
       fluid
