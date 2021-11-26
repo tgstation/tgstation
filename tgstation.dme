@@ -193,6 +193,7 @@
 #include "code\__DEFINES\dcs\signals\signals_hydroponic.dm"
 #include "code\__DEFINES\dcs\signals\signals_janitor.dm"
 #include "code\__DEFINES\dcs\signals\signals_light_eater.dm"
+#include "code\__DEFINES\dcs\signals\signals_mod.dm"
 #include "code\__DEFINES\dcs\signals\signals_mood.dm"
 #include "code\__DEFINES\dcs\signals\signals_movetype.dm"
 #include "code\__DEFINES\dcs\signals\signals_music.dm"

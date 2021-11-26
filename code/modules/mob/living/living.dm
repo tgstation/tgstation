@@ -47,7 +47,7 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
-	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & COMPONENT_NO_Z_DAMAGE)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
 		return
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))

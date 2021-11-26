@@ -32,7 +32,7 @@
 	/// A callback for the sparks/message that play when a charge is used, see [/datum/component/shielded/proc/default_run_hit_callback]
 	var/datum/callback/on_hit_effects
 
-/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, recharge_path = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
+/datum/component/shielded/Initialize(max_charges = 3, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 1, lose_multiple_charges = FALSE, recharge_path = null, starting_charges = null, shield_icon_file = 'icons/effects/effects.dmi', shield_icon = "shield-old", shield_inhand = FALSE, run_hit_callback)
 	if(!isitem(parent) || max_charges <= 0)
 		return COMPONENT_INCOMPATIBLE
 
@@ -46,8 +46,10 @@
 	src.shield_icon = shield_icon
 	src.shield_inhand = shield_inhand
 	src.on_hit_effects = run_hit_callback || CALLBACK(src, .proc/default_run_hit_callback)
-
-	current_charges = max_charges
+	if(isnull(starting_charges))
+		current_charges = max_charges
+	else
+		current_charges = starting_charges
 	if(recharge_start_delay)
 		START_PROCESSING(SSdcs, src)
 
@@ -155,8 +157,6 @@
 	INVOKE_ASYNC(src, .proc/actually_run_hit_callback, owner, attack_text, current_charges)
 
 	if(!recharge_start_delay) // if recharge_start_delay is 0, we don't recharge
-		if(!current_charges) // obviously if someone ever adds a manual way to replenish charges, change this
-			qdel(src)
 		return
 
 	START_PROCESSING(SSdcs, src) // if we DO recharge, start processing so we can do that
@@ -179,6 +179,6 @@
 		return
 	. = COMPONENT_NO_AFTERATTACK
 
-	current_charges += charge_recovery
+	adjust_charge(charge_recovery)
 	to_chat(user, span_notice("You charge \the [parent]. It can now absorb [current_charges] hits."))
 	qdel(recharge_rune)

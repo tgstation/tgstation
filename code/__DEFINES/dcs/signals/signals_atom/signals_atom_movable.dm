@@ -72,3 +72,6 @@
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 ///Called when a movable is teleported from `do_teleport()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
+/// from base of atom/movable/Process_Spacemove(): (movement_dir)
+#define COMSIG_MOVABLE_SPACEMOVE "spacemove"
+	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)

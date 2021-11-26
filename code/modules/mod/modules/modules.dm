@@ -755,7 +755,7 @@
 	new /obj/effect/temp_visual/mook_dust(fell_on)
 	mod.wearer.Stun(levels * 1 SECONDS)
 	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
-	return COMPONENT_NO_Z_DAMAGE
+	return NO_Z_IMPACT_DAMAGE
 
 /obj/item/mod/module/thermal_regulator
 	name = "MOD thermal regulator module"
@@ -1455,13 +1455,19 @@
 	var/shield_icon = "shield-red"
 	var/charges
 
+/obj/item/mod/module/energy_shield/Initialize(mapload)
+	. = ..()
+	charges = max_charges
+
 /obj/item/mod/module/energy_shield/on_equip()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, shield_icon = shield_icon)
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
 /obj/item/mod/module/energy_shield/on_unequip()
-	qdel(mod.GetComponent(/datum/component/shielded))
+	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
+	charges = shield.current_charges
+	qdel(shield)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
