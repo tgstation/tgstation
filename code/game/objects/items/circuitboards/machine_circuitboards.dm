@@ -273,9 +273,8 @@
 
 /obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()
-	if (istype(multitool))
-		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
-		to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
+	pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
+	to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
