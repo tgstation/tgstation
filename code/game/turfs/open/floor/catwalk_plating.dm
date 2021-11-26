@@ -27,8 +27,8 @@ GLOBAL_LIST_EMPTY(catwalk_overlay_masterlist)	//Stores all the above_states for 
 
 /turf/open/floor/catwalk_floor/update_overlays()
 	. = ..()
-	if(!covered)	//will this reset the overlay or just leave it? should test this
-		return
+	if(!covered)
+		return	//Updating the overlay with nothing actually removes it, in this case. Somehow.
 	if(!GLOB.catwalk_overlay_masterlist[above_state])
 		//Generate a new overlay and add it to the global list
 		var/image/catwalk_overlay = new()
