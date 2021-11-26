@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define AREA_USES_STARLIGHT (1<<14)
 /// If engravings are persistent in this area
 #define PERSISTENT_ENGRAVINGS (1<<15)
-///If this area qualifies as Maintenence (or similar)
+///If this area qualifies as Maintenance (or similar)
 #define IS_MAINTENANCE_AREA (1<<16)
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
