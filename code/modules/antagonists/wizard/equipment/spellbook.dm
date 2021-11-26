@@ -342,14 +342,14 @@
 	name = "Buy Item"
 	refundable = FALSE
 	buy_word = "Summon"
-	var/item_path= null
+	var/item_path = null
 
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	new item_path(get_turf(user))
+	var/atom/spawned_path = new item_path(get_turf(user))
 	log_spellbook("[key_name(user)] bought [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	return TRUE
+	return spawned_path
 
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
@@ -424,23 +424,27 @@
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space, also grants a battlemage shield."
 	item_path = /obj/item/mod/control/pre_equipped/wizard
 	category = "Defensive"
 
-/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
+/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	. = ..()
-	if(.)
-		new /obj/item/tank/internals/oxygen(get_turf(user)) //i need to BREATHE
-		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
-		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit
-
-/datum/spellbook_entry/item/battlemage
-	name = "Battlemage Shield Module"
-	desc = "A powerful shield that can be installed in the Mastercrafted Armor. The shield can completely negate sixteen attacks before being permanently depleted."
-	item_path = /obj/item/mod/module/energy_shield/wizard
-	category = "Defensive"
-	cost = 1
+	if(!.)
+		return
+	var/obj/item/mod/control/mod = .
+	var/obj/item/mod/module/storage/storage = locate() in mod.modules
+	var/obj/item/back = user.back
+	if(back)
+		if(!user.dropItemToGround(back))
+			return
+		for(var/obj/item/item as anything in back.contents)
+			item.forceMove(storage)
+	if(!user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+		return
+	if(!user.dropItemToGround(user.wear_suit) || !user.dropItemToGround(user.head))
+		return
+	mod.quick_activation()
 
 /datum/spellbook_entry/item/battlemage_charge
 	name = "Battlemage Armour Charges"

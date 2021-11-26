@@ -1,5 +1,10 @@
 /obj/item/mod/control/pre_equipped
 	cell = /obj/item/stock_parts/cell/high
+	var/applied_skin
+
+/obj/item/mod/control/pre_equipped/Initialize(mapload, new_theme, new_skin)
+	new_skin = applied_skin
+	return ..()
 
 /obj/item/mod/control/pre_equipped/standard
 	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight)
@@ -54,7 +59,7 @@
 /obj/item/mod/control/pre_equipped/wizard
 	theme = /datum/mod_theme/wizard
 	cell = /obj/item/stock_parts/cell/crystal_cell/wizard
-	initial_modules = list(/obj/item/mod/module/storage/large_capacity)
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/energy_shield/wizard)
 
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug

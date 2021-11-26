@@ -1392,11 +1392,20 @@
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
 	cooldown_time = 0.5 SECONDS
-	overlay_state_active = "module_armorbooster"
+	overlay_state_inactive = "module_armorbooster_off"
+	overlay_state_active = "module_armorbooster_on"
 	var/remove_pressure_protection = TRUE
 	var/added_slowdown = -0.5
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
 	var/list/spaceproofed = list()
+
+/obj/item/mod/module/armor_booster/on_install()
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
+
+/obj/item/mod/module/armor_booster/on_uninstall()
+	overlay_state_inactive = initial(overlay_state_inactive)
+	overlay_state_active = initial(overlay_state_active)
 
 /obj/item/mod/module/armor_booster/on_activation()
 	. = ..()
@@ -1436,7 +1445,6 @@
 /obj/item/mod/module/armor_booster/elite
 	name = "MOD elite armor booster module"
 	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
-	overlay_state_active = "module_armorbooster_elite"
 	added_slowdown = -0.25
 
 /obj/item/mod/module/energy_shield

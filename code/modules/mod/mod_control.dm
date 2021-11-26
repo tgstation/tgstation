@@ -80,16 +80,16 @@
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
 
-/obj/item/mod/control/Initialize(mapload, newtheme)
+/obj/item/mod/control/Initialize(mapload, new_theme, new_skin)
 	. = ..()
-	if(newtheme)
-		theme = newtheme
+	if(new_theme)
+		theme = new_theme
 	theme = GLOB.mod_themes[theme]
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
 	slowdown = slowdown_inactive
 	complexity_max = theme.complexity_max
-	skin = theme.default_skin
+	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
 	cell_drain = theme.cell_drain
 	initial_modules += theme.inbuilt_modules
