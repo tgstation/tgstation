@@ -33,15 +33,16 @@
 /obj/machinery/prisongate/CanAllowThrough(atom/movable/gate_toucher, border_dir)
 	. = ..()
 	if(!iscarbon(gate_toucher))
-		if(isstructure(gate_toucher))
-			var/obj/structure/cargobay = gate_toucher
-			for(var/mob/living/stowaway in cargobay.contents) //nice try bub
-				if(COOLDOWN_FINISHED(src, spam_cooldown_time))
-					say("Stowaway detected in internal contents. Access denied.")
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
-					COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
+		if(!isstructure(gate_toucher))
+			return TRUE
+		var/obj/structure/cargobay = gate_toucher
+		for(var/mob/living/stowaway in cargobay.contents) //nice try bub
+			if(COOLDOWN_FINISHED(src, spam_cooldown_time))
+				say("Stowaway detected in internal contents. Access denied.")
+				playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
+				COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
 				return FALSE
-		return TRUE
+			return TRUE
 	var/mob/living/carbon/the_toucher = gate_toucher
 	if(gate_active == FALSE)
 		return TRUE
