@@ -55,3 +55,8 @@
 #define COMSIG_ALARM_CLEAR(alarm_type) "!alarm_clear [alarm_type]"
 ///global mob logged in signal! (/mob/added_player)
 #define COMSIG_GLOB_MOB_LOGGED_IN "!mob_logged_in"
+
+/// global signal sent when a nuclear device is armed (/obj/machinery/nuclearbomb/nuke/exploding_nuke)
+#define COMSIG_GLOB_NUKE_DEVICE_ARMED "!nuclear_device_armed"
+/// global signal sent when a nuclear device is disarmed (/obj/machinery/nuclearbomb/nuke/disarmed_nuke)
+#define COMSIG_GLOB_NUKE_DEVICE_DISARMED "!nuclear_device_disarmed"
