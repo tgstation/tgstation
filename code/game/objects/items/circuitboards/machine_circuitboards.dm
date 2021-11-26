@@ -373,14 +373,14 @@
 	var/secure = FALSE
 
 /obj/item/circuitboard/machine/holopad/multitool_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(secure)
 		build_path = /obj/machinery/holopad
 		secure = FALSE
 	else
 		build_path = /obj/machinery/holopad/secure
 		secure = TRUE
-	to_chat(user, span_notice("You [secure? "en" : "dis"]able the security on the [src]"))
+	to_chat(user, span_notice("You [secure? "en" : "dis"]able the security on [src]"))
+	return TRUE
 
 /obj/item/circuitboard/machine/holopad/examine(mob/user)
 	. = ..()
@@ -452,13 +452,13 @@
 	return ..()
 
 /obj/item/circuitboard/machine/smartfridge/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if (is_special_type)
-		return
+		return FALSE
 	var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
 	position = (position == fridges_name_paths.len) ? 1 : (position + 1)
 	build_path = fridges_name_paths[position]
 	to_chat(user, span_notice("You set the board to [fridges_name_paths[build_path]]."))
+	return TRUE
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
 	. = ..()
@@ -556,7 +556,6 @@
 		/obj/machinery/vending/custom = "Custom Vendor")
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	var/static/list/display_vending_names_paths
 	if(!display_vending_names_paths)
 		display_vending_names_paths = list()
@@ -564,6 +563,7 @@
 			display_vending_names_paths[vending_names_paths[path]] = path
 	var/choice = input(user, "Choose a new brand", "Select an Item") as null|anything in sort_list(display_vending_names_paths)
 	set_type(display_vending_names_paths[choice])
+	return TRUE
 
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
@@ -686,7 +686,6 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_master/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	var/new_name = "ChemMaster"
 	var/new_path = /obj/machinery/chem_master
 
@@ -697,6 +696,7 @@
 	build_path = new_path
 	name = "[new_name] 3000 (Machine Board)"
 	to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
+	return TRUE
 
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -1099,7 +1099,6 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/processor/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(build_path == /obj/machinery/processor)
 		name = "Slime Processor (Machine Board)"
 		build_path = /obj/machinery/processor/slime
@@ -1108,6 +1107,7 @@
 		name = "Food Processor (Machine Board)"
 		build_path = /obj/machinery/processor
 		to_chat(user, span_notice("Defaulting name protocols."))
+	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service (Machine Board)"
