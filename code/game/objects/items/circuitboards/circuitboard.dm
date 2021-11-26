@@ -28,7 +28,7 @@
 		stack_trace("apply_defauly_parts called on machine that already had component_parts: [machine]")
 
 		// Move to nullspace so you don't trigger handle_atom_del logic and remove existing parts.
-		for(var/obj/item/part in machine.component_parts)
+		for(var/obj/item/part as anything in machine.component_parts)
 			part.moveToNullspace(loc)
 			qdel(part)
 
@@ -96,8 +96,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	. = ..()
 	if(LAZYLEN(req_components))
 		var/list/nice_list = list()
-		for(var/req_component in req_components)
-			var/atom/component = req_component
+		for(var/atom/component as anything in req_components)
 			if(!ispath(component))
 				continue
 			nice_list += list("[req_components[component]] [initial(component.name)]")
