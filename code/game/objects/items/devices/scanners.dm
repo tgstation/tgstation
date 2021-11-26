@@ -284,7 +284,7 @@ GENE SCANNER
 		var/mob/living/carbon/human/H = M
 
 		// Organ damage, missing organs
-		if (H.internal_organs && H.internal_organs.len)
+		if(H.internal_organs && H.internal_organs.len)
 			var/render = FALSE
 			var/toReport = "<span class='info ml-1'>Organs:</span>\
 				<table class='ml-2'><tr>\
@@ -301,43 +301,30 @@ GENE SCANNER
 						<td>[status]</td></tr>"
 
 			var/datum/species/the_dudes_species = H.dna.species
-			if (!H.getorganslot(ORGAN_SLOT_BRAIN)) // Surely there is a better way to do this?
+			var/missing_organs = list()
+			if(!H.getorganslot(ORGAN_SLOT_BRAIN))
+				missing_organs += "brain"
+			if(!(NOBLOOD in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_HEART))
+				missing_organs += "heart"
+			if(!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_LUNGS))
+				missing_organs += "lungs"
+			if(!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_LIVER))
+				missing_organs += "liver"
+			if(!(NOSTOMACH in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_STOMACH))
+				missing_organs += "stomach"
+			if(!H.getorganslot(ORGAN_SLOT_EARS))
+				missing_organs += "ears"
+			if(!H.getorganslot(ORGAN_SLOT_EYES))
+				missing_organs += "eyes"
+				
+			if(length(missing_organs))
 				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["brain"]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			if (!(NOBLOOD in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_HEART))
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["heart"]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			if (!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_LUNGS))
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["lungs"]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			if (!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_LIVER))
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["liver"]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			if (!(NOSTOMACH in the_dudes_species.species_traits) && !H.getorganslot(ORGAN_SLOT_STOMACH))
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["stomach"]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			if (!H.getorganslot(ORGAN_SLOT_EARS))
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["ears"]:</font></td>\
-						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
-						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			if (!H.getorganslot(ORGAN_SLOT_EYES))
-				render = TRUE
-				toReport += "<tr><td><font color='#cc3333'>["eyes"]:</font></td>\
+				for(var/organ in missing_organs)
+					toReport += "<tr><td><font color='#cc3333'>[organ]:</font></td>\
 						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
 						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
 			
-			if (render)
+			if(render)
 				render_list += toReport + "</table>" // tables do not need extra linebreak
 
 		//Genetic stability
@@ -474,7 +461,6 @@ GENE SCANNER
 		
 		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
 		
-
 /obj/item/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
 	set category = "Object"
