@@ -109,6 +109,9 @@ SUBSYSTEM_DEF(move_manager)
 			continue
 		favorite = checking
 
+	if(!favorite) //This isn't an error state, since some loops ignore the concept of a running loop
+		return
+		
 	var/datum/controller/subsystem/movement/favorite_subsystem = favorite.controller
 
 	running_loop = favorite

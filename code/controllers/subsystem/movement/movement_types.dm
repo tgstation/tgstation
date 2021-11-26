@@ -425,9 +425,23 @@
 /datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, priority, flags, extra_info, delay, timeout, chasing, home)
 
-///Helper proc for homing
-/datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout)
-	return move_towards(moving, chasing, delay, TRUE, timeout)
+/**
+ * Helper proc for homing onto something with move_towards
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * chasing - The atom we want to move towards
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * home - Should we move towards the object at all times? Or launch towards them, but allow walls and such to take us off track. Defaults to FALSE
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to INFINITY
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+**/
+/datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return move_towards(moving, chasing, delay, TRUE, timeout, subsystem, priority, flags, extra_info)
 
 ///Used as a alternative to walk_towards
 /datum/move_loop/has_target/move_towards
