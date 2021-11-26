@@ -133,8 +133,6 @@
 	if(!owner.current)
 		return
 
-	var/mob/malf_mob = owner.current
-
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
 	var/responses = jointext(GLOB.syndicate_code_response, ", ")
 
