@@ -141,8 +141,7 @@
 
 /obj/item/grenade/chem_grenade/on_found(mob/finder)
 	var/obj/item/assembly/assembly = wires.get_attached(wires.get_wire(1))
-	if(assembly)
-		assembly.on_found(finder)
+	assembly?.on_found(finder)
 
 /obj/item/grenade/chem_grenade/log_grenade(mob/user)
 	var/reagent_string = ""
@@ -187,7 +186,7 @@
 	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
 		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		if(beakers.len)
-			for(var/obj/beaker in beakers)
+			for(var/obj/beaker as anything in beakers)
 				beaker.forceMove(drop_location())
 			beakers = list()
 		stage_change(GRENADE_EMPTY)
@@ -217,34 +216,38 @@
 		return
 
 	for(var/obj/item/slime_extract/slime_extract in beakers)
-		if(slime_extract.Uses)
+		if (!slime_extract.Uses)
+			continue
+
+		for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
+			glass_beaker.reagents.trans_to(slime_extract, glass_beaker.reagents.total_volume)
+
+		//If there is still a core (sometimes it's used up)
+		//and there are reagents left, behave normally,
+		//otherwise drop it on the ground for timed reactions like gold.
+
+		if(!slime_extract)
+			continue
+
+		if(slime_extract.reagents && slime_extract.reagents.total_volume)
 			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
-				glass_beaker.reagents.trans_to(slime_extract, glass_beaker.reagents.total_volume)
-
-			//If there is still a core (sometimes it's used up)
-			//and there are reagents left, behave normally,
-			//otherwise drop it on the ground for timed reactions like gold.
-
-			if(slime_extract)
-				if(slime_extract.reagents && slime_extract.reagents.total_volume)
-					for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
-						slime_extract.reagents.trans_to(glass_beaker, slime_extract.reagents.total_volume)
-				else
-					slime_extract.forceMove(get_turf(src))
-					no_splash = TRUE
+				slime_extract.reagents.trans_to(glass_beaker, slime_extract.reagents.total_volume)
+		else
+			slime_extract.forceMove(get_turf(src))
+			no_splash = TRUE
 	..()
 
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
 	//make a special case you might as well do it explicitly. -Sayu
 /obj/item/grenade/chem_grenade/large/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/slime_extract) && stage == GRENADE_WIRED)
-		if(!user.transferItemToLoc(item, src))
-			return
-		to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
-		beakers += item
-	else
+	if(!istype(item, /obj/item/slime_extract) || stage != GRENADE_WIRED)
 		return ..()
+
+	if(!user.transferItemToLoc(item, src))
+		return
+	to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
+	beakers += item
 
 /obj/item/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes. Cools the area moderately upon detonation.
 	name = "cryo grenade"
@@ -268,15 +271,16 @@
 	icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
-/obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/item, mob/user, params)
-	if(item.tool_behaviour == TOOL_MULTITOOL && !active)
-		var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
-		if (newspread != null && user.canUseTopic(src, BE_CLOSE))
-			newspread = round(newspread)
-			unit_spread = clamp(newspread, 5, 100)
-			to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
-		if (newspread != unit_spread)
-			to_chat(user, span_notice("The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units."))
+/obj/item/grenade/chem_grenade/adv_release/multitool_act(mob/living/user, obj/item/tool)
+	if (active)
+		return
+	var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
+	if (newspread != null && user.canUseTopic(src, BE_CLOSE))
+		newspread = round(newspread)
+		unit_spread = clamp(newspread, 5, 100)
+		to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
+	if (newspread != unit_spread)
+		to_chat(user, span_notice("The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units."))
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
