@@ -126,13 +126,13 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-        to_chat(attached, span_userdanger("The IV drip needle is ripped out of you!"))
-        var/selected_limb = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-        var/chosen_limb = pick(/obj/item/bodypart/l_arm, /obj/item/bodypart/r_arm)
-        attached.apply_damage(3, BRUTE, selected_limb)
-        chosen_limb.force_wound_upwards(/datum/wound/blunt/moderate)
-        detach_iv()
-        return PROCESS_KILL
+		to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
+		var/selected_limb = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
+		var/obj/item/bodypart/chosen_limb = attached.get_bodypart(selected_limb)
+		attached.apply_damage(3, BRUTE, selected_limb)
+		chosen_limb.force_wound_upwards(/datum/wound/pierce/moderate)
+		detach_iv()
+		return PROCESS_KILL
 
 	var/datum/reagents/target_reagents = get_reagent_holder()
 	if(target_reagents)
