@@ -42,9 +42,9 @@
 	if(!.)
 		return FALSE
 	if(isliving(target))
-		var/mob/living/L = target
-		REMOVE_TRAIT(L, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
-		L.sec_hud_set_implants()
+		var/mob/living/living_target = target
+		REMOVE_TRAIT(living_target, TRAIT_MINDSHIELD, IMPLANT_TRAIT)
+		living_target.sec_hud_set_implants()
 	if(target.stat != DEAD && !silent)
 		to_chat(target, span_boldnotice("Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing."))
 	return TRUE

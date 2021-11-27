@@ -8,7 +8,7 @@
 	else
 		// Give the group a unique name for debugging, and possible future
 		// use for making custom linked groups.
-		src.name = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+		src.name = "[rand(100, 999)] [pick(GLOB.phonetic_alphabet)]"
 
 /*
  * Proc called by new implant being added to the group. Listens for the

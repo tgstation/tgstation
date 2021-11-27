@@ -11,8 +11,8 @@
 	uses--
 	to_chat(imp_in, span_hear("You feel a faint click."))
 	if(iscarbon(imp_in))
-		var/mob/living/carbon/C_imp_in = imp_in
-		C_imp_in.uncuff()
+		var/mob/living/carbon/implanted_carbon = imp_in
+		implanted_carbon.uncuff()
 	if(!uses)
 		qdel(src)
 

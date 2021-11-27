@@ -17,20 +17,22 @@
 
 /obj/item/implant/spell/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
-	if (.)
-		if (!spell)
-			return FALSE
-		if (autorobeless && spell.clothes_req)
-			spell.clothes_req = FALSE
-		target.AddSpell(spell)
-		return TRUE
+	if (!.)
+		return FALSE
+	if (!spell)
+		return FALSE
+	if (autorobeless && spell.clothes_req)
+		spell.clothes_req = FALSE
+	target.AddSpell(spell)
+	return TRUE
 
 /obj/item/implant/spell/removed(mob/target, silent = FALSE, special = 0)
 	. = ..()
-	if (.)
-		target.RemoveSpell(spell)
-		if(target.stat != DEAD && !silent)
-			to_chat(target, span_boldnotice("The knowledge of how to cast [spell] slips out from your mind."))
+	if (!.)
+		return
+	target.RemoveSpell(spell)
+	if(target.stat != DEAD && !silent)
+		to_chat(target, span_boldnotice("The knowledge of how to cast [spell] slips out from your mind."))
 
 /obj/item/implanter/spell
 	name = "implanter (spell)"

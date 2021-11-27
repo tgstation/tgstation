@@ -25,8 +25,8 @@
 		if(case)
 			. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
 
-/obj/item/implantpad/handle_atom_del(atom/A)
-	if(A == case)
+/obj/item/implantpad/handle_atom_del(atom/atom)
+	if(atom == case)
 		case = null
 	update_appearance()
 	updateSelfDialog()
@@ -49,15 +49,14 @@
 	updateSelfDialog()
 	update_appearance()
 
-/obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
-	if(istype(C, /obj/item/implantcase) && !case)
-		if(!user.transferItemToLoc(C, src))
-			return
-		case = C
-		updateSelfDialog()
-		update_appearance()
-	else
+/obj/item/implantpad/attackby(obj/item/implantcase/implantcase, mob/user, params)
+	if(!istype(implantcase, /obj/item/implantcase) || case)
 		return ..()
+	if(!user.transferItemToLoc(implantcase, src))
+		return
+	case = implantcase
+	updateSelfDialog()
+	update_appearance()
 
 /obj/item/implantpad/ui_interact(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

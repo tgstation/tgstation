@@ -36,12 +36,12 @@
 	alpha = 255
 	addtimer(CALLBACK(src, .proc/go_invisible), 10, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-/obj/structure/closet/cardboard/agent/Bump(atom/A)
+/obj/structure/closet/cardboard/agent/Bump(atom/atom)
 	. = ..()
-	if(isliving(A))
+	if(isliving(atom))
 		reveal()
 
-/obj/structure/closet/cardboard/agent/Bumped(atom/movable/A)
+/obj/structure/closet/cardboard/agent/Bumped(atom/movable/atom)
 	. = ..()
-	if(isliving(A))
+	if(isliving(atom))
 		reveal()

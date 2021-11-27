@@ -32,11 +32,12 @@
 /obj/item/implant/radio
 	name = "internal radio implant"
 	activated = TRUE
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "walkietalkie"
 	var/obj/item/radio/radio
 	var/radio_key
 	var/subspace_transmission = FALSE
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "walkietalkie"
+
 
 /obj/item/implant/radio/activate()
 	. = ..()

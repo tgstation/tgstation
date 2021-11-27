@@ -12,7 +12,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
+	custom_materials = list(/datum/material/iron = 600, /datum/material/glass = 200)
 	///The implant in our implanter
 	var/obj/item/implant/imp = null
 	///Type of implant this will spawn as imp upon being spawned
@@ -45,15 +45,15 @@
 	else
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
-	if(!istype(I, /obj/item/pen))
+/obj/item/implanter/attackby(obj/item/item, mob/living/user, params)
+	if(!istype(item, /obj/item/pen))
 		return ..()
 	if(!user.is_literate())
-		to_chat(user, span_notice("You prod at [src] with [I]!"))
+		to_chat(user, span_notice("You prod at [src] with [item]!"))
 		return
 
 	var/new_name = stripped_input(user, "What would you like the label to be?", name, null)
-	if(user.get_active_held_item() != I)
+	if(user.get_active_held_item() != item)
 		return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return

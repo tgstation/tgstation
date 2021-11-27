@@ -6,6 +6,7 @@
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	actions_types = list(/datum/action/item_action/hands_free/activate)
+	item_flags = DROPDEL
 	///true for implant types that can be activated, false for ones that are "always on" like mindshield implants
 	var/activated = TRUE
 	///the mob that's implanted with this
@@ -16,7 +17,6 @@
 	var/allow_multiple = FALSE
 	///how many times this can do something, only relevant for implants with limited uses
 	var/uses = -1
-	item_flags = DROPDEL
 
 /obj/item/implant/proc/activate()
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
@@ -56,8 +56,8 @@
 	if(!force && !can_be_implanted_in(target))
 		return FALSE
 
-	for(var/X in target.implants)
-		var/obj/item/implant/other_implant = X
+	for(var/implant as anything in target.implants)
+		var/obj/item/implant/other_implant = implant
 		var/flags = SEND_SIGNAL(other_implant, COMSIG_IMPLANT_OTHER, args, src)
 		if(flags & COMPONENT_STOP_IMPLANTING)
 			UNSETEMPTY(target.implants)
@@ -73,11 +73,11 @@
 		if(!istype(other_implant, type) || allow_multiple)
 			continue
 
-		if(other_implant.uses < initial(other_implant.uses)*2)
+		if(other_implant.uses < initial(other_implant.uses) * 2)
 			if(uses == -1)
 				other_implant.uses = -1
 			else
-				other_implant.uses = min(other_implant.uses + uses, initial(other_implant.uses)*2)
+				other_implant.uses = min(other_implant.uses + uses, initial(other_implant.uses) * 2)
 			qdel(src)
 			return TRUE
 		else
@@ -87,8 +87,8 @@
 	imp_in = target
 	target.implants += src
 	if(activated)
-		for(var/X in actions)
-			var/datum/action/implant_action = X
+		for(var/action in actions)
+			var/datum/action/implant_action = action
 			implant_action.Grant(target)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
@@ -113,8 +113,8 @@
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
-	for(var/X in actions)
-		var/datum/action/implant_action = X
+	for(var/action in actions)
+		var/datum/action/implant_action = action
 		implant_action.Remove(source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source

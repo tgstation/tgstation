@@ -11,25 +11,26 @@
 /obj/item/implant/abductor/activate()
 	. = ..()
 	if(on_cooldown)
-		to_chat(imp_in, span_warning("You must wait [timeleft(on_cooldown)*0.1] seconds to use [src] again!"))
+		to_chat(imp_in, span_warning("You must wait [timeleft(on_cooldown) * 0.1] seconds to use [src] again!"))
 		return
 
-	home.Retrieve(imp_in,1)
+	home.Retrieve(imp_in, 1)
 	on_cooldown = addtimer(VARSET_CALLBACK(src, on_cooldown, null), cooldown , TIMER_STOPPABLE)
 
 /obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	if(..())
-		var/obj/machinery/abductor/console/console
-		if(ishuman(target))
-			var/datum/antagonist/abductor/A = target.mind.has_antag_datum(/datum/antagonist/abductor)
-			if(A)
-				console = get_abductor_console(A.team.team_number)
-				home = console.pad
-
-		if(!home)
-			var/list/consoles = list()
-			for(var/obj/machinery/abductor/console/C in GLOB.machines)
-				consoles += C
-			console = pick(consoles)
+	if(!..())
+		return
+	var/obj/machinery/abductor/console/console
+	if(ishuman(target))
+		var/datum/antagonist/abductor/abductor = target.mind.has_antag_datum(/datum/antagonist/abductor)
+		if(abductor)
+			console = get_abductor_console(abductor.team.team_number)
 			home = console.pad
-		return TRUE
+
+	if(!home)
+		var/list/consoles = list()
+		for(var/obj/machinery/abductor/console/temp_console in GLOB.machines)
+			consoles += temp_console
+		console = pick(consoles)
+		home = console.pad
+	return TRUE

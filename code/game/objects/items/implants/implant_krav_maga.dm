@@ -16,15 +16,15 @@
 
 /obj/item/implant/krav_maga/activate()
 	. = ..()
-	var/mob/living/carbon/human/H = imp_in
-	if(!ishuman(H))
+	var/mob/living/carbon/human/implanted_human = imp_in
+	if(!ishuman(implanted_human))
 		return
-	if(!H.mind)
+	if(!implanted_human.mind)
 		return
-	if(H.mind.has_martialart(MARTIALART_KRAVMAGA))
-		style.remove(H)
+	if(implanted_human.mind.has_martialart(MARTIALART_KRAVMAGA))
+		style.remove(implanted_human)
 	else
-		style.teach(H,1)
+		style.teach(implanted_human, 1)
 
 /obj/item/implanter/krav_maga
 	name = "implanter (krav maga)"

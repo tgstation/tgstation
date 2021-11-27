@@ -12,8 +12,8 @@
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
-	var/lifespan = 3000 //how many deciseconds does the implant last?
 	allow_teleport = FALSE
+	var/lifespan = 3000 //how many deciseconds does the implant last?
 
 /obj/item/implant/tracking/c38/Initialize(mapload)
 	. = ..()
