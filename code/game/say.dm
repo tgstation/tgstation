@@ -39,9 +39,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//SHOULD_BE_PURE(TRUE)
 	return TRUE
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list())
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
-	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source, TRUE))
+	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
 		hearing_movable.Hear(rendered, src, message_language, message, , spans, message_mods)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)

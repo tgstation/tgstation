@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
-			if(get_dist(player_mob, src) > 7 || player_mob.z != z) //they're out of range of normal hearing
+			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
 				if(eavesdrop_range)
 					if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
