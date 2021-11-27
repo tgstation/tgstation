@@ -2082,10 +2082,75 @@
 //Update the screentip to reflect what we're hoverin over
 /atom/MouseEntered(location, control, params)
 	. = ..()
+	var/randi = rand(1,5)
+	switch(randi)
+		if(1)
+			MouseEnteredOld()
+		if(2)
+			MouseEnteredInlineBar()
+		if(3)
+			MouseEnteredCacheHud()
+		if(4)
+			MouseEnteredInlineMaptext()
+		if(5)
+			MouseEnteredNoUsrCheck()
+
+/atom/proc/MouseEnteredOld()
 	// Statusbar
 	status_bar_set_text(usr, name)
 	// Screentips
 	if(usr?.hud_used)
+		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
+			usr.hud_used.screentip_text.maptext = ""
+		else
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
+
+/atom/proc/MouseEnteredInlineBar()
+	// Statusbar
+	var/client/our_client = usr.client
+	//If you have no client why are you here
+	if(!our_client)
+		return
+	// Stop a winset call if text didn't change.
+	if(our_client.status_bar_prev_text != name)
+		our_client.status_bar_prev_text = name
+		winset(our_client, "mapwindow.status_bar",
+			"text=[url_encode(name)]&is-visible=[!!name]")
+
+	if(usr?.hud_used)
+		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
+			usr.hud_used.screentip_text.maptext = ""
+		else
+			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
+
+/atom/proc/MouseEnteredCacheHud()
+	// Statusbar
+	status_bar_set_text(usr, name)
+
+	// Screentips
+	var/datum/hud/active_hud = usr?.hud_used
+	if(active_hud)
+		if(!active_hud.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
+			active_hud.screentip_text.maptext = ""
+		else
+			active_hud.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[active_hud.screentip_color]: 32px'>[name]</span>")
+
+/atom/proc/MouseEnteredInlineMaptext()
+	// Statusbar
+	status_bar_set_text(usr, name)
+
+	// Screentips
+	if(usr?.hud_used)
+		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
+			usr.hud_used.screentip_text.maptext = ""
+		else
+			usr.hud_used.screentip_text.maptext ="<span class='maptext'><span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span></span>"
+
+/atom/proc/MouseEnteredNoUsrCheck()
+	// Statusbar
+	status_bar_set_text(usr, name)
+	// Screentips
+	if(usr.hud_used)
 		if(!usr.hud_used.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
 			usr.hud_used.screentip_text.maptext = ""
 		else
