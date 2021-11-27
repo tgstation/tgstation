@@ -219,5 +219,5 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	updateUsrDialog()
 
-/obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/rnd/destructive_analyzer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return FALSE
