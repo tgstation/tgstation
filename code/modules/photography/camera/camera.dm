@@ -119,8 +119,8 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
-	else //user is an atom
-		if(!(get_turf(target) in view(world.view, src)))
+	else //user is an atom or null
+		if(!(get_turf(target) in view(world.view, user || src)))
 			return FALSE
 	return TRUE
 
