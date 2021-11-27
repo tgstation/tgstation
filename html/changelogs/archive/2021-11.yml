@@ -835,3 +835,72 @@
   - bugfix: fixes non-chaplains being able to invoke rites
   "\u041F\u0435\u043B\u044C\u043C\u0435\u0448\u043A\u0430":
   - bugfix: You could see parallax over blackness
+2021-11-26:
+  BastardBlaster:
+  - bugfix: Cyborgs and those with rad immunity will no longer get the radiation burn
+      message when near something being dusted by the supermatter.
+  - spellcheck: Rewrote some messages when near something that was dusted by the SM
+  KathyRyals:
+  - balance: Heretics no longer gib their target when sacrificing them, instead outright
+      killing them and spilling all their organs everywhere in a gruesome manner.
+  Melbert:
+  - bugfix: Spading plants correctly updates the tray icon again
+  Mothblocks:
+  - rscadd: Added back dissection surgery, which can be used with an operating computer
+      to perform experiments for research.
+  - rscadd: Biological technology's requirement has been changed from scanning one
+      grey slime extract to performing a dissection surgery.
+  - rscadd: Advanced biotech's requirement has been changed from scanning three slime
+      extracts to performing a dissection surgery on a nonhuman.
+  - rscadd: Xeno-organ biology and Alien Biological Tools' now have additional discounts
+      for performing a dissection surgery on a xenomorph.
+  PositiveEntropy:
+  - imageadd: In no short effort of our best tailors, every Central Command outfit
+      have been either redesigned or reshaded! All of them!
+  TheBonded:
+  - qol: Chairs and beds are now deconstructed with right click, making them more
+      consistent with other object deconstructions.
+  itseasytosee:
+  - imageadd: added new sprites for the energy axe
+  jlsnow301:
+  - bugfix: 'Scams Deleted: You will no longer be charged full price for items listed
+      as discounted in the vendor.'
+2021-11-27:
+  Gandalf2k15:
+  - balance: Diagonal movement is now slightly faster
+  Ghommie:
+  - expansion: Gradients can now be applied to facial hair too.
+  - expansion: 'Two new hair gradients: Striped horizontal and Striped vertical.'
+  - bugfix: Fixed the dye kit missing a lot of checks which made it able to dye mobs
+      out of reach or while incapacitated.
+  - bugfix: Fixed clown mobs spawning banana peels on turfs they can't reach or while
+      inside objects.
+  - bugfix: Some things such as heretic influences won't spawn on open space anymore.
+  HarseTheef:
+  - bugfix: The space heater right click toggle now works correctly.
+  - bugfix: Pipe layer changes now occur on right + alt click
+  JohnFulpWillard:
+  - bugfix: Bots will no longer turn invisible when being turned on/off
+  Melbert:
+  - expansion: The Fission360 has been upgraded, operatives. Examining a tablet running
+      the Fission360 when a bomb is armed will show you the time remaining until detonation,
+      and it can now point back to the Infiltrator. Hopefully you'll stop missing
+      your pinpointers now.
+  - expansion: The Syndicate Infiltrator is now a point of interest in the orbit menu
+      that ghosts can jump to.
+  OrionTheFox:
+  - rscadd: Added new reskins of the Catwalk Tiles, which will blend better with other
+      types of floor! These can be selected via a radial on the base catwalk tile,
+      crafted with iron rods.
+  - expansion: Floorbots will automatically place catwalks when they're in a maintenance
+      area, and will repair damaged/burnt tiles rather than fully replacing them.
+  - bugfix: Floorbots will actually place a plating when repairing a breach with tiles,
+      rather than haphazardly laying a tile that has space below it.
+  cacogen:
+  - rscadd: Adds timezones to US Thanksgiving so it's active on the server when it's
+      celebrated in real life
+  carshalash:
+  - expansion: Abductors now have a limb grower to play with, for scientific purposes.
+      Brain traumas are no longer forced after abductions.
+  tralezab:
+  - bugfix: prison plates have fixed text in some interactions

@@ -14,7 +14,7 @@
 			to_chat(user, span_warning("You crush the [src]! [capitalize(DisplayTimeText(det_time))]!"))
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
-		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
+		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', volume, TRUE)

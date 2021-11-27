@@ -1113,17 +1113,51 @@
 /obj/item/stack/tile/emissive_test/white/sixty
 	amount = 60
 
-/obj/item/stack/tile/catwalk_tile
+//Catwalk Tiles
+/obj/item/stack/tile/catwalk_tile //This is our base type, sprited to look maintenance-styled
 	name = "catwalk floor"
 	singular_name = "catwalk floor tile"
-	desc = "Catwalk floor to be able see things underneath"
-	icon_state = "catwalk_floor"
+	desc = "Flooring that shows its contents underneath. Engineers love it!"
+	icon_state = "maint_catwalk"
 	inhand_icon_state = "tile-catwalk"
 	turf_type = /turf/open/floor/catwalk_floor
-	merge_type = /obj/item/stack/tile/catwalk_tile
+	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
+	tile_reskin_types = list(
+		/obj/item/stack/tile/catwalk_tile,
+		/obj/item/stack/tile/catwalk_tile/iron,
+		/obj/item/stack/tile/catwalk_tile/iron_white,
+		/obj/item/stack/tile/catwalk_tile/iron_dark,
+		/obj/item/stack/tile/catwalk_tile/flat_white,
+		/obj/item/stack/tile/catwalk_tile/titanium,
+		/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the original greenish one
+	)
 
 /obj/item/stack/tile/catwalk_tile/sixty
 	amount = 60
+
+/obj/item/stack/tile/catwalk_tile/iron
+	icon_state = "iron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron
+
+/obj/item/stack/tile/catwalk_tile/iron_white
+	icon_state = "whiteiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_white
+
+/obj/item/stack/tile/catwalk_tile/iron_dark
+	icon_state = "darkiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_dark
+
+/obj/item/stack/tile/catwalk_tile/flat_white
+	icon_state = "flatwhite_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/flat_white
+
+/obj/item/stack/tile/catwalk_tile/titanium
+	icon_state = "titanium_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/titanium
+
+/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the greenish one
+	icon_state = "smoothiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_smooth
 
 // Glass floors
 /obj/item/stack/tile/glass
