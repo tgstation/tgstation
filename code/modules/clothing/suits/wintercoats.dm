@@ -25,7 +25,6 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
 		/obj/item/storage/bag/books,
-		/obj/item/storage/bag/tray,
 	)
 
 /obj/item/clothing/head/hooded/winterhood
@@ -217,6 +216,8 @@
 	desc = "A lab-grade winter coat made with acid resistant polymers. For the enterprising chemist who was exiled to a frozen wasteland on the go."
 	icon_state = "coatchemistry"
 	inhand_icon_state = "coatchemistry"
+/obj/item/clothing/suit/hooded/wintercoat/medical/chemistry/Initialize(mapload)
+	. = ..()
 	allowed += list(
 		/obj/item/storage/bag/chemistry,
 	)
@@ -234,6 +235,8 @@
 	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = "coatviro"
+/obj/item/clothing/suit/hooded/wintercoat/medical/viro/Initialize(mapload)
+	. = ..()
 	allowed += list(
 		/obj/item/storage/bag/bio,
 
