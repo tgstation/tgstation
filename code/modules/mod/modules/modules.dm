@@ -55,7 +55,7 @@
 	desc = "A module installed to the helmet, allowing access to different views."
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 5
+	active_power_cost = DEFAULT_CELL_DRAIN*0.3
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS
 	var/hud_type
@@ -123,10 +123,10 @@
 	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
 
-/obj/item/mod/module/welding/on_equip()
+/obj/item/mod/module/welding/on_suit_activation()
 	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
 
-/obj/item/mod/module/welding/on_unequip()
+/obj/item/mod/module/welding/on_suit_deactivation()
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 /obj/item/mod/module/t_ray
@@ -134,7 +134,7 @@
 	desc = "A module scanning the station for pipes and wires underneath."
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 15
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
 	var/range = 2
@@ -142,15 +142,21 @@
 /obj/item/mod/module/t_ray/on_active_process(delta_time)
 	t_ray_scan(mod.wearer, 8, range)
 
+#define HEALTH_SCAN "Health"
+#define WOUND_SCAN "Wound"
+#define CHEM_SCAN "Chemical"
+
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
 	desc = "A module with a microchip health analyzer to instantly scan vitals at a range."
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = 25
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
+	var/mode = HEALTH_SCAN
+	var/static/list/modes = list(HEALTH_SCAN, WOUND_SCAN, CHEM_SCAN)
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
@@ -158,8 +164,27 @@
 		return
 	if(!isliving(target))
 		return
-	healthscan(mod.wearer, target)
+	switch(mode)
+		if(HEALTH_SCAN)
+			healthscan(mod.wearer, target)
+		if(WOUND_SCAN)
+			woundscan(mod.wearer, target)
+		if(CHEM_SCAN)
+			chemscan(mod.wearer, target)
 	drain_power(use_power_cost)
+
+/obj/item/mod/module/health_analyzer/get_configuration()
+	. = ..()
+	.["mode"] = add_ui_configuration("Scan Mode", "list", mode, modes)
+
+/obj/item/mod/module/health_analyzer/configure_edit(key, value)
+	switch(key)
+		if("mode")
+			mode = value
+
+#undef HEALTH_SCAN
+#undef WOUND_SCAN
+#undef CHEM_SCAN
 
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
@@ -167,8 +192,8 @@
 	icon_state = "cloak"
 	module_type = MODULE_TOGGLE
 	complexity = 4
-	active_power_cost = 50
-	use_power_cost = 100
+	active_power_cost = DEFAULT_CELL_DRAIN * 2
+	use_power_cost = DEFAULT_CELL_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	var/bumpoff = TRUE
@@ -223,8 +248,8 @@
 	icon_state = "cloak_ninja"
 	bumpoff = FALSE
 	stealth_alpha = 20
-	active_power_cost = 10
-	use_power_cost = 50
+	active_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
 /obj/item/mod/module/jetpack
@@ -233,8 +258,8 @@
 	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_cost = 10
-	use_power_cost = 40
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/jetpack)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
@@ -323,7 +348,7 @@
 	icon_state = "magnet"
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 10
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
 	var/slowdown_active = 0.5
@@ -360,7 +385,7 @@
 	icon_state = "holster"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = 20
+	use_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
 	var/obj/item/gun/holstered
@@ -405,7 +430,7 @@
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = 50
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
 
@@ -479,19 +504,19 @@
 	desc = "A module that lets the MOD scan for radiation and protects the user from it."
 	icon_state = "radshield"
 	complexity = 2
-	idle_power_cost = 10
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 	tgui_id = "rad_counter"
 	var/perceived_threat_level
 
-/obj/item/mod/module/rad_protection/on_equip()
+/obj/item/mod/module/rad_protection/on_suit_activation()
 	AddComponent(/datum/component/geiger_sound)
 	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	RegisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 	for(var/obj/item/part in mod.mod_parts)
 		ADD_TRAIT(part, TRAIT_RADIATION_PROTECTED_CLOTHING, MOD_TRAIT)
 
-/obj/item/mod/module/rad_protection/on_unequip()
+/obj/item/mod/module/rad_protection/on_suit_deactivation()
 	qdel(GetComponent(/datum/component/geiger_sound))
 	REMOVE_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	UnregisterSignal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION)
@@ -515,7 +540,7 @@
 	desc = "A module that shields the MOD from EMPs, taking a power cost for that."
 	icon_state = "empshield"
 	complexity = 1
-	idle_power_cost = 10
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/emp_shield)
 
 /obj/item/mod/module/emp_shield/on_install()
@@ -530,7 +555,7 @@
 	icon_state = "flashlight"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = 10
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/flashlight)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_light"
@@ -539,7 +564,7 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
-	var/base_power = 2
+	var/base_power = DEFAULT_CELL_DRAIN * 0.1
 	var/min_range = 2
 	var/max_range = 5
 
@@ -598,7 +623,7 @@
 	icon_state = "scanner"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = 5
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
 
@@ -650,7 +675,7 @@
 	desc = "A module that dispenses burgers."
 	module_type = MODULE_USABLE
 	complexity = 3
-	use_power_cost = 50
+	use_power_cost = DEFAULT_CELL_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
 	var/dispense_type = /obj/item/food/burger/plain
@@ -675,7 +700,7 @@
 	icon_state = "gps"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	active_power_cost = 5
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	device = /obj/item/gps/mod
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
@@ -692,15 +717,15 @@
 	icon_state = "constructor"
 	module_type = MODULE_USABLE
 	complexity = 2
-	idle_power_cost = 3
-	use_power_cost = 50
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	use_power_cost = DEFAULT_CELL_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
-/obj/item/mod/module/constructor/on_equip()
+/obj/item/mod/module/constructor/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
-/obj/item/mod/module/constructor/on_unequip()
+/obj/item/mod/module/constructor/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_BUILD, MOD_TRAIT)
 
 /obj/item/mod/module/constructor/on_use()
@@ -714,13 +739,13 @@
 	name = "MOD quick carry module"
 	desc = "A module that redirects power to arms, allowing for quicker carrying."
 	complexity = 1
-	idle_power_cost = 3
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 
-/obj/item/mod/module/quick_carry/on_equip()
+/obj/item/mod/module/quick_carry/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_unequip()
+/obj/item/mod/module/quick_carry/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICK_CARRY, MOD_TRAIT)
 
 /obj/item/mod/module/quick_carry/advanced
@@ -728,11 +753,11 @@
 	removable = FALSE
 	complexity = 0
 
-/obj/item/mod/module/quick_carry/on_equip()
+/obj/item/mod/module/quick_carry/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
-/obj/item/mod/module/quick_carry/on_unequip()
+/obj/item/mod/module/quick_carry/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
@@ -740,13 +765,13 @@
 	name = "MOD longfall module"
 	desc = "A module that stops fall damage from happening to the user, converting into kinetic charge."
 	complexity = 1
-	use_power_cost = 100
+	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/longfall)
 
-/obj/item/mod/module/longfall/on_equip()
+/obj/item/mod/module/longfall/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
 
-/obj/item/mod/module/longfall/on_unequip()
+/obj/item/mod/module/longfall/on_suit_deactivation()
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
@@ -763,7 +788,7 @@
 	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = 5
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
 	var/temperature_setting = BODYTEMP_NORMAL
@@ -788,7 +813,7 @@
 	icon_state = "injector"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	active_power_cost = 5
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	device = /obj/item/reagent_containers/syringe/mod
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
@@ -808,7 +833,7 @@
 	desc = "A module that adapts an integrated circuit to a MODsuit."
 	module_type = MODULE_USABLE
 	complexity = 3
-	idle_power_cost = 5
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
 	var/obj/item/integrated_circuit/circuit
@@ -829,10 +854,10 @@
 /obj/item/mod/module/circuit/on_uninstall()
 	circuit.set_cell(mod.cell)
 
-/obj/item/mod/module/circuit/on_equip()
+/obj/item/mod/module/circuit/on_suit_activation()
 	circuit.set_on(TRUE)
 
-/obj/item/mod/module/circuit/on_unequip()
+/obj/item/mod/module/circuit/on_suit_deactivation()
 	circuit.set_on(FALSE)
 
 /obj/item/mod/module/circuit/on_use()
@@ -909,7 +934,7 @@
 	desc = "A specialized clamp system that allows the MODSuit to pick up crates."
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = 25
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/clamp)
 	cooldown_time = 0.5 SECONDS
 	var/max_crates = 5
@@ -955,7 +980,7 @@
 	icon_state = "bikehorn"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = 25
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
 
@@ -972,7 +997,7 @@
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = 50
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
 
@@ -1013,21 +1038,15 @@
 	icon_state = "ore"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = 25
+	use_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
 	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_equip()
-	. = ..()
-	if(!.)
-		return
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/ore_pickup)
 
 /obj/item/mod/module/orebag/on_unequip()
-	. = ..()
-	if(!.)
-		return
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 
 /obj/item/mod/module/orebag/proc/ore_pickup(atom/movable/source, atom/old_loc, dir, forced)
@@ -1062,7 +1081,7 @@
 	desc = "A hand-mounted microwave beam to cook your food to perfection."
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = 50
+	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam)
 	cooldown_time = 10 SECONDS
 
@@ -1094,7 +1113,7 @@
 	desc = "An arm mounted organ launching device to automatically insert organs into open bodies."
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = 50
+	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower)
 	cooldown_time = 0.5 SECONDS
 	var/max_organs = 5
@@ -1184,7 +1203,7 @@
 	desc = "A module linked to an implant, able to find the user and attach itself onto them. To inject the implant, hit someone with it."
 	icon_state = "pathfinder"
 	complexity = 2
-	use_power_cost = 100
+	use_power_cost = DEFAULT_CELL_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
 	var/obj/item/implant/mod/implant
 
@@ -1333,7 +1352,7 @@
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = 100
+	use_power_cost = DEFAULT_CELL_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
 	var/dna = null
@@ -1388,7 +1407,7 @@
 	name = "MOD armor booster module"
 	desc = "A module that uses the suit's power to boost armor. To increase efficiency, some parts of the armor are retracted."
 	module_type = MODULE_TOGGLE
-	active_power_cost = 5
+	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
 	cooldown_time = 0.5 SECONDS
@@ -1411,6 +1430,7 @@
 	. = ..()
 	if(!.)
 		return
+	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	mod.slowdown += added_slowdown
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
@@ -1427,6 +1447,7 @@
 	. = ..()
 	if(!.)
 		return
+	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	mod.slowdown -= added_slowdown
 	mod.wearer.update_equipment_speed_mods()
 	var/list/parts = mod.mod_parts + mod
@@ -1451,8 +1472,8 @@
 	name = "MOD energy shield module"
 	desc = "A module creating an energy shield around the user."
 	complexity = 3
-	idle_power_cost = 10
-	use_power_cost = 25
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	use_power_cost = DEFAULT_CELL_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
 	var/max_charges = 3
 	var/recharge_start_delay = 20 SECONDS
@@ -1467,12 +1488,12 @@
 	. = ..()
 	charges = max_charges
 
-/obj/item/mod/module/energy_shield/on_equip()
+/obj/item/mod/module/energy_shield/on_suit_activation()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
-/obj/item/mod/module/energy_shield/on_unequip()
+/obj/item/mod/module/energy_shield/on_suit_deactivation()
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
@@ -1486,9 +1507,23 @@
 
 /obj/item/mod/module/energy_shield/wizard
 	name = "MOD battlemage shield module"
-	idle_power_cost = 0 //magic
-	use_power_cost = 0 //magic too
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0 //magic
+	use_power_cost = DEFAULT_CELL_DRAIN * 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
 	recharge_path = /obj/item/wizard_armour_charge
+
+/obj/item/mod/module/plasma_stabilizer
+	name = "MOD plasma stabilizer module"
+	desc = "A module supporting plasma lifeforms by preventing self-ignition."
+	complexity = 1
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
+	overlay_state_inactive = "module_plasma"
+
+/obj/item/mod/module/plasma_stabilizer/on_equip()
+	ADD_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+
+/obj/item/mod/module/plasma_stabilizer/on_unequip()
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)

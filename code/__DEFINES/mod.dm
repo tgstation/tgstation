@@ -1,5 +1,8 @@
-/// Default value for the max_complexity var on modsuits
+/// Default value for the max_complexity var on MODsuits
 #define DEFAULT_MAX_COMPLEXITY 15
+
+/// Default cell drain per process on MODsuits
+#define DEFAULT_CELL_DRAIN 10
 
 /// Passive module, just acts when put in naturally.
 #define MODULE_PASSIVE 0

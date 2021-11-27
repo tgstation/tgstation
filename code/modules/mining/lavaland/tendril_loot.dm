@@ -670,6 +670,7 @@
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
+	START_PROCESSING(SSobj, src)
 
 /// Ends berserk, reverting the changes from the proc [berserk_mode]
 /obj/item/clothing/head/hooded/berserker/proc/end_berserk(mob/living/carbon/human/user)
@@ -686,6 +687,7 @@
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
+	STOP_PROCESSING(SSobj, src)
 
 #undef MAX_BERSERK_CHARGE
 #undef PROJECTILE_HIT_MULTIPLIER

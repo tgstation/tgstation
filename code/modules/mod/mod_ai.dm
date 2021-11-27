@@ -66,7 +66,7 @@
 #define MOVE_DELAY 2
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
-#define CELL_PER_STEP 25
+#define CELL_PER_STEP DEFAULT_CELL_DRAIN * 2.5
 
 /obj/item/mod/control/relaymove(mob/user, direction)
 	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))

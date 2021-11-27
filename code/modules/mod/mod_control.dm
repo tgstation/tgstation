@@ -48,7 +48,7 @@
 	/// How much module complexity this MOD is carrying.
 	var/complexity = 0
 	/// Power usage of the MOD.
-	var/cell_drain = 0
+	var/cell_drain = DEFAULT_CELL_DRAIN
 	/// Slowdown of the MOD when not active.
 	var/slowdown_inactive = 2
 	/// Slowdown of the MOD when active.
@@ -371,8 +371,12 @@
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 	RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	update_cell_alert()
+	for(var/obj/item/mod/module/module as anything in modules)
+		module.on_equip()
 
 /obj/item/mod/control/proc/unset_wearer()
+	for(var/obj/item/mod/module/module as anything in modules)
+		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 	wearer.clear_alert("mod_charge")
 	wearer = null
@@ -468,6 +472,8 @@
 	complexity += new_module.complexity
 	new_module.mod = src
 	new_module.on_install()
+	if(wearer)
+		new_module.on_equip()
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -477,9 +483,11 @@
 	modules -= old_module
 	complexity -= old_module.complexity
 	if(active)
-		old_module.on_unequip()
+		old_module.on_suit_deactivation()
 		if(old_module.active)
 			old_module.on_deactivation()
+	if(wearer)
+		old_module.on_unequip()
 	old_module.on_uninstall()
 	old_module.mod = null
 

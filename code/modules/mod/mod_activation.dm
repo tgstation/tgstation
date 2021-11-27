@@ -172,11 +172,11 @@
 	slowdown = on ? slowdown_active : slowdown_inactive
 	if(on)
 		for(var/obj/item/mod/module/module as anything in modules)
-			module.on_equip()
+			module.on_suit_activation()
 		START_PROCESSING(SSobj, src)
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
-			module.on_unequip()
+			module.on_suit_deactivation()
 			if(module.active)
 				module.on_deactivation()
 		STOP_PROCESSING(SSobj, src)

@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber } from '../components';
+import { Button, ColorBox, LabeledList, ProgressBar, Section, Collapsible, Box, Icon, Stack, Table, Dimmer, NumberInput, Flex, AnimatedNumber, Dropdown } from '../components';
 import { Window } from '../layouts';
 
 const ConfigureNumberEntry = (props, context) => {
@@ -53,12 +53,29 @@ const ConfigureColorEntry = (props, context) => {
   );
 };
 
+const ConfigureListEntry = (props, context) => {
+  const { name, value, values, module_ref } = props;
+  const { act } = useBackend(context);
+  return (
+    <Dropdown
+      displayText={value}
+      options={values}
+      onSelected={value => act('configure', {
+        "key": name,
+        "value": value,
+        "ref": module_ref,
+      })}
+    />
+  );
+};
+
 const ConfigureDataEntry = (props, context) => {
-  const { name, display_name, type, value, module_ref } = props;
+  const { name, display_name, type, value, values, module_ref } = props;
   const configureEntryTypes = {
     number: <ConfigureNumberEntry {...props} />,
     bool: <ConfigureBoolEntry {...props} />,
     color: <ConfigureColorEntry {...props} />,
+    list: <ConfigureListEntry {...props} />,
   };
   return (
     <Box>
@@ -148,6 +165,7 @@ const ConfigureScreen = (props, context) => {
                 display_name={data.display_name}
                 type={data.type}
                 value={data.value}
+                values={data.values}
                 module_ref={module_ref} />
             </Stack.Item>
           );

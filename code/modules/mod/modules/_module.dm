@@ -10,11 +10,11 @@
 	/// How much space it takes up in the MOD
 	var/complexity = 0
 	/// Power use when idle
-	var/idle_power_cost = 0
+	var/idle_power_cost = DEFAULT_CELL_DRAIN * 0
 	/// Power use when active
-	var/active_power_cost = 0
+	var/active_power_cost = DEFAULT_CELL_DRAIN * 0
 	/// Power use when used, we call it manually
-	var/use_power_cost = 0
+	var/use_power_cost = DEFAULT_CELL_DRAIN * 0
 	/// ID used by their TGUI
 	var/tgui_id
 	/// Linked MODsuit
@@ -67,10 +67,18 @@
 	return
 
 /// Called when the MODsuit is activated
-/obj/item/mod/module/proc/on_equip()
+/obj/item/mod/module/proc/on_suit_activation()
 	return
 
 /// Called when the MODsuit is deactivated
+/obj/item/mod/module/proc/on_suit_deactivation()
+	return
+
+/// Called when the MODsuit is equipped
+/obj/item/mod/module/proc/on_equip()
+	return
+
+/// Called when the MODsuit is unequipped
 /obj/item/mod/module/proc/on_unequip()
 	return
 
@@ -113,8 +121,6 @@
 					used_signal = COMSIG_MOB_MIDDLECLICKON
 				if(ALT_CLICK)
 					used_signal = COMSIG_MOB_ALTCLICKON
-				if(RIGHT_CLICK)
-					used_signal = COMSIG_MOB_ATTACK_RANGED_SECONDARY
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
 			RegisterSignal(mod.wearer, used_signal, .proc/on_special_click)
 	active = TRUE
@@ -197,8 +203,8 @@
 	return list()
 
 /// Generates an element of the get_configuration list with a display name, type and value
-/obj/item/mod/module/proc/add_ui_configuration(display_name, type, value)
-	return list("display_name" = display_name, "type" = type, "value" = value)
+/obj/item/mod/module/proc/add_ui_configuration(display_name, type, value, list/values)
+	return list("display_name" = display_name, "type" = type, "value" = value, "values" = values)
 
 /// Receives configure edits from the TGUI and edits the vars
 /obj/item/mod/module/proc/configure_edit(key, value)

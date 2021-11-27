@@ -30,7 +30,7 @@
 	/// How much modules can the MOD carry without malfunctioning.
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much battery power the MOD uses by just being on
-	var/cell_drain = 5
+	var/cell_drain = DEFAULT_CELL_DRAIN
 	/// Slowdown of the MOD when not active.
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
@@ -207,7 +207,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cell_drain = 10
+	cell_drain = DEFAULT_CELL_DRAIN * 2
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	clothing_flags = list(
 		"mining" = list(
@@ -240,7 +240,7 @@
 	default_skin = "medical"
 	skins = list("medical")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
-	cell_drain = 7
+	cell_drain = DEFAULT_CELL_DRAIN * 1.5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	clothing_flags = list(
@@ -276,7 +276,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cell_drain = 7
+	cell_drain = DEFAULT_CELL_DRAIN * 1.5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
@@ -305,11 +305,11 @@
 		),
 	)
 
-/datum/mod_theme/prototype
-	name = "prototype"
+/datum/mod_theme/research
+	name = "research"
 	desc = "A private military EOD suit by Aussec Armory, intended for explosive research. Bulky, but expansive."
-	default_skin = "prototype"
-	skins = list("prototype")
+	default_skin = "research"
+	skins = list("research")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	alternate_layer = null
@@ -319,7 +319,7 @@
 	slowdown_active = 1.5
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	clothing_flags = list(
-		"prototype" = list(
+		"research" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -501,7 +501,7 @@
 	alternate_layer = null
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 1000
-	cell_drain = 0
+	cell_drain = DEFAULT_CELL_DRAIN * 0
 	slowdown_inactive = 0
 	slowdown_active = 0
 	clothing_flags = list(
