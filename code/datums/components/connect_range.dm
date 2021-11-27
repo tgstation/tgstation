@@ -92,8 +92,7 @@
 		return
 
 	if(ismovable(location))
-		var/list/movables_to_unregister = get_nested_locs(location) + location
-		for(var/atom/movable/target as anything in movables_to_unregister)
+		for(var/atom/movable/target as anything in (get_nested_locs(location) + location))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
 	if(on_same_turf)
