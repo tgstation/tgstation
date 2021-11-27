@@ -682,7 +682,7 @@
 	model.transform_to(/obj/item/robot_model)
 
 	// Remove upgrades.
-	for(var/obj/item/borg/upgrade/I in upgrades)
+	for(var/obj/item/borg/upgrade/I in src.upgrades)
 		I.forceMove(get_turf(src))
 
 	ionpulse = FALSE
@@ -740,8 +740,9 @@
 
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
 /mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
-	if(new_upgrade in upgrades)
-		return FALSE
+	for(var/obj/item/borg/upgrade/current_upgrade in src.upgrades)
+		if(current_upgrade.name == new_upgrade.name)
+			return FALSE
 	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
 		return FALSE
 	if(!new_upgrade.action(src, user))
@@ -754,7 +755,7 @@
 		logevent("Firmware [new_upgrade] run successfully.")
 		qdel(new_upgrade)
 		return FALSE
-	upgrades += new_upgrade
+	src.upgrades += new_upgrade
 	new_upgrade.forceMove(src)
 	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, .proc/remove_from_upgrades)
 	RegisterSignal(new_upgrade, COMSIG_PARENT_QDELETING, .proc/on_upgrade_deleted)
@@ -766,7 +767,10 @@
 	if(loc == src)
 		return
 	old_upgrade.deactivate(src)
-	upgrades -= old_upgrade
+	for(var/obj/item/borg/upgrade/current_upgrade in src.upgrades)
+		if(current_upgrade.name == old_upgrade.name)
+			src.upgrades.Remove(current_upgrade)
+
 	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
 ///Called when an applied upgrade is deleted.
@@ -774,7 +778,9 @@
 	SIGNAL_HANDLER
 	if(!QDELETED(src))
 		old_upgrade.deactivate(src)
-	upgrades -= old_upgrade
+	for(var/obj/item/borg/upgrade/current_upgrade in src.upgrades)
+		if(current_upgrade.name == old_upgrade.name)
+			src.upgrades.Remove(current_upgrade)
 	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
 /**
@@ -785,7 +791,7 @@
  */
 /mob/living/silicon/robot/proc/make_shell(obj/item/borg/upgrade/ai/board)
 	if(!board)
-		upgrades |= new /obj/item/borg/upgrade/ai(src)
+		src.upgrades |= new /obj/item/borg/upgrade/ai(src)
 	shell = TRUE
 	braintype = "AI Shell"
 	name = "Empty AI Shell-[ident]"

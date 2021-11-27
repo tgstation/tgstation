@@ -398,27 +398,37 @@
 
 /obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
+	if(R.emagged)
+		return FALSE
+
 	if(.)
 		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
-			if(H.accepts_reagent_upgrades)
-				for(var/re in additional_reagents)
-					H.add_reagent(re)
+			R.model.remove_module(H, TRUE)
+
+		var/obj/item/reagent_containers/borghypo/expanded/E = new /obj/item/reagent_containers/borghypo/expanded(R.model)
+		R.model.basic_modules += E
+		R.model.add_module(E, FALSE, TRUE)
 
 /obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
-	if (.)
-		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
-			if(H.accepts_reagent_upgrades)
-				for(var/re in additional_reagents)
-					H.del_reagent(re)
+	if(R.emagged)
+		return FALSE
+
+	if(.)
+		for(var/obj/item/reagent_containers/borghypo/expanded/E in R.model.modules)
+			R.model.remove_module(E, TRUE)
+
+		var/obj/item/reagent_containers/borghypo/H = new (R.model)
+		R.model.basic_modules += H
+		R.model.add_module(H, FALSE, TRUE)
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
 	desc = "An upgrade to the Medical model's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
-	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
-		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
-		/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/medical)
+	model_flags = BORG_MODEL_MEDICAL
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"

@@ -28,8 +28,12 @@ Borg Hypospray
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list(/datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/c2/libital, /datum/reagent/medicine/c2/multiver, /datum/reagent/medicine/c2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
-	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
+	var/list/reagent_ids = list(
+		/datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/c2/libital, /datum/reagent/medicine/c2/multiver,
+		/datum/reagent/medicine/c2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin,
+		/datum/reagent/medicine/salglu_solution
+	)
+	var/list/additional_reagent_ids = null
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 	var/list/reagent_names = list()
@@ -40,6 +44,10 @@ Borg Hypospray
 
 	for(var/R in reagent_ids)
 		add_reagent(R)
+
+	if(additional_reagent_ids)
+		for(var/AR in additional_reagent_ids)
+			add_reagent(AR)
 
 	START_PROCESSING(SSobj, src)
 
@@ -162,22 +170,29 @@ Borg Hypospray
 		amount_per_transfer_from_this = 5
 	to_chat(user,span_notice("[src] is now set to [amount_per_transfer_from_this == 5 ? "dose normally" : "microdose"]."))
 
+/obj/item/reagent_containers/borghypo/expanded
+	additional_reagent_ids = list(
+		/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
+		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone,
+		/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid
+	)
+
 /obj/item/reagent_containers/borghypo/hacked
 	icon_state = "borghypo_s"
-	reagent_ids = list (/datum/reagent/toxin/acid/fluacid, /datum/reagent/toxin/mutetoxin, /datum/reagent/toxin/cyanide, /datum/reagent/toxin/sodium_thiopental, /datum/reagent/toxin/heparin, /datum/reagent/toxin/lexorin)
-	accepts_reagent_upgrades = FALSE
+	reagent_ids = list (
+		/datum/reagent/toxin/acid/fluacid, /datum/reagent/toxin/mutetoxin, /datum/reagent/toxin/cyanide,
+		/datum/reagent/toxin/sodium_thiopental, /datum/reagent/toxin/heparin, /datum/reagent/toxin/lexorin
+	)
 
 /obj/item/reagent_containers/borghypo/clown
 	name = "laughter injector"
 	desc = "Keeps the crew happy and productive!"
 	reagent_ids = list(/datum/reagent/consumable/laughter)
-	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/clown/hacked
 	name = "laughter injector"
 	desc = "Keeps the crew so happy they don't work!"
 	reagent_ids = list(/datum/reagent/consumable/superlaughter)
-	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/syndicate
 	name = "syndicate cyborg hypospray"
@@ -192,7 +207,6 @@ Borg Hypospray
 		/datum/reagent/medicine/morphine,
 	)
 	bypass_protection = TRUE
-	accepts_reagent_upgrades = FALSE
 
 /*
 Borg Shaker
@@ -205,7 +219,6 @@ Borg Shaker
 	possible_transfer_amounts = list(5,10,20)
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
-	accepts_reagent_upgrades = FALSE
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 
 	reagent_ids = list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee,
@@ -273,7 +286,6 @@ Borg Shaker
 	possible_transfer_amounts = list(5,10,20)
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
-	accepts_reagent_upgrades = FALSE
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 	reagent_ids = list(/datum/reagent/toxin/fakebeer, /datum/reagent/consumable/ethanol/fernet)
@@ -282,18 +294,19 @@ Borg Shaker
 	name = "Peace Hypospray"
 
 	reagent_ids = list(/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/pax/peaceborg)
-	accepts_reagent_upgrades = FALSE
 
 /obj/item/reagent_containers/borghypo/peace/hacked
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
-	reagent_ids = list(/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/pax/peaceborg,/datum/reagent/toxin/staminatoxin,/datum/reagent/toxin/sulfonal,/datum/reagent/toxin/sodium_thiopental,/datum/reagent/toxin/cyanide,/datum/reagent/toxin/fentanyl)
-	accepts_reagent_upgrades = FALSE
+	reagent_ids = list(
+		/datum/reagent/peaceborg/confuse, /datum/reagent/peaceborg/tire, /datum/reagent/pax/peaceborg,
+		/datum/reagent/toxin/staminatoxin, /datum/reagent/toxin/sulfonal, /datum/reagent/toxin/sodium_thiopental,
+		/datum/reagent/toxin/cyanide,/datum/reagent/toxin/fentanyl
+	)
 
 /obj/item/reagent_containers/borghypo/epi
 	name = "epinephrine injector"
 	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
 	reagent_ids = list(/datum/reagent/medicine/epinephrine)
-	accepts_reagent_upgrades = FALSE
 
 #undef C2NAMEREAGENT

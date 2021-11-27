@@ -118,7 +118,7 @@
 	var/toner = 0
 	var/tonermax = 40
 
-	var/list/upgrades = list()
+	var/list/obj/item/borg/upgrade/upgrades = list()
 
 	var/hasExpanded = FALSE
 	var/obj/item/hat
