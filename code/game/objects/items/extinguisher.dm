@@ -218,7 +218,7 @@
 	var/delay = 2
 	// Second loop: Get all the water particles and make them move to their target
 	for(var/obj/effect/particle_effect/water/extinguisher/water as anything in particles)
-		SSmove_manager.move_towards(water, particles[water], delay, timeout = delay * power, flags = MOVEMENT_LOOP_START_FAST)
+		SSmove_manager.move_towards_legacy(water, particles[water], delay, timeout = delay * power, flags = MOVEMENT_LOOP_START_FAST)
 
 //Chair movement loop
 /obj/item/extinguisher/proc/move_chair(obj/buckled_object, movementdirection)
