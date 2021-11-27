@@ -102,7 +102,7 @@ const ICON_MAP = {
   'what': 'question',
 };
 
-export const PaiInterface = (props, context) => {
+export const PaiInterface = (_, context) => {
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const setTabHandler = (tab: number) => {
     setTab(tab);

@@ -25,7 +25,7 @@ type Pai = {
   receive: number;
 };
 
-export const PaiCard = (props, context) => {
+export const PaiCard = (_, context) => {
   const { data } = useBackend<PaiCardData>(context);
   const { pai } = data;
 
@@ -37,7 +37,7 @@ export const PaiCard = (props, context) => {
 };
 
 /** Gives a list of candidates as cards */
-const PaiDownload = (props, context) => {
+const PaiDownload = (_, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { candidates = [] } = data;
 
@@ -58,9 +58,9 @@ const PaiDownload = (props, context) => {
         <NoticeBox>None found!</NoticeBox>
       ) : (
         <Stack fill vertical>
-          {candidates.map((candidate) => {
+          {candidates.map((candidate, index) => {
             return (
-              <Stack.Item key={candidate}>
+              <Stack.Item key={index}>
                 <CandidateDisplay candidate={candidate} />
               </Stack.Item>
             );
@@ -151,7 +151,7 @@ const CandidateTabs = (props, context) => {
 };
 
 /** Once a pAI has been loaded, you can alter its settings here */
-const PaiOptions = (props, context) => {
+const PaiOptions = (_, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { pai } = data;
   const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;
