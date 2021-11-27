@@ -72,7 +72,7 @@
  *
  * Used for special firelocks with light overlays that don't line up to their sprite.
  */
-/obj/machinery/door/firedoor/proc/set_offset()
+/obj/machinery/door/firedoor/proc/adjust_starting_offset()
 	return
 
 /obj/machinery/door/firedoor/Destroy()
@@ -211,11 +211,12 @@
 	correct_state()
 
 /obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
-	if(!istype(digital_crowbar))
-		return //emags get out
-	if(obj_flags &= EMAGGED || !user || digital_crowbar.charges < 1)
+	if(obj_flags & EMAGGED)
 		return
-	digital_crowbar.use_charge(user)
+	if(!isAI(user)) //Skip doorjack-specific code
+		if(!user || digital_crowbar.charges < 1)
+			return
+		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	open()
 
@@ -449,9 +450,9 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	set_offset()
+	adjust_starting_offset()
 
-/obj/machinery/door/firedoor/border_only/set_offset()
+/obj/machinery/door/firedoor/border_only/adjust_starting_offset()
 	light_xoffset = 0
 	light_yoffset = 0
 	switch(dir)
@@ -467,7 +468,7 @@
 
 /obj/machinery/door/firedoor/border_only/Moved()
 	. = ..()
-	set_offset()
+	adjust_starting_offset()
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
