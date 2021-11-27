@@ -262,9 +262,11 @@
 			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has admin_only set to 0")
 			return FALSE
 
-		var/obj/item/stock_parts/cell/cell = parent.get_cell()
-		if(!cell?.use(power_usage_per_input))
-			return FALSE
+		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, power_usage_per_input)
+		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
+			var/obj/item/stock_parts/cell/cell = parent.get_cell()
+			if(!cell?.use(power_usage_per_input))
+				return FALSE
 
 	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
