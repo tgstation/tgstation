@@ -69,7 +69,7 @@
 	// Add some random stamps.
 	if(stamped == TRUE)
 		var/stamp_count = rand(1, stamp_max)
-		for(var/i = 1, i <= stamp_count, i++)
+		for(var/i in 1 to stamp_count)
 			stamps += list("stamp_[rand(2, 6)]")
 	update_icon()
 
@@ -157,7 +157,7 @@
 			else
 				goodies += job_goodies
 
-	for(var/iterator = 0, iterator < goodie_count, iterator++)
+	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
 		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)

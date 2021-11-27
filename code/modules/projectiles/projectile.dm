@@ -127,7 +127,8 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
-	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
+	var/flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.

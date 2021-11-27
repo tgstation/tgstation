@@ -415,6 +415,8 @@
 #define EXAMINE_MORE_WINDOW 1 SECONDS
 /// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
 #define EYE_CONTACT_WINDOW 2 SECONDS
+/// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
+#define YAWN_PROPAGATION_EXAMINE_WINDOW 2 SECONDS
 
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5
@@ -476,3 +478,20 @@
 
 //Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
+
+//defines for grad_color and grad_styles list access keys
+#define GRADIENT_HAIR_KEY 1
+#define GRADIENT_FACIAL_HAIR_KEY 2
+//Keep up to date with the highest key value
+#define GRADIENTS_LEN 2
+
+// /datum/sprite_accessory/gradient defines
+#define GRADIENT_APPLIES_TO_HAIR (1<<0)
+#define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
+
+/// Sign Language defines
+#define SIGN_ONE_HAND 0
+#define SIGN_HANDS_FULL 1
+#define SIGN_ARMLESS 2
+#define SIGN_TRAIT_BLOCKED 3
+#define SIGN_CUFFED 4

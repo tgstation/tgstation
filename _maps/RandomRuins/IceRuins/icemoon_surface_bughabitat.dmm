@@ -76,7 +76,7 @@
 "hy" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/toggle/labcoat,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plastic,
@@ -333,9 +333,9 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light/small/blacklight,
 /obj/item/plunger,
 /mob/living/simple_animal/mouse,
+/obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Pt" = (

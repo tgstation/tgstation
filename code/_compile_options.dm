@@ -15,15 +15,14 @@
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
-///Should we be logging our findings or not
-#define REFERENCE_TRACKING_LOG
-
 ///Used for doing dry runs of the reference finder, to test for feature completeness
+///Slightly slower, higher in memory. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
 
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
+///Don't stop when searching, go till you're totally done
 #define FIND_REF_NO_CHECK_TICK
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
@@ -49,6 +48,7 @@
 
 #ifdef LOWMEMORYMODE
 #define FORCE_MAP "runtimestation"
+#define FORCE_MAP_DIRECTORY "_maps"
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features
@@ -78,6 +78,7 @@
 #define REFERENCE_TRACKING
 #define REFERENCE_TRACKING_DEBUG
 #define FIND_REF_NO_CHECK_TICK
+#define GC_FAILURE_HARD_LOOKUP
 #endif
 
 #ifdef TGS
