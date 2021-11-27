@@ -108,7 +108,7 @@
 				CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 			else
 				to_chat(src, span_warning("You are not being carried by anyone!"))
-				return FALSE // FALSE ? If you return here you won't call paiinterface() below
+				return FALSE
 		if("crew_manifest")
 			ai_roster()
 		if("door_jack")
