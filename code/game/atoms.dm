@@ -2108,9 +2108,6 @@
 /atom/proc/MouseEnteredInlineBar()
 	// Statusbar
 	var/client/our_client = usr.client
-	//If you have no client why are you here
-	if(!our_client)
-		return
 	// Stop a winset call if text didn't change.
 	if(our_client.status_bar_prev_text != name)
 		our_client.status_bar_prev_text = name
