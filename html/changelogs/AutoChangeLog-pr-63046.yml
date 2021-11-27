@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Adds timezones to US Thanksgiving so it's active on the server when it's celebrated in real life"

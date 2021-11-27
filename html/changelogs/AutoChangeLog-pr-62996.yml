@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - expansion: "Gradients can now be applied to facial hair too."
-  - expansion: "Two new hair gradients: Striped horizontal and Striped vertical."
-  - bugfix: "Fixed the dye kit missing a lot of checks which made it able to dye mobs out of reach or while incapacitated."
