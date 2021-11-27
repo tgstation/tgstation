@@ -305,7 +305,7 @@
 /obj/item/circuit_component/camera/input_received(datum/port/input/port)
 	var/atom/target = picture_target.value
 	if(!target)
-		var/turf/our_turf = get_turf(camera)
+		var/turf/our_turf = get_location()
 		target = locate(our_turf.x + picture_coord_x.value, our_turf.y + picture_coord_y.value, our_turf.z)
 		if(!target)
 			return
