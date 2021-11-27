@@ -62,22 +62,19 @@
 	name = "chemist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem"
-	allowed +=
-		/obj/item/storage/bag/chemistry
+	allowed +=	/obj/item/storage/bag/chemistry
 
 /obj/item/clothing/suit/toggle/labcoat/virologist
 	name = "virologist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir"
-	allowed +=
-		/obj/item/storage/bag/bio
+	allowed +=	/obj/item/storage/bag/bio
 
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_sci"
-	allowed +=
-		/obj/item/storage/bag/bio
+	allowed +=	/obj/item/storage/bag/bio
 
 /obj/item/clothing/suit/toggle/labcoat/roboticist
 	name = "roboticist labcoat"

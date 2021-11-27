@@ -216,8 +216,7 @@
 	desc = "A lab-grade winter coat made with acid resistant polymers. For the enterprising chemist who was exiled to a frozen wasteland on the go."
 	icon_state = "coatchemistry"
 	inhand_icon_state = "coatchemistry"
-	allowed +=
-		/obj/item/storage/bag/chemistry
+	allowed +=	/obj/item/storage/bag/chemistry
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
@@ -230,8 +229,7 @@
 	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = "coatviro"
-	allowed +=
-		/obj/item/storage/bag/bio
+	allowed +=	/obj/item/storage/bag/bio
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
 
 /obj/item/clothing/head/hooded/winterhood/medical/viro
