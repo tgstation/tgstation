@@ -61,18 +61,17 @@
 	ai = newAI
 	balloon_alert(newAI, "transferred to a suit")
 	for(var/datum/action/action as anything in actions)
-		action.Share(newAI)
+		action.Grant(newAI)
 
-#define CARDINAL_DELAY 2
-#define DIAGONAL_DELAY 3
+#define MOVE_DELAY 2
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
 #define CELL_PER_STEP 25
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer && (HAS_TRAIT(wearer, TRAIT_RESTRAINED))))
+	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
 		return FALSE
-	var/timemodifier = ((direction in GLOB.cardinals) ? CARDINAL_DELAY : DIAGONAL_DELAY) * wearer ? WEARER_DELAY : LONE_DELAY
+	var/timemodifier = MOVE_DELAY * (ISDIAGONALDIR(direction) ? SQRT_2 : 1) * (wearer ? WEARER_DELAY : LONE_DELAY)
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	cell.charge = max(0, cell.charge - CELL_PER_STEP)
@@ -83,8 +82,7 @@
 	var/atom/movable/mover = wearer || src
 	return step(mover, direction)
 
-#undef CARDINAL_DELAY
-#undef DIAGONAL_DELAY
+#undef MOVE_DELAY
 #undef WEARER_DELAY
 #undef LONE_DELAY
 #undef CELL_PER_STEP

@@ -35,6 +35,7 @@
 	if(!IsAvailable())
 		return FALSE
 	mod.choose_deploy(usr)
+	return TRUE
 
 /datum/action/item_action/mod/activate
 	name = "Activate MODsuit"
@@ -45,6 +46,7 @@
 	if(!IsAvailable())
 		return FALSE
 	mod.toggle_activate(usr)
+	return TRUE
 
 /datum/action/item_action/mod/module
 	name = "Toggle Module"
@@ -55,6 +57,7 @@
 	if(!IsAvailable())
 		return FALSE
 	mod.quick_module(usr)
+	return TRUE
 
 /datum/action/item_action/mod/panel
 	name = "MODsuit Panel"
@@ -65,3 +68,4 @@
 	if(!IsAvailable())
 		return FALSE
 	mod.ui_interact(usr)
+	return TRUE
