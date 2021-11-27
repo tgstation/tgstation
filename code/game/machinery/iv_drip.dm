@@ -127,12 +127,10 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
-		var/selected_limb = BODY_ZONE_CHEST
-		if((/obj/item/bodypart/l_arm && /obj/item/bodypart/r_arm) in attached.bodyparts)
-			selected_limb = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-		var/obj/item/bodypart/pierced_limb = attached.get_bodypart(selected_limb)
-		attached.apply_damage(3, BRUTE, selected_limb)
-		pierced_limb.force_wound_upwards(/datum/wound/pierce/moderate)
+		var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
+		var/obj/item/bodypart/chosen_limb = attached.get_bodypart(arm_zones[1]) || attached.get_bodypart(arm_zones[2]) || attached.get_bodypart(BODY_ZONE_CHEST)
+		chosen_limb.receive_damage(3)
+		chosen_limb.force_wound_upwards(/datum/wound/pierce/moderate)
 		detach_iv()
 		return PROCESS_KILL
 
