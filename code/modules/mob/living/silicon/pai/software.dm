@@ -35,9 +35,8 @@
 /mob/living/silicon/pai/ui_static_data(mob/user)
 	var/list/data = list()
 	var/mob/living/silicon/pai/pai = user
+	data["available"] = available_software
 	data["records"] = list()
-	data["software"] = list()
-	data["software"]["available"] = available_software
 	if("medical records" in pai.software)
 		data["records"]["medical"] = GLOB.data_core.get_general_records()
 	if("security records" in pai.software)
@@ -51,19 +50,17 @@
 	data["door_jack"] = hacking_cable || null
 	data["emagged"] = emagged
 	data["image"] = card.emotion_icon
+	data["installed"] = software
 	data["languages"] = languages_granted
 	data["master"] = list()
 	data["pda"] = list()
 	data["ram"] = ram
-	data["software"] = list()
 	if(aiPDA)
 		data["pda"]["power"] = !aiPDA.toff
 		data["pda"]["silent"] = aiPDA.silent
 	if(master)
 		data["master"]["name"] = master
 		data["master"]["dna"] = master_dna
-	if(length(software))
-		data["software"]["installed"] = software
 	return data
 
 // Actions received from TGUI

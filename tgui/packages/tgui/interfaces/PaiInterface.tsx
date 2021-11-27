@@ -15,16 +15,22 @@ import {
 import { Window } from '../layouts';
 
 type PaiInterfaceData = {
+  available: Available;
   directives: string;
   door_jack?: string;
   emagged: number;
   image: string;
+  installed: string[];
   languages: number;
   master: Master;
   pda: PDA;
   ram: number;
   records: Records;
-  software: Softwares;
+};
+
+type Available = {
+  name: string;
+  value: string | number;
 };
 
 type Master = {
@@ -40,16 +46,6 @@ type PDA = {
 type Records = {
   medical?: CrewRecord[];
   security?: CrewRecord[];
-};
-
-type Softwares = {
-  available: Available;
-  installed: string[];
-};
-
-type Available = {
-  name: string;
-  value: string | number;
 };
 
 type CrewRecord = {
@@ -125,7 +121,7 @@ export const PaiInterface = (props, context) => {
   };
 
   return (
-    <Window title="PAI Software Interface v2.4" width={380} height={480}>
+    <Window title="pAI Software Interface v2.4" width={380} height={480}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -338,7 +334,7 @@ const InstalledDisplay = (_, context) => {
 /** Iterates over installed software to render buttons. */
 const InstalledSoftware = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
-  const { installed } = data.software;
+  const { installed } = data;
   const { onInstallClick } = props;
 
   return (
@@ -593,7 +589,7 @@ const AvailableMemory = (_, context) => {
  */
 const AvailableSoftware = (_, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
-  const { available } = data.software;
+  const { available } = data;
   const convertedList: Available[] = Object.entries(available).map((key) => {
     return { name: key[0], value: key[1] };
   });
@@ -612,7 +608,7 @@ const AvailableSoftware = (_, context) => {
 const AvailableRow = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { ram } = data;
-  const { installed } = data.software;
+  const { installed } = data;
   const { software } = props;
   const purchased = installed.includes(software.name);
 

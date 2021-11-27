@@ -79,13 +79,13 @@ SUBSYSTEM_DEF(pai)
 
 /datum/controller/subsystem/pai/proc/submit_alert()
 	if(ghost_spam)
-		to_chat(usr, span_warning("You sent an alert to PAI cards too recently."))
+		to_chat(usr, span_warning("You sent an alert to pAI cards too recently."))
 		return FALSE
 	ghost_spam = TRUE
 	for(var/obj/item/paicard/paicard in pai_card_list)
 		if(!paicard.pai)
 			paicard.alertUpdate()
-	to_chat(usr, span_notice("Your PAI candidacy has been submitted!"))
+	to_chat(usr, span_notice("Your pAI candidacy has been submitted!"))
 	addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	return TRUE
 
