@@ -53,7 +53,6 @@
 		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
 		return
 
-	var/nulls_found = 0
 	var/index = 0
 	var/list/dat = list("<center><B>Tag Menu</B></center><hr>")
 
@@ -64,8 +63,9 @@
 			var/specific_info = ""
 
 			if(isnull(iter_datum))
-				specific_info = "(Null reference)"
-				nulls_found++
+				dat += "\t[index]: Null reference - Check runtime logs!"
+				stack_trace("Null datum found in tagged datum menu! User: [usr]")
+				continue
 			else if(ismob(iter_datum))
 				specific_info = "[ADMIN_PP(iter_datum)] [ADMIN_FLW(iter_datum)] [ADMIN_VV(iter_datum)]"
 			else if(ismovable(iter_datum))
