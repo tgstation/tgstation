@@ -218,10 +218,9 @@
 	inhand_icon_state = "coatchemistry"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 
-/obj/item/clothing/suit/toggle/labcoat/chemistry/Initialize(mapload)
+/obj/item/clothing/suit/hooded/wintercoat/medical/chemistry/Initialize(mapload)
 	. = ..()
-	allowed +=	/obj/item/storage/bag/chemistry
-
+	allowed += /obj/item/storage/bag/chemistry
 
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 	desc = "A white winter coat hood."
@@ -235,10 +234,9 @@
 	inhand_icon_state = "coatviro"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
 
-/obj/item/clothing/suit/toggle/labcoat/viro/Initialize(mapload)
+/obj/item/clothing/suit/hooded/wintercoat/medical/viro/Initialize(mapload)
 	. = ..()
-	allowed +=	/obj/item/storage/bag/bio
-
+	allowed += /obj/item/storage/bag/bio
 
 /obj/item/clothing/head/hooded/winterhood/medical/viro
 	desc = "A white winter coat hood with green markings."
