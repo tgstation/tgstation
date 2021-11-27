@@ -1506,6 +1506,11 @@
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
+"ajT" = (
+/obj/structure/lattice/catwalk,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/tram/left)
 "ajU" = (
 /obj/structure/railing/corner,
 /turf/open/floor/glass,
@@ -8658,10 +8663,10 @@
 /area/maintenance/starboard/central)
 "brB" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "brE" = (
@@ -18133,6 +18138,21 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
+"eWc" = (
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/floor/iron,
+/area/maintenance/tram/left)
 "eWe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19061,9 +19081,9 @@
 /turf/open/floor/iron/dark,
 /area/medical/medbay/central)
 "foC" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "foH" = (
@@ -26136,8 +26156,8 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "hUL" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "hVc" = (
@@ -27183,10 +27203,10 @@
 /area/medical/medbay/central)
 "ioC" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "ioD" = (
@@ -27303,10 +27323,10 @@
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "iqO" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /mob/living/basic/cockroach,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "iqY" = (
@@ -28082,6 +28102,7 @@
 "iDv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/maintenance/port/central)
@@ -35090,12 +35111,12 @@
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "ljP" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "ljS" = (
@@ -37426,10 +37447,10 @@
 /turf/open/floor/iron,
 /area/security/prison/mess)
 "mig" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "mii" = (
@@ -38450,7 +38471,7 @@
 /area/security/courtroom)
 "mCD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "mCL" = (
@@ -39674,9 +39695,9 @@
 /turf/open/floor/iron/white,
 /area/science/cytology)
 "naZ" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "nbk" = (
@@ -40608,6 +40629,15 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/service/kitchen)
+"nxw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/structure/lattice/catwalk,
+/obj/machinery/door/poddoor/shutters{
+	id = "trammaintdock"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/central)
 "nxE" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -48753,8 +48783,8 @@
 /turf/open/floor/iron/smooth,
 /area/maintenance/central)
 "qyP" = (
+/obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
 /area/maintenance/tram/mid)
 "qyV" = (
@@ -59806,6 +59836,11 @@
 	spawn_random_offset = 1;
 	spawn_scatter_radius = 4
 	},
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/lattice/catwalk,
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "uEo" = (
@@ -90233,8 +90268,8 @@ tpS
 tpS
 tpS
 iDv
-hsL
-ljS
+nxw
+eWc
 ioC
 mCD
 uEh
@@ -91261,13 +91296,13 @@ tpS
 tpS
 tpS
 iDv
-hsL
-ljS
-mCD
-mCD
-mCD
-mCD
-mCD
+nxw
+eWc
+ajT
+ajT
+ajT
+ajT
+ajT
 rUb
 fDW
 nia
@@ -92289,8 +92324,8 @@ tpS
 tpS
 tpS
 iDv
-hsL
-ljS
+nxw
+eWc
 brB
 mCD
 mCD
