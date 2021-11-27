@@ -757,6 +757,15 @@
 		/obj/item/reagent_containers/glass/beaker = 2,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/limbgrower/fullupgrade
+	name = "Limb Grower (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/limbgrower
+	req_components = list(
+		/obj/item/stock_parts/manipulator/femto  = 1,
+		/obj/item/reagent_containers/glass/beaker/bluespace = 2,
+		/obj/item/stack/sheet/glass = 1)
+
 /obj/item/circuitboard/machine/protolathe/department/medical
 	name = "Departmental Protolathe (Machine Board) - Medical"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL

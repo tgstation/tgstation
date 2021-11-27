@@ -75,9 +75,9 @@ GLOBAL_VAR(station_nuke_source)
 	switch(off_station)
 		if(0)
 			if(get_antag_minds(/datum/antagonist/nukeop).len && syndies_escaped())
-				return CINEMATIC_ANNIHILATION
-			else
 				return CINEMATIC_NUKE_WIN
+			else
+				return CINEMATIC_ANNIHILATION
 		if(1)
 			return CINEMATIC_NUKE_MISS
 		if(2)
@@ -424,6 +424,9 @@ GLOBAL_VAR(station_nuke_source)
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
+
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
+
 		countdown.start()
 		set_security_level("delta")
 	else
@@ -435,6 +438,9 @@ GLOBAL_VAR(station_nuke_source)
 			S.switch_mode_to(initial(S.mode))
 			S.alert = FALSE
 		countdown.stop()
+
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
+
 	update_appearance()
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
