@@ -61,6 +61,11 @@
 	cell = /obj/item/stock_parts/cell/crystal_cell/wizard
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/energy_shield/wizard)
 
+/obj/item/mod/control/pre_equipped/prototype
+	theme = /datum/mod_theme/prototype
+	cell = /obj/item/stock_parts/cell/high/plus
+	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/rad_protection, /obj/item/mod/module/flashlight, /obj/item/mod/module/tether)
+
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug
 	cell = /obj/item/stock_parts/cell/bluespace

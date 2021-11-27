@@ -160,6 +160,7 @@
 		"mod_organ_thrower",
 		"mod_pathfinder",
 		"mod_dna_lock",
+		"mod_plasma",
 	)
 
 /datum/techweb_node/mech_tools

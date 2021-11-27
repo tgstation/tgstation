@@ -1527,3 +1527,15 @@
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+
+/obj/item/mod/module/anti_magic
+	name = "MOD magic nullifier module"
+	desc = "A module protecting the wearer of a MODsuit from magic."
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/anti_magic)
+
+/obj/item/mod/module/anti_magic/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
+
+/obj/item/mod/module/anti_magic/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)

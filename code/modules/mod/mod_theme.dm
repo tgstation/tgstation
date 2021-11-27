@@ -428,6 +428,7 @@
 	complexity_max = 10
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	inbuilt_modules = list(/obj/item/mod/module/anti_magic)
 	clothing_flags = list(
 		"magic" = list(
 			HELMET_FLAGS = list(
@@ -435,6 +436,42 @@
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
 				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+		),
+	)
+
+/datum/mod_theme/prototype
+	name = "prototype"
+	desc = "Prototype MODsuit powered by locomotives. While it is comfortable and has a big capacity, it remains very bulky and power-inefficient."
+	default_skin = "prototype"
+	skins = list("prototype")
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
+	resistance_flags = FIRE_PROOF
+	cell_drain = DEFAULT_CELL_DRAIN * 2
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
+	slowdown_inactive = 2.5
+	slowdown_active = 2
+	clothing_flags = list(
+		"prototype" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 			),
 			CHESTPLATE_FLAGS = list(

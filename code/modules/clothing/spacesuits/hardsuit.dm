@@ -37,37 +37,6 @@
 	. = ..()
 	return INITIALIZE_HINT_QDEL
 
-	//Wizard hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/wizard
-	name = "gem-encrusted hardsuit helmet"
-	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
-	icon_state = "hardsuit0-wiz"
-	inhand_icon_state = "wiz_helm"
-	hardsuit_type = "wiz"
-	resistance_flags = FIRE_PROOF | ACID_PROOF //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
-	heat_protection = HEAD //Uncomment to enable firesuit protection
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/space/hardsuit/wizard
-	name = "gem-encrusted hardsuit"
-	desc = "A bizarre gem-encrusted suit that radiates magical energies."
-	icon_state = "hardsuit-wiz"
-	inhand_icon_state = "wiz_hardsuit"
-	w_class = WEIGHT_CLASS_NORMAL
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
-	allowed = list(/obj/item/teleportation_scroll, /obj/item/tank/internals)
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS //Uncomment to enable firesuit protection
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
-	cell = /obj/item/stock_parts/cell/hyper
-	slowdown = 0 //you're spending 2 wizard points on this thing, the least it could do is not make you a sitting duck
-
-/obj/item/clothing/suit/space/hardsuit/wizard/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
-
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
 	name = "security hardsuit helmet"
@@ -177,61 +146,6 @@
 		return TRUE
 	else
 		return FALSE
-
-	//Old Prototype
-/obj/item/clothing/head/helmet/space/hardsuit/ancient
-	name = "prototype RIG hardsuit helmet"
-	desc = "Early prototype RIG hardsuit helmet, designed to quickly shift over a user's head. Design constraints of the helmet mean it has no inbuilt cameras, thus it restricts the users visability."
-	icon_state = "hardsuit0-ancient"
-	inhand_icon_state = "anc_helm"
-	armor = list(MELEE = 30, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75)
-	hardsuit_type = "ancient"
-	resistance_flags = FIRE_PROOF
-
-/obj/item/clothing/suit/space/hardsuit/ancient
-	name = "prototype RIG hardsuit"
-	desc = "Prototype powered RIG hardsuit. Provides excellent protection from the elements of space while being comfortable to move around in, thanks to the powered locomotives. Remains very bulky however."
-	icon_state = "hardsuit-ancient"
-	inhand_icon_state = "anc_hardsuit"
-	armor = list(MELEE = 30, BULLET = 5, LASER = 5, ENERGY = 15, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75)
-	slowdown = 3
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
-	resistance_flags = FIRE_PROOF
-	var/footstep = 1
-	var/mob/listeningTo
-
-/obj/item/clothing/suit/space/hardsuit/ancient/proc/on_mob_move()
-	SIGNAL_HANDLER
-	var/mob/living/carbon/human/H = loc
-	if(!istype(H) || H.wear_suit != src)
-		return
-	if(footstep > 1)
-		playsound(src, 'sound/effects/servostep.ogg', 100, TRUE)
-		footstep = 0
-	else
-		footstep++
-
-/obj/item/clothing/suit/space/hardsuit/ancient/equipped(mob/user, slot)
-	. = ..()
-	if(slot != ITEM_SLOT_OCLOTHING)
-		if(listeningTo)
-			UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		return
-	if(listeningTo == user)
-		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
-	listeningTo = user
-
-/obj/item/clothing/suit/space/hardsuit/ancient/dropped()
-	. = ..()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-
-/obj/item/clothing/suit/space/hardsuit/ancient/Destroy()
-	listeningTo = null
-	return ..()
 
 	//Deathsquad
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad

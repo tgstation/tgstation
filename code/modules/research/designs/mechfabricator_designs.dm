@@ -1249,3 +1249,8 @@
 	name = "MOD Module: Circuit Adapter"
 	id = "mod_circuit"
 	build_path = /obj/item/mod/module/circuit
+
+/datum/design/module/mod_plasma_stabilizer
+	name = "MOD Module: Plasma Stabilizer"
+	id = "mod_plasma"
+	build_path = /obj/item/mod/module/plasma_stabilizer

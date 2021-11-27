@@ -35,6 +35,7 @@
 			break
 
 /obj/item/mod/control/proc/deploy(mob/user, part)
+	. = FALSE
 	var/obj/item/piece = part
 	if(piece == gauntlets && wearer.gloves)
 		gauntlets.overslot = wearer.gloves
@@ -43,6 +44,7 @@
 		boots.overslot = wearer.shoes
 		wearer.transferItemToLoc(boots.overslot, boots, TRUE)
 	if(wearer.equip_to_slot_if_possible(piece,piece.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+		. = TRUE
 		ADD_TRAIT(piece, TRAIT_NODROP, MOD_TRAIT)
 		if(!user)
 			return
@@ -185,7 +187,12 @@
 	wearer.update_inv_back()
 
 /obj/item/mod/control/proc/quick_activation() //quick activation, for stuff like outfits with the suit on
+	var/seal = TRUE
 	for(var/obj/item/part in mod_parts)
-		deploy(null, part)
+		if(!deploy(null, part))
+			seal = FALSE
+	if(!seal)
+		return
+	for(var/obj/item/part in mod_parts)
 		seal_part(part, TRUE)
 	finish_activation(TRUE)
