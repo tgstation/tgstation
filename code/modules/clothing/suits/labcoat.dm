@@ -85,7 +85,7 @@
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_sci"
 
-	/obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
+/obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/storage/bag/bio,
