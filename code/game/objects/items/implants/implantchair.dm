@@ -11,15 +11,15 @@
 
 	var/ready_implants = 5
 	var/max_implants = 5
-	var/injection_cooldown = 600
-	var/replenish_cooldown = 6000
+	var/injection_cooldown = 60 SECONDS
+	var/replenish_cooldown = 600 SECONDS
 	var/implant_type = /obj/item/implant/mindshield
 	var/auto_inject = FALSE
 	var/auto_replenish = TRUE
 	var/special = FALSE
 	var/special_name = "special function"
 	var/message_cooldown
-	var/breakout_time = 600
+	var/breakout_time = 60 SECONDS
 
 /obj/machinery/implantchair/Initialize(mapload)
 	. = ..()
@@ -140,7 +140,7 @@
 
 /obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
-		message_cooldown = world.time + 50
+		message_cooldown = world.time + 5 SECONDS
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 
@@ -167,7 +167,7 @@
 	special = TRUE
 	special_name = "Purge genome"
 	injection_cooldown = 0
-	replenish_cooldown = 300
+	replenish_cooldown = 30 SECONDS
 
 /obj/machinery/implantchair/genepurge/implant_action(mob/living/carbon/human/human_target, mob/user)
 	if(!istype(human_target))
@@ -182,7 +182,7 @@
 	name = "Neural Imprinter"
 	desc = "Used to <s>indoctrinate</s> rehabilitate hardened recidivists."
 	special_name = "Imprint"
-	injection_cooldown = 3000
+	injection_cooldown = 300 SECONDS
 	auto_inject = FALSE
 	auto_replenish = FALSE
 	special = TRUE
