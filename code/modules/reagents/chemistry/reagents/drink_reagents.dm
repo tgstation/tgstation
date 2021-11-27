@@ -1043,3 +1043,12 @@
 		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/coffee/engine_slag
+	name = "Engine Slag"
+	description = "Engine slag is a popular coffee drink aboard the Mothic Fleet, the result of massively overloading the coffee with grounds and overreducing it on the stove. It puts hair on your chest, quite possibly literally."
+	color = "#090605"
+	taste_description = "extreme bitterness"
+	glass_icon_state = "glass_brown"
+	glass_name = "glass of engine slag"
+	glass_desc = "Coffee so thick you can chew it- literally."

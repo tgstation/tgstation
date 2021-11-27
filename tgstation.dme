@@ -1397,6 +1397,7 @@
 #include "code\game\objects\items\food\meat.dm"
 #include "code\game\objects\items\food\mexican.dm"
 #include "code\game\objects\items\food\misc.dm"
+#include "code\game\objects\items\food\moth.dm"
 #include "code\game\objects\items\food\pastries.dm"
 #include "code\game\objects\items\food\pie.dm"
 #include "code\game\objects\items\food\pizza.dm"
