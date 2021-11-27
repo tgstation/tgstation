@@ -24,6 +24,8 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
+		/obj/item/storage/bag/books,
+		/obj/item/storage/bag/tray,
 	)
 
 /obj/item/clothing/head/hooded/winterhood
@@ -215,7 +217,13 @@
 	desc = "A lab-grade winter coat made with acid resistant polymers. For the enterprising chemist who was exiled to a frozen wasteland on the go."
 	icon_state = "coatchemistry"
 	inhand_icon_state = "coatchemistry"
+allowed += list(
+/obj/item/storage/bag/chemistry,
+
+	)
+
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/chemistry
+
 
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 	desc = "A white winter coat hood."
@@ -227,7 +235,14 @@
 	desc = "A white winter coat with green markings. Warm, but wont fight off the common cold or any other disease. Might make people stand far away from you in the hallway. The zipper tab looks like an oversized bacteriophage."
 	icon_state = "coatviro"
 	inhand_icon_state = "coatviro"
+allowed += list(
+/obj/item/storage/bag/bio,
+
+	)
+
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
+
+
 
 /obj/item/clothing/head/hooded/winterhood/medical/viro
 	desc = "A white winter coat hood with green markings."
@@ -262,6 +277,8 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/pill_bottle,
+		/obj/item/storage/bag/bio,
+
 	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
@@ -327,6 +344,7 @@
 		/obj/item/construction/rcd,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
+		/obj/item/storage/bag/construction,
 	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
@@ -416,6 +434,7 @@
 		/obj/item/resonator,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/storage/bag/ore,
 	)
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
