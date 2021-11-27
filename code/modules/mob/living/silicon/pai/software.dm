@@ -64,7 +64,7 @@
 	return data
 
 // Actions received from TGUI
-/mob/living/silicon/pai/ui_act(action, params)
+/mob/living/silicon/pai/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -166,6 +166,8 @@
 			aicamera.paiprint(usr)
 		if("radio")
 			radio.attack_self(src)
+		if("refresh")
+			ui.send_full_update()
 		if("remote_signaler")
 			signaler.ui_interact(src)
 		if("security_hud")

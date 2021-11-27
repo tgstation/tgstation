@@ -1,18 +1,10 @@
-import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  NoticeBox,
-  Section,
-  Stack,
-  Tooltip,
-} from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 type PaiCardData = {
   candidates: Candidate[];
-  pai: Pai[] | null;
+  pai: Pai;
 };
 
 type Candidate = {
@@ -44,9 +36,11 @@ export const PaiCard = (props, context) => {
   );
 };
 
+/** Gives a list of candidates as cards */
 const PaiDownload = (props, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { candidates = [] } = data;
+
   return (
     <Section
       buttons={
@@ -63,7 +57,7 @@ const PaiDownload = (props, context) => {
       {!candidates.length ? (
         <NoticeBox>None found!</NoticeBox>
       ) : (
-        <Stack>
+        <Stack fill vertical>
           {candidates.map((candidate) => {
             return (
               <Stack.Item key={candidate}>
@@ -77,10 +71,18 @@ const PaiDownload = (props, context) => {
   );
 };
 
+/** Candidate card: Individual. Since this info is refreshing,
+ * had to make the comments and descriptions a separate tab.
+ * In longer entries, it is much more readable.
+ */
 const CandidateDisplay = (props, context) => {
-  const { act } = useBackend<PaiCardData>(context);
+  const [tab, setTab] = useLocalState(context, 'tab', 'description');
   const { candidate } = props;
-  const { comments, description, key, name } = candidate;
+  const { comments, description, name } = candidate;
+  const onTabClickHandler = (tab: string) => {
+    setTab(tab);
+  };
+
   return (
     <Box
       style={{
@@ -91,32 +93,124 @@ const CandidateDisplay = (props, context) => {
       }}>
       <Section
         buttons={
-          <Button
-            icon="download"
-            onClick={() => act('download', { key })}
-            tooltip="Accepts this pAI candidate.">
-            Download
-          </Button>
+          <CandidateTabs
+            candidate={candidate}
+            onTabClick={onTabClickHandler}
+            tab={tab}
+          />
         }
+        fill
+        height={15}
         scrollable
-        title={name}>
-        <LabeledList>
-          <Tooltip content="If entered, describes the playstyle of the pAI.">
-            <LabeledList.Item label="Description">
-              {description}
-            </LabeledList.Item>
-          </Tooltip>
-          <Tooltip content="Out of character comments.">
-            <LabeledList.Item label="Comments">{comments}</LabeledList.Item>
-          </Tooltip>
-        </LabeledList>
+        title="Candidate">
+        <Box color="green" fontSize="16px">
+          Name: {name || 'Randomized Name'}
+        </Box>
+        {tab === 'description' ? description : comments}
       </Section>
     </Box>
   );
 };
 
+/** Tabs for the candidate */
+const CandidateTabs = (props, context) => {
+  const { act } = useBackend<PaiCardData>(context);
+  const { candidate, onTabClick, tab } = props;
+  const { key } = candidate;
+
+  return (
+    <Stack>
+      <Stack.Item>
+        <Tabs>
+          <Tabs.Tab
+            onClick={() => {
+              onTabClick('description');
+            }}
+            selected={tab === 'description'}>
+            Description
+          </Tabs.Tab>
+          <Tabs.Tab
+            onClick={() => {
+              onTabClick('comments');
+            }}
+            selected={tab === 'comments'}>
+            OOC
+          </Tabs.Tab>
+        </Tabs>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="download"
+          onClick={() => act('download', { key })}
+          tooltip="Accepts this pAI candidate.">
+          Download
+        </Button>
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+/** Once a pAI has been loaded, you can alter its settings here */
 const PaiOptions = (props, context) => {
   const { act, data } = useBackend<PaiCardData>(context);
   const { pai } = data;
-  return 'Hello';
+  const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;
+
+  return (
+    <Section fill scrollable title={name}>
+      <LabeledList>
+        <LabeledList.Item label="Master">
+          {master || (
+            <Button icon="dna" onClick={() => act('set_dna')}>
+              Imprint
+            </Button>
+          )}
+        </LabeledList.Item>
+        {master && <LabeledList.Item label="DNA">{dna}</LabeledList.Item>}
+        <LabeledList.Item label="Laws">{laws}</LabeledList.Item>
+        <LabeledList.Item label="Holoform">
+          <Button
+            icon={can_holo ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_holo')}
+            selected={can_holo}>
+            Toggle
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Transmit">
+          <Button
+            icon={transmit ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_radio', { option: 'transmit' })}
+            selected={transmit}>
+            Toggle
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Receive">
+          <Button
+            icon={receive ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_radio', { option: 'receive' })}
+            selected={receive}>
+            Toggle
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Troubleshoot">
+          <Button icon="comment" onClick={() => act('fix_speech')}>
+            Fix Speech
+          </Button>
+          <Button icon="edit" onClick={() => act('set_laws')}>
+            Set Laws
+          </Button>
+        </LabeledList.Item>
+        {!!emagged && (
+          <Button color="bad" icon="bug">
+            Malicious Software Detected
+          </Button>
+        )}
+        <LabeledList.Item label="Personality">
+          <Button icon="trash" onClick={() => act('wipe_pai')}>
+            Erase
+          </Button>
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
 };

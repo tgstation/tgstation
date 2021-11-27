@@ -49,6 +49,7 @@ export const PaiSubmit = (props, context) => {
   );
 };
 
+/** Displays basic info about playing pAI */
 const DetailsDisplay = () => {
   return (
     <Section fill scrollable title="Details">
@@ -62,6 +63,7 @@ const DetailsDisplay = () => {
   );
 };
 
+/** Input boxes for submission details */
 const InputDisplay = (props) => {
   const { input, onChangeHandler } = props;
   const { comments, description, name } = input;
@@ -110,6 +112,7 @@ const InputDisplay = (props) => {
   );
 };
 
+/** Gives the user a submit button */
 const SubmitDisplay = (props, context) => {
   const { act } = useBackend<CandidateData>(context);
   const { input } = props;
@@ -119,8 +122,7 @@ const SubmitDisplay = (props, context) => {
         onClick={() =>
           act('submit', {
             candidate: input,
-          })
-        }>
+          })}>
         SUBMIT
       </Button>
     </Section>

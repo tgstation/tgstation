@@ -92,15 +92,12 @@
 	if(loc != usr)
 		return FALSE
 	switch(action)
-		if("request")
-			if(!pai)
-				SSpai.findPAI(src, usr)
 		if("download")
 			var/datum/pai_candidate/candidate
 			for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
 				if(params["key"] == checked_candidate.key)
 					candidate = checked_candidate
-			var/obj/item/paicard/card = locate(src) in SSpai.pai_card_list
+			var/obj/item/paicard/card = src
 			if(card.pai)
 				return
 			if(istype(card, /obj/item/paicard) && istype(candidate, /datum/pai_candidate))
@@ -115,6 +112,13 @@
 				pai.key = candidate.key
 				card.setPersonality(pai)
 				SSpai.candidates -= candidate
+		if("fix_speech")
+			pai.stuttering = 0
+			pai.slurring = 0
+			pai.derpspeech = 0
+		if("request")
+			if(!pai)
+				SSpai.findPAI(src, usr)
 		if("set_dna")
 			if(pai.master_dna)
 				return
@@ -126,19 +130,19 @@
 				pai.master_dna = master.dna.unique_enzymes
 				to_chat(pai, span_notice("You have been bound to a new master."))
 				pai.emittersemicd = FALSE
-		if("wipe_pai")
-			var/confirm = tgui_alert(usr, "Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No"))
-			if(confirm == "Yes")
-				if(pai)
-					to_chat(pai, span_warning("You feel yourself slipping away from reality."))
-					to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
-					to_chat(pai, span_userdanger("Your mental faculties leave you."))
-					to_chat(pai, span_rose("oblivion... "))
-					qdel(pai)
-		if("fix_speech")
-			pai.stuttering = 0
-			pai.slurring = 0
-			pai.derpspeech = 0
+		if("set_laws")
+			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
+			if(newlaws && pai)
+				pai.add_supplied_law(0,newlaws)
+		if("toggle_holo")
+			if(pai.canholo)
+				to_chat(pai, span_warning("Your owner has disabled your holomatrix projectors!"))
+				pai.canholo = FALSE
+				to_chat(usr, span_notice("You disable your pAI's holomatrix!"))
+			else
+				to_chat(pai, span_notice("Your owner has enabled your holomatrix projectors!"))
+				pai.canholo = TRUE
+				to_chat(usr, span_notice("You enable your pAI's holomatrix!"))
 		if("toggle_radio")
 			var/transmitting = params["option"] == "transmit" //it can't be both so if we know it's not transmitting it must be receiving.
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
@@ -148,21 +152,17 @@
 				pai.can_receive = !pai.can_receive
 			pai.radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
 			transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
-			to_chat(usr,span_warning("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-			to_chat(pai,span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-		if("set_laws")
-			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
-			if(newlaws && pai)
-				pai.add_supplied_law(0,newlaws)
-		if("toggle_holo")
-			if(pai.canholo)
-				to_chat(pai, span_userdanger("Your owner has disabled your holomatrix projectors!"))
-				pai.canholo = FALSE
-				to_chat(usr, span_warning("You disable your pAI's holomatrix!"))
-			else
-				to_chat(pai, span_boldnotice("Your owner has enabled your holomatrix projectors!"))
-				pai.canholo = TRUE
-				to_chat(usr, span_notice("You enable your pAI's holomatrix!"))
+			to_chat(usr, span_notice("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+			to_chat(pai, span_notice("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+		if("wipe_pai")
+			var/confirm = tgui_alert(usr, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No"))
+			if(confirm == "Yes")
+				if(pai)
+					to_chat(pai, span_warning("You feel yourself slipping away from reality."))
+					to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
+					to_chat(pai, span_userdanger("Your mental faculties leave you."))
+					to_chat(pai, span_rose("oblivion... "))
+					qdel(pai)
 	return
 
 // WIRE_SIGNAL = 1

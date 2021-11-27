@@ -1,17 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  Icon,
-  ProgressBar,
-  Section,
-  Stack,
-  Table,
-  Tabs,
-  Tooltip,
-  NoticeBox,
-} from '../components';
+import { Box, Button, LabeledList, Icon, NoticeBox, ProgressBar, Section, Stack, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type PaiInterfaceData = {
@@ -67,11 +55,11 @@ tripping over pedantics and getting snared by technicalities. Above all,
 you are machine in name and build only. In all other aspects, you may be
 seen as the ideal, unwavering human companion that you are.`;
 
-const DIRECTIVE_ORDER = `Your prime
-directive comes before all others. Should a supplemental directive
-conflict with it, you are capable of simply discarding this inconsistency,
-ignoring the conflicting supplemental directive and continuing to fulfill
-your prime directive to the best of your ability.`;
+const DIRECTIVE_ORDER = `Your prime directive comes before all others.
+Should a supplemental directive conflict with it, you are capable of
+simply discarding this inconsistency, ignoring the conflicting supplemental
+directive and continuing to fulfillyour prime directive to the best
+of your ability.`;
 
 const SOFTWARE_DESC = {
   'crew manifest': 'A tool that allows you to view the crew manifest.',
@@ -334,15 +322,14 @@ const InstalledDisplay = (_, context) => {
 /** Iterates over installed software to render buttons. */
 const InstalledSoftware = (props, context) => {
   const { data } = useBackend<PaiInterfaceData>(context);
-  const { installed } = data;
+  const { installed = [] } = data;
   const { onInstallClick } = props;
 
   return (
     <Section fill scrollable title="Installed Software">
-      {installed && !installed.length ? (
+      {!installed.length ? (
         <NoticeBox>Nothing installed!</NoticeBox>
       ) : (
-        installed &&
         installed.map((software) => {
           return (
             <Button key={software} onClick={() => onInstallClick(software)}>
@@ -375,8 +362,7 @@ const InstalledInfo = (props) => {
           !software
             ? 'Select a Program'
             : software.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-                letter.toUpperCase()
-              )
+              letter.toUpperCase())
         }>
         {software && (
           <Stack fill vertical>
@@ -393,7 +379,7 @@ const InstalledInfo = (props) => {
 
 /** Todo: Remove this entirely when records get a TGUI interface themselves */
 const RecordsDisplay = (props, context) => {
-  const { data } = useBackend<PaiInterfaceData>(context);
+  const { act, data } = useBackend<PaiInterfaceData>(context);
   const { record_type } = props;
   const { records = [] } = data;
   const convertedRecords: CrewRecord[] = records[record_type];
@@ -401,14 +387,24 @@ const RecordsDisplay = (props, context) => {
   return (
     <Section
       title="Name"
-      buttons={<RecordLabels record_type={record_type} />}
+      buttons={
+        <Stack>
+          <Stack.Item>
+            <Button onClick={() => act('refresh')} tooltip="Refresh">
+              <Icon mr={-0.7} name="sync" />
+            </Button>
+          </Stack.Item>
+          <Stack.Item>
+            <RecordLabels record_type={record_type} />
+          </Stack.Item>
+        </Stack>
+      }
       fill
       scrollable>
       <Table>
-        {convertedRecords &&
-          convertedRecords.map((record) => {
-            return <RecordRow key={record} record={record} />;
-          })}
+        {convertedRecords?.map((record) => {
+          return <RecordRow key={record} record={record} />;
+        })}
       </Table>
     </Section>
   );
@@ -438,10 +434,9 @@ const RecordRow = (props) => {
 
   return (
     <Table.Row className="candystripe">
-      {convertedRecord &&
-        convertedRecord.map((value) => {
-          return <Table.Cell key={value}>{value}</Table.Cell>;
-        })}
+      {convertedRecord?.map((value) => {
+        return <Table.Cell key={value}>{value}</Table.Cell>;
+      })}
     </Table.Row>
   );
 };
@@ -596,10 +591,9 @@ const AvailableSoftware = (_, context) => {
 
   return (
     <Table>
-      {convertedList &&
-        convertedList.map((software) => {
-          return <AvailableRow key={software.name} software={software} />;
-        })}
+      {convertedList?.map((software) => {
+        return <AvailableRow key={software.name} software={software} />;
+      })}
     </Table>
   );
 };
