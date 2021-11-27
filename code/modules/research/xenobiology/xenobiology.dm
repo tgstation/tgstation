@@ -751,45 +751,53 @@
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/living/user, proximity)
+/obj/item/slimepotion/transference/afterattack(mob/living/switchy_mob, mob/living/user, proximity)
 	if(!proximity)
 		return
-	if(prompted || !ismob(M))
+	if(prompted || !ismob(switchy_mob))
 		return
-	if(!isanimal(M) || M.ckey) //much like sentience, these will not work on something that is already player controlled
-		to_chat(user, span_warning("[M] already has a higher consciousness!"))
+	if(!(isanimal(switchy_mob) || isbasicmob(switchy_mob))|| switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
+		to_chat(user, span_warning("[switchy_mob] already has a higher consciousness!"))
 		return ..()
-	if(M.stat)
-		to_chat(user, span_warning("[M] is dead!"))
+	if(switchy_mob.stat)
+		to_chat(user, span_warning("[switchy_mob] is dead!"))
 		return ..()
-	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != animal_type)
-		to_chat(user, span_warning("You cannot transfer your consciousness to [SM].") )
-		return ..()
-	var/jb = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
-	if(QDELETED(src) || QDELETED(M) || QDELETED(user))
+	if(isanimal(switchy_mob))
+		var/mob/living/simple_animal/switchy_animal= switchy_mob
+		if(switchy_animal.sentience_type != animal_type)
+			to_chat(user, span_warning("You cannot transfer your consciousness to [switchy_animal].") )
+			return ..()
+	else	//ugly code duplication, but necccesary as sentience_type is implemented twice.
+		var/mob/living/basic/basic_mob = switchy_mob
+		if(basic_mob.sentience_type != animal_type)
+			to_chat(user, span_warning("You cannot transfer your consciousness to [basic_mob].") )
+			return ..()
+
+	var/job_banned = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
+	if(QDELETED(src) || QDELETED(switchy_mob) || QDELETED(user))
 		return
 
-	if(jb)
+	if(job_banned)
 		to_chat(user, span_warning("Your mind goes blank as you attempt to use the potion."))
 		return
 
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,list("Yes","No"))=="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No"))=="No")
 		prompted = 0
 		return
 
-	to_chat(user, span_notice("You drink the potion then place your hands on [SM]..."))
+	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
-
-	user.mind.transfer_to(SM)
-	SM.faction = user.faction.Copy()
-	SM.sentience_act() //Same deal here as with sentience
+	user.mind.transfer_to(switchy_mob)
+	switchy_mob.faction = user.faction.Copy()
 	user.death()
-	to_chat(SM, span_notice("In a quick flash, you feel your consciousness flow into [SM]!"))
-	to_chat(SM, span_warning("You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
-	SM.name = "[user.real_name]"
+	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
+	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
+	switchy_mob.name = "[user.real_name]"
 	qdel(src)
+	if(isanimal(switchy_mob))
+		var/mob/living/simple_animal/switchy_animal= switchy_mob
+		switchy_animal.sentience_act()
 
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"
