@@ -11133,7 +11133,7 @@
 "crT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
-/area/cargo/miningdock)
+/area/commons/storage/primary)
 "csa" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/clothing/mask/breath,
@@ -11667,18 +11667,13 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "cEk" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 10
-	},
-/obj/effect/turf_decal/trimline/brown/corner{
-	dir = 4
-	},
-/obj/machinery/camera/motion{
-	c_tag = "Cargo - Ore Silo";
+/obj/machinery/camera{
+	c_tag = "Cargo - Mining South-East";
 	dir = 10;
 	network = list("ss13","cargo")
 	},
-/turf/open/floor/iron,
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/plating,
 /area/cargo/miningdock)
 "cEp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15879,7 +15874,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/circuit,
-/area/hallway/primary/central)
+/area/ai_monitored/command/nuke_storage)
 "eed" = (
 /mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/iron,
@@ -38289,7 +38284,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "muJ" = (
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
 	dir = 1
 	},
