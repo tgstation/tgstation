@@ -2060,11 +2060,6 @@
 			return
 		return remove_tagged_datum(datum_to_remove)
 
-	else if(href_list["clear_nulls"])
-		if(!check_rights(R_ADMIN))
-			return
-		return clear_nulled_tags()
-
 	else if(href_list["show_tags"])
 		if(!check_rights(R_ADMIN))
 			return
