@@ -67,7 +67,7 @@
 			. = TRUE
 		if("changeRate")
 			var/target_rate = params["rate"]
-			if(text2num(target) != null)
+			if(text2num(target_rate) != null)
 				target_rate = text2num(target_rate)
 				transfer_rate = clamp(target_rate, MIN_TRANSFER_RATE, MAX_TRANSFER_RATE)
 				. = TRUE
