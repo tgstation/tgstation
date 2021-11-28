@@ -54,6 +54,24 @@
 	data["injectOnly"] = inject_only ? 1 : 0
 	data["containerName"] = use_internal_storage ? "internal reagent storage" : reagent_container.name
 
+/obj/machinery/iv_drip/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("changeMode")
+			toggle_mode()
+			. = TRUE
+		if("eject")
+			eject_beaker()
+			. = TRUE
+		if("changeRate")
+			var/target_rate = params["rate"]
+			if(text2num(target) != null)
+				target_rate = text2num(target_rate)
+				transfer_rate = clamp(target_rate, MIN_TRANSFER_RATE, MAX_TRANSFER_RATE)
+				. = TRUE
+
 /obj/machinery/iv_drip/update_icon_state()
 	if(attached)
 		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
