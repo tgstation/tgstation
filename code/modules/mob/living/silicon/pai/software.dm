@@ -185,25 +185,25 @@
 				languages_granted = TRUE
 	return
 
-/mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
-	if(!istype(M))
+/mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/master, mob/living/silicon/pai/pai)
+	if(!istype(master))
 		return
-	to_chat(P, span_notice("Requesting a DNA sample."))
-	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
-	if(answer == "Yes")
-		M.visible_message(span_notice("[M] presses [M.p_their()] thumb against [P]."),\
-						span_notice("You press your thumb against [P]."),\
-						span_notice("[P] makes a sharp clicking sound as it extracts DNA material from [M]."))
-		if(!M.has_dna())
-			to_chat(P, "<b>No DNA detected.</b>")
+	to_chat(pai, span_notice("Requesting a DNA sample."))
+	var/confirm = tgui_alert(master, "[pai] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No"))
+	if(confirm == "Yes")
+		master.visible_message(span_notice("[master] presses [master.p_their()] thumb against [pai]."),\
+						span_notice("You press your thumb against [pai]."),\
+						span_notice("[pai] makes a sharp clicking sound as it extracts DNA material from [master]."))
+		if(!master.has_dna())
+			to_chat(pai, "<b>No DNA detected.</b>")
 			return
-		to_chat(P, "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
-		if(M.dna.unique_enzymes == P.master_dna)
-			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
+		to_chat(pai, "<font color = red><h3>[master]'s UE string : [master.dna.unique_enzymes]</h3></font>")
+		if(master.dna.unique_enzymes == pai.master_dna)
+			to_chat(pai, "<b>DNA is a match to stored Master DNA.</b>")
 		else
-			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
+			to_chat(pai, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, span_warning("[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly."))
+		to_chat(pai, span_warning("[master] does not seem like [master.p_theyre()] going to provide a DNA sample willingly."))
 
 // Host Scan supporting proc
 /mob/living/silicon/pai/proc/hostscan()
@@ -221,23 +221,22 @@
 	hacking_cable = new
 	var/transfered_to_mob
 	if(isliving(card.loc))
-		var/mob/living/L = card.loc
-		if(L.put_in_hands(hacking_cable))
+		var/mob/living/hacker = card.loc
+		if(hacker.put_in_hands(hacking_cable))
 			transfered_to_mob = TRUE
-			L.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
+			hacker.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
 		if(!transfered_to_mob)
 			hacking_cable.forceMove(drop_location())
 			hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
-	var/mob/living/silicon/pai/pai = usr
-	var/turf/T = get_turf(src)
+	var/turf/turf = get_turf(src)
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-	to_chat(pai, span_boldnotice("You begin overriding the airlock security protocols."))
+	to_chat(usr, span_boldnotice("You begin overriding the airlock security protocols."))
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
-		if(T.loc)
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [T.loc].</b></font>")
+		if(turf.loc)
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [turf.loc].</b></font>")
 		else
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress. Unable to pinpoint location.</b></font>")
 	hacking = TRUE
