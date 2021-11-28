@@ -1,3 +1,5 @@
+#define NUMBER_OF_PREGENERATED_ORANGES_EARS 2500
+
 // macros meant specifically to add/remove movables from the hearing_contents and client_contents lists of
 // /datum/spatial_grid_cell, when empty they become references to a single list in SSspatial_grid and when filled they become their own list
 // this is to save memory without making them lazylists as that slows down iteration through them
@@ -97,6 +99,11 @@ SUBSYSTEM_DEF(spatial_grid)
 	///empty spatial grid cell content lists are just a reference to this instead of a standalone list to save memory without needed to check if its null when iterating
 	var/list/dummy_list = list()
 
+	///list of all of /mob/oranges_ear instances we have pregenerated for view() iteration speedup
+	var/list/mob/oranges_ear/pregenerated_oranges_ears = list()
+	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
+	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
+
 /datum/controller/subsystem/spatial_grid/Initialize(start_timeofday)
 	. = ..()
 
@@ -107,7 +114,7 @@ SUBSYSTEM_DEF(spatial_grid)
 		propogate_spatial_grid_to_new_z(null, z_level)
 		CHECK_TICK_HIGH_PRIORITY
 
-	//for anything waiting to be let in
+	//go through the pre init queue for anything waiting to be let in the grid
 	for(var/channel_type in waiting_to_add_by_type)
 		for(var/atom/movable/movable as anything in waiting_to_add_by_type[channel_type])
 			var/turf/movable_turf = get_turf(movable)
@@ -117,9 +124,12 @@ SUBSYSTEM_DEF(spatial_grid)
 			UnregisterSignal(movable, COMSIG_PARENT_PREQDELETED)
 			waiting_to_add_by_type[channel_type] -= movable
 
+	pregenerate_more_oranges_ears(NUMBER_OF_PREGENERATED_ORANGES_EARS)
+
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/propogate_spatial_grid_to_new_z)
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, .proc/after_world_bounds_expanded)
 
+///add a movable to the pre init queue for whichever type is specified so that when the subsystem initializes they get added to the grid
 /datum/controller/subsystem/spatial_grid/proc/enter_pre_init_queue(atom/movable/waiting_movable, type)
 	RegisterSignal(waiting_movable, COMSIG_PARENT_PREQDELETED, .proc/queued_item_deleted, override = TRUE)
 	//override because something can enter the queue for two different types but that is done through unrelated procs that shouldnt know about eachother
@@ -163,6 +173,26 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
 
+///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears
+///i really fucking hope this never gets called after init :clueless:
+/datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
+	for(var/new_ear in 1 to number_to_generate)
+		pregenerated_oranges_ears += new/mob/oranges_ear(null)
+
+	number_of_oranges_ears = length(pregenerated_oranges_ears)
+
+/datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
+	if(length(atoms_that_need_ears) > number_of_oranges_ears)
+		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
+		pregenerate_more_oranges_ears(length(atoms_that_need_ears) - number_of_oranges_ears)//im still gonna DO IT but ill complain about it
+
+	. = list()
+
+	for(var/current_ear_index in 1 to length(atoms_that_need_ears))
+		var/mob/oranges_ear/current_ear = pregenerated_oranges_ears[current_ear_index]
+		if(current_ear.assign(atoms_that_need_ears[current_ear_index]))
+			. += current_ear //for tracking
+
 ///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed
 /datum/controller/subsystem/spatial_grid/proc/after_world_bounds_expanded(datum/controller/subsystem/processing/dcs/fucking_dcs, has_expanded_world_maxx, has_expanded_world_maxy)
 	SIGNAL_HANDLER
@@ -195,17 +225,19 @@ SUBSYSTEM_DEF(spatial_grid)
 				old_cell_that_needs_updating.cell_x = grid_cell_for_expanded_x_axis
 				old_cell_that_needs_updating.cell_y = cell_row_for_expanded_y_axis
 
-
+//the left or bottom side index of a box composed of spatial grid cells with the given actual center x or y coordinate
 #define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) / SPATIAL_GRID_CELLSIZE), 1)
+//the right or upper side index of a box composed of spatial grid cells with the given center x or y coordinate.
+//outputted value cant exceed the number of cells on that axis
 #define BOUNDING_BOX_MAX(center_coord, axis_size) min(ROUND_UP((center_coord + range) / SPATIAL_GRID_CELLSIZE), axis_size)
 
 /**
  * https://en.wikipedia.org/wiki/Range_searching#Orthogonal_range_searching
  *
  * searches through the grid cells intersecting a rectangular search space (with sides of length 2 * range) then returns all contents of type inside them.
- * much faster than iterating through view() to find all of what you want for things that arent that common.
+ * much faster than iterating through view() to find all of what you want.
  *
- * this does NOT return things only in range distance from center! the search space is a square not a circle, if you want only thing in a certain distance
+ * this does NOT return things only in range distance from center! the search space is a square not a circle, if you want only things in a certain distance
  * then you need to filter that yourself
  *
  * * center - the atom that is the center of the searched circle
@@ -386,11 +418,12 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/cell_coords = "the following cells contain [src]: "
 	for(var/datum/spatial_grid_cell/cell as anything in containing_cells)
-		cell_coords += "([cell.cell_x], [cell.cell_y]), "
+		cell_coords += "([cell.cell_x], [cell.cell_y], [cell.cell_z]), "
 
 	message_admins(cell_coords)
-	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y])")
+	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y], [real_cell.cell_z]). but is contained at the cells at [cell_coords]")
 
+///debug proc for finding how full the cells of src's z level are
 /atom/proc/find_grid_statistics_for_z_level(insert_clients = 100)
 	var/raw_clients = 0
 	var/raw_hearables = 0
