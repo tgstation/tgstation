@@ -240,7 +240,7 @@
 
 /mob/orange_ear/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
-	return
+	return INITIALIZE_HINT_NORMAL
 
 /**
  * assigns this ear to the turf at get_turf(assigned_atom) and adds it to this ears references list then moves to the turf.
