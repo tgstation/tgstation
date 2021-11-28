@@ -3273,7 +3273,7 @@
 /obj/structure/table/wood,
 /obj/machinery/door/firedoor,
 /obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 4
+	pixel_y = 6
 	},
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
@@ -7138,6 +7138,7 @@
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "bBi" = (
@@ -14112,6 +14113,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured,
 /area/security/checkpoint/customs)
 "coN" = (
@@ -15916,6 +15920,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "cDu" = (
@@ -30179,6 +30184,11 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/checker,
 /area/service/theater)
+"dWP" = (
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "dWR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -32877,6 +32887,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
+/obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "eqe" = (
@@ -38561,7 +38572,6 @@
 /turf/open/floor/plating,
 /area/service/abandoned_gambling_den)
 "fXn" = (
-/obj/machinery/light/directional/north,
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
@@ -43828,6 +43838,7 @@
 	c_tag = "Arrivals - Port Entrance";
 	name = "arrivals camera"
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "hpE" = (
@@ -48713,6 +48724,12 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "iCE" = (
@@ -58083,6 +58100,12 @@
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
 	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "lir" = (
@@ -58957,6 +58980,9 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "lrU" = (
@@ -60214,6 +60240,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "lIh" = (
@@ -60449,6 +60476,10 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
@@ -62477,6 +62508,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "mkx" = (
@@ -63928,6 +63960,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/security/checkpoint)
@@ -73467,6 +73502,9 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "pcj" = (
@@ -74921,6 +74959,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "pAG" = (
@@ -76381,7 +76420,6 @@
 /area/service/kitchen/coldroom)
 "pSS" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/wood,
 /area/service/electronic_marketing_den)
 "pSV" = (
@@ -77563,7 +77601,6 @@
 /area/service/library)
 "qkY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Atmospherics - HFR Main Room";
 	name = "atmospherics camera"
@@ -79042,7 +79079,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "qHt" = (
-/obj/machinery/light/directional/south,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos/upper)
 "qHy" = (
@@ -80504,7 +80541,6 @@
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "rcz" = (
-/obj/machinery/light/directional/east,
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -80829,6 +80865,10 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/assistant,
+/obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "rik" = (
@@ -83343,6 +83383,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/box/corners,
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "rSw" = (
@@ -86532,6 +86575,7 @@
 	},
 /obj/machinery/newscaster/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/security/checkpoint)
 "sKk" = (
@@ -89087,7 +89131,6 @@
 /area/service/kitchen)
 "tuy" = (
 /obj/structure/closet/radiation,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -90185,6 +90228,9 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "tKi" = (
@@ -91006,6 +91052,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"tWO" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/engineering/atmos/upper)
 "tWP" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/plasma,
@@ -92612,7 +92664,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "urq" = (
 /obj/machinery/door/airlock{
@@ -93969,13 +94021,6 @@
 /obj/machinery/electrolyzer,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/west,
-/turf/open/floor/iron,
-/area/engineering/atmos/upper)
-"uIL" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "uIM" = (
@@ -96957,6 +97002,7 @@
 	dir = 9;
 	name = "arrivals camera"
 	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/entry)
 "vxk" = (
@@ -96968,15 +97014,6 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/storage)
-"vxn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/engineering/atmos/upper)
 "vxq" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lamp,
@@ -101562,7 +101599,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "wMb" = (
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -104502,11 +104538,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/transit_tube)
-"xDQ" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/engineering/atmos/upper)
 "xDZ" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/stripes/line,
@@ -104934,6 +104965,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/bluespace_vendor/directional/east,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "xKc" = (
@@ -132334,7 +132366,7 @@ nkW
 xNR
 twf
 gqZ
-uIL
+kHb
 wLZ
 rAZ
 fsH
@@ -132344,7 +132376,7 @@ awb
 wCO
 guF
 xNR
-vxn
+nOb
 yct
 dyb
 kPa
@@ -132589,7 +132621,7 @@ uJi
 lXH
 oaO
 nkW
-xDQ
+twf
 iqZ
 vSW
 wLZ
@@ -133103,7 +133135,7 @@ oaO
 bkf
 uJi
 iID
-xDQ
+twf
 iqZ
 kHb
 wLZ
@@ -133632,7 +133664,7 @@ awb
 uhv
 uIG
 suL
-suL
+dWP
 awb
 ipq
 dNG
@@ -134145,7 +134177,7 @@ kQK
 awb
 dYN
 rcz
-xbc
+tWO
 xbc
 iqM
 iZY
