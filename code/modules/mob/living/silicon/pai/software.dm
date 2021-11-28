@@ -122,6 +122,7 @@
 			if(params["jack"]  == "cable")
 				extendcable()
 		if("encryption_keys")
+			to_chat(src, span_notice("You have [!encryptmod ? "enabled" : "disabled"] encrypted radio frequencies."))
 			encryptmod = !encryptmod
 			radio.subspace_transmission = !radio.subspace_transmission
 		if("host_scan")
