@@ -1325,6 +1325,5 @@
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
 	our_splatter.add_blood_DNA(return_blood_DNA())
 	our_splatter.blood_source = src
-	playsound(src, pick('sound/effects/wounds/splatter.ogg'), 40, TRUE, -1)
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.GoTo(targ, splatter_strength)

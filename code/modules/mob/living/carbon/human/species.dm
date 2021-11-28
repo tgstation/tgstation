@@ -1346,11 +1346,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
 
+		var/attack_direction = get_dir(user, target)
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block)
+			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
@@ -1441,7 +1442,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	H.send_item_attack_message(I, user, hit_area, affecting)
 
+
 	var/attack_direction = get_dir(user, H)
+	testing("spec_attacked_by attack_direction: [attack_direction]")
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H, wound_bonus = Iwound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
 
 	if(!I.force)
@@ -1530,7 +1533,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
 			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage_amount)
@@ -1538,7 +1541,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.damageoverlaytemp = 20
 			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
 			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage_amount)

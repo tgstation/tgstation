@@ -69,6 +69,9 @@
 	icon_state = "gibbl1"
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
+/obj/effect/decal/cleanable/blood/splatter/over_wall
+	layer = BULLET_HOLE_LAYER
+
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
@@ -320,7 +323,7 @@
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/T, var/range)
 	for(var/i in 1 to range)
 		step_towards(src,T)
-		sleep(1) //formerly 2?
+		sleep(2) //formerly 2?
 		prev_loc = loc
 		for(var/atom/iter_atom in get_turf(src))
 			if(amount <= 0)
@@ -352,7 +355,7 @@
 	if(isturf(prev_loc))
 		loc = bumped_atom
 		skip = TRUE
-		var/obj/effect/decal/cleanable/blood/splatter/B = new(prev_loc)
+		var/obj/effect/decal/cleanable/blood/splatter/over_wall/B = new(prev_loc)
 		//Adjust pixel offset to make splatters appear on the wall
 		if(istype(B))
 			B.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
@@ -363,5 +366,6 @@
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
 	if(isturf(loc) && !skip)
+		playsound(src, pick('sound/effects/wounds/splatter.ogg'), 40, TRUE, -1)
 		loc.add_mob_blood(blood_source)
 	return ..()
