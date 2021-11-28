@@ -254,33 +254,9 @@
 	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
 	return FALSE
 
-/mob/oranges_ear/doMove(atom/destination)
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
-	return FALSE
-
 /mob/oranges_ear/abstract_move(atom/destination)
 	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
-	return FALSE
-
-/mob/oranges_ear/Move()
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
-	return FALSE
-
-/mob/oranges_ear/doMove(atom/destination)
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
-	return FALSE
-
-/mob/oranges_ear/Moved(atom/OldLoc, Dir)
-	SHOULD_CALL_PARENT(FALSE)
-	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
-	return FALSE
-
-/mob/oranges_ear/Bump()
-	SHOULD_CALL_PARENT(FALSE)
 	return FALSE
 
 /mob/oranges_ear/Bump()
