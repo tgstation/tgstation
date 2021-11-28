@@ -607,6 +607,8 @@
 	var/ooze_nutrition_cost = 40
 	///How many projectiles we will shoot per volley
 	var/shots = 5
+	///our mouseover target
+	var/datum/weakref/mouse_target
 
 /obj/effect/proc_holder/moonshine_volley/Initialize(mapload, mob/living/new_owner)
 	. = ..()
@@ -614,6 +616,7 @@
 		return
 	var/datum/action/cooldown/our_action = action
 	our_action.cooldown_time = cooldown
+	RegisterSignal(new_owner, COMSIG_MOB_CLIENT_LOGIN, .proc/hook_up_aiming)
 
 /obj/effect/proc_holder/moonshine_volley/Click(location, control, params)
 	. = ..()
@@ -654,8 +657,11 @@
 			return
 		else
 			ooze_owner.adjust_ooze_nutrition(-ooze_nutrition_cost)
+
+	mouse_target = WEAKREF(target)
+
 	for(var/iteration in 0 to shots)
-		addtimer(CALLBACK(src, .proc/liquor_shot), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(src, .proc/liquor_shot), 0.3 SECONDS * iteration)
 	remove_ranged_ability()
 
 	var/datum/action/cooldown/our_action = action
@@ -665,17 +671,24 @@
 
 /obj/effect/proc_holder/moonshine_volley/proc/liquor_shot()
 	var/mob/living/mob_owner = owner.resolve()
-	var/squirt_angle
+	var/target = mouse_target.resolve()
 
 	if(!mob_owner)
 		return
-
-	if(!mob_owner.client)
-		squirt_angle = rand(0, 359)
-	else
-		squirt_angle = mouse_angle_from_client(mob_owner.client)
+	if(!target)
+		return
 
 	var/obj/projectile/boozy/moonshine_shot = new(mob_owner.loc)
-	moonshine_shot.firer = mob_owner
-	moonshine_shot.fire(squirt_angle)
+	moonshine_shot.preparePixelProjectile(target, mob_owner)
+	moonshine_shot.fired_from = mob_owner
+	moonshine_shot.fire()
 	playsound(src, 'sound/misc/soggy.ogg', 30, TRUE)
+
+/obj/effect/proc_holder/moonshine_volley/proc/hook_up_aiming(datum/source, client/aiming_client)
+	SIGNAL_HANDLER
+	RegisterSignal(aiming_client, COMSIG_CLIENT_MOUSEENTERED, .proc/update_aim)
+
+/obj/effect/proc_holder/moonshine_volley/proc/update_aim(datum/source, target_object)
+	SIGNAL_HANDLER
+	if(isatom(target_object))
+		mouse_target = WEAKREF(target_object)

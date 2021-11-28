@@ -115,3 +115,7 @@
 		middragtime = 0
 		middragatom = null
 	..()
+
+/client/MouseEntered(object, location, control, params)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEENTERED, object, location, control, params)
