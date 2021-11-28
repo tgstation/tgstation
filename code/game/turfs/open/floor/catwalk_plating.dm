@@ -18,18 +18,18 @@
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	var/covered = TRUE
-	var/above_state = "maint_above"	//Icon-state for the overlay
+	var/catwalk_type = "maint"
 
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
-	var/mutable_appearance/plating_underlay = mutable_appearance(icon, "maint_below", TURF_LAYER)
+	var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[catwalk_type]_below", TURF_LAYER)
 	underlays += plating_underlay
 	update_icon(UPDATE_OVERLAYS)
 
 /turf/open/floor/catwalk_floor/update_overlays()
 	layer = covered ? CATWALK_LAYER : TURF_LAYER
 	plane = covered ? GAME_PLANE : FLOOR_PLANE
-	icon_state = covered ? "maint_above" : "maint_below"
+	icon_state = covered ? "[catwalk_type]_above" : "[catwalk_type]_below"
 	. = ..()
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
@@ -48,34 +48,40 @@
 		return FALSE
 	. = ..()
 
-
 //Reskins! More fitting with most of our tiles, and appear as a radial on the base type
 /turf/open/floor/catwalk_floor/iron
 	name = "iron plated catwalk floor"
 	icon_state = "iron_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron
+	catwalk_type = "iron"
+
 
 /turf/open/floor/catwalk_floor/iron_white
 	name = "white plated catwalk floor"
 	icon_state = "whiteiron_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron_white
+	catwalk_type = "whiteiron"
 
 /turf/open/floor/catwalk_floor/iron_dark
 	name = "dark plated catwalk floor"
 	icon_state = "darkiron_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron_dark
+	catwalk_type = "darkiron"
 
 /turf/open/floor/catwalk_floor/flat_white
 	name = "white large plated catwalk floor"
 	icon_state = "flatwhite_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/flat_white
+	catwalk_type = "flatwhite"
 
 /turf/open/floor/catwalk_floor/titanium
 	name = "titanium plated catwalk floor"
 	icon_state = "titanium_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/titanium
+	catwalk_type = "titanium"
 
 /turf/open/floor/catwalk_floor/iron_smooth //the original green type
 	name = "smooth plated catwalk floor"
 	icon_state = "smoothiron_above"
 	floor_tile = /obj/item/stack/tile/catwalk_tile/iron_smooth
+	catwalk_type = "smoothiron"
