@@ -189,13 +189,21 @@
 	if(pai && !pai.holoform)
 		pai.emp_act(severity)
 
+/**
+ * Gathers a list of candidates to display in the download candidate
+ * window. If the candidate isn't marked ready, ie they have not
+ * pressed submit, they will be skipped over.
+ *
+ * @return - An array of candidate objects.
+ */
 /obj/item/paicard/proc/pool_candidates()
-	/// List of pAI candidates
+	/// Array of pAI candidates
 	var/list/candidates = list()
 	if(length(SSpai.candidates))
 		for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
 			if(!checked_candidate.ready)
 				continue
+			/// The object containing the candidate data.
 			var/list/candidate = list()
 			candidate["comments"] = checked_candidate.comments
 			candidate["description"] = checked_candidate.description
