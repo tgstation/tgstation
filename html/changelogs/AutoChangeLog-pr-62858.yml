@@ -1,4 +1,0 @@
-author: "alexkar598"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the bitfield_to_field() proc not working"

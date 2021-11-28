@@ -1,5 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - expansion: "Tramstation's Security has been transformed to accommodate a genpop prisoners of all kinds to mingle together."
-  - rscadd: "Genpop removes the usual isolated timed cells and adds the ability to assign timers to prisoner IDs for holding them in a general prison area."
