@@ -296,3 +296,72 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return TRUE
 	return FALSE
+
+/obj/effect/decal/cleanable/blood/hitsplatter
+	name = "blood splatter"
+	pass_flags = PASSTABLE | PASSGRILLE
+	icon_state = "hitsplatter1"
+	random_icon_states = list("hitsplatter1", "hitsplatter2", "hitsplatter3")
+	/// The turf we just came from, so we can back up when we hit a wall
+	var/turf/prev_loc
+	/// Who's the blood donor, so to speak?
+	var/mob/living/blood_source
+	/// Skip making the final blood splatter when we're done, like if we're not in a turf
+	var/skip = FALSE
+	/// How many tiles/items/people we can paint red
+	var/amount = 3
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Initialize(amount)
+	. = ..()
+	prev_loc = loc //Just so we are sure prev_loc exists
+	if(amount)
+		src.amount = amount
+
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/T, var/range)
+	for(var/i in 1 to range)
+		step_towards(src,T)
+		sleep(1) //formerly 2?
+		prev_loc = loc
+		for(var/atom/iter_atom in get_turf(src))
+			if(amount <= 0)
+				break
+
+			if(isitem(iter_atom))
+				var/obj/item/I = iter_atom
+				I.add_mob_blood(blood_source)
+				amount--
+			else if(ishuman(iter_atom))
+				var/mob/living/carbon/human/splashed_human = iter_atom
+				if(splashed_human.wear_suit)
+					splashed_human.wear_suit.add_mob_blood(blood_source)
+					splashed_human.update_inv_wear_suit()    //updates mob overlays to show the new blood (no refresh)
+				if(splashed_human.w_uniform)
+					splashed_human.w_uniform.add_mob_blood(blood_source)
+					splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
+				amount--
+		if(amount <= 0) // we used all the puff so we delete it.
+			qdel(src)
+			return
+	qdel(src)
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Bump(atom/bumped_atom)
+	if(!iswallturf(bumped_atom))
+		qdel(src)
+		return
+
+	if(isturf(prev_loc))
+		loc = bumped_atom
+		skip = TRUE
+		var/obj/effect/decal/cleanable/blood/splatter/B = new(prev_loc)
+		//Adjust pixel offset to make splatters appear on the wall
+		if(istype(B))
+			B.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
+			B.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
+	else //This will only happen if prev_loc is not even a turf, which is highly unlikely.
+		loc = bumped_atom //Either way we got this.
+		qdel(src)
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
+	if(isturf(loc) && !skip)
+		loc.add_mob_blood(blood_source)
+	return ..()
