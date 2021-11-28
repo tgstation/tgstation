@@ -24,46 +24,56 @@
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
-
-	var/ram = 100 // Used as currency to purchase different abilities
+	/// Used as currency to purchase different abilities
+	var/ram = 100
+	/// Installed software on the pAI
 	var/list/software = list()
-	var/userDNA // The DNA string of our assigned user
-	var/obj/item/paicard/card // The card we inhabit
-	var/hacking = FALSE //Are we hacking a door?
-
-	var/emagged = FALSE // Changes display on true
+	/// current user's DNA
+	var/userDNA
+	/// The card we inhabit
+	var/obj/item/paicard/card
+	/// Are we hacking a door?
+	var/hacking = FALSE
+	/// Changes the display to syndi if true
+	var/emagged = FALSE
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
-
-	var/obj/item/pai_cable/hacking_cable // The cable we produce when hacking a door
-
-	var/master // Name of the one who commands us
-	var/master_dna // DNA string for owner verification
+	/// The cable we produce when hacking a door
+	var/obj/item/pai_cable/hacking_cable
+	/// Name of the one who commands us
+	var/master
+	/// DNA string for owner verification
+	var/master_dna
 
 // Various software-specific vars
 
-	var/temp // General error reporting text contained here will typically be shown once and cleared
-	var/screen // Which screen our main window displays
-	var/subscreen // Which specific function of the main screen is being displayed
-
-	var/secHUD = FALSE // Toggles whether the Security HUD is active or not
-	var/medHUD = FALSE // Toggles whether the Medical  HUD is active or not
-
-	var/languages_granted = FALSE // Toggles whether universal translator has been activated. Cannot be reversed
-
-	var/obj/machinery/door/hackdoor // The airlock being hacked
-	var/hackprogress = 0 // Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	/// Toggles whether the Security HUD is active or not
+	var/secHUD = FALSE
+	/// Toggles whether the Medical  HUD is active or not
+	var/medHUD = FALSE
+	/// Toggles whether universal translator has been activated. Cannot be reversed
+	var/languages_granted = FALSE
+	/// The airlock being hacked
+	var/obj/machinery/door/hackdoor
+	/// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/hackprogress = 0
 
 	// Software
-	var/obj/item/analyzer/atmos_analyzer // Atmospheric analyzer
-	var/obj/item/assembly/signaler/internal/signaler // AI's signaler
+	/// Atmospheric analyzer
+	var/obj/item/analyzer/atmos_analyzer
+	/// AI's signaler
+	var/obj/item/assembly/signaler/internal/signaler
+	/// Synthesizer
 	var/obj/item/instrument/piano_synth/internal_instrument
-	var/obj/machinery/newscaster //pAI Newscaster
-	var/obj/item/healthanalyzer/hostscan //pAI healthanalyzer
-	var/obj/item/gps/pai/internal_gps = null // Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
+	/// pAI Newscaster
+	var/obj/machinery/newscaster
+	/// pAI healthanalyzer
+	var/obj/item/healthanalyzer/hostscan
+	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
+	var/obj/item/gps/pai/internal_gps = null
 
 	var/encryptmod = FALSE
 	var/holoform = FALSE

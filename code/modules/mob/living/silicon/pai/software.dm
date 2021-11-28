@@ -205,7 +205,12 @@
 	else
 		to_chat(pai, span_warning("[master] does not seem like [master.p_theyre()] going to provide a DNA sample willingly."))
 
-// Host Scan supporting proc
+/**
+ * Host scan supporting proc
+ *
+ * Allows the pAI to scan its host's health vitals
+ * An integrated health analyzer.
+ */
 /mob/living/silicon/pai/proc/hostscan()
 	var/mob/living/silicon/pai/pAI = usr
 	var/mob/living/carbon/holder = get(pAI.card.loc, /mob/living/carbon)
@@ -215,7 +220,13 @@
 		to_chat(usr, span_warning("You are not being carried by anyone!"))
 		return FALSE
 
-// Extend cable supporting proc
+/**
+ * Extend cable supporting proc
+ *
+ * When doorjack is installed, allows the pAI to drop
+ * a cable which is placed either on the floor or in
+ * someone's hands based (on distance).
+ */
 /mob/living/silicon/pai/proc/extendcable()
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
@@ -229,7 +240,13 @@
 			hacking_cable.forceMove(drop_location())
 			hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
-// Door Jack - supporting proc
+/**
+ * Door jacking supporting proc
+ *
+ * This begins the hacking process on a door.
+ * Mostly, this gives UI feedback, while the "hack"
+ * is handled inside pai.dm itself.
+ */
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/turf = get_turf(src)
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)

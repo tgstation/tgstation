@@ -88,28 +88,27 @@
 	. = ..()
 	if(.)
 		return FALSE
-	if(!usr || usr.stat)
-		return FALSE
-	if(loc != usr)
-		return FALSE
 	switch(action)
 		if("download")
+			/// The individual candidate to download
 			var/datum/pai_candidate/candidate
 			for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
 				if(params["key"] == checked_candidate.key)
 					candidate = checked_candidate
-			var/obj/item/paicard/card = src
-			if(card.pai)
-				return
-			if(istype(card, /obj/item/paicard) && istype(candidate, /datum/pai_candidate))
-				if(SSpai.check_ready(candidate) != candidate)
-					return FALSE
-				var/mob/living/silicon/pai/pai = new(card)
-				pai.name = candidate.name || pick(GLOB.ninja_names)
-				pai.real_name = pai.name
-				pai.key = candidate.key
-				card.setPersonality(pai)
-				SSpai.candidates -= candidate
+					break
+			if(isnull(candidate))
+				return FALSE
+			if(src.pai)
+				return FALSE
+			if(SSpai.check_ready(candidate) != candidate)
+				return FALSE
+			/// The newly downloaded pAI personality
+			var/mob/living/silicon/pai/pai = new(src)
+			pai.name = candidate.name || pick(GLOB.ninja_names)
+			pai.real_name = pai.name
+			pai.key = candidate.key
+			src.setPersonality(pai)
+			SSpai.candidates -= candidate
 		if("fix_speech")
 			pai.stuttering = 0
 			pai.slurring = 0
@@ -191,6 +190,7 @@
 		pai.emp_act(severity)
 
 /obj/item/paicard/proc/pool_candidates()
+	/// List of pAI candidates
 	var/list/candidates = list()
 	if(length(SSpai.candidates))
 		for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
