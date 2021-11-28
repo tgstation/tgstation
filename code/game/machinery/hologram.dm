@@ -1,8 +1,7 @@
-#define CAN_HEAR_AI_MASTERS (1<<0)
+#define CAN_HEAR_MASTERS (1<<0)
 #define CAN_HEAR_ACTIVE_HOLOCALLS (1<<1)
 #define CAN_HEAR_RECORD_MODE (1<<2)
-#define CAN_HEAR_OUTGOING_CALL (1<<3)
-#define CAN_HEAR_ALL_FLAGS (CAN_HEAR_AI_MASTERS|CAN_HEAR_ACTIVE_HOLOCALLS|CAN_HEAR_RECORD_MODE|CAN_HEAR_OUTGOING_CALL)
+#define CAN_HEAR_ALL_FLAGS (CAN_HEAR_MASTERS|CAN_HEAR_ACTIVE_HOLOCALLS|CAN_HEAR_RECORD_MODE)
 
 /* Holograms!
  * Contains:
@@ -368,6 +367,51 @@ Possible to do for anyone motivated enough:
 				outgoing_call.Disconnect(src)
 				return TRUE
 
+//setters
+/**
+ * setter for can_hear_flags. handles adding or removing the given flag on can_hear_flags and then adding hearing sensitivity or removing it depending on the final state
+ * this is necessary because holopads are a significant fraction of the hearable atoms on station which increases the cost of procs that iterate through hearables
+ * so we need holopads to not be hearable until it is needed
+ *
+ * * flag - one of the can_hear_flags flag defines
+ * * set_flag - boolean, if TRUE sets can_hear_flags to that flag and might add hearing sensitivity if can_hear_flags was NONE before,
+ * if FALSE unsets the flag and possibly removes hearing sensitivity
+ */
+/obj/machinery/holopad/proc/set_can_hear_flags(flag, set_flag = TRUE)
+	if(!(flag & CAN_HEAR_ALL_FLAGS))
+		return FALSE //the given flag doesnt exist
+
+	if(set_flag)
+		if(can_hear_flags == NONE)//we couldnt hear before, so become hearing sensitive
+			become_hearing_sensitive()
+
+		can_hear_flags |= flag
+		return TRUE
+
+	else
+		can_hear_flags &= ~flag
+		if(can_hear_flags == NONE)
+			lose_hearing_sensitivity()
+
+		return TRUE
+
+///setter for adding/removing holocalls to this holopad. used to update the holo_calls list and can_hear_flags
+///adds the given holocall if add_holocall is TRUE, removes if FALSE
+/obj/machinery/holopad/proc/set_holocall(datum/holocall/holocall_to_update, add_holocall = TRUE)
+	if(!istype(holocall_to_update))
+		return FALSE
+
+	if(add_holocall)
+		set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS)
+		LAZYADD(holo_calls, holocall_to_update)
+
+	else
+		LAZYREMOVE(holo_calls, holocall_to_update)
+		if(!LAZYLEN(holo_calls))
+			set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS, FALSE)
+
+	return TRUE
+
 /**
  * hangup_all_calls: Disconnects all current holocalls from the holopad
  */
@@ -472,52 +516,6 @@ Possible to do for anyone motivated enough:
 	else
 		to_chat(user, "[span_danger("ERROR:")] Unable to project hologram.")
 
-//setters TODOKYLER: put these where they belong near the top
-/**
- * setter for can_hear_flags. handles adding or removing the given flag on can_hear_flags and then adding hearing sensitivity or removing it depending on the final state
- * this is necessary because holopads are a significant fraction of the hearable atoms on station which increases the cost of procs that iterate through hearables
- * so we need holopads to not be hearable until it is needed
- *
- * * flag - one of the can_hear_flags flag defines
- * * set_flag - boolean, if TRUE sets can_hear_flags to that flag and might add hearing sensitivity if can_hear_flags was NONE before,
- * if FALSE unsets the flag and possibly removes hearing sensitivity
- */
-/obj/machinery/holopad/proc/set_can_hear_flags(flag, set_flag = TRUE)
-	if(!(flag & CAN_HEAR_ALL_FLAGS))
-		return FALSE //the given flag doesnt exist
-
-	if(set_flag)
-		if(can_hear_flags == NONE)//we couldnt hear before, so become hearing sensitive
-			become_hearing_sensitive()
-
-		can_hear_flags |= flag
-		return TRUE
-
-	else
-		can_hear_flags &= ~flag
-		if(can_hear_flags == NONE)
-			lose_hearing_sensitivity()
-
-		return TRUE
-
-///setter for adding/removing holocalls to this holopad. used to update the holo_calls list and can_hear_flags
-///adds the given holocall if add_holocall is TRUE, removes if FALSE
-/obj/machinery/holopad/proc/set_holocall(datum/holocall/holocall_to_update, add_holocall = TRUE)
-	if(!istype(holocall_to_update))
-		return FALSE
-
-	if(add_holocall)
-		set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS)
-		LAZYADD(holo_calls, holocall_to_update)
-
-	else
-		LAZYREMOVE(holo_calls, holocall_to_update)
-		if(!LAZYLEN(holo_calls))
-			set_can_hear_flags(CAN_HEAR_ACTIVE_HOLOCALLS, FALSE)
-
-	return TRUE
-
-
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
@@ -561,7 +559,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 /obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)
 	LAZYSET(holorays, user, new /obj/effect/overlay/holoray(loc))
-	set_can_hear_flags(CAN_HEAR_AI_MASTERS)
+	set_can_hear_flags(CAN_HEAR_MASTERS)
 	var/mob/living/silicon/ai/AI = user
 	if(istype(AI))
 		AI.current = src
@@ -580,7 +578,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		AI.current = null
 	LAZYREMOVE(masters, user) // Discard AI from the list of those who use holopad
 	if(!LAZYLEN(masters))
-		set_can_hear_flags(CAN_HEAR_AI_MASTERS, set_flag = FALSE)
+		set_can_hear_flags(CAN_HEAR_MASTERS, set_flag = FALSE)
 	qdel(holorays[user])
 	LAZYREMOVE(holorays, user)
 	SetLightsAndPower()
@@ -803,8 +801,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 #undef HOLOPAD_PASSIVE_POWER_USAGE
 #undef HOLOGRAM_POWER_USAGE
-#undef CAN_HEAR_AI_MASTERS
+#undef CAN_HEAR_MASTERS
 #undef CAN_HEAR_ACTIVE_HOLOCALLS
 #undef CAN_HEAR_RECORD_MODE
-#undef CAN_HEAR_OUTGOING_CALL
 #undef CAN_HEAR_ALL_FLAGS
