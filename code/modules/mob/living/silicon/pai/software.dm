@@ -233,7 +233,7 @@
 	var/mob/living/silicon/pai/pai = usr
 	var/turf/T = get_turf(src)
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
-	to_chat(pai, "You begin overriding the airlock security protocols.")
+	to_chat(pai, span_boldnotice("You begin overriding the airlock security protocols."))
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [T.loc].</b></font>")

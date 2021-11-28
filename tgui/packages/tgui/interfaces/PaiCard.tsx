@@ -106,6 +106,7 @@ const CandidateDisplay = (props, context) => {
         <Box color="green" fontSize="16px">
           Name: {name || 'Randomized Name'}
         </Box>
+        <Box color="label">{tab === 'description' ? "Description: " : "OOC Comments: "}</Box>
         {tab === 'description' ? description : comments}
       </Section>
     </Box>
@@ -200,17 +201,17 @@ const PaiOptions = (_, context) => {
             Set Laws
           </Button>
         </LabeledList.Item>
-        {!!emagged && (
-          <Button color="bad" icon="bug">
-            Malicious Software Detected
-          </Button>
-        )}
         <LabeledList.Item label="Personality">
           <Button icon="trash" onClick={() => act('wipe_pai')}>
             Erase
           </Button>
         </LabeledList.Item>
       </LabeledList>
+      {!!emagged && (
+        <Button color="bad" disabled icon="bug" mt={1}>
+          Malicious Software Detected
+        </Button>
+      )}
     </Section>
   );
 };
