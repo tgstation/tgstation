@@ -8,14 +8,28 @@
 	slot = ORGAN_SLOT_TAIL
 	/// The sprite accessory this tail gives to the human it's attached to. If null, it will inherit its value from the human's DNA once attached.
 	var/tail_type = "None"
+	///What kind of mood effect do you get when having this tail pulled?
+	var/pulled_mood_effect = /datum/mood_event/tailpulled
 
 /obj/item/organ/tail/Insert(mob/living/carbon/human/tail_owner, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
 	tail_owner?.dna?.species?.on_tail_regain(tail_owner, src, special)
+	RegisterSignal(tail_owner, COMSIG_CARBON_TAILPULL, .proc/on_tail_pull)
 
 /obj/item/organ/tail/Remove(mob/living/carbon/human/tail_owner, special = FALSE)
 	. = ..()
 	tail_owner?.dna?.species?.on_tail_lost(tail_owner, src, special)
+	UnregisterSignal(tail_owner, COMSIG_CARBON_TAILPULL)
+
+/obj/item/organ/tail/proc/on_tail_pull(mob/living/carbon/pulled_tail, mob/living/carbon/tail_puller)
+	SIGNAL_HANDLER
+
+	tail_puller.visible_message(span_notice("[tail_puller] pulls on [pulled_tail]'s tail!"), \
+		null, span_hear("You hear a soft patter."), \
+		DEFAULT_MESSAGE_RANGE, \
+		list(tail_puller, pulled_tail))
+	if(!isnull(pulled_mood_effect))
+		SEND_SIGNAL(pulled_tail, COMSIG_ADD_MOOD_EVENT, "tailpulled", pulled_mood_effect)
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
@@ -98,6 +112,7 @@
 	desc = "A fabricated severed lizard tail. This one's made of synthflesh. Probably not usable for lizard wine."
 	tail_type = null
 	spines = null
+	pulled_mood_effect = null
 
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
