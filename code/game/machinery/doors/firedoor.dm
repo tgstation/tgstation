@@ -218,7 +218,7 @@
 			return
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
-	open()
+	INVOKE_ASYNC(src, proc/open)
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
