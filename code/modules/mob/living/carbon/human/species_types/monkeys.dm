@@ -53,7 +53,6 @@
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	RegisterSignal(C, COMSIG_CARBON_TAILPULL, .proc/on_tail_pull)
 	H.pass_flags |= PASSTABLE
 	H.butcher_results = knife_butcher_results
 	if(!H.dna.features["tail_monkey"] || H.dna.features["tail_monkey"] == "None")
@@ -66,15 +65,9 @@
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	UnregisterSignal(C, COMSIG_CARBON_TAILPULL)
 	C.pass_flags = initial(C.pass_flags)
 	C.butcher_results = null
 	C.dna.remove_mutation(RACEMUT)
-
-/datum/species/monkey/proc/on_tail_pull(mob/living/carbon/pulled_tail, mob/living/carbon/tail_puller)
-	SIGNAL_HANDLER
-
-	SEND_SIGNAL(pulled_tail, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled_negative)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	. = ..()

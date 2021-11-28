@@ -93,8 +93,6 @@
 
 	. = ..()
 
-	RegisterSignal(C, COMSIG_CARBON_TAILPULL, .proc/on_tail_pull)
-	
 	// Special handler for loading preferences. If we're doing it from a preference load, we'll want
 	// to make sure we give the appropriate lizard tail AFTER we call the parent proc, as the parent
 	// proc will overwrite the lizard tail. Species code at its finest.
@@ -110,15 +108,6 @@
 		// organ.Insert will qdel any existing organs in the same slot, so
 		// we don't need to manage that.
 		new_tail.Insert(C, TRUE, FALSE)
-
-/datum/species/lizard/felinid/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	UnregisterSignal(C, COMSIG_CARBON_TAILPULL)
-	return ..()
-
-/datum/species/lizard/felinid/proc/on_tail_pull(mob/living/carbon/pulled_tail, mob/living/carbon/tail_puller)
-	SIGNAL_HANDLER
-
-	SEND_SIGNAL(pulled_tail, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled_negative)
 
 /datum/species/lizard/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
 	var/tail = pick(GLOB.tails_list_lizard)

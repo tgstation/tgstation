@@ -24,7 +24,7 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
-/datum/mood_event/tailpulled_positive
+/datum/mood_event/tailpulled
 	description = "<span class='nicegreen'>I love getting my tail pulled!</span>\n"
 	mood_change = 1
 	timeout = 2 MINUTES

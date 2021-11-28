@@ -54,7 +54,6 @@
 	H.update_body()
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	RegisterSignal(C, COMSIG_CARBON_TAILPULL, .proc/on_tail_pull)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
@@ -73,16 +72,6 @@
 		else
 			mutant_organs = list()
 	return ..()
-
-/datum/species/human/felinid/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	UnregisterSignal(C, COMSIG_CARBON_TAILPULL)
-	return ..()
-
-/datum/species/human/felinid/proc/on_tail_pull(mob/living/carbon/pulled_tail, mob/living/carbon/tail_puller)
-	SIGNAL_HANDLER
-
-	if(!HAS_TRAIT(pulled_tail, TRAIT_BADTOUCH))
-		SEND_SIGNAL(pulled_tail, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled_positive)
 
 /proc/mass_purrbation()
 	for(var/M in GLOB.mob_list)
