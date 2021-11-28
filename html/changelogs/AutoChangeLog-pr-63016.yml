@@ -1,6 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes: 
-  - rscadd: "Added new reskins of the Catwalk Tiles, which will blend better with other types of floor! These can be selected via a radial on the base catwalk tile, crafted with iron rods."
-  - expansion: "Floorbots will automatically place catwalks when they're in a maintenance area, and will repair damaged/burnt tiles rather than fully replacing them."
-  - bugfix: "Floorbots will actually place a plating when repairing a breach with tiles, rather than haphazardly laying a tile that has space below it."

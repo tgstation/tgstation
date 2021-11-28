@@ -1,4 +1,0 @@
-author: "HarseTheef"
-delete-after: True
-changes: 
-  - bugfix: "Pipe layer changes now occur on right + alt click"

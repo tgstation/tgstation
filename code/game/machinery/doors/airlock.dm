@@ -894,9 +894,12 @@
 		C.play_tool_sound(src)
 		update_appearance()
 	else if((C.tool_behaviour == TOOL_WIRECUTTER) && note)
-		user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		else //telekinesis
+			visible_message(span_notice("[C] cuts down [note] from [src]."))
 		C.play_tool_sound(src)
-		note.forceMove(get_turf(user))
+		note.forceMove(C.drop_location())
 		note = null
 		update_appearance()
 	else if(is_wire_tool(C) && panel_open)
