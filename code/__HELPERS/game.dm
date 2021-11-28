@@ -234,6 +234,13 @@
 	move_resist = INFINITY
 	invisibility = 0
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	logging = null
+	held_items = null //all of these are list objects that should not exist for something like us
+	faction = null
+	alerts = null
+	screens = null
+	client_colours = null
+	hud_possible = null
 	/// references to everything "on" the turf we are assigned to, that we care about. populated in assign() and cleared in unassign()
 	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf. intentionally not a lazylist
 	var/list/references = list()
