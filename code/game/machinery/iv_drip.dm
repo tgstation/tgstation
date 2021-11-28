@@ -1,9 +1,14 @@
 #define IV_TAKING 0
 #define IV_INJECTING 1
+
+#define MIN_TRANSFER_RATE 0.5
+#define MAX_TRANSFER_RATE 5
+#define MEDIAN_TRANSFER_RATE (MIN_TRANSFER_RATE + MAX_TRANSFER_RATE) / 2
+
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Right-Click to change the transfer rate."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container. Alt-Click to change the transfer rate to the maximum possible."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -14,7 +19,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/dripfeed = FALSE
+	var/transfer_rate = MEDIAN_TRANSFER_RATE;
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -24,6 +29,8 @@
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass,
 									/obj/item/reagent_containers/chem_pack))
+	// If the blood draining tab should be greyed out
+	var/inject_only = FALSE
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -136,13 +143,11 @@
 		// Give blood
 		if(mode)
 			if(target_reagents.total_volume)
-				var/transfer_amount = 5
-				if (dripfeed)
-					transfer_amount = 1
+				var/real_transfer_amount = transfer_rate
 				if(istype(reagent_container, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount *= 2
-				target_reagents.trans_to(attached, transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+					real_transfer_amount *= 2
+				target_reagents.trans_to(attached, real_transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_appearance()
 
 		// Take blood
@@ -163,9 +168,9 @@
 			attached.transfer_blood_to(target, amount)
 			update_appearance()
 
-/obj/machinery/iv_drip/attack_hand(mob/user, list/modifiers)
+/obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(!ishuman(user))
 		return
@@ -177,19 +182,13 @@
 		eject_beaker(user)
 	else
 		toggle_mode()
-
-/obj/machinery/iv_drip/attack_hand_secondary(mob/user, modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-
-	if(dripfeed)
-		dripfeed = FALSE
-		to_chat(usr, span_notice("You loosen the valve to speed up the [src]."))
-	else
-		dripfeed = TRUE
-		to_chat(usr, span_notice("You tighten the valve to slowly drip-feed the contents of [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/iv_drip/AltClick(mob/user)
+	if(can_interact(user))
+		transfer_rate = MAX_TRANSFER_RATE
+		to_chat(usr, span_notice("You set the transfer rate to [transfer_rate] units per metabolism cycle to speed up the [src]."))
+	return ..()
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(mob/living/target, mob/user)
@@ -272,6 +271,7 @@
 	icon_state = "saline"
 	base_icon_state = "saline"
 	density = TRUE
+	inject_only = TRUE
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	. = ..()
