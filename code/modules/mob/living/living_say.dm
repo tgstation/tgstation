@@ -368,6 +368,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
 	for(var/atom/movable/listening_movable as anything in listening)
+		if(!listening_movable)
+			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
+			continue
 		if(eavesdrop_range && get_dist(source, listening_movable) > message_range && !(the_dead[listening_movable]))
 			listening_movable.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mods)
 		else
