@@ -3,7 +3,6 @@
 
 #define MIN_TRANSFER_RATE 0.5
 #define MAX_TRANSFER_RATE 5
-#define MEDIAN_TRANSFER_RATE (MIN_TRANSFER_RATE + MAX_TRANSFER_RATE) / 2
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -19,7 +18,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/transfer_rate = MEDIAN_TRANSFER_RATE;
+	var/transfer_rate = MAX_TRANSFER_RATE;
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -42,6 +41,18 @@
 	attached = null
 	QDEL_NULL(reagent_container)
 	return ..()
+
+/obj/machinery/iv_drip/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "IVDrip")
+		ui.open()
+
+/obj/machinery/iv_drip/ui_data(mod/user)
+	var/list/data = list()
+	data["transferRate"] = transfer_rate
+	data["injectOnly"] = inject_only ? 1 : 0
+	data["containerName"] = use_internal_storage ? "internal reagent storage" : reagent_container.name
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(attached)
