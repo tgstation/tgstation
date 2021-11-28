@@ -7,37 +7,30 @@
  */
 /turf/open/floor/catwalk_floor	//the base type, meant to look like a maintenance panel
 	icon = 'icons/turf/floors/catwalk_plating.dmi'
-	icon_state = "maint_below"
+	icon_state = "maint_above"
 	name = "catwalk floor"
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	baseturfs = /turf/open/floor/plating
 	floor_tile = /obj/item/stack/tile/catwalk_tile
+	layer = CATWALK_LAYER
+	plane = GAME_PLANE
 	footstep = FOOTSTEP_CATWALK
 	overfloor_placed = TRUE
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	var/covered = TRUE
 	var/above_state = "maint_above"	//Icon-state for the overlay
 
-
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
+	//catwalk_overlay = mutable_appearance(icon, above_state, CATWALK_LAYER, GAME_PLANE)
+	//catwalk_overlay.alpha = covered ? 255 : 0
 	update_icon(UPDATE_OVERLAYS)
 
-GLOBAL_LIST_EMPTY(catwalk_overlay_masterlist)	//Stores all the above_states for the different types of catwalk
-
 /turf/open/floor/catwalk_floor/update_overlays()
+	layer = covered ? CATWALK_LAYER : TURF_LAYER
+	plane = covered ? GAME_PLANE : FLOOR_PLANE
+	icon_state = covered ? "maint_above" : "maint_below"
 	. = ..()
-	if(!covered)
-		return	//Updating the overlay with nothing actually removes it, in this case. Somehow.
-	if(!GLOB.catwalk_overlay_masterlist[above_state])
-		//Generate a new overlay and add it to the global list
-		var/image/catwalk_overlay = new()
-		catwalk_overlay.icon = icon
-		catwalk_overlay.icon_state = above_state
-		catwalk_overlay.plane = GAME_PLANE
-		catwalk_overlay.layer = CATWALK_LAYER
-		GLOB.catwalk_overlay_masterlist[above_state] = catwalk_overlay
-	. += GLOB.catwalk_overlay_masterlist[above_state]
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
