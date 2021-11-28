@@ -9,7 +9,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_premium_price = PAYCHECK_HARD * 1.25
-	var/alert_cooldown ///don't spam alert messages.
+	///don't spam alert messages.
+	var/alert_cooldown
 	var/mob/living/silicon/pai/pai
 	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
