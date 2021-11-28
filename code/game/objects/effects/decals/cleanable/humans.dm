@@ -71,6 +71,7 @@
 
 /obj/effect/decal/cleanable/blood/splatter/over_wall
 	layer = BULLET_HOLE_LAYER
+	plane = GAME_PLANE
 
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
@@ -312,13 +313,15 @@
 	/// Skip making the final blood splatter when we're done, like if we're not in a turf
 	var/skip = FALSE
 	/// How many tiles/items/people we can paint red
-	var/amount = 3
+	var/splatter_strength = 3
 
-/obj/effect/decal/cleanable/blood/hitsplatter/Initialize(amount)
+	var/hit_endpoint = FALSE
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Initialize(splatter_strength)
 	. = ..()
 	prev_loc = loc //Just so we are sure prev_loc exists
-	if(amount)
-		src.amount = amount
+	if(splatter_strength)
+		src.splatter_strength = splatter_strength
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/T, var/range)
 	for(var/i in 1 to range)
@@ -326,13 +329,15 @@
 		sleep(2) //formerly 2?
 		prev_loc = loc
 		for(var/atom/iter_atom in get_turf(src))
-			if(amount <= 0)
+			if(hit_endpoint)
+				return
+			if(splatter_strength <= 0)
 				break
 
 			if(isitem(iter_atom))
 				var/obj/item/I = iter_atom
 				I.add_mob_blood(blood_source)
-				amount--
+				splatter_strength--
 			else if(ishuman(iter_atom))
 				var/mob/living/carbon/human/splashed_human = iter_atom
 				if(splashed_human.wear_suit)
@@ -341,31 +346,44 @@
 				if(splashed_human.w_uniform)
 					splashed_human.w_uniform.add_mob_blood(blood_source)
 					splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
-				amount--
-		if(amount <= 0) // we used all the puff so we delete it.
+				splatter_strength--
+		if(splatter_strength <= 0) // we used all the puff so we delete it.
 			qdel(src)
 			return
 	qdel(src)
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Bump(atom/bumped_atom)
-	if(!iswallturf(bumped_atom))
+	if(!iswallturf(bumped_atom) && !istype(bumped_atom, /obj/structure/window/fulltile))
 		qdel(src)
 		return
 
+	hit_endpoint = TRUE
 	if(isturf(prev_loc))
 		loc = bumped_atom
 		skip = TRUE
 		var/obj/effect/decal/cleanable/blood/splatter/over_wall/B = new(prev_loc)
 		//Adjust pixel offset to make splatters appear on the wall
 		if(istype(B))
-			B.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
-			B.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
+			if(istype(bumped_atom, /obj/structure/window))
+				land_on_window(bumped_atom)
+			else
+				B.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
+				B.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
 	else //This will only happen if prev_loc is not even a turf, which is highly unlikely.
 		loc = bumped_atom //Either way we got this.
 		qdel(src)
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
 	if(isturf(loc) && !skip)
-		playsound(src, pick('sound/effects/wounds/splatter.ogg'), 40, TRUE, -1)
+		playsound(src, pick('sound/effects/wounds/splatter.ogg'), 60, TRUE, -1)
 		loc.add_mob_blood(blood_source)
 	return ..()
+
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
+	testing("landing on window! fulltile: [the_window.fulltile]")
+	if(!the_window.fulltile)
+		return
+	alpha = 180
+	forceMove(the_window)
+	the_window.vis_contents += src
+	the_window.bloodied = TRUE
