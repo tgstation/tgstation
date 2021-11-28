@@ -1,6 +1,6 @@
 //Speech verbs.
 
-///Say verb
+///what clients use to speak
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
@@ -8,7 +8,7 @@
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	if(message)
-		say(message)
+		SSspeech_controller.queue_say_for_mob(src, message)
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
@@ -21,7 +21,7 @@
 
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
-	say(message, language) //only living mobs actually whisper, everything else just talks
+	SSspeech_controller.queue_say_for_mob(src, message)
 
 ///The me emote verb
 /mob/verb/me_verb(message as text)
