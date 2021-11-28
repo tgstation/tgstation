@@ -238,9 +238,47 @@
 	/// movables iside of other movables count as being "on" if they have get_turf(them) == our turf. intentionally not a lazylist
 	var/list/references = list()
 
-/mob/orange_ear/Initialize(mapload)
+/mob/oranges_ear/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	return INITIALIZE_HINT_NORMAL
+
+/mob/oranges_ear/Move()
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
+	return FALSE
+
+/mob/oranges_ear/doMove(atom/destination)
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
+	return FALSE
+
+/mob/oranges_ear/abstract_move(atom/destination)
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
+	return FALSE
+
+/mob/oranges_ear/Move()
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
+	return FALSE
+
+/mob/oranges_ear/doMove(atom/destination)
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
+	return FALSE
+
+/mob/oranges_ear/Moved(atom/OldLoc, Dir)
+	SHOULD_CALL_PARENT(FALSE)
+	stack_trace("SOMEHOW A /mob/oranges_ear MOVED")
+	return FALSE
+
+/mob/oranges_ear/Bump()
+	SHOULD_CALL_PARENT(FALSE)
+	return FALSE
+
+/mob/oranges_ear/Bump()
+	SHOULD_CALL_PARENT(FALSE)
+	return FALSE
 
 /**
  * assigns this ear to the turf at get_turf(assigned_atom) and adds it to this ears references list then moves to the turf.
