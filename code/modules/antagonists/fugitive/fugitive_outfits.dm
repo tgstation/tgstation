@@ -101,7 +101,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
-	glasses = /obj/item/clothing/glasses/sunglasses/garb
+	glasses = /obj/item/clothing/glasses/sunglasses/gar
 	ears = /obj/item/radio/headset
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id/advanced

@@ -81,7 +81,7 @@
 
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
-	aim_dir = get_dir(user,bomb_target)
+	aim_dir = get_dir(user, bomb_target)
 	if(!flag)
 		return
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))

@@ -303,10 +303,10 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
-		if(!bot.emagged)
+		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.locked = FALSE
-			bot.open = TRUE
+			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
+			bot.bot_cover_flags |= BOT_COVER_OPEN
 			bot.emag_act(user)
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)

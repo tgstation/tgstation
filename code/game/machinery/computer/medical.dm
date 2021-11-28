@@ -161,7 +161,7 @@
 							continue //only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl) //if it can't find a turf for the medibot, then it probably shouldn't be showing up
-							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
+							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]<br>"
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else
