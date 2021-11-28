@@ -224,7 +224,8 @@
 			var/exclusive_candidate = FALSE
 			for(var/role in exclusive_roles)
 				var/datum/job/job = SSjob.GetJob(role)
-				if((role in candidate_client.prefs.job_preferences) && !is_banned_from(candidate_player.ckey, role) && !job.required_playtime_remaining(candidate_client))
+
+				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE))
 					exclusive_candidate = TRUE
 					break
 

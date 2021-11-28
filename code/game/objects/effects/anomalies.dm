@@ -142,7 +142,7 @@
 		if(!O.anchored)
 			if(isturf(O.loc))
 				var/turf/T = O.loc
-				if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+				if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 					continue
 			var/mob/living/target = locate() in view(4,src)
 			if(target && !target.stat)

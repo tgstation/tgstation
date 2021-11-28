@@ -9,7 +9,7 @@
 	drag_slowdown = 1.5 // Same as a prone mob
 	max_integrity = 200
 	integrity_failure = 0.25
-	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 60)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 60)
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	/// The overlay for the closet's door
@@ -74,6 +74,12 @@
 	. = ..()
 	update_appearance()
 	PopulateContents()
+	if(QDELETED(src)) //It turns out populate contents has a 1 in 100 chance of qdeling src on /obj/structure/closet/emcloset
+		return //Why
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -249,6 +255,8 @@
 		return
 	if(opened)
 		return
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
+		return
 	welded = FALSE
 	locked = FALSE
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
@@ -258,7 +266,9 @@
 	dump_contents()
 	animate_door(FALSE)
 	update_appearance()
+
 	after_open(user, force)
+	SEND_SIGNAL(src, COMSIG_CLOSET_POST_OPEN, force)
 	return TRUE
 
 ///Proc to override for effects after opening a door
@@ -326,7 +336,9 @@
 /obj/structure/closet/proc/after_close(mob/living/user)
 	return
 
-
+/**
+ * Toggles a closet open or closed, to the opposite state. Does not respect locked or welded states, however.
+ */
 /obj/structure/closet/proc/toggle(mob/living/user)
 	if(opened)
 		return close(user)
@@ -413,6 +425,7 @@
 			return FALSE
 		if (!user.transferItemToLoc(W, src))
 			return FALSE
+		W.moveToNullspace()
 		to_chat(user, span_notice("You install the electronics."))
 		electronics = W
 		if (electronics.one_access)
@@ -674,5 +687,23 @@
 
 /obj/structure/closet/return_temperature()
 	return
+
+/obj/structure/closet/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+	SIGNAL_HANDLER
+	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
+		return
+	if(!opened && !shove_blocked)
+		return
+	if(opened)
+		target.forceMove(src)
+	else
+		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	toggle()
+	update_icon()
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
+		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
+	log_combat(src, target, "shoved", "into [src] (locker/crate)")
+	return COMSIG_CARBON_SHOVE_HANDLED
 
 #undef LOCKER_FULL

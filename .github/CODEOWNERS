@@ -57,10 +57,6 @@
 /code/datums/elements/ @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
 
-# ShizCalev
-
-/sound/ @ShizCalev
-
 # stylemistake
 
 /code/__DEFINES/chat.dm @stylemistake
@@ -103,9 +99,14 @@
 /code/controllers/configuration/entries @MrStonedOne
 /config/ @MrStonedOne
 
+# NamelessFairy
+
+/code/modules/capture_the_flag/ @NamelessFairy
+/_maps/map_files/CTF/ @NamelessFairy
+
 # MULTIPLE OWNERS
 
-/icons/ @Twaticus @ShizCalev @Krysonism
+/icons/ @Twaticus @Krysonism @Imaginos16
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /_maps/ @EOBGames @ShizCalev @Maurukas
 /tools/build/ @MrStonedOne @stylemistake

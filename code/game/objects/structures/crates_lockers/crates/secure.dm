@@ -5,7 +5,7 @@
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
-	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
 	var/tamperproof = 0
 	damage_deflection = 25
 
@@ -19,8 +19,8 @@
 	if(user)
 		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
 		log_bomber(user, "has detonated a", src)
-	for(var/atom/movable/AM in src)
-		qdel(AM)
+	for(var/obj/loot in src)
+		SSexplosions.high_mov_atom += loot
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 

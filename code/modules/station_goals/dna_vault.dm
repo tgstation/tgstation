@@ -86,7 +86,7 @@
 		var/obj/machinery/hydroponics/H = target
 		if(!H.myseed)
 			return
-		if(!H.harvest)// So it's bit harder.
+		if(H.plant_status != HYDROTRAY_PLANT_HARVESTABLE)// So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])

@@ -905,3 +905,132 @@
       the turf that the outlet injector was on was unpowered.
   - bugfix: Reinforced walls will now properly re-smooth when nearby reinforced walls
       are created or destroyed.
+2021-10-28:
+  Cyberboss:
+  - bugfix: Emergency inlet access on the mining station eastern-most airlocks has
+      been removed.
+  - bugfix: Fixed mining station east airlocks requiring external airlock access instead
+      of mining access.
+  - bugfix: Removed access requirements from southern mining station public external
+      airlocks.
+  Guillaume Prata:
+  - expansion: Atmospherics Technicians can receive some useful things from their
+      mail now.
+  LemonInTheDark:
+  - bugfix: emagging ethereals works again
+  Seris02:
+  - bugfix: orion can now no longer give you multiple prizes
+  - qol: personal lockers will now allow you to actually un/lock them without swiping
+      ID
+  Watermelon914:
+  - balance: If you try using the staff of change, the staff of chaos or the staff
+      of healing as a crewmember, then it'll backfire. The Staff of change wabbajacks
+      the user, like the pool of change; this means you can't become a xenomorph or
+      a syndicate borg. The Staff of chaos has a 5% chance of firing the bolt directly
+      at the user using it. The Staff of healing now behaves like a medibeam gun to
+      non-wizards trying to use it.
+  carshalash:
+  - bugfix: Squirt cider now requires salt. Tomato soup no longer becomes squirt cider
+  esainane:
+  - bugfix: A roundstart Mannitol pill should no longer cause overdose on its own.
+  optimumtact:
+  - rscadd: Bans are now more user friendly
+2021-10-29:
+  ATHATH:
+  - balance: Heavily EMPing a jumpsuit or another piece of under clothing will now
+      short out its suit sensors (as if they had shorted out from damage to the jumpsuit)
+      instead of randomizing their setting. You can repair them with a cable coil
+      as normal.
+  - bugfix: The sensor list will now be updated when your jumpsuit is EMP'd to reflect
+      any possible changes in suit sensor status.
+  - bugfix: Under clothing will now respect the EMP_PROTECT_SELF flag.
+  ArcaneMusic:
+  - bugfix: Double Bedsheets now properly show the bedsheet sprites.
+  JohnFulpWillard:
+  - bugfix: Bank machines will now immediately stop withdrawing funds if the machine
+      is broken or unpowered.
+  Melbert:
+  - bugfix: The OOC messages of people with minor admin ranks now respect OOC filters
+      in chat tabs
+  - expansion: Two new station traits, Ionic Stormfront and Radiation Stormfront.
+      They make ion storms and rad storms more common, respectively.
+  Mickyan:
+  - code_imp: Vending machines no longer require a unique panel overlay for each new
+      type
+  Mothblocks:
+  - bugfix: Felinids can no longer be head of staff if human authority is required.
+  - bugfix: The foreigner quirk on felinids now works as it does with all other nonhumans
+      who have their own languages, rather than also giving Galactic Uncommon.
+  Sealed101:
+  - bugfix: fixed a runtime in physical experiments trying to unregister a signal
+      from a non-existant atom
+  Timberpoes:
+  - qol: Ordnance, Ordnance Storage and Atmospherics have been dropped to common-level
+      accesses, allowing them to be added to any ID card instead of just silver and
+      specific job trimmed cards.
+  Watermelon914:
+  - qol: Allows you to link integrated circuits to component printers and, as a result,
+      let you print components off remotely which are put directly into your circuit.
+  esainane:
+  - bugfix: Pressure Tanks will now refuse to accept materials without a specific
+      material type during construction.
+  - bugfix: Pressure Tanks will now drop the correct amount of materials during deconstruction.
+  - bugfix: Pressure Tanks will now send you flying if you continue to slice open
+      a sufficiently pressurized tank despite the warning, rather than doing nothing.
+  - bugfix: Pressure Tanks will release their gas contents when destroyed, rather
+      than voiding them.
+  - refactor: Reworked `/turf/var/intact` into variables which don't conflate underfloor
+      visibility, underfloor interactability, and overfloor presence. This fixes many
+      bugs relating to turfs in general, especially catwalks and glass flooring.
+  - bugfix: The SM now properly provides bonus power for operating in a low pressure
+      environment. Make sure you can keep it cool enough, and remember, space or a
+      vacuum won't work, but it will damage the SM!
+  - code_imp: Calculations relating to the SM pressure bonus are now derived from
+      human readable parameters.
+  jlsnow301:
+  - rscdel: Removed leftover HTML from spawner menu
+  - refactor: Spawner menu is now easier to read
+  - bugfix: The crafting menu now uses scrollable sections, fitting the window regardless
+      of resize. A little easier to use.
+  - bugfix: Fixed an issue with the crafting menu not being fully dimmed while crafting.
+2021-10-30:
+  ArcaneMusic:
+  - bugfix: Metastation once again has power to arrivals.
+  Horatio22:
+  - imageadd: made command envirosuits more consistent
+  KathrinBailey:
+  - bugfix: Corporate Sofas now have their rear middle sprites fixed to align with
+      the rest of the rear sofa sprites.
+  LemonInTheDark:
+  - bugfix: You're (hopefully) no longer able to make timed singlecaps using nitryl.
+      I really liked this one honestly, it's got an aggressive amount of heart and
+      soul
+  Timberpoes feat. JohnFulpWillard:
+  - config: Modified how ambiguous VALUE_MODE_FLAG keyed_list config entries are parsed
+      and added additional config logging for when weirdness with keyed_list config
+      entries happens in general. (Timberpoes)
+  - config: /datum/config_entry/keyed_list/probability was unused and has been deleted.
+      (Timberpoes)
+  - bugfix: The Cloth Golem preferences profile now works (JohnFulpWillard)
+  - qol: The species-changing magic mirror variants now list species names instead
+      of internal code IDs. (JohnFulpWillard)
+  - qol: Shadowperson species should now show as "Shadow" instead of "???" (JohnFulpWillard)
+  esainane:
+  - imageadd: Hot Ice icons are now consistent, and now have an stack icon showing
+      two pieces for when there are between 17 and 33 pieces in the stack.
+2021-10-31:
+  GoldenAlpharex:
+  - bugfix: You can finally remember how to place down wires again! How did you even
+      forget something so simple?
+  Krysonism:
+  - balance: The organic slurry is now retained inside the rat after it is dipped
+      in welding fuel.
+  Timberpoes:
+  - bugfix: Vampires and Dullahans can no longer select Cat ears and Cat tails. You
+      monsters.
+  Zytolg:
+  - expansion: Condition Orange! Severe Seismic Activity Detected! New Gulag Position
+      Registered!
+  - rscdel: The remnants of the Old Mining Base are gone. We've always had the crater
+      observatory.
+  - qol: New Icebox Terrain

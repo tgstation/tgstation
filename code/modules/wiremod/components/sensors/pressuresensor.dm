@@ -6,6 +6,7 @@
 /obj/item/circuit_component/pressuresensor
 	display_name = "Pressure Sensor"
 	desc = "Outputs the current pressure of the tile"
+	category = "Sensor"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
@@ -17,7 +18,7 @@
 
 /obj/item/circuit_component/pressuresensor/input_received(datum/port/input/port)
 	//Get current turf
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 	if(!location)
 		result.set_output(null)
 		return

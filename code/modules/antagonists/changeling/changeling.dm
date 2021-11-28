@@ -4,11 +4,10 @@
 
 /datum/antagonist/changeling
 	name = "Changeling"
-	roundend_category  = "changelings"
+	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
-	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
 	ui_name = "AntagInfoChangeling"
@@ -382,12 +381,10 @@
 			B.decoy_override = TRUE
 		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	handle_clown_mutation(M, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	handle_clown_mutation(M, removing = FALSE)
 	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
@@ -709,7 +706,7 @@
 	var/list/memories = list()
 
 	for(var/memory_key as anything in user?.mind.memories)
-		var/datum/memory/memory =  user.mind.memories[memory_key]
+		var/datum/memory/memory = user.mind.memories[memory_key]
 		memories += list(list("name" = memory.name, "quality" = memory.story_value))
 
 	data["memories"] = memories

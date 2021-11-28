@@ -36,7 +36,7 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
-	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
+	var/gas_stimulation_min = 0.002 //nitrium and Freon
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
@@ -56,6 +56,11 @@
 	var/plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
 	var/plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 	var/plas_damage_type = TOX
+
+	var/tritium_irradiation_moles_min = 1
+	var/tritium_irradiation_moles_max = 15
+	var/tritium_irradiation_probability_min = 10
+	var/tritium_irradiation_probability_max = 60
 
 	var/cold_message = "your face freezing and an icicle forming"
 	var/cold_level_1_threshold = 260
@@ -169,13 +174,13 @@
 	if(safe_nitro_min)
 		if(N2_pp < safe_nitro_min)
 			gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
-			breather.throw_alert("nitro", /atom/movable/screen/alert/not_enough_nitro)
+			breather.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
-			breather.clear_alert("nitro")
+			breather.clear_alert("not_enough_nitro")
 
 	//Exhale
 	breath_gases[/datum/gas/nitrogen][MOLES] -= gas_breathed
@@ -283,23 +288,35 @@
 
 	// Tritium
 		var/trit_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/tritium][MOLES])
-		if (trit_pp > 50)
-			breather.radiation += trit_pp/2 //If you're breathing in half an atmosphere of radioactive gas, you fucked up.
-		else
-			breather.radiation += trit_pp/10
+		// If you're breathing in half an atmosphere of radioactive gas, you fucked up.
+		if (trit_pp > tritium_irradiation_moles_min && SSradiation.can_irradiate_basic(breather))
+			var/lerp_scale = min(tritium_irradiation_moles_max, trit_pp - tritium_irradiation_moles_min) / (tritium_irradiation_moles_max - tritium_irradiation_moles_min)
+			var/chance = LERP(tritium_irradiation_probability_min, tritium_irradiation_probability_max, lerp_scale)
+			if (prob(chance))
+				breather.AddComponent(/datum/component/irradiated)
 
-	// Nitryl
-		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
-		if (prob(nitryl_pp))
-			breather.emote("burp")
-		if (prob(nitryl_pp) && nitryl_pp>10)
-			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
-			to_chat(breather, span_notice("You feel a burning sensation in your chest"))
-		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
-		if (gas_breathed > gas_stimulation_min)
-			breather.reagents.add_reagent(/datum/reagent/nitryl,1)
+		gas_breathed = breath_gases[/datum/gas/tritium][MOLES]
 
-		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
+		if (trit_pp > 0)
+			var/ratio = gas_breathed * 15
+			breather.adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+
+		breath_gases[/datum/gas/tritium][MOLES] -= gas_breathed
+
+	// Nitrium
+		var/nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
+		if (prob(nitrium_pp) && nitrium_pp > 15)
+			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
+			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
+		gas_breathed = breath_gases[/datum/gas/nitrium][MOLES]
+		if (nitrium_pp > 5)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
+			breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
+		if (nitrium_pp > 10)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
+			breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+
+		breath_gases[/datum/gas/nitrium][MOLES] -= gas_breathed
 
 	// Freon
 		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
@@ -357,13 +374,6 @@
 			breather.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
-
-	// Stimulum
-		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
-		if (gas_breathed > gas_stimulation_min)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/stimulum)
-			breather.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
-		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
 	// Hyper-Nob
 		gas_breathed = breath_gases[/datum/gas/hypernoblium][MOLES]
@@ -504,7 +514,7 @@
 	icon_state = "lungs-plasma"
 
 	safe_oxygen_min = 0 //We don't breathe this
-	safe_plasma_min = 16 //We breathe THIS!
+	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
 
 /obj/item/organ/lungs/slime

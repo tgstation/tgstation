@@ -26,11 +26,11 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/attackby(obj/item/W, mob/user, params)
-	if(!can_buckle || !istype(W, /obj/item/riding_offhand) || !user.Adjacent(src))
+/atom/movable/attackby(obj/item/attacking_item, mob/user, params)
+	if(!can_buckle || !istype(attacking_item, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 
-	var/obj/item/riding_offhand/riding_item = W
+	var/obj/item/riding_offhand/riding_item = attacking_item
 	var/mob/living/carried_mob = riding_item.rider
 	if(carried_mob == user) //Piggyback user.
 		return
@@ -322,6 +322,8 @@
  * user - The mob unbuckling buckled_mob
  */
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
+	if(!(buckled_mob in buckled_mobs) || !user.CanReach(buckled_mob))
+		return
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
 		if(M != user)

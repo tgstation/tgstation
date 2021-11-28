@@ -161,7 +161,7 @@
 							continue //only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl) //if it can't find a turf for the medibot, then it probably shouldn't be showing up
-							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
+							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]<br>"
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else
@@ -444,7 +444,7 @@
 
 			else if(href_list["new"])
 				if((istype(active1, /datum/data/record) && !( istype(active2, /datum/data/record) )))
-					var/datum/data/record/R = new /datum/data/record(  )
+					var/datum/data/record/R = new /datum/data/record()
 					R.fields["name"] = active1.fields["name"]
 					R.fields["id"] = active1.fields["id"]
 					R.name = text("Medical Record #[]", R.fields["id"])

@@ -1113,14 +1113,75 @@
 /obj/item/stack/tile/emissive_test/white/sixty
 	amount = 60
 
-/obj/item/stack/tile/catwalk_tile
+//Catwalk Tiles
+/obj/item/stack/tile/catwalk_tile //This is our base type, sprited to look maintenance-styled
 	name = "catwalk floor"
 	singular_name = "catwalk floor tile"
-	desc = "Catwalk floor to be able see things underneath"
-	icon_state = "catwalk_floor"
+	desc = "Flooring that shows its contents underneath. Engineers love it!"
+	icon_state = "maint_catwalk"
 	inhand_icon_state = "tile-catwalk"
-	turf_type = /turf/open/floor/plating/catwalk_floor
-	merge_type = /obj/item/stack/tile/catwalk_tile
+	turf_type = /turf/open/floor/catwalk_floor
+	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
+	tile_reskin_types = list(
+		/obj/item/stack/tile/catwalk_tile,
+		/obj/item/stack/tile/catwalk_tile/iron,
+		/obj/item/stack/tile/catwalk_tile/iron_white,
+		/obj/item/stack/tile/catwalk_tile/iron_dark,
+		/obj/item/stack/tile/catwalk_tile/flat_white,
+		/obj/item/stack/tile/catwalk_tile/titanium,
+		/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the original greenish one
+	)
 
 /obj/item/stack/tile/catwalk_tile/sixty
+	amount = 60
+
+/obj/item/stack/tile/catwalk_tile/iron
+	icon_state = "iron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron
+
+/obj/item/stack/tile/catwalk_tile/iron_white
+	icon_state = "whiteiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_white
+
+/obj/item/stack/tile/catwalk_tile/iron_dark
+	icon_state = "darkiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_dark
+
+/obj/item/stack/tile/catwalk_tile/flat_white
+	icon_state = "flatwhite_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/flat_white
+
+/obj/item/stack/tile/catwalk_tile/titanium
+	icon_state = "titanium_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/titanium
+
+/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the greenish one
+	icon_state = "smoothiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_smooth
+
+// Glass floors
+/obj/item/stack/tile/glass
+	name = "glass floor"
+	singular_name = "glass floor tile"
+	desc = "Glass window floors, to let you see... Whatever that is down there."
+	icon_state = "tile_glass"
+	turf_type = /turf/open/floor/glass
+	inhand_icon_state = "tile-glass"
+	merge_type = /obj/item/stack/tile/glass
+	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+
+/obj/item/stack/tile/glass/sixty
+	amount = 60
+
+/obj/item/stack/tile/rglass
+	name = "reinforced glass floor"
+	singular_name = "reinforced glass floor tile"
+	desc = "Reinforced glass window floors. These bad boys are 50% stronger than their predecessors!"
+	icon_state = "tile_rglass"
+	inhand_icon_state = "tile-rglass"
+	turf_type = /turf/open/floor/glass/reinforced
+	merge_type = /obj/item/stack/tile/rglass
+	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+
+/obj/item/stack/tile/rglass/sixty
 	amount = 60

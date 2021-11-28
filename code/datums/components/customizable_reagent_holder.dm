@@ -230,7 +230,7 @@
 	else
 		var/list/rgbcolor = list(0,0,0,0)
 		var/customcolor = GetColors(color)
-		var/ingcolor =  GetColors(top_overlay.color)
+		var/ingcolor = GetColors(top_overlay.color)
 		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
 		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
 		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2

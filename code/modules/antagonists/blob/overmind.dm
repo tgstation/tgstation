@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)
 		if(manualplace_min_time)
-			. +=  "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+			. += "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
 		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)

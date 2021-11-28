@@ -148,7 +148,7 @@ export class VariableMenu extends Component {
                       <Dropdown
                         options={types}
                         displayText={variable_type}
-                        className="Datatype__Option"
+                        className="IntegratedCircuit__BlueBorder"
                         color="black"
                         width="100%"
                         over
