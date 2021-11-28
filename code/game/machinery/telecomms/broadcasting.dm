@@ -189,12 +189,7 @@
 	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 
-	for(var/atom/movable/hearer as anything in receive)
-		if(!hearer)
-			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
-			continue
-
-		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
+	propogate_sound_to_hearers(receive, rendered, virt, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
@@ -219,3 +214,17 @@
 
 	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted
 
+//TODOKYLER: this is just to profile how expensive this part of the process is since its hard to tell from profile data. dont keep this in
+//i dont even know what all these args do
+/datum/signal/subspace/vocal/proc/propogate_sound_to_hearers(list/receiving_hearers, rendered, virt, language, message, frequency, spans, message_mods)
+	for(var/atom/movable/hearer as anything in receiving_hearers)
+		if(!hearer)
+			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
+			continue
+
+		//hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
+		hearer_wrap(hearer, rendered, virt, language, message, frequency, spans, message_mods)
+
+//TODOKYLER: same as above, just to profile the exact cost of this subset of Hear() calls
+/datum/signal/subspace/vocal/proc/hearer_wrap(atom/movable/hearer, rendered, virt, language, message, frequency, spans, message_mods)
+	hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
