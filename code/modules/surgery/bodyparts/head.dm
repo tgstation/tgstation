@@ -266,7 +266,7 @@
 	return NOPASS
 
 /obj/item/bodypart/head/GetVoice()
-	return real_name
+	return "The head of [real_name]"
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'
