@@ -213,3 +213,7 @@
 /datum/brain_trauma/mild/phobia/guns
 	phobia_type = "guns"
 	random_gain = FALSE
+	
+/datum/brain_trauma/mild/phobia/blood
+	phobia_type = "blood"
+	random_gain = FALSE
