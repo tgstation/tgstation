@@ -1,31 +1,25 @@
 import { BooleanLike } from 'common/react';
-import { decodeHtmlEntities } from 'common/string';
 import { useLocalState, useSharedState } from '../../backend';
-import { Box, Button, Flex, Input, Section, Tabs, NoticeBox, Stack } from '../../components';
-import { formatMoney } from '../../format';
-
-type Item = {
-  name
-}
+import { Box, Button, Input, Section, Tabs, NoticeBox, Stack } from '../../components';
 
 type GenericUplinkProps = {
-  currencyAmount: number,
-  currencySymbol: string,
+  currency?: string | JSX.Element,
   categories: string[],
   items: Item[],
-  lockable: BooleanLike,
+  lockable?: BooleanLike,
 
   handleLock: (key: MouseEvent) => void;
+  handleBuy: (item: Item) => void;
 }
 
 export const GenericUplink = (props: GenericUplinkProps, context) => {
   const {
-    currencyAmount = 0,
-    currencySymbol = 'cr',
+    currency = 'cr',
     categories,
     lockable,
 
     handleLock,
+    handleBuy,
   } = props;
   const [
     searchText, setSearchText,
@@ -36,14 +30,18 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
   const [
     compactMode, setCompactMode,
   ] = useSharedState(context, 'compactModeUplink', false);
-  let items = props.items;
+  let items = props.items.filter(value => {
+    if (searchText.length === 0) {
+      return value.category === selectedCategory;
+    }
+    return value.name.toLowerCase().includes(searchText.toLowerCase());
+  });
   return (
     <Section
       title={(
         <Box
-          inline
-          color={currencyAmount > 0 ? 'good' : 'bad'}>
-          {formatMoney(currencyAmount)} {currencySymbol}
+          inline>
+          {currency}
         </Box>
       )}
       buttons={(
@@ -66,9 +64,9 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
           )}
         </>
       )}>
-      <Flex>
+      <Stack>
         {searchText.length === 0 && (
-          <Flex.Item>
+          <Stack.Item mr={1}>
             <Tabs vertical>
               {categories.map(category => (
                 <Tabs.Tab
@@ -79,9 +77,9 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
                 </Tabs.Tab>
               ))}
             </Tabs>
-          </Flex.Item>
+          </Stack.Item>
         )}
-        <Flex.Item grow={1} basis={0}>
+        <Stack.Item grow={1}>
           {items.length === 0 && (
             <NoticeBox>
               {searchText.length === 0
@@ -91,53 +89,54 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
           )}
           <ItemList
             compactMode={searchText.length > 0 || compactMode}
-            currencyAmount={currencyAmount}
-            currencySymbol={currencySymbol}
-            items={items} />
-        </Flex.Item>
-      </Flex>
+            items={items}
+            handleBuy={handleBuy}
+          />
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
 
-type Item = {
-  cost: number,
-  disabled:
+export type Item = {
+  id: string | number,
+  name: string,
+  category: string,
+  cost: JSX.Element,
+  desc: JSX.Element | string,
+  disabled: BooleanLike,
 }
 
 type ItemListProps = {
   compactMode: BooleanLike,
-  currencyAmount: number,
-  currencySymbol: string,
   items: Item[],
 
-  handleBuy: (key: MouseEvent) => void;
+  handleBuy: (item: Item) => void;
 }
 
 const ItemList = (props: ItemListProps, context) => {
   const {
     compactMode,
-    currencyAmount,
-    currencySymbol,
     items,
+    handleBuy,
   } = props;
   return (
-    <Stack>
-      {items.map(item => (
-        <Stack.Item>
+    <Stack vertical>
+      {items.map((item, index) => (
+        <Stack.Item key={index}>
           <Section
             key={item.name}
             title={item.name}
             buttons={(
               <Button
-                content={item.cost + ' ' + currencySymbol}
+                content={item.cost}
                 disabled={item.disabled}
-                onClick={() => handleBuy(item)} />
+                onClick={(e) => handleBuy(item)} />
             )}>
-            {compactMode? null : decodeHtmlEntities(item.desc)}
+            {compactMode? null : item.desc}
           </Section>
         </Stack.Item>
-      ))
-    )}
-  </Stack>
+      ))}
+    </Stack>
+  );
 };

@@ -600,21 +600,25 @@ GLOBAL_LIST_EMPTY_TYPED(uplink_items_by_type, /datum/uplink_item)
 	var/list/categories = list()
 	var/list/items = list()
 	for(var/datum/uplink_category/category as anything in subtypesof(/datum/uplink_category))
-		categories[category] = initial(category.name)
+		categories += initial(category.name)
 		sortTim(categories, .proc/cmp_uplink_category_desc)
 
 	for(var/datum/uplink_item/item_path as anything in subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/item = new item_path()
-		items += list(list(
-			"name" = item.name,
-			"cost" = item.cost,
-			"desc" = item.desc,
-			"category" = item.category,
-			"purchasable_from" = item.purchasable_from,
-			"restricted" = item.restricted,
-			"limited_stock" = item.limited_stock,
-			"restricted_roles" = item.restricted_roles
-		))
+		if(item.item) {
+			items += list(list(
+				"id" = item_path,
+				"name" = item.name,
+				"cost" = item.cost,
+				"desc" = item.desc,
+				"category" = item.category? initial(item.category.name) : null,
+				"purchasable_from" = item.purchasable_from,
+				"restricted" = item.restricted,
+				"limited_stock" = item.limited_stock,
+				"restricted_roles" = item.restricted_roles,
+				"progression_minimum" = item.progression_minimum,
+			))
+		}
 		GLOB.uplink_items_by_type[item_path] = item
 
 	data["items"] = items

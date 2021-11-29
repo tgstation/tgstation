@@ -10,7 +10,5 @@
 #define UPLINK_CLOWN_OPS (1 << 2)
 
 /// Progression gets turned into a user-friendly form. This is just an abstract equation that makes progression not too large.
-#define DISPLAY_PROGRESSION(time) (time/100)
+#define DISPLAY_PROGRESSION(time) round(time/600, 0.01)
 
-#define UPLINK_NO_PROGRESSION (1<<0)
-#define UPLINK_HAS_PROGRESSION (1<<1)

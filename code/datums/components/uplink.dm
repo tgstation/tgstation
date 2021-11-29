@@ -39,7 +39,7 @@
 	/// The failsafe code that causes this uplink to blow up.
 	var/failsafe_code
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, progression_points = UPLINK_HAS_PROGRESSION, datum/uplink_handler/uplink_handler_override)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, has_progression = TRUE, datum/uplink_handler/uplink_handler_override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -71,7 +71,8 @@
 		uplink_handler.has_objectives = FALSE
 		uplink_handler.uplink_flag = uplink_flag
 		uplink_handler.telecrystals = starting_tc
-		uplink_handler.progression_points = progression_points
+		uplink_handler.has_progression = has_progression
+		uplink_handler.purchase_log = purchase_log
 	else
 		uplink_handler = uplink_handler_override
 	if(!lockable)
@@ -164,6 +165,11 @@
 	data["assigned_role"] = uplink_handler.assigned_role
 	data["debug"] = uplink_handler.debug_mode
 	return data
+
+/datum/component/uplink/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/json/uplink)
+	)
 
 /datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

@@ -77,13 +77,13 @@
 /datum/uplink_item/proc/get_discount()
 	return pick(4;0.75,2;0.5,1;0.25)
 
-/datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
-	var/atom/A = spawn_item(item, user, U)
-	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [U.parent]'s uplink")
-	if(purchase_log_vis && U.purchase_log)
-		U.purchase_log.LogPurchase(A, src, cost)
+/datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	var/atom/A = spawn_item(item, user, uplink_handler, source)
+	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
+	if(purchase_log_vis && uplink_handler.purchase_log)
+		uplink_handler.purchase_log.LogPurchase(A, src, cost)
 
-/datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+/datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	if(!spawn_path)
 		return
 	var/atom/A

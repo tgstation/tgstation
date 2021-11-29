@@ -68,7 +68,8 @@ const Abductsoft = (props, context) => {
       </Section>
       <GenericUplink
         currencyAmount={credits}
-        currencySymbol="Credits" />
+        currencySymbol="Credits"
+      />
     </>
   );
 };

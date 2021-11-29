@@ -1,7 +1,5 @@
-#define PEN_ROTATIONS 2
-
 /**
- * Uplinks
+ * Uplink Handler
  *
  * The uplink handler, used to handle a traitor's TC and experience points and the uplink UI.
 **/
@@ -10,8 +8,12 @@
 	var/telecrystals = 0
 	/// The current uplink flag of this uplink
 	var/uplink_flag = NONE
+	/// This uplink has progression
+	var/has_progression = TRUE
 	/// The amount of experience points this traitor has
 	var/progression_points = 0
+	/// The purchase log of this uplink handler
+	var/datum/uplink_purchase_log/purchase_log
 	/// Associative array of uplink item = stock left
 	var/list/item_stock = list()
 	/// Whether this uplink handler has objectives.
@@ -32,11 +34,11 @@
 	if(!(to_purchase.purchasable_from & uplink_flag))
 		return FALSE
 
-	if(to_purchase.restricted_roles && !(assigned_role in to_purchase.restricted_roles))
+	if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
 		return FALSE
 
 	var/stock = item_stock[to_purchase.type] || INFINITY
-	if(telecrystals < to_purchase.cost || stock <= 0 || progression_points < to_purchase.progression_minimum)
+	if(telecrystals < to_purchase.cost || stock <= 0 || (has_progression && progression_points < to_purchase.progression_minimum))
 		return FALSE
 
 	return TRUE

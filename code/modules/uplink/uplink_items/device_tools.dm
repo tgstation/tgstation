@@ -117,13 +117,14 @@
 	restricted = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
-	if(!U)
+/datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
+	if(!uplink)
 		return
-	U.failsafe_code = U.generate_code()
-	var/code = "[islist(U.failsafe_code) ? english_list(U.failsafe_code) : U.failsafe_code]"
+	uplink.failsafe_code = uplink.generate_code()
+	var/code = "[islist(uplink.failsafe_code) ? english_list(uplink.failsafe_code) : uplink.failsafe_code]"
 	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
-	return U.parent //For log icon
+	return source //For log icon
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
