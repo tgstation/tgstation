@@ -51,7 +51,7 @@ export const IVDrip = (props, context) => {
                 maxValue={maxInjectRate}
                 step={0.1}
                 onChange={(e, value) => act('changeRate', {
-                rate: value,
+                  rate: value,
                 })}
               />
             </LabeledList.Item>
