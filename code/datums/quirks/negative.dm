@@ -847,3 +847,33 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/bad_touch)
+
+/datum/quirk/claustrophobia
+	name = "Claustrophobia"
+	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
+	icon = "lightbulb"
+	value = -1
+	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
+	hardcore_value = 2
+
+/datum/quirk/claustrophobia/add()
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+
+/datum/quirk/claustrophobia/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia")
+
+/// Called when the quirk holder moves. Updates the quirk holder's mood.
+/datum/quirk/claustrophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+
+	if(quirk_holder.stat == DEAD)
+		return
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	var/turf/holder_turf = get_turf(quirk_holder)
+	if( !isturf(human_holder.loc))
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
+
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
