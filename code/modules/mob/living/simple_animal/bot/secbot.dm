@@ -169,6 +169,7 @@
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
+	return FALSE
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()
