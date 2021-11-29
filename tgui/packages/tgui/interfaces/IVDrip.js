@@ -20,7 +20,7 @@ export const IVDrip = (props, context) => {
         <Section title="IV Status">
           <LabeledList>
             <LabeledList.Item label="Status" color={connected ? 'good' : 'average'}>
-            {connected ? "Conntected" : "Not Connected"}
+            {connected ? "Connected" : "Not Connected"}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
               <Button
