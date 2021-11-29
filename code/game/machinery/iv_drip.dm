@@ -54,10 +54,10 @@
 	data["injectOnly"] = inject_only ? TRUE : FALSE
 	data["maxInjectRate"] = MAX_TRANSFER_RATE
 	data["minInjectRate"] = MIN_TRANSFER_RATE
-	data["mode"] = mode
+	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
 	data["connected"] = attached ? TRUE : FALSE
 	data["beakerAttached"] = reagent_container ? TRUE : FALSE
-	data["useInteralStorage"] = use_internal_storage
+	data["useInternalStorage"] = !(use_internal_storage == null)
 
 /obj/machinery/iv_drip/ui_act(action, params)
 	. = ..()
@@ -76,6 +76,7 @@
 				target_rate = text2num(target_rate)
 				transfer_rate = clamp(target_rate, MIN_TRANSFER_RATE, MAX_TRANSFER_RATE)
 				. = TRUE
+	update_appearance()
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(attached)
