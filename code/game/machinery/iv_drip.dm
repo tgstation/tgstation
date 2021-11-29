@@ -57,7 +57,7 @@
 	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
 	data["connected"] = attached ? TRUE : FALSE
 	data["beakerAttached"] = reagent_container ? TRUE : FALSE
-	data["useInternalStorage"] = !(use_internal_storage == null)
+	data["useInternalStorage"] = use_internal_storage
 
 /obj/machinery/iv_drip/ui_act(action, params)
 	. = ..()
