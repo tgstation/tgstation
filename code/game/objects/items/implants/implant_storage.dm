@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/item/implant/storage/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	for(var/implant as anything in target.implants)
+	for(var/implant in target.implants)
 		if (!istype(implant, type))
 			continue
 		var/obj/item/implant/storage/imp_e = implant

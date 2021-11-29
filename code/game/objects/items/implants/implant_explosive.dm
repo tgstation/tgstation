@@ -61,7 +61,7 @@
 	timed_explosion()
 
 /obj/item/implant/explosive/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
-	for(var/implant as anything in target.implants)
+	for(var/implant in target.implants)
 		if(!istype(implant, /obj/item/implant/explosive)) //we don't use our own type here, because macrobombs inherit this proc and need to be able to upgrade microbombs
 			continue
 		var/obj/item/implant/explosive/imp_e = implant

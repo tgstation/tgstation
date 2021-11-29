@@ -87,7 +87,7 @@
 	imp_in = target
 	target.implants += src
 	if(activated)
-		for(var/action in actions)
+		for(var/action as anything in actions)
 			var/datum/action/implant_action = action
 			implant_action.Grant(target)
 	if(ishuman(target))
@@ -113,7 +113,7 @@
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
-	for(var/action in actions)
+	for(var/action as anything in actions)
 		var/datum/action/implant_action = action
 		implant_action.Remove(source)
 	if(ishuman(source))
