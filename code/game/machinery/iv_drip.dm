@@ -349,3 +349,6 @@
 
 #undef IV_TAKING
 #undef IV_INJECTING
+
+#undef MIN_TRANSFER_RATE
+#under MAX_TRANSFER_RATE
