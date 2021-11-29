@@ -33,6 +33,8 @@
 	var/reagent_vol = 10
 
 	var/failure_time = 0
+	///Do we effect the appearance of our mob. Used to save time in preference code
+	var/visual = TRUE
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.

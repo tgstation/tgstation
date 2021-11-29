@@ -2,6 +2,7 @@
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
 	desc = "I see you!"
+	visual = TRUE
 	zone = BODY_ZONE_PRECISE_EYES
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
@@ -81,7 +82,6 @@
 	eye_owner.set_blurriness(0)
 	eye_owner.clear_fullscreen("eye_damage", 0)
 	eye_owner.update_sight()
-
 
 /obj/item/organ/eyes/on_life(delta_time, times_fired)
 	. = ..()
