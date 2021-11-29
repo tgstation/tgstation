@@ -52,11 +52,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
-	if(isanimal(user) && !isdrone(user))
-		var/mob/living/simple_animal/A = user
-		if(!A.dextrous)
-			to_chat(user, span_warning("You are too primitive to use this device!"))
-			return UI_CLOSE
+	if(!isanimal(user) || isdrone(user))
+		return ..()
+	var/mob/living/simple_animal/A = user
+	if(!A.dextrous)
+		to_chat(user, span_warning("You are too primitive to use this device!"))
+		return UI_CLOSE
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
