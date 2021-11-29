@@ -1,6 +1,7 @@
 /* Toys!
  * Contains
  * Balloons
+ * Captain's Aid
  * Fake singularity
  * Toy gun
  * Toy swords
@@ -182,6 +183,26 @@
 
 #undef BALLOON_COLORS
 
+/*
+* Captain's Aid
+*/
+/obj/item/toy/captainsaid
+	name = "\improper Captain's Aid"
+	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
+	icon = 'icons/obj/captainsaid.dmi'
+	icon_state = "1"
+	var/current_mode = 1
+	var/list/modes= list("off", "port", "starboard", "fore", "aft")
+
+/obj/item/toy/captainsaid/attack_self(mob/living/user)
+	current_mode++
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	if (current_mode > modes.len)
+		to_chat(user, span_notice("You set \the [src] to [modes[current_mode]]"))
+	else
+		to_chat(user, span_notice("You turn off \the [src] "))
+	icon_state = current_mode
+	update_appearance(UPDATE_ICON)
 /*
  * Fake singularity
  */
