@@ -919,3 +919,16 @@
   tf-4:
   - code_imp: GAR glasses are now (mostly) subtypes rather than all their own thing
   - qol: GAR glasses now layer above hair, rather than under it.
+2021-11-29:
+  Ghommie:
+  - bugfix: 'Fixed yet another couple TK teleportation tricks: airlock notes and cloth
+      cut from gauzes.'
+  - bugfix: The camera circuit will now actually work.
+  MMMiracles:
+  - bugfix: The Tramstation Tram no longer force unbuckles you from chairs/vehicles
+      when moving.
+  Pickle-Coding:
+  - spellcheck: Captain's wintercoat now has spaces separating between some words.
+  tralezab:
+  - rscadd: Malfunctioning Ais now roll for backstory, much like traitors!
+  - expansion: Malfunctioning Ais now get a unique antag panel!
