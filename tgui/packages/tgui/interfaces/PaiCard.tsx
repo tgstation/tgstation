@@ -79,6 +79,7 @@ const CandidateDisplay = (props, context) => {
   const [tab, setTab] = useLocalState(context, 'tab', 'description');
   const { candidate } = props;
   const { comments, description, name } = candidate;
+
   const onTabClickHandler = (tab: string) => {
     setTab(tab);
   };
@@ -100,14 +101,15 @@ const CandidateDisplay = (props, context) => {
           />
         }
         fill
-        height={15}
+        height={12}
         scrollable
         title="Candidate">
         <Box color="green" fontSize="16px">
           Name: {name || 'Randomized Name'}
         </Box>
-        <Box color="label">{tab === 'description' ? "Description: " : "OOC Comments: "}</Box>
-        {tab === 'description' ? description : comments}
+        {tab === 'description'
+          ? (`Description: ${description.length && description || "None"}`)
+          : (`OOC Comments: ${comments.length && comments || "None"}`)}
       </Section>
     </Box>
   );

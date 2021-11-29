@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(pai)
  */
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
 	/// Created candidate upon opening the menu
-	var/datum/pai_candidate/candidate = check_candidate()
+	var/datum/pai_candidate/candidate = check_candidate(user)
 	if(isnull(candidate))
 		return FALSE
 	candidate = new /datum/pai_candidate()
@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(pai)
 	. = ..()
 	var/list/data = list()
 	/// The matching candidate from search
-	var/datum/pai_candidate/candidate = check_candidate()
+	var/datum/pai_candidate/candidate = check_candidate(user)
 	if(isnull(candidate))
 		return data
 	data["comments"] = candidate.comments
@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(pai)
 		return
 	if(action == "submit")
 		/// The matching candidate from search
-		var/datum/pai_candidate/candidate = check_candidate()
+		var/datum/pai_candidate/candidate = check_candidate(usr)
 		if(isnull(candidate))
 			return FALSE
 		candidate.comments = params["candidate"]["comments"]
@@ -101,10 +101,11 @@ SUBSYSTEM_DEF(pai)
 /**
  * Finds the candidate in question from the list of candidates.
  */
-/datum/controller/subsystem/pai/proc/check_candidate()
+/datum/controller/subsystem/pai/proc/check_candidate(mob/user)
+	/// Finds a matching candidate.
 	var/datum/pai_candidate/candidate
 	for(var/datum/pai_candidate/checked_candidate as anything in candidates)
-		if(checked_candidate.key == usr.key)
+		if(checked_candidate.key == user.key)
 			candidate = checked_candidate
 			return candidate
 	return null

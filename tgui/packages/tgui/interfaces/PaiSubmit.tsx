@@ -72,7 +72,7 @@ const InputDisplay = (props) => {
     <Section fill title="Input">
       <Stack fill vertical>
         <Stack.Item>
-          <Tooltip content="The name of your PAI">
+          <Tooltip content="The name of your pAI.">
             <Box bold color="label">
               Name
             </Box>
@@ -96,7 +96,7 @@ const InputDisplay = (props) => {
           </Tooltip>
         </Stack.Item>
         <Stack.Item>
-          <Tooltip content="Any other OOC comments about your PAI personality.">
+          <Tooltip content="Any other OOC comments about your pAI personality.">
             <Box bold color="label">
               OOC Comments
             </Box>
