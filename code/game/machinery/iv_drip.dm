@@ -261,6 +261,9 @@
 	if(usr.incapacitated())
 		return
 	if(reagent_container)
+		if(attached)
+			visible_message(span_warning("[attached] is detached from [src]."))
+			detach_iv()
 		reagent_container.forceMove(drop_location())
 		reagent_container = null
 		update_appearance()
