@@ -425,7 +425,7 @@
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
 	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space, also grants a battlemage shield."
-	item_path = /obj/item/mod/control/pre_equipped/wizard
+	item_path = /obj/item/mod/control/pre_equipped/magic
 	category = "Defensive"
 
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
