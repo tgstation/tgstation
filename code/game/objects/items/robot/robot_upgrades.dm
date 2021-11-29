@@ -396,31 +396,31 @@
 	model_flags = BORG_MODEL_MEDICAL
 	var/list/additional_reagents = list()
 
-/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/hypospray/action(mob/living/silicon/robot/robot_upgradee, user = usr)
 	. = ..()
-	if(R.emagged)
+	if(robot_upgradee.emagged)
 		return FALSE
 
 	if(.)
-		for(var/obj/item/reagent_containers/borghypo/H in R.model.modules)
-			R.model.remove_module(H, TRUE)
+		for(var/obj/item/reagent_containers/borghypo/module_to_remove in robot_upgradee.model.modules)
+			robot_upgradee.model.remove_module(module_to_remove, TRUE)
 
-		var/obj/item/reagent_containers/borghypo/expanded/E = new /obj/item/reagent_containers/borghypo/expanded(R.model)
-		R.model.basic_modules += E
-		R.model.add_module(E, FALSE, TRUE)
+		var/obj/item/reagent_containers/borghypo/expanded/module_to_add = new /obj/item/reagent_containers/borghypo/expanded(robot_upgradee.model)
+		robot_upgradee.model.basic_modules += module_to_add
+		robot_upgradee.model.add_module(module_to_add, FALSE, TRUE)
 
-/obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/hypospray/deactivate(mob/living/silicon/robot/robot_upgradee, user = usr)
 	. = ..()
-	if(R.emagged)
+	if(robot_upgradee.emagged)
 		return FALSE
 
 	if(.)
-		for(var/obj/item/reagent_containers/borghypo/expanded/E in R.model.modules)
-			R.model.remove_module(E, TRUE)
+		for(var/obj/item/reagent_containers/borghypo/expanded/module_to_remove in robot_upgradee.model.modules)
+			robot_upgradee.model.remove_module(module_to_remove, TRUE)
 
-		var/obj/item/reagent_containers/borghypo/H = new (R.model)
-		R.model.basic_modules += H
-		R.model.add_module(H, FALSE, TRUE)
+		var/obj/item/reagent_containers/borghypo/module_to_add = new (robot_upgradee.model)
+		robot_upgradee.model.basic_modules += module_to_add
+		robot_upgradee.model.add_module(module_to_add, FALSE, TRUE)
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"

@@ -42,12 +42,12 @@ Borg Hypospray
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
 
-	for(var/R in reagent_ids)
-		add_reagent(R)
+	for(var/reagent_id in reagent_ids)
+		add_reagent(reagent_id)
 
 	if(additional_reagent_ids)
-		for(var/AR in additional_reagent_ids)
-			add_reagent(AR)
+		for(var/additional_reagent_id in additional_reagent_ids)
+			add_reagent(additional_reagent_id)
 
 	START_PROCESSING(SSobj, src)
 
