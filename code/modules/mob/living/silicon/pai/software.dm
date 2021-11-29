@@ -71,6 +71,7 @@
 	switch(action)
 		if("buy")
 			if(available_software.Find(params["selection"]) && !software.Find(params["selection"]))
+				/// Cost of the software to purchase
 				var/cost = available_software[params["selection"]]
 				if(ram >= cost)
 					software.Add(params["selection"])
@@ -185,6 +186,11 @@
 				languages_granted = TRUE
 	return
 
+/**
+ * Supporting proc for the pAI to prick it's master's hand
+ * or... whatever. It must be held in order to work
+ * Gives the owner a popup if they want to get the jab.
+ */
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/master, mob/living/silicon/pai/pai)
 	if(!istype(master))
 		return
