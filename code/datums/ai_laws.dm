@@ -261,7 +261,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
 		law_weights -= AI_LAWS_ASIMOV
 	while(!lawtype && law_weights.len)
-		var/possible_id = pick_weight_allow_zero(law_weights)
+		var/possible_id = pick_weight(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id

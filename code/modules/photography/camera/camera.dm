@@ -119,8 +119,8 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
-	else //user is an atom
-		if(!(get_turf(target) in view(world.view, user)))
+	else //user is an atom or null
+		if(!(get_turf(target) in view(world.view, user || src)))
 			return FALSE
 	return TRUE
 
@@ -176,9 +176,9 @@
 	var/list/dead_spotted = list()
 	var/ai_user = isAI(user)
 	var/list/seen
-	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
+	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user.client? user.client.eye : target
+	var/viewc = user?.client ? user.client.eye : target
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/list/mobs = list()
@@ -294,8 +294,8 @@
 	return ..()
 
 /obj/item/circuit_component/camera/proc/sanitize_picture_size()
-	camera.picture_size_x = clamp(adjust_size_x, camera.picture_size_x_min, camera.picture_size_x_max)
-	camera.picture_size_y = clamp(adjust_size_y, camera.picture_size_y_min, camera.picture_size_y_max)
+	camera.picture_size_x = clamp(adjust_size_x.value, camera.picture_size_x_min, camera.picture_size_x_max)
+	camera.picture_size_y = clamp(adjust_size_y.value, camera.picture_size_y_min, camera.picture_size_y_max)
 
 /obj/item/circuit_component/camera/proc/on_image_captured(obj/item/camera/source, atom/target, mob/user)
 	SIGNAL_HANDLER
@@ -303,10 +303,10 @@
 	picture_taken.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/camera/input_received(datum/port/input/port)
-	var/atom/target = picture_target
+	var/atom/target = picture_target.value
 	if(!target)
 		var/turf/our_turf = get_location()
-		target = locate(our_turf.x + adjust_size_x, our_turf.y + adjust_size_y, our_turf.z)
+		target = locate(our_turf.x + picture_coord_x.value, our_turf.y + picture_coord_y.value, our_turf.z)
 		if(!target)
 			return
 	if(!camera.can_target(target))

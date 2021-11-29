@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "Refactored cult rune inscribing into a component"
-  - refactor: "Refactored null rod rune clearing into a component"

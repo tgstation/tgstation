@@ -351,6 +351,7 @@
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
+	update_appearance()
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
@@ -941,12 +942,14 @@
 /obj/machinery/hydroponics/soil/update_status_light_overlays()
 	return // Has no lights
 
-/obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_SHOVEL && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
-		to_chat(user, span_notice("You clear up [src]!"))
+/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	balloon_alert(user, "clearing up soil...")
+	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
+		balloon_alert(user, "cleared")
 		qdel(src)
-	else
-		return ..()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.

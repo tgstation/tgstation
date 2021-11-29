@@ -55,7 +55,7 @@
 /obj/structure/chair/proc/RemoveFromLatejoin()
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 
-/obj/structure/chair/deconstruct()
+/obj/structure/chair/deconstruct(disassembled)
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
@@ -100,12 +100,14 @@
 		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
 
 
-/obj/structure/chair/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	I.play_tool_sound(src)
-	deconstruct()
+/obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if(flags_1&NODECONSTRUCT_1)
+		return TRUE
+	..()
+	weapon.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
 	return TRUE
-
+	
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
 		return ..()

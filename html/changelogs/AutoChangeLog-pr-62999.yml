@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - admin: "Added options to disable footstep sounds and parallax to the lag switch panel."
