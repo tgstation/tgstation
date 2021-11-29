@@ -314,7 +314,7 @@
 		N.update_appearance()
 		N.autolathe_crafted(src)
 	else
-		for(var/i=1, i<=multiplier, i++)
+		for(var/i in 1 to multiplier)
 			var/obj/item/new_item = new being_built.build_path(A)
 			new_item.autolathe_crafted(src)
 

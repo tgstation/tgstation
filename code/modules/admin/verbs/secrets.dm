@@ -120,7 +120,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
+				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=manifest;size=440x410")
 		if("dna")
@@ -346,6 +346,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
+				stoplag()
 		if("whiteout")
 			if(!is_funmin)
 				return
@@ -353,6 +354,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
+				stoplag()
 		if("customportal")
 			if(!is_funmin)
 				return

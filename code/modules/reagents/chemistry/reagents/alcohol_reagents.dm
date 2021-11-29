@@ -106,8 +106,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"

@@ -166,8 +166,8 @@
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/away{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -365,8 +365,8 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/machinery/airalarm/away{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -835,8 +835,8 @@
 "cm" = (
 /obj/structure/table,
 /obj/machinery/airalarm/away{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
@@ -887,8 +887,8 @@
 "cs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/airalarm/away{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/deepstorage)
@@ -1663,7 +1663,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ex" = (
 /obj/structure/table,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1992,8 +1992,8 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/away{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -2026,7 +2026,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/away{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2638,8 +2638,8 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/away{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /turf/open/floor/light,
 /area/ruin/space/has_grav/deepstorage/hydroponics)

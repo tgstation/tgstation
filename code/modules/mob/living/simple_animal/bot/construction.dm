@@ -118,7 +118,7 @@
 				icon_state = "ed209_hat"
 				build_step++
 
-		if(5)
+		if(ASSEMBLY_SIXTH_STEP)
 			if(isprox(W))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -129,7 +129,7 @@
 				inhand_icon_state = "ed209_prox"
 				icon_state = "ed209_prox"
 
-		if(6)
+		if(ASSEMBLY_SEVENTH_STEP)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.get_amount() < 1)
@@ -143,7 +143,7 @@
 						name = "wired ED-209 assembly"
 						build_step++
 
-		if(7)
+		if(ASSEMBLY_EIGHTH_STEP)
 			if(istype(W, /obj/item/gun/energy/disabler))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -154,7 +154,7 @@
 				qdel(W)
 				build_step++
 
-		if(8)
+		if(ASSEMBLY_NINTH_STEP)
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, span_notice("You start attaching the gun to the frame..."))
 				if(W.use_tool(src, user, 40, volume=100))
@@ -372,7 +372,7 @@
 				to_chat(user, span_notice("You complete the Securitron! Beep boop."))
 				var/mob/living/simple_animal/bot/secbot/S = new(Tsec)
 				S.name = created_name
-				S.weapon = I.type
+				S.baton_type = I.type
 				S.robot_arm = robot_arm
 				qdel(I)
 				qdel(src)
