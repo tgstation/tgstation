@@ -56,6 +56,8 @@
 	data["minInjectRate"] = MIN_TRANSFER_RATE
 	data["mode"] = mode ? "Injecting" : "Draining"
 	data["connected"] = attached ? 1 : 0
+	data["beakerAttached"] = reagent_container ? 1 : 0
+	data["useInteralStorage"] = use_internal_storage ? 1 : 0
 
 /obj/machinery/iv_drip/ui_act(action, params)
 	. = ..()

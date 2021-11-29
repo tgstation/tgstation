@@ -12,6 +12,8 @@ export const IVDrip = (props, context) => {
     minInjectRate,
     mode,
     connected,
+    beakerAttached,
+    useInternalStorage,
   } = data;
   return(
     <Window resizable>
@@ -27,6 +29,14 @@ export const IVDrip = (props, context) => {
                 content={mode}
                 icon={mode == "Injecting" ? "sign-in-alt" : "sign-out-alt"}
                 onClick{() => act('changeMode')} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Attached Container" color = {beakerAttached ? 'good' : 'average'}>
+              {beakerAttached ? "Container Attached" : "Container Not Attached"}
+              <Button
+                disabled = {(!beakerAttached) || useInternalStorage}
+                content = "Eject"
+                icon = "eject"
+                onClick{() => act('eject')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
