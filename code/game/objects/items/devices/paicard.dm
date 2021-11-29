@@ -110,7 +110,7 @@
 			src.setPersonality(pai)
 			SSpai.candidates -= candidate
 		if("fix_speech")
-			to_chat(pai, span_boldnotice("Your owner has corrected your speech modulation!"))
+			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
 			to_chat(usr, span_notice("You fix the pAI's speech modulator."))
 			pai.stuttering = 0
 			pai.slurring = 0

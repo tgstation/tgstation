@@ -26,15 +26,13 @@ SUBSYSTEM_DEF(pai)
 		to_chat(user, span_warning("Due to growing incidents of SELF corrupted independent artificial intelligences, freeform personality devices have been temporarily banned in this sector."))
 		return
 	if(ghost_spam)
+		to_chat(user, span_warning("You sent a request too recently."))
 		return
 	ghost_spam = TRUE
+	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
 	to_chat(user, span_notice("You have requested PAI assistance."))
-	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!ghost.key)
-			continue
-		if(!(ROLE_PAI in ghost.client.prefs.be_special))
-			continue
-		to_chat(ghost, span_ghostalert("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one."))
+	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
+	notify_ghosts("[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.", source=user, alert_overlay = alert_overlay, action=NOTIFY_ORBIT, header="pAI Request!", ignore_key = POLL_IGNORE_PAI)
 	addtimer(CALLBACK(src, .proc/spam_again), 10 SECONDS)
 	return TRUE
 
@@ -46,13 +44,12 @@ SUBSYSTEM_DEF(pai)
  * @user - The ghost doing the pressing.
  */
 /datum/controller/subsystem/pai/proc/recruitWindow(mob/user)
-	/// Created candidate upon opening the menu
+	/// Searches for a previous candidate upon opening the menu
 	var/datum/pai_candidate/candidate = check_candidate(user)
 	if(isnull(candidate))
-		return FALSE
-	candidate = new /datum/pai_candidate()
-	candidate.key = user.key
-	candidates.Add(candidate)
+		candidate = new /datum/pai_candidate()
+		candidate.key = user.key
+		candidates.Add(candidate)
 	ui_interact(user)
 
 /// Ensures an observer has the window open
