@@ -1325,7 +1325,8 @@
  * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
  *
  * Arguments:
- * *
+ * * splatter_direction: Which direction the blood is flying
+ * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
  */
 /mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	if(!isturf(loc))

@@ -148,7 +148,7 @@
 			to_chat(user, span_notice("You clean \the [target.name]."))
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
-			var/obj/structure/window/fulltile/our_window = target
+			var/obj/structure/window/our_window = target
 			if(our_window.bloodied)
 				for(var/obj/effect/decal/cleanable/blood/iter_blood in our_window)
 					our_window.vis_contents -= iter_blood

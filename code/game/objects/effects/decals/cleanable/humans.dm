@@ -69,9 +69,11 @@
 	icon_state = "gibbl1"
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
-/obj/effect/decal/cleanable/blood/splatter/over_wall
-	layer = BULLET_HOLE_LAYER
+/obj/effect/decal/cleanable/blood/splatter/over_window // special layer/plane set to appear on windows
+	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
+	turf_loc_check = FALSE
+	alpha = 180
 
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
@@ -314,7 +316,7 @@
 	var/skip = FALSE
 	/// How many tiles/items/people we can paint red
 	var/splatter_strength = 3
-
+	/// Insurance so that we don't keep moving once we hit a stoppoint
 	var/hit_endpoint = FALSE
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Initialize(splatter_strength)
@@ -326,7 +328,7 @@
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/T, var/range)
 	for(var/i in 1 to range)
 		step_towards(src,T)
-		sleep(2) //formerly 2?
+		sleep(2) // Will be resolved pending Potato's moveloop rework
 		prev_loc = loc
 		for(var/atom/iter_atom in get_turf(src))
 			if(hit_endpoint)
@@ -353,37 +355,43 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Bump(atom/bumped_atom)
-	if(!iswallturf(bumped_atom) && !istype(bumped_atom, /obj/structure/window/fulltile))
+	if(!iswallturf(bumped_atom) && !istype(bumped_atom, /obj/structure/window))
 		qdel(src)
 		return
+
+	if(istype(bumped_atom, /obj/structure/window))
+		var/obj/structure/window/bumped_window = bumped_atom
+		if(!bumped_window.fulltile)
+			qdel(src)
+			return
 
 	hit_endpoint = TRUE
 	if(isturf(prev_loc))
 		loc = bumped_atom
 		skip = TRUE
-		var/obj/effect/decal/cleanable/blood/splatter/over_wall/B = new(prev_loc)
 		//Adjust pixel offset to make splatters appear on the wall
-		if(istype(B))
-			if(istype(bumped_atom, /obj/structure/window))
-				land_on_window(bumped_atom)
-			else
-				B.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
-				B.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
-	else //This will only happen if prev_loc is not even a turf, which is highly unlikely.
+		if(istype(bumped_atom, /obj/structure/window))
+			land_on_window(bumped_atom)
+		else
+			var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc)
+			final_splatter.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
+			final_splatter.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
+	else // This will only happen if prev_loc is not even a turf, which is highly unlikely.
 		loc = bumped_atom //Either way we got this.
 		qdel(src)
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
 	if(isturf(loc) && !skip)
-		playsound(src, pick('sound/effects/wounds/splatter.ogg'), 60, TRUE, -1)
+		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
 		loc.add_mob_blood(blood_source)
 	return ..()
 
+/// A special case for hitsplatters hitting windows, since those can actually be moved around, store it in the window and slap it in the vis_contents
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
-	testing("landing on window! fulltile: [the_window.fulltile]")
 	if(!the_window.fulltile)
 		return
-	alpha = 180
-	forceMove(the_window)
-	the_window.vis_contents += src
+	var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new
+	final_splatter.forceMove(the_window)
+	the_window.vis_contents += final_splatter
 	the_window.bloodied = TRUE
+	qdel(src)
