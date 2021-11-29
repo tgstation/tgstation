@@ -65,7 +65,7 @@
 
 /obj/item/clothing/suit/toggle/labcoat/chemist/Initialize(mapload)
 	. = ..()
-	allowed +=	/obj/item/storage/bag/chemistry
+	allowed += /obj/item/storage/bag/chemistry
 
 /obj/item/clothing/suit/toggle/labcoat/virologist
 	name = "virologist labcoat"
@@ -74,7 +74,7 @@
 
 /obj/item/clothing/suit/toggle/labcoat/virologist/Initialize(mapload)
 	. = ..()
-	allowed +=	/obj/item/storage/bag/bio
+	allowed += /obj/item/storage/bag/bio
 
 /obj/item/clothing/suit/toggle/labcoat/science
 	name = "scientist labcoat"
@@ -83,7 +83,7 @@
 
 /obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()
-	allowed +=	/obj/item/storage/bag/bio
+	allowed += /obj/item/storage/bag/bio
 
 /obj/item/clothing/suit/toggle/labcoat/roboticist
 	name = "roboticist labcoat"
