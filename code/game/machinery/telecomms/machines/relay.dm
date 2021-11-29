@@ -26,9 +26,9 @@
 		// Relays send signals to all ZTRAIT_STATION z-levels
 		if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
 			for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-				signals.levels |= z
+				signal.levels |= z
 		else
-			signals.levels |= T.z
+			signal.levels |= T.z
 
 // Checks to see if it can send/receive.
 
