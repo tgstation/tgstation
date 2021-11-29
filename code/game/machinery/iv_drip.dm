@@ -58,6 +58,7 @@
 	data["connected"] = attached ? TRUE : FALSE
 	data["beakerAttached"] = reagent_container ? TRUE : FALSE
 	data["useInternalStorage"] = use_internal_storage
+	return data
 
 /obj/machinery/iv_drip/ui_act(action, params)
 	. = ..()
