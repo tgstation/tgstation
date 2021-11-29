@@ -28,7 +28,7 @@ export const IVDrip = (props, context) => {
                 disabled={injectOnly}
                 content={mode}
                 icon={mode == "Injecting" ? "sign-in-alt" : "sign-out-alt"}
-                onClick{() => act('changeMode')} />
+                onClick={() => act('changeMode')} />
             </LabeledList.Item>
             <LabeledList.Item label="Attached Container" color = {beakerAttached ? 'good' : 'average'}>
               {beakerAttached ? "Container Attached" : "Container Not Attached"}
@@ -36,7 +36,7 @@ export const IVDrip = (props, context) => {
                 disabled = {(!beakerAttached) || useInternalStorage}
                 content = "Eject"
                 icon = "eject"
-                onClick{() => act('eject')} />
+                onClick={() => act('eject')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
