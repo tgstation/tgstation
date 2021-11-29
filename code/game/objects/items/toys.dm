@@ -197,11 +197,13 @@
 /obj/item/toy/captainsaid/attack_self(mob/living/user)
 	current_mode++
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
-	if (current_mode > modes.len)
-		to_chat(user, span_notice("You set \the [src] to [modes[current_mode]]"))
+	if (current_mode <= modes.len)
+		mode_name = modes[current_mode]
+		to_chat(user, span_notice("You set \the [src] to [mode_name]"))
 	else
 		to_chat(user, span_notice("You turn off \the [src] "))
-	icon_state = current_mode
+		current_mode = 1
+	icon_state = mode_name
 	update_appearance(UPDATE_ICON)
 /*
  * Fake singularity
