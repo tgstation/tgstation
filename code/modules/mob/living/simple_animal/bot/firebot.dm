@@ -133,8 +133,8 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/firebot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
-		return
+	if(.)
+		return TRUE
 	switch(action)
 		if("extinguish_fires")
 			extinguish_fires = !extinguish_fires
@@ -143,7 +143,7 @@
 		if("stationary_mode")
 			stationary_mode = !stationary_mode
 			update_appearance()
-	return
+	return FALSE
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))

@@ -156,8 +156,8 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
-		return
+	if(.)
+		return TRUE
 	switch(action)
 		if("check_id")
 			security_mode_flags ^= SECBOT_CHECK_IDS
@@ -169,7 +169,6 @@
 			security_mode_flags ^= SECBOT_HANDCUFF_TARGET
 		if("arrest_alert")
 			security_mode_flags ^= SECBOT_DECLARE_ARRESTS
-	return
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/attacking_human)
 	var/judgement_criteria = judgement_criteria()

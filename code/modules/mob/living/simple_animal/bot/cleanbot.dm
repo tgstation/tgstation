@@ -399,8 +399,8 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
 	. = ..()
-	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
-		return
+	if(.)
+		return TRUE
 	switch(action)
 		if("clean_blood")
 			blood = !blood
@@ -411,7 +411,7 @@
 		if("clean_graffiti")
 			drawn = !drawn
 	get_targets()
-	return
+	return FALSE
 
 /obj/machinery/bot_core/cleanbot/medbay
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

@@ -885,14 +885,17 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/ui_act(action, params)
 	. = ..()
 	if(.)
-		return
+		return TRUE
+
 	if(!bot_core.allowed(usr) && !usr.has_unlimited_silicon_privilege)
 		to_chat(usr, span_warning("Access denied."))
-		return
+		return TRUE
 	if(action == "lock")
 		bot_cover_flags ^= BOT_COVER_LOCKED
-	if(bot_cover_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
-		return
+
+	if(bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege)
+		return TRUE
+
 	switch(action)
 		if("power")
 			if(bot_mode_flags & BOT_MODE_ON)
@@ -908,7 +911,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))
-				return
+				return TRUE
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
@@ -926,7 +929,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			if(paicard)
 				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
 				ejectpai(usr)
-	return
+	return FALSE
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][get_bot_flag(BOT_MODE_ON)]"
@@ -957,11 +960,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
-	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || !key)
-		to_chat(user, span_warning("[src] is not compatible with [card]!"))
-		return
-	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
+	if(bot_cover_flags & BOT_COVER_LOCKED || bot_cover_flags & BOT_COVER_OPEN)
 		to_chat(user, span_warning("The personality slot is locked."))
+		return
+	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || key) //Not pAI controllable or is already player controlled.
+		to_chat(user, span_warning("[src] is not compatible with [card]!"))
 		return
 	if(!card.pai || !card.pai.mind)
 		to_chat(user, span_warning("[card] is inactive."))
