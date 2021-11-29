@@ -190,7 +190,7 @@
 	name = "\improper Captain's Aid"
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
 	icon = 'icons/obj/captainsaid.dmi'
-	icon_state = "1"
+	icon_state = "off"
 	var/current_mode = 1
 	var/list/modes= list("off", "port", "starboard", "fore", "aft")
 
@@ -198,12 +198,11 @@
 	current_mode++
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 	if (current_mode <= modes.len)
-		mode_name = modes[current_mode]
-		to_chat(user, span_notice("You set \the [src] to [mode_name]"))
+		to_chat(user, span_notice("You set \the [src] to [modes[current_mode]]"))
 	else
 		to_chat(user, span_notice("You turn off \the [src] "))
 		current_mode = 1
-	icon_state = mode_name
+	icon_state = modes[current_mode]
 	update_appearance(UPDATE_ICON)
 /*
  * Fake singularity
