@@ -2341,7 +2341,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jo" = (
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/magic,
 /turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (

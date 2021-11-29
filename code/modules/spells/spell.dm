@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			var/passes_req = FALSE
 			if(istype(H.back, /obj/item/mod/control))
 				var/obj/item/mod/control/mod = H.back
-				if(istype(mod.theme, /datum/mod_theme/wizard))
+				if(istype(mod.theme, /datum/mod_theme/magic))
 					passes_req = TRUE
 			if(!passes_req && !is_type_in_typecache(H.wear_suit, casting_clothes))
 				to_chat(H, span_warning("You don't feel strong enough without your robe!"))

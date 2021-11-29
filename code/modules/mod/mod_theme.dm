@@ -342,6 +342,18 @@
 		),
 	)
 
+/datum/mod_theme/security
+	name = "security"
+
+/datum/mod_theme/military
+	name = "military"
+
+/datum/mod_theme/safeguard
+	name = "safeguard"
+
+/datum/mod_theme/cosmohonk
+	name = "cosmohonk"
+
 /datum/mod_theme/syndicate
 	name = "syndicate"
 	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."
@@ -417,7 +429,7 @@
 		),
 	)
 
-/datum/mod_theme/wizard
+/datum/mod_theme/magic
 	name = "magic"
 	desc = "The Wizard Federation's relatively low-tech MODsuit. Is very protective, though."
 	default_skin = "magic"
@@ -490,6 +502,15 @@
 		),
 	)
 
+/datum/mod_theme/response
+	name = "response"
+
+/datum/mod_theme/trooper
+	name = "trooper"
+
+/datum/mod_theme/command
+	name = "command"
+
 /datum/mod_theme/debug
 	name = "debug"
 	desc = "Strangely nostalgic."
@@ -528,7 +549,7 @@
 		),
 	)
 
-/datum/mod_theme/admin
+/datum/mod_theme/administrative
 	name = "administrative"
 	desc = "A suit made of adminium. Who comes up with these stupid mineral names?"
 	default_skin = "debug"

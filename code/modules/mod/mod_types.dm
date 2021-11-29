@@ -56,8 +56,8 @@
 	cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/visor/thermal, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
 
-/obj/item/mod/control/pre_equipped/wizard
-	theme = /datum/mod_theme/wizard
+/obj/item/mod/control/pre_equipped/magic
+	theme = /datum/mod_theme/magic
 	cell = /obj/item/stock_parts/cell/crystal_cell/wizard
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/energy_shield/wizard)
 
@@ -71,8 +71,8 @@
 	cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(/obj/item/mod/module/storage/bluespace, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/bikehorn, /obj/item/mod/module/rad_protection, /obj/item/mod/module/tether, /obj/item/mod/module/injector) //one of every type of module, for testing if they all work correctly
 
-/obj/item/mod/control/pre_equipped/admin
-	theme = /datum/mod_theme/admin
+/obj/item/mod/control/pre_equipped/administrative
+	theme = /datum/mod_theme/administrative
 	cell = /obj/item/stock_parts/cell/infinite/abductor
 	initial_modules = list(/obj/item/mod/module/storage/bluespace, /obj/item/mod/module/welding, /obj/item/mod/module/stealth/ninja, /obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/magboot/advanced, /obj/item/mod/module/jetpack)
 
