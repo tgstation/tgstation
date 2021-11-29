@@ -542,12 +542,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			var/datum/card/target = GLOB.cached_cards[series]["ALL"][card]
 			var/toAdd = "The card [target.id] in [series] has the following default variables:"
 			var/shouldAdd = FALSE
-			for(var/var in (target.vars ^ thing.vars))
-				if(var == "icon" && target.vars[var] == DEFAULT_TCG_DMI)
+			for(var/current_var in (target.vars ^ thing.vars))
+				if(current_var == "icon" && target.vars[current_var] == DEFAULT_TCG_DMI)
 					continue
-				if(target.vars[var] == initial(target.vars[var]))
+				if(target.vars[current_var] == initial(target.vars[current_var]))
 					shouldAdd = TRUE
-					toAdd += "\n[var] with a value of [target.vars[var]]"
+					toAdd += "\n[var] with a value of [target.vars[current_var]]"
 			if(shouldAdd)
 				toReturn += toAdd
 	qdel(thing)
