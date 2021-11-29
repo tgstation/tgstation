@@ -38,3 +38,5 @@
 #define COMSIG_ATOM_SECONDARY_TOOL_ACT(tooltype) "tool_secondary_act_[tooltype]"
 	// We have the same returns here as COMSIG_ATOM_TOOL_ACT
 	// #define COMPONENT_BLOCK_TOOL_ATTACK (1<<0)
+///for any industrial lift/tram related interactions tied to specific items
+#define COMSIG_ATOM_INDUSTRIAL_LIFT_SPECIAL "industrial_lift_special_act"
