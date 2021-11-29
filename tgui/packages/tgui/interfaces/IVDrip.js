@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const IVDrip = (props, context) => {
@@ -26,12 +26,20 @@ export const IVDrip = (props, context) => {
             <LabeledList.Item label="Mode">
               <Button
                 disabled={injectOnly}
-                content={mode}
+                content={(mode) => {
+                  switch(mode) {
+                    case 0:
+                      return "Draining";
+                    case 1:
+                      return "Injecting";
+                }}}
                 icon={mode == "Injecting" ? "sign-in-alt" : "sign-out-alt"}
                 onClick={() => act('changeMode')} />
             </LabeledList.Item>
             <LabeledList.Item label="Attached Container" color = {beakerAttached ? 'good' : 'average'}>
-              {beakerAttached ? "Container Attached" : "Container Not Attached"}
+              <Box as="span" mr={2}>
+                {beakerAttached ? "Container Attached" : "Container Not Attached"}
+              </Box>
               <Button
                 disabled = {(!beakerAttached) || useInternalStorage}
                 content = "Eject"
