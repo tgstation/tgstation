@@ -14,13 +14,13 @@ export const IVDrip = (props, context) => {
     beakerAttached,
     useInternalStorage,
   } = data;
-  return(
+  return (
     <Window resizable>
       <Window.Content scrollable>
         <Section title="IV Status">
           <LabeledList>
             <LabeledList.Item label="Status" color={connected ? 'good' : 'average'}>
-            {connected ? "Connected" : "Not Connected"}
+              {connected ? "Connected" : "Not Connected"}
             </LabeledList.Item>
             <LabeledList.Item label="Mode">
               <Button
@@ -29,35 +29,35 @@ export const IVDrip = (props, context) => {
                 icon={mode ? "sign-in-alt" : "sign-out-alt"}
                 onClick={() => act('changeMode')} />
             </LabeledList.Item>
-            <LabeledList.Item label="Attached Container" color = {beakerAttached ? 'good' : 'average'}>
+            <LabeledList.Item label="Attached Container" color={beakerAttached ? 'good' : 'average'}>
               <Box as="span" mr={2}>
                 {beakerAttached ? "Container Attached" : "Container Not Attached"}
               </Box>
               <Button
-                disabled = {(!beakerAttached) || useInternalStorage}
-                content = "Eject"
-                icon = "eject"
+                disabled={(!beakerAttached) || useInternalStorage}
+                content="Eject"
+                icon="eject"
                 onClick={() => act('eject')} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
         <Section title="Injection Settings">
           <LabeledList>
-          <LabeledList.Item label = "Injection Rate">
-            <NumberInput
-              value={transferRate}
-              unit="u/cycle"
-              minValue={minInjectRate}
-              maxValue={maxInjectRate}
-              step={0.1}
-              onChange={(e,value) => act('changeRate',{
+            <LabeledList.Item label="Injection Rate">
+              <NumberInput
+                value={transferRate}
+                unit="u/cycle"
+                minValue={minInjectRate}
+                maxValue={maxInjectRate}
+                step={0.1}
+                onChange={(e, value) => act('changeRate', {
                 rate: value,
-              })}
-            />
-          </LabeledList.Item>
+                })}
+              />
+            </LabeledList.Item>
           </LabeledList>
         </Section>
       </Window.Content>
     </Window>
-  )
-}
+  );
+};
