@@ -2830,6 +2830,7 @@
 #include "code\modules\mob\living\ventcrawling.dm"
 #include "code\modules\mob\living\basic\basic.dm"
 #include "code\modules\mob\living\basic\basic_defense.dm"
+#include "code\modules\mob\living\basic\cobraworm.dm"
 #include "code\modules\mob\living\basic\health_adjustment.dm"
 #include "code\modules\mob\living\basic\farm_animals\cows.dm"
 #include "code\modules\mob\living\basic\pigeon\pigeon.dm"

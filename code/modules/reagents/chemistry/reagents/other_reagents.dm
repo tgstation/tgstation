@@ -2802,3 +2802,33 @@
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
 
+/datum/reagent/nightcrawler_enzymes
+	name = "nightcrawler enzymes"
+	description = "The fluoresenct digestive juices of the cobraworm. While it is considered to be highly irritating, scientists have discovered it also acts as a plant hormone, speeding up the maturation of common garden plants."
+	taste_description = "earthy slime"
+	color = "#cdff43"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolization_rate = 1 * REM //Fast as fuck, boi
+
+/datum/reagent/nightcrawler_saliva/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		var/slime = chems.get_reagent_amount(type)
+		mytray.adjustWater(round(slime))
+		if(myseed && prob(slime))
+			myseed.adjust_maturation(-1)
+
+/datum/reagent/nightcrawler_enzymes/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.particles = new /particles/worm_enzymes()
+
+/datum/reagent/nightcrawler_enzymes/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	QDEL_NULL(affected_mob.particles)
+
+/datum/reagent/nightcrawler_enzymes/on_mob_life(mob/living/carbon/hydrolyzed_mob, delta_time, times_fired)
+	. = ..()
+	hydrolyzed_mob.adjustFireLoss(4 * REM * delta_time)
+	animate(hydrolyzed_mob, pixel_z = 5, time = 1)
+	animate(pixel_z = 0, time = 2)
+	playsound(hydrolyzed_mob, 'sound/chemistry/bufferadd.ogg', 40)

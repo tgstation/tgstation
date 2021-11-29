@@ -8,8 +8,11 @@
 #define MAX_PLANT_INSTABILITY 100
 #define MAX_PLANT_WEEDRATE 10
 #define MAX_PLANT_WEEDCHANCE 67
+#define MAX_PLANT_MATURATION 100
+
 /// MINS:
 #define MIN_PLANT_ENDURANCE 10
+#define MIN_PLANT_MATURATION 1
 
 /// -- Some botany trait value defines. --
 /// Weed Hardy can only reduce plants to 3 yield.

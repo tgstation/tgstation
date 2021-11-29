@@ -352,6 +352,10 @@
 		return
 	instability = clamp(instability + adjustamt, 0, MAX_PLANT_INSTABILITY)
 
+///Adjusts seed maturation up or down according to adjustamt.
+/obj/item/seeds/proc/adjust_maturation(adjustamt)
+	maturation = clamp(maturation + adjustamt, MIN_PLANT_MATURATION, MAX_PLANT_MATURATION)
+
 /**
  * Adjusts seed weed grwoth speed up or down according to adjustamt. (Max 10)
  */
