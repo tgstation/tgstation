@@ -1,7 +1,7 @@
 #define IV_TAKING 0
 #define IV_INJECTING 1
 
-#define MIN_TRANSFER_RATE 0.5
+#define MIN_TRANSFER_RATE 0.1
 #define MAX_TRANSFER_RATE 5
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
