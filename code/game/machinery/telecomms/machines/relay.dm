@@ -23,7 +23,12 @@
 	// Add our level and send it back
 	var/turf/T = get_turf(src)
 	if(can_send(signal) && T)
-		signal.levels |= T.z
+		// Relays send signals to all ZTRAIT_STATION z-levels
+		if(SSmapping.level_trait(T.z, ZTRAIT_STATION))
+			for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+				signals.levels |= z
+		else
+			signals.levels |= T.z
 
 // Checks to see if it can send/receive.
 
