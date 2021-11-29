@@ -547,7 +547,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 					continue
 				if(target.vars[current_var] == initial(target.vars[current_var]))
 					shouldAdd = TRUE
-					toAdd += "\n[var] with a value of [target.vars[current_var]]"
+					toAdd += "\n[current_var] with a value of [target.vars[current_var]]"
 			if(shouldAdd)
 				toReturn += toAdd
 	qdel(thing)
