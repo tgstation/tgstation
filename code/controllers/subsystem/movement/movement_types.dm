@@ -11,7 +11,7 @@
 	var/atom/movable/moving
 	///Defines how different move loops override each other. Lower numbers beat higher numbers
 	var/priority = MOVEMENT_DEFAULT_PRIORITY
-	///Bitfield of different things that effect how a loop operates
+	///Bitfield of different things that affect how a loop operates
 	var/flags
 	///Time till we stop processing in deci-seconds, defaults to forever
 	var/lifetime = INFINITY
