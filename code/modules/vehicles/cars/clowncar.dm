@@ -61,8 +61,8 @@
 				addtimer(CALLBACK(src, .proc/irish_car_bomb), 5 SECONDS)
 
 /obj/vehicle/sealed/car/clowncar/proc/irish_car_bomb()
-	dump_mobs(randomstep = FALSE) // the mobs must be dumped or else they won't explode
-	explosion(src, devastation_range = 2, heavy_impact_range = 5, light_impact_range = 10, flame_range = 10) // half a max cap. yep
+	dump_mobs()
+	explosion(src, light_impact_range = 1)
 
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()
