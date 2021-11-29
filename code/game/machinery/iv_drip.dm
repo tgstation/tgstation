@@ -52,7 +52,10 @@
 	var/list/data = list()
 	data["transferRate"] = transfer_rate
 	data["injectOnly"] = inject_only ? 1 : 0
-	data["containerName"] = use_internal_storage ? "internal reagent storage" : reagent_container.name
+	data["maxInjectRate"] = MAX_TRANSFER_RATE
+	data["minInjectRate"] = MIN_TRANSFER_RATE
+	data["mode"] = mode ? "Injecting" : "Draining"
+	data["connected"] = attached ? 1 : 0
 
 /obj/machinery/iv_drip/ui_act(action, params)
 	. = ..()
