@@ -23,6 +23,12 @@
 															"internal gps" = 35,
 															"universal translator" = 35
 															)
+/// Bool that determines if the pAI can refresh medical/security records.
+/mob/living/silicon/pai/var/refresh_spam = FALSE
+/// Cached list for medical records to send as static data
+/mob/living/silicon/pai/var/list/medical_records = list()
+/// Cached list for security records to send as static data
+/mob/living/silicon/pai/var/list/security_records = list()
 
 // Opens TGUI interface
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
@@ -38,9 +44,9 @@
 	data["available"] = available_software
 	data["records"] = list()
 	if("medical records" in pai.software)
-		data["records"]["medical"] = GLOB.data_core.get_general_records()
+		data["records"]["medical"] = medical_records
 	if("security records" in pai.software)
-		data["records"]["security"] = GLOB.data_core.get_security_records()
+		data["records"]["security"] = security_records
 	return data
 
 // Variables sent to TGUI
@@ -55,6 +61,7 @@
 	data["master"] = list()
 	data["pda"] = list()
 	data["ram"] = ram
+	data["refresh_spam"] = refresh_spam
 	if(aiPDA)
 		data["pda"]["power"] = !aiPDA.toff
 		data["pda"]["silent"] = aiPDA.silent
@@ -169,7 +176,15 @@
 		if("radio")
 			radio.attack_self(src)
 		if("refresh")
+			if(refresh_spam)
+				return FALSE
+			refresh_spam = TRUE
+			if(params["list"] == "medical")
+				medical_records = GLOB.data_core.get_general_records()
+			if(params["list"] == "security")
+				security_records = GLOB.data_core.get_security_records()
 			ui.send_full_update()
+			addtimer(CALLBACK(src, .proc/refresh_again), 3 SECONDS)
 		if("remote_signaler")
 			signaler.ui_interact(src)
 		if("security_hud")
@@ -263,3 +278,10 @@
 		else
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress. Unable to pinpoint location.</b></font>")
 	hacking = TRUE
+
+/**
+ * Proc that switches whether a pAI can refresh
+ * the records window again.
+ */
+/mob/living/silicon/pai/proc/refresh_again()
+	refresh_spam = FALSE

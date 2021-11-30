@@ -323,12 +323,13 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
  */
 /datum/datacore/proc/get_general_records()
 	if(!GLOB.data_core.general)
-		return FALSE
+		return list()
 	/// The array of records
 	var/list/general_records_out = list()
 	for(var/datum/data/record/gen_record as anything in GLOB.data_core.general)
 		/// The object containing the crew info
 		var/list/crew_record = list()
+		crew_record["ref"] = REF(gen_record)
 		crew_record["name"] = gen_record.fields["name"]
 		crew_record["physical_health"] = gen_record.fields["p_stat"]
 		crew_record["mental_health"] = gen_record.fields["m_stat"]
@@ -344,12 +345,13 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
  */
 /datum/datacore/proc/get_security_records()
 	if(!GLOB.data_core.security)
-		return FALSE
+		return list()
 	/// The array of records
 	var/list/security_records_out = list()
 	for(var/datum/data/record/sec_record as anything in GLOB.data_core.security)
 		/// The object containing the crew info
 		var/list/crew_record = list()
+		crew_record["ref"] = REF(sec_record)
 		crew_record["name"] = sec_record.fields["name"]
 		crew_record["status"] = sec_record.fields["criminal"] // wanted status
 		crew_record["crimes"] = length(sec_record.fields["crim"])

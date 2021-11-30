@@ -14,6 +14,7 @@ type PaiInterfaceData = {
   pda: PDA;
   ram: number;
   records: Records;
+  refresh_spam: number;
 };
 
 type Available = {
@@ -381,7 +382,7 @@ const InstalledInfo = (props) => {
 const RecordsDisplay = (props, context) => {
   const { act, data } = useBackend<PaiInterfaceData>(context);
   const { record_type } = props;
-  const { records = [] } = data;
+  const { records = [], refresh_spam } = data;
   const convertedRecords: CrewRecord[] = records[record_type];
 
   return (
@@ -390,8 +391,11 @@ const RecordsDisplay = (props, context) => {
       buttons={
         <Stack>
           <Stack.Item>
-            <Button onClick={() => act('refresh')} tooltip="Refresh">
-              <Icon mr={-0.7} name="sync" />
+            <Button
+              disabled={refresh_spam}
+              onClick={() => act('refresh', { list: record_type })}
+              tooltip="Refresh">
+              <Icon mr={-0.7} name="sync" spin={refresh_spam} />
             </Button>
           </Stack.Item>
           <Stack.Item>
@@ -403,7 +407,7 @@ const RecordsDisplay = (props, context) => {
       scrollable>
       <Table>
         {convertedRecords?.map((record) => {
-          return <RecordRow key={record} record={record} />;
+          return <RecordRow key={record.ref} record={record} />;
         })}
       </Table>
     </Section>
@@ -431,10 +435,12 @@ const RecordLabels = (props) => {
 const RecordRow = (props) => {
   const { record = [] } = props;
   const convertedRecord = Object.values(record);
+  /** I do not want to show the ref here */
+  const filteredRecord = convertedRecord.filter((_, index) => index !== 0);
 
   return (
     <Table.Row className="candystripe">
-      {convertedRecord?.map((value) => {
+      {filteredRecord?.map((value) => {
         return <Table.Cell key={value}>{value}</Table.Cell>;
       })}
     </Table.Row>
