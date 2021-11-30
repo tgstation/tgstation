@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 			pdata["ref"] = REF(painting)
 			. += list(pdata)
 		else
-			. += list(list("title"=painting.title,"md5"=painting.md5,"ref"=REF(painting)))
+			. += list(list("title" = painting.title,"md5" = painting.md5,"ref" = REF(painting)))
 
 /// Returns paintings with given tag.
 /datum/controller/subsystem/persistent_paintings/proc/get_paintings_with_tag(tag_name)
@@ -160,9 +160,9 @@ SUBSYSTEM_DEF(persistent_paintings)
 					var/new_png_path = "data/paintings/images/[old_data["md5"]].png"
 					fcopy(old_png_path,new_png_path)
 					fdel(old_png_path)
-					var/icon/I = new(new_png_path)
-					var/width = I.Width()
-					var/height = I.Height()
+					var/icon/painting_icon = new(new_png_path)
+					var/width = painting_icon.Width()
+					var/height = painting_icon.Height()
 					var/list/new_data = list()
 					new_data["md5"] = old_data["md5"]
 					new_data["title"] = old_data["title"] || "Untitled Artwork"
@@ -193,7 +193,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	var/json_file = file("data/paintings.json")
 	fdel(json_file)
-	var/list/all_data = list("version"=PAINTINGS_DATA_FORMAT_VERSION)
+	var/list/all_data = list("version" = PAINTINGS_DATA_FORMAT_VERSION)
 	var/list/painting_data = list()
 	for(var/datum/painting/painting as anything in paintings)
 		painting_data += list(painting.to_json())

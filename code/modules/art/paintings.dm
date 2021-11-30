@@ -167,8 +167,8 @@
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !painting_metadata.loaded_from_json || !isliving(user))
 		return
-	var/mob/living/L = user
-	var/obj/item/card/id/id_card = L.get_idcard(TRUE)
+	var/mob/living/living_user = user
+	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(!id_card)
 		to_chat(user,span_notice("You don't even have a id and you want to be an art patron?"))
 		return
