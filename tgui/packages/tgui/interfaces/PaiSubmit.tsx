@@ -41,7 +41,7 @@ export const PaiSubmit = (_, context) => {
             <InputDisplay input={input} onChangeHandler={onChangeHandler} />
           </Stack.Item>
           <Stack.Item>
-            <SubmitDisplay input={input} />
+            <ButtonsDisplay input={input} />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -113,18 +113,36 @@ const InputDisplay = (props) => {
 };
 
 /** Gives the user a submit button */
-const SubmitDisplay = (props, context) => {
+const ButtonsDisplay = (props, context) => {
   const { act } = useBackend<CandidateData>(context);
   const { input } = props;
   return (
     <Section fill>
-      <Button
-        onClick={() =>
-          act('submit', {
-            candidate: input,
-          })}>
-        SUBMIT
-      </Button>
+      <Stack>
+        <Stack.Item>
+          <Button
+            onClick={() => act('save', { candidate: input })}
+            tooltip="Saves your candidate data locally.">
+            SAVE
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            onClick={() => act('load')}
+            tooltip="Loads saved candidate data, if any.">
+            LOAD
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            onClick={() =>
+              act('submit', {
+                candidate: input,
+              })}>
+            SUBMIT
+          </Button>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
