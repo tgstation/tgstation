@@ -93,7 +93,7 @@
 		affected_turf.underlays += current_underlay
 	else if(!set_luminosity)
 		affected_turf.underlays -= current_underlay
-		current_underlay.icon_state = "dark"
+		current_underlay.icon_state = "lighting_dark"
 		current_underlay.color = null
 		affected_turf.underlays += current_underlay
 	else
