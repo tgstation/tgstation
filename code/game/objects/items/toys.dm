@@ -204,6 +204,9 @@
 		current_mode = 1
 	icon_state = modes[current_mode]
 	update_appearance(UPDATE_ICON)
+/obj/item/toy/captainsaid/collector
+	name = "\improper Collector's Edition Captain's Aid"
+	desc = "A copy of the first run of Captain's Aid ever released. Functionally the same as the later batches, just more expensive. For the truly aristocratic."
 /*
  * Fake singularity
  */
