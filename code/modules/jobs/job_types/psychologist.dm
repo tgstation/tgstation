@@ -1,11 +1,11 @@
 /datum/job/psychologist
 	title = "Psychologist"
-	department_head = list("Head of Personnel","Chief Medical Officer")
+	department_head = list("Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel and the chief medical officer"
-	selection_color = "#bbe291"
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/psychologist
@@ -17,8 +17,9 @@
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_PSYCHOLOGIST
+	bounty_types = CIV_JOB_MED
 	departments_list = list(
-		/datum/job_department/service,
+		/datum/job_department/medical,
 		)
 
 	family_heirlooms = list(/obj/item/storage/pill_bottle)
