@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(pai)
 	/// All pAI cards on the map.
 	var/list/pai_card_list = list()
 
+/// Created when a user clicks the "pAI candidate" window
 /datum/pai_candidate
 	/// User inputted OOC comments
 	var/comments
@@ -62,11 +63,9 @@ SUBSYSTEM_DEF(pai)
 		candidates.Add(candidate)
 	ui_interact(user)
 
-/// Ensures an observer has the window open
 /datum/controller/subsystem/pai/ui_state(mob/user)
 	return GLOB.observer_state
 
-/// Opens the TGUI window
 /datum/controller/subsystem/pai/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -74,7 +73,6 @@ SUBSYSTEM_DEF(pai)
 		ui = new(user, src, "PaiSubmit")
 		ui.open()
 
-/// The data sent to the window.
 /datum/controller/subsystem/pai/ui_static_data(mob/user)
 	. = ..()
 	var/list/data = list()
@@ -87,7 +85,6 @@ SUBSYSTEM_DEF(pai)
 	data["name"] = candidate.name
 	return data
 
-/// Actions sent by TGUI
 /datum/controller/subsystem/pai/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -95,6 +92,8 @@ SUBSYSTEM_DEF(pai)
 	/// The matching candidate from search
 	var/datum/pai_candidate/candidate = check_candidate(usr)
 	if(isnull(candidate))
+		to_chat(usr, span_warning("There was an error. Please resubmit."))
+		ui.close()
 		return FALSE
 	switch(action)
 		if("submit")
