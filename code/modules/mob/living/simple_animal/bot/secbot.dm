@@ -9,22 +9,21 @@
 	maxHealth = 25
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
+	combat_mode = TRUE
 
+	bot_core = /obj/machinery/bot_core/secbot
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
-	model = "Securitron"
-	bot_core_type = /obj/machinery/bot_core/secbot
-	window_id = "autosec"
-	window_name = "Automatic Security Unit v1.6"
-	allow_pai = FALSE
+	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
+	hackables = "target identification systems"
 	path_image_color = "#FF0000"
 
-	combat_mode = TRUE
-
-	///The tool this Secbot will use to make arrests
-	var/obj/item/weapon = /obj/item/melee/baton/security
+	///The type of baton this Secbot will use
+	var/baton_type = /obj/item/melee/baton/security
+	///The weapon (from baton_type) that will be used to make arrests.
+	var/obj/item/weapon
 	///Their current target
 	var/mob/living/carbon/target
 	///Name of their last target to prevent spamming
@@ -44,7 +43,7 @@
 	var/fair_market_price_arrest = 25
 	///Charged each time the violator is stunned on detain
 	var/fair_market_price_detain = 5
-	/// Force of the harmbaton used on them
+	///Force of the harmbaton used on them
 	var/weapon_force = 20
 	///The department the secbot will deposit collected money into
 	var/payment_department = ACCOUNT_SEC
@@ -52,13 +51,18 @@
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
 	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
-	auto_patrol = TRUE
+	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
+
+/mob/living/simple_animal/bot/secbot/beepsky/officer
+	name = "Officer Beepsky"
+	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too."
+	health = 45
 
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
 	health = 45
-	auto_patrol = FALSE
+	bot_mode_flags = ~BOT_MODE_AUTOPATROL
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/beepsky/jr
@@ -76,6 +80,13 @@
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
 
+/mob/living/simple_animal/bot/secbot/genesky
+	name = "Officer Genesky"
+	desc = "A beefy variant of the standard securitron model."
+	health = 50
+	faction = list("nanotrasenprivate")
+	bot_mode_flags = BOT_MODE_ON
+	bot_cover_flags = BOT_COVER_LOCKED | BOT_COVER_EMAGGED
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
@@ -86,7 +97,7 @@
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
-	weapon = new weapon()
+	weapon = new baton_type()
 	update_appearance(UPDATE_ICON)
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
@@ -131,15 +142,10 @@
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
-/mob/living/simple_animal/bot/secbot/set_custom_texts()
-	text_hack = "You overload [name]'s target identification system."
-	text_dehack = "You reboot [name] and restore the target identification."
-	text_dehack_fail = "[name] refuses to accept your authority!"
-
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
+	if(!(bot_cover_flags & BOT_COVER_LOCKED) || issilicon(user) || isAdminGhostAI(user))
 		data["custom_controls"]["check_id"] = security_mode_flags & SECBOT_CHECK_IDS
 		data["custom_controls"]["check_weapons"] = security_mode_flags & SECBOT_CHECK_WEAPONS
 		data["custom_controls"]["check_warrants"] = security_mode_flags & SECBOT_CHECK_RECORDS
@@ -150,7 +156,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/secbot/ui_act(action, params)
 	. = ..()
-	if(. || (locked && !usr.has_unlimited_silicon_privilege))
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 	switch(action)
 		if("check_id")
@@ -175,7 +181,7 @@
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
 	var/final = FALSE
-	if(emagged)
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		final |= JUDGE_EMAGGED
 	if(bot_type == ADVANCED_SEC_BOT)
 		final |= JUDGE_IGNOREMONKEYS
@@ -209,7 +215,7 @@
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, params)
 	..()
-	if(!on) // Bots won't remember if you hit them while they're off.
+	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
 	if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
 		return
@@ -219,7 +225,7 @@
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-	if(!emagged)
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
 		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
@@ -236,7 +242,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(!on)
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
@@ -268,7 +274,7 @@
 	addtimer(CALLBACK(src, .proc/handcuff_target, target), 60)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
-	if(!on || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!(bot_mode_flags & BOT_MODE_ON) || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
@@ -280,7 +286,7 @@
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
 	var/threat = 5
 
 	if(harm)
@@ -312,7 +318,7 @@
 		if(BOT_IDLE) // idle
 			walk_to(src,0)
 			look_for_perp() // see if any criminals are in range
-			if(!mode && auto_patrol) // still idle, and set to patrol
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 
 		if(BOT_HUNT) // hunting for perp
@@ -467,10 +473,7 @@
 		secbot_assembly.add_overlay("hs_hole")
 		secbot_assembly.created_name = name
 		new /obj/item/assembly/prox_sensor(Tsec)
-		drop_part(weapon, Tsec)
-
-		if(prob(50))
-			drop_part(robot_arm, Tsec)
+		drop_part(baton_type, Tsec)
 
 	do_sparks(3, TRUE, src)
 

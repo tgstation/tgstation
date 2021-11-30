@@ -68,12 +68,6 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/suit/black/female
-	name = "executive suit"
-	desc = "A formal trouser suit for women, intended for the station's finest."
-	icon_state = "black_suit_fem"
-	inhand_icon_state = "black_suit_fem"
-
 /obj/item/clothing/under/suit/green
 	name = "green suit"
 	desc = "A green suit and yellow necktie. Baller."

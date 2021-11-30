@@ -663,5 +663,7 @@
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,
-		/datum/reagent/uranium
+		/datum/reagent/uranium,
+		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/medicine/c2/synthflesh
 	)
