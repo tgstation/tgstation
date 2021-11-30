@@ -48,7 +48,7 @@
 		ui = new(user, src, "IVDrip")
 		ui.open()
 
-/obj/machinery/iv_drip/ui_data(mod/user)
+/obj/machinery/iv_drip/ui_data(mob/user)
 	var/list/data = list()
 	data["transferRate"] = transfer_rate
 	data["injectOnly"] = inject_only ? TRUE : FALSE
