@@ -12,7 +12,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/psychologist
 
 	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_SRV
+	paycheck_department = ACCOUNT_MED
 
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
@@ -48,7 +48,7 @@
 		/obj/item/storage/pill_bottle/psicodine,
 		)
 	belt = /obj/item/pda/medical
-	ears = /obj/item/radio/headset/headset_srvmed
+	ears = /obj/item/radio/headset/headset_med
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/clipboard
 
