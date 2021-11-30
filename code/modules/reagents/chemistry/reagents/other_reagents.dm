@@ -2829,6 +2829,6 @@
 /datum/reagent/nightcrawler_enzymes/on_mob_life(mob/living/carbon/hydrolyzed_mob, delta_time, times_fired)
 	. = ..()
 	hydrolyzed_mob.adjustFireLoss(4 * REM * delta_time)
-	animate(hydrolyzed_mob, pixel_z = 5, time = 1)
-	animate(pixel_z = 0, time = 2)
+	animate(hydrolyzed_mob, pixel_z = 5, time = 1, easing = (EASE_OUT|BOUNCE_EASING))
+	animate(pixel_z = 0, time = 2, easing = (EASE_IN|BOUNCE_EASING))
 	playsound(hydrolyzed_mob, 'sound/chemistry/bufferadd.ogg', 40)

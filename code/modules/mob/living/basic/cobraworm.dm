@@ -1,7 +1,21 @@
 /mob/living/basic/cobraworm
 	name = "tiziran cobraworm"
+	desc = "A wormlike creature from the Tiziran crudlands. It is commonly encounted near bone heaps, plastomiddens and compost basins. Its noxious spit is feared amongst Tirizan scourjocks."
+	icon = 'icons/mob/cobraworm.dmi'
+	icon_state = "cobraworm"
+	base_icon_state = "cobraworm"
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	maxHealth = 80
+	health = 80
+	speed = 0
 	ranged_ability = /obj/projectile/worm_spit
+	melee_damage_lower = 3
+	melee_damage_upper = 6
+	obj_damage = 10
 
+/mob/living/basic/cobraworm/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /particles/worm_enzymes
 	icon = 'icons/effects/particles/worm_enzymes.dmi'

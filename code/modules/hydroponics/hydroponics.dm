@@ -909,3 +909,11 @@
 
 /obj/machinery/hydroponics/soil/CtrlClick(mob/user)
 	return //Soil has no electricity.
+
+/obj/machinery/hydroponics/soil/worm
+	name = "worm castings"
+	desc = "A patch of fetrile soil straight from disgestive tract of the gardeners slimy friends."
+	icon_state = "soil_worm"
+	maxnutri = 20
+
+
