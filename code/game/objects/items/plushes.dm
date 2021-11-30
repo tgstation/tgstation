@@ -605,7 +605,10 @@
 
 /obj/item/toy/plush/goatplushie/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_INDUSTRIAL_LIFT_SPECIAL, .proc/splat)
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/splat,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)
 	if(!istype(fat_dart))

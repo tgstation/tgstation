@@ -292,11 +292,10 @@ GLOBAL_LIST_EMPTY(lifts)
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
 
-		for(var/atom/movable/specific_items as anything in destination.contents)
-			SEND_SIGNAL(specific_items, COMSIG_ATOM_INDUSTRIAL_LIFT_SPECIAL)
-
 	set_glide_size(gliding_amount)
 	forceMove(destination)
+	///ideally should be used to catch any unique interactions between items and the lift that isn't caught by the above
+	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER)
 	for(var/atom/movable/thing as anything in things_to_move)
 		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
