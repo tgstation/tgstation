@@ -3,16 +3,25 @@ SUBSYSTEM_DEF(pai)
 
 	flags = SS_NO_INIT|SS_NO_FIRE
 
+	/// List of pAI candidates, including those not submitted.
 	var/list/candidates = list()
+	/// Prevents a crew member from hitting "request pAI"
 	var/request_spam = FALSE
+	/// Prevents a pAI from submitting itself repeatedly and sounding an alert.
 	var/submit_spam = FALSE
+	/// All pAI cards on the map.
 	var/list/pai_card_list = list()
 
 /datum/pai_candidate
+	/// User inputted OOC comments
 	var/comments
+	/// User inputted behavior description
 	var/description
+	/// User's ckey - not input
 	var/key
+	/// User's pAI name. If blank, ninja name.
 	var/name
+	/// If the user has hit "submit"
 	var/ready = FALSE
 
 /**
@@ -100,7 +109,6 @@ SUBSYSTEM_DEF(pai)
 			candidate.description = params["candidate"]["description"]
 			candidate.name = params["candidate"]["name"]
 			candidate.savefile_save(usr)
-			to_chat(usr, span_boldnotice("You have saved pAI information locally."))
 		if("load")
 			candidate.savefile_load(usr)
 			//In case people have saved unsanitized stuff.
