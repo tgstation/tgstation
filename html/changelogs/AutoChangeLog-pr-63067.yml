@@ -1,6 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Elevators are no longer defying the laws of physics and therefore can no longer phase through ceilings or floors."
-  - bugfix: "When an individual is interacting with an elevator and said elevator is moved, their menu will be closed if they weren't the one to cause that move, to prevent more physics-defying operations."
-  - code_imp: "Improved the industrial lift code by adding documentation and trying to enforce the coding standards in there while I was at it."
