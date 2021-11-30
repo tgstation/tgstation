@@ -3,7 +3,6 @@ import { Component, createRef, RefObject } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
-import { createLogger } from '../logging';
 
 const PX_PER_UNIT = 24;
 
@@ -23,8 +22,6 @@ type PointData = {
   y: number,
   color: Color
 }
-
-const logger = createLogger("aaah");
 
 const fromDM = (data: string[][]) => {
   return data.map(inner => inner.map(v => Color.fromHex(v)));

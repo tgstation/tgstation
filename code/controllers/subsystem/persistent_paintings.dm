@@ -6,16 +6,17 @@
 		{
 			"md5":"2e117d9d372fb6823bd81d3542a419d6", //unique identifier
 			"creator_ckey" : "example",
-			"creator_name" : "example"
-			"creation_date" : "YYYY-MM-DD hh:mm:ss"
-			"creation_round_id": 222
-			"title": "example title"
-			"tags": ["library","library_private"]
-			"patron_ckey" : "example"
-			"patron_name" : "example"
-			"credit_value" : 999
-			"width" : 24
-			"height" : 24
+			"creator_name" : "example",
+			"creation_date" : "YYYY-MM-DD hh:mm:ss",
+			"creation_round_id": 222,
+			"title": "example title",
+			"tags": ["library","library_private"],
+			"patron_ckey" : "example",
+			"patron_name" : "example",
+			"credit_value" : 999,
+			"width" : 24,
+			"height" : 24,
+			"medium" : "Oil on canvas"
 		},
 	]
 }
