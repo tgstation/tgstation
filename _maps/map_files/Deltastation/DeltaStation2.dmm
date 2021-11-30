@@ -39418,17 +39418,6 @@
 /obj/machinery/mineral/ore_redemption,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/box,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/mineral/ore_redemption,
 /obj/machinery/door/window/southleft{
 	name = "Ore Redemption Access";
 	req_access_txt = "31;48;64"
