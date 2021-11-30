@@ -11,6 +11,8 @@
 	custom_premium_price = PAYCHECK_HARD * 1.25
 	///don't spam alert messages.
 	var/alert_cooldown
+	/// If the pAIcard is slotted in a PDA
+	var/slotted = FALSE
 	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
 	///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
@@ -57,7 +59,6 @@
 	user.set_machine(src)
 	ui_interact(user)
 
-/// Opens the TGUI window
 /obj/item/paicard/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -65,11 +66,9 @@
 		ui = new(user, src, "PaiCard")
 		ui.open()
 
-/// Ensures the paicard is in hand
 /obj/item/paicard/ui_state(mob/user)
-	return GLOB.inventory_state
+	return GLOB.paicard_state
 
-/// Data sent to TGUI
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
 	var/list/data = list()
@@ -89,7 +88,6 @@
 	data["pai"]["receive"] = pai.can_receive
 	return data
 
-/// Actions received from TGUI
 /obj/item/paicard/ui_act(action, list/params)
 	. = ..()
 	if(.)
