@@ -1,8 +1,8 @@
 #define IV_TAKING 0
 #define IV_INJECTING 1
 
-#define MIN_TRANSFER_RATE 0.1
-#define MAX_TRANSFER_RATE 5
+#define MIN_IV_TRANSFER_RATE 0.1
+#define MAX_IV_TRANSFER_RATE 5
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -18,7 +18,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/transfer_rate = MAX_TRANSFER_RATE
+	var/transfer_rate = MAX_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -52,8 +52,8 @@
 	var/list/data = list()
 	data["transferRate"] = transfer_rate
 	data["injectOnly"] = inject_only ? TRUE : FALSE
-	data["maxInjectRate"] = MAX_TRANSFER_RATE
-	data["minInjectRate"] = MIN_TRANSFER_RATE
+	data["maxInjectRate"] = MAX_IV_TRANSFER_RATE
+	data["minInjectRate"] = MIN_IV_TRANSFER_RATE
 	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
 	data["connected"] = attached ? TRUE : FALSE
 	data["beakerAttached"] = reagent_container ? TRUE : FALSE
@@ -75,7 +75,7 @@
 			var/target_rate = params["rate"]
 			if(text2num(target_rate) != null)
 				target_rate = text2num(target_rate)
-				transfer_rate = clamp(target_rate, MIN_TRANSFER_RATE, MAX_TRANSFER_RATE)
+				transfer_rate = clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE)
 				. = TRUE
 	update_appearance()
 
@@ -222,7 +222,7 @@
 
 /obj/machinery/iv_drip/AltClick(mob/user)
 	if(can_interact(user))
-		transfer_rate = MAX_TRANSFER_RATE
+		transfer_rate = MAX_IV_TRANSFER_RATE
 		to_chat(usr, span_notice("You set the transfer rate to [transfer_rate] units per metabolism cycle to speed up the [src]."))
 	return ..()
 
@@ -354,5 +354,5 @@
 #undef IV_TAKING
 #undef IV_INJECTING
 
-#undef MIN_TRANSFER_RATE
-#undef MAX_TRANSFER_RATE
+#undef MIN_IV_TRANSFER_RATE
+#undef MAX_IV_TRANSFER_RATE
