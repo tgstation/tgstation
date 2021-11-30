@@ -51,12 +51,12 @@ export const PaintingAdminPanel = (props, context) => {
               <LabeledList.Item label="md5" content={chosenPainting.md5} />
               <LabeledList.Item label="title">
                 <Box inline>{chosenPainting.title}</Box>
-                <Button onClick={() => act("rename", { ref: chosenPainting.ref })} icon="edit"/>
+                <Button onClick={() => act("rename", { ref: chosenPainting.ref })} icon="edit" />
               </LabeledList.Item>
               <LabeledList.Item label="creator ckey" content={chosenPainting.creator_ckey} />
               <LabeledList.Item label="creator name">
                 <Box inline>{chosenPainting.creator_name}</Box>
-                <Button onClick={() => act("rename_author", { ref: chosenPainting.ref })} icon="edit"/>
+                <Button onClick={() => act("rename_author", { ref: chosenPainting.ref })} icon="edit" />
               </LabeledList.Item>
               <LabeledList.Item label="creation date" content={chosenPainting.creation_date} />
               <LabeledList.Item label="creation round id" content={chosenPainting.creation_round_id} />

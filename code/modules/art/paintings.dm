@@ -233,17 +233,17 @@
 	return data.Join("")
 
 //Todo make this element ?
-/obj/item/canvas/proc/get_paint_tool_color(obj/item/I)
-	if(!I)
+/obj/item/canvas/proc/get_paint_tool_color(obj/item/painting_implement)
+	if(!painting_implement)
 		return
-	if(istype(I, /obj/item/paint_palette))
-		var/obj/item/paint_palette/palette = I
+	if(istype(painting_implement, /obj/item/paint_palette))
+		var/obj/item/paint_palette/palette = painting_implement
 		return palette.current_color
-	if(istype(I, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/crayon = I
+	if(istype(painting_implement, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/crayon = painting_implement
 		return crayon.paint_color
-	else if(istype(I, /obj/item/pen))
-		var/obj/item/pen/P = I
+	else if(istype(painting_implement, /obj/item/pen))
+		var/obj/item/pen/P = painting_implement
 		switch(P.colour)
 			if("black")
 				return "#000000"
@@ -252,18 +252,20 @@
 			if("red")
 				return "#ff0000"
 		return P.colour
-	else if(istype(I, /obj/item/soap) || istype(I, /obj/item/reagent_containers/glass/rag))
+	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
 		return canvas_color
 
 /// Generates medium description
-/obj/item/canvas/proc/get_paint_tool_medium(obj/item/I)
-	if(!I)
+/obj/item/canvas/proc/get_paint_tool_medium(obj/item/painting_implement)
+	if(!painting_implement)
 		return
-	if(istype(I, /obj/item/paint_palette))
+	if(istype(painting_implement, /obj/item/paint_palette))
 		return "Oil on canvas"
-	if(istype(I, /obj/item/toy/crayon))
+	else if(istype(painting_implement, /obj/item/toy/crayon/spraycan))
+		return "Spraycan on canvas"
+	else if(istype(painting_implement, /obj/item/toy/crayon))
 		return "Crayon on canvas"
-	else if(istype(I, /obj/item/pen))
+	else if(istype(painting_implement, /obj/item/pen))
 		return "Ink on canvas"
 	else
 		return
