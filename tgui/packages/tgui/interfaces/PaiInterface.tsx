@@ -436,7 +436,7 @@ const RecordRow = (props) => {
   const { record = [] } = props;
   const convertedRecord = Object.values(record);
   /** I do not want to show the ref here */
-  const filteredRecord = convertedRecord.filter((_, index) => index !== 0);
+  const filteredRecord = convertedRecord.splice(1);
 
   return (
     <Table.Row className="candystripe">
