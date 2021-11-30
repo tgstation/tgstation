@@ -233,6 +233,8 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+	///handles any special interactions objects could have with the lift/tram, handled on the item itself	
+	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER)
 
 	if(istype(destination, /turf/closed/wall))
 		var/turf/closed/wall/C = destination
@@ -294,8 +296,6 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	set_glide_size(gliding_amount)
 	forceMove(destination)
-	///ideally should be used to catch any unique interactions between items and the lift that isn't caught by the above
-	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER)
 	for(var/atom/movable/thing as anything in things_to_move)
 		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
