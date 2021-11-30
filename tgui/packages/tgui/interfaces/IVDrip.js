@@ -15,8 +15,8 @@ export const IVDrip = (props, context) => {
     useInternalStorage,
   } = data;
   return (
-    <Window resizable>
-      <Window.Content scrollable>
+    <Window width={380} height={230}>
+      <Window.Content>
         <Section title="IV Status">
           <LabeledList>
             <LabeledList.Item label="Status" color={connected ? 'good' : 'average'}>
