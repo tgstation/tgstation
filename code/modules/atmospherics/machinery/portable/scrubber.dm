@@ -169,6 +169,10 @@
 			. = TRUE
 	update_appearance()
 
+/obj/machinery/portable_atmospherics/scrubber/unregister_holding()
+	on = FALSE
+	. = ..()
+
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"
 	icon_state = "scrubber"
@@ -216,7 +220,3 @@
 			on = FALSE
 	else
 		return ..()
-
-/obj/machinery/portable_atmospherics/pump/unregister_holding()
-	on = FALSE
-	. = ..()
