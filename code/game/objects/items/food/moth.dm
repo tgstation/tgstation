@@ -104,13 +104,13 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/engine_room_fodder
-	name = "engine-room fodder"
-	desc = "A common snack for engineers on the mothic fleet, made of seeds, nuts, chocolate and potato chips- designed to be dense with calories and easy to snack on when an extra boost is needed."
+/obj/item/food/engine_fodder
+	name = "engine fodder"
+	desc = "A common snack for engineers on the mothic fleet, made of seeds, nuts, chocolate, popcorn, and potato chips- designed to be dense with calories and easy to snack on when an extra boost is needed."
 	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "engine_room_fodder"
+	icon_state = "engine_fodder"
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 1)
-	tastes = list("seeds" = 1, "nuts" = 1, "chocolate" = 1, "salt" = 1, "potato" = 1)
+	tastes = list("seeds" = 1, "nuts" = 1, "chocolate" = 1, "salt" = 1, "popcorn" = 1, "potato" = 1)
 	foodtypes = GRAIN | NUTS | VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 
