@@ -29,7 +29,7 @@
 
 /datum/paintings_manager/ui_data(mob/user)
 	. = list()
-	.["paintings"] = SSpersistent_paintings.painting_ui_data(filter=NONE,admin=TRUE)
+	.["paintings"] = SSpersistent_paintings.painting_ui_data(filter = NONE,admin = TRUE)
 
 /datum/paintings_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
@@ -38,6 +38,8 @@
 		return
 	var/mob/user = usr
 	var/datum/painting/chosen_painting = locate(params["ref"]) in SSpersistent_paintings.paintings
+	if(!chosen_painting)
+		return
 	switch(action)
 		if("delete")
 			//Delete the png file
@@ -45,6 +47,7 @@
 			fdel(png)
 			//Remove entry from paintings list
 			SSpersistent_paintings.paintings -= chosen_painting
+			SSpersistent_paintings.save_to_file() // Save now so we don't have broken variations if this round crashes
 			//Delete any painting instances in the current round
 			for(var/obj/structure/sign/painting/painting as anything in SSpersistent_paintings.painting_frames)
 				if(painting.current_canvas && painting.current_canvas.painting_metadata == chosen_painting)

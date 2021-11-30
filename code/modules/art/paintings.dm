@@ -276,7 +276,11 @@
 	var/new_name = stripped_input(user,"What do you want to name the painting?")
 	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src,BE_CLOSE))
 		painting_metadata.title = new_name
-		SStgui.update_uis(src)
+	var/sign_choice = tgui_alert(user,"Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes","No"))
+	if(sign_choice != "Yes")
+		painting_metadata.creator_name = "Anonymous"
+	SStgui.update_uis(src)
+
 
 /obj/item/canvas/nineteen_nineteen
 	name = "canvas (19x19)"

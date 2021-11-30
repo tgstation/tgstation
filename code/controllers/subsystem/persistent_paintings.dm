@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 /datum/controller/subsystem/persistent_paintings/proc/painting_ui_data(filter=NONE,admin=FALSE)
 	. = list()
 	for(var/datum/painting/painting as anything in paintings)
-		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && (painting.width != 24 && painting.width != 23) || (painting.height != 24 && painting.height != 23))
+		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && ((painting.width != 24 && painting.width != 23) || (painting.height != 24 && painting.height != 23)))
 			continue
 		if(admin)
 			var/list/pdata = painting.to_json()
@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 					new_data["md5"] = old_data["md5"]
 					new_data["title"] = old_data["title"] || "Untitled Artwork"
 					new_data["creator_ckey"] = old_data["ckey"] || ""
-					new_data["creator_name"] = "Unknown"
+					new_data["creator_name"] = "Anonymous"
 					new_data["creation_date"] = time2text(world.realtime) // Could use creation/modified file helpers in rustg
 					new_data["creation_round_id"] = GLOB.round_id
 					new_data["tags"] = list(category,"Migrated from version 0")
@@ -191,6 +191,10 @@ SUBSYSTEM_DEF(persistent_paintings)
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.save_persistent()
 
+	save_to_file()
+
+/// Saves all currently tracked painting data to file
+/datum/controller/subsystem/persistent_paintings/proc/save_to_file()
 	var/json_file = file("data/paintings.json")
 	fdel(json_file)
 	var/list/all_data = list("version" = PAINTINGS_DATA_FORMAT_VERSION)
