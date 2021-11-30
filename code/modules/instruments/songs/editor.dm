@@ -90,10 +90,10 @@
 /**
  * Parses a song the user has input into lines and stores them.
  */
-/datum/song/proc/ParseSong(text)
+/datum/song/proc/ParseSong(new_song)
 	set waitfor = FALSE
 	//split into lines
-	lines = splittext(text, "\n")
+	lines = islist(new_song) ? new_song : splittext(new_song, "\n")
 	if(lines.len)
 		var/bpm_string = "BPM: "
 		if(findtext(lines[1], bpm_string, 1, length(bpm_string) + 1))

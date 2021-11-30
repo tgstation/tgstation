@@ -100,7 +100,7 @@
 	var/obj/item/instrument/piano_synth/synth
 
 /obj/item/circuit_component/synth/populate_ports()
-	song = add_input_port("Song", PORT_TYPE_STRING, trigger = .proc/import_song)
+	song = add_input_port("Song", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = .proc/import_song)
 	play = add_input_port("Play", PORT_TYPE_SIGNAL, trigger = .proc/start_playing)
 	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = .proc/stop_playing)
 	repetitions = add_input_port("Repetitions", PORT_TYPE_NUMBER, trigger = .proc/set_repetitions)
@@ -125,12 +125,14 @@
 	RegisterSignal(synth, COMSIG_SONG_SHOULD_STOP_PLAYING, .proc/continue_if_autoplaying)
 
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
+	if(synth.song.music_player == src)
+		synth.song.stop_playing()
 	synth = null
 	UnregisterSignal(synth, list(COMSIG_SONG_START, COMSIG_SONG_END, COMSIG_SONG_SHOULD_STOP_PLAYING))
 	return ..()
 
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)
-	synth.song.start_playing()
+	synth.song.start_playing(src)
 
 /obj/item/circuit_component/synth/proc/on_song_start()
 	SIGNAL_HANDLER
@@ -172,7 +174,7 @@
 	synth.song.note_shift = clamp(note_shift.value, synth.song.note_shift_min, synth.song.note_shift_max)
 
 /obj/item/circuit_component/synth/proc/set_sustain_mode()
-	synth.song.sustain_mode = SSinstruments.note_sustain_modes[sustain_mode]
+	synth.song.sustain_mode = SSinstruments.note_sustain_modes[sustain_mode.value]
 
 /obj/item/circuit_component/synth/proc/set_sustain_value()
 	switch(synth.song.sustain_mode)
