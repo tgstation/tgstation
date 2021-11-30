@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Fixed nuke ops leader not having an antag HUD to other nuke ops."
