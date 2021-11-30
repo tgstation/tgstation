@@ -216,3 +216,7 @@
 			on = FALSE
 	else
 		return ..()
+
+/obj/machinery/portable_atmospherics/pump/unregister_holding()
+	on = FALSE
+	. = ..()
