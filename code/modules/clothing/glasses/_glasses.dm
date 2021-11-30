@@ -125,9 +125,10 @@
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
-	icon_state = "garm"
-	inhand_icon_state = "garm"
 	desc = "Do the impossible, see the invisible!"
+	icon_state = "gar_meson"
+	inhand_icon_state = "gar_meson"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 10
 	throwforce = 10
 	throw_speed = 4
@@ -194,9 +195,10 @@
 
 /obj/item/clothing/glasses/material/mining/gar
 	name = "gar material scanner"
-	icon_state = "garm"
-	inhand_icon_state = "garm"
 	desc = "Do the impossible, see the invisible!"
+	icon_state = "gar_meson"
+	inhand_icon_state = "gar_meson"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 10
 	throwforce = 20
 	throw_speed = 4
@@ -304,11 +306,12 @@
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
 	clothing_flags = SCAN_REAGENTS
 
-/obj/item/clothing/glasses/sunglasses/garb
+/obj/item/clothing/glasses/sunglasses/gar
 	name = "black gar glasses"
 	desc = "Go beyond impossible and kick reason to the curb!"
-	icon_state = "garb"
-	inhand_icon_state = "garb"
+	icon_state = "gar_black"
+	inhand_icon_state = "gar_black"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 10
 	throwforce = 10
 	throw_speed = 4
@@ -317,35 +320,25 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/clothing/glasses/sunglasses/garb/supergarb
-	name = "black giga gar glasses"
-	desc = "Believe in us humans."
-	icon_state = "supergarb"
-	inhand_icon_state = "garb"
-	force = 12
-	throwforce = 12
-
-/obj/item/clothing/glasses/sunglasses/gar
+/obj/item/clothing/glasses/sunglasses/gar/orange
 	name = "gar glasses"
 	desc = "Just who the hell do you think I am?!"
 	icon_state = "gar"
 	inhand_icon_state = "gar"
-	force = 10
-	throwforce = 10
-	throw_speed = 4
-	attack_verb_continuous = list("slices")
-	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/orange
 
-/obj/item/clothing/glasses/sunglasses/gar/supergar
-	name = "giga gar glasses"
-	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
-	icon_state = "supergar"
-	inhand_icon_state = "gar"
+/obj/item/clothing/glasses/sunglasses/gar/giga
+	name = "black giga gar glasses"
+	desc = "Believe in us humans."
+	icon_state = "gigagar_black"
 	force = 12
 	throwforce = 12
+
+/obj/item/clothing/glasses/sunglasses/gar/giga/red
+	name = "giga gar glasses"
+	desc = "We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!"
+	icon_state = "gigagar_red"
+	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/welding
@@ -612,7 +605,7 @@
 
 /obj/item/clothing/glasses/salesman/proc/moodshift(atom/movable/source, amount)
 	SIGNAL_HANDLER
-	if(amount < SANITY_UNSTABLE)	
+	if(amount < SANITY_UNSTABLE)
 		icon_state = "salesman_fzz"
 		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
 		bigshot.update_inv_glasses()
