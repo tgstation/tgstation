@@ -1,0 +1,7 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - refactor: "pAI interfaces have been converted to TGUI."
+  - refactor: "Requesting a holographic pAI friend now correctly notifies ghosts of your loneliness."
+  - rscadd: "pAI door jacks have been given a bit more UI feedback."
+  - rscdel: "Requesting and downloading a pAI no longer uses two separate screens."
