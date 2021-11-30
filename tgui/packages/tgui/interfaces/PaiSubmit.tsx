@@ -13,7 +13,7 @@ capable of nuanced interaction. They are designed to be used
 in a variety of situations, assisting their masters in their
 work. They do not possess hands, thus they cannot interact with
 equipment or items. While in hologram form, you cannot be
-directly killed, but you maybe incapacitated. `;
+directly killed, but you may be incapacitated.`;
 
 const PAI_RULES = `You are expected to role play to some degree.
 Keep in mind: Not entering information may lead to you not being
