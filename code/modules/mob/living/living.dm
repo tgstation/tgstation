@@ -1503,7 +1503,7 @@
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
-	if(buckled)
+	if(buckled && !HAS_TRAIT(src, TRAIT_CANNOT_BE_UNBUCKLED))
 		buckled.unbuckle_mob(src, force = TRUE)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force = TRUE)

@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "ED-209s can be constructed once more!"

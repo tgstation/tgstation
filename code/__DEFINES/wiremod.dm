@@ -97,6 +97,7 @@
 #define SHELL_FLAG_CIRCUIT_UNMODIFIABLE (1<<5)
 
 // Shell capacities. These can be converted to configs very easily later
+#define SHELL_CAPACITY_TINY 12
 #define SHELL_CAPACITY_SMALL 25
 #define SHELL_CAPACITY_MEDIUM 50
 #define SHELL_CAPACITY_LARGE 100

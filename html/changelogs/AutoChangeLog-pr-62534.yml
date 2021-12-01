@@ -1,0 +1,8 @@
+author: "Pickle-Coding"
+delete-after: True
+changes: 
+  - balance: "Proto nitrate BZ reaction will now produce gases, instead of just deleting BZ. The gases it produces is nitrogen, helium, and plasma."
+  - balance: "Tritium combustion and proto nitrate tritium response will release radiation again, even if it's in a pipenet or canister. Proto nitrate BZ response will also release radiation."
+  - balance: "Proto nitrate BZ and tritium responses reaction rates has been changed and is no longer capped at 5 moles per second. Given a fixed amount of combined moles, the composition for the fastest reaction rate in tritium response is different than the composition of the consumption rates."
+  - balance: "Energy released from proto nitrate BZ and tritium responses has been increased."
+  - balance: "Proto nitrate BZ response hallucination and gas production now occur at the same time, instead of hallucinations only appearing below 30 moles and gas production + radiation (previously it just deleted BZ) above 30 moles."

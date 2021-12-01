@@ -1,0 +1,4 @@
+author: "Twaticus"
+delete-after: True
+changes: 
+  - imageadd: "Makes mob ID sprites smaller, mob PDA sprites more consistent"

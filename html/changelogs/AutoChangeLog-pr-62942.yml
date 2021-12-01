@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "Improved logging for radio emotes in game logs and player panel logs."

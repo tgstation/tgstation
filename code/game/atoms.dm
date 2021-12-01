@@ -1573,6 +1573,8 @@
 			log_whisper(log_text)
 		if(LOG_EMOTE)
 			log_emote(log_text)
+		if(LOG_RADIO_EMOTE)
+			log_radio_emote(log_text)
 		if(LOG_DSAY)
 			log_dsay(log_text)
 		if(LOG_PDA)
@@ -1618,10 +1620,10 @@
  * * log_globally - boolean checking whether or not we write this log to the log file
  * * forced_by - source that forced the dialogue if any
  */
-/atom/proc/log_talk(message, message_type, tag=null, log_globally=TRUE, forced_by=null)
+/atom/proc/log_talk(message, message_type, tag = null, log_globally = TRUE, forced_by = null, custom_say_emote = null)
 	var/prefix = tag ? "([tag]) " : ""
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
-	log_message("[prefix]\"[message]\"[suffix]", message_type, log_globally=log_globally)
+	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally=log_globally)
 
 /// Helper for logging of messages with only one sender and receiver
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)

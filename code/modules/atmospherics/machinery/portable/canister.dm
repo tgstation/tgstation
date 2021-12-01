@@ -722,3 +722,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/canister/unregister_holding()
+	valve_open = FALSE
+	return ..()
