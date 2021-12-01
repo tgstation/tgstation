@@ -40,6 +40,13 @@ $tracked_branch = 'master';
 $require_changelogs = false;
 $discordWebHooks = array();
 
+// Only these repositories will announce in game and on Discord.
+// Any repository that players actually care about.
+$repo_announce_whitelist = array(
+	"tgstation",
+	"TerraGov-Marine-Corps",
+);
+
 require_once 'secret.php';
 
 //CONFIG END
@@ -352,9 +359,11 @@ function handle_pr($payload) {
 	if (!$validated) {
 		$pr_flags |= F_UNVALIDATED_USER;
 	}
-	discord_announce($action, $payload, $pr_flags);
-	game_announce($action, $payload, $pr_flags);
 
+	if (in_array($payload['repository']['name'], $repo_announce_whitelist)) {
+		discord_announce($action, $payload, $pr_flags);
+		game_announce($action, $payload, $pr_flags);
+	}
 }
 
 function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
