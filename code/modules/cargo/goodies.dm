@@ -155,3 +155,9 @@
 	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_MEDIUM * 2
 	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+
+/datum/supply_pack/goody/mothic_rations
+	name = "Surplus Mothic Ration Pack"
+	desc = "A single surplus ration pack from the Mothic Fleet. Comes with 3 random sustenance bars, and a package of Activin chewing gum."
+	cost = PAYCHECK_HARD * 2
+	contains = list(/obj/item/storage/box/mothic_rations)

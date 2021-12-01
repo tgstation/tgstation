@@ -2,78 +2,17 @@
 //A large emphasis has been put on sharing and multiple portion dishes
 //Additionally, where a mothic name is given, a short breakdown of what exactly it means is provided, for the curious on the internal workings of mothic: it's very onomatopoeic, and makes heavy use of combined words and accents
 
-//Curd cheese, a general term which I will now proceed to stretch as thin as the toppings on a supermarket sandwich:
-//I'll use it as a substitute for ricotta, cottage cheese and quark, as well as any other non-aged, soft grainy cheese
-/obj/item/food/curd_cheese
-	name = "curd cheese"
-	desc = "Known by many names throughout human cuisine, curd cheese is useful for a wide variety of dishes."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "curd_cheese"
-	microwaved_type = /obj/item/food/cheese_curds
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cream = 1)
-	tastes = list("cream" = 1, "cheese" = 1)
-	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cheese_curds
-	name = "cheese curds"
-	desc = "Not to be mistaken for curd cheese. Tasty deep fried."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "cheese_curds"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cheese_curds/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/dryable,  /obj/item/food/firm_cheese)
-
+//Base ingredients and miscellany, generally not served on their own
 /obj/item/food/herby_cheese
 	name = "herby cheese"
 	desc = "As a staple of mothic cuisine, cheese is often augmented with various flavours to keep variety in their diet. Herbs are one such addition, and are particularly beloved."
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "herby_cheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("cheese" = 1, "herbs" = 1)
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/firm_cheese
-	name = "firm cheese"
-	desc = "Firm aged cheese, similar in texture to firm tofu. Due to its lack of moisture it's particularly useful for cooking with, as it doesn't melt easily."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "firm_cheese"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
-	tastes = list("aged cheese" = 1)
-	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/firm_cheese_slice
-	name = "firm cheese slice"
-	desc = "A slice of firm cheese. Perfect for grilling or making into delicious pesto."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "firm_cheese_slice"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
-	tastes = list("aged cheese" = 1)
-	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
-
-/obj/item/food/firm_cheese_slice/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
-
-/obj/item/food/mozzarella
-	name = "mozzarella cheese"
-	desc = "Delicious, creamy, and cheesy, all in one simple package."
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "mozzarella"
-	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
-	tastes = list("mozzarella" = 1)
-	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-
-//Base ingredients and miscellany, generally not served on their own
 /obj/item/food/grilled_cheese
 	name = "grilled cheese"
 	desc = "As prescribed by Lord Alton, blessed be his name, 99.997% of the world's recipes for grilled cheese flat out lie: never once is the cheese grilled, it is merely a griddled sandwich containing melted cheese. This, on the other hand, is truly grilled cheese, grillmarks and all."
@@ -114,36 +53,6 @@
 	foodtypes = GRAIN | NUTS | VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/pesto
-	name = "pesto"
-	desc = "A combination of firm cheese, salt, herbs, garlic, oil, and pine nuts. Frequently used as a sauce for pasta or pizza, or eaten on bread."
-	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "pesto"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("pesto" = 1)
-	foodtypes = VEGETABLES | DAIRY | NUTS
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/tomato_sauce
-	name = "tomato sauce"
-	desc = "Tomato sauce, perfect for pizza or pasta. Mamma mia!"
-	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "tomato_sauce"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("tomato" = 1, "herbs" = 1)
-	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/bechamel_sauce
-	name = "béchamel sauce"
-	desc = "A classic white sauce common to several European cultures."
-	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "bechamel_sauce"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("cream" = 1)
-	foodtypes = DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/food/mothic_pizza_dough
 	name = "mothic pizza dough"
 	desc = "A strong, glutenous dough, made with cornmeal and flour, designed to hold up to cheese and sauce."
@@ -153,17 +62,6 @@
 	tastes = list("raw flour" = 1)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/griddle_toast
-	name = "griddle toast"
-	desc = "Thick cut bread, griddled to perfection."
-	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "griddle_toast"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("toast" = 1)
-	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
 
 //Entrees: categorising food that is 90% cheese and salad is not easy
 /obj/item/food/squeaking_stir_fry
@@ -803,7 +701,7 @@
 
 //Sweets
 /obj/item/food/moth_cheese_cakes
-	name = "ælorölen" //ælo = cheese, rölen = balls
+	name = "\improper ælorölen" //ælo = cheese, rölen = balls
 	desc = "Ælorölen (cheese balls) are a traditional mothic dessert, made of soft cheese, powdered sugar and flour, rolled into balls, battered and then deep fried. They're often served with either chocolate sauce or honey, or sometimes both!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "moth_cheese_cakes"
@@ -833,13 +731,13 @@
 	tastes = list("vanilla" = 1, "clouds" = 1, "chocolate" = 1)
 	foodtypes = VEGETABLES | SUGAR
 
-/obj/item/food/soup/red_porridge_and_sour_cream
+/obj/item/food/soup/red_porridge
 	name = "eltsløsk ül a priktæolk" //eltsløsk = red porridge, ül a = with, prikt = sour, æolk = cream
-	desc = "Red porridge with sour cream. The name and vegetable ingredients obscure the sweet nature of the dish, which is commonly served as a dessert aboard the fleet."
+	desc = "Red porridge with yoghurt. The name and vegetable ingredients obscure the sweet nature of the dish, which is commonly served as a dessert aboard the fleet."
 	icon = 'icons/obj/food/moth.dmi'
-	icon_state = "red_porridge_and_sour_cream"
-	food_reagents = list(/datum/reagent/consumable/vitamin = 4, /datum/reagent/consumable/sugar = 6)
-	tastes = list("sweet beets" = 1, "sugar" = 1, "sweetened sour cream" = 1)
+	icon_state = "red_porridge"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/sugar = 6)
+	tastes = list("sweet beets" = 1, "sugar" = 1, "sweetened yoghurt" = 1)
 	foodtypes = VEGETABLES | SUGAR | DAIRY
 
 //misc food

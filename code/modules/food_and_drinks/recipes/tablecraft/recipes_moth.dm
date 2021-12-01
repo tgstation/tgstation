@@ -28,38 +28,16 @@
 	result = /obj/item/food/toasted_seeds
 	subcategory = CAT_MOTH
 
-/datum/crafting_recipe/food/pesto
-	name = "Pesto"
+/datum/crafting_recipe/food/engine_fodder
+	name = "Engine fodder"
 	reqs = list(
-		/obj/item/food/firm_cheese_slice = 1,
-		/datum/reagent/consumable/salt = 5,
-		/obj/item/food/grown/herbs = 2,
-		/obj/item/food/grown/garlic = 1,
-		/datum/reagent/consumable/quality_oil = 5,
-		/obj/item/food/canned/pine_nuts = 1
+		/obj/item/food/toasted_seeds = 1,
+		/obj/item/food/cnds = 1,
+		/obj/item/food/popcorn = 1,
+		/obj/item/food/peanuts = 1,
+		/obj/item/food/chips = 1
 	)
-	result = /obj/item/food/pesto
-	subcategory = CAT_MOTH
-
-/datum/crafting_recipe/food/tomato_sauce
-	name = "Tomato sauce"
-	reqs = list(
-		/obj/item/food/canned/tomatoes = 1,
-		/datum/reagent/consumable/salt = 2,
-		/obj/item/food/grown/herbs = 1,
-		/datum/reagent/consumable/quality_oil = 5
-	)
-	result = /obj/item/food/tomato_sauce
-	subcategory = CAT_MOTH
-
-/datum/crafting_recipe/food/bechamel_sauce
-	name = "Bechamel sauce"
-	reqs = list(
-		/datum/reagent/consumable/milk = 10,
-		/datum/reagent/consumable/flour = 5,
-		/obj/item/food/butter = 1
-	)
-	result = /obj/item/food/bechamel_sauce
+	result = /obj/item/food/engine_fodder
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/squeaking_stir_fry
@@ -182,6 +160,18 @@
 		/obj/item/food/onion_slice = 2
 	)
 	result = /obj/item/food/raw_stuffed_peppers
+	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/fueljacks_lunch
+	name = "Fueljack's lunch"
+	reqs = list(
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/onion_slice = 2,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/firm_cheese_slice = 1
+	)
+	result = /obj/item/food/fueljacks_lunch
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/moth_cotton_soup
@@ -472,4 +462,15 @@
 		/datum/reagent/consumable/ethanol/rum = 5
 	)
 	result = /obj/item/food/cake/mothmallow
+	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/red_porridge
+	name = "Eltsløsk ül a priktæolk (Red Porridge and Yoghurt)"
+	reqs = list(
+		/obj/item/food/grown/redbeet = 1,
+		/datum/reagent/consumable/vanilla = 5,
+		/datum/reagent/consumable/yoghurt = 10,
+		/datum/reagent/consumable/sugar = 5
+	)
+	result = /obj/item/food/soup/red_porridge
 	subcategory = CAT_MOTH
