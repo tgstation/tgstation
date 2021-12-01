@@ -55,7 +55,7 @@
 
 	if(delete && !QDELETED(parent))
 		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm. 
-	Destroy() // Dont want to stick around.
+	qdel(src)
 
 /// fire_act reaction.
 /datum/component/combustible_flooder/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
