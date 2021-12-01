@@ -121,18 +121,21 @@ const ButtonGroup = (props, context) => {
 
   return (
     <Stack fill>
-      <Stack.Item grow>
-        {!isValid && <Box color="average">{error}</Box>}
-      </Stack.Item>
       <Stack.Item>
         <Button
+          color="good"
           disabled={!isValid}
           onClick={() => act('submit', { entry: input })}>
           Submit
         </Button>
       </Stack.Item>
+      <Stack.Item grow>
+        {!isValid && <Box color="average">{error}</Box>}
+      </Stack.Item>
       <Stack.Item>
-        <Button onClick={() => act('cancel')}>Cancel</Button>
+        <Button color="bad" onClick={() => act('cancel')}>
+          Cancel
+        </Button>
       </Stack.Item>
     </Stack>
   );
