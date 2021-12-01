@@ -264,9 +264,9 @@
 	desc = "A wooden contraption, used to dry plant products, food and hide."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 5
-	active_power_usage = 200
+	use_power = 0
+	idle_power_usage = 0 
+	active_power_usage = 0 //Does not require power to function
 	visible_contents = FALSE
 	base_build_path = /obj/machinery/smartfridge/drying_rack //should really be seeing this without admin fuckery.
 	var/drying = FALSE
@@ -355,10 +355,8 @@
 /obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
 	if(drying || forceoff)
 		drying = FALSE
-		update_use_power(IDLE_POWER_USE)
 	else
 		drying = TRUE
-		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)
