@@ -54,3 +54,8 @@
 	else
 		use_purple_suit = TRUE
 	..()
+
+/datum/outfit/job/lawyer/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
+	. += /obj/item/clothing/suit/toggle/lawyer/purple

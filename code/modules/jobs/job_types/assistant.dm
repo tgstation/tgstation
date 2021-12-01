@@ -58,6 +58,16 @@ Assistant
 	else
 		uniform = GLOB.colored_assistant.jumpskirts[index]
 
+/datum/outfit/job/assistant/get_types_to_preload()
+	. = ..()
+	if(isnull(GLOB.colored_assistant))
+		var/configured_type = get_configured_colored_assistant_type()
+		GLOB.colored_assistant = new configured_type
+
+	var/list/assistant_things = list()
+	assistant_things += GLOB.colored_assistant.jumpsuits + GLOB.colored_assistant.jumpskirts
+	. += assistant_things
+
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
 
