@@ -1,5 +1,8 @@
 /datum/job/captain
 	title = "Captain"
+	description = "Be responsible for the station, manage your Heads of Staff, \
+		keep the crew alive, be prepared to do anything and everything or die \
+		horribly trying."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("CentCom")
 	faction = FACTION_STATION

@@ -67,6 +67,8 @@
 #define DEPARTMENT_MEDICAL "Medical"
 #define DEPARTMENT_BITFLAG_SILICON (1<<7)
 #define DEPARTMENT_SILICON "Silicon"
+#define DEPARTMENT_BITFLAG_ASSISTANT (1<<8)
+#define DEPARTMENT_ASSISTANT "Assistant"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.

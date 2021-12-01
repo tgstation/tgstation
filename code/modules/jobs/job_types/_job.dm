@@ -2,6 +2,10 @@
 	/// The name of the job , used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
+	/// The description of the job, used for preferences menu.
+	/// Keep it short and useful. Avoid in-jokes, these are for new players.
+	var/description
+
 	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a skeleton crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
 	var/list/skills
 	/// Innate skill levels unlocked at roundstart. Based on config.jobs_have_minimal_access config setting, for example with a full crew. Format is list(/datum/skill/foo = SKILL_EXP_NOVICE) with exp as an integer or as per code/_DEFINES/skills.dm
@@ -79,7 +83,10 @@
 
 	/// Bitfield of departments this job belongs to. These get setup when adding the job into the department, on job datum creation.
 	var/departments_bitflags = NONE
+
 	/// Lazy list with the departments this job belongs to.
+	/// Required to be set for playable jobs.
+	/// The first department will be used in the preferences menu.
 	var/list/departments_list = null
 
 	/// Should this job be allowed to be picked for the bureaucratic error event?

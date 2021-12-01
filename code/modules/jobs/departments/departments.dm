@@ -23,6 +23,10 @@
 	department_jobs += job
 	job.departments_bitflags |= department_bitflags
 
+// A special assistant only department, primarily for use by the preferences menu
+/datum/job_department/assistant
+	department_name = DEPARTMENT_ASSISTANT
+	department_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
 
 /datum/job_department/command
 	department_name = DEPARTMENT_COMMAND
