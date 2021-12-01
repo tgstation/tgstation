@@ -142,7 +142,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*0.05, null)
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
-	. = ..()	
+	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
 	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	qdel(source.GetComponent(/datum/component/explodable))
