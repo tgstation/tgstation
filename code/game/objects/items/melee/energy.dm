@@ -252,13 +252,13 @@
 /obj/item/melee/energy/sword/saber/multitool_act(mob/living/user, obj/item/tool)
 	if(hacked)
 		to_chat(user, span_warning("It's already fabulous!"))
-	else
-		hacked = TRUE
-		sword_color_icon = "rainbow"
-		to_chat(user, span_warning("RNBW_ENGAGE"))
-		if(force >= active_force)
-			icon_state = "[initial(icon_state)]_on_rainbow"
-			user.update_inv_hands()
+		return
+	hacked = TRUE
+	sword_color_icon = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	if(force >= active_force)
+		icon_state = "[initial(icon_state)]_on_rainbow"
+		user.update_inv_hands()
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"

@@ -397,8 +397,8 @@
 	var/obj/item/melee/baton/baton = new (source_turf)
 	baton.alpha = 20
 	playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
-	animate(src, alpha = 0, time = 10)
-	animate(baton, alpha = 255, time = 10)
+	animate(src, alpha = 0, time = 1 SECONDS)
+	animate(baton, alpha = 255, time = 1 SECONDS)
 	qdel(item)
 	qdel(src)
 
@@ -555,7 +555,7 @@
 		var/scramble_time
 		scramble_mode()
 		for(var/loops in 1 to rand(6, 12))
-			scramble_time = rand(5, 15)/10
+			scramble_time = rand(5, 15) / (1 SECONDS)
 			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
@@ -636,7 +636,7 @@
 /obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!active)
 		return ..()
-	var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum = throwingdatum)
+	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
 	var/mob/thrown_by = thrownby?.resolve()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)

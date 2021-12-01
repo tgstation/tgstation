@@ -264,8 +264,10 @@
 	if(newT.type == oldtype)
 		return
 	playsound(turf, 'sound/effects/supermatter.ogg', 50, TRUE)
-	turf.visible_message(span_danger("[turf] smacks into [src] and rapidly flashes to ash."),\
-	span_hear("You hear a loud crack as you are washed with a wave of heat."))
+	turf.visible_message(
+		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
+		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+	)
 	shard.Consume()
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
@@ -395,8 +397,6 @@
 	else if (user.Adjacent(target))
 		to_chat(user, span_notice("You extend [src] towards [target]."))
 		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-		finish_roasting(user, target)
-		return
 	else
 		return
 	finish_roasting(user, target)
