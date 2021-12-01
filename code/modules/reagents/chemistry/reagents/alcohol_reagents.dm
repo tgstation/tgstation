@@ -106,8 +106,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -196,7 +196,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn
-	name = "candy corn liquor"
+	name = "Candy Corn Liquor"
 	description = "Like they drank in 2D speakeasies."
 	color = "#ccb800" // rgb: 204, 184, 0
 	taste_description = "pancake syrup"
@@ -402,7 +402,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/lizardwine
-	name = "Lizard wine"
+	name = "Lizard Wine"
 	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
@@ -2173,9 +2173,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			name += "[fruit_name] "
 			named = TRUE
 	if(named)
-		name += "wine"
+		name += "Wine"
 	else
-		name = "mixed [names_in_order[1]] wine"
+		name = "Mixed [names_in_order[1]] Wine"
 
 	var/alcohol_description
 	switch(boozepwr)
@@ -2473,7 +2473,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
-	name = "pruno"
+	name = "Pruno"
 	color = "#E78108"
 	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 	boozepwr = 85

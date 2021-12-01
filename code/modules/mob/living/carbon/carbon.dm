@@ -9,7 +9,11 @@
 
 	GLOB.carbon_list += src
 	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/disarm_collision)
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -1297,13 +1301,39 @@
 	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
 		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
-/mob/living/carbon/proc/disarm_collision(mob/living/carbon/collateral, mob/living/carbon/shover, mob/living/carbon/target)
+/mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
 	SIGNAL_HANDLER
+	if(can_be_shoved_into)
+		return COMSIG_CARBON_ACT_SOLID
+
+/mob/living/carbon/proc/disarm_collision(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+	SIGNAL_HANDLER
+	if(src == target || !can_be_shoved_into)
+		return
 	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-	if(!collateral.is_shove_knockdown_blocked())
-		collateral.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-	target.visible_message(span_danger("[shover] shoves [target.name] into [collateral.name]!"),
-		span_userdanger("You're shoved into [collateral.name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into [collateral.name]!"))
-	log_combat(src, target, "shoved", "into [collateral.name]")
+	if(!is_shove_knockdown_blocked())
+		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
+		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into [name]!"))
+	log_combat(src, target, "shoved", "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+
+// Checks to see how many hands this person has to sign with.
+/mob/living/carbon/proc/check_signables_state()
+	var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
+	var/empty_indexes = get_empty_held_indexes()
+	var/exit_right = (!right_arm || right_arm.bodypart_disabled)
+	var/exit_left = (!left_arm || left_arm.bodypart_disabled)
+	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (exit_left || exit_right)))//All existing hands full, can't sign
+		return SIGN_HANDS_FULL // These aren't booleans
+	if(exit_left && exit_right)//Can't sign with no arms!
+		return SIGN_ARMLESS
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+	if(handcuffed) // Cuffed, usually will show visual effort to sign
+		return SIGN_CUFFED
+	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
+		return SIGN_ONE_HAND

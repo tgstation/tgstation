@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - bugfix: "a misplaced pipe in tramstation's atmospherics that was causing wrenched down portable scrubbers to melt has been removed"

@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Virology's PanD.E.M.I.C 2200 should no longer bluescreen"
-  - refactor: "The Pandemic machine has been refreshed and is more helpful, intuitive to use."
