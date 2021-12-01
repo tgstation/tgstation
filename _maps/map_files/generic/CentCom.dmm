@@ -965,10 +965,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
-"ed" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/wood/parquet,
-/area/centcom/holding)
 "eh" = (
 /obj/structure/chair/office,
 /obj/effect/landmark/ert_spawn,
@@ -3215,7 +3211,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lj" = (
-/obj/structure/closet/abductor,
+/obj/machinery/limbgrower/fullupgrade,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lk" = (
@@ -14894,6 +14890,7 @@
 "RQ" = (
 /obj/structure/closet/abductor,
 /obj/item/storage/box/alienhandcuffs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "RU" = (
@@ -15956,15 +15953,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
-"VX" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/nukeop,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/syndicate_mothership/control)
 "VZ" = (
 /obj/structure/closet/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{

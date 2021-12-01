@@ -1,0 +1,4 @@
+author: "HarseTheef"
+delete-after: True
+changes: 
+  - bugfix: "Baseball bats now correctly knockback targets in the direction of the bat to the target."
