@@ -102,6 +102,7 @@
 /mob/living/simple_animal/bot/mulebot/examine(mob/user)
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_OPEN)
+		. += span_info("You can access the wires using <b>wirecutters</b> or a <b>multitool</b>.")
 		if(cell)
 			. += span_notice("It has \a [cell] installed.")
 			. += span_info("You can use a <b>crowbar</b> to remove it.")
