@@ -1,3 +1,4 @@
+/// An AI controller for the MODsuit pathfinder module. It's activated by implant and attaches itself to the user.
 /datum/ai_controller/mod
 	blackboard = list(
 		BB_MOD_TARGET,
