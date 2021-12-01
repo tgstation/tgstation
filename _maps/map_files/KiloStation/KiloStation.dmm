@@ -43847,6 +43847,7 @@
 "jEB" = (
 /obj/item/storage/fancy/donut_box,
 /obj/structure/table/wood,
+/obj/item/pondering_orb,
 /turf/open/floor/carpet/royalblue,
 /area/command/heads_quarters/captain)
 "jEI" = (

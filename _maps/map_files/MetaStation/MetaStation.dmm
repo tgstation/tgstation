@@ -6462,8 +6462,8 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /obj/machinery/computer/cargo/request{
-	icon_state = "computer";
-	dir = 1
+	dir = 1;
+	icon_state = "computer"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -54879,6 +54879,7 @@
 "rDv" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/security_unit/directional/west,
+/obj/item/pondering_orb,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "rDB" = (
