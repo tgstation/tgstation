@@ -424,12 +424,15 @@ SUBSYSTEM_DEF(spatial_grid)
 	message_admins("[src] is supposed to only be contained in the cell at indexes ([real_cell.cell_x], [real_cell.cell_y], [real_cell.cell_z]). but is contained at the cells at [cell_coords]")
 
 ///debug proc for finding how full the cells of src's z level are
-/atom/proc/find_grid_statistics_for_z_level(insert_clients = 100)
+/atom/proc/find_grid_statistics_for_z_level(insert_clients = 0)
 	var/raw_clients = 0
 	var/raw_hearables = 0
 
 	var/cells_with_clients = 0
 	var/cells_with_hearables = 0
+
+	var/list/client_list = list()
+	var/list/hearable_list = list()
 
 	var/total_cells = (world.maxx / SPATIAL_GRID_CELLSIZE) ** 2
 
@@ -448,46 +451,103 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/client_min_y = (world.maxy / SPATIAL_GRID_CELLSIZE)
 	var/client_max_y = 1
 
+	var/list/inserted_clients = list()
+
+	if(insert_clients)
+		var/list/turfs
+		var/level = SSmapping.get_level(z)
+		if(is_station_level(level))
+			turfs = GLOB.station_turfs
+
+		else
+			turfs = block(locate(1,1,z), locate(255,255,z))
+
+		for(var/client_to_insert in 0 to insert_clients)
+			var/turf/random_turf = pick(turfs)
+			var/mob/fake_client = new()
+			fake_client.important_recursive_contents = list(SPATIAL_GRID_CONTENTS_TYPE_HEARING = list(fake_client), SPATIAL_GRID_CONTENTS_TYPE_CLIENTS = list(fake_client))
+			fake_client.forceMove(random_turf)
+			inserted_clients += fake_client
+
 	var/list/all_z_level_cells = SSspatial_grid.get_cells_in_range(src, 1000)
 
 	for(var/datum/spatial_grid_cell/cell as anything in all_z_level_cells)
 		var/client_length = length(cell.client_contents)
 		var/hearable_length = length(cell.hearing_contents)
+
 		raw_clients += client_length
 		raw_hearables += hearable_length
+
 		if(client_length)
 			cells_with_clients++
+
+			client_list += cell.client_contents
+
 			if(cell.cell_x < client_min_x)
 				client_min_x = cell.cell_x
+
 			if(cell.cell_x > client_max_x)
 				client_max_x = cell.cell_x
 
 			if(cell.cell_y < client_min_y)
 				client_min_y = cell.cell_y
+
 			if(cell.cell_y > client_max_y)
 				client_max_y = cell.cell_y
 
 		if(hearable_length)
 			cells_with_hearables++
+
+			hearable_list += cell.hearing_contents
+
 			if(cell.cell_x < hearable_min_x)
 				hearable_min_x = cell.cell_x
+
 			if(cell.cell_x > hearable_max_x)
 				hearable_max_x = cell.cell_x
 
 			if(cell.cell_y < hearable_min_y)
 				hearable_min_y = cell.cell_y
+
 			if(cell.cell_y > hearable_max_y)
 				hearable_max_y = cell.cell_y
 
+	var/total_client_distance = 0
+	var/total_hearable_distance = 0
+
+	var/average_client_distance = 0
+	var/average_hearable_distance = 0
+
+	for(var/hearable in hearable_list)//n^2 btw
+		for(var/other_hearable in hearable_list)
+			if(hearable == other_hearable)
+				continue
+			total_hearable_distance += get_dist(hearable, other_hearable)
+
+	for(var/client in client_list)//n^2 btw
+		for(var/other_client in client_list)
+			if(client == other_client)
+				continue
+			total_client_distance += get_dist(client, other_client)
+
+	if(length(hearable_list))
+		average_hearable_distance = total_hearable_distance / length(hearable_list)
+	if(length(client_list))
+		average_client_distance = total_client_distance / length(client_list)
+
 	average_clients_per_cell = raw_clients / total_cells
 	average_hearables_per_cell = raw_hearables / total_cells
+
+	for(var/mob/inserted_client as anything in inserted_clients)
+		qdel(inserted_client)
 
 	message_admins("on z level [z] there are [raw_clients] clients ([insert_clients] of whom are fakes inserted to random station turfs) \
 	and [raw_hearables] hearables. all of whom are inside the bounding box given by \
 	clients: ([client_min_x], [client_min_y]) x ([client_max_x], [client_max_y]) \
 	and hearables: ([hearable_min_x], [hearable_min_y]) x ([hearable_max_x], [hearable_max_y]) \
 	on average there are [average_clients_per_cell] clients per cell and [average_hearables_per_cell] hearables per cell. \
-	[cells_with_clients] cells have clients and [cells_with_hearables] have hearables")
+	[cells_with_clients] cells have clients and [cells_with_hearables] have hearables, \
+	the average client distance is: [average_client_distance] and the average hearable_distance is [average_hearable_distance].")
 
 #undef GRID_CELL_ADD
 #undef GRID_CELL_REMOVE
