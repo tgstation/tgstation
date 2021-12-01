@@ -449,29 +449,14 @@
 	examine_list += "The dogtag has a listing of allergies : [display]"
 
 /obj/item/clothing/accessory/pride
-	name = "rainbow pride pin"
-	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
+	name = "pride pin"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-
-/obj/item/clothing/accessory/pride/bi
-	name = "bisexual pin"
-	icon_state = "pride_bi"
-
-/obj/item/clothing/accessory/pride/trans
-	name = "transgender pin"
-	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored pin, saying that they stand in 'solidarity' with trans people."
-	icon_state = "pride_trans"
-
-/obj/item/clothing/accessory/pride/pan
-	name = "pansexual pin"
-	icon_state = "pride_pan"
-
-/obj/item/clothing/accessory/pride/ace
-	name = "asexual pin"
-	icon_state = "pride_ace"
-	desc = "A pin to show off your sexuality, or in this case, the lack thereof!"
-
-/obj/item/clothing/accessory/pride/enby
-	name = "non-binary pin"
-	icon_state = "pride_enby"
-	desc = "A pin to show off your chosen gender identity, or in this case, the lack thereof!"
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Rainbow Pride" = "pride",
+						"Bisexual Pride" = "pride_bi",
+						"Pansexual Pride" = "pride_pan",
+						"Asexual Pride" = "pride_ace",
+						"Non-binary Pride" = "pride_enby",
+						"Transgender Pride" = "pride_trans",
+						)
