@@ -53,20 +53,12 @@ Assistant
 
 	var/index = (jumpsuit_number % GLOB.colored_assistant.jumpsuits.len) + 1
 
+	//We don't cache these, because they can delete on init
+	//Too fragile, better to just eat the cost
 	if (target.jumpsuit_style == PREF_SUIT)
 		uniform = GLOB.colored_assistant.jumpsuits[index]
 	else
 		uniform = GLOB.colored_assistant.jumpskirts[index]
-
-/datum/outfit/job/assistant/get_types_to_preload()
-	. = ..()
-	if(isnull(GLOB.colored_assistant))
-		var/configured_type = get_configured_colored_assistant_type()
-		GLOB.colored_assistant = new configured_type
-
-	var/list/assistant_things = list()
-	assistant_things += GLOB.colored_assistant.jumpsuits + GLOB.colored_assistant.jumpskirts
-	. += assistant_things
 
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
