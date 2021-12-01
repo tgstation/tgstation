@@ -57,6 +57,7 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	handle_ride(user, direction)
+	return ..()
 
 /// This handles the actual movement for vehicles once [/datum/component/riding/vehicle/proc/driver_move] has given us the green light
 /datum/component/riding/vehicle/proc/handle_ride(mob/user, direction)
