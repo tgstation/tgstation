@@ -40,11 +40,16 @@ $tracked_branch = 'master';
 $require_changelogs = false;
 $discordWebHooks = array();
 
-// Only these repositories will announce in game and on Discord.
+// Only these repositories will announce in game.
 // Any repository that players actually care about.
-$repo_announce_whitelist = array(
+$game_announce_whitelist = array(
 	"tgstation",
 	"TerraGov-Marine-Corps",
+);
+
+// Any repository that matches in this blacklist will not appear on Discord.
+$discord_announce_blacklist = array(
+	"/^event-.*$/",
 );
 
 require_once 'secret.php';
@@ -317,6 +322,16 @@ function check_dismiss_changelog_review($payload){
 				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
+function is_blacklisted($blacklist, $name) {
+	foreach ($blacklist as $pattern) {
+		if (preg_match($pattern, $name)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function handle_pr($payload) {
 	global $no_changelog;
 	$action = 'opened';
@@ -360,9 +375,14 @@ function handle_pr($payload) {
 		$pr_flags |= F_UNVALIDATED_USER;
 	}
 
-	if (in_array($payload['repository']['name'], $repo_announce_whitelist)) {
-		discord_announce($action, $payload, $pr_flags);
+	$repo_name = $payload['repository']['name'];
+
+	if (in_array($repo_name, $repo_announce_whitelist)) {
 		game_announce($action, $payload, $pr_flags);
+	}
+
+	if (!is_blacklisted($discord_announce_blacklist, $repo_name)) {
+		discord_announce($action, $payload, $pr_flags);
 	}
 }
 
