@@ -23,7 +23,6 @@
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
-	RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
 	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)

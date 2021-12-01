@@ -15,7 +15,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/projectile_react)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
-	RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_TURF_EXPOSE, .proc/hotspots_react)
 
@@ -24,20 +23,19 @@
 	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 	UnregisterSignal(parent, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
-	UnregisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER))
 	if(isturf(parent))
 		UnregisterSignal(parent, COMSIG_TURF_EXPOSE)
 
 /// Do the flooding. Trigger temperature is the temperature we will flood at if we dont have a temp set at the start. Trigger referring to whatever triggered it.
 /datum/component/combustible_flooder/proc/flood(mob/user, trigger_temperature)
-	var/delete = TRUE
+	var/delete_parent = TRUE
 	var/turf/open/flooded_turf = get_turf(parent)
 
 	// We do this check early so closed turfs are still be able to flood.
 	if(isturf(parent)) // Walls and floors.
 		var/turf/parent_turf = parent
 		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
-		delete = FALSE
+		delete_parent = FALSE
 
 	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];TEMP=[temp_amount || trigger_temperature]")
 	
@@ -53,7 +51,7 @@
 	message_admins(admin_message)
 	log_game(log_message)
 
-	if(delete && !QDELETED(parent))
+	if(delete_parent && !QDELETED(parent))
 		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm. 
 	qdel(src)
 
