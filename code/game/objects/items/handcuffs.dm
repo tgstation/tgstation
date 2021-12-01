@@ -59,9 +59,9 @@
 
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())
-			C.visible_message(span_danger("[user] is trying to put [src.name] on [C]!"), \
-								span_userdanger("[user] is trying to put [src.name] on you!"), \
-								span_userdanger("You feel someone grab your wrists, the clink of [src.name] rattling around your ears!"))
+			C.visible_message(span_danger("[user] is trying to put [name] on [C]!"), \
+								span_userdanger("[user] is trying to put [name] on you!"), \
+								span_userdanger("You feel someone grab your wrists, the clink of [name] rattling around your ears!"))
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
