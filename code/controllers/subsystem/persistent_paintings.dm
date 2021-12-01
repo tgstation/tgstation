@@ -145,7 +145,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 			var/list/result = list()
 			result["version"] = 1
 			var/list/data = list()
-			///Squash categories into tags
+			// Squash categories into tags
 			for(var/category in current_data)
 				for(var/old_data in current_data[category])
 					var/duplicate_found = FALSE
@@ -187,7 +187,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 /// Saves all persistent paintings
 /datum/controller/subsystem/persistent_paintings/proc/save_paintings()
-	/// Collect new painting data
+	// Collect new painting data
 	for(var/obj/structure/sign/painting/painting_frame as anything in painting_frames)
 		painting_frame.save_persistent()
 

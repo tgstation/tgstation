@@ -29,7 +29,7 @@
 
 /datum/paintings_manager/ui_data(mob/user)
 	. = list()
-	.["paintings"] = SSpersistent_paintings.painting_ui_data(filter = NONE,admin = TRUE)
+	.["paintings"] = SSpersistent_paintings.painting_ui_data(filter = NONE, admin = TRUE)
 
 /datum/paintings_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())

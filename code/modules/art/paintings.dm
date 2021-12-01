@@ -139,7 +139,7 @@
 				var/y = text2num(point["y"])
 				grid[x][y] = tool_color
 			var/medium = get_paint_tool_medium(I)
-			if(painting_metadata.medium && painting_metadata.medium != medium)
+			if(medium && painting_metadata.medium && painting_metadata.medium != medium)
 				painting_metadata.medium = "Mixed medium"
 			else
 				painting_metadata.medium = medium
@@ -193,8 +193,6 @@
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	to_chat(user,span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
-	/// Add achievement ?
-	return
 
 /obj/item/canvas/update_overlays()
 	. = ..()
@@ -217,7 +215,7 @@
 		return
 	var/png_filename = "data/paintings/temp_painting.png"
 	var/image_data = get_data_string()
-	var/result = rustg_dmi_create_png(png_filename,"[width]","[height]",image_data)
+	var/result = rustg_dmi_create_png(png_filename, "[width]", "[height]", image_data)
 	if(result)
 		CRASH("Error generating painting png : [result]")
 	painting_metadata.md5 = md5(lowertext(image_data))
@@ -267,16 +265,18 @@
 		return "Crayon on canvas"
 	else if(istype(painting_implement, /obj/item/pen))
 		return "Ink on canvas"
+	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
+		return //These are just for cleaning, ignore them
 	else
-		return
+		return "Unknown medium"
 
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return
 	var/new_name = stripped_input(user,"What do you want to name the painting?")
-	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src,BE_CLOSE))
+	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src, BE_CLOSE))
 		painting_metadata.title = new_name
-	var/sign_choice = tgui_alert(user,"Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes","No"))
+	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
 	if(sign_choice != "Yes")
 		painting_metadata.creator_name = "Anonymous"
 	SStgui.update_uis(src)
