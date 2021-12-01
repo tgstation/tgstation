@@ -1,4 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Fixed edgecase causing PDA Skill Tracker to hard lock the PDA as your reward for getting legendary level."
