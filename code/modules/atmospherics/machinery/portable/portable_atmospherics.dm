@@ -196,5 +196,7 @@
 /// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change. 
 /// This checks for that case and removes our reference to it.
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
+	SIGNAL_HANDLER
+	
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null
