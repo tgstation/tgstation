@@ -4,6 +4,8 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
+	set instant = TRUE
+
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -14,6 +16,8 @@
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
+	set instant = TRUE
+
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -21,7 +25,7 @@
 
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
-	SSspeech_controller.queue_say_for_mob(src, message)
+	SSspeech_controller.queue_say_for_mob(src, message, language)
 
 ///The me emote verb
 /mob/verb/me_verb(message as text)

@@ -487,7 +487,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof)
 	if(!message)
 		return
-	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
+	message = "#[message]"
+	SSspeech_controller.queue_say_for_mob(src, args)
 
 /mob/living/get_language_holder(get_minds = TRUE)
 	if(get_minds && mind)
