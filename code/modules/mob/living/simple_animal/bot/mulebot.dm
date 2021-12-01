@@ -168,7 +168,7 @@
 		cell = null
 		diag_hud_set_mulebotcell()
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
-		return attack_hand(user)
+		wires.interact(user)
 	else if(load && ismob(load))  // chance to knock off rider
 		if(prob(1 + I.force * 2))
 			unload(0)
