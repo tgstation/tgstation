@@ -155,7 +155,7 @@
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		. += span_notice("It's an illison - what is it hiding?")
+		. += span_notice("It's an illusion - what is it hiding?")
 	else
 		qdel(src) //I see through your ruse!
 
