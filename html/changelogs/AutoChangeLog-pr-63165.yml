@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - balance: "the Head of Personnel no longer has access to Security Office nor Mechs (outside of mining ones)."
