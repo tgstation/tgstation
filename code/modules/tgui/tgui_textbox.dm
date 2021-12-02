@@ -11,9 +11,10 @@
  * * title - The title of the textbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder.
  * * max_length - Specifies a max length for input.
+ * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_textbox(mob/user, message = null, title = "Text Input", default = null, max_length = null, timeout = 0)
+/proc/tgui_textbox(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -25,13 +26,13 @@
 	/// Client does NOT have tgui_fancy on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy))
 		if(max_length)
-			if(max_length <= MAX_NAME_LEN)
-				return stripped_input(user, message, title, default, max_length)
-			else
+			if(multiline)
 				return stripped_multiline_input(user, message, title, default, max_length)
+			else
+				return stripped_input(user, message, title, default, max_length)
 		else
 			return input(user, message, title, default)
-	var/datum/tgui_textbox/textbox = new(user, message, title, default, max_length, timeout)
+	var/datum/tgui_textbox/textbox = new(user, message, title, default, max_length, multiline, timeout)
 	textbox.ui_interact(user)
 	textbox.wait()
 	if (textbox)
@@ -48,10 +49,11 @@
  * * title - The title of the textbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder.
  * * max_length - Specifies a max length for input.
+ * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  */
-/proc/tgui_textbox_async(mob/user, message = null, title = "Text Input", default = "Type something...", max_length = null, datum/callback/callback, timeout = 0)
+/proc/tgui_textbox_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, datum/callback/callback, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -60,7 +62,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_textbox/async/textbox = new(user, message, title, default, max_length, callback, timeout)
+	var/datum/tgui_textbox/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout)
 	textbox.ui_interact(user)
 
 /**
@@ -72,14 +74,16 @@
 /datum/tgui_textbox
 	/// Boolean field describing if the tgui_textbox was closed by the user.
 	var/closed
+	/// The default (or current) value, shown as a default.
+	var/default
 	/// The entry that the user has return_typed in.
 	var/entry
 	/// The maximum length for text entry
 	var/max_length
 	/// The prompt's body, if any, of the TGUI window.
 	var/message
-	/// The default (or current) value, shown as a default.
-	var/default
+	/// Multiline input for larger input boxes.
+	var/multiline
 	/// String that modulates the return casting
 	var/start_time
 	/// The lifespan of the tgui_textbox, after which the window will close and delete itself.
@@ -88,10 +92,11 @@
 	var/title
 
 
-/datum/tgui_textbox/New(mob/user, message, title, default, max_length, timeout)
+/datum/tgui_textbox/New(mob/user, message, title, default, max_length, multiline, timeout)
 	src.default = default
 	src.max_length = max_length
 	src.message = message
+	src.multiline = multiline
 	src.title = title
 	if (timeout)
 		src.timeout = timeout
@@ -127,6 +132,7 @@
 	. = list(
 		"max_length" = max_length,
 		"message" = message,
+		"multiline" = multiline,
 		"placeholder" = default, /// You cannot use default as a const
 		"title" = title,
 	)
@@ -161,8 +167,8 @@
 	/// The callback to be invoked by the tgui_textbox upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_textbox/async/New(mob/user, message, title, default, max_length, callback, timeout)
-	..(user, message, title, default, max_length, timeout)
+/datum/tgui_textbox/async/New(mob/user, message, title, default, max_length, multiline, callback, timeout)
+	..(user, message, title, default, max_length, multiline, timeout)
 	src.callback = callback
 
 /datum/tgui_textbox/async/Destroy(force, ...)

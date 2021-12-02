@@ -1,12 +1,13 @@
 import { useBackend, useSharedState } from '../backend';
 import { clamp01 } from 'common/math';
 import { KEY_ENTER } from 'common/keycodes';
-import { Box, Button, Input, Section, Stack } from '../components';
+import { Box, Button, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type TextboxData = {
   max_length: number;
   message: string;
+  multiline: boolean;
   placeholder: string;
   timeout: number;
   title: string;
@@ -19,7 +20,7 @@ type Validator = {
 
 export const TextboxModal = (_, context) => {
   const { data } = useBackend<TextboxData>(context);
-  const { max_length, message, placeholder, timeout, title } = data;
+  const { max_length, message, multiline, placeholder, timeout, title } = data;
   const [input, setInput] = useSharedState(context, 'input', placeholder);
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
@@ -33,17 +34,17 @@ export const TextboxModal = (_, context) => {
     setInput(target.value);
   };
   // Dynamically changes the window height based on the message.
-  const windowHeight = 130 + Math.ceil(message.length / 5);
+  const windowHeight = 130 + Math.ceil(message.length / 5) + (multiline && 75);
 
   return (
-    <Window title={title} width={450} height={windowHeight}>
+    <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content>
         <Stack fill vertical>
-          <Stack.Item grow>
+          <Stack.Item>
             <MessageBox />
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow={multiline && 1}>
             <InputArea
               input={input}
               inputIsValid={inputIsValid}
@@ -88,27 +89,51 @@ const MessageBox = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { act } = useBackend<TextboxData>(context);
+  const { act, data } = useBackend<TextboxData>(context);
+  const { multiline } = data;
   const { input, inputIsValid, onChangeHandler } = props;
 
-  return (
-    <Input
-      fluid
-      onInput={(event) => onChangeHandler(event)}
-      onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        /**
-         * Simulate a click when pressing space or enter,
-         * allow keyboard navigation, override tab behavior
-         */
-        if (keyCode === KEY_ENTER && inputIsValid) {
-          act('choose', { entry: input });
-        }
-      }}
-      placeholder="Type something..."
-      value={input}
-    />
-  );
+  if (!multiline) {
+    return (
+      <Input
+        autoFocus
+        fluid
+        onInput={(event) => onChangeHandler(event)}
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          /**
+           * Simulate a click when pressing space or enter,
+           * allow keyboard navigation, override tab behavior
+           */
+          if (keyCode === KEY_ENTER && inputIsValid) {
+            act('choose', { entry: input });
+          }
+        }}
+        placeholder="Type something..."
+        value={input}
+      />
+    );
+  } else {
+    return (
+      <TextArea
+        autoFocus
+        height="100%"
+        onInput={(event) => onChangeHandler(event)}
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          /**
+           * Simulate a click when pressing space or enter,
+           * allow keyboard navigation, override tab behavior
+           */
+          if (keyCode === KEY_ENTER && inputIsValid) {
+            act('choose', { entry: input });
+          }
+        }}
+        placeholder="Type something..."
+        value={input}
+      />
+    );
+  }
 };
 
 /** The buttons shown at bottom. Will display the error
@@ -120,7 +145,7 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack fill>
+    <Stack pl={2} pr={2}>
       <Stack.Item>
         <Button
           color="good"
@@ -128,7 +153,7 @@ const ButtonGroup = (props, context) => {
           onClick={() => act('submit', { entry: input })}>
           Submit
         </Button>
-      </Stack.Item>
+      </Stack.Item>{' '}
       <Stack.Item grow>
         {!isValid && <Box color="average">{error}</Box>}
       </Stack.Item>
