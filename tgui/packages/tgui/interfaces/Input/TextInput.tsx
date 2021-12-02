@@ -1,14 +1,14 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useSharedState } from '../../backend';
 import { clamp01 } from 'common/math';
 import { KEY_ENTER } from 'common/keycodes';
-import { Box, Button, Input, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { Box, Button, Input, Section, Stack, TextArea } from '../../components';
+import { Window } from '../../layouts';
 
-type NumboxData = {
-  max_value: number | null;
+type TextInputData = {
+  max_length: number;
   message: string;
-  min_value: number | null;
-  placeholder: number;
+  multiline: boolean;
+  placeholder: string;
   timeout: number;
   title: string;
 };
@@ -18,44 +18,38 @@ type Validator = {
   error: string | null;
 };
 
-export const NumboxModal = (_, context) => {
-  const { data } = useBackend<NumboxData>(context);
-  const { max_value, message, min_value, placeholder, timeout, title } = data;
+export const TextInput = (_, context) => {
+  const { data } = useBackend<TextInputData>(context);
+  const { max_length, message, multiline, placeholder, timeout, title } = data;
   const [input, setInput] = useSharedState(context, 'input', placeholder);
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
     'inputIsValid',
-    { isValid: true, error: null }
+    { isValid: false, error: null }
   );
-  const onTypeHandler = (event) => {
+  const onType = (event) => {
     event.preventDefault();
     const target = event.target;
-    setInputIsValid(validateInput(target.value, max_value, min_value));
+    setInputIsValid(validateInput(target.value, max_length));
     setInput(target.value);
   };
-  const onButtonClickHandler = (value: number) => {
-    setInputIsValid(validateInput(value, max_value, min_value));
-    setInput(value);
-  };
   // Dynamically changes the window height based on the message.
-  const windowHeight = 130 + Math.ceil(message.length / 5);
+  const windowHeight
+    = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 
   return (
-    <Window title={title} width={250} height={windowHeight}>
+    <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <MessageBox />
           </Stack.Item>
-          <Stack.Item>
-            <InputArea
-              input={input}
-              inputIsValid={inputIsValid}
-              onButtonClickHandler={onButtonClickHandler}
-              onTypeHandler={onTypeHandler}
-            />
-          </Stack.Item>
+          <InputArea
+            input={input}
+            inputIsValid={inputIsValid}
+            onType={onType}
+          />
           <Stack.Item>
             <ButtonGroup input={input} inputIsValid={inputIsValid} />
           </Stack.Item>
@@ -83,7 +77,7 @@ const Loader = (props) => {
 
 /** The message displayed. Scales the window height. */
 const MessageBox = (_, context) => {
-  const { data } = useBackend<NumboxData>(context);
+  const { data } = useBackend<TextInputData>(context);
   const { message } = data;
   return (
     <Section fill>
@@ -94,24 +88,17 @@ const MessageBox = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { act, data } = useBackend<NumboxData>(context);
-  const { min_value, max_value, placeholder } = data;
-  const { input, inputIsValid, onButtonClickHandler, onTypeHandler } = props;
+  const { act, data } = useBackend<TextInputData>(context);
+  const { multiline } = data;
+  const { input, inputIsValid, onType } = props;
 
-  return (
-    <Stack fill>
+  if (!multiline) {
+    return (
       <Stack.Item>
-        <Button
-          icon="angle-double-left"
-          onClick={() => onButtonClickHandler(min_value || 0)}
-          tooltip="Minimum"
-        />
-      </Stack.Item>
-      <Stack.Item grow>
         <Input
           autoFocus
           fluid
-          onInput={(event) => onTypeHandler(event)}
+          onInput={(event) => onType(event)}
           onKeyDown={(event) => {
             const keyCode = window.event ? event.which : event.keyCode;
             /**
@@ -122,44 +109,52 @@ const InputArea = (props, context) => {
               act('choose', { entry: input });
             }
           }}
-          placeholder="Type a number..."
+          placeholder="Type something..."
           value={input}
         />
       </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon="angle-double-right"
-          onClick={() => onButtonClickHandler(max_value || 1000)}
-          tooltip="Max"
+    );
+  } else {
+    return (
+      <Stack.Item grow>
+        <TextArea
+          autoFocus
+          height="100%"
+          onInput={(event) => onType(event)}
+          onKeyDown={(event) => {
+            const keyCode = window.event ? event.which : event.keyCode;
+            /**
+             * Simulate a click when pressing space or enter,
+             * allow keyboard navigation, override tab behavior
+             */
+            if (keyCode === KEY_ENTER && inputIsValid) {
+              act('choose', { entry: input });
+            }
+          }}
+          placeholder="Type something..."
+          value={input}
         />
       </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon="redo"
-          onClick={() => onButtonClickHandler(placeholder || 0)}
-          tooltip="Reset"
-        />
-      </Stack.Item>
-    </Stack>
-  );
+    );
+  }
 };
 
 /** The buttons shown at bottom. Will display the error
  * if the input is invalid.
  */
 const ButtonGroup = (props, context) => {
-  const { act } = useBackend<NumboxData>(context);
+  const { act } = useBackend<TextInputData>(context);
   const { input, inputIsValid } = props;
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack>
+    <Stack pl={5} pr={5}>
       <Stack.Item>
         <Button
           color="good"
           disabled={!isValid}
           onClick={() => act('submit', { entry: input })}
-          width={5.5}
+          width={6}
           textAlign="center">
           Submit
         </Button>
@@ -175,7 +170,7 @@ const ButtonGroup = (props, context) => {
         <Button
           color="bad"
           onClick={() => act('cancel')}
-          width={5.5}
+          width={6}
           textAlign="center">
           Cancel
         </Button>
@@ -185,22 +180,11 @@ const ButtonGroup = (props, context) => {
 };
 
 /** Helper functions */
-const validateInput = (input, max_value, min_value) => {
-  if (isNaN(input)) {
-    return { isValid: false, error: 'Not a number!' };
-  } else if (!!max_value && input > max_value) {
-    return {
-      isValid: false,
-      error: `Too high!`,
-    };
-  } else if (!!min_value && input < min_value) {
-    return {
-      isValid: false,
-      error: `Too low!`,
-    };
+const validateInput = (input, max_length) => {
+  if (!!max_length && input.length > max_length) {
+    return { isValid: false, error: `Too long!` };
   } else if (input.length === 0) {
     return { isValid: false, error: null };
-  } else {
-    return { isValid: true, error: null };
   }
+  return { isValid: true, error: null };
 };
