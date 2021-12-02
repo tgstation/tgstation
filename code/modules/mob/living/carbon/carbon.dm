@@ -619,9 +619,9 @@
 	if(tinttotal > TINT_DARKENED && tinttotal < TINT_BLIND)
 		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2, clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal > TINT_LIGHTER && tinttotal <= TINT_DARKENED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 150, 0, 255))
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal > TINT_MINIMAL && tinttotal <= TINT_LIGHTER)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 0, clamp(tinttotal * 200, 0, 255))
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 0, clamp(tinttotal * 100, 0, 255))
 	else if(tinttotal <= TINT_MINIMAL)
 		clear_fullscreen("tint", 0)
 
