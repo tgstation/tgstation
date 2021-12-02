@@ -70,7 +70,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	inhand_icon_state = "swat"
 	aggressiveness = AGGR_SHIT_COP
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR | HIDESNOUT
-	visor_flags_inv = 0
+	visor_flags_inv = NONE
+	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	visor_flags_cover = NONE
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
