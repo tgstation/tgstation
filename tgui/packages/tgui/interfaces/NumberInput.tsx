@@ -52,8 +52,8 @@ export const NumberInput = (_, context) => {
             <InputArea
               input={input}
               inputIsValid={inputIsValid}
-              onButtonClickHandler={onClick}
-              onTypeHandler={onType}
+              onClick={onClick}
+              onType={onType}
             />
           </Stack.Item>
           <Stack.Item>
