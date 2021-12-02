@@ -1,0 +1,4 @@
+author: "Seris02"
+delete-after: True
+changes: 
+  - qol: "made hair gradient color preferences not show up if no gradient is selected"
