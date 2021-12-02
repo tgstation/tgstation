@@ -525,9 +525,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist\n"
 				continue
 		//Lets run a check to see if all the rarities exist that we want to exist exist
-		for(var/_rarity in pack.rarity_table)
-			if(!GLOB.cached_cards[pack.series][_rarity])
-				toReturn += "[pack.type] does not have the required rarity [_rarity]\n"
+		for(var/pack_rarity in pack.rarity_table)
+			if(!GLOB.cached_cards[pack.series][pack_rarity])
+				toReturn += "[pack.type] does not have the required rarity [pack_rarity]\n"
 		qdel(pack)
 	return toReturn
 
