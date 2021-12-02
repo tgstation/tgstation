@@ -31,7 +31,7 @@
 	to_chat(user, span_green("You succesfully link [src] to the [M.buffer]."))
 	return TRUE
 
-///Lose our previous target and make our previous target lose us. Separate proc because I feel like I'll need this again
+///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
 /obj/machinery/plumbing/sender/proc/lose_teleport_target()
 	target.senders.Remove(src)
 	target = null

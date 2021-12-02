@@ -132,7 +132,7 @@ LOG_SILICON
 ## log economy actions
 LOG_ECON
 
-## log crew manifest to Separate file
+## log crew manifest to seperate file
 LOG_MANIFEST
 
 ## log job divide debugging information
