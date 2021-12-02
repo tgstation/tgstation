@@ -86,7 +86,7 @@
 
 /obj/item/mod/construction/shell
 	name = "MOD shell"
-	icon_state = "mod-construction"
+	icon_state = "mod-construction_start"
 	desc = "A MOD shell."
 	var/obj/item/core
 	var/obj/item/helmet
