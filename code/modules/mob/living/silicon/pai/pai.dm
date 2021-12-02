@@ -1,6 +1,3 @@
-/// Total percent required to hack a door.
-#define HACK_COMPLETE 100
-
 /mob/living/silicon/pai
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
@@ -197,7 +194,6 @@
 		hackprogress = 0
 		hacking = FALSE
 		hackbar.end_progress()
-		/// The door being opened by the pAI
 		var/obj/machinery/door/door = hacking_cable.machine
 		door.open()
 		QDEL_NULL(hackbar)
