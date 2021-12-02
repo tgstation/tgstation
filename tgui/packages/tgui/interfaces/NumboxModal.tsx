@@ -5,9 +5,9 @@ import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type NumboxData = {
-  max_value: number;
+  max_value: number | null;
   message: string;
-  min_value: number;
+  min_value: number | null;
   placeholder: number;
   timeout: number;
   title: string;
@@ -25,13 +25,17 @@ export const NumboxModal = (_, context) => {
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
     'inputIsValid',
-    { isValid: false, error: null }
+    { isValid: true, error: null }
   );
-  const onChangeHandler = (event) => {
+  const onTypeHandler = (event) => {
     event.preventDefault();
     const target = event.target;
     setInputIsValid(validateInput(target.value, max_value, min_value));
     setInput(target.value);
+  };
+  const onButtonClickHandler = (value: number) => {
+    setInputIsValid(validateInput(value, max_value, min_value));
+    setInput(value);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight = 130 + Math.ceil(message.length / 5);
@@ -48,7 +52,8 @@ export const NumboxModal = (_, context) => {
             <InputArea
               input={input}
               inputIsValid={inputIsValid}
-              onChangeHandler={onChangeHandler}
+              onButtonClickHandler={onButtonClickHandler}
+              onTypeHandler={onTypeHandler}
             />
           </Stack.Item>
           <Stack.Item>
@@ -90,26 +95,52 @@ const MessageBox = (_, context) => {
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
   const { act, data } = useBackend<NumboxData>(context);
-  const { input, inputIsValid, onChangeHandler } = props;
+  const { min_value, max_value, placeholder } = data;
+  const { input, inputIsValid, onButtonClickHandler, onTypeHandler } = props;
 
   return (
-    <Input
-      autoFocus
-      fluid
-      onInput={(event) => onChangeHandler(event)}
-      onKeyDown={(event) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        /**
-         * Simulate a click when pressing space or enter,
-         * allow keyboard navigation, override tab behavior
-         */
-        if (keyCode === KEY_ENTER && inputIsValid) {
-          act('choose', { entry: input });
-        }
-      }}
-      placeholder="Type a number..."
-      value={input}
-    />
+    <Stack fill>
+      <Stack.Item>
+        <Button
+          icon="angle-double-left"
+          onClick={() => onButtonClickHandler(min_value || 0)}
+          tooltip="Minimum"
+        />
+      </Stack.Item>
+      <Stack.Item grow>
+        <Input
+          autoFocus
+          fluid
+          onInput={(event) => onTypeHandler(event)}
+          onKeyDown={(event) => {
+            const keyCode = window.event ? event.which : event.keyCode;
+            /**
+             * Simulate a click when pressing space or enter,
+             * allow keyboard navigation, override tab behavior
+             */
+            if (keyCode === KEY_ENTER && inputIsValid) {
+              act('choose', { entry: input });
+            }
+          }}
+          placeholder="Type a number..."
+          value={input}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="angle-double-right"
+          onClick={() => onButtonClickHandler(max_value || 1000)}
+          tooltip="Max"
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="redo"
+          onClick={() => onButtonClickHandler(placeholder || 0)}
+          tooltip="Reset"
+        />
+      </Stack.Item>
+    </Stack>
   );
 };
 
@@ -122,20 +153,30 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={8} pr={8}>
+    <Stack>
       <Stack.Item>
         <Button
           color="good"
           disabled={!isValid}
-          onClick={() => act('submit', { entry: input })}>
+          onClick={() => act('submit', { entry: input })}
+          width={5.5}
+          textAlign="center">
           Submit
         </Button>
-      </Stack.Item>{' '}
+      </Stack.Item>
       <Stack.Item grow>
-        {!isValid && <Box color="average">{error}</Box>}
+        {!isValid && (
+          <Box color="average" nowrap textAlign="center">
+            {error}
+          </Box>
+        )}
       </Stack.Item>
       <Stack.Item>
-        <Button color="bad" onClick={() => act('cancel')}>
+        <Button
+          color="bad"
+          onClick={() => act('cancel')}
+          width={5.5}
+          textAlign="center">
           Cancel
         </Button>
       </Stack.Item>
@@ -145,18 +186,21 @@ const ButtonGroup = (props, context) => {
 
 /** Helper functions */
 const validateInput = (input, max_value, min_value) => {
-  if (!!max_value && input > max_value) {
+  if (isNaN(input)) {
+    return { isValid: false, error: 'Not a number!' };
+  } else if (!!max_value && input > max_value) {
     return {
       isValid: false,
       error: `Too high!`,
     };
-  } else if (!min_value && input < min_value) {
+  } else if (!!min_value && input < min_value) {
     return {
       isValid: false,
       error: `Too low!`,
     };
   } else if (input.length === 0) {
     return { isValid: false, error: null };
+  } else {
+    return { isValid: true, error: null };
   }
-  return { isValid: true, error: null };
 };

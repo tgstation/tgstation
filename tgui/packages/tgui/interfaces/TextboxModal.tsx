@@ -34,8 +34,8 @@ export const TextboxModal = (_, context) => {
     setInput(target.value);
   };
   // Dynamically changes the window height based on the message.
-  const windowHeight
-    = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
+  const windowHeight =
+    130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -102,9 +102,9 @@ const InputArea = (props, context) => {
           onKeyDown={(event) => {
             const keyCode = window.event ? event.which : event.keyCode;
             /**
-           * Simulate a click when pressing space or enter,
-           * allow keyboard navigation, override tab behavior
-           */
+             * Simulate a click when pressing space or enter,
+             * allow keyboard navigation, override tab behavior
+             */
             if (keyCode === KEY_ENTER && inputIsValid) {
               act('choose', { entry: input });
             }
@@ -124,9 +124,9 @@ const InputArea = (props, context) => {
           onKeyDown={(event) => {
             const keyCode = window.event ? event.which : event.keyCode;
             /**
-           * Simulate a click when pressing space or enter,
-           * allow keyboard navigation, override tab behavior
-           */
+             * Simulate a click when pressing space or enter,
+             * allow keyboard navigation, override tab behavior
+             */
             if (keyCode === KEY_ENTER && inputIsValid) {
               act('choose', { entry: input });
             }
@@ -148,20 +148,30 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={8} pr={8}>
+    <Stack pl={5} pr={5}>
       <Stack.Item>
         <Button
           color="good"
           disabled={!isValid}
-          onClick={() => act('submit', { entry: input })}>
+          onClick={() => act('submit', { entry: input })}
+          width={6}
+          textAlign="center">
           Submit
         </Button>
-      </Stack.Item>{' '}
+      </Stack.Item>
       <Stack.Item grow>
-        {!isValid && <Box color="average" nowrap textAlign="center">{error}</Box>}
+        {!isValid && (
+          <Box color="average" nowrap textAlign="center">
+            {error}
+          </Box>
+        )}
       </Stack.Item>
       <Stack.Item>
-        <Button color="bad" onClick={() => act('cancel')}>
+        <Button
+          color="bad"
+          onClick={() => act('cancel')}
+          width={6}
+          textAlign="center">
           Cancel
         </Button>
       </Stack.Item>

@@ -84,7 +84,7 @@
 	var/message
 	/// Multiline input for larger input boxes.
 	var/multiline
-	/// String that modulates the return casting
+	/// The time at which the tgui_modal was created, for displaying timeout progress.
 	var/start_time
 	/// The lifespan of the tgui_textbox, after which the window will close and delete itself.
 	var/timeout
