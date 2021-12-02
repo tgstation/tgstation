@@ -45,13 +45,11 @@ export const TextboxModal = (_, context) => {
           <Stack.Item>
             <MessageBox />
           </Stack.Item>
-          <Stack.Item grow={multiline && 1}>
-            <InputArea
-              input={input}
-              inputIsValid={inputIsValid}
-              onChangeHandler={onChangeHandler}
-            />
-          </Stack.Item>
+          <InputArea
+            input={input}
+            inputIsValid={inputIsValid}
+            onChangeHandler={onChangeHandler}
+          />
           <Stack.Item>
             <ButtonGroup input={input} inputIsValid={inputIsValid} />
           </Stack.Item>
@@ -96,43 +94,47 @@ const InputArea = (props, context) => {
 
   if (!multiline) {
     return (
-      <Input
-        autoFocus
-        fluid
-        onInput={(event) => onChangeHandler(event)}
-        onKeyDown={(event) => {
-          const keyCode = window.event ? event.which : event.keyCode;
-          /**
+      <Stack.Item>
+        <Input
+          autoFocus
+          fluid
+          onInput={(event) => onChangeHandler(event)}
+          onKeyDown={(event) => {
+            const keyCode = window.event ? event.which : event.keyCode;
+            /**
            * Simulate a click when pressing space or enter,
            * allow keyboard navigation, override tab behavior
            */
-          if (keyCode === KEY_ENTER && inputIsValid) {
-            act('choose', { entry: input });
-          }
-        }}
-        placeholder="Type something..."
-        value={input}
-      />
+            if (keyCode === KEY_ENTER && inputIsValid) {
+              act('choose', { entry: input });
+            }
+          }}
+          placeholder="Type something..."
+          value={input}
+        />
+      </Stack.Item>
     );
   } else {
     return (
-      <TextArea
-        autoFocus
-        height="100%"
-        onInput={(event) => onChangeHandler(event)}
-        onKeyDown={(event) => {
-          const keyCode = window.event ? event.which : event.keyCode;
-          /**
+      <Stack.Item grow>
+        <TextArea
+          autoFocus
+          height="100%"
+          onInput={(event) => onChangeHandler(event)}
+          onKeyDown={(event) => {
+            const keyCode = window.event ? event.which : event.keyCode;
+            /**
            * Simulate a click when pressing space or enter,
            * allow keyboard navigation, override tab behavior
            */
-          if (keyCode === KEY_ENTER && inputIsValid) {
-            act('choose', { entry: input });
-          }
-        }}
-        placeholder="Type something..."
-        value={input}
-      />
+            if (keyCode === KEY_ENTER && inputIsValid) {
+              act('choose', { entry: input });
+            }
+          }}
+          placeholder="Type something..."
+          value={input}
+        />
+      </Stack.Item>
     );
   }
 };
@@ -146,7 +148,7 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={3} pr={3}>
+    <Stack pl={7} pr={7}>
       <Stack.Item>
         <Button
           color="good"
@@ -156,7 +158,7 @@ const ButtonGroup = (props, context) => {
         </Button>
       </Stack.Item>{' '}
       <Stack.Item grow>
-        {!isValid && <Box color="average">{error}</Box>}
+        {!isValid && <Box color="average" nowrap textAlign="center">{error}</Box>}
       </Stack.Item>
       <Stack.Item>
         <Button color="bad" onClick={() => act('cancel')}>
@@ -170,7 +172,7 @@ const ButtonGroup = (props, context) => {
 /** Helper functions */
 const validateInput = (input, max_length) => {
   if (!!max_length && input.length > max_length) {
-    return { isValid: false, error: `Too many characters!` };
+    return { isValid: false, error: `Too long!` };
   } else if (input.length === 0) {
     return { isValid: false, error: null };
   }
