@@ -1,35 +1,38 @@
-///This subsystem strives to make loading outfits as smooth at execution as possible
-///It preloads a set of marked outfit datum's equipment, and caches them until requested
-///Doesn't catch everything mind, but it's close enough for government work
-///Fuck you goonstation
+/// This subsystem strives to make loading large amounts of select objects as smooth at execution as possible
+/// It preloads a set of types to store, and caches them until requested
+/// Doesn't catch everything mind, this is intentional. There's many types that expect to either 
+/// A: Not sit in a list for 2 hours, or B: have extra context passed into them, or for their parent to be their location
+/// You should absolutely not spam this system, it will break things in new and wonderful ways
+/// S close enough for government work though.
+/// Fuck you goonstation
 SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
-	wait = 10 //This is more like a queue then anything else
+	wait = 10 // This is more like a queue then anything else
 	flags = SS_BACKGROUND
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT //We're going to fill up our cache while players sit in the lobby
-	///How much to cache outfit items
-	///Multiplier, 2 would mean cache enough items to stock 1 of each preloaded order twice, etc
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // We're going to fill up our cache while players sit in the lobby
+	/// How much to cache outfit items
+	/// Multiplier, 2 would mean cache enough items to stock 1 of each preloaded order twice, etc
 	var/cache_intensity = 2
-	///How many more then the template of a type are we allowed to have before we delete applicants?
+	/// How many more then the template of a type are we allowed to have before we delete applicants?
 	var/overflow_lienency = 2
-	///Canonical list of types required to fill all preloaded stocks once.
-	///Type -> count
-	var/list/outfit_minimum = list()
-	///List of types to load. Type -> count //(I'd do a list of lists but this needs to be refillable)
+	/// Canonical list of types required to fill all preloaded stocks once.
+	/// Type -> list(count, last inspection timestamp, call on insert, call on removal)
+	var/list/canon_minimum = list()
+	/// List of types to load. Type -> count //(I'd do a list of lists but this needs to be refillable)
 	var/list/order_list = list()
-	///List of lists. Contains our preloaded atoms. Type -> list(last inspect time, list(instances))
+	/// List of lists. Contains our preloaded atoms. Type -> list(last inspect time, list(instances))
 	var/list/preloaded_stock = list()
-	///The last time we inspected our stock
+	/// The last time we inspected our stock
 	var/last_inspect_time = 0
-	///How often to inspect our stock, in deciseconds
+	/// How often to inspect our stock, in deciseconds
 	var/inspect_delay = 30 SECONDS
-	///What we're currently doing
+	/// What we're currently doing
 	var/current_task = SSWARDROBE_STOCK
-	///How many times we've had to generate a stock item on request
+	/// How many times we've had to generate a stock item on request
 	var/stock_miss = 0
-	///How many times we've successfully returned a cached item
+	/// How many times we've successfully returned a cached item
 	var/stock_hit = 0
-	///How many items would we make just by loading the master list once?
+	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
 
 /datum/controller/subsystem/wardrobe/Initialize(start_timeofday)
@@ -40,7 +43,7 @@ SUBSYSTEM_DEF(wardrobe)
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
 	for(var/datum/outfit/outfit_to_stock as anything in subtypesof(/datum/outfit))
-		if(!initial(outfit_to_stock.preload)) //Clearly not interested
+		if(!initial(outfit_to_stock.preload)) // Clearly not interested
 			continue
 		store_outfit(new outfit_to_stock)
 		CHECK_TICK
@@ -52,21 +55,21 @@ SUBSYSTEM_DEF(wardrobe)
 		store_species(new species_to_stock)
 		CHECK_TICK
 
-///Resets the load queue to the master template, accounting for the existing stock
+/// Resets the load queue to the master template, accounting for the existing stock
 /datum/controller/subsystem/wardrobe/proc/hard_refresh_queue()
-	for(var/datum/type_to_queue as anything in outfit_minimum)
-		var/list/master_info = outfit_minimum[type_to_queue]
+	for(var/datum/type_to_queue as anything in canon_minimum)
+		var/list/master_info = canon_minimum[type_to_queue]
 		var/amount_to_load = master_info[WARDROBE_CACHE_COUNT] * cache_intensity
 		
 		var/list/stock_info = preloaded_stock[type_to_queue]
-		if(stock_info) //If we already have stuff, reduce the amount we load
+		if(stock_info) // If we already have stuff, reduce the amount we load
 			amount_to_load -= length(stock_info[WARDROBE_STOCK_CONTENTS])
 		set_queue_item(type_to_queue, amount_to_load)
 
 /datum/controller/subsystem/wardrobe/stat_entry(msg)
 	var/total_provided = max(stock_hit + stock_miss, 1)
-	var/current_max_store = (one_go_master * cache_intensity) + (overflow_lienency * length(outfit_minimum))
-	msg += " P:[length(outfit_minimum)] Q:[length(order_list)] S:[length(preloaded_stock)] I:[cache_intensity] O:[overflow_lienency]"
+	var/current_max_store = (one_go_master * cache_intensity) + (overflow_lienency * length(canon_minimum))
+	msg += " P:[length(canon_minimum)] Q:[length(order_list)] S:[length(preloaded_stock)] I:[cache_intensity] O:[overflow_lienency]"
 	msg += " H:[stock_hit] M:[stock_miss] T:[total_provided] H/T:[PERCENT(stock_hit / total_provided)]% M/T:[PERCENT(stock_miss / total_provided)]%"
 	msg += " MAX:[current_max_store]"
 	msg += " ID:[inspect_delay] NI:[last_inspect_time + inspect_delay]"
@@ -86,27 +89,27 @@ SUBSYSTEM_DEF(wardrobe)
 			current_task = SSWARDROBE_STOCK
 			last_inspect_time = world.time
 
-///Turns the order list into actual loaded items, this is where most work is done
+/// Turns the order list into actual loaded items, this is where most work is done
 /datum/controller/subsystem/wardrobe/proc/stock_wardrobe()
 	for(var/atom/movable/type_to_stock as anything in order_list)
 		var/amount_to_stock = order_list[type_to_stock]
 		for(var/i in 1 to amount_to_stock)
 			if(MC_TICK_CHECK)
-				order_list[type_to_stock] = (amount_to_stock - (i - 1)) //Account for types we've already created
+				order_list[type_to_stock] = (amount_to_stock - (i - 1)) // Account for types we've already created
 				return
-			var/atom/movable/new_suit = new type_to_stock()
-			stash_object(new_suit)
+			var/atom/movable/new_member = new type_to_stock()
+			stash_object(new_member)
 
 		order_list -= type_to_stock
 		if(MC_TICK_CHECK)
 			return
 
-///If we have a spare moment, go through the current stock and make sure we don't have too much of one thing
-///Or that we're not too low on some other stock
-///This exists as a failsafe, so the wardrobe doesn't just end up generating too many items
+/// Once every medium while, go through the current stock and make sure we don't have too much of one thing
+/// Or that we're not too low on some other stock
+/// This exists as a failsafe, so the wardrobe doesn't just end up generating too many items or accidentially running out somehow
 /datum/controller/subsystem/wardrobe/proc/run_inspection()
-	for(var/datum/loaded_type as anything in outfit_minimum)
-		var/list/master_info = outfit_minimum[loaded_type]
+	for(var/datum/loaded_type as anything in canon_minimum)
+		var/list/master_info = canon_minimum[loaded_type]
 		var/last_looked_at = master_info[WARDROBE_CACHE_LAST_INSPECT]
 		if(last_looked_at == last_inspect_time)
 			continue
@@ -119,17 +122,17 @@ SUBSYSTEM_DEF(wardrobe)
 		
 		var/target_stock = master_info[WARDROBE_CACHE_COUNT] * cache_intensity
 		var/target_delta = amount_held - target_stock
-		//If we've got too much
+		// If we've got too much
 		if(target_delta > overflow_lienency)
 			unload_stock(loaded_type, target_delta - overflow_lienency)
 			if(state != SS_RUNNING)
 				return
 
-		//If we have more then we target, just continue
+		// If we have more then we target, just don't you feel me?
 		target_delta = min(target_delta, 0) //I only want negative numbers to matter here
 
-		//If we don't have enough, queue enough to make up the remainder
-		//If we have too much in the queue, cull to 0. We do this so time isn't wasted creating and destroying entries
+		// If we don't have enough, queue enough to make up the remainder
+		// If we have too much in the queue, cull to 0. We do this so time isn't wasted creating and destroying entries
 		set_queue_item(loaded_type, abs(target_delta))
 
 		master_info[WARDROBE_CACHE_LAST_INSPECT] = last_inspect_time
@@ -137,24 +140,33 @@ SUBSYSTEM_DEF(wardrobe)
 		if(MC_TICK_CHECK)
 			return
 
+/**
+ * Canonizes the type, which means it's now managed by the subsystem, and will be created deleted and passed out to comsumers  
+ * 
+ * Arguments:
+ * * type to stock - What type exactly do you want us to remember?
+ * * datum/callback/on_add - Callback to invoke on any instances of this object inserted into our store
+ * * datum/callback/on_remove - Callback to invoke on any stored instances of this object handed out to a requester. (This is not called on new instances of the object)
+ * 
+*/
 /datum/controller/subsystem/wardrobe/proc/canonize_type(type_to_stock, datum/callback/on_add, datum/callback/on_remove)
 	if(!type_to_stock)
 		return
 	if(!ispath(type_to_stock))
 		stack_trace("Non path [type_to_stock] attempted to canonize itself. Something's fucky")
-	var/list/master_info = outfit_minimum[type_to_stock]
+	var/list/master_info = canon_minimum[type_to_stock]
 	if(!master_info)
 		master_info = new /list(WARDROBE_CACHE_CALL_REMOVAL)
 		master_info[WARDROBE_CACHE_COUNT] = 0
 		master_info[WARDROBE_STOCK_CALL_INSERT] = call_on_add
 		master_info[WARDROBE_STOCK_CALL_REMOVAL] = call_on_remove
-		outfit_minimum[type_to_stock] = master_info
+		canon_minimum[type_to_stock] = master_info
 	master_info[WARDROBE_CACHE_COUNT] += 1
 	one_go_master++
 
-///Are we interested in the passed in type? TRUE if so, FALSE otherwise
+/// Are we interested in the passed in type? TRUE if so, FALSE otherwise
 /datum/controller/subsystem/wardrobe/proc/interested_in(atom/movable/check)
-	return !!outfit_minimum[check.type]
+	return !!canon_minimum[check.type]
 
 /datum/controller/subsystem/wardrobe/proc/add_queue_item(queued_type, amount)
 	if(amount <= 0)
@@ -181,12 +193,12 @@ SUBSYSTEM_DEF(wardrobe)
 		return
 	order_list[queued_type] = amount
 
-///Take an existing object, and insert it into our storage
-///If we can't or won't take it, it's deleted. You do not own this object after passing it in
+/// Take an existing object, and insert it into our storage
+/// If we can't or won't take it, it's deleted. You do not own this object after passing it in
 /datum/controller/subsystem/wardrobe/proc/stash_object(atom/movable/object)
 	var/object_type = object.type
-	var/list/master_info = outfit_minimum[object_type]
-	//I will not permit objects you didn't reserve ahead of time
+	var/list/master_info = canon_minimum[object_type]
+	// I will not permit objects you didn't reserve ahead of time
 	if(!master_info)
 		qdel(object)
 		return
@@ -197,11 +209,11 @@ SUBSYSTEM_DEF(wardrobe)
 	if(stock_info)
 		amount_held = length(stock_info[WARDROBE_STOCK_CONTENTS])
 	
-	//Doublely so for things we already have too much of
+	// Doublely so for things we already have too much of
 	if(amount_held - stock_target > overflow_lienency)
 		qdel(object)
 		return
-	//Fuck off
+	// Fuck off
 	if(QDELETED(object))
 		stack_trace("We tried to stash a qdeleted object, what did you do")
 		return
@@ -239,7 +251,7 @@ SUBSYSTEM_DEF(wardrobe)
 			do_on_removal.Invoke()
 			do_on_removal.object = null	
 		stock_hit++
-		add_queue_item(requested_type, 1) //Requeue the item, under the assumption we'll never see it again
+		add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
 		if(!(contents_length - 1))
 			preloaded_stock -= requested_type
 
@@ -248,8 +260,8 @@ SUBSYSTEM_DEF(wardrobe)
 
 	return requested_object
 
-///Unloads an amount of some type we have in stock
-///Private function, for internal use only
+/// Unloads an amount of some type we have in stock
+/// Private function, for internal use only
 /datum/controller/subsystem/wardrobe/proc/unload_stock(datum/unload_type, amount, force = FALSE)
 	var/list/stock_info = preloaded_stock[unload_type]
 	if(!stock_info)
@@ -276,7 +288,7 @@ SUBSYSTEM_DEF(wardrobe)
 	var/datum/callback/on_organ_removal = CALLBACK(/obj/item/organ/proc/start_processing)
 	var/list/types_to_store = archive.get_types_to_preload()
 	for(var/obj/item/species_request as anything in types_to_store)
-		for(var/i in 1 to 5) //Store 5 of each species, since that seems on par with 1 of each outfit
+		for(var/i in 1 to 5) // Store 5 of each species, since that seems on par with 1 of each outfit
 			if(ispath(species_request, /obj/item/organ))
 				canonize_type(species_request, on_organ_insert, on_organ_removal)
 			else //Bit weird but ok
