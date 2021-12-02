@@ -17,6 +17,6 @@ export const tgui_lock: FeatureToggle = {
 export const tgui_input: FeatureToggle = {
   name: 'Enable tgui input boxes',
   category: 'UI',
-  description: 'Renders input boxes in TGUI.',
+  description: 'Renders input boxes in tgui.',
   component: CheckboxInput,
 };
