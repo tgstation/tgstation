@@ -1,17 +1,17 @@
 /**
  * Creates a TGUI window with a number input. Returns the user's response as num | null.
  *
- * This proc should be used to create windows for text entry that the caller will wait for a response from.
- * If tgui fancy chat is turned off: Will return a normal input. If max_value is specified, will return
- * stripped_min_value_input.
+ * This proc should be used to create windows for number entry that the caller will wait for a response from.
+ * If tgui fancy chat is turned off: Will return a normal input. If a max or min value is specified, will
+ * validate the input inside the UI and ui_act.
  *
  * Arguments:
  * * user - The user to show the numbox to.
  * * message - The content of the numbox, shown in the body of the TGUI window.
  * * title - The title of the numbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder. Users can press refresh with this.
- * * max_value - Specifies a max length for input.
- * * min_value -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
+ * * max_value - Specifies a maximum value. If none is set, any number can be entered. Pressing "max" defaults to 1000.
+ * * min_value - Specifies a minimum value. Often 0.
  * * timeout - The timeout of the numbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
 /proc/tgui_numbox(mob/user, message = null, title = "Number Input", default = null, max_value = null, min_value = 0, timeout = 0)
@@ -37,17 +37,18 @@
  * Creates an asynchronous TGUI text input window with an associated callback.
  *
  * This proc should be used to create numboxes that invoke a callback with the user's entry.
+ *
  * Arguments:
  * * user - The user to show the numbox to.
  * * message - The content of the numbox, shown in the body of the TGUI window.
  * * title - The title of the numbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder. Users can press refresh with this.
- * * max_value - Specifies a max length for input.
- * * min_value -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
+ * * max_value - Specifies a maximum value. If none is set, any number can be entered. Pressing "max" defaults to 1000.
+ * * min_value - Specifies a minimum value. Often 0.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the numbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  */
-/proc/tgui_numbox_async(mob/user, message = null, title = "Text Input", default = null, max_value = null, min_value = 0, datum/callback/callback, timeout = 0)
+/proc/tgui_numbox_async(mob/user, message = null, title = "Number Input", default = null, max_value = null, min_value = 0, datum/callback/callback, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -72,7 +73,7 @@
 	var/default
 	/// The entry that the user has return_typed in.
 	var/entry
-	/// The maximum value that can be entered
+	/// The maximum value that can be entered.
 	var/max_value
 	/// The prompt's body, if any, of the TGUI window.
 	var/message
