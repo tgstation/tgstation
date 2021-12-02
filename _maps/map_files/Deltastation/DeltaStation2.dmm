@@ -50570,11 +50570,11 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "jdg" = (
-/obj/machinery/rnd/production/protolathe/department/service,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
+/obj/machinery/rnd/production/techfab/department/service,
 /turf/open/floor/iron/checker,
 /area/hallway/secondary/service)
 "jdv" = (
