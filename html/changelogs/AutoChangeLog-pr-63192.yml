@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes: 
+  - bugfix: "Blind people now get a chat message when being cuffed."
