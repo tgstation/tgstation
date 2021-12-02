@@ -50,7 +50,6 @@
 			)
 
 		jobs[job.title] = list(
-			"name" = job.title,
 			"description" = job.description,
 			"department" = department_name,
 		)
