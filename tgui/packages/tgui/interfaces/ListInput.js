@@ -4,13 +4,13 @@
  * @license MIT
  */
 
-import { Loader } from "./Loader";
-import { useBackend } from '../../backend';
-import { Button, Section, Stack, Input } from '../../components';
+import { Loader } from "./common/Loader";
+import { useBackend } from '../backend';
+import { Button, Section, Stack, Input } from '../components';
 import { KEY_DOWN, KEY_UP, KEY_ENTER } from 'common/keycodes';
-import { Window } from '../../layouts';
+import { Window } from '../layouts';
 import { Component, createRef } from 'inferno';
-import { globalEvents } from "../../events";
+import { globalEvents } from "../events";
 
 export class ListInput extends Component {
   constructor() {

@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { Loader } from "./Loader";
-import { useBackend } from '../../backend';
+import { Loader } from "./common/Loader";
+import { useBackend } from '../backend';
 import { Component, createRef } from 'inferno';
-import { Box, Flex, Section } from '../../components';
-import { Window } from '../../layouts';
+import { Box, Flex, Section } from '../components';
+import { Window } from '../layouts';
 import {
   KEY_ENTER,
   KEY_LEFT,
