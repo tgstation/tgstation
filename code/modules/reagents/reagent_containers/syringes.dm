@@ -15,7 +15,7 @@
 	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
 	/// Flags used by the injection
-	var/inject_flags = null
+	var/inject_flags = NONE
 
 /obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()

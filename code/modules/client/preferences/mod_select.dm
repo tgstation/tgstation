@@ -19,10 +19,5 @@
 	var/obj/item/mod/control/mod = client_owner.back
 	if(!mod.selected_module)
 		return
-	mod.selected_module.UnregisterSignal(mod.wearer, mod.selected_module.used_signal)
-	switch(value)
-		if(MIDDLE_CLICK)
-			mod.selected_module.used_signal = COMSIG_MOB_MIDDLECLICKON
-		if(ALT_CLICK)
-			mod.selected_module.used_signal = COMSIG_MOB_ALTCLICKON
-	mod.selected_module.RegisterSignal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)
+	UnregisterSignal(mod.wearer, mod.selected_module.used_signal)
+	mod.selected_module.update_signal(value)

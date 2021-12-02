@@ -116,13 +116,8 @@
 				return
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
-			switch(used_button)
-				if(MIDDLE_CLICK)
-					used_signal = COMSIG_MOB_MIDDLECLICKON
-				if(ALT_CLICK)
-					used_signal = COMSIG_MOB_ALTCLICKON
+			update_signal(used_button)
 			balloon_alert(mod.wearer, "[src] activated, [used_button]-click to use")
-			RegisterSignal(mod.wearer, used_signal, .proc/on_special_click)
 	active = TRUE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	mod.wearer.update_inv_back()
@@ -140,6 +135,7 @@
 		else
 			balloon_alert(mod.wearer, "[src] deactivated")
 			UnregisterSignal(mod.wearer, used_signal)
+			used_signal = null
 	mod.wearer.update_inv_back()
 	return TRUE
 
@@ -243,3 +239,12 @@
 		used_overlay = overlay_state_inactive
 	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
 	. += module_icon
+
+/// Updates the signal used by active modules to be activated
+/obj/item/mod/module/proc/update_signal(value)
+	switch(value)
+		if(MIDDLE_CLICK)
+			mod.selected_module.used_signal = COMSIG_MOB_MIDDLECLICKON
+		if(ALT_CLICK)
+			mod.selected_module.used_signal = COMSIG_MOB_ALTCLICKON
+	RegisterSignal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)

@@ -1448,7 +1448,7 @@
 
 /datum/supply_pack/science/mod_core
 	name = "MOD core Crate"
-	desc = "Three cores, perfect for any MODsuit construction! Naturally harvested(tm), of course."
+	desc = "Three cores, perfect for any MODsuit construction! Naturally harvested™, of course."
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS

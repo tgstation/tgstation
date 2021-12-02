@@ -21,13 +21,16 @@
 /obj/item/mod/construction/core
 	name = "MOD core"
 	icon_state = "mod-core"
-	desc = "A powerful crystal originating from the birthplace of Ethereals, planet Sprout. \
-	It has been repurposed to be an internal power source for a Modular Outerwear Device."
+	desc = "Growing in the most lush, fertile areas of the planet Sprout, there is a crystal known as the Heartbloom. \
+		These rare, organic piezoelectric crystals are of incredible cultural significance to the artist castes of the Ethereals, \
+		owing to their appearance; which is exactly similar to that of an Ethereal's heart. \n\
+		Which one you have in your suit is unclear, but either way, \
+		it's been repurposed to be an internal power source for a Modular Outerwear Device."
 
 /obj/item/mod/construction/broken_core
 	name = "broken MOD core"
 	icon_state = "mod-core-broken"
-	desc = "A powerful crystal for powering MOD devices. This one doesn't seem to be able to power anything."
+	desc = "An internal power source for a Modular Outerwear Device. You don't seem to be able to source any power from this one, though."
 
 /obj/item/mod/construction/broken_core/examine(mob/user)
 	. = ..()
@@ -71,6 +74,7 @@
 	icon = 'icons/obj/mod.dmi'
 	icon_state = "paintkit"
 
+#define START_STEP "start"
 #define CORE_STEP "core"
 #define SCREWED_CORE_STEP "screwed_core"
 #define HELMET_STEP "helmet"
@@ -89,13 +93,13 @@
 	var/obj/item/chestplate
 	var/obj/item/gauntlets
 	var/obj/item/boots
-	var/step = NONE
+	var/step = START_STEP
 
 /obj/item/mod/construction/shell/examine(mob/user)
 	. = ..()
 	var/display_text
 	switch(step)
-		if(NONE)
+		if(START_STEP)
 			display_text = "It looks like it's missing a <b>MOD core</b>..."
 		if(CORE_STEP)
 			display_text = "The core seems <b>loose</b>..."
@@ -118,7 +122,7 @@
 /obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, params)
 	. = ..()
 	switch(step)
-		if(NONE)
+		if(START_STEP)
 			if(!istype(part, /obj/item/mod/construction/core))
 				return
 			if(!user.transferItemToLoc(part, src))
@@ -137,7 +141,7 @@
 				if(part.use_tool(src, user, 0, volume=30))
 					core.forceMove(drop_location())
 					balloon_alert(user, "core taken out")
-				step = NONE
+				step = START_STEP
 		if(SCREWED_CORE_STEP)
 			if(istype(part, /obj/item/mod/construction/helmet)) //Construct
 				if(!user.transferItemToLoc(part, src))
@@ -234,10 +238,7 @@
 
 /obj/item/mod/construction/shell/update_icon_state()
 	. = ..()
-	if(!step)
-		icon_state = "mod-construction"
-	else
-		icon_state = "mod-construction_[step]"
+	icon_state = "mod-construction_[step]"
 
 /obj/item/mod/construction/shell/Destroy()
 	QDEL_NULL(core)
@@ -260,6 +261,7 @@
 		boots = null
 	return ..()
 
+#undef START_STEP
 #undef CORE_STEP
 #undef SCREWED_CORE_STEP
 #undef HELMET_STEP

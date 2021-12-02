@@ -50,18 +50,18 @@
 			ai_enter_mod(intAI)
 			card.AI = null
 
-/obj/item/mod/control/proc/ai_enter_mod(mob/living/silicon/ai/newAI)
-	newAI.control_disabled = FALSE
-	newAI.radio_enabled = TRUE
-	newAI.ai_restore_power()
-	newAI.cancel_camera()
-	newAI.controlled_equipment = src
-	newAI.remote_control = src
-	newAI.forceMove(src)
-	ai = newAI
-	balloon_alert(newAI, "transferred to a suit")
+/obj/item/mod/control/proc/ai_enter_mod(mob/living/silicon/ai/new_ai)
+	new_ai.control_disabled = FALSE
+	new_ai.radio_enabled = TRUE
+	new_ai.ai_restore_power()
+	new_ai.cancel_camera()
+	new_ai.controlled_equipment = src
+	new_ai.remote_control = src
+	new_ai.forceMove(src)
+	ai = new_ai
+	balloon_alert(new_ai, "transferred to a suit")
 	for(var/datum/action/action as anything in actions)
-		action.Grant(newAI)
+		action.Grant(new_ai)
 
 #define MOVE_DELAY 2
 #define WEARER_DELAY 1

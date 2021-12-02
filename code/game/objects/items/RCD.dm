@@ -289,6 +289,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	COOLDOWN_START(src, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
 	rcd_scan(src)
 
+/**
+ * Global proc that generates RCD hologram in a range.
+ *
+ * Arguments:
+ * * source - The atom the scans originate from
+ * * scan_range - The range of turfs we grab from the source
+ * * fade_time - The time for RCD holograms to fade
+ */
 /proc/rcd_scan(atom/source, scan_range = RCD_DESTRUCTIVE_SCAN_RANGE, fade_time = RCD_HOLOGRAM_FADE_TIME)
 	playsound(source, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
 

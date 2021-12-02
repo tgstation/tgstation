@@ -50,6 +50,7 @@
 	. = ..()
 	. += "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
 
+///Adds/removes the gravity negation trait from the wearer depending on if the magpulse system is turned on.
 /obj/item/clothing/shoes/magboots/proc/update_gravity_trait(mob/user)
 	if(magpulse)
 		ADD_TRAIT(user, TRAIT_NEGATES_GRAVITY, type)

@@ -1,4 +1,3 @@
-
 /obj/item/clothing/head/helmet/space/mod
 	name = "MOD helmet"
 	desc = "A helmet for a MODsuit."
@@ -81,11 +80,13 @@
 		QDEL_NULL(mod)
 	return ..()
 
+/// Replaces these gloves on the wearer with the overslot ones
+
 /obj/item/clothing/gloves/mod/proc/show_overslot()
 	if(!overslot)
 		return
-	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		mod.wearer.dropItemToGround(overslot, TRUE, TRUE)
+	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+		mod.wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 	overslot = null
 
 /obj/item/clothing/shoes/mod
@@ -113,9 +114,10 @@
 		QDEL_NULL(mod)
 	return ..()
 
+/// Replaces these shoes on the wearer with the overslot ones
 /obj/item/clothing/shoes/mod/proc/show_overslot()
 	if(!overslot)
 		return
-	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, FALSE, TRUE))
-		mod.wearer.dropItemToGround(overslot, TRUE, TRUE)
+	if(!mod.wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+		mod.wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
 	overslot = null

@@ -118,16 +118,17 @@
 	display_name = "Modular Suits"
 	description = "Powered suits, for powered engineers."
 	design_ids = list(
-		"mod_boots",
-		"mod_chestplate",
-		"mod_gauntlets",
-		"mod_helmet",
-		"mod_shell",
 		"mod_armor_standard",
 		"mod_armor_engineering",
 		"mod_armor_atmospheric",
 		"mod_armor_medical",
+		"mod_boots",
+		"mod_chestplate",
+		"mod_gauntlets",
+		"mod_helmet",
 		"mod_paint_kit",
+		"mod_shell",
+		//move
 		"mod_storage",
 		"mod_visor_medhud",
 		"mod_visor_diaghud",
@@ -742,10 +743,10 @@
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
+		"mod_circuit",
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
-		"mod_circuit",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

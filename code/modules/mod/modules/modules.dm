@@ -1502,8 +1502,8 @@
 /obj/item/mod/module/energy_shield/proc/shield_reaction(mob/living/carbon/human/owner, atom/movable/hitby, damage = 0, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	if(SEND_SIGNAL(mod, COMSIG_ITEM_HIT_REACT, owner, hitby, attack_text, 0, damage, attack_type) & COMPONENT_HIT_REACTION_BLOCK)
 		drain_power(use_power_cost)
-		return TRUE
-	return FALSE
+		return SHIELD_BLOCK
+	return NONE
 
 /obj/item/mod/module/energy_shield/wizard
 	name = "MOD battlemage shield module"
