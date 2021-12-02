@@ -1783,7 +1783,10 @@
 	SIGNAL_HANDLER
 	var/turf/ceiling = get_step_multiz(src, UP)
 	if(!ceiling) //We are at the highest z-level.
-		to_chat(src, span_warning("You can't see through the ceiling above you."))
+		if (prob(0.1))
+			to_chat(src, span_warning("You gaze out into the infinite vastness of deep space, for a moment, you have the impulse to continue travelling, out there, out into the deep beyond, before your conciousness reasserts itself and you decide to stay within travellling distance of the station."))
+			return
+		to_chat(src, span_warning("There's nothing interesting up there."))
 		return
 	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
 		var/turf/front_hole = get_step(ceiling, dir)
@@ -1796,10 +1799,7 @@
 					ceiling = checkhole
 					break
 		if(!istransparentturf(ceiling))
-			if(prob(0.1)
-				to_chat(src, "<span class='warning'>You gaze out into the infinite vastness of deep space, for a moment, you have the impulse to continue travelling, out there, out into the deep beyond, before your conciousness reasserts itself and you decide to stay within travellling distance of the station.</span>")
-			else
-				to_chat(src, span_warning("There's nothing interesting up there."))
+			to_chat(src, span_warning("You can't see through the floor above you."))
 			return
 
 	reset_perspective(ceiling)
