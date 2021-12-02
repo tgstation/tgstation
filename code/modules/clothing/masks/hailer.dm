@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	tint = 0
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE
 	var/recent_uses = 0
