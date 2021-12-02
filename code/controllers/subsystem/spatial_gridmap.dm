@@ -57,8 +57,8 @@
 		dummy_list.Cut()
 		stack_trace("SSspatial_grid.dummy_list had something inserted into it at some point! this is a problem as it is supposed to stay empty")
 
-	hearing_contents = SSspatial_grid.dummy_list
-	client_contents = SSspatial_grid.dummy_list
+	hearing_contents = dummy_list
+	client_contents = dummy_list
 
 /datum/spatial_grid_cell/Destroy(force, ...)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
