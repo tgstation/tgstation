@@ -270,7 +270,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 /obj/structure/mirror/magic/pride
 	name = "pride's mirror"
 	desc = "Pride cometh before the..."
-	icon_state = "magic_mirror"
 	race_flags = MIRROR_PRIDE
 
 /obj/structure/mirror/magic/pride/attack_hand(mob/user, list/modifiers)
