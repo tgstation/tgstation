@@ -24,7 +24,7 @@
 		else
 			return
 	/// Client does NOT have tgui_fancy on: Returns regular input
-	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy))
+	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(max_length)
 			if(multiline)
 				return stripped_multiline_input(user, message, title, default, max_length)
