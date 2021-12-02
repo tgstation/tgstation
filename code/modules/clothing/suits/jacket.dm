@@ -77,11 +77,3 @@
 	icon_state = "letterman_n"
 	inhand_icon_state = "letterman_n"
 	species_exception = list(/datum/species/golem)
-
-/obj/item/clothing/suit/mothcoat
-	name = "mothcoat"
-	desc = "mothcoataa"
-	icon_state = "mothcoat2"
-	flags_inv = HIDEMUTWINGS
-	body_parts_covered = CHEST
-	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/flashlight/lamp, /obj/item/flashlight/lantern)
