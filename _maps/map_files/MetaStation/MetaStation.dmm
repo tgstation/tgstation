@@ -3027,6 +3027,16 @@
 	dir = 1
 	},
 /area/engineering/main)
+"azB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
+/area/engineering/atmos)
 "azK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -10855,7 +10865,6 @@
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/east,
 /obj/machinery/light/no_nightlight/directional/east,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
@@ -15720,15 +15729,14 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "dyd" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 6
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 6
+	},
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos)
 "dyl" = (
@@ -17224,7 +17232,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/no_nightlight/directional/north,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
 /area/engineering/atmos)
 "dZY" = (
 /obj/structure/disposalpipe/segment,
@@ -25599,12 +25612,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/effect/spawner/random/structure/crate_empty,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_x = 32;
-	ruined = 1
-	},
 /obj/item/circuitboard/machine/thermomachine,
 /obj/machinery/light/small/directional/east,
+/obj/structure/sign/poster/ripped{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark/textured,
 /area/engineering/atmos)
 "gNH" = (
@@ -29654,6 +29666,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/corner{
@@ -51223,6 +51238,15 @@
 /obj/structure/closet/secure_closet/detective,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
+"pOt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half{
+	dir = 8
+	},
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron/dark,
+/area/engineering/atmos)
 "pOz" = (
 /obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/iron/grimy,
@@ -72012,7 +72036,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 9
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1
+	},
 /area/engineering/atmos)
 "xoD" = (
 /turf/closed/wall,
@@ -117902,7 +117931,7 @@ lye
 hYO
 caT
 cor
-oZb
+azB
 grx
 lye
 lye
@@ -118416,7 +118445,7 @@ crY
 wCh
 caT
 cor
-oZb
+azB
 efi
 grx
 grx
@@ -118673,7 +118702,7 @@ nzD
 vtb
 dQy
 mvS
-keD
+pOt
 keD
 keD
 keD
@@ -120232,7 +120261,7 @@ vXh
 sxZ
 cor
 lMJ
-jMk
+deP
 deP
 deP
 deP
