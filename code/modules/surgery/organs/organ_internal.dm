@@ -44,6 +44,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
+	START_PROCESSING(SSobj, src)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
@@ -155,9 +156,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(damage > high_threshold)
 		. += span_warning("[src] is starting to look discolored.")
 
-/obj/item/organ/Initialize(mapload)
-	. = ..()
+///Used as callbacks by object pooling
+/obj/item/organ/proc/start_processing()
 	START_PROCESSING(SSobj, src)
+
+//See above
+/obj/item/organ/proc/stop_processing()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
 	if(owner)
