@@ -138,7 +138,7 @@
 /**
  * Handles actual flashing part of the attack
  *
- * This proc is awful in every sense of the way, someone should definately refactor this whole code.
+ * This proc is awful in every sense of the way, someone should definitely refactor this whole code.
  * Arguments:
  * * M - Victim
  * * user - Attacker
