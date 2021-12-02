@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - balance: "gasmasks give a slightly darkening overlay, effect will stack with other items that have tint."
-  - code_imp: "tint code has been updated to properly work."
