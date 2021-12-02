@@ -322,7 +322,7 @@
 
 /obj/item/mod/module/jetpack/on_activation()
 	. = ..()
-	if(!. || !allow_thrust())
+	if(!.)
 		return
 	ion_trail.start()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
@@ -530,8 +530,8 @@
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
 	desc = "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier infront of the mouth \
-		to eating and drinking while retaining protection and atmosphere. However, it will do nothing to improve \
-		the taste of a goliath steak."
+		to allow eating and drinking while retaining protection and atmosphere. \
+		However, it will do nothing to improve the taste of a goliath steak."
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
@@ -1676,3 +1676,13 @@
 	use_power_cost = DEFAULT_CELL_DRAIN*3
 	incompatible_modules = list(/obj/item/mod/module/kinesis)
 	cooldown_time = 0.5 SECONDS
+	var/obj/grabbed_object
+
+/obj/item/mod/module/kinesis/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(grabbed_object)
+		balloon_alert(mod.wearer, "soontm")
+	else if(isobj(target))
+		balloon_alert(mod.wearer, "soontm")
