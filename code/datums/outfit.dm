@@ -198,12 +198,8 @@
 		else
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
-	if(ispath(back, /obj/item/mod/control))
-		var/obj/item/mod/control/mod = H.back
-		if(istype(mod))
-			if(visualsOnly)
-				mod.set_wearer(H) //we need to set wearer manually since it doesnt call equipped
-			mod.quick_activation()
+	for(var/obj/item/equipped_item in H.contents) //before suit storage, as equipped items for example could extend a suit item
+		equipped_item.on_outfit_equip(H, visualsOnly)
 
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),ITEM_SLOT_SUITSTORE, TRUE)

@@ -344,10 +344,16 @@
 	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
 	if(!active || !wearer || . & EMP_PROTECT_CONTENTS)
 		return
+	selected_module = null
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
-	to_chat(wearer, span_danger("You feel [src] heat up from the EMP burning you slightly."))
+	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
 	if (wearer.stat < UNCONSCIOUS && prob(10))
 		wearer.emote("scream")
+
+/obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only)
+	if(visuals_only)
+		set_wearer(outfit_wearer) //we need to set wearer manually since it doesnt call equipped
+	quick_activation()
 
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))

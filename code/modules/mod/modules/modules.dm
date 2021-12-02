@@ -1,6 +1,7 @@
 /obj/item/mod/module/storage
 	name = "MOD storage module"
-	desc = "A module using nanotechnology to fit a storage inside of the MOD."
+	desc = "What amounts to a series of integrated storage compartments and specialized pockets installed across \
+		the surface of the suit, useful for storing various bits, and or bobs."
 	icon_state = "storage"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage)
@@ -33,18 +34,26 @@
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"
+	desc = "Reverse engineered by Nakamura Engineering from Donk Corporation designs, this system of hidden compartments \
+		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
+		whether smuggling, or simply hauling."
 	icon_state = "storage_large"
 	max_combined_w_class = 21
 	max_items = 14
 
 /obj/item/mod/module/storage/syndicate
 	name = "MOD syndicate storage module"
+	desc = "A storage system using nanotechnology developed by Cybersun Industries, these compartments use \
+		esoteric technology to compress the physical matter of items put inside of them, \
+		essentially shrinking items for much easier and more portable storage."
 	icon_state = "storage_syndi"
 	max_combined_w_class = 30
 	max_items = 21
 
 /obj/item/mod/module/storage/bluespace
 	name = "MOD bluespace storage module"
+	desc = "A storage system developed by Nanotrasen, these compartments employ \
+		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
 	icon_state = "storage_large"
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 60
@@ -52,7 +61,7 @@
 
 /obj/item/mod/module/visor
 	name = "MOD visor module"
-	desc = "A module installed to the helmet, allowing access to different views."
+	desc = "A heads-up display installed into the visor of the suit. They say these also let you see behind you."
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = DEFAULT_CELL_DRAIN*0.3
@@ -85,40 +94,60 @@
 
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
+	desc = "A heads-up display installed into the visor of the suit. This cross-references suit sensor data with a modern \
+		biological scanning suite, allowing the user to visualize the current health of organic lifeforms, as well as \
+		access data such as patient files in a convenient readout. They say these also let you see behind you."
 	icon_state = "medhud_visor"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
 /obj/item/mod/module/visor/diaghud
 	name = "MOD diagnostic visor module"
+	desc = "A heads-up display installed into the visor of the suit. This uses a series of advanced sensors to access data \
+		from advanced machinery, exosuits, and other devices, allowing the user to visualize current power levels \
+		and integrity of such. They say these also let you see behind you."
 	icon_state = "diaghud_visor"
 	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
 /obj/item/mod/module/visor/sechud
 	name = "MOD security visor module"
+	desc = "A heads-up display installed into the visor of the suit. This module is a heavily-retrofitted targeting system, \
+		plugged into various criminal databases to be able to view arrest records, command simple security-oriented robots, \
+		and generally know who to shoot. They say these also let you see behind you."
 	icon_state = "sechud_visor"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
+	desc = "A heads-up display installed into the visor of the suit. This module is based off well-loved meson scanner \
+		technology, used by construction workers and miners across the galaxy to see basic structural and terrain layouts \
+		through walls, regardless of lighting conditions. They say these also let you see behind you."
 	icon_state = "meson_visor"
 	visor_traits = list(TRAIT_MESON_VISION, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
 
 /obj/item/mod/module/visor/thermal
 	name = "MOD thermal visor module"
+	desc = "A heads-up display installed into the visor of the suit. This uses a small IR scanner to detect and identify \
+		the thermal radiation output of objects near the user. While it can detect the heat output of even something as \
+		small as a rodent, it still produces irritating red overlay. They say these also let you see behind you."
 	icon_state = "thermal_visor"
 	visor_traits = list(TRAIT_THERMAL_VISION)
 
 /obj/item/mod/module/visor/night
 	name = "MOD night visor module"
+	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \
+		this allows the user to perceive their surroundings while in complete darkness, enhancing the view by tenfold; \
+		yet brightening everything into a spooky green glow. They say these also let you see behind you."
 	icon_state = "night_visor"
 	visor_traits = list(TRAIT_TRUE_NIGHT_VISION)
 
 /obj/item/mod/module/welding
 	name = "MOD welding protection module"
-	desc = "A welding mask installed onto the helmet, giving it welding protection when powered."
+	desc = "A module installed into the visor of the suit, this projects a \
+		polarized, holographic overlay in front of the user's eyes. It's rated high enough for \
+		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
 	complexity = 2
 	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
@@ -131,7 +160,9 @@
 
 /obj/item/mod/module/t_ray
 	name = "MOD t-ray scan module"
-	desc = "A module scanning the station for pipes and wires underneath."
+	desc = "A module installed into the visor of the suit, allowing the user to use a pulse of terahertz radiation \
+		to essentially echolocate things beneath the floor, mostly cables and pipes. \
+		A staple of atmospherics work, and counter-smuggling work."
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
@@ -148,7 +179,10 @@
 
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
-	desc = "A module with a microchip health analyzer to instantly scan vitals at a range."
+	desc = "A module installed into the glove of the suit. This is a high-tech biological scanning suite, \
+		allowing the user indepth information on the vitals and injuries of others even at a distance, \
+		all with the flick of the wrist. Data is displayed in a convenient package on HUD in the helmet, \
+		but it's up to you to do something with it."
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 2
@@ -188,7 +222,9 @@
 
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
-	desc = "A module using prototype cloaking technology to hide the user from plain sight."
+	desc = "A complete retrofitting of the suit, this is a form of visual concealment tech employing esoteric technology \
+		to bend light around the user, as well as mimetic materials to make the surface of the suit match the \
+		surroundings based off sensor data. For some reason, this tech is rarely seen."
 	icon_state = "cloak"
 	module_type = MODULE_TOGGLE
 	complexity = 4
@@ -244,7 +280,11 @@
 
 /obj/item/mod/module/stealth/ninja
 	name = "MOD advanced cloaking module"
-	desc = "A module using advanced cloaking technology to hide the user from plain sight."
+	desc = "The latest in stealth technology, this module is a definite upgrade over previous versions. \
+		The field has been tuned to be even more responsive and fast-acting, with enough stability to \
+		continue operation of the field even if the user bumps into others. \
+		The draw on the power cell has been reduced drastically, \
+		making this perfect for activities like standing near sentry turrets for extended periods of time."
 	icon_state = "cloak_ninja"
 	bumpoff = FALSE
 	stealth_alpha = 20
@@ -254,7 +294,9 @@
 
 /obj/item/mod/module/jetpack
 	name = "MOD ion jetpack module"
-	desc = "A module that runs a micro-jetpack using a MOD's power cell."
+	desc = "A series of electric thrusters installed across the suit, this is a module highly anticipated by trainee Engineers. \
+		Rather than using gasses for combustion thrust, these jets are capable of accelerating ions using \
+		charge from the suit's cell. Some say this isn't Nakamura Engineering's first foray into jet-enabled suits."
 	icon_state = "jetpack"
 	module_type = MODULE_TOGGLE
 	complexity = 3
@@ -344,7 +386,10 @@
 
 /obj/item/mod/module/magboot
 	name = "MOD magnetic stability module"
-	desc = "A module granting magnetic stability to the wearer, protecting them from forces pushing them away."
+	desc = "These are powerful electromagnets fitted into the suit's boots, allowing users both \
+		excellent traction no matter the condition indoors, and to essentially hitch a ride on the exterior of a hull. \
+		However, these basic models do not feature computerized systems to automatically toggle them on and off, \
+		so numerous users report a certain stickiness to their steps."
 	icon_state = "magnet"
 	module_type = MODULE_TOGGLE
 	complexity = 2
@@ -381,7 +426,10 @@
 
 /obj/item/mod/module/holster
 	name = "MOD holster module"
-	desc = "A module that can instantly holster a gun inside the MOD."
+	desc = "Based off typical storage compartments, this system allows the suit to holster a \
+		standard firearm across its surface and allow for extremely quick retrieval. \
+		While some users prefer the chest, others the forearm for quick deployment, \
+		some law enforcement prefer the holster to extend from the thigh."
 	icon_state = "holster"
 	module_type = MODULE_USABLE
 	complexity = 2
@@ -426,7 +474,9 @@
 
 /obj/item/mod/module/tether
 	name = "MOD emergency tether module"
-	desc = "A module that can shoot an emergency tether to pull yourself towards an object in 0-G."
+	desc = "A custom-built grappling-hook powered by a winch capable of hauling the user. \
+		While some older models of cargo-oriented grapples have capacities of a few tons, \
+		these are only capable of working in zero-gravity environments, a blessing to some Engineers."
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 3
@@ -479,7 +529,9 @@
 
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
-	desc = "A module that enables eating with the MOD helmet."
+	desc = "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier infront of the mouth \
+		to eating and drinking while retaining protection and atmosphere. However, it will do nothing to improve \
+		the taste of a goliath steak."
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
@@ -501,7 +553,9 @@
 
 /obj/item/mod/module/rad_protection
 	name = "MOD radiation protection module"
-	desc = "A module that lets the MOD scan for radiation and protects the user from it."
+	desc = "A module utilizing polymers and reflective shielding to protect the user against ionizing radiation; \
+		a common danger in space. This comes with software to notify the wearer that they're even in a radioactive area, \
+		giving a voice to an otherwise silent killer."
 	icon_state = "radshield"
 	complexity = 2
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
@@ -537,7 +591,9 @@
 
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
-	desc = "A module that shields the MOD from EMPs, taking a power cost for that."
+	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
+		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
 	icon_state = "empshield"
 	complexity = 1
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
@@ -551,7 +607,9 @@
 
 /obj/item/mod/module/flashlight
 	name = "MOD flashlight module"
-	desc = "A module granting the MOD a light source."
+	desc = "A simple pair of flashlights installed on the left and right sides of the helmet, \
+		useful for providing light in a variety of ranges and colors. \
+		Some survivalists prefer the color green for their illumination, for reasons unknown."
 	icon_state = "flashlight"
 	module_type = MODULE_TOGGLE
 	complexity = 1
@@ -619,7 +677,9 @@
 
 /obj/item/mod/module/reagent_scanner
 	name = "MOD reagent scanner module"
-	desc = "A module that enables internal reagent scanners in the MOD."
+	desc = "A module based off research-oriented Nanotrasen HUDs, this is capable of scanning the contents of \
+		containers and projecting the information in an easy-to-read format on the wearer's display. \
+		It cannot detect flavors, so that's up to you."
 	icon_state = "scanner"
 	module_type = MODULE_TOGGLE
 	complexity = 1
@@ -672,7 +732,10 @@
 
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
-	desc = "A module that dispenses burgers."
+	desc = "A rare piece of technology reverse-engineered from a prototype found in a Donk Corporation vessel. \
+		This can draw incredible amounts of power from the suit's cell to create edible organic matter in the \
+		palm of the wearer's glove; however, research seemed to have entirely stopped at burgers. \
+		Notably, all attempts to get it to dispense Earl Grey tea have failed."
 	module_type = MODULE_USABLE
 	complexity = 3
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
@@ -696,7 +759,9 @@
 
 /obj/item/mod/module/gps
 	name = "MOD internal GPS module"
-	desc = "A module that extends a GPS."
+	desc = "This module uses common Nanotrasen technology to calculate the user's position anywhere in space, \
+		down to the exact coordinates. This information is fed to a central database viewable from the device itself, \
+		though using it to help people is up to you."
 	icon_state = "gps"
 	module_type = MODULE_ACTIVE
 	complexity = 1
@@ -707,13 +772,16 @@
 
 /obj/item/gps/mod
 	name = "MOD internal GPS"
-	desc = "A MODsuit internal positioning system."
+	desc = "Common Nanotrasen technology that calcaulates the user's position from anywhere in space, down to their coordinates."
 	icon_state = "gps-b"
 	gpstag = "MOD0"
 
 /obj/item/mod/module/constructor
 	name = "MOD constructor module"
-	desc = "A module that lets you scan the surrounding environment for construction holograms and speeds up wall construction time."
+	desc = "This module entirely occupies the wearer's forearm, notably causing conflict with \
+		advanced arm servos meant to carry crewmembers. However, it functions as an \
+		extremely advanced construction hologram scanner, as well as containing the \
+		latest engineering schematics combined with inbuilt memory to help the user build walls."
 	icon_state = "constructor"
 	module_type = MODULE_USABLE
 	complexity = 2
@@ -737,7 +805,8 @@
 
 /obj/item/mod/module/quick_carry
 	name = "MOD quick carry module"
-	desc = "A module that redirects power to arms, allowing for quicker carrying."
+	desc = "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; \
+		or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
 	complexity = 1
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
@@ -763,7 +832,10 @@
 
 /obj/item/mod/module/longfall
 	name = "MOD longfall module"
-	desc = "A module that stops fall damage from happening to the user, converting into kinetic charge."
+	desc = "Useful for protecting both the suit and the wearer, \
+		utilizing commonplace systems to convert the possible damage from a fall into kinetic charge, \
+		as well as internal gyroscopes to ensure the user's safe falling. \
+		Useful for mining, monorail tracks, or even skydiving!"
 	complexity = 1
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/longfall)
@@ -784,7 +856,9 @@
 
 /obj/item/mod/module/thermal_regulator
 	name = "MOD thermal regulator module"
-	desc = "A module that lets you set a temperature to keep your body at."
+	desc = "Advanced climate control, using an inner body glove interwoven with thousands of tiny, \
+		flexible cooling lines. This circulates coolant at various user-controlled temperatures, \
+		ensuring they're comfortable; even if they're some that like it hot."
 	icon_state = "regulator"
 	module_type = MODULE_TOGGLE
 	complexity = 2
@@ -809,7 +883,9 @@
 
 /obj/item/mod/module/injector
 	name = "MOD injector module"
-	desc = "A module that extends a piercing injector."
+	desc = "A module installed into the wrist of the suit, this functions as a high-capacity syringe, \
+		with a tip fine enough to locate the emergency injection ports on any suit of armor, \
+		penetrating it with ease. Even yours."
 	icon_state = "injector"
 	module_type = MODULE_ACTIVE
 	complexity = 1
@@ -820,7 +896,8 @@
 
 /obj/item/reagent_containers/syringe/mod
 	name = "MOD injector syringe"
-	desc = "A piercing injector fitting in a MODsuit."
+	desc = "A high-capacity syringe, with a tip fine enough to locate \
+		the emergency injection ports on any suit of armor, penetrating it with ease. Even yours."
 	icon_state = "mod_0"
 	base_icon_state = "mod"
 	amount_per_transfer_from_this = 30
@@ -830,7 +907,9 @@
 
 /obj/item/mod/module/circuit
 	name = "MOD circuit adapter module"
-	desc = "A module that adapts an integrated circuit to a MODsuit."
+	desc = "A popular aftermarket module, seen in wide varieties with wide applications by those across the galaxy. \
+		This is able to fit any sort of integrated circuit, hooking it into controls in the suit and displaying information \
+		to the HUD. Useful for universal translation, or perhaps as a calculator."
 	module_type = MODULE_USABLE
 	complexity = 3
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
@@ -931,7 +1010,9 @@
 
 /obj/item/mod/module/clamp
 	name = "MOD hydraulic clamp module"
-	desc = "A specialized clamp system that allows the MODSuit to pick up crates."
+	desc = "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. \
+		However, this design has been locked by Nanotrasen to be primarily utilized for lifting various crates. \
+		A lot of people would say that loading cargo is a dull job, but you could not disagree more."
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	use_power_cost = DEFAULT_CELL_DRAIN
@@ -976,7 +1057,8 @@
 
 /obj/item/mod/module/bikehorn
 	name = "MOD bike horn module"
-	desc = "A bike horn for honking."
+	desc = "A shoulder-mounted piece of heavy sonic artillery, this module uses the finest femto-manipulator technology to \
+		precisely deliver an almost lethal squeeze to... a bike horn, producing a significantly memorable sound."
 	icon_state = "bikehorn"
 	module_type = MODULE_USABLE
 	complexity = 1
@@ -993,7 +1075,8 @@
 
 /obj/item/mod/module/drill
 	name = "MOD drill module"
-	desc = "A specialized drilling system that allows the MODsuit to pierce the heavens."
+	desc = "An integrated drill, typically extending over the user's hand. While useful for drilling through rock, \
+		your drill is surely the one that both pierces and creates the heavens."
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 2
@@ -1034,7 +1117,9 @@
 
 /obj/item/mod/module/orebag
 	name = "MOD ore bag module"
-	desc = "An integrated ore storage system that allows the MODsuit to automatically collect and deposit ore."
+	desc = "An integrated ore storage system installed into the suit, \
+		this utilizes precise electromagnets and storage compartments to automatically collect and deposit ore. \
+		It's recommended by Nakamura Engineering to actually deposit that ore at local refineries."
 	icon_state = "ore"
 	module_type = MODULE_USABLE
 	complexity = 2
@@ -1078,7 +1163,9 @@
 
 /obj/item/mod/module/microwave_beam
 	name = "MOD microwave beam module"
-	desc = "A hand-mounted microwave beam to cook your food to perfection."
+	desc = "An oddly domestic device, this module is installed into the user's palm, \
+		hooking up with culinary scanners located in the helmet to blast food with precise microwave radiation, \
+		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
@@ -1110,7 +1197,11 @@
 
 /obj/item/mod/module/organ_thrower
 	name = "MOD organ thrower module"
-	desc = "An arm mounted organ launching device to automatically insert organs into open bodies."
+	desc = "A device recovered from a crashed Interdyne Pharmaceuticals vessel, \
+		this module has been unearthed for better or for worse. \
+		It's an arm-mounted device utilizing technology similar to modern-day part replacers, \
+		capable of storing and inserting organs into open patients. \
+		It's recommended by the DeForest Medical Corporation to not inform patients it has been used."
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN
@@ -1200,7 +1291,13 @@
 
 /obj/item/mod/module/pathfinder
 	name = "MOD pathfinder module"
-	desc = "A module linked to an implant, able to find the user and attach itself onto them. To inject the implant, hit someone with it."
+	desc = "This module, brought to you by Nakamura Engineering, has two components. \
+		The first component is a series of thrusters and a computerized location subroutine installed into the \
+		very control unit of the suit, allowing it flight at highway speeds, \
+		and to be able to locate the second part of the system; \
+		a pathfinding implant installed into the base of the user's spine, \
+		broadcasting their location to the suit and allowing them to recall it to their back at any time. \
+		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 10
@@ -1214,6 +1311,13 @@
 /obj/item/mod/module/pathfinder/Destroy()
 	implant = null
 	return ..()
+
+/obj/item/mod/module/pathfinder/examine(mob/user)
+	. = ..()
+	if(implant)
+		. += span_notice("Use it on a human to implant them.")
+	else
+		. += span_warning("The implant is missing.")
 
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, params)
 	if(!ishuman(target) || !implant)
@@ -1348,7 +1452,9 @@
 
 /obj/item/mod/module/dna_lock
 	name = "MOD DNA lock module"
-	desc = "A module that locks the MODsuit's activation to the wearer's DNA. Shorted out by EMPs."
+	desc = "A module which engages with the various locks and seals tied to the suit's systems, \
+		enabling it to only be worn by someone corresponding with the user's exact DNA profile; \
+		however, this incredibly sensitive module is shorted out by EMPs. Luckily, cloning has been outlawed."
 	icon_state = "dnalock"
 	module_type = MODULE_USABLE
 	complexity = 2
@@ -1405,7 +1511,10 @@
 
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
-	desc = "A module that uses the suit's power to boost armor. To increase efficiency, some parts of the armor are retracted."
+	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
+		giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. \
+		However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, \
+		so this extra armor provides zero ability for extravehicular activity while deployed."
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	removable = FALSE
@@ -1470,7 +1579,10 @@
 
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"
-	desc = "A module creating an energy shield around the user."
+	desc = "A personal, protective forcefield typically seen in military applications. \
+		This advanced deflector shield is essentially a scaled down version of those seen on starships, \
+		and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, \
+		though with its' low amount of separate charges, the user remains mortal."
 	complexity = 3
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
@@ -1507,6 +1619,10 @@
 
 /obj/item/mod/module/energy_shield/wizard
 	name = "MOD battlemage shield module"
+	desc = "The caster wielding this spell gains a visible barrier around them, channeling arcane power through \
+		specialized runes engraved onto the surface of the suit to generate a wall of force. \
+		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
+		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0 //magic
 	use_power_cost = DEFAULT_CELL_DRAIN * 0 //magic too
 	max_charges = 15
@@ -1516,7 +1632,11 @@
 
 /obj/item/mod/module/plasma_stabilizer
 	name = "MOD plasma stabilizer module"
-	desc = "A module supporting plasma lifeforms by preventing self-ignition."
+	desc = "This system essentially forms an atmosphere of its' own inside the suit, \
+		safely ejecting oxygen from the inside and allowing the wearer, a plasmaman, \
+		to have their internal plasma circulate around them somewhat like a sauna. \
+		This prevents them from self-igniting, and leads to greater comfort overall. \
+		The purple glass of the visor seems to be constructed for nostalgic purposes."
 	complexity = 1
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
@@ -1530,7 +1650,11 @@
 
 /obj/item/mod/module/anti_magic
 	name = "MOD magic nullifier module"
-	desc = "A module protecting the wearer of a MODsuit from magic."
+	desc = "A series of obsidian rods installed into critical points around the suit, \
+		vibrated at a certain low frequency to enable them to resonate. \
+		This creates a low-range, yet strong, magic nullification field around the user, \
+		aided by a full replacement of the suit's normal coolant with holy water. \
+		Spells will spall right off this field, though it'll do nothing to help others believe you about all this."
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
 
@@ -1539,3 +1663,16 @@
 
 /obj/item/mod/module/anti_magic/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
+
+/obj/item/mod/module/kinesis
+	name = "MOD kinesis module"
+	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \
+		despite the suits it used to be mounted on still seeing some circulation. \
+		This piece of technology allows the user to generate precise anti-gravity fields, \
+		letting them move objects as small as a titanium rod to as large as industrial machinery. \
+		Oddly enough, it doesn't seem to work on living creatures."
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = DEFAULT_CELL_DRAIN*3
+	incompatible_modules = list(/obj/item/mod/module/kinesis)
+	cooldown_time = 0.5 SECONDS
