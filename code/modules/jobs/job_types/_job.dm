@@ -84,9 +84,13 @@
 	/// Bitfield of departments this job belongs to. These get setup when adding the job into the department, on job datum creation.
 	var/departments_bitflags = NONE
 
+	/// If specified, this department will be used for the preferences menu.
+	var/datum/job_department/department_for_prefs = null
+
 	/// Lazy list with the departments this job belongs to.
 	/// Required to be set for playable jobs.
-	/// The first department will be used in the preferences menu.
+	/// The first department will be used in the preferences menu,
+	/// unless department_for_prefs is set.
 	var/list/departments_list = null
 
 	/// Should this job be allowed to be picked for the bureaucratic error event?

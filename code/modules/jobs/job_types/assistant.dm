@@ -21,9 +21,7 @@ Assistant
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
 
-	departments_list = list(
-		/datum/job_department/assistant,
-	)
+	department_for_prefs = /datum/job_department/assistant
 
 	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 

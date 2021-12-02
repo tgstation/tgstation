@@ -14,6 +14,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
+	department_for_prefs = /datum/job_department/security
 	departments_list = list(
 		/datum/job_department/service,
 	)
