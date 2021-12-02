@@ -332,11 +332,11 @@
 
 /obj/item/food/soup/moth_cheese_soup
 	name = "ælosterrmæsch" //ælo = cheese, sterr = melt, mæsch = soup
-	desc = "A simple and filling soup made from homemade cheese and stale bread. The curds provide texture while the whey provides volume- and they both provide deliciousness!"
+	desc = "A simple and filling soup made from homemade cheese and sweet potato. The curds provide texture while the whey provides volume- and they both provide deliciousness!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "moth_cheese_soup"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/salt = 1)
-	tastes = list("cheese" = 1, "cream" = 1, "bread" = 1)
+	tastes = list("cheese" = 1, "cream" = 1, "sweet potato" = 1)
 	foodtypes = DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -505,7 +505,7 @@
 
 /obj/item/food/pizza/mothic_margherita
 	name = "mothic margherita pizza"
-	desc = "Another characteristic of mothic pizza is that it's sold by weight- single slices are available for discretionary credits, while a meal ticket can buy a whole pie."
+	desc = "A key characteristic of mothic pizza is that it's sold by weight- single slices are available for discretionary credits, while a meal ticket can buy a whole pie."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "margherita_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
@@ -527,8 +527,8 @@
 	desc = "A favourite amongst the more adventurous moths, firecracker pizza is HOT HOT HOT!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "raw_firecracker_pizza"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
-	tastes = list("dough" = 1, "chili" = 1, "corn" = 1, "cheese" = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/bbqsauce = 6, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 10)
+	tastes = list("dough" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/food/raw_mothic_firecracker/MakeBakeable()
@@ -539,8 +539,8 @@
 	desc = "They're not kidding when they call this a hot pizza pie."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "firecracker_pizza"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
-	tastes = list("crust" = 1, "chili" = 1, "corn" = 1, "cheese" = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/bbqsauce = 6, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 10)
+	tastes = list("crust" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	slice_type = /obj/item/food/pizzaslice/mothic_firecracker
 	boxtag = "Vesuvian Firecracker"
@@ -550,7 +550,7 @@
 	desc = "A spicy slice of something quite nice."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "firecracker_slice"
-	tastes = list("crust" = 1, "chili" = 1, "corn" = 1, "cheese" = 1)
+	tastes = list("crust" = 1, "chili" = 1, "corn" = 1, "cheese" = 1, "bbq sauce" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/food/raw_mothic_five_cheese
@@ -629,7 +629,7 @@
 
 /obj/item/food/pizza/mothic_pesto
 	name = "mothic pesto pizza"
-	desc = "Green as the grass in the garden."
+	desc = "Green as the grass in the garden. Not that there's many of those on mothic ships."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "pesto_pizza"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)

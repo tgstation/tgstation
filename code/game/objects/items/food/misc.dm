@@ -814,6 +814,9 @@
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/firm_cheese/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/firm_cheese_slice, 3, 30)
+
 /obj/item/food/firm_cheese_slice
 	name = "firm cheese slice"
 	desc = "A slice of firm cheese. Perfect for grilling or making into delicious pesto."

@@ -384,7 +384,7 @@
 	name = "Mothic firecracker pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
-		/obj/item/food/tomato_sauce = 1,
+		/datum/reagent/consumable/bbqsauce = 10,
 		/obj/item/food/firm_cheese = 1,
 		/obj/item/food/oven_baked_corn = 1,
 		/obj/item/food/grown/ghost_chili = 1
