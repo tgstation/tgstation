@@ -1799,7 +1799,7 @@
 			if(prob(0.1)
 				to_chat(src, "<span class='warning'>You gaze out into the infinite vastness of deep space, for a moment, you have the impulse to continue travelling, out there, out into the deep beyond, before your conciousness reasserts itself and you decide to stay within travellling distance of the station.</span>")
 			else
-				to_chat(src, span_warning("There's nothing interesting up there.."))
+				to_chat(src, span_warning("There's nothing interesting up there."))
 			return
 
 	reset_perspective(ceiling)
