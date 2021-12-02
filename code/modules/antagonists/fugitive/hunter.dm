@@ -5,18 +5,10 @@
 	silent = TRUE //greet called by the spawn
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
-	antag_hud_type = ANTAG_HUD_FUGITIVE
 	antag_hud_name = "fugitive_hunter"
+	suicide_cry = "FOR GLORY!!"
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
-
-/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/fugitive_hunter/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/fugitive_hunter/on_gain()
 	forge_objectives()
@@ -31,16 +23,16 @@
 /datum/antagonist/fugitive_hunter/greet()
 	switch(backstory)
 		if("space cop")
-			to_chat(owner, "<span class='boldannounce'>Justice has arrived. I am a member of the Spacepol!</span>")
+			to_chat(owner, span_boldannounce("Justice has arrived. I am a member of the Spacepol!"))
 			to_chat(owner, "<B>The criminals should be on the station, we have special huds implanted to recognize them.</B>")
 			to_chat(owner, "<B>As we have lost pretty much all power over these damned lawless megacorporations, it's a mystery if their security will cooperate with us.</B>")
 		if("russian")
-			to_chat(src, "<span class='danger'>Ay blyat. I am a space-russian smuggler! We were mid-flight when our cargo was beamed off our ship!</span>")
-			to_chat(src, "<span class='danger'>We were hailed by a man in a green uniform, promising the safe return of our goods in exchange for a favor:</span>")
-			to_chat(src, "<span class='danger'>There is a local station housing fugitives that the man is after, he wants them returned; dead or alive.</span>")
-			to_chat(src, "<span class='danger'>We will not be able to make ends meet without our cargo, so we must do as he says and capture them.</span>")
+			to_chat(src, span_danger("Ay blyat. I am a space-russian smuggler! We were mid-flight when our cargo was beamed off our ship!"))
+			to_chat(src, span_danger("We were hailed by a man in a green uniform, promising the safe return of our goods in exchange for a favor:"))
+			to_chat(src, span_danger("There is a local station housing fugitives that the man is after, he wants them returned; dead or alive."))
+			to_chat(src, span_danger("We will not be able to make ends meet without our cargo, so we must do as he says and capture them."))
 
-	to_chat(owner, "<span class='boldannounce'>You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station.</span>")
+	to_chat(owner, span_boldannounce("You are not an antagonist in that you may kill whomever you please, but you can do anything to ensure the capture of the fugitives, even if that means going through the station."))
 	owner.announce_objectives()
 
 /datum/antagonist/fugitive_hunter/create_team(datum/team/fugitive_hunters/new_team)

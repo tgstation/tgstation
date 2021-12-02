@@ -80,6 +80,8 @@
 #define REAGENT_CAN_BE_SYNTHESIZED (1<<5)
 ///Allows a reagent to work on a mob regardless of stasis
 #define REAGENT_IGNORE_STASIS (1<<6)
+///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
+#define REAGENT_NO_RANDOM_RECIPE (1<<7)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
@@ -107,7 +109,7 @@
 ///Minimum requirement for addiction buzz to be met. Addiction code only checks this once every two seconds, so this should generally be low
 #define MIN_ADDICTION_REAGENT_AMOUNT 1
 ///Nicotine requires much less in your system to be happy
-#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.1
+#define MIN_NICOTINE_ADDICTION_REAGENT_AMOUNT 0.01
 #define MAX_ADDICTION_POINTS 1000
 
 ///Addiction start/ends
@@ -172,3 +174,9 @@
 #define GOLDSCHLAGER_GOLD (1)
 
 #define GOLDSCHLAGER_GOLD_RATIO (GOLDSCHLAGER_GOLD/(GOLDSCHLAGER_VODKA+GOLDSCHLAGER_GOLD))
+
+#define BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT 3
+#define BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE 3
+
+///This is the center of a 1 degree deadband in which water will neither freeze to ice nor melt to liquid
+#define WATER_MATTERSTATE_CHANGE_TEMP 274.5

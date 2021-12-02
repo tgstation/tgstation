@@ -32,9 +32,9 @@
 
 	///If the announcer overrides alert messages, use that message.
 	if(SSstation.announcer.custom_alert_message && !has_important_message)
-		announcement +=  SSstation.announcer.custom_alert_message
+		announcement += SSstation.announcer.custom_alert_message
 	else
-		announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
+		announcement += "<br>[span_alert("[html_encode(text)]")]<br>"
 	announcement += "<br>"
 
 	var/s = sound(sound)
@@ -56,7 +56,7 @@
 	var/meeting_sound = sound('sound/misc/emergency_meeting.ogg')
 	var/announcement
 	announcement += "<h1 class='alert'>Captain Alert</h1>"
-	announcement += "<br><span class='alert'>[user] has called an Emergency Meeting!</span><br><br>"
+	announcement += "<br>[span_alert("[user] has called an Emergency Meeting!")]<br><br>"
 
 	for(var/mob/mob_to_teleport in GLOB.player_list) //gotta make sure the whole crew's here!
 		if(isnewplayer(mob_to_teleport) || iscameramob(mob_to_teleport))
@@ -83,9 +83,9 @@
 	if(announce)
 		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", SSstation.announcer.get_rand_report_sound(), has_important_message = TRUE)
 
-	var/datum/comm_message/M  = new
+	var/datum/comm_message/M = new
 	M.title = title
-	M.content =  text
+	M.content = text
 
 	SScommunications.send_message(M)
 
@@ -99,7 +99,7 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(!isnewplayer(M) && M.can_hear())
-			to_chat(M, "<span class='minorannounce'><font color = red>[title]</font color><BR>[message]</span><BR>")
+			to_chat(M, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
 					SEND_SOUND(M, sound('sound/misc/notice1.ogg'))

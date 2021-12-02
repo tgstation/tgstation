@@ -1,6 +1,6 @@
 /datum/species/snail
 	name = "Snailperson"
-	id = "snail"
+	id = SPECIES_SNAIL
 	offset_features = list(OFFSET_GLASSES = list(0,4))
 	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
@@ -55,15 +55,16 @@
 	inhand_icon_state = "snailshell"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 0, FIRE = 0, ACID = 50)
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/storage/backpack/snail/dropped(mob/user, silent)
 	. = ..()
 	emptyStorage()
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
-/obj/item/storage/backpack/snail/Initialize()
+/obj/item/storage/backpack/snail/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, "snailshell")

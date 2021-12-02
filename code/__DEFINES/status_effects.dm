@@ -42,6 +42,8 @@
 #define STATUS_EFFECT_LIGHTNINGORB /datum/status_effect/lightningorb //Speed from a lightning orb!
 
 #define STATUS_EFFECT_MAYHEM /datum/status_effect/mayhem //Total bloodbath. Activated by orb of mayhem pickup/bottle of mayhem item.
+///Has had their health buffed 10% to 30% depending if the effect has been reapplied.
+#define STATUS_EFFECT_HEALTH_BUFFED /datum/status_effect/limited_buff/health_buff
 
 /////////////
 // DEBUFFS //
@@ -54,6 +56,8 @@
 #define STATUS_EFFECT_IMMOBILIZED /datum/status_effect/incapacitating/immobilized //the affected is unable to move
 
 #define STATUS_EFFECT_PARALYZED /datum/status_effect/incapacitating/paralyzed //the affected is unable to move, use items, or stand up.
+
+#define STATUS_EFFECT_INCAPACITATED /datum/status_effect/incapacitating/incapacitated //the incapacitated is unable to perform some basic actions and gets their do_afters canceled
 
 #define STATUS_EFFECT_UNCONSCIOUS /datum/status_effect/incapacitating/unconscious //the affected is unconscious
 
@@ -114,6 +118,12 @@
 /// Read the documentation for /datum/status_effect/confusion for more information.
 #define STATUS_EFFECT_CONFUSION /datum/status_effect/confusion
 
+//Deals with covering the target in ants.
+#define STATUS_EFFECT_ANTS /datum/status_effect/ants
+
+/// Doubles attack cooldowns on simplemobs and recovery time on megafauna.
+#define STATUS_EFFECT_STAGGER /datum/status_effect/stagger
+
 /////////////
 // NEUTRAL //
 /////////////
@@ -130,11 +140,16 @@
 
 #define STATUS_EFFECT_HOLDUP /datum/status_effect/holdup // you are currently pointing a gun at someone
 
-#define STATUS_EFFECT_HIGHFIVE /datum/status_effect/high_fiving // you are angling for a high five
+#define STATUS_EFFECT_OFFERING /datum/status_effect/offering // you are offering up an item to people
+
+#define STATUS_EFFECT_HANDSHAKE /datum/status_effect/offering/secret_handshake // you are attempting to perform a secret Family handshake
 
 #define STATUS_EFFECT_SURRENDER /datum/status_effect/grouped/surrender // gives an alert to quickly surrender
 
 #define STATUS_EFFECT_EIGEN /datum/status_effect/eigenstasium
+
+#define STATUS_EFFECT_STONED /datum/status_effect/stoned
+
 /////////////
 //  SLIME  //
 /////////////

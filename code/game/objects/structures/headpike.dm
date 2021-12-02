@@ -54,7 +54,8 @@
 		victim = null
 	if(A == spear)
 		spear = null
-	deconstruct(TRUE)
+	if(!QDELETED(src))
+		deconstruct(TRUE)
 	return ..()
 
 /obj/structure/headpike/deconstruct(disassembled)
@@ -72,5 +73,5 @@
 	. = ..()
 	if(.)
 		return
-	to_chat(user, "<span class='notice'>You take down [src].</span>")
+	to_chat(user, span_notice("You take down [src]."))
 	deconstruct(TRUE)

@@ -1,6 +1,6 @@
 /obj/item/modular_computer/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
-	var/component_probability = min(50, max(damage_amount*0.1, 1 - obj_integrity/max_integrity))
+	var/component_probability = min(50, max(damage_amount*0.1, 1 - atom_integrity/max_integrity))
 	switch(damage_flag)
 		if(BULLET)
 			component_probability = damage_amount * 0.5
@@ -18,7 +18,7 @@
 
 /obj/item/modular_computer/proc/break_apart()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		physical.visible_message("<span class='notice'>\The [src] breaks apart!</span>")
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
 		var/turf/newloc = get_turf(src)
 		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost/2))
 		for(var/C in all_components)

@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/turf/shuttle_turf in shuttle_area)
-			for(var/atom/passenger in shuttle_turf.GetAllContents())
+			for(var/atom/passenger in shuttle_turf.get_all_contents())
 				if((is_type_in_typecache(passenger, GLOB.blacklisted_cargo_types) || HAS_TRAIT(passenger, TRAIT_BANNED_FROM_CARGO_SHUTTLE)) && !istype(passenger, /obj/docking_port))
 					return FALSE
 	return TRUE
@@ -90,9 +90,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
+	SEND_SIGNAL(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
 	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
+	var/list/misc_costs = list() //list of overall costs sustained by each buyer.
 
 	var/list/empty_turfs = list()
 	for(var/place in shuttle_areas)
@@ -121,50 +123,56 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/purchases = 0
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
 
-	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+	for(var/datum/supply_order/spawning_order in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		var/price = SO.pack.get_cost()
-		if(SO.applied_coupon)
-			price *= (1 - SO.applied_coupon.discount_pct_off)
+		var/price = spawning_order.pack.get_cost()
+		if(spawning_order.applied_coupon)
+			price *= (1 - spawning_order.applied_coupon.discount_pct_off)
 
-		var/datum/bank_account/D
-		if(SO.paying_account) //Someone paid out of pocket
-			D = SO.paying_account
-			var/list/current_buyer_orders = goodies_by_buyer[SO.paying_account] // so we can access the length a few lines down
-			if(!SO.pack.goody)
-				price *= 1.1 //TODO make this customizable by the quartermaster
+		var/datum/bank_account/paying_for_this
 
-			// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-			else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
-				price += CRATE_TAX
-				D.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
-		else
-			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			if(!D.adjust_money(-price))
-				if(SO.paying_account)
-					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
-				continue
+		//department orders EARN money for cargo, not the other way around
+		if(!spawning_order.department_destination)
+			if(spawning_order.paying_account) //Someone paid out of pocket
+				paying_for_this = spawning_order.paying_account
+				var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account] // so we can access the length a few lines down
+				if(!spawning_order.pack.goody)
+					price *= 1.1 //TODO make this customizable by the quartermaster
 
-		if(SO.paying_account)
-			if(SO.pack.goody)
-				LAZYADD(goodies_by_buyer[SO.paying_account], SO)
-			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
+				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
+				else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
+					price += CRATE_TAX
+					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
+			else
+				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(paying_for_this)
+				if(!paying_for_this.adjust_money(-price))
+					if(spawning_order.paying_account)
+						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
+					continue
+
+		if(spawning_order.paying_account)
+			if(spawning_order.pack.goody)
+				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
+			paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] has shipped. [price] credits have been charged to your bank account.")
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			cargo.adjust_money(price - SO.pack.get_cost()) //Cargo gets the handling fee
-		value += SO.pack.get_cost()
-		SSshuttle.shoppinglist -= SO
-		SSshuttle.orderhistory += SO
-		QDEL_NULL(SO.applied_coupon)
+			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
+		value += spawning_order.pack.get_cost()
+		SSshuttle.shoppinglist -= spawning_order
+		SSshuttle.orderhistory += spawning_order
+		QDEL_NULL(spawning_order.applied_coupon)
 
-		if(!SO.pack.goody) //we handle goody crates below
-			SO.generate(pick_n_take(empty_turfs))
+		if(!spawning_order.pack.goody) //we handle goody crates below
+			spawning_order.generate(pick_n_take(empty_turfs))
 
-		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.get_cost()]", "[SO.pack.name]"))
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
-		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
+		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]"))
+
+		var/from_whom = paying_for_this?.account_holder || "nobody (department order)"
+
+		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [from_whom] has shipped.", INVESTIGATE_CARGO)
+		if(spawning_order.pack.dangerous)
+			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
@@ -190,12 +198,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			var/datum/supply_order/our_order = O
 			for (var/item in our_order.pack.contains)
 				misc_contents[buyer] += item
+			misc_costs[buyer] += our_order.pack.cost
 			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id]  "
 
 	for(var/I in miscboxes)
 		var/datum/supply_order/SO = new/datum/supply_order()
 		SO.id = misc_order_num[I]
-		SO.generateCombo(miscboxes[I], I, misc_contents[I])
+		SO.generateCombo(miscboxes[I], I, misc_contents[I], misc_costs[I])
 		qdel(SO)
 
 	SSeconomy.import_total += value
@@ -218,7 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(!AM.anchored || istype(AM, /obj/vehicle/sealed/mecha))
+			if(!AM.anchored)
 				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
@@ -245,6 +254,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
 	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked)
 		return
+
 	//spawn crate
 	var/list/empty_turfs = list()
 	for(var/place as anything in shuttle_areas)
@@ -253,35 +263,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(shuttle_floor.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_floor
-	var/obj/structure/closet/crate/mail/mailcrate = new(pick(empty_turfs))
 
-	//collect recipients
-	var/list/mail_recipients = list()
-	for(var/mob/living/carbon/human/player_human in shuffle(GLOB.player_list))
-		if(player_human.stat == DEAD)
-			continue
-		if(!SSjob.GetJob(player_human.mind.assigned_role) || (player_human.mind.assigned_role in GLOB.nonhuman_positions))
-			continue //this check stops wizards and nuke ops from getting mail, which is hilarious but should definitely not happen
-		mail_recipients += player_human
-
-	//Creates mail for all the mail waiting to arrive, if there's nobody to recieve it it's just junkmail.
-	for(var/mail_iterator in 1 to SSeconomy.mail_waiting)
-		var/obj/item/mail/new_mail
-		if(prob(FULL_CRATE_LETTER_ODDS))
-			new_mail = new /obj/item/mail(mailcrate)
-		else
-			new_mail = new /obj/item/mail/envelope(mailcrate)
-		var/mob/living/carbon/human/mail_to
-		if(mail_recipients.len)
-			mail_to = pick(mail_recipients)
-			new_mail.initialize_for_recipient(mail_to)
-			mail_recipients -= mail_to
-		else
-			new_mail.junk_mail()
-		if(new_mail)
-			SSeconomy.mail_waiting -= 1
-	mailcrate.update_icon()
-	return mailcrate
+	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
 
 #undef GOODY_FREE_SHIPPING_MAX
 #undef CRATE_TAX

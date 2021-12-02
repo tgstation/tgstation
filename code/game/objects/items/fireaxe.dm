@@ -17,13 +17,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -15
 	bare_wound_bonus = 20
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/fireaxe/Initialize()
+/obj/item/fireaxe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
@@ -50,7 +50,7 @@
 	return ..()
 
 /obj/item/fireaxe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/fireaxe/afterattack(atom/A, mob/user, proximity)
@@ -60,7 +60,7 @@
 	if(wielded) //destroys windows and grilles in one hit
 		if(istype(A, /obj/structure/window) || istype(A, /obj/structure/grille))
 			var/obj/structure/W = A
-			W.obj_destruction("fireaxe")
+			W.atom_destruction("fireaxe")
 
 /*
  * Bone Axe

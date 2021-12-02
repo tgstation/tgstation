@@ -22,6 +22,7 @@ const icons = {
   soundadd: { icon: 'tg-sound-plus', color: 'green' },
   sounddel: { icon: 'tg-sound-minus', color: 'red' },
   add: { icon: 'check-circle', color: 'green' },
+  expansion: { icon: 'check-circle', color: 'green' },
   rscadd: { icon: 'check-circle', color: 'green' },
   rscdel: { icon: 'times-circle', color: 'red' },
   imageadd: { icon: 'tg-image-plus', color: 'green' },
@@ -62,12 +63,13 @@ export class Changelog extends Component {
     this.setState({ selectedIndex });
   }
 
-  getData = (date, attemptNumber = 0) => {
+  getData = (date, attemptNumber = 1) => {
     const { act } = useBackend(this.context);
     const self = this;
+    const maxAttempts = 6;
 
-    if (attemptNumber > 2) {
-      return this.setData('Failed to load data after 3 attempts');
+    if (attemptNumber > maxAttempts) {
+      return this.setData('Failed to load data after ' + maxAttempts + ' attempts');
     }
 
     act('get_month', { date });
@@ -78,7 +80,7 @@ export class Changelog extends Component {
         const errorRegex = /^Cannot find/;
 
         if (errorRegex.test(result)) {
-          const timeout = 50 + attemptNumber * 100;
+          const timeout = 50 + attemptNumber * 50;
 
           self.setData(
             'Loading changelog data' + '.'.repeat(attemptNumber + 3)
@@ -97,7 +99,7 @@ export class Changelog extends Component {
 
     if (dates) {
       dates.forEach(
-        date => this.dateChoices.push(dateformat(date, 'mmmm yyyy'))
+        date => this.dateChoices.push(dateformat(date, 'mmmm yyyy', true))
       );
       this.setSelectedDate(this.dateChoices[0]);
       this.getData(dates[0]);
@@ -287,7 +289,7 @@ export class Changelog extends Component {
 
     const changes = typeof data === 'object' && Object.keys(data).length > 0 && (
       Object.entries(data).reverse().map(([date, authors]) => (
-        <Section key={date} title={dateformat(date, 'd mmmm yyyy')}>
+        <Section key={date} title={dateformat(date, 'd mmmm yyyy', true)}>
           <Box ml={3}>
             {Object.entries(authors).map(([name, changes]) => (
               <Fragment key={name}>

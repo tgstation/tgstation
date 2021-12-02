@@ -17,7 +17,7 @@
 	bare_wound_bonus = 15
 	damtype = BRUTE
 
-/obj/item/zombie_hand/Initialize()
+/obj/item/zombie_hand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -57,7 +57,7 @@
 
 
 /obj/item/zombie_hand/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(isliving(user))
 		var/mob/living/L = user
 		var/obj/item/bodypart/O = L.get_bodypart(BODY_ZONE_HEAD)

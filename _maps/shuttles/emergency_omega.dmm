@@ -3,7 +3,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ab" = (
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -15,12 +15,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit{
-	pixel_y = 32
-	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
+/obj/machinery/newscaster/security_unit/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ae" = (
@@ -31,18 +27,13 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_y = 24
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ag" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
+/obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -102,12 +93,8 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "al" = (
@@ -159,9 +146,7 @@
 "ap" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -299,9 +284,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -316,10 +299,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26
-	},
+/obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -327,9 +307,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
+/obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -358,7 +336,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aH" = (
@@ -446,7 +424,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "aJ" = (
@@ -461,29 +439,18 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"aL" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"aM" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	use_power = 0
-	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/light/small/directional/west,
+/obj/machinery/vending/wallmed/directional/west{
+	use_power = 0
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -515,11 +482,12 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aR" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aS" = (
@@ -528,9 +496,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -543,10 +509,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"aU" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aV" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -599,18 +561,18 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "ba" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	pixel_x = -26;
-	use_power = 0
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west{
+	use_power = 0
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bb" = (
@@ -623,10 +585,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bc" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 26
-	},
+/obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -638,14 +597,10 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/machinery/recharge_station,
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
+/obj/machinery/status_display/evac/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "be" = (
@@ -702,12 +657,8 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/status_display/evac{
-	pixel_x = 32
-	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -726,10 +677,7 @@
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = -32
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom";
-	pixel_y = -26
-	},
+/obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -760,9 +708,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -781,9 +727,7 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/reinforced,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -857,6 +801,28 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"eA" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"qt" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/vending/wallmed/directional/east{
+	use_power = 0
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"sY" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -866,9 +832,9 @@ aq
 ac
 ay
 aa
-ab
-ab
-ab
+sY
+sY
+sY
 aa
 aP
 ac
@@ -884,7 +850,7 @@ aa
 ad
 ak
 al
-ab
+sY
 az
 aD
 aJ
@@ -892,7 +858,7 @@ aJ
 aJ
 aD
 az
-ab
+sY
 az
 bd
 bj
@@ -901,7 +867,7 @@ br
 bv
 "}
 (3,1,1) = {"
-ab
+sY
 ae
 al
 al
@@ -917,28 +883,28 @@ aT
 aW
 be
 bk
-ab
+sY
 bs
 bv
 "}
 (4,1,1) = {"
-ab
+sY
 ae
 al
 al
-ab
+sY
 aA
 aF
 aK
 aF
-aF
+qt
 aF
 aQ
 aT
 aX
 bf
 bl
-ab
+sY
 bt
 bv
 "}
@@ -947,15 +913,15 @@ aa
 af
 al
 ar
-ab
+sY
 aA
 aG
-aL
+aZ
 aI
-aM
+aZ
 aG
 aQ
-ab
+sY
 aY
 bg
 bm
@@ -967,7 +933,7 @@ bv
 ac
 ab
 am
-ab
+sY
 aw
 aB
 aH
@@ -976,9 +942,9 @@ aO
 aI
 aH
 aR
-aU
 aZ
-ab
+aZ
+sY
 aZ
 aZ
 br
@@ -989,15 +955,15 @@ aa
 ag
 an
 as
-ab
+sY
 aA
 aI
-aM
+aZ
 aG
-aL
+aZ
 aI
 aQ
-ab
+sY
 ba
 bh
 bn
@@ -1006,7 +972,7 @@ bt
 bv
 "}
 (8,1,1) = {"
-ab
+sY
 ah
 ao
 an
@@ -1015,19 +981,19 @@ aA
 aJ
 aN
 aJ
-aJ
+eA
 aJ
 aQ
 aV
 bb
 bb
 bo
-ab
+sY
 bt
 bv
 "}
 (9,1,1) = {"
-ab
+sY
 ai
 an
 at
@@ -1043,12 +1009,12 @@ aV
 bb
 bb
 bp
-ab
+sY
 bt
 bv
 "}
 (10,1,1) = {"
-ab
+sY
 aj
 ap
 au
@@ -1060,7 +1026,7 @@ aF
 aF
 aF
 aS
-ab
+sY
 bc
 bi
 bq
@@ -1070,16 +1036,16 @@ bv
 "}
 (11,1,1) = {"
 aa
-ab
-ab
+sY
+sY
 aa
 ac
 aa
-ab
-ab
-ab
-ab
-ab
+sY
+sY
+sY
+sY
+sY
 aa
 ac
 aa

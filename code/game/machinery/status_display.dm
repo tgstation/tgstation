@@ -18,6 +18,10 @@
 	desc = null
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
+	base_icon_state = "unanchoredstatusdisplay"
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -31,6 +35,50 @@
 	var/message2 = "" // message line 2
 	var/index1 // display index for scrolling messages or 0 if non-scrolling
 	var/index2
+
+/obj/item/wallframe/status_display
+	name = "status display frame"
+	desc = "Used to build status displays, just secure to the wall."
+	icon_state = "unanchoredstatusdisplay"
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	result_path = /obj/machinery/status_display
+	pixel_shift = 32
+
+/obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 6 SECONDS))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		deconstruct()
+		return TRUE
+
+/obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return
+	if(atom_integrity >= max_integrity)
+		balloon_alert(user, "it doesn't need repairs!")
+		return TRUE
+	user.balloon_alert_to_viewers("repairing display...", "repairing...")
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
+		return TRUE
+	balloon_alert(user, "repaired")
+	atom_integrity = max_integrity
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
+	return TRUE
+
+/obj/machinery/status_display/deconstruct(disassembled = TRUE)
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(!disassembled)
+		new /obj/item/stack/sheet/iron(drop_location(), 2)
+		new /obj/item/shard(drop_location())
+		new /obj/item/shard(drop_location())
+	else
+		new /obj/item/wallframe/status_display(drop_location())
+	qdel(src)
 
 /// Immediately blank the display.
 /obj/machinery/status_display/proc/remove_display()
@@ -158,24 +206,14 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
-/obj/machinery/status_display/evac/directional/north
-	dir = SOUTH
-	pixel_y = 32
+//makes it go on the wall when built
+/obj/machinery/status_display/Initialize(mapload, ndir, building)
+	. = ..()
+	update_appearance()
 
-/obj/machinery/status_display/evac/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/status_display/evac/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/status_display/evac/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/status_display/evac/Initialize()
+/obj/machinery/status_display/evac/Initialize(mapload)
 	. = ..()
 	// register for radio system
 	SSradio.add_object(src, frequency)
@@ -340,23 +378,10 @@
 		AI_EMOTION_RED_GLOW = "ai_hal",
 	)
 
-/obj/machinery/status_display/ai/directional/north
-	dir = SOUTH
-	pixel_y = 32
 
-/obj/machinery/status_display/ai/directional/south
-	dir = NORTH
-	pixel_y = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
-/obj/machinery/status_display/ai/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/status_display/ai/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/status_display/ai/Initialize()
+/obj/machinery/status_display/ai/Initialize(mapload)
 	. = ..()
 	GLOB.ai_status_displays.Add(src)
 

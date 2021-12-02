@@ -9,11 +9,22 @@
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
 	show_to_ghosts = TRUE
+	suicide_cry = "EEK OOP!!"
 	var/datum/team/monkey/monkey_team
 	var/monkey_only = TRUE
 
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
+
+/datum/antagonist/monkey/get_preview_icon()
+	// Creating a *real* monkey is fairly involved before atoms init.
+	var/icon/icon = icon('icons/mob/human.dmi', "monkey")
+
+	icon.Crop(4, 9, 28, 33)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.Shift(SOUTH, 10)
+
+	return icon
 
 /datum/antagonist/monkey/get_team()
 	return monkey_team
@@ -39,7 +50,7 @@
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
 
-	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
+	var/datum/disease/transformation/jungle_fever/D = locate() in owner.current.diseases
 	if(D)
 		qdel(D)
 
@@ -77,7 +88,7 @@
 /datum/antagonist/monkey/admin_remove(mob/admin)
 	var/mob/living/carbon/human/M = owner.current
 	if(ismonkey(M))
-		switch(alert(admin, "Humanize?", "Humanize", "Yes", "No"))
+		switch(tgui_alert(admin, "Humanize?", "Humanize", list("Yes", "No")))
 			if("Yes")
 				if(admin == M)
 					admin = M.humanize()
@@ -96,7 +107,7 @@
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/human/H = new_owner.current
 	if(istype(H))
-		switch(alert(admin, "Monkeyize?", "Monkeyize", "Yes", "No"))
+		switch(tgui_alert(admin, "Monkeyize?", "Monkeyize", list("Yes", "No")))
 			if("Yes")
 				if(admin == H)
 					admin = H.monkeyize()
@@ -112,8 +123,8 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/obj/item/organ/heart/freedom/F = new
-	F.Insert(owner.current, drop_if_replaced = FALSE)
+	var/obj/item/organ/heart/freedom/super_heart = new
+	super_heart.Insert(owner.current, drop_if_replaced = FALSE)
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
@@ -123,7 +134,7 @@
 	. = ..()
 
 /datum/antagonist/monkey/leader/greet()
-	to_chat(owner, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B></span>")
+	to_chat(owner, "<B>[span_notice("You are the Jungle Fever patient zero!!</B>")]")
 	to_chat(owner, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
 	to_chat(owner, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(owner, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
@@ -204,16 +215,16 @@
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
 			parts += "<span class='greentext big'><B>Monkey Major Victory!</B></span>"
-			parts += "<span class='greentext'><B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B></span>"
+			parts += span_greentext("<B>Central Command and [station_name()] were taken over by the monkeys! Ook ook!</B>")
 		if(MONKEYS_LIVED)
 			parts += "<FONT size = 3><B>Monkey Minor Victory!</B></FONT>"
-			parts += "<span class='greentext'><B>[station_name()] was taken over by the monkeys! Ook ook!</B></span>"
+			parts += span_greentext("<B>[station_name()] was taken over by the monkeys! Ook ook!</B>")
 		if(DISEASE_LIVED)
 			parts += "<span class='redtext big'><B>Monkey Minor Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, but the disease lives on! The future is uncertain.</B></span>"
+			parts += span_redtext("<B>All the monkeys died, but the disease lives on! The future is uncertain.</B>")
 		if(MONKEYS_DIED)
 			parts += "<span class='redtext big'><B>Monkey Major Defeat!</B></span>"
-			parts += "<span class='redtext'><B>All the monkeys died, and Jungle Fever was wiped out!</B></span>"
+			parts += span_redtext("<B>All the monkeys died, and Jungle Fever was wiped out!</B>")
 	var/list/leaders = get_antag_minds(/datum/antagonist/monkey/leader, TRUE)
 	var/list/monkeys = get_antag_minds(/datum/antagonist/monkey, TRUE)
 

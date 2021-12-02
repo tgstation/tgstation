@@ -36,7 +36,7 @@
 	trail.icon = trail_icon
 	trail.icon_state = trail_icon_state
 	//might be changed to temp overlay
-	trail.density = FALSE
+	trail.set_density(FALSE)
 	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	QDEL_IN(trail, trail_lifespan)
 
@@ -60,7 +60,7 @@
 
 
 
-	var/proj_type =  /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
+	var/proj_type = /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
 
 
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you
@@ -122,7 +122,7 @@
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/choose_targets(mob/user = usr)
 	var/turf/T = get_turf(user)
-	for(var/i = 1; i < range; i++)
+	for(var/i in 1 to range-1)
 		var/turf/new_turf = get_step(T, user.dir)
 		if(new_turf.density)
 			break

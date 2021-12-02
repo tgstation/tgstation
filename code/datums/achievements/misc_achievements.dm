@@ -1,6 +1,6 @@
 /datum/award/achievement/misc
 	category = "Misc"
-	icon = "basemisc"
+	icon = "basemisc" //for those achievements that still need an actual icon, later.
 
 /datum/award/achievement/misc/meteor_examine
 	name = "Your Life Before Your Eyes"
@@ -48,11 +48,13 @@
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
 	database_id = MEDAL_MATERIALCRAFT
+	icon = "upgrade"
 
 /datum/award/achievement/misc/rocket_holdup
 	name = "Disk, Please!"
 	desc = "Is the man currently pointing a loaded rocket launcher at your head point blank really dumb enough to pull the trigger? Do you really want to find out?"
 	database_id = MEDAL_DISKPLEASE
+	icon = "rocket_holdup"
 
 /datum/award/achievement/misc/gamer
 	name = "My Watchlist Status is Not Important"
@@ -111,6 +113,7 @@
 	name = "HA, GOTTEM"
 	desc = "Made you look!"
 	database_id = MEDAL_GOTTEM
+	icon = "gottem"
 
 /datum/award/achievement/misc/ascension
 	name = "Ascension"
@@ -122,7 +125,7 @@
 	name = "Frenching"
 	desc = "Just a taste, for science!"
 	database_id = MEDAL_FRENCHING
-	icon = "frenching"
+	icon = "frenchingthebubble"
 
 /datum/award/achievement/misc/ash_ascension
 	name = "Nightwatcher's Eyes"
@@ -171,3 +174,15 @@
 	desc = "Lights out, guerilla radio!"
 	database_id = MEDAL_TRAM_SURFER
 	icon = "tram_surfer"
+
+/datum/award/achievement/misc/cult_shuttle_omfg
+	name = "WHAT JUST HAPPENED"
+	desc = "As a blood cultist, be part of a team that summons 3 shuttle curses within 10 seconds. Imagine cleaning up after them, g r o s s!"
+	database_id = MEDAL_CULT_SHUTTLE_OMFG
+	icon = "cult_shuttle_omfg"
+
+/datum/award/achievement/misc/clickbait
+	name = "Clickbait"
+	desc = "Where's my free smartphone?!?"
+	database_id = MEDAL_CLICKBAIT
+	icon = "bait"

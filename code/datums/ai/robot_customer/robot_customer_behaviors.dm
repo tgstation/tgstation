@@ -113,11 +113,12 @@
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	required_distance = 1
 
-/datum/ai_behavior/leave_venue/perform(delta_time, datum/ai_controller/controller)
+/datum/ai_behavior/leave_venue/setup(datum/ai_controller/controller, venue_key)
+	. = ..()
+	var/datum/venue/attending_venue = controller.blackboard[venue_key]
+	controller.current_movement_target = attending_venue.restaurant_portal
+
+/datum/ai_behavior/leave_venue/perform(delta_time, datum/ai_controller/controller, venue_key)
 	. = ..()
 	qdel(controller.pawn) //save the world, my final message, goodbye.
 	finish_action(controller, TRUE)
-
-
-/datum/ai_behavior/break_spine/robot_customer
-	target_key = BB_CUSTOMER_CURRENT_TARGET

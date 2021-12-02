@@ -5,7 +5,6 @@
 	max_occurrences = 1
 	min_players = 20
 	dynamic_should_hijack = TRUE
-	gamemode_blacklist = list("nuclear","wizard","revolution")
 
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
@@ -18,8 +17,8 @@
 	if(candidates.len < 2)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/living/carbon/human/agent = makeBody(pick_n_take(candidates))
-	var/mob/living/carbon/human/scientist = makeBody(pick_n_take(candidates))
+	var/mob/living/carbon/human/agent = make_body(pick_n_take(candidates))
+	var/mob/living/carbon/human/scientist = make_body(pick_n_take(candidates))
 
 	var/datum/team/abductor_team/T = new
 	if(T.team_number > ABDUCTOR_MAX_TEAMS)

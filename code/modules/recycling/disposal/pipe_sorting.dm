@@ -33,7 +33,7 @@
 	icon_state = "pipe-j2s"
 	initialize_dirs = DISP_DIR_LEFT | DISP_DIR_FLIP
 
-/obj/structure/disposalpipe/sorting/mail/Initialize()
+/obj/structure/disposalpipe/sorting/mail/Initialize(mapload)
 	. = ..()
 	// Generate a list of soring tags.
 	if(sortType)
@@ -62,10 +62,10 @@
 		if(O.currTag)// Tagger has a tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				to_chat(user, "<span class='notice'>Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, span_notice("Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
 			else
 				sortTypes |= O.currTag
-				to_chat(user, "<span class='notice'>Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				to_chat(user, span_notice("Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
 			playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	else
 		return ..()

@@ -7,7 +7,6 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	dir = NONE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/datum/gas_mixture/gas // gas used to flush, will appear at exit point
 	var/active = FALSE // true if the holder is moving, otherwise inactive
 	var/count = 1000 // can travel 1000 steps before going inactive (in case of loops)
@@ -16,7 +15,6 @@
 	var/hasmob = FALSE // contains a mob
 
 /obj/structure/disposalholder/Destroy()
-	QDEL_NULL(gas)
 	active = FALSE
 	return ..()
 
@@ -84,6 +82,9 @@
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
+	//Moved to nullspace gang
+	if(!loc)
+		return
 	if(!pipes_typecache[loc.type])
 		var/turf/T = get_turf(loc)
 		if(T)

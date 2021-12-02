@@ -34,17 +34,14 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "h" = (
-/obj/machinery/camera{
-	dir = 1;
+/obj/machinery/camera/directional/south{
 	network = list("auxbase")
 	},
 /obj/structure/mining_shuttle_beacon,
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "i" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "j" = (
@@ -52,13 +49,10 @@
 	dir = 2
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxiliary_base,
 /turf/closed/wall,
 /area/shuttle/auxiliary_base)
 "k" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "l" = (
@@ -77,6 +71,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/turf/open/floor/plating,
+/area/shuttle/auxiliary_base)
+"O" = (
+/obj/machinery/computer/auxiliary_base/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 
@@ -112,7 +110,7 @@ c
 f
 h
 j
-f
+O
 f
 m
 "}

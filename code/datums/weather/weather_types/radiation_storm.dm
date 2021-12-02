@@ -17,11 +17,11 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
+	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer, /area/ai_monitored/turret_protected/aisat/maint, /area/ai_monitored/command/storage/satellite,
 	/area/ai_monitored/turret_protected/ai, /area/commons/storage/emergency/starboard, /area/commons/storage/emergency/port, /area/shuttle, /area/security/prison/safe, /area/security/prison/toilet)
 	target_trait = ZTRAIT_STATION
 
-	immunity_type = RAD
+	immunity_type = TRAIT_RADSTORM_IMMUNE
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -29,20 +29,31 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, RAD)
-	if(prob(40))
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.dna && !HAS_TRAIT(H, TRAIT_GENELESS))
-				if(prob(max(0,100-resist)))
-					H.randmuti()
-					if(prob(50))
-						if(prob(90))
-							H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
-						else
-							H.easy_randmut(POSITIVE)
-						H.domutcheck()
-		L.rad_act(20)
+	if(!prob(40))
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	if(!H.dna || HAS_TRAIT(H, TRAIT_GENELESS))
+		return
+		
+	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+		return
+
+	if (SSradiation.wearing_rad_protected_clothing(H))
+		return
+
+	H.random_mutate_unique_identity()
+	H.random_mutate_unique_features()
+
+	if(prob(50))
+		if(prob(90))
+			H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
+		else
+			H.easy_random_mutate(POSITIVE)
+		H.domutcheck()
 
 /datum/weather/rad_storm/end()
 	if(..())

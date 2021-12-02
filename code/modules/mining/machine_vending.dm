@@ -75,7 +75,7 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/Initialize()
+/obj/machinery/mineral/equipment_vendor/Initialize(mapload)
 	. = ..()
 	build_inventory()
 
@@ -139,20 +139,20 @@
 				var/mob/living/L = usr
 				I = L.get_idcard(TRUE)
 			if(!istype(I))
-				to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
+				to_chat(usr, span_alert("Error: An ID is required!"))
 				flick(icon_deny, src)
 				return
 			var/datum/data/mining_equipment/prize = locate(params["ref"]) in prize_list
 			if(!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
+				to_chat(usr, span_alert("Error: Invalid choice!"))
 				flick(icon_deny, src)
 				return
 			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
+				to_chat(usr, span_alert("Error: Insufficient points for [prize.equipment_name] on [I]!"))
 				flick(icon_deny, src)
 				return
 			I.mining_points -= prize.cost
-			to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+			to_chat(usr, span_notice("[src] clanks to life briefly before vending [prize.equipment_name]!"))
 			new prize.equipment_path(loc)
 			SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 			. = TRUE
@@ -170,7 +170,7 @@
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sortList(items)
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sort_list(items)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()
@@ -209,7 +209,7 @@
 	name = "golem ship equipment vendor"
 	circuit = /obj/item/circuitboard/machine/mining_equipment_vendor/golem
 
-/obj/machinery/mineral/equipment_vendor/golem/Initialize()
+/obj/machinery/mineral/equipment_vendor/golem/Initialize(mapload)
 	desc += "\nIt seems a few selections have been added."
 	prize_list += list(
 		new /datum/data/mining_equipment("Extra Id", /obj/item/card/id/advanced/mining, 250),
@@ -247,15 +247,15 @@
 		if(points)
 			var/obj/item/card/id/C = I
 			C.mining_points += points
-			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
+			to_chat(user, span_info("You transfer [points] points to [C]."))
 			points = 0
 		else
-			to_chat(user, "<span class='alert'>There's no points left on [src].</span>")
+			to_chat(user, span_alert("There's no points left on [src]."))
 	..()
 
 /obj/item/card/mining_point_card/examine(mob/user)
-	..()
-	to_chat(user, "<span class='alert'>There's [points] point\s on the card.</span>")
+	. = ..()
+	. += span_alert("There's [points] point\s on the card.")
 
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
@@ -272,5 +272,5 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/card/id/advanced/mining(src)
 	new /obj/item/gun/energy/kinetic_accelerator(src)
-	new /obj/item/kitchen/knife/combat/survival(src)
+	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)

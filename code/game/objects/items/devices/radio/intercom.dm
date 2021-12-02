@@ -11,10 +11,13 @@
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 
+/obj/item/radio/intercom/prison
+	name = "prison intercom"
+	desc = "A station intercom. It looks like it has been modified to not broadcast."
+	prison_radio = TRUE
+
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
-	if(building)
-		setDir(ndir)
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
@@ -22,33 +25,33 @@
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.</span>"
+	. += span_notice("Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.")
 	if(!unscrewed)
-		. += "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>"
+		. += span_notice("It's <b>screwed</b> and secured to the wall.")
 	else
-		. += "<span class='notice'>It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.</span>"
+		. += span_notice("It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.")
 
 /obj/item/radio/intercom/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(unscrewed)
-			user.visible_message("<span class='notice'>[user] starts tightening [src]'s screws...</span>", "<span class='notice'>You start screwing in [src]...</span>")
+			user.visible_message(span_notice("[user] starts tightening [src]'s screws..."), span_notice("You start screwing in [src]..."))
 			if(I.use_tool(src, user, 30, volume=50))
-				user.visible_message("<span class='notice'>[user] tightens [src]'s screws!</span>", "<span class='notice'>You tighten [src]'s screws.</span>")
+				user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
 				unscrewed = FALSE
 		else
-			user.visible_message("<span class='notice'>[user] starts loosening [src]'s screws...</span>", "<span class='notice'>You start unscrewing [src]...</span>")
+			user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
 			if(I.use_tool(src, user, 40, volume=50))
-				user.visible_message("<span class='notice'>[user] loosens [src]'s screws!</span>", "<span class='notice'>You unscrew [src], loosening it from the wall.</span>")
+				user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
 				unscrewed = TRUE
 		return
 	else if(I.tool_behaviour == TOOL_WRENCH)
 		if(!unscrewed)
-			to_chat(user, "<span class='warning'>You need to unscrew [src] from the wall first!</span>")
+			to_chat(user, span_warning("You need to unscrew [src] from the wall first!"))
 			return
-		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
+		user.visible_message(span_notice("[user] starts unsecuring [src]..."), span_notice("You start unsecuring [src]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 80))
-			user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
+			user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new/obj/item/wallframe/intercom(get_turf(src))
 			qdel(src)
@@ -120,6 +123,7 @@
  * * source - the area that just had a power change.
  */
 /obj/item/radio/intercom/proc/AreaPowerCheck(datum/source)
+	SIGNAL_HANDLER
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		on = FALSE
@@ -136,9 +140,10 @@
 	desc = "A ready-to-go intercom. Just slap it on a wall and screw it in!"
 	icon_state = "intercom"
 	result_path = /obj/item/radio/intercom/unscrewed
-	pixel_shift = 29
-	inverse = TRUE
+	pixel_shift = 26
 	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
@@ -146,14 +151,5 @@
 	frequency = 1481
 	broadcasting = TRUE
 
-/obj/item/radio/intercom/directional/north
-	pixel_y = 22
-
-/obj/item/radio/intercom/directional/south
-	pixel_y = -28
-
-/obj/item/radio/intercom/directional/east
-	pixel_x = 28
-
-/obj/item/radio/intercom/directional/west
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)

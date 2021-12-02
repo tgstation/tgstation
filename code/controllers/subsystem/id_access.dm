@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(id_access)
 
 /datum/controller/subsystem/id_access/Initialize(timeofday)
 	// We use this because creating the trim singletons requires the config to be loaded.
-	SSmapping.HACK_LoadMapConfig()
 	setup_access_flags()
 	setup_region_lists()
 	setup_trim_singletons()
@@ -254,8 +253,8 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
 	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
 	desc_by_access["[ACCESS_RND]"] = "R&D Lab"
-	desc_by_access["[ACCESS_TOXINS]"] = "Toxins Lab"
-	desc_by_access["[ACCESS_TOXINS_STORAGE]"] = "Toxins Storage"
+	desc_by_access["[ACCESS_ORDNANCE]"] = "Ordnance Lab"
+	desc_by_access["[ACCESS_ORDNANCE_STORAGE]"] = "Ordnance Storage"
 	desc_by_access["[ACCESS_CHEMISTRY]"] = "Chemistry Lab"
 	desc_by_access["[ACCESS_RD]"] = "RD Office"
 	desc_by_access["[ACCESS_BAR]"] = "Bar"

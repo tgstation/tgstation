@@ -83,15 +83,15 @@
 /datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 50, affected_mob)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 5 SECONDS, affected_mob)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		to_chat(affected_mob, "<span class='userdanger'>Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!</span>")
+		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(0)
 		affected_mob.key = C.key
 	else
-		to_chat(new_mob, "<span class='userdanger'>Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!</span>")
+		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
@@ -138,10 +138,10 @@
 	switch(stage)
 		if(2)
 			if(DT_PROB(1, delta_time))
-				to_chat(affected_mob, "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>")
+				to_chat(affected_mob, span_notice("Your [pick("back", "arm", "leg", "elbow", "head")] itches."))
 		if(3)
 			if(DT_PROB(2, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
+				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.add_confusion(10)
 		if(4)
 			if(DT_PROB(1.5, delta_time))
@@ -192,7 +192,7 @@
 			if (DT_PROB(4, delta_time))
 				affected_mob.say(pick("Beep, boop", "beep, beep!", "Boop...bop"), forced = "robotic transformation")
 			if (DT_PROB(2, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
+				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if (DT_PROB(10, delta_time))
@@ -226,7 +226,7 @@
 	switch(stage)
 		if(3)
 			if(DT_PROB(2, delta_time))
-				to_chat(affected_mob, "<span class='danger'>You feel a stabbing pain in your head.</span>")
+				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if(DT_PROB(10, delta_time))
@@ -258,12 +258,12 @@
 	switch(stage)
 		if(1)
 			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == "slime" || affected_mob.dna.species.id == "stargazer" || affected_mob.dna.species.id == "lum")
+				if(affected_mob.dna.species.id == SPECIES_SLIMEPERSON || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_LUMINESCENT)
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != "slime" && affected_mob.dna.species.id != "stargazer" && affected_mob.dna.species.id != "lum")
+				if(human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
 					human.set_species(/datum/species/jelly/slime)
 
 
@@ -356,5 +356,5 @@
 			if(DT_PROB(1, delta_time))
 				var/obj/item/held_item = affected_mob.get_active_held_item()
 				if(held_item)
-					to_chat(affected_mob, "<span class='danger'>You let go of what you were holding.</span>")
+					to_chat(affected_mob, span_danger("You let go of what you were holding."))
 					affected_mob.dropItemToGround(held_item)

@@ -1,5 +1,35 @@
 // A very special plant, deserving it's own file.
 
+// Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
+/obj/item/seeds/cabbage
+	name = "pack of cabbage seeds"
+	desc = "These seeds grow into cabbages."
+	icon_state = "seed-cabbage"
+	species = "cabbage"
+	plantname = "Cabbages"
+	product = /obj/item/food/grown/cabbage
+	lifespan = 50
+	endurance = 25
+	maturation = 3
+	production = 5
+	yield = 4
+	instability = 10
+	growthstages = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	mutatelist = list(/obj/item/seeds/replicapod)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	seed_flags = null
+
+/obj/item/food/grown/cabbage
+	seed = /obj/item/seeds/cabbage
+	name = "cabbage"
+	desc = "Ewwwwwwwwww. Cabbage."
+	icon_state = "cabbage"
+	foodtypes = VEGETABLES
+	wine_power = 20
+
+///The actual replica pods themselves!
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
@@ -26,7 +56,7 @@
 	var/contains_sample = FALSE
 	var/being_harvested = FALSE
 
-/obj/item/seeds/replicapod/Initialize()
+/obj/item/seeds/replicapod/Initialize(mapload)
 	. = ..()
 
 	create_reagents(volume, INJECTABLE|DRAWABLE)
@@ -61,10 +91,10 @@
 		quirks = B.data["quirks"]
 		sampleDNA = B.data["blood_DNA"]
 		contains_sample = TRUE
-		visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+		visible_message(span_notice("The [src] is injected with a fresh blood sample."))
 		log_cloning("[key_name(mind)]'s cloning record was added to [src] at [AREACOORD(src)].")
 	else
-		visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+		visible_message(span_warning("The [src] rejects the sample!"))
 	return NONE
 
 /// Handles reagents being deleted from these seeds.
@@ -122,7 +152,7 @@
 	if(!make_podman)
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(mind || ckey)
-			var/choice = alert("The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", "Harvest Seeds", "Cancel")
+			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
 			if(choice == "Cancel")
 				return result
 
@@ -141,11 +171,11 @@
 		if(prob(getYield() * 20))
 			seed_count++
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-		for(var/i=0,i<seed_count,i++)
+		for(var/i  in 1 to seed_count)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
 			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
-		parent.update_tray()
+		parent.update_tray(user, seed_count)
 		return result
 
 	// Congratulations! %Do you want to build a pod man?%
@@ -170,5 +200,5 @@
 	podman.set_cloned_appearance()
 	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
-	parent.update_tray()
+	parent.update_tray(user, 1)
 	return result

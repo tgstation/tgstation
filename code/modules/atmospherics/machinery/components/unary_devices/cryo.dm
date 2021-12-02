@@ -69,7 +69,7 @@
 	icon_state = "pod-off"
 	density = TRUE
 	max_integrity = 350
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 30, ACID = 30)
 	layer = MOB_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
@@ -106,7 +106,7 @@
 	payment_department = ACCOUNT_MED
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
+/obj/machinery/atmospherics/components/unary/cryo_cell/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 	if(is_operational)
@@ -142,7 +142,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
+		. += span_notice("The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	vis_contents.Cut()
@@ -321,7 +321,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
@@ -342,14 +342,14 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
-		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)</span>", \
-		"<span class='hear'>You hear a thump from [src].</span>")
+	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
+		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
+		span_hear("You hear a thump from [src]."))
 	if(do_after(user, CRYO_BREAKOUT_TIME, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
-		user.visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>", \
-			"<span class='notice'>You successfully break out of [src]!</span>")
+		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
+			span_notice("You successfully break out of [src]!"))
 		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
@@ -370,7 +370,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if(L.incapacitated())
 			close_machine(target)
 	else
-		user.visible_message("<span class='notice'>[user] starts shoving [target] inside [src].</span>", "<span class='notice'>You start shoving [target] inside [src].</span>")
+		user.visible_message(span_notice("[user] starts shoving [target] inside [src]."), span_notice("You start shoving [target] inside [src]."))
 		if (do_after(user, 2.5 SECONDS, target=target))
 			close_machine(target)
 
@@ -378,13 +378,13 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	if(istype(I, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
+			to_chat(user, span_warning("A beaker is already loaded into [src]!"))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
-							"<span class='notice'>You place [I] in [src].</span>")
+		user.visible_message(span_notice("[user] places [I] in [src]."), \
+							span_notice("You place [I] in [src]."))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
@@ -523,17 +523,19 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 /obj/machinery/atmospherics/components/unary/cryo_cell/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	. = ..()
 	if(.)
-		SetInitDirections()
+		set_init_directions()
 		var/obj/machinery/atmospherics/node = nodes[1]
 		if(node)
 			node.disconnect(src)
 			nodes[1] = null
-		nullifyPipenet(parents[1])
-		atmosinit()
+			if(parents[1])
+				nullify_pipenet(parents[1])
+
+		atmos_init()
 		node = nodes[1]
 		if(node)
-			node.atmosinit()
-			node.addMember(src)
+			node.atmos_init()
+			node.add_member(src)
 		SSair.add_to_rebuild_queue(src)
 
 #undef MAX_TEMPERATURE

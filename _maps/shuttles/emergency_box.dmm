@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -74,16 +74,11 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "as" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "at" = (
@@ -92,7 +87,7 @@
 	pixel_x = 6;
 	pixel_y = -24
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "au" = (
@@ -108,23 +103,15 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"az" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "aA" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aB" = (
-/obj/machinery/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = 24
+/obj/machinery/flasher/directional/north{
+	id = "cockpit_flasher"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aC" = (
@@ -145,19 +132,14 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = 6
-	},
 /obj/machinery/button/flasher{
 	id = "shuttle_flasher";
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
+/obj/machinery/light/small/directional/west,
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -202,19 +184,12 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aQ" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aR" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aS" = (
@@ -242,9 +217,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aW" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aX" = (
@@ -263,9 +236,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bd" = (
@@ -280,12 +251,8 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bf" = (
@@ -304,10 +271,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bj" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	use_power = 0
-	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bk" = (
@@ -315,54 +278,51 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bl" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bm" = (
 /obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bn" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bp" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bq" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bs" = (
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ga" = (
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"Dk" = (
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Nt" = (
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "XC" = (
 /obj/structure/closet/emcloset,
@@ -475,7 +435,7 @@ ac
 aH
 ac
 bj
-aC
+Dk
 aT
 aT
 aT
@@ -506,7 +466,7 @@ aC
 aC
 aC
 bp
-az
+ad
 ad
 ad
 ad
@@ -542,8 +502,8 @@ ac
 ai
 ao
 ao
-az
-an
+ad
+Nt
 aC
 aM
 aM

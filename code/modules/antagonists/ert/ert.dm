@@ -5,6 +5,11 @@
 
 /datum/antagonist/ert
 	name = "Emergency Response Officer"
+	can_elimination_hijack = ELIMINATION_PREVENT
+	show_in_antagpanel = FALSE
+	show_to_ghosts = TRUE
+	antag_moodlet = /datum/mood_event/focused
+	suicide_cry = "FOR NANOTRASEN!!"
 	var/datum/team/ert/ert_team
 	var/leader = FALSE
 	var/datum/outfit/outfit = /datum/outfit/centcom/ert/security
@@ -15,10 +20,9 @@
 	var/rip_and_tear = FALSE
 	var/equip_ert = TRUE
 	var/forge_objectives_for_ert = TRUE
-	can_elimination_hijack = ELIMINATION_PREVENT
-	show_in_antagpanel = FALSE
-	show_to_ghosts = TRUE
-	antag_moodlet = /datum/mood_event/focused
+	/// Typepath indicating the kind of job datum this ert member will have.
+	var/ert_job_path = /datum/job/ert_generic
+
 
 /datum/antagonist/ert/on_gain()
 	if(random_names)
@@ -155,6 +159,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/centcom_intern
 	random_names = FALSE
 	role = "Intern"
+	suicide_cry = "FOR MY INTERNSHIP!!"
 
 /datum/antagonist/ert/intern/leader
 	name = "CentCom Head Intern"
@@ -239,13 +244,12 @@
 
 /datum/antagonist/ert/families
 	name = "Space Police Responder"
-	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
+	suicide_cry = "FOR THE SPACE POLICE!!"
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
@@ -257,7 +261,6 @@
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		H.infodisplay -= H.wanted_lvl
@@ -265,7 +268,7 @@
 	..()
 
 /datum/antagonist/ert/families/greet()
-	var/missiondesc =  "<span class='warningplain'><B><font size=6 color=red>You are the [name].</font></B>"
+	var/missiondesc = "<span class='warningplain'><B><font size=6 color=red>You are the [name].</font></B>"
 	missiondesc += "<BR><B><font size=5 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>"
 	missiondesc += "<BR><B><font size=5 color=red>You are NOT a deathsquad. You are here to help innocents escape violence, criminal activity, and other dangerous things.</font></B>"
 	missiondesc += "<BR>After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"
@@ -351,3 +354,23 @@
 /datum/antagonist/ert/families/beatcop/military/New()
 	. = ..()
 	name_source = GLOB.commando_names
+
+/datum/antagonist/ert/marine
+	name = "Marine Commander"
+	outfit = /datum/outfit/centcom/ert/marine
+	role = "Commander"
+
+/datum/antagonist/ert/marine/security
+	name = "Marine Heavy"
+	outfit = /datum/outfit/centcom/ert/marine/security
+	role = "Trooper"
+
+/datum/antagonist/ert/marine/engineer
+	name = "Marine Engineer"
+	outfit = /datum/outfit/centcom/ert/marine/engineer
+	role = "Engineer"
+
+/datum/antagonist/ert/marine/medic
+	name = "Marine Medic"
+	outfit = /datum/outfit/centcom/ert/marine/medic
+	role = "Medical Officer"

@@ -24,7 +24,7 @@
 		return FALSE
 	var/obj/item/circuitboard/computer/syndicate_shuttle/board = circuit
 	if(board?.challenge && world.time < SYNDICATE_CHALLENGE_TIMER)
-		to_chat(user, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare.</span>")
+		to_chat(user, span_warning("You've issued a combat challenge to the station! You've got to give them at least [DisplayTimeText(SYNDICATE_CHALLENGE_TIMER - world.time)] more to allow them to prepare."))
 		return FALSE
 	board.moved = TRUE
 	return TRUE
@@ -39,6 +39,7 @@
 	desc = "Controls the drop pod's launch system."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
+	icon_keyboard = null
 	light_color = LIGHT_COLOR_BLUE
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"
@@ -49,7 +50,7 @@
 	if(!.)
 		return FALSE
 	if(!is_centcom_level(z))
-		to_chat(user, "<span class='warning'>Pods are one way!</span>")
+		to_chat(user, span_warning("Pods are one way!"))
 		return FALSE
 	return TRUE
 
@@ -65,7 +66,7 @@
 	view_range = 5.5
 	x_offset = -7
 	y_offset = -1
-	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral)
+	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral, /turf/open/openspace)
 	see_hidden = TRUE
 
 #undef SYNDICATE_CHALLENGE_TIMER

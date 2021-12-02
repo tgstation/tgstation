@@ -18,9 +18,9 @@
 			continue
 		possible_types += E
 
-	forced_type = input(usr, "Select the scare.","False event") as null|anything in sortNames(possible_types)
+	forced_type = input(usr, "Select the scare.","False event") as null|anything in sort_names(possible_types)
 
-/datum/round_event_control/falsealarm/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/falsealarm/canSpawnEvent(players_amt)
 	return ..() && length(gather_false_events())
 
 /datum/round_event/falsealarm
@@ -32,9 +32,8 @@
 	if(fake) //What are you doing
 		return
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
-	var/gamemode = SSticker.mode.config_tag
 
-	var/events_list = gather_false_events(players_amt, gamemode)
+	var/events_list = gather_false_events(players_amt)
 	var/datum/round_event_control/event_control
 	var/datum/round_event_control/falsealarm/C = control
 	if(C.forced_type)
@@ -48,12 +47,12 @@
 		Event.kill() //do not process this event - no starts, no ticks, no ends
 		Event.announce(TRUE) //just announce it like it's happening
 
-/proc/gather_false_events(players_amt, gamemode)
+/proc/gather_false_events(players_amt)
 	. = list()
 	for(var/datum/round_event_control/E in SSevents.control)
 		if(istype(E, /datum/round_event_control/falsealarm))
 			continue
-		if(!E.canSpawnEvent(players_amt, gamemode))
+		if(!E.canSpawnEvent(players_amt))
 			continue
 
 		var/datum/round_event/event = E.typepath

@@ -12,12 +12,12 @@
 	antag_datum = /datum/antagonist/traitor
 	minimum_required_age = 0
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("Cyborg")
+	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 5
-	cost = 8 // Avoid raising traitor threat above 10, as it is the default low cost ruleset.
+	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
 	scaling_cost = 9
-	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 24)
 	var/autotraitor_cooldown = (15 MINUTES)
 	COOLDOWN_DECLARE(autotraitor_cooldown_check)
@@ -40,6 +40,49 @@
 		log_game("DYNAMIC: Checking if we can turn someone into a traitor.")
 		mode.picking_specific_rule(/datum/dynamic_ruleset/midround/autotraitor)
 
+//////////////////////////////////////////////
+//                                          //
+//            MALFUNCTIONING AI             //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/malf_ai
+	name = "Malfunctioning AI"
+	antag_flag = ROLE_MALF
+	antag_datum = /datum/antagonist/malf_ai
+	minimum_required_age = 14
+	exclusive_roles = list("AI")
+	required_candidates = 1
+	weight = 3
+	cost = 18
+	requirements = list(101,101,80,70,60,60,50,50,40,40)
+	antag_cap = 1
+	flags = HIGH_IMPACT_RULESET
+
+/datum/dynamic_ruleset/roundstart/malf_ai/ready(forced)
+	var/datum/job/ai_job = SSjob.GetJobType(/datum/job/ai)
+
+	// If we're not forced, we're going to make sure we can actually have an AI in this shift,
+	if(!forced && min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions) <= 0)
+		return FALSE
+
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/malf_ai/pre_execute(population)
+	. = ..()
+
+	var/datum/job/ai_job = SSjob.GetJobType(/datum/job/ai)
+	// Maybe a bit too pedantic, but there should never be more malf AIs than there are available positions, spawn positions or antag cap allocations.
+	var/num_malf = min(get_antag_cap(population), min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions))
+	for (var/i in 1 to num_malf)
+		var/mob/new_malf = pick_n_take(candidates)
+		assigned += new_malf.mind
+		new_malf.mind.special_role = ROLE_MALF
+		GLOB.pre_setup_antags += new_malf.mind
+		// We need an AI for the malf roundstart ruleset to execute. This means that players who get selected as malf AI get priority, because antag selection comes before role selection.
+		LAZYADDASSOC(SSjob.dynamic_forced_occupations, new_malf, "AI")
+	return TRUE
+
 //////////////////////////////////////////
 //                                      //
 //           BLOOD BROTHERS             //
@@ -49,7 +92,7 @@
 /datum/dynamic_ruleset/roundstart/traitorbro
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
-	antag_datum = /datum/antagonist/brother/
+	antag_datum = /datum/antagonist/brother
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
@@ -142,7 +185,7 @@
 	weight = 3
 	cost = 15
 	scaling_cost = 9
-	requirements = list(50,45,45,40,35,20,20,15,10,10)
+	requirements = list(101,101,101,40,35,20,20,15,10,10)
 	antag_cap = list("denominator" = 24)
 
 
@@ -180,7 +223,7 @@
 	name = "Wizard"
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
-	flags = LONE_RULESET
+	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
 	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
@@ -203,7 +246,7 @@
 	var/mob/M = pick_n_take(candidates)
 	if (M)
 		assigned += M.mind
-		M.mind.assigned_role = ROLE_WIZARD
+		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
 		M.mind.special_role = ROLE_WIZARD
 
 	return TRUE
@@ -305,8 +348,8 @@
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
-		M.mind.assigned_role = "Nuclear Operative"
-		M.mind.special_role = "Nuclear Operative"
+		M.mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+		M.mind.special_role = ROLE_NUCLEAR_OPERATIVE
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
@@ -449,23 +492,21 @@
 /datum/dynamic_ruleset/roundstart/families
 	name = "Families"
 	persistent = TRUE
+	antag_datum = /datum/antagonist/gang
 	antag_flag = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
-	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	required_candidates = 6 // gotta have 'em ALL
-	weight = 2
-	cost = 30
-	requirements = list(101,101,101,101,101,70,40,10,10,10)
+	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
+	required_candidates = 9
+	weight = 1
+	cost = 19
+	requirements = list(101,101,40,40,30,20,10,10,10,10)
 	flags = HIGH_IMPACT_RULESET
-	minimum_players = 36
-	antag_cap = 6
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
 
 /datum/dynamic_ruleset/roundstart/families/pre_execute(population)
 	..()
 	handler = new /datum/gang_handler(candidates,restricted_roles)
-	handler.gangs_to_generate = (get_antag_cap(population) / 2)
 	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
 	handler.use_dynamic_timing = TRUE
 	return handler.pre_setup_analogue()
@@ -518,22 +559,25 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops
-	name = "Clown Ops"
+	name = "Clown Operatives"
 	antag_datum = /datum/antagonist/nukeop/clownop
+	antag_flag = ROLE_CLOWN_OPERATIVE
+	antag_flag_override = ROLE_OPERATIVE
 	antag_leader_datum = /datum/antagonist/nukeop/leader/clownop
 	requirements = list(101,101,101,101,101,101,101,101,101,101)
 
 /datum/dynamic_ruleset/roundstart/nuclear/clown_ops/pre_execute()
 	. = ..()
 	if(.)
-		for(var/obj/machinery/nuclearbomb/syndicate/S in GLOB.nuke_list)
-			var/turf/T = get_turf(S)
-			if(T)
-				qdel(S)
-				new /obj/machinery/nuclearbomb/syndicate/bananium(T)
-		for(var/datum/mind/V in assigned)
-			V.assigned_role = "Clown Operative"
-			V.special_role = "Clown Operative"
+		var/obj/machinery/nuclearbomb/syndicate/syndicate_nuke = locate() in GLOB.nuke_list
+		if(syndicate_nuke)
+			var/turf/nuke_turf = get_turf(syndicate_nuke)
+			if(nuke_turf)
+				new /obj/machinery/nuclearbomb/syndicate/bananium(nuke_turf)
+				qdel(syndicate_nuke)
+		for(var/datum/mind/clowns in assigned)
+			clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
+			clowns.special_role = ROLE_CLOWN_OPERATIVE
 
 
 //////////////////////////////////////////////
@@ -561,7 +605,7 @@
 	. = ..()
 	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
 
-	for(var/j = 0, j < carriers_to_make, j++)
+	for(var/j in 1 to carriers_to_make)
 		if (!candidates.len)
 			break
 		var/mob/carrier = pick_n_take(candidates)

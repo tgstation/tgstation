@@ -8,9 +8,9 @@
 	. = ..()
 	if(. && silent && !prevent_warning)
 		if(quickdraw)
-			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent]. Alt-click [parent] to remove it.</span>")
+			to_chat(user, span_notice("You discreetly slip [I] into [parent]. Right-click [parent] to remove it."))
 		else
-			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent].</span>")
+			to_chat(user, span_notice("You discreetly slip [I] into [parent]."))
 
 /datum/component/storage/concrete/pockets/small
 	max_items = 1
@@ -61,7 +61,7 @@
 /datum/component/storage/concrete/pockets/shoes/Initialize()
 	. = ..()
 	set_holdable(list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
+		/obj/item/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
 		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
 		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,
@@ -73,7 +73,7 @@
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
 	. = ..()
 	set_holdable(list(
-		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
+		/obj/item/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
 		/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/dropper,
 		/obj/item/implanter, /obj/item/screwdriver, /obj/item/weldingtool/mini,

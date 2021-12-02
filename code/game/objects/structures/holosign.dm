@@ -6,11 +6,11 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	max_integrity = 1
-	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, RAD = 0, FIRE = 20, ACID = 20)
+	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
 
-/obj/structure/holosign/Initialize(loc, source_projector)
+/obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
 	if(use_vis_overlay)
 		alpha = 0
@@ -58,7 +58,7 @@
 	max_integrity = 20
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
-/obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
 		return
@@ -75,7 +75,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "holosign"
 
-/obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/wetsign/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
@@ -86,7 +86,6 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
@@ -95,22 +94,21 @@
 	icon_state = "holo_firelock"
 	density = FALSE
 	anchored = TRUE
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	alpha = 150
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"
 	max_integrity = 150
 
-/obj/structure/holosign/barrier/atmos/Initialize()
+/obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	var/turf/local = get_turf(loc)
 	ADD_TRAIT(local, TRAIT_FIREDOOR_STOP, TRAIT_GENERIC)
 	air_update_turf(TRUE, TRUE)
 
-/obj/structure/holosign/barrier/atmos/BlockSuperconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
+/obj/structure/holosign/barrier/atmos/block_superconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
 	return TRUE
 
 /obj/structure/holosign/barrier/atmos/Destroy()
@@ -144,9 +142,9 @@
 
 /obj/structure/holosign/barrier/medical/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.</span>"
+	. += span_notice("The biometric scanners are <b>[force_allaccess ? "off" : "on"]</b>.")
 
-/obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(force_allaccess)
 		return TRUE
@@ -175,9 +173,9 @@
 	return TRUE
 
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
-	if(CanPass(user) && !user.combat_mode)
+	if(!user.combat_mode && CanPass(user, get_dir(src, user)))
 		force_allaccess = !force_allaccess
-		to_chat(user, "<span class='warning'>You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.</span>") //warning spans because you can make the station sick!
+		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
 	else
 		return ..()
 

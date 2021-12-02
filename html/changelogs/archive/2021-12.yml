@@ -1,0 +1,93 @@
+2021-12-01:
+  FernandoJ8:
+  - imageadd: Resprited the lipsticks
+  Fikou:
+  - bugfix: fullauto now checks for incapacitated instead of stat
+  HarseTheef:
+  - bugfix: Baseball bats now correctly knockback targets in the direction of the
+      bat to the target.
+  Mothblocks:
+  - bugfix: Fixed nuke ops leader not having an antag HUD to other nuke ops.
+  Sealed101:
+  - expansion: Added ventriloquism to disembodied heads.
+  jlsnow301:
+  - refactor: pAI interfaces have been converted to TGUI.
+  - refactor: Requesting a holographic pAI friend now correctly notifies ghosts of
+      your loneliness.
+  - rscadd: pAI door jacks have been given a bit more UI feedback.
+  - rscdel: Requesting and downloading a pAI no longer uses two separate screens.
+  tastyfish:
+  - bugfix: Cleanbots no longer disappear.
+  - bugfix: Fixed edgecase causing PDA Skill Tracker to hard lock the PDA as your
+      reward for getting legendary level.
+2021-12-02:
+  Aerden:
+  - bugfix: Fixed being scared of the dark even if you have mesons.
+  Ghilker:
+  - code_imp: increased atmos performances a bit more
+  - balance: gasmasks give a slightly darkening overlay, effect will stack with other
+      items that have tint.
+  - code_imp: tint code has been updated to properly work.
+  Ghommie:
+  - expansion: Synthesizers and headphones can now have circuits installed.
+  - bugfix: The ship-in-a-bottle is now resistant to icebox/snowdin plasma rivers.
+  GoldenAlpharex:
+  - bugfix: Numpad keys are now properly recognized by the keybinds menu.
+  Guillaume Prata:
+  - expansion: After a short break, the Supermatter is back again at the her hard
+      working and slightly different Pluoxium generation business.
+  - bugfix: Swaps the engineer jumpsuit description still referencing them being resistant
+      to radiation, now it correctly reference them being resistant to fire.
+  - bugfix: Fixes a rogue airlock at the SM room on Icebox having the wrong access
+      requirement.
+  Iamgoofball:
+  - balance: Downgrades the purchasable knives in cargo from Combat Knives to Survival
+      Knives, moves them from Security to Service.
+  JohnFulpWillard:
+  - balance: the Head of Personnel no longer has access to Security Office nor Mechs
+      (outside of mining ones).
+  Melbert:
+  - bugfix: Mjol the Creative's summons can't be dispelled by observers anymore
+  - bugfix: There is now the proper amount of ORMs in Deltastation's Cargo.
+  - bugfix: Service jobs can leave the Deltastation Service Hall through maintenance
+  Mothblocks:
+  - balance: The Irish Car Bomb + clown car interaction has been nerfed from a big
+      gibbing explosion to throwing out all the mobs (with the usual chance of spilling
+      out slipping foam)
+  OrionTheFox:
+  - qol: Catwalk Tiles now have unique names, so hovering over them in the radial
+      menu will tell you the type! They're also recyclable now!
+  Pickle-Coding:
+  - balance: Proto nitrate BZ reaction will now produce gases, instead of just deleting
+      BZ. The gases it produces is nitrogen, helium, and plasma.
+  - balance: Tritium combustion and proto nitrate tritium response will release radiation
+      again, even if it's in a pipenet or canister. Proto nitrate BZ response will
+      also release radiation.
+  - balance: Proto nitrate BZ and tritium responses reaction rates has been changed
+      and is no longer capped at 5 moles per second. Given a fixed amount of combined
+      moles, the composition for the fastest reaction rate in tritium response is
+      different than the composition of the consumption rates.
+  - balance: Energy released from proto nitrate BZ and tritium responses has been
+      increased.
+  - balance: Proto nitrate BZ response hallucination and gas production now occur
+      at the same time, instead of hallucinations only appearing below 30 moles and
+      gas production + radiation (previously it just deleted BZ) above 30 moles.
+  SuperNovaa41:
+  - bugfix: Fixes an exploit with regenerative mesh and burn wounds.
+  Tastyfish:
+  - spellcheck: Made reagents consistently capitalized.
+  Thunder12345:
+  - expansion: Tram Station's vault has been moved to the service wing, next to tool
+      storage.
+  Timberpoes:
+  - admin: Improved logging for radio emotes in game logs and player panel logs.
+  Twaticus:
+  - imageadd: Makes mob ID sprites smaller, mob PDA sprites more consistent
+  dragomagol:
+  - bugfix: ED-209s can be constructed once more!
+  tf-4:
+  - bugfix: TK can no longer be used to teleport onto weight machines.
+  timothymtorres:
+  - bugfix: Fix telecomms relays to work across multi-z
+  vincentiusvin:
+  - bugfix: tanks being destroyed in cans/pumps/scrubbers wont cause errors now

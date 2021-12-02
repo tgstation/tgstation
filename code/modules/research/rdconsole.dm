@@ -12,7 +12,7 @@ aren't already linked to another console. Any consoles it cannot link up with (e
 linked or there aren't any in range), you'll just not have access to that menu. In the settings menu, there are menu options that
 allow a player to attempt to re-sync with nearby consoles. You can also force it to disconnect from a specific console.
 
-The only thing that requires toxins access is locking and unlocking the console on the settings menu.
+The only thing that requires ordnance access is locking and unlocking the console on the settings menu.
 Nothing else in the console has ID requirements.
 
 */
@@ -45,7 +45,7 @@ Nothing else in the console has ID requirements.
 		return reagent.name
 	return ID
 
-/obj/machinery/computer/rdconsole/Initialize()
+/obj/machinery/computer/rdconsole/Initialize(mapload)
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE
@@ -66,24 +66,24 @@ Nothing else in the console has ID requirements.
 	if(istype(D, /obj/item/disk))
 		if(istype(D, /obj/item/disk/tech_disk))
 			if(t_disk)
-				to_chat(user, "<span class='warning'>A technology disk is already loaded!</span>")
+				to_chat(user, span_warning("A technology disk is already loaded!"))
 				return
 			if(!user.transferItemToLoc(D, src))
-				to_chat(user, "<span class='warning'>[D] is stuck to your hand!</span>")
+				to_chat(user, span_warning("[D] is stuck to your hand!"))
 				return
 			t_disk = D
 		else if (istype(D, /obj/item/disk/design_disk))
 			if(d_disk)
-				to_chat(user, "<span class='warning'>A design disk is already loaded!</span>")
+				to_chat(user, span_warning("A design disk is already loaded!"))
 				return
 			if(!user.transferItemToLoc(D, src))
-				to_chat(user, "<span class='warning'>[D] is stuck to your hand!</span>")
+				to_chat(user, span_warning("[D] is stuck to your hand!"))
 				return
 			d_disk = D
 		else
-			to_chat(user, "<span class='warning'>Machine cannot accept disks in that format.</span>")
+			to_chat(user, span_warning("Machine cannot accept disks in that format."))
 			return
-		to_chat(user, "<span class='notice'>You insert [D] into \the [src]!</span>")
+		to_chat(user, span_notice("You insert [D] into \the [src]!"))
 		return
 	return ..()
 
@@ -105,6 +105,8 @@ Nothing else in the console has ID requirements.
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
@@ -128,7 +130,7 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>You disable the security protocols[locked? " and unlock the console":""].</span>")
+		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
 		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
@@ -296,12 +298,12 @@ Nothing else in the console has ID requirements.
 	switch (action)
 		if ("toggleLock")
 			if(obj_flags & EMAGGED)
-				to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to access locking protocols.</span>")
+				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
 			if(allowed(usr))
 				locked = !locked
 			else
-				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
+				to_chat(usr, span_boldwarning("Unauthorized Access."))
 			return TRUE
 		if ("researchNode")
 			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
@@ -318,18 +320,9 @@ Nothing else in the console has ID requirements.
 			var/slot = text2num(params["slot"])
 			var/datum/design/design = SSresearch.techweb_design_by_id(params["selectedDesign"])
 			if(design)
-				var/autolathe_friendly = TRUE
-				if(design.reagents_list.len)
-					autolathe_friendly = FALSE
-					design.category -= "Imported"
-				else
-					for(var/material in design.materials)
-						if( !(material in list(/datum/material/iron, /datum/material/glass)))
-							autolathe_friendly = FALSE
-							design.category -= "Imported"
-
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
-					design.build_type = autolathe_friendly ? (design.build_type | AUTOLATHE) : design.build_type
+					if(design.autolathe_exportable && !design.reagents_list.len)
+						design.build_type |= AUTOLATHE
 					design.category |= "Imported"
 				d_disk.blueprints[slot] = design
 			return TRUE

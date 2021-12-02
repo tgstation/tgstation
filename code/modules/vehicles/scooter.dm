@@ -4,7 +4,7 @@
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
 
-/obj/vehicle/ridden/scooter/Initialize()
+/obj/vehicle/ridden/scooter/Initialize(mapload)
 	. = ..()
 	make_ridable()
 
@@ -13,12 +13,12 @@
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
+	to_chat(user, span_notice("You begin to remove the handlebars..."))
 	if(!I.use_tool(src, user, 40, volume=50))
 		return TRUE
 	var/obj/vehicle/ridden/scooter/skateboard/improvised/skater = new(drop_location())
 	new /obj/item/stack/rods(drop_location(), 2)
-	to_chat(user, "<span class='notice'>You remove the handlebars from [src].</span>")
+	to_chat(user, span_notice("You remove the handlebars from [src]."))
 	if(has_buckled_mobs())
 		var/mob/living/carbon/carbons = buckled_mobs[1]
 		unbuckle_mob(carbons)
@@ -50,7 +50,7 @@
 	///Stamina drain multiplier
 	var/instability = 10
 
-/obj/vehicle/ridden/scooter/skateboard/Initialize()
+/obj/vehicle/ridden/scooter/skateboard/Initialize(mapload)
 	. = ..()
 	sparks = new
 	sparks.set_up(1, 0, src)
@@ -74,23 +74,24 @@
 	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/ollie, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	density = TRUE
+	set_density(TRUE)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-		density = FALSE
+		set_density(FALSE)
 	return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
-	if(!A.density || !has_buckled_mobs())
+	if(!A.density || !has_buckled_mobs() || world.time < next_crash)
 		return
 
+	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
 	rider.adjustStaminaLoss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || world.time < next_crash)
+	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding)
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		rider.throw_at(throw_target, 3, 2)
@@ -98,13 +99,12 @@
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
-		visible_message("<span class='danger'>[src] crashes into [A], sending [rider] flying!</span>")
+		visible_message(span_danger("[src] crashes into [A], sending [rider] flying!"))
 		rider.Paralyze(80)
 	else
 		var/backdir = turn(dir, 180)
 		step(src, backdir)
 		rider.spin(4, 1)
-	next_crash = world.time + 10
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
@@ -123,7 +123,7 @@
 		unbuckle_mob(skater)
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
-		visible_message("<span class='danger'>[skater] loses [skater.p_their()] footing and slams on the ground!</span>")
+		visible_message(span_danger("[skater] loses [skater.p_their()] footing and slams on the ground!"))
 		skater.Paralyze(40)
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
@@ -148,7 +148,7 @@
 	if (skater.incapacitated() || !Adjacent(skater))
 		return
 	if(has_buckled_mobs())
-		to_chat(skater, "<span class='warning'>You can't lift this up when somebody's on it.</span>")
+		to_chat(skater, span_warning("You can't lift this up when somebody's on it."))
 		return
 	skater.put_in_hands(new board_item_type(get_turf(skater)))
 	qdel(src)
@@ -192,16 +192,16 @@
 		return ..()
 	if(!I.tool_start_check(user, amount=5))
 		return
-	to_chat(user, "<span class='notice'>You begin to add wheels to [src].</span>")
+	to_chat(user, span_notice("You begin to add wheels to [src]."))
 	if(!I.use_tool(src, user, 80, volume=50, amount=5))
 		return
-	to_chat(user, "<span class='notice'>You finish making wheels for [src].</span>")
+	to_chat(user, span_notice("You finish making wheels for [src]."))
 	new /obj/vehicle/ridden/scooter/skateboard/improvised(user.loc)
 	qdel(src)
 
 /obj/item/scooter_frame/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
+	to_chat(user, span_notice("You deconstruct [src]."))
 	new /obj/item/stack/rods(drop_location(), 10)
 	I.play_tool_sound(src)
 	qdel(src)
@@ -215,10 +215,10 @@
 		return ..()
 	if(!I.tool_start_check(user, amount=2))
 		return
-	to_chat(user, "<span class='notice'>You begin making handlebars for [src].</span>")
+	to_chat(user, span_notice("You begin making handlebars for [src]."))
 	if(!I.use_tool(src, user, 25, volume=50, amount=2))
 		return
-	to_chat(user, "<span class='notice'>You add the rods to [src], creating handlebars.</span>")
+	to_chat(user, span_notice("You add the rods to [src], creating handlebars."))
 	var/obj/vehicle/ridden/scooter/skaterskoot = new(loc)
 	if(has_buckled_mobs())
 		var/mob/living/carbon/skaterboy = buckled_mobs[1]
@@ -230,10 +230,10 @@
 	. = ..()
 	if(.)
 		return
-	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
+	to_chat(user, span_notice("You begin to deconstruct and remove the wheels on [src]..."))
 	if(!I.use_tool(src, user, 20, volume=50))
 		return
-	to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")
+	to_chat(user, span_notice("You deconstruct the wheels on [src]."))
 	new /obj/item/stack/sheet/iron(drop_location(), 5)
 	new /obj/item/scooter_frame(drop_location())
 	if(has_buckled_mobs())
@@ -261,7 +261,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())
-		to_chat(M, "<span class='notice'>You pop the [wheel_name] back into place.</span>")
+		to_chat(M, span_notice("You pop the [wheel_name] back into place."))
 		moveToNullspace()
 		shoes.toggle_wheels(FALSE)
 	return ..()
@@ -270,7 +270,7 @@
 	return
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_buckle_mob(mob/living/M)
-	to_chat(M, "<span class='notice'>You pop out the [wheel_name].</span>")
+	to_chat(M, span_notice("You pop out the [wheel_name]."))
 	shoes.toggle_wheels(TRUE)
 	return ..()
 
@@ -286,7 +286,7 @@
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	name = "ski shoes"
-	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either."
+	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	instability = 8
 	wheel_name = "skis"
 	component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes

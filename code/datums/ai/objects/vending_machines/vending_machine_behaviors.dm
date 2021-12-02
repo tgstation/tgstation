@@ -5,6 +5,11 @@
 	///Time to telegraph and tilt over
 	var/time_to_tilt = 0.8 SECONDS
 
+/datum/ai_behavior/vendor_crush/setup(datum/ai_controller/controller, target_key)
+	. = ..()
+	controller.current_movement_target = controller.blackboard[target_key]
+
+
 /datum/ai_behavior/vendor_crush/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	if(controller.blackboard[BB_VENDING_BUSY_TILTING])
@@ -38,7 +43,7 @@
 /datum/ai_behavior/vendor_rise_up/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/machinery/vending/vendor_pawn = controller.pawn
-	vendor_pawn.visible_message("<span class='warning'>[vendor_pawn] untilts itself!</span>")
+	vendor_pawn.visible_message(span_warning("[vendor_pawn] untilts itself!"))
 	if(controller.blackboard[BB_VENDING_LAST_HIT_SUCCESFUL])
 		controller.blackboard[BB_VENDING_TILT_COOLDOWN] = world.time + succes_tilt_cooldown
 	vendor_pawn.untilt()

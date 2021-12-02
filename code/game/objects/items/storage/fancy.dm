@@ -53,16 +53,16 @@
 	if(contents.len)
 		return
 	new fold_result(user.drop_location())
-	to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+	to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
 	user.put_in_active_hand(fold_result)
 	qdel(src)
 
-/obj/item/storage/fancy/Exited()
+/obj/item/storage/fancy/Exited(atom/movable/gone, direction)
 	. = ..()
 	is_open = TRUE
 	update_appearance()
 
-/obj/item/storage/fancy/Entered()
+/obj/item/storage/fancy/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	is_open = TRUE
 	update_appearance()
@@ -79,7 +79,7 @@
 	icon = 'icons/obj/food/donuts.dmi'
 	icon_state = "donutbox_inner"
 	base_icon_state = "donutbox"
-	spawn_type = /obj/item/food/donut
+	spawn_type = /obj/item/food/donut/plain
 	is_open = TRUE
 	appearance_flags = KEEP_TOGETHER
 	custom_premium_price = PAYCHECK_HARD * 1.75
@@ -165,7 +165,7 @@
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
 		new fold_result(user.drop_location())
-		to_chat(user, "<span class='notice'>You fold the [src] into [initial(fold_result.name)].</span>")
+		to_chat(user, span_notice("You fold the [src] into [initial(fold_result.name)]."))
 		user.put_in_active_hand(fold_result)
 		qdel(src)
 
@@ -193,12 +193,14 @@
 	var/spawn_coupon = TRUE
 	/// For VV'ing, set this to true if you want to force the coupon to give an omen
 	var/rigged_omen = FALSE
+	///Do we not have our own handling for cig overlays?
+	var/display_cigs = TRUE
 
 /obj/item/storage/fancy/cigarettes/attack_self(mob/user)
 	if(contents.len != 0 || !spawn_coupon)
 		return ..()
 
-	to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+	to_chat(user, span_notice("You rip the back off \the [src] and get a coupon!"))
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
 	attached_coupon.generate(rigged_omen)
@@ -219,9 +221,9 @@
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
 
-	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	. += span_notice("Alt-click to extract contents.")
 	if(spawn_coupon)
-		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
+		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
@@ -231,14 +233,13 @@
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, user)
 		user.put_in_hands(W)
 		contents -= W
-		to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
+		to_chat(user, span_notice("You take \a [W] out of the pack."))
 	else
-		to_chat(user, "<span class='notice'>There are no [contents_tag]s left in the pack.</span>")
+		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state][contents.len ? null : "_empty"]"
-	return
 
 /obj/item/storage/fancy/cigarettes/update_overlays()
 	. = ..()
@@ -246,21 +247,24 @@
 		return
 
 	. += "[icon_state]_open"
+
+	if(!display_cigs)
+		return
+
 	var/cig_position = 1
 	for(var/C in contents)
-		var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+		var/use_icon_state = ""
 
 		if(istype(C, /obj/item/lighter/greyscale))
-			inserted_overlay.icon_state = "lighter_in"
+			use_icon_state = "lighter_in"
 		else if(istype(C, /obj/item/lighter))
-			inserted_overlay.icon_state = "zippo_in"
+			use_icon_state = "zippo_in"
 		else if(candy)
-			inserted_overlay.icon_state = "candy"
+			use_icon_state = "candy"
 		else
-			inserted_overlay.icon_state = "cigarette"
+			use_icon_state = "cigarette"
 
-		inserted_overlay.icon_state = "[inserted_overlay.icon_state]_[cig_position]"
-		. += inserted_overlay
+		. += "[use_icon_state]_[cig_position]"
 		cig_position++
 
 /obj/item/storage/fancy/cigarettes/attack(mob/living/carbon/target, mob/living/carbon/user)
@@ -269,7 +273,7 @@
 
 	var/obj/item/clothing/mask/cigarette/cig = locate() in contents
 	if(!cig)
-		to_chat(user, "<span class='notice'>There are no [contents_tag]s left in the pack.</span>")
+		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
 		return
 	if(target != user || !contents.len || user.wear_mask)
 		return ..()
@@ -277,7 +281,7 @@
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, cig, target)
 	target.equip_to_slot_if_possible(cig, ITEM_SLOT_MASK)
 	contents -= cig
-	to_chat(user, "<span class='notice'>You take \a [cig] out of the pack.</span>")
+	to_chat(user, span_notice("You take \a [cig] out of the pack."))
 	return
 
 
@@ -340,7 +344,7 @@
 	candy = TRUE
 	age_restricted = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
+/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize(mapload)
 	. = ..()
 	if(prob(7))
 		spawn_type = /obj/item/clothing/mask/cigarette/candy/nicotine //uh oh!
@@ -414,6 +418,7 @@
 	contents_tag = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 	spawn_coupon = FALSE
+	display_cigs = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
@@ -423,7 +428,8 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][is_open ? "_open" : null]"
+	//reset any changes the parent call may have made
+	icon_state = base_icon_state
 
 /obj/item/storage/fancy/cigarettes/cigars/update_overlays()
 	. = ..()
@@ -431,8 +437,7 @@
 		return
 	var/cigar_position = 1 //generate sprites for cigars in the box
 	for(var/obj/item/clothing/mask/cigarette/cigar/smokes in contents)
-		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, "[smokes.icon_off]_[cigar_position]")
-		. += cigar_overlay
+		. += "[smokes.icon_off]_[cigar_position]"
 		cigar_position++
 
 /obj/item/storage/fancy/cigarettes/cigars/cohiba

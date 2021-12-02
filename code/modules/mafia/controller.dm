@@ -175,7 +175,7 @@
 				judgement_lynch_period /= 2
 				night_phase_period /= 2
 		if(turn == 1)
-			send_message("<span class='notice'><b>The selected map is [current_map.name]!</b></br>[current_map.description]</span>")
+			send_message(span_notice("<b>The selected map is [current_map.name]!</b></br>[current_map.description]"))
 			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
 			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
@@ -244,19 +244,19 @@
 /datum/mafia_controller/proc/lynch()
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
-		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
+		send_message(span_green("[role.body.real_name] voted innocent."))
 	for(var/ii in judgement_abstain_votes)
 		var/datum/mafia_role/role = ii
-		send_message("<span class='comradio'>[role.body.real_name] abstained.</span>")
+		send_message(span_comradio("[role.body.real_name] abstained."))
 	for(var/iii in judgement_guilty_votes)
 		var/datum/mafia_role/role = iii
-		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
+		send_message(span_red("[role.body.real_name] voted guilty."))
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
-		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
+		send_message(span_red("<b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b>"))
 		on_trial.kill(src,lynch = TRUE)
 		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
 	else
-		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>")
+		send_message(span_green("<b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b>"))
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	on_trial = null
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
@@ -453,11 +453,11 @@
 	if(victim)
 		var/datum/mafia_role/killer = get_random_voter("Mafia")
 		if(!victim.can_action(src, killer, "changeling murder"))
-			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
+			send_message(span_danger("[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!"),MAFIA_TEAM_MAFIA)
 		else
-			send_message("<span class='danger'>[killer.body.real_name] has attacked [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
+			send_message(span_danger("[killer.body.real_name] has attacked [victim.body.real_name]!"),MAFIA_TEAM_MAFIA)
 			if(victim.kill(src,killer,lynch=FALSE))
-				to_chat(victim.body, "<span class='userdanger'>You have been killed by a Changeling!</span>")
+				to_chat(victim.body, span_userdanger("You have been killed by a Changeling!"))
 	reset_votes("Mafia")
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)
@@ -484,9 +484,9 @@
 	else
 		votes[vote_type][voter] = target
 	if(old_vote && old_vote == target)
-		send_message("<span class='notice'>[voter.body.real_name] retracts their vote for [target.body.real_name]!</span>", team = teams)
+		send_message(span_notice("[voter.body.real_name] retracts their vote for [target.body.real_name]!"), team = teams)
 	else
-		send_message("<span class='notice'>[voter.body.real_name] voted for [target.body.real_name]!</span>",team = teams)
+		send_message(span_notice("[voter.body.real_name] voted for [target.body.real_name]!"),team = teams)
 	if(!teams)
 		target.body.update_appearance() //Update the vote display if it's a public vote
 		var/datum/mafia_role/old = old_vote
@@ -572,11 +572,15 @@
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
 		ADD_TRAIT(H, TRAIT_NOFIRE, MAFIA_TRAIT)
 		ADD_TRAIT(H, TRAIT_NOBREATH, MAFIA_TRAIT)
+		ADD_TRAIT(H, TRAIT_CANNOT_CRYSTALIZE, MAFIA_TRAIT)
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
 		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
+		var/client/player_client = GLOB.directory[role.player_key]
+		if(player_client)
+			player_client.prefs.safe_transfer_prefs_to(H, is_antag = TRUE)
 		role.body = H
 		player_role_lookup[H] = role
 		H.key = role.player_key
@@ -720,25 +724,25 @@
 		switch(action)
 			if("mf_signup")
 				if(!SSticker.HasRoundStarted())
-					to_chat(usr, "<span class='warning'>Wait for the round to start.</span>")
+					to_chat(usr, span_warning("Wait for the round to start."))
 					return
 				if(GLOB.mafia_signup[C.ckey])
 					GLOB.mafia_signup -= C.ckey
-					to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
+					to_chat(usr, span_notice("You unregister from Mafia."))
 					return TRUE
 				else
 					GLOB.mafia_signup[C.ckey] = C
-					to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
+					to_chat(usr, span_notice("You sign up for Mafia."))
 				if(phase == MAFIA_PHASE_SETUP)
 					check_signups()
 					try_autostart()
 				return TRUE
 			if("mf_spectate")
 				if(C.ckey in spectators)
-					to_chat(usr, "<span class='notice'>You will no longer get messages from the game.</span>")
+					to_chat(usr, span_notice("You will no longer get messages from the game."))
 					spectators -= C.ckey
 				else
-					to_chat(usr, "<span class='notice'>You will now get messages from the game.</span>")
+					to_chat(usr, span_notice("You will now get messages from the game."))
 					spectators += C.ckey
 				return TRUE
 	if(user_role && user_role.game_status == MAFIA_DEAD)
@@ -921,8 +925,8 @@
 	//small message about not getting into this game for clarity on why they didn't get in
 	for(var/unpicked in possible_keys)
 		var/client/unpicked_client = GLOB.directory[unpicked]
-		to_chat(unpicked_client, "<span class='danger'>Sorry, the starting mafia game has too many players and you were not picked.</span>")
-		to_chat(unpicked_client, "<span class='warning'>You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes.</span>")
+		to_chat(unpicked_client, span_danger("Sorry, the starting mafia game has too many players and you were not picked."))
+		to_chat(unpicked_client, span_warning("You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes."))
 
 	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
 		setup = generate_random_setup()

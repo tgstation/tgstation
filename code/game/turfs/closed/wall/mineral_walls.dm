@@ -5,6 +5,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
+	material_flags = MATERIAL_EFFECTS
 	var/last_event = 0
 	var/active = null
 
@@ -91,7 +92,13 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(src, 40)
+			radiation_pulse(
+				src,
+				max_range = 3,
+				threshold = RAD_LIGHT_INSULATION,
+				chance = URANIUM_IRRADIATION_CHANCE,
+				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+			)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -164,6 +171,7 @@
 	base_icon_state = "wood_wall"
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
+	turf_flags = NONE
 	explosion_block = 0
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
@@ -270,24 +278,9 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)
 
-//sub-type to be used for interior shuttle walls
-//won't get an underlay of the destination turf on shuttle move
 /turf/closed/wall/mineral/titanium/interior/copyTurf(turf/T)
-	if(T.type != type)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(color)
-		T.atom_colours = atom_colours.Copy()
-		T.update_atom_colour()
-	if(T.dir != dir)
-		T.setDir(dir)
+	. = ..()
 	T.transform = transform
-	return T
 
 /turf/closed/wall/mineral/titanium/copyTurf(turf/T)
 	. = ..()
@@ -354,24 +347,6 @@
 
 /turf/closed/wall/mineral/plastitanium/hulk_recoil(obj/item/bodypart/arm, mob/living/carbon/human/hulkman, damage = 41)
 	return ..()
-
-//have to copypaste this code
-/turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)
-	if(T.type != type)
-		T.ChangeTurf(type)
-		if(underlays.len)
-			T.underlays = underlays
-	if(T.icon_state != icon_state)
-		T.icon_state = icon_state
-	if(T.icon != icon)
-		T.icon = icon
-	if(color)
-		T.atom_colours = atom_colours.Copy()
-		T.update_atom_colour()
-	if(T.dir != dir)
-		T.setDir(dir)
-	T.transform = transform
-	return T
 
 /turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
 	. = ..()

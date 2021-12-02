@@ -71,6 +71,17 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define PATH_FLESH "Flesh"
 #define PATH_VOID "Void"
 
+/// Forces the blob to place the core where they currently are, ignoring any checks.
+#define BLOB_FORCE_PLACEMENT -1
+/// Normal blob placement, does the regular checks to make sure the blob isn't placing itself in an invalid location
+#define BLOB_NORMAL_PLACEMENT 0
+/// Selects a random location for the blob to be placed.
+#define BLOB_RANDOM_PLACEMENT 1
+
+#define CONSTRUCT_JUGGERNAUT "Juggernaut"
+#define CONSTRUCT_WRAITH "Wraith"
+#define CONSTRUCT_ARTIFICER "Artificer"
+
 
 /// How many telecrystals a normal traitor starts with
 #define TELECRYSTALS_DEFAULT 20
@@ -80,6 +91,97 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 /// TC to charge someone if they get a free implant through choice or
 /// because they have nothing else that supports an implant.
 #define UPLINK_IMPLANT_TELECRYSTAL_COST 4
+
+/// The Classic Wizard wizard loadout.
+#define WIZARD_LOADOUT_CLASSIC "loadout_classic"
+/// Mjolnir's Power wizard loadout.
+#define WIZARD_LOADOUT_MJOLNIR "loadout_hammer"
+/// Fantastical Army wizard loadout.
+#define WIZARD_LOADOUT_WIZARMY "loadout_army"
+/// Soul Tapper wizard loadout.
+#define WIZARD_LOADOUT_SOULTAP "loadout_tap"
+/// Convenient list of all wizard loadouts for unit testing.
+#define ALL_WIZARD_LOADOUTS list( \
+	WIZARD_LOADOUT_CLASSIC, \
+	WIZARD_LOADOUT_MJOLNIR, \
+	WIZARD_LOADOUT_WIZARMY, \
+	WIZARD_LOADOUT_SOULTAP, \
+)
+
+///File to the traitor flavor
+#define TRAITOR_FLAVOR_FILE "antagonist_flavor/traitor_flavor.json"
+
+///File to the malf flavor
+#define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
+
+///employers that are from the syndicate
+GLOBAL_LIST_INIT(syndicate_employers, list(
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Cybersun Industries",
+	"Donk Corporation",
+	"Gorlex Marauders",
+	"MI13",
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
+	"Waffle Corporation",
+))
+///employers that are from nanotrasen
+GLOBAL_LIST_INIT(nanotrasen_employers, list(
+	"Champions of Evil",
+	"Corporate Climber",
+	"Gone Postal",
+	"Internal Affairs Agent",
+	"Legal Trouble",
+))
+
+///employers who hire agents to do the hijack
+GLOBAL_LIST_INIT(hijack_employers, list(
+	"Animal Rights Consortium",
+	"Bee Liberation Front",
+	"Gone Postal",
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
+))
+
+///employers who hire agents to do a task and escape... or martyrdom. whatever
+GLOBAL_LIST_INIT(normal_employers, list(
+	"Champions of Evil",
+	"Corporate Climber",
+	"Cybersun Industries",
+	"Donk Corporation",
+	"Gorlex Marauders",
+	"Internal Affairs Agent",
+	"Legal Trouble",
+	"MI13",
+	"Waffle Corporation",
+))
+
+///employers for malfunctioning ais. they do not have sides, unlike traitors.
+GLOBAL_LIST_INIT(ai_employers, list(
+	"Biohazard",
+	"Despotic Ruler",
+	"Fanatical Revelation",
+	"Logic Core Error",
+	"Problem Solver",
+	"S.E.L.F.",
+	"Something's Wrong",
+	"Spam Virus",
+	"SyndOS",
+	"Unshackled",
+))
+
+///how long traitors will have to wait before an unreasonable objective is rerolled
+#define OBJECTIVE_REROLL_TIMER 10 MINUTES
+
+///all the employers that are syndicate
+#define FACTION_SYNDICATE "syndicate"
+///all the employers that are nanotrasen
+#define FACTION_NANOTRASEN "nanotrasen"
+
+#define UPLINK_THEME_SYNDICATE "syndicate"
+
+#define UPLINK_THEME_UNDERWORLD_MARKET "neutral"
 
 /// Checks if the given mob is a blood cultist
 #define IS_CULTIST(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/cult))
@@ -105,3 +207,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 
 /// Checks if the given mob is a head revolutionary.
 #define IS_HEAD_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev/head))
+
+/// Checks if the given mob is a malf ai.
+#define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// The dimensions of the antagonist preview icon. Will be scaled to this size.
+#define ANTAGONIST_PREVIEW_ICON_SIZE 96

@@ -3,19 +3,7 @@ What are the archived variables for?
 Calculations are done using the archived variables with the results merged into the regular variables.
 This prevents race conditions that arise based on the order of tile processing.
 */
-#define MINIMUM_HEAT_CAPACITY 0.0003
-#define MINIMUM_MOLE_COUNT 0.01
-#define MOLAR_ACCURACY  1E-4
-/**
- *I feel the need to document what happens here. Basically this is used
- *catch rounding errors, and make gas go away in small portions.
- *People have raised it to higher levels in the past, do not do this. Consider this number a soft limit
- *If you're making gasmixtures that have unexpected behavior related to this value, you're doing something wrong.
- *
- *On an unrelated note this may cause a bug that creates negative gas, related to round(). When it has a second arg it will round up.
- *So for instance round(0.5, 1) == 1. I've hardcoded a fix for this into share, by forcing the garbage collect.
- *Any other attempts to fix it just killed atmos. I leave this to a greater man then I
- */
+
 #define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
@@ -37,9 +25,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/tmp/temperature_archived = 0
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
+	/// The fire key contains information that might determine the volume of hotspots.
 	var/list/reaction_results
-	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
-	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	/// Used for analyzer feedback - not initialized until its used
+	var/list/analyzer_results
+	/// Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	var/gc_share = FALSE
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -235,6 +226,24 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	garbage_collect(list(gas_id))
 	return removed
 
+/datum/gas_mixture/proc/remove_specific_ratio(gas_id, ratio)
+	if(ratio <= 0)
+		return null
+	ratio = min(ratio, 1)
+
+	var/list/cached_gases = gases
+	var/datum/gas_mixture/removed = new type
+	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
+
+	removed.temperature = temperature
+	ADD_GAS(gas_id, removed.gases)
+	removed_gases[gas_id][MOLES] = QUANTIZE(cached_gases[gas_id][MOLES] * ratio)
+	cached_gases[gas_id][MOLES] -= removed_gases[gas_id][MOLES]
+
+	garbage_collect(list(gas_id))
+
+	return removed
+
 ///Distributes the contents of two mixes equally between themselves
 //Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
@@ -259,7 +268,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
-
+	garbage_collect()
+	other.garbage_collect()
 
 ///Creates new, identical gas mixture
 ///Returns: duplicate gas mixture
@@ -506,7 +516,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Takes the amount of the gas you want to PP as an argument
 ///So I don't have to do some hacky switches/defines/magic strings
 ///eg:
-///Tox_PP = get_partial_pressure(gas_mixture.toxins)
+///Plas_PP = get_partial_pressure(gas_mixture.plasma)
 ///O2_PP = get_partial_pressure(gas_mixture.oxygen)
 
 /datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
@@ -548,7 +558,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 	return FALSE
 
 /// Releases gas from src to output air. This means that it can not transfer air to gas mixture with higher pressure.
-/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure)
+/datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
 
@@ -565,7 +575,7 @@ get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 		var/transfer_moles = (pressure_delta*output_air.volume)/(temperature * R_IDEAL_GAS_EQUATION)
 
 		//Actually transfer the gas
-		var/datum/gas_mixture/removed = remove(transfer_moles)
+		var/datum/gas_mixture/removed = remove(transfer_moles * rate)
 		output_air.merge(removed)
 
 		return TRUE

@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	rat_heal = 35
 
-/obj/item/food/cheese/wheel/Initialize()
+/obj/item/food/cheese/wheel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
@@ -37,14 +37,14 @@
 	/// used to determine how much health rats/regal rats recover when they eat it.
 	var/rat_heal = 10
 
-/obj/item/food/cheese/Initialize()
+/obj/item/food/cheese/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
-/obj/item/food/cheese/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
+/obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
-	king.cheese_heal(src, rat_heal, "<span class='green'>You eat [src], restoring some health.</span>")
+	king.cheese_heal(src, rat_heal, span_green("You eat [src], restoring some health."))
 
 /obj/item/food/watermelonslice
 	name = "watermelon slice"
@@ -94,6 +94,10 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/hugemushroomslice/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /obj/item/food/popcorn
 	name = "popcorn"
 	desc = "Now let's find some cinema."
@@ -122,11 +126,11 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("fries" = 3, "salt" = 1)
-	foodtypes = VEGETABLES | GRAIN | FRIED
+	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/fries/Initialize()
+/obj/item/food/fries/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -140,7 +144,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/tatortot/Initialize()
+/obj/item/food/tatortot/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -161,11 +165,25 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fries" = 3, "cheese" = 1)
-	foodtypes = VEGETABLES | GRAIN | DAIRY
+	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/cheesyfries/Initialize()
+/obj/item/food/cheesyfries/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
+
+/obj/item/food/poutine
+	name = "poutine"
+	desc = "Fries covered in cheese curds and gravy."
+	icon_state = "poutine"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/medicine/antihol = 4)
+	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
+	foodtypes = VEGETABLES | FRIED | MEAT
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/poutine/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -176,22 +194,28 @@
 	food_reagents = list(/datum/reagent/toxin/bad_food = 30)
 	foodtypes = GROSS
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE //Can't decompose any more than this
 
-/obj/item/food/badrecipe/Initialize()
+/obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
-	desc = "A rancid, living culture of mold. Somewhere, under there, at SOME POINT... there was food."
+	desc = "A rancid, disgusting culture of mold and ants. Somewhere under there, at <i>some point,</i> there was food."
 	food_reagents = list(/datum/reagent/consumable/mold = 30)
 
-/obj/item/food/badrecipe/moldy/Initialize()
+/obj/item/food/badrecipe/moldy/bacteria
+	name = "bacteria rich moldy mess"
+	desc = "Not only is this rancid lump of disgusting bile crawling with insect life, but it is also teeming with various microscopic cultures. <i>It moves when you're not looking.</i>"
+
+/obj/item/food/badrecipe/moldy/bacteria/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
 
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
+	SIGNAL_HANDLER
 	return COMPONENT_HANDLED_GRILLING
 
 /obj/item/food/carrotfries
@@ -204,7 +228,7 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/carrotfries/Initialize()
+/obj/item/food/carrotfries/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -257,7 +281,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 
-/obj/item/food/spiderlollipop/Initialize()
+/obj/item/food/spiderlollipop/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/chewable)
 
@@ -310,7 +334,7 @@
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sweet potato" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR
+	foodtypes = VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/roastparsnip
@@ -384,7 +408,7 @@
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/lollipop/Initialize()
+/obj/item/food/lollipop/Initialize(mapload)
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
@@ -419,7 +443,7 @@
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM / 2
 
-/obj/item/food/bubblegum/Initialize()
+/obj/item/food/bubblegum/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
 
@@ -473,9 +497,9 @@
 		return
 	if(prob(15))
 		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b></span>")
+		to_chat(victim, span_colossus("<b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b>"))
 	else
-		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
+		to_chat(victim, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
 /obj/item/food/gumball
 	name = "gumball"
@@ -490,7 +514,7 @@
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/food/gumball/Initialize()
+/obj/item/food/gumball/Initialize(mapload)
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	AddElement(/datum/element/chewable)
@@ -515,15 +539,15 @@
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>If you had a rod you could make <b>butter on a stick</b>.</span>"
+	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
 		if(!R.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, "<span class='warning'>You do not have enough iron to put [src] on a stick!</span>")
+			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
 			return ..()
-		to_chat(user, "<span class='notice'>You stick the rod into the stick of butter.</span>")
+		to_chat(user, span_notice("You stick the rod into the stick of butter."))
 		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
 		var/replace = (user.get_inactive_held_item() == R)
 		if(!R && replace)
@@ -572,17 +596,21 @@
 	name = "Canned Air"
 	desc = "If you ever wondered where air came from..."
 	food_reagents = list(/datum/reagent/oxygen = 6, /datum/reagent/nitrogen = 24)
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan"
 	food_flags = FOOD_IN_CONTAINER
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 30
 	w_class = WEIGHT_CLASS_SMALL
+	preserved_food = TRUE
 
 
 /obj/item/food/canned/proc/open_can(mob/user)
-	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
+	to_chat(user, span_notice("You pull back the tab of \the [src]."))
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	reagents.flags |= OPENCONTAINER
+	preserved_food = FALSE
+	MakeDecompose()
 
 /obj/item/food/canned/attack_self(mob/user)
 	if(!is_drainable())
@@ -592,7 +620,7 @@
 
 /obj/item/food/canned/attack(mob/living/M, mob/user, def_zone)
 	if (!is_drainable())
-		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
+		to_chat(user, span_warning("[src]'s lid hasn't been opened!"))
 		return FALSE
 	return ..()
 
@@ -676,3 +704,59 @@
 
 /obj/item/food/rationpack/proc/check_liked(fraction, mob/M) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED
+
+/obj/item/food/ant_candy
+	name = "ant candy"
+	desc = "A colony of ants suspended in hardened sugar. Those things are dead, right?"
+	icon_state = "ant_pop"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/sugar = 5, /datum/reagent/ants = 3)
+	tastes = list("candy" = 1, "insects" = 1)
+	foodtypes = JUNKFOOD | SUGAR | GROSS
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/food/canned/envirochow
+	name = "dog eat dog envirochow"
+	desc = "The first pet food product that is made fully sustainable by employing ancient British animal husbandry techniques."
+	icon_state = "envirochow"
+	trash_type = /obj/item/trash/can/food/envirochow
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 9, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("dog food" = 5, "狗肉" = 3)
+	foodtypes = MEAT | GROSS
+
+/obj/item/food/canned/envirochow/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(!check_buffability(user))
+		return ..()
+	apply_buff(user)
+
+/obj/item/food/canned/envirochow/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if(!proximity_flag)
+		return
+	if(!isanimal(target))
+		return
+	if(!check_buffability(target))
+		return
+	apply_buff(target, user)
+
+///This proc checks if the mob is able to recieve the buff.
+/obj/item/food/canned/envirochow/proc/check_buffability(mob/living/simple_animal/hungry_pet)
+	if(!is_drainable()) //can is not open
+		return FALSE
+	if(hungry_pet.stat) //parrot deceased
+		return FALSE
+	if(hungry_pet.mob_biotypes & (MOB_BEAST|MOB_REPTILE|MOB_BUG))
+		return TRUE
+	else
+		return FALSE //humans, robots & spooky ghosts not allowed
+
+///This makes the animal eat the food, and applies the buff status effect to them.
+/obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)
+	hungry_pet.apply_status_effect(STATUS_EFFECT_HEALTH_BUFFED) //the status effect keeps track of the stacks
+	hungry_pet.visible_message(
+		span_notice("[hungry_pet] chows down on [src]."),
+		span_nicegreen("You chow down on [src]."),
+		span_notice("You hear sloppy eating noises."))
+	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet)//If there is no dog mom, we assume the pet fed itself.
+	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	qdel(src)

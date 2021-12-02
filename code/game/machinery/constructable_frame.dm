@@ -44,7 +44,7 @@
 			hasContent = TRUE
 
 		if(hasContent)
-			. +=  "[requires]."
+			. += "[requires]."
 		else
 			. += "It does not require any more components."
 
@@ -75,64 +75,65 @@
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/circuitboard/machine))
-				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
+				to_chat(user, span_warning("The frame needs wiring first!"))
 				return
 			else if(istype(P, /obj/item/circuitboard))
-				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
+				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 			if(istype(P, /obj/item/stack/cable_coil))
 				if(!P.tool_start_check(user, amount=5))
 					return
 
-				to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
+				to_chat(user, span_notice("You start to add cables to the frame..."))
 				if(P.use_tool(src, user, 20, volume=50, amount=5))
-					to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+					to_chat(user, span_notice("You add cables to the frame."))
 					state = 2
 					icon_state = "box_1"
 
 				return
 			if(P.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
-				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
-									"<span class='notice'>You start to disassemble the frame...</span>", "<span class='hear'>You hear banging and clanking.</span>")
+				user.visible_message(span_warning("[user] disassembles the frame."), \
+									span_notice("You start to disassemble the frame..."), span_hear("You hear banging and clanking."))
 				if(P.use_tool(src, user, 40, volume=50))
 					if(state == 1)
-						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
+						to_chat(user, span_notice("You disassemble the frame."))
 						var/obj/item/stack/sheet/iron/M = new (loc, 5)
-						M.add_fingerprint(user)
+						if (!QDELETED(M))
+							M.add_fingerprint(user)
 						qdel(src)
 				return
 			if(P.tool_behaviour == TOOL_WRENCH)
 				var/turf/ground = get_turf(src)
 				if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-					to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
+					to_chat(user, span_notice("You fail to secure [src]."))
 					return
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
+				to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 				if(P.use_tool(src, user, 40, volume=75))
 					if(state == 1)
-						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
+						to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 						set_anchored(!anchored)
 				return
 
 		if(2)
 			if(P.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
+				to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 				if(P.use_tool(src, user, 40, volume=75))
-					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
+					to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 					set_anchored(!anchored)
 				return
 
 			if(istype(P, /obj/item/circuitboard/machine))
 				var/obj/item/circuitboard/machine/B = P
 				if(!B.build_path)
-					to_chat(user, "<span class='warning'>This circuitboard seems to be broken.</span>")
+					to_chat(user, span_warning("This circuitboard seems to be broken."))
 					return
 				if(!anchored && B.needs_anchored)
-					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
+					to_chat(user, span_warning("The frame needs to be secured first!"))
 					return
 				if(!user.transferItemToLoc(B, src))
 					return
 				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
+				to_chat(user, span_notice("You add the circuit board to the frame."))
 				circuit = B
 				icon_state = "box_2"
 				state = 3
@@ -142,12 +143,12 @@
 				return
 
 			else if(istype(P, /obj/item/circuitboard))
-				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
+				to_chat(user, span_warning("This frame does not accept circuit boards of this type!"))
 				return
 
 			if(P.tool_behaviour == TOOL_WIRECUTTER)
 				P.play_tool_sound(src)
-				to_chat(user, "<span class='notice'>You remove the cables.</span>")
+				to_chat(user, span_notice("You remove the cables."))
 				state = 1
 				icon_state = "box_0"
 				new /obj/item/stack/cable_coil(drop_location(), 5)
@@ -161,9 +162,9 @@
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
-					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
+					to_chat(user, span_notice("You remove the circuit board."))
 				else
-					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
+					to_chat(user, span_notice("You remove the circuit board and other components."))
 					for(var/atom/movable/AM in components)
 						AM.forceMove(drop_location())
 				desc = initial(desc)
@@ -173,9 +174,9 @@
 				return
 
 			if(P.tool_behaviour == TOOL_WRENCH && !circuit.needs_anchored)
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
+				to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [src]..."))
 				if(P.use_tool(src, user, 40, volume=75))
-					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
+					to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 					set_anchored(!anchored)
 				return
 
@@ -258,7 +259,7 @@
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
 						part.forceMove(src)
-					to_chat(user, "<span class='notice'>[part.name] applied.</span>")
+					to_chat(user, span_notice("[part.name] applied."))
 				if(added_components.len)
 					replacer.play_rped_sound()
 				return
@@ -280,15 +281,15 @@
 									NS.add(used_amt)
 
 								req_components[I] -= used_amt
-								to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
+								to_chat(user, span_notice("You add [P] to [src]."))
 							return
 						if(!user.transferItemToLoc(P, src))
 							break
-						to_chat(user, "<span class='notice'>You add [P] to [src].</span>")
+						to_chat(user, span_notice("You add [P] to [src]."))
 						components += P
 						req_components[I]--
 						return TRUE
-				to_chat(user, "<span class='warning'>You cannot add that to the machine!</span>")
+				to_chat(user, span_warning("You cannot add that to the machine!"))
 				return FALSE
 	if(user.combat_mode)
 		return ..()

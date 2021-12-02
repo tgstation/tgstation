@@ -44,7 +44,7 @@
 	desc = "A machine that prints swarmers."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	max_integrity = 500
 	plane = MASSIVE_OBJ_PLANE
 	light_color = LIGHT_COLOR_CYAN
@@ -56,14 +56,17 @@
 	///Reference to all the swarmers currently alive this beacon has created
 	var/list/mob/living/simple_animal/hostile/swarmer/swarmerlist
 
-/obj/structure/swarmer_beacon/Initialize()
+/obj/structure/swarmer_beacon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
 	if(processing_swarmer)
-		to_chat(user, "<b>A swarmer is currently being created.  Try again soon.</b>")
+		to_chat(user, "<b>A swarmer is currently being created. Try again soon.</b>")
+		return
+	if(is_banned_from(user.ckey, ROLE_SWARMER))
+		to_chat(user, span_danger("You are banned from playing as a Swarmer."))
 		return
 	que_swarmer(user)
 
@@ -75,13 +78,13 @@
  * * user - A reference to the ghost interacting with the beacon
  */
 /obj/structure/swarmer_beacon/proc/que_swarmer(mob/user)
-	var/swarm_ask = alert("Become a swarmer?", "Do you wish to consume the station?", "Yes", "No")
+	var/swarm_ask = tgui_alert(usr, "Become a swarmer?", "Do you wish to consume the station?", list("Yes", "No"))
 	if(swarm_ask == "No" || QDELETED(src) || QDELETED(user) || processing_swarmer)
 		return FALSE
 	var/mob/living/simple_animal/hostile/swarmer/newswarmer = new /mob/living/simple_animal/hostile/swarmer(src)
 	newswarmer.key = user.key
 	addtimer(CALLBACK(src, .proc/release_swarmer, newswarmer), (LAZYLEN(swarmerlist) * 2 SECONDS) + 5 SECONDS)
-	to_chat(newswarmer, "<span class='boldannounce'>SWARMER CONSTRUCTION INITIALIZED.</span>")
+	to_chat(newswarmer, span_boldannounce("SWARMER CONSTRUCTION INITIALIZED."))
 	processing_swarmer = TRUE
 	return TRUE
 
@@ -135,7 +138,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/swarmer/trap/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -156,9 +159,9 @@
 	max_integrity = 50
 	density = TRUE
 
-/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/O)
+/obj/structure/swarmer/blockade/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isswarmer(O) || istype(O, /obj/projectile/beam/disabler))
+	if(isswarmer(mover) || istype(mover, /obj/projectile/beam/disabler))
 		return TRUE
 
 /obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects
@@ -169,7 +172,7 @@
 	icon_state = "disintegrate"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/swarmer/disintegration/Initialize()
+/obj/effect/temp_visual/swarmer/disintegration/Initialize(mapload)
 	. = ..()
 	playsound(loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

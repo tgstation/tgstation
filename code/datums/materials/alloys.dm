@@ -31,11 +31,12 @@
 	name = "plasteel"
 	desc = "The heavy duty result of infusing iron with plasma."
 	color = "#706374"
+	greyscale_colors = "#706374"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.135
 	strength_modifier = 1.25
 	integrity_modifier = 1.5 // Heavy duty.
-	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, RAD = 1.5, FIRE = 1.1, ACID = 1)
+	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.1, ENERGY = 1.1, BOMB = 1.5, BIO = 1, FIRE = 1.1, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/plasteel
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/iron=1, /datum/material/plasma=1)
@@ -63,11 +64,12 @@
 	name = "plastitanium"
 	desc = "The extremely heat resistant result of infusing titanium with plasma."
 	color = "#3a313a"
+	greyscale_colors = "#3a313a"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	value_per_unit = 0.225
 	strength_modifier = 0.9 // It's a lightweight alloy.
 	integrity_modifier = 1.3
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.4, ENERGY = 1.4, BOMB = 1.1, BIO = 1.2, RAD = 1.1, FIRE = 1.5, ACID = 1)
+	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.4, ENERGY = 1.4, BOMB = 1.1, BIO = 1.2, FIRE = 1.5, ACID = 1)
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	composition = list(/datum/material/titanium=1, /datum/material/plasma=1)
@@ -80,10 +82,11 @@
 	name = "plasmaglass"
 	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
 	color = "#ff80f4"
+	greyscale_colors = "#ff80f4"
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 0.5
-	armor_modifiers = list(MELEE = 0.8, BULLET = 0.8, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 1.2, RAD = 1, FIRE = 2, ACID = 2)
+	armor_modifiers = list(MELEE = 0.8, BULLET = 0.8, LASER = 1.2, ENERGY = 1.2, BOMB = 0.3, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plasmaglass
 	shard_type = /obj/item/shard/plasma
 	value_per_unit = 0.075
@@ -98,9 +101,10 @@
 	name = "titanium glass"
 	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
 	color = "#cfbee0"
+	greyscale_colors = "#cfbee0"
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
-	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, RAD = 1, FIRE = 0.8, ACID = 2)
+	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 0.8, ENERGY = 0.8, BOMB = 0.5, BIO = 1.2, FIRE = 0.8, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/titaniumglass
 	shard_type = /obj/item/shard
 	value_per_unit = 0.04
@@ -115,10 +119,11 @@
 	name = "plastitanium glass"
 	desc = "A specialized silicate-plastitanium alloy."
 	color = "#5d3369"
+	greyscale_colors = "#5d3369"
 	alpha = 150
 	init_flags = MATERIAL_INIT_MAPLOAD
 	integrity_modifier = 1.1
-	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1.2, ENERGY = 1.2, BOMB = 0.5, BIO = 1.2, RAD = 1, FIRE = 2, ACID = 2)
+	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1.2, ENERGY = 1.2, BOMB = 0.5, BIO = 1.2, FIRE = 2, ACID = 2)
 	sheet_type = /obj/item/stack/sheet/plastitaniumglass
 	shard_type = /obj/item/shard/plasma
 	value_per_unit = 0.125
@@ -135,10 +140,11 @@
 	name = "alien alloy"
 	desc = "An extremely dense alloy similar to plasteel in composition. It requires exotic metallurgical processes to create."
 	color = "#6041aa"
+	greyscale_colors = "#6041aa"
 	init_flags = MATERIAL_INIT_MAPLOAD
 	strength_modifier = 1.5 // It's twice the density of plasteel and just as durable. Getting hit with it is going to HURT.
 	integrity_modifier = 1.5
-	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.2, ENERGY = 1.2, BOMB = 1.5, BIO = 1.2, RAD = 1.5, FIRE = 1.2, ACID = 1.2)
+	armor_modifiers = list(MELEE = 1.4, BULLET = 1.4, LASER = 1.2, ENERGY = 1.2, BOMB = 1.5, BIO = 1.2, FIRE = 1.2, ACID = 1.2)
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	value_per_unit = 0.4
 	categories = list(MAT_CATEGORY_RIGID=TRUE, MAT_CATEGORY_BASE_RECIPES=TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)

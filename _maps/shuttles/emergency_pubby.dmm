@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -60,9 +60,7 @@
 /area/shuttle/escape)
 "ap" = (
 /obj/structure/chair/comfy,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -84,9 +82,7 @@
 /turf/open/floor/carpet/black,
 /area/shuttle/escape)
 "as" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/item/kirbyplants{
 	icon_state = "plant-21";
 	pixel_x = -3;
@@ -207,12 +203,8 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/chair/comfy,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -240,9 +232,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/item/food/butterdog,
 /obj/item/food/cakeslice/apple,
 /obj/item/food/cakeslice/brioche,
@@ -279,7 +269,7 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -378,9 +368,7 @@
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -432,7 +420,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -441,9 +429,7 @@
 /area/shuttle/escape)
 "aZ" = (
 /obj/structure/table/glass,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/item/storage/firstaid/regular,
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -455,8 +441,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/vending/wallmed{
-	pixel_y = 30
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
@@ -557,7 +543,7 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -576,7 +562,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/chair/office{
 	dir = 8
 	},
@@ -586,7 +572,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "bt" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/chair/office{
 	dir = 4
 	},
@@ -599,8 +585,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bv" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bw" = (
@@ -623,7 +608,7 @@
 "bz" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
-/obj/item/melee/baton,
+/obj/item/melee/baton/security,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bA" = (
@@ -652,24 +637,22 @@
 /area/shuttle/escape/brig)
 "bE" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bG" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bH" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bI" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bK" = (

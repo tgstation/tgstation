@@ -9,7 +9,7 @@
 /turf/template_noop,
 /area/template_noop)
 "c" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "d" = (
@@ -35,18 +35,14 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "h" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "i" = (
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "j" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "k" = (
@@ -94,13 +90,11 @@
 /turf/template_noop,
 /area/template_noop)
 "q" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 "r" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/dinner_for_two)
 

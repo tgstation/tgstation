@@ -11,7 +11,7 @@
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/computer/atmos_alert/Initialize()
+/obj/machinery/computer/atmos_alert/Initialize(mapload)
 	. = ..()
 	set_frequency(receive_frequency)
 
@@ -46,11 +46,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				to_chat(usr, "<span class='notice'>Priority alarm for [zone] cleared.</span>")
+				to_chat(usr, span_notice("Priority alarm for [zone] cleared."))
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				to_chat(usr, "<span class='notice'>Minor alarm for [zone] cleared.</span>")
+				to_chat(usr, span_notice("Minor alarm for [zone] cleared."))
 				minor_alarms -= zone
 				. = TRUE
 	update_appearance()

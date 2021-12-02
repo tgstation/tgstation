@@ -3,9 +3,11 @@
 	name = "growing vat"
 	desc = "Tastes just like the chef's soup."
 	icon_state = "growing_vat"
-	buffer = 200
+	buffer = 300
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
+	///If the vat will restart the sample upon completion
+	var/resampler_active = FALSE
 
 ///Add that sexy demnand component
 /obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt)
@@ -33,7 +35,7 @@
 		if(!prob(10))
 			return
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		audible_message(pick(list("<span class='notice'>[src] grumbles!</span>", "<span class='notice'>[src] makes a splashing noise!</span>", "<span class='notice'>[src] sloshes!</span>")))
+		audible_message(pick(list(span_notice("[src] grumbles!"), span_notice("[src] makes a splashing noise!"), span_notice("[src] sloshes!"))))
 
 ///Handles the petri dish depositing into the vat.
 /obj/machinery/plumbing/growing_vat/attacked_by(obj/item/I, mob/living/user)
@@ -46,7 +48,7 @@
 		return ..()
 
 	if(biological_sample)
-		to_chat(user, "<span class='warning'>There is already a sample in the vat!</span>")
+		to_chat(user, span_warning("There is already a sample in the vat!"))
 		return
 	deposit_sample(user, petri)
 
@@ -57,16 +59,17 @@
 		biological_sample.micro_organisms += new m.type()
 	biological_sample.sample_layers = petri.sample.sample_layers
 	biological_sample.sample_color = petri.sample.sample_color
-	to_chat(user, "<span class='warning'>You put some of the sample in the vat!</span>")
+	to_chat(user, span_warning("You put some of the sample in the vat!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
+	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, .proc/on_sample_growth_completed)
 
 ///Adds text for when there is a sample in the vat
 /obj/machinery/plumbing/growing_vat/examine(mob/user)
 	. = ..()
 	if(!biological_sample)
 		return
-	. += "<span class='notice'>It seems to have a sample in it!</span>"
+	. += span_notice("It seems to have a sample in it!")
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(user.research_scanner)
@@ -84,6 +87,19 @@
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()
 	. = ..()
+	var/static/image/on_overlay
+	var/static/image/off_overlay
+	var/static/image/emissive_overlay
+	if(isnull(on_overlay))
+		on_overlay = iconstate2appearance(icon, "growing_vat_on")
+		off_overlay = iconstate2appearance(icon, "growing_vat_off")
+		emissive_overlay = emissive_appearance(icon, "growing_vat_glow", alpha = src.alpha)
+	. += emissive_overlay
+	if(is_operational)
+		if(resampler_active)
+			. += on_overlay
+		else
+			. += off_overlay
 	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
@@ -94,3 +110,28 @@
 	if(biological_sample && is_operational)
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
+
+/obj/machinery/plumbing/growing_vat/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	if(obj_flags & EMAGGED)
+		return
+	resampler_active = !resampler_active
+	balloon_alert_to_viewers("resampler [resampler_active ? "activated" : "deactivated"]")
+	update_appearance()
+
+/obj/machinery/plumbing/growing_vat/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	to_chat(user, span_warning("You overload [src]'s resampling circuit."))
+	flick("growing_vat_emagged", src)
+
+/obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
+	SIGNAL_HANDLER
+	if(resampler_active)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
+		biological_sample.reset_sample()
+		return SPARE_SAMPLE
+	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)

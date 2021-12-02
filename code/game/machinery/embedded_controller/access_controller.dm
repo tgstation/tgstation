@@ -18,7 +18,7 @@
 /obj/machinery/door_buttons/proc/findObjsByTag()
 	return
 
-/obj/machinery/door_buttons/Initialize()
+/obj/machinery/door_buttons/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -32,7 +32,7 @@
 	req_access = list()
 	req_one_access = list()
 	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+	to_chat(user, span_warning("You short out the access controller."))
 
 /obj/machinery/door_buttons/proc/removeMe()
 
@@ -62,7 +62,7 @@
 	if(busy)
 		return
 	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+		to_chat(user, span_warning("Access denied."))
 		return
 	if(controller && !controller.busy && door)
 		if(controller.machine_stat & NOPOWER)
@@ -129,7 +129,7 @@
 	if(busy)
 		return
 	if(!allowed(usr))
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		to_chat(usr, span_warning("Access denied."))
 		return
 	switch(href_list["command"])
 		if("close_exterior")

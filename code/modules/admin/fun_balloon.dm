@@ -7,7 +7,7 @@
 	var/popped = FALSE
 	var/pop_sound_effect = 'sound/items/party_horn.ogg'
 
-/obj/effect/fun_balloon/Initialize()
+/obj/effect/fun_balloon/Initialize(mapload)
 	. = ..()
 	SSobj.processing |= src
 
@@ -28,7 +28,7 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("<span class='notice'>[src] pops!</span>")
+	visible_message(span_notice("[src] pops!"))
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
@@ -57,6 +57,8 @@
 /obj/effect/fun_balloon/sentience/ui_status(mob/user)
 	if(popped)
 		return UI_CLOSE
+	if(isAdminObserver(user)) // ignore proximity if we're an admin
+		return UI_INTERACTIVE
 	return ..()
 
 /obj/effect/fun_balloon/sentience/ui_act(action, list/params)
@@ -86,7 +88,7 @@
 			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, FALSE, 100, bodies)
+	var/list/candidates = poll_candidates_for_mobs(question, ROLE_PAI, FALSE, 10 SECONDS, bodies)
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
@@ -117,7 +119,7 @@
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
-		to_chat(M, "<span class='notice'>Pop!</span>", confidential = TRUE)
+		to_chat(M, span_notice("Pop!"), confidential = TRUE)
 
 // ----------- Station Crash
 // Can't think of anywhere better to put it right now
@@ -130,7 +132,7 @@
 	var/min_crash_strength = 3
 	var/max_crash_strength = 15
 
-/obj/effect/station_crash/Initialize()
+/obj/effect/station_crash/Initialize(mapload)
 	..()
 	shuttle_crash()
 	return INITIALIZE_HINT_QDEL

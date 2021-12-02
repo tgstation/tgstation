@@ -5,6 +5,7 @@
  * Note: works for carbons and above, but please do something better. humans have wings got dangit!
  */
 /datum/element/simple_flying
+	element_flags = ELEMENT_DETACH
 
 /datum/element/simple_flying/Attach(datum/target)
 	. = ..()
@@ -23,6 +24,6 @@
 	SIGNAL_HANDLER
 
 	if(new_stat == CONSCIOUS)
-		ADD_TRAIT(target, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+		ADD_TRAIT(target, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 	else
-		REMOVE_TRAIT(target, TRAIT_MOVE_FLYING, ROUNDSTART_TRAIT)
+		REMOVE_TRAIT(target, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))

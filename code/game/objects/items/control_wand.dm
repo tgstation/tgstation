@@ -16,26 +16,19 @@
 	var/list/access_list
 	network_id = NETWORK_DOOR_REMOTES
 
-/obj/item/door_remote/Initialize()
+/obj/item/door_remote/Initialize(mapload)
 	. = ..()
 	access_list = SSid_access.get_region_access_list(list(region_access))
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_NAK, .proc/bad_signal)
-	RegisterSignal(src, COMSIG_COMPONENT_NTNET_ACK, .proc/good_signal)
 
 /obj/item/door_remote/proc/bad_signal(datum/source, datum/netdata/data, error_code)
+	SIGNAL_HANDLER
 	if(QDELETED(data.user))
 		return // can't send a message to a missing user
 	if(error_code == NETWORK_ERROR_UNAUTHORIZED)
-		to_chat(data.user, "<span class='notice'>This remote is not authorized to modify this door.</span>")
+		to_chat(data.user, span_notice("This remote is not authorized to modify this door."))
 	else
-		to_chat(data.user, "<span class='notice'>Error: [error_code]</span>")
-
-
-/obj/item/door_remote/proc/good_signal(datum/source, datum/netdata/data, error_code)
-	if(QDELETED(data.user))
-		return
-	var/toggled = data.data["data"]
-	to_chat(data.user, "<span class='notice'>Door [toggled] toggled</span>")
+		to_chat(data.user, span_notice("Error: [error_code]"))
 
 /obj/item/door_remote/attack_self(mob/user)
 	var/static/list/desc = list(WAND_OPEN = "Open Door", WAND_BOLT = "Toggle Bolts", WAND_EMERGENCY = "Toggle Emergency Access")
@@ -46,12 +39,18 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	to_chat(user, "<span class='notice'>Now in mode: [desc[mode]].</span>")
+	balloon_alert(user, "mode: [desc[mode]]")
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
 	. = ..()
 	var/datum/component/ntnet_interface/target_interface = A.GetComponent(/datum/component/ntnet_interface)
+
+	// Try to find an airlock in the clicked turf
+	if(!target_interface)
+		var/obj/machinery/door/airlock/door = locate() in get_turf(A)
+		if(door)
+			target_interface = door.GetComponent(/datum/component/ntnet_interface)
 
 	if(!target_interface)
 		return

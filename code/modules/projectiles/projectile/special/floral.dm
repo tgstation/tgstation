@@ -12,20 +12,21 @@
 		var/mob/living/L = target
 		if(L.mob_biotypes & MOB_PLANT)
 			if(prob(15))
-				L.rad_act(rand(30, 80))
+				L.adjustToxLoss(rand(3, 6))
 				L.Paralyze(100)
-				L.visible_message("<span class='warning'>[L] writhes in pain as [L.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='hear'>You hear the crunching of leaves.</span>")
+				L.visible_message(span_warning("[L] writhes in pain as [L.p_their()] vacuoles boil."), span_userdanger("You writhe in pain as your vacuoles boil!"), span_hear("You hear the crunching of leaves."))
 				if(iscarbon(L) && L.has_dna())
 					var/mob/living/carbon/C = L
 					if(prob(80))
-						C.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
+						C.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
 					else
-						C.easy_randmut(POSITIVE)
-					C.randmuti()
+						C.easy_random_mutate(POSITIVE)
+					C.random_mutate_unique_identity()
+					C.random_mutate_unique_features()
 					C.domutcheck()
 			else
 				L.adjustFireLoss(rand(5, 15))
-				L.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
+				L.show_message(span_userdanger("The radiation beam singes you!"))
 
 /obj/projectile/energy/florayield
 	name = "beta somatoray"
@@ -55,7 +56,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.mob_biotypes & MOB_PLANT)
-			L.show_message("<span class='notice'>The radiation beam leaves you feeling disoriented!</span>")
+			L.show_message(span_notice("The radiation beam leaves you feeling disoriented!"))
 			L.Dizzy(15)
 			L.emote("flip")
 			L.emote("spin")

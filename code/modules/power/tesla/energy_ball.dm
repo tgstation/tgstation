@@ -163,7 +163,7 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/jedi = user
-	to_chat(jedi, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
+	to_chat(jedi, span_userdanger("That was a shockingly dumb idea."))
 	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.internal_organs
 	jedi.ghostize(jedi)
 	if(rip_u)
@@ -192,7 +192,7 @@
 			return
 	if(!iscarbon(A))
 		return
-	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
+	for(var/obj/machinery/power/energy_accumulator/grounding_rod/GR in orange(src, 2))
 		if(GR.anchored)
 			return
 	var/mob/living/carbon/C = A
@@ -212,8 +212,8 @@
 	*/
 	var/atom/closest_atom
 	var/closest_type = 0
-	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure, /obj/vehicle/ridden))
-	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+	var/static/list/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure, /obj/vehicle/ridden))
+	var/static/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/portable_atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
@@ -253,8 +253,8 @@
 		else if(closest_type >= COIL)
 			continue //no need checking these other things
 
-		else if(istype(A, /obj/machinery/power/tesla_coil))
-			var/obj/machinery/power/tesla_coil/C = A
+		else if(istype(A, /obj/machinery/power/energy_accumulator/tesla_coil))
+			var/obj/machinery/power/energy_accumulator/tesla_coil/C = A
 			if(!(C.obj_flags & BEING_SHOCKED))
 				closest_type = COIL
 				closest_atom = C
@@ -262,7 +262,7 @@
 		else if(closest_type >= ROD)
 			continue
 
-		else if(istype(A, /obj/machinery/power/grounding_rod))
+		else if(istype(A, /obj/machinery/power/energy_accumulator/grounding_rod))
 			closest_type = ROD
 			closest_atom = A
 

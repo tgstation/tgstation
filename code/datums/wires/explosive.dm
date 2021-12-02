@@ -22,6 +22,8 @@
 	var/fingerprint
 
 /datum/wires/explosive/chem_grenade/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/grenade/chem_grenade/G = holder
 	if(G.stage == GRENADE_WIRED)
 		return TRUE
@@ -56,8 +58,7 @@
 	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
-	var/turf/T = get_turf(M)
-	G.log_grenade(M, T) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
+	G.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
 	if(G.landminemode)
 		G.detonate() ///already armed
 	else
@@ -77,9 +78,6 @@
 /datum/wires/explosive/c4 // Also includes X4
 	holder_type = /obj/item/grenade/c4
 
-/datum/wires/explosive/c4/interactable(mob/user) // No need to unscrew wire panels on plastic explosives
-	return TRUE
-
 /datum/wires/explosive/c4/explode()
 	var/obj/item/grenade/c4/P = holder
 	P.detonate()
@@ -95,6 +93,8 @@
 	..()
 
 /datum/wires/explosive/pizza/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/item/pizzabox/P = holder
 	if(P.open && P.bomb)
 		return TRUE

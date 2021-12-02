@@ -206,7 +206,7 @@
 	var/icon/puzzle_icon
 
 /obj/structure/puzzle_element/Move(nloc, dir)
-	if(!isturf(nloc) ||  moving_diagonally || get_dist(get_step(src,dir),get_turf(source)) > 1)
+	if(!isturf(nloc) || moving_diagonally || get_dist(get_step(src,dir),get_turf(source)) > 1)
 		return 0
 	else
 		return ..()
@@ -242,7 +242,8 @@
 
 /obj/structure/puzzle_element/Moved()
 	. = ..()
-	source.validate()
+	if(source)
+		source.validate()
 
 //Admin abuse version so you can pick the icon before it sets up
 /obj/effect/sliding_puzzle/admin
@@ -282,7 +283,7 @@
 
 /obj/effect/sliding_puzzle/prison/Destroy()
 	if(prisoner)
-		to_chat(prisoner,"<span class='userdanger'>With the cube broken by force, you can feel your body falling apart.</span>")
+		to_chat(prisoner,span_userdanger("With the cube broken by force, you can feel your body falling apart."))
 		prisoner.death()
 		qdel(prisoner)
 	. = ..()
@@ -294,7 +295,7 @@
 
 //Some armor so it's harder to kill someone by mistake.
 /obj/structure/puzzle_element/prison
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, FIRE = 50, ACID = 50)
 
 /obj/structure/puzzle_element/prison/relaymove(mob/living/user, direction)
 	return
@@ -314,12 +315,12 @@
 	//Handcuffed or unconcious
 	if(istype(carbon_victim) && carbon_victim.handcuffed || victim.stat != CONSCIOUS)
 		if(!puzzle_imprison(target))
-			to_chat(user,"<span class='warning'>[src] does nothing.</span>")
+			to_chat(user,span_warning("[src] does nothing."))
 			return
-		to_chat(user,"<span class='warning'>You trap [victim] in the prison cube!</span>")
+		to_chat(user,span_warning("You trap [victim] in the prison cube!"))
 		qdel(src)
 	else
-		to_chat(user,"<span class='notice'>[src] only accepts restrained or unconcious prisoners.</span>")
+		to_chat(user,span_notice("[src] only accepts restrained or unconcious prisoners."))
 
 /proc/puzzle_imprison(mob/living/prisoner)
 	var/turf/T = get_turf(prisoner)
@@ -331,7 +332,7 @@
 	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
 	prisoner.notransform = TRUE
 	prisoner.forceMove(cube)
-	to_chat(prisoner,"<span class='userdanger'>You're trapped by the prison cube! You will remain trapped until someone solves it.</span>")
+	to_chat(prisoner,span_userdanger("You're trapped by the prison cube! You will remain trapped until someone solves it."))
 
 	//Clear the area from objects (and cube user)
 	var/list/things_to_throw = list()

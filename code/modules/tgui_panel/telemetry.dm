@@ -60,21 +60,38 @@
 		message_admins("[key_name(client)] was kicked for sending a huge telemetry payload")
 		qdel(client)
 		return
+
+	var/list/all_known_alts = GLOB.known_alts.load_known_alts()
+	var/list/our_known_alts = list()
+
+	for (var/known_alt in all_known_alts)
+		if (known_alt[1] == client?.ckey)
+			our_known_alts += known_alt[2]
+		else if (known_alt[2] == client?.ckey)
+			our_known_alts += known_alt[1]
+
 	var/list/found
 	for(var/i in 1 to len)
 		if(QDELETED(client))
 			// He got cleaned up before we were done
 			return
 		var/list/row = telemetry_connections[i]
+
 		// Check for a malformed history object
 		if (!row || row.len < 3 || (!row["ckey"] || !row["address"] || !row["computer_id"]))
 			return
+
+		if (row["ckey"] in our_known_alts)
+			continue
+
 		if (world.IsBanned(row["ckey"], row["address"], row["computer_id"], real_bans_only = TRUE))
 			found = row
 			break
+
 		CHECK_TICK
 	// This fucker has a history of playing on a banned account.
 	if(found)
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
 		message_admins(msg)
 		log_admin_private(msg)
+		log_suspicious_login(msg, access_log_mirror = FALSE)

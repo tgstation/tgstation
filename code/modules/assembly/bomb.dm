@@ -36,7 +36,7 @@
 
 /obj/item/onetankbomb/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You disassemble [src]!</span>")
+	to_chat(user, span_notice("You disassemble [src]!"))
 	if(bombassembly)
 		bombassembly.forceMove(drop_location())
 		bombassembly.master = null
@@ -52,15 +52,15 @@
 	..()
 	. = FALSE
 	if(status)
-		to_chat(user, "<span class='warning'>[bombtank] already has a pressure hole!</span>")
+		to_chat(user, span_warning("[bombtank] already has a pressure hole!"))
 		return
 	if(!I.tool_start_check(user, amount=0))
 		return
 	if(I.use_tool(src, user, 0, volume=40))
 		status = TRUE
 		var/datum/gas_mixture/bomb_mix = bombtank.return_air()
-		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bomb_mix.temperature-T0C]")
-		to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
+		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [bomb_mix.temperature]")
+		to_chat(user, span_notice("A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited."))
 		add_fingerprint(user)
 		return TRUE
 
@@ -70,7 +70,7 @@
 	return
 
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	audible_message("<span class='warning'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
+	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	sleep(10)
 	if(QDELETED(src))
@@ -114,11 +114,11 @@
 		return
 
 	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))
-		to_chat(user, "<span class='warning'>[src] is stuck to you!</span>")
+		to_chat(user, span_warning("[src] is stuck to you!"))
 		return
 
 	if(!user.canUnEquip(assembly))
-		to_chat(user, "<span class='warning'>[assembly] is stuck to your hand!</span>")
+		to_chat(user, span_warning("[assembly] is stuck to your hand!"))
 		return
 
 	var/obj/item/onetankbomb/bomb = new
@@ -135,7 +135,7 @@
 	bomb.update_appearance()
 
 	user.put_in_hands(bomb) //Equips the bomb if possible, or puts it on the floor.
-	to_chat(user, "<span class='notice'>You attach [assembly] to [src].</span>")
+	to_chat(user, span_notice("You attach [assembly] to [src]."))
 	return
 
 /obj/item/tank/proc/ignite() //This happens when a bomb is told to explode
@@ -154,13 +154,13 @@
 		strength = (fuel_moles/15)
 
 		if(strength >=2)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1))
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
 		else if(strength >=1)
-			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
 		else if(strength >=0.5)
-			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4)
+			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
 		else if(strength >=0.2)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -169,9 +169,9 @@
 		strength = (fuel_moles/20)
 
 		if(strength >=1)
-			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1))
+			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
 		else if(strength >=0.5)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)
@@ -180,7 +180,7 @@
 		strength = (fuel_moles/25)
 
 		if(strength >=1)
-			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1))
+			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
 		else
 			ground_zero.assume_air(bomb_mixture)
 			ground_zero.hotspot_expose(1000, 125)

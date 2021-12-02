@@ -12,6 +12,7 @@
 	movement_type = FLYING
 	wound_bonus = CANT_WOUND // can't wound by default
 	generic_canpass = FALSE
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -126,7 +127,8 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
-	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
+	var/flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
@@ -142,7 +144,6 @@
 	var/paralyze = 0
 	var/immobilize = 0
 	var/unconscious = 0
-	var/irradiate = 0
 	var/stutter = 0
 	var/slur = 0
 	var/eyeblur = 0
@@ -157,26 +158,24 @@
 	var/shrapnel_type
 	///If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/list/embedding
-
 	///If TRUE, hit mobs even if they're on the floor and not our target
-	var/hit_stunned_targets = FALSE
-
+	var/hit_prone_targets = FALSE
 	///For what kind of brute wounds we're rolling for, if we're doing such a thing. Lasers obviously don't care since they do burn instead.
 	var/sharpness = NONE
 	///How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
+	var/static/list/projectile_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
 
-/obj/projectile/Initialize()
+/obj/projectile/Initialize(mapload)
 	. = ..()
 	decayedRange = range
 	if(embedding)
 		updateEmbedding()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, projectile_connections)
 
 /obj/projectile/proc/Range()
 	range--
@@ -278,13 +277,13 @@
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
 			playsound(loc, hitsound, 5, TRUE, -1)
-			to_chat(L, "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>")
+			to_chat(L, span_userdanger("You're shot by \a [src][organ_hit_text]!"))
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(src, hitsound, volume, TRUE, -1)
-			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-					"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
+			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
+					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(src)
 
 	var/reagent_note
@@ -315,15 +314,15 @@
 	if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
 		best_angle += NICE_SHOT_RICOCHET_BONUS
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
-		if(L.stat == DEAD || !isInSight(src, L))
+		if(L.stat == DEAD || !is_in_sight(src, L))
 			continue
-		var/our_angle = abs(closer_angle_difference(Angle, Get_Angle(src.loc, L.loc)))
+		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
 			best_angle = our_angle
 			unlucky_sob = L
 
 	if(unlucky_sob)
-		set_angle(Get_Angle(src, unlucky_sob.loc))
+		set_angle(get_angle(src, unlucky_sob.loc))
 
 /obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
 	beam_segments[beam_index] = point_cache
@@ -503,15 +502,15 @@
 		var/mob/living/L = target
 		if(direct_target)
 			return TRUE
-		// If target not able to use items, move and stand - or if they're just dead, pass over.
 		if(L.stat == DEAD)
 			return FALSE
-		if(!L.density)
+		if(HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED))
 			return FALSE
-		if(L.body_position != LYING_DOWN)
-			return TRUE
-		var/stunned = HAS_TRAIT(L, TRAIT_IMMOBILIZED) && HAS_TRAIT(L, TRAIT_FLOORED) && HAS_TRAIT(L, TRAIT_HANDS_BLOCKED)
-		return !stunned || hit_stunned_targets
+		if(!hit_prone_targets)
+			if(!L.density)
+				return FALSE
+			if(L.body_position != LYING_DOWN)
+				return TRUE
 	return TRUE
 
 /**
@@ -559,8 +558,8 @@
  * Projectile can pass through
  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
  */
-/obj/projectile/CanPassThrough(atom/blocker, turf/target, blocker_opinion)
-	return impacted[blocker]? TRUE : ..()
+/obj/projectile/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
+	return impacted[blocker] ? TRUE : ..()
 
 /**
  * Projectile moved:
@@ -627,7 +626,7 @@
 /obj/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
 	var/turf/current = get_turf(src)
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
-	return getline(current, ending)
+	return get_line(current, ending)
 
 /obj/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE //Bullets don't drift in space
@@ -679,7 +678,7 @@
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
-		set_angle(Get_Angle(src, target))
+		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/matrix = new
@@ -827,6 +826,8 @@
 		else if(T != loc)
 			step_towards(src, T)
 			hitscan_last = loc
+	if(QDELETED(src)) //deleted on last move
+		return
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
@@ -869,7 +870,7 @@
 	if(targloc || !length(modifiers))
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		set_angle(Get_Angle(src, targloc) + spread)
+		set_angle(get_angle(src, targloc) + spread)
 
 	if(isliving(source) && length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, modifiers)
@@ -880,7 +881,7 @@
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		set_angle(Get_Angle(src, targloc) + spread)
+		set_angle(get_angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
@@ -920,13 +921,14 @@
 		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	cleanup_beam_segments()
-	qdel(trajectory)
+	if(trajectory)
+		QDEL_NULL(trajectory)
 	return ..()
 
 /obj/projectile/proc/cleanup_beam_segments()
 	QDEL_LIST_ASSOC(beam_segments)
 	beam_segments = list()
-	qdel(beam_index)
+	QDEL_NULL(beam_index)
 
 /obj/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
 	if(trajectory && beam_index)

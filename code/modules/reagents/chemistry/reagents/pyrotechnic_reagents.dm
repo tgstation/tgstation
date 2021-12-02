@@ -116,7 +116,7 @@
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
-	e.start()
+	e.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/reagent/rdx
@@ -196,9 +196,9 @@
 	. = ..()
 	if(chems.has_reagent(type, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
-			mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 6))
-			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
-		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
+			mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjust_weedlevel(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(1 * REM * delta_time)

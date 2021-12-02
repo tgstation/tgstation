@@ -4,11 +4,13 @@
  * @license MIT
  */
 
-import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
 import { inspect } from 'util';
-import WebSocket from 'ws';
-import { retrace, loadSourceMaps } from './retrace.js';
+import { createLogger, directLog } from '../logging.js';
+import { require } from '../require.js';
+import { loadSourceMaps, retrace } from './retrace.js';
+
+const WebSocket = require('ws');
 
 const logger = createLogger('link');
 

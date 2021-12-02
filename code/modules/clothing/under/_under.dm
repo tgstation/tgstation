@@ -5,10 +5,10 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 5)
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
@@ -22,27 +22,33 @@
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 	var/freshly_laundered = FALSE
 
-/obj/item/clothing/under/worn_overlays(isinhands = FALSE)
-	. = list()
-	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		if(HAS_BLOOD_DNA(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
-		if(accessory_overlay)
-			. += accessory_overlay
+/obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+	. = ..()
+	if(isinhands)
+		return
+
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
+	if(HAS_BLOOD_DNA(src))
+		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
+	if(accessory_overlay)
+		. += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		has_sensor = HAS_SENSORS
-		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
+		to_chat(user,span_notice("You repair the suit sensors on [src] with [C]."))
 		return 1
 	if(!attach_accessory(I, user))
 		return ..()
 
 /obj/item/clothing/under/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	toggle()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -56,19 +62,32 @@
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
 
-/obj/item/clothing/under/Initialize()
+/obj/item/clothing/under/Initialize(mapload)
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 
-/obj/item/clothing/under/emp_act()
+/obj/item/clothing/under/emp_act(severity)
 	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(has_sensor > NO_SENSORS)
-		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
+		if(severity <= EMP_HEAVY)
+			has_sensor = BROKEN_SENSORS
+			if(ismob(loc))
+				var/mob/M = loc
+				to_chat(M,span_warning("[src]'s sensors short out!"))
+		else
+			sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+			if(ismob(loc))
+				var/mob/M = loc
+				to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/ooman = loc
+			if(ooman.w_uniform == src)
+				ooman.update_suit_sensors()
+
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	..()
@@ -128,7 +147,7 @@
 	var/obj/item/clothing/accessory/accessory = tool
 	if(attached_accessory)
 		if(user)
-			to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
+			to_chat(user, span_warning("[src] already has an accessory."))
 		return
 
 	if(!accessory.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
@@ -140,10 +159,10 @@
 
 	. = TRUE
 	if(user && notifyAttach)
-		to_chat(user, "<span class='notice'>You attach [accessory] to [src].</span>")
+		to_chat(user, span_notice("You attach [accessory] to [src]."))
 
 	var/accessory_color = attached_accessory.icon_state
-	accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
+	accessory_overlay = mutable_appearance(attached_accessory.worn_icon, "[accessory_color]")
 	accessory_overlay.alpha = attached_accessory.alpha
 	accessory_overlay.color = attached_accessory.color
 
@@ -170,9 +189,9 @@
 	var/obj/item/clothing/accessory/accessory = attached_accessory
 	attached_accessory.detach(src, user)
 	if(user.put_in_hands(accessory))
-		to_chat(user, "<span class='notice'>You detach [accessory] from [src].</span>")
+		to_chat(user, span_notice("You detach [accessory] from [src]."))
 	else
-		to_chat(user, "<span class='notice'>You detach [accessory] from [src] and it falls on the floor.</span>")
+		to_chat(user, span_notice("You detach [accessory] from [src] and it falls on the floor."))
 
 	update_appearance()
 	if(!ishuman(loc))
@@ -230,19 +249,19 @@
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
 	if(get_dist(usr, src) > 1)
-		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
+		to_chat(usr, span_warning("You have moved too far away!"))
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 	if (loc == usr)
 		switch(sensor_mode)
 			if(0)
-				to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
+				to_chat(usr, span_notice("You disable your suit's remote sensing equipment."))
 			if(1)
-				to_chat(usr, "<span class='notice'>Your suit will now only report whether you are alive or dead.</span>")
+				to_chat(usr, span_notice("Your suit will now only report whether you are alive or dead."))
 			if(2)
-				to_chat(usr, "<span class='notice'>Your suit will now only report your exact vital lifesigns.</span>")
+				to_chat(usr, span_notice("Your suit will now only report your exact vital lifesigns."))
 			if(3)
-				to_chat(usr, "<span class='notice'>Your suit will now report your exact vital lifesigns as well as your coordinate position.</span>")
+				to_chat(usr, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -271,12 +290,12 @@
 	if(!can_use(usr))
 		return
 	if(!can_adjust)
-		to_chat(usr, "<span class='warning'>You cannot wear this suit any differently!</span>")
+		to_chat(usr, span_warning("You cannot wear this suit any differently!"))
 		return
 	if(toggle_jumpsuit_adjust())
-		to_chat(usr, "<span class='notice'>You adjust the suit to wear it more casually.</span>")
+		to_chat(usr, span_notice("You adjust the suit to wear it more casually."))
 	else
-		to_chat(usr, "<span class='notice'>You adjust the suit back to normal.</span>")
+		to_chat(usr, span_notice("You adjust the suit back to normal."))
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.update_inv_w_uniform()
@@ -322,6 +341,6 @@
 	accessory_overlay = null
 	update_appearance()
 
-/obj/item/clothing/under/rank/obj_destruction(damage_flag)
+/obj/item/clothing/under/rank/atom_destruction(damage_flag)
 	dump_attachment()
 	return ..()

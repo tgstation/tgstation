@@ -5,7 +5,7 @@
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
 	var/timing = FALSE
 	var/time = 10
@@ -14,17 +14,17 @@
 	var/hearing_range = 3
 
 /obj/item/assembly/timer/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] looks at the timer and decides [user.p_their()] fate! It looks like [user.p_theyre()] going to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] looks at the timer and decides [user.p_their()] fate! It looks like [user.p_theyre()] going to commit suicide!"))
 	activate()//doesnt rely on timer_end to prevent weird metas where one person can control the timer and therefore someone's life. (maybe that should be how it works...)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), time SECONDS)//kill yourself once the time runs out
 	return MANUAL_SUICIDE
 
 /obj/item/assembly/timer/proc/manual_suicide(mob/living/user)
-	user.visible_message("<span class='suicide'>[user]'s time is up!</span>")
+	user.visible_message(span_suicide("[user]'s time is up!"))
 	user.adjustOxyLoss(200)
 	user.death(0)
 
-/obj/item/assembly/timer/Initialize()
+/obj/item/assembly/timer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -34,7 +34,7 @@
 
 /obj/item/assembly/timer/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The timer is [timing ? "counting down from [time]":"set for [time] seconds"].</span>"
+	. += span_notice("The timer is [timing ? "counting down from [time]":"set for [time] seconds"].")
 
 /obj/item/assembly/timer/activate()
 	if(!..())
@@ -58,10 +58,8 @@
 		return FALSE
 	pulse(FALSE)
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
-	for(var/CHM in get_hearers_in_view(hearing_range, src))
-		if(ismob(CHM))
-			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	if(loop)
 		timing = TRUE
 	update_appearance()

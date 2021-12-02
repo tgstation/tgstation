@@ -30,11 +30,11 @@
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
-	. += "<span class='notice'>Use a multitool on it to change colors.</span>"
-	. += "<span class='notice'>Use a screwdriver to turn it off or on.</span>"
+	. += span_notice("There's a <b>small crack</b> on the edge of it.")
+	. += span_notice("Use a multitool on it to change colors.")
+	. += span_notice("Use a screwdriver to turn it off or on.")
 	if(state) ///check if broken
-		. += "<span class='danger'>The light bulb seems fried!</span>"
+		. += span_danger("The light bulb seems fried!")
 
 ///create radial menu
 /turf/open/floor/light/proc/populate_lighttile_designs()
@@ -51,7 +51,7 @@
 		LIGHT_COLOR_FIRE = image(icon = src.icon, icon_state = "light_on-10")
 		)
 
-/turf/open/floor/light/Initialize()
+/turf/open/floor/light/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	if(!length(lighttile_designs))
@@ -135,15 +135,15 @@
 	if(istype(C, /obj/item/light/bulb)) //only for light tiles
 		var/obj/item/light/bulb/B = C
 		if(B.status)/// check if broken
-			to_chat(user, "<span class='danger'>The light bulb is broken!</span>")
+			to_chat(user, span_danger("The light bulb is broken!"))
 			return
 		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
 			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
 			update_appearance()
-			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
+			to_chat(user, span_notice("You replace the light bulb."))
 		else
-			to_chat(user, "<span class='notice'>The light bulb seems fine, no need to replace it.</span>")
+			to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
 
 /turf/open/floor/light/emp_act(severity)
 	. = ..()

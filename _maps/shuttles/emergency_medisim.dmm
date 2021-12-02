@@ -16,9 +16,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "cc" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cL" = (
@@ -54,7 +52,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "fa" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Engine Maintenance Access"
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -268,15 +266,11 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/template_noop,
 /area/shuttle/escape)
 "kS" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "lg" = (
@@ -302,9 +296,7 @@
 /obj/structure/table/reinforced,
 /obj/item/surgicaldrill,
 /obj/item/cautery,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "ls" = (
@@ -485,9 +477,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/template_noop,
 /area/shuttle/escape)
 "uG" = (
@@ -591,7 +581,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape/simulation)
 "Aw" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Engine Maintenance Access";
 	req_access_txt = "19"
 	},
@@ -632,8 +622,8 @@
 	dispense_type = /obj/item/binoculars;
 	end_create_message = "dispenses a pair of binoculars.";
 	glass_cost = 0;
-	maximum_idle = 1;
 	iron_cost = 0;
+	maximum_idle = 1;
 	name = "binoculars fabricator";
 	power_used = 0;
 	starting_amount = 25000
@@ -644,9 +634,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "CM" = (
@@ -685,9 +673,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "Eo" = (
@@ -706,9 +692,7 @@
 /turf/template_noop,
 /area/template_noop)
 "EV" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "EZ" = (
@@ -833,9 +817,7 @@
 "HE" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "HR" = (
@@ -1077,9 +1059,7 @@
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/hardhat/red,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Sf" = (
@@ -1157,9 +1137,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "TE" = (
@@ -1204,12 +1182,8 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Vn" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -32
-	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Vv" = (
@@ -1250,7 +1224,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "WN" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "WQ" = (
@@ -1351,9 +1325,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "YC" = (
@@ -1393,7 +1365,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ZB" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ZI" = (

@@ -1,3 +1,6 @@
+#define USERNAME_SIZE 32
+#define CHANNELNAME_SIZE 12
+#define MESSAGE_SIZE 2048
 
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
@@ -19,9 +22,17 @@
 	var/list/channel_history = list()
 	var/operator_mode = FALSE // Channel operator mode
 	var/netadmin_mode = FALSE // Administrator mode (invisible to other users + bypasses passwords)
+	//A list of all the converstations we're a part of
+	var/list/datum/ntnet_conversation/conversations = list()
 
 /datum/computer_file/program/chatclient/New()
 	username = "DefaultUser[rand(100, 999)]"
+
+/datum/computer_file/program/chatclient/Destroy()
+	for(var/datum/ntnet_conversation/discussion as anything in conversations)
+		discussion.purge_client(src)
+	conversations.Cut()
+	return ..()
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
 	. = ..()
@@ -36,7 +47,7 @@
 		if("PRG_speak")
 			if(!channel || isnull(active_channel))
 				return
-			var/message = reject_bad_text(params["message"])
+			var/message = reject_bad_chattext(params["message"], MESSAGE_SIZE)
 			if(!message)
 				return
 			if(channel.password && (!(src in channel.active_clients) && !(src in channel.offline_clients)))
@@ -57,7 +68,7 @@
 				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
 				return TRUE
 
-			active_channel =  new_target
+			active_channel = new_target
 			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 			if((!(src in channel.active_clients) && !(src in channel.offline_clients)) && !channel.password)
 				channel.add_client(src)
@@ -68,7 +79,7 @@
 				active_channel = null
 				return TRUE
 		if("PRG_newchannel")
-			var/channel_title = reject_bad_text(params["new_channel_name"])
+			var/channel_title = reject_bad_chattext(params["new_channel_name"], CHANNELNAME_SIZE)
 			if(!channel_title)
 				return
 			var/datum/ntnet_conversation/C = new /datum/ntnet_conversation()
@@ -91,7 +102,7 @@
 				netadmin_mode = TRUE
 				return TRUE
 		if("PRG_changename")
-			var/newname = sanitize(params["new_name"])
+			var/newname = reject_bad_chattext(params["new_name"], USERNAME_SIZE)
 			newname = replacetext(newname, " ", "_")
 			if(!newname || newname == username)
 				return
@@ -120,14 +131,14 @@
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
 				if(!hard_drive)
-					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.</span>")
+					computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning."))
 				else // In 99.9% cases this will mean our HDD is full
-					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.</span>")
+					computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning."))
 			return TRUE
 		if("PRG_renamechannel")
 			if(!authed)
 				return
-			var/newname = reject_bad_text(params["new_name"])
+			var/newname = reject_bad_chattext(params["new_name"], CHANNELNAME_SIZE)
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
@@ -259,3 +270,7 @@
 		data["messages"] = list()
 
 	return data
+
+#undef USERNAME_SIZE
+#undef CHANNELNAME_SIZE
+#undef MESSAGE_SIZE

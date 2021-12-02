@@ -38,7 +38,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+	to_chat(user, span_warning("PZZTTPFFFT"))
 	desc = "[desc] The display is flickering slightly."
 
 /obj/item/clothing/glasses/hud/health
@@ -65,7 +65,7 @@
 	icon_state = "sunhudmed"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 1
+	tint = 0.25
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
 /obj/item/clothing/glasses/hud/diagnostic
@@ -92,7 +92,7 @@
 	icon_state = "sunhuddiag"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 1
+	tint = 0.25
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -111,7 +111,7 @@
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/hud/security/chameleon/Initialize()
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
@@ -137,7 +137,7 @@
 	icon_state = "sunhudsec"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 1
+	tint = 0.25
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
 /obj/item/clothing/glasses/hud/security/night
@@ -152,8 +152,9 @@
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
 	name = "\improper HUD gar glasses"
 	desc = "GAR glasses with a HUD."
-	icon_state = "gars"
-	inhand_icon_state = "garb"
+	icon_state = "gar_sec"
+	inhand_icon_state = "gar_black"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 10
 	throwforce = 10
 	throw_speed = 4
@@ -162,11 +163,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
+/obj/item/clothing/glasses/hud/security/sunglasses/gars/giga
 	name = "giga HUD gar glasses"
 	desc = "GIGA GAR glasses with a HUD."
-	icon_state = "supergars"
-	inhand_icon_state = "garb"
+	icon_state = "gigagar_sec"
 	force = 12
 	throwforce = 12
 
@@ -230,10 +230,9 @@
 	name = "police aviators"
 	desc = "For thinking you look cool while brutalizing protestors and minorities."
 	icon_state = "bigsunglasses"
-	hud_type = ANTAG_HUD_GANGSTER
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 1
+	tint = 0.25
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 

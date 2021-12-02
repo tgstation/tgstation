@@ -23,8 +23,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "f" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "g" = (
@@ -72,9 +71,7 @@
 "j" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "k" = (
@@ -85,12 +82,8 @@
 "l" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "m" = (
@@ -116,11 +109,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "o" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "p" = (
@@ -159,6 +151,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/requests_console/directional/east{
+	department = "Arrivals shuttle"
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "t" = (
@@ -167,9 +162,7 @@
 	dir = 8
 	},
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "u" = (
@@ -222,7 +215,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "y" = (
@@ -237,25 +230,16 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/fernybush,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
-/area/shuttle/arrival)
-"A" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	use_power = 0
-	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "B" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/status_display/evac{
-	pixel_y = -32
-	},
-/obj/machinery/light,
+/obj/machinery/status_display/evac/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "C" = (
@@ -263,9 +247,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
+/obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -356,9 +338,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "N" = (
@@ -378,6 +358,16 @@
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"R" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/vending/wallmed/directional/west{
+	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
@@ -449,7 +439,7 @@ f
 f
 k
 w
-A
+b
 K
 N
 f
@@ -458,7 +448,7 @@ f
 c
 l
 w
-s
+R
 K
 B
 c

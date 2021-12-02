@@ -4,7 +4,7 @@
 	var/window_id // window_id is used as the window name for browse and onclose
 	var/width = 0
 	var/height = 0
-	var/atom/ref = null
+	var/datum/weakref/ref = null
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
@@ -16,8 +16,8 @@
 
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
-
 	user = nuser
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/user_deleted)
 	window_id = nwindow_id
 	if (ntitle)
 		title = format_text(ntitle)
@@ -26,7 +26,11 @@
 	if (nheight)
 		height = nheight
 	if (nref)
-		ref = nref
+		ref = WEAKREF(nref)
+
+/datum/browser/proc/user_deleted(datum/source)
+	SIGNAL_HANDLER
+	user = null
 
 /datum/browser/proc/add_head_content(nhead_content)
 	head_content = nhead_content
@@ -96,7 +100,7 @@
 /datum/browser/proc/open(use_onclose = TRUE)
 	if(isnull(window_id)) //null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
-		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
+		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on github!"))
 		return
 	var/window_size = ""
 	if (width && height)
@@ -113,8 +117,13 @@
 /datum/browser/proc/setup_onclose()
 	set waitfor = 0 //winexists sleeps, so we don't need to.
 	for (var/i in 1 to 10)
-		if (user && winexists(user, window_id))
-			onclose(user, window_id, ref)
+		if (user?.client && winexists(user, window_id))
+			var/atom/send_ref
+			if(ref)
+				send_ref = ref.resolve()
+				if(!send_ref)
+					ref = null
+			onclose(user, window_id, send_ref)
 			break
 
 /datum/browser/proc/close()
@@ -127,7 +136,7 @@
 	if (!User)
 		return
 
-	var/output =  {"<center><b>[Message]</b></center><br />
+	var/output = {"<center><b>[Message]</b></center><br />
 		<div style="text-align:center">
 		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=[REF(src)];button=1">[Button1]</a>"}
 
@@ -240,7 +249,7 @@
 	if (!User)
 		return
 
-	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
+	var/output = {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
 	if (inputtype == "checkbox" || inputtype == "radio")
 		for (var/i in values)
 			var/div_slider = slidecolor

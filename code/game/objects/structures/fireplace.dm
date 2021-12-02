@@ -16,8 +16,8 @@
 	var/fuel_added = 0
 	var/flame_expiry_timer
 
-/obj/structure/fireplace/New()
-	..()
+/obj/structure/fireplace/Initialize(mapload)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/fireplace/Destroy()
@@ -26,10 +26,10 @@
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)
-		to_chat(user, "<span class='warning'>It's already lit!</span>")
+		to_chat(user, span_warning("It's already lit!"))
 		return FALSE
 	if(!fuel_added)
-		to_chat(user, "<span class='warning'>[src] needs some fuel to burn!</span>")
+		to_chat(user, span_warning("[src] needs some fuel to burn!"))
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
@@ -43,7 +43,7 @@
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			to_chat(user, "<span class='warning'>You can't fit any more of [T] in [src]!</span>")
+			to_chat(user, span_warning("You can't fit any more of [T] in [src]!"))
 			return
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)

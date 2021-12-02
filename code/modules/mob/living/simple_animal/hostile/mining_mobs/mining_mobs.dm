@@ -1,9 +1,9 @@
 //the base mining mob
 /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE)
 	obj_damage = 30
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
@@ -38,7 +38,7 @@
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)
 		P.damage = (P.damage / 3)
-		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
+		visible_message(span_danger("[P] has a reduced effect on [src]!"))
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
@@ -47,7 +47,7 @@
 		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
-			visible_message("<span class='notice'>The [T.name] [throw_message] [src.name]!</span>")
+			visible_message(span_notice("The [T.name] [throw_message] [src.name]!"))
 			return
 	..()
 

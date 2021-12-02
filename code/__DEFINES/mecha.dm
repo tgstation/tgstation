@@ -13,6 +13,10 @@
 #define HAS_LIGHTS (1<<6)
 #define QUIET_STEPS (1<<7)
 #define QUIET_TURNS (1<<8)
+///blocks using equipment and melee attacking.
+#define CANNOT_INTERACT (1<<9)
+/// posibrains can drive this mecha
+#define MMI_COMPATIBLE (1<<10)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)

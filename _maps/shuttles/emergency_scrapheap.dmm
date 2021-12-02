@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -65,20 +65,16 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "an" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ao" = (
 /obj/machinery/button/flasher{
 	id = "cockpit_flasher";
-	pixel_x = 6;
 	pixel_y = -24
 	},
 /obj/structure/table/wood/poker,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "ap" = (
@@ -113,14 +109,12 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "au" = (
-/obj/machinery/flasher{
-	id = "cockpit_flasher";
-	pixel_x = 6;
-	pixel_y = 24
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
+	},
+/obj/machinery/flasher/directional/north{
+	id = "cockpit_flasher"
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -135,20 +129,15 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ax" = (
-/obj/machinery/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = 6
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
 	},
 /obj/machinery/button/flasher{
 	id = "shuttle_flasher";
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ay" = (
@@ -177,9 +166,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "aD" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/structure/table,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -208,10 +195,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 23
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aJ" = (
@@ -277,9 +261,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aU" = (
@@ -312,9 +294,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -326,16 +306,12 @@
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"bc" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bd" = (
 /obj/machinery/door/airlock{
@@ -347,12 +323,8 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bg" = (
@@ -377,16 +349,12 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/recharge_station,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/shuttle/escape)
 "bl" = (
@@ -412,19 +380,23 @@
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bp" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/light{
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Fs" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/iron,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -539,8 +511,8 @@ aG
 aw
 aL
 ac
-av
-bc
+Fs
+ab
 be
 ab
 ab

@@ -8,7 +8,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
-/obj/item/clothing/gloves/butchering/Initialize()
+/obj/item/clothing/gloves/butchering/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 5, 125, null, null, TRUE, TRUE)
 
@@ -25,6 +25,7 @@
 	butchering.butchering_enabled = FALSE
 
 /obj/item/clothing/gloves/butchering/proc/butcher_target(mob/user, atom/target, proximity)
+	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
 	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)

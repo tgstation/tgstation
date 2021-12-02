@@ -69,7 +69,7 @@
 	var/poster_item_icon_state = "rolled_poster"
 	var/poster_item_type = /obj/item/poster
 
-/obj/structure/sign/poster/Initialize()
+/obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
 	if(random_basetype)
 		randomise(random_basetype)
@@ -103,10 +103,10 @@
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		I.play_tool_sound(src, 100)
 		if(ruined)
-			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")
+			to_chat(user, span_notice("You remove the remnants of the poster."))
 			qdel(src)
 		else
-			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
+			to_chat(user, span_notice("You carefully remove the poster from the wall."))
 			roll_and_drop(user.loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user, list/modifiers)
@@ -115,7 +115,7 @@
 		return
 	if(ruined)
 		return
-	visible_message("<span class='notice'>[user] rips [src] in a single, decisive motion!</span>" )
+	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
 
 	var/obj/structure/sign/poster/ripped/R = new(loc)
@@ -134,7 +134,7 @@
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/wall/proc/place_poster(obj/item/poster/P, mob/user)
 	if(!P.poster_structure)
-		to_chat(user, "<span class='warning'>[P] has no poster... inside it? Inform a coder!</span>")
+		to_chat(user, span_warning("[P] has no poster... inside it? Inform a coder!"))
 		return
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
@@ -147,14 +147,14 @@
 	var/stuff_on_wall = 0
 	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
 		if(istype(O, /obj/structure/sign/poster))
-			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
+			to_chat(user, span_warning("The wall is far too cluttered to place a poster!"))
 			return
 		stuff_on_wall++
 		if(stuff_on_wall == 3)
-			to_chat(user, "<span class='warning'>The wall is far too cluttered to place a poster!</span>")
+			to_chat(user, span_warning("The wall is far too cluttered to place a poster!"))
 			return
 
-	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>" )
+	to_chat(user, span_notice("You start placing the poster on the wall...") )
 
 	var/obj/structure/sign/poster/D = P.poster_structure
 
@@ -169,10 +169,10 @@
 			return
 
 		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
-			to_chat(user, "<span class='notice'>You place the poster!</span>")
+			to_chat(user, span_notice("You place the poster!"))
 			return
 
-	to_chat(user, "<span class='notice'>The poster falls down!</span>")
+	to_chat(user, span_notice("The poster falls down!"))
 	D.roll_and_drop(get_turf(user))
 
 // Various possible posters follow
@@ -438,6 +438,16 @@
 	desc = "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
 	icon_state = "poster48"
 
+/obj/structure/sign/poster/contraband/got_wood
+	name = "Got Wood?"
+	desc = "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
+	icon_state = "poster49"
+
+/obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
+	name = "Syndie Moth - Nuclear Operation"
+	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
+	icon_state = "poster_aspev_syndie"	//Syndies mark the end of an era; down with numbered poster icon_states
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
@@ -634,5 +644,34 @@
 	desc = "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
 	// And yet people still believe...
 	icon_state = "poster37_legit"
+
+//SafetyMoth Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982)
+//SafetyMoth art credit goes to AspEv
+/obj/structure/sign/poster/official/moth_hardhat
+	name = "Safety Moth - Hardhats"
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
+	icon_state = "poster_legit_aspev_hardhat"
+
+/obj/structure/sign/poster/official/moth_piping
+	name = "Safety Moth - Piping"
+	desc = "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
+	icon_state = "poster_legit_aspev_piping"
+
+/obj/structure/sign/poster/official/moth_meth
+	name = "Safety Moth - Methamphetamine"
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
+	icon_state = "poster_legit_aspev_meth"
+
+/obj/structure/sign/poster/official/moth_epi
+	name = "Safety Moth - Epinephrine"
+	desc = "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
+	icon_state = "poster_legit_aspev_epi"
+
+/obj/structure/sign/poster/official/moth_delam
+	name = "Safety Moth - Delamination Safety Precautions"
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
+	icon_state = "poster_legit_aspev_delam"
+//End of AspEv posters
+
 
 #undef PLACE_SPEED

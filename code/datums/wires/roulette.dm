@@ -13,6 +13,8 @@
 	..()
 
 /datum/wires/roulette/interactable(mob/user)
+	if(!..())
+		return FALSE
 	. = FALSE
 	var/obj/machinery/roulette/R = holder
 	if(R.machine_stat & MAINT)
@@ -39,14 +41,14 @@
 			R.set_anchored(!R.anchored)
 		if(WIRE_RESETOWNER)
 			R.my_card = null
-			R.audible_message("<span class='warning'>Owner reset!</span>")
+			R.audible_message(span_warning("Owner reset!"))
 			R.locked = FALSE
 		if(WIRE_PRIZEVEND)
 			if(isliving(usr))
 				R.shock(usr, 70)
 			if(R.locked)
 				return
-			R.audible_message("<span class='warning'>Unauthorized prize vend detected! Locking down machine!</span>")
+			R.audible_message(span_warning("Unauthorized prize vend detected! Locking down machine!"))
 			R.prize_theft(0.20)
 
 /datum/wires/roulette/on_cut(wire, mend)
@@ -71,6 +73,6 @@
 				R.shock(usr, 75)
 			if(R.locked)
 				return
-			R.audible_message("<span class='warning'>Unauthorized prize vend detected! Locking down machine!</span>")
+			R.audible_message(span_warning("Unauthorized prize vend detected! Locking down machine!"))
 			R.prize_theft(0.10)
 

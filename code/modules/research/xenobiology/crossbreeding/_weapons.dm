@@ -17,7 +17,7 @@ Slimecrossing Weapons
 		user.emote("scream")
 
 //Rainbow knife - Burning Rainbow
-/obj/item/kitchen/knife/rainbowknife
+/obj/item/knife/rainbowknife
 	name = "rainbow knife"
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
 	icon = 'icons/obj/slimecrossing.dmi'
@@ -27,7 +27,7 @@ Slimecrossing Weapons
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/kitchen/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
+/obj/item/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
 	if(proximity && istype(O, /mob/living))
 		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
 	switch(damtype)
@@ -61,7 +61,7 @@ Slimecrossing Weapons
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
 	force = 0
@@ -93,7 +93,7 @@ Slimecrossing Weapons
 	ammo_type = /obj/item/ammo_casing/magic/bloodchill
 	fire_sound = 'sound/effects/attackblob.ogg'
 
-/obj/item/gun/magic/bloodchill/Initialize()
+/obj/item/gun/magic/bloodchill/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 

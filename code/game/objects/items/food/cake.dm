@@ -6,7 +6,7 @@
 	tastes = list("cake" = 1)
 	foodtypes = GRAIN | DAIRY
 
-/obj/item/food/cake/Initialize()
+/obj/item/food/cake/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
@@ -24,6 +24,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
+	burns_in_oven = TRUE
+
 
 /obj/item/food/cake/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/plain, 5, 30)
@@ -317,10 +319,10 @@
 	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
-/obj/item/food/cake/bscc // blackbarry strawberries chocolate cake
-	name = "blackberry and strawberry chocolate cake"
-	desc = "A chocolate cake, filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_cake"
+/obj/item/food/cake/bscc // blackbarry strawberries chocolate cake <- this is a relic from before resprite
+	name = "strawberry chocolate cake"
+	desc = "A chocolate cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF."
+	icon_state = "liars_cake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/coco = 5)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
@@ -329,10 +331,10 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/bscc, 5, 30)
 
 /obj/item/food/cakeslice/bscc
-	name = "blackberry and strawberry chocolate cake slice"
-	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
-	icon_state = "blackbarry_strawberries_cake_coco_slice"
-	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
+	name = "strawberry chocolate cake slice"
+	desc = "Just a slice of cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF." //yes, I know the one referenced has cherries, but I'm not implementing a new cake today.
+	icon_state = "liars_slice"
+	tastes = list("strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/holy_cake
@@ -467,3 +469,24 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cake" = 4, "butter" = 2, "cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+
+/obj/item/food/cake/pavlova
+	name = "pavlova"
+	desc = "A sweet berry pavlova. Invented in New Zealand, but named after a Russian ballerina... And scientifically proven to be the best at dinner parties!"
+	icon_state = "pavlova"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
+	foodtypes = DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cake/pavlova/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova, 5, 30)
+
+/obj/item/food/cakeslice/pavlova
+	name = "pavlova slice"
+	desc = "A cracked slice of pavlova stacked with berries. You even got it sliced in such a way that more berries ended up on your slice, how delightfully devilish."
+	icon_state = "pavlova_slice"
+	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
+	foodtypes = DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cakeslice/pavlova/nuts
+	foodtypes = NUTS | FRUIT | SUGAR

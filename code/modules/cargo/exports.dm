@@ -24,7 +24,6 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/exported_atoms = list() //names of atoms sold/deleted by export
 	var/list/total_amount = list() //export instance => total count of sold objects of its type, only exists if any were sold
 	var/list/total_value = list() //export instance => total value of sold objects
-	var/list/exported_atoms_ref = list() //if they're not deleted they go in here for use.
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
 /proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
@@ -33,32 +32,29 @@ Then the player gets the profit from selling his own wasted time.
 
 	var/profit_ratio = 1 //Percentage that gets sent to the seller, rest goes to cargo.
 
-	var/list/contents = AM.GetAllContents()
+	var/list/contents = AM.get_all_contents()
 
 	var/datum/export_report/report = external_report
 
 	if(!report) //If we don't have any longer transaction going on
 		report = new
 
-	// We go backwards, so it'll be innermost objects sold first
-	for(var/i in reverseRange(contents))
-		var/atom/movable/thing = i
+	// We go backwards, so it'll be innermost objects sold first. We also make sure nothing is accidentally delete before everything is sold.
+	var/list/to_delete = list()
+	for(var/atom/movable/thing as anything in reverse_range(contents))
 		var/sold = FALSE
-		if(QDELETED(thing))
-			continue
-
-		for(var/datum/export/E in GLOB.exports_list)
-			if(!E)
-				continue
-			if(E.applies_to(thing, apply_elastic))
-				sold = E.sell_object(thing, report, dry_run, apply_elastic, profit_ratio)
+		for(var/datum/export/export as anything in GLOB.exports_list)
+			if(export.applies_to(thing, apply_elastic))
+				sold = export.sell_object(thing, report, dry_run, apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
-				if(!QDELETED(thing))
-					report.exported_atoms_ref += thing
 				break
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
+			to_delete += thing
+
+	for(var/atom/movable/thing as anything in to_delete)
+		if(!QDELETED(thing))
 			qdel(thing)
 
 	return report
@@ -69,6 +65,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/message = ""
 	/// Cost of item, in cargo credits. Must not allow for infinite price dupes, see above.
 	var/cost = 1
+	/// whether this export can have a negative impact on the cargo budget or not
+	var/allow_negative_cost = FALSE
 	/// coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/k_elasticity = 1/30
 	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
@@ -146,7 +144,7 @@ Then the player gets the profit from selling his own wasted time.
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
 
-	if(amount <=0 || the_cost <=0)
+	if(amount <=0 || (the_cost <=0 && !allow_negative_cost))
 		return FALSE
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)

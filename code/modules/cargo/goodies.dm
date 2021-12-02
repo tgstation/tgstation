@@ -32,11 +32,11 @@
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/grenade/stingbang)
 
-/datum/supply_pack/goody/combatknives_single
-	name = "Combat Knife Single-Pack"
-	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
+/datum/supply_pack/goody/Survivalknives_single
+	name = "Survival Knife Single-Pack"
+	desc = "Contains one sharpened survival knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
 	cost = PAYCHECK_HARD * 1.75
-	contains = list(/obj/item/kitchen/knife/combat)
+	contains = list(/obj/item/knife/combat/survival)
 
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
@@ -133,11 +133,22 @@
 	cost = PAYCHECK_EASY * 4
 	contains = list(/obj/item/toy/plush/beeplushie)
 
+/datum/supply_pack/goody/dyespray
+	name = "Hair Dye Spray"
+	desc = "A cool spray to dye your hair with awesome colors!"
+	cost = PAYCHECK_EASY * 2
+	contains = list(/obj/item/dyespray)
+
 /datum/supply_pack/goody/beach_ball
 	name = "Beach Ball"
-	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
+	// uses desc from item
 	cost = PAYCHECK_MEDIUM
-	contains = list(/obj/item/toy/beach_ball)
+	contains = list(/obj/item/toy/beach_ball/branded)
+
+/datum/supply_pack/goody/beach_ball/New()
+	..()
+	var/obj/item/toy/beach_ball/branded/beachball_type = /obj/item/toy/beach_ball/branded
+	desc = initial(beachball_type.desc)
 
 /datum/supply_pack/goody/medipen_twopak
 	name = "Medipen Two-Pak"

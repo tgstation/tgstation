@@ -40,9 +40,9 @@
 	name = "Incinerator Air Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/incinerator
 
-/obj/item/circuitboard/computer/atmos_control/toxinsmix
-	name = "Toxins Mixing Air Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/toxinsmix
+/obj/item/circuitboard/computer/atmos_control/ordnancemix
+	name = "Ordnance Mixing Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/ordnancemix
 
 /obj/item/circuitboard/computer/atmos_control/tank
 	name = "Tank Control (Computer Board)"
@@ -52,9 +52,9 @@
 	name = "Oxygen Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/oxygen_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/toxin_tank
+/obj/item/circuitboard/computer/atmos_control/tank/plasma_tank
 	name = "Plasma Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/toxin_tank
+	build_path = /obj/machinery/computer/atmos_control/tank/plasma_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/air_tank
 	name = "Mixed Air Supply Control (Computer Board)"
@@ -104,9 +104,9 @@
 	name = "Miasma Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/miasma_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/nitryl_tank
-	name = "Nitryl Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/nitryl_tank
+/obj/item/circuitboard/computer/atmos_control/tank/nitrium_tank
+	name = "Nitrium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitrium_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
 	name = "Pluoxium Supply Control (Computer Board)"
@@ -115,10 +115,6 @@
 /obj/item/circuitboard/computer/atmos_control/tank/proto_nitrate_tank
 	name = "Proto-Nitrate Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/proto_nitrate_tank
-
-/obj/item/circuitboard/computer/atmos_control/tank/stimulum_tank
-	name = "Stimulum Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/stimulum_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/tritium_tank
 	name = "Tritium Supply Control (Computer Board)"
@@ -210,11 +206,6 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/turbine_computer
 
-/obj/item/circuitboard/computer/turbine_control
-	name = "Turbine control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/turbine_computer
-
 //Generic
 
 /obj/item/circuitboard/computer/arcade/amputation
@@ -241,18 +232,16 @@
 	name = "Library Visitor Console (Computer Board)"
 	build_path = /obj/machinery/computer/libraryconsole
 
-/obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/bookmanagement)
-			name = "Library Visitor Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole
-			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
-		else
-			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/bookmanagement
-			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
+/obj/item/circuitboard/computer/libraryconsole/screwdriver_act(mob/living/user, obj/item/tool)
+	if(build_path == /obj/machinery/computer/bookmanagement)
+		name = "Library Visitor Console (Computer Board)"
+		build_path = /obj/machinery/computer/libraryconsole
+		to_chat(user, span_notice("Defaulting access protocols."))
 	else
-		return ..()
+		name = "Book Inventory Management Console (Computer Board)"
+		build_path = /obj/machinery/computer/bookmanagement
+		to_chat(user, span_notice("Access protocols successfully updated."))
+	return TRUE
 
 /obj/item/circuitboard/computer/monastery_shuttle
 	name = "Monastery Shuttle (Computer Board)"
@@ -286,7 +275,7 @@
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
+/obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)
 	. = ..()
 	GLOB.syndicate_shuttle_boards += src
 
@@ -368,16 +357,6 @@
 	name = "Exosuit Control Console (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/mecha
-
-/obj/item/circuitboard/computer/nanite_chamber_control
-	name = "Nanite Chamber Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/nanite_chamber_control
-
-/obj/item/circuitboard/computer/nanite_cloud_controller
-	name = "Nanite Cloud Control (Computer Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/nanite_cloud_controller
 
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console (Computer Board)"
@@ -480,15 +459,15 @@
 	. = ..()
 	if(!(obj_flags & EMAGGED))
 		contraband = !contraband
-		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
+		to_chat(user, span_notice("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
 	else
-		to_chat(user, "<span class='alert'>The spectrum chip is unresponsive.</span>")
+		to_chat(user, span_alert("The spectrum chip is unresponsive."))
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
 	if(!(obj_flags & EMAGGED))
 		contraband = TRUE
 		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
 
 /obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
 	if(!istype(machine))
@@ -508,14 +487,14 @@
 	if(!(obj_flags & EMAGGED))
 		contraband = TRUE
 		obj_flags |= EMAGGED
-		to_chat(user, "<span class='notice'>You change the routing protocols, allowing the Drop Pod to land anywhere on the station.</span>")
+		to_chat(user, span_notice("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
 	if (!(obj_flags & EMAGGED))
 		contraband = !contraband
-		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
+		to_chat(user, span_notice("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
 	else
-		to_chat(user, "<span class='notice'>You reset the destination-routing protocols and receiver spectrum to factory defaults.</span>")
+		to_chat(user, span_notice("You reset the destination-routing protocols and receiver spectrum to factory defaults."))
 		contraband = FALSE
 		obj_flags &= ~EMAGGED
 
@@ -554,3 +533,28 @@
 /obj/item/circuitboard/computer/exodrone_console
 	name = "Exploration odrone control console (Computer Board)"
 	build_path = /obj/machinery/computer/exodrone_control_console
+
+/obj/item/circuitboard/computer/service_orders
+	name = "Service Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/service
+
+/obj/item/circuitboard/computer/engineering_orders
+	name = "Engineering Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/engineering
+
+/obj/item/circuitboard/computer/science_orders
+	name = "Science Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/science
+
+/obj/item/circuitboard/computer/security_orders
+	name = "Security Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/security
+
+/obj/item/circuitboard/computer/medical_orders
+	name = "Medical Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/medical

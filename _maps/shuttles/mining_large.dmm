@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "c" = (
@@ -151,7 +151,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/corner,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
@@ -184,7 +184,7 @@
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 8
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/item/radio/intercom{
 	pixel_y = -29
 	},
@@ -356,7 +356,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "y" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/box/white/corners,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
@@ -376,7 +376,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/mining/large)
 "A" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
@@ -399,7 +399,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "D" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -407,12 +407,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "E" = (
-/obj/machinery/power/apc/highcap{
-	dir = 4;
-	locked = 0;
-	name = "Mining Shuttle APC";
-	pixel_x = 24
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
@@ -443,7 +438,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "J" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mining Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

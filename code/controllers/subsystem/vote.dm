@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(vote)
 			else if(mode == "map")
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
-					var/preferred_map = C.prefs.preferred_map
+					var/preferred_map = C.prefs.read_preference(/datum/preference/choiced/preferred_map)
 					if(isnull(global.config.defaultmap))
 						continue
 					if(!preferred_map)
@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(vote)
 			text += "<b>[question]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
-		for(var/i=1,i<=choices.len,i++)
+		for(var/i in 1 to choices.len)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
@@ -152,7 +152,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	//Server is still intializing.
 	if(!Master.current_runlevel)
-		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
+		to_chat(usr, span_warning("Cannot start vote, server is not done initializing."))
 		return FALSE
 	var/lower_admin = FALSE
 	var/ckey = ckey(initiator_key)
@@ -163,10 +163,10 @@ SUBSYSTEM_DEF(vote)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
 			if(mode)
-				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
+				to_chat(usr, span_warning("There is already a vote in progress! please wait for it to finish."))
 				return FALSE
 			if(next_allowed_time > world.time && !lower_admin)
-				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!</span>")
+				to_chat(usr, span_warning("A vote was initiated recently, you must wait [DisplayTimeText(next_allowed_time-world.time)] before a new vote can be started!"))
 				return FALSE
 
 		reset()
@@ -175,7 +175,7 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("map")
 				if(!lower_admin && SSmapping.map_voted)
-					to_chat(usr, "<span class='warning'>The next map has already been selected.</span>")
+					to_chat(usr, span_warning("The next map has already been selected."))
 					return FALSE
 				// Randomizes the list so it isn't always METASTATION
 				var/list/maps = list()
@@ -191,7 +191,7 @@ SUBSYSTEM_DEF(vote)
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return FALSE
-				for(var/i=1,i<=10,i++)
+				for(var/i in 1 to 10)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
 						break

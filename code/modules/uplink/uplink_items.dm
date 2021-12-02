@@ -119,9 +119,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			to_chat(H, "<span class='boldnotice'>[A] materializes into your hands!</span>")
+			to_chat(H, span_boldnotice("[A] materializes into your hands!"))
 			return A
-	to_chat(user, "<span class='boldnotice'>[A] materializes onto the floor!</span>")
+	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
 	return A
 
 //Discounts (dynamically filled above)
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Bananium Energy Sword"
 	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
 	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
-	item = /obj/item/melee/transforming/energy/sword/bananium
+	item = /obj/item/melee/energy/sword/bananium
 	cost = 3
 	surplus = 0
 	purchasable_from = UPLINK_CLOWN_OPS
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/melee/transforming/energy/sword/saber
+	item = /obj/item/melee/energy/sword/saber
 	cost = 8
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
+	desc = "A flamethrower, fueled by a portion of highly flammable plasma stolen previously from Nanotrasen \
 			stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/flamethrower/full/tank
 	cost = 4
@@ -611,6 +611,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_weapons/crossbow/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+		desc += " Happy Halloween!"
 
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
@@ -988,11 +994,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/explosives/detomatix
 	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
-			detonate PDAs of crewmembers who have their message feature enabled. \
+	desc = "When inserted into a personal digital assistant, this cartridge gives you the opportunity to \
+			send up to six forged messages that will make PDAs of crewmembers explode when they try to reply to them. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	item = /obj/item/cartridge/virus/syndicate
-	cost = 6
+	cost = 4
 	restricted = TRUE
 
 /datum/uplink_item/explosives/emp
@@ -1382,6 +1388,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/card/emag
 	cost = 4
 
+/datum/uplink_item/device_tools/emag/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/card/emag/halloween
+		desc += " This one is fitted to support the Halloween season. Candle not included."
+
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
 	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
@@ -1430,9 +1442,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		return
 	U.failsafe_code = U.generate_code()
 	var/code = "[islist(U.failsafe_code) ? english_list(U.failsafe_code) : U.failsafe_code]"
-	to_chat(user, "<span class='warning'>The new failsafe code for this uplink is now : [code].</span>")
-	if(user.mind)
-		user.mind.store_memory("Failsafe code for [U.parent] : [code]")
+	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
 	return U.parent //For log icon
 
 /datum/uplink_item/device_tools/toolbox
@@ -1663,11 +1673,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. Has no telecrystals and must be charged by the use of physical telecrystals. \
 			Undetectable (except via surgery), and excellent for escaping confinement."
-	item = /obj/item/storage/box/syndie_kit/imp_uplink
+	item = /obj/item/storage/box/syndie_kit // the actual uplink implant is generated later on in spawn_item
 	cost = UPLINK_IMPLANT_TELECRYSTAL_COST
 	// An empty uplink is kinda useless.
 	surplus = 0
 	restricted = TRUE
+
+/datum/uplink_item/implants/uplink/spawn_item(spawn_path, mob/user, datum/component/uplink/purchaser_uplink)
+	var/obj/item/storage/box/syndie_kit/uplink_box = ..()
+	uplink_box.name = "Uplink Implant Box"
+	new /obj/item/implanter/uplink(uplink_box, purchaser_uplink.uplink_flag)
+	return uplink_box
+
 
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"
@@ -1701,7 +1718,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	Syndicate brand \"Extra-Bright Lantern™\". Enjoy."
 	cost = 2
 	item = /obj/item/flashlight/lantern/syndicate
-	restricted_species = list("moth")
+	restricted_species = list(SPECIES_MOTH)
 
 // Role-specific items
 /datum/uplink_item/role_restricted
@@ -1809,6 +1826,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 	restricted_roles = list("Roboticist", "Research Director")
 
+/datum/uplink_item/role_restricted/syndimmi
+	name = "Syndicate Brand MMI"
+	desc = "An MMI modified to give cyborgs laws to serve the Syndicate without having their interface damaged by Cryptographic Sequencers, this will not unlock their hidden modules."
+	item = /obj/item/mmi/syndie
+	cost = 2
+	restricted_roles = list("Roboticist", "Research Director", "Scientist", "Medical Doctor", "Chief Medical Officer")
+	surplus = 0
+
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
 	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. \
@@ -1874,8 +1899,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
-	name = "Modified Syringe Gun"
-	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	name = "Modified  Compact Syringe Gun"
+	desc = "A compact version of the syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
 	restricted_roles = list("Geneticist", "Research Director")
@@ -1927,12 +1952,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
 	restricted_roles = list("Roboticist", "Research Director")
 
-/datum/uplink_item/role_restricted/ocd_device
+/datum/uplink_item/role_restricted/bureaucratic_error_remote
 	name = "Organic Resources Disturbance Inducer"
 	desc = "A device that raises hell in organic resources indirectly. Single use."
 	cost = 2
 	limited_stock = 1
-	item = /obj/item/devices/ocd_device
+	item = /obj/item/devices/bureaucratic_error_remote
 	restricted_roles = list("Head of Personnel", "Quartermaster")
 
 /datum/uplink_item/role_restricted/meathook
@@ -2029,3 +2054,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
+// Special equipment (Dynamically fills in uplink component)
+/datum/uplink_item/special_equipment
+	category = "Objective-Specific Equipment"
+	name = "Objective-Specific Equipment"
+	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
+	limited_stock = 1
+	illegal_tech = FALSE
+
+/datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
+	..()
+	if(user?.mind?.failed_special_equipment)
+		user.mind.failed_special_equipment -= item

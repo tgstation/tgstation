@@ -37,9 +37,7 @@
 /area/shuttle/abandoned)
 "af" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ag" = (
@@ -67,7 +65,7 @@
 "ak" = (
 /obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "al" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -81,8 +79,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
-/turf/open/floor/mech_bay_recharge_floor,
+/obj/effect/spawner/random/exotic/ripley,
+/turf/open/floor/iron/recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -104,7 +102,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "as" = (
@@ -128,9 +126,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "au" = (
@@ -156,9 +152,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "ax" = (
@@ -182,12 +176,11 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/machinery/button/door{
-	id = "cerewhiteleft";
-	name = "Cargo Blast Door Toggle";
-	pixel_x = -24
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/button/door/directional/west{
+	id = "cerewhiteleft";
+	name = "Cargo Blast Door Toggle"
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aA" = (
@@ -237,12 +230,11 @@
 /obj/effect/turf_decal/delivery{
 	dir = 1
 	},
-/obj/machinery/button/door{
-	id = "cerewhiteright";
-	name = "Cargo Blast Door Toggle";
-	pixel_x = 24
-	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/button/door/directional/east{
+	id = "cerewhiteright";
+	name = "Cargo Blast Door Toggle"
+	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aF" = (
@@ -285,7 +277,7 @@
 	icon_state = "crateopen";
 	name = "spare equipment crate"
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aK" = (
@@ -301,7 +293,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/abandoned)
 "aM" = (
@@ -328,9 +320,7 @@
 "aP" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aQ" = (
@@ -353,9 +343,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "aU" = (

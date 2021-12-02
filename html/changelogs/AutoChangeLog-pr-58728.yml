@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "On Sundays and given mail holidays, mail will not arrive on station."
-  - code_imp: "Documented code in the holidays file."

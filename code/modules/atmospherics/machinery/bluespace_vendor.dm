@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
+	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -18,7 +19,7 @@
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -51,35 +52,17 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/machinery/bluespace_vendor/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/bluespace_vendor/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/bluespace_vendor/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()
-	if(ndir)
-		setDir(ndir)
 
 	if(nbuild)
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
+/obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
@@ -126,15 +109,15 @@
 	if(!istype(multitool))
 		return
 	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
-		to_chat(user, "<span class='notice'>Wrong machine type in [multitool] buffer...</span>")
+		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
 	if(connected_machine)
-		to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
+		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
 	register_machine(multitool.buffer)
-	to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
+	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
@@ -156,11 +139,11 @@
 /obj/machinery/bluespace_vendor/examine(mob/user)
 	. = ..()
 	if(empty_tanks > 1)
-		. += "<span class='notice'>There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.</span>"
+		. += span_notice("There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.")
 	else if(empty_tanks == 1)
-		. += "<span class='notice'>There is only one empty tank available, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is only one empty tank available, please refill the machine by using iron sheets.")
 	else
-		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is no available tank, please refill the machine by using iron sheets.")
 
 ///Check what is the current operating mode
 /obj/machinery/bluespace_vendor/proc/check_mode()
@@ -182,9 +165,11 @@
 
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
-	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(connected_machine.vendors, src)
-	connected_machine = null
+	SIGNAL_HANDLER
+	if(connected_machine)
+		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		LAZYREMOVE(connected_machine.vendors, src)
+		connected_machine = null
 	mode = BS_MODE_OFF
 	update_appearance()
 

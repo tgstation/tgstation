@@ -30,7 +30,8 @@
 	If amount_left is equal to -1, the component is infinite and will never delete itself.
 */
 /datum/component/sound_player/proc/play_sound()
-	playsound(parent, pickweight(sounds), volume, TRUE)
+	SIGNAL_HANDLER
+	playsound(parent, pick_weight(sounds), volume, TRUE)
 	switch(amount_left)
 		if(-1)
 			return

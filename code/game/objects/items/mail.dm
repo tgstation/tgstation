@@ -10,12 +10,12 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
-	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
-	/// Who this mail is for and who can open it.
-	var/datum/weakref/recipient
+	/// Weak reference to who this mail is for and who can open it.
+	var/datum/weakref/recipient_ref
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
 	/// Goodies which can be given to anyone. The base weight for cash is 56. For there to be a 50/50 chance of getting a department item, they need 56 weight as well.
@@ -50,7 +50,7 @@
 	stamp_max = 2
 	stamp_offset_y = 5
 
-/obj/item/mail/Initialize()
+/obj/item/mail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 	AddElement(/datum/element/item_scaling, 0.75, 1)
@@ -69,7 +69,7 @@
 	// Add some random stamps.
 	if(stamped == TRUE)
 		var/stamp_count = rand(1, stamp_max)
-		for(var/i = 1, i <= stamp_count, i++)
+		for(var/i in 1 to stamp_count)
 			stamps += list("stamp_[rand(2, 6)]")
 	update_icon()
 
@@ -104,16 +104,20 @@
 
 		if(sort_tag != destination_tag.currTag)
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
-			to_chat(user, "<span class='notice'>*[tag]*</span>")
+			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 /obj/item/mail/attack_self(mob/user)
-	if(recipient && user != recipient)
-		to_chat(user, "<span class='notice'>You can't open somebody else's mail! That's <em>illegal</em>!</span>")
-		return
+	if(recipient_ref)
+		var/datum/mind/recipient = recipient_ref.resolve()
+		// If the recipient's mind has gone, then anyone can open their mail
+		// whether a mind can actually be qdel'd is an exercise for the reader
+		if(recipient && recipient != user?.mind)
+			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
+			return
 
-	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")
+	to_chat(user, span_notice("You start to unwrap the package..."))
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -124,21 +128,24 @@
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list("<span class='notice'><i>You notice the postmarking on the front of the mail...</i></span>")
+	var/list/msg = list(span_notice("<i>You notice the postmarking on the front of the mail...</i>"))
+	var/datum/mind/recipient = recipient_ref.resolve()
 	if(recipient)
-		msg += "\t<span class='info'>Certified NT mail for [recipient].</span>"
+		msg += "\t[span_info("Certified NT mail for [recipient].")]"
 	else
-		msg += "\t<span class='info'>Certified mail for [GLOB.station_name].</span>"
-	msg += "\t<span class='info'>Distribute by hand or via destination tagger using the certified NT disposal system.</span>"
+		msg += "\t[span_info("Certified mail for [GLOB.station_name].")]"
+	msg += "\t[span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")]"
 	return msg
 
-/// Accepts a mob to initialize goodies for a piece of mail.
-/obj/item/mail/proc/initialize_for_recipient(mob/new_recipient)
-	recipient = new_recipient
-	name = "[initial(name)] for [new_recipient.real_name] ([new_recipient.job])"
+/// Accepts a mind to initialize goodies for a piece of mail.
+/obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
+	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
+	recipient_ref = WEAKREF(recipient)
+
+	var/mob/living/body = recipient.current
 	var/list/goodies = generic_goodies
 
-	var/datum/job/this_job = SSjob.name_occupations[new_recipient.job]
+	var/datum/job/this_job = recipient.assigned_role
 	if(this_job)
 		if(this_job.paycheck_department && department_colors[this_job.paycheck_department])
 			color = department_colors[this_job.paycheck_department]
@@ -150,16 +157,10 @@
 			else
 				goodies += job_goodies
 
-	for(var/iterator = 0, iterator < goodie_count, iterator++)
-		var/target_good = pickweight(goodies)
-		if(ispath(target_good, /datum/reagent))
-			var/obj/item/reagent_containers/target_container = new /obj/item/reagent_containers/glass/bottle(src)
-			target_container.reagents.add_reagent(target_good, target_container.volume)
-			target_container.name = "[target_container.reagents.reagent_list[1].name] bottle"
-			new_recipient.log_message("[key_name(new_recipient)] received reagent container [target_container.name] in the mail ([target_good])", LOG_GAME)
-		else
-			var/atom/movable/target_atom = new target_good(src)
-			new_recipient.log_message("[key_name(new_recipient)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
+	for(var/iterator in 1 to goodie_count)
+		var/target_good = pick_weight(goodies)
+		var/atom/movable/target_atom = new target_good(src)
+		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
 	return TRUE
 
@@ -192,8 +193,8 @@
 		disposal_holder.destinationTag = sort_tag
 
 /// Subtype that's always junkmail
-/obj/item/mail/junkmail/Initialize()
-	..()
+/obj/item/mail/junkmail/Initialize(mapload)
+	. = ..()
 	junk_mail()
 
 /// Crate for mail from CentCom.
@@ -201,11 +202,7 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
-
-/// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
-/obj/structure/closet/crate/mail/full
-	name = "brimming mail crate"
-	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -216,25 +213,50 @@
 	else
 		icon_state = "[initial(icon_state)]sealed"
 
-/obj/structure/closet/crate/mail/full/Initialize()
-	. = ..()
+/// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
+/obj/structure/closet/crate/mail/proc/populate(amount)
+	var/mail_count = min(amount, storage_capacity)
+	// Fills the
 	var/list/mail_recipients = list()
-	for(var/mob/living/carbon/human/alive in GLOB.player_list)
-		if(alive.stat != DEAD)
-			mail_recipients += alive
-	for(var/iterator in 1 to storage_capacity)
+
+	for(var/mob/living/carbon/human/human in GLOB.player_list)
+		if(human.stat == DEAD || !human.mind)
+			continue
+		// Skip wizards, nuke ops, cyborgs; Centcom does not send them mail
+		if(!(human.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+
+		mail_recipients += human.mind
+
+	for(var/i in 1 to mail_count)
 		var/obj/item/mail/new_mail
 		if(prob(FULL_CRATE_LETTER_ODDS))
 			new_mail = new /obj/item/mail(src)
 		else
 			new_mail = new /obj/item/mail/envelope(src)
-		var/mob/living/carbon/human/mail_to
-		mail_to = pick(mail_recipients)
-		if(mail_to)
-			new_mail.initialize_for_recipient(mail_to)
-			mail_recipients -= mail_to //Once picked, the mail crate will need a new recipient.
+
+		var/datum/mind/recipient = pick_n_take(mail_recipients)
+		if(recipient)
+			new_mail.initialize_for_recipient(recipient)
 		else
 			new_mail.junk_mail()
+
+	update_icon()
+
+/// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
+/obj/structure/closet/crate/mail/economy/Initialize(mapload)
+	. = ..()
+	populate(SSeconomy.mail_waiting)
+	SSeconomy.mail_waiting = 0
+
+/// Crate for mail that automatically generates a lot of mail. Usually only normal mail, but on lowpop it may end up just being junk.
+/obj/structure/closet/crate/mail/full
+	name = "brimming mail crate"
+	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
+
+/obj/structure/closet/crate/mail/full/Initialize(mapload)
+	. = ..()
+	populate(INFINITY)
 
 
 /// Mailbag.
@@ -264,7 +286,7 @@
 	icon_state = "scrap"
 	var/nuclear_option_odds = 0.1
 
-/obj/item/paper/fluff/junkmail_redpill/Initialize()
+/obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
 	. = ..()
 	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
 		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
@@ -282,6 +304,6 @@
 	name = "important document"
 	icon_state = "paper_words"
 
-/obj/item/paper/fluff/junkmail_generic/Initialize()
+/obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
 	. = ..()
 	info = pick(GLOB.junkmail_messages)

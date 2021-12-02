@@ -5,21 +5,21 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 	anchored = TRUE
 
-	icon            = 'icons/turf/floors.dmi'
-	icon_state      = "grey"
-	plane           = OPENSPACE_BACKDROP_PLANE
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "grey"
+	plane = OPENSPACE_BACKDROP_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	//I don't know why the others are aligned but I shall do the same.
 	vis_flags = VIS_INHERIT_ID
 
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
-	icon_state = "transparent"
+	icon_state = "invisible"
 	baseturfs = /turf/open/openspace
-	CanAtmosPassVertical = ATMOS_PASS_YES
+	can_atmos_pass_vertical = ATMOS_PASS_YES
 	baseturfs = /turf/open/openspace
-	intact = FALSE //this means wires go on top
+	overfloor_placed = FALSE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
@@ -28,9 +28,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/openspace/airless/planetary
-		planetary_atmos = TRUE
+	planetary_atmos = TRUE
 
-/turf/open/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+/turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
 	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
 	return INITIALIZE_HINT_LATELOAD
@@ -93,23 +93,23 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
 		if(W)
-			to_chat(user, "<span class='warning'>There is already a catwalk here!</span>")
+			to_chat(user, span_warning("There is already a catwalk here!"))
 			return
 		if(L)
 			if(R.use(1))
 				qdel(L)
-				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
+				to_chat(user, span_notice("You construct a catwalk."))
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 				new/obj/structure/lattice/catwalk(src)
 			else
-				to_chat(user, "<span class='warning'>You need two rods to build a catwalk!</span>")
+				to_chat(user, span_warning("You need two rods to build a catwalk!"))
 			return
 		if(R.use(1))
-			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
+			to_chat(user, span_notice("You construct a lattice."))
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 			ReplaceWithLattice()
 		else
-			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
+			to_chat(user, span_warning("You need one rod to build a lattice."))
 		return
 	if(istype(C, /obj/item/stack/tile/iron))
 		if(!CanCoverUp())
@@ -120,12 +120,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, "<span class='notice'>You build a floor.</span>")
+				to_chat(user, span_notice("You build a floor."))
 				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			else
-				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
+				to_chat(user, span_warning("You need one floor tile to build a floor!"))
 		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support! Place iron rods first.</span>")
+			to_chat(user, span_warning("The plating is going to need some support! Place iron rods first."))
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(!CanBuildHere())
@@ -143,7 +143,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
-			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			to_chat(user, span_notice("You build a floor."))
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
@@ -159,9 +159,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	/// If true mineral turfs below this openspace turf will be mined automatically
 	var/drill_below = TRUE
 
-/turf/open/openspace/icemoon/Initialize()
+/turf/open/openspace/icemoon/Initialize(mapload)
 	. = ..()
 	var/turf/T = below()
+	//I wonder if I should error here
+	if(!T)
+		return
 	if(T.turf_flags & NO_RUINS && protect_ruin)
 		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
 		return

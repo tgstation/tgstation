@@ -47,7 +47,7 @@
 		name = dryname
 		desc = drydesc
 		bloodiness = 0
-		color =  COLOR_GRAY //not all blood splatters have their own sprites... It still looks pretty nice
+		color = COLOR_GRAY //not all blood splatters have their own sprites... It still looks pretty nice
 		STOP_PROCESSING(SSobj, src)
 		return TRUE
 
@@ -93,6 +93,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gib1"
 	layer = LOW_OBJ_LAYER
+	plane = GAME_PLANE
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 	turf_loc_check = FALSE
@@ -279,17 +280,17 @@
 			// god help me
 			if(species == "unknown")
 				. += "Some <B>feet</B>."
-			else if(species == "monkey")
-				. += "[icon2html('icons/mob/monkey.dmi', user, "monkey1")] Some <B>monkey feet</B>."
-			else if(species == "human")
+			else if(species == SPECIES_MONKEY)
+				. += "[icon2html('icons/mob/human.dmi', user, "monkey")] Some <B>monkey feet</B>."
+			else if(species == SPECIES_HUMAN)
 				. += "[icon2html('icons/mob/human_parts.dmi', user, "default_human_l_leg")] Some <B>human feet</B>."
 			else
 				. += "[icon2html('icons/mob/human_parts.dmi', user, "[species]_l_leg")] Some <B>[species] feet</B>."
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
-		return
-	..()
+		return FALSE
+	return ..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

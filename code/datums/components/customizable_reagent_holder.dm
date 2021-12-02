@@ -33,7 +33,8 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/atom_parent = parent
-	if (!atom_parent.reagents)
+	// assume replacement is OK
+	if (!atom_parent.reagents && !replacement)
 		return COMPONENT_INCOMPATIBLE
 
 	src.replacement = replacement
@@ -108,14 +109,16 @@
 	switch (ingredient_type)
 		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
 			valid_ingredient = IS_EDIBLE(ingredient)
+		if (CUSTOM_INGREDIENT_TYPE_DRYABLE)
+			valid_ingredient = HAS_TRAIT(ingredient, TRAIT_DRYABLE)
 
 	// only accept valid ingredients
 	if (!valid_ingredient || HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
-		to_chat(attacker, "<span class='warning'>[ingredient] doesn't belong on [parent]!</span>")
+		to_chat(attacker, span_warning("[ingredient] doesn't belong on [parent]!"))
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
-		to_chat(attacker, "<span class='warning'>[parent] is too full for any more ingredients!</span>")
+		to_chat(attacker, span_warning("[parent] is too full for any more ingredients!"))
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/atom_parent = parent
@@ -125,7 +128,6 @@
 		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
 		ingredient.forceMove(replacement_parent)
 		replacement = null
-		RemoveComponent()
 		replacement_parent.TakeComponent(src)
 		qdel(atom_parent)
 	handle_reagents(ingredient)
@@ -228,7 +230,7 @@
 	else
 		var/list/rgbcolor = list(0,0,0,0)
 		var/customcolor = GetColors(color)
-		var/ingcolor =  GetColors(top_overlay.color)
+		var/ingcolor = GetColors(top_overlay.color)
 		rgbcolor[1] = (customcolor[1]+ingcolor[1])/2
 		rgbcolor[2] = (customcolor[2]+ingcolor[2])/2
 		rgbcolor[3] = (customcolor[3]+ingcolor[3])/2

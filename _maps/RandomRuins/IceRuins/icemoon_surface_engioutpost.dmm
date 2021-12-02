@@ -162,22 +162,18 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
+/obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aL" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "aM" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
@@ -233,9 +229,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ba" = (
@@ -402,7 +396,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/book/manual/wiki/engineering_singulo_tesla,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bE" = (
@@ -549,7 +542,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "ci" = (
-/obj/machinery/light/broken,
+/obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cj" = (
@@ -566,9 +559,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/light/dim{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cm" = (
@@ -586,9 +577,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cs" = (
-/obj/machinery/light/dim{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
@@ -707,7 +696,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cR" = (
@@ -757,23 +746,14 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "cZ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "db" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
 /turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
-"dc" = (
-/obj/machinery/power/rad_collector,
-/obj/structure/cable,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dd" = (
-/obj/machinery/power/rad_collector,
-/turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "de" = (
 /obj/machinery/rnd/production/circuit_imprinter/offstation,
@@ -781,7 +761,7 @@
 /area/icemoon/surface/outdoors)
 "df" = (
 /obj/machinery/rnd/production/protolathe/department/engineering,
-/obj/machinery/light/small/broken,
+/obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "dg" = (
@@ -821,7 +801,7 @@
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "dp" = (
-/obj/machinery/light/built,
+/obj/machinery/light/built/directional/south,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "dq" = (
@@ -918,17 +898,17 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "na" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "tH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
 "xA" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
 /turf/open/floor/engine/airless,
 /area/icemoon/surface/outdoors)
@@ -1079,7 +1059,7 @@ aa
 af
 cE
 ag
-dc
+ag
 al
 ae
 aa
@@ -1121,7 +1101,7 @@ aa
 af
 af
 ag
-dc
+ag
 dp
 ae
 aa
@@ -1142,7 +1122,7 @@ aa
 af
 ab
 ag
-dd
+al
 dq
 ak
 aa
@@ -1163,7 +1143,7 @@ aa
 af
 cE
 ag
-dc
+ag
 al
 ak
 aa

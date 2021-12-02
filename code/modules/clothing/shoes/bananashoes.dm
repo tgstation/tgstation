@@ -8,7 +8,7 @@
 	var/on = FALSE
 	var/always_noslip = FALSE
 
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize(mapload)
 	. = ..()
 	if(always_noslip)
 		clothing_flags |= NOSLIP
@@ -31,7 +31,7 @@
 			if(!always_noslip)
 				clothing_flags &= ~NOSLIP
 			update_appearance()
-			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
+			to_chat(loc, span_warning("You ran out of bananium!"))
 		else
 			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(wearer.dir, 180))) //honk
 			bananium.use_amount_mat(100, /datum/material/bananium)
@@ -40,27 +40,27 @@
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
-		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
+		to_chat(user, span_notice("You retrieve [sheet_amount] sheets of bananium from the prototype shoes."))
 	else
-		to_chat(user, "<span class='warning'>You cannot retrieve any bananium from the prototype shoes!</span>")
+		to_chat(user, span_warning("You cannot retrieve any bananium from the prototype shoes!"))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
+	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
 		update_appearance()
-		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
+		to_chat(user, span_notice("You [on ? "activate" : "deactivate"] the prototype shoes."))
 		if(!always_noslip)
 			if(on)
 				clothing_flags |= NOSLIP
 			else
 				clothing_flags &= ~NOSLIP
 	else
-		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
+		to_chat(user, span_warning("You need bananium to turn the prototype shoes on!"))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon_state()
 	icon_state = "clown_prototype_[on ? "on" : "off"]"

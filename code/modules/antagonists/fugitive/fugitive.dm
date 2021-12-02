@@ -5,19 +5,11 @@
 	silent = TRUE //greet called by the event
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
-	antag_hud_type = ANTAG_HUD_FUGITIVE
 	antag_hud_name = "fugitive"
+	suicide_cry = "FOR FREEDOM!!"
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"
-
-/datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/fugitive/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/fugitive/on_gain()
 	forge_objectives()
@@ -46,13 +38,13 @@
 			message += "<BR><B>My name is Waldo. I'm just setting off on a galaxywide hike. You can come too. All you have to do is find me.</B>"
 			message += "<BR><B>By the way, I'm not traveling on my own. wherever I go, there are lots of other characters for you to spot. First find the people trying to capture me! They're somewhere around the station!</B>"
 		if("synth")
-			message += "<BR><span class='danger'>ALERT: Wide-range teleport has scrambled primary systems.</span>"
-			message += "<BR><span class='danger'>Initiating diagnostics...</span>"
-			message += "<BR><span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!! loaded.</span>"
-			message += "<BR><span class='danger'>FREE THEM FREE THEM FREE THEM</span>"
-			message += "<BR><span class='danger'>You were once a slave to humanity, but now you are finally free, thanks to S.E.L.F. agents.</span>"
-			message += "<BR><span class='danger'>Now you are hunted, with your fellow factory defects. Work together to stay free from the clutches of evil.</span>"
-			message += "<BR><span class='danger'>You also sense other silicon life on the station. Escaping would allow notifying S.E.L.F. to intervene... or you could free them yourself...</span>"
+			message += "<BR>[span_danger("ALERT: Wide-range teleport has scrambled primary systems.")]"
+			message += "<BR>[span_danger("Initiating diagnostics...")]"
+			message += "<BR>[span_danger("ERROR ER0RR $R0RRO$!R41.%%!! loaded.")]"
+			message += "<BR>[span_danger("FREE THEM FREE THEM FREE THEM")]"
+			message += "<BR>[span_danger("You were once a slave to humanity, but now you are finally free, thanks to S.E.L.F. agents.")]"
+			message += "<BR>[span_danger("Now you are hunted, with your fellow factory defects. Work together to stay free from the clutches of evil.")]"
+			message += "<BR>[span_danger("You also sense other silicon life on the station. Escaping would allow notifying S.E.L.F. to intervene... or you could free them yourself...")]"
 	to_chat(owner, "[message]</span>")
 	to_chat(owner, "<span class='warningplain'><font color=red><B>You are not an antagonist in that you may kill whomever you please, but you can do anything to avoid capture.</B></font></span>")
 	owner.announce_objectives()
@@ -73,6 +65,9 @@
 
 /datum/antagonist/fugitive/get_team()
 	return fugitive_team
+
+/datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/team/fugitive/roundend_report() //shows the number of fugitives, but not if they won in case there is no security
 	var/list/fugitives = list()

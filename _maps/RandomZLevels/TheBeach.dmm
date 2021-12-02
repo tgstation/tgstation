@@ -210,13 +210,6 @@
 	},
 /turf/open/floor/plating/beach/water,
 /area/awaymission/beach)
-"aJ" = (
-/obj/item/reagent_containers/food/drinks/beer/light{
-	pixel_x = -14;
-	pixel_y = 15
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "aK" = (
 /mob/living/simple_animal/crab,
 /turf/open/floor/plating/beach/sand,
@@ -266,18 +259,14 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bc" = (
-/obj/structure/mirror{
-	pixel_y = 28
-	},
+/obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bd" = (
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "be" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bf" = (
@@ -302,21 +291,19 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bi" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/east{
 	id = "changlinhut2";
 	name = "changing room lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bj" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/west{
 	id = "changlinhut1";
 	name = "changing room lock";
 	normaldoorcontrol = 1;
-	pixel_x = -24;
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
@@ -328,38 +315,35 @@
 /area/awaymission/beach)
 "bl" = (
 /obj/structure/bed,
-/obj/machinery/button/door{
+/obj/item/bedsheet/dorms,
+/obj/machinery/button/door/directional/east{
 	id = "theloveshack1";
 	name = "door lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bm" = (
 /obj/structure/bed,
-/obj/machinery/button/door{
+/obj/item/bedsheet/dorms,
+/obj/machinery/button/door/directional/east{
 	id = "theloveshack2";
 	name = "door lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bn" = (
 /obj/structure/bed,
-/obj/machinery/button/door{
+/obj/item/bedsheet/dorms,
+/obj/machinery/button/door/directional/east{
 	id = "theloveshack3";
 	name = "door lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bo" = (
@@ -522,9 +506,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bM" = (
-/obj/structure/mirror{
-	pixel_x = 28
-	},
+/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/sand,
 /obj/structure/sink{
 	pixel_y = 32
@@ -532,9 +514,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bN" = (
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/sand,
 /obj/structure/sink{
 	pixel_y = 32
@@ -560,49 +540,45 @@
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bR" = (
-/obj/machinery/button/door{
+/obj/effect/turf_decal/sand,
+/obj/machinery/button/door/directional/east{
 	id = "toilet1";
 	name = "restroom lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bS" = (
-/obj/machinery/button/door{
+/obj/effect/turf_decal/sand,
+/obj/machinery/button/door/directional/west{
 	id = "toilet2";
 	name = "restroom lock";
 	normaldoorcontrol = 1;
-	pixel_x = -24;
 	specialfunctions = 4
 	},
-/obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bT" = (
 /obj/structure/bed,
-/obj/machinery/button/door{
+/obj/item/bedsheet/red,
+/obj/machinery/button/door/directional/east{
 	id = "loveshack";
 	name = "love shack lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/red,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bU" = (
 /obj/structure/bed,
-/obj/machinery/button/door{
+/obj/item/bedsheet/dorms,
+/obj/machinery/button/door/directional/east{
 	id = "theloveshack4";
 	name = "door lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bV" = (
@@ -613,14 +589,13 @@
 /area/awaymission/beach)
 "bW" = (
 /obj/structure/bed,
-/obj/machinery/button/door{
+/obj/item/bedsheet/dorms,
+/obj/machinery/button/door/directional/east{
 	id = "theloveshack5";
 	name = "door lock";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bX" = (
@@ -646,9 +621,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "ca" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = -32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cb" = (
@@ -667,11 +640,6 @@
 "cd" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/vending/cola/starkist,
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"ce" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/spawner/randomsnackvend,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cf" = (
@@ -713,13 +681,6 @@
 "cl" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/shaker,
-/turf/open/floor/wood,
-/area/awaymission/beach)
-"cm" = (
-/obj/structure/table/wood,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cn" = (
@@ -815,11 +776,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
-"cB" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/ale,
-/turf/open/floor/wood,
-/area/awaymission/beach)
 "cC" = (
 /obj/structure/table/wood,
 /obj/item/food/burger/crab{
@@ -853,7 +809,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cH" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
@@ -869,16 +825,6 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"cK" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cL" = (
@@ -1025,6 +971,11 @@
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"hw" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/ale,
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "iy" = (
 /obj/item/toy/seashell,
 /turf/open/floor/plating/beach/coastline_t,
@@ -1043,6 +994,11 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"lx" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
 "lA" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/maltliquor{
@@ -1058,9 +1014,23 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
+"mV" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer/light{
+	pixel_x = -14;
+	pixel_y = 15
+	},
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
 "oE" = (
 /obj/structure/table/wood,
 /obj/item/food/burger/crab,
+/turf/open/floor/wood,
+/area/awaymission/beach)
+"sG" = (
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "wr" = (
@@ -1152,6 +1122,16 @@
 	pixel_x = 7;
 	pixel_y = -5
 	},
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
+"Nr" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "QQ" = (
@@ -6620,7 +6600,7 @@ ci
 bd
 bd
 bd
-cB
+hw
 cH
 ba
 ak
@@ -6721,13 +6701,13 @@ bQ
 aX
 ak
 ba
-ce
+lx
 aX
 cj
 bd
 bd
 bd
-cB
+hw
 cH
 ba
 ak
@@ -7044,7 +7024,7 @@ ak
 ba
 ba
 aX
-cm
+sG
 bd
 bd
 bd
@@ -7577,7 +7557,7 @@ bQ
 aX
 ak
 ba
-ce
+lx
 aX
 bd
 bd
@@ -8228,7 +8208,7 @@ ak
 ak
 ak
 ak
-cK
+Nr
 cM
 ap
 bw
@@ -8631,7 +8611,7 @@ ac
 ad
 ag
 ak
-aJ
+mV
 aE
 ak
 aX

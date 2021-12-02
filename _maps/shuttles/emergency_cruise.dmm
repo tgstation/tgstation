@@ -70,7 +70,7 @@
 /obj/item/storage/fancy/donut_box{
 	pixel_y = -7
 	},
-/obj/item/food/donut{
+/obj/item/food/donut/plain{
 	pixel_x = 5;
 	pixel_y = 10
 	},
@@ -90,7 +90,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "cZ" = (
-/obj/item/toy/plush/lizardplushie{
+/obj/item/toy/plush/lizard_plushie/green{
 	name = "Hides-On-Shuttle"
 	},
 /turf/open/floor/wood,
@@ -106,9 +106,7 @@
 /obj/item/clipboard,
 /obj/item/folder/white,
 /obj/item/pen/blue,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "dR" = (
@@ -137,7 +135,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "en" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "fB" = (
@@ -236,9 +234,7 @@
 /obj/item/clipboard,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "jT" = (
@@ -362,9 +358,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "mv" = (
@@ -402,13 +396,11 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "oo" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "oH" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "oZ" = (
@@ -432,9 +424,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "qd" = (
@@ -527,9 +517,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "rt" = (
@@ -577,9 +565,7 @@
 /area/shuttle/escape)
 "si" = (
 /obj/structure/table/wood/fancy,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "sv" = (
@@ -626,7 +612,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ut" = (
@@ -843,9 +829,7 @@
 /area/shuttle/escape)
 "BB" = (
 /obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Cw" = (
@@ -854,7 +838,7 @@
 /area/shuttle/escape)
 "CK" = (
 /obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "CR" = (
@@ -888,9 +872,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Dq" = (
@@ -915,9 +897,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "EC" = (
@@ -928,9 +908,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "FR" = (
@@ -1039,9 +1017,7 @@
 /area/shuttle/escape)
 "Iu" = (
 /obj/machinery/computer/slot_machine,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "IL" = (
@@ -1096,16 +1072,12 @@
 	max_integrity = 2500;
 	name = "seraph mech exhibit"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Kc" = (
 /obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Ki" = (
@@ -1241,9 +1213,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "On" = (
@@ -1335,15 +1305,11 @@
 	max_integrity = 2500;
 	name = "marauder mech exhibit"
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Pr" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "So" = (
@@ -1467,7 +1433,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "UJ" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "UN" = (
@@ -1490,9 +1456,7 @@
 /area/shuttle/escape)
 "Vv" = (
 /obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "VQ" = (
@@ -1615,9 +1579,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "YZ" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "ZL" = (

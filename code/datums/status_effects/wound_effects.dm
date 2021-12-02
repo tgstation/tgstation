@@ -11,14 +11,14 @@
 
 /datum/status_effect/determined/on_apply()
 	. = ..()
-	owner.visible_message("<span class='danger'>[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!</span>", "<span class='notice'><b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b></span>", \
+	owner.visible_message(span_danger("[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!"), span_notice("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"), \
 		vision_distance=COMBAT_MESSAGE_RANGE)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
 
 /datum/status_effect/determined/on_remove()
-	owner.visible_message("<span class='danger'>[owner]'s body slackens noticeably!</span>", "<span class='warning'><b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+	owner.visible_message(span_danger("[owner]'s body slackens noticeably!"), span_warning("<b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
@@ -27,7 +27,7 @@
 /datum/status_effect/limp
 	id = "limp"
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = 10
+	tick_interval = 0
 	alert_type = /atom/movable/screen/alert/status_effect/limp
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 	/// The left leg of the limping person
@@ -40,6 +40,10 @@
 	var/slowdown_left = 0
 	/// How many deciseconds we limp for on the right leg
 	var/slowdown_right = 0
+	/// The chance we limp with the left leg each step it takes
+	var/limp_chance_left = 0
+	/// The chance we limp with the right leg each step it takes
+	var/limp_chance_right = 0
 
 /datum/status_effect/limp/on_apply()
 	if(!iscarbon(owner))
@@ -64,14 +68,17 @@
 
 	if(!owner.client || owner.body_position == LYING_DOWN || !owner.has_gravity() || (owner.movement_type & FLYING) || forced || owner.buckled)
 		return
+
 	// less limping while we have determination still
-	var/determined_mod = owner.has_status_effect(STATUS_EFFECT_DETERMINED) ? 0.25 : 1
+	var/determined_mod = owner.has_status_effect(STATUS_EFFECT_DETERMINED) ? 0.5 : 1
 
 	if(next_leg == left)
-		owner.client.move_delay += slowdown_left * determined_mod
+		if(prob(limp_chance_left * determined_mod))
+			owner.client.move_delay += slowdown_left * determined_mod
 		next_leg = right
 	else
-		owner.client.move_delay += slowdown_right * determined_mod
+		if(prob(limp_chance_right * determined_mod))
+			owner.client.move_delay += slowdown_right * determined_mod
 		next_leg = left
 
 /datum/status_effect/limp/proc/update_limp()
@@ -87,16 +94,21 @@
 
 	slowdown_left = 0
 	slowdown_right = 0
+	limp_chance_left = 0
+	limp_chance_right = 0
 
+	// technically you can have multiple wounds causing limps on the same limb, even if practically only bone wounds cause it in normal gameplay
 	if(left)
 		for(var/thing in left.wounds)
 			var/datum/wound/W = thing
 			slowdown_left += W.limp_slowdown
+			limp_chance_left = max(limp_chance_left, W.limp_chance)
 
 	if(right)
 		for(var/thing in right.wounds)
 			var/datum/wound/W = thing
 			slowdown_right += W.limp_slowdown
+			limp_chance_right = max(limp_chance_right, W.limp_chance)
 
 	// this handles losing your leg with the limp and the other one being in good shape as well
 	if(!slowdown_left && !slowdown_right)

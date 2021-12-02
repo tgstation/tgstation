@@ -6,7 +6,7 @@
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/item/storage/drone_tools/Initialize()
+/obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
@@ -45,6 +45,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "crowbar_cyborg"
 	inhand_icon_state = "crowbar"
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/screwdriver/drone
 	name = "built-in screwdriver"
@@ -52,15 +53,18 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "screwdriver_cyborg"
 	inhand_icon_state = "screwdriver"
+	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 
 
-/obj/item/screwdriver/drone/worn_overlays(isinhands = FALSE, icon_file)
-	. = list()
-	if(isinhands)
-		var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
-		head.appearance_flags = RESET_COLOR
-		. += head
+/obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+	. = ..()
+	if(!isinhands)
+		return
+
+	var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
+	head.appearance_flags = RESET_COLOR
+	. += head
 
 /obj/item/wrench/drone
 	name = "built-in wrench"
@@ -68,12 +72,14 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wrench_cyborg"
 	inhand_icon_state = "wrench"
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/weldingtool/drone
 	name = "built-in welding tool"
 	desc = "A welding tool built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
+	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/wirecutters/drone
 	name = "built-in wirecutters"
@@ -81,5 +87,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wirecutters_cyborg"
 	inhand_icon_state = "cutters"
+	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
 

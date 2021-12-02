@@ -17,21 +17,7 @@
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
 
-/obj/machinery/flasher/directional/north
-	dir = SOUTH
-	pixel_y = 26
-
-/obj/machinery/flasher/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/flasher/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/flasher/directional/west
-	dir = EAST
-	pixel_x = -26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -47,11 +33,7 @@
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	if(built)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
-	else
+	if(!built)
 		bulb = new(src)
 
 
@@ -76,9 +58,9 @@
 	add_fingerprint(user)
 	if (W.tool_behaviour == TOOL_WIRECUTTER)
 		if (bulb)
-			user.visible_message("<span class='notice'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
+			user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message("<span class='notice'>[user] disconnects [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
+				user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
@@ -87,20 +69,20 @@
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return
-			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
+			user.visible_message(span_notice("[user] installs [W] into [src]."), span_notice("You install [W] into [src]."))
 			bulb = W
 			power_change()
 		else
-			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
+			to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
 
 	else if (W.tool_behaviour == TOOL_WRENCH)
 		if(!bulb)
-			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
+			to_chat(user, span_notice("You start unsecuring the flasher frame..."))
 			if(W.use_tool(src, user, 40, volume=50))
-				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
+				to_chat(user, span_notice("You unsecure the flasher frame."))
 				deconstruct(TRUE)
 		else
-			to_chat(user, "<span class='warning'>Remove a flashbulb from [src] first!</span>")
+			to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
 	else
 		return ..()
 
@@ -156,7 +138,7 @@
 			bulb.burn_out()
 			power_change()
 
-/obj/machinery/flasher/obj_break(damage_flag)
+/obj/machinery/flasher/atom_break(damage_flag)
 	. = ..()
 	if(. && bulb)
 		bulb.burn_out()
@@ -176,7 +158,7 @@
 			new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
-/obj/machinery/flasher/portable/Initialize()
+/obj/machinery/flasher/portable/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 0)
 
@@ -194,13 +176,13 @@
 		W.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
-			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
+			to_chat(user, span_notice("[src] is now secured."))
 			add_overlay("[base_icon_state]-s")
 			set_anchored(TRUE)
 			power_change()
 			proximity_monitor.SetRange(range)
 		else
-			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
+			to_chat(user, span_notice("[src] can now be moved."))
 			cut_overlays()
 			set_anchored(FALSE)
 			power_change()
@@ -216,10 +198,11 @@
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null
+	pixel_shift = 28
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+	. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/wallframe/flasher/after_attach(obj/O)
 	..()

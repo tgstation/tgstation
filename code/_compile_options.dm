@@ -16,11 +16,13 @@
 #ifdef REFERENCE_TRACKING
 
 ///Used for doing dry runs of the reference finder, to test for feature completeness
+///Slightly slower, higher in memory. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
 
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
+///Don't stop when searching, go till you're totally done
 #define FIND_REF_NO_CHECK_TICK
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
@@ -45,21 +47,17 @@
 								// 2 for preloading absolutely everything;
 
 #ifdef LOWMEMORYMODE
-#define FORCE_MAP "_maps/runtimestation.json"
+#define FORCE_MAP "runtimestation"
+#define FORCE_MAP_DIRECTORY "_maps"
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 513
-#define MIN_COMPILER_BUILD 1514
-#if DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD
+#define MIN_COMPILER_VERSION 514
+#define MIN_COMPILER_BUILD 1556
+#if (DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD) && !defined(SPACEMAN_DMM)
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513.1514 or higher
-#endif
-
-//Don't load extools on 514 and 513.1539+
-#if DM_VERSION < 514 && DM_BUILD < 1540
-#define USE_EXTOOLS
+#error You need version 514.1556 or higher
 #endif
 
 //Additional code for the above flags.
@@ -80,6 +78,7 @@
 #define REFERENCE_TRACKING
 #define REFERENCE_TRACKING_DEBUG
 #define FIND_REF_NO_CHECK_TICK
+#define GC_FAILURE_HARD_LOOKUP
 #endif
 
 #ifdef TGS
@@ -92,7 +91,7 @@
 #define MAX_ATOM_OVERLAYS 100
 
 #if !defined(CBT) && !defined(SPACEMAN_DMM)
-#warn "Building with Dream Maker is no longer supported and may result in errors."
-#warn "In order to build, run BUILD.bat in the root directory."
-#warn "Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build."
+#warn Building with Dream Maker is no longer supported and will result in errors.
+#warn In order to build, run BUILD.bat in the root directory.
+#warn Consider switching to VSCode editor instead, where you can press Ctrl+Shift+B to build.
 #endif

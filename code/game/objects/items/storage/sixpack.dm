@@ -10,14 +10,14 @@
 	max_integrity = 500
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/storage/cans/update_icon_state()
 	icon_state = "[initial(icon_state)][contents.len]"
 	return ..()
 
-/obj/item/storage/cans/Initialize()
+/obj/item/storage/cans/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -29,8 +29,8 @@
 	STR.max_items = 6
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food/drinks/soda_cans,
-		/obj/item/reagent_containers/food/drinks/beer,
-		/obj/item/reagent_containers/food/drinks/ale,
+		/obj/item/reagent_containers/food/drinks/bottle/beer,
+		/obj/item/reagent_containers/food/drinks/bottle/ale,
 		/obj/item/reagent_containers/food/drinks/waterbottle
 		))
 
@@ -48,4 +48,4 @@
 
 /obj/item/storage/cans/sixbeer/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/drinks/beer(src)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer(src)

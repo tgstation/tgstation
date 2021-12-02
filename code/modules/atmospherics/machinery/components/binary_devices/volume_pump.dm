@@ -41,7 +41,7 @@
 	if(can_interact(user))
 		transfer_rate = MAX_TRANSFER_RATE
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
-		to_chat(user, "<span class='notice'>You maximize the volume output on [src] to [transfer_rate] L/s.</span>")
+		balloon_alert(user, "volume output set to [transfer_rate] L/s")
 		update_appearance()
 	return ..()
 
@@ -94,7 +94,7 @@
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
 /**
- * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Called in atmos_init(), used to change or remove the radio frequency from the component
  * Arguments:
  * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
  */
@@ -105,7 +105,7 @@
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /**
- * Called in atmosinit(), send the component status to the radio device connected
+ * Called in atmos_init(), send the component status to the radio device connected
  */
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -133,7 +133,7 @@
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/volume_pump/atmosinit()
+/obj/machinery/atmospherics/components/binary/volume_pump/atmos_init()
 	. = ..()
 
 	set_frequency(frequency)
@@ -189,7 +189,7 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
 		return FALSE
 
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)

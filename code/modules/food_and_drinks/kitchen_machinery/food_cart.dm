@@ -14,9 +14,9 @@
 	var/obj/machinery/smartfridge/food/cart_smartfridge
 	var/obj/structure/table/reinforced/cart_table
 	var/obj/effect/food_cart_stand/cart_tent
-	var/static/list/packed_things
+	var/list/packed_things
 
-/obj/machinery/food_cart/Initialize()
+/obj/machinery/food_cart/Initialize(mapload)
 	. = ..()
 	cart_griddle = new(src)
 	cart_smartfridge = new(src)
@@ -26,6 +26,7 @@
 	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
 	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
 	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	RegisterSignal(cart_tent, COMSIG_PARENT_QDELETING, .proc/lost_part)
 
 /obj/machinery/food_cart/Destroy()
 	if(cart_griddle)
@@ -34,38 +35,40 @@
 		QDEL_NULL(cart_smartfridge)
 	if(cart_table)
 		QDEL_NULL(cart_table)
-	QDEL_NULL(cart_tent)
+	if(cart_tent)
+		QDEL_NULL(cart_tent)
+	packed_things.Cut()
 	return ..()
 
 /obj/machinery/food_cart/examine(mob/user)
 	. = ..()
 	if(!(machine_stat & BROKEN))
 		if(cart_griddle.machine_stat & BROKEN)
-			. += "<span class='warning'>The stand's <b>griddle</b> is completely broken!</span>"
+			. += span_warning("The stand's <b>griddle</b> is completely broken!")
 		else
-			. += "<span class='notice'>The stand's <b>griddle</b> is intact.</span>"
-		. += "<span class='notice'>The stand's <b>fridge</b> seems fine.</span>" //weirdly enough, these fridges don't break
-		. += "<span class='notice'>The stand's <b>table</b> seems fine.</span>"
+			. += span_notice("The stand's <b>griddle</b> is intact.")
+		. += span_notice("The stand's <b>fridge</b> seems fine.") //weirdly enough, these fridges don't break
+		. += span_notice("The stand's <b>table</b> seems fine.")
 
 /obj/machinery/food_cart/proc/pack_up()
 	if(!unpacked)
 		return
-	visible_message("<span class='notice'>[src] retracts all of it's unpacked components.</span>")
+	visible_message(span_notice("[src] retracts all of it's unpacked components."))
 	for(var/o in packed_things)
 		var/obj/object = o
 		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
 		object.forceMove(src)
-	anchored = FALSE
+	set_anchored(FALSE)
 	unpacked = FALSE
 
 /obj/machinery/food_cart/proc/unpack(mob/user)
 	if(unpacked)
 		return
 	if(!check_setup_place())
-		to_chat(user, "<span class='warning'>There isn't enough room to unpack here! Bad spaces were marked in red.</span>")
+		to_chat(user, span_warning("There isn't enough room to unpack here! Bad spaces were marked in red."))
 		return
-	visible_message("<span class='notice'>[src] expands into a full stand.</span>")
-	anchored = TRUE
+	visible_message(span_notice("[src] expands into a full stand."))
+	set_anchored(TRUE)
 	var/iteration = 1
 	var/turf/grabbed_turf = get_step(get_turf(src), EAST)
 	for(var/angle in list(0, -45, -45, 45))
@@ -79,15 +82,15 @@
 /obj/machinery/food_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(machine_stat & BROKEN)
-		to_chat(user, "<span class='warning'>[src] is completely busted.</span>")
+		to_chat(user, span_warning("[src] is completely busted."))
 		return
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = TRUE)
 	if(!check_access(id_card))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return
-	to_chat(user, "<span class='notice'>You attempt to [unpacked ? "pack up" :"unpack"] [src]...</span>")
+	to_chat(user, span_notice("You attempt to [unpacked ? "pack up" :"unpack"] [src]..."))
 	if(!do_after(user, 5 SECONDS, src))
-		to_chat(user, "<span class='warning'>Your [unpacked ? "" :"un"]packing of [src] was interrupted!</span>")
+		to_chat(user, span_warning("Your [unpacked ? "" :"un"]packing of [src] was interrupted!"))
 		return
 	if(unpacked)
 		pack_up()
@@ -113,19 +116,20 @@
 	UnregisterSignal(cart_griddle, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_tent, COMSIG_MOVABLE_MOVED)
-	obj_break()
+	UnregisterSignal(cart_tent, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	atom_break()
 
-/obj/machinery/food_cart/obj_break(damage_flag)
+/obj/machinery/food_cart/atom_break(damage_flag)
 	. = ..()
 	pack_up()
-	if(cart_griddle)
+	if(!QDELETED(cart_griddle))
 		QDEL_NULL(cart_griddle)
-	if(cart_smartfridge)
+	if(!QDELETED(cart_smartfridge))
 		QDEL_NULL(cart_smartfridge)
-	if(cart_table)
+	if(!QDELETED(cart_table))
 		QDEL_NULL(cart_table)
-	QDEL_NULL(cart_tent)
+	if(!QDELETED(cart_tent))
+		QDEL_NULL(cart_tent)
 
 /obj/effect/food_cart_stand
 	name = "food cart tent"

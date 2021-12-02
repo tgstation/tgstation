@@ -63,18 +63,18 @@
 	emote_see = list("coughs up a furball", "stretches")
 	emote_hear = list("purrs")
 	speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
-	desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
+	desc = "They're a cute little kitty-cat! ... wait ... what the hell?"
 
 /datum/dog_fashion/head/rabbit
 	name = "Hoppy"
-	emote_see = list("twitches its nose", "hops around a bit")
-	desc = "This is Hoppy. It's a corgi-...urmm... bunny rabbit."
+	emote_see = list("twitches their nose", "hops around a bit")
+	desc = "This is Hoppy. They're a corgi-...urmm... bunny rabbit."
 
 /datum/dog_fashion/head/beret
 	name = "Yann"
 	desc = "Mon dieu! C'est un chien!"
 	speak = list("le woof!", "le bark!", "JAPPE!!")
-	emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of him.")
+	emote_see = list("cowers in fear.", "surrenders.", "plays dead.","looks as though there is a wall in front of them.")
 
 
 /datum/dog_fashion/head/detective
@@ -90,7 +90,7 @@
 /datum/dog_fashion/head/pirate
 	name = "Pirate-title Pirate-name"
 	desc = "Yaarghh!! Thar' be a scurvy dog!"
-	emote_see = list("hunts for treasure.","stares coldly...","gnashes his tiny corgi teeth!")
+	emote_see = list("hunts for treasure.","stares coldly...","gnashes their tiny corgi teeth!")
 	emote_hear = list("growls ferociously!", "snarls.")
 	speak = list("Arrrrgh!!","Grrrrrr!")
 
@@ -137,8 +137,8 @@
 /datum/dog_fashion/head/santa
 	name = "Santa's Corgi Helper"
 	emote_hear = list("barks Christmas songs.", "yaps merrily!")
-	emote_see = list("looks for presents.", "checks his list.")
-	desc = "He's very fond of milk and cookies."
+	emote_see = list("looks for presents.", "checks their list.")
+	desc = "They're very fond of milk and cookies."
 
 /datum/dog_fashion/head/cargo_tech
 	name = "Corgi Tech REAL_NAME"
@@ -147,7 +147,7 @@
 /datum/dog_fashion/head/reindeer
 	name = "REAL_NAME the red-nosed Corgi"
 	emote_hear = list("lights the way!", "illuminates.", "yaps!")
-	desc = "He has a very shiny nose."
+	desc = "They have a very shiny nose."
 
 /datum/dog_fashion/head/sombrero
 	name = "Segnor REAL_NAME"
@@ -159,7 +159,7 @@
 
 /datum/dog_fashion/head/hop
 	name = "Lieutenant REAL_NAME"
-	desc = "Can actually be trusted to not run off on his own."
+	desc = "Can actually be trusted to not run off on their own."
 
 /datum/dog_fashion/head/deathsquad
 	name = "Trooper REAL_NAME"
@@ -179,3 +179,25 @@
 	name = "Festive REAL_NAME"
 	desc = "Ready to party!"
 	obj_icon_state = "festive"
+
+/datum/dog_fashion/head/pumpkin/unlit
+	name = "Headless HoP-less REAL_NAME"
+	desc = "A spooky dog spirit of a beloved pet who lost their owner."
+	obj_icon_state = "pumpkin0"
+	speak = list("BOO!", "AUUUUUUU", "RAAARGH!")
+	emote_see = list("shambles around.", "yaps ominously.", "shivers.")
+	emote_hear = list("howls at the Moon.", "yaps at the crows!")
+
+/datum/dog_fashion/head/pumpkin/lit
+	obj_icon_state = "pumpkin1"
+
+/datum/dog_fashion/head/blumpkin/unlit
+	name = "Hue-less Headless HoP-less REAL_NAME"
+	desc = "An evil dog spirit of a beloved pet that haunts your treats pantries!"
+	obj_icon_state = "blumpkin0"
+	speak = list("BOO!", "AUUUUUUU", "RAAARGH!")
+	emote_see = list("shambles around.", "yaps ominously.", "shivers.")
+	emote_hear = list("howls at the Moon.", "yaps at the crows!", "growls eerily!")
+
+/datum/dog_fashion/head/blumpkin/lit
+	obj_icon_state = "blumpkin1"

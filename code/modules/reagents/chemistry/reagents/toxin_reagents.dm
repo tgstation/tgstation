@@ -16,7 +16,7 @@
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(toxpwr)
@@ -34,7 +34,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutagen
-	name = "Unstable mutagen"
+	name = "Unstable Mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -50,22 +50,23 @@
 	if(!exposed_mob.has_dna() || HAS_TRAIT(exposed_mob, TRAIT_GENELESS) || HAS_TRAIT(exposed_mob, TRAIT_BADDNA))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if(((methods & VAPOR) && prob(min(33, reac_volume))) || (methods & (INGEST|PATCH|INJECT)))
-		exposed_mob.randmuti()
+		exposed_mob.random_mutate_unique_identity()
+		exposed_mob.random_mutate_unique_features()
 		if(prob(98))
-			exposed_mob.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			exposed_mob.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
 		else
-			exposed_mob.easy_randmut(POSITIVE)
+			exposed_mob.easy_random_mutate(POSITIVE)
 		exposed_mob.updateappearance()
 		exposed_mob.domutcheck()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.apply_effect(5 * REM * delta_time, EFFECT_IRRADIATE, 0)
+	C.adjustToxLoss(0.5 * delta_time * REM)
 	return ..()
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(3) //It is still toxic, mind you, but not to the same degree.
+		mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
 
@@ -126,7 +127,7 @@
 
 /datum/reagent/toxin/hot_ice
 	name = "Hot Ice Slush"
-	description = "Frozen plasma, worth its weight in gold, to the right people"
+	description = "Frozen plasma, worth its weight in gold, to the right people."
 	reagent_state = SOLID
 	color = "#724cb8" // rgb: 114, 76, 184
 	taste_description = "thick and smokey"
@@ -181,7 +182,7 @@
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
+		to_chat(M, span_danger("Your insides are burning!"))
 		M.adjustToxLoss(rand(20, 60), 0)
 		. = TRUE
 	else if(DT_PROB(23, delta_time))
@@ -212,11 +213,6 @@
 	taste_description = "fish"
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = ..()
-	for(var/i in M.all_scars)
-		qdel(i)
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -258,7 +254,7 @@
 	switch(current_cycle)
 		if(1 to 5)
 			M.add_confusion(1 * REM * delta_time)
-			M.drowsyness += 1 * REM * delta_time
+			M.adjust_drowsyness(1 * REM * delta_time)
 			M.slurring += 3 * REM * delta_time
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
@@ -306,8 +302,11 @@
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(!HAS_TRAIT(M, TRAIT_INSANITY))
+	if(HAS_TRAIT(M, TRAIT_INSANITY))
+		M.hallucination = 0
+	else
 		M.hallucination += 5 * REM * delta_time
+
 	return ..()
 
 /datum/reagent/toxin/plantbgone
@@ -324,9 +323,9 @@
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 10))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 6))
-		mytray.adjustWeeds(-rand(4,8))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 10))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 6))
+		mytray.adjust_weedlevel(-rand(4,8))
 
 /datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -362,8 +361,8 @@
 	if(!mytray)
 		return
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
-		mytray.adjustWeeds(-rand(1,2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.5))
+		mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
@@ -378,8 +377,8 @@
 	if(!mytray)
 		return
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustPests(-rand(1,2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -399,8 +398,8 @@
 	if(!mytray)
 		return
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.1))
-		mytray.adjustPests(-rand(1,2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -408,7 +407,7 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	C.damageoverlaytemp = 60
@@ -423,7 +422,7 @@
 	toxpwr = 0.5
 	taste_description = "burning"
 	ph = 13
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_fire_stacks(2 * REM * delta_time)
@@ -448,7 +447,7 @@
 	switch(current_cycle)
 		if(1 to 10)
 			M.add_confusion(2 * REM * normalise_creation_purity() * delta_time)
-			M.drowsyness += 2 * REM * normalise_creation_purity() * delta_time
+			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 			. = TRUE
@@ -468,7 +467,7 @@
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
 	ph = 2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	switch(current_cycle)
@@ -496,6 +495,16 @@
 	toxpwr = 0.1
 	taste_description = "green tea"
 	ph = 4.9
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/toxin/mushroom_powder
+	name = "Mushroom Powder"
+	description = "Finely ground polypore mushrooms, ready to be steeped in water to make mushroom tea."
+	reagent_state = SOLID
+	color = "#67423A" // rgb: 127, 132, 0
+	toxpwr = 0.1
+	taste_description = "mushrooms"
+	ph = 8.0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
@@ -536,10 +545,14 @@
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation += 4 * REM * delta_time
+	if (!HAS_TRAIT(M, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(M))
+		M.AddComponent(/datum/component/irradiated)
+	else
+		M.adjustToxLoss(1 * REM * delta_time)
+
 	..()
 
 /datum/reagent/toxin/histamine
@@ -551,13 +564,13 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(30, delta_time))
 		switch(pick(1, 2, 3, 4))
 			if(1)
-				to_chat(M, "<span class='danger'>You can barely see!</span>")
+				to_chat(M, span_danger("You can barely see!"))
 				M.blur_eyes(3)
 			if(2)
 				M.emote("cough")
@@ -565,7 +578,7 @@
 				M.emote("sneeze")
 			if(4)
 				if(prob(75))
-					to_chat(M, "<span class='danger'>You scratch at an itch.</span>")
+					to_chat(M, span_danger("You scratch at an itch."))
 					M.adjustBruteLoss(2*REM, 0)
 					. = TRUE
 	..()
@@ -605,9 +618,16 @@
 	color = "#F0FFF0"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	///Mob Size of the current mob sprite.
+	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	var/newsize = 1.1 * RESIZE_DEFAULT_SIZE
+	M.resize = newsize/current_size
+	current_size = newsize
+	M.update_transform()
+
 	toxpwr = 0.1 * volume
 	M.adjustBruteLoss((0.3 * volume) * REM * delta_time, 0)
 	. = TRUE
@@ -616,6 +636,12 @@
 		holder.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
+
+/datum/reagent/toxin/venom/on_mob_end_metabolize(mob/living/M)
+	M.resize = RESIZE_DEFAULT_SIZE/current_size
+	current_size = RESIZE_DEFAULT_SIZE
+	M.update_transform()
+	..()
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"
@@ -657,7 +683,7 @@
 	if(DT_PROB(2.5, delta_time))
 		M.losebreath += 1
 	if(DT_PROB(4, delta_time))
-		to_chat(M, "<span class='danger'>You feel horrendously weak!</span>")
+		to_chat(M, span_danger("You feel horrendously weak!"))
 		M.Stun(40)
 		M.adjustToxLoss(2*REM * normalise_creation_purity(), 0)
 	return ..()
@@ -688,15 +714,15 @@
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(8, delta_time))
-		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
+		to_chat(M, span_danger("You scratch at your head."))
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = TRUE
 	if(DT_PROB(8, delta_time))
-		to_chat(M, "<span class='danger'>You scratch at your leg.</span>")
+		to_chat(M, span_danger("You scratch at your leg."))
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = TRUE
 	if(DT_PROB(8, delta_time))
-		to_chat(M, "<span class='danger'>You scratch at your arm.</span>")
+		to_chat(M, span_danger("You scratch at your arm."))
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = TRUE
 	if(DT_PROB(1.5, delta_time))
@@ -713,7 +739,7 @@
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	if(DT_PROB(13, delta_time))
@@ -730,7 +756,7 @@
 				if(!C.undergoing_cardiac_arrest() && C.can_heartattack())
 					C.set_heartattack(TRUE)
 					if(C.stat == CONSCIOUS)
-						C.visible_message("<span class='userdanger'>[C] clutches at [C.p_their()] chest as if [C.p_their()] heart stopped!</span>")
+						C.visible_message(span_userdanger("[C] clutches at [C.p_their()] chest as if [C.p_their()] heart stopped!"))
 				else
 					C.losebreath += 10
 					C.adjustOxyLoss(rand(5,25), 0)
@@ -746,7 +772,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0 // undetectable, I guess?
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 10)
@@ -764,7 +790,7 @@
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/sodium_thiopental/on_mob_add(mob/living/L, amount)
 	. = ..()
@@ -808,12 +834,16 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/delayed_toxin_damage = 0
+
+/datum/reagent/toxin/amanitin/on_mob_life(mob/living/M, delta_time, times_fired)
+	delayed_toxin_damage += (delta_time * 3)
+	. = ..()
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	var/toxdamage = current_cycle*3*REM
-	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
-	M.adjustToxLoss(toxdamage)
-	..()
+	M.log_message("has taken [delayed_toxin_damage] toxin damage from amanitin toxin", LOG_ATTACK)
+	M.adjustToxLoss(delayed_toxin_damage)
+	. = ..()
 
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
@@ -847,7 +877,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.losebreath += 5 * REM * delta_time
+	if(M.losebreath < 5)
+		M.losebreath = min(M.losebreath + 5 * REM * delta_time, 5)
 	return ..()
 
 /datum/reagent/toxin/spewium
@@ -859,7 +890,7 @@
 	overdose_threshold = 29
 	toxpwr = 0
 	taste_description = "vomit"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
 	.=..()
@@ -874,7 +905,7 @@
 	if(current_cycle >= 33 && DT_PROB(7.5, delta_time))
 		C.spew_organ()
 		C.vomit(0, TRUE, TRUE, 4)
-		to_chat(C, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
+		to_chat(C, span_userdanger("You feel something lumpy come up as you vomit."))
 
 /datum/reagent/toxin/curare
 	name = "Curare"
@@ -883,7 +914,7 @@
 	color = "#191919"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle >= 11)
@@ -969,7 +1000,7 @@
 
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric acid"
+	name = "Sulphuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
@@ -983,9 +1014,9 @@
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1.5))
-		mytray.adjustWeeds(-rand(1,2))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 1.5))
+		mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/toxin/acid/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1015,7 +1046,7 @@
 	exposed_turf.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
-	name = "Fluorosulfuric acid"
+	name = "Fluorosulfuric Acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1029,9 +1060,9 @@
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 2))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 3))
-		mytray.adjustWeeds(-rand(1,4))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 3))
+		mytray.adjust_weedlevel(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustFireLoss((current_cycle/15) * REM * normalise_creation_purity() * delta_time, 0)
@@ -1039,7 +1070,7 @@
 	..()
 
 /datum/reagent/toxin/acid/nitracid
-	name = "Nitric acid"
+	name = "Nitric Acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1063,7 +1094,7 @@
 	toxpwr = 0
 	var/actual_toxpwr = 5
 	var/delay = 30
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle > delay)
@@ -1116,9 +1147,9 @@
 			if(1)
 				M.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(2)
-				M.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+				M.manual_emote(pick("oofs silently.", "looks like [M.p_their()] bones hurt.", "grimaces, as though [M.p_their()] bones hurt."))
 			if(3)
-				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
+				to_chat(M, span_warning("Your bones hurt!"))
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M, delta_time, times_fired)
@@ -1127,11 +1158,11 @@
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
 			playsound(M, get_sfx("desecration"), 50, TRUE, -1)
-			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+			M.visible_message(span_warning("[M]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			bp.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))
 		else //SUCH A LUST FOR REVENGE!!!
-			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+			to_chat(M, span_warning("A phantom limb hurts!"))
 			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 	return ..()
 
@@ -1150,7 +1181,7 @@
 	M.set_confusion(M.dizziness) //add a tertiary effect here if this is isn't an effective poison.
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
-		to_chat(M, "<span class='notice'>[tox_message]</span>")
+		to_chat(M, span_notice("[tox_message]"))
 	. = TRUE
 	..()
 
@@ -1168,6 +1199,6 @@
 	M.adjustOrganLoss(ORGAN_SLOT_EARS, 1 * REM * delta_time)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time)
 	if(DT_PROB(0.5, delta_time))
-		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
+		to_chat(M, span_notice("Ah, what was that? You thought you heard something..."))
 		M.add_confusion(5)
 	return ..()

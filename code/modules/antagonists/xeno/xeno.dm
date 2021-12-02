@@ -32,6 +32,9 @@
 /datum/antagonist/xeno/get_team()
 	return xeno_team
 
+/datum/antagonist/xeno/get_preview_icon()
+	return finish_preview_icon(icon('icons/mob/alien.dmi', "alienh"))
+
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()

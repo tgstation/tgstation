@@ -69,7 +69,7 @@
 	if(length(strangers) && locate(/mob/living) in strangers)
 		for(var/mob/living/person in strangers)
 			if(person != owner && !is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
-				to_chat(owner, "<span class='warning'>[replacetext(message, "%TARGET", person)]</span>")
+				to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
 				result = TRUE
 				break
 
@@ -79,8 +79,10 @@
 
 
 
-/datum/component/shy/proc/on_clickon(datum/source, atom/target, params)
+/datum/component/shy/proc/on_clickon(datum/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+	if(modifiers[SHIFT_CLICK]) //let them examine their surroundings.
+		return
 	return is_shy(target) && COMSIG_MOB_CANCEL_CLICKON
 
 /datum/component/shy/proc/on_try_pull(datum/source, atom/movable/target, force)

@@ -26,9 +26,9 @@
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
 	if(screen_on)
-		. += "<span class='notice'>Alt-click to close it.</span>"
+		. += span_notice("Alt-click to close it.")
 
-/obj/item/modular_computer/laptop/Initialize()
+/obj/item/modular_computer/laptop/Initialize(mapload)
 	. = ..()
 
 	if(start_open && !screen_on)
@@ -93,6 +93,9 @@
 
 
 /obj/item/modular_computer/laptop/AltClick(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		return
 	if(screen_on) // Close it.
 		try_toggle_open(user)
 	else
@@ -100,11 +103,11 @@
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
-		to_chat(user, "<span class='notice'>You close \the [src].</span>")
+		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
 		w_class = initial(w_class)
 	else
-		to_chat(user, "<span class='notice'>You open \the [src].</span>")
+		to_chat(user, span_notice("You open \the [src]."))
 		slowdown = slowdown_open
 		w_class = w_class_open
 

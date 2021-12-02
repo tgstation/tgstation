@@ -76,7 +76,7 @@
 	data["notice"] = notice
 
 
-	var/datum/station_goal/station_shield/G = locate() in SSticker.mode.station_goals
+	var/datum/station_goal/station_shield/G = locate() in GLOB.station_goals
 	if(G)
 		data["meteor_shield"] = 1
 		data["meteor_shield_coverage"] = G.get_coverage()
@@ -92,13 +92,13 @@
 	base_icon_state = "sat"
 	anchored = FALSE
 	density = TRUE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	var/mode = "NTPROBEV0.8"
 	var/active = FALSE
 	var/static/gid = 0
 	var/id = 0
 
-/obj/machinery/satellite/Initialize()
+/obj/machinery/satellite/Initialize(mapload)
 	. = ..()
 	id = gid++
 
@@ -121,10 +121,10 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
-			to_chat(user, "<span class='warning'>You can only activate [src] in space.</span>")
+			to_chat(user, span_warning("You can only activate [src] in space."))
 		return FALSE
 	if(user)
-		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] [src].</span>")
+		to_chat(user, span_notice("You [active ? "deactivate": "activate"] [src]."))
 	set_anchored(!anchored)
 	return TRUE
 
@@ -134,7 +134,7 @@
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
+	to_chat(user, span_notice("// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]"))
 	return TRUE
 
 /obj/machinery/satellite/meteor_shield
@@ -146,7 +146,7 @@
 	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
-	for(var/turf/T in getline(src,meteor))
+	for(var/turf/T in get_line(src,meteor))
 		if(!isspaceturf(T))
 			return FALSE
 	return TRUE
@@ -186,6 +186,6 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You access the satellite's debug mode, increasing the chance of meteor strikes.</span>")
+	to_chat(user, span_notice("You access the satellite's debug mode, increasing the chance of meteor strikes."))
 	if(active)
 		change_meteor_chance(2)

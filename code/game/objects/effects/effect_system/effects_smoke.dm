@@ -24,13 +24,13 @@
 	if(frames == 0)
 		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
 	var/step = alpha / frames
-	for(var/i = 0, i < frames, i++)
+	for(var/i in 1 to frames)
 		alpha -= step
 		if(alpha < 160)
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/Initialize()
+/obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
@@ -76,7 +76,7 @@
 	if(!t_loc)
 		return
 	var/list/newsmokes = list()
-	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
+	for(var/turf/T in t_loc.get_atmos_adjacent_turfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)
 			continue
@@ -125,12 +125,12 @@
 /obj/effect/particle_effect/smoke/bad
 	lifetime = 8
 
-/obj/effect/particle_effect/smoke/bad/Initialize()
+/obj/effect/particle_effect/smoke/bad/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, src, loc_connections)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
 	. = ..()
@@ -140,11 +140,11 @@
 		M.emote("cough")
 		return TRUE
 
-/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/AM, oldloc)
+/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	if(istype(AM, /obj/projectile/beam))
-		var/obj/projectile/beam/B = AM
-		B.damage = (B.damage/2)
+	if(istype(arrived, /obj/projectile/beam))
+		var/obj/projectile/beam/beam = arrived
+		beam.damage *= 0.5
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
@@ -186,7 +186,7 @@
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 					U.welded = TRUE
 					U.update_appearance()
-					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
+					U.visible_message(span_danger("[U] is frozen shut!"))
 		for(var/mob/living/L in T)
 			L.extinguish_mob()
 		for(var/obj/item/Item in T)
@@ -241,7 +241,7 @@
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
 				continue
-			if(T.intact && HAS_TRAIT(AM, TRAIT_T_RAY_VISIBLE))
+			if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(AM, TRAIT_T_RAY_VISIBLE))
 				continue
 			reagents.expose(AM, TOUCH, fraction)
 

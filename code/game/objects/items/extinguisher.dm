@@ -3,6 +3,7 @@
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "fire_extinguisher0"
+	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags_1 = CONDUCT_1
@@ -33,6 +34,7 @@
 	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
+	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null //it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
@@ -48,6 +50,7 @@
 	name = "Improvised cooling spray"
 	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
 	icon_state = "coolant0"
+	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
@@ -72,7 +75,7 @@
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
-/obj/item/extinguisher/Initialize()
+/obj/item/extinguisher/Initialize(mapload)
 	. = ..()
 	refill()
 
@@ -85,6 +88,7 @@
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
+	worn_icon_state = "foam_extinguisher"
 	inhand_icon_state = "foam_extinguisher"
 	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
@@ -95,14 +99,14 @@
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
-		user.visible_message("<span class='suicide'>[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!</span>")
+		user.visible_message(span_suicide("[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!"))
 		afterattack(user,user)
 		return OXYLOSS
 	else if (safety && (reagents.total_volume >= 1))
-		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!</span>")
+		user.visible_message(span_warning("[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!"))
 		return SHAME
 	else
-		user.visible_message("<span class='warning'>[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!</span>")
+		user.visible_message(span_warning("[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!"))
 		return SHAME
 
 /obj/item/extinguisher/attack_self(mob/user)
@@ -117,7 +121,7 @@
 	else
 		return ..()
 
-/obj/item/extinguisher/attack_obj(obj/O, mob/living/user, params)
+/obj/item/extinguisher/attack_atom(obj/O, mob/living/user, params)
 	if(AttemptRefill(O, user))
 		refilling = TRUE
 		return FALSE
@@ -129,26 +133,22 @@
 	. += "The safety is [safety ? "on" : "off"]."
 
 	if(reagents.total_volume)
-		. += "<span class='notice'>Alt-click to empty it.</span>"
+		. += span_notice("Alt-click to empty it.")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, tanktype) && target.Adjacent(user))
-		var/safety_save = safety
-		safety = TRUE
 		if(reagents.total_volume == reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
-			safety = safety_save
+			to_chat(user, span_warning("\The [src] is already full!"))
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
 		if(transferred > 0)
-			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
+			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
-			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")
-		safety = safety_save
+			to_chat(user, span_warning("\The [W] is empty!"))
 		return TRUE
 	else
 		return FALSE
@@ -167,7 +167,7 @@
 
 
 		if (src.reagents.total_volume < 1)
-			to_chat(usr, "<span class='warning'>\The [src] is empty!</span>")
+			to_chat(usr, span_warning("\The [src] is empty!"))
 			return
 
 		if (world.time < src.last_use + 12)
@@ -197,7 +197,7 @@
 			the_targets.Add(T3,T4)
 
 		var/list/water_particles=list()
-		for(var/a=0, a<5, a++)
+		for(var/a in 1 to 5)
 			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
 			var/my_target = pick(the_targets)
 			water_particles[W] = my_target
@@ -256,7 +256,7 @@
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(!user.is_holding(src))
-		to_chat(user, "<span class='notice'>You must be holding the [src] in your hands do this!</span>")
+		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
 		return
 	EmptyExtinguisher(user)
 
@@ -269,12 +269,12 @@
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
-		user.visible_message("<span class='notice'>[user] empties out \the [src] onto the floor using the release valve.</span>", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+		user.visible_message(span_notice("[user] empties out \the [src] onto the floor using the release valve."), span_info("You quietly empty out \the [src] using its release valve."))
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
-		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
+		to_chat(user, span_notice("You add [O] to [src]."))
 		qdel(O)
 		qdel(src)
 		user.put_in_hands(new /obj/item/bot_assembly/firebot)

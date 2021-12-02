@@ -1,6 +1,5 @@
-import { multiline } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Divider, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -232,122 +231,115 @@ const ORION_STATUS_INSTRUCTIONS = (props, context) => {
   const { act } = useBackend(context);
   const fake_settlers = ["John", "William", "Alice", "Tom"];
   return (
-    <Stack vertical fill>
-      <Stack.Item grow>
-        <Section
-          color="label"
-          title="Objective"
-          fill
-          buttons={(
-            <Button
-              content="Back to Main Menu"
-              onClick={() => act('back_to_menu')} />
-          )}>
-          <Box fontSize="11px">
-            In the 2200&apos;s, the Orion trail was established as a dangerous
-            yet opportunistic trail through space for those willing to risk it.
-            Many pioneers seeking new lives on the galactic frontier would find
-            exactly what they were seeking... or lose their lives on the way.
-          </Box>
-        </Section>
-      </Stack.Item>
-      <Stack.Item>
-        <Section title="Status Example" fill>
-          <Stack mb={-1} fill>
-            <Stack.Item basis={70} grow mb={-0.5}>
-              {fake_settlers?.map(settler => (
-                <Stack key={settler}>
-                  <Stack.Item grow mt={0.9}>
-                    {settler}
-                  </Stack.Item>
-                  <Stack.Item mt={0.9}>
-                    <Button
-                      fluid
-                      color="red"
-                      textAlign="center"
-                      icon="skull"
-                      content="KILL" />
-                  </Stack.Item>
-                  <Stack.Item mr={0}>
-                    <Box className={'moods32x32 mood5'} />
-                  </Stack.Item>
-                </Stack>
-              ))}
-            </Stack.Item>
-            <Divider vertical />
-            <Stack.Item grow>
-              This is the status panel for your pioneers. Each one requires
-              1 food every time you continue
-              towards <span style={goodstyle}>Orion</span>.
-              You can find more crew on your journey, and lose them as
-              fast as you found &apos;em.
-              <br /><br />
-              If you run out of food or crew,
-              it&apos;s <span style={badstyle}>GAME OVER</span> for you!
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Section fill title="Resources">
-          <Stack fill>
-            <Stack.Item grow mt={-1}>
-              If you want to make it to <span style={goodstyle}>Orion</span>,
-              you&apos;ll need to manage your resources:
-              <br />
-              <span style={goodstyle}>Food</span>: Your crewmembers consume
-              it. More crew means this goes down faster!
-              <br />
-              <span style={fuelstyle}>Fuel</span>: You use 5u of fuel with
-              every movement. Don&apos;t let it run out.
-              <br />
-              <span style={partstyle}>Parts</span>: Used to repair breakdowns.
-              Nobody likes wasting time on repairs!
-            </Stack.Item>
-            <Divider vertical />
-            <Stack.Item>
-              <Stack vertical fill>
-                <Stack.Item grow>
-                  <Button
-                    fluid
-                    icon="hamburger"
-                    content={"Food Left: 80"}
-                    color="green" />
+    <>
+      <Section
+        color="label"
+        title="Objective"
+        buttons={(
+          <Button
+            content="Back to Main Menu"
+            onClick={() => act('back_to_menu')} />
+        )}>
+        <Box fontSize="11px">
+          In the 2200&apos;s, the Orion trail was established as a dangerous
+          yet opportunistic trail through space for those willing to risk it.
+          Many pioneers seeking new lives on the galactic frontier would find
+          exactly what they were seeking... or lose their lives on the way.
+        </Box>
+      </Section>
+      <Section title="Status Example">
+        <Stack mb={-1}>
+          <Stack.Item basis={70} grow mb={-0.5}>
+            {fake_settlers?.map(settler => (
+              <Stack key={settler}>
+                <Stack.Item grow mt={0.9}>
+                  {settler}
                 </Stack.Item>
-                <Stack.Item grow>
+                <Stack.Item mt={0.9}>
                   <Button
                     fluid
-                    icon="gas-pump"
-                    content={"Fuel Left: 60"}
-                    color="olive" />
+                    color="red"
+                    textAlign="center"
+                    icon="skull"
+                    content="KILL" />
                 </Stack.Item>
-                <Stack.Item grow>
-                  <Button
-                    fluid
-                    icon="wrench"
-                    content={"Hull Parts: 1"}
-                    color="average" />
-                </Stack.Item>
-                <Stack.Item grow>
-                  <Button
-                    fluid
-                    icon="server"
-                    content={"Electronics: 1"}
-                    color="blue" />
-                </Stack.Item>
-                <Stack.Item mb={-0.3} grow>
-                  <Button
-                    fluid
-                    icon="rocket"
-                    content={"Engine Parts: 1"}
-                    color="violet" />
+                <Stack.Item mr={0}>
+                  <Box className={'moods32x32 mood5'} />
                 </Stack.Item>
               </Stack>
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </Stack.Item>
-    </Stack>
+            ))}
+          </Stack.Item>
+          <Divider vertical />
+          <Stack.Item>
+            This is the status panel for your pioneers. Each one requires
+            1 food every time you continue
+            towards <span style={goodstyle}>Orion</span>.
+            You can find more crew on your journey, and lose them as
+            fast as you found &apos;em.
+            <br /><br />
+            If you run out of food or crew,
+            it&apos;s <span style={badstyle}>GAME OVER</span> for you!
+          </Stack.Item>
+        </Stack>
+      </Section>
+      <Section title="Resources">
+        <Stack>
+          <Stack.Item grow mt={-1}>
+            If you want to make it to <span style={goodstyle}>Orion</span>,
+            you&apos;ll need to manage your resources:
+            <br />
+            <span style={goodstyle}>Food</span>: Your crewmembers consume
+            it. More crew means this goes down faster!
+            <br />
+            <span style={fuelstyle}>Fuel</span>: You use 5u of fuel with
+            every movement. Don&apos;t let it run out.
+            <br />
+            <span style={partstyle}>Parts</span>: Used to repair breakdowns.
+            Nobody likes wasting time on repairs!
+          </Stack.Item>
+          <Divider vertical />
+          <Stack.Item>
+            <Stack vertical fill>
+              <Stack.Item>
+                <Button
+                  fluid
+                  icon="hamburger"
+                  content={"Food Left: 80"}
+                  color="green" />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  fluid
+                  icon="gas-pump"
+                  content={"Fuel Left: 60"}
+                  color="olive" />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  fluid
+                  icon="wrench"
+                  content={"Hull Parts: 1"}
+                  color="average" />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  fluid
+                  icon="server"
+                  content={"Electronics: 1"}
+                  color="blue" />
+              </Stack.Item>
+              <Stack.Item mb={-0.3}>
+                <Button
+                  fluid
+                  icon="rocket"
+                  content={"Engine Parts: 1"}
+                  color="violet" />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
+      </Section>
+    </>
   );
 };
 
@@ -508,8 +500,8 @@ const ORION_STATUS_MARKET = (props, context) => {
                         <Stack.Item>
                           <Button
                             fluid
-                            icon="hamburger"
-                            content={"5 Food for 5 Fuel"}
+                            icon="gas-pump"
+                            content={"5 Food -> 5 Fuel"}
                             color="green"
                             onClick={() => act('trade', {
                               what: 2,
@@ -556,8 +548,8 @@ const ORION_STATUS_MARKET = (props, context) => {
                         <Stack.Item>
                           <Button
                             fluid
-                            icon="gas-pump"
-                            content={"5 Fuel for 5 Food"}
+                            icon="hamburger"
+                            content={"5 Fuel -> 5 Food"}
                             color="olive"
                             onClick={() => act('trade', {
                               what: 1,
@@ -622,9 +614,9 @@ export const OrionGame = (props, context) => {
   return (
     <Window
       title={gamename}
-      width={400}
-      height={500}>
-      <Window.Content>
+      width={420}
+      height={510}>
+      <Window.Content scrollable>
         {eventname === "Space Port Raid" && (
           <MarketRaid />
         ) || (

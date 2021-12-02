@@ -17,7 +17,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakeid/Initialize()
+/obj/structure/showcase/fakeid/Initialize(mapload)
 	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")
@@ -28,10 +28,10 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakesec/Initialize()
+/obj/structure/showcase/fakesec/update_overlays()
 	. = ..()
-	add_overlay("security")
-	add_overlay("security_key")
+	. += "security"
+	. += "security_key"
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
@@ -111,17 +111,17 @@
 /obj/structure/showcase/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
+			to_chat(user, span_notice("You screw the screws back into the showcase."))
 			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_CONSTRUCTED
 		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
-			to_chat(user, "<span class='notice'>You unscrew the screws.</span>")
+			to_chat(user, span_notice("You unscrew the screws."))
 			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
 	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(W.use_tool(src, user, 20, volume=100))
-			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
+			to_chat(user, span_notice("You start to crowbar the showcase apart..."))
 			new /obj/item/stack/sheet/iron(drop_location(), 4)
 			qdel(src)
 
