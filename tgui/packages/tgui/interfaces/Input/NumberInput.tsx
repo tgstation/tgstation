@@ -65,7 +65,7 @@ export const NumberInput = (_, context) => {
   );
 };
 
-/** Timed text input windows!
+/** Timed number input windows!
  * Why? I don't know!
  */
 const Loader = (props) => {
