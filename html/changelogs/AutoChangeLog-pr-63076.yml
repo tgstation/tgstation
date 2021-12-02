@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - imageadd: "Fire mutation now has the sprite of old space adaption while Pressure is a blue version of it."
