@@ -32,6 +32,9 @@
 /// From base of /client/Move()
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 
+///from mind/transfer_to. Sent to the receiving mob.
+#define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
+
 ///from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 #define COMSIG_MOB_ALLOWED "mob_allowed"
 ///from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
