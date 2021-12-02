@@ -24,5 +24,3 @@
 	for (var/datum/tgui/tgui as anything in client.mob?.tgui_open_uis)
 		// Force it to reload either way
 		tgui.update_static_data(client.mob)
-
-
