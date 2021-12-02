@@ -477,6 +477,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	slowdown_inactive = 2.5
 	slowdown_active = 2
+	ui_theme = "hackerman"
 	clothing_flags = list(
 		"prototype" = list(
 			HELMET_FLAGS = list(

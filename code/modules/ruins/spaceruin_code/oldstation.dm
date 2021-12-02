@@ -9,11 +9,15 @@
 	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
 
 /obj/item/paper/fluff/ruins/oldstation/protosuit
-	name = "B01-RIG Hardsuit Report"
-	info = "<b>*Prototype Hardsuit*</b><br><br>The B01-RIG Hardsuit is a prototype powered exoskeleton. Based off a recovered pre-void war era united Earth government powered military \
-	exosuit, the RIG Hardsuit is a breakthrough in Hardsuit technology, and is the first post-void war era Hardsuit that can be safely used by an operator.<br><br>The B01 however suffers \
-	a myriad of constraints. It is slow and bulky to move around, it lacks any significant armor plating against direct attacks and its internal heads up display is unfinished,  \
-	resulting in the user being unable to see long distances.<br><br>The B01 is unlikely to see any form of mass production, but will serve as a base for future Hardsuit developments."
+	name = "B01-MOD modular suit Report"
+	info = "<b>*Prototype MODsuit*</b><br><br>This is a prototype powered exoskeleton, a design not seen in hundreds of years, \
+		the first post-void war era modular suit to ever be safely utilized by an operator. \
+		This ancient clunker is still functional, though it's missing several modern-day luxuries from \
+		updated Nakamura Engineering designs. Primarily, the suit's myoelectric suit layer is entirely non-existant, \
+		and the servos do very little to help distribute the weight evenly across the wearer's body, \
+		making it slow and bulky to move in. Additionally, the armor plating never finished production aside from the shoulders, \
+		forearms, and helmet; making it useless against direct attacks. The internal heads-up display is rendered entirely in \
+		monochromatic cyan, leaving the user unable to see long distances. However, the way the helmet retracts is pretty cool."
 
 /obj/item/paper/fluff/ruins/oldstation/protohealth
 	name = "Health Analyser Report"
