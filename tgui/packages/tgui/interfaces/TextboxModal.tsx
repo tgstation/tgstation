@@ -35,7 +35,7 @@ export const TextboxModal = (_, context) => {
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-  = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
+    = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -146,7 +146,7 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={2} pr={2}>
+    <Stack pl={3} pr={3}>
       <Stack.Item>
         <Button
           color="good"

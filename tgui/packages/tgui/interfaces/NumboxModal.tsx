@@ -122,7 +122,7 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={2} pr={2}>
+    <Stack pl={3} pr={3}>
       <Stack.Item>
         <Button
           color="good"
