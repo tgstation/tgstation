@@ -2,7 +2,10 @@
 	"version": 1,
 	"map_name": "Tramstation",
 	"map_path": "map_files/tramstation",
-	"map_file": "tramstation.dmm",
+	"map_file": [
+		"tramstation_upper.dmm",
+		"tramstation_lower.dmm"
+	],
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
