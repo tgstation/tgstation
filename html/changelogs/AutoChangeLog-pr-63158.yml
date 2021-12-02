@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "There is now the proper amount of ORMs in Deltastation's Cargo."
-  - bugfix: "Service jobs can leave the Deltastation Service Hall through maintenance"
