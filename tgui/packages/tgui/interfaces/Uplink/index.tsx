@@ -42,6 +42,8 @@ type UplinkData = {
   telecrystals: number,
   progression_points: number,
   uplink_flag: number,
+  assigned_role: string,
+  debug: BooleanLike,
   has_objectives: BooleanLike,
   potential_objectives: Objective[],
   active_objectives: Objective[],
@@ -83,6 +85,7 @@ export class Uplink extends Component<{}, UplinkState> {
     const { data } = useBackend<UplinkData>(this.context);
 
     const uplinkFlag = data.uplink_flag;
+    const uplinkRole = data.assigned_role;
 
     const uplinkData = await fetchServerData;
     uplinkData.items = uplinkData.items.sort((a, b) => {
@@ -97,12 +100,16 @@ export class Uplink extends Component<{}, UplinkState> {
 
     const availableCategories: string[] = [];
     uplinkData.items = uplinkData.items.filter(value => {
-      if (value.purchasable_from & uplinkFlag) {
+      if (value.restricted_roles.length > 0
+        && !value.restricted_roles.includes(uplinkRole)) {
+        return false;
+      }
+      { if (value.purchasable_from & uplinkFlag) {
         if (!availableCategories.includes(value.category)) {
           availableCategories.push(value.category);
         }
         return true;
-      }
+      } }
       return false;
     });
 

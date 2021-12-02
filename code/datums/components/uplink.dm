@@ -204,7 +204,7 @@
 			var/list/active_objectives = uplink_handler.active_objectives
 			if(objective_index < 1 || objective_index > length(active_objectives))
 				return
-			uplink_handler.ui_objective_act(ui.user, potential_objectives[objective_index], params["objective_action"])
+			uplink_handler.ui_objective_act(ui.user, active_objectives[objective_index], params["objective_action"])
 	return TRUE
 
 // Implant signal responses
