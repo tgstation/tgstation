@@ -339,6 +339,11 @@
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 
+/obj/machinery/bci_implanter/on_deconstruction()
+	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
+	bci_to_implant_resolved?.forceMove(drop_location())
+	bci_to_implant = null
+
 /obj/machinery/bci_implanter/Destroy()
 	QDEL_NULL(bci_to_implant)
 	return ..()
