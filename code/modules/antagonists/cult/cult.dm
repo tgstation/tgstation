@@ -375,7 +375,8 @@
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
 		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
-	cult.make_image(src)
+	if(!sacced)
+		cult.make_image(src)
 	for(var/datum/mind/mind in cult.members)
 		if(mind.current)
 			mind.current.clear_alert("bloodsense")
@@ -399,7 +400,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
-	addtimer(CALLBACK(.proc/do_we_have_a_body), 0 SECONDS)
+	addtimer(CALLBACK(src, .proc/do_we_have_a_body), 0 SECONDS)
 
 /datum/objective/sacrifice/proc/do_we_have_a_body()
 	if(!target.current) //The player was ghosted and the mind isn't probably going to be transferred to another mob at this point.
