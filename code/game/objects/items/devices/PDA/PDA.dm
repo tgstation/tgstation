@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	/// String name of owner
 	var/owner = null
-	/// Access level defined by cartridge
+	/// Typepath of the default cartridge to use
 	var/default_cartridge = 0
 	/// Current cartridge
 	var/obj/item/cartridge/cartridge = null
@@ -97,7 +97,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
+	//During init, this is the typepath to load into the pda. After init, this is the object currently inside the pda, if one exists
+	var/obj/item/inserted_item = /obj/item/pen
 
 	var/underline_flag = TRUE //flag for underline
 
@@ -128,11 +129,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	GLOB.PDAs += src
 	if(default_cartridge)
-		cartridge = new default_cartridge(src)
+		cartridge = SSwardrobe.provide_type(default_cartridge, src)
+		cartridge.host_pda = src
 	if(inserted_item)
-		inserted_item = new inserted_item(src)
-	else
-		inserted_item = new /obj/item/pen(src)
+		inserted_item = SSwardrobe.provide_type(inserted_item, src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	update_appearance()
@@ -1295,6 +1295,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 	SIGNAL_HANDLER
 	return COMPONENT_PDA_NO_DETONATE
 
+/// Return a list of types you want to pregenerate and use later
+/// Do not pass in things that care about their init location, or expect extra input
+/// Also as a curtiousy to me, don't pass in any bombs
+/obj/item/pda/proc/get_types_to_preload()
+	var/list/preload = list()
+	preload += default_cartridge
+	preload += inserted_item
+	return preload
+
+/// Callbacks for preloading pdas
+/obj/item/pda/proc/display_pda()
+	GLOB.PDAs += src 
+
+/// See above, we don't want jerry from accounting to try and message nullspace his new bike
+/obj/item/pda/proc/cloak_pda()
+	GLOB.PDAs -= src 
+	
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
 #undef PDA_SCANNER_FORENSICS

@@ -39,21 +39,8 @@ SUBSYSTEM_DEF(wardrobe)
 	. = ..()
 	load_outfits()
 	load_species()
+	load_pda_nicknacks()
 	hard_refresh_queue()
-
-/datum/controller/subsystem/wardrobe/proc/load_outfits()
-	for(var/datum/outfit/outfit_to_stock as anything in subtypesof(/datum/outfit))
-		if(!initial(outfit_to_stock.preload)) // Clearly not interested
-			continue
-		store_outfit(new outfit_to_stock)
-		CHECK_TICK
-
-/datum/controller/subsystem/wardrobe/proc/load_species()
-	for(var/datum/species/species_to_stock as anything in subtypesof(/datum/species))
-		if(!initial(species_to_stock.preload)) //Clearly not interested
-			continue
-		store_species(new species_to_stock)
-		CHECK_TICK
 
 /// Resets the load queue to the master template, accounting for the existing stock
 /datum/controller/subsystem/wardrobe/proc/hard_refresh_queue()
@@ -158,8 +145,8 @@ SUBSYSTEM_DEF(wardrobe)
 	if(!master_info)
 		master_info = new /list(WARDROBE_CACHE_CALL_REMOVAL)
 		master_info[WARDROBE_CACHE_COUNT] = 0
-		master_info[WARDROBE_STOCK_CALL_INSERT] = call_on_add
-		master_info[WARDROBE_STOCK_CALL_REMOVAL] = call_on_remove
+		master_info[WARDROBE_STOCK_CALL_INSERT] = on_add
+		master_info[WARDROBE_STOCK_CALL_REMOVAL] = on_remove
 		canon_minimum[type_to_stock] = master_info
 	master_info[WARDROBE_CACHE_COUNT] += 1
 	one_go_master++
@@ -278,18 +265,41 @@ SUBSYSTEM_DEF(wardrobe)
 	if(!length(stock_info[WARDROBE_STOCK_CONTENTS]))
 		preloaded_stock -= unload_type
 
-/datum/controller/subsystem/wardrobe/proc/store_outfit(datum/outfit/hang_up)
-	var/list/types_to_store = hang_up.get_types_to_preload()
-	for(var/datum/outfit_item_type as anything in types_to_store)
-		canonize_type(outfit_item_type)
+/datum/controller/subsystem/wardrobe/proc/load_outfits()
+	var/datum/callback/pda_insert = CALLBACK(null, /obj/item/pda/proc/display_pda)
+	var/datum/callback/pda_removal = CALLBACK(null, /obj/item/pda/proc/cloak_pda)
+	
+	for(var/datum/outfit/to_stock as anything in subtypesof(/datum/outfit))
+		if(!initial(to_stock.preload)) // Clearly not interested
+			continue
+		var/datum/outfit/hang_up = new to_stock()
+		for(var/datum/outfit_item as anything in hang_up.get_types_to_preload())
+			if(ispath(outfit_item, /obj/item/pda))
+				canonize_type(outfit_item, pda_insert, pda_removal)
+			else
+				canonize_type(outfit_item)
+		CHECK_TICK
 
-/datum/controller/subsystem/wardrobe/proc/store_species(datum/species/archive)
-	var/datum/callback/on_organ_insert = CALLBACK(/obj/item/organ/proc/start_processing)
-	var/datum/callback/on_organ_removal = CALLBACK(/obj/item/organ/proc/start_processing)
-	var/list/types_to_store = archive.get_types_to_preload()
-	for(var/obj/item/species_request as anything in types_to_store)
-		for(var/i in 1 to 5) // Store 5 of each species, since that seems on par with 1 of each outfit
-			if(ispath(species_request, /obj/item/organ))
-				canonize_type(species_request, on_organ_insert, on_organ_removal)
-			else //Bit weird but ok
-				canonize_type(species_request)
+/datum/controller/subsystem/wardrobe/proc/load_species()
+	var/datum/callback/on_organ_insert = CALLBACK(null, /obj/item/organ/proc/start_processing)
+	var/datum/callback/on_organ_removal = CALLBACK(null, /obj/item/organ/proc/start_processing)
+
+	for(var/datum/species/to_record as anything in subtypesof(/datum/species))
+		if(!initial(to_record.preload))
+			continue
+		var/datum/species/fossil_record = new to_record()
+		for(var/obj/item/species_request as anything in fossil_record.get_types_to_preload())
+			for(var/i in 1 to 5) // Store 5 of each species, since that seems on par with 1 of each outfit
+				if(ispath(species_request, /obj/item/organ))
+					canonize_type(species_request, on_organ_insert, on_organ_removal)
+				else //Bit weird but ok
+					canonize_type(species_request)
+		CHECK_TICK
+
+/datum/controller/subsystem/wardrobe/proc/load_pda_nicknacks()
+	for(var/obj/item/pda/pager as anything in typesof(/obj/item/pda))
+		var/obj/item/pda/flip_phone = new pager()
+		for(var/datum/outfit_item_type as anything in flip_phone.get_types_to_preload())
+			canonize_type(outfit_item_type)
+		qdel(flip_phone)
+		CHECK_TICK
