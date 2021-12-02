@@ -1,5 +1,5 @@
+import { Loader } from "./Loader";
 import { useBackend, useSharedState } from '../../backend';
-import { clamp01 } from 'common/math';
 import { KEY_ENTER } from 'common/keycodes';
 import { Box, Button, Input, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
@@ -62,22 +62,6 @@ export const NumberInput = (_, context) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-/** Timed number input windows!
- * Why? I don't know!
- */
-const Loader = (props) => {
-  const { value } = props;
-
-  return (
-    <div className="AlertModal__Loader">
-      <Box
-        className="AlertModal__LoaderProgress"
-        style={{ width: clamp01(value) * 100 + '%' }}
-      />
-    </div>
   );
 };
 

@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { clamp01 } from 'common/math';
-import { useBackend } from '../backend';
+import { Loader } from "./Loader";
+import { useBackend } from '../../backend';
 import { Component, createRef } from 'inferno';
-import { Box, Flex, Section } from '../components';
-import { Window } from '../layouts';
+import { Box, Flex, Section } from '../../components';
+import { Window } from '../../layouts';
 import {
   KEY_ENTER,
   KEY_LEFT,
@@ -134,14 +134,3 @@ export class AlertModal extends Component {
 
 }
 
-export const Loader = props => {
-  const { value } = props;
-
-  return (
-    <div className="AlertModal__Loader">
-      <Box
-        className="AlertModal__LoaderProgress"
-        style={{ width: clamp01(value) * 100 + '%' }} />
-    </div>
-  );
-};
