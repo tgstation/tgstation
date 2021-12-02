@@ -65,3 +65,9 @@
 
 	potential_objectives -= to_take
 	active_objectives += to_take
+
+/datum/uplink_handler/proc/ui_objective_act(mob/user, datum/traitor_objective/to_act_on, action)
+	if(!(to_act_on in active_objectives))
+		return
+
+	to_act_on.ui_perform_action(user, action)

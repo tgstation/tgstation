@@ -6,9 +6,7 @@ type GenericUplinkProps = {
   currency?: string | JSX.Element,
   categories: string[],
   items: Item[],
-  lockable?: BooleanLike,
 
-  handleLock: (key: MouseEvent) => void;
   handleBuy: (item: Item) => void;
 }
 
@@ -16,9 +14,7 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
   const {
     currency = 'cr',
     categories,
-    lockable,
 
-    handleLock,
     handleBuy,
   } = props;
   const [
@@ -56,12 +52,6 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
             icon={compactMode ? 'list' : 'info'}
             content={compactMode ? 'Compact' : 'Detailed'}
             onClick={() => setCompactMode(!compactMode)} />
-          {!!lockable && (
-            <Button
-              icon="lock"
-              content="Lock"
-              onClick={handleLock} />
-          )}
         </>
       )}>
       <Stack>

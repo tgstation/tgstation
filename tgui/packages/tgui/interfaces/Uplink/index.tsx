@@ -5,14 +5,9 @@ import { Component } from 'inferno';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box } from '../../components';
-import { logger } from '../../logging';
-
-export const MAX_SEARCH_RESULTS = 25;
-
-const calculateProgression = (progression_points: number) => {
-  return Math.round(progression_points / 6) / 100;
-};
+import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
+import { ObjectiveMenu } from './ObjectiveMenu';
+import { calculateReputationLevel, reputationLevelsTooltip } from './calculateReputationLevel';
 
 type UplinkItem = {
   id: string,
@@ -27,14 +22,14 @@ type UplinkItem = {
   progression_minimum: number,
 }
 
-type ObjectiveUiButton = {
+export type ObjectiveUiButton = {
   name: string,
   tooltip: string,
   icon: string,
   action: string,
 }
 
-type Objective = {
+export type Objective = {
   name: string,
   description: string,
   progression_minimum: number,
@@ -54,7 +49,8 @@ type UplinkData = {
 
 type UplinkState = {
   allItems: UplinkItem[],
-  allCategories: string[]
+  allCategories: string[],
+  currentTab: number,
 }
 
 type ServerData = {
@@ -71,6 +67,7 @@ export class Uplink extends Component<{}, UplinkState> {
     this.state = {
       allItems: [],
       allCategories: [],
+      currentTab: 0,
     };
   }
 
@@ -111,7 +108,6 @@ export class Uplink extends Component<{}, UplinkState> {
 
     uplinkData.categories = uplinkData.categories.filter(value =>
       availableCategories.includes(value));
-    logger.log(availableCategories);
 
     this.setState({
       allItems: uplinkData.items,
@@ -124,10 +120,13 @@ export class Uplink extends Component<{}, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      active_objectives,
+      potential_objectives,
     } = data;
     const {
       allItems,
       allCategories,
+      currentTab,
     } = this.state as UplinkState;
     const items: Item[] = [];
     for (let i = 0; i < allItems.length; i++) {
@@ -147,7 +146,7 @@ export class Uplink extends Component<{}, UplinkState> {
         cost: (
           <Box>
             {item.cost} TC,&nbsp;
-            {calculateProgression(item.progression_minimum)} Reputation
+            {calculateReputationLevel(item.progression_minimum, true)}
           </Box>
         ),
         disabled: !canBuy || !hasEnoughProgression,
@@ -159,22 +158,77 @@ export class Uplink extends Component<{}, UplinkState> {
         height={580}
         theme="syndicate">
         <Window.Content scrollable>
-          <GenericUplink
-            currency={(
-              <Box color="good">
-                {telecrystals} TC,&nbsp;
-                {calculateProgression(progression_points)} Reputation
-              </Box>
-            )}
-            categories={allCategories}
-            items={items}
-            handleBuy={(item) => {
-              act("buy", { path: item.id });
-            }}
-            handleLock={(event) => {
-              act("lock");
-            }}
-          />
+          <Section>
+            <Stack>
+              <Stack.Item grow={1} align="center">
+                <Box fontSize={0.8}>
+                  SyndOS Version 3.17 &nbsp;
+                  <Box color="green" as="span">
+                    Connection Secure
+                  </Box>
+                </Box>
+                <Box color="green" bold fontSize={1.2}>
+                  WELCOME, AGENT.
+                </Box>
+              </Stack.Item>
+              <Stack.Item align="center">
+                <Box bold fontSize={1.2}>
+                  <Tooltip content={reputationLevelsTooltip}>
+                    {calculateReputationLevel(progression_points, false)}
+                  </Tooltip>
+                </Box>
+                <Box color="good" bold fontSize={1.2} textAlign="right">
+                  {telecrystals} TC
+                </Box>
+              </Stack.Item>
+            </Stack>
+          </Section>
+          <Section fitted>
+            <Stack align="center">
+              <Stack.Item grow={1}>
+                <Tabs fluid textAlign="center">
+                  <Tabs.Tab
+                    selected={currentTab === 0}
+                    onClick={() => this.setState({ currentTab: 0 })}
+                  >
+                    Objectives
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    selected={currentTab === 1}
+                    onClick={() => this.setState({ currentTab: 1 })}
+                  >
+                    Market
+                  </Tabs.Tab>
+                </Tabs>
+              </Stack.Item>
+              <Stack.Item mr={1}>
+                <Button
+                  icon="times"
+                  content="Lock"
+                  color="transparent"
+                  onClick={() => act("lock")}
+                />
+              </Stack.Item>
+            </Stack>
+          </Section>
+          {currentTab === 0 && (
+            <ObjectiveMenu
+              activeObjectives={active_objectives}
+              potentialObjectives={potential_objectives}
+              handleObjectiveAction={(objectiveIndex, action) =>
+                act("objective_act", { objective_action: action, index: objectiveIndex })}
+              handleStartObjective={(objectiveIndex) => act("start_objective", { index: objectiveIndex })}
+            />
+          ) || (
+            <GenericUplink
+              currency=""
+              categories={allCategories}
+              items={items}
+              handleBuy={(item) => {
+                act("buy", { path: item.id });
+              }}
+            />
+          )}
         </Window.Content>
       </Window>
     );

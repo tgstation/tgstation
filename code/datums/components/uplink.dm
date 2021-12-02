@@ -189,6 +189,23 @@
 			active = FALSE
 			locked = TRUE
 			SStgui.close_uis(src)
+		if("start_objective")
+			if(!uplink_handler.has_objectives)
+				return
+			var/objective_index = text2num(params["index"])
+			var/list/potential_objectives = uplink_handler.potential_objectives
+			if(objective_index < 1 || objective_index > length(potential_objectives))
+				return
+			uplink_handler.take_objective(ui.user, potential_objectives[objective_index])
+		if("objective_act")
+			if(!uplink_handler.has_objectives)
+				return
+			var/objective_index = text2num(params["index"])
+			var/list/active_objectives = uplink_handler.active_objectives
+			if(objective_index < 1 || objective_index > length(active_objectives))
+				return
+			uplink_handler.ui_objective_act(ui.user, potential_objectives[objective_index], params["objective_action"])
+	return TRUE
 
 // Implant signal responses
 /datum/component/uplink/proc/implant_activation()
