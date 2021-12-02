@@ -122,7 +122,7 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={3} pr={3}>
+    <Stack pl={8} pr={8}>
       <Stack.Item>
         <Button
           color="good"
@@ -148,12 +148,12 @@ const validateInput = (input, max_value, min_value) => {
   if (!!max_value && input > max_value) {
     return {
       isValid: false,
-      error: `Too high! Limit: ${max_value}`,
+      error: `Too high!`,
     };
   } else if (!min_value && input < min_value) {
     return {
       isValid: false,
-      error: `Too low! Floor: ${min_value}`,
+      error: `Too low!`,
     };
   } else if (input.length === 0) {
     return { isValid: false, error: null };

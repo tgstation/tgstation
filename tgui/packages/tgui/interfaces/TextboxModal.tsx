@@ -148,7 +148,7 @@ const ButtonGroup = (props, context) => {
   const { isValid, error } = inputIsValid;
 
   return (
-    <Stack pl={7} pr={7}>
+    <Stack pl={8} pr={8}>
       <Stack.Item>
         <Button
           color="good"
