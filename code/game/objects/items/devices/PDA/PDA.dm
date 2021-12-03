@@ -97,9 +97,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	//During init, this is the typepath to load into the pda. After init, this is the object currently inside the pda, if one exists
-	var/obj/item/inserted_item = /obj/item/pen
-
+	//This is the typepath to load "into" the pda 
+	var/obj/item/insert_type = /obj/item/pen
+	//This is the currently inserted item
+	var/obj/item/inserted_item
 	var/underline_flag = TRUE //flag for underline
 
 /obj/item/pda/suicide_act(mob/living/carbon/user)
@@ -131,8 +132,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(default_cartridge)
 		cartridge = SSwardrobe.provide_type(default_cartridge, src)
 		cartridge.host_pda = src
-	if(inserted_item)
-		inserted_item = SSwardrobe.provide_type(inserted_item, src)
+	if(insert_type)
+		inserted_item = SSwardrobe.provide_type(insert_type, src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	update_appearance()
@@ -1301,7 +1302,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/get_types_to_preload()
 	var/list/preload = list()
 	preload += default_cartridge
-	preload += inserted_item
+	preload += insert_type
 	return preload
 
 /// Callbacks for preloading pdas
