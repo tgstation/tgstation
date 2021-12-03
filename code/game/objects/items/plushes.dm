@@ -627,7 +627,7 @@
 	going_hard = TRUE
 	update_icon(UPDATE_OVERLAYS)
 
-/obj/item/toy/plush/goatplushie/proc/splat()
+/obj/item/toy/plush/goatplushie/proc/splat(datum/source)
 	SIGNAL_HANDLER
 	if(splat)
 		return
