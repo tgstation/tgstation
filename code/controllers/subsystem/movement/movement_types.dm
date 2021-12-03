@@ -4,7 +4,9 @@
 	var/datum/movement_packet/owner
 	///The subsystem we're processing on
 	var/datum/controller/subsystem/movement/controller
-	///An extra reference we pass around because it's occasionally handy for signals
+	///An extra reference we pass around
+	///It is on occasion useful to have a reference to some datum without storing it on the moving object
+	///Mostly comes up in high performance senarios where we care about things being singletons
 	///This feels horrible, but constantly making components seems worse
 	var/datum/extra_info
 	///The thing we're moving about
@@ -98,6 +100,8 @@
 /**
  * Replacement for walk()
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * direction - The direction we want to move in
@@ -107,7 +111,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move, priority, flags, extra_info, delay, timeout, direction)
@@ -129,6 +132,8 @@
 /**
  * Like walk(), but it uses byond's pathfinding on a step by step basis
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * direction - The direction we want to move in
@@ -138,7 +143,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_to_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move/move_to, priority, flags, extra_info, delay, timeout, direction)
@@ -178,6 +182,8 @@
 /**
  * Used for force-move loops, similar to move_towards_legacy() but not quite the same
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
@@ -187,7 +193,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/force_move(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/force_move, priority, flags, extra_info, delay, timeout, chasing)
@@ -200,6 +205,8 @@
 
 /**
  * Used for following jps defined paths. The proc signature here's a bit long, I'm sorry
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
  *
  * Arguments:
  * moving - The atom we want to move
@@ -217,7 +224,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/jps_move(moving,
 	chasing,
@@ -348,6 +354,8 @@
 /**
  * Wrapper around walk_to()
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
@@ -358,7 +366,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_to(moving, chasing, min_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_to, priority, flags, extra_info, delay, timeout, chasing, min_dist)
@@ -379,6 +386,8 @@
 /**
  * Wrapper around walk_away()
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
@@ -389,7 +398,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_away(moving, chasing, max_dist, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/dist_bound/move_away, priority, flags, extra_info, delay, timeout, chasing, max_dist)
@@ -410,6 +418,8 @@
 /**
  * Helper proc for the move_towards datum
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
@@ -420,7 +430,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_towards(moving, chasing, delay, home, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards, priority, flags, extra_info, delay, timeout, chasing, home)
@@ -428,6 +437,8 @@
 /**
  * Helper proc for homing onto something with move_towards
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
@@ -438,7 +449,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/home_onto(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return move_towards(moving, chasing, delay, TRUE, timeout, subsystem, priority, flags, extra_info)
@@ -551,6 +561,8 @@
 /**
  * Wrapper for walk_towards, not reccomended, as it's movement ends up being a bit stilted
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * chasing - The atom we want to move towards
@@ -560,7 +572,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_towards_legacy(moving, chasing, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/move_towards_budget, priority, flags, extra_info, delay, timeout, chasing)
@@ -576,6 +587,8 @@
 /**
  * Helper proc for the move_rand datum
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * directions - A list of acceptable directions to try and move in. Defaults to GLOB.alldirs
@@ -585,7 +598,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_rand(moving, directions, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	if(!directions)
@@ -621,6 +633,8 @@
 /**
  * Wrapper around walk_rand(), doesn't actually result in a random walk, it's more like moving to random places in viewish
  *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
  * Arguments:
  * moving - The atom we want to move
  * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
@@ -629,7 +643,6 @@
  * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
- * Returns TRUE if the loop sucessfully started, or FALSE if it failed
 **/
 /datum/controller/subsystem/move_manager/proc/move_to_rand(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/move_to_rand, priority, flags, extra_info, delay, timeout)
