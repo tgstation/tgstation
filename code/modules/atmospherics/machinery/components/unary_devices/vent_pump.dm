@@ -181,7 +181,9 @@
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
-	..()
+	. = ..()
+	if(override_naming)
+		return
 	var/area/vent_area = get_area(src)
 	name = "\proper [vent_area.name] [name] [id_tag]"
 
