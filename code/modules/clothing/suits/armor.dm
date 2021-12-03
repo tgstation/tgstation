@@ -372,3 +372,14 @@
 /obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/hop_formal
+	name = "\improper Head of Personnel's parade jacket"
+	desc = "A luxurious deep blue jacket for the Head of Personnel, woven with a red trim. It smells of bureaucracy."
+	icon_state = "hop_formal"
+	inhand_icon_state = "armor"
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/armor/vest/hop_formal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)

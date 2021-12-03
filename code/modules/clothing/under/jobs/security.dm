@@ -169,12 +169,15 @@
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/head_of_security/parade/female
-	name = "head of security's parade uniform"
+	name = "head of security's female parade uniform"
 	desc = "A female head of security's luxury-wear, for special occasions."
 	icon_state = "hos_parade_fem"
 	inhand_icon_state = "r_suit"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	unique_reskin = list("Skirt" = "hos_parade_fem",
+						"Dress" = "hos_dress",
+						)
 
 /obj/item/clothing/under/rank/security/head_of_security/formal
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."

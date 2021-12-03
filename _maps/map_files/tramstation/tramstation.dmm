@@ -40425,6 +40425,7 @@
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 8
 	},
+/obj/structure/closet/crate/secure/gear/parade,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "nnf" = (

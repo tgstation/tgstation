@@ -87,6 +87,23 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/rank/civilian/head_of_personnel/parade
+	name = "\improper Head of Personnel's parade uniform"
+	desc = "A luxurious uniform for the head of personnel, woven in a deep blue. On the lapel is a small pin in the shape of a corgi's head."
+	icon_state = "hop_parade_male"
+	inhand_icon_state = "r_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/head_of_personnel/parade/female
+	name = "\improper Head of Personnel's female parade uniform"
+	icon_state = "hop_parade_fem"
+	inhand_icon_state = "r_suit"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
+	unique_reskin = list("Skirt" = "hop_parade_fem",
+						"Dress" = "hop_dress",
+						)
+
 /obj/item/clothing/under/rank/civilian/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
 	name = "botanist's jumpsuit"

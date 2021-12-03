@@ -39463,6 +39463,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/office)
+"qnU" = (
+/obj/structure/closet/crate/secure/gear/parade,
+/turf/open/floor/wood,
+/area/command/meeting_room)
 "qnY" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -82470,7 +82474,7 @@ nuf
 kKh
 xQR
 sUJ
-xQa
+qnU
 kcR
 cGo
 suY

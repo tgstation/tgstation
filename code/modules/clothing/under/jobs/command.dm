@@ -40,3 +40,13 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = "by_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/captain/parade/female
+	name = "captain's female parade uniform"
+	desc = "A female captain's luxury-wear, for special occasions."
+	icon_state = "captain_parade_fem"
+	inhand_icon_state = "by_suit"
+	fitted = FEMALE_UNIFORM_TOP
+	unique_reskin = list("Skirt" = "captain_parade_fem",
+						"Dress" = "captain_dress",
+						)

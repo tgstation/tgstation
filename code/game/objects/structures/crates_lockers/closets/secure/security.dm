@@ -308,3 +308,19 @@
 	new /obj/item/clothing/under/rank/security/officer/skirt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/structure/closet/crate/secure/gear/parade
+	name = "\improper Formal Uniform Crate"
+	desc = "A secure crate containing formal and parade uniforms for Heads of Staff."
+
+/obj/structure/closet/crate/secure/gear/parade/PopulateContents()
+	..()
+	new /obj/item/clothing/under/rank/captain/parade(src)
+	new /obj/item/clothing/under/rank/captain/parade/female(src)
+	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
+	new /obj/item/clothing/under/rank/security/head_of_security/parade(src)
+	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
+	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
+	new /obj/item/clothing/under/rank/civilian/head_of_personnel/parade(src)
+	new /obj/item/clothing/under/rank/civilian/head_of_personnel/parade/female(src)
+	new /obj/item/clothing/suit/armor/vest/hop_formal(src)

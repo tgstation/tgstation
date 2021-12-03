@@ -38300,7 +38300,6 @@
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/service)
 "fTP" = (
-/obj/machinery/vending/cigarette,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -38312,6 +38311,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/crate/secure/gear/parade,
 /turf/open/floor/iron/dark,
 /area/command/meeting_room/council)
 "fTS" = (
