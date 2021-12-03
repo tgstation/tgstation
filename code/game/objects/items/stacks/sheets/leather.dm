@@ -158,6 +158,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	. = ..()
 	AddElement(/datum/element/dryable, /obj/item/stack/sheet/leather)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddComponent(/datum/component/grillable, /obj/item/stack/sheet/leather, rand(1 SECONDS, 3 SECONDS), TRUE)
 
 /obj/item/stack/sheet/wethide/burn()
 	visible_message(span_notice("[src] finishes drying!"))
