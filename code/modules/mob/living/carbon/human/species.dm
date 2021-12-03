@@ -2154,7 +2154,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for(var/obj/item/organ/external/horny as anything in external_organs)
 		to_store += horny //Haha get it?
 
-	to_store += mutantbrain
+	//Don't preload brains, cause reuse becomes a horrible headache
 	to_store += mutantheart
 	to_store += mutantlungs
 	to_store += mutanteyes
