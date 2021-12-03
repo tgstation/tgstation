@@ -597,7 +597,7 @@
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
-			if(candidate.mmi)
+			if(candidate.mmi || candidate.shell)
 				channeling = TRUE
 				user.visible_message(span_danger("A dark cloud emanates from [user]'s hand and swirls around [candidate]!"))
 				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, TRUE)
