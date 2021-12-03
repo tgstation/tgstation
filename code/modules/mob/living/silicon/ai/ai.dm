@@ -163,9 +163,13 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		add_verb(src, list(/mob/living/silicon/ai/proc/ai_network_change, /mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/botcall, /mob/living/silicon/ai/proc/control_integrated_radio, \
-		/mob/living/silicon/ai/proc/set_automatic_say_channel))
+		add_verb(src, list(
+			/mob/living/silicon/ai/proc/ai_network_change,
+			/mob/living/silicon/ai/proc/ai_hologram_change,
+			/mob/living/silicon/ai/proc/botcall,
+			/mob/living/silicon/ai/proc/control_integrated_radio,
+			/mob/living/silicon/ai/proc/set_automatic_say_channel,
+		))
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
@@ -840,8 +844,9 @@
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
-	modules_action = new(malf_picker)
-	modules_action.Grant(src)
+	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade
+		modules_action = new(malf_picker)
+		modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)

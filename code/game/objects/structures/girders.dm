@@ -9,7 +9,6 @@
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
 	var/next_beep = 0 //Prevents spamming of the construction sound
 	max_integrity = 200
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 
 /obj/structure/girder/examine(mob/user)
@@ -347,12 +346,7 @@
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user)) //Cultists can demolish cult girders instantly with their tomes
-		user.visible_message(span_warning("[user] strikes [src] with [W]!"), span_notice("You demolish [src]."))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-		qdel(src)
-
-	else if(W.tool_behaviour == TOOL_WELDER)
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 

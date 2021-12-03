@@ -482,6 +482,8 @@
 			colored_message = "(ASAY) [colored_message]"
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
+		if(LOG_RADIO_EMOTE)
+			colored_message = "(RADIOEMOTE) [colored_message]"
 
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
@@ -502,15 +504,6 @@
  * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
  */
 /mob/proc/common_trait_examine()
-	if(HAS_TRAIT(src, TRAIT_DISSECTED))
-		var/dissectionmsg = ""
-		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
-			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
-		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
-			dissectionmsg = " via Experimental Dissection"
-		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
-			dissectionmsg = " via Thorough Dissection"
-		. += "[span_notice("This body has been dissected and analyzed[dissectionmsg].")]<br>"
 	if(HAS_TRAIT(src,TRAIT_HUSK))
 		. += span_warning("This body has been reduced to a grotesque husk.")
 

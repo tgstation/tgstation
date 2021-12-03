@@ -4,6 +4,8 @@
 
 #define NUM_E 2.71828183
 
+#define SQRT_2 1.414214 //CLOSE ENOUGH!
+
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
 
@@ -83,11 +85,6 @@
 
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
-
-/// Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
-/// delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
-/// See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths
-#define LPFILTER(memory, signal, delta_time, RC) (delta_time / (RC + delta_time)) * signal + (1 - delta_time / (RC + delta_time)) * memory
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.

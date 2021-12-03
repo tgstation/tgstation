@@ -126,10 +126,18 @@
 		"slides out of a fold in spacetime")
 	to_chat(user, span_notice("You try to align with the bluespace stream..."))
 	if(do_after(user, 20, target = src))
-		new /obj/effect/temp_visual/bluespace_fissure(get_turf(src))
-		new /obj/effect/temp_visual/bluespace_fissure(get_turf(linked_to))
-		user.forceMove(get_turf(linked_to))
+		var/turf/source_turf = get_turf(src)
+		var/turf/destination_turf = get_turf(linked_to)
+
+		new /obj/effect/temp_visual/bluespace_fissure(source_turf)
+		new /obj/effect/temp_visual/bluespace_fissure(destination_turf)
+
 		user.visible_message(span_warning("[user] [slip_in_message]."), null, null, null, user)
+
+		if(!do_teleport(user, destination_turf, no_effects = TRUE))
+			user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), null, null, null, user)
+			return
+
 		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
 
 /datum/brain_trauma/special/quantum_alignment
@@ -387,7 +395,7 @@
 
 /obj/effect/hallucination/simple/securitron/Initialize(mapload)
 	. = ..()
-	name = pick("officer Beepsky", "officer Johnson", "officer Pingsky")
+	name = pick("Officer Beepsky", "Officer Johnson", "Officer Pingsky")
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/hallucination/simple/securitron/process()

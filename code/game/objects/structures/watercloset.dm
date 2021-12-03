@@ -159,21 +159,7 @@
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
-/obj/structure/urinal/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/structure/urinal/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/urinal/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/urinal/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
@@ -788,3 +774,10 @@
 
 /obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
 		return
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed
+	icon_state = "cur_fancy-closed"
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed/Initialize(mapload)
+	. = ..()
+	close()

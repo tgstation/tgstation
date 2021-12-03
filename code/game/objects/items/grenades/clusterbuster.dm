@@ -1,6 +1,10 @@
 ////////////////////
 //Clusterbang
 ////////////////////
+
+#define RANDOM_DETONATE_MIN_TIME 1.5 SECONDS
+#define RANDOM_DETONATE_MAX_TIME 6 SECONDS
+
 /obj/item/grenade/clusterbuster
 	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."
 	name = "clusterbang"
@@ -17,10 +21,10 @@
 /obj/item/grenade/clusterbuster/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
-	var/numspawned = rand(min_spawned,max_spawned)
+	var/numspawned = rand(min_spawned, max_spawned)
 	var/again = 0
 
-	for(var/more = numspawned,more > 0,more--)
+	for(var/_ in 1 to numspawned)
 		if(prob(segment_chance))
 			again++
 			numspawned--
@@ -55,13 +59,13 @@
 		max_spawned = base.max_spawned
 	icon_state = "[base_state]_active"
 	active = TRUE
-	var/steps = rand(1,4)
-	for(var/i in 1 to steps)
-		step_away(src,loc)
-	addtimer(CALLBACK(src, .proc/detonate), rand(15,60))
+	var/steps = rand(1, 4)
+	for(var/step in 1 to steps)
+		step_away(src, loc)
+	addtimer(CALLBACK(src, .proc/detonate), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 
 /obj/item/grenade/clusterbuster/segment/detonate(mob/living/lanced_by)
-	new payload_spawner(drop_location(), payload, rand(min_spawned,max_spawned))
+	new payload_spawner(drop_location(), payload, rand(min_spawned, max_spawned))
 	playsound(src, prime_sound, 75, TRUE, -3)
 	qdel(src)
 
@@ -75,14 +79,14 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/payload_spawner/proc/spawn_payload(type, numspawned)
-	for(var/loop in 1 to numspawned)
-		var/obj/item/grenade/P = new type(loc)
-		if(istype(P))
-			P.active = TRUE
-			addtimer(CALLBACK(P, /obj/item/grenade/proc/detonate), rand(15,60))
-		var/steps = rand(1,4)
-		for(var/i in 1 to steps)
-			step_away(src,loc)
+	for(var/_ in 1 to numspawned)
+		var/obj/item/grenade/grenade = new type(loc)
+		if(istype(grenade))
+			grenade.active = TRUE
+			addtimer(CALLBACK(grenade, /obj/item/grenade/proc/detonate), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+		var/steps = rand(1, 4)
+		for(var/step in 1 to steps)
+			step_away(src, loc)
 
 /obj/effect/payload_spawner/random_slime
 	var/volatile = FALSE
@@ -101,17 +105,20 @@
 		if(chem == "holy water and uranium")
 			chem = /datum/reagent/uranium
 			reagents.add_reagent(/datum/reagent/water/holywater)
-		reagents.add_reagent(chem,amount)
+		reagents.add_reagent(chem, amount)
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
-	for(var/loop = numspawned ,loop > 0, loop--)
+	for(var/_ in 1 to numspawned)
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
-		var/obj/item/slime_extract/P = new chosen(loc)
+		var/obj/item/slime_extract/slime_extract = new chosen(loc)
 		if(volatile)
-			addtimer(CALLBACK(P, /obj/item/slime_extract/proc/activate_slime), rand(15,60))
-		var/steps = rand(1,4)
-		for(var/i in 1 to steps)
-			step_away(src,loc)
+			addtimer(CALLBACK(slime_extract, /obj/item/slime_extract/proc/activate_slime), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+		var/steps = rand(1, 4)
+		for(var/step in 1 to steps)
+			step_away(src, loc)
+
+#undef RANDOM_DETONATE_MIN_TIME
+#undef RANDOM_DETONATE_MAX_TIME
 
 //////////////////////////////////
 //Custom payload clusterbusters

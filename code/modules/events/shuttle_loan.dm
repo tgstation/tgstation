@@ -165,7 +165,7 @@
 			if(ANTIDOTE_NEEDED)
 				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
 				var/turf/T
-				for(var/i=0, i<10, i++)
+				for(var/i in 1 to 10)
 					if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))

@@ -2,7 +2,6 @@
 	name = "Family Member"
 	roundend_category = "gangsters"
 	ui_name = "AntagInfoGangmember"
-	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
 	antagpanel_category = "Family"
 	show_in_antagpanel = FALSE // i don't *think* this base class is buggy but it's too worthless to test
@@ -80,8 +79,6 @@
 	my_gang.rename_gangster(owner, original_name, starter_gangster) // fully_replace_character_name
 	if(starter_gangster)
 		equip_gangster_in_inventory()
-	var/datum/atom_hud/gang_hud = GLOB.huds[ANTAG_HUD_GANGSTER]
-	gang_hud.add_hud_to(owner.current)
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	..()
 
@@ -95,8 +92,6 @@
 		have that datum onhand. it would be easier if all of the code the gang team calls on its my_gang_datum was
 		just in the team datum itself, and there were different types of teams instead of different types of gangster
 		that imprint on generic teams, but i'm too lazy to refactor THAT too */
-	var/datum/atom_hud/gang_hud = GLOB.huds[ANTAG_HUD_GANGSTER]
-	gang_hud.remove_hud_from(owner.current)
 	..()
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
@@ -104,14 +99,11 @@
 	if(starter_gangster)
 		package_spawner.Grant(owner.current)
 		package_spawner.my_gang_datum = src
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	add_team_hud(mob_override || owner.current, /datum/antagonist/gang)
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	if(starter_gangster)
 		package_spawner.Remove(owner.current)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	..()
 
 /// Gives a gangster their equipment in their backpack and / or pockets.

@@ -19,7 +19,6 @@
 
 	WRITE_FILE(F["name"], name)
 	WRITE_FILE(F["description"], description)
-	WRITE_FILE(F["role"], role)
 	WRITE_FILE(F["comments"], comments)
 
 	WRITE_FILE(F["version"], 1)
@@ -56,6 +55,5 @@
 
 	F["name"] >> src.name
 	F["description"] >> src.description
-	F["role"] >> src.role
 	F["comments"] >> src.comments
 	return 1

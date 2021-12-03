@@ -263,6 +263,19 @@
 			return FALSE
 	return TRUE
 
+/obj/machinery/limbgrower/fullupgrade //Inherently cheaper organ production. This is to NEVER be inherently emagged, no valids.
+	desc = "It grows new limbs using Synthflesh. This alien model seems more efficient."
+	obj_flags = CAN_BE_HIT
+	flags_1 = NODECONSTRUCT_1
+	circuit = /obj/item/circuitboard/machine/limbgrower/fullupgrade
+
+/obj/machinery/limbgrower/fullupgrade/Initialize(mapload)
+	. = ..()
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
+		if((found_design.build_type & LIMBGROWER) && !("emagged" in found_design.category))
+			stored_research.add_design(found_design)
+
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

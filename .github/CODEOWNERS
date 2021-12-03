@@ -57,10 +57,6 @@
 /code/datums/elements/ @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
 
-# ShizCalev
-
-/sound/ @ShizCalev
-
 # stylemistake
 
 /code/__DEFINES/chat.dm @stylemistake
@@ -89,6 +85,7 @@
 
 # JohnFulpWizard
 
+/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 /goon/ @JohnFulpWillard
 
 # MrStonedOne
@@ -110,7 +107,7 @@
 
 # MULTIPLE OWNERS
 
-/icons/ @Twaticus @ShizCalev @Krysonism
+/icons/ @Twaticus @Krysonism @Imaginos16
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /_maps/ @EOBGames @ShizCalev @Maurukas
 /tools/build/ @MrStonedOne @stylemistake

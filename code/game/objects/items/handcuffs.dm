@@ -39,7 +39,7 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	custom_price = PAYCHECK_HARD * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -59,9 +59,10 @@
 
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())
-			C.visible_message(span_danger("[user] is trying to put [src.name] on [C]!"), \
-								span_userdanger("[user] is trying to put [src.name] on you!"))
-
+			C.visible_message(span_danger("[user] is trying to put [name] on [C]!"), \
+								span_userdanger("[user] is trying to put [name] on you!"))
+			if(C.is_blind())
+				to_chat(C, span_userdanger("You feel someone grab your wrists, the cold metal of [name] starting to dig into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
 			if(do_mob(user, C, 30, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())

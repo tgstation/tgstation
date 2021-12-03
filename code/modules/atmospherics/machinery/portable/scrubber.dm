@@ -23,7 +23,7 @@
 		/datum/gas/carbon_dioxide,
 		/datum/gas/nitrous_oxide,
 		/datum/gas/bz,
-		/datum/gas/nitryl,
+		/datum/gas/nitrium,
 		/datum/gas/tritium,
 		/datum/gas/hypernoblium,
 		/datum/gas/water_vapor,
@@ -168,6 +168,10 @@
 			scrubbing ^= gas_id2path(params["val"])
 			. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/scrubber/unregister_holding()
+	on = FALSE
+	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"

@@ -75,11 +75,16 @@
 		uplink_handler.purchase_log = purchase_log
 	else
 		uplink_handler = uplink_handler_override
+	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, .proc/handle_uplink_handler_update)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
 
 	previous_attempts = list()
+
+/datum/component/uplink/proc/handle_uplink_handler_update()
+	SIGNAL_HANDLER
+	SStgui.update_uis(src)
 
 /// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
 /datum/component/uplink/proc/add_telecrystals(telecrystals_added)
@@ -270,7 +275,7 @@
 	interact(null, user)
 	to_chat(user, span_hear("The PDA softly beeps."))
 	user << browse(null, "window=pda")
-	master.mode = 0
+	master.ui_mode = PDA_UI_HUB
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
