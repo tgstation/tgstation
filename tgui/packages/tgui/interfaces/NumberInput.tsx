@@ -29,9 +29,13 @@ export const NumberInput = (_, context) => {
   );
   const onType = (event) => {
     event.preventDefault();
-    const target = event.target;
-    setInputIsValid(validateInput(target.value, max_value, min_value));
-    setInput(target.value);
+    let value = event.target.value;
+    /** Cuts leading zeros */
+    if (!isNaN(value)) {
+      value = value * 1;
+    }
+    setInputIsValid(validateInput(value, max_value, min_value));
+    setInput(value);
   };
   const onClick = (value: number) => {
     setInputIsValid(validateInput(value, max_value, min_value));
