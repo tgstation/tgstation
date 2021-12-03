@@ -289,6 +289,16 @@
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/mac_balls
+	name = "macheronirölen"
+	desc = "Fried balls of macaroni cheese, served with tomato sauce. A popular snack across the galaxy, and especially on the Mothic Fleet- where they tend to use Donk-dinner as the base."
+	icon = 'icons/obj/food/moth.dmi'
+	icon_state = "mac_balls"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
+	tastes = list("pasta" = 1, "bread" = 1, "cheese" = 1)
+	foodtypes = DAIRY | VEGETABLES | FRIED | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/sustenance_bar
 	name = "surplus fleet PSB"
 	desc = "The PSB, or Prepacked Sustenance Bar, is a densely packed, nutrient rich food which is designed to hold the populace over during times of food shortage. Made from soy and pea protein, each lasts 3 days if adequately rationed. While they have a long shelf life, they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is, like most artificially-flavoured moth food, mixed-herb flavoured."

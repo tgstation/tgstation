@@ -883,3 +883,44 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/char = 1)
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
+
+//DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
+/obj/item/food/donk_dinner
+	name = "\improper Donk-dinner: Bachelor Chow"
+	desc = "Donk-dinner: now with flavour!"
+	icon_state = "donk_dinner"
+	trash_type = /obj/item/trash/donk_dinner
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	microwaved_type = /obj/item/food/donk_dinner/warm
+	tastes = list("food?" = 2, "laziness" = 1)
+	foodtypes = MEAT | JUNKFOOD
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/donk_dinner/examine_more(mob/user)
+	var/list/msg = list(span_notice("<i>You browse the back of the box...</i>"))
+	msg += "\t[span_info("Donk-dinner: a product of Donk Co.")]"
+	msg += "\t[span_info("Heating instructions: pierce packaging, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
+	msg += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
+	return msg
+
+/obj/item/food/donk_dinner/warm
+	name = "warm Donk-dinner: Bachelor Chow"
+	desc = "Donk-dinner, now with flavour! And it's even hot!"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/omnizine = 3)
+	microwaved_type = null
+	tastes = list("food?" = 2, "laziness" = 1)
+
+/obj/item/food/donk_dinner/mac_n_cheese
+	name = "\improper Donk-dinner: Yankee Cheesy Mac"
+	desc = "(Slightly subpar) mac n' cheese in seconds!"
+	microwaved_type = /obj/item/food/donk_dinner/warm/mac_n_cheese
+	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+/obj/item/food/donk_dinner/warm/mac_n_cheese
+	name = "warm Donk-dinner: Yankee Cheesy Mac"
+	desc = "(Slightly subpar) mac n' cheese, ready to eat!"
+	microwaved_type = null
+	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
