@@ -892,7 +892,7 @@
 		{
 			"id": "rd_suit",
 			"name": "Nakamura Engineering B.O.M.B.Suit",
-			"desc": "The Nakamura Engineering B.O.M.B.Suit is an innovative combination of a R.I.G.Suit and a bomb suit, perfect for toxins research.",
+			"desc": "The Nakamura Engineering B.O.M.B.Suit is an innovative combination of a R.I.G.Suit and a bomb suit, perfect for ordnance research.",
 			"rules": "Reduces all battlefield damage to the equipped creature by 2.",
 			"icon_state": "rd_hardsuit",
 			"power": "0",

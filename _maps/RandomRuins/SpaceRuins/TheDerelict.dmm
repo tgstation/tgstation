@@ -2134,7 +2134,7 @@
 /area/ruin/space/derelict/medical)
 "jQ" = (
 /obj/machinery/door/airlock/research{
-	name = "Toxins Research";
+	name = "Ordnance Research";
 	req_access_txt = "7"
 	},
 /obj/structure/cable,
@@ -2207,7 +2207,7 @@
 /area/ruin/unpowered/no_grav)
 "kh" = (
 /obj/machinery/door/airlock/research{
-	name = "Toxins Research";
+	name = "Ordnance Research";
 	req_access_txt = "7"
 	},
 /obj/structure/cable,

@@ -11372,7 +11372,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 2;
-	name = "toxins sorting disposal pipe";
+	name = "ordnance sorting disposal pipe";
 	sortType = 25
 	},
 /turf/open/floor/iron/showroomfloor,
@@ -66646,7 +66646,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/south{
-	c_tag = "Toxins Pumps";
+	c_tag = "Ordnance Pumps";
 	name = "science camera";
 	network = list("ss13","rd")
 	},

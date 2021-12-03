@@ -411,7 +411,7 @@
 	icon_state = "book6"
 	author = "Cuban Pete"
 	title = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
-	page_link = "Guide_to_toxins"
+	page_link = "Guide_to_ordnance"
 
 /obj/item/book/manual/wiki/ordnance/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user

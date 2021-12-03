@@ -20741,7 +20741,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/camera{
-	c_tag = "Science - Toxins Burn Chamber";
+	c_tag = "Science - Ordnance Burn Chamber";
 	dir = 9;
 	network = list("ss13","rd")
 	},
@@ -45770,7 +45770,7 @@
 /obj/machinery/requests_console/directional/north{
 	department = "Toxins";
 	departmentType = 2;
-	name = "Toxins Requests Console";
+	name = "Ordnance Requests Console";
 	receive_ore_updates = 1
 	},
 /turf/open/floor/iron,

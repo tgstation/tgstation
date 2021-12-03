@@ -759,7 +759,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	QDEL_NULL(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
-	name = "Toxins Special"
+	name = "Ordnance Special"
 	description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
 	color = "#8880a8" // rgb: 136,128,168
 	boozepwr = 25
