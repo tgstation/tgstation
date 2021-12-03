@@ -104,7 +104,7 @@
 		rite_target = user
 	else
 		for(var/buckled in movable_reltool.buckled_mobs)
-			if(istype(buckled, /mob/living/carbon/human))
+			if(ishuman(buckled))
 				rite_target = buckled
 				break
 	if(!rite_target)
