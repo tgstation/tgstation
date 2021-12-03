@@ -98,6 +98,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	update_move_direction()
 
+/**
+ * Proc to handle updating the directions in which the conveyor belt is moving items.
+ */
 /obj/machinery/conveyor/proc/update_move_direction()
 	switch(dir)
 		if(NORTH)
@@ -183,6 +186,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)//Movement effect
 
+/**
+ * Proc to handle moving items along the conveyor belt.
+ */
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/am in affecting)
 		if(!ismovable(am)) //This is like a third faster than for(var/atom/movable in affecting)
@@ -540,7 +546,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "Allows to control connected conveyor belts."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
+	/// The current direction of the conveyor attached to the component.
 	var/datum/port/output/direction
+	/// The switch this conveyor switch component is attached to.
 	var/obj/machinery/conveyor_switch/attached_switch
 
 /obj/item/circuit_component/conveyor_switch/populate_ports()
