@@ -433,6 +433,9 @@
 					if (!isnull(strippable_item.get_item(owner)))
 						return
 
+					if (!user.Adjacent(owner))
+						return
+
 					strippable_item.finish_equip(owner, held_item, user)
 			else if (strippable_item.try_unequip(owner, user))
 				LAZYORASSOCLIST(interactions, user, key)
@@ -450,6 +453,9 @@
 
 				// They changed the item in the meantime
 				if (strippable_item.get_item(owner) != item)
+					return
+
+				if (!user.Adjacent(owner))
 					return
 
 				strippable_item.finish_unequip(owner, user)
