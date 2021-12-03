@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "Simplified the \"Transformation/Rudimentary Transformation\" part of the admin player panel, you can now choose from ghost/human/monkey/cyborg/AI, and all options work whether the target is currently a human/other living mob/ghost."

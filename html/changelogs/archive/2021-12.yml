@@ -91,3 +91,28 @@
   - bugfix: Fix telecomms relays to work across multi-z
   vincentiusvin:
   - bugfix: tanks being destroyed in cans/pumps/scrubbers wont cause errors now
+2021-12-03:
+  AffectedArc07:
+  - bugfix: Fixed some bugged lighting
+  Ghommie:
+  - bugfix: Fixes the cult sacrifice softlocking if the target is deleted before being
+      sacced. It'll reroll a new target if that happens.
+  Melbert:
+  - bugfix: The lathe in Deltastation's service hall can print circuit boards again.
+  Ryll/Shaps:
+  - admin: Simplified the "Transformation/Rudimentary Transformation" part of the
+      admin player panel, you can now choose from ghost/human/monkey/cyborg/AI, and
+      all options work whether the target is currently a human/other living mob/ghost.
+  Seris02:
+  - qol: made hair gradient color preferences not show up if no gradient is selected
+  axietheaxolotl:
+  - rscadd: Pride Pins
+  carshalash:
+  - imageadd: Fire mutation now has the sprite of old space adaption while Pressure
+      is a blue version of it.
+  jlsnow301:
+  - bugfix: Removed two map-based runtimes for Syndicate Lavaland Base and The Derelict
+  tf-4:
+  - admin: You now have to confirm that you want to reset the station name from the
+      secrets panel.
+  - bugfix: Blind people now get a chat message when being cuffed.

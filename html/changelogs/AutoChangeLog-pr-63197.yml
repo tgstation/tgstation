@@ -1,4 +1,0 @@
-author: "tf-4"
-delete-after: True
-changes: 
-  - admin: "You now have to confirm that you want to reset the station name from the secrets panel."
