@@ -67,9 +67,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
 		if(istype(checking, /obj/item/pda))
-			checking.cartridge.host_pda = null
-			checking.cartridge = null
-			checking.inserted_item = null //Lmao LOL fuck me
+			var/obj/item/pda/whats_shitcode = checking
+			whats_shitcode.cartridge.host_pda = null
+			whats_shitcode.cartridge = null
+			whats_shitcode.inserted_item = null //Lmao LOL fuck me
 		SSwardrobe.stash_object(checking)
 
 	for(var/obj/item/delete as anything in to_nuke)
