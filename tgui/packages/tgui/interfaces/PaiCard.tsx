@@ -169,7 +169,7 @@ const PaiOptions = (_, context) => {
             </Button>
           )}
         </LabeledList.Item>
-        {master && <LabeledList.Item label="DNA">{dna}</LabeledList.Item>}
+        {!!master && <LabeledList.Item label="DNA">{dna}</LabeledList.Item>}
         <LabeledList.Item label="Laws">{laws}</LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button
