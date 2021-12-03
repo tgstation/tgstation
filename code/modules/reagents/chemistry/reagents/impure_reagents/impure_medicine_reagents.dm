@@ -628,11 +628,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	if(!(DT_PROB(creation_purity*10, delta_time)))
 		return
-	var/trauma = /datum/brain_trauma/hypnosis
+	var/traumalist = subtypesof(/datum/brain_trauma)
+	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
+	traumalist -= /datum/brain_trauma/special/obsessed //Sets the owner as an antag - I presume this will lead to problems, so we'll remove it
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
-		temp_trauma = trauma
-		return
+	traumalist = shuffle(traumalist)
+	for(var/trauma in traumalist)
+		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
+			temp_trauma = trauma
+			return
 
 /datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
 	.=..()
