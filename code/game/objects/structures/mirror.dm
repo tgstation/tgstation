@@ -277,13 +277,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	user.visible_message(span_danger("<B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B>"), \
 	span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"))
 
-	var/turf/T = get_turf(user)
+	var/turf/user_turf = get_turf(user)
 	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
 	var/turf/dest
 	if(levels.len)
-		dest = locate(T.x, T.y, pick(levels))
+		dest = locate(user_turf.x, user_turf.y, pick(levels))
 
-	T.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/C = T
-	C.set_target(dest)
-	C.drop(user)
+	user_turf.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/open/chasm/new_chasm = user_turf
+	new_chasm.set_target(dest)
+	new_chasm.drop(user)
