@@ -51,7 +51,7 @@
 		SET_BITFLAG_LIST(canSmoothWith)
 
 	var/area/our_area = loc
-	if(our_area.static_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
+	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
 		add_overlay(GLOB.fullbright_overlay)
 
 	if(requires_activation)
