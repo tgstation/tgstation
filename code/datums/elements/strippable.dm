@@ -433,9 +433,6 @@
 					if (!isnull(strippable_item.get_item(owner)))
 						return
 
-					if (!user.Adjacent(owner))
-						return
-
 					strippable_item.finish_equip(owner, held_item, user)
 			else if (strippable_item.try_unequip(owner, user))
 				LAZYORASSOCLIST(interactions, user, key)
@@ -453,9 +450,6 @@
 
 				// They changed the item in the meantime
 				if (strippable_item.get_item(owner) != item)
-					return
-
-				if (!user.Adjacent(owner))
 					return
 
 				strippable_item.finish_unequip(owner, user)
@@ -496,7 +490,7 @@
 	return min(
 		ui_status_only_living(user, owner),
 		ui_status_user_has_free_hands(user, owner),
-		ui_status_user_is_adjacent(user, owner),
+		ui_status_user_is_adjacent(user, owner, allow_tk = FALSE),
 		HAS_TRAIT(user, TRAIT_CAN_STRIP) ? UI_INTERACTIVE : UI_UPDATE,
 		max(
 			ui_status_user_is_conscious_and_lying_down(user),
