@@ -34,6 +34,8 @@
 	var/obj/item/paicard/card
 	/// Are we hacking a door?
 	var/hacking = FALSE
+	/// The progress for hacking
+	var/datum/progressbar/hackbar
 	/// Changes the display to syndi if true
 	var/emagged = FALSE
 
@@ -174,22 +176,27 @@
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 /mob/living/silicon/pai/proc/process_hack(delta_time, times_fired)
-	if(hacking_cable && hacking_cable.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = clamp(hackprogress + (2 * delta_time), 0, 100)
+	if(hacking_cable?.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
+		hackprogress = clamp(hackprogress + (2 * delta_time), 0, HACK_COMPLETE)
+		hackbar.update(hackprogress)
 	else
 		to_chat(src, span_notice("Door Jack: Connection to airlock has been lost. Hack aborted."))
 		hackprogress = 0
 		hacking = FALSE
 		hackdoor = null
+		hackbar.end_progress()
+		QDEL_NULL(hackbar)
 		QDEL_NULL(hacking_cable)
 		if(!QDELETED(card))
 			card.update_appearance()
 		return
-	if(hackprogress >= 100)
+	if(hackprogress >= HACK_COMPLETE)
 		hackprogress = 0
-		var/obj/machinery/door/D = hacking_cable.machine
-		D.open()
 		hacking = FALSE
+		hackbar.end_progress()
+		var/obj/machinery/door/door = hacking_cable.machine
+		door.open()
+		QDEL_NULL(hackbar)
 		QDEL_NULL(hacking_cable)
 
 /mob/living/silicon/pai/make_laws()
