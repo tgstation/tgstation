@@ -84,7 +84,7 @@
 //Gotta reset the eye color, because that persists
 /obj/item/organ/eyes/enter_wardrobe()
 	. = ..()
-	eye_color = inital(eye_color)
+	eye_color = initial(eye_color)
 
 /obj/item/organ/eyes/on_life(delta_time, times_fired)
 	. = ..()
