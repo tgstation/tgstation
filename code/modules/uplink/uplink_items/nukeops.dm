@@ -754,31 +754,6 @@
 	cost = 4
 	cant_discount = TRUE
 
-/datum/uplink_item/badass/costumes/obvious_chameleon
-	name = "Broken Chameleon Kit"
-	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
-			Please note that this kit did NOT pass quality control."
-	item = /obj/item/storage/box/syndie_kit/chameleon/broken
-
-/datum/uplink_item/badass/costumes/centcom_official
-	name = "CentCom Official Costume"
-	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. \
-			Radio headset does not include encryption key. No gun included."
-	item = /obj/item/storage/box/syndie_kit/centcom_costume
-
-/datum/uplink_item/badass/costumes/clown
-	name = "Clown Costume"
-	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
-	item = /obj/item/storage/backpack/duffelbag/clown/syndie
-
-/datum/uplink_item/badass/costumes/tactical_naptime
-	name = "Sleepy Time Pajama Bundle"
-	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
-	item = /obj/item/storage/box/syndie_kit/sleepytime
-	cost = 4
-	limited_stock = 1
-	cant_discount = TRUE
-
 /datum/uplink_item/badass/clownopclumsinessinjector //clowns can buy this too, but it's in the role-restricted items section for them
 	name = "Clumsiness Injector"
 	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clown operatives who wish to reconnect with their former clownish nature or for clown operatives who wish to torment and play with their prey before killing them."

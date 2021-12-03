@@ -7,7 +7,7 @@ import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
 import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
 import { ObjectiveMenu } from './ObjectiveMenu';
-import { calculateReputationLevel, reputationLevelsTooltip } from './calculateReputationLevel';
+import { calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
 
 type UplinkItem = {
   id: string,
@@ -30,6 +30,7 @@ export type ObjectiveUiButton = {
 }
 
 export type Objective = {
+  id: number,
   name: string,
   description: string,
   progression_minimum: number,
@@ -45,6 +46,7 @@ type UplinkData = {
   assigned_role: string,
   debug: BooleanLike,
   has_objectives: BooleanLike,
+  has_progression: BooleanLike,
   potential_objectives: Objective[],
   active_objectives: Objective[],
 }
@@ -129,6 +131,8 @@ export class Uplink extends Component<{}, UplinkState> {
       progression_points,
       active_objectives,
       potential_objectives,
+      has_objectives,
+      has_progression,
     } = data;
     const {
       allItems,
@@ -152,8 +156,17 @@ export class Uplink extends Component<{}, UplinkState> {
         ),
         cost: (
           <Box>
-            {item.cost} TC,&nbsp;
-            {calculateReputationLevel(item.progression_minimum, true)}
+            {item.cost} TC
+            {has_progression
+              ? (
+                <>
+                  ,&nbsp;
+                  <Box as="span">
+                    {calculateReputationLevel(item.progression_minimum, true)}
+                  </Box>
+                </>
+              )
+              : ""}
           </Box>
         ),
         disabled: !canBuy || !hasEnoughProgression,
@@ -181,7 +194,11 @@ export class Uplink extends Component<{}, UplinkState> {
               <Stack.Item align="center">
                 <Box bold fontSize={1.2}>
                   <Tooltip content={reputationLevelsTooltip}>
-                    {calculateReputationLevel(progression_points, false)}
+                    {/* If we have no progression,
+                      just give them a generic title */}
+                    {has_progression
+                      ? calculateReputationLevel(progression_points, false)
+                      : calculateReputationLevel(reputationDefault, false)}
                   </Tooltip>
                 </Box>
                 <Box color="good" bold fontSize={1.2} textAlign="right">
@@ -194,14 +211,16 @@ export class Uplink extends Component<{}, UplinkState> {
             <Stack align="center">
               <Stack.Item grow={1}>
                 <Tabs fluid textAlign="center">
+                  {!!has_objectives && (
+                    <Tabs.Tab
+                      selected={currentTab === 0}
+                      onClick={() => this.setState({ currentTab: 0 })}
+                    >
+                      Objectives
+                    </Tabs.Tab>
+                  )}
                   <Tabs.Tab
-                    selected={currentTab === 0}
-                    onClick={() => this.setState({ currentTab: 0 })}
-                  >
-                    Objectives
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    selected={currentTab === 1}
+                    selected={currentTab === 1 || !has_objectives}
                     onClick={() => this.setState({ currentTab: 1 })}
                   >
                     Market
@@ -218,13 +237,13 @@ export class Uplink extends Component<{}, UplinkState> {
               </Stack.Item>
             </Stack>
           </Section>
-          {currentTab === 0 && (
+          {(currentTab === 0 && has_objectives) && (
             <ObjectiveMenu
               activeObjectives={active_objectives}
               potentialObjectives={potential_objectives}
-              handleObjectiveAction={(objectiveIndex, action) =>
-                act("objective_act", { objective_action: action, index: objectiveIndex })}
-              handleStartObjective={(objectiveIndex) => act("start_objective", { index: objectiveIndex })}
+              handleObjectiveAction={(objective, action) =>
+                act("objective_act", { objective_action: action, index: objective.id, name: objective.name })}
+              handleStartObjective={(objective) => act("start_objective", { index: objective.id, name: objective.name })}
             />
           ) || (
             <GenericUplink

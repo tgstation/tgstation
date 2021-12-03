@@ -18,6 +18,8 @@
 	var/list/item_stock = list()
 	/// Whether this uplink handler has objectives.
 	var/has_objectives = TRUE
+	/// The maximum number of objectives that can be taken
+	var/maximum_active_objectives = 1
 	/// Current objectives taken
 	var/list/active_objectives = list()
 	/// Potential objectives that can be taken
@@ -26,6 +28,11 @@
 	var/assigned_role
 	/// Whether this is in debug mode or not. If in debug mode, allows all purchases
 	var/debug_mode = FALSE
+
+/// Called whenever an update occurs on this uplink handler. Used for UIs
+/datum/uplink_handler/proc/on_update()
+	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
+	return
 
 /datum/uplink_handler/proc/can_purchase_item(mob/user, datum/uplink_item/to_purchase)
 	if(debug_mode)
@@ -57,7 +64,11 @@
 		item_stock[to_purchase.type] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
+	SStgui.update_uis()
 	return TRUE
+
+/datum/uplink_handler/proc/generate_objectives()
+	potential_objectives = list()
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))

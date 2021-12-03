@@ -26,6 +26,9 @@
 	///reference to the uplink this traitor was given, if they were.
 	var/datum/component/uplink/uplink
 
+	/// The uplink handler that this traitor belongs to.
+	var/datum/uplink_handler/uplink_handler
+
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
 
@@ -41,6 +44,13 @@
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
 	uplink = owner.find_syndicate_uplink()
+	if(uplink_handler)
+		uplink.uplink_handler = uplink_handler
+	else
+		uplink_handler = uplink.uplink_handler
+	uplink_handler.has_objectives = TRUE
+	uplink_handler.generate_objectives()
+
 	RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
 
 	if(give_objectives)

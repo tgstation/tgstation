@@ -145,15 +145,22 @@
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
-	data["uplink_flag"] = uplink_handler.uplink_flag
+	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
 	if(uplink_handler.has_objectives)
-		data["has_objectives"] = TRUE
 		var/list/potential_objectives = list()
+		var/index = 1
 		for(var/datum/traitor_objective/objective as anything in uplink_handler.potential_objectives)
-			potential_objectives += list(objective.uplink_ui_data(user))
+			var/list/objective_data = objective.uplink_ui_data(user)
+			objective_data["id"] = index
+			potential_objectives += list(objective_data)
+			index++
+		index = 1
 		var/list/active_objectives = list()
 		for(var/datum/traitor_objective/objective as anything in uplink_handler.active_objectives)
-			active_objectives += list(objective.uplink_ui_data(user))
+			var/list/objective_data = objective.uplink_ui_data(user)
+			objective_data["id"] = index
+			active_objectives += list(objective_data)
+			index++
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
 
@@ -161,6 +168,9 @@
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
+	data["uplink_flag"] = uplink_handler.uplink_flag
+	data["has_progression"] = uplink_handler.has_progression
+	data["has_objectives"] = uplink_handler.has_objectives
 	data["lockable"] = lockable
 	data["assigned_role"] = uplink_handler.assigned_role
 	data["debug"] = uplink_handler.debug_mode
@@ -196,7 +206,10 @@
 			var/list/potential_objectives = uplink_handler.potential_objectives
 			if(objective_index < 1 || objective_index > length(potential_objectives))
 				return
-			uplink_handler.take_objective(ui.user, potential_objectives[objective_index])
+			var/datum/traitor_objective/objective = potential_objectives[objective_index]
+			if(objective.name != params["name"])
+				return // Failsafe to prevent selecting an objective they didn't actually select in the UI
+			uplink_handler.take_objective(ui.user, objective)
 		if("objective_act")
 			if(!uplink_handler.has_objectives)
 				return
@@ -204,7 +217,10 @@
 			var/list/active_objectives = uplink_handler.active_objectives
 			if(objective_index < 1 || objective_index > length(active_objectives))
 				return
-			uplink_handler.ui_objective_act(ui.user, active_objectives[objective_index], params["objective_action"])
+			var/datum/traitor_objective/objective = active_objectives[objective_index]
+			if(objective.name != params["name"])
+				return // Failsafe to prevent selecting an objective they didn't actually select in the UI
+			uplink_handler.ui_objective_act(ui.user, objective, params["objective_action"])
 	return TRUE
 
 // Implant signal responses

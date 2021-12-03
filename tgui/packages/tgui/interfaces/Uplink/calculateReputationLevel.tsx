@@ -65,6 +65,8 @@ const ranks = [
   },
 ];
 
+export const reputationDefault = 50*600;
+
 let lastMinutesThan = -1;
 export const reputationLevelsTooltip = (
   <Box preserveWhitespace>
