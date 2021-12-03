@@ -27,9 +27,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		return TRUE
 	var/mob/living/carbon/human/hairdresser = user
 
-	//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
-	//this is largely copypasted from there.
-
 	//handle facial hair (if necessary)
 	if(hairdresser.gender != FEMALE)
 		var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
