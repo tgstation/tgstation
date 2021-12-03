@@ -37,7 +37,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(current_organ)
 			current_organ.Remove(src, special=TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
-	
+
 	for(var/obj/item/organ/external/organ in internal_organs)
 		if(organ.type in current_species.external_organs)
 			organ.Remove(src)
@@ -66,6 +66,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(ismob(checking.loc))
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
+		if(istype(checking, /obj/item/pda))
+			checking.cartridge.host_pda = null
+			checking.cartridge = null
+			checking.inserted_item = null //Lmao LOL fuck me
 		SSwardrobe.stash_object(checking)
 
 	for(var/obj/item/delete as anything in to_nuke)
