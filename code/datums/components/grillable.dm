@@ -76,6 +76,15 @@
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 
+	if(istype(parent, /obj/item/stack)) //Check if its a sheet
+		var/obj/item/stack/itemstack = original_object
+		for(var/i in 1 to itemstack.amount)
+			var/atom/movable/resulting_atom = new grilled_result(parent.drop_location())
+		grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
+		SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
+		currently_grilling = FALSE
+		qdel(parent)
+		return
 	grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
 	SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
 	currently_grilling = FALSE
