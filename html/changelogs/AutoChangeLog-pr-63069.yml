@@ -1,0 +1,4 @@
+author: "HarseTheef"
+delete-after: True
+changes: 
+  - bugfix: "Forged agent id cards will no longer break wallets"
