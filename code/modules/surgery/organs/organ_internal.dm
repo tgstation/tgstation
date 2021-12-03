@@ -157,11 +157,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		. += span_warning("[src] is starting to look discolored.")
 
 ///Used as callbacks by object pooling
-/obj/item/organ/proc/start_processing()
+/obj/item/organ/proc/exit_wardrobe()
 	START_PROCESSING(SSobj, src)
 
 //See above
-/obj/item/organ/proc/stop_processing()
+/obj/item/organ/proc/enter_wardrobe()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()

@@ -42,7 +42,6 @@
 		old_eye_color = human_owner.eye_color
 		if(eye_color)
 			human_owner.eye_color = eye_color
-			human_owner.regenerate_icons()
 		else
 			eye_color = human_owner.eye_color
 		if(HAS_TRAIT(human_owner, TRAIT_NIGHT_VISION) && !lighting_alpha)
@@ -58,7 +57,6 @@
 		old_eye_color = affected_human.eye_color
 		if(eye_color)
 			affected_human.eye_color = eye_color
-			affected_human.regenerate_icons()
 		else
 			eye_color = affected_human.eye_color
 		if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_alpha)
@@ -82,6 +80,11 @@
 	eye_owner.set_blurriness(0)
 	eye_owner.clear_fullscreen("eye_damage", 0)
 	eye_owner.update_sight()
+
+//Gotta reset the eye color, because that persists
+/obj/item/organ/eyes/enter_wardrobe()
+	. = ..()
+	eye_color = inital(eye_color)
 
 /obj/item/organ/eyes/on_life(delta_time, times_fired)
 	. = ..()
