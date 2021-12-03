@@ -38,7 +38,8 @@
 #define TECHWEB_BOMB_MAX_RANGE 300
 /// A constant used to scale the cash produced by ordnance experiments.
 #define TECHWEB_BOMB_SCALE_CONST 300000
-/// A constant used to scale the cash produced by ordnance experiments.t#define TECHWEB_BOMB_SCALE_DIVISOR 1500
+/// A constant used to scale the cash produced by ordnance experiments.t
+#define TECHWEB_BOMB_SCALE_DIVISOR 1500
 
 //! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 52.3
