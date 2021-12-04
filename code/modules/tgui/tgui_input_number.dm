@@ -123,6 +123,13 @@
 /datum/tgui_input_number/ui_state(mob/user)
 	return GLOB.always_state
 
+/datum/tgui_input_number/ui_static_data(mob/user)
+	. = list(
+		"preferences" = list()
+	)
+	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+
 /datum/tgui_input_number/ui_data(mob/user)
 	. = list(
 		"max_value" = max_value,

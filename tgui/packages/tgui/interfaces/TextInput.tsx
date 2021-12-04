@@ -1,7 +1,8 @@
-import { Loader } from "./common/Loader";
+import { Loader } from './common/Loader';
+import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { useBackend, useSharedState } from '../backend';
 import { KEY_ENTER } from 'common/keycodes';
-import { Box, Button, Input, Section, Stack, TextArea } from '../components';
+import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type TextInputData = {
@@ -9,18 +10,23 @@ type TextInputData = {
   message: string;
   multiline: boolean;
   placeholder: string;
+  preferences: Preferences;
   timeout: number;
   title: string;
 };
 
-type Validator = {
-  isValid: boolean;
-  error: string | null;
-};
-
 export const TextInput = (_, context) => {
   const { data } = useBackend<TextInputData>(context);
-  const { max_length, message, multiline, placeholder, timeout, title } = data;
+  const {
+    max_length,
+    message,
+    multiline,
+    placeholder,
+    preferences,
+    timeout,
+    title,
+  } = data;
+  const { large_buttons } = preferences;
   const [input, setInput] = useSharedState(context, 'input', placeholder);
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
@@ -33,40 +39,31 @@ export const TextInput = (_, context) => {
     setInputIsValid(validateInput(target.value, max_length));
     setInput(target.value);
   };
-  // Dynamically changes the window height based on the message.
+  /** Dynamically changes the window height based on the message. */
   const windowHeight
     = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content >
-        <Stack fill vertical>
-          <Stack.Item>
-            <MessageBox />
-          </Stack.Item>
-          <InputArea
-            input={input}
-            inputIsValid={inputIsValid}
-            onType={onType}
-          />
-          <Stack.Item>
-            <ButtonGroup input={input} inputIsValid={inputIsValid} />
-          </Stack.Item>
-        </Stack>
+      <Window.Content>
+        <Section fill>
+          <Stack fill vertical>
+            <Stack.Item>
+              <Box color="label">{message}</Box>
+            </Stack.Item>
+            <InputArea
+              input={input}
+              inputIsValid={inputIsValid}
+              onType={onType}
+            />
+            <Stack.Item pl={!large_buttons && 5} pr={!large_buttons && 5}>
+              <InputButtons input={input} inputIsValid={inputIsValid} />
+            </Stack.Item>
+          </Stack>
+        </Section>
       </Window.Content>
     </Window>
-  );
-};
-
-/** The message displayed. Scales the window height. */
-const MessageBox = (_, context) => {
-  const { data } = useBackend<TextInputData>(context);
-  const { message } = data;
-  return (
-    <Section >
-      <Box color="label">{message}</Box>
-    </Section>
   );
 };
 
@@ -121,46 +118,6 @@ const InputArea = (props, context) => {
       </Stack.Item>
     );
   }
-};
-
-/** The buttons shown at bottom. Will display the error
- * if the input is invalid.
- */
-const ButtonGroup = (props, context) => {
-  const { act } = useBackend<TextInputData>(context);
-  const { input, inputIsValid } = props;
-  const { isValid, error } = inputIsValid;
-
-  return (
-    <Stack pl={5} pr={5}>
-      <Stack.Item>
-        <Button
-          color="good"
-          disabled={!isValid}
-          onClick={() => act('submit', { entry: input })}
-          width={6}
-          textAlign="center">
-          Submit
-        </Button>
-      </Stack.Item>
-      <Stack.Item grow>
-        {!isValid && (
-          <Box color="average" nowrap textAlign="center">
-            {error}
-          </Box>
-        )}
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          color="bad"
-          onClick={() => act('cancel')}
-          width={6}
-          textAlign="center">
-          Cancel
-        </Button>
-      </Stack.Item>
-    </Stack>
-  );
 };
 
 /** Helper functions */
