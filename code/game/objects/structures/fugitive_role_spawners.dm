@@ -2,7 +2,6 @@
 
 /obj/effect/mob_spawn/human/fugitive
 	spawner_job_path = /datum/job/fugitive_hunter
-	mob_name = "a fugitive hunter"
 	flavour_text = "" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
 	roundstart = FALSE
 	death = FALSE
