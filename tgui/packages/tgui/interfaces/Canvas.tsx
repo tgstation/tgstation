@@ -200,10 +200,12 @@ export const Canvas = (props, context) => {
   const [width, height] = getImageSize(data.grid);
   const scaled_width = width * PX_PER_UNIT;
   const scaled_height = height * PX_PER_UNIT;
+  const average_plaque_height = 90;
   return (
     <Window
       width={scaled_width + 72}
-      height={scaled_height + 160}>
+      height={scaled_height + 70
+        + (data.show_plaque ? average_plaque_height : 0)}>
       <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
