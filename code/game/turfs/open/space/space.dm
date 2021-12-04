@@ -13,7 +13,6 @@
 	var/destination_x
 	var/destination_y
 
-	var/static/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
@@ -33,7 +32,7 @@
 /turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
-	air = space_gas
+	air = SSair.space_gas
 	vis_contents.Cut() //removes inherited overlays
 	visibilityChanged()
 
@@ -79,6 +78,8 @@
 	if(destination_z)
 		var/turf/T = locate(destination_x, destination_y, destination_z)
 		user.forceMove(T)
+
+// Next 6 behaviours mirrored to /turf/open/openspace/space
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return

@@ -34,6 +34,9 @@ SUBSYSTEM_DEF(air)
 	var/list/atmos_gen
 	var/list/planetary = list() //Lets cache static planetary mixes
 
+	/// A null mix used for vacuums e.g. open/space and open/openspace/space
+	var/datum/gas_mixture/immutable/space/space_gas = new
+
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
 	var/list/turf/open/high_pressure_delta = list()
