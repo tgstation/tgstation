@@ -75,7 +75,7 @@
 			var/target_rate = params["rate"]
 			if(text2num(target_rate) != null)
 				target_rate = text2num(target_rate)
-				transfer_rate = clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE)
+				transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), 0.1)
 				. = TRUE
 	update_appearance()
 
