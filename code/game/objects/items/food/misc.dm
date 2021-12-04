@@ -885,10 +885,10 @@
 	foodtypes = VEGETABLES
 
 //DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
-/obj/item/food/donk_dinner
-	name = "\improper Donk-dinner: Bachelor Chow"
-	desc = "Donk-dinner: now with flavour!"
-	icon_state = "donk_dinner"
+/obj/item/food/ready_donk
+	name = "\improper Ready-Donk: Bachelor Chow"
+	desc = "A quick Donk-dinner: now with flavour!"
+	icon_state = "ready_donk"
 	trash_type = /obj/item/trash/donk_dinner
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	microwaved_type = /obj/item/food/donk_dinner/warm
@@ -899,28 +899,43 @@
 
 /obj/item/food/donk_dinner/examine_more(mob/user)
 	var/list/msg = list(span_notice("<i>You browse the back of the box...</i>"))
-	msg += "\t[span_info("Donk-dinner: a product of Donk Co.")]"
-	msg += "\t[span_info("Heating instructions: pierce packaging, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
+	msg += "\t[span_info("Ready-Donk: a product of Donk Co.")]"
+	msg += "\t[span_info("Heating instructions: open box and pierce film, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
 	msg += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
 	return msg
 
-/obj/item/food/donk_dinner/warm
-	name = "warm Donk-dinner: Bachelor Chow"
-	desc = "Donk-dinner, now with flavour! And it's even hot!"
+/obj/item/food/ready_donk/warm
+	name = "warm Ready-Donk: Bachelor Chow"
+	desc = "A quick Donk-dinner, now with flavour! And it's even hot!"
+	icon_state = "ready_donk_warm"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/omnizine = 3)
 	microwaved_type = null
 	tastes = list("food?" = 2, "laziness" = 1)
 
-/obj/item/food/donk_dinner/mac_n_cheese
-	name = "\improper Donk-dinner: Yankee Cheesy Mac"
+/obj/item/food/ready_donk/mac_n_cheese
+	name = "\improper Ready-Donk: Donk-a-Roni"
 	desc = "(Slightly subpar) mac n' cheese in seconds!"
 	microwaved_type = /obj/item/food/donk_dinner/warm/mac_n_cheese
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
 
-/obj/item/food/donk_dinner/warm/mac_n_cheese
-	name = "warm Donk-dinner: Yankee Cheesy Mac"
+/obj/item/food/ready_donk/warm/mac_n_cheese
+	name = "warm Ready-Donk: Donk-a-Roni"
 	desc = "(Slightly subpar) mac n' cheese, ready to eat!"
-	microwaved_type = null
+	icon_state = "ready_donk_warm_mac"
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+/obj/item/food/ready_donk/donkhiladas
+	name = "\improper Ready-Donk: Donkhiladas"
+	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
+	microwaved_type = /obj/item/food/donk_dinner/warm/donkhiladas
+	tastes = list("enchiladas" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/warm/donkhiladas
+	name = "warm Ready-Donk: Donkhiladas"
+	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
+	icon_state = "donk_dinner_warm_mex"
+	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
