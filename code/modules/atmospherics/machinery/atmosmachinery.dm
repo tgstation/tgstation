@@ -460,7 +460,7 @@
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 	update_name()
-	set_piping_layer(set_layer)
+	set_piping_layer(set_layer || piping_layer || PIPING_LAYER_DEFAULT)
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
