@@ -15,7 +15,7 @@ type TextInputData = {
   title: string;
 };
 
-export const TextInput = (_, context) => {
+export const TextInputModal = (_, context) => {
   const { data } = useBackend<TextInputData>(context);
   const {
     max_length,
@@ -87,7 +87,7 @@ const InputArea = (props, context) => {
              * allow keyboard navigation, override tab behavior
              */
             if (keyCode === KEY_ENTER && inputIsValid) {
-              act('choose', { entry: input });
+              act('submit', { entry: input });
             }
           }}
           placeholder="Type something..."
@@ -103,13 +103,15 @@ const InputArea = (props, context) => {
           height="100%"
           onInput={(event) => onType(event)}
           onKeyDown={(event) => {
+
             const keyCode = window.event ? event.which : event.keyCode;
             /**
              * Simulate a click when pressing space or enter,
              * allow keyboard navigation, override tab behavior
              */
             if (keyCode === KEY_ENTER && inputIsValid) {
-              act('choose', { entry: input });
+
+              act('submit', { entry: input });
             }
           }}
           placeholder="Type something..."

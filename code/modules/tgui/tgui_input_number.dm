@@ -113,7 +113,7 @@
 /datum/tgui_input_number/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "NumberInput")
+		ui = new(user, src, "NumberInputModal")
 		ui.open()
 
 /datum/tgui_input_number/ui_close(mob/user)
