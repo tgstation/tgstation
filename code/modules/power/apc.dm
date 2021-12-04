@@ -317,9 +317,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	return (exposed_temperature > 2000)
 
 /obj/machinery/power/apc/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
-	if(machine_stat & BROKEN)
-		return
 	take_damage(min(exposed_temperature/100, 10), BURN)
 
 /obj/machinery/power/apc/examine(mob/user)
@@ -1534,6 +1531,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 			L.update(FALSE)
 		CHECK_TICK
 
+/obj/machinery/power/apc/take_damage()
+	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
+	if(machine_stat & BROKEN && atom_integrity <= 0)
+		return
+	return ..()
 
 #undef APC_CHANNEL_OFF
 #undef APC_CHANNEL_AUTO_OFF
