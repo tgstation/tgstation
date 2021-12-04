@@ -82,10 +82,6 @@ const InputArea = (props, context) => {
           onInput={(event) => onType(event)}
           onKeyDown={(event) => {
             const keyCode = window.event ? event.which : event.keyCode;
-            /**
-             * Simulate a click when pressing space or enter,
-             * allow keyboard navigation, override tab behavior
-             */
             if (keyCode === KEY_ENTER && inputIsValid) {
               act('submit', { entry: input });
             }
@@ -103,12 +99,7 @@ const InputArea = (props, context) => {
           height="100%"
           onInput={(event) => onType(event)}
           onKeyDown={(event) => {
-
             const keyCode = window.event ? event.which : event.keyCode;
-            /**
-             * Simulate a click when pressing space or enter,
-             * allow keyboard navigation, override tab behavior
-             */
             if (keyCode === KEY_ENTER && inputIsValid) {
 
               act('submit', { entry: input });

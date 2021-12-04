@@ -79,10 +79,6 @@ const InputArea = (props, context) => {
           onDrag={(_, value) => onChange(value)}
           onKeyDown={(event) => {
             const keyCode = window.event ? event.which : event.keyCode;
-            /**
-             * Simulate a click when pressing space or enter,
-             * allow keyboard navigation, override tab behavior
-             */
             if (keyCode === KEY_ENTER && input) {
               act('submit', { entry: input });
             }
