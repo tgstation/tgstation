@@ -455,12 +455,12 @@
 		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 	return pipe_overlay
 
-/obj/machinery/atmospherics/on_construction(obj_color, set_layer)
+/obj/machinery/atmospherics/on_construction(obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 	update_name()
-	set_piping_layer(set_layer || piping_layer || PIPING_LAYER_DEFAULT)
+	set_piping_layer(set_layer)
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
