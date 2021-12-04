@@ -161,8 +161,8 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	AddComponent(/datum/component/grillable, /obj/item/stack/sheet/leather, rand(1 SECONDS, 3 SECONDS), TRUE)
 
 /obj/item/stack/sheet/wethide/burn()
-	visible_message(span_notice("[src] finishes drying!"))
-	new /obj/item/stack/sheet/leather(loc)
+	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
+	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
 	qdel(src)
 	
 
