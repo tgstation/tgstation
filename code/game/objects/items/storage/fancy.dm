@@ -222,6 +222,7 @@
 	. = ..()
 
 	. += span_notice("Alt-click to extract contents.")
+	. += span_notice("Alt-right-click to extract lighter.")
 	if(spawn_coupon)
 		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
 
@@ -236,6 +237,19 @@
 		to_chat(user, span_notice("You take \a [W] out of the pack."))
 	else
 		to_chat(user, span_notice("There are no [contents_tag]s left in the pack."))
+
+/obj/item/storage/fancy/cigarettes/alt_click_secondary(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return
+	var/obj/item/lighter/light = locate(/obj/item/lighter) in contents
+	if(light)
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, light, user)
+		user.put_in_hands(light)
+		contents -= light
+		to_chat(user, span_notice("You take [light] out of the pack."))
+	else
+		to_chat(user, span_notice("The pack doesn't have a lighter in it!"))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()
