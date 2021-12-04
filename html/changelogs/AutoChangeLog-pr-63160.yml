@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - rscadd: "Saving pAI candidacy information now outputs an error when unsuccessful."
-  - rscadd: "pAIs now get a door jacking progressbar. It remains obscenely slow, though."
-  - bugfix: "Fixes not being able to access pAI config if it's slotted into your PDA."
