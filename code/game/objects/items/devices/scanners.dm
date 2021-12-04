@@ -503,7 +503,7 @@ GENE SCANNER
 		else
 			to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
 	else
-		to_chat(user, jointext(render_list, ""))
+		to_chat(user, jointext(render_list, ""), type=MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/wound
 	name = "first aid analyzer"
@@ -612,7 +612,7 @@ GENE SCANNER
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			render_list += "[span_alert("[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(env_gases[id][MOLES], 0.01)] mol)")]\n"
 		render_list += "[span_info("Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)")]\n"
-	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
+	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type=MESSAGE_TYPE_INFO) // we handled the last <br> so we don't need handholding
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
@@ -716,7 +716,7 @@ GENE SCANNER
 			render_list += "[span_boldnotice("Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.")]\
 						\n[span_notice("Instability of the last fusion reaction: [round(cached_scan_results["fusion"], 0.01)].")]"
 
-	to_chat(user, jointext(render_list, "\n")) // we let the join apply newlines so we do need handholding
+	to_chat(user, jointext(render_list, "\n"), type=MESSAGE_TYPE_INFO) // we let the join apply newlines so we do need handholding
 	return TRUE
 
 //slime scanner
