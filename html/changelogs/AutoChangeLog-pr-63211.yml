@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "fix an oversight where sec hailer shouldn't have the tint changes, the eye protection and the pepper immunity. All other sec masks (the swat and spacepol) are unchanged"
