@@ -78,7 +78,6 @@
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"
 
-/*	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
-	suit_store = /obj/item/tank/internals/oxygen */
-	suit_store = null
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/safeguard
 	mask = /obj/item/clothing/mask/gas/sechailer

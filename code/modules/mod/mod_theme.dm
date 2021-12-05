@@ -37,14 +37,12 @@
 	var/slowdown_active = 0.75
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
-	/// Total list of selectable skins for the MOD.
-	var/list/skins = list("standard", "civilian")
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
-	/// Clothing flags on the parts, sealed and unsealed, per skin
-	var/list/clothing_flags = list(
+	/// List of skins with their appropriate clothing flags.
+	var/list/skins = list(
 		"standard" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -94,14 +92,13 @@
 	name = "engineering"
 	desc = "An engineer-fit suit with heat and shock resistance. Nakamura Engineering's classic."
 	default_skin = "engineering"
-	skins = list("engineering")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 25, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
-	clothing_flags = list(
+	skins = list(
 		"engineering" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -130,13 +127,12 @@
 	name = "atmospheric"
 	desc = "An atmospheric-resistant suit by Nakamura Engineering, offering extreme heat resistance compared to the engineer suit."
 	default_skin = "atmospheric"
-	skins = list("atmospheric")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 75, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
-	clothing_flags = list(
+	skins = list(
 		"atmospheric" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -166,7 +162,6 @@
 	name = "advanced"
 	desc = "An advanced version of Nakamura Engineering's classic suit, shining with a white, acid and fire resistant polish."
 	default_skin = "advanced"
-	skins = list("advanced")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0
@@ -174,7 +169,7 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
-	clothing_flags = list(
+	skins = list(
 		"advanced" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -203,13 +198,12 @@
 	name = "mining"
 	desc = "A high-power Nanotrasen mining suit, supporting more complexity at a bigger drain."
 	default_skin = "mining"
-	skins = list("mining")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cell_drain = DEFAULT_CELL_DRAIN * 2
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	clothing_flags = list(
+	skins = list(
 		"mining" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
@@ -238,13 +232,34 @@
 	name = "medical"
 	desc = "A lightweight suit by DeForest Medical Corporation, allows for easier movement."
 	default_skin = "medical"
-	skins = list("medical")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
 	cell_drain = DEFAULT_CELL_DRAIN * 1.5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
-	clothing_flags = list(
+	skins = list(
 		"medical" = list(
+			HELMET_FLAGS = list(
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+		),
+		"corpsman" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -272,7 +287,6 @@
 	name = "rescue"
 	desc = "An advanced version of DeForest Medical Corporation's medical suit, designed for quick rescue of bodies from the most dangerous environments."
 	default_skin = "rescue"
-	skins = list("rescue")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -280,7 +294,7 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
-	clothing_flags = list(
+	skins = list(
 		"rescue" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -309,7 +323,6 @@
 	name = "research"
 	desc = "A private military EOD suit by Aussec Armory, intended for explosive research. Bulky, but expansive."
 	default_skin = "research"
-	skins = list("research")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	alternate_layer = null
@@ -318,7 +331,7 @@
 	slowdown_inactive = 2
 	slowdown_active = 1.5
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
-	clothing_flags = list(
+	skins = list(
 		"research" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
@@ -345,11 +358,11 @@
 /datum/mod_theme/security
 	name = "security"
 
-/datum/mod_theme/military
-	name = "military"
-
 /datum/mod_theme/safeguard
 	name = "safeguard"
+
+/datum/mod_theme/magnate
+	name = "magnate"
 
 /datum/mod_theme/cosmohonk
 	name = "cosmohonk"
@@ -358,7 +371,6 @@
 	name = "syndicate"
 	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."
 	default_skin = "syndicate"
-	skins = list("syndicate")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
 	siemens_coefficient = 0
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -366,7 +378,7 @@
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
-	clothing_flags = list(
+	skins = list(
 		"syndicate" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -395,7 +407,6 @@
 	name = "elite"
 	desc = "An elite suit upgraded by Cybersun Industries, offering upgraded armor values."
 	default_skin = "elite"
-	skins = list("elite")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	siemens_coefficient = 0
@@ -404,7 +415,7 @@
 	slowdown_active = 0.25
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster/elite)
-	clothing_flags = list(
+	skins = list(
 		"elite" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -429,19 +440,19 @@
 		),
 	)
 
-/datum/mod_theme/magic
-	name = "magic"
+/datum/mod_theme/enchanted
+	name = "enchanted"
 	desc = "The Wizard Federation's relatively low-tech MODsuit. Is very protective, though."
-	default_skin = "magic"
-	skins = list("magic")
+	default_skin = "enchanted"
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 10
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
-	inbuilt_modules = list(/obj/item/mod/module/anti_magic)
-	clothing_flags = list(
+	ui_theme = "wizard"
+	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
+	skins = list(
 		"magic" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -470,7 +481,6 @@
 	name = "prototype"
 	desc = "Prototype MODsuit powered by locomotives. While it is comfortable and has a big capacity, it remains very bulky and power-inefficient."
 	default_skin = "prototype"
-	skins = list("prototype")
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 	cell_drain = DEFAULT_CELL_DRAIN * 2
@@ -478,7 +488,8 @@
 	slowdown_inactive = 2.5
 	slowdown_active = 2
 	ui_theme = "hackerman"
-	clothing_flags = list(
+	inbuilt_modules = list(/obj/item/mod/module/kinesis)
+	skins = list(
 		"prototype" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
@@ -503,20 +514,19 @@
 		),
 	)
 
-/datum/mod_theme/response
-	name = "response"
+/datum/mod_theme/responsory
+	name = "responsory"
 
-/datum/mod_theme/trooper
-	name = "trooper"
+/datum/mod_theme/apocryphal
+	name = "apocryphal"
 
-/datum/mod_theme/command
-	name = "command"
+/datum/mod_theme/corporate
+	name = "corporate"
 
 /datum/mod_theme/debug
 	name = "debug"
 	desc = "Strangely nostalgic."
 	default_skin = "debug"
-	skins = list("debug")
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 0)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	alternate_layer = null
@@ -524,7 +534,7 @@
 	complexity_max = 50
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	clothing_flags = list(
+	skins = list(
 		"debug" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
@@ -554,7 +564,6 @@
 	name = "administrative"
 	desc = "A suit made of adminium. Who comes up with these stupid mineral names?"
 	default_skin = "debug"
-	skins = list("debug")
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 100)
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 	alternate_layer = null
@@ -563,7 +572,7 @@
 	cell_drain = DEFAULT_CELL_DRAIN * 0
 	slowdown_inactive = 0
 	slowdown_active = 0
-	clothing_flags = list(
+	skins = list(
 		"debug" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE,

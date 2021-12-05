@@ -41,6 +41,20 @@
 	cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/circuit, /obj/item/mod/module/t_ray)
 
+/obj/item/mod/control/pre_equipped/security
+	theme = /datum/mod_theme/security
+	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
+
+/obj/item/mod/control/pre_equipped/safeguard
+	theme = /datum/mod_theme/safeguard
+	cell = /obj/item/stock_parts/cell/super
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/flashlight, /obj/item/mod/module/jetpack, /obj/item/mod/module/holster)
+
+/obj/item/mod/control/pre_equipped/magnate
+	theme = /datum/mod_theme/magnate
+	cell = /obj/item/stock_parts/cell/hyper
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/holster, /obj/item/mod/module/pathfinder)
+
 /obj/item/mod/control/pre_equipped/traitor
 	theme = /datum/mod_theme/syndicate
 	cell = /obj/item/stock_parts/cell/super
@@ -56,8 +70,8 @@
 	cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(/obj/item/mod/module/storage/syndicate, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/visor/thermal, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
 
-/obj/item/mod/control/pre_equipped/magic
-	theme = /datum/mod_theme/magic
+/obj/item/mod/control/pre_equipped/enchanted
+	theme = /datum/mod_theme/enchanted
 	cell = /obj/item/stock_parts/cell/crystal_cell/wizard
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/energy_shield/wizard)
 
@@ -65,6 +79,42 @@
 	theme = /datum/mod_theme/prototype
 	cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/welding, /obj/item/mod/module/rad_protection, /obj/item/mod/module/flashlight, /obj/item/mod/module/tether)
+
+/obj/item/mod/control/pre_equipped/responsory
+	theme = /datum/mod_theme/responsory
+	cell = /obj/item/stock_parts/cell/hyper
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/emp_shield, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
+
+/obj/item/mod/control/pre_equipped/responsory/commander
+	applied_skin = "responsory-commander"
+
+/obj/item/mod/control/pre_equipped/responsory/security
+	applied_skin = "responsory-security"
+
+/obj/item/mod/control/pre_equipped/responsory/engineer
+	applied_skin = "responsory-engineer"
+
+/obj/item/mod/control/pre_equipped/responsory/medic
+	applied_skin = "responsory-medic"
+
+/obj/item/mod/control/pre_equipped/responsory/janitor
+	applied_skin = "responsory-janitor"
+
+/obj/item/mod/control/pre_equipped/responsory/clown
+	applied_skin = "responsory-clown"
+
+/obj/item/mod/control/pre_equipped/responsory/chaplain
+	applied_skin = "responsory-chaplain"
+
+/obj/item/mod/control/pre_equipped/apocryphal
+	theme = /datum/mod_theme/apocryphal
+	cell = /obj/item/stock_parts/cell/bluespace
+	initial_modules = list(/obj/item/mod/module/storage/bluespace, /obj/item/mod/module/welding, /obj/item/mod/module/jetpack, /obj/item/mod/module/holster)
+
+/obj/item/mod/control/pre_equipped/corporate
+	theme = /datum/mod_theme/corporate
+	cell = /obj/item/stock_parts/cell/bluespace
+	initial_modules = list(/obj/item/mod/module/storage/bluespace, /obj/item/mod/module/holster)
 
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug

@@ -388,7 +388,7 @@
 	wearer = null
 
 /obj/item/mod/control/proc/update_flags()
-	var/list/used_skin = theme.clothing_flags[skin]
+	var/list/used_skin = theme.skins[skin]
 	for(var/obj/item/clothing/part as anything in mod_parts)
 		var/used_category
 		if(part == helmet)

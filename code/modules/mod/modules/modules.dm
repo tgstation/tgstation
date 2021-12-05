@@ -148,7 +148,7 @@
 	desc = "A module installed into the visor of the suit, this projects a \
 		polarized, holographic overlay in front of the user's eyes. It's rated high enough for \
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
-	complexity = 2
+	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
 
@@ -1660,29 +1660,58 @@
 
 /obj/item/mod/module/anti_magic/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
 
 /obj/item/mod/module/anti_magic/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HOLY, MOD_TRAIT)
 
-/obj/item/mod/module/kinesis
+/obj/item/mod/module/anti_magic/wizard
+	name = "MOD magic neutralizer module"
+	desc = "A series of obsidian rods installed into critical points around the suit, \
+		vibrated at a certain low frequency to enable them to resonate. \
+		This creates a low-range, yet strong, magic nullification field around the user, \
+		aided by a full replacement of the suit's normal coolant with holy water. \
+		Spells will spall right off this field, though it'll do nothing to help others believe you about all this."
+
+/obj/item/mod/module/anti_magic/wizard/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
+
+/obj/item/mod/module/anti_magic/wizard/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
+
+/obj/item/mod/module/kinesis //TODO POST-MERGE MAKE NOT SUCK ASS, MAKE BALLER AS FUCK
 	name = "MOD kinesis module"
 	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \
 		despite the suits it used to be mounted on still seeing some circulation. \
 		This piece of technology allows the user to generate precise anti-gravity fields, \
 		letting them move objects as small as a titanium rod to as large as industrial machinery. \
 		Oddly enough, it doesn't seem to work on living creatures."
-	module_type = MODULE_ACTIVE
-	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN*3
+//	module_type = MODULE_ACTIVE
+	module_type = MODULE_TOGGLE
+//	complexity = 3
+	complexity = 0
+	active_power_cost = DEFAULT_CELL_DRAIN*0.75
+//	use_power_cost = DEFAULT_CELL_DRAIN*3
+	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/kinesis)
 	cooldown_time = 0.5 SECONDS
-	var/obj/grabbed_object
+	var/has_tk = FALSE
 
-/obj/item/mod/module/kinesis/on_select_use(atom/target)
+/obj/item/mod/module/kinesis/on_activation()
 	. = ..()
 	if(!.)
 		return
-	if(grabbed_object)
-		balloon_alert(mod.wearer, "soontm")
-	else if(isobj(target))
-		balloon_alert(mod.wearer, "soontm")
+	if(mod.wearer.dna.check_mutation(TK))
+		has_tk = TRUE
+	else
+		mod.wearer.dna.add_mutation(TK)
+
+/obj/item/mod/module/kinesis/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	if(has_tk)
+		has_tk = FALSE
+		return
+	mod.wearer.dna.remove_mutation(TK)
