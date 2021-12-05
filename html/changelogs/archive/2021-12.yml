@@ -160,3 +160,7 @@
   vincentiusvin:
   - qol: Wired glass tiles need iron to make it a full fledged floor, this is now
       explained in the examine message.
+2021-12-05:
+  TheBonded:
+  - rscadd: You can now tan wet hide into leather by lighting it on fire or placing
+      it on a bonfire grill.
