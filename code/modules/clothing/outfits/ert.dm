@@ -36,7 +36,6 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/responsory/commander
 	l_hand = /obj/item/gun/energy/e_gun
-	back = /obj/item/storage/backpack/ert
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
@@ -72,7 +71,6 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/responsory/security
 	l_hand = /obj/item/gun/energy/e_gun/stun
-	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/handcuffs = 1,
@@ -109,7 +107,6 @@
 	id = /obj/item/card/id/advanced/centcom/ert/medical
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/responsory/medic
-	back = /obj/item/storage/backpack/ert/medical
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -152,7 +149,6 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/responsory/engineer
 	l_hand = /obj/item/gun/energy/e_gun
-	back = /obj/item/storage/backpack/ert/engineer
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded/upgraded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -260,7 +256,6 @@
 	id = /obj/item/card/id/advanced/centcom/ert/chaplain
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
-	back = /obj/item/storage/backpack/cultpack
 	l_hand = /obj/item/gun/energy/e_gun
 	belt = /obj/item/storage/belt/soulstone
 	glasses = /obj/item/clothing/glasses/hud/health
