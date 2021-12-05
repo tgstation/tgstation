@@ -13030,15 +13030,6 @@
 	},
 /obj/item/cultivator,
 /obj/item/clothing/head/chefhat,
-/obj/item/storage/box/lights/mixed,
-/obj/structure/rack,
-/obj/item/clothing/mask/gas,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/cultivator,
-/obj/item/clothing/head/chefhat,
 /obj/machinery/camera/directional/west{
 	c_tag = "Service - Starboard"
 	},
@@ -60709,8 +60700,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /obj/machinery/computer/cargo/request{
-	dir = 1;
-	icon_state = "computer"
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
