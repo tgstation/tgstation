@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Meat and pizza walls and floors should no longer cause a runtime every time they're built."
