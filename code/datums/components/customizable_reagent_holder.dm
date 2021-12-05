@@ -9,6 +9,7 @@
  * copied over since other components already take care of that.
  */
 /datum/component/customizable_reagent_holder
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	can_transfer = TRUE
 	///List of item ingredients.
 	var/list/obj/item/ingredients
@@ -71,6 +72,17 @@
 	))
 	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
 
+/datum/component/customizable_reagent_holder/InheritComponent(datum/component/C, i_am_original, atom/replacement, fill_type, ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE, max_ingredients = MAX_ATOM_OVERLAYS - 2, list/obj/item/initial_ingredients = null)
+	. = ..()
+	src.replacement ||= replacement
+	src.fill_type ||= fill_type
+	src.ingredient_type ||= ingredient_type
+	src.max_ingredients ||= max_ingredients
+
+	if(LAZYLEN(initial_ingredients))
+		for(var/obj/item/_ingredient as anything in initial_ingredients)
+			add_ingredient(ingredient)
+			handle_fill(ingredient)
 
 /datum/component/customizable_reagent_holder/PostTransfer()
 	if(!isatom(parent))
