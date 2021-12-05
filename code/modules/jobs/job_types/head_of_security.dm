@@ -80,4 +80,6 @@
 
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/mod/control/pre_equipped/safeguard
+	suit = null
+	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer

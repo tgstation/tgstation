@@ -86,25 +86,19 @@
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/emp_shield, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
 
 /obj/item/mod/control/pre_equipped/responsory/commander
-	applied_skin = "responsory-commander"
 
 /obj/item/mod/control/pre_equipped/responsory/security
-	applied_skin = "responsory-security"
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
-	applied_skin = "responsory-engineer"
 
 /obj/item/mod/control/pre_equipped/responsory/medic
-	applied_skin = "responsory-medic"
 
 /obj/item/mod/control/pre_equipped/responsory/janitor
-	applied_skin = "responsory-janitor"
 
 /obj/item/mod/control/pre_equipped/responsory/clown
-	applied_skin = "responsory-clown"
 
 /obj/item/mod/control/pre_equipped/responsory/chaplain
-	applied_skin = "responsory-chaplain"
+	applied_skin = "paranormal"
 
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal

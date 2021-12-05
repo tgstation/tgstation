@@ -357,15 +357,87 @@
 
 /datum/mod_theme/security
 	name = "security"
+	desc = ""
+	default_skin = "security"
+	skins = list(
+		"security" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/safeguard
 	name = "safeguard"
+	desc = ""
+	default_skin = "safeguard"
+	skins = list(
+		"safeguard" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/magnate
 	name = "magnate"
+	desc = ""
+	default_skin = "magnate"
+	skins = list(
+		"magnate" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/cosmohonk
 	name = "cosmohonk"
+	desc = ""
+	default_skin = "cosmohonk"
+	skins = list(
+		"cosmohonk" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/syndicate
 	name = "syndicate"
@@ -453,7 +525,7 @@
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	skins = list(
-		"magic" = list(
+		"enchanted" = list(
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -516,12 +588,80 @@
 
 /datum/mod_theme/responsory
 	name = "responsory"
+	desc = ""
+	default_skin = "responsory"
+	skins = list(
+		"responsory" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+		"paranormal" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
+	desc = ""
+	default_skin = "apocryphal"
+	skins = list(
+		"apocryphal" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/corporate
 	name = "corporate"
+	desc = ""
+	default_skin = "corporate"
+	skins = list(
+		"corporate" = list(
+			HELMET_FLAGS = list(
+
+			),
+			CHESTPLATE_FLAGS = list(
+
+			),
+			GAUNTLETS_FLAGS = list(
+
+			),
+			BOOTS_FLAGS = list(
+
+			),
+		),
+	)
 
 /datum/mod_theme/debug
 	name = "debug"
