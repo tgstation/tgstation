@@ -1,0 +1,4 @@
+author: "maxspells"
+delete-after: True
+changes: 
+  - bugfix: "health scan, gas scan, and atmos scan results will now show up on info tab instead of the local tab"
