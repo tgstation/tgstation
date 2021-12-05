@@ -29,16 +29,17 @@
 /area/ruin/pizzeria)
 "bf" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/enzyme,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/plate/small,
 /obj/structure/sign/poster/official/moth_meth{
 	pixel_y = 32
 	},
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "bV" = (
@@ -141,17 +142,13 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron/cafeteria,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
 /area/ruin/pizzeria/kitchen)
 "dy" = (
 /obj/effect/turf_decal/tile/blue{
@@ -180,6 +177,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/drinks/colocup,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -433,13 +431,13 @@
 /area/ruin/pizzeria)
 "mb" = (
 /obj/structure/table,
-/obj/item/trash/can,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/item/plate/small,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -475,13 +473,13 @@
 	},
 /area/ruin/pizzeria)
 "oM" = (
+/obj/effect/turf_decal/siding/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/blue,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "qo" = (
@@ -606,17 +604,13 @@
 	name = "menu board";
 	pixel_y = 27
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/turf/open/floor/iron/cafeteria,
+/turf/open/floor/iron/checker,
 /area/ruin/pizzeria)
 "tX" = (
 /obj/structure/fence/door,
@@ -672,17 +666,13 @@
 /area/ruin/pizzeria)
 "wT" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/turf/open/floor/iron/cafeteria,
+/turf/open/floor/iron/checker,
 /area/ruin/pizzeria)
 "xx" = (
 /obj/effect/turf_decal/tile/blue{
@@ -700,9 +690,6 @@
 /area/ruin/pizzeria)
 "yn" = (
 /obj/structure/table,
-/obj/item/plate{
-	pixel_x = -9
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -713,6 +700,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_x = 5
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -768,11 +758,11 @@
 "Aa" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = -12;
-	pixel_y = 3
+	pixel_x = -12
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/obj/structure/mirror/directional/west,
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
 "Ah" = (
@@ -832,20 +822,16 @@
 /area/ruin/pizzeria/kitchen)
 "Be" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/item/stack/sheet/cardboard{
 	amount = 12
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron/cafeteria,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
 /area/ruin/pizzeria/kitchen)
 "Bp" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1072,6 +1058,10 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 8
 	},
+/obj/item/plate_shard{
+	icon_state = "plate_shard3"
+	},
+/obj/item/plate_shard,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -1299,10 +1289,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/siding/blue/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/blue/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
@@ -1344,18 +1334,17 @@
 /area/ruin/pizzeria)
 "PW" = (
 /obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/light/warm/directional/south,
+/obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
 	},
-/obj/machinery/light/warm/directional/south,
-/turf/open/floor/iron/cafeteria,
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_y = 11
+	},
+/turf/open/floor/iron/checker,
 /area/ruin/pizzeria)
 "Qg" = (
 /obj/structure/chair/sofa/left,
@@ -1377,7 +1366,6 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/plate,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1385,7 +1373,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/item/trash/candle,
+/obj/item/plate/small,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -1525,20 +1513,16 @@
 /area/ruin/pizzeria)
 "UJ" = (
 /obj/structure/table,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/machinery/chem_dispenser/drinks{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron/cafeteria,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
 /area/ruin/pizzeria/kitchen)
 "UT" = (
 /obj/machinery/griddle,
@@ -1674,6 +1658,19 @@
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
+"XS" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/colocup{
+	pixel_x = 5
+	},
+/turf/open/floor/iron/checker,
+/area/ruin/pizzeria)
 "Ym" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
@@ -1878,7 +1875,7 @@ rY
 iK
 tl
 wT
-wT
+XS
 PW
 NL
 NL
