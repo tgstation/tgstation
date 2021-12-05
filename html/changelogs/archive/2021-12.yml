@@ -116,3 +116,51 @@
   - admin: You now have to confirm that you want to reset the station name from the
       secrets panel.
   - bugfix: Blind people now get a chat message when being cuffed.
+2021-12-04:
+  Ghilker:
+  - bugfix: fix an oversight where sec hailer shouldn't have the tint changes, the
+      eye protection and the pepper immunity. All other sec masks (the swat and spacepol)
+      are unchanged
+  GoldenAlpharex:
+  - bugfix: Nanotrasen's Paranormal Containment team had some budget cuts, meaning
+      that ghosts are no longer stripped of their hair colors- You can finally sport
+      that bright pink floor bedhead even in death once again!
+  HarseTheef:
+  - bugfix: Forged agent id cards will no longer break wallets
+  JohnFulpWillard:
+  - admin: More Silicon related loggings have been moved to silicon logs.
+  LemonInTheDark:
+  - bugfix: The job overflow station trait will now work again. I look forward to
+      infinite captains
+  - bugfix: Fixed solars and nearstation areas being pitch black, restores the fullbright
+      they ought to have
+  MMMiracles:
+  - rscadd: You can now run over the goat plushie.
+  Mickyan:
+  - spellcheck: Looking up in space no longer says there's a ceiling. There's no ceiling
+      in space, promise. Please don't try to look for it.
+  Mothblocks:
+  - admin: Crafting is now better logged.
+  - bugfix: Fix all tend wounds showing when selecting a surgery after upgrading.
+  Paxilmaniac:
+  - balance: allows the attaching of bayonets to pipe guns
+  Potato-Masher:
+  - expansion: Metastation - A near complete remap of the atmospherics section of
+      the station. Functionally the same, but with added space for projects, the HFR,
+      and an included basic crystallizer setup.
+  - qol: Minor atmospherics adjustments to metastation's xenobiology satellite, the
+      slime euthanization chamber cooling loop has been prettied up and starts with
+      CO2 already inside to ensure the freezer works immediately with no setup.
+  ShizCalev:
+  - bugfix: Fixed mapeditted scrubbers and vents having the incorrect names.
+  jlsnow301:
+  - rscadd: Saving pAI candidacy information now outputs an error when unsuccessful.
+  - rscadd: pAIs now get a door jacking progressbar. It remains obscenely slow, though.
+  - bugfix: Fixes not being able to access pAI config if it's slotted into your PDA.
+  vincentiusvin:
+  - qol: Wired glass tiles need iron to make it a full fledged floor, this is now
+      explained in the examine message.
+2021-12-05:
+  TheBonded:
+  - rscadd: You can now tan wet hide into leather by lighting it on fire or placing
+      it on a bonfire grill.

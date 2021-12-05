@@ -3,7 +3,7 @@
 This component makes it possible to make things edible. What this means is that you can take a bite or force someone to take a bite (in the case of items).
 These items take a specific time to eat, and can do most of the things our original food items could.
 
-Behavior that's still missing from this component that original food items had that should either be put into seperate components or somewhere else:
+Behavior that's still missing from this component that original food items had that should either be put into separate components or somewhere else:
 	Components:
 	Drying component (jerky etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
