@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "You can now deliver kilo department orders (the delivery area didn't exist on kilo)"
