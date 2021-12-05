@@ -72,7 +72,7 @@
 	))
 	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
 
-/datum/component/customizable_reagent_holder/InheritComponent(datum/component/C, i_am_original, atom/replacement, fill_type, ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE, max_ingredients = MAX_ATOM_OVERLAYS - 2, list/obj/item/initial_ingredients = null)
+/datum/component/customizable_reagent_holder/InheritComponent(datum/component/C, i_am_original, atom/replacement=null, fill_type=null, ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE, max_ingredients = MAX_ATOM_OVERLAYS - 2, list/obj/item/initial_ingredients = null)
 	. = ..()
 	src.replacement ||= replacement
 	src.fill_type ||= fill_type
