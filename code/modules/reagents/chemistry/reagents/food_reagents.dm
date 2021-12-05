@@ -1018,3 +1018,10 @@
 	color = "#efeff0"
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/cornmeal_batter
+	name = "Cornmeal Batter"
+	description = "An eggy, milky, corny mixture that's not very good raw."
+	taste_description = "raw batter"
+	color = "#ebca85"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

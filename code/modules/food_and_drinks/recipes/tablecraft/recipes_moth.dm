@@ -174,6 +174,16 @@
 	result = /obj/item/food/fueljacks_lunch
 	subcategory = CAT_MOTH
 
+/datum/crafting_recipe/food/mac_balls
+	name = "Macheronirölen (Mac balls)"
+	reqs = list(
+		/obj/item/food/ready_donk/warm/mac_n_cheese = 1,
+		/obj/item/food/tomato_sauce = 1,
+		/datum/reagent/consumable/cornmeal_batter = 5
+	)
+	result = /obj/item/food/mac_balls
+	subcategory = CAT_MOTH
+
 /datum/crafting_recipe/food/moth_cotton_soup
 	name = "Flöfrölenmæsch (Cottonball soup)"
 	reqs = list(

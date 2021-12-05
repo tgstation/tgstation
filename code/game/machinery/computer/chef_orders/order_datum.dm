@@ -199,6 +199,24 @@
 	item_instance = /obj/item/food/canned/pine_nuts
 	cost_per_order = 20
 
+/datum/orderable_item/ready_donk
+	name = "Ready-Donk Meal: Bachelor Chow"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/ready_donk
+	cost_per_order = 40
+
+/datum/orderable_item/ready_donk_mac
+	name = "Ready-Donk Meal: Donk-a-Roni"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/ready_donk/mac_n_cheese
+	cost_per_order = 40
+
+/datum/orderable_item/ready_donk_mex
+	name = "Ready-Donk Meal: Donkhiladas"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/ready_donk/donkhiladas
+	cost_per_order = 40
+
 //Reagents
 
 /datum/orderable_item/flour

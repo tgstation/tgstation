@@ -98,7 +98,8 @@
 
 /obj/item/food/spaghetti/mac_n_cheese
 	name = "mac n' cheese"
-	desc = "Made the proper way with only the finest cheese and breadcrumbs. And yet, it can't scratch the same itch as Donk Dinner."
+	desc = "Made the proper way with only the finest cheese and breadcrumbs. And yet, it can't scratch the same itch as Ready-Donk."
 	icon_state = "mac_n_cheese"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("cheese" = 1, "breadcrumbs" = 1, "pasta" = 1)
 	foodtypes = GRAIN | DAIRY

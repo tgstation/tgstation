@@ -135,3 +135,8 @@
 /obj/item/trash/spacers_sidekick
 	name = "\improper Spacer's Sidekick packet"
 	icon_state = "spacers_sidekick"
+
+/obj/item/trash/ready_donk
+	name = "empty Ready-donk"
+	desc = "It's been Donk-decimated."
+	icon_state = "ready_donk"

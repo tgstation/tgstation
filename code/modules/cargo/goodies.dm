@@ -161,3 +161,9 @@
 	desc = "A single surplus ration pack from the Mothic Fleet. Comes with 3 random sustenance bars, and a package of Activin chewing gum."
 	cost = PAYCHECK_HARD * 2
 	contains = list(/obj/item/storage/box/mothic_rations)
+
+/datum/supply_pack/goody/ready_donk
+	name = "Ready-Donk Single Meal"
+	desc = "A complete meal package for the terminally lazy. Contains one Ready-Donk meal."
+	cost = PAYCHECK_MEDIUM * 2
+	contains = list(/obj/item/food/ready_donk)

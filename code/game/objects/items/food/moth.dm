@@ -291,11 +291,11 @@
 
 /obj/item/food/mac_balls
 	name = "macheronirölen"
-	desc = "Fried balls of macaroni cheese, served with tomato sauce. A popular snack across the galaxy, and especially on the Mothic Fleet- where they tend to use Donk-dinner as the base."
+	desc = "Fried balls of macaroni cheese dipped in corn batter, served with tomato sauce. A popular snack across the galaxy, and especially on the Mothic Fleet- where they tend to use Ready-Donk as the base."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "mac_balls"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
-	tastes = list("pasta" = 1, "bread" = 1, "cheese" = 1)
+	tastes = list("pasta" = 1, "cornbread" = 1, "cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES | FRIED | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -320,9 +320,9 @@
 	tastes = list("parmesan" = 1, "mozzarella" = 1, "cheddar" = 1)
 
 /obj/item/food/sustenance_bar/mint
-	name = "surplus fleet PSB- mint chocolate flavour"
-	desc = "The PSB, or Prepacked Sustenance Bar, is a densely packed, nutrient rich food which is designed to hold the populace over during times of food shortage. Made from soy and pea protein, each lasts 3 days if adequately rationed. While they have a long shelf life, they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is mint chocolate flavoured- peppermint, spearmint, and dark chocolate."
-	tastes = list("peppermint" = 1, "spearmint" = 1, "dark chocolate" = 1)
+	name = "surplus fleet PSB- mint choc chip flavour"
+	desc = "The PSB, or Prepacked Sustenance Bar, is a densely packed, nutrient rich food which is designed to hold the populace over during times of food shortage. Made from soy and pea protein, each lasts 3 days if adequately rationed. While they have a long shelf life, they do eventually go bad- prompting them to be sold as surplus by the fleet. This particular one is mint choc chip flavoured- peppermint, dark chocolate, and potato chips, showing that mothkind has no idea what mint choc chip is."
+	tastes = list("peppermint" = 1, "potato chips(?)" = 1, "dark chocolate" = 1)
 
 /obj/item/food/sustenance_bar/wonka
 	name = "surplus fleet PSB- three course dinner"

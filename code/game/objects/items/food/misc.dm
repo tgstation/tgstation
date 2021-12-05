@@ -889,15 +889,15 @@
 	name = "\improper Ready-Donk: Bachelor Chow"
 	desc = "A quick Donk-dinner: now with flavour!"
 	icon_state = "ready_donk"
-	trash_type = /obj/item/trash/donk_dinner
+	trash_type = /obj/item/trash/ready_donk
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	microwaved_type = /obj/item/food/donk_dinner/warm
+	microwaved_type = /obj/item/food/ready_donk/warm
 	tastes = list("food?" = 2, "laziness" = 1)
 	foodtypes = MEAT | JUNKFOOD
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/donk_dinner/examine_more(mob/user)
+/obj/item/food/ready_donk/examine_more(mob/user)
 	var/list/msg = list(span_notice("<i>You browse the back of the box...</i>"))
 	msg += "\t[span_info("Ready-Donk: a product of Donk Co.")]"
 	msg += "\t[span_info("Heating instructions: open box and pierce film, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
@@ -914,14 +914,14 @@
 
 /obj/item/food/ready_donk/mac_n_cheese
 	name = "\improper Ready-Donk: Donk-a-Roni"
-	desc = "(Slightly subpar) mac n' cheese in seconds!"
-	microwaved_type = /obj/item/food/donk_dinner/warm/mac_n_cheese
+	desc = "Neon-orange mac n' cheese in seconds!"
+	microwaved_type = /obj/item/food/ready_donk/warm/mac_n_cheese
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
 
 /obj/item/food/ready_donk/warm/mac_n_cheese
 	name = "warm Ready-Donk: Donk-a-Roni"
-	desc = "(Slightly subpar) mac n' cheese, ready to eat!"
+	desc = "Neon-orange mac n' cheese, ready to eat!"
 	icon_state = "ready_donk_warm_mac"
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
@@ -929,13 +929,13 @@
 /obj/item/food/ready_donk/donkhiladas
 	name = "\improper Ready-Donk: Donkhiladas"
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
-	microwaved_type = /obj/item/food/donk_dinner/warm/donkhiladas
+	microwaved_type = /obj/item/food/ready_donk/warm/donkhiladas
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
 
 /obj/item/food/ready_donk/warm/donkhiladas
 	name = "warm Ready-Donk: Donkhiladas"
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
-	icon_state = "donk_dinner_warm_mex"
+	icon_state = "ready_donk_warm_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
