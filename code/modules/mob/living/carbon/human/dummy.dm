@@ -57,20 +57,23 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			to_nuke += checking
 			continue
 
+		if(istype(checking, /obj/item/pda))
+			var/obj/item/pda/whats_shitcode = checking
+			if(whats_shitcode.cartridge)
+				whats_shitcode.cartridge.host_pda = null
+				whats_shitcode.cartridge = null
+			whats_shitcode.inserted_item = null //Lmao LOL fuck me
+
 		var/list/contents = checking.contents
 		if(length(contents))
 			items_to_check |= contents //Please don't make an infinite loop somehow thx
 			to_nuke += checking //Goodbye
 			continue
+			
 		//I'm making the bet that if you're empty of other items you're not going to OOM if reapplied. I assume you're here because I was wrong
 		if(ismob(checking.loc))
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
-		if(istype(checking, /obj/item/pda))
-			var/obj/item/pda/whats_shitcode = checking
-			whats_shitcode.cartridge.host_pda = null
-			whats_shitcode.cartridge = null
-			whats_shitcode.inserted_item = null //Lmao LOL fuck me
 		SSwardrobe.stash_object(checking)
 
 	for(var/obj/item/delete as anything in to_nuke)
