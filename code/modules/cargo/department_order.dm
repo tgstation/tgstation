@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(mapload) //check for mapping errors
 		for(var/delivery_area_type in department_delivery_areas)
 			if(GLOB.areas_by_type[delivery_area_type])
-				break
+				return
 		//every area fallback didn't exist on this map so throw a mapping error and set some generic area that uuuh please exist okay
 		log_mapping("[src] has no valid areas to deliver to on this map, add some more fallback areas to its \"department_delivery_areas\" var.")
 		department_delivery_areas = list(/area/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
