@@ -108,9 +108,9 @@
 	SIGNAL_HANDLER
 	if(!attached_circuit)
 		return
-	if( attached_circuit.admin_only)
+	if(attached_circuit.admin_only)
 		return
-	if( shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
+	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
 		return
 	remove_circuit()
 
