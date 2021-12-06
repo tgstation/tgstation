@@ -164,3 +164,26 @@
   TheBonded:
   - rscadd: You can now tan wet hide into leather by lighting it on fire or placing
       it on a bonfire grill.
+2021-12-06:
+  GoldenAlpharex:
+  - bugfix: Meat and pizza walls and floors should no longer cause a runtime every
+      time they're built.
+  Melbert:
+  - bugfix: Chefs on Deltastation can now tussle in their Cafeteria.
+  Paxilmaniac:
+  - bugfix: the duplicate rack space in meta's service hall isn't duplicate anymore
+  - bugfix: Mismatched door ids on the starboard side of pirate shuttles will no longer
+      prevent egress from that side of the ship
+  RandomGamer123:
+  - bugfix: Locked circuits cannot have USB cables attached to them anymore.
+  Y0SH1M4S73R:
+  - bugfix: BCI manipulation chambers no longer drop the contained BCI when opened.
+  maxspells:
+  - bugfix: health scan, gas scan, and atmos scan results will now show up on info
+      tab instead of the local tab
+  tralezab:
+  - bugfix: You can now deliver kilo department orders (the delivery area didn't exist
+      on kilo)
+  - bugfix: ethereals no longer get the "he" pronoun accidentally
+  vincentiusvin:
+  - bugfix: fixed APC making too many damage runtimes.

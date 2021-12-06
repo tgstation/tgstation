@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - bugfix: "Mismatched door ids on the starboard side of pirate shuttles will no longer prevent egress from that side of the ship"
