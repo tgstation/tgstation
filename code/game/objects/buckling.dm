@@ -215,7 +215,7 @@
 
 	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
 	var/turf/ground = get_turf(src)
-	if(anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		return FALSE
 
 	// Check if this atom can have things buckled to it.
