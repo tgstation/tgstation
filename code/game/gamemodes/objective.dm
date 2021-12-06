@@ -243,7 +243,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target)
+	return !((target && considered_alive(target)) && (target.current.onCentCom() || target.current.onSyndieBase()))
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
