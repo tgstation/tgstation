@@ -200,6 +200,7 @@
 	default_skin = "mining"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
 	resistance_flags = FIRE_PROOF
+	alternate_layer = null
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cell_drain = DEFAULT_CELL_DRAIN * 2
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
@@ -357,7 +358,7 @@
 
 /datum/mod_theme/security
 	name = "security"
-	desc = ""
+	desc = "An Apadyne Technologies security suit, offering shock protection and quicker speed, at the cost of carrying capacity."
 	default_skin = "security"
 	skins = list(
 		"security" = list(
@@ -378,7 +379,7 @@
 
 /datum/mod_theme/safeguard
 	name = "safeguard"
-	desc = ""
+	desc = "An Apadyne Technologies advanced security suit, offering greater capacity and fire protection than the standard security model."
 	default_skin = "safeguard"
 	skins = list(
 		"safeguard" = list(
@@ -399,7 +400,7 @@
 
 /datum/mod_theme/magnate
 	name = "magnate"
-	desc = ""
+	desc = "A fancy, very protective suit for Nanotrasen's captains. Shock, fire and acid-proof while also having a large capacity and high speed."
 	default_skin = "magnate"
 	skins = list(
 		"magnate" = list(
@@ -420,8 +421,12 @@
 
 /datum/mod_theme/cosmohonk
 	name = "cosmohonk"
-	desc = ""
+	desc = "A suit by Honk Ltd. Protects against low humor environments. Most of the tech went to lower the power cost."
 	default_skin = "cosmohonk"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 30, WOUND = 5)
+	cell_drain = DEFAULT_CELL_DRAIN * 0.25
+	slowdown_inactive = 1.75
+	slowdown_active = 1.25
 	skins = list(
 		"cosmohonk" = list(
 			HELMET_FLAGS = list(
@@ -555,7 +560,7 @@
 	default_skin = "prototype"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
-	cell_drain = DEFAULT_CELL_DRAIN * 2
+	alternate_layer = null
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	slowdown_inactive = 2.5
 	slowdown_active = 2
@@ -588,7 +593,7 @@
 
 /datum/mod_theme/responsory
 	name = "responsory"
-	desc = ""
+	desc = "A high-speed rescue suit by Nanotrasen, intended for its' emergency response teams."
 	default_skin = "responsory"
 	skins = list(
 		"responsory" = list(
@@ -623,7 +628,7 @@
 
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
-	desc = ""
+	desc = "A high-tech, only technically legal, armored suit created by a collaboration effort between Nanotrasen and Apadyne Technologies"
 	default_skin = "apocryphal"
 	skins = list(
 		"apocryphal" = list(
@@ -644,7 +649,7 @@
 
 /datum/mod_theme/corporate
 	name = "corporate"
-	desc = ""
+	desc = "A fancy, high-tech suit for Nanotrasen's high ranking officers."
 	default_skin = "corporate"
 	skins = list(
 		"corporate" = list(

@@ -1013,6 +1013,7 @@
 	desc = "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. \
 		However, this design has been locked by Nanotrasen to be primarily utilized for lifting various crates. \
 		A lot of people would say that loading cargo is a dull job, but you could not disagree more."
+	icon_state = "clamp"
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	use_power_cost = DEFAULT_CELL_DRAIN
@@ -1166,6 +1167,7 @@
 	desc = "An oddly domestic device, this module is installed into the user's palm, \
 		hooking up with culinary scanners located in the helmet to blast food with precise microwave radiation, \
 		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
+	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
@@ -1515,6 +1517,7 @@
 		giving the user incredible protection against conventional firearms, or everyday attacks in close-quarters. \
 		However, the additional plating cannot deploy alongside parts of the suit used for vacuum sealing, \
 		so this extra armor provides zero ability for extravehicular activity while deployed."
+	icon_state = "armor_booster"
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	removable = FALSE
@@ -1527,13 +1530,10 @@
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
 	var/list/spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/on_install()
+/obj/item/mod/module/armor_booster/generate_worn_overlay()
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-
-/obj/item/mod/module/armor_booster/on_uninstall()
-	overlay_state_inactive = initial(overlay_state_inactive)
-	overlay_state_active = initial(overlay_state_active)
+	return ..()
 
 /obj/item/mod/module/armor_booster/on_activation()
 	. = ..()
@@ -1583,6 +1583,7 @@
 		This advanced deflector shield is essentially a scaled down version of those seen on starships, \
 		and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, \
 		though with its' low amount of separate charges, the user remains mortal."
+	icon_state = "energy_shield"
 	complexity = 3
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
