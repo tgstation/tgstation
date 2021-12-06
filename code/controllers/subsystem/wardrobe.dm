@@ -251,24 +251,26 @@ SUBSYSTEM_DEF(wardrobe)
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
 		stock_miss++
-		requested_object = new requested_type()
-	else
-		var/list/contents = stock_info[WARDROBE_STOCK_CONTENTS]
-		var/contents_length = length(contents)
-		requested_object = contents[contents_length]
-		contents.len--
-		var/datum/callback/do_on_removal = stock_info[WARDROBE_STOCK_CALL_REMOVAL]
-		if(do_on_removal)
-			do_on_removal.object = requested_object
-			do_on_removal.Invoke()
-			do_on_removal.object = null
-		stock_hit++
-		add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
-		if(!(contents_length - 1))
-			preloaded_stock -= requested_type
+		requested_object = new requested_type(location)
+		return requested_object
 
+	var/list/contents = stock_info[WARDROBE_STOCK_CONTENTS]
+	var/contents_length = length(contents)
+	requested_object = contents[contents_length]
+	
+	contents.len--
+	var/datum/callback/do_on_removal = stock_info[WARDROBE_STOCK_CALL_REMOVAL]
+	if(do_on_removal)
+		do_on_removal.object = requested_object
+		do_on_removal.Invoke()
+		do_on_removal.object = null
 	if(location)
 		requested_object.forceMove(location)
+
+	stock_hit++
+	add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
+	if(!(contents_length - 1))
+		preloaded_stock -= requested_type
 
 	return requested_object
 
