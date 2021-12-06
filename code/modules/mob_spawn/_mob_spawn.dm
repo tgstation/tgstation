@@ -41,10 +41,6 @@
 	name_mob(spawned_mob, newname)
 	special(spawned_mob, mob_possessor)
 	equip(spawned_mob)
-	if(uses > 0)
-		uses--
-	if(!permanent && !uses)
-		qdel(src)
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
@@ -84,12 +80,12 @@
 	var/chosen_name
 	//passed arguments on mob spawns are number one priority
 	if(forced_name)
-		set_name = forced_name
+		chosen_name = forced_name
 	//then the mob name var
 	else if(mob_name)
-		set_name = mob_name
+		chosen_name = mob_name
 	//then if no name was chosen the one the mob has by default works great
-	if(!set_name)
+	if(!chosen_name)
 		return
 	//not using an old name doesn't update records- but ghost roles don't have records so who cares
 	spawned_mob.fully_replace_character_name(null, chosen_name)
@@ -108,8 +104,10 @@
 /obj/effect/mob_spawn/ghost_role
 	///a short, lowercase name for the mob used in possession prompt that pops up on ghost attacks. must be set.
 	var/prompt_name = ""
-	//if false, you won't prompt for this role. best used for replacing the prompt system with something else like a radial, or something.
+	///if false, you won't prompt for this role. best used for replacing the prompt system with something else like a radial, or something.
 	var/prompt_ghost = TRUE
+	///how many times this spawner can be used (it won't delete unless it's out of uses)
+	var/uses = 1
 
 	////descriptions
 
@@ -153,13 +151,13 @@
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
 		return
-	if(!uses)
+	if(!uses) //just in case
 		to_chat(user, span_warning("This spawner is out of charges!"))
 		return
 	if(is_banned_from(user.key, role_ban))
 		to_chat(user, span_warning("You are banned from this role!"))
 		return
-	if(!allow_spawn(user))
+	if(!allow_spawn(user, silent = FALSE))
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
@@ -168,7 +166,7 @@
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
-	spawned_mob.ckey = user.ckey
+	spawned_mob.ckey = mob_possessor.ckey
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")
@@ -176,13 +174,21 @@
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
-	var/datum/mind/MM = spawned_mob.mind
+	var/datum/mind/spawned_mind = spawned_mob.mind
 	spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
 	special(spawned_mob)
-	MM.name = spawned_mob.real_name
+	spawned_mind.name = spawned_mob.real_name
+
+//multiple use mob spawner functionality here- doesn't make sense on corpses
+/obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname)
+	. = ..()
+	if(uses > 0)
+		uses--
+	if(!uses)
+		qdel(src)
 
 ///override this to add special spawn conditions to a ghost role
-/obj/effect/mob_spawn/ghost_role/allow_spawn(mob/user)
+/obj/effect/mob_spawn/ghost_role/proc/allow_spawn(mob/user, silent = FALSE)
 	return TRUE
 
 ///these mob spawn subtypes trigger immediately (New or Initialize) and are not player controlled... since they're dead, you know?
@@ -214,6 +220,10 @@
 	spawned_mob.adjustOxyLoss(oxy_damage)
 	spawned_mob.adjustBruteLoss(brute_damage)
 	spawned_mob.adjustFireLoss(burn_damage)
+
+/obj/effect/mob_spawn/corpse/create(mob/mob_possessor, newname)
+	. = ..()
+	qdel(src)
 
 //almost all mob spawns in this game, dead or living, are human. so voila
 
@@ -251,3 +261,6 @@
 			sensor_clothes.sensor_mode = NO_SENSORS
 			spawned_human.update_suit_sensors()
 
+//don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist
+/obj/effect/mob_spawn/corpse/human/damaged
+	brute_damage = 1000

@@ -9,8 +9,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	mob_species = /datum/species/golem
-	roundstart = FALSE
-	death = FALSE
 	anchored = FALSE
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE

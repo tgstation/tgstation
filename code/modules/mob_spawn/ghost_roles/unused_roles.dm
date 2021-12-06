@@ -8,8 +8,6 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/lavalandprisoner
-	roundstart = FALSE
-	death = FALSE
 	you_are_text = "You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you."
 	flavour_text = "Good. It seems as though your ship crashed. You remember that you were convicted of "
@@ -46,13 +44,9 @@
 	prompt_name = "a hotel staff member"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
-	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel. Remember, the customer is always right!"
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
 	outfit = /datum/outfit/hotelstaff
 	you_are_text = "You are a staff member of a top-of-the-line space hotel!"
-	flavour_text = "Cater to guests, advertise the hotel, and make sure the manager doesn't fire you."
+	flavour_text = "Cater to visiting guests with your fellow staff, advertise the hotel, and make sure the manager doesn't fire you. Remember, the customer is always right!"
 	important_text = "Do NOT leave the hotel, as that is grounds for contract termination."
 	spawner_job_path = /datum/job/hotel_staff
 
@@ -82,7 +76,7 @@
 	back = /obj/item/storage/backpack/security
 	belt = /obj/item/storage/belt/security/full
 
-/obj/effect/mob_spawn/human/hotel_staff/Destroy()
+/obj/effect/mob_spawn/ghost_role/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	return ..()
 
@@ -143,8 +137,6 @@
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate
 	name = "Syndicate Operative"
-	roundstart = FALSE
-	death = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	outfit = /datum/outfit/syndicate_empty
@@ -253,8 +245,6 @@
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
 	mob_type = /mob/living/simple_animal/mouse
-	death = FALSE
-	roundstart = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
@@ -268,3 +258,26 @@
 /obj/effect/mob_spawn/cow/special(mob/living/spawned_mob)
 	. = ..()
 	gender = FEMALE
+
+// snow operatives on snowdin - unfortunately seemingly removed in a map remake womp womp
+
+/obj/effect/mob_spawn/ghost_role/human/snow_operative
+	name = "sleeper"
+	prompt_name = "a snow operative"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	faction = list(ROLE_SYNDICATE)
+	outfit = /datum/outfit/snowsyndie
+	you_are_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
+	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
+	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."
+
+/datum/outfit/snowsyndie
+	name = "Syndicate Snow Operative"
+	uniform = /obj/item/clothing/under/syndicate/coldres
+	shoes = /obj/item/clothing/shoes/combat/coldres
+	ears = /obj/item/radio/headset/syndicate/alt
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol
+	id = /obj/item/card/id/advanced/chameleon
+	implants = list(/obj/item/implant/exile)
+	id_trim = /datum/id_trim/chameleon/operative

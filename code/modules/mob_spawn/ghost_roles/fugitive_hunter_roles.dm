@@ -12,10 +12,10 @@
 /obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human)
 	var/datum/antagonist/fugitive_hunter/fughunter = new
 	fughunter.backstory = back_story
-	new_spawn.mind.add_antag_datum(fughunter)
+	spawned_human.mind.add_antag_datum(fughunter)
 	fughunter.greet()
-	message_admins("[ADMIN_LOOKUPFLW(new_spawn)] has been made into a Fugitive Hunter by an event.")
-	log_game("[key_name(new_spawn)] was spawned as a Fugitive Hunter by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(spawned_human)] has been made into a Fugitive Hunter by an event.")
+	log_game("[key_name(spawned_human)] was spawned as a Fugitive Hunter by an event.")
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol
 	name = "police pod"

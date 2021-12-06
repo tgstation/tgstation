@@ -1,7 +1,7 @@
 
 //jobs from ss13 but DEAD.
 
-/obj/effect/mob_spawn/corpse/human/corpse/cargo_tech
+/obj/effect/mob_spawn/corpse/human/cargo_tech
 	name = "Cargo Tech"
 	outfit = /datum/outfit/job/cargo_tech
 	icon_state = "corpsecargotech"
@@ -70,7 +70,7 @@
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/brainrot)
 
-/obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection/special(mob/spawned_mob)
+/obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection/special(mob/living/spawned_mob)
 	. = ..()
 	spawned_mob.ForceContractDisease(new /datum/disease/fluspanish)
 

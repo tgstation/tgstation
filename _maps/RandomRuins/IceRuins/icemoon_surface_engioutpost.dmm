@@ -470,7 +470,7 @@
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bV" = (
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/iron/icemoon,
 /area/icemoon/surface/outdoors)
 "bW" = (

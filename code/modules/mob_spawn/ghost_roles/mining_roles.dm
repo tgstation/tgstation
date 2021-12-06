@@ -2,21 +2,20 @@
 //lava hermit
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
-/obj/effect/mob_spawn/human/hermit
+/obj/effect/mob_spawn/ghost_role/human/hermit
 	name = "malfunctioning cryostasis sleeper"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
-	prompt_text = "stranded hermit"
+	prompt_name = "a stranded hermit"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/hermit
-	mob_species = /datum/species/human
 	you_are_text = "You've been stranded in this godless prison of a planet for longer than you can remember."
 	flavour_text = "Each day you barely scrape by, and between the terrible conditions of your makeshift shelter, \
 	the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
 	spawner_job_path = /datum/job/hermit
 
-/obj/effect/mob_spawn/human/hermit/Initialize(mapload)
+/obj/effect/mob_spawn/ghost_role/human/hermit/Initialize(mapload)
 	. = ..()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
@@ -42,7 +41,7 @@
 			at one of Nanotrasen's state-of-the-art research facilities, were in one of the escape pods alone and saw the red button. It was big and shiny, and it caught your eye. You pressed \
 			it, and after a terrifying and fast ride for days, you landed here. You've had time to wisen up since then, and you think that your old friends wouldn't be laughing now."
 
-/obj/effect/mob_spawn/human/hermit/Destroy()
+/obj/effect/mob_spawn/ghost_role/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
 
@@ -56,17 +55,13 @@
 	r_pocket = /obj/item/flashlight/glowstick
 
 //Icebox version of hermit
-/obj/effect/mob_spawn/human/hermit/icemoon
+/obj/effect/mob_spawn/ghost_role/human/hermit/icemoon
 	name = "Cryostasis bed"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
-	prompt_name = "grumpy old man"
+	prompt_name = "a grumpy old man"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/hermit
-	roundstart = FALSE
-	death = FALSE
-	random = TRUE
-	mob_species = /datum/species/human
 	you_are_text = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
 	flavour_text = "You were fine hunting polar bears and taming wolves out here on your own, \
 		but now that there are corporate stooges around, you need to watch your step. "
@@ -74,11 +69,8 @@
 
 //beach dome
 
-/obj/effect/mob_spawn/human/beach
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
-	prompt_name = "beach bum"
+/obj/effect/mob_spawn/ghost_role/human/beach
+	prompt_name = "a beach bum"
 	name = "beach bum sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -86,13 +78,16 @@
 	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
 	spawner_job_path = /datum/job/beach_bum
 
-/obj/effect/mob_spawn/human/beach/lifeguard
+/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard
 	you_are_text = "You're a spunky lifeguard!"
 	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
-	mob_gender = "female"
 	name = "lifeguard sleeper"
 	outfit = /datum/outfit/beachbum/lifeguard
-	uniform = /obj/item/clothing/under/shorts/red
+
+/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard/special(mob/living/carbon/human/lifeguard, mob/mob_possessor)
+	. = ..()
+	lifeguard.gender = FEMALE
+	lifeguard.update_body()
 
 /datum/outfit/beachbum
 	name = "Beach Bum"
@@ -109,12 +104,11 @@
 	H.dna.add_mutation(STONER)
 
 /datum/outfit/beachbum/lifeguard
+	name = "Beach Lifeguard"
+	uniform = /obj/item/clothing/under/shorts/red
 	id_trim = /datum/id_trim/lifeguard
 
-/obj/effect/mob_spawn/human/bartender/alive
-	death = FALSE
-	roundstart = FALSE
-	random = TRUE
+/obj/effect/mob_spawn/ghost_role/human/bartender/alive
 	name = "bartender sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
@@ -227,7 +221,7 @@
 	eggshell = null
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/human/ash_walker/allow_spawn(mob/user)
+/obj/effect/mob_spawn/ghost_role/human/ash_walker/allow_spawn(mob/user, silent = FALSE)
 	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
 		return TRUE
 	to_chat(user, span_warning("<b>You have exhausted your usefulness to the Necropolis</b>."))
@@ -239,11 +233,8 @@
 
 	spawned_human.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
-	if(ishuman(spawned_human))
-		var/H = spawned_human
-
-		ADD_TRAIT(H, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
-		H.remove_language(/datum/language/common)
+	ADD_TRAIT(spawned_human, TRAIT_PRIMITIVE, ROUNDSTART_TRAIT)
+	spawned_human.remove_language(/datum/language/common)
 	team.players_spawned += (spawned_human.key)
 	eggshell.egg = null
 	QDEL_NULL(eggshell)

@@ -4,13 +4,10 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate
 	name = "space pirate sleeper"
 	desc = "A cryo sleeper smelling faintly of rum."
-	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	prompt_name = "a space pirate"
 	outfit = /datum/outfit/pirate/space
-	roundstart = FALSE
-	death = FALSE
 	anchored = TRUE
 	density = FALSE
 	show_flavor = FALSE //Flavour only exists for spawners menu
@@ -46,7 +43,6 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton
 	name = "pirate remains"
 	desc = "Some unanimated bones. They feel like they could spring to life any moment!"
-	random = TRUE
 	density = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
@@ -66,7 +62,6 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale
 	name = "elegant sleeper"
 	desc = "Cozy. You get the feeling you aren't supposed to be here, though..."
-	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	prompt_name = "a silverscale"

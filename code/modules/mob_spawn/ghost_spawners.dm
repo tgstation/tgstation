@@ -6,8 +6,6 @@
 
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace
 	name = "Syndicate Ship Crew Member"
-	roundstart = FALSE
-	death = FALSE
 	show_flavor = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
