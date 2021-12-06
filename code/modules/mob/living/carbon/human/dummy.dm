@@ -28,14 +28,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		ORGAN_SLOT_EYES, ORGAN_SLOT_EARS, ORGAN_SLOT_TONGUE, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH))
 		var/obj/item/organ/current_organ = getorganslot(slot) //Time to cache it lads
 		if(current_organ)
-			current_organ.Remove(src, special=TRUE) //Please don't somehow kill our dummy
+			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
 
 	var/datum/species/current_species = dna.species
 	for(var/organ_path in current_species.mutant_organs)
 		var/obj/item/organ/current_organ = getorgan(organ_path)
 		if(current_organ)
-			current_organ.Remove(src, special=TRUE) //Please don't somehow kill our dummy
+			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
 			SSwardrobe.stash_object(current_organ)
 
 	for(var/obj/item/organ/external/organ in internal_organs)
