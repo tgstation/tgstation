@@ -26,9 +26,9 @@ export const NumberInputModal = (_, context) => {
   const onClick = (value: number) => {
     setInput(value);
   };
-  /** NumberInput basically handles everything here */
+  // NumberInput basically handles everything here
   const defaultValidState = { isValid: true, error: null };
-  /** Dynamically changes the window height based on the message. */
+  // Dynamically changes the window height based on the message.
   const windowHeight
     = 130 + Math.ceil(message.length / 5) + (large_buttons ? 5 : 0);
 

@@ -39,7 +39,7 @@ export const TextInputModal = (_, context) => {
     setInputIsValid(validateInput(target.value, max_length));
     setInput(target.value);
   };
-  /** Dynamically changes the window height based on the message. */
+  // Dynamically changes the window height based on the message.
   const windowHeight
     = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 

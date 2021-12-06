@@ -1,7 +1,6 @@
 import { Box } from '../../components';
 import { clamp01 } from 'common/math';
 
-/** Progress bar for timed input prompts */
 export const Loader = props => {
   const { value } = props;
 

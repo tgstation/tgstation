@@ -20,9 +20,6 @@ export type Preferences = {
   swapped_buttons: boolean;
 };
 
-/** The buttons shown at bottom. Will display the error
- * if the input is invalid.
- */
 export const InputButtons = (props: InputButtonsProps, context) => {
   const { act, data } = useBackend<InputButtonsData>(context);
   const { large_buttons = false, swapped_buttons = true } = data.preferences;
