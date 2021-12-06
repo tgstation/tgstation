@@ -3,7 +3,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical
 	mech_flags = EXOSUIT_MODULE_MEDICAL
 
-/obj/item/mecha_parts/mecha_equipment/medical/Initialize()
+/obj/item/mecha_parts/mecha_equipment/medical/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -279,7 +279,7 @@
 	///Chooses what kind of action we should perform when clicking
 	var/mode = FIRE_SYRINGE_MODE // fire syringe or analyze reagents.
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize(mapload)
 	. = ..()
 	create_reagents(max_volume, NO_REACT)
 	known_reagents = list(/datum/reagent/medicine/epinephrine="Epinephrine",/datum/reagent/medicine/c2/multiver="Multiver")
@@ -515,9 +515,8 @@
 	///The medical gun doing the actual healing. yes its wierd but its better than copypasting the entire thing
 	var/obj/item/gun/medbeam/mech/medigun
 	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
-	material_flags = MATERIAL_NO_EFFECTS
 
-/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
+/obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize(mapload)
 	. = ..()
 	medigun = new(src)
 

@@ -144,7 +144,7 @@
 
 	density = TRUE
 
-/obj/machinery/debug_component_printer/Initialize()
+/obj/machinery/debug_component_printer/Initialize(mapload)
 	. = ..()
 	all_circuit_designs = list()
 

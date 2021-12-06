@@ -21,7 +21,7 @@ Reproductive extracts:
 	. = ..()
 	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
 
-/obj/item/slimecross/reproductive/Initialize()
+/obj/item/slimecross/reproductive/Initialize(mapload)
 	. = ..()
 	slimeStorage = AddComponent(/datum/component/storage/concrete/extract_inventory)
 

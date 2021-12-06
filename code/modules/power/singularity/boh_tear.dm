@@ -22,7 +22,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	flags_1 = SUPERMATTER_IGNORES_1
 
-/obj/boh_tear/Initialize()
+/obj/boh_tear/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 5 SECONDS) // vanishes after 5 seconds
 

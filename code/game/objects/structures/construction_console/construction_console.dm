@@ -112,14 +112,14 @@
 	var/obj/machinery/computer/camera_advanced/base_construction/linked_console
 
 /mob/camera/ai_eye/remote/base_construction/Initialize(mapload, obj/machinery/computer/camera_advanced/console_link)
+	linked_console = console_link
 	if(!linked_console)
 		stack_trace("A base consturuction drone was created with no linked console")
 		return INITIALIZE_HINT_QDEL
-	linked_console = console_link
 	return ..()
 
-/mob/camera/ai_eye/remote/base_construction/setLoc(t)
-	var/area/curr_area = get_area(t)
+/mob/camera/ai_eye/remote/base_construction/setLoc(destination)
+	var/area/curr_area = get_area(destination)
 	//Only move if we're in the allowed area. If no allowed area is defined, then we're free to move wherever.
 	if(!linked_console.allowed_area || istype(curr_area, linked_console.allowed_area))
 		return ..()

@@ -139,3 +139,10 @@
 	emageffect = FALSE
 	spec_updatehealth(H)
 	H.visible_message(span_danger("[H] stops flickering and goes back to their normal state!"))
+
+/datum/species/ethereal/get_features()
+	var/list/features = ..()
+
+	features += "feature_ethcolor"
+
+	return features

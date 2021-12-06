@@ -131,7 +131,8 @@
 	custom_price = PAYCHECK_ASSISTANT * 2
 	absorption_rate = 0.125
 	absorption_capacity = 5
-	splint_factor = 0.35
+	splint_factor = 0.7
+	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
@@ -191,6 +192,8 @@
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
 	self_delay = 6 SECONDS
 	other_delay = 3 SECONDS
+	splint_factor = 0.85
+	burn_cleanliness_bonus = 0.7
 	absorption_rate = 0.075
 	absorption_capacity = 4
 	merge_type = /obj/item/stack/medical/gauze/improvised

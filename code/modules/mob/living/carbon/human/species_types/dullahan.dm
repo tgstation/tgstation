@@ -161,7 +161,7 @@
 	if(admin_revive)
 		var/obj/item/bodypart/head/H = loc
 		var/turf/T = get_turf(owner)
-		if(H && istype(H) && T && !(H in owner.GetAllContents()))
+		if(H && istype(H) && T && !(H in owner.get_all_contents()))
 			H.forceMove(T)
 
 /obj/item/dullahan_relay/Destroy()

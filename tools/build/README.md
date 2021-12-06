@@ -23,12 +23,12 @@ tools/build/build --help
 
 ## Dependencies
 
-- On Windows, `BUILD.bat` will automatically install a private (vendored) copy of Node.
+- On Windows, `build.bat` will automatically install a private (vendored) copy of Node.
 - On Linux, install Node using your package manager or from <https://nodejs.org/en/download/>.
-- On Linux , unless using tgs4 or later you will need to compile rust-g on the server and obtain a .so file, for instructions see https://github.com/tgstation/rust-g
+- On Linux, unless using tgs4 or later you will need to compile rust-g on the server and obtain a .so file, for instructions see https://github.com/tgstation/rust-g
 
 ## Why?
 
 We used to include compiled versions of the tgui JavaScript code in the Git repository so that the project could be compiled using BYOND only. These pre-compiled files tended to have merge conflicts for no good reason. Using a build script lets us avoid this problem, while keeping builds convenient for people who are not modifying tgui.
 
-This build script is based on [Juke Build](https://github.com/stylemistake/juke-build) - please follow the link and read the documentation for the project to understand how it works and how to contribute to this build script.
+This build script is based on [Juke Build](https://github.com/stylemistake/juke-build) - follow the link to read the documentation for the project and understand how it works and how to contribute.

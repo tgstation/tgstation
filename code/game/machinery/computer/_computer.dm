@@ -39,6 +39,9 @@
 	var/overlay_state = icon_screen
 	if(machine_stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
+		. += mutable_appearance(icon, overlay_state)
+		return // If we don't do this broken computers glow in the dark.
+
 	. += mutable_appearance(icon, overlay_state)
 	. += emissive_appearance(icon, overlay_state)
 
@@ -68,7 +71,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/machinery/computer/obj_break(damage_flag)
+/obj/machinery/computer/atom_break(damage_flag)
 	if(!circuit) //no circuit, no breaking
 		return
 	. = ..()
@@ -82,10 +85,10 @@
 		switch(severity)
 			if(1)
 				if(prob(50))
-					obj_break(ENERGY)
+					atom_break(ENERGY)
 			if(2)
 				if(prob(10))
-					obj_break(ENERGY)
+					atom_break(ENERGY)
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
@@ -117,5 +120,7 @@
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return

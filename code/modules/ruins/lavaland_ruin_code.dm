@@ -4,25 +4,12 @@
 /obj/item/disk/design_disk/adv/knight_gear
 	name = "Magic Disk of Smithing"
 
-/obj/item/disk/design_disk/adv/knight_gear/Initialize()
+/obj/item/disk/design_disk/adv/knight_gear/Initialize(mapload)
 	. = ..()
 	var/datum/design/knight_armour/A = new
 	var/datum/design/knight_helmet/H = new
 	blueprints[1] = A
 	blueprints[2] = H
-
-//lavaland_surface_seed_vault.dmm
-//Seed Vault
-
-/obj/effect/spawner/lootdrop/seed_vault
-	name = "seed vault seeds"
-	lootcount = 1
-
-	loot = list(/obj/item/seeds/gatfruit = 10,
-				/obj/item/seeds/cherry/bomb = 10,
-				/obj/item/seeds/berry/glow = 10,
-				/obj/item/seeds/sunflower/moonflower = 8
-				)
 
 //Free Golems
 
@@ -32,7 +19,7 @@
 	icon_state = "datadisk1"
 	max_blueprints = 1
 
-/obj/item/disk/design_disk/golem_shell/Initialize()
+/obj/item/disk/design_disk/golem_shell/Initialize(mapload)
 	. = ..()
 	var/datum/design/golem_shell/G = new
 	blueprints[1] = G
@@ -154,7 +141,7 @@
 	flavour_text = "Monitor enemy activity as best you can, and try to keep a low profile. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
 	important_info = "DO NOT abandon the base."
 
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space/Initialize()
+/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space/Initialize(mapload)
 	. = ..()
 	if(prob(90)) //only has a 10% chance of existing, otherwise it'll just be a NPC syndie.
 		new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
@@ -162,10 +149,10 @@
 
 /datum/outfit/lavaland_syndicate/comms
 	name = "Lavaland Syndicate Comms Agent"
-	r_hand = /obj/item/melee/transforming/energy/sword/saber
+	r_hand = /obj/item/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon/gps
 	suit = /obj/item/clothing/suit/armor/vest
 
-/obj/item/clothing/mask/chameleon/gps/Initialize()
+/obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Signal")

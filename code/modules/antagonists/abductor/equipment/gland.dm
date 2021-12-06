@@ -23,7 +23,7 @@
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
 
-/obj/item/organ/heart/gland/Initialize()
+/obj/item/organ/heart/gland/Initialize(mapload)
 	. = ..()
 	icon_state = pick(list("health", "spider", "slime", "emp", "species", "egg", "vent", "mindshock", "viral"))
 

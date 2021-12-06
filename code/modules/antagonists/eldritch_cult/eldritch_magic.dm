@@ -341,7 +341,7 @@
 		if(!check)
 			break
 		T = check
-	return (getline(user, T) - get_turf(user))
+	return (get_line(user, T) - get_turf(user))
 
 /obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
@@ -634,7 +634,7 @@
 	duration = 1 MINUTES
 	layer = LOW_SIGIL_LAYER
 
-/obj/effect/temp_visual/glowing_rune/Initialize()
+/obj/effect/temp_visual/glowing_rune/Initialize(mapload)
 	. = ..()
 	pixel_y = rand(-6,6)
 	pixel_x = rand(-6,6)

@@ -25,7 +25,7 @@
 	unsuitable_atmos_damage = 7.5
 	speak_emote = list("yarrs")
 	loot = list(/obj/effect/mob_spawn/human/corpse/pirate,
-			/obj/item/melee/transforming/energy/sword/pirate)
+			/obj/item/melee/energy/sword/pirate)
 	del_on_death = 1
 	faction = list("pirate")
 
@@ -55,11 +55,11 @@
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/pirate/melee/space/Initialize()
+/mob/living/simple_animal/hostile/pirate/melee/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
-/mob/living/simple_animal/hostile/pirate/melee/Initialize()
+/mob/living/simple_animal/hostile/pirate/melee/Initialize(mapload)
 	. = ..()
 	sord = new(src)
 
@@ -67,7 +67,7 @@
 	QDEL_NULL(sord)
 	return ..()
 
-/mob/living/simple_animal/hostile/pirate/melee/Initialize()
+/mob/living/simple_animal/hostile/pirate/melee/Initialize(mapload)
 	. = ..()
 	set_light(2)
 
@@ -94,6 +94,6 @@
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/pirate/ranged/space/Initialize()
+/mob/living/simple_animal/hostile/pirate/ranged/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)

@@ -142,7 +142,7 @@
 	var/obj/item/I = parent
 	modeswitch_action = new(I)
 	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
-	if(I.obj_flags & IN_INVENTORY)
+	if(I.item_flags & IN_INVENTORY)
 		var/mob/M = I.loc
 		if(!istype(M))
 			return

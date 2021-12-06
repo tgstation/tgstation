@@ -51,7 +51,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	alt_sound = 'sound/items/pshoom_2.ogg'
 	component_type = /datum/component/storage/concrete/bluespace/rped
 
-/obj/item/storage/part_replacer/bluespace/Initialize()
+/obj/item/storage/part_replacer/bluespace/Initialize(mapload)
 	. = ..()
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
@@ -144,7 +144,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 
-/obj/item/stock_parts/Initialize()
+/obj/item/stock_parts/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

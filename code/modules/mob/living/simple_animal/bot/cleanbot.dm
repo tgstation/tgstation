@@ -98,7 +98,7 @@
 		if(ascended && user.stat == CONSCIOUS && user.client)
 			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 
-/mob/living/simple_animal/bot/cleanbot/Initialize()
+/mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
 	. = ..()
 
 	chosen_name = name
@@ -304,7 +304,7 @@
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
 	if(pests)
-		target_types += /mob/living/simple_animal/hostile/cockroach
+		target_types += /mob/living/basic/cockroach
 		target_types += /mob/living/simple_animal/mouse
 
 	if(drawn)
@@ -336,12 +336,12 @@
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
 		target = null
-	else if(istype(A, /mob/living/simple_animal/hostile/cockroach) || istype(A, /mob/living/simple_animal/mouse))
-		var/mob/living/simple_animal/M = target
-		if(!M.stat)
-			visible_message(span_danger("[src] smashes [target] with its mop!"))
-			M.death()
-		target = null
+	else if(istype(A, /mob/living/basic/cockroach) || istype(A, /mob/living/simple_animal/mouse))
+		var/mob/living/living_target = target
+		if(!living_target.stat)
+			visible_message(span_danger("[src] smashes [living_target] with its mop!"))
+			living_target.death()
+		living_target = null
 
 	else if(emagged == 2) //Emag functions
 		if(istype(A, /mob/living/carbon))

@@ -275,16 +275,18 @@
 
 ///Returns the client runechat visible messages preference according to the message type.
 /atom/proc/runechat_prefs_check(mob/target, visible_message_flags = NONE)
-	if(!target.client?.prefs.chat_on_map || !target.client.prefs.see_chat_non_mob)
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		return FALSE
-	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
+	if (!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs))
+		return FALSE
+	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.read_preference(/datum/preference/toggle/see_rc_emotes))
 		return FALSE
 	return TRUE
 
 /mob/runechat_prefs_check(mob/target, visible_message_flags = NONE)
-	if(!target.client?.prefs.chat_on_map)
+	if(!target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		return FALSE
-	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.see_rc_emotes)
+	if(visible_message_flags & EMOTE_MESSAGE && !target.client.prefs.read_preference(/datum/preference/toggle/see_rc_emotes))
 		return FALSE
 	return TRUE
 
@@ -443,34 +445,38 @@
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-/mob/verb/examinate(atom/A as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
+/mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
 	set name = "Examine"
 	set category = "IC"
 
-	if(isturf(A) && !(sight & SEE_TURFS) && !(A in view(client ? client.view : world.view, src)))
+	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind() && !blind_examine_check(A)) //blind people see things differently (through touch)
+	if(is_blind() && !blind_examine_check(examinify)) //blind people see things differently (through touch)
 		return
 
-	face_atom(A)
+	face_atom(examinify)
 	var/list/result
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time)
-			result = A.examine(src)
-			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
-			RegisterSignal(A, COMSIG_PARENT_QDELETING, .proc/clear_from_recent_examines, override=TRUE) // to flush the value if deleted early
-			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
-			handle_eye_contact(A)
+		var/ref_to_atom = ref(examinify)
+		var/examine_time = client.recent_examines[ref_to_atom]
+
+		if(isnull(examine_time) || examine_time < world.time)
+			result = examinify.examine(src)
+			client.recent_examines[ref_to_atom] = world.time + EXAMINE_MORE_TIME // set the value to when the examine cooldown ends
+			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, ref_to_atom), EXAMINE_MORE_TIME)
+			handle_eye_contact(examinify)
 		else
-			result = A.examine_more(src)
+			result = examinify.examine_more(src)
+			if(!length(result))
+				result += span_notice("<i>You examine [src] closer, but find nothing of interest...</i>")
 	else
-		result = A.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
+		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
 	to_chat(src, "<span class='infoplain'>[result.Join("\n")]</span>")
-	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
 
 /mob/proc/blind_examine_check(atom/examined_thing)
@@ -506,7 +512,7 @@
 
 	/// how long it takes for the blind person to find the thing they're examining
 	var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
-	if(client?.recent_examines && client?.recent_examines[examined_thing]) //easier to find things we just touched
+	if(client?.recent_examines && client?.recent_examines[ref(examined_thing)]) //easier to find things we just touched
 		examine_delay_length = 0.33 SECONDS
 	else if(isobj(examined_thing))
 		examine_delay_length *= 1.5
@@ -526,13 +532,11 @@
 	return TRUE
 
 
-/mob/proc/clear_from_recent_examines(atom/A)
+/mob/proc/clear_from_recent_examines(ref_to_clear)
 	SIGNAL_HANDLER
-
 	if(!client)
 		return
-	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(client.recent_examines, A)
+	LAZYREMOVE(client.recent_examines, ref_to_clear)
 
 /**
  * handle_eye_contact() is called when we examine() something. If we examine an alive mob with a mind who has examined us in the last second within 5 tiles, we make eye contact!
@@ -656,38 +660,6 @@
 
 	limb_attack_self()
 
-
-/**
- * Get the notes of this mob
- *
- * This actually gets the mind datums notes
- */
-/mob/verb/memory()
-	set name = "Notes"
-	set category = "IC"
-	set desc = "View your character's notes memory."
-	if(mind)
-		mind.show_memory(src)
-	else
-		to_chat(src, "You don't have a mind datum for some reason, so you can't look at your notes, if you had any.")
-
-/**
- * Add a note to the mind datum
- */
-/mob/verb/add_memory(msg as message)
-	set name = "Add Note"
-	set category = "IC"
-	if(mind)
-		if (world.time < memory_throttle_time)
-			return
-		memory_throttle_time = world.time + 5 SECONDS
-		msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
-
-		mind.store_memory(msg)
-	else
-		to_chat(src, "You don't have a mind datum for some reason, so you can't add a note to it.")
-
 /**
  * Allows you to respawn, abandoning your current mob
  *
@@ -706,22 +678,22 @@
 		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
-	log_game("[key_name(usr)] used abandon mob.")
+	log_game("[key_name(usr)] used the respawn button.")
 
 	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
 
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		return
 
 	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
-		log_game("[key_name(usr)] AM failed due to disconnect.")
+		log_game("[key_name(usr)] respawn failed due to disconnect.")
 		qdel(M)
 		return
 
@@ -940,6 +912,15 @@
 
 ///Add a spell to the mobs spell list
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
+	// HACK: Preferences menu creates one of every selectable species.
+	// Some species, like vampires, create spells when they're made.
+	// The "action" is created when those spells Initialize.
+	// Preferences menu can create these assets at *any* time, primarily before
+	// the atoms SS initializes.
+	// That means "action" won't exist.
+	if (isnull(S.action))
+		return
+
 	LAZYADD(mob_spell_list, S)
 	S.action.Grant(src)
 
@@ -1004,6 +985,15 @@
 	var/datum/dna/mob_dna = has_dna()
 	if(mob_dna?.check_mutation(TK) && tkMaxRangeCheck(src, A))
 		return TRUE
+
+	//range check
+	if(!interaction_range)
+		return TRUE
+	var/turf/our_turf = get_turf(src)
+	var/turf/their_turf = get_turf(A)
+	if (!our_turf || !their_turf)
+		return FALSE
+	return ISINRANGE(their_turf.x, our_turf.x - interaction_range, our_turf.x + interaction_range) && ISINRANGE(their_turf.y, our_turf.y - interaction_range, our_turf.y + interaction_range)
 
 ///Can the mob use Topic to interact with machines
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
@@ -1094,7 +1084,7 @@
 
 ///update the ID name of this mob
 /mob/proc/replace_identification_name(oldname,newname)
-	var/list/searching = GetAllContents()
+	var/list/searching = get_all_contents()
 	var/search_id = 1
 	var/search_pda = 1
 
@@ -1239,7 +1229,7 @@
 	if(href_list[VV_HK_SDQL_SPELL])
 		if(!check_rights(R_DEBUG))
 			return
-		usr.client.cmd_give_sdql_spell(src)
+		usr.client.cmd_sdql_spell_menu(src)
 /**
  * extra var handling for the logging var
  */
@@ -1351,3 +1341,59 @@
 		client.movingmob.client_mobs_in_contents -= src
 		UNSETEMPTY(client.movingmob.client_mobs_in_contents)
 		client.movingmob = null
+
+
+///Shows a tgui window with memories
+/mob/verb/memory()
+	set name = "Memories"
+	set category = "IC"
+	set desc = "View your character's memories."
+	if(!mind)
+		var/fail_message = "You have no mind!"
+		if(isobserver(src))
+			fail_message += " You have to be in the current round at some point to have one."
+		to_chat(src, span_warning(fail_message))
+		return
+	if(!mind.memory_panel)
+		mind.memory_panel = new(usr, mind)
+	mind.memory_panel.ui_interact(usr)
+
+/datum/memory_panel
+	var/datum/mind/mind_reference
+	var/client/holder //client of whoever is using this datum
+
+/datum/memory_panel/New(user, mind_reference)//user can either be a client or a mob due to byondcode(tm)
+	if (istype(user, /client))
+		var/client/user_client = user
+		holder = user_client //if its a client, assign it to holder
+	else
+		var/mob/user_mob = user
+		holder = user_mob.client //if its a mob, assign the mob's client to holder
+	src.mind_reference = mind_reference
+
+/datum/memory_panel/Destroy(force)
+	mind_reference.memory_panel = null
+	. = ..()
+
+/datum/memory_panel/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/memory_panel/ui_close()
+	qdel(src)
+
+/datum/memory_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MemoryPanel")
+		ui.open()
+
+/datum/memory_panel/ui_data(mob/user)
+	var/list/data = list()
+	var/list/memories = list()
+
+	for(var/memory_key in user?.mind.memories)
+		var/datum/memory/memory =  user.mind.memories[memory_key]
+		memories += list(list("name" = memory.name, "quality" = memory.story_value))
+
+	data["memories"] = memories
+	return data

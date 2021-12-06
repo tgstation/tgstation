@@ -1,13 +1,16 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	door_anim_squish = 0.22
+	door_anim_angle = 123
+	door_anim_time = 4
 	var/jones = FALSE
 
 /obj/structure/closet/secure_closet/freezer/Destroy()
 	recursive_organ_check(src)
 	return ..()
 
-/obj/structure/closet/secure_closet/freezer/Initialize()
+/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
 	. = ..()
 	recursive_organ_check(src)
 
@@ -74,7 +77,7 @@
 /obj/structure/closet/secure_closet/freezer/gulag_fridge/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/food/drinks/beer/light(src)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer/light(src)
 
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"

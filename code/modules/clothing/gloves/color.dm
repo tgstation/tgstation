@@ -43,7 +43,7 @@
 	resistance_flags = ACID_PROOF
 	var/charges_remaining = 10
 
-/obj/item/clothing/gloves/color/yellow/sprayon/Initialize()
+/obj/item/clothing/gloves/color/yellow/sprayon/Initialize(mapload)
 	.=..()
 	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
 
@@ -71,7 +71,7 @@
 	resistance_flags = NONE
 	cut_type = /obj/item/clothing/gloves/cut
 
-/obj/item/clothing/gloves/color/fyellow/Initialize()
+/obj/item/clothing/gloves/color/fyellow/Initialize(mapload)
 	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
@@ -79,7 +79,7 @@
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
 
-/obj/item/clothing/gloves/color/fyellow/old/Initialize()
+/obj/item/clothing/gloves/color/fyellow/old/Initialize(mapload)
 	. = ..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
@@ -254,20 +254,3 @@
 	icon_state = "white"
 	inhand_icon_state = "wgloves"
 	custom_price = PAYCHECK_MINIMAL
-
-/obj/effect/spawner/lootdrop/gloves
-	name = "random gloves"
-	desc = "These gloves are supposed to be a random color..."
-	icon = 'icons/obj/clothing/gloves.dmi'
-	icon_state = "random_gloves"
-	loot = list(
-		/obj/item/clothing/gloves/color/orange = 1,
-		/obj/item/clothing/gloves/color/red = 1,
-		/obj/item/clothing/gloves/color/blue = 1,
-		/obj/item/clothing/gloves/color/purple = 1,
-		/obj/item/clothing/gloves/color/green = 1,
-		/obj/item/clothing/gloves/color/grey = 1,
-		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1,
-		/obj/item/clothing/gloves/color/white = 1,
-		/obj/item/clothing/gloves/color/rainbow = 1)

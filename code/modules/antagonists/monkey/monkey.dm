@@ -16,6 +16,16 @@
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
 
+/datum/antagonist/monkey/get_preview_icon()
+	// Creating a *real* monkey is fairly involved before atoms init.
+	var/icon/icon = icon('icons/mob/monkey.dmi', "monkey1")
+
+	icon.Crop(4, 9, 28, 33)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.Shift(SOUTH, 10)
+
+	return icon
+
 /datum/antagonist/monkey/get_team()
 	return monkey_team
 
@@ -113,8 +123,8 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/obj/item/organ/heart/freedom/F = new
-	F.Insert(owner.current, drop_if_replaced = FALSE)
+	var/obj/item/organ/heart/freedom/super_heart = new
+	super_heart.Insert(owner.current, drop_if_replaced = FALSE)
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()

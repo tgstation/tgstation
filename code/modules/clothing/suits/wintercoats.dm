@@ -12,7 +12,7 @@
 	allowed = list()
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 
-/obj/item/clothing/suit/hooded/wintercoat/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/Initialize(mapload)
 	. = ..()
 	allowed += list(
 		/obj/item/flashlight,
@@ -47,9 +47,9 @@
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, RAD = 10, FIRE = 10, ACID = 60)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
 
-/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
@@ -66,9 +66,9 @@
 	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
-/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
@@ -82,7 +82,7 @@
 	inhand_icon_state = "coathop"
 	armor = list(MELEE = 10, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 35)
 	allowed = list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hop
 
@@ -120,15 +120,9 @@
 	allowed = list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/holosign_creator,
-		/obj/item/key/janitor,
-		/obj/item/lightreplacer,
-		/obj/item/melee/flyswatter,
-		/obj/item/paint/paint_remover,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/reagent_containers/spray,
-		/obj/item/soap,
 	)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/janitor
 
@@ -145,9 +139,9 @@
 	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
-/obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
 	. = ..()
-	allowed = GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed
 
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
@@ -203,10 +197,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 30)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/cmo
 
-/obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/medical/cmo/Initialize(mapload)
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/medical/cmo
@@ -286,10 +280,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/rd
 
-/obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize(mapload)
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/science/rd
@@ -351,10 +345,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 20, FIRE = 30, ACID = 10)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/ce
 
-/obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize()
+/obj/item/clothing/suit/hooded/wintercoat/engineering/ce/Initialize(mapload)
 	. = ..()
 	allowed += list(
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 	)
 
 /obj/item/clothing/head/hooded/winterhood/engineering/ce

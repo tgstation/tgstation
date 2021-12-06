@@ -28,7 +28,7 @@
 	important_info = "You MUST read and follow your laws carefully."
 	spawner_job_path = /datum/job/maintenance_drone
 
-/obj/effect/mob_spawn/drone/Initialize()
+/obj/effect/mob_spawn/drone/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)

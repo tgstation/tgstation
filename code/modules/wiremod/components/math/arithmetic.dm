@@ -37,8 +37,7 @@
 	)
 	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
-/obj/item/circuit_component/arithmetic/Initialize()
-	. = ..()
+/obj/item/circuit_component/arithmetic/populate_ports()
 	arithmetic_ports = list()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
@@ -47,9 +46,6 @@
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/arithmetic/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/list/ports = arithmetic_ports.Copy()
 	var/datum/port/input/first_port = popleft(ports)

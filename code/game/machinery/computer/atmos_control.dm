@@ -119,7 +119,7 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/air_sensor/Initialize()
+/obj/machinery/air_sensor/Initialize(mapload)
 	. = ..()
 	SSair.start_processing_machine(src)
 	set_frequency(frequency)
@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/datum/radio_frequency/radio_connection
 
 
-/obj/machinery/computer/atmos_control/Initialize()
+/obj/machinery/computer/atmos_control/Initialize(mapload)
 	. = ..()
 	GLOB.atmos_air_controllers += src
 	set_frequency(frequency)
@@ -430,7 +430,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		IO |= text[1]
 	if(!IO.len)
 		to_chat(user, span_alert("No machinery detected."))
-	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in sortList(IO)
+	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in sort_list(IO)
 	if(src)
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"

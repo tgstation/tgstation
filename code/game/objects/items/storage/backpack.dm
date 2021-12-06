@@ -81,7 +81,7 @@
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/backpack/santabag/Initialize()
+/obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
 
@@ -361,7 +361,7 @@
 	///counts time passed since it ate food
 	var/hunger = 0
 
-/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+/obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
 	. = ..()
 	var/add_dropdel = TRUE //clarified boolean
 	AddComponent(/datum/component/curse_of_hunger, add_dropdel)

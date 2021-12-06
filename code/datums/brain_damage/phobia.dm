@@ -22,16 +22,16 @@
 		phobia_type = new_phobia_type
 
 	if(!phobia_type)
-		phobia_type = pick(SStraumas.phobia_types)
+		phobia_type = pick(GLOB.phobia_types)
 
 	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
 	scan_desc += " of [phobia_type]"
-	trigger_regex = SStraumas.phobia_regexes[phobia_type]
-	trigger_mobs = SStraumas.phobia_mobs[phobia_type]
-	trigger_objs = SStraumas.phobia_objs[phobia_type]
-	trigger_turfs = SStraumas.phobia_turfs[phobia_type]
-	trigger_species = SStraumas.phobia_species[phobia_type]
+	trigger_regex = GLOB.phobia_regexes[phobia_type]
+	trigger_mobs = GLOB.phobia_mobs[phobia_type]
+	trigger_objs = GLOB.phobia_objs[phobia_type]
+	trigger_turfs = GLOB.phobia_turfs[phobia_type]
+	trigger_species = GLOB.phobia_species[phobia_type]
 	..()
 
 /datum/brain_trauma/mild/phobia/on_life(delta_time, times_fired)

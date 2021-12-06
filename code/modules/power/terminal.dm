@@ -11,7 +11,7 @@
 	var/obj/machinery/power/master = null
 
 
-/obj/machinery/power/terminal/Initialize()
+/obj/machinery/power/terminal/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)

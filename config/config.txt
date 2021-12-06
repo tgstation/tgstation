@@ -90,6 +90,9 @@ LOG_ADMIN
 ## log admin chat
 LOG_ADMINCHAT
 
+## log asset debug logs
+#LOG_ASSET
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 
@@ -143,7 +146,7 @@ LOG_MANIFEST
 # LOG_TWITTER
 
 ## Enable logging pictures
-# LOG_PICTURES
+LOG_PICTURES
 
 ## log mecha actions
 # LOG_MECHA
@@ -286,9 +289,9 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
-## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
-#POPUP_ADMIN_PM
+## Uncomment to give admins the ability to send a maptext popup to players.
+## Only fires when an admin requests it, not every ahelp.
+POPUP_ADMIN_PM
 
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
@@ -555,3 +558,9 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
 #HARD_DELETES_OVERRUN_LIMIT 0
+
+## Sets an MOTD of the server.
+## You can use this multiple times, and the MOTDs will be appended in order.
+## Based on config directory, so "motd.txt" points to "config/motd.txt"
+MOTD motd.txt
+#MOTD motd_extra.txt

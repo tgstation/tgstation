@@ -150,7 +150,7 @@
 	B.w_class = max_weight_of_contents
 	usr.put_in_hands(B)
 
-/// Environmental bags
+/// Environmental bags. They protect against bad weather.
 
 /obj/structure/closet/body_bag/environmental
 	name = "environmental protection bag"
@@ -161,7 +161,12 @@
 	contents_pressure_protection = 0.8
 	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental/
-	weather_protection = list(WEATHER_ACID, WEATHER_ASH, WEATHER_RAD, WEATHER_SNOW, WEATHER_VOID) // Does not protect against lava or the The Floor Is Lava spell.
+	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_VOIDSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
+
+/obj/structure/closet/body_bag/environmental/Initialize(mapload)
+	. = ..()
+	for(var/trait in weather_protection)
+		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
 
 /obj/structure/closet/body_bag/environmental/nanotrasen
 	name = "elite environmental protection bag"
@@ -171,7 +176,7 @@
 	contents_pressure_protection = 1
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/nanotrasen/
-	weather_protection = list(WEATHER_ALL)
+	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 
 /// Securable enviro. bags
 
@@ -298,13 +303,13 @@
 	contents_pressure_protection = 1
 	contents_thermal_insulation = 1
 	foldedbag_path = /obj/item/bodybag/environmental/prisoner/syndicate
-	weather_protection = list(WEATHER_ALL)
+	weather_protection = list(TRAIT_WEATHER_IMMUNE)
 	breakout_time = 8 MINUTES
 	sinch_time = 20 SECONDS
 	// The contents of the gas to be distributed to an occupant once sinched down. Set in Initialize()
 	var/datum/gas_mixture/air_contents = null
 
-/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize()
+/obj/structure/closet/body_bag/environmental/prisoner/syndicate/Initialize(mapload)
 	. = ..()
 	refresh_air()
 

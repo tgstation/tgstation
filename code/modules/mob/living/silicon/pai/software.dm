@@ -13,7 +13,7 @@
 															"digital messenger" = 5,
 															"atmosphere sensor" = 5,
 															"photography module" = 5,
-															"remote signaller" = 10,
+															"remote signaler" = 10,
 															"medical records" = 10,
 															"security records" = 10,
 															"camera zoom" = 10,
@@ -68,10 +68,6 @@
 				left_part = medicalAnalysis()
 			if("doorjack")
 				left_part = softwareDoor()
-			if("signaller")
-				left_part = softwareSignal()
-			if("loudness")
-				left_part = softwareLoudness()
 			if("hostscan")
 				left_part = softwareHostScan()
 
@@ -149,7 +145,7 @@
 				radio.attack_self(src)
 
 			if("image") // Set pAI card display face
-				var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
+				var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
 				switch(newImage)
 					if(null)
 						card.emotion_icon = "null"
@@ -165,23 +161,8 @@
 			if("camzoom")
 				aicamera.adjust_zoom(usr)
 
-			if("signaller")
-				if(href_list["send"])
-					signaler.send_activation()
-					audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*")
-					playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-
-				if(href_list["freq"])
-					var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
-					if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
-						new_frequency = sanitize_frequency(new_frequency)
-					signaler.set_frequency(new_frequency)
-
-				if(href_list["code"])
-					signaler.code += text2num(href_list["code"])
-					signaler.code = round(signaler.code)
-					signaler.code = min(100, signaler.code)
-					signaler.code = max(1, signaler.code)
+			if("signaler")
+				signaler.ui_interact(src)
 
 			if("directive")
 				if(href_list["getdna"])
@@ -281,8 +262,9 @@
 
 
 			if("loudness")
-				if(subscreen == 1) // Open Instrument
-					internal_instrument.interact(src)
+				if(!internal_instrument)
+					internal_instrument = new(src)
+				internal_instrument.interact(src) // Open Instrument
 
 			if("internalgps")
 				if(!internal_gps)
@@ -317,8 +299,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")
 			dat += "<a href='byond://?src=[REF(src)];software=securityrecord;sub=0'>Security Records</a> <br>"
-		if(s == "remote signaller")
-			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
+		if(s == "remote signaler")
+			dat += "<a href='byond://?src=[REF(src)];software=signaler;sub=0'>Remote Signaler</a> <br>"
 		if(s == "loudness booster")
 			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 		if(s == "internal gps")
@@ -414,33 +396,11 @@
 
 // -=-=-=-= Software =-=-=-=-=- //
 
-//Remote Signaller
-/mob/living/silicon/pai/proc/softwareSignal()
-	var/dat = ""
-	dat += "<h3>Remote Signaller</h3><br><br>"
-	dat += {"<B>Frequency/Code</B> for signaler:<BR>
-	Frequency:
-	<A href='byond://?src=[REF(src)];software=signaller;freq=-10;'>-</A>
-	<A href='byond://?src=[REF(src)];software=signaller;freq=-2'>-</A>
-	[format_frequency(signaler.frequency)]
-	<A href='byond://?src=[REF(src)];software=signaller;freq=2'>+</A>
-	<A href='byond://?src=[REF(src)];software=signaller;freq=10'>+</A><BR>
-
-	Code:
-	<A href='byond://?src=[REF(src)];software=signaller;code=-5'>-</A>
-	<A href='byond://?src=[REF(src)];software=signaller;code=-1'>-</A>
-	[signaler.code]
-	<A href='byond://?src=[REF(src)];software=signaller;code=1'>+</A>
-	<A href='byond://?src=[REF(src)];software=signaller;code=5'>+</A><BR>
-
-	<A href='byond://?src=[REF(src)];software=signaller;send=1'>Send Signal</A><BR>"}
-	return dat
-
 // Crew Manifest
 /mob/living/silicon/pai/proc/softwareManifest()
 	. += "<h2>Crew Manifest</h2><br><br>"
 	if(GLOB.data_core.general)
-		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
+		for(var/datum/data/record/t in sort_record(GLOB.data_core.general))
 			. += "[t.fields["name"]] - [t.fields["rank"]]<BR>"
 	. += "</body></html>"
 	return .
@@ -451,7 +411,7 @@
 		if(0)
 			. += "<h3>Medical Records</h3><HR>"
 			if(GLOB.data_core.general)
-				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					. += "<A href='?src=[REF(src)];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
@@ -473,7 +433,7 @@
 		if(0)
 			. += "<h3>Security Records</h3><HR>"
 			if(GLOB.data_core.general)
-				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+				for(var/datum/data/record/R in sort_record(GLOB.data_core.general))
 					. += "<A href='?src=[REF(src)];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<h3>Security Record</h3>"
@@ -611,13 +571,4 @@
 	dat += "</ul>"
 	dat += "<br><br>"
 	dat += "Messages: <hr> [aiPDA.tnote]"
-	return dat
-
-// Loudness Booster
-/mob/living/silicon/pai/proc/softwareLoudness()
-	if(!internal_instrument)
-		internal_instrument = new(src)
-	var/dat = "<h3>Sound Synthesizer</h3>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=1'>Open Synthesizer Interface</a><br>"
-	dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=2'>Choose Instrument Type</a>"
 	return dat

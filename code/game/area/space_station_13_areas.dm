@@ -25,7 +25,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space"
 	requires_power = TRUE
 	always_unpowered = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -37,13 +39,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/space/nearstation
 	icon_state = "space_near"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	area_flags = UNIQUE_AREA | NO_ALERTS | AREA_USES_STARLIGHT
 
 /area/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 	has_gravity = STANDARD_GRAVITY
 
 
@@ -68,7 +70,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	max_ambience_cooldown = 220 SECONDS
 
 /area/asteroid/nearstation
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	ambience_index = AMBIENCE_RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
@@ -103,7 +105,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
-/area/ai_monitored/turret_protected/Initialize()
+/area/ai_monitored/turret_protected/Initialize(mapload)
 	. = ..()
 	if(ai_will_not_hear_this)
 		ambientsounds += ai_will_not_hear_this
@@ -166,7 +168,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
@@ -720,7 +722,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/theater
 	name = "\improper Theater"
-	icon_state = "Theater"
+	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/service/theater/abandoned
@@ -923,8 +925,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/solars
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -1156,6 +1157,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 
 /area/security/prison/toilet //radproof
 	name = "\improper Prison Toilet"

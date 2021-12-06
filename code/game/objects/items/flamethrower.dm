@@ -83,7 +83,7 @@
 	if(user && user.get_active_held_item() == src) // Make sure our user is still holding us
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
-			var/turflist = getline(user, target_turf)
+			var/turflist = get_line(user, target_turf)
 			log_combat(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 

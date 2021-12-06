@@ -225,12 +225,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (7 * REM * delta_time))
+	M.drowsyness = max(M.drowsyness - (7 * REM * delta_time), 0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
-	return ..()
+	..()
+	return TRUE
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
 	to_chat(M, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
@@ -2632,3 +2633,26 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(islizard(M))
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
 	..()
+
+/datum/reagent/consumable/ethanol/the_juice
+	name = "The Juice"
+	description = "Woah man, this like, feels familiar to you dude."
+	color = "#4c14be"
+	boozepwr = 50
+	quality = DRINK_GOOD
+	taste_description = "like, the future, man"
+	glass_icon_state = "thejuice"
+	glass_name = "The Juice"
+	glass_desc = "A concoction of not-so-edible things that apparently lets you feel like you're in two places at once"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/datum/brain_trauma/special/bluespace_prophet/prophet_trauma
+
+/datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/victim)
+	. = ..()
+	prophet_trauma = new()
+	victim.gain_trauma(prophet_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/consumable/ethanol/the_juice/on_mob_end_metabolize(mob/living/carbon/victim)
+	if(prophet_trauma)
+		QDEL_NULL(prophet_trauma)
+	return ..()

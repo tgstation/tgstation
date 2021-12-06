@@ -162,7 +162,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
 "J" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

@@ -371,7 +371,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "gd" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter3)
 "gk" = (
@@ -567,7 +567,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "ht" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/caravan/freighter2)
 "hu" = (
@@ -597,8 +597,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/engineering,
-/obj/effect/spawner/lootdrop/space/fancytech,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter3)
 "hy" = (
@@ -667,8 +667,8 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/crate/secure,
-/obj/effect/spawner/lootdrop/space/cashmoney,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter2)
 "hX" = (
@@ -715,8 +715,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/engineering,
-/obj/effect/spawner/lootdrop/space/fancytech,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "ic" = (

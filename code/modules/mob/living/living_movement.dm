@@ -34,6 +34,8 @@
 
 
 /mob/living/proc/update_pull_movespeed()
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATING_PULL_MOVESPEED)
+
 	if(pulling)
 		if(isliving(pulling))
 			var/mob/living/L = pulling

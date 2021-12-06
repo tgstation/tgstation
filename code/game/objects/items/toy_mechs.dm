@@ -50,7 +50,7 @@
 	/// ...And their loss count in combat
 	var/losses = 0
 
-/obj/item/toy/mecha/Initialize()
+/obj/item/toy/mecha/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
 	combat_health = max_combat_health

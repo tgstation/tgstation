@@ -7,7 +7,7 @@
 	icon_state = "datadisk1"
 	var/modkit_design = /datum/design/unique_modkit
 
-/obj/item/disk/design_disk/modkit_disc/Initialize()
+/obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
 	. = ..()
 	blueprints[1] = new modkit_design
 
@@ -236,7 +236,7 @@
 		wisp.forceMove(src)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
-/obj/item/wisp_lantern/Initialize()
+/obj/item/wisp_lantern/Initialize(mapload)
 	. = ..()
 	wisp = new(src)
 
@@ -337,7 +337,7 @@
 	icon_state = "red_cube"
 	teleport_color = "#FD3F48"
 
-/obj/item/warp_cube/red/Initialize()
+/obj/item/warp_cube/red/Initialize(mapload)
 	. = ..()
 	if(!linked)
 		var/obj/item/warp_cube/blue = new(src.loc)
@@ -358,7 +358,7 @@
 	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
 
-/obj/item/immortality_talisman/Initialize()
+/obj/item/immortality_talisman/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE)
 
@@ -439,7 +439,7 @@
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 
-/obj/item/shared_storage/red/Initialize()
+/obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
@@ -510,7 +510,7 @@
 		exposed_carbon.dna.species.GiveSpeciesFlight(exposed_carbon)
 		if(holycheck)
 			to_chat(exposed_carbon, span_notice("You feel blessed!"))
-			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, SPECIES_TRAIT)
+			ADD_TRAIT(exposed_carbon, TRAIT_HOLY, FLIGHTPOTION_TRAIT)
 		playsound(exposed_carbon.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
 		exposed_carbon.adjustBruteLoss(20)
 		exposed_carbon.emote("scream")
@@ -591,10 +591,10 @@
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/transforming/cleaving_saw)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
 
 
-/obj/item/clothing/suit/space/hardsuit/berserker/Initialize()
+/obj/item/clothing/suit/space/hardsuit/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
 
@@ -626,7 +626,7 @@
 	/// Status of berserk
 	var/berserk_active = FALSE
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/Initialize()
+/obj/item/clothing/head/helmet/space/hardsuit/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
@@ -706,7 +706,7 @@
 	custom_materials = null
 	var/obj/effect/proc_holder/scan/scan
 
-/obj/item/clothing/glasses/godeye/Initialize()
+/obj/item/clothing/glasses/godeye/Initialize(mapload)
 	. = ..()
 	scan = new(src)
 
@@ -879,7 +879,7 @@
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/shatter),
 		)
 
-/obj/item/cursed_katana/Initialize()
+/obj/item/cursed_katana/Initialize(mapload)
 	. = ..()
 	for(var/combo in combo_list)
 		var/list/combo_specifics = combo_list[combo]

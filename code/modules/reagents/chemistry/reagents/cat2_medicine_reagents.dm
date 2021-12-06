@@ -514,13 +514,13 @@
 	failed_chem = null //We don't want to accidentally crash it out (see reaction)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
+/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
-	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
+	user.balloon_alert(user, "your heart beats with a great force")
+	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
+	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
+	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time)
@@ -549,11 +549,12 @@
 		volume = 0
 	. = ..()
 
-/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
-	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
+/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
+	user.balloon_alert(user, "your heart relaxes")
+	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)

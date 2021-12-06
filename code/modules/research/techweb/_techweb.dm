@@ -147,7 +147,7 @@
 	if(unlock_hidden)
 		for(var/i in receiver.hidden_nodes)
 			CHECK_TICK
-			if(!hidden_nodes[i])
+			if(available_nodes[i] || researched_nodes[i] || visible_nodes[i])
 				receiver.hidden_nodes -= i //We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK

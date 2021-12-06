@@ -17,7 +17,7 @@
 	var/squeak = TRUE
 
 /obj/vehicle/sealed/mecha/combat/honker/get_stats_part(mob/user)
-	var/integrity = obj_integrity/max_integrity*100
+	var/integrity = atom_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
@@ -162,7 +162,7 @@
 		return
 	cell = new /obj/item/stock_parts/cell/hyper(src)
 
-/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize()
+/obj/vehicle/sealed/mecha/combat/honker/dark/loaded/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
 	ME.attach(src)

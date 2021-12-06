@@ -57,7 +57,7 @@
 		return
 
 	if(!M)
-		M = input(usr, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sortNames(GLOB.player_list)
+		M = input(usr, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
 	if(!M || QDELETED(M))
 		return
 	log_admin("[key_name(src)] played a direct mob sound [S] to [M].")

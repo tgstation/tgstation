@@ -104,6 +104,9 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))
 
+// basic mobs
+#define isbasicmob(A) (istype(A, /mob/living/basic))
+
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
@@ -115,7 +118,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
-#define iscow(A) (istype(A, /mob/living/simple_animal/cow))
+#define iscow(A) (istype(A, /mob/living/basic/cow))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 

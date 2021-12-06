@@ -19,7 +19,7 @@
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
-/obj/item/mop/Initialize()
+/obj/item/mop/Initialize(mapload)
 	. = ..()
 	create_reagents(mopcap)
 
@@ -102,7 +102,7 @@
 	var/refill_rate = 0.5
 	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
-/obj/item/mop/advanced/Initialize()
+/obj/item/mop/advanced/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

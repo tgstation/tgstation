@@ -11,7 +11,7 @@
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
-/obj/structure/emergency_shield/Initialize()
+/obj/structure/emergency_shield/Initialize(mapload)
 	. = ..()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(TRUE, TRUE)
@@ -155,7 +155,7 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	obj_break()
+	atom_break()
 	locked = pick(0,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
@@ -202,7 +202,7 @@
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, span_notice("You repair \the [src]."))
 			update_appearance()
@@ -276,7 +276,14 @@
 /obj/machinery/power/shieldwallgen/anchored
 	anchored = TRUE
 
-/obj/machinery/power/shieldwallgen/Initialize()
+/obj/machinery/power/shieldwallgen/unlocked //for use in ruins, etc
+	locked = FALSE
+	req_access = null
+
+/obj/machinery/power/shieldwallgen/unlocked/anchored
+	anchored = TRUE
+
+/obj/machinery/power/shieldwallgen/Initialize(mapload)
 	. = ..()
 	if(anchored)
 		connect_to_network()

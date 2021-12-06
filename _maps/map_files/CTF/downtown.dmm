@@ -614,6 +614,13 @@
 	},
 /turf/open/floor/iron,
 /area/ctf)
+"kZ" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 4;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "lk" = (
 /obj/structure/closet/crate/trashcart{
 	resistance_flags = 64
@@ -648,13 +655,6 @@
 /obj/effect/turf_decal/trimline/blue/line,
 /obj/effect/decal/cleanable/shreds,
 /turf/open/floor/iron,
-/area/ctf)
-"mf" = (
-/obj/effect/spawner/randomarcade{
-	dir = 4;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
 /area/ctf)
 "mj" = (
 /turf/open/floor/plating/grass,
@@ -982,7 +982,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/structure/table/wood{
 	resistance_flags = 64
 	},
@@ -1224,6 +1224,13 @@
 	},
 /turf/open/floor/eighties,
 /area/ctf)
+"xy" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8;
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "xC" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
@@ -1253,13 +1260,6 @@
 	},
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/iron,
-/area/ctf)
-"yi" = (
-/obj/effect/spawner/randomarcade{
-	dir = 8;
-	resistance_flags = 64
-	},
-/turf/open/floor/wood,
 /area/ctf)
 "yp" = (
 /obj/effect/turf_decal/siding/yellow,
@@ -1383,6 +1383,14 @@
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced/ctf,
+/turf/open/floor/plating,
+/area/ctf)
+"Am" = (
+/obj/structure/window/reinforced/fulltile{
+	max_integrity = 5000;
+	name = "hardened window";
+	atom_integrity = 5000
+	},
 /turf/open/floor/plating,
 /area/ctf)
 "Ao" = (
@@ -1641,7 +1649,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /obj/structure/table/reinforced/ctf,
 /turf/open/floor/iron,
 /area/ctf)
@@ -2021,14 +2029,6 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron/dark,
-/area/ctf)
-"Lr" = (
-/obj/structure/window/reinforced/fulltile{
-	max_integrity = 5000;
-	name = "hardened window";
-	obj_integrity = 5000
-	},
-/turf/open/floor/plating,
 /area/ctf)
 "Lz" = (
 /obj/effect/turf_decal/trimline/red/line,
@@ -3254,7 +3254,7 @@ td
 td
 td
 td
-Lr
+Am
 kh
 td
 BH
@@ -3312,7 +3312,7 @@ rk
 rk
 ey
 ql
-Lr
+Am
 Ad
 TD
 jC
@@ -3350,7 +3350,7 @@ us
 Da
 Xm
 ql
-Lr
+Am
 Ad
 TD
 jC
@@ -3383,7 +3383,7 @@ Te
 td
 El
 BH
-Lr
+Am
 Fm
 Da
 lT
@@ -3421,7 +3421,7 @@ Te
 td
 El
 BH
-Lr
+Am
 FW
 Da
 oC
@@ -3459,7 +3459,7 @@ Te
 td
 El
 BH
-Lr
+Am
 Vw
 Da
 Jg
@@ -3475,7 +3475,7 @@ jD
 YD
 Ad
 xq
-Lr
+Am
 LP
 jS
 jS
@@ -3502,7 +3502,7 @@ Da
 Da
 Sg
 ql
-Lr
+Am
 Ad
 TD
 jC
@@ -3540,7 +3540,7 @@ Fw
 Fw
 vo
 ql
-Lr
+Am
 Ad
 xq
 jC
@@ -3725,10 +3725,10 @@ Ag
 BH
 td
 Bh
-mf
-yi
-mf
-yi
+kZ
+xy
+kZ
+xy
 QC
 oq
 mB
@@ -3761,7 +3761,7 @@ Te
 td
 El
 BH
-Lr
+Am
 Ug
 hU
 ql
@@ -3799,7 +3799,7 @@ Te
 td
 BH
 BH
-Lr
+Am
 Ug
 ql
 ql
@@ -3837,14 +3837,14 @@ Te
 td
 xs
 BH
-Lr
+Am
 Ug
 ql
 go
 ql
 go
 QC
-Lr
+Am
 Ad
 lW
 nQ
@@ -3862,7 +3862,7 @@ jS
 jS
 jS
 TD
-Lr
+Am
 BH
 BH
 td
@@ -3877,12 +3877,12 @@ xs
 BH
 td
 Bh
-mf
-yi
-mf
-yi
+kZ
+xy
+kZ
+xy
 QC
-Lr
+Am
 Ad
 Uf
 aq
@@ -3900,7 +3900,7 @@ Av
 Av
 mC
 TD
-Lr
+Am
 BH
 BH
 td
@@ -4052,7 +4052,7 @@ UQ
 xk
 xK
 TD
-Lr
+Am
 BH
 BH
 td
@@ -4090,7 +4090,7 @@ Wk
 st
 xK
 da
-Lr
+Am
 BH
 BH
 td
@@ -4224,7 +4224,7 @@ RU
 Dm
 Ie
 iv
-Lr
+Am
 Kh
 Tq
 PX
@@ -4242,7 +4242,7 @@ jX
 jX
 AW
 da
-Lr
+Am
 BH
 BH
 td
@@ -4255,14 +4255,14 @@ Te
 td
 BH
 xs
-Lr
+Am
 Ux
 dO
 sZ
 Dm
 ql
 EJ
-Lr
+Am
 ru
 da
 jC
@@ -4280,7 +4280,7 @@ jS
 jS
 jS
 da
-Lr
+Am
 BH
 xs
 td
@@ -4293,7 +4293,7 @@ Te
 td
 BH
 BH
-Lr
+Am
 nT
 dO
 bd
@@ -4331,7 +4331,7 @@ Te
 td
 El
 BH
-Lr
+Am
 nT
 dO
 sZ
@@ -4566,7 +4566,7 @@ ag
 ag
 hb
 ql
-Lr
+Am
 vS
 Jc
 jC
@@ -4604,7 +4604,7 @@ SQ
 SQ
 gv
 ql
-Lr
+Am
 vS
 da
 jC
@@ -4637,7 +4637,7 @@ Te
 td
 El
 BH
-Lr
+Am
 bF
 SQ
 iz
@@ -4653,7 +4653,7 @@ jD
 De
 vS
 da
-Lr
+Am
 Pc
 jS
 jS
@@ -4675,7 +4675,7 @@ Te
 td
 El
 BH
-Lr
+Am
 wU
 SQ
 oG
@@ -4713,7 +4713,7 @@ Te
 td
 El
 BH
-Lr
+Am
 Jo
 SQ
 hy
@@ -4756,7 +4756,7 @@ dm
 SQ
 lC
 ql
-Lr
+Am
 vS
 da
 jC
@@ -4794,7 +4794,7 @@ MU
 MU
 Nm
 ql
-Lr
+Am
 jQ
 da
 jC
@@ -4888,7 +4888,7 @@ td
 td
 td
 td
-Lr
+Am
 ar
 td
 BH

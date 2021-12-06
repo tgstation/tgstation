@@ -17,6 +17,7 @@
 	open_sound_volume = 35
 	close_sound_volume = 35
 	has_closed_overlay = FALSE
+	door_anim_time = 0 // no animation
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
 	var/egged = 0

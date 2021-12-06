@@ -909,9 +909,9 @@
 	clear_products(holder, step_volume_added)
 	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!"))
 
-/datum/chemical_reaction/ants
+/datum/chemical_reaction/ants // Breeding ants together, high sugar cost makes this take a while to farm.
 	results = list(/datum/reagent/ants = 3)
-	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 6)
+	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 8)
 	//FermiChem vars:
 	optimal_ph_min = 3
 	optimal_ph_max = 12

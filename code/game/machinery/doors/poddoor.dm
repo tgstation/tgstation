@@ -1,9 +1,3 @@
-
-//blast door (de)construction states
-#define BLASTDOOR_NEEDS_WIRES 0
-#define BLASTDOOR_NEEDS_ELECTRONICS 1
-#define BLASTDOOR_FINISHED 2
-
 /obj/machinery/door/poddoor
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
@@ -28,10 +22,9 @@
 
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(density)
-			to_chat(user, span_warning("You need to open [src] before opening its maintenance panel."))
+			balloon_alert(user, "open the door first!")
 			return
 		else if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
-			to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
 			return TRUE
 
 	if(panel_open)
@@ -40,33 +33,39 @@
 			if(change_id)
 				id = clamp(round(change_id, 1), 1, 100)
 				to_chat(user, span_notice("You change the ID to [id]."))
+				balloon_alert(user, "ID changed")
 
 		else if(W.tool_behaviour == TOOL_CROWBAR && deconstruction == BLASTDOOR_FINISHED)
-			to_chat(user, span_notice("You start to remove the airlock electronics."))
-			if(do_after(user, 10 SECONDS, target = src))
+			balloon_alert(user, "removing airlock electronics...")
+			if(W.use_tool(src, user, 100, volume=50))
 				new /obj/item/electronics/airlock(loc)
 				id = null
 				deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
+				balloon_alert(user, "removed airlock electronics")
+			return TRUE
 
 		else if(W.tool_behaviour == TOOL_WIRECUTTER && deconstruction == BLASTDOOR_NEEDS_ELECTRONICS)
-			to_chat(user, span_notice("You start to remove the internal cables."))
-			if(do_after(user, 10 SECONDS, target = src))
+			balloon_alert(user, "removing internal cables...")
+			if(W.use_tool(src, user, 100, volume=50))
 				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/cable_coil]
 				new /obj/item/stack/cable_coil(loc, amount)
 				deconstruction = BLASTDOOR_NEEDS_WIRES
+				balloon_alert(user, "removed internal cables")
+			return TRUE
 
 		else if(W.tool_behaviour == TOOL_WELDER && deconstruction == BLASTDOOR_NEEDS_WIRES)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
-			to_chat(user, span_notice("You start tearing apart the [src]."))
-			playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
-			if(do_after(user, 15 SECONDS, target = src))
+			balloon_alert(user, "tearing apart...") //You're tearing me apart, Lisa!
+			if(W.use_tool(src, user, 150, volume=50))
 				var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 				var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
 				new /obj/item/stack/sheet/plasteel(loc, amount)
+				user.balloon_alert(user, "torn apart")
 				qdel(src)
+			return TRUE
 
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()

@@ -56,7 +56,7 @@
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
 	QDEL_LIST(debris)
-	if(obj_integrity == 0)
+	if(atom_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
 	var/turf/floor = get_turf(src)
@@ -140,6 +140,8 @@
 
 /obj/machinery/door/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+	if(leaving.movement_type & PHASING)
+		return
 
 	if(leaving == src)
 		return // Let's not block ourselves.

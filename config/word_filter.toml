@@ -1,0 +1,15 @@
+# This configuration file forms the in-game chat filter.
+# Values are stored as "word" = "reason for being banned".
+
+# Anything in here will be blocked from IC interactions, dead chat, and OOC
+[shared]
+"blockedinshared" = "This message is not allowed anywhere, please use a different weird test phrase."
+
+# Anything in here is blocked just from IC interactions, such as chat or names, but is allowed in dead chat and OOC
+[ic]
+"blockedinic" = "This message is not allowed IC, please use a different weird test phrase."
+
+# Anything in here is blocked from all IC interactions *except* PDAs.
+# On /tg/, netspeak is OK in PDAs.
+[ic_outside_pda]
+"<(0_0<)" = "Kirby dancing is strictly prohibited on this server."

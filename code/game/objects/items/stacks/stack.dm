@@ -33,6 +33,8 @@
 		// The following are all for medical treatment, they're here instead of /stack/medical because sticky tape can be used as a makeshift bandage or splint
 	/// If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
 	var/splint_factor
+	/// Like splint_factor but for burns instead of bone wounds. This is a multiplier used to speed up burn recoveries
+	var/burn_cleanliness_bonus
 	/// How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
 	var/absorption_capacity
 	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
@@ -289,9 +291,9 @@
 			if(QDELETED(O))
 				return //It's a stack and has already been merged
 
+			O.add_fingerprint(usr) //Add fingerprints first, otherwise O might already be deleted because of stack merging
 			if(isitem(O))
 				usr.put_in_hands(O)
-			O.add_fingerprint(usr)
 
 			//BubbleWrap - so newly formed boxes are empty
 			if(istype(O, /obj/item/storage))
@@ -430,7 +432,7 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(mats_per_unit != check.mats_per_unit)
+	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
@@ -463,6 +465,11 @@
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
+	if(target_stack.mats_per_unit != mats_per_unit) // We get the average value of mats_per_unit between two stacks getting merged
+		var/list/temp_mats_list = list() // mats_per_unit is passed by ref into this coil, and that same ref is used in other places. If we didn't make a new list here we'd end up contaminating those other places, which leads to batshit behavior
+		for(var/mat_type in target_stack.mats_per_unit)
+			temp_mats_list[mat_type] = (target_stack.mats_per_unit[mat_type] * (target_stack.amount - transfer) + mats_per_unit[mat_type] * transfer) / target_stack.amount
+		target_stack.mats_per_unit = temp_mats_list
 	return transfer
 
 /**

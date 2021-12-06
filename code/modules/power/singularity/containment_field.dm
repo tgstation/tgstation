@@ -19,7 +19,7 @@
 	///Second of the generators producing the containment field
 	var/obj/machinery/field/generator/field_gen_2 = null
 
-/obj/machinery/field/containment/Initialize()
+/obj/machinery/field/containment/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)

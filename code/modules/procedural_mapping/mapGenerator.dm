@@ -75,7 +75,7 @@
 			theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
 
 
-		map |= circlerange(locate(centerX,centerY,i),theRadius)
+		map |= circle_range(locate(centerX,centerY,i),theRadius)
 
 
 	return map

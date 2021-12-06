@@ -648,7 +648,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	airlock_electronics = new(src)
 	airlock_electronics.name = "Access Control"
@@ -746,7 +746,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	mode = construction_mode
 	rcd_create(A, user)
-	return FALSE
+	return TRUE
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
@@ -773,7 +773,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		if(ratio > 0)
 			. += "[icon_state]_charge[ratio]"
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

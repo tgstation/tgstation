@@ -36,7 +36,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "i" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "j" = (

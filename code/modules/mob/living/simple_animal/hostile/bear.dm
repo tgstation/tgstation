@@ -48,7 +48,7 @@
 
 	var/armored = FALSE
 
-/mob/living/simple_animal/hostile/bear/Initialize()
+/mob/living/simple_animal/hostile/bear/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
@@ -82,7 +82,7 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
-	weather_immunities = list(WEATHER_SNOW)
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"

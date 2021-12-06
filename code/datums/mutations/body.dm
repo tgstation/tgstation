@@ -454,7 +454,7 @@
 	for(var/obj/item/organ/I in organs)
 		qdel(I)
 
-	explosion(owner, light_impact_range = 2, adminlog = TRUE)
+	explosion(owner, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 	for(var/mob/living/carbon/human/H in view(2,owner))
 		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		if(eyes)

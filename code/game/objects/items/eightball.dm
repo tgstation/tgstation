@@ -135,7 +135,7 @@
 	. = ..()
 	for (var/answer in haunted_answers)
 		votes[answer] = 0
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	become_hearing_sensitive()
 
 /obj/item/toy/eightball/haunted/MakeHaunted()

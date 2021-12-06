@@ -69,7 +69,7 @@
 	emote_see = list("bubbles", "oozes")
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/particle_effect/foam)
 
-/mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize()
+/mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/snailcrawl)
 
@@ -131,7 +131,7 @@
 	obj_damage = 5
 	loot = list(/obj/item/clothing/suit/hooded/bloated_human, /obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap)
 
-/mob/living/simple_animal/hostile/retaliate/clown/fleshclown/Initialize()
+/mob/living/simple_animal/hostile/retaliate/clown/fleshclown/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -316,7 +316,7 @@
 	///This ability lets you fire a single random item from your pouch.
 	var/obj/effect/proc_holder/regurgitate/my_regurgitate
 
-/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize()
+/mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Initialize(mapload)
 	. = ..()
 	my_regurgitate = new
 	AddAbility(my_regurgitate)

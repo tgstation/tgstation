@@ -157,20 +157,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
-"aE" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/clothing/under/rank/security/officer,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/loaded,
-/obj/item/clothing/head/helmet,
-/turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/hive)
 "aF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -2608,7 +2594,7 @@
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/grenade/flashbang,
 /obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
@@ -3169,16 +3155,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"gZ" = (
-/obj/machinery/power/shieldwallgen{
-	locked = 0;
-	req_access = null
-	},
-/obj/structure/cable,
-/turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
@@ -5643,12 +5619,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"mB" = (
-/obj/effect/spawner/randomarcade{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster/contraband/smoke{
@@ -6497,6 +6467,27 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"HQ" = (
+/obj/machinery/power/shieldwallgen/unlocked,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
+"Ij" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/clothing/under/rank/security/officer,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/melee/baton/security/loaded,
+/obj/item/clothing/head/helmet,
+/turf/open/floor/plating/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/hive)
 "IW" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -6520,6 +6511,12 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Rm" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/moonoutpost19/arrivals)
 "SE" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
@@ -33142,7 +33139,7 @@ ac
 ac
 ac
 ad
-aE
+Ij
 aK
 ak
 ai
@@ -38830,7 +38827,7 @@ ba
 ba
 ba
 dZ
-gZ
+HQ
 ez
 ez
 ez
@@ -38838,7 +38835,7 @@ fE
 gb
 gt
 ez
-gZ
+HQ
 ea
 ba
 ba
@@ -42710,7 +42707,7 @@ la
 lq
 jk
 mj
-mB
+Rm
 hJ
 ba
 ba
@@ -42967,7 +42964,7 @@ jN
 lr
 jj
 mj
-mB
+Rm
 hI
 ba
 ba

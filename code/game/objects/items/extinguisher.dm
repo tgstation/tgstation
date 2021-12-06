@@ -72,7 +72,7 @@
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
-/obj/item/extinguisher/Initialize()
+/obj/item/extinguisher/Initialize(mapload)
 	. = ..()
 	refill()
 
@@ -117,7 +117,7 @@
 	else
 		return ..()
 
-/obj/item/extinguisher/attack_obj(obj/O, mob/living/user, params)
+/obj/item/extinguisher/attack_atom(obj/O, mob/living/user, params)
 	if(AttemptRefill(O, user))
 		refilling = TRUE
 		return FALSE

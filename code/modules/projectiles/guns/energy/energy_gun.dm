@@ -27,7 +27,7 @@
 	flight_y_offset = 13
 	single_shot_type_overlay = FALSE
 
-/obj/item/gun/energy/e_gun/mini/Initialize()
+/obj/item/gun/energy/e_gun/mini/Initialize(mapload)
 	set_gun_light(new /obj/item/flashlight/seclite(src))
 	return ..()
 
