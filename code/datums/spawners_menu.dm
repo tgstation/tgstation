@@ -71,8 +71,7 @@
 				return TRUE
 		if("spawn")
 			if(mob_spawner)
-				if(mob_spawner.radial_based)
-					owner.ManualFollow(mob_spawner)
-					ui.close()
+				owner.ManualFollow(mob_spawner)
+				ui.close()
 				mob_spawner.attack_ghost(owner)
 				return TRUE

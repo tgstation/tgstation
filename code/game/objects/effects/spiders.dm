@@ -144,14 +144,15 @@
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	random = TRUE
-	show_flavour = FALSE
+	show_flavor = FALSE
 	short_desc = "You are a spider."
 	important_info = "Follow your directives at all costs."
 	faction = list("spiders")
 	spawner_job_path = /datum/job/spider
 	banType = ROLE_ALIEN
-	ready = FALSE
-	radial_based = TRUE
+	prompt_ghost = FALSE
+	/// Prevents spawning from this mob_spawn until TRUE, set by the egg growing
+	var/ready = FALSE
 	/// The amount the egg cluster has grown.  Is able to produce a spider when it hits 100.
 	var/amount_grown = 0
 	/// The mother's directive at the time the egg was produced.  Passed onto the child.
