@@ -355,6 +355,10 @@
 		source.balloon_alert(user, "no circuit inside")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
+	if(attached_circuit.locked)
+		source.balloon_alert(user, "circuit is locked!")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+	
 	usb_cable.attached_circuit = attached_circuit
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 

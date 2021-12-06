@@ -32,11 +32,11 @@
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/grenade/stingbang)
 
-/datum/supply_pack/goody/combatknives_single
-	name = "Combat Knife Single-Pack"
-	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
+/datum/supply_pack/goody/Survivalknives_single
+	name = "Survival Knife Single-Pack"
+	desc = "Contains one sharpened survival knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
 	cost = PAYCHECK_HARD * 1.75
-	contains = list(/obj/item/knife/combat)
+	contains = list(/obj/item/knife/combat/survival)
 
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"

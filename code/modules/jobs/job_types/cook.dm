@@ -1,5 +1,6 @@
 /datum/job/cook
 	title = "Cook"
+	description = "Serve food, cook meat, keep the crew fed."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 2
