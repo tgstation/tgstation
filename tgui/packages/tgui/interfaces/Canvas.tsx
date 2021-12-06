@@ -35,7 +35,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   canvasRef: RefObject<HTMLCanvasElement>;
   baseImageData: Color[][]
   modifiedElements: PointData[];
-  onCanvasModified: (data : PointData[]) => void;
+  onCanvasModified: (data: PointData[]) => void;
   drawing: boolean;
   drawing_color: string;
 
@@ -122,7 +122,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
   }
 
   drawPoint(x: number, y: number, color: any) {
-    let p : PointData = { x, y, color: Color.fromHex(color) };
+    let p: PointData = { x, y, color: Color.fromHex(color) };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
@@ -130,7 +130,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     ctx.fillRect(x, y, 1, 1);
   }
 
-  handleDrawing(event : MouseEvent) {
+  handleDrawing(event: MouseEvent) {
     if (!this.drawing) {
       return;
     }
@@ -138,9 +138,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     this.drawPoint(coords.x, coords.y, this.drawing_color);
   }
 
-  handleEndDrawing(event : MouseEvent) {
-    if (!this.drawing)
-    {
+  handleEndDrawing(event: MouseEvent) {
+    if (!this.drawing) {
       return;
     }
     this.drawing = false;
@@ -156,8 +155,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
       value,
       width = 300,
       height = 300,
-      imageWidth=36,
-      imageHeight=36,
+      imageWidth = 36,
+      imageHeight = 36,
       ...rest
     } = this.props;
     return (
