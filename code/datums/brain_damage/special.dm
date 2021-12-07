@@ -395,7 +395,7 @@
 
 /obj/effect/hallucination/simple/securitron/Initialize(mapload)
 	. = ..()
-	name = pick("officer Beepsky", "officer Johnson", "officer Pingsky")
+	name = pick("Officer Beepsky", "Officer Johnson", "Officer Pingsky")
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/hallucination/simple/securitron/process()

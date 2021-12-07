@@ -1,5 +1,6 @@
 /datum/job/clown
 	title = "Clown"
+	description = "Entertain the crew, make bad jokes, go on a holy quest to find bananium, HONK!"
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 1

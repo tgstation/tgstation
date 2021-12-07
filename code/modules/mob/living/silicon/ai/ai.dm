@@ -844,8 +844,9 @@
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
-	modules_action = new(malf_picker)
-	modules_action.Grant(src)
+	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade
+		modules_action = new(malf_picker)
+		modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
@@ -995,12 +996,15 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
-	if(zMove(UP, TRUE))
+	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/living/silicon/ai/zMove(dir, feedback = FALSE)
-	. = eyeobj.zMove(dir, feedback)
+/mob/living/silicon/ai/down()
+	set name = "Move Down"
+	set category = "IC"
 
+	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
+		to_chat(src, span_notice("You move down."))
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
 /mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)

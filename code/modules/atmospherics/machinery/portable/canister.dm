@@ -420,7 +420,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(!air_contents)
 		return
 	var/static/alpha_filter
-	if(!alpha_filter) // Gotta do this seperate since the icon may not be correct at world init
+	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
 		alpha_filter = filter(type="alpha", icon=icon(icon, "window-base"))
 
 	cut_overlay(window)
@@ -722,3 +722,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/canister/unregister_holding()
+	valve_open = FALSE
+	return ..()

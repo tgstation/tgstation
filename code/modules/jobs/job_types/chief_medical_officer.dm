@@ -1,5 +1,7 @@
 /datum/job/chief_medical_officer
 	title = "Chief Medical Officer"
+	description = "Coordinate doctors and other medbay employees, ensure they \
+		know how to save lives, check for injuries on the crew monitor."
 	department_head = list("Captain")
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
