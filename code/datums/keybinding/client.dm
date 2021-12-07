@@ -29,7 +29,7 @@
 	. = ..()
 	if(.)
 		return
-	winset(user, null, "command=[!user.keys_held["shift"] ? ".auto" : ".screenshot"]")
+	winset(user, null, "command=.auto")
 	return TRUE
 
 /datum/keybinding/client/minimal_hud
