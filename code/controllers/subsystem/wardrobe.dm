@@ -257,8 +257,14 @@ SUBSYSTEM_DEF(wardrobe)
 	var/list/contents = stock_info[WARDROBE_STOCK_CONTENTS]
 	var/contents_length = length(contents)
 	requested_object = contents[contents_length]
-	
 	contents.len--
+
+	if(QDELETED(requested_object))
+		stack_trace("We somehow ended up with a qdeleted or null object in SSwardrobe's stock. Something's weird, likely to do with reinsertion. Typepath of [requested_type]")
+		stock_miss++
+		requested_object = new requested_type(location)
+		return requested_object
+
 	var/datum/callback/do_on_removal = stock_info[WARDROBE_STOCK_CALL_REMOVAL]
 	if(do_on_removal)
 		do_on_removal.object = requested_object
