@@ -56,8 +56,7 @@
 	if(!force && !can_be_implanted_in(target))
 		return FALSE
 
-	for(var/implant as anything in target.implants)
-		var/obj/item/implant/other_implant = implant
+	for(var/obj/item/implant/other_implant as anything in target.implants)
 		var/flags = SEND_SIGNAL(other_implant, COMSIG_IMPLANT_OTHER, args, src)
 		if(flags & COMPONENT_STOP_IMPLANTING)
 			UNSETEMPTY(target.implants)
@@ -87,8 +86,7 @@
 	imp_in = target
 	target.implants += src
 	if(activated)
-		for(var/action as anything in actions)
-			var/datum/action/implant_action = action
+		for(var/datum/action/implant_action as anything in actions)
 			implant_action.Grant(target)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
@@ -113,8 +111,7 @@
 	moveToNullspace()
 	imp_in = null
 	source.implants -= src
-	for(var/action as anything in actions)
-		var/datum/action/implant_action = action
+	for(var/datum/action/implant_action as anything in actions)
 		implant_action.Remove(source)
 	if(ishuman(source))
 		var/mob/living/carbon/human/human_source = source

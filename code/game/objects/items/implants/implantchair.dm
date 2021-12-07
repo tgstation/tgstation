@@ -195,7 +195,7 @@
 	if(custom)
 		if(!user || !user.Adjacent(src))
 			return FALSE
-		objective = stripped_input(usr, "What order do you want to imprint on [target_carbon]?", "Enter the order", "", 120)
+		objective = stripped_input(user, "What order do you want to imprint on [target_carbon]?", "Enter the order", "", max_length = 120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
 		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
 	if(HAS_TRAIT(target_carbon, TRAIT_MINDSHIELD))

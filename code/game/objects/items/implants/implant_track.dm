@@ -2,7 +2,7 @@
 	name = "tracking implant"
 	desc = "Track with this."
 	activated = FALSE
-	///for how many seconds after user death will the implant work?
+	///for how many deciseconds after user death will the implant work?
 	var/lifespan_postmortem = 600 SECONDS
 	///will people implanted with this act as teleporter beacons?
 	var/allow_teleport = TRUE
@@ -13,7 +13,8 @@
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
 	allow_teleport = FALSE
-	var/lifespan = 300 SECONDS //how many seconds does the implant last?
+	///how many deciseconds does the implant last?
+	var/lifespan = 300 SECONDS
 
 /obj/item/implant/tracking/c38/Initialize(mapload)
 	. = ..()
