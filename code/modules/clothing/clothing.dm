@@ -350,7 +350,7 @@
 			readout += "\n<b>ARMOR</b>"
 			for(var/dam_type in armor_list)
 				var/armor_amount = armor_list[dam_type]
-				if (armor_amount < 0)
+				if (armor_amount <= 0)
 					continue
 				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
 		if(LAZYLEN(durability_list))
