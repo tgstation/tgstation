@@ -146,6 +146,7 @@
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
+	check_flags = NONE
 
 //You are now brea- pumping blood manually
 /datum/action/item_action/organ_action/cursed_heart/Trigger()
