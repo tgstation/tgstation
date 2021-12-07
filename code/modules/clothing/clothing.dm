@@ -350,8 +350,6 @@
 			readout += "\n<b>ARMOR</b>"
 			for(var/dam_type in armor_list)
 				var/armor_amount = armor_list[dam_type]
-				if (armor_amount <= 0)
-					continue
 				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
 		if(LAZYLEN(durability_list))
 			readout += "\n<b>DURABILITY</b>"
@@ -371,8 +369,14 @@
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	armor_value = round(armor_value,10) / 10
+	armor_value = round(armor_value, 10) / 10
 	switch (armor_value)
+		if (-INFINITY to -3) // lowest armor value is around -20, so giving it this small room to play with
+			. = "-III"
+		if (-2)
+			. = "-II"
+		if (-1)
+			. = "-I"
 		if (1)
 			. = "I"
 		if (2)
