@@ -16,29 +16,37 @@
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	ignore_if_not_on_turf = _ignore_if_not_on_turf
 	current_range = range
-	SetHost(_host)
+	set_host(_host)
 
-/datum/proximity_monitor/proc/SetHost(atom/H,atom/R)
-	if(H == host)
+/datum/proximity_monitor/proc/set_host(atom/new_host, atom/new_receiver)
+	if(new_host == host)
 		return
 	if(host) //No need to delete the connect range and containers comps. They'll be updated with the new tracked host.
-		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
-	if(R)
-		hasprox_receiver = R
+		UnregisterSignal(host, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		if(hasprox_receiver)
+			UnregisterSignal(hasprox_receiver, COMSIG_PARENT_QDELETING)
+	if(new_receiver)
+		hasprox_receiver = new_receiver
+		RegisterSignal(new_receiver, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
 	else if(hasprox_receiver == host) //Default case
-		hasprox_receiver = H
-	host = H
+		hasprox_receiver = new_host
+	host = new_host
+	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
 	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved)
 	AddComponent(/datum/component/connect_containers, host, containers_connections)
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	SetRange(current_range, TRUE)
+	set_range(current_range, TRUE)
+
+/datum/proximity_monitor/proc/on_host_or_receiver_del(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/proximity_monitor/Destroy()
 	host = null
 	hasprox_receiver = null
 	return ..()
 
-/datum/proximity_monitor/proc/SetRange(range, force_rebuild = FALSE)
+/datum/proximity_monitor/proc/set_range(range, force_rebuild = FALSE)
 	if(!force_rebuild && range == current_range)
 		return FALSE
 	. = TRUE
