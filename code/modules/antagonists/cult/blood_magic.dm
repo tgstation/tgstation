@@ -604,6 +604,7 @@
 				var/prev_color = candidate.color
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
+					candidate.undeploy()
 					candidate.emp_act(EMP_HEAVY)
 					var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 					if(!check_menu(user))
@@ -624,7 +625,6 @@
 					return
 			else
 				uses--
-				candidate.undeploy()
 				to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!"))
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
