@@ -61,16 +61,13 @@
 	if(burnt_out)
 		. += "flashburnt"
 		attached_overlays += "flashburnt"
+		inhand_icon_state = "flashtool_burnt"
 	if(flashing)
 		. += flashing_overlay
 		attached_overlays += flashing_overlay
 
 /obj/item/assembly/flash/update_name()
 	name = "[burnt_out ? "burnt-out [initial(name)]" : "[initial(name)]"]"
-	return ..()
-
-/obj/item/assembly/flash/update_desc()
-	desc = "[burnt_out ? "[initial(desc)] It's burnt out." : "[initial(desc)]"]"
 	return ..()
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
