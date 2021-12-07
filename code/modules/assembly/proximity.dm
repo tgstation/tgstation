@@ -42,14 +42,14 @@
 	if(!.)
 		return
 	else
-		proximity_monitor.set_host(src)
+		proximity_monitor.set_host(src, src)
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
 		if(scanning)
 			toggle_scan()
-			proximity_monitor.set_host(src)
+			proximity_monitor.set_host(src, src)
 		timing = FALSE
 		STOP_PROCESSING(SSobj, src)
 	else
