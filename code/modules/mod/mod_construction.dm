@@ -62,11 +62,17 @@
 /obj/item/mod/construction/armor/atmospheric
 	theme = /datum/mod_theme/atmospheric
 
+/obj/item/mod/construction/armor/mining
+	theme = /datum/mod_theme/mining
+
 /obj/item/mod/construction/armor/medical
 	theme = /datum/mod_theme/medical
 
-/obj/item/mod/construction/armor/mining
-	theme = /datum/mod_theme/mining
+/obj/item/mod/construction/armor/security
+	theme = /datum/mod_theme/security
+
+/obj/item/mod/construction/armor/cosmohonk
+	theme = /datum/mod_theme/cosmohonk
 
 /obj/item/mod/paint
 	name = "MOD paint kit"

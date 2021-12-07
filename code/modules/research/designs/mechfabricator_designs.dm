@@ -1062,6 +1062,20 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 	research_icon_state = "medical-armor"
 
+/datum/design/mod_armor/security
+	id = "mod_armor_security"
+	build_path = /obj/item/mod/construction/armor/security
+	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	research_icon_state = "security-armor"
+
+/datum/design/mod_armor/cosmohonk
+	id = "mod_armor_cosmohonk"
+	build_path = /obj/item/mod/construction/armor/cosmohonk
+	materials = list(/datum/material/iron = 6000, /datum/material/bananium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+	research_icon_state = "cosmohonk-armor"
+
 /datum/design/mod_paint_kit
 	name = "MOD paint kit"
 	desc = "A paint kit for Modular Suits."
@@ -1215,9 +1229,9 @@
 	id = "mod_bikehorn"
 	build_path = /obj/item/mod/module/bikehorn
 
-/datum/design/module/mod_clamps
+/datum/design/module/mod_clamp
 	name = "MOD Module: Crate Clamp"
-	id = "mod_clamps"
+	id = "mod_clamp"
 	build_path = /obj/item/mod/module/clamp
 
 /datum/design/module/mod_drill

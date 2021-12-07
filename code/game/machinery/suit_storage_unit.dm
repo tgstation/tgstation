@@ -418,16 +418,23 @@
 			dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/process(delta_time)
-	if(!suit)
+	var/obj/item/stock_parts/cell/cell
+	if(suit)
+		if(!istype(suit))
+			return
+		if(!suit.cell)
+			return
+		cell = suit.cell
+	else if(mod)
+		if(!istype(mod))
+			return
+		if(!mod.cell)
+			return
+		cell = mod.cell
+	else
 		return
-	if(!istype(suit, /obj/item/clothing/suit/space))
-		return
-	if(!suit.cell)
-		return
-
-	var/obj/item/stock_parts/cell/C = suit.cell
 	use_power(charge_rate * delta_time)
-	C.give(charge_rate * delta_time)
+	cell.give(charge_rate * delta_time)
 
 /obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
 	if(!prob(prb))
