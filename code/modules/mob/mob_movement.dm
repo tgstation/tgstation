@@ -494,13 +494,20 @@
 
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = SSmapping.get_turf_above(current_turf)
-	var/ventcrawling_mob = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING)
 
-	if(can_zFall(above_turf, 1, current_turf, DOWN) && !ventcrawling_mob) //Will be fall down if we go up?
-		to_chat(src, "<span class='notice'>You are not Superman.<span>")
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	if(!above_turf)
+		to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 		return
 
-	if(zMove(UP, TRUE, ventcrawling_mob))
+	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
+		if(buckled)
+			to_chat(src, "<span class='notice'>[buckled] is is not capable of flight.<span>")
+		else
+			to_chat(src, "<span class='notice'>You are not Superman.<span>")
+		return
+
+	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move upwards."))
 
 ///Moves a mob down a z level
@@ -508,44 +515,10 @@
 	set name = "Move Down"
 	set category = "IC"
 
-	var/ventcrawling_mob = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING)
-
-	if(zMove(DOWN, TRUE, ventcrawling_mob))
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
-
-/mob/can_zFall(turf/source, levels, turf/target, direction)
-	if(buckled)
-		return buckled.can_zFall(source, levels, target, direction)
-	return ..()
-
-///Move a mob between z levels, if it's valid to move z's on this turf
-/mob/proc/zMove(dir, feedback = FALSE, ventcrawling = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	if(incapacitated())
-		if(feedback)
-			to_chat(src, span_warning("You can't do that right now!"))
-			return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(src, span_warning("There's nowhere to go in that direction!"))
-		return FALSE
-	if(!canZMove(dir, target) && !ventcrawling)
-		if(feedback)
-			to_chat(src, span_warning("You couldn't move there!"))
-		return FALSE
-	if(!ventcrawling) //let this be handled in atmosmachinery.dm
-		return Move(target)
-	else
-		var/obj/machinery/atmospherics/pipe = loc
-		pipe.relaymove(src, dir)
-	return TRUE
-
-/// Can this mob move between z levels
-/mob/proc/canZMove(direction, turf/target)
 	return FALSE
-
 /mob/abstract_move(atom/destination)
 	var/turf/new_turf = get_turf(destination)
 	if(is_secret_level(new_turf.z) && !client?.holder)

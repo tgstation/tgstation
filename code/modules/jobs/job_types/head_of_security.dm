@@ -1,5 +1,7 @@
 /datum/job/head_of_security
 	title = "Head of Security"
+	description = "Coordinate security personnel, ensure they are not corrupt, \
+		make sure every department is protected."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("Captain")
 	head_announce = list(RADIO_CHANNEL_SECURITY)

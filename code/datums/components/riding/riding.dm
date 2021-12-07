@@ -63,6 +63,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/vehicle_bump)
+	RegisterSignal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, .proc/riding_can_z_move)
 
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
@@ -128,9 +129,12 @@
 
 	vehicle_moved(source, null, new_dir)
 
-/// Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard
-/datum/component/riding/proc/ride_check(mob/living/rider)
-	return
+/**
+ * Check to see if we have all of the necessary bodyparts and not-falling-over statuses we need to stay onboard.
+ * If not and if consequences is TRUE, well, there'll be consequences.
+ */
+/datum/component/riding/proc/ride_check(mob/living/rider, consequences = TRUE)
+	return TRUE
 
 /datum/component/riding/proc/handle_vehicle_offsets(dir)
 	var/atom/movable/AM = parent
@@ -246,3 +250,8 @@
 		else
 			qdel(O)
 	return TRUE
+
+/// Extra checks before buckled.can_z_move can be called in mob/living/can_z_move()
+/datum/component/riding/proc/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	SIGNAL_HANDLER
+	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
