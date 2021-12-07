@@ -369,7 +369,10 @@
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	armor_value = round(armor_value, 10) / 10
+	if (armor_value < 0)
+		armor_value = round(armor_value, -10) / 10
+	else
+		armor_value = round(armor_value, 10) / 10
 	switch (armor_value)
 		if (-INFINITY to -3) // lowest armor value is around -20, so giving it this small room to play with
 			. = "-III"
