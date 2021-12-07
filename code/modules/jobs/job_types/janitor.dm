@@ -1,5 +1,6 @@
 /datum/job/janitor
 	title = "Janitor"
+	description = "Clean up trash and blood. Replace broken lights. Slip people over."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 2

@@ -1,5 +1,7 @@
 /datum/job/doctor
 	title = "Medical Doctor"
+	description = "Save lives, run around the station looking for victims, \
+		scan everyone in sight"
 	department_head = list("Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 5
