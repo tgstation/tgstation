@@ -362,7 +362,7 @@
 	var/active_players = 0
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/player_mob = GLOB.player_list[i]
-		if(!player_mob?.client)
+		if(player_mob?.client)
 			if(alive_check && player_mob.stat)
 				continue
 			else if(afk_check && player_mob.client.is_afk())
