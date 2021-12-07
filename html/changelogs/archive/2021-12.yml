@@ -187,3 +187,28 @@
   - bugfix: ethereals no longer get the "he" pronoun accidentally
   vincentiusvin:
   - bugfix: fixed APC making too many damage runtimes.
+2021-12-07:
+  Ghommie:
+  - bugfix: Fixed the strip menu not being warded against telekinesis shenanigeans
+      (No item was stripped from longer distances, but  warnings were still sent).
+  GoldenAlpharex:
+  - imageadd: NanoTrasen's Bench Tailoring department has worked hard on fixing an
+      error in their factory line that resulted in every bench cover being darker
+      than it was supposed to be, bringing them back to what they were supposed to
+      look like!
+  Pickle-Coding:
+  - spellcheck: Mime finger gun description now states that it mutes your target instead
+      of stunning.
+  RandomGamer123:
+  - expansion: IV Drips can now have their insertion rates finetuned to anything between
+      0.1-5u/cycle.
+  - bugfix: Screwdrivers can now be inserted into the destructive analyzer through
+      left-click
+  tastyfish:
+  - rscadd: New skill tracking app for your PDA's called ExperTrak Skill Tracker.
+  tralezab:
+  - bugfix: chaplains can once again convert themselves into an android
+  - qol: Added a help tab for learning some cargo delivery systems and department
+      orders as a concept
+  - bugfix: Ais no longer get the wrong antagonist added to them from "everyone is
+      traitor" secret

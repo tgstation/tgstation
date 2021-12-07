@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the strip menu not being warded against telekinesis shenanigeans (No item was stripped from longer distances, but  warnings were still sent)."
