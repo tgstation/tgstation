@@ -28,6 +28,7 @@
 	microfusion_gun.heat_per_shot += heat_addition
 	microfusion_gun.update_appearance()
 	microfusion_gun.extra_power_usage += power_usage
+	microfusion_gun.chambered?.refresh_shot()
 	return
 
 /obj/item/microfusion_gun_attachment/proc/process_attachment(obj/item/gun/microfusion/microfusion_gun)
@@ -42,6 +43,7 @@
 	microfusion_gun.heat_per_shot -= heat_addition
 	microfusion_gun.update_appearance()
 	microfusion_gun.extra_power_usage -= power_usage
+	microfusion_gun.chambered?.refresh_shot()
 	return
 
 /*
@@ -275,14 +277,14 @@ Converts shots to STAMNINA damage.
 /obj/item/microfusion_gun_attachment/undercharger/proc/toggle(obj/item/gun/microfusion/microfusion_gun, mob/user)
 	if(toggle)
 		toggle = FALSE
-		microfusion_gun.heat_dissipation_bonus -= cooling_rate_increase
-		microfusion_gun.recoil -= recoil_to_remove
-		microfusion_gun.spread -= spread_to_remove
-	else
-		toggle = TRUE
 		microfusion_gun.heat_dissipation_bonus += cooling_rate_increase
 		microfusion_gun.recoil += recoil_to_remove
 		microfusion_gun.spread += spread_to_remove
+	else
+		toggle = TRUE
+		microfusion_gun.heat_dissipation_bonus -= cooling_rate_increase
+		microfusion_gun.recoil -= recoil_to_remove
+		microfusion_gun.spread -= spread_to_remove
 
 	if(user)
 		to_chat(user, span_notice("You toggle [src] [toggle ? "ON" : "OFF"]."))

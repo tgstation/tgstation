@@ -173,7 +173,7 @@ Basically the heart of the gun, can be upgraded.
 /obj/item/microfusion_phase_emitter/enhanced
 	name = "enhanced microfusion phase emitter"
 	desc = "A second-generation phase emitter, this one is made of more robust materials which allow for a higher capacity for heat, a faster dissipation and cooling of it, and more capacity for thermal throttling."
-	max_heat = 3000
+	max_heat = 2500
 	throttle_percentage = 85
 	heat_dissipation_per_tick = 40
 	cooling_system_rate = 40
@@ -183,7 +183,7 @@ Basically the heart of the gun, can be upgraded.
 /obj/item/microfusion_phase_emitter/advanced
 	name = "advanced microfusion phase emitter"
 	desc = "A third-generation phase emitter, boasting a high capacity for heat, greater dissipation and cooling, and is built using higher-grade materials for more durability."
-	max_heat = 4000
+	max_heat = 3000
 	throttle_percentage = 90
 	heat_dissipation_per_tick = 50
 	cooling_system_rate = 50
@@ -193,7 +193,7 @@ Basically the heart of the gun, can be upgraded.
 /obj/item/microfusion_phase_emitter/bluespace
 	name = "bluespace microfusion phase emitter"
 	desc = "A fourth-generation phase emitter, utilizing a bluespace medium to store and manage heat, allowing for much cooler temperatures than realspace would allow. This is made of nothing but the latest materials, leading to the highest durability of any phase emitter on the market."
-	max_heat = 5000
+	max_heat = 3500
 	throttle_percentage = 95
 	heat_dissipation_per_tick = 60
 	cooling_system_rate = 60

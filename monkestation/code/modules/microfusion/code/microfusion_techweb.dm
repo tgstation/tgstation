@@ -24,6 +24,8 @@
 		"microfusion_cell_attachment_rechargeable",
 		"enhanced_microfusion_phase_emitter",
 		"microfusion_gun_attachment_black_camo",
+		"microfusion_gun_attachment_heatsink",
+		"microfusion_gun_attachment_rgb",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 

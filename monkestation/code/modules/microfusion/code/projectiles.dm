@@ -10,6 +10,9 @@
 	fire_sound = 'modular_skyrat/modules/microfusion/sound/laser_1.ogg'
 	fire_sound_volume = 100
 
+/obj/item/ammo_casing/proc/refresh_shot()
+	loaded_projectile = new projectile_type(src, src)
+
 /obj/projectile/beam/laser/microfusion
 	name = "microfusion laser"
 	icon = 'modular_skyrat/modules/microfusion/icons/projectiles.dmi'
