@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "Ais no longer get the wrong antagonist added to them from \"everyone is traitor\" secret"
