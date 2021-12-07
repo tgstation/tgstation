@@ -268,8 +268,9 @@
 /datum/component/uplink/proc/implanting(datum/source, list/arguments)
 	SIGNAL_HANDLER
 
+	var/mob/target = arguments[1]
 	var/mob/user = arguments[2]
-	owner = user?.key
+	owner = user ? user.key : target?.key
 	if(owner && !purchase_log)
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 		if(GLOB.uplink_purchase_logs_by_key[owner])
