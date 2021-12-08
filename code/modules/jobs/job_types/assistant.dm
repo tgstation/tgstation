@@ -5,6 +5,7 @@ Assistant
 */
 /datum/job/assistant
 	title = "Assistant"
+	description = "Get your space legs, assist people, ask the HoP to give you a job."
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
@@ -19,6 +20,8 @@ Assistant
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
+
+	department_for_prefs = /datum/job_department/assistant
 
 	family_heirlooms = list(/obj/item/storage/toolbox/mechanical/old/heirloom, /obj/item/clothing/gloves/cut/heirloom)
 

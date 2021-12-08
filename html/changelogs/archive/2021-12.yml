@@ -1,0 +1,252 @@
+2021-12-01:
+  FernandoJ8:
+  - imageadd: Resprited the lipsticks
+  Fikou:
+  - bugfix: fullauto now checks for incapacitated instead of stat
+  HarseTheef:
+  - bugfix: Baseball bats now correctly knockback targets in the direction of the
+      bat to the target.
+  Mothblocks:
+  - bugfix: Fixed nuke ops leader not having an antag HUD to other nuke ops.
+  Sealed101:
+  - expansion: Added ventriloquism to disembodied heads.
+  jlsnow301:
+  - refactor: pAI interfaces have been converted to TGUI.
+  - refactor: Requesting a holographic pAI friend now correctly notifies ghosts of
+      your loneliness.
+  - rscadd: pAI door jacks have been given a bit more UI feedback.
+  - rscdel: Requesting and downloading a pAI no longer uses two separate screens.
+  tastyfish:
+  - bugfix: Cleanbots no longer disappear.
+  - bugfix: Fixed edgecase causing PDA Skill Tracker to hard lock the PDA as your
+      reward for getting legendary level.
+2021-12-02:
+  Aerden:
+  - bugfix: Fixed being scared of the dark even if you have mesons.
+  Ghilker:
+  - code_imp: increased atmos performances a bit more
+  - balance: gasmasks give a slightly darkening overlay, effect will stack with other
+      items that have tint.
+  - code_imp: tint code has been updated to properly work.
+  Ghommie:
+  - expansion: Synthesizers and headphones can now have circuits installed.
+  - bugfix: The ship-in-a-bottle is now resistant to icebox/snowdin plasma rivers.
+  GoldenAlpharex:
+  - bugfix: Numpad keys are now properly recognized by the keybinds menu.
+  Guillaume Prata:
+  - expansion: After a short break, the Supermatter is back again at the her hard
+      working and slightly different Pluoxium generation business.
+  - bugfix: Swaps the engineer jumpsuit description still referencing them being resistant
+      to radiation, now it correctly reference them being resistant to fire.
+  - bugfix: Fixes a rogue airlock at the SM room on Icebox having the wrong access
+      requirement.
+  Iamgoofball:
+  - balance: Downgrades the purchasable knives in cargo from Combat Knives to Survival
+      Knives, moves them from Security to Service.
+  JohnFulpWillard:
+  - balance: the Head of Personnel no longer has access to Security Office nor Mechs
+      (outside of mining ones).
+  Melbert:
+  - bugfix: Mjol the Creative's summons can't be dispelled by observers anymore
+  - bugfix: There is now the proper amount of ORMs in Deltastation's Cargo.
+  - bugfix: Service jobs can leave the Deltastation Service Hall through maintenance
+  Mothblocks:
+  - balance: The Irish Car Bomb + clown car interaction has been nerfed from a big
+      gibbing explosion to throwing out all the mobs (with the usual chance of spilling
+      out slipping foam)
+  OrionTheFox:
+  - qol: Catwalk Tiles now have unique names, so hovering over them in the radial
+      menu will tell you the type! They're also recyclable now!
+  Pickle-Coding:
+  - balance: Proto nitrate BZ reaction will now produce gases, instead of just deleting
+      BZ. The gases it produces is nitrogen, helium, and plasma.
+  - balance: Tritium combustion and proto nitrate tritium response will release radiation
+      again, even if it's in a pipenet or canister. Proto nitrate BZ response will
+      also release radiation.
+  - balance: Proto nitrate BZ and tritium responses reaction rates has been changed
+      and is no longer capped at 5 moles per second. Given a fixed amount of combined
+      moles, the composition for the fastest reaction rate in tritium response is
+      different than the composition of the consumption rates.
+  - balance: Energy released from proto nitrate BZ and tritium responses has been
+      increased.
+  - balance: Proto nitrate BZ response hallucination and gas production now occur
+      at the same time, instead of hallucinations only appearing below 30 moles and
+      gas production + radiation (previously it just deleted BZ) above 30 moles.
+  SuperNovaa41:
+  - bugfix: Fixes an exploit with regenerative mesh and burn wounds.
+  Tastyfish:
+  - spellcheck: Made reagents consistently capitalized.
+  Thunder12345:
+  - expansion: Tram Station's vault has been moved to the service wing, next to tool
+      storage.
+  Timberpoes:
+  - admin: Improved logging for radio emotes in game logs and player panel logs.
+  Twaticus:
+  - imageadd: Makes mob ID sprites smaller, mob PDA sprites more consistent
+  dragomagol:
+  - bugfix: ED-209s can be constructed once more!
+  tf-4:
+  - bugfix: TK can no longer be used to teleport onto weight machines.
+  timothymtorres:
+  - bugfix: Fix telecomms relays to work across multi-z
+  vincentiusvin:
+  - bugfix: tanks being destroyed in cans/pumps/scrubbers wont cause errors now
+2021-12-03:
+  AffectedArc07:
+  - bugfix: Fixed some bugged lighting
+  Ghommie:
+  - bugfix: Fixes the cult sacrifice softlocking if the target is deleted before being
+      sacced. It'll reroll a new target if that happens.
+  Melbert:
+  - bugfix: The lathe in Deltastation's service hall can print circuit boards again.
+  Ryll/Shaps:
+  - admin: Simplified the "Transformation/Rudimentary Transformation" part of the
+      admin player panel, you can now choose from ghost/human/monkey/cyborg/AI, and
+      all options work whether the target is currently a human/other living mob/ghost.
+  Seris02:
+  - qol: made hair gradient color preferences not show up if no gradient is selected
+  axietheaxolotl:
+  - rscadd: Pride Pins
+  carshalash:
+  - imageadd: Fire mutation now has the sprite of old space adaption while Pressure
+      is a blue version of it.
+  jlsnow301:
+  - bugfix: Removed two map-based runtimes for Syndicate Lavaland Base and The Derelict
+  tf-4:
+  - admin: You now have to confirm that you want to reset the station name from the
+      secrets panel.
+  - bugfix: Blind people now get a chat message when being cuffed.
+2021-12-04:
+  Ghilker:
+  - bugfix: fix an oversight where sec hailer shouldn't have the tint changes, the
+      eye protection and the pepper immunity. All other sec masks (the swat and spacepol)
+      are unchanged
+  GoldenAlpharex:
+  - bugfix: Nanotrasen's Paranormal Containment team had some budget cuts, meaning
+      that ghosts are no longer stripped of their hair colors- You can finally sport
+      that bright pink floor bedhead even in death once again!
+  HarseTheef:
+  - bugfix: Forged agent id cards will no longer break wallets
+  JohnFulpWillard:
+  - admin: More Silicon related loggings have been moved to silicon logs.
+  LemonInTheDark:
+  - bugfix: The job overflow station trait will now work again. I look forward to
+      infinite captains
+  - bugfix: Fixed solars and nearstation areas being pitch black, restores the fullbright
+      they ought to have
+  MMMiracles:
+  - rscadd: You can now run over the goat plushie.
+  Mickyan:
+  - spellcheck: Looking up in space no longer says there's a ceiling. There's no ceiling
+      in space, promise. Please don't try to look for it.
+  Mothblocks:
+  - admin: Crafting is now better logged.
+  - bugfix: Fix all tend wounds showing when selecting a surgery after upgrading.
+  Paxilmaniac:
+  - balance: allows the attaching of bayonets to pipe guns
+  Potato-Masher:
+  - expansion: Metastation - A near complete remap of the atmospherics section of
+      the station. Functionally the same, but with added space for projects, the HFR,
+      and an included basic crystallizer setup.
+  - qol: Minor atmospherics adjustments to metastation's xenobiology satellite, the
+      slime euthanization chamber cooling loop has been prettied up and starts with
+      CO2 already inside to ensure the freezer works immediately with no setup.
+  ShizCalev:
+  - bugfix: Fixed mapeditted scrubbers and vents having the incorrect names.
+  jlsnow301:
+  - rscadd: Saving pAI candidacy information now outputs an error when unsuccessful.
+  - rscadd: pAIs now get a door jacking progressbar. It remains obscenely slow, though.
+  - bugfix: Fixes not being able to access pAI config if it's slotted into your PDA.
+  vincentiusvin:
+  - qol: Wired glass tiles need iron to make it a full fledged floor, this is now
+      explained in the examine message.
+2021-12-05:
+  TheBonded:
+  - rscadd: You can now tan wet hide into leather by lighting it on fire or placing
+      it on a bonfire grill.
+2021-12-06:
+  GoldenAlpharex:
+  - bugfix: Meat and pizza walls and floors should no longer cause a runtime every
+      time they're built.
+  Melbert:
+  - bugfix: Chefs on Deltastation can now tussle in their Cafeteria.
+  Paxilmaniac:
+  - bugfix: the duplicate rack space in meta's service hall isn't duplicate anymore
+  - bugfix: Mismatched door ids on the starboard side of pirate shuttles will no longer
+      prevent egress from that side of the ship
+  RandomGamer123:
+  - bugfix: Locked circuits cannot have USB cables attached to them anymore.
+  Y0SH1M4S73R:
+  - bugfix: BCI manipulation chambers no longer drop the contained BCI when opened.
+  maxspells:
+  - bugfix: health scan, gas scan, and atmos scan results will now show up on info
+      tab instead of the local tab
+  tralezab:
+  - bugfix: You can now deliver kilo department orders (the delivery area didn't exist
+      on kilo)
+  - bugfix: ethereals no longer get the "he" pronoun accidentally
+  vincentiusvin:
+  - bugfix: fixed APC making too many damage runtimes.
+2021-12-07:
+  Ghommie:
+  - bugfix: Fixed the strip menu not being warded against telekinesis shenanigeans
+      (No item was stripped from longer distances, but  warnings were still sent).
+  GoldenAlpharex:
+  - imageadd: NanoTrasen's Bench Tailoring department has worked hard on fixing an
+      error in their factory line that resulted in every bench cover being darker
+      than it was supposed to be, bringing them back to what they were supposed to
+      look like!
+  Pickle-Coding:
+  - spellcheck: Mime finger gun description now states that it mutes your target instead
+      of stunning.
+  RandomGamer123:
+  - expansion: IV Drips can now have their insertion rates finetuned to anything between
+      0.1-5u/cycle.
+  - bugfix: Screwdrivers can now be inserted into the destructive analyzer through
+      left-click
+  tastyfish:
+  - rscadd: New skill tracking app for your PDA's called ExperTrak Skill Tracker.
+  tralezab:
+  - bugfix: chaplains can once again convert themselves into an android
+  - qol: Added a help tab for learning some cargo delivery systems and department
+      orders as a concept
+  - bugfix: Ais no longer get the wrong antagonist added to them from "everyone is
+      traitor" secret
+2021-12-08:
+  Amrabol:
+  - qol: Job specific bags can now be carried on labcoats, wintercoats and apron suit
+      storage slot
+  - rscadd: Added tray sprite to mirror_belt.dmi
+  Capsandi:
+  - rscadd: There's been a Moffuchi's Family Pizzeria on the surface of the icemoon
+      but we only just noticed it
+  FernandoJ8:
+  - imageadd: Resprites all of the abductors surgical tools
+  Ghommie:
+  - refactor: Refactored and standardized multiz movement code. This should fix some
+      issues about it.
+  - qol: You can now drag movables, ride vehicles and fireman carry mobs upstairs
+      and downstairs.
+  Iamgoofball:
+  - qol: Leaders are now distributed evenly among the Families.
+  - qol: As a result, the Families rulesets now only require 3 people to start, instead
+      of 9.
+  - bugfix: You can no longer become a Family Leader as a restricted role, such as
+      a Head of Security.
+  - admin: Admins can now promote people to Family Leader with a button from the traitor
+      panel.
+  JohnFulpWillard:
+  - bugfix: Magic mirrors will now allow you to swap species again.
+  Mothblocks:
+  - bugfix: Fixed away missions not loading when the config was enabled.
+  Pope:
+  - bugfix: fixed an issue in orion.dm and orion_event.dm to let silicon play orion
+      trail
+  RandomGamer123:
+  - bugfix: Transit tube dispensers will no longer eat up immovable rods.
+  SuperNovaa41:
+  - bugfix: The maroon objective will no longer fail due to your target being borged.
+  - bugfix: Bardrones no longer recieve tools.
+  tralezab:
+  - bugfix: Department orders no longer bugs out and asks you to take the deliveries
+      to central primary hallway

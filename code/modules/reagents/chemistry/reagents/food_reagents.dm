@@ -185,7 +185,7 @@
 		return
 
 	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-	exposed_turf.name = "deep-fried [initial(exposed_turf.name)]"
+	exposed_turf.name = "Deep-fried [initial(exposed_turf.name)]"
 	exposed_turf.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/sugar
@@ -939,7 +939,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/pancakebatter
-	name = "pancake batter"
+	name = "Pancake Batter"
 	description = "A very milky batter. 5 units of this on the griddle makes a mean pancake."
 	taste_description = "milky batter"
 	color = "#fccc98"

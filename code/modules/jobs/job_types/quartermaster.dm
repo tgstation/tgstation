@@ -1,5 +1,7 @@
 /datum/job/quartermaster
 	title = "Quartermaster"
+	description = "Coordinate cargo technicians and shaft miners, assist with \
+		economical purchasing."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 1

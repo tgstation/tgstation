@@ -233,6 +233,8 @@ GLOBAL_LIST_EMPTY(lifts)
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+	///handles any special interactions objects could have with the lift/tram, handled on the item itself	
+	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER)
 
 	if(istype(destination, /turf/closed/wall))
 		var/turf/closed/wall/C = destination
