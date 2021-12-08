@@ -1,4 +1,4 @@
-/// Datumized FOV handler for a mob's client.
+/// Datumized FOV handler for a mob's client. Handles the visual part of the FOV mechanics.
 /datum/field_of_view
 	/// Reference to the mob owning this
 	var/mob/living/owner
