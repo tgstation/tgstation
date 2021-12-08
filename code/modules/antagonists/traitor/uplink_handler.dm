@@ -4,6 +4,8 @@
  * The uplink handler, used to handle a traitor's TC and experience points and the uplink UI.
 **/
 /datum/uplink_handler
+	/// The owner of this uplink handler.
+	var/datum/mind/owner
 	/// The amount of telecrystals contained in this traitor has
 	var/telecrystals = 0
 	/// The current uplink flag of this uplink
@@ -24,6 +26,10 @@
 	var/list/active_objectives = list()
 	/// Potential objectives that can be taken
 	var/list/potential_objectives = list()
+	/// Objectives that have been completed.
+	var/list/completed_objectives = list()
+	/// All objectives assigned by type to handle any duplicates
+	var/list/potential_duplicate_objectives = list()
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
 	/// Whether this is in debug mode or not. If in debug mode, allows all purchases
@@ -64,11 +70,47 @@
 		item_stock[to_purchase.type] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
-	SStgui.update_uis()
+	on_update()
 	return TRUE
 
+/// Generates objectives for this uplink handler
 /datum/uplink_handler/proc/generate_objectives()
-	potential_objectives = list()
+	var/potential_objectives_left = CONFIG_GET(number/maximum_potential_objectives) - length(potential_objectives)
+	var/list/objectives = SStraitor.get_possible_objectives(progression_points)
+	if(!length(objectives))
+		return
+	var/maximum_iteration = CONFIG_GET(number/maximum_potential_objectives) * 2
+	for(var/i in 1 to maximum_iteration)
+		if(potential_objectives_left <= 0 || !length(objectives))
+			break
+		var/objective_typepath = pick(objectives)
+		var/datum/traitor_objective/objective = new objective_typepath(src)
+		if(!objective.generate_objective(owner))
+			objectives -= objective_typepath
+			continue
+		if(!handle_duplicate(objective))
+			return
+		potential_objectives += objective
+		potential_objectives_left--
+	on_update()
+
+/datum/uplink_handler/proc/handle_duplicate(datum/traitor_objective/potential_duplicate)
+	if(!potential_duplicate_objectives[potential_duplicate.type])
+		potential_duplicate_objectives[potential_duplicate.type] = list(potential_duplicate)
+		return TRUE
+
+	for(var/datum/traitor_objective/duplicate_checker as anything in potential_duplicate_objectives[potential_duplicate.type])
+		if(duplicate_checker.is_duplicate(potential_duplicate))
+			return FALSE
+	potential_duplicate_objectives[potential_duplicate.type] += potential_duplicate
+	return TRUE
+
+/datum/uplink_handler/proc/complete_objective(mob/user, datum/traitor_objective/to_remove)
+	if(to_remove in completed_objectives)
+		return
+
+	active_objectives -= to_remove
+	completed_objectives += to_remove
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
@@ -76,6 +118,7 @@
 
 	potential_objectives -= to_take
 	active_objectives += to_take
+	on_update()
 
 /datum/uplink_handler/proc/ui_objective_act(mob/user, datum/traitor_objective/to_act_on, action)
 	if(!(to_act_on in active_objectives))

@@ -1,18 +1,24 @@
 import { multiline } from 'common/string';
 import { Box, Flex } from '../../components';
 
-const calculateProgression = (progression_points: number) => {
+export const calculateProgression = (progression_points: number) => {
   return Math.round(progression_points / 6) / 10;
 };
 
-const badGradient = "linear-gradient(to right, #9c1e1e, rgba(108, 40, 40, 255), #9c1e1e);";
-const normalGradient = "linear-gradient(to right, #5d5041, #40372d, #5d5041)";
-const goodGradient = "linear-gradient(to right, #515d6c, #252a30, #515d6c)";
-const veryGoodGradient = "linear-gradient(to right, #977949, #534328, #977949)";
-const ultraGoodGradient = "linear-gradient(to right, #9d9948, #777437, #9d9948)";
-const bestGradient = "linear-gradient(to right, #9d486b, #57283c, #9d486b)";
+const badGradient = "reputation-bad";
+const normalGradient = "reputation-normal";
+const goodGradient = "reputation-good";
+const veryGoodGradient = "reputation-very-good";
+const ultraGoodGradient = "reputation-super-good";
+const bestGradient = "reputation-best";
 
-const ranks = [
+export type Rank = {
+  minutesLessThan: number;
+  title: string;
+  gradient: string;
+}
+
+const ranks: Rank[] = [
   {
     minutesLessThan: 5,
     title: "Obscure",
@@ -88,8 +94,8 @@ you get and what items you can purchase.\
           <Flex.Item key={value.minutesLessThan} mt={0.1}>
             <Box
               color="white"
+              className={value.gradient}
               style={{
-                "background": value.gradient,
                 "border-radius": "5px",
                 "display": "inline-block",
               }}
@@ -105,37 +111,41 @@ you get and what items you can purchase.\
   </Box>
 );
 
+export const getReputation = (progression_points: number) => {
+  const minutes = progression_points / 600;
+
+  for (let index = 0; index < ranks.length; index++) {
+    const rank = ranks[index];
+    if (minutes < rank.minutesLessThan) {
+      return rank;
+    }
+  }
+
+  return ranks[ranks.length - 1];
+};
+
 export const calculateReputationLevel = (
   progression_points: number,
   textOnly: boolean
 ) => {
   const minutes = progression_points / 600;
   const displayedProgression = calculateProgression(progression_points);
-  let gradient;
-  let title;
-  for (let index = 0; index < ranks.length; index++) {
-    const rank = ranks[index];
-    if (minutes < rank.minutesLessThan) {
-      gradient = rank.gradient;
-      title = rank.title;
-      break;
-    }
-  }
+  const reputation = getReputation(progression_points);
   if (textOnly) {
-    return (<Box as="span">{title} ({displayedProgression})</Box>);
+    return (<Box as="span">{reputation.title} ({displayedProgression})</Box>);
   }
   return (
     <Box
       color="white"
+      className={reputation.gradient}
       style={{
-        "background": gradient,
         "border-radius": "5px",
         "display": "inline-block",
       }}
       px={0.8}
       py={0.6}
     >
-      {title} ({displayedProgression})
+      {reputation.title} ({displayedProgression})
     </Box>
   );
 };

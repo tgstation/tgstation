@@ -6,7 +6,7 @@ import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
 import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
-import { ObjectiveMenu } from './ObjectiveMenu';
+import { Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
 
 type UplinkItem = {
@@ -29,16 +29,6 @@ export type ObjectiveUiButton = {
   action: string,
 }
 
-export type Objective = {
-  id: number,
-  name: string,
-  description: string,
-  progression_minimum: number,
-  progression_reward: number,
-  telecrystal_reward: number,
-  ui_buttons?: ObjectiveUiButton[],
-}
-
 type UplinkData = {
   telecrystals: number,
   progression_points: number,
@@ -49,6 +39,7 @@ type UplinkData = {
   has_progression: BooleanLike,
   potential_objectives: Objective[],
   active_objectives: Objective[],
+  maximum_active_objectives: number,
 }
 
 type UplinkState = {
@@ -133,6 +124,7 @@ export class Uplink extends Component<{}, UplinkState> {
       potential_objectives,
       has_objectives,
       has_progression,
+      maximum_active_objectives,
     } = data;
     const {
       allItems,
@@ -177,84 +169,93 @@ export class Uplink extends Component<{}, UplinkState> {
         width={620}
         height={580}
         theme="syndicate">
-        <Window.Content scrollable>
-          <Section>
-            <Stack>
-              <Stack.Item grow={1} align="center">
-                <Box fontSize={0.8}>
-                  SyndOS Version 3.17 &nbsp;
-                  <Box color="green" as="span">
-                    Connection Secure
-                  </Box>
-                </Box>
-                <Box color="green" bold fontSize={1.2}>
-                  WELCOME, AGENT.
-                </Box>
-              </Stack.Item>
-              <Stack.Item align="center">
-                <Box bold fontSize={1.2}>
-                  <Tooltip content={reputationLevelsTooltip}>
-                    {/* If we have no progression,
+        <Window.Content scrollable={currentTab !== 0}>
+          <Stack vertical fill>
+            <Stack.Item>
+              <Section>
+                <Stack>
+                  <Stack.Item grow={1} align="center">
+                    <Box fontSize={0.8}>
+                      SyndOS Version 3.17 &nbsp;
+                      <Box color="green" as="span">
+                        Connection Secure
+                      </Box>
+                    </Box>
+                    <Box color="green" bold fontSize={1.2}>
+                      WELCOME, AGENT.
+                    </Box>
+                  </Stack.Item>
+                  <Stack.Item align="center">
+                    <Box bold fontSize={1.2}>
+                      <Tooltip content={reputationLevelsTooltip}>
+                        {/* If we have no progression,
                       just give them a generic title */}
-                    {has_progression
-                      ? calculateReputationLevel(progression_points, false)
-                      : calculateReputationLevel(reputationDefault, false)}
-                  </Tooltip>
-                </Box>
-                <Box color="good" bold fontSize={1.2} textAlign="right">
-                  {telecrystals} TC
-                </Box>
-              </Stack.Item>
-            </Stack>
-          </Section>
-          <Section fitted>
-            <Stack align="center">
-              <Stack.Item grow={1}>
-                <Tabs fluid textAlign="center">
-                  {!!has_objectives && (
-                    <Tabs.Tab
-                      selected={currentTab === 0}
-                      onClick={() => this.setState({ currentTab: 0 })}
-                    >
-                      Objectives
-                    </Tabs.Tab>
-                  )}
-                  <Tabs.Tab
-                    selected={currentTab === 1 || !has_objectives}
-                    onClick={() => this.setState({ currentTab: 1 })}
-                  >
-                    Market
-                  </Tabs.Tab>
-                </Tabs>
-              </Stack.Item>
-              <Stack.Item mr={1}>
-                <Button
-                  icon="times"
-                  content="Lock"
-                  color="transparent"
-                  onClick={() => act("lock")}
+                        {has_progression
+                          ? calculateReputationLevel(progression_points, false)
+                          : calculateReputationLevel(reputationDefault, false)}
+                      </Tooltip>
+                    </Box>
+                    <Box color="good" bold fontSize={1.2} textAlign="right">
+                      {telecrystals} TC
+                    </Box>
+                  </Stack.Item>
+                </Stack>
+              </Section>
+            </Stack.Item>
+            <Stack.Item>
+              <Section fitted>
+                <Stack align="center">
+                  <Stack.Item grow={1}>
+                    <Tabs fluid textAlign="center">
+                      {!!has_objectives && (
+                        <Tabs.Tab
+                          selected={currentTab === 0}
+                          onClick={() => this.setState({ currentTab: 0 })}
+                        >
+                          Objectives
+                        </Tabs.Tab>
+                      )}
+                      <Tabs.Tab
+                        selected={currentTab === 1 || !has_objectives}
+                        onClick={() => this.setState({ currentTab: 1 })}
+                      >
+                        Market
+                      </Tabs.Tab>
+                    </Tabs>
+                  </Stack.Item>
+                  <Stack.Item mr={1}>
+                    <Button
+                      icon="times"
+                      content="Lock"
+                      color="transparent"
+                      onClick={() => act("lock")}
+                    />
+                  </Stack.Item>
+                </Stack>
+              </Section>
+            </Stack.Item>
+            <Stack.Item grow>
+              {(currentTab === 0 && has_objectives) && (
+                <ObjectiveMenu
+                  activeObjectives={active_objectives}
+                  potentialObjectives={potential_objectives}
+                  maximumActiveObjectives={maximum_active_objectives}
+                  handleObjectiveAction={(objective, action) =>
+                    act("objective_act", { objective_action: action, index: objective.id, name: objective.name })}
+                  handleStartObjective={(objective) => act("start_objective", { index: objective.id, name: objective.name })}
                 />
-              </Stack.Item>
-            </Stack>
-          </Section>
-          {(currentTab === 0 && has_objectives) && (
-            <ObjectiveMenu
-              activeObjectives={active_objectives}
-              potentialObjectives={potential_objectives}
-              handleObjectiveAction={(objective, action) =>
-                act("objective_act", { objective_action: action, index: objective.id, name: objective.name })}
-              handleStartObjective={(objective) => act("start_objective", { index: objective.id, name: objective.name })}
-            />
-          ) || (
-            <GenericUplink
-              currency=""
-              categories={allCategories}
-              items={items}
-              handleBuy={(item) => {
-                act("buy", { path: item.id });
-              }}
-            />
-          )}
+              ) || (
+                <GenericUplink
+                  currency=""
+                  categories={allCategories}
+                  items={items}
+                  handleBuy={(item) => {
+                    act("buy", { path: item.id });
+                  }}
+                />
+              )}
+            </Stack.Item>
+          </Stack>
         </Window.Content>
       </Window>
     );
