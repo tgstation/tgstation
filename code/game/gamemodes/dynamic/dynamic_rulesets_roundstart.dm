@@ -27,6 +27,8 @@
 	COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
 	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_traitors)
+		if(candidates.len <= 0)
+			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
 		M.mind.special_role = ROLE_TRAITOR
@@ -75,6 +77,8 @@
 	// Maybe a bit too pedantic, but there should never be more malf AIs than there are available positions, spawn positions or antag cap allocations.
 	var/num_malf = min(get_antag_cap(population), min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions))
 	for (var/i in 1 to num_malf)
+		if(candidates.len <= 0)
+			break
 		var/mob/new_malf = pick_n_take(candidates)
 		assigned += new_malf.mind
 		new_malf.mind.special_role = ROLE_MALF
@@ -155,6 +159,8 @@
 	. = ..()
 	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_changelings)
+		if(candidates.len <= 0)
+			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
@@ -194,6 +200,8 @@
 	var/num_ecult = get_antag_cap(population) * (scaled_times + 1)
 
 	for (var/i = 1 to num_ecult)
+		if(candidates.len <= 0)
+			break
 		var/mob/picked_candidate = pick_n_take(candidates)
 		assigned += picked_candidate.mind
 		picked_candidate.mind.restricted_roles = restricted_roles
@@ -606,7 +614,7 @@
 	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
 
 	for(var/j in 1 to carriers_to_make)
-		if (!candidates.len)
+		if (candidates.len <= 0)
 			break
 		var/mob/carrier = pick_n_take(candidates)
 		assigned += carrier.mind
