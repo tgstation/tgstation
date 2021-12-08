@@ -322,7 +322,7 @@
 	return types
 
 /// Return a list of types to pregenerate for later equipping
-/// This should not be things that do unique stuff in New(), since we'll be storing them for a while
+/// This should not be things that do unique stuff in Initialize() based off their location, since we'll be storing them for a while
 /datum/outfit/proc/get_types_to_preload()
 	var/list/preload = list()
 	preload += id
@@ -347,7 +347,7 @@
 	preload += l_hand
 	preload += r_hand
 	preload += accessory
-	preload += box
+	//We do not load boxes, they care about spawn location and it's just not feasible
 	for(var/implant_type in implants)
 		preload += implant_type
 	for(var/skillpath in skillchips)
