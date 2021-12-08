@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	//This is the typepath to load "into" the pda 
+	//This is the typepath to load "into" the pda
 	var/obj/item/insert_type = /obj/item/pen
 	//This is the currently inserted item
 	var/obj/item/inserted_item
@@ -138,6 +138,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	update_appearance()
 
+/obj/item/pda/Destroy()
+	GLOB.PDAs -= src
+	if(istype(id))
+		QDEL_NULL(id)
+	if(istype(cartridge))
+		QDEL_NULL(cartridge)
+	if(istype(pai))
+		QDEL_NULL(pai)
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
+	return ..()
+
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
 	if(!equipped)
@@ -160,6 +172,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
 			equipped = TRUE
+
+/obj/item/pda/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cartridge)
+		cartridge.host_pda = null
+		cartridge = null
+	if(gone == inserted_item)
+		inserted_item = null
 
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -968,9 +988,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 
 	if(inserted_item)
-		user.put_in_hands(inserted_item)
 		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
-		inserted_item = null
+		user.put_in_hands(inserted_item) //Don't need to manage the pen ref, handled on Exited()
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
@@ -980,11 +999,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK disabled to stop cartridge teleporting into hand
 		return
 	if (!isnull(cartridge))
-		user.put_in_hands(cartridge)
 		to_chat(user, span_notice("You eject [cartridge] from [src]."))
+		user.put_in_hands(cartridge) //We don't manage reference clearing here, dealt with in Exited()
 		scanmode = PDA_SCANNER_NONE
-		cartridge.host_pda = null
-		cartridge = null
 		updateSelfDialog()
 		update_appearance()
 
@@ -1183,18 +1200,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
 
-/obj/item/pda/Destroy()
-	GLOB.PDAs -= src
-	if(istype(id))
-		QDEL_NULL(id)
-	if(istype(cartridge))
-		QDEL_NULL(cartridge)
-	if(istype(pai))
-		QDEL_NULL(pai)
-	if(istype(inserted_item))
-		QDEL_NULL(inserted_item)
-	return ..()
-
 //AI verb and proc for sending PDA messages.
 
 /obj/item/pda/ai/verb/cmd_toggle_pda_receiver()
@@ -1309,12 +1314,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /// Callbacks for preloading pdas
 /obj/item/pda/proc/display_pda()
-	GLOB.PDAs += src 
+	GLOB.PDAs += src
 
 /// See above, we don't want jerry from accounting to try and message nullspace his new bike
 /obj/item/pda/proc/cloak_pda()
-	GLOB.PDAs -= src 
-	
+	GLOB.PDAs -= src
+
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
 #undef PDA_SCANNER_FORENSICS
