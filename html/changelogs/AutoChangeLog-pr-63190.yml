@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - rscadd: "TGUI input boxes are on the way! You can find new preferences in the menu. They will be on by default."
