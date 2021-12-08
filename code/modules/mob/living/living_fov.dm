@@ -141,7 +141,7 @@
 		if(rel_x >= -1 && rel_x <= 1 && rel_y >= -1 && rel_y <= 1) //Cheap way to check inside that 3x3 box around you
 			return TRUE //Also checks if both are 0 to stop division by zero
 	
-		// Converts the relative position into a 0-360 rotation
+		// Get the vector length so we can create a good directional vector
 		var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
 	
 		/// Getting a direction vector
