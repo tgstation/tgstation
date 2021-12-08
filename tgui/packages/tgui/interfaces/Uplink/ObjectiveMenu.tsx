@@ -36,6 +36,8 @@ type ObjectiveMenuState = {
   objectiveY: number;
 }
 
+let dragClickTimer = 0;
+
 export class ObjectiveMenu
   extends Component<ObjectiveMenuProps, ObjectiveMenuState> {
   constructor() {
@@ -53,6 +55,9 @@ export class ObjectiveMenu
   }
 
   handleObjectiveClick(event: MouseEvent, objective: Objective) {
+    if (this.state?.draggingObjective) {
+      return;
+    }
     if (event.button === 0) { // Left click
       this.setState({
         draggingObjective: objective,
@@ -63,10 +68,16 @@ export class ObjectiveMenu
       window.addEventListener('mousemove', this.handleMouseMove);
       event.stopPropagation();
       event.preventDefault();
+
+      dragClickTimer = Date.now() + 100; // 100 milliseconds
     }
   }
 
   handleMouseUp(event: MouseEvent) {
+    if (dragClickTimer > Date.now()) {
+      return;
+    }
+
     window.removeEventListener('mouseup', this.handleMouseUp);
     window.removeEventListener('mousemove', this.handleMouseMove);
     this.setState({
@@ -135,7 +146,7 @@ export class ObjectiveMenu
                         >
                           <Stack textAlign="center" fill align="center">
                             <Stack.Item textAlign="center" width="100%">
-                              Empty Objective
+                              Empty Objective, drop objectives here to take them
                             </Stack.Item>
                           </Stack>
                         </Box>
@@ -168,9 +179,6 @@ export class ObjectiveMenu
             >
               <Flex wrap="wrap" justify="space-evenly">
                 {potentialObjectives.map(objective => {
-                  if (objective === draggingObjective) {
-                    return;
-                  }
                   return (
                     <Flex.Item
                       key={objective.id}
@@ -182,9 +190,17 @@ export class ObjectiveMenu
                         this.handleObjectiveClick(event, objective);
                       }}
                     >
-                      {ObjectiveFunction(
+                      {objective !== draggingObjective && ObjectiveFunction(
                         objective,
                         false
+                      ) || (
+                        <Box
+                          style={{
+                            "border": "2px dashed black",
+                          }}
+                          width="100%"
+                          height="100%"
+                        />
                       )}
                     </Flex.Item>
                   );
