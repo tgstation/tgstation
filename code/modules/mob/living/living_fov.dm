@@ -30,8 +30,7 @@
 	fov_angle = fov_type
 	blocker_mask = new
 	visual_shadow = new
-	blocker_mask.dir = owner.dir
-	visual_shadow.dir = owner.dir
+	dir_change(owner.dir)
 	visual_shadow.alpha = parent_client.prefs.read_preference(/datum/preference/numeric/fov_darkness)
 	set_fov_angle(fov_type)
 	update_fov_size()
