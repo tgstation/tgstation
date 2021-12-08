@@ -84,6 +84,9 @@
 		recharge_newshot() //and try to charge a new shot
 		update_appearance()
 
+/obj/item/gun/microfusion/get_cell()
+	return cell
+
 /obj/item/gun/microfusion/Initialize(mapload)
 	. = ..()
 	if(cell_type)
