@@ -347,7 +347,7 @@
 	preload += l_hand
 	preload += r_hand
 	preload += accessory
-	//We do not load boxes, they care about spawn location and it's just not feasible
+	preload += box
 	for(var/implant_type in implants)
 		preload += implant_type
 	for(var/skillpath in skillchips)

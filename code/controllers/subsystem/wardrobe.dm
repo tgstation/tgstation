@@ -265,13 +265,14 @@ SUBSYSTEM_DEF(wardrobe)
 		requested_object = new requested_type(location)
 		return requested_object
 
+	if(location)
+		requested_object.forceMove(location)
+
 	var/datum/callback/do_on_removal = stock_info[WARDROBE_STOCK_CALL_REMOVAL]
 	if(do_on_removal)
 		do_on_removal.object = requested_object
 		do_on_removal.Invoke()
 		do_on_removal.object = null
-	if(location)
-		requested_object.forceMove(location)
 
 	stock_hit++
 	add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
@@ -311,6 +312,10 @@ SUBSYSTEM_DEF(wardrobe)
 	play_with[WARDROBE_CALLBACK_INSERT] = CALLBACK(null, /obj/item/organ/proc/enter_wardrobe)
 	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, /obj/item/organ/proc/exit_wardrobe)
 	initial_callbacks[/obj/item/organ] = play_with
+
+	play_with = new /list(WARDROBE_CALLBACK_REMOVE)
+	play_with[WARDROBE_CALLBACK_REMOVE] = CALLBACK(null, /obj/item/storage/box/survival/proc/wardrobe_removal)
+	initial_callbacks[/obj/item/storage/box/survival] = play_with
 
 /datum/controller/subsystem/wardrobe/proc/load_outfits()
 	for(var/datum/outfit/to_stock as anything in subtypesof(/datum/outfit))
