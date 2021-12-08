@@ -10,3 +10,9 @@
 		return
 
 	plane_master.backdrop(client.mob)
+
+	var/atom/movable/screen/plane_master/game_world/fov_hidden/plane_master_fov = locate() in client?.screen
+	if (!plane_master_fov)
+		return
+
+	plane_master_fov.backdrop(client.mob)

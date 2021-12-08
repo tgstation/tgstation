@@ -263,6 +263,7 @@
 	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
+	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)

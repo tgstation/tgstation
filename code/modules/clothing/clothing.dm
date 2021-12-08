@@ -38,6 +38,9 @@
 	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
 	var/list/clothing_traits
 
+	/// Whether the clothing applies a fov trait, which limits a users field of view.
+	var/fov_trait
+
 	var/pocket_storage_component_path
 
 	//These allow head/mask items to dynamically alter the user's hair
@@ -243,13 +246,17 @@
 	QDEL_NULL(moth_snack)
 	return ..()
 
-/obj/item/clothing/dropped(mob/user)
+/obj/item/clothing/dropped(mob/living/user)
 	..()
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
 		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+
+	if(fov_trait)
+		user.remove_fov_trait(type, fov_trait)
+		user.update_fov()
 
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
@@ -258,7 +265,7 @@
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
-/obj/item/clothing/equipped(mob/user, slot)
+/obj/item/clothing/equipped(mob/living/user, slot)
 	. = ..()
 	if (!istype(user))
 		return
@@ -267,6 +274,9 @@
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+		if(fov_trait)
+			user.add_fov_trait(type, fov_trait)
+			user.update_fov()
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
