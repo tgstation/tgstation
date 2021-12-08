@@ -39,7 +39,7 @@
 	/// The failsafe code that causes this uplink to blow up.
 	var/failsafe_code
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, has_progression = TRUE, datum/uplink_handler/uplink_handler_override)
+/datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, has_progression = FALSE, datum/uplink_handler/uplink_handler_override)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
