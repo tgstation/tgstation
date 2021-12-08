@@ -1,0 +1,4 @@
+author: "FA120"
+delete-after: True
+changes: 
+  - expansion: "adds health to the crew monitor's usb table"
