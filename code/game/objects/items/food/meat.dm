@@ -416,7 +416,7 @@
 /obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
 	if(QDELETED(user) || QDELETED(src))
 		return
-	if((src.loc != user)) //how the hell did you manage this
+	if(src.loc != user) //how the hell did you manage this
 		to_chat(user, span_warning("Something happened to [src]..."))
 		return
 	Expand()
@@ -1076,7 +1076,6 @@
 	..()
 	if(!istype(original_atom, /obj/item/food/meat/slab))
 		return
-
 	var/obj/item/food/meat/slab/original_slab = original_atom
 	var/mutable_appearance/filling = mutable_appearance(icon, "rawcutlet_coloration")
 	filling.color = original_slab.slab_color
@@ -1098,14 +1097,15 @@
 
 /obj/item/food/meat/rawcutlet/plain/human/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	. = ..()
-	if(istype(original_atom, /obj/item/food/meat))
-		var/obj/item/food/meat/origin_meat = original_atom
-		subjectname = origin_meat.subjectname
-		subjectjob = origin_meat.subjectjob
-		if(subjectname)
-			name = "raw [origin_meat.subjectname] cutlet"
-		else if(subjectjob)
-			name = "raw [origin_meat.subjectjob] cutlet"
+	if(!istype(original_atom, /obj/item/food/meat))
+		return
+	var/obj/item/food/meat/origin_meat = original_atom
+	subjectname = origin_meat.subjectname
+	subjectjob = origin_meat.subjectjob
+	if(subjectname)
+		name = "raw [origin_meat.subjectname] cutlet"
+	else if(subjectjob)
+		name = "raw [origin_meat.subjectjob] cutlet"
 
 /obj/item/food/meat/rawcutlet/killertomato
 	name = "raw killer tomato cutlet"

@@ -405,7 +405,7 @@
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 	var/mutable_appearance/head
-	var/headcolor = rgb(0, 0, 0)
+	var/head_color = rgb(0, 0, 0)
 
 /obj/item/food/lollipop/Initialize(mapload)
 	. = ..()
@@ -414,7 +414,7 @@
 	AddElement(/datum/element/chewable)
 
 /obj/item/food/lollipop/proc/change_head_color(C)
-	headcolor = C
+	head_color = C
 	cut_overlay(head)
 	head.color = C
 	add_overlay(head)

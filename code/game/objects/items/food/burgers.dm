@@ -39,8 +39,6 @@
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
 	var/obj/item/food/patty/human/human_patty = locate(/obj/item/food/patty/human) in contents
-	if(!LAZYLEN(human_patty.custom_materials))
-		return
 	for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
 		if(mob_meat_material.subjectname)
 			name = "[mob_meat_material.subjectname] burger"
