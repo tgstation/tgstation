@@ -229,18 +229,16 @@
 	QDEL_NULL(access_card)
 	return ..()
 
-/mob/living/simple_animal/bot/proc/check_access(mob/user, obj/item/card/id/id_card)
+/mob/living/simple_animal/bot/proc/check_access(mob/living/user)
 	if(issilicon(user) || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
 		return TRUE
 
-	var/obj/item/card/id/id_slot = user.get_item_by_slot(ITEM_SLOT_ID)
-	if(id_slot && id_slot.access) // If we have an ID equipped, we'll check that instead.
-		id_card = id_slot.GetID()
-
-	if(!id_card)
+	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+	if(!id_card || !id_card.access) // If we have an ID equipped, we'll check that instead.
 		return FALSE
+	id_card = id_card.GetID()
 
 	for(var/requested_access in maints_access_required)
 		if(requested_access in id_card.access)
@@ -373,14 +371,14 @@
 		return
 	unlock_with_id(user)
 
-/mob/living/simple_animal/bot/proc/unlock_with_id(mob/user, obj/item/id_card)
+/mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		to_chat(user, span_danger("ERROR"))
 		return
 	if(bot_cover_flags & BOT_COVER_OPEN)
 		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
-	if(!check_access(user, id_card))
+	if(!check_access(user))
 		to_chat(user, span_warning("Access denied."))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
@@ -395,7 +393,7 @@
 		else
 			to_chat(user, span_warning("The maintenance panel is locked!"))
 	else if(attacking_item.GetID())
-		unlock_with_id(user, attacking_item)
+		unlock_with_id(user)
 	else if(istype(attacking_item, /obj/item/paicard))
 		insertpai(user, attacking_item)
 	else if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)

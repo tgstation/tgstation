@@ -42,7 +42,7 @@
 			var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
 			if(!id_card && !Bot.check_access(current_user))
 				continue
-			else if(id_card && !Bot.check_access(current_user, id_card))
+			else if(id_card && !Bot.check_access(current_user))
 				continue
 		var/list/newbot = list(
 			"name" = Bot.name,
