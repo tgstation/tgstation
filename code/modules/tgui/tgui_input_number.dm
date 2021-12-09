@@ -23,9 +23,9 @@
 			user = client.mob
 		else
 			return
-	/// Client does NOT have tgui_fancy on: Returns regular input
+	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		return input(user, message, title, default) as null | num
+		return input(user, message, title, default) as null|num
 	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout)
 	numbox.ui_interact(user)
 	numbox.wait()

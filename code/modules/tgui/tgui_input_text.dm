@@ -25,7 +25,7 @@
 			user = client.mob
 		else
 			return
-	/// Client does NOT have tgui_fancy on: Returns regular input
+	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(max_length)
 			if(multiline)
