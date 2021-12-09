@@ -372,9 +372,7 @@
 	var/sign = ""
 	if (armor_value < 0)
 		sign = "-"
-		armor_value = abs(round(armor_value, -10) / 10)
-	else
-		armor_value = round(armor_value, 10) / 10
+	armor_value = round(abs(armor_value), 10) / 10
 	switch (armor_value)
 		if (1)
 			. = sign + "I"
