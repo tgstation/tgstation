@@ -332,12 +332,6 @@
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return FALSE
 
-// The src mob is trying to place an item on someone
-// But the src mob is a silicon!!  Disable.
-/mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return FALSE
-
-
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10
 

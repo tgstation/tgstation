@@ -1,5 +1,7 @@
 /datum/job/psychologist
 	title = "Psychologist"
+	description = "Advocate sanity, self-esteem, and teamwork in a station \
+		staffed with headcases."
 	department_head = list("Head of Personnel","Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 1

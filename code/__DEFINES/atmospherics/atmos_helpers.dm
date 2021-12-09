@@ -70,3 +70,8 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
+
+#define LINDA_CYCLE_ARCHIVE(turf)\
+	turf.air.archive();\
+	turf.archived_cycle = SSair.times_fired;\
+	turf.temperature_archived = turf.temperature;

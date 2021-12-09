@@ -310,6 +310,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/datum/objective/sacrifice/sac_objective in C.cult_team.objectives)
 			if(sac_objective.target == sacrificial.mind)
 				sac_objective.sacced = TRUE
+				sac_objective.clear_sacrifice()
 				sac_objective.update_explanation_text()
 				big_sac = TRUE
 	else

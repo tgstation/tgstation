@@ -1,5 +1,6 @@
 /datum/job/janitor
 	title = "Janitor"
+	description = "Clean up trash and blood. Replace broken lights. Slip people over."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 2
@@ -47,3 +48,9 @@
 	if(GARBAGEDAY in SSevents.holidays)
 		backpack_contents += /obj/item/gun/ballistic/revolver
 		r_pocket = /obj/item/ammo_box/a357
+
+/datum/outfit/job/janitor/get_types_to_preload()
+	. = ..()
+	if(GARBAGEDAY in SSevents.holidays)
+		. += /obj/item/gun/ballistic/revolver
+		. += /obj/item/ammo_box/a357

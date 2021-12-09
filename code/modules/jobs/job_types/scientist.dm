@@ -1,5 +1,6 @@
 /datum/job/scientist
 	title = "Scientist"
+	description = "Do experiments, perform research, feed the slimes, make bombs."
 	department_head = list("Research Director")
 	faction = FACTION_STATION
 	total_positions = 5
@@ -55,3 +56,7 @@
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+
+/datum/outfit/job/scientist/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/neck/tie/horrible

@@ -9,6 +9,7 @@
 
 	///Unremovable is until the features are completely finished
 	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
+	visual = TRUE
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
 	var/layers

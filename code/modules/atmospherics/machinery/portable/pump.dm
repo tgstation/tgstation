@@ -172,3 +172,7 @@
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/pump/unregister_holding()
+	on = FALSE
+	return ..()

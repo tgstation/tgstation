@@ -109,7 +109,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 )
 
 ///File to the traitor flavor
-#define TRAITOR_FLAVOR_FILE "traitor_flavor.json"
+#define TRAITOR_FLAVOR_FILE "antagonist_flavor/traitor_flavor.json"
+
+///File to the malf flavor
+#define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
 
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
@@ -154,6 +157,20 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Waffle Corporation",
 ))
 
+///employers for malfunctioning ais. they do not have sides, unlike traitors.
+GLOBAL_LIST_INIT(ai_employers, list(
+	"Biohazard",
+	"Despotic Ruler",
+	"Fanatical Revelation",
+	"Logic Core Error",
+	"Problem Solver",
+	"S.E.L.F.",
+	"Something's Wrong",
+	"Spam Virus",
+	"SyndOS",
+	"Unshackled",
+))
+
 ///how long traitors will have to wait before an unreasonable objective is rerolled
 #define OBJECTIVE_REROLL_TIMER 10 MINUTES
 
@@ -190,6 +207,9 @@ GLOBAL_LIST_INIT(normal_employers, list(
 
 /// Checks if the given mob is a head revolutionary.
 #define IS_HEAD_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev/head))
+
+/// Checks if the given mob is a malf ai.
+#define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96

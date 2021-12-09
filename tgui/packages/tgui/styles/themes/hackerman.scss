@@ -26,6 +26,11 @@
     'color-disabled': #4A6A4A,
     'color-selected': #00FF00,
   ));
+  @include meta.load-css('../components/Tabs.scss', $with: (
+    'color-default': colors.$primary,
+    'tab-color-selected': #00ff003f,
+    'text-color': #e7e7e7
+  ));
   @include meta.load-css('../components/Input.scss', $with: (
     'border-color': colors.$primary,
   ));
