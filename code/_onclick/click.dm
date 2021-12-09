@@ -75,9 +75,11 @@
 	if(notransform)
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
-		return
 	var/list/modifiers = params2list(params)
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
@@ -117,8 +119,8 @@
 		return
 
 	if(throw_mode)
-		changeNext_move(CLICK_CD_THROW)
-		throw_item(A)
+		if(throw_item(A))
+			changeNext_move(CLICK_CD_THROW)
 		return
 
 	var/obj/item/W = get_active_held_item()

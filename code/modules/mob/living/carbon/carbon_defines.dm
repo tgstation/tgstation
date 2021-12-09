@@ -106,4 +106,7 @@
 	/// Can other carbons be shoved into this one to make it fall?
 	var/can_be_shoved_into = FALSE
 
+	/// Only load in visual organs
+	var/visual_only_organs = FALSE
+
 	COOLDOWN_DECLARE(bleeding_message_cd)

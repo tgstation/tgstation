@@ -252,7 +252,7 @@
 	antag_flag_override = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
-	required_candidates = 9
+	required_candidates = 3
 	weight = 2
 	cost = 19
 	requirements = list(101,101,40,40,30,20,10,10,10,10)
@@ -272,6 +272,8 @@
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			candidates -= player
 		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
+			candidates -= player
+		else if(player.mind.assigned_role.title in restricted_roles)
 			candidates -= player
 
 
@@ -370,7 +372,7 @@
 	weight = 1
 	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	repeatable = TRUE
+	flags = HIGH_IMPACT_RULESET
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
 	if (required_candidates > (dead_players.len + list_observers.len))
@@ -517,7 +519,7 @@
 				continue // No parent vent
 			// Stops Aliens getting stuck in small networks.
 			// See: Security, Virology
-			if(temp_vent_parent.other_atmosmch.len > 20)
+			if(temp_vent_parent.other_atmos_machines.len > 20)
 				vents += temp_vent
 	if(!vents.len)
 		return FALSE

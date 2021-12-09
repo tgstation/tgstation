@@ -23,7 +23,7 @@ at the cost of risking a vicious bite.**/
 					/obj/item/restraints/handcuffs/cable/pink = 1,
 					/obj/item/restraints/handcuffs/alien = 2,
 					/obj/item/coin/bananium = 9,
-					/obj/item/kitchen/knife/butcher = 5,
+					/obj/item/knife/butcher = 5,
 					/obj/item/coin/mythril = 1) //the loot table isn't that great and should probably be improved and expanded later.
 
 

@@ -30,7 +30,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/cardboardbox_pickup.ogg'
+	pickup_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 
@@ -93,7 +93,7 @@
 /obj/item/storage/box/mime/Moved(oldLoc, dir)
 	if (iscarbon(oldLoc))
 		alpha = 0
-	..()
+	return ..()
 
 //Disk boxes
 
@@ -132,6 +132,15 @@
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/survival/proc/wardrobe_removal()
+	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+		return
+	var/obj/item/mask = locate(mask_type) in src
+	var/obj/item/internals = locate(internal_type) in src
+	new /obj/item/tank/internals/plasmaman/belt(src)
+	qdel(mask) // Get rid of the items that shouldn't be
+	qdel(internals)
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
@@ -699,7 +708,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
+	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
 	custom_price = PAYCHECK_ASSISTANT * 0.4
 	base_icon_state = "matchbox"
 	illustration = null
@@ -1583,7 +1592,7 @@
 /obj/item/storage/box/hero/carphunter/PopulateContents()
 	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
 	new /obj/item/clothing/mask/gas/carp(src)
-	new /obj/item/kitchen/knife/hunting(src)
+	new /obj/item/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
 
 /obj/item/storage/box/holy/clock

@@ -11,27 +11,32 @@
 	invocation = "RAC'WA NO!"
 	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
+	nonabstract_req = TRUE
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
-	var/convert_damage = TRUE //If you want to convert the caster's health and blood to the shift, and vice versa.
-	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
+	///If you want to convert the caster's health and blood to the shift, and vice versa.
+	var/convert_damage = TRUE
+	///The damage type to convert to, as simplemobs don't have advanced damagetypes.
+	var/convert_damage_type = BRUTE
 
 	var/mob/living/shapeshift_type
-	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
-		/mob/living/simple_animal/pet/dog/corgi,\
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
-		/mob/living/simple_animal/bot/secbot/ed209,\
-		/mob/living/simple_animal/hostile/giant_spider/viper/wizard,\
-		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
+	var/list/possible_shapes = list(
+		/mob/living/simple_animal/mouse,
+		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/simple_animal/hostile/carp/ranged/chaos,
+		/mob/living/simple_animal/bot/secbot/ed209,
+		/mob/living/simple_animal/hostile/giant_spider/viper/wizard,
+		/mob/living/simple_animal/hostile/construct/juggernaut/mystic,
+	)
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets, mob/user = usr)
 	if(src in user.mob_spell_list)
 		LAZYREMOVE(user.mob_spell_list, src)
 		user.mind.AddSpell(src)
 	if(user.buckled)
 		user.buckled.unbuckle_mob(src,force=TRUE)
-	for(var/mob/living/M in targets)
+	for(var/mob/living/shapeshifted_targets in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
 			var/list/display_animals = list()
@@ -41,7 +46,7 @@
 				var/image/animal_image = image(icon = initial(animal.icon), icon_state = initial(animal.icon_state))
 				display_animals += list(initial(animal.name) = animal_image)
 			sort_list(display_animals)
-			var/new_shapeshift_type = show_radial_menu(M, M, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
+			var/new_shapeshift_type = show_radial_menu(shapeshifted_targets, shapeshifted_targets, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 			if(shapeshift_type)
 				return
 			shapeshift_type = new_shapeshift_type
@@ -49,41 +54,44 @@
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
 
-		var/obj/shapeshift_holder/S = locate() in M
-		if(S)
-			M = Restore(M)
+		var/obj/shapeshift_holder/shapeshift_ability = locate() in shapeshifted_targets
+		var/currently_ventcrawling = FALSE
+		if(shapeshift_ability)
+			if(shapeshifted_targets.movement_type & VENTCRAWLING)
+				currently_ventcrawling = TRUE
+			shapeshifted_targets = restore_form(shapeshifted_targets)
 		else
-			M = Shapeshift(M)
-		// Are we currently ventcrawling?
-		if(!(M.movement_type & VENTCRAWLING))
-			return
+			shapeshifted_targets = Shapeshift(shapeshifted_targets)
 
 		// Can our new form support ventcrawling?
-		var/ventcrawler = HAS_TRAIT(M, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(M, TRAIT_VENTCRAWLER_NUDE)
+		var/ventcrawler = HAS_TRAIT(shapeshifted_targets, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(shapeshifted_targets, TRAIT_VENTCRAWLER_NUDE)
 		if(ventcrawler)
-			return
+			continue
 
-		//you're shapeshifting into something that can't fit into a vent
+		// Are we currently ventcrawling?
+		if(!currently_ventcrawling)
+			continue
 
-		var/obj/machinery/atmospherics/pipeyoudiein = M.loc
+		// You're shapeshifting into something that can't fit into a vent
+		var/obj/machinery/atmospherics/pipeyoudiein = shapeshifted_targets.loc
 		var/datum/pipeline/ourpipeline
-		var/pipenets = pipeyoudiein.returnPipenets()
+		var/pipenets = pipeyoudiein.return_pipenets()
 		if(islist(pipenets))
 			ourpipeline = pipenets[1]
 		else
 			ourpipeline = pipenets
 
-		to_chat(M, span_userdanger("Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!"))
+		to_chat(shapeshifted_targets, span_userdanger("Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!"))
 		var/gibtype = /obj/effect/gibspawner/generic
-		if(isalien(M))
+		if(isalien(shapeshifted_targets))
 			gibtype = /obj/effect/gibspawner/xeno
-		for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
+		for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(shapeshifted_targets)))
 			if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
 				new gibtype(get_turf(possiblevent))
 				playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
-		priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
-		M.death()
-		qdel(M)
+		priority_announce("We detected a pipe blockage around [get_area(get_turf(shapeshifted_targets))], please dispatch someone to investigate.", "Central Command")
+		shapeshifted_targets.death()
+		qdel(shapeshifted_targets)
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -99,28 +107,30 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
-	var/obj/shapeshift_holder/H = locate() in caster
-	if(H)
+	var/obj/shapeshift_holder/shapeshift_ability = locate() in caster
+	if(shapeshift_ability)
 		to_chat(caster, span_warning("You're already shapeshifted!"))
 		return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
-	H = new(shape,src,caster)
+	shapeshift_ability = new(shape, src, caster)
 
 	clothes_req = FALSE
 	human_req = FALSE
 	return shape
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/proc/Restore(mob/living/shape)
-	var/obj/shapeshift_holder/H = locate() in shape
-	if(!H)
+/obj/effect/proc_holder/spell/targeted/shapeshift/proc/restore_form(mob/living/caster)
+	var/obj/shapeshift_holder/shapeshift_ability = locate() in caster
+	if(!shapeshift_ability)
 		return
 
-	. =  H.stored
-	H.restore()
+	var/mob/living/restored_player = shapeshift_ability.stored
+
+	shapeshift_ability.restore()
 
 	clothes_req = initial(clothes_req)
 	human_req = initial(human_req)
+	return restored_player
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/dragon
 	name = "Dragon Form"
@@ -140,7 +150,7 @@
 	var/restoring = FALSE
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload,obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload, obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
 	. = ..()
 	source = _source
 	shape = loc
@@ -163,7 +173,7 @@
 	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/caster_death)
 
 /obj/shapeshift_holder/Destroy()
-	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
+	// restore_form manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here
 	// because restore() qdel'd src.
 	if(!restoring)
 		restore()
@@ -229,3 +239,4 @@
 		QDEL_NULL(shape)
 
 	qdel(src)
+	return stored

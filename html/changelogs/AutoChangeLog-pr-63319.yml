@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer use the disease browsing console to summon satan"
+  - bugfix: "The disease browsing console will now properly show you the mobs the disease effects"

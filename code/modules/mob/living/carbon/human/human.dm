@@ -48,11 +48,15 @@
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
-	if(!HAS_TRAIT(src, TRAIT_FREERUNNING) || levels > 1) // falling off one level
+	if(stat != CONSCIOUS || levels > 1) // you're not The One
 		return ..()
-	visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
-					span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
-	Knockdown(levels * 40)
+	var/obj/item/organ/external/wings/gliders = getorgan(/obj/item/organ/external/wings)
+	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
+		visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
+						span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
+		Knockdown(levels * 40)
+		return
+	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -290,8 +294,8 @@
 							"name" = "Security Citation",
 							"job" = "Citation Server",
 							"message" = message,
-							"targets" = list("[P.owner] ([P.ownjob])"),
-							"automated" = 1
+							"targets" = list(STRINGIFY_PDA_TARGET(P.owner, P.ownjob)),
+							"automated" = TRUE
 						))
 						signal.send_to_receivers()
 						usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
@@ -472,7 +476,6 @@
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [S] pulls \the [hand] from your grip!"))
-	rad_act(current_size * 3)
 
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
@@ -777,10 +780,6 @@
 	VV_DROPDOWN_OPTION(VV_HK_COPY_OUTFIT, "Copy Outfit")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_MUTATIONS, "Add/Remove Mutation")
 	VV_DROPDOWN_OPTION(VV_HK_MOD_QUIRKS, "Add/Remove Quirks")
-	VV_DROPDOWN_OPTION(VV_HK_MAKE_MONKEY, "Make Monkey")
-	VV_DROPDOWN_OPTION(VV_HK_MAKE_CYBORG, "Make Cyborg")
-	VV_DROPDOWN_OPTION(VV_HK_MAKE_SLIME, "Make Slime")
-	VV_DROPDOWN_OPTION(VV_HK_MAKE_ALIEN, "Make Alien")
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
 
@@ -835,30 +834,6 @@
 					remove_quirk(T)
 				else
 					add_quirk(T)
-	if(href_list[VV_HK_MAKE_MONKEY])
-		if(!check_rights(R_SPAWN))
-			return
-		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-			return
-		usr.client.holder.Topic("vv_override", list("monkeyone"=href_list[VV_HK_TARGET]))
-	if(href_list[VV_HK_MAKE_CYBORG])
-		if(!check_rights(R_SPAWN))
-			return
-		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-			return
-		usr.client.holder.Topic("vv_override", list("makerobot"=href_list[VV_HK_TARGET]))
-	if(href_list[VV_HK_MAKE_ALIEN])
-		if(!check_rights(R_SPAWN))
-			return
-		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-			return
-		usr.client.holder.Topic("vv_override", list("makealien"=href_list[VV_HK_TARGET]))
-	if(href_list[VV_HK_MAKE_SLIME])
-		if(!check_rights(R_SPAWN))
-			return
-		if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-			return
-		usr.client.holder.Topic("vv_override", list("makeslime"=href_list[VV_HK_TARGET]))
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return

@@ -479,15 +479,6 @@
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
-/datum/supply_pack/security/armory/combatknives
-	name = "Combat Knives Crate"
-	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat)
-	crate_name = "combat knife crate"
-
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers. Requires Armory access to open."
@@ -918,10 +909,10 @@
 	name = "Grounding Rod Crate"
 	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod)
+	contains = list(/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -929,7 +920,7 @@
 	name = "Solar Panel Crate"
 	desc = "Go green with this DIY advanced solar array. Contains twenty one solar assemblies, a solar-control circuit board, and tracker. If you have any questions, please check out the enclosed instruction book."
 	cost = CARGO_CRATE_VALUE * 8
-	contains  = list(/obj/item/solar_assembly,
+	contains = list(/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
@@ -970,10 +961,10 @@
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old assistant electrofrying: This pack of four Tesla coils can do it all!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil)
+	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -1634,6 +1625,15 @@
 	contains = list(/obj/item/storage/backpack/duffelbag/mining_conscript)
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/service/survivalknives
+	name = "Survival Knives Crate"
+	desc = "Contains three sharpened survival knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/knife/combat/survival,
+					/obj/item/knife/combat/survival,
+					/obj/item/knife/combat/survival)
+	crate_name = "survival knife crate"
 
 /datum/supply_pack/service/wedding
 	name = "Wedding Crate"
@@ -2524,6 +2524,13 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/exodrone)
 	crate_name = "exodrone crate"
+
+/datum/supply_pack/misc/exploration_fuel
+	name = "Drone Fuel Pellet"
+	desc = "A fresh tank of exploration drone fuel."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/fuel_pellet)
+	crate_name = "exodrone fuel crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"

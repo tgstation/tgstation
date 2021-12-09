@@ -27,6 +27,8 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+///Sets the length of a lazylist
+#define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
 ///Returns the lenght of the list
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
@@ -169,8 +171,7 @@
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/thing in atoms)
-		var/atom/atom_checked = thing
+	for(var/atom/atom_checked as anything in atoms)
 		if (typecache[atom_checked.type])
 			. += atom_checked
 
@@ -178,16 +179,16 @@
 /proc/typecache_filter_list_reverse(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
 	. = list()
-	for(var/atom/atom as anything in atoms)
-		if(!typecache[atom.type])
-			. += atom
+	for(var/atom/atom_checked as anything in atoms)
+		if(!typecache[atom_checked.type])
+			. += atom_checked
 
 ///similar to typecache_filter_list and typecache_filter_list_reverse but it supports an inclusion list and and exclusion list
 /proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
 	. = list()
-	for(var/atom/atom as anything in atoms)
-		if(typecache_include[atom.type] && !typecache_exclude[atom.type])
-			. += atom
+	for(var/atom/atom_checked as anything in atoms)
+		if(typecache_include[atom_checked.type] && !typecache_exclude[atom_checked.type])
+			. += atom_checked
 
 ///Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
@@ -262,30 +263,16 @@
 	return result
 
 /**
- * Picks a random element from a list based on a weighting system:
- * 1. Adds up the total of weights for each element
- * 2. Gets a number between 1 and that total
- * 3. For each element in the list, subtracts its weighting from that number
- * 4. If that makes the number 0 or less, return that element.
- * Will output null sometimes if you use decimals (e.g. 0.1 instead of 10) as rand() uses integers, not floats
-**/
+ * Picks a random element from a list based on a weighting system.
+ * For example, given the following list:
+ * A = 6, B = 3, C = 1, D = 0
+ * A would have a 60% chance of being picked,
+ * B would have a 30% chance of being picked,
+ * C would have a 10% chance of being picked,
+ * and D would have a 0% chance of being picked.
+ * You should only pass integers in.
+ */
 /proc/pick_weight(list/list_to_pick)
-	var/total = 0
-	var/item
-	for(item in list_to_pick)
-		if(!list_to_pick[item])
-			list_to_pick[item] = 1
-		total += list_to_pick[item]
-
-	total = rand(1, total)
-	for(item in list_to_pick)
-		total -= list_to_pick[item]
-		if(total <= 0)
-			return item
-
-	return null
-///The original pickweight proc will sometimes pick entries with zero weight.  I'm not sure if changing the original will break anything, so I left it be.
-/proc/pick_weight_allow_zero(list/list_to_pick)
 	var/total = 0
 	var/item
 	for(item in list_to_pick)
@@ -314,6 +301,12 @@
 	if(L.len)
 		. = L[L.len]
 		L.len--
+
+/// Returns the top (last) element from the list, does not remove it from the list. Stack functionality.
+/proc/peek(list/target_list)
+	var/list_length = length(target_list)
+	if(list_length != 0)
+		return target_list[list_length]
 
 /proc/popleft(list/L)
 	if(L.len)
@@ -352,7 +345,7 @@
 		return
 	inserted_list = inserted_list.Copy()
 
-	for(var/i = 1, i < inserted_list.len, ++i)
+	for(var/i in 1 to inserted_list.len - 1)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 	return inserted_list
@@ -362,7 +355,7 @@
 	if(!inserted_list)
 		return
 
-	for(var/i = 1, i < inserted_list.len, ++i)
+	for(var/i in 1 to inserted_list.len - 1)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
 
 ///Return a list with no duplicate entries
@@ -405,12 +398,13 @@
 	if(islist(wordlist))
 		var/max = min(wordlist.len, 24)
 		var/bit = 1
-		for(var/i = 1, i <= max, i++)
+		for(var/i in 1 to max)
 			if(bitfield & bit)
 				return_list += wordlist[i]
 			bit = bit << 1
 	else
-		for(var/bit = 1, bit <= (1<<24), bit = bit << 1)
+		for(var/bit_number = 0 to 23)
+			var/bit = 1 << bit_number
 			if(bitfield & bit)
 				return_list += bit
 
@@ -466,7 +460,7 @@
 			return //no need to move
 		from_index += len //we want to shift left instead of right
 
-		for(var/i = 0, i < distance, ++i)
+		for(var/i in 1 to distance)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -474,7 +468,7 @@
 		if(from_index > to_index)
 			from_index += len
 
-		for(var/i = 0, i < len, ++i)
+		for(var/i in 1 to len)
 			inserted_list.Insert(to_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(from_index, from_index + 1)
@@ -490,7 +484,7 @@
 		else
 			from_index += len
 
-		for(var/i = 0, i < distance, ++i)
+		for(var/i in 1 to distance)
 			inserted_list.Insert(from_index, null)
 			inserted_list.Swap(from_index, to_index)
 			inserted_list.Cut(to_index, to_index + 1)
@@ -500,7 +494,7 @@
 			to_index = from_index
 			from_index = a
 
-		for(var/i = 0, i < len, ++i)
+		for(var/i in 1 to len)
 			inserted_list.Swap(from_index++, to_index++)
 
 ///replaces reverseList ~Carnie
@@ -657,3 +651,25 @@
 		if(condition.Invoke(i))
 			. |= i
 
+///Returns a list with all weakrefs resolved
+/proc/recursive_list_resolve(list/list_to_resolve)
+	. = list()
+	for(var/element in list_to_resolve)
+		if(istext(element))
+			. += element
+			var/possible_assoc_value = list_to_resolve[element]
+			if(possible_assoc_value)
+				.[element] = recursive_list_resolve_element(possible_assoc_value)
+		else
+			. += list(recursive_list_resolve_element(element))
+
+///Helper for /proc/recursive_list_resolve
+/proc/recursive_list_resolve_element(element)
+	if(islist(element))
+		var/list/inner_list = element
+		return recursive_list_resolve(inner_list)
+	else if(isweakref(element))
+		var/datum/weakref/ref = element
+		return ref.resolve()
+	else
+		return element

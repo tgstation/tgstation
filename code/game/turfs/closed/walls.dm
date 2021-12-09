@@ -87,6 +87,7 @@
 		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
 	else
 		ScrapeAway()
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)

@@ -266,7 +266,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "O" = (
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"

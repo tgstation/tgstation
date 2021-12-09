@@ -173,7 +173,7 @@
 		heirloom_type = pick(holder_species.family_heirlooms)
 	else
 		// Our quirk holder's job
-		var/datum/job/holder_job = human_holder.mind?.assigned_role
+		var/datum/job/holder_job = human_holder.last_mind?.assigned_role
 		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
 			heirloom_type = pick(holder_job.family_heirlooms)
 
@@ -203,7 +203,6 @@
 	if(!family_heirloom)
 		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realise your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
 		return
-
 	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 	return ..()
@@ -287,9 +286,21 @@
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
 	hardcore_value = 5
+	var/glasses
 
 /datum/quirk/item_quirk/nearsighted/add_unique()
-	give_item_to_holder(/obj/item/clothing/glasses/regular, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	glasses = glasses || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/glasses)
+	switch(glasses)
+		if ("Thin")
+			glasses = /obj/item/clothing/glasses/regular/thin
+		if ("Circle")
+			glasses = /obj/item/clothing/glasses/regular/circle
+		if ("Hipster")
+			glasses = /obj/item/clothing/glasses/regular/hipster
+		else
+			glasses = /obj/item/clothing/glasses/regular
+
+	give_item_to_holder(glasses, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/nearsighted/add()
 	quirk_holder.become_nearsighted(QUIRK_TRAIT)
@@ -322,6 +333,9 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
 		return
 
 	var/turf/holder_turf = get_turf(quirk_holder)
@@ -635,7 +649,7 @@
 	reagent_instance = new reagent_type()
 
 	for(var/addiction in reagent_instance.addiction_types)
-		human_holder.mind.add_addiction_points(addiction, 1000)
+		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
 	var/current_turf = get_turf(quirk_holder)
 
@@ -686,14 +700,14 @@
 		var/deleted = QDELETED(reagent_instance)
 		var/missing_addiction = FALSE
 		for(var/addiction_type in reagent_instance.addiction_types)
-			if(!LAZYACCESS(human_holder.mind.active_addictions, addiction_type))
+			if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
 				missing_addiction = TRUE
 		if(deleted || missing_addiction)
 			if(deleted)
 				reagent_instance = new reagent_type()
 			to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
 			for(var/addiction in reagent_instance.addiction_types)
-				human_holder.mind.add_addiction_points(addiction, 1000) ///Max that shit out
+				human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
 /datum/quirk/item_quirk/junkie/smoker
 	name = "Smoker"
@@ -704,6 +718,7 @@
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
+	mob_trait = TRAIT_SMOKER
 	hardcore_value = 1
 	drug_flavour_text = "Make sure you get your favorite brand when you run out."
 
@@ -721,6 +736,11 @@
 	. = ..()
 	var/brand = initial(drug_container_type.name)
 	quirk_holder.mind.add_memory(MEMORY_QUIRK_DRUG, list(DETAIL_FAV_BRAND = brand), memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOPERSISTENCE, story_value = STORY_VALUE_SHIT)
+	// smoker lungs have 25% less health and healing
+	var/obj/item/organ/lungs/smoker_lungs = quirk_holder.getorganslot(ORGAN_SLOT_LUNGS)
+	if (smoker_lungs && !(smoker_lungs.organ_flags & ORGAN_SYNTHETIC)) // robotic lungs aren't affected
+		smoker_lungs.maxHealth = smoker_lungs.maxHealth * 0.75
+		smoker_lungs.healing_factor = smoker_lungs.healing_factor * 0.75
 
 /datum/quirk/item_quirk/junkie/smoker/process(delta_time)
 	. = ..()
@@ -816,10 +836,10 @@
 	hardcore_value = 1
 
 /datum/quirk/bad_touch/add()
-	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT), .proc/uncomfortable_touch)
+	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT, COMSIG_CARBON_TAILPULL), .proc/uncomfortable_touch)
 
 /datum/quirk/bad_touch/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT))
+	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT, COMSIG_CARBON_TAILPULL))
 
 /datum/quirk/bad_touch/proc/uncomfortable_touch()
 	SIGNAL_HANDLER

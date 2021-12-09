@@ -1,5 +1,7 @@
 /datum/job/virologist
 	title = "Virologist"
+	description = "Study the effects of various diseases and synthesize a \
+		vaccine for them. Engineer beneficial viruses."
 	department_head = list("Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 1
@@ -41,17 +43,17 @@
 	name = "Virologist"
 	jobtype = /datum/job/virologist
 
+	id_trim = /datum/id_trim/job/virologist
+	uniform = /obj/item/clothing/under/rank/medical/virologist
+	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
+	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/virologist
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
-	suit_store =  /obj/item/flashlight/pen
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir
 	duffelbag = /obj/item/storage/backpack/duffelbag/virology
-	box = /obj/item/storage/box/survival/medical
 
-	id_trim = /datum/id_trim/job/virologist
+	box = /obj/item/storage/box/survival/medical

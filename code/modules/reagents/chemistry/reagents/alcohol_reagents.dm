@@ -106,8 +106,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -164,7 +164,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
@@ -196,7 +196,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn
-	name = "candy corn liquor"
+	name = "Candy Corn Liquor"
 	description = "Like they drank in 2D speakeasies."
 	color = "#ccb800" // rgb: 204, 184, 0
 	taste_description = "pancake syrup"
@@ -225,7 +225,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (7 * REM * delta_time), 0)
+	M.adjust_drowsyness(-7 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
@@ -286,10 +286,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassclear"
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation = max(M.radiation - (2 * REM * delta_time),0)
-	return ..()
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -406,7 +402,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/lizardwine
-	name = "Lizard wine"
+	name = "Lizard Wine"
 	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
@@ -669,8 +665,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
-		// Engineers lose radiation poisoning at a massive rate.
-		M.radiation = max(M.radiation - (25 * REM * delta_time), 0)
+		ADD_TRAIT(M, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+		if (HAS_TRAIT(M, TRAIT_IRRADIATED))
+			M.adjustToxLoss(-2 * REM * delta_time)
+
+	return ..()
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 	return ..()
 
 /datum/reagent/consumable/ethanol/booger
@@ -2171,9 +2173,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			name += "[fruit_name] "
 			named = TRUE
 	if(named)
-		name += "wine"
+		name += "Wine"
 	else
-		name = "mixed [names_in_order[1]] wine"
+		name = "Mixed [names_in_order[1]] Wine"
 
 	var/alcohol_description
 	switch(boozepwr)
@@ -2326,8 +2328,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(DT_PROB(10, delta_time) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "ccc"
-			metabolizer.hair_color = "ccc"
+			metabolizer.facial_hair_color = "#cccccc"
+			metabolizer.hair_color = "#cccccc"
 			metabolizer.update_hair()
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
@@ -2471,7 +2473,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
-	name = "pruno"
+	name = "Pruno"
 	color = "#E78108"
 	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 	boozepwr = 85

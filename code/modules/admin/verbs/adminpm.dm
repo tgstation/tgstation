@@ -64,9 +64,19 @@
 
 	var/datum/admin_help/AH = C.current_ticket
 
+	var/message_prompt = "Message:"
+
+	if(AH?.opening_responders && length(AH.ticket_interactions) == 1)
+		SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
+		message_prompt += "\n\n**This ticket is already being responded to by: [english_list(AH.opening_responders)]**"
+
 	if(AH)
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+		if(length(AH.ticket_interactions) == 1) // add the admin who is currently responding to the list of people responding
+			LAZYADD(AH.opening_responders, src)
+
+	var/msg = input(src, message_prompt, "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+	LAZYREMOVE(AH.opening_responders, src)
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return
@@ -225,13 +235,13 @@
 					confidential = TRUE)
 				//omg this is dumb, just fill in both their tickets
 				var/interaction_message = "<font color='purple'>PM from-<b>[key_name(src, recipient, 1)]</b> to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>"
-				admin_ticket_log(src, interaction_message)
+				admin_ticket_log(src, interaction_message, log_in_blackbox = FALSE)
 				if(recipient != src) //reeee
-					admin_ticket_log(recipient, interaction_message)
+					admin_ticket_log(recipient, interaction_message, log_in_blackbox = FALSE)
 				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 			else //recipient is an admin but sender is not
 				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"
-				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
+				admin_ticket_log(src, "<font color='red'>[replymsg]</font>", log_in_blackbox = FALSE)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
 					html = span_danger("[replymsg]"),
@@ -270,7 +280,7 @@
 					html = span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"),
 					confidential = TRUE)
 
-				admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
+				admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>", log_in_blackbox = FALSE)
 
 				if(!already_logged) //Reply to an existing ticket
 					SSblackbox.LogAhelp(recipient.current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
@@ -400,7 +410,7 @@
 		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 		confidential = TRUE)
 
-	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>")
+	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>", log_in_blackbox = FALSE)
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound

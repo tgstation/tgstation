@@ -818,7 +818,7 @@
 	var/faction_name
 
 /datum/status_effect/stabilized/pink/on_apply()
-	faction_name = owner.real_name
+	faction_name = REF(owner)
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick()

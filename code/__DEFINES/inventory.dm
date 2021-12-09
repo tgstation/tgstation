@@ -134,7 +134,9 @@
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
 
-#define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
+#define TINT_MINIMAL 0.25
+#define TINT_LIGHTER 1.5
+#define TINT_DARKENED 2.5 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
 
 // defines for AFK theft
@@ -199,7 +201,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
-	/obj/item/kitchen/knife/combat,
+	/obj/item/knife/combat,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/random
 	display_name = "Random"
 	desc = "A component that returns random values."
+	category = "Math"
 
 	/// The minimum value that the random number can be
 	var/datum/port/input/minimum

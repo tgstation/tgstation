@@ -77,10 +77,10 @@ Buildable meters
 
 /obj/item/pipe/dropped()
 	if(loc)
-		setPipingLayer(piping_layer)
+		set_piping_layer(piping_layer)
 	return ..()
 
-/obj/item/pipe/proc/setPipingLayer(new_layer = PIPING_LAYER_DEFAULT)
+/obj/item/pipe/proc/set_piping_layer(new_layer = PIPING_LAYER_DEFAULT)
 	var/obj/machinery/atmospherics/fakeA = pipe_type
 
 	if(initial(fakeA.pipe_flags) & PIPING_ALL_LAYER)
@@ -173,7 +173,7 @@ Buildable meters
 	for(var/obj/machinery/atmospherics/machine as anything in potentially_conflicting_machines)
 		// if the pipes have any directions in common, we can't place it that way.
 		var/our_init_dirs = SSair.get_init_dirs(pipe_type, fixed_dir(), p_init_dir)
-		if(machine.GetInitDirections() & our_init_dirs)
+		if(machine.get_init_directions() & our_init_dirs)
 			// We have a conflict!
 			if (length(potentially_conflicting_machines) != 1 || !try_smart_reconfiguration(machine, our_init_dirs, user))
 				// No solutions found
@@ -216,7 +216,7 @@ Buildable meters
 				if (ISNOTSTUB(opposing_dir))
 					// We only get here if both smart pipes have two directions.
 					p_init_dir = opposing_dir
-					other_smart_pipe.SetInitDirections(other_smart_pipe.connections)
+					other_smart_pipe.set_init_directions(other_smart_pipe.connections)
 					other_smart_pipe.update_pipe_icon()
 					return TRUE
 				// We're left with one or no available directions if we look at the complement of the other smart pipe's live connections.
@@ -229,27 +229,27 @@ Buildable meters
 					if ((NORTH|SOUTH) & ~p_init_dir)
 						// Not allowed to connect this way
 						return FALSE
-					if (~other_smart_pipe.GetInitDirections() & (EAST|WEST))
+					if (~other_smart_pipe.get_init_directions() & (EAST|WEST))
 						// Not allowed to reconfigure the other pipe this way
 						return FALSE
 					p_init_dir = NORTH|SOUTH
-					other_smart_pipe.SetInitDirections(EAST|WEST)
+					other_smart_pipe.set_init_directions(EAST|WEST)
 					other_smart_pipe.update_pipe_icon()
 					return TRUE
 				if (NSCOMPONENT(other_smart_pipe.dir))
 					if ((EAST|WEST) & ~p_init_dir)
 						// Not allowed to connect this way
 						return FALSE
-					if (~other_smart_pipe.GetInitDirections() & (NORTH|SOUTH))
+					if (~other_smart_pipe.get_init_directions() & (NORTH|SOUTH))
 						// Not allowed to reconfigure the other pipe this way
 						return FALSE
 					p_init_dir = EAST|WEST
-					other_smart_pipe.SetInitDirections(NORTH|SOUTH)
+					other_smart_pipe.set_init_directions(NORTH|SOUTH)
 					other_smart_pipe.update_pipe_icon()
 					return TRUE
 			return FALSE
 		// We're not dealing with another smart pipe. See if we can become the complement of the conflicting machine.
-		var/opposing_dir = our_init_dirs & ~machine.GetInitDirections()
+		var/opposing_dir = our_init_dirs & ~machine.get_init_directions()
 		if (ISNOTSTUB(opposing_dir))
 			// We have at least two permitted directions in the complement. Use them.
 			p_init_dir = opposing_dir
@@ -261,10 +261,10 @@ Buildable meters
 		if (our_init_dirs & other_smart_pipe.connections)
 			// We needed to go where a smart pipe already had connections, nothing further we can do
 			return FALSE
-		var/opposing_dir = other_smart_pipe.GetInitDirections() & ~our_init_dirs
+		var/opposing_dir = other_smart_pipe.get_init_directions() & ~our_init_dirs
 		if (ISNOTSTUB(opposing_dir))
 			// At least two directions remain for that smart pipe, reconfigure it
-			other_smart_pipe.SetInitDirections(opposing_dir)
+			other_smart_pipe.set_init_directions(opposing_dir)
 			other_smart_pipe.update_pipe_icon()
 			return TRUE
 		return FALSE
@@ -273,7 +273,7 @@ Buildable meters
 
 /obj/item/pipe/proc/build_pipe(obj/machinery/atmospherics/A)
 	A.setDir(fixed_dir())
-	A.SetInitDirections(p_init_dir)
+	A.set_init_directions(p_init_dir)
 
 	if(pipename)
 		A.name = pipename
@@ -287,7 +287,7 @@ Buildable meters
 	..()
 	T.flipped = flipped
 
-/obj/item/pipe/directional/suicide_act(mob/user)
+/obj/item/pipe/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -298,6 +298,27 @@ Buildable meters
 			sleep(5)
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
+
+/obj/item/pipe/examine(mob/user)
+	. = ..()
+	. += span_notice("The pipe layer is set to [piping_layer].")
+	. += span_notice("You can change the pipe layer by Alt-Right-Clicking the device.")
+	. += span_notice("You can rotate it by using it in hand or by Alt-Left-Clicking the device.")
+
+/obj/item/pipe/alt_click_secondary(mob/user)
+	. = ..()
+	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+	set_piping_layer(layer_to_set)
+	visible_message("You set the pipe layer to [piping_layer].")
+
+/obj/item/pipe/trinary/flippable/examine(mob/user)
+	. = ..()
+	. += span_notice("You can flip the device by Ctrl-Clicking it.")
+
+/obj/item/pipe/trinary/flippable/CtrlClick(mob/user)
+	. = ..()
+	do_a_flip()
+	visible_message("You flip the device.")
 
 /obj/item/pipe_meter
 	name = "meter"

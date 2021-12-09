@@ -24,7 +24,7 @@
 	opacity = FALSE
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
 	var/load_random_books = FALSE
@@ -184,7 +184,6 @@
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
 	new /obj/item/book/manual/wiki/engineering_guide(src)
-	new /obj/item/book/manual/wiki/engineering_singulo_tesla(src)
 	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
 	update_appearance()
 
@@ -214,7 +213,7 @@
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
-	pickup_sound =  'sound/items/handling/book_pickup.ogg'
+	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 	var/dat //Actual page content
 	var/due_date = 0 //Game time in 1/10th seconds
 	var/author //Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -318,7 +317,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
-	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
+	else if((istype(I, /obj/item/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [title]..."))
 		if(do_after(user, 30, target = src))
 			to_chat(user, span_notice("You carve out the pages from [title]! You didn't want to read it anyway."))

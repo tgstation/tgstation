@@ -28,8 +28,8 @@
 	volume = 1000
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
-	var/turf/T = get_turf(src)
-	T.assume_air(air_contents)
+	var/turf/local_turf = get_turf(src)
+	local_turf.assume_air(air_contents)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
@@ -57,14 +57,14 @@
 
 	excited = TRUE
 
-	var/turf/T = get_turf(src)
+	var/turf/local_turf = get_turf(src)
 	var/datum/gas_mixture/sending
 	var/datum/gas_mixture/receiving
 	if(direction == PUMP_OUT) // Hook up the internal pump.
 		sending = (holding ? holding.return_air() : air_contents)
-		receiving = (holding ? air_contents : T.return_air())
+		receiving = (holding ? air_contents : local_turf.return_air())
 	else
-		sending = (holding ? air_contents : T.return_air())
+		sending = (holding ? air_contents : local_turf.return_air())
 		receiving = (holding ? holding.return_air() : air_contents)
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
@@ -172,3 +172,7 @@
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/pump/unregister_holding()
+	on = FALSE
+	return ..()

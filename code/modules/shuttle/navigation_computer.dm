@@ -2,7 +2,7 @@
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
-	should_supress_view_changes  = FALSE
+	should_supress_view_changes = FALSE
 
 	// Docking cameras should only interact with their current z-level.
 	move_up_action = null
@@ -304,7 +304,7 @@
 	src.origin = origin
 	return ..()
 
-/mob/camera/ai_eye/remote/shuttle_docker/setLoc(destination)
+/mob/camera/ai_eye/remote/shuttle_docker/setLoc(turf/destination, force_update = FALSE)
 	. = ..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	console.checkLandingSpot()

@@ -260,7 +260,9 @@
 		if(heart.target && heart.target.stat == DEAD)
 			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
 			var/mob/living/carbon/human/current_target = heart.target
-			current_target.gib()
+			current_target.spill_organs()
+			current_target.adjustBruteLoss(250)
+			new /obj/effect/gibspawner/generic(get_turf(current_target))
 			heart.target = null
 			var/datum/antagonist/heretic/heretic_datum = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
@@ -281,7 +283,7 @@
 					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
-				var/datum/mind/targeted =  temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/datum/mind/targeted = temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
 				for(var/datum/team/team as anything in teams)
 					if(targeted in team.members)

@@ -13,7 +13,9 @@
 	pipe_state = "manifoldlayer"
 	paintable = TRUE
 
+	///Reference to all the nodes in the front
 	var/list/front_nodes
+	///Reference to all the nodes in the back
 	var/list/back_nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize(mapload)
@@ -23,16 +25,16 @@
 	return ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Destroy()
-	nullifyAllNodes()
+	nullify_all_nodes()
 	return ..()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_pipe_icon()
 	return
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/nullifyAllNodes()
-	for(var/obj/machinery/atmospherics/A in nodes)
-		A.disconnect(src)
-		SSair.add_to_rebuild_queue(A)
+/obj/machinery/atmospherics/pipe/layer_manifold/proc/nullify_all_nodes()
+	for(var/obj/machinery/atmospherics/node in nodes)
+		node.disconnect(src)
+		SSair.add_to_rebuild_queue(node)
 	front_nodes = null
 	back_nodes = null
 	nodes = list()
@@ -52,37 +54,37 @@
 		if(length(back_images))
 			. += back_images
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_images(obj/machinery/atmospherics/A)
-	if(!A)
+/obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_images(obj/machinery/atmospherics/machine_check)
+	if(!machine_check)
 		return
 
 	. = list()
 
-	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
+	if(istype(machine_check, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-			. += get_attached_image(get_dir(src, A), i, COLOR_VERY_LIGHT_GRAY)
+			. += get_attached_image(get_dir(src, machine_check), i, COLOR_VERY_LIGHT_GRAY)
 		return
-	. += get_attached_image(get_dir(src, A), A.piping_layer, A.pipe_color)
+	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, machine_check.pipe_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
 	var/mutable_appearance/muta = mutable_appearance('icons/obj/atmospherics/pipes/layer_manifold_underlays.dmi', "intact_[p_dir]_[p_layer]", layer = layer - 0.01, appearance_flags = RESET_COLOR)
 	muta.color = p_color
 	return muta
 
-/obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
+/obj/machinery/atmospherics/pipe/layer_manifold/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
 
-/obj/machinery/atmospherics/pipe/layer_manifold/proc/findAllConnections()
+/obj/machinery/atmospherics/pipe/layer_manifold/proc/find_all_connections()
 	front_nodes = list()
 	back_nodes = list()
 	nodes = list()
 	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-		var/obj/machinery/atmospherics/foundfront = findConnecting(dir, iter)
-		var/obj/machinery/atmospherics/foundback = findConnecting(turn(dir, 180), iter)
+		var/obj/machinery/atmospherics/foundfront = find_connecting(dir, iter)
+		var/obj/machinery/atmospherics/foundback = find_connecting(turn(dir, 180), iter)
 		front_nodes += foundfront
 		back_nodes += foundback
 		if(foundfront && !QDELETED(foundfront))
@@ -92,11 +94,11 @@
 	update_appearance()
 	return nodes
 
-/obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
+/obj/machinery/atmospherics/pipe/layer_manifold/atmos_init()
 	normalize_cardinal_directions()
-	findAllConnections()
+	find_all_connections()
 
-/obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
+/obj/machinery/atmospherics/pipe/layer_manifold/set_piping_layer()
 	piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/machinery/atmospherics/pipe/layer_manifold/pipeline_expansion()
@@ -104,8 +106,8 @@
 
 /obj/machinery/atmospherics/pipe/layer_manifold/disconnect(obj/machinery/atmospherics/reference)
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = reference
-		P.destroy_network()
+		var/obj/machinery/atmospherics/pipe/pipe_reference = reference
+		pipe_reference.destroy_network()
 	while(reference in nodes)
 		var/i = nodes.Find(reference)
 		nodes[i] = null

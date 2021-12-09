@@ -474,7 +474,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	duration = 82
 	color = COLOR_DARK_ORANGE
 
@@ -601,7 +601,7 @@
 		return
 	swoop_attack(FALSE, A)
 	lava_pools(10, 2) // less pools but longer delay before spawns
-	player_cooldown = world.time + 20 SECONDS // needs seperate cooldown or cant use fire attacks
+	player_cooldown = world.time + 20 SECONDS // needs separate cooldown or cant use fire attacks
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return

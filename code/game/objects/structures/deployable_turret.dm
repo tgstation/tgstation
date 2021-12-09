@@ -60,7 +60,7 @@
 
 //BUCKLE HOOKS
 
-/obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob,force = FALSE)
+/obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))

@@ -37,7 +37,7 @@
 		var/list/viewable = view(affected_range, epicenter)
 
 		var/list/accessible = list(epicenter)
-		for(var/i=1; i<=affected_range; i++)
+		for(var/i in 1 to affected_range)
 			var/list/turflist = list()
 			for(var/turf/T in (orange(i, epicenter) - orange(i-1, epicenter)))
 				turflist |= T
@@ -48,7 +48,7 @@
 			for(var/turf/T in turflist)
 				if(accessible[T])
 					continue
-				for(var/thing in T.GetAtmosAdjacentTurfs(alldir = TRUE))
+				for(var/thing in T.get_atmos_adjacent_turfs(alldir = TRUE))
 					var/turf/NT = thing
 					if(!(NT in accessible))
 						continue

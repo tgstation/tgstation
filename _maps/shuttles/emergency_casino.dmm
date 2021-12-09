@@ -476,7 +476,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "mi" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
@@ -562,7 +562,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "ok" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "oz" = (
@@ -896,7 +896,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "yy" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -1132,7 +1132,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Gf" = (
@@ -1393,7 +1393,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "PW" = (
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Qk" = (
@@ -1566,7 +1566,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "Yc" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Yp" = (
@@ -1779,7 +1779,7 @@ mz
 BY
 ly
 Wp
-BD
+gm
 yc
 YF
 yc
@@ -1827,8 +1827,8 @@ Xl
 Xl
 Xl
 Lb
-ji
-ji
+Ws
+Ws
 Wp
 mz
 Fi
@@ -1865,7 +1865,7 @@ Lz
 Lz
 Lz
 Lz
-Td
+qx
 Zj
 qx
 Lz
@@ -1931,8 +1931,8 @@ aS
 YS
 AA
 RZ
-kU
-kU
+kz
+kz
 RZ
 Ab
 mz
@@ -2057,8 +2057,8 @@ RZ
 RZ
 RZ
 RZ
-kU
-kU
+kz
+kz
 RZ
 Ab
 mz
@@ -2075,7 +2075,7 @@ gI
 gI
 gI
 gI
-gg
+jS
 Xv
 jS
 gI
@@ -2162,9 +2162,9 @@ kA
 Wp
 Wp
 Wp
-ji
-ji
-ji
+Ws
+Ws
+Ws
 Wp
 mz
 DA

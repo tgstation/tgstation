@@ -24,7 +24,7 @@
 	implements = list(
 		TOOL_SCALPEL = 90,
 		/obj/item/melee/energy/sword = 45,
-		/obj/item/kitchen/knife = 45,
+		/obj/item/knife = 45,
 		/obj/item/shard = 25)
 	time = 16
 

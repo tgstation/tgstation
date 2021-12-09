@@ -23,7 +23,7 @@
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,allow_numbers=FALSE)
-	if(is_ic_filtered(t))
+	if(is_ic_filtered(t) || is_soft_ic_filtered(t))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
@@ -221,7 +221,7 @@
 			return //(not case sensitive)
 
 	// Protects against names containing IC chat prohibited words.
-	if(is_ic_filtered(t_out))
+	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
 		return
 
 	return t_out
@@ -373,12 +373,12 @@ GLOBAL_LIST_INIT(space, list(" "))
 GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
-	for(var/i=1, i<=length, i++)
+	for(var/i in 1 to length)
 		. += pick(characters)
 
 /proc/repeat_string(times, string="")
 	. = ""
-	for(var/i=1, i<=times, i++)
+	for(var/i in 1 to times)
 		. += string
 
 /proc/random_short_color()
@@ -480,7 +480,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/tlistlen = tlist.len
 		var/listlevel = -1
 		var/singlespace = -1 // if 0, double spaces are used before asterisks, if 1, single are
-		for(var/i = 1, i <= tlistlen, i++)
+		for(var/i in 1 to tlistlen)
 			var/line = tlist[i]
 			var/count_asterisk = length(replacetext(line, regex("\[^\\*\]+", "g"), ""))
 			if(count_asterisk % 2 == 1 && findtext(line, regex("^\\s*\\*", "g"))) // there is an extra asterisk in the beggining
@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		// end for
 
 		t = tlist[1]
-		for(var/i = 2, i <= tlistlen, i++)
+		for(var/i in 2 to tlistlen)
 			t += "\n" + tlist[i]
 
 		while(listlevel >= 0)
@@ -656,7 +656,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/punctbuffer = ""
 		var/cutoff = 0
 		lentext = length_char(buffer)
-		for(var/pos = 1, pos <= lentext, pos++)
+		for(var/pos in 1 to lentext)
 			let = copytext_char(buffer, -pos, -pos + 1)
 			if(!findtext(let, GLOB.is_punctuation)) //This won't handle things like Nyaaaa!~ but that's fine
 				break

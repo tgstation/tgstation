@@ -73,18 +73,14 @@
 
 /obj/structure/closet/secure_closet/chief_medical/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/cmo(src)
+
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
-	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
-	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
-	new /obj/item/clothing/shoes/sneakers/brown (src)
+	new /obj/item/storage/bag/garment/chief_medical(src)
 	new /obj/item/cartridge/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/defibrillator/compact/loaded(src)
-	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/reagent_containers/hypospray/cmo(src)
@@ -95,7 +91,7 @@
 	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/medical/cmo(src)
+
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
@@ -110,7 +106,7 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"
 	desc = "Store dangerous chemicals in here."
-	req_access = list(ACCESS_CHEMISTRY)
+	req_access = list(ACCESS_PHARMACY)
 	icon_door = "chemical"
 
 /obj/structure/closet/secure_closet/chemical/PopulateContents()
@@ -125,6 +121,7 @@
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"
+	req_access = list(ACCESS_CHEMISTRY)
 
 /obj/structure/closet/secure_closet/chemical/heisenberg/PopulateContents()
 	..()
