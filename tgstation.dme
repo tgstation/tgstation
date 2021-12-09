@@ -1732,6 +1732,7 @@
 #include "code\modules\admin\outfit_editor.dm"
 #include "code\modules\admin\outfit_manager.dm"
 #include "code\modules\admin\outfits.dm"
+#include "code\modules\admin\painting_manager.dm"
 #include "code\modules\admin\permissionedit.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\poll_management.dm"

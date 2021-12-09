@@ -76,6 +76,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/view_all_circuits,
 	/datum/admins/proc/view_all_sdql_spells,
 	/datum/admins/proc/known_alts_panel,
+	/datum/admins/proc/paintings_manager,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
