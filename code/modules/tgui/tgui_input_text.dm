@@ -13,6 +13,7 @@
  * * max_length - Specifies a max length for input. MAX_MESSAGE_LEN is default (1024)
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * encode - Toggling this determines if input is filtered via html_encode. Setting this to FALSE gives raw input.
+ * * no_trim - Like stripped_input's no_trim. Boolean determines whether to use copytext or trim
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
 /proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, no_trim = FALSE, timeout = 0)
@@ -52,6 +53,7 @@
  * * max_length - Specifies a max length for input.
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * encode - If toggled, input is filtered via html_encode. Setting this to FALSE gives raw input.
+ * * no_trim - Like stripped_input's no_trim. Boolean determines whether to use copytext or trim
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  */
