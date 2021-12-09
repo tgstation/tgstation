@@ -620,7 +620,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in GLOB.gas_id_to_canister
+			var/label = tgui_input_list(usr, "New canister label", name, GLOB.gas_id_to_canister)
 			if(label && !..())
 				var/newtype = GLOB.gas_id_to_canister[label]
 				if(newtype)
