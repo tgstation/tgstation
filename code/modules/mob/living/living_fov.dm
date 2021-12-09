@@ -55,10 +55,7 @@
 /// Updates the state of the owner eye and updates masking
 /datum/field_of_view/proc/update_eye()
 	var/client/parent_client = owner.client
-	if(parent_client.eye == owner)
-		user_extends_eye = FALSE
-	else
-		user_extends_eye = TRUE
+	user_extends_eye = owner.client.eye != owner
 	update_masking()
 
 /// Properly applies or removes the mask, on conditions of living and not extending an eye
