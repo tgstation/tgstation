@@ -50,8 +50,7 @@
 
 /mob/living/setDir(new_dir)
 	. = ..()
-	if(fov_handler)
-		fov_handler.dir_change(dir)
+	fov_handler?.dir_change(dir)
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
@@ -734,8 +733,7 @@
 	else if(admin_revive)
 		updatehealth()
 		get_up(TRUE)
-	if(fov_handler)
-		fov_handler.update_living()
+	fov_handler?.update_living()
 
 
 /mob/living/proc/remove_CC()
@@ -1533,8 +1531,7 @@
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
-		if(fov_handler)
-			fov_handler.update_eye()
+		fov_handler?.update_eye()
 
 /mob/living/update_mouse_pointer()
 	..()
