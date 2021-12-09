@@ -148,6 +148,7 @@
 	desc = "A module installed into the visor of the suit, this projects a \
 		polarized, holographic overlay in front of the user's eyes. It's rated high enough for \
 		immunity against extremities such as spot and arc welding, solar eclipses, and handheld flashlights."
+	icon_state = "welding"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/welding)
 	overlay_state_inactive = "module_welding"
@@ -163,6 +164,7 @@
 	desc = "A module installed into the visor of the suit, allowing the user to use a pulse of terahertz radiation \
 		to essentially echolocate things beneath the floor, mostly cables and pipes. \
 		A staple of atmospherics work, and counter-smuggling work."
+	icon_state = "tray"
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
@@ -736,6 +738,7 @@
 		This can draw incredible amounts of power from the suit's cell to create edible organic matter in the \
 		palm of the wearer's glove; however, research seemed to have entirely stopped at burgers. \
 		Notably, all attempts to get it to dispense Earl Grey tea have failed."
+	icon_state = "dispenser"
 	module_type = MODULE_USABLE
 	complexity = 3
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
@@ -807,6 +810,7 @@
 	name = "MOD quick carry module"
 	desc = "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; \
 		or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
+	icon_state = "carry"
 	complexity = 1
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
@@ -836,6 +840,7 @@
 		utilizing commonplace systems to convert the possible damage from a fall into kinetic charge, \
 		as well as internal gyroscopes to ensure the user's safe falling. \
 		Useful for mining, monorail tracks, or even skydiving!"
+	icon_state = "longfall"
 	complexity = 1
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/longfall)
@@ -1204,6 +1209,7 @@
 		It's an arm-mounted device utilizing technology similar to modern-day part replacers, \
 		capable of storing and inserting organs into open patients. \
 		It's recommended by the DeForest Medical Corporation to not inform patients it has been used."
+	icon_state = "organ_thrower"
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN
@@ -1624,6 +1630,7 @@
 		specialized runes engraved onto the surface of the suit to generate a wall of force. \
 		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
+	icon_state = "battlemage_shield"
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0 //magic
 	use_power_cost = DEFAULT_CELL_DRAIN * 0 //magic too
 	max_charges = 15
@@ -1638,6 +1645,7 @@
 		to have their internal plasma circulate around them somewhat like a sauna. \
 		This prevents them from self-igniting, and leads to greater comfort overall. \
 		The purple glass of the visor seems to be constructed for nostalgic purposes."
+	icon_state = "plasma_stabilizer"
 	complexity = 1
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
@@ -1656,6 +1664,7 @@
 		This creates a low-range, yet strong, magic nullification field around the user, \
 		aided by a full replacement of the suit's normal coolant with holy water. \
 		Spells will spall right off this field, though it'll do nothing to help others believe you about all this."
+	icon_state = "magic_nullifier"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/anti_magic)
 
@@ -1674,6 +1683,7 @@
 		This creates a low-range, yet strong, magic nullification field around the user, \
 		aided by a full replacement of the suit's normal coolant with holy water. \
 		Spells will spall right off this field, though it'll do nothing to help others believe you about all this."
+	icon_state = "magic_neutralizer"
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
@@ -1688,6 +1698,7 @@
 		This piece of technology allows the user to generate precise anti-gravity fields, \
 		letting them move objects as small as a titanium rod to as large as industrial machinery. \
 		Oddly enough, it doesn't seem to work on living creatures."
+	icon_state = "kinesis"
 //	module_type = MODULE_ACTIVE
 	module_type = MODULE_TOGGLE
 //	complexity = 3
