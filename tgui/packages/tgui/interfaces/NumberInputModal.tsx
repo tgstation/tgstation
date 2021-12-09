@@ -30,7 +30,7 @@ export const NumberInputModal = (_, context) => {
   const defaultValidState = { isValid: true, error: null };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 130 + Math.ceil(message.length / 5) + (large_buttons ? 5 : 0);
+    = 125 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={270} height={windowHeight}>
