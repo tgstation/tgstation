@@ -35,20 +35,37 @@
 	botcount = 0
 	current_user = user
 
-	for(var/B in GLOB.bots_list)
-		var/mob/living/simple_animal/bot/Bot = B
-		if(!(Bot.bot_mode_flags & BOT_MODE_ON) || Bot.z != zlevel || !(Bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+	for(var/mob/living/simple_animal/bot/Bot as anything in GLOB.bots_list)
+		if(Bot.z != zlevel || !(Bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
 		else if(computer) //Also, the inserted ID must have access to the bot type
 			var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-			if(!id_card && !Bot.bot_core.allowed(current_user))
+			if(!id_card && !Bot.check_access(current_user))
 				continue
-			else if(id_card && !Bot.bot_core.check_access(id_card))
+			else if(id_card && !Bot.check_access(current_user, id_card))
 				continue
-		var/list/newbot = list("name" = Bot.name, "mode" = Bot.get_mode_ui(), "model" = Bot.bot_type, "locat" = get_area(Bot), "bot_ref" = REF(Bot), "mule_check" = FALSE)
+		var/list/newbot = list(
+			"name" = Bot.name,
+			"mode" = Bot.get_mode_ui(),
+			"model" = Bot.bot_type,
+			"locat" = get_area(Bot),
+			"bot_ref" = REF(Bot),
+			"mule_check" = FALSE,
+		)
 		if(Bot.bot_type == MULE_BOT)
 			var/mob/living/simple_animal/bot/mulebot/MULE = Bot
-			mulelist += list(list("name" = MULE.name, "dest" = MULE.destination, "power" = MULE.cell ? MULE.cell.percent() : 0, "home" = MULE.home_destination, "autoReturn" = MULE.auto_return, "autoPickup" = MULE.auto_pickup, "reportDelivery" = MULE.report_delivery, "mule_ref" = REF(MULE)))
+			mulelist += list(
+				list(
+					"name" = MULE.name,
+					"dest" = MULE.destination,
+					"power" = MULE.cell ? MULE.cell.percent() : 0,
+					"home" = MULE.home_destination,
+					"autoReturn" = MULE.auto_return,
+					"autoPickup" = MULE.auto_pickup,
+					"reportDelivery" = MULE.report_delivery,
+					"mule_ref" = REF(MULE),
+				),
+			)
 			if(MULE.load)
 				data["load"] = MULE.load.name
 			newbot["mule_check"] = TRUE
