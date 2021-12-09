@@ -221,7 +221,7 @@
 	var/image/fov_image
 	for(var/mob/living/living_mob in get_hearers_in_view(range, center))
 		var/client/mob_client = living_mob.client
-		if(!mob_client?.prefs?.read_preference(/datum/preference/toggle/play_fov_effects))
+		if(!mob_client)
 			continue
 		if(HAS_TRAIT(living_mob, TRAIT_DEAF)) //Deaf people can't hear sounds so no sound indicators
 			continue

@@ -2236,7 +2236,6 @@
 #include "code\modules\client\preferences\pda.dm"
 #include "code\modules\client\preferences\phobia.dm"
 #include "code\modules\client\preferences\pixel_size.dm"
-#include "code\modules\client\preferences\play_fov_effects.dm"
 #include "code\modules\client\preferences\playtime_reward_cloak.dm"
 #include "code\modules\client\preferences\preferred_map.dm"
 #include "code\modules\client\preferences\random.dm"
