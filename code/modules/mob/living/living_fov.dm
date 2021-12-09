@@ -60,9 +60,7 @@
 
 /// Properly applies or removes the mask, on conditions of living and not extending an eye
 /datum/field_of_view/proc/update_masking()
-	var/should_apply_mask = FALSE
-	if(user_living && !user_extends_eye)
-		should_apply_mask = TRUE
+	var/should_apply_mask = user_living && !user_extends_eye
 	if(should_apply_mask == applied_mask)
 		return
 	if(should_apply_mask)
