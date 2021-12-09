@@ -134,7 +134,7 @@
 	if(!source_loc)
 		return
 
-	play_fov_effect(source, 5, "footstep", direction, TRUE)
+	play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE)
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
 		playsound(source_loc, pick(GLOB.footstep[source_loc.footstep][1]),
