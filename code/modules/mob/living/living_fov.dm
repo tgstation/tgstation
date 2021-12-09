@@ -49,10 +49,7 @@
 
 /// Updates the state of the owner living and updates masking
 /datum/field_of_view/proc/update_living()
-	if(owner.stat == DEAD)
-		user_living = FALSE
-	else
-		user_living = TRUE
+	user_living = owner.stat != DEAD
 	update_masking()
 
 /// Updates the state of the owner eye and updates masking
