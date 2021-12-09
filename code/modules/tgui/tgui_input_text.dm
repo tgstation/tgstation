@@ -10,11 +10,11 @@
  * * message - The content of the textbox, shown in the body of the TGUI window.
  * * title - The title of the textbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder.
- * * max_length - Specifies a max length for input.
+ * * max_length - Specifies a max length for input. MAX_MESSAGE_LEN is default (1024)
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, timeout = 0)
+/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = MAX_MESSAGE_LEN, multiline = FALSE, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))

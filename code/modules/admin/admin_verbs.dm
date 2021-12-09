@@ -690,7 +690,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin.Events"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	var/message = tgui_input_text(usr, "What do you want the message to be?", "Make Sound")
 	if(!message)
 		return
 	O.say(message, sanitize = FALSE)
