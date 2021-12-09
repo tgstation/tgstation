@@ -9,7 +9,7 @@
 /datum/preference/numeric/fov_darkness/create_default_value()
 	return 255
 
-/datum/preference/numeric/fov_darkness/apply_to_client(client/client, value)
+/datum/preference/numeric/fov_darkness/apply_to_client_updated(client/client, value)
 	if(client.mob && isliving(client.mob))
 		var/mob/living/living_mob = client.mob
 		if(!living_mob.fov_handler)
