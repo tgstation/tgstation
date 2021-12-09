@@ -230,7 +230,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/proc/check_access(mob/living/user)
-	if(issilicon(user) || isAdminGhostAI(user)) // Silicon and Admins always have access.
+	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
 		return TRUE
@@ -899,13 +899,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	if(!check_access(usr) && !usr.has_unlimited_silicon_privilege)
+	if(!check_access(usr))
 		to_chat(usr, span_warning("Access denied."))
 		return
+
 	if(action == "lock")
 		bot_cover_flags ^= BOT_COVER_LOCKED
+
 	if(bot_cover_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
 		return
+
 	switch(action)
 		if("power")
 			if(bot_mode_flags & BOT_MODE_ON)
