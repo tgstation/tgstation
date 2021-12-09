@@ -248,8 +248,8 @@
 
 				var/datum/disease/disease = new type(0)
 				var/applicable_mob_names = ""
-				for(var/mob/M in disease.viable_mobtypes)
-					applicable_mob_names += " [initial(M.name)];"
+				for(var/mob/viable_mob as anything in disease.viable_mobtypes)
+					applicable_mob_names += " [initial(viable_mob.name)];"
 				temp = {"<b>Name:</b> [disease.name]
 <BR><b>Number of stages:</b> [disease.max_stages]
 <BR><b>Spread:</b> [disease.spread_text] Transmission
