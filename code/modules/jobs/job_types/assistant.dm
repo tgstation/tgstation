@@ -56,6 +56,8 @@ Assistant
 
 	var/index = (jumpsuit_number % GLOB.colored_assistant.jumpsuits.len) + 1
 
+	//We don't cache these, because they can delete on init
+	//Too fragile, better to just eat the cost
 	if (target.jumpsuit_style == PREF_SUIT)
 		uniform = GLOB.colored_assistant.jumpsuits[index]
 	else
