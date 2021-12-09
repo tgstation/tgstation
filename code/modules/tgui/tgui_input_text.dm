@@ -203,7 +203,7 @@
 /datum/tgui_input_text/async/set_entry(entry)
 	. = ..()
 	if(!isnull(src.entry))
-		callback?.InvokeAsync(entry)
+		callback?.InvokeAsync(src.entry)
 
 /datum/tgui_input_text/async/wait()
 	return
