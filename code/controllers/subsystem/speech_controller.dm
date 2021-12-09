@@ -11,15 +11,13 @@ SUBSYSTEM_DEF(speech_controller)
 	var/list/queued_says_to_execute = list()
 
 ///queues mob_to_queue into our process list so they say(message) near the start of the next tick
-/datum/controller/subsystem/speech_controller/proc/queue_say_for_mob(mob/mob_to_queue, message, ...)
-	if(!ismob(mob_to_queue) || mob_to_queue.gc_destroyed || !message)
-		return FALSE
+/datum/controller/subsystem/speech_controller/proc/queue_say_for_mob(mob/mob_to_queue, message, message_type)
 
 	if(!TICK_CHECK)
-		mob_to_queue.say(arglist(args.Copy(2)))//master isnt that overloaded, dont delay the message
+		process_single_say(mob_to_queue, message, message_type)
 		return TRUE
 
-	queued_says_to_execute += list(args.Copy())
+	queued_says_to_execute += list(list(mob_to_queue, message, message_type))
 
 	return TRUE
 
@@ -28,16 +26,29 @@ SUBSYSTEM_DEF(speech_controller)
 	///	cache for sanic speed (lists are references anyways)
 	var/list/says_to_process = queued_says_to_execute.Copy()
 	says_to_process.Cut()//we should be going through the entire list every single iteration
-	for(var/list/say_args as anything in says_to_process)
-		var/mob/mob_to_speak = say_args[1]
-		if(!ismob(mob_to_speak) || mob_to_speak.gc_destroyed || !say_args[2])//index 1 is the mob, 2 is the message, 3+ are optional
+
+	for(var/list/say_to_process as anything in says_to_process)
+
+		var/mob/mob_to_speak = say_to_process[1]
+		var/message = say_to_process[2]
+		var/message_category = say_to_process[3]
+
+		if(!ismob(mob_to_speak) || mob_to_speak.gc_destroyed || !message)//index 1 is the mob, 2 is the message, 3 is the message category
 			continue
 
-		say_args -= mob_to_speak
+		process_single_say(mob_to_speak, message, message_category)
 
-		mob_to_speak.say(arglist(say_args))
+///used in fire() to process a single mobs message through the relevant proc.
+///only exists so that sleeps in the message pipeline dont cause the whole queue to wait
+/datum/controller/subsystem/speech_controller/proc/process_single_say(mob/mob_to_speak, message, message_category)
+	set waitfor = FALSE
 
+	switch(message_category)
+		if(SPEECH_CONTROLLER_QUEUE_SAY_VERB)
+			mob_to_speak.say(message)
 
+		if(SPEECH_CONTROLLER_QUEUE_WHISPER_VERB)
+			mob_to_speak.whisper(message)
 
-
-
+		if(SPEECH_CONTROLLER_QUEUE_EMOTE_VERB)
+			mob_to_speak.emote("me",1,message,TRUE)
