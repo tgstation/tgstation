@@ -135,14 +135,14 @@
 ///AI Camera Static
 #define CAMERA_STATIC_PLANE 200
 
+///Debug Atmos Overlays
+#define ATMOS_GROUP_PLANE 450
+
 ///Popup Chat Messages
 #define RUNECHAT_PLANE 501
 
 /// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 502
-
-///Debug Atmos Overlays
-#define ATMOS_GROUP_PLANE 450
 
 ///--------------- FULLSCREEN IMAGES ------------
 #define FULLSCREEN_PLANE 500
