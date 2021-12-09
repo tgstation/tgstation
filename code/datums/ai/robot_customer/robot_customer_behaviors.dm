@@ -26,7 +26,7 @@
 
 	if(found_seat)
 		customer_pawn.say(pick(customer_data.found_seat_lines))
-		controller.blackboard[BB_CUSTOMER_MY_SEAT] = found_seat
+		controller.blackboard[BB_CUSTOMER_MY_SEAT] = WEAKREF(found_seat)
 		attending_venue.linked_seats[found_seat] = customer_pawn
 		finish_action(controller, TRUE)
 		return
@@ -47,7 +47,8 @@
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 
-	if(get_turf(controller.blackboard[BB_CUSTOMER_MY_SEAT]) == get_turf(customer_pawn))
+	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]?.resolve()
+	if(get_turf(seat_marker) == get_turf(customer_pawn))
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(customer_pawn)
 		if(my_seat)
 			controller.pawn.setDir(my_seat.dir) //Sit in your seat
@@ -79,7 +80,8 @@
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
 
-	if(get_turf(controller.blackboard[BB_CUSTOMER_MY_SEAT]) == get_turf(controller.pawn))
+	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]?.resolve()
+	if(get_turf(seat_marker) == get_turf(controller.pawn))
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(controller.pawn)
 		if(my_seat)
 			controller.pawn.setDir(my_seat.dir) //Sit in your seat
