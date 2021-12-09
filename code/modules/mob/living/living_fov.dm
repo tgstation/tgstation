@@ -73,7 +73,10 @@
 	var/client/parent_client = owner.client
 	if(!parent_client) //Love client volatility!!
 		return
-	var/list/view_size = getviewsize(parent_client.view)
+	var/client_view = parent_client?.view
+	if(!client_view)
+		return
+	var/list/view_size = getviewsize(client_view)
 	if(view_size[1] == current_fov_x && view_size[2] == current_fov_y)
 		return
 	current_fov_x = BASE_FOV_MASK_X_DIMENSION
