@@ -140,10 +140,6 @@
 
 ///--------------- FULLSCREEN IMAGES ------------
 
-#define FULLSCREEN_PLANE 500
-///Popup Chat Messages
-#define RUNECHAT_PLANE 501
-/// Plane for balloon text (text that fades up)
 #define BALLOON_CHAT_PLANE 502
 #define FLASH_LAYER 1
 #define FULLSCREEN_LAYER 2
@@ -151,6 +147,13 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+
+#define FULLSCREEN_PLANE 500
+///Popup Chat Messages
+#define RUNECHAT_PLANE 501
+/// Plane for balloon text (text that fades up)
 
 //-------------------- Rendering ---------------------
 #define RENDER_PLANE_GAME 990
