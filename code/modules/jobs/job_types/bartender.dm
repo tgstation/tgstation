@@ -1,5 +1,6 @@
 /datum/job/bartender
 	title = "Bartender"
+	description = "Serve booze, mix drinks, keep the crew drunk."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 1
