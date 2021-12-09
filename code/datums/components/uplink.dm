@@ -204,28 +204,40 @@
 			active = FALSE
 			locked = TRUE
 			SStgui.close_uis(src)
+
+	if(!uplink_handler.has_objectives)
+		return TRUE
+
+	var/list/objectives
+	switch(action)
 		if("start_objective")
-			if(!uplink_handler.has_objectives)
-				return
-			var/objective_index = text2num(params["index"])
-			var/list/potential_objectives = uplink_handler.potential_objectives
-			if(objective_index < 1 || objective_index > length(potential_objectives))
-				return
-			var/datum/traitor_objective/objective = potential_objectives[objective_index]
-			if(objective.name != params["name"])
-				return // Failsafe to prevent selecting an objective they didn't actually select in the UI
+			objectives = uplink_handler.potential_objectives
+		if("objective_act", "finish_objective")
+			objectives = uplink_handler.active_objectives
+
+	if(!objectives)
+		return
+
+	var/objective_index = text2num(params["index"])
+	if(objective_index < 1 || objective_index > length(objectives))
+		return TRUE
+	var/datum/traitor_objective/objective = objectives[objective_index]
+	if(objective.name != params["name"])
+		return TRUE // Failsafe to prevent selecting an objective they didn't actually select in the UI
+
+	// Objective actions
+	switch(action)
+		if("start_objective")
 			uplink_handler.take_objective(ui.user, objective)
 		if("objective_act")
-			if(!uplink_handler.has_objectives)
-				return
-			var/objective_index = text2num(params["index"])
-			var/list/active_objectives = uplink_handler.active_objectives
-			if(objective_index < 1 || objective_index > length(active_objectives))
-				return
-			var/datum/traitor_objective/objective = active_objectives[objective_index]
-			if(objective.name != params["name"])
-				return // Failsafe to prevent selecting an objective they didn't actually select in the UI
 			uplink_handler.ui_objective_act(ui.user, objective, params["objective_action"])
+		if("finish_objective")
+			if(!objective.finish_objective(ui.user))
+				return
+			active_objectives -= objective
+			uplink_handler.completed_objectives += objective
+			uplink_handler.generate_objectives()
+
 	return TRUE
 
 // Implant signal responses

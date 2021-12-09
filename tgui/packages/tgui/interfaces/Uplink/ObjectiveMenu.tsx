@@ -1,7 +1,8 @@
 import { classes } from "common/react";
 import { Component } from "inferno";
-import { Section, Stack, Box, Button, Flex } from "../../components";
+import { Section, Stack, Box, Button, Flex, Tooltip } from "../../components";
 import { calculateProgression, getReputation, Rank } from "./calculateReputationLevel";
+import { ObjectiveState } from "./constants";
 
 export type Objective = {
   id: number,
@@ -11,7 +12,7 @@ export type Objective = {
   progression_reward: number,
   telecrystal_reward: number,
   ui_buttons?: ObjectiveUiButton[],
-  objective_state: number,
+  objective_state: ObjectiveState,
 }
 
 export type ObjectiveUiButton = {
@@ -28,6 +29,7 @@ type ObjectiveMenuProps = {
 
   handleStartObjective: (objective: Objective) => void;
   handleObjectiveAction: (objective: Objective, action: string) => void;
+  handleObjectiveCompleted: (objective: Objective) => void;
 }
 
 type ObjectiveMenuState = {
@@ -109,6 +111,7 @@ export class ObjectiveMenu
       potentialObjectives,
       maximumActiveObjectives,
       handleObjectiveAction,
+      handleObjectiveCompleted,
     } = this.props;
     const {
       draggingObjective,
@@ -162,7 +165,8 @@ export class ObjectiveMenu
                       {ObjectiveFunction(
                         objective,
                         true,
-                        handleObjectiveAction
+                        handleObjectiveAction,
+                        handleObjectiveCompleted,
                       )}
                     </Stack.Item>
                   );
@@ -232,7 +236,8 @@ export class ObjectiveMenu
 const ObjectiveFunction = (
   objective: Objective,
   active: boolean,
-  handleObjectiveAction?: (objective: Objective, action: string) => void
+  handleObjectiveAction?: (objective: Objective, action: string) => void,
+  handleCompletion?: (objective: Objective) => void,
 ) => {
   const reputation = getReputation(objective.progression_minimum);
   return (
@@ -242,6 +247,12 @@ const ObjectiveFunction = (
       reputation={reputation}
       telecrystalReward={objective.telecrystal_reward}
       progressionReward={objective.progression_reward}
+      objectiveState={objective.objective_state}
+      handleCompletion={(event) => {
+        if (handleCompletion) {
+          handleCompletion(objective);
+        }
+      }}
       uiButtons={
         active && handleObjectiveAction
           ? (
@@ -275,6 +286,9 @@ type ObjectiveElementProps = {
   telecrystalReward: number;
   progressionReward: number;
   uiButtons?: JSX.Element;
+  objectiveState: ObjectiveState;
+
+  handleCompletion: (event: MouseEvent) => void;
 }
 
 const ObjectiveElement = (props: ObjectiveElementProps, context) => {
@@ -285,8 +299,16 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     uiButtons = null,
     telecrystalReward,
     progressionReward,
+    objectiveState,
+    handleCompletion,
     ...rest
   } = props;
+
+  const objectiveFinished
+    = objectiveState === ObjectiveState.Completed
+    || objectiveState === ObjectiveState.Failed;
+
+  const objectiveFailed = objectiveState === ObjectiveState.Failed;
 
   return (
     <Box {...rest}>
@@ -295,6 +317,8 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
           "UplinkObjective__Titlebar",
           reputation.gradient,
         ])}
+        width="100%"
+        position="relative"
       >
         {name}
       </Box>
@@ -320,11 +344,13 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                   "border": "2px solid rgba(0, 0, 0, 0.5)",
                   "border-left": "none",
                   "border-right": "none",
+                  "border-bottom": objectiveFinished? "none" : undefined,
                 }}
                 className={reputation.gradient}
                 py={0.5}
                 width="100%"
                 textAlign="center"
+                position="relative"
               >
                 {telecrystalReward} TC,
                 <Box ml={1} as="span">
@@ -332,6 +358,43 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                 </Box>
               </Box>
             </Stack>
+            {objectiveFinished? (
+              <Tooltip
+                content={`Click this to finish this objective.${
+                  objectiveFailed? ""
+                    : ` You will receive ${telecrystalReward} TC
+              and ${progressionReward} Reputation.`
+                }`}
+              >
+                <Button
+                  inline
+                  className={reputation.gradient}
+                  style={{
+                    "border-radius": "0",
+                    "border": "2px solid rgba(0, 0, 0, 0.5)",
+                    "border-left": "none",
+                    "border-right": "none",
+                  }}
+                  width="100%"
+                  textAlign="center"
+                  bold
+                  onClick={handleCompletion}
+                >
+                  <Box
+                    width="100%"
+                    height="100%"
+                    backgroundColor={objectiveFailed
+                      ? "rgba(255, 0, 0, 0.1)"
+                      : "rgba(0, 255, 0, 0.1)"}
+                    position="absolute"
+                    left={0}
+                    top={0}
+                  />
+                  {objectiveFailed? "OBJECTIVE FAILED" : "OBJECTIVE COMPLETE"}
+                </Button>
+              </Tooltip>
+            )
+              : null}
           </Stack.Item>
           {!!uiButtons && (
             <Stack.Item>

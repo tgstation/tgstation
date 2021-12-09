@@ -243,6 +243,7 @@ export class Uplink extends Component<{}, UplinkState> {
                   handleObjectiveAction={(objective, action) =>
                     act("objective_act", { objective_action: action, index: objective.id, name: objective.name })}
                   handleStartObjective={(objective) => act("start_objective", { index: objective.id, name: objective.name })}
+                  handleObjectiveCompleted={(objective) => act("finish_objective", { index: objective.id, name: objective.name })}
                 />
               ) || (
                 <GenericUplink

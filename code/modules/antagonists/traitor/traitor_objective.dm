@@ -35,6 +35,21 @@
 /datum/traitor_objective/proc/fail_objective()
 	objective_state = OBJECTIVE_STATE_FAILED
 
+/// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
+/datum/traitor_objective/proc/finish_objective()
+	switch(objective_state)
+		if(OBJECTIVE_STATE_FAILED)
+			return TRUE
+		if(OBJECTIVE_STATE_COMPLETED)
+			completion_payout()
+			return TRUE
+	return FALSE
+
+/// Called when rewards should be given to the user.
+/datum/traitor_objective/proc/completion_payout()
+	handler.progression_points += progression_reward
+	handler.telecrystals += telecrystal_reward
+
 /// Determines whether this objective is a duplicate. objective_to_compare is always of the type it is being called on.
 /datum/traitor_objective/proc/is_duplicate(datum/traitor_objective/objective_to_compare)
 	return TRUE

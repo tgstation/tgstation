@@ -18,7 +18,7 @@ export type Rank = {
   gradient: string;
 }
 
-const ranks: Rank[] = [
+export const ranks: Rank[] = [
   {
     minutesLessThan: 5,
     title: "Obscure",
