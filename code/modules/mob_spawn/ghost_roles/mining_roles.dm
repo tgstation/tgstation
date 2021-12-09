@@ -17,6 +17,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/hermit/Initialize(mapload)
 	. = ..()
+	outfit = new outfit //who cares equip outfit works with outfit as a path or an instance
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(1)
@@ -56,7 +57,7 @@
 
 //Icebox version of hermit
 /obj/effect/mob_spawn/ghost_role/human/hermit/icemoon
-	name = "Cryostasis bed"
+	name = "cryostasis bed"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
 	prompt_name = "a grumpy old man"
 	icon = 'icons/obj/lavaland/spawners.dmi'
@@ -108,10 +109,11 @@
 	uniform = /obj/item/clothing/under/shorts/red
 	id_trim = /datum/id_trim/lifeguard
 
-/obj/effect/mob_spawn/ghost_role/human/bartender/alive
+/obj/effect/mob_spawn/ghost_role/human/bartender
 	name = "bartender sleeper"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+	prompt_name = "a space bartender"
 	you_are_text = "You are a space bartender!"
 	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
 	spawner_job_path = /datum/job/space_bartender
@@ -253,3 +255,54 @@
 	name ="Ashwalker"
 	head = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
+
+///Syndicate Listening Post
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate
+	name = "Syndicate Bioweapon Scientist"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper_s"
+	prompt_name = "a syndicate science technician"
+	you_are_text = "You are a syndicate science technician, employed in a top secret research facility developing biological weapons."
+	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile."
+	important_text = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
+	outfit = /datum/outfit/lavaland_syndicate
+	spawner_job_path = /datum/job/lavaland_syndicate
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms
+	name = "Syndicate Comms Agent"
+	prompt_name = "a syndicate comms agent"
+	you_are_text = "You are a syndicate comms agent, employed in a top secret research facility developing biological weapons."
+	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!"
+	important_text = "DO NOT abandon the base."
+	outfit = /datum/outfit/lavaland_syndicate/comms
+
+/datum/outfit/lavaland_syndicate
+	name = "Lavaland Syndicate Agent"
+	r_hand = /obj/item/gun/ballistic/automatic/sniper_rifle
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
+	ears = /obj/item/radio/headset/syndicate/alt
+	back = /obj/item/storage/backpack
+	r_pocket = /obj/item/gun/ballistic/automatic/pistol
+	id = /obj/item/card/id/advanced/chameleon
+	implants = list(/obj/item/implant/weapons_auth)
+	id_trim = /datum/id_trim/chameleon/operative
+
+/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H)
+	H.faction |= ROLE_SYNDICATE
+
+/datum/outfit/lavaland_syndicate/comms
+	name = "Lavaland Syndicate Comms Agent"
+	r_hand = /obj/item/melee/energy/sword/saber
+	mask = /obj/item/clothing/mask/chameleon/gps
+	suit = /obj/item/clothing/suit/armor/vest
+
+/obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/gps, "Encrypted Signal")

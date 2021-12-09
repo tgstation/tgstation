@@ -62,6 +62,7 @@
 	icon_state = "syndrone_item"
 	mob_name = "syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone
+	prompt_name = "a syndrone"
 	you_are_text = "You are a Syndicate Maintenance Drone."
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
 	important_text = ""
@@ -71,12 +72,14 @@
 	name = "badass syndrone shell"
 	mob_name = "badass syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone/badass
+	prompt_name = "a badass syndrone"
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some BETTER upgrades... and now serve an enemy of your former masters."
 
 /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	name = "snowflake drone shell"
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
 	mob_name = "snowflake drone"
+	prompt_name = "a drone with a holohat projector"
 	mob_type = /mob/living/simple_animal/drone/snowflake
 
 /mob/living/simple_animal/drone/polymorphed
@@ -114,6 +117,7 @@
 	mob_name = "derelict drone"
 	mob_type = /mob/living/simple_animal/drone/derelict
 	anchored = TRUE
+	prompt_name = "a derelict drone"
 	you_are_text = "You are a drone on Kosmicheskaya Stantsiya 13."
 	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
 	important_text = "Build, repair, maintain and improve the station that housed you on activation."

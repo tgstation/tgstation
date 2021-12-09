@@ -122,6 +122,7 @@
 	name = "Legion-Consumed Clown"
 	id_trim = /datum/id_trim/job/clown
 	uniform = /obj/item/clothing/under/rank/civilian/clown
+	back = /obj/item/storage/backpack/clown
 	backpack_contents = list()
 	belt = /obj/item/pda/clown
 	ears = /obj/item/radio/headset/headset_srv
@@ -186,7 +187,7 @@
 /datum/outfit/consumed_shadowperson
 	name = "Legion-Consumed Shadowperson"
 	r_pocket = /obj/item/reagent_containers/pill/shadowtoxin
-	neck = /obj/item/clothing/accessory/medal/plasma/nobel_science
+	accessory = /obj/item/clothing/accessory/medal/plasma/nobel_science
 	uniform = /obj/item/clothing/under/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/toggle/labcoat
@@ -204,8 +205,7 @@
 	uniform = /obj/item/clothing/under/costume/roman
 	suit = /obj/item/clothing/suit/hooded/cultrobes
 	suit_store = /obj/item/tome
-	r_pocket = /obj/item/restraints/legcuffs/bola/cult
 	l_pocket = /obj/item/melee/cultblade/dagger
+	back = /obj/item/storage/backpack/cultpack
 	glasses = /obj/item/clothing/glasses/hud/health/night/cultblind
 	backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
-

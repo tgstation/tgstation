@@ -1508,7 +1508,7 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = -32
 	},
-/obj/effect/mob_spawn/human/bartender/alive{
+/obj/effect/mob_spawn/human/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,

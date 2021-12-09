@@ -1292,7 +1292,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fr" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/item/gun/ballistic/automatic/wt550,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
@@ -2620,7 +2620,7 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kl" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron,

@@ -7,7 +7,8 @@
 	name = "skeletal remains"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	mob_name = "a skeleton"
+	mob_name = "skeleton"
+	prompt_name = "a skeletal guardian"
 	you_are_text = "By unknown powers, your skeletal remains have been reanimated!"
 	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
 	spawner_job_path = /datum/job/skeleton
@@ -20,7 +21,8 @@
 	name = "rotting corpse"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	mob_name = "a zombie"
+	mob_name = "zombie"
+	prompt_name = "an undead guardian"
 	mob_species = /datum/species/zombie
 	spawner_job_path = /datum/job/zombie
 	you_are_text = "By unknown powers, your rotting remains have been resurrected!"

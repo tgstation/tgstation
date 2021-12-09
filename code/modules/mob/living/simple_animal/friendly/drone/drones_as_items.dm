@@ -21,6 +21,7 @@
 	mob_type = /mob/living/simple_animal/drone
 	role_ban = ROLE_DRONE
 	show_flavor = FALSE
+	prompt_name = "maintenance drone"
 	you_are_text = "You are a Maintenance Drone."
 	flavour_text = "Born out of science, your purpose is to maintain Space Station 13. Maintenance Drones can become the backbone of a healthy station."
 	important_text = "You MUST read and follow your laws carefully."

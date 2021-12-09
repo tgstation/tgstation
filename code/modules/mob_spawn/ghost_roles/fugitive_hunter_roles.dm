@@ -1,7 +1,9 @@
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive
 	spawner_job_path = /datum/job/fugitive_hunter
-	flavour_text = "" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
+	prompt_name = "Write me some god damn prompt names!"
+	you_are_text = "Write me some god damn you are text!"
+	flavour_text = "Write me some god damn flavor text!" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
 	show_flavor = FALSE
 	var/back_story = "error"
 
@@ -21,7 +23,8 @@
 	name = "police pod"
 	desc = "A small sleeper typically used to put people to sleep for briefing on the mission."
 	prompt_name = "a spacepol officer"
-	flavour_text = "Justice has arrived. I am a member of the Spacepol!"
+	you_are_text = "I am a member of the Spacepol!"
+	flavour_text = "Justice has arrived. We must capture those fugitives lurking on that station!"
 	back_story = "space cop"
 	outfit = /datum/outfit/spacepol
 	icon = 'icons/obj/machines/sleeper.dmi'
@@ -29,20 +32,22 @@
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/russian
 	name = "russian pod"
-	flavour_text = "Ay blyat. I am a space-russian smuggler! We were mid-flight when our cargo was beamed off our ship!"
+	prompt_name = "a russian"
+	you_are_text = "Ay blyat. I am a space-russian smuggler!"
+	flavour_text = "We were mid-flight when our cargo was beamed off our ship!"
 	back_story = "russian"
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
-	prompt_name = "a russian"
 	outfit = /datum/outfit/russiancorpse/hunter
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/bounty
 	name = "bounty hunter pod"
+	prompt_name = "a bounty hunter"
+	you_are_text = "I'm a bounty hunter."
 	flavour_text = "We got a new bounty on some fugitives, dead or alive."
 	back_story = "bounty hunters"
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
-	prompt_name = "a bounty hunter"
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 

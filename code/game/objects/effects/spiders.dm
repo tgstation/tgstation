@@ -143,6 +143,7 @@
 	density = FALSE
 	show_flavor = FALSE
 	you_are_text = "You are a spider."
+	flavour_text = "For the hive! Choose a spider and fulfill your role to take over the station... if that is within your directives, of course."
 	important_text = "Follow your directives at all costs."
 	faction = list("spiders")
 	spawner_job_path = /datum/job/spider
@@ -226,6 +227,7 @@
 	name = "bloody egg cluster"
 	color = rgb(255, 0, 0)
 	you_are_text = "You are a bloody spider."
+	flavour_text = "An abomination of nature set upon the station by changelings. Your only goal is to kill, terrorize, and survive."
 	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
@@ -235,6 +237,7 @@
 /obj/effect/mob_spawn/ghost_role/spider/midwife
 	name = "midwife egg cluster"
 	you_are_text = "You are a midwife spider."
+	flavour_text = "The crux of the spider horde. You have the ability to reproduce and create more spiders, and turn victims into special spider eggs."
 	directive = "Ensure the survival of the spider species and overtake whatever structure you find yourself in."
 	cluster_type = /obj/structure/spider/eggcluster/midwife
 	potentialspawns = list(

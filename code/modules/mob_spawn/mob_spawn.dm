@@ -7,8 +7,8 @@
 	icon_state = "mobspawner"
 	///A forced name of the mob, though can be overridden if a special name is passed as an argument
 	var/mob_name
-	///the type of the mob
-	var/mob_type
+	///the type of the mob, you best inherit this
+	var/mob_type = /mob/living/basic/cockroach
 	///Lazy string list of factions that the spawned mob will be in upon spawn
 	var/list/faction
 
