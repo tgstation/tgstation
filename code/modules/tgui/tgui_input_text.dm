@@ -15,7 +15,7 @@
  * * encode - Toggling this determines if input is filtered via html_encode. Setting this to FALSE gives raw input.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, timeout = 0)
+/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, no_trim = FALSE, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -33,7 +33,7 @@
 				return stripped_input(user, message, title, default, max_length)
 		else
 			return input(user, message, title, default)
-	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, encode, timeout)
+	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, encode, no_trim, timeout)
 	textbox.ui_interact(user)
 	textbox.wait()
 	if (textbox)
@@ -55,7 +55,7 @@
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  */
-/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, encode = TRUE, datum/callback/callback, timeout = 0)
+/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, encode = TRUE, no_trim = FALSE, datum/callback/callback, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -64,7 +64,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout)
+	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, encode, no_trim, callback, timeout)
 	textbox.ui_interact(user)
 
 /**
@@ -88,6 +88,8 @@
 	var/message
 	/// Multiline input for larger input boxes.
 	var/multiline
+	/// Whether trim should be used to trim the input.
+	var/no_trim
 	/// The time at which the tgui_modal was created, for displaying timeout progress.
 	var/start_time
 	/// The lifespan of the tgui_input_text, after which the window will close and delete itself.
@@ -96,12 +98,13 @@
 	var/title
 
 
-/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, timeout)
+/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, encode, no_trim, timeout)
 	src.default = default
 	src.encode = encode
 	src.max_length = max_length
 	src.message = message
 	src.multiline = multiline
+	src.no_trim = no_trim
 	src.title = title
 	if (timeout)
 		src.timeout = timeout
@@ -168,10 +171,12 @@
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(encode)
-		src.entry = html_encode(entry)
+	var/converted_entry = encode ? html_encode(entry) : entry
+	if(no_trim)
+		src.entry = copytext(converted_entry, 1, max_length)
 	else
-		src.entry = entry
+		src.entry = trim(converted_entry, max_length)
+
 
 /**
  * # async tgui_input_text
@@ -182,8 +187,8 @@
 	/// The callback to be invoked by the tgui_input_text upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_input_text/async/New(mob/user, message, title, default, max_length, multiline, encode, callback, timeout)
-	..(user, message, title, default, max_length, multiline, encode, timeout)
+/datum/tgui_input_text/async/New(mob/user, message, title, default, max_length, multiline, encode, no_trim, callback, timeout)
+	..(user, message, title, default, max_length, multiline, encode, no_trim, timeout)
 	src.callback = callback
 
 /datum/tgui_input_text/async/Destroy(force, ...)
@@ -192,9 +197,8 @@
 
 /datum/tgui_input_text/async/set_entry(entry)
 	. = ..()
-	var/converted_entry = encode ? html_encode(src.entry) : src.entry
 	if(!isnull(src.entry))
-		callback?.InvokeAsync(converted_entry)
+		callback?.InvokeAsync(entry)
 
 /datum/tgui_input_text/async/wait()
 	return
