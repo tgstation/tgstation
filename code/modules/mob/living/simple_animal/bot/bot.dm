@@ -236,7 +236,7 @@
 		return TRUE
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.access) // If we have an ID equipped, we'll check that instead.
+	if(!id_card || !id_card.access)
 		return FALSE
 	id_card = id_card.GetID()
 
