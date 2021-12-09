@@ -31,7 +31,7 @@
 	blocker_mask = new
 	visual_shadow = new
 	dir_change(owner.dir)
-	visual_shadow.alpha = parent_client.prefs.read_preference(/datum/preference/numeric/fov_darkness)
+	visual_shadow.alpha = parent_client?.prefs.read_preference(/datum/preference/numeric/fov_darkness)
 	set_fov_angle(fov_type)
 	update_fov_size()
 	update_living()
@@ -49,26 +49,18 @@
 
 /// Updates the state of the owner living and updates masking
 /datum/field_of_view/proc/update_living()
-	if(owner.stat == DEAD)
-		user_living = FALSE
-	else
-		user_living = TRUE
+	user_living = owner.stat != DEAD
 	update_masking()
 
 /// Updates the state of the owner eye and updates masking
 /datum/field_of_view/proc/update_eye()
 	var/client/parent_client = owner.client
-	if(parent_client.eye == owner)
-		user_extends_eye = FALSE
-	else
-		user_extends_eye = TRUE
+	user_extends_eye = owner.client.eye != owner
 	update_masking()
 
 /// Properly applies or removes the mask, on conditions of living and not extending an eye
 /datum/field_of_view/proc/update_masking()
-	var/should_apply_mask = FALSE
-	if(user_living && !user_extends_eye)
-		should_apply_mask = TRUE
+	var/should_apply_mask = user_living && !user_extends_eye
 	if(should_apply_mask == applied_mask)
 		return
 	if(should_apply_mask)
