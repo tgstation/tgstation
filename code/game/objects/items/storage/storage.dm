@@ -4,6 +4,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/rummage_if_nodrop = TRUE
 	var/component_type = /datum/component/storage/concrete
+	/// Should we preload the contents of this type?
+	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
+	/// SANTA IS EVIL
+	var/preload = FALSE
 
 /obj/item/storage/Initialize(mapload)
 	. = ..()
@@ -51,3 +55,9 @@
 			continue
 		important_thing.forceMove(drop_location())
 	return ..()
+
+/// Returns a list of object types to be preloaded by our code
+/// I'll say it again, be very careful with this. We only need it for a few things
+/// Don't do anything stupid, please
+/obj/item/storage/proc/get_types_to_preload()
+	return
