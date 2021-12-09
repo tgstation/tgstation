@@ -1,5 +1,7 @@
 /datum/job/virologist
 	title = "Virologist"
+	description = "Study the effects of various diseases and synthesize a \
+		vaccine for them. Engineer beneficial viruses."
 	department_head = list("Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 1

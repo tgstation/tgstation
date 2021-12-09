@@ -1081,9 +1081,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 	Consume(hit_object)
 
-/obj/machinery/power/supermatter_crystal/intercept_zImpact(atom/movable/hit_object, levels)
+/obj/machinery/power/supermatter_crystal/intercept_zImpact(list/falling_movables, levels)
 	. = ..()
-	Bumped(hit_object)
+	for(var/atom/movable/hit_object as anything in falling_movables)
+		Bumped(hit_object)
 	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)

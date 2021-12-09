@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the cult sacrifice softlocking if the target is deleted before being sacced. It'll reroll a new target if that happens."

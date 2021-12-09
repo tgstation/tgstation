@@ -11,8 +11,12 @@
 	custom_premium_price = PAYCHECK_HARD * 1.25
 	///don't spam alert messages.
 	var/alert_cooldown
+	/// If the pAIcard is slotted in a PDA
+	var/slotted = FALSE
+	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
-	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
+	///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
+	var/emotion_icon = "off"
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/paicard/suicide_act(mob/living/user)
@@ -63,7 +67,7 @@
 		ui.open()
 
 /obj/item/paicard/ui_state(mob/user)
-	return GLOB.inventory_state
+	return GLOB.paicard_state
 
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()

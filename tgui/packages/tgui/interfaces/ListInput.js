@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { clamp01 } from 'common/math';
+import { Loader } from "./common/Loader";
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Input } from '../components';
+import { Button, Section, Stack, Input } from '../components';
 import { KEY_DOWN, KEY_UP, KEY_ENTER } from 'common/keycodes';
 import { Window } from '../layouts';
 import { Component, createRef } from 'inferno';
@@ -218,15 +218,3 @@ export class ListInput extends Component {
   }
 }
 
-export const Loader = props => {
-  const { value } = props;
-  return (
-    <div className="ListInput__Loader">
-      <Box
-        className="ListInput__LoaderProgress"
-        style={{
-          width: clamp01(value) * 100 + '%',
-        }} />
-    </div>
-  );
-};

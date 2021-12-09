@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "The lathe in Deltastation's service hall can print circuit boards again."

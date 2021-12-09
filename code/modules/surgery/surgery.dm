@@ -80,7 +80,7 @@
 	if (isnull(opcomputer))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
-		return .
+		return FALSE
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
 
