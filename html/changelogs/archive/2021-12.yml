@@ -250,3 +250,15 @@
   tralezab:
   - bugfix: Department orders no longer bugs out and asks you to take the deliveries
       to central primary hallway
+2021-12-09:
+  FA120:
+  - expansion: adds health to the crew monitor's usb table
+  FernandoJ8:
+  - rscadd: IV drips now cause a moderate pierce wound when ripped out
+  Gandalf2k15:
+  - bugfix: You will once again see events that required a playercount to run.
+  Retlaw34:
+  - imageadd: New suit storage sprites
+  jlsnow301:
+  - rscadd: TGUI input boxes are on the way! You can find new preferences in the menu.
+      They will be on by default.
