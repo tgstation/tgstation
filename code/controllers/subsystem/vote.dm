@@ -188,7 +188,7 @@ SUBSYSTEM_DEF(vote)
 				for(var/valid_map in maps)
 					choices.Add(valid_map)
 			if("custom")
-				question = tgui_input_text(usr, "What is the vote for?", "Custom Vote", max_length = MAX_MESSAGE_LEN)
+				question = tgui_input_text(usr, "What is the vote for?", "Custom Vote")
 				if(!question)
 					return FALSE
 				for(var/i in 1 to 10)
