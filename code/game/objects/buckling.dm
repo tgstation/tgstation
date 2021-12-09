@@ -218,6 +218,11 @@
 	if(!isopenturf(loc) || !isopenturf(target.loc))
 		return FALSE
 
+	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
+	var/turf/ground = get_turf(src)
+	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+		return FALSE
+
 	// Check if this atom can have things buckled to it.
 	if(!can_buckle && !force)
 		return FALSE
