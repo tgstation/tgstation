@@ -10,12 +10,11 @@
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
-	var/lifespan = 3000 //how many deciseconds does the implant last?
-	///The id of the timer that's qdeleting us
-	var/timerid
 	allow_teleport = FALSE
 	///how many deciseconds does the implant last?
 	var/lifespan = 300 SECONDS
+	///The id of the timer that's qdeleting us
+	var/timerid
 
 /obj/item/implant/tracking/c38/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
