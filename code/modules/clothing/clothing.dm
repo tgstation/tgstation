@@ -38,9 +38,6 @@
 	/// Trait modification, lazylist of traits to add/take away, on equipment/drop in the correct slot
 	var/list/clothing_traits
 
-	/// Whether the clothing applies a fov trait, which limits a users field of view.
-	var/fov_trait
-
 	var/pocket_storage_component_path
 
 	//These allow head/mask items to dynamically alter the user's hair
@@ -254,9 +251,6 @@
 	for(var/trait in clothing_traits)
 		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
 
-	if(fov_trait)
-		user.remove_fov_trait(type, fov_trait)
-		user.update_fov()
 
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
@@ -274,9 +268,6 @@
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
-		if(fov_trait)
-			user.add_fov_trait(type, fov_trait)
-			user.update_fov()
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -467,6 +458,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
@@ -478,6 +470,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	icon_state = "[initial(icon_state)]"

@@ -10,7 +10,6 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	tint = 1.5
-	fov_trait = FOV_90_DEGREES
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -20,6 +19,7 @@
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 	if(!max_filters || !starting_filter_type)
 		return
 
