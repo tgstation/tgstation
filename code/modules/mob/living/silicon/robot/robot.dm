@@ -779,7 +779,7 @@
 	if(!QDELETED(src))
 		old_upgrade.deactivate(src)
 	for(var/obj/item/borg/upgrade/current_upgrade in src.upgrades)
-		if(current_upgrade.name == old_upgrade.name)
+		if(istype(current_upgrade, old_upgrade))
 			src.upgrades.Remove(current_upgrade)
 	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
