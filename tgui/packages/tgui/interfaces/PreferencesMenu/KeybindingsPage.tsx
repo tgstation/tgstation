@@ -49,6 +49,13 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   "UP": "North",
 };
 
+/**
+ * So, as it turns out, KeyboardEvent seems to be broken with IE 11, the
+ * DOM_KEY_LOCATION_X codes are all undefined. See this to see why it's 3:
+ * https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/location
+ */
+const DOM_KEY_LOCATION_NUMPAD = 3;
+
 const sortKeybindings = sortBy(
   ([_, keybinding]: [string, Keybinding]) => {
     return keybinding.name;
@@ -74,7 +81,7 @@ const formatKeyboardEvent = (event: KeyboardEvent): string => {
     text += "Shift";
   }
 
-  if (event.location === KeyboardEvent.DOM_KEY_LOCATION_NUMPAD) {
+  if (event.location === DOM_KEY_LOCATION_NUMPAD) {
     text += "Numpad";
   }
 

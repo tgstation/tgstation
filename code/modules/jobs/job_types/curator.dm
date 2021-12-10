@@ -1,5 +1,7 @@
 /datum/job/curator
 	title = "Curator"
+	description = "Read and write books and hand them to people, stock \
+		bookshelves, report on station news."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 1

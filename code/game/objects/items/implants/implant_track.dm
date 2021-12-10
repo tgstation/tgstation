@@ -6,22 +6,27 @@
 	var/lifespan_postmortem = 600 SECONDS
 	///will people implanted with this act as teleporter beacons?
 	var/allow_teleport = TRUE
-	///The id of the timer that's qdeleting us
-	var/timerid
 
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"
 	desc = "A smaller tracking implant that supplies power for only a few minutes."
+	var/lifespan = 3000 //how many deciseconds does the implant last?
+	///The id of the timer that's qdeleting us
+	var/timerid
 	allow_teleport = FALSE
 	///how many deciseconds does the implant last?
 	var/lifespan = 300 SECONDS
 
-/obj/item/implant/tracking/c38/Initialize(mapload)
+/obj/item/implant/tracking/c38/implant(mob/living/target, mob/user, silent, force)
 	. = ..()
 	timerid = QDEL_IN(src, lifespan)
 
-/obj/item/implant/tracking/c38/Destroy()
+/obj/item/implant/tracking/c38/removed(mob/living/source, silent, special)
+	. = ..()
 	deltimer(timerid)
+	timerid = null
+
+/obj/item/implant/tracking/c38/Destroy()
 	return ..()
 
 /obj/item/implant/tracking/Initialize(mapload)

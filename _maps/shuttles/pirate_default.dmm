@@ -423,7 +423,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/south{
-	id = "pirateportstarboardexternal";
+	id = "piratestarboardexternal";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4

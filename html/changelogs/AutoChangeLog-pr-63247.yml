@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes: 
+  - bugfix: "Deconstructing an active AI shell will no longer ghost the AI inhabiting it."
