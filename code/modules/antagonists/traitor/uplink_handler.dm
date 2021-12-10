@@ -75,7 +75,7 @@
 
 /// Generates objectives for this uplink handler
 /datum/uplink_handler/proc/generate_objectives()
-	var/potential_objectives_left = CONFIG_GET(number/maximum_potential_objectives) - length(potential_objectives)
+	var/potential_objectives_left = CONFIG_GET(number/maximum_potential_objectives) - (length(potential_objectives) + length(active_objectives))
 	var/list/objectives = SStraitor.get_possible_objectives(progression_points)
 	if(!length(objectives))
 		return
@@ -105,23 +105,29 @@
 	potential_duplicate_objectives[potential_duplicate.type] += potential_duplicate
 	return TRUE
 
-/datum/uplink_handler/proc/complete_objective(mob/user, datum/traitor_objective/to_remove)
+/// Used to complete objectives, failed or successful.
+/datum/uplink_handler/proc/complete_objective(datum/traitor_objective/to_remove)
 	if(to_remove in completed_objectives)
 		return
 
+	potential_objectives -= to_remove
 	active_objectives -= to_remove
 	completed_objectives += to_remove
+	generate_objectives()
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
 		return
 
+	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take
 	active_objectives += to_take
 	on_update()
 
 /datum/uplink_handler/proc/ui_objective_act(mob/user, datum/traitor_objective/to_act_on, action)
 	if(!(to_act_on in active_objectives))
+		return
+	if(to_act_on.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 
 	to_act_on.ui_perform_action(user, action)

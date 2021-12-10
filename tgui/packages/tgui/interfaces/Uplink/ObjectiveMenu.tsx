@@ -1,6 +1,6 @@
 import { classes } from "common/react";
 import { Component } from "inferno";
-import { Section, Stack, Box, Button, Flex, Tooltip } from "../../components";
+import { Section, Stack, Box, Button, Flex } from "../../components";
 import { calculateProgression, getReputation, Rank } from "./calculateReputationLevel";
 import { ObjectiveState } from "./constants";
 
@@ -320,7 +320,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         width="100%"
         position="relative"
       >
-        {name}
+        {name} {objectiveFailed? "- Failed" : " - Completed"}
       </Box>
       <Box
         className="UplinkObjective__Content"
@@ -359,44 +359,45 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
               </Box>
             </Stack>
             {objectiveFinished? (
-              <Tooltip
-                content={`Click this to finish this objective.${
-                  objectiveFailed? ""
-                    : ` You will receive ${telecrystalReward} TC
-              and ${progressionReward} Reputation.`
-                }`}
+              <Box
+                inline
+                className={reputation.gradient}
+                style={{
+                  "border-radius": "0",
+                  "border": "2px solid rgba(0, 0, 0, 0.5)",
+                  "border-left": "none",
+                  "border-right": "none",
+                }}
+                position="relative"
+                width="100%"
+                textAlign="center"
+                bold
               >
-                <Button
-                  inline
-                  className={reputation.gradient}
-                  style={{
-                    "border-radius": "0",
-                    "border": "2px solid rgba(0, 0, 0, 0.5)",
-                    "border-left": "none",
-                    "border-right": "none",
-                  }}
+                <Box
                   width="100%"
-                  textAlign="center"
-                  bold
+                  height="100%"
+                  backgroundColor={objectiveFailed
+                    ? "rgba(255, 0, 0, 0.1)"
+                    : "rgba(0, 255, 0, 0.1)"}
+                  position="absolute"
+                  left={0}
+                  top={0}
+                />
+                <Button
                   onClick={handleCompletion}
+                  color={objectiveFailed? "bad" : "good"}
+                  style={{
+                    "border": "1px solid rgba(0, 0, 0, 0.65)",
+                  }}
+                  my={1}
                 >
-                  <Box
-                    width="100%"
-                    height="100%"
-                    backgroundColor={objectiveFailed
-                      ? "rgba(255, 0, 0, 0.1)"
-                      : "rgba(0, 255, 0, 0.1)"}
-                    position="absolute"
-                    left={0}
-                    top={0}
-                  />
-                  {objectiveFailed? "OBJECTIVE FAILED" : "OBJECTIVE COMPLETE"}
+                  TURN IN
                 </Button>
-              </Tooltip>
+              </Box>
             )
               : null}
           </Stack.Item>
-          {!!uiButtons && (
+          {!!uiButtons && !objectiveFinished && (
             <Stack.Item>
               {uiButtons}
             </Stack.Item>

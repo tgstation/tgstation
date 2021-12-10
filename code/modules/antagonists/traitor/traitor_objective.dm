@@ -9,17 +9,23 @@
 	var/progression_minimum = 0 MINUTES
 	/// The maximum progression before this objective cannot appear anymore
 	var/progression_maximum = INFINITY
-	/// The progression that is rewarded from completing this traitor objective
+	/// The progression that is rewarded from completing this traitor objective. Can either be a list of list(min, max) or a direct value
 	var/progression_reward = 0 MINUTES
-	/// The telecrystals that are rewarded from completing this traitor objective
+	/// The telecrystals that are rewarded from completing this traitor objective. Can either be a list of list(min,max) or a direct value
 	var/telecrystal_reward = 0
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
 
+	var/list/registered_objects = list()
+
 /datum/traitor_objective/New(datum/uplink_handler/handler)
 	. = ..()
 	src.handler = handler
+	if(islist(telecrystal_reward))
+		telecrystal_reward = rand(telecrystal_reward[1], telecrystal_reward[2])
 
+	if(islist(progression_reward))
+		progression_reward = rand(progression_reward[1], progression_reward[2])
 
 /datum/traitor_objective/Destroy(force, ...)
 	handler = null
@@ -29,11 +35,30 @@
 /// If false is returned, the objective will be removed as a potential objective for the traitor it is being generated for.
 /// This is only temporary, it will run the proc again when objectives are generated for the traitor again.
 /datum/traitor_objective/proc/generate_objective(datum/mind/generating_for)
-	return TRUE
+	return FALSE
 
-/// Determines whether this objective is valid or not anymore.
+/// Used to clean up signals and stop listening to states.
+/datum/traitor_objective/proc/ungenerate_objective()
+	return
+
+/// Used to handle cleaning up the objective.
+/datum/traitor_objective/proc/handle_cleanup()
+	ungenerate_objective()
+	if(objective_state == OBJECTIVE_STATE_INACTIVE)
+		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active
+		return
+
+/// Used to fail objectives. Players can clear completed objectives in the UI
 /datum/traitor_objective/proc/fail_objective()
+	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
+	handle_cleanup()
 	objective_state = OBJECTIVE_STATE_FAILED
+
+/// Used to succeed objectives. Allows the player to cash it out in the UI.
+/datum/traitor_objective/proc/succeed_objective()
+	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
+	handle_cleanup()
+	objective_state = OBJECTIVE_STATE_COMPLETED
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
 /datum/traitor_objective/proc/finish_objective()

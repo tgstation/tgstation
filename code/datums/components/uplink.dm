@@ -234,9 +234,7 @@
 		if("finish_objective")
 			if(!objective.finish_objective(ui.user))
 				return
-			active_objectives -= objective
-			uplink_handler.completed_objectives += objective
-			uplink_handler.generate_objectives()
+			uplink_handler.complete_objective(objective)
 
 	return TRUE
 

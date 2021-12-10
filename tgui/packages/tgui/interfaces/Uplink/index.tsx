@@ -166,7 +166,7 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     return (
       <Window
-        width={620}
+        width={820}
         height={580}
         theme="syndicate">
         <Window.Content scrollable={currentTab !== 0}>

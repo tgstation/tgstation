@@ -51,8 +51,8 @@
 		SStraitor.register_uplink_handler(uplink_handler)
 	uplink_handler.has_progression = TRUE
 	uplink_handler.has_objectives = TRUE
-	uplink_handler.generate_objectives()
 	uplink_handler.owner = owner
+	uplink_handler.generate_objectives()
 
 	if(uplink_handler.progression_points < SStraitor.current_global_progression)
 		uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
