@@ -1,5 +1,6 @@
 /datum/job/atmospheric_technician
 	title = "Atmospheric Technician"
+	description = "Ensure the air is breathable on the station, fill oxygen tanks, fight fires, purify the air."
 	department_head = list("Chief Engineer")
 	faction = FACTION_STATION
 	total_positions = 3

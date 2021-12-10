@@ -27,6 +27,8 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+///Sets the length of a lazylist
+#define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
 ///Returns the lenght of the list
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
@@ -401,7 +403,8 @@
 				return_list += wordlist[i]
 			bit = bit << 1
 	else
-		for(var/bit = 1, bit <= (1<<24), bit = bit << 1)
+		for(var/bit_number = 0 to 23)
+			var/bit = 1 << bit_number
 			if(bitfield & bit)
 				return_list += bit
 
