@@ -1955,10 +1955,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.0":
-  version: 2.11.0
-  resolution: "@popperjs/core@npm:2.11.0"
-  checksum: 84d6f197d3ddfd8a5b05c7276c3692d8404c96128a946ab0a800b25567d8fc231928319c1f97a67e0817e76ce2a1b735589ef0f38f8e8835692408660a2395a1
+"@popperjs/core@npm:~2.9.3":
+  version: 2.9.3
+  resolution: "@popperjs/core@npm:2.9.3"
+  checksum: 4cb94c271eaa13416ab8169c6af778c5b6160614351a79c68e8219d6ee0a40b8f71080ca29e139591c7c0c8e08fc1627d0e18d40a64609713a42b58d683a009d
   languageName: node
   linkType: hard
 
@@ -8781,7 +8781,7 @@ resolve@^2.0.0-next.3:
   version: 0.0.0-use.local
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
-    "@popperjs/core": ^2.11.0
+    "@popperjs/core": ~2.9.3
     common: "workspace:*"
     dateformat: ^4.6.3
     dompurify: ^2.3.4
