@@ -26,10 +26,12 @@ type ObjectiveMenuProps = {
   activeObjectives: Objective[];
   potentialObjectives: Objective[];
   maximumActiveObjectives: number;
+  maximumPotentialObjectives: number;
 
   handleStartObjective: (objective: Objective) => void;
   handleObjectiveAction: (objective: Objective, action: string) => void;
   handleObjectiveCompleted: (objective: Objective) => void;
+  handleRequestObjectives: () => void;
 }
 
 type ObjectiveMenuState = {
@@ -110,8 +112,10 @@ export class ObjectiveMenu
       activeObjectives = [],
       potentialObjectives,
       maximumActiveObjectives,
+      maximumPotentialObjectives,
       handleObjectiveAction,
       handleObjectiveCompleted,
+      handleRequestObjectives,
     } = this.props;
     const {
       draggingObjective,
@@ -210,6 +214,32 @@ export class ObjectiveMenu
                     </Flex.Item>
                   );
                 })}
+                {potentialObjectives.length < maximumPotentialObjectives && (
+                  <Flex.Item
+                    basis="100%"
+                    style={{
+                      // "background-color": "rgba(0, 0, 0, 0.5)",
+                    }}
+                    mb={1}
+                    mx="0.5%"
+                    minHeight="100px"
+                  >
+                    <Stack
+                      align="center"
+                      height="100%"
+                      width="100%"
+                      textAlign="center"
+                    >
+                      <Stack.Item width="100%">
+                        <Button
+                          content="Request More Objectives"
+                          fontSize={2}
+                          onClick={handleRequestObjectives}
+                        />
+                      </Stack.Item>
+                    </Stack>
+                  </Flex.Item>
+                )}
               </Flex>
             </Section>
           </Stack.Item>
@@ -320,7 +350,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         width="100%"
         position="relative"
       >
-        {name} {objectiveFailed? "- Failed" : " - Completed"}
+        {name} {!objectiveFinished? null : objectiveFailed? "- Failed" : " - Completed"}
       </Box>
       <Box
         className="UplinkObjective__Content"

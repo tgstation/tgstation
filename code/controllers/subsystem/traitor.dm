@@ -32,6 +32,7 @@ SUBSYSTEM_DEF(traitor)
 		var/amount_to_give = round(current_progression_scaling + (current_progression_scaling * deviance), 0.1 MINUTES)
 		amount_to_give = clamp(amount_to_give, 0, current_progression_scaling * 2)
 		handler.progression_points += current_progression_scaling
+		handler.on_update()
 
 /datum/controller/subsystem/traitor/proc/get_possible_objectives(progression_points)
 	var/list/possible_objectives = list()

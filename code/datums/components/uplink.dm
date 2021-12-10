@@ -151,6 +151,7 @@
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
 	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
+	data["maximum_potential_objectives"] = CONFIG_GET(number/maximum_potential_objectives)
 	if(uplink_handler.has_objectives)
 		var/list/potential_objectives = list()
 		var/index = 1
@@ -207,6 +208,11 @@
 
 	if(!uplink_handler.has_objectives)
 		return TRUE
+
+	switch(action)
+		if("regenerate_objectives")
+			uplink_handler.generate_objectives()
+			return TRUE
 
 	var/list/objectives
 	switch(action)

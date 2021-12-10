@@ -46,19 +46,20 @@
 	ungenerate_objective()
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
 		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active
-		return
 
 /// Used to fail objectives. Players can clear completed objectives in the UI
 /datum/traitor_objective/proc/fail_objective()
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
 	objective_state = OBJECTIVE_STATE_FAILED
+	handler.on_update() // Trigger an update to the UI
 
 /// Used to succeed objectives. Allows the player to cash it out in the UI.
 /datum/traitor_objective/proc/succeed_objective()
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
 	handle_cleanup()
 	objective_state = OBJECTIVE_STATE_COMPLETED
+	handler.on_update() // Trigger an update to the UI
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
 /datum/traitor_objective/proc/finish_objective()

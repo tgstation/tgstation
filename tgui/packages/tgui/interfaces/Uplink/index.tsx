@@ -40,6 +40,7 @@ type UplinkData = {
   potential_objectives: Objective[],
   active_objectives: Objective[],
   maximum_active_objectives: number,
+  maximum_potential_objectives: number,
 }
 
 type UplinkState = {
@@ -125,6 +126,7 @@ export class Uplink extends Component<{}, UplinkState> {
       has_objectives,
       has_progression,
       maximum_active_objectives,
+      maximum_potential_objectives,
     } = data;
     const {
       allItems,
@@ -240,10 +242,12 @@ export class Uplink extends Component<{}, UplinkState> {
                   activeObjectives={active_objectives}
                   potentialObjectives={potential_objectives}
                   maximumActiveObjectives={maximum_active_objectives}
+                  maximumPotentialObjectives={maximum_potential_objectives}
                   handleObjectiveAction={(objective, action) =>
                     act("objective_act", { objective_action: action, index: objective.id, name: objective.name })}
                   handleStartObjective={(objective) => act("start_objective", { index: objective.id, name: objective.name })}
                   handleObjectiveCompleted={(objective) => act("finish_objective", { index: objective.id, name: objective.name })}
+                  handleRequestObjectives={() => act("regenerate_objectives")}
                 />
               ) || (
                 <GenericUplink
