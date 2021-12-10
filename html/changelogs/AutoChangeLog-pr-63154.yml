@@ -1,8 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "Plasma material objects that didn't spawn plasma gas when ignited due to weird code reasons will now do just that."
-  - bugfix: "Fixed plasma material objects exploding when used with condenser."
-  - bugfix: "Fixed uranium manual doors and false walls not radiating."
-  - bugfix: "You can no longer duplicate rods with rough false walls."
-  - code_imp: "Due to code structural changes the mole amount from welding plasma related objects may get buffed or nerfed. Mostly buffed."
