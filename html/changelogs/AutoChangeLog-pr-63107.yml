@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Nuclear operatives will only win if they actually nuked the station and didn't nuke space instead."
