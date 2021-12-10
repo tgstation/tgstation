@@ -98,11 +98,11 @@
 	uniform = /obj/item/clothing/under/pants/youngfolksjeans
 	id = /obj/item/card/id/advanced
 
-/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/bum, visualsOnly = FALSE)
 	. = ..()
 	if(visualsOnly)
 		return
-	H.dna.add_mutation(STONER)
+	bum.dna.add_mutation(STONER)
 
 /datum/outfit/beachbum/lifeguard
 	name = "Beach Lifeguard"
@@ -128,12 +128,12 @@
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/space_bartender
 
-/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/spacebartender/post_equip(mob/living/carbon/human/bartender, visualsOnly = FALSE)
 	. = ..()
-	var/obj/item/card/id/id_card = H.wear_id
-	if(H.age < AGE_MINOR)
+	var/obj/item/card/id/id_card = bartender.wear_id
+	if(bartender.age < AGE_MINOR)
 		id_card.registered_age = AGE_MINOR
-		to_chat(H, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
+		to_chat(bartender, span_notice("You're not technically old enough to access or serve alcohol, but your ID has been discreetly modified to display your age as [AGE_MINOR]. Try to keep that a secret!"))
 
 //Preserved terrarium/seed vault: Spawns in seed vault structures in lavaland. Ghosts become plantpeople and are advised to begin growing plants in the room near them.
 /obj/effect/mob_spawn/ghost_role/human/seed_vault
@@ -294,8 +294,8 @@
 	implants = list(/obj/item/implant/weapons_auth)
 	id_trim = /datum/id_trim/chameleon/operative
 
-/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H)
-	H.faction |= ROLE_SYNDICATE
+/datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/syndicate, visualsOnly = FALSE)
+	syndicate.faction |= ROLE_SYNDICATE
 
 /datum/outfit/lavaland_syndicate/comms
 	name = "Lavaland Syndicate Comms Agent"

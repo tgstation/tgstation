@@ -5,27 +5,27 @@
 /obj/effect/mob_spawn/ghost_role/human/golem
 	name = "inert free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	prompt_name = "free golem"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	mob_species = /datum/species/golem
 	anchored = FALSE
 	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
+	prompt_name = "a free golem"
+	you_are_text = "You are a Free Golem. Your family worships The Liberator."
+	flavour_text = "In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration: \"Yeah go do whatever.\""
 	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
-	you_are_text = "You are a Free Golem. Your family worships The Liberator."
-	flavour_text = "In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration: \"Yeah go do whatever.\""
 
 /obj/effect/mob_spawn/ghost_role/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
 		mob_species = species
 	. = ..()
-	var/area/A = get_area(src)
-	if(!mapload && A)
-		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
+	var/area/init_area = get_area(src)
+	if(!mapload && init_area)
+		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [init_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
 	if(has_owner && creator)
 		you_are_text = "You are a golem."
 		flavour_text = "You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools."
