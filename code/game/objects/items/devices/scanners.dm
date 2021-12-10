@@ -97,6 +97,10 @@ GENE SCANNER
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 	custom_price = PAYCHECK_HARD
+	
+/obj/item/healthanalyzer/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click [src] to toggle the limb damage readout.")
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
@@ -273,9 +277,9 @@ GENE SCANNER
 
 			if(mode == SCANNER_VERBOSE)
 				for(var/obj/item/bodypart/limb as anything in damaged)
-					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.name)]:</font></td>\
-									<td><font color='#cc3333'>[(limb.brute_dam > 0) ? "[CEILING(limb.brute_dam,1)]" : "0"]</font></td>\
-									<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
+					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(limb.name)]:</font></td>"
+					dmgreport += "<td><font color='#cc3333'>[(limb.brute_dam > 0) ? "[CEILING(limb.brute_dam,1)]" : "0"]</font></td>"
+					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
 			render_list += dmgreport // tables do not need extra linebreak
 
@@ -361,10 +365,10 @@ GENE SCANNER
 		var/list/wounded_parts = carbontarget.get_wounded_bodyparts()
 		for(var/i in wounded_parts)
 			var/obj/item/bodypart/wounded_part = i
-			render_list += "<span class='alert ml-1'><b>Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
+			render_list += "<span class='alert ml-1'><b>Physical trauma[LAZYLEN(wounded_part.wounds) > 1 ? "s" : ""] detected in [wounded_part.name]</b>"
 			for(var/k in wounded_part.wounds)
 				var/datum/wound/W = k
-				render_list += "<div class='ml-2'>[W.name] ([W.severity_text()])</div>" // less lines than in woundscan() so we don't overload people trying to get basic med info
+				render_list += "<div class='ml-2'>[W.name] ([W.severity_text()])\nRecommended treatment: [W.treat_text]</div>" // less lines than in woundscan() so we don't overload people trying to get basic med info
 			render_list += "</span>"
 
 	//Diseases
@@ -469,15 +473,14 @@ GENE SCANNER
 		
 		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE) // we handled the last <br> so we don't need handholding
 		
-/obj/item/healthanalyzer/verb/toggle_mode()
-	set name = "Switch Verbosity"
-	set category = "Object"
-
-	if(usr.incapacitated())
+/obj/item/healthanalyzer/AltClick(mob/user)
+	..()
+	
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 
 	mode = !mode
-	to_chat(usr, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
+	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
 
 /obj/item/healthanalyzer/advanced
 	name = "advanced health analyzer"
