@@ -72,7 +72,7 @@
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
 	if(host)
-		var/list/actual_costs = research_costs
+		var/list/actual_costs = research_costs.Copy()
 		if(host.boosted_nodes[id])
 			var/list/boostlist = host.boosted_nodes[id]
 			for(var/booster in boostlist)
