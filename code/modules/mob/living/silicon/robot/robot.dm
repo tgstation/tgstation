@@ -741,7 +741,7 @@
 ///Use this to add upgrades to robots. It'll register signals for when the upgrade is moved or deleted, if not single use.
 /mob/living/silicon/robot/proc/add_to_upgrades(obj/item/borg/upgrade/new_upgrade, mob/user)
 	for(var/obj/item/borg/upgrade/current_upgrade in src.upgrades)
-		if(current_upgrade.name == new_upgrade.name)
+		if(istype(current_upgrade, new_upgrade))
 			return FALSE
 	if(!user.temporarilyRemoveItemFromInventory(new_upgrade)) //calling the upgrade's dropped() proc /before/ we add action buttons
 		return FALSE
@@ -768,7 +768,7 @@
 		return
 	old_upgrade.deactivate(src)
 	for(var/obj/item/borg/upgrade/current_upgrade in src.upgrades)
-		if(current_upgrade.name == old_upgrade.name)
+		if(istype(current_upgrade, old_upgrade))
 			src.upgrades.Remove(current_upgrade)
 
 	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
