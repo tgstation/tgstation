@@ -1,5 +1,7 @@
 /datum/job/security_officer
 	title = "Security Officer"
+	description = "Protect company assets, follow the Standard Operating \
+		Procedure, eat donuts."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
 	faction = FACTION_STATION

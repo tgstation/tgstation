@@ -363,19 +363,20 @@
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/player_mob = GLOB.player_list[i]
 		if(!player_mob?.client)
-			if(alive_check && player_mob.stat)
+			continue
+		if(alive_check && player_mob.stat)
+			continue
+		else if(afk_check && player_mob.client.is_afk())
+			continue
+		else if(human_check && !ishuman(player_mob))
+			continue
+		else if(isnewplayer(player_mob)) // exclude people in the lobby
+			continue
+		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+			var/mob/dead/observer/ghost_player = player_mob
+			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
-			else if(afk_check && player_mob.client.is_afk())
-				continue
-			else if(human_check && !ishuman(player_mob))
-				continue
-			else if(isnewplayer(player_mob)) // exclude people in the lobby
-				continue
-			else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
-				var/mob/dead/observer/ghost_player = player_mob
-				if(ghost_player.started_as_observer) // Exclude people who started as observers
-					continue
-			active_players++
+		active_players++
 	return active_players
 
 ///Show the poll window to the candidate mobs

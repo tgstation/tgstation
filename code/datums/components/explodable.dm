@@ -22,6 +22,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
 	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
@@ -64,6 +65,13 @@
 	SIGNAL_HANDLER
 
 	check_if_detonate(target)
+
+/// Welder check. Here because tool_act is higher priority than attackby.
+/datum/component/explodable/proc/welder_react(datum/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+
+	if(check_if_detonate(tool))
+		return COMPONENT_BLOCK_TOOL_ATTACK
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
 /datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone)
@@ -119,10 +127,9 @@
 	if(!isitem(target))
 		return
 	var/obj/item/I = target
-	if(!I.get_temperature())
-		return
-	detonate() //If we're touching a hot item we go boom
-
+	if(I.get_temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		detonate() //If we're touching a hot item we go boom
+		return TRUE
 
 /// Explode and remove the object
 /datum/component/explodable/proc/detonate()

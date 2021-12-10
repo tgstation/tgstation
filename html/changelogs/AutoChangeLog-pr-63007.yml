@@ -1,5 +1,0 @@
-author: "Potato-Masher"
-delete-after: True
-changes: 
-  - expansion: "Metastation - A near complete remap of the atmospherics section of the station. Functionally the same, but with added space for projects, the HFR, and an included basic crystallizer setup."
-  - qol: "Minor atmospherics adjustments to metastation's xenobiology satellite, the slime euthanization chamber cooling loop has been prettied up and starts with CO2 already inside to ensure the freezer works immediately with no setup."
