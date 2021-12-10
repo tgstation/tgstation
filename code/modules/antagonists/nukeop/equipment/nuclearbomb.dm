@@ -1,6 +1,4 @@
-/// station_was_nuked
-/// Global variable that is true only if the station was actually hit by the nuke, otherwise false
-
+/// TRUE only if the station was actually hit by the nuke, otherwise FALSE
 GLOBAL_VAR_INIT(station_was_nuked, FALSE)
 GLOBAL_VAR(station_nuke_source)
 
@@ -499,7 +497,6 @@ GLOBAL_VAR(station_nuke_source)
 	if(off_station < NUKE_MISS_STATION)
 		SSshuttle.registerHostileEnvironment(src)
 		SSshuttle.lockdown = TRUE
-	
 	//Cinematic
 	GLOB.station_nuke_source = off_station
 	really_actually_explode(off_station)
