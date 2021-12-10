@@ -726,6 +726,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/do_fermentation()
 	fermentation_time_remaining = null
 	fermentation_timer = null
+	reagents.remove_reagent(/datum/reagent/consumable/prunomix, 50)
 	if(prob(10))
 		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15) // closest thing we have to botulism
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)
