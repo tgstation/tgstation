@@ -24,6 +24,20 @@
 	QDEL_NULL(ion_trail)
 	return ..()
 
+/obj/item/tank/jetpack/item_action_slot_check(slot)
+	if(slot == ITEM_SLOT_BACK)
+		return TRUE
+
+/obj/item/tank/jetpack/equipped(mob/user, slot, initial)
+	. = ..()
+	if(on && slot != ITEM_SLOT_BACK)
+		turn_off(user)
+
+/obj/item/tank/jetpack/dropped(mob/user, silent)
+	. = ..()
+	if(on)
+		turn_off(user)
+
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
 		var/datum/gas_mixture/our_mix = return_air()
