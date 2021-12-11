@@ -44,7 +44,7 @@
 	desc = "A machine that prints swarmers."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_console"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	max_integrity = 500
 	plane = MASSIVE_OBJ_PLANE
 	light_color = LIGHT_COLOR_CYAN
@@ -56,14 +56,17 @@
 	///Reference to all the swarmers currently alive this beacon has created
 	var/list/mob/living/simple_animal/hostile/swarmer/swarmerlist
 
-/obj/structure/swarmer_beacon/Initialize()
+/obj/structure/swarmer_beacon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
 	if(processing_swarmer)
-		to_chat(user, "<b>A swarmer is currently being created.  Try again soon.</b>")
+		to_chat(user, "<b>A swarmer is currently being created. Try again soon.</b>")
+		return
+	if(is_banned_from(user.ckey, ROLE_SWARMER))
+		to_chat(user, span_danger("You are banned from playing as a Swarmer."))
 		return
 	que_swarmer(user)
 
@@ -130,7 +133,7 @@
 	max_integrity = 10
 	density = FALSE
 
-/obj/structure/swarmer/trap/Initialize()
+/obj/structure/swarmer/trap/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -169,7 +172,7 @@
 	icon_state = "disintegrate"
 	duration = 1 SECONDS
 
-/obj/effect/temp_visual/swarmer/disintegration/Initialize()
+/obj/effect/temp_visual/swarmer/disintegration/Initialize(mapload)
 	. = ..()
 	playsound(loc, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		return parent.say(arglist(args))
 	return ..()
@@ -31,17 +31,17 @@
 	if (!message)
 		return
 
-	var/obj/machinery/holopad/T = current
-	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		var/turf/padturf = get_turf(T)
+	var/obj/machinery/holopad/active_pad = current
+	if(istype(active_pad) && active_pad.masters[src])//If there is a hologram and its master is the user.
+		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+		var/turf/padturf = get_turf(active_pad)
 		var/padloc
 		if(padturf)
 			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, MODE_ROBOT, message_language = language)
-		to_chat(src, "<i><span class='game say'>Holopad transmitted, [span_name("[real_name]")] <span class='message robot'>\"[message]\"</span></span></i>")
+		ai_holo.say(message, language = language)
 	else
 		to_chat(src, span_alert("No holopad connected."))
 
@@ -142,7 +142,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(M.can_hear() && (M.client?.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						SEND_SOUND(M, voice)

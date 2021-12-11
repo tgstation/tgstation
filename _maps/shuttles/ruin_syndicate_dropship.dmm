@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "al" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -165,7 +165,7 @@
 /area/shuttle/caravan/syndicate3)
 "rU" = (
 /obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "caravansyndicate3_bridge"
 	},
@@ -305,6 +305,7 @@
 "EO" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/airalarm/syndicate{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -326,7 +327,7 @@
 /area/shuttle/caravan/syndicate3)
 "Gx" = (
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,

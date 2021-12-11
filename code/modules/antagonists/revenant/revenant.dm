@@ -36,7 +36,7 @@
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
@@ -72,7 +72,6 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	flags_1 |= RAD_NO_CONTAMINATE_1
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
@@ -81,6 +80,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, no_hands = FALSE, floor_okay=FALSE)
@@ -107,7 +107,7 @@
 	to_chat(src, "<b>Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.</b>")
 	if(!generated_objectives_and_spells)
 		generated_objectives_and_spells = TRUE
-		mind.assigned_role = ROLE_REVENANT
+		mind.set_assigned_role(SSjob.GetJobType(/datum/job/revenant))
 		mind.special_role = ROLE_REVENANT
 		SEND_SOUND(src, sound('sound/effects/ghost.ogg'))
 		mind.add_antag_datum(/datum/antagonist/revenant)
@@ -157,9 +157,11 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if(!message)
 		return
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	src.log_talk(message, LOG_SAY)
 	var/rendered = span_revennotice("<b>[src]</b> says, \"[message]\"")
 	for(var/mob/M in GLOB.mob_list)
@@ -191,15 +193,13 @@
 	return ..()
 
 //damage, gibbing, and dying
-/mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
-	. = ..()
-	if(istype(W, /obj/item/nullrod))
-		visible_message(span_warning("[src] violently flinches!"), \
-						span_revendanger("As \the [W] passes through you, you feel your essence draining away!"))
-		adjustBruteLoss(25) //hella effective
-		inhibited = TRUE
-		update_action_buttons_icon()
-		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
+/mob/living/simple_animal/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
+	SIGNAL_HANDLER
+	visible_message(span_warning("[src] violently flinches!"), \
+		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
+	inhibited = TRUE
+	update_action_buttons_icon()
+	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
@@ -262,6 +262,7 @@
 		to_chat(src, span_revenwarning("You have been revealed!"))
 		unreveal_time = unreveal_time + time
 	update_spooky_icon()
+	orbiting?.end_orbit(src)
 
 /mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
@@ -276,6 +277,7 @@
 		to_chat(src, span_revenwarning("You cannot move!"))
 		unstun_time = unstun_time + time
 	update_spooky_icon()
+	orbiting?.end_orbit(src)
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
 	if(revealed)
@@ -345,6 +347,43 @@
 	alpha=255
 	stasis = FALSE
 
+/mob/living/simple_animal/revenant/orbit(atom/target)
+	setDir(SOUTH) // reset dir so the right directional sprites show up
+	return ..()
+
+/mob/living/simple_animal/revenant/Moved(atom/OldLoc)
+	if(!orbiting) // only needed when orbiting
+		return ..()
+	if(incorporeal_move_check(src))
+		return ..()
+
+	// back back back it up, the orbitee went somewhere revenant cannot
+	orbiting?.end_orbit(src)
+	abstract_move(OldLoc) // gross but maybe orbit component will be able to check pre move in the future
+
+/mob/living/simple_animal/revenant/stop_orbit(datum/component/orbiter/orbits)
+	// reset the simple_flying animation
+	animate(src, pixel_y = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE)
+	animate(pixel_y = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	return ..()
+
+/// Incorporeal move check: blocked by holy-watered tiles and salt piles.
+/mob/living/simple_animal/revenant/proc/incorporeal_move_check(atom/destination)
+	var/turf/open/floor/stepTurf = get_turf(destination)
+	if(stepTurf)
+		var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
+		if(salt)
+			to_chat(src, span_warning("[salt] bars your passage!"))
+			reveal(20)
+			stun(20)
+			return
+		if(stepTurf.turf_flags & NOJAUNT)
+			to_chat(src, span_warning("Some strange aura is blocking the way."))
+			return
+		if(locate(/obj/effect/blessing) in stepTurf)
+			to_chat(src, span_warning("Holy energies block your path!"))
+			return
+	return TRUE
 
 //reforming
 /obj/item/ectoplasm/revenant
@@ -359,7 +398,7 @@
 	var/old_key //key of the previous revenant, will have first pick on reform.
 	var/mob/living/simple_animal/revenant/revenant
 
-/obj/item/ectoplasm/revenant/Initialize()
+/obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
@@ -410,7 +449,7 @@
 				break
 	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
-		var/list/candidates = pollCandidatesForMob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, ROLE_REVENANT, 50, revenant)
+		var/list/candidates = poll_candidates_for_mob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, ROLE_REVENANT, 5 SECONDS, revenant)
 		if(!LAZYLEN(candidates))
 			qdel(revenant)
 			message_admins("No candidates were found for the new revenant. Oh well!")
@@ -445,7 +484,7 @@
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))
 		qdel(revenant)
-	..()
+	return ..()
 
 //objectives
 /datum/objective/revenant

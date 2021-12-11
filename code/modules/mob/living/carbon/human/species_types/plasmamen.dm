@@ -25,7 +25,7 @@
 	heatmod = 1.5
 	brutemod = 1.5
 	payday_modifier = 0.75
-	breathid = "tox"
+	breathid = "plas"
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 	disliked_food = FRUIT | CLOTH
@@ -51,6 +51,13 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
+	var/flammable_limb = FALSE
+	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
+		if(found_bodypart.status == BODYPART_ORGANIC && (found_bodypart.species_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+			flammable_limb = TRUE
+			break
+	if(!flammable_limb && !H.on_fire) //Allows their suit to attempt to autoextinguish if augged and on fire
+		return
 	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
@@ -78,11 +85,13 @@
 		no_protection = TRUE
 	. = ..()
 
-/datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(J.plasmaman_outfit)
-		H.equipOutfit(J.plasmaman_outfit, visualsOnly)
-	H.internal = H.get_item_for_held_index(2)
-	H.update_internals_hud_icon(1)
+
+/datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	if(job.plasmaman_outfit)
+		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
+	equipping.internal = equipping.get_item_for_held_index(2)
+	equipping.update_internals_hud_icon(1)
+
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
@@ -111,7 +120,7 @@
 				if(1)
 					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 				if(2)
-					H.manual_emote(pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+					H.manual_emote(pick("oofs silently.", "looks like [H.p_their()] bones hurt.", "grimaces, as though [H.p_their()] bones hurt."))
 				if(3)
 					to_chat(H, span_warning("Your bones hurt!"))
 		if(chem.overdosed)

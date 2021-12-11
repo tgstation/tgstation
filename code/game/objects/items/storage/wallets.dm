@@ -43,38 +43,32 @@
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
-	refreshID(removed = TRUE)
+	if(istype(gone, /obj/item/card/id))
+		refreshID()
 
 /**
  * Calculates the new front ID.
  *
  * Picks the ID card that has the most combined command or higher tier accesses.
- * Arguments:
- * * removed - If this proc was called because a card was removed. There's a chance we don't need to calculate the new front ID if a card was removed.
  */
-/obj/item/storage/wallet/proc/refreshID(removed = FALSE)
+/obj/item/storage/wallet/proc/refreshID()
 	LAZYCLEARLIST(combined_access)
-
-	// If the front_id is still in our wallet an we removed a card, we can return early.
-	if((front_id in src) && removed)
-		return
 
 	front_id = null
 	var/winning_tally = 0
-	for(var/card in contents)
-		var/obj/item/card/id/id_card = card
-		if(!istype(id_card))
-			continue
-
+	var/is_magnetic_found = FALSE
+	for(var/obj/item/card/id/id_card in contents)
 		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
-		if(HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
+		if(!is_magnetic_found && HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
 			front_id = id_card
-			break
+			is_magnetic_found = TRUE
 
-		var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
-		if(card_tally > winning_tally)
-			winning_tally = card_tally
-			front_id = id_card
+		if(!is_magnetic_found)
+			var/card_tally = SSid_access.tally_access(id_card, ACCESS_FLAG_COMMAND)
+			if(card_tally > winning_tally)
+				winning_tally = card_tally
+				front_id = id_card
+
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
 
@@ -94,7 +88,8 @@
 
 /obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	refreshID(removed = FALSE)
+	if(istype(arrived, /obj/item/card/id))
+		refreshID()
 
 /obj/item/storage/wallet/update_overlays()
 	. = ..()
@@ -159,10 +154,10 @@
 /obj/item/storage/wallet/random
 	icon_state = "random_wallet" // for mapping purposes
 
-/obj/item/storage/wallet/random/Initialize()
+/obj/item/storage/wallet/random/Initialize(mapload)
 	. = ..()
 	icon_state = "wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
 	new /obj/item/holochip(src, rand(5, 30))
-	new /obj/effect/spawner/lootdrop/wallet_loot(src)
+	new /obj/effect/spawner/random/entertainment/wallet_storage(src)

@@ -5,7 +5,8 @@
  */
 /obj/item/circuit_component/split
 	display_name = "Split"
-	display_desc = "Splits a string by the separator, turning it into a list"
+	desc = "Splits a string by the separator, turning it into a list"
+	category = "List"
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -18,28 +19,18 @@
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-/obj/item/circuit_component/split/Initialize()
-	. = ..()
+/obj/item/circuit_component/split/populate_ports()
 	input_port = add_input_port("Input", PORT_TYPE_STRING)
 	separator = add_input_port("Seperator", PORT_TYPE_STRING)
-	output = add_output_port("Output", PORT_TYPE_LIST)
-
-/obj/item/circuit_component/split/Destroy()
-	input_port = null
-	separator = null
-	output = null
-	return ..()
+	output = add_output_port("Output", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
 /obj/item/circuit_component/split/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
-	var/separator_value = separator.input_value
+	var/separator_value = separator.value
 	if(isnull(separator_value))
 		return
 
-	var/value = input_port.input_value
+	var/value = input_port.value
 	if(isnull(value))
 		return
 

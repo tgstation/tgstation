@@ -7,7 +7,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	move_resist = INFINITY
 	throwforce = 0
 
-/mob/dead/Initialize()
+/mob/dead/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -20,6 +20,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		add_verb(src, /mob/dead/proc/server_hop)
 	set_focus(src)
+	become_hearing_sensitive()
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/canUseStorage()
@@ -29,7 +30,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/turf/old_turf = get_turf(src)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
-		onTransitZ(old_turf?.z, new_turf?.z)
+		on_changed_z_level(old_turf, new_turf)
 	return ..()
 
 /mob/dead/get_status_tab_items()
@@ -50,6 +51,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	. += "Players: [SSticker.totalPlayers]"
 	if(client.holder)
 		. += "Players Ready: [SSticker.totalPlayersReady]"
+		. += "Admins Ready: [SSticker.total_admins_ready] / [GLOB.admins.len]"
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
@@ -67,7 +69,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		if(1)
 			pick = csa[1]
 		else
-			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
+			pick = tgui_input_list(src, "Server to jump to", "Server Hop", csa)
 
 	if(!pick)
 		return
@@ -79,7 +81,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	var/client/C = client
 	to_chat(C, span_notice("Sending you to [pick]."))
-	new /atom/movable/screen/splash(C)
+	new /atom/movable/screen/splash(null, C)
 
 	notransform = TRUE
 	sleep(29) //let the animation play
@@ -118,6 +120,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	update_z(null)
 	return ..()
 
-/mob/dead/onTransitZ(old_z,new_z)
+/mob/dead/on_changed_z_level(turf/old_turf, turf/new_turf)
 	..()
-	update_z(new_z)
+	update_z(new_turf?.z)

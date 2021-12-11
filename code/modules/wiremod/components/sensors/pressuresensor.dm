@@ -5,27 +5,20 @@
  */
 /obj/item/circuit_component/pressuresensor
 	display_name = "Pressure Sensor"
-	display_desc = "Outputs the current pressure of the tile"
+	desc = "Outputs the current pressure of the tile"
+	category = "Sensor"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The result from the output
 	var/datum/port/output/result
 
-/obj/item/circuit_component/pressuresensor/Initialize()
-	. = ..()
+/obj/item/circuit_component/pressuresensor/populate_ports()
 	result = add_output_port("Result", PORT_TYPE_NUMBER)
 
-/obj/item/circuit_component/tempsensor/Destroy()
-	result = null
-	return ..()
-
 /obj/item/circuit_component/pressuresensor/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 	//Get current turf
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 	if(!location)
 		result.set_output(null)
 		return

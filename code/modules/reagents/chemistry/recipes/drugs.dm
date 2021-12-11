@@ -3,13 +3,6 @@
 	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG
 
-/datum/chemical_reaction/crank
-	results = list(/datum/reagent/drug/crank = 5)
-	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1, /datum/reagent/lithium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/fuel = 1)
-	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
-	required_temp = 390
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG
-
 /datum/chemical_reaction/krokodil
 	results = list(/datum/reagent/drug/krokodil = 6)
 	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/medicine/morphine = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/potassium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/fuel = 1)
@@ -80,7 +73,7 @@
 	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(power, T, 0, 0)
-	e.start()
+	e.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/chemical_reaction/bath_salts
@@ -126,3 +119,40 @@
 	required_reagents = list(/datum/reagent/drug/maint/sludge = 6 , /datum/reagent/toxin/acid/nitracid = 1 , /datum/reagent/consumable/enzyme = 1)
 	required_catalysts = list(/datum/reagent/acetone_oxide = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+//These drug item reactions should probably be converted to fermichem in the future.
+/datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get amde.
+	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 10, /datum/reagent/ammonia = 5)
+	mob_react = FALSE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+/datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		var/obj/item/food/drug/moon_rock/new_rock = new(location)
+		new_rock.pixel_x = rand(-6, 6)
+		new_rock.pixel_y = rand(-6, 6)
+
+/datum/chemical_reaction/blastoff_ampoule
+	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)
+	mob_react = FALSE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+/datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/iteration in 1 to created_volume)
+		var/obj/item/reagent_containers/glass/blastoff_ampoule/new_ampoule = new(location)
+		new_ampoule.pixel_x = rand(-6, 6)
+		new_ampoule.pixel_y = rand(-6, 6)
+
+/datum/chemical_reaction/saturnx_glob
+	required_reagents = list(/datum/reagent/lead = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/drug/maint/tar = 10)
+	mob_react = FALSE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+/datum/chemical_reaction/saturnx_glob/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/iteration in 1 to created_volume)
+		var/obj/item/food/drug/saturnx/new_glob = new(location)
+		new_glob.pixel_x = rand(-6, 6)
+		new_glob.pixel_y = rand(-6, 6)

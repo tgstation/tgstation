@@ -12,13 +12,13 @@
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
 	var/obj/item/noz
 	var/volume = 500
 
-/obj/item/watertank/Initialize()
+/obj/item/watertank/Initialize(mapload)
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
@@ -122,7 +122,7 @@
 
 	var/obj/item/watertank/tank
 
-/obj/item/reagent_containers/spray/mister/Initialize()
+/obj/item/reagent_containers/spray/mister/Initialize(mapload)
 	. = ..()
 	tank = loc
 	if(!istype(tank))
@@ -149,7 +149,7 @@
 	inhand_icon_state = "waterbackpackjani"
 	custom_price = PAYCHECK_EASY * 5
 
-/obj/item/watertank/janitor/Initialize()
+/obj/item/watertank/janitor/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
 
@@ -162,14 +162,45 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(5,10)
+	possible_transfer_amounts = list(5, 10)
 	current_range = 5
 
 /obj/item/watertank/janitor/make_noz()
 	return new /obj/item/reagent_containers/spray/mister/janitor(src)
 
 /obj/item/reagent_containers/spray/mister/janitor/mode_change_message(mob/user)
-	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
+	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
+
+//Security tank
+/obj/item/watertank/pepperspray
+	name = "ANTI-TIDER-2500 suppression backpack"
+	desc = "The ultimate crowd-control device; this tool allows the user to quickly and efficiently pacify groups of hostile targets."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "pepperbackpacksec"
+	inhand_icon_state = "pepperbackpacksec"
+	custom_price = PAYCHECK_MEDIUM * 2
+
+/obj/item/watertank/pepperspray/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 500)
+
+/obj/item/reagent_containers/spray/mister/pepperspray
+	name = "security spray nozzle"
+	desc = "A pacifying spray nozzle attached to a pepperspray tank, designed to silence perps."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "mistersec"
+	inhand_icon_state = "mistersec"
+	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(5, 10)
+	current_range = 6
+
+/obj/item/watertank/pepperspray/make_noz()
+	return new /obj/item/reagent_containers/spray/mister/pepperspray(src)
+
+/obj/item/reagent_containers/spray/mister/pepperspray/mode_change_message(mob/user)
+	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
 
 //ATMOS FIRE FIGHTING BACKPACK
 
@@ -186,7 +217,7 @@
 	volume = 200
 	slowdown = 0
 
-/obj/item/watertank/atmos/Initialize()
+/obj/item/watertank/atmos/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/water, 200)
 
@@ -222,7 +253,7 @@
 	var/metal_synthesis_cooldown = 0
 	var/resin_cooldown = 0
 
-/obj/item/extinguisher/mini/nozzle/Initialize()
+/obj/item/extinguisher/mini/nozzle/Initialize(mapload)
 	. = ..()
 	tank = loc
 	if (!istype(tank))
@@ -285,7 +316,7 @@
 		var/obj/effect/resin_container/A = new (get_turf(src))
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
-		for(var/a=0, a<5, a++)
+		for(var/i in 1 to 5)
 			step_towards(A, target)
 			sleep(2)
 		A.Smoke()
@@ -433,7 +464,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/watertank/op/Initialize()
+/obj/item/watertank/op/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
 	reagents.add_reagent(/datum/reagent/napalm,125)

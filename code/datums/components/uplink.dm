@@ -26,7 +26,8 @@
 	var/failsafe_code
 	var/compact_mode = FALSE
 	var/debug = FALSE
-
+	///Instructions on how to access the uplink based on location
+	var/unlock_text
 	var/list/previous_attempts
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
@@ -78,10 +79,11 @@
 	purchase_log = null
 	return ..()
 
-/datum/component/uplink/proc/update_items()
+/datum/component/uplink/proc/update_items(user)
 	var/updated_items
 	updated_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
 	update_sales(updated_items)
+	update_special_equipment(user, updated_items)
 	uplink_items = updated_items
 
 /datum/component/uplink/proc/update_sales(updated_items)
@@ -91,6 +93,23 @@
 	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
 		if (uplink_items[category] != null && updated_items[category] != null)
 			updated_items[category] = uplink_items[category]
+
+/datum/component/uplink/proc/update_special_equipment(mob/user, updated_items)
+	if(!user?.mind?.failed_special_equipment)
+		return
+	for(var/obj/item/equipment_path as anything in user.mind.failed_special_equipment)
+		var/datum/uplink_item/special_equipment/equipment_uplink_item = new
+		if(!updated_items[equipment_uplink_item.category])
+			updated_items[equipment_uplink_item.category] = list()
+		var/list/name_words = splittext(initial(equipment_path.name), " ")
+		var/capitalized_name
+		for(var/i in 1 to name_words.len)
+			name_words[i] = capitalize(name_words[i])
+		capitalized_name = name_words.Join(" ")
+		equipment_uplink_item.item = equipment_path
+		equipment_uplink_item.name = capitalized_name
+		equipment_uplink_item.desc = initial(equipment_path.desc)
+		updated_items[equipment_uplink_item.category][equipment_uplink_item.name] = equipment_uplink_item
 
 /datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
 	if(!silent)
@@ -127,7 +146,7 @@
 	if(locked)
 		return
 	active = TRUE
-	update_items()
+	update_items(user)
 	if(user)
 		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
@@ -167,12 +186,8 @@
 			var/datum/uplink_item/I = uplink_items[category][item]
 			if(I.limited_stock == 0)
 				continue
-			if(I.restricted_roles.len)
-				var/is_inaccessible = TRUE
-				for(var/R in I.restricted_roles)
-					if(R == user.mind.assigned_role || debug)
-						is_inaccessible = FALSE
-				if(is_inaccessible)
+			if(length(I.restricted_roles))
+				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
 					continue
 			if(I.restricted_species)
 				if(ishuman(user))
@@ -226,6 +241,8 @@
 		return
 	if (!user || user.incapacitated())
 		return
+	if(U.restricted_roles.len && !(user.mind.assigned_role.title in U.restricted_roles))
+		return
 
 	if(telecrystals < U.cost || U.limited_stock == 0)
 		return
@@ -252,7 +269,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/user = arguments[2]
-	owner = user.key
+	owner = user?.key
 	if(owner && !purchase_log)
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 		if(GLOB.uplink_purchase_logs_by_key[owner])
@@ -287,7 +304,7 @@
 	interact(null, user)
 	to_chat(user, span_hear("The PDA softly beeps."))
 	user << browse(null, "window=pda")
-	master.mode = 0
+	master.ui_mode = PDA_UI_HUB
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()

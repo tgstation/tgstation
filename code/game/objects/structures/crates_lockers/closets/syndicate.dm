@@ -95,6 +95,7 @@
 
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergency storage closet for repairs."
+	storage_capacity = 60 // This is gonna be used for debug.
 
 /obj/structure/closet/syndicate/resources/everything/PopulateContents()
 	var/list/resources = list(
@@ -116,7 +117,7 @@
 	/obj/item/stack/sheet/mineral/wood
 	)
 
-	for(var/i = 0, i<2, i++)
+	for(var/i in 1 to 2)
 		for(var/res in resources)
 			var/obj/item/stack/R = res
 			new res(src, initial(R.max_amount))

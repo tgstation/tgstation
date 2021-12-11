@@ -6,7 +6,7 @@
 	var/highlighted = FALSE
 	var/mob/camera/ai_eye/pic_in_pic/aiEye
 
-/atom/movable/screen/movable/pic_in_pic/ai/Initialize()
+/atom/movable/screen/movable/pic_in_pic/ai/Initialize(mapload)
 	. = ..()
 	aiEye = new /mob/camera/ai_eye/pic_in_pic()
 	aiEye.screen = src
@@ -91,7 +91,9 @@
 /area/ai_multicam_room
 	name = "ai_multicam_room"
 	icon_state = "ai_camera_room"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 	area_flags = NOTELEPORT | HIDDEN_AREA | UNIQUE_AREA
 	ambientsounds = null
 	flags_1 = NONE
@@ -103,7 +105,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 
-/obj/effect/landmark/ai_multicam_room/Initialize()
+/obj/effect/landmark/ai_multicam_room/Initialize(mapload)
 	. = ..()
 	qdel(GLOB.ai_camera_room_landmark)
 	GLOB.ai_camera_room_landmark = src
@@ -130,7 +132,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination)
+/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
 	if (destination)
 		abstract_move(destination)
 	else

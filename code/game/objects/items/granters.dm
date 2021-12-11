@@ -52,7 +52,7 @@
 		return FALSE
 	on_reading_start(user)
 	reading = TRUE
-	for(var/i=1, i<=pages_to_mastery, i++)
+	for(var/i in 1 to pages_to_mastery)
 		if(!turn_page(user))
 			on_reading_stopped()
 			reading = FALSE
@@ -159,7 +159,7 @@
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
-	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
+	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 	qdel(src)
 
 /obj/item/book/granter/spell/sacredflame
@@ -304,7 +304,7 @@
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"
 
-/obj/item/book/granter/spell/random/Initialize()
+/obj/item/book/granter/spell/random/Initialize(mapload)
 	. = ..()
 	var/static/banned_spells = list(/obj/item/book/granter/spell/mimery_blockade, /obj/item/book/granter/spell/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)
@@ -442,5 +442,20 @@
 	remarks = list("He apparently mastered some lost guncrafting technique.", "Why do I have to go through so many hoops to get this shitty gun?", "That much Grey Bull cannot be healthy...", "Did he drop this into a moisture trap? Yuck.", "Toolboxing techniques, huh? I kinda just want to know how to make the gun.", "What the hell does he mean by 'ancient warrior tradition'?")
 
 /obj/item/book/granter/crafting_recipe/pipegun_prime/recoil(mob/living/carbon/user)
+	to_chat(user, span_warning("The book turns to dust in your hands."))
+	qdel(src)
+
+/obj/item/book/granter/crafting_recipe/trash_cannon
+	name = "diary of a demoted engineer"
+	desc = "A lost journal. The engineer seems very deranged about their demotion."
+	crafting_recipe_types = list(
+		/datum/crafting_recipe/trash_cannon,
+		/datum/crafting_recipe/trashball,
+	)
+	icon_state = "book1"
+	oneuse = TRUE
+	remarks = list("\"I'll show them! I'll build a CANNON!\"", "\"Gunpowder is ideal, but i'll have to improvise...\"", "\"I savor the look on the CE's face when I BLOW down the walls to engineering!\"", "\"If the supermatter gets loose from my rampage, so be it!\"", "\"I'VE GONE COMPLETELY MENTAL!\"")
+
+/obj/item/book/granter/crafting_recipe/trash_cannon/recoil(mob/living/carbon/user)
 	to_chat(user, span_warning("The book turns to dust in your hands."))
 	qdel(src)

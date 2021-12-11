@@ -32,7 +32,7 @@
 	shy = FALSE
 	flavortext = null
 
-/mob/living/simple_animal/drone/syndrone/Initialize()
+/mob/living/simple_animal/drone/syndrone/Initialize(mapload)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
@@ -42,7 +42,7 @@
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	default_storage = /obj/item/uplink/nuclear
 
-/mob/living/simple_animal/drone/syndrone/badass/Initialize()
+/mob/living/simple_animal/drone/syndrone/badass/Initialize(mapload)
 	. = ..()
 	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 30
@@ -52,7 +52,7 @@
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
 
-/mob/living/simple_animal/drone/snowflake/Initialize()
+/mob/living/simple_animal/drone/snowflake/Initialize(mapload)
 	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
@@ -65,7 +65,7 @@
 	short_desc = "You are a Syndicate Maintenance Drone."
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
 	important_info = ""
-	assignedrole = null
+	spawner_job_path = /datum/job/ghost_role
 
 /obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
@@ -85,7 +85,7 @@
 	picked = TRUE
 	flavortext = null
 
-/mob/living/simple_animal/drone/polymorphed/Initialize()
+/mob/living/simple_animal/drone/polymorphed/Initialize(mapload)
 	. = ..()
 	liberate()
 	visualAppearance = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
@@ -117,7 +117,7 @@
 	short_desc = "You are a drone on Kosmicheskaya Stantsiya 13."
 	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
 	important_info = "Build, repair, maintain and improve the station that housed you on activation."
-	assignedrole = null
+	spawner_job_path = /datum/job/ghost_role
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
@@ -137,7 +137,7 @@
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 	shy = FALSE
 
-/mob/living/simple_animal/drone/derelict/Initialize()
+/mob/living/simple_animal/drone/derelict/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/stationstuck, PUNISHMENT_GIB, "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self-destruct activated.")
 

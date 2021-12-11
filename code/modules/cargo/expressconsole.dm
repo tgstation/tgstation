@@ -27,7 +27,7 @@
 	var/locked = TRUE //is the console locked? unlock with ID
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
 
-/obj/machinery/computer/cargo/express/Initialize()
+/obj/machinery/computer/cargo/express/Initialize(mapload)
 	. = ..()
 	packin_up()
 

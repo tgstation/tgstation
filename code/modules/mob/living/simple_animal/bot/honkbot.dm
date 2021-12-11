@@ -10,14 +10,12 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
-	model = "Honkbot"
-	bot_core_type = /obj/machinery/bot_core/honkbot
-	window_id = "autohonk"
-	window_name = "Honkomatic Bike Horn Unit v1.0.7"
 	data_hud_type = DATA_HUD_SECURITY_BASIC // show jobs
+	hackables = "sound control systems"
 	path_image_color = "#FF69B4"
 
 	var/honksound = 'sound/items/bikehorn.ogg' //customizable sound
@@ -37,10 +35,10 @@
 	var/weaponscheck = TRUE
 	var/bikehorn = /obj/item/bikehorn
 
-/mob/living/simple_animal/bot/honkbot/Initialize()
+/mob/living/simple_animal/bot/honkbot/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	auto_patrol = TRUE
+	bot_mode_flags |= BOT_MODE_AUTOPATROL
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/clown_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/clown]
@@ -78,36 +76,12 @@
 	last_found = world.time
 	limiting_spam = FALSE
 
-/mob/living/simple_animal/bot/honkbot/set_custom_texts()
-
-	text_hack = "You overload [name]'s sound control system"
-	text_dehack = "You reboot [name] and restore the sound control system."
-	text_dehack_fail = "[name] refuses to accept your authority!"
-
-/mob/living/simple_animal/bot/honkbot/get_controls(mob/user)
-	var/dat
-	dat += hack(user)
-	dat += showpai(user)
-	dat += text({"
-<TT><B>Honkomatic Bike Horn Unit v1.0.7 controls</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
-
-"<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>" )
-
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += text({"<BR> Auto Patrol: []"},
-
-"<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	return dat
-
 /mob/living/simple_animal/bot/honkbot/proc/judgement_criteria()
 	var/final = NONE
 	if(check_records)
-		final = final|JUDGE_RECORDCHECK
-	if(emagged == 2)
-		final = final|JUDGE_EMAGGED
+		final |= JUDGE_RECORDCHECK
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
+		final |= JUDGE_EMAGGED
 	return final
 
 /mob/living/simple_animal/bot/honkbot/proc/retaliate(mob/living/carbon/human/H)
@@ -133,13 +107,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/emag_act(mob/user)
 	..()
-	if(emagged == 2)
-		if(user)
-			user << span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!")
-			oldtarget_name = user.name
-		audible_message(span_danger("[src] gives out an evil laugh!"))
-		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
-		update_appearance()
+	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
+		return
+	if(user)
+		to_chat(user, span_danger("You short out [src]'s sound control system. It gives out an evil laugh!!"))
+		oldtarget_name = user.name
+	audible_message(span_danger("[src] gives out an evil laugh!"))
+	playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+	update_appearance()
 
 /mob/living/simple_animal/bot/honkbot/bullet_act(obj/projectile/Proj)
 	if((istype(Proj,/obj/projectile/beam)) || (istype(Proj,/obj/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
@@ -147,13 +122,13 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	return ..()
 
 /mob/living/simple_animal/bot/honkbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(!on)
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if (emagged <= 1)
+		if(bot_cover_flags & BOT_COVER_EMAGGED)
 			honk_attack(A)
 		else
 			if(!C.IsParalyzed() || arrest_type)
@@ -174,18 +149,18 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	..()
 
 /mob/living/simple_animal/bot/honkbot/proc/bike_horn() //use bike_horn
-	if (emagged <= 1)
-		if (!limiting_spam)
-			playsound(src, honksound, 50, TRUE, -1)
-			limiting_spam = TRUE //prevent spam
-			sensor_blink()
-			addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
-	else if (emagged == 2) //emagged honkbots will spam short and memorable sounds.
+	if (bot_cover_flags & BOT_COVER_EMAGGED) //emagged honkbots will spam short and memorable sounds.
 		if (!limiting_spam)
 			playsound(src, "honkbot_e", 50, FALSE)
 			limiting_spam = TRUE // prevent spam
 			icon_state = "honkbot-e"
 			addtimer(CALLBACK(src, /atom/.proc/update_appearance), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
+		return
+	if (!limiting_spam)
+		playsound(src, honksound, 50, TRUE, -1)
+		limiting_spam = TRUE //prevent spam
+		sensor_blink()
 		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 
 /mob/living/simple_animal/bot/honkbot/proc/honk_attack(mob/living/carbon/C) // horn attack
@@ -210,13 +185,14 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				limiting_spam = TRUE
-			if (emagged <= 1) //HONK once, then leave
+			if (bot_cover_flags & BOT_COVER_EMAGGED) // you really don't want to hit an emagged honkbot
+				threatlevel = 6 // will never let you go
+			else
+				//HONK once, then leave
 				var/judgement_criteria = judgement_criteria()
 				threatlevel = H.assess_threat(judgement_criteria)
 				threatlevel -= 6
 				target = oldtarget_name
-			else // you really don't want to hit an emagged honkbot
-				threatlevel = 6 // will never let you go
 			addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntime)
 
 			log_combat(src,C,"honked")
@@ -239,7 +215,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			walk_to(src,0)
 			look_for_perp()
-			if(!mode && auto_patrol)
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL)
 				mode = BOT_START_PATROL
 
 		if(BOT_HUNT)
@@ -337,8 +313,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
 	new bikehorn(Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 
@@ -357,7 +331,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 /mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
-	if(ismob(AM) && (on)) //only if its online
+	if(ismob(AM) && (bot_mode_flags & BOT_MODE_ON)) //only if its online
 		if(prob(30)) //you're far more likely to trip on a honkbot
 			var/mob/living/carbon/C = AM
 			if(!istype(C) || !C || in_range(src, target))
@@ -375,6 +349,3 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 				INVOKE_ASYNC(src, /mob/living/simple_animal/bot/proc/speak, "Honk!")
 			sensor_blink()
 			return
-
-/obj/machinery/bot_core/honkbot
-	req_one_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)

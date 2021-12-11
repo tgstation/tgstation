@@ -3,14 +3,14 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/labor)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "c" = (
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "d" = (
@@ -27,7 +27,7 @@
 /area/shuttle/labor)
 "f" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "g" = (

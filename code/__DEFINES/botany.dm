@@ -64,3 +64,14 @@
 #define REAGENT_TRANSFER_ID (1<<5)
 /// Plants that have a unique effect on attack_self.
 #define ATTACK_SELF_ID (1<<6)
+
+#define GLOWSHROOM_SPREAD_BASE_DIMINISH_FACTOR 10
+#define GLOWSHROOM_SPREAD_DIMINISH_FACTOR_PER_GLOWSHROOM 0.2
+#define GLOWSHROOM_BASE_INTEGRITY 60
+
+// obj/machinery/hydroponics/var/plant_status defines
+
+#define HYDROTRAY_NO_PLANT "missing"
+#define HYDROTRAY_PLANT_DEAD "dead"
+#define HYDROTRAY_PLANT_GROWING "growing"
+#define HYDROTRAY_PLANT_HARVESTABLE "harvestable"

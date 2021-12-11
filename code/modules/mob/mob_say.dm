@@ -60,6 +60,12 @@
 			to_chat(src, span_danger("You cannot talk in deadchat (muted)."))
 			return
 
+		if(SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && src == usr)
+			if(!COOLDOWN_FINISHED(client, say_slowmode))
+				to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+				return
+			COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
+
 		if(src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
@@ -74,7 +80,7 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(message)
+	var/spanned = say_quote(say_emphasis(message))
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
@@ -97,6 +103,19 @@
 
 ///The amount of items we are looking for in the message
 #define MESSAGE_MODS_LENGTH 6
+
+/mob/proc/check_for_custom_say_emote(message, list/mods)
+	var/customsaypos = findtext(message, "*")
+	if(!customsaypos)
+		return message
+	if (is_banned_from(ckey, "Emote"))
+		return copytext(message, customsaypos + 1)
+	mods[MODE_CUSTOM_SAY_EMOTE] = lowertext(copytext_char(message, 1, customsaypos))
+	message = copytext(message, customsaypos + 1)
+	if (!message)
+		mods[MODE_CUSTOM_SAY_ERASE_INPUT] = TRUE
+		message = "an interesting thing to say"
+	return message
 /**
  * Extracts and cleans message of any extenstions at the begining of the message
  * Inserts the info into the passed list, returns the cleaned message

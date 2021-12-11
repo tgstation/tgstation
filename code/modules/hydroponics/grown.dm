@@ -44,13 +44,16 @@
 	if(!tastes)
 		tastes = list("[name]" = 1) //This happens first else the component already inits
 
-	if(new_seed)
+	if(istype(new_seed))
 		seed = new_seed.Copy()
 
 	else if(ispath(seed))
 		// This is for adminspawn or map-placed growns. They get the default stats of their seed type.
 		seed = new seed()
 		seed.adjust_potency(50-seed.potency)
+	else if(!seed)
+		stack_trace("Grown object created without a seed. WTF")
+		return INITIALIZE_HINT_QDEL
 
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
@@ -70,6 +73,11 @@
 
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
+
+/obj/item/food/grown/Destroy()
+	if(isatom(seed))
+		QDEL_NULL(seed)
+	return ..()
 
 /obj/item/food/grown/MakeEdible()
 	AddComponent(/datum/component/edible,\

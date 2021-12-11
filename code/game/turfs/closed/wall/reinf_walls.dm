@@ -6,6 +6,7 @@
 	base_icon_state = "reinforced_wall"
 	opacity = TRUE
 	density = TRUE
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
@@ -199,8 +200,10 @@
 
 /turf/closed/wall/r_wall/update_icon(updates=ALL)
 	. = ..()
-	if(!(updates & UPDATE_SMOOTHING) || (d_state != INTACT))
+	if(d_state != INTACT)
 		smoothing_flags = NONE
+		return
+	if (!(updates & UPDATE_SMOOTHING))
 		return
 	smoothing_flags = SMOOTH_BITMASK
 	QUEUE_SMOOTH_NEIGHBORS(src)
@@ -230,9 +233,10 @@
 /turf/closed/wall/r_wall/rust_heretic_act()
 	if(prob(50))
 		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/closed/wall/r_wall/rust)
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		ScrapeAway()
+		return
+	return ..()
 
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"
@@ -242,6 +246,7 @@
 	base_icon_state = "plastitanium_wall"
 	explosion_block = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+	turf_flags = NONE
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)

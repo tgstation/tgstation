@@ -5,21 +5,20 @@
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
+	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
+	layer = ABOVE_MOB_LAYER
 	density = FALSE
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
+
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
+	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
 	bot_type = HYGIENE_BOT
-	model = "Cleanbot"
-	bot_core_type = /obj/machinery/bot_core/hygienebot
-	window_id = "autoclean"
-	window_name = "Automatic Crew Cleaner X2"
-	pass_flags = PASSMOB | PASSFLAPS | PASSTABLE
+	hackables = "cleaning service protocols"
 	path_image_color = "#993299"
-	allow_pai = FALSE
-	layer = ABOVE_MOB_LAYER
 
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target
@@ -38,7 +37,7 @@
 	///Visual overlay of the bot commiting warcrimes.
 	var/mutable_appearance/fire_overlay
 
-/mob/living/simple_animal/bot/hygienebot/Initialize()
+/mob/living/simple_animal/bot/hygienebot/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_ICON)
 
@@ -55,7 +54,7 @@
 	walk_to(src,0)
 	visible_message(span_boldannounce("[src] blows apart in a foamy explosion!"))
 	do_sparks(3, TRUE, src)
-	on = FALSE
+	bot_mode_flags &= ~BOT_MODE_ON
 	new /obj/effect/particle_effect/foam(loc)
 
 	..()
@@ -67,16 +66,16 @@
 
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state][on ? "-on" : null]"
+	icon_state = "[base_icon_state][bot_mode_flags & BOT_MODE_ON ? "-on" : null]"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
-	if(on)
+	if(bot_mode_flags & BOT_MODE_ON)
 		. += mutable_appearance(icon, "hygienebot-flame")
 
 	if(washing)
-		. += mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
+		. += mutable_appearance(icon, bot_cover_flags & BOT_COVER_EMAGGED ? "hygienebot-fire" : "hygienebot-water")
 
 
 /mob/living/simple_animal/bot/hygienebot/turn_off()
@@ -98,7 +97,7 @@
 		do_wash(loc)
 		for(var/AM in loc)
 			do_wash(AM)
-		if(isopenturf(loc) && !emagged)
+		if(isopenturf(loc) && !(bot_cover_flags & BOT_COVER_EMAGGED))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
@@ -106,11 +105,11 @@
 		if(BOT_IDLE) // idle
 			walk_to(src,0)
 			look_for_lowhygiene() // see if any disgusting fucks are in range
-			if(!mode && auto_patrol) // still idle, and set to patrol
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 
 		if(BOT_HUNT) // hunting for stinkman
-			if(emagged) //lol fuck em up
+			if(bot_cover_flags & BOT_COVER_EMAGGED) //lol fuck em up
 				currentspeed = 3.5
 				start_washing()
 				mad = TRUE
@@ -205,25 +204,8 @@
 	washing = FALSE
 	update_appearance()
 
-
-
-/mob/living/simple_animal/bot/hygienebot/get_controls(mob/user)
-	var/list/dat = list()
-	dat += hack(user)
-	dat += showpai(user)
-	dat += {"
-<TT><B>Hygienebot X2 controls</B></TT><BR><BR>
-Status: ["<A href='?src=[REF(src)];power=[TRUE]'>[on ? "On" : "Off"]</A>"]<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel is [open ? "opened" : "closed"]"}
-
-	if(!locked || issilicon(user) || isAdminGhostAI(user))
-		dat += {"<BR> Auto Patrol: ["<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>"]"}
-
-	return dat.Join("")
-
 /mob/living/simple_animal/bot/hygienebot/proc/check_purity(mob/living/L)
-	if((emagged == 2) && L.stat != DEAD)
+	if((bot_cover_flags & BOT_COVER_EMAGGED) && L.stat != DEAD)
 		return FALSE
 
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
@@ -234,12 +216,7 @@ Maintenance panel is [open ? "opened" : "closed"]"}
 	return TRUE
 
 /mob/living/simple_animal/bot/hygienebot/proc/do_wash(atom/A)
-	if(emagged)
+	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		A.fire_act()  //lol pranked no cleaning besides that
 	else
 		A.wash(CLEAN_WASH)
-
-
-
-/obj/machinery/bot_core/hygienebot
-	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)

@@ -223,7 +223,7 @@
 	///this is our destination's landmark, so we only have to find it the first time.
 	var/datum/weakref/to_where
 
-/obj/item/assembly/control/tram/Initialize()
+/obj/item/assembly/control/tram/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 

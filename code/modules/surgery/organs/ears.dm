@@ -4,6 +4,7 @@
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EARS
+	visual = FALSE
 	gender = PLURAL
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -37,9 +38,6 @@
 	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
 		return
 
-	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING)) //ear damage can be repaired from the failing condition
-		organ_flags &= ~ORGAN_FAILING
-
 	if((organ_flags & ORGAN_FAILING))
 		deaf = max(deaf, 1) // if we're failing we always have at least 1 deaf stack (and thus deafness)
 	else // only clear deaf stacks if we're not failing
@@ -54,6 +52,8 @@
 		REMOVE_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
+	if(owner.status_flags & GODMODE)
+		return
 	damage = max(damage + (ddmg*damage_multiplier), 0)
 	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
@@ -64,6 +64,7 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
+	visual = TRUE
 	damage_multiplier = 2
 
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/ear_owner, special = 0, drop_if_replaced = TRUE)

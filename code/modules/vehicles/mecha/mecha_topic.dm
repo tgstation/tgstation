@@ -22,11 +22,7 @@
 				<script language='javascript' type='text/javascript'>
 					[js_byjax]
 					[js_dropdowns]
-					function SSticker() {
-						setInterval(function(){
-							window.location='byond://?src=[REF(src)]&update_content=1';
-						}, 1000);
-					}
+					[get_ssticker_function()]
 
 					window.onload = function() {
 						dropdowns();
@@ -51,9 +47,19 @@
 			</body>
 		</html>"}
 
+//Returns the autoupdate javascript script functions for the mecha ui.
+/obj/vehicle/sealed/mecha/proc/get_ssticker_function()
+	. = {"
+		function SSticker() {
+			setInterval(function(){
+				window.location='byond://?src=[REF(src)]&update_content=1';
+			}, 1000);
+		}
+	"}
+
 ///Returns the status of the mech.
 /obj/vehicle/sealed/mecha/proc/get_stats_part(mob/user)
-	var/integrity = obj_integrity/max_integrity*100
+	var/integrity = atom_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = 0
 	var/tank_pressure = 0
@@ -325,6 +331,7 @@
 		to_chat(occupants, "[icon2html(src, occupants)][span_notice("You switch to [equip].")]")
 		visible_message(span_notice("[src] raises [equip]."))
 		send_byjax(usr, "exosuit.browser", "eq_list", get_equipment_list())
+		playsound(src,'sound/machines/piston_raise.ogg', 40, TRUE)
 		return
 
 	//Toggles radio broadcasting

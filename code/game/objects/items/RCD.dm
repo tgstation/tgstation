@@ -24,7 +24,7 @@ RLD
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
@@ -186,6 +186,8 @@ RLD
 	return .
 
 /obj/item/construction/proc/range_check(atom/A, mob/user)
+	if(A.z != user.z)
+		return
 	if(!(A in view(7, get_turf(user))))
 		to_chat(user, span_warning("The \'Out of Range\' light on [src] blinks red."))
 		return FALSE
@@ -269,6 +271,15 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	grille_icon.Blend(window_icon, ICON_OVERLAY)
 
 	return getHologramIcon(grille_icon)
+
+/obj/item/construction/rcd/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/openspace_item_click_handler)
+
+/obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(proximity_flag)
+		mode = construction_mode
+		rcd_create(target, user)
 
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
@@ -637,7 +648,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	airlock_electronics = new(src)
 	airlock_electronics.name = "Access Control"
@@ -735,7 +746,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	mode = construction_mode
 	rcd_create(A, user)
-	return FALSE
+	return TRUE
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
@@ -762,14 +773,13 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		if(ratio > 0)
 			. += "[icon_state]_charge[ratio]"
 
-/obj/item/construction/rcd/Initialize()
+/obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
 /obj/item/construction/rcd/borg
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
-	canRturf = TRUE
 	banned_upgrades = RCD_UPGRADE_SILO_LINK
 	var/energyfactor = 72
 
@@ -801,9 +811,12 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return .
 
 /obj/item/construction/rcd/borg/syndicate
+	name = "syndicate RCD"
+	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
 	energyfactor = 66
+	canRturf = TRUE
 
 /obj/item/construction/rcd/loaded
 	matter = 160
@@ -867,6 +880,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		pre_attack_secondary(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/construction/rcd/arcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
+	if(ranged && range_check(target, user))
+		mode = construction_mode
+		rcd_create(target, user)
 
 /obj/item/construction/rcd/arcd/rcd_create(atom/A, mob/user)
 	. = ..()
@@ -1028,7 +1045,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			if(useResource(launchcost, user))
 				activate()
 				to_chat(user, span_notice("You fire a glowstick!"))
-				var/obj/item/flashlight/glowstick/G  = new /obj/item/flashlight/glowstick(start)
+				var/obj/item/flashlight/glowstick/G = new /obj/item/flashlight/glowstick(start)
 				G.color = color_choice
 				G.set_light_color(G.color)
 				G.throw_at(A, 9, 3, user)

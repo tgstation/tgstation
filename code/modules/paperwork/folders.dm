@@ -13,7 +13,7 @@
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/folder/Initialize()
+/obj/item/folder/Initialize(mapload)
 	update_icon()
 	. = ..()
 
@@ -26,7 +26,7 @@
 
 /obj/item/folder/examine()
 	. = ..()
-	if(contents)
+	if(length(contents))
 		. += span_notice("Right-click to remove [contents[1]].")
 
 /obj/item/folder/proc/rename(mob/user)
@@ -50,7 +50,7 @@
 		update_icon()
 
 /obj/item/folder/attack_hand(mob/user, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(length(contents) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		remove_item(contents[1], user)
 		return TRUE
 	. = ..()

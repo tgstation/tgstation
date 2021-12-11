@@ -65,7 +65,7 @@
 					var/area/A = get_area(W)
 					beacon_name = A.name
 
-				var/D =  dir2text(get_dir(sr, tr))
+				var/D = dir2text(get_dir(sr, tr))
 				tele_beacons += list(list(name = beacon_name, direction = D, distance = distance))
 
 		data["telebeacons"] = tele_beacons
@@ -86,7 +86,7 @@
 			if(distance > tracking_range)
 				continue
 
-			var/D =  dir2text(get_dir(sr, tr))
+			var/D = dir2text(get_dir(sr, tr))
 			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
 		data["trackimplants"] = track_implants
 	return data
@@ -111,7 +111,7 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=10000)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
@@ -126,7 +126,7 @@
 	*/
 	var/last_portal_location
 
-/obj/item/hand_tele/Initialize()
+/obj/item/hand_tele/Initialize(mapload)
 	. = ..()
 	active_portal_pairs = list()
 
@@ -167,15 +167,17 @@
 
 	var/list/locations = list()
 	for(var/obj/machinery/computer/teleporter/computer in GLOB.machines)
-		if(!computer.target)
+		var/atom/target = computer.target_ref?.resolve()
+		if(!target)
+			computer.target_ref = null
 			continue
-		var/area/computer_area = get_area(computer.target)
+		var/area/computer_area = get_area(target)
 		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
 			continue
 		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
-			locations["[get_area(computer.target)] (Active)"] = computer
+			locations["[get_area(target)] (Active)"] = computer
 		else
-			locations["[get_area(computer.target)] (Inactive)"] = computer
+			locations["[get_area(target)] (Inactive)"] = computer
 
 	locations["None (Dangerous)"] = PORTAL_LOCATION_DANGEROUS
 
@@ -207,7 +209,7 @@
 		user.show_message(span_notice("[src] is recharging!"))
 		return
 
-	var/teleport_turf
+	var/atom/teleport_target
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
@@ -221,16 +223,19 @@
 				continue
 			dangerous_turfs += dangerous_turf
 
-		teleport_turf = pick(dangerous_turfs)
+		teleport_target = pick(dangerous_turfs)
 	else
 		var/obj/machinery/computer/teleporter/computer = teleport_location
-		teleport_turf = computer.target
+		var/atom/target = computer.target_ref?.resolve()
+		if(!target)
+			computer.target_ref = null
+		teleport_target = target
 
-	if (teleport_turf == null)
+	if (teleport_target == null)
 		to_chat(user, span_notice("[src] vibrates, then stops. Maybe you should try something else."))
 		return
 
-	var/area/teleport_area = get_area(teleport_turf)
+	var/area/teleport_area = get_area(teleport_target)
 	if (teleport_area.area_flags & NOTELEPORT)
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return
@@ -238,7 +243,7 @@
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_turf)), 300, 1, null, atmos_link_override)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null, atmos_link_override)
 	if(LAZYLEN(created) != 2)
 		return
 
@@ -248,9 +253,7 @@
 	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 
-	var/turf/check_turf = get_turf(get_step(user, user.dir))
-	if(check_turf.CanPass(user, get_dir(check_turf, user)))
-		portal1.forceMove(check_turf)
+	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2
 
 	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(portal1)] and [AREACOORD(portal2)].", INVESTIGATE_PORTAL)

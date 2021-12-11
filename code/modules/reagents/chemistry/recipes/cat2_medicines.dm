@@ -269,12 +269,6 @@
 	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
-/datum/chemical_reaction/medicine/seiver/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
-	if(off_cooldown(holder, equilibrium, 1, "seiver_rads"))
-		return
-	var/modifier = max((100 - holder.chem_temp)*0.025, 0)*step_volume_added //0 - 5 * volume based off temperature(colder is more)
-	radiation_pulse(holder.my_atom, modifier, 0.5, can_contaminate=FALSE) //Please advise on this, I don't have a good handle on the numbers
-
 /datum/chemical_reaction/medicine/multiver
 	results = list(/datum/reagent/medicine/c2/multiver = 2)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/salt = 1)
@@ -282,16 +276,15 @@
 	required_temp = 380
 	optimal_temp = 400
 	overheat_temp = 410
-	optimal_ph_min = 2.5
-	optimal_ph_max = 7
+	optimal_ph_min = 5
+	optimal_ph_max = 9.5
 	determin_ph_range = 4
-	temp_exponent_factor = 0.5
+	temp_exponent_factor = 0.1
 	ph_exponent_factor = 1
 	thermic_constant = 0
-	H_ion_release = 0
-	rate_up_lim = 25
+	H_ion_release = 0.015
+	rate_up_lim = 10
 	purity_min = 0.1 //Fire is our worry for now
-	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
 //You get nothing! I'm serious about staying under the heating requirements!

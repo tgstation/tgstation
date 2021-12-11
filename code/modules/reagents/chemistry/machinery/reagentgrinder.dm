@@ -25,7 +25,7 @@
 	var/static/radial_juice = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
 	var/static/radial_mix = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_mix")
 
-/obj/machinery/reagentgrinder/Initialize()
+/obj/machinery/reagentgrinder/Initialize(mapload)
 	. = ..()
 	holdingitems = list()
 	beaker = new /obj/item/reagent_containers/glass/beaker/large(src)
@@ -39,7 +39,7 @@
 	beaker.desc += " May contain blended dust. Don't breathe this!"
 	ADD_TRAIT(beaker, TRAIT_MAY_CONTAIN_BLENDED_DUST, TRAIT_GENERIC)
 
-/obj/machinery/reagentgrinder/constructed/Initialize()
+/obj/machinery/reagentgrinder/constructed/Initialize(mapload)
 	. = ..()
 	holdingitems = list()
 	QDEL_NULL(beaker)
@@ -334,3 +334,8 @@
 			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/eggyolk)
 			beaker.reagents.remove_reagent(/datum/reagent/consumable/eggyolk, amount)
 			beaker.reagents.add_reagent(/datum/reagent/consumable/mayonnaise, amount)
+		//Recipe to make whipped cream
+		if (beaker.reagents.has_reagent(/datum/reagent/consumable/cream))
+			var/amount = beaker.reagents.get_reagent_amount(/datum/reagent/consumable/cream)
+			beaker.reagents.remove_reagent(/datum/reagent/consumable/cream, amount)
+			beaker.reagents.add_reagent(/datum/reagent/consumable/whipped_cream, amount)

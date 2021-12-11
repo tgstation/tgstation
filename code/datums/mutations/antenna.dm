@@ -6,7 +6,7 @@
 	text_lose_indication = "<span class='notice'>Your antenna shrinks back down.</span>"
 	instability = 5
 	difficulty = 8
-	var/obj/item/implant/radio/antenna/linked_radio
+	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
@@ -21,13 +21,16 @@
 /datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	linked_radio = new(owner)
+	var/obj/item/implant/radio/antenna/linked_radio = new(owner)
 	linked_radio.implant(owner, null, TRUE, TRUE)
+	radio_weakref = WEAKREF(linked_radio)
 
 /datum/mutation/human/antenna/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	QDEL_NULL(linked_radio)
+	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
+	if(linked_radio)
+		QDEL_NULL(linked_radio)
 
 /datum/mutation/human/antenna/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -76,14 +79,15 @@
 				if(nlog_type & LOG_SAY)
 					var/list/reversed = log_source[log_type]
 					if(islist(reversed))
-						say_log = reverseRange(reversed.Copy())
+						say_log = reverse_range(reversed.Copy())
 						break
 			if(LAZYLEN(say_log))
 				for(var/spoken_memory in say_log)
 					if(recent_speech.len >= 3)//up to 3 random lines of speech, favoring more recent speech
 						break
 					if(prob(50))
-						recent_speech[spoken_memory] = say_log[spoken_memory]
+						//log messages with tags like telepathy are displayed like "(Telepathy to Ckey/(target)) "greetings"" by splitting the text by using a " delimiter we can grab just the greetings part
+						recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 			if(recent_speech.len)
 				to_chat(user, span_boldnotice("You catch some drifting memories of their past conversations..."))
 				for(var/spoken_memory in recent_speech)

@@ -788,6 +788,7 @@ class PresetsPage extends Component {
     for (let i = 0; i < presets.length; i++) {
       if (presets[i].id === deleteID) {
         presets.splice(i, 1);
+        break;
       }
     }
     storage.set("podlauncher_presetlist", presets);
@@ -894,6 +895,7 @@ class PresetsPage extends Component {
             width="100%"
             backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
             onClick={() => setSelectedPreset(preset.id)}
+            onDblClick={() => this.loadDataFromPreset(preset.id)}
             content={preset.title}
             style={presetIndex === preset.id ? {
               'border-width': '1px',

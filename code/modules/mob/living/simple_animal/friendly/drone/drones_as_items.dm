@@ -26,9 +26,9 @@
 	short_desc = "You are a Maintenance Drone."
 	flavour_text = "Born out of science, your purpose is to maintain Space Station 13. Maintenance Drones can become the backbone of a healthy station."
 	important_info = "You MUST read and follow your laws carefully."
-	assignedrole = "Maintenance Drone"
+	spawner_job_path = /datum/job/maintenance_drone
 
-/obj/effect/mob_spawn/drone/Initialize()
+/obj/effect/mob_spawn/drone/Initialize(mapload)
 	. = ..()
 	var/area/A = get_area(src)
 	if(A)

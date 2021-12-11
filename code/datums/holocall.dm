@@ -9,7 +9,7 @@
 
 #define HOLORECORD_MAX_LENGTH 200
 
-/mob/camera/ai_eye/remote/holo/setLoc()
+/mob/camera/ai_eye/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	. = ..()
 	var/obj/machinery/holopad/H = origin
 	H?.move_hologram(eye_user, loc)
@@ -81,6 +81,7 @@
 	if(!QDELETED(hologram))
 		hologram.HC = null
 		QDEL_NULL(hologram)
+	hologram = null
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I

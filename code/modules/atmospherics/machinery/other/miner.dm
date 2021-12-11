@@ -29,7 +29,7 @@
 	idle_power_usage = 150
 	active_power_usage = 2000
 
-/obj/machinery/atmospherics/miner/Initialize()
+/obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
 	set_active(active) //Force overlay update.
 
@@ -87,15 +87,15 @@
 	var/P = G.return_pressure()
 	switch(power_draw)
 		if(GASMINER_POWER_NONE)
-			active_power_usage = 0
+			update_use_power(ACTIVE_POWER_USE, 0)
 		if(GASMINER_POWER_STATIC)
-			active_power_usage = power_draw_static
+			update_use_power(ACTIVE_POWER_USE, power_draw_static)
 		if(GASMINER_POWER_MOLES)
-			active_power_usage = spawn_mol * power_draw_dynamic_mol_coeff
+			update_use_power(ACTIVE_POWER_USE, spawn_mol * power_draw_dynamic_mol_coeff)
 		if(GASMINER_POWER_KPA)
-			active_power_usage = P * power_draw_dynamic_kpa_coeff
+			update_use_power(ACTIVE_POWER_USE, P * power_draw_dynamic_kpa_coeff)
 		if(GASMINER_POWER_FULLSCALE)
-			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
+			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
 	var/turf/T = get_turf(src)
@@ -159,7 +159,7 @@
 	overlay_color = "#007FFF"
 	spawn_id = /datum/gas/oxygen
 
-/obj/machinery/atmospherics/miner/toxins
+/obj/machinery/atmospherics/miner/plasma
 	name = "\improper Plasma Gas Miner"
 	overlay_color = "#FF0000"
 	spawn_id = /datum/gas/plasma
@@ -209,10 +209,10 @@
 	overlay_color = "#395806"
 	spawn_id = /datum/gas/miasma
 
-/obj/machinery/atmospherics/miner/nitryl
-	name = "\improper Nitryl Gas Miner"
+/obj/machinery/atmospherics/miner/nitrium
+	name = "\improper Nitrium Gas Miner"
 	overlay_color = "#752b00"
-	spawn_id = /datum/gas/nitryl
+	spawn_id = /datum/gas/nitrium
 
 /obj/machinery/atmospherics/miner/pluoxium
 	name = "\improper Pluoxium Gas Miner"
@@ -223,11 +223,6 @@
 	name = "\improper Proto-Nitrate Gas Miner"
 	overlay_color = "#00571d"
 	spawn_id = /datum/gas/proto_nitrate
-
-/obj/machinery/atmospherics/miner/stimulum
-	name = "\improper Stimulum Gas Miner"
-	overlay_color = "#d577dd"
-	spawn_id = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/miner/tritium
 	name = "\improper Tritium Gas Miner"

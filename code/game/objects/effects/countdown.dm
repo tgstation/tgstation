@@ -14,7 +14,7 @@
 	var/displayed_text
 	var/atom/attached_to
 
-/obj/effect/countdown/Initialize()
+/obj/effect/countdown/Initialize(mapload)
 	. = ..()
 	attach(loc)
 

@@ -17,6 +17,8 @@ $bg-map: colors.$bg-map !default;
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: base.em(1px) !important;
+  border-style: solid !important;
   border-radius: $border-radius;
   background-color: $background-color;
   transition: border-color 900ms ease-out;
@@ -50,7 +52,7 @@ $bg-map: colors.$bg-map !default;
 
 @each $color-name, $color-value in $bg-map {
   .ProgressBar--color--#{$color-name} {
-    border: base.em(1px) solid $color-value !important;
+    border-color: $color-value !important;
 
     .ProgressBar__fill {
       background-color: $color-value;

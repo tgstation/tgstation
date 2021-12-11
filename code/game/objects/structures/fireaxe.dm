@@ -5,30 +5,16 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 90, ACID = 50)
 	max_integrity = 150
 	integrity_failure = 0.33
 	var/locked = TRUE
 	var/open = FALSE
 	var/obj/item/fireaxe/fireaxe
 
-/obj/structure/fireaxecabinet/directional/north
-	dir = SOUTH
-	pixel_y = 32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
-/obj/structure/fireaxecabinet/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/fireaxecabinet/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/fireaxecabinet/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/structure/fireaxecabinet/Initialize()
+/obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
 	fireaxe = new
 	update_appearance()
@@ -42,13 +28,13 @@
 	if(iscyborg(user) || I.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
 	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=2))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]."))
 			if(I.use_tool(src, user, 40, volume=50, amount=2))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))
 		else
@@ -62,7 +48,7 @@
 		to_chat(user, span_notice("You start fixing [src]..."))
 		if(do_after(user, 20, target = src) && G.use(2))
 			broken = FALSE
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			update_appearance()
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
@@ -98,7 +84,7 @@
 	if(.)
 		update_appearance()
 
-/obj/structure/fireaxecabinet/obj_break(damage_flag)
+/obj/structure/fireaxecabinet/atom_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_appearance()
@@ -165,7 +151,7 @@
 	if(open)
 		. += "glass_raised"
 		return
-	var/hp_percent = obj_integrity/max_integrity * 100
+	var/hp_percent = atom_integrity/max_integrity * 100
 	if(broken)
 		. += "glass4"
 	else

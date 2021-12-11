@@ -157,20 +157,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
-"aE" = (
-/obj/structure/alien/weeds,
-/obj/structure/bed/nest,
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/item/clothing/mask/facehugger/impregnated,
-/obj/item/clothing/under/rank/security/officer,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/melee/baton/loaded,
-/obj/item/clothing/head/helmet,
-/turf/open/floor/plating/asteroid{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/hive)
 "aF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -420,7 +406,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "bo" = (
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -439,9 +425,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -605,8 +589,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bE" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -773,7 +756,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "bU" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/directional/north{
 	pixel_y = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -879,6 +862,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cd" = (
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -986,9 +970,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cm" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -1322,8 +1304,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cS" = (
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -1498,8 +1479,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "dh" = (
 /obj/structure/chair/wood,
-/obj/machinery/airalarm{
-	dir = 4;
+/obj/machinery/airalarm/directional/west{
 	pixel_x = -23;
 	req_access = null;
 	req_access_txt = "150"
@@ -1511,9 +1491,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "di" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/wood{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -1526,8 +1504,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dk" = (
-/obj/machinery/airalarm{
-	dir = 8;
+/obj/machinery/airalarm/directional/east{
 	pixel_x = 23;
 	req_access = null;
 	req_access_txt = "150"
@@ -1634,7 +1611,7 @@
 /area/awaymission/moonoutpost19/syndicate)
 "du" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
@@ -1789,7 +1766,7 @@
 /area/awaymission/moonoutpost19/main)
 "dI" = (
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	density = 0;
 	icon_state = "open";
 	opacity = 0;
@@ -2010,7 +1987,7 @@
 /obj/machinery/light/broken/directional/north,
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Xenobiology Containment North";
 	network = list("mo19x")
 	},
@@ -2126,9 +2103,8 @@
 /area/awaymission/moonoutpost19/research)
 "eM" = (
 /obj/machinery/light/small/broken/directional/west,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Xenobiology";
-	dir = 4;
 	network = list("mo19","mo19r")
 	},
 /turf/open/floor/iron/white/side{
@@ -2206,6 +2182,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null
 	},
@@ -2310,6 +2287,7 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/light/small/broken/directional/north,
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null
 	},
@@ -2538,9 +2516,8 @@
 "fK" = (
 /obj/machinery/light/broken/directional/east,
 /obj/structure/alien/weeds,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Xenobiology Containment East";
-	dir = 8;
 	network = list("mo19x")
 	},
 /turf/open/floor/engine,
@@ -2608,11 +2585,12 @@
 /obj/item/reagent_containers/spray/pepper,
 /obj/item/grenade/flashbang,
 /obj/item/storage/belt/security,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -3;
 	pixel_y = -2
 	},
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null
 	},
@@ -2716,7 +2694,7 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "gf" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
@@ -2728,7 +2706,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gi" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3111,7 +3089,7 @@
 "gS" = (
 /obj/machinery/light/broken/directional/east,
 /obj/machinery/airalarm/unlocked{
-	dir = 8;
+	dir = 4;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -3172,16 +3150,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"gZ" = (
-/obj/machinery/power/shieldwallgen{
-	locked = 0;
-	req_access = null
-	},
-/obj/structure/cable,
-/turf/open/floor/plating{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "ha" = (
 /obj/structure/disposaloutlet{
 	desc = "An outlet for the pneumatic disposal system. This one has been applied with an acid-proof coating.";
@@ -3199,9 +3167,8 @@
 "hb" = (
 /obj/machinery/light/broken/directional/south,
 /obj/structure/alien/weeds,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Xenobiology Containment South";
-	dir = 1;
 	network = list("mo19x")
 	},
 /turf/open/floor/engine,
@@ -3327,7 +3294,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/obj/item/storage/backpack/satchel/tox,
+/obj/item/storage/backpack/satchel/science,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -3335,8 +3302,8 @@
 /area/awaymission/moonoutpost19/research)
 "hr" = (
 /obj/structure/table,
-/obj/item/cartridge/signal/toxins,
-/obj/item/cartridge/signal/toxins{
+/obj/item/cartridge/signal/ordnance,
+/obj/item/cartridge/signal/ordnance{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -3349,6 +3316,7 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small/broken/directional/north,
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null
 	},
@@ -3467,9 +3435,8 @@
 /obj/structure/noticeboard/directional/south,
 /obj/machinery/light/small/broken/directional/south,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/evacuation,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Research Division";
-	dir = 1;
 	network = list("mo19","mo19r")
 	},
 /obj/effect/turf_decal/tile/purple{
@@ -3499,7 +3466,7 @@
 /obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/unlocked{
-	dir = 8;
+	dir = 4;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -3751,7 +3718,7 @@
 /area/awaymission/moonoutpost19/research)
 "ij" = (
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = -23;
 	req_access = null
 	},
@@ -3975,9 +3942,8 @@
 "iH" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/light/small/broken/directional/south,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Research Director's Office";
-	dir = 1;
 	network = list("mo19","mo19r")
 	},
 /turf/open/floor/iron/cafeteria{
@@ -4090,9 +4056,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -4431,6 +4395,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jI" = (
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null
 	},
@@ -4546,6 +4511,7 @@
 "jY" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null
 	},
@@ -4701,7 +4667,7 @@
 "kp" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -4727,7 +4693,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/processor,
 /obj/machinery/airalarm/unlocked{
-	dir = 8;
+	dir = 4;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -4766,9 +4732,8 @@
 "kw" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Arrivals North";
-	dir = 1;
 	network = list("mo19")
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -5059,9 +5024,8 @@
 /area/awaymission/moonoutpost19/arrivals)
 "lb" = (
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Kitchen";
-	dir = 8;
 	network = list("mo19")
 	},
 /turf/open/floor/iron/cafeteria{
@@ -5155,12 +5119,10 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "lo" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/chair/wood,
 /obj/machinery/airalarm/unlocked{
-	dir = 8;
+	dir = 4;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -5179,7 +5141,7 @@
 /obj/structure/table,
 /obj/item/storage/box,
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = -23;
 	req_access = null
 	},
@@ -5206,9 +5168,8 @@
 "ls" = (
 /obj/machinery/firealarm/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Bar";
-	dir = 8;
 	network = list("mo19")
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5396,9 +5357,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "lU" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. The skeleton is sitting upright with its legs tucked in and hands still holding onto its arms."
 	},
@@ -5483,7 +5442,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mj" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -5579,9 +5538,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mu" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -5642,12 +5599,6 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
-/area/awaymission/moonoutpost19/arrivals)
-"mB" = (
-/obj/effect/spawner/randomarcade{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
 /area/awaymission/moonoutpost19/arrivals)
 "mC" = (
 /obj/machinery/vending/cigarette,
@@ -5713,7 +5664,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)
 "mL" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -5723,7 +5674,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mM" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -5732,15 +5683,12 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mN" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/noticeboard/directional/east,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/welcome,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Arrivals South";
-	dir = 8;
 	network = list("mo19")
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -5812,11 +5760,9 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mT" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/unlocked{
-	dir = 8;
+	dir = 4;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -5842,9 +5788,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
 "mY" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/moonoutpost19/arrivals)
@@ -5956,9 +5900,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "np" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -5969,9 +5911,8 @@
 	desc = "Your instincts say you shouldn't be following these.";
 	icon_state = "ltrails_2"
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Dormitories";
-	dir = 4;
 	network = list("mo19")
 	},
 /turf/open/floor/iron{
@@ -6051,7 +5992,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ny" = (
 /obj/machinery/airalarm/unlocked{
-	dir = 8;
+	dir = 4;
 	pixel_x = 23;
 	req_access = null
 	},
@@ -6316,9 +6257,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nY" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron{
@@ -6453,7 +6392,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "vV" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -6469,7 +6408,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "zZ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -6497,6 +6436,27 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"HQ" = (
+/obj/machinery/power/shieldwallgen/unlocked,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
+"Ij" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/clothing/mask/facehugger/impregnated,
+/obj/item/clothing/under/rank/security/officer,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/melee/baton/security/loaded,
+/obj/item/clothing/head/helmet,
+/turf/open/floor/plating/asteroid{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/hive)
 "IW" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -6520,6 +6480,12 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Rm" = (
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/moonoutpost19/arrivals)
 "SE" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
@@ -6548,7 +6514,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "Wf" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -33142,7 +33108,7 @@ ac
 ac
 ac
 ad
-aE
+Ij
 aK
 ak
 ai
@@ -38830,7 +38796,7 @@ ba
 ba
 ba
 dZ
-gZ
+HQ
 ez
 ez
 ez
@@ -38838,7 +38804,7 @@ fE
 gb
 gt
 ez
-gZ
+HQ
 ea
 ba
 ba
@@ -42710,7 +42676,7 @@ la
 lq
 jk
 mj
-mB
+Rm
 hJ
 ba
 ba
@@ -42967,7 +42933,7 @@ jN
 lr
 jj
 mj
-mB
+Rm
 hI
 ba
 ba

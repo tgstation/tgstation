@@ -25,6 +25,7 @@
 #define COLOR_VIVID_RED "#FF3232"
 #define COLOR_LIGHT_GRAYISH_RED "#E4C7C5"
 #define COLOR_SOFT_RED "#FA8282"
+#define COLOR_CULT_RED "#960000"
 #define COLOR_BUBBLEGUM_RED "#950A0A"
 
 #define COLOR_YELLOW "#FFFF00"
@@ -74,6 +75,14 @@
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
 #define COLOR_ORANGE_BROWN "#a9734f"
+
+//Color defines used by the soapstone (based on readability against grey tiles)
+#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
+#define COLOR_SOAPSTONE_IRON "#b2b2b2"
+#define COLOR_SOAPSTONE_BRONZE "#FE8001"
+#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
+#define COLOR_SOAPSTONE_GOLD "#FFD900"
+#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
 
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
@@ -187,3 +196,8 @@
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// The default color for admin say, used as a fallback when the preference is not enabled
+#define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
+
+#define DEFAULT_HEX_COLOR_LEN 6

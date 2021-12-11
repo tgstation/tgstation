@@ -303,12 +303,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/next_announce
 	var/mob/living/silicon/ai/owner
 
-/obj/machinery/doomsday_device/Initialize()
+/obj/machinery/doomsday_device/Initialize(mapload)
 	. = ..()
-	owner = loc
-	if(!istype(owner))
+	if(!isAI(loc))
 		stack_trace("Doomsday created outside an AI somehow, shit's fucking broke. Anyway, we're just gonna qdel now. Go make a github issue report.")
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
+	owner = loc
 	countdown = new(src)
 
 /obj/machinery/doomsday_device/Destroy()
@@ -318,7 +318,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	SSshuttle.clearHostileEnvironment(src)
 	SSmapping.remove_nuke_threat(src)
 	set_security_level("red")
-	for(var/mob/living/silicon/robot/borg in owner.connected_robots)
+	for(var/mob/living/silicon/robot/borg in owner?.connected_robots)
 		borg.lamp_doom = FALSE
 		borg.toggle_headlamp(FALSE, TRUE) //forces borg lamp to update
 	owner?.doomsday_device = null
@@ -788,7 +788,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/upgraded_cameras = 0
 	for(var/V in GLOB.cameranet.cameras)
 		var/obj/machinery/camera/C = V
-		if(C.assembly)
+		var/obj/structure/camera_assembly/assembly = C.assembly_ref?.resolve()
+		if(assembly)
 			var/upgraded = FALSE
 
 			if(!C.isXRay())
@@ -803,7 +804,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 			if(upgraded)
 				upgraded_cameras++
-
 	unlock_text = replacetext(unlock_text, "CAMSUPGRADED", "<b>[upgraded_cameras]</b>") //This works, since unlock text is called after upgrade()
 
 /// AI Turret Upgrade: Increases the health and damage of all turrets.

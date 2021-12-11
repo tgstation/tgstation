@@ -17,9 +17,13 @@
 #_maps/RandomRuins/IceRuins/icemoon_surface_asteroid.dmm
 #_maps/RandomRuins/IceRuins/icemoon_surface_hotsprings.dmm
 #_maps/RandomRuins/IceRuins/icemoon_surface_engioutpost.dmm
+#_maps/RandomRuins/IceRuins/icemoon_surface_pizza.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_puzzle.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_village.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_library.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_wrath.dmm
 #_maps/RandomRuins/IceRuins/icemoon_underground_bathhouse.dmm
 #_maps/RandomRuins/AnywhereRuins/fountain_hall.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_homestead.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_abandoned_plasma_facility.dmm
+#_maps/RandomRuins/IceRuins/icemoon_underground_frozen_comms.dmm

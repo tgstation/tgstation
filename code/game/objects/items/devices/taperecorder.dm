@@ -8,7 +8,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = HEAR_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
@@ -38,6 +37,7 @@
 		mytape = new starting_tape_type(src)
 	soundloop = new(src)
 	update_appearance()
+	become_hearing_sensitive()
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
@@ -239,7 +239,7 @@
 		if(mytape.storedinfo.len < i)
 			say("End of recording.")
 			break
-		say("[mytape.storedinfo[i]]")
+		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(1 SECONDS)
@@ -299,7 +299,7 @@
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, mytape.storedinfo.len >= i, i++)
+	for(var/i in 1 to mytape.storedinfo.len)
 		t1 += "[mytape.storedinfo[i]]<BR>"
 	P.info = t1
 	var/tapename = mytape.name
@@ -350,7 +350,7 @@
 	unspool()
 	..()
 
-/obj/item/tape/Initialize()
+/obj/item/tape/Initialize(mapload)
 	. = ..()
 	initial_icon_state = icon_state //random tapes will set this after choosing their icon
 
@@ -433,7 +433,7 @@
 /obj/item/tape/random
 	icon_state = "random_tape"
 
-/obj/item/tape/random/Initialize()
+/obj/item/tape/random/Initialize(mapload)
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple", "greyscale")]"
 	. = ..()
 

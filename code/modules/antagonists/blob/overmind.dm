@@ -71,12 +71,22 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
-	if(!is_valid_turf(T) && LAZYLEN(GLOB.blobstart))
+	if(is_valid_turf(T))
+		return
+
+	if(LAZYLEN(GLOB.blobstart))
 		var/list/blobstarts = shuffle(GLOB.blobstart)
 		for(var/_T in blobstarts)
 			if(is_valid_turf(_T))
 				T = _T
 				break
+	else // no blob starts so look for an alternate
+		for(var/i in 1 to 16)
+			var/turf/picked_safe = find_safe_turf()
+			if(is_valid_turf(picked_safe))
+				T = picked_safe
+				break
+
 	if(!T)
 		CRASH("No blobspawnpoints and blob spawned in nullspace.")
 	forceMove(T)
@@ -96,13 +106,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(blobstrain.effectdesc)
 				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
-/mob/camera/blob/can_zFall(turf/source, levels)
-	// Prevent blob from falling through zlevels
+/mob/camera/blob/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
 	return FALSE
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
-	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isspaceturf(T))
+	if((A && !(A.area_flags & BLOBS_ALLOWED)) || !T || !is_station_level(T.z) || isgroundlessturf(T))
 		return FALSE
 	return TRUE
 
@@ -233,7 +242,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
-/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if (!message)
 		return
 
@@ -281,7 +290,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)
 		if(manualplace_min_time)
-			. +=  "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+			. += "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
 		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)
@@ -293,7 +302,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			return FALSE
 	else
 		var/area/A = get_area(NewLoc)
-		if(isspaceturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or space tiles
+		if(isgroundlessturf(NewLoc) || istype(A, /area/shuttle)) //if unplaced, can't go on shuttles or goundless tiles
 			return FALSE
 		forceMove(NewLoc)
 		return TRUE

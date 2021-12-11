@@ -9,7 +9,7 @@
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 
-	flags_1 = CONDUCT_1 | HEAR_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -90,7 +90,7 @@
 	QDEL_NULL(keyslot)
 	return ..()
 
-/obj/item/radio/Initialize()
+/obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
 	if(prison_radio)
 		wires.cut(WIRE_TX) // OH GOD WHY
@@ -101,6 +101,8 @@
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/radio/ComponentInitialize()
 	. = ..()
@@ -193,18 +195,14 @@
 	if(HAS_TRAIT(M, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
 		var/mob/living/carbon/mute = M
 		if(istype(mute))
-			var/empty_indexes = mute.get_empty_held_indexes() //How many hands the player has empty
 			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
 			if(!istype(G))
 				return FALSE
-			if(length(empty_indexes) == 1)
-				message = stars(message)
-			if(length(empty_indexes) == 0) //Due to the requirement of gloves, the arm check for normal speech would be redundant here.
-				return FALSE
-			if(mute.handcuffed)//Would be weird if they couldn't sign but their words still went over the radio
-				return FALSE
-			if(HAS_TRAIT(mute, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(mute, TRAIT_EMOTEMUTE))
-				return FALSE
+			switch(mute.check_signables_state())
+				if(SIGN_ONE_HAND) // One hand full
+					message = stars(message)
+				if(SIGN_HANDS_FULL to SIGN_CUFFED)
+					return FALSE
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)
@@ -294,7 +292,10 @@
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
-
+	var/filtered_mods = list()
+	if (message_mods[MODE_CUSTOM_SAY_EMOTE])
+		filtered_mods[MODE_CUSTOM_SAY_EMOTE] = message_mods[MODE_CUSTOM_SAY_EMOTE]
+		filtered_mods[MODE_CUSTOM_SAY_ERASE_INPUT] = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
 	if(message_mods[RADIO_EXTENSION] == MODE_L_HAND || message_mods[RADIO_EXTENSION] == MODE_R_HAND)
 		// try to avoid being heard double
 		if (loc == speaker && ismob(speaker))
@@ -304,7 +305,7 @@
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
 
-	talk_into(speaker, raw_message, , spans, language=message_language)
+	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
 // Checks if this radio can receive on the given frequency.
 /obj/item/radio/proc/can_receive(freq, level)
@@ -396,7 +397,7 @@
 	syndie = 1
 	keyslot = new /obj/item/encryptionkey/syndicate
 
-/obj/item/radio/borg/syndicate/Initialize()
+/obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 

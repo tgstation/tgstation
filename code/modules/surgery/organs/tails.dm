@@ -3,6 +3,7 @@
 /obj/item/organ/tail
 	name = "tail"
 	desc = "A severed tail. What did you cut this off of?"
+	visual = TRUE
 	icon_state = "severedtail"
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_TAIL
@@ -49,7 +50,7 @@
 	/// The sprite accessory this tail gives to the human it's attached to. If null, it will inherit its value from the human's DNA once attached.
 	var/spines = "None"
 
-/obj/item/organ/tail/lizard/Initialize()
+/obj/item/organ/tail/lizard/Initialize(mapload)
 	. = ..()
 	color = "#"+ random_color()
 
@@ -78,7 +79,7 @@
 	..()
 	if(istype(tail_owner))
 		tail_owner.dna.species.mutant_bodyparts -= "tail_lizard"
-		color = "#" + tail_owner.dna.features["mcolor"]
+		color = tail_owner.dna.features["mcolor"]
 		tail_type = tail_owner.dna.features["tail_lizard"]
 		spines = tail_owner.dna.features["spines"]
 		tail_owner.update_body()

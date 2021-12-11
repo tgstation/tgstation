@@ -324,10 +324,15 @@ SUBSYSTEM_DEF(timer)
 
 
 /datum/controller/subsystem/timer/Recover()
-	second_queue |= SStimer.second_queue
-	hashes |= SStimer.hashes
-	timer_id_dict |= SStimer.timer_id_dict
-	bucket_list |= SStimer.bucket_list
+	//Find the current timer sub-subsystem in global and recover its buckets etc
+	var/datum/controller/subsystem/timer/timerSS = null
+	for(var/global_var in global.vars)
+		if (istype(global.vars[global_var],src.type))
+			timerSS = global.vars[global_var]
+	second_queue |= timerSS.second_queue
+	hashes |= timerSS.hashes
+	timer_id_dict |= timerSS.timer_id_dict
+	bucket_list |= timerSS.bucket_list
 
 /**
  * # Timed Event
@@ -483,7 +488,7 @@ SUBSYSTEM_DEF(timer)
 /datum/timedevent/proc/bucketJoin()
 	// Generate debug-friendly name for timer
 	var/static/list/bitfield_flags = list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT", "TIMER_LOOP")
-	name = "Timer: [id] (\ref[src]), TTR: [timeToRun], wait:[wait] Flags: [jointext(bitfield2list(flags, bitfield_flags), ", ")], \
+	name = "Timer: [id] (\ref[src]), TTR: [timeToRun], wait:[wait] Flags: [jointext(bitfield_to_list(flags, bitfield_flags), ", ")], \
 		callBack: \ref[callBack], callBack.object: [callBack.object]\ref[callBack.object]([getcallingtype()]), \
 		callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""]), source: [source]"
 

@@ -73,37 +73,36 @@
 /datum/brain_trauma/special/obsessed/handle_speech(datum/source, list/speech_args)
 	if(!viewing)
 		return
-	var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
-	if(mood && mood.sanity >= SANITY_GREAT && social_interaction())
-		speech_args[SPEECH_MESSAGE] = ""
+	if(prob(25)) // 25% chances to be nervous and stutter.
+		if(prob(50)) // 12.5% chance (previous check taken into account) of doing something suspicious.
+			addtimer(CALLBACK(src, .proc/on_failed_social_interaction), rand(1, 3) SECONDS)
+		else if(owner.stuttering == 0)
+			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
+		owner.stuttering = max(3, owner.stuttering)
 
 /datum/brain_trauma/special/obsessed/proc/on_hug(mob/living/hugger, mob/living/hugged)
 	SIGNAL_HANDLER
 	if(hugged == obsession)
 		obsession_hug_count++
 
-/datum/brain_trauma/special/obsessed/proc/social_interaction()
-	var/fail = FALSE //whether you can finish a sentence while doing it
-	owner.stuttering = max(3, owner.stuttering)
-	owner.blur_eyes(10)
-	switch(rand(1,4))
-		if(1)
+/datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
+	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS)
+		return
+	switch(rand(1, 100)) 
+		if(1 to 40)
+			INVOKE_ASYNC(owner, /mob.proc/emote, pick("blink", "blink_r"))
+			owner.blur_eyes(10)
+			to_chat(owner, span_userdanger("You sweat profusely and have a hard time focusing..."))
+		if(41 to 80)
+			INVOKE_ASYNC(owner, /mob.proc/emote, "pale")
 			shake_camera(owner, 15, 1)
-			owner.vomit()
-			fail = TRUE
-		if(2)
+			owner.adjustStaminaLoss(70)
+			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
+		if(81 to 100)
 			INVOKE_ASYNC(owner, /mob.proc/emote, "cough")
 			owner.dizziness += 10
-			fail = TRUE
-		if(3)
-			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
-			owner.Stun(20)
-			shake_camera(owner, 15, 1)
-		if(4)
-			to_chat(owner, span_warning("You faint."))
-			owner.Unconscious(80)
-			fail = TRUE
-	return fail
+			owner.adjust_disgust(5)
+			to_chat(owner, span_userdanger("You gag and swallow a bit of bile..."))
 
 // if the creep examines first, then the obsession examines them, have a 50% chance to possibly blow their cover. wearing a mask avoids this risk
 /datum/brain_trauma/special/obsessed/proc/stare(datum/source, mob/living/examining_mob, triggering_examiner)
@@ -118,16 +117,19 @@
 /datum/brain_trauma/special/obsessed/proc/find_obsession()
 	var/list/viable_minds = list() //The first list, which excludes hijinks
 	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
-	var/static/list/trait_obsessions = list("Mime" = TRAIT_FAN_MIME, "Clown" = TRAIT_FAN_CLOWN, "Chaplain" = TRAIT_SPIRITUAL) //Jobs and their corresponding quirks
+	var/static/list/trait_obsessions = list("Mime" = TRAIT_MIME_FAN, "Clown" = TRAIT_CLOWN_ENJOYER, "Chaplain" = TRAIT_SPIRITUAL) //Jobs and their corresponding quirks
 	var/list/special_pool = list() //The special list, for quirk-based
 	var/chosen_victim  //The obsession target
 
-	for(var/mob/Player in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner && SSjob.GetJob(Player.mind.assigned_role))
-			viable_minds += Player.mind
-	for(var/datum/mind/possible_target in viable_minds)
+	for(var/mob/player as anything in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met, and other annoying hijinks
+		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player) || player == owner)
+			continue
+		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+			continue
+		viable_minds += player.mind
+	for(var/datum/mind/possible_target as anything in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))
-			var/job = possible_target.assigned_role
+			var/job = possible_target.assigned_role.title
 			if (trait_obsessions[job] != null && HAS_TRAIT(owner, trait_obsessions[job]))
 				special_pool += possible_target.current
 			possible_targets += possible_target.current

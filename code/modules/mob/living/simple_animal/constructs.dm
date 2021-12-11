@@ -22,7 +22,7 @@
 	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
@@ -45,9 +45,10 @@
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 
-/mob/living/simple_animal/hostile/construct/Initialize()
+/mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	var/spellnum = 1
 	for(var/spell in construct_spells)
@@ -66,7 +67,8 @@
 		var/pos = 2+spellnum*31
 		our_rune.button.screen_loc = "6:[pos],4:-2"
 		our_rune.button.moved = "6:[pos],4:-2"
-	add_overlay("glow_[icon_state]_[theme]")
+	if(icon_state)
+		add_overlay("glow_[icon_state]_[theme]")
 
 /mob/living/simple_animal/hostile/construct/Destroy()
 	QDEL_NULL(our_rune)
@@ -81,7 +83,15 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
+	var/text_span
+	switch(theme)
+		if(THEME_CULT)
+			text_span = "cult"
+		if(THEME_WIZARD)
+			text_span = "purple"
+		if(THEME_HOLY)
+			text_span = "blue"
+	. = list("<span class='[text_span]'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
 			. += span_warning("[t_He] look[t_s] slightly dented.")
@@ -294,7 +304,7 @@
 	///The health HUD applied to this mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
-/mob/living/simple_animal/hostile/construct/artificer/Initialize()
+/mob/living/simple_animal/hostile/construct/artificer/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.add_hud_to(src)
@@ -431,7 +441,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/construct/harvester/Initialize()
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
 	var/datum/action/innate/seek_prey/seek = new()
 	seek.Grant(src)

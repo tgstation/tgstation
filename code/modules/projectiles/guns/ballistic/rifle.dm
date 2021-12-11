@@ -17,10 +17,6 @@
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
 	tac_reloads = FALSE
 
-/obj/item/gun/ballistic/rifle/update_overlays()
-	. = ..()
-	. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
-
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
 		to_chat(user, span_notice("You open the bolt of \the [src]."))
@@ -94,7 +90,7 @@
 		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
 				jammed = TRUE
-			jamming_chance  += jamming_increment
+			jamming_chance += jamming_increment
 			jamming_chance = clamp (jamming_chance, 0, 100)
 	return ..()
 
@@ -151,11 +147,12 @@
 	can_misfire = TRUE
 	misfire_probability = 0
 	misfire_percentage_increment = 5 //Slowly increases every shot
-	can_bayonet = FALSE
+	can_bayonet = TRUE
+	knife_y_offset = 11
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/process_chamber(empty_chamber, from_firing, chamber_next_round)
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
 	. = ..()
 	do_sparks(1, TRUE, src)
 
@@ -193,6 +190,7 @@
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	show_bolt_icon = FALSE //It's a magic hand, not a rifle
 
 	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
 

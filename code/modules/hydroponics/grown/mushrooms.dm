@@ -152,7 +152,7 @@
 	yield = 1
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/mob_transformation/shroom)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/eyes
@@ -205,15 +205,11 @@
 	endurance = 8
 	yield = 4
 	growthstages = 2
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/liquidelectricity, /datum/plant_gene/trait/carnivory)
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/preset/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
+	mutatelist = null
 	graft_gene = /datum/plant_gene/trait/carnivory
-
-/obj/item/seeds/chanter/jupitercup/Initialize(mapload,nogenes)
-	. = ..()
-	if(!nogenes)
-		unset_mutability(/datum/plant_gene/trait/carnivory, PLANT_GENE_REMOVABLE)
 
 /obj/item/food/grown/mushroom/jupitercup
 	seed = /obj/item/seeds/chanter/jupitercup
@@ -271,6 +267,7 @@
 		return FALSE
 	new effect_path(user.loc, seed)
 	to_chat(user, span_notice("You plant [src]."))
+	seed = null // We pass our seed to our planted shroom, null it here
 	qdel(src)
 	return TRUE
 
@@ -285,7 +282,7 @@
 	plantname = "Glowcaps"
 	product = /obj/item/food/grown/mushroom/glowshroom/glowcap
 	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/teslium = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/cell_charge
@@ -310,7 +307,7 @@
 	plantname = "Shadowshrooms"
 	product = /obj/item/food/grown/mushroom/glowshroom/shadowshroom
 	genes = list(/datum/plant_gene/trait/glow/shadow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/uranium/radium = 0.2, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
 	graft_gene = /datum/plant_gene/trait/glow/shadow
@@ -328,3 +325,32 @@
 	. = ..()
 	if(.)
 		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
+
+/obj/item/seeds/odious_puffball
+	name = "pack of odious pullball spores"
+	desc = "These spores reek! Disgusting."
+	icon_state = "seed-odiouspuffball"
+	species = "odiouspuffball"
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	icon_grow = "odiouspuffball-grow"
+	icon_dead = "odiouspuffball-dead"
+	icon_harvest = "odiouspuffball-harvest"
+	plantname = "Odious Puffballs"
+	maturation = 3
+	production = 8
+	potency = 30
+	instability = 65
+	growthstages = 3
+	product = /obj/item/food/grown/mushroom/odious_puffball
+	genes = list(/datum/plant_gene/trait/smoke, /datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/squash)
+	reagents_add = list(/datum/reagent/toxin/spore = 0.2, /datum/reagent/consumable/nutriment = 0.04)
+	rarity = 35
+	graft_gene = /datum/plant_gene/trait/smoke
+
+/obj/item/food/grown/mushroom/odious_puffball
+	seed = /obj/item/seeds/odious_puffball
+	name = "odious puffball"
+	desc = "<I>Lycoperdon Faetidus</I>: This puffball is considered a great nuisance not only because of the highly irritating nature of its spores, but also because of its considerable size and unsightly appearance."
+	icon_state = "odious_puffball"
+	tastes = list("rotten garlic" = 2, "mushroom" = 1, "spores" = 1)
+	wine_power = 50

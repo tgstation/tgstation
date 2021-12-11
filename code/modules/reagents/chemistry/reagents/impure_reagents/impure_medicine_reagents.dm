@@ -7,14 +7,14 @@
 
 //We don't want these to hide - they're helpful!
 /datum/reagent/impurity/healing
-	name = "Healing impure reagent"
+	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
-	name = "Healing inverse reagent"
+	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3)
@@ -26,7 +26,7 @@
 
 //Catch all failed reaction for medicines - supposed to be non punishing
 /datum/reagent/impurity/healing/medicine_failure
-	name = "Insolvent medicinal precipitate"
+	name = "Insolvent Medicinal Precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 1 * REM//This is fast
 	addiction_types = list(/datum/addiction/medicine = 7.5)
@@ -182,7 +182,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	..()
 
 /datum/reagent/peptides_failed
-	name = "Prion peptides"
+	name = "Prion Peptides"
 	taste_description = "spearmint frosting"
 	description = "These inhibitory peptides cause cellular damage and cost nutrition to the patient!"
 	ph = 2.1
@@ -419,16 +419,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
 /datum/reagent/inverse/technetium
 	name = "Technetium 99"
-	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
+	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 	tox_damage = 0
-	///Accumulates radiation, then adds it as a whole number to the owner
-	var/radiation_ticker
+
+	var/time_until_next_poison = 0
+
+	var/poison_interval = (9 SECONDS)
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	//for some reason radiation doesn't work when small
-	owner.radiation += creation_purity * delta_time * 0.5
+	time_until_next_poison -= delta_time * (1 SECONDS)
+	if (time_until_next_poison <= 0)
+		time_until_next_poison = poison_interval
+		owner.adjustToxLoss(creation_purity * 1)
+
 	..()
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
@@ -544,7 +549,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	remove_buffs(owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
-		explosion(owner, light_impact_range = 1)
+		explosion(owner, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
 		owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return ..()
@@ -557,7 +562,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 		owner.stat = DEAD
 		return ..()
-	explosion(owner, light_impact_range = 1)
+	explosion(owner, light_impact_range = 1, explosion_cause = src)
 	qdel(heart)
 	owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return..()
@@ -590,7 +595,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/carbon = owner
 	if(!carbon.dna)
 		return
-	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, PIGLATIN, NERVOUS, MUT_MUTE)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
 		if(carbon.dna.get_mutation(option))

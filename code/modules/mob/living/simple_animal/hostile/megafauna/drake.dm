@@ -111,7 +111,7 @@
 		return
 
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + ranged_cooldown_time
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = ranged_cooldown_time), ignore_staggered = TRUE)
 
 	if(client)
 		switch(chosen_attack)
@@ -164,7 +164,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(amount = 30)
 	if(health < maxHealth * 0.5)
-		return swoop_attack(lava_arena = TRUE, swoop_cooldown = 60)
+		return swoop_attack(lava_arena = TRUE, swoop_cooldown = 6 SECONDS)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
 	SLEEP_CHECK_DEATH(0)
@@ -174,19 +174,19 @@
 		fire_cone()
 		SLEEP_CHECK_DEATH(10)
 		fire_cone()
-	SetRecoveryTime(40)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 4 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 4 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(spiral_count = 12, range = 15, times = 3)
 	SLEEP_CHECK_DEATH(0)
 	for(var/i = 1 to times)
-		SetRecoveryTime(50)
+		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 5 SECONDS))
 		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 		var/increment = 360 / spiral_count
 		for(var/j = 1 to spiral_count)
 			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
 			INVOKE_ASYNC(src, .proc/fire_line, turfs)
 		SLEEP_CHECK_DEATH(25)
-	SetRecoveryTime(30)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 3 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
 	if(!target)
@@ -241,7 +241,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0)
-	SetRecoveryTime(80)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 8 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 8 SECONDS))
 	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
 	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
@@ -271,7 +271,7 @@
 	if(!at)
 		return
 	var/turf/T = get_ranged_target_turf_direct(src, at, range, offset)
-	return (getline(src, T) - get_turf(src))
+	return (get_line(src, T) - get_turf(src))
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(list/turfs)
 	SLEEP_CHECK_DEATH(0)
@@ -396,7 +396,7 @@
 	set_density(TRUE)
 	SLEEP_CHECK_DEATH(1)
 	swooping &= ~SWOOP_DAMAGEABLE
-	SetRecoveryTime(swoop_cooldown)
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = swoop_cooldown, COOLDOWN_UPDATE_SET_RANGED = swoop_cooldown))
 	if(!lava_success)
 		arena_escape_enrage()
 
@@ -474,7 +474,7 @@
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	duration = 82
 	color = COLOR_DARK_ORANGE
 
@@ -542,7 +542,7 @@
 	duration = 9
 	pixel_z = 270
 
-/obj/effect/temp_visual/fireball/Initialize()
+/obj/effect/temp_visual/fireball/Initialize(mapload)
 	. = ..()
 	animate(src, pixel_z = 0, time = duration)
 
@@ -601,7 +601,7 @@
 		return
 	swoop_attack(FALSE, A)
 	lava_pools(10, 2) // less pools but longer delay before spawns
-	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
+	player_cooldown = world.time + 20 SECONDS // needs separate cooldown or cant use fire attacks
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return

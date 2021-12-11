@@ -124,7 +124,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
+	for (var/obj/item/disk/nuclear/N in SSpoints_of_interest.real_nuclear_disks)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
@@ -203,9 +203,9 @@
  */
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
 	if(mode != SHUTTLE_CALL)
-		AnnounceArrival(mob, rank)
+		announce_arrival(mob, rank)
 	else
-		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/announce_arrival, mob, rank))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)

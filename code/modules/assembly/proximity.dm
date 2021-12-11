@@ -5,14 +5,14 @@
 	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 20
 	var/sensitivity = 1
 	var/hearing_range = 3
 
-/obj/item/assembly/prox_sensor/Initialize()
+/obj/item/assembly/prox_sensor/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 0)
 	START_PROCESSING(SSobj, src)
@@ -66,10 +66,8 @@
 		return FALSE
 	pulse(FALSE)
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
-	for(var/CHM in get_hearers_in_view(hearing_range, src))
-		if(ismob(CHM))
-			var/mob/LM = CHM
-			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	next_activate = world.time + 30
 	return TRUE
 

@@ -42,12 +42,12 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
-	var/static/area_or_turf_fail_types = typecacheof(list(
+	var/static/list/area_or_turf_fail_types = typecacheof(list(
 		/turf/open/space,
 		/area/shuttle,
 		))
 	// Ignore these areas and dont let people expand them. They can expand into them though
-	var/static/blacklisted_areas = typecacheof(list(
+	var/static/list/blacklisted_areas = typecacheof(list(
 		/area/space,
 		))
 	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types, BP_MAX_ROOM_SIZE*2)
@@ -82,7 +82,6 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 			return
 		newA = new area_choice
 		newA.setup(str)
-		newA.set_dynamic_lighting()
 		newA.has_gravity = oldA.has_gravity
 	else
 		newA = area_choice
@@ -104,3 +103,75 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
+
+//Repopulates sortedAreas list
+/proc/repopulate_sorted_areas()
+	GLOB.sortedAreas = list()
+
+	for(var/area/A in world)
+		GLOB.sortedAreas.Add(A)
+
+	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
+
+/area/proc/addSorted()
+	GLOB.sortedAreas.Add(src)
+	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
+
+//Takes: Area type as a text string from a variable.
+//Returns: Instance for the area in the world.
+/proc/get_area_instance_from_text(areatext)
+	if(istext(areatext))
+		areatext = text2path(areatext)
+	return GLOB.areas_by_type[areatext]
+
+//Takes: Area type as text string or as typepath OR an instance of the area.
+//Returns: A list of all areas of that type in the world.
+/proc/get_areas(areatype, subtypes=TRUE)
+	if(istext(areatype))
+		areatype = text2path(areatype)
+	else if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
+
+	var/list/areas = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(cache[area_to_check.type])
+				areas += area_to_check
+	else
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(area_to_check.type == areatype)
+				areas += area_to_check
+	return areas
+
+//Takes: Area type as text string or as typepath OR an instance of the area.
+//Returns: A list of all turfs in areas of that type of that type in the world.
+/proc/get_area_turfs(areatype, target_z = 0, subtypes=FALSE)
+	if(istext(areatype))
+		areatype = text2path(areatype)
+	else if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
+
+	var/list/turfs = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(!cache[area_to_check.type])
+				continue
+			for(var/turf/turf_in_area in area_to_check)
+				if(target_z == 0 || target_z == turf_in_area.z)
+					turfs += turf_in_area
+	else
+		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+			if(area_to_check.type != areatype)
+				continue
+			for(var/turf/turf_in_area in area_to_check)
+				if(target_z == 0 || target_z == turf_in_area.z)
+					turfs += turf_in_area
+	return turfs

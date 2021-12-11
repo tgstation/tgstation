@@ -52,7 +52,7 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face //Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name ) //disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -238,3 +238,15 @@
 	destination.undershirt = undershirt
 	destination.socks = socks
 	destination.jumpsuit_style = jumpsuit_style
+
+
+/// Fully randomizes everything according to the given flags.
+/mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
+	var/datum/preferences/preferences = new
+
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (!preference.included_in_randomization_flags(randomize_flags))
+			continue
+
+		if (preference.is_randomizable())
+			preference.apply_to_human(src, preference.create_random_value(preferences))

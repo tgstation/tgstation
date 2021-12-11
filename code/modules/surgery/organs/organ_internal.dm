@@ -33,9 +33,18 @@
 	var/reagent_vol = 10
 
 	var/failure_time = 0
+	///Do we effect the appearance of our mob. Used to save time in preference code
+	var/visual = TRUE
 
-/obj/item/organ/Initialize()
+// Players can look at prefs before atoms SS init, and without this
+// they would not be able to see external organs, such as moth wings.
+// This is also necessary because assets SS is before atoms, and so
+// any nonhumans created in that time would experience the same effect.
+INITIALIZE_IMMEDIATE(/obj/item/organ)
+
+/obj/item/organ/Initialize(mapload)
 	. = ..()
+	START_PROCESSING(SSobj, src)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
@@ -61,6 +70,7 @@
 		else
 			qdel(replaced)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, reciever)
 	SEND_SIGNAL(reciever, COMSIG_CARBON_GAIN_ORGAN, src, special)
 
 	owner = reciever
@@ -92,6 +102,7 @@
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
 	START_PROCESSING(SSobj, src)
@@ -113,6 +124,7 @@
 	applyOrganDamage(decay_factor * maxHealth * delta_time)
 
 /obj/item/organ/proc/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
+	check_failing_thresholds() // Check if an organ should/shouldnt be failing
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(delta_time)
 		return
@@ -144,9 +156,13 @@
 	if(damage > high_threshold)
 		. += span_warning("[src] is starting to look discolored.")
 
-/obj/item/organ/Initialize()
-	. = ..()
+///Used as callbacks by object pooling
+/obj/item/organ/proc/exit_wardrobe()
 	START_PROCESSING(SSobj, src)
+
+//See above
+/obj/item/organ/proc/enter_wardrobe()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
 	if(owner)
@@ -171,6 +187,7 @@
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
+	check_failing_thresholds()
 	prev_damage = damage
 	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
@@ -191,20 +208,25 @@
 	var/delta = damage - prev_damage
 	if(delta > 0)
 		if(damage >= maxHealth)
-			organ_flags |= ORGAN_FAILING
 			return now_failing
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			return high_threshold_passed
 		if(damage > low_threshold && prev_damage <= low_threshold)
 			return low_threshold_passed
 	else
-		organ_flags &= ~ORGAN_FAILING
 		if(prev_damage > low_threshold && damage <= low_threshold)
 			return low_threshold_cleared
 		if(prev_damage > high_threshold && damage <= high_threshold)
 			return high_threshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
+
+///Checks if an organ should/shouldn't be failing and gives the appropriate organ flag
+/obj/item/organ/proc/check_failing_thresholds()
+	if(damage >= maxHealth)
+		organ_flags |= ORGAN_FAILING
+	if(damage < maxHealth)
+		organ_flags &= ~ORGAN_FAILING
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
@@ -279,3 +301,17 @@
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
 	return
+
+/// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
+/obj/item/organ/proc/get_status_text()
+	var/status = ""
+	if(owner.has_reagent(/datum/reagent/inverse/technetium))
+		status = "<font color='#E42426'> organ is [round((damage/maxHealth)*100, 1)]% damaged.</font>"
+	else if(organ_flags & ORGAN_FAILING)
+		status = "<font color='#cc3333'>Non-Functional</font>"
+	else if(damage > high_threshold)
+		status = "<font color='#ff9933'>Severely Damaged</font>"
+	else if (damage > low_threshold)
+		status = "<font color='#ffcc33'>Mildly Damaged</font>"
+
+	return status

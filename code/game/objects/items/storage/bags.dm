@@ -84,7 +84,7 @@
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(1, 7))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 	update_icon_state()
 
 /obj/item/storage/bag/trash/bluespace
@@ -121,7 +121,6 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -223,14 +222,15 @@
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
-/obj/item/storage/bag/plants/portaseeder/verb/dissolve_contents()
-	set name = "Activate Seed Extraction"
-	set category = "Object"
-	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.incapacitated())
+/obj/item/storage/bag/plants/portaseeder/examine(mob/user)
+	. = ..()
+	. += span_notice("Ctrl-click to activate seed extraction.")
+
+/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
+	if(user.incapacitated())
 		return
-	for(var/obj/item/O in contents)
-		seedify(O, 1)
+	for(var/obj/item/plant in contents)
+		seedify(plant, 1)
 
 // -----------------------------
 //        Sheet Snatcher
@@ -321,8 +321,9 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.max_w_class = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	STR.set_holdable(list(
+		/obj/item/plate,
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
 		/obj/item/clothing/mask/cigarette,
@@ -459,6 +460,7 @@
 	icon_state = "construction_bag"
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/ComponentInitialize()

@@ -7,7 +7,7 @@
 	shaded_charge = TRUE
 	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	flight_x_offset = 17
@@ -62,6 +62,7 @@
 	cell_type = /obj/item/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
+	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -73,6 +74,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
@@ -87,6 +89,7 @@
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
+	base_icon_state = "crossbow"
 	inhand_icon_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=2000)
@@ -98,12 +101,13 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = FALSE
-	max_mod_capacity = 0
+	max_mod_capacity = -1
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."
 	icon_state = "crossbow_halloween"
+	base_icon_state = "crossbow_halloween"
 	inhand_icon_state = "crossbow"
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
 
@@ -111,6 +115,7 @@
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
+	base_icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
@@ -194,18 +199,27 @@
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
+#define AMMO_SELECT_BLUE 1
+#define AMMO_SELECT_ORANGE 2
+
 /obj/item/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function. Fits in a bag."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	can_select = FALSE // left-click for blue, right-click for orange.
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
 	icon_state = "wormhole_projector"
 	base_icon_state = "wormhole_projector"
+	automatic_charge_overlays = FALSE
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
 	var/firing_core = FALSE
+
+/obj/item/gun/energy/wormhole_projector/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Left-click</b> to fire blue wormholes and <b><font color=orange>right-click</font></b> to fire orange wormholes.")
 
 /obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
@@ -238,9 +252,16 @@
 			if(istype(WH))
 				WH.gun = WEAKREF(src)
 
-/obj/item/gun/energy/wormhole_projector/process_chamber()
-	..()
-	select_fire()
+/obj/item/gun/energy/wormhole_projector/afterattack(atom/target, mob/living/user, flag, params)
+	if(select == AMMO_SELECT_ORANGE) //Last fired in right click mode. Switch to blue wormhole (left click).
+		select_fire()
+	return ..()
+
+/obj/item/gun/energy/wormhole_projector/afterattack_secondary(atom/target, mob/living/user, flag, params)
+	if(select == AMMO_SELECT_BLUE) //Last fired in left click mode. Switch to orange wormhole (right click).
+		select_fire()
+	fire_gun(target, user, flag, params)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
@@ -286,6 +307,9 @@
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	firing_core = TRUE
 
+#undef AMMO_SELECT_BLUE
+#undef AMMO_SELECT_ORANGE
+
 /* 3d printer 'pseudo guns' for borgs */
 
 /obj/item/gun/energy/printer
@@ -320,45 +344,6 @@
 	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/energy/laser/instakill
-	name = "instakill rifle"
-	icon_state = "instagib"
-	inhand_icon_state = "instagib"
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
-	w_class = WEIGHT_CLASS_BULKY
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
-	force = 60
-	charge_sections = 5
-	ammo_x_offset = 2
-	shaded_charge = FALSE
-
-/obj/item/gun/energy/laser/instakill/red
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
-	icon_state = "instagibred"
-	inhand_icon_state = "instagibred"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/red)
-
-/obj/item/gun/energy/laser/instakill/blue
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a blue design."
-	icon_state = "instagibblue"
-	inhand_icon_state = "instagibblue"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/blue)
-
-/obj/item/gun/energy/laser/instakill/green
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a green design."
-	icon_state = "instagibgreen"
-	inhand_icon_state = "instagibgreen"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/green)
-
-/obj/item/gun/energy/laser/instakill/yellow
-	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a yellow design."
-	icon_state = "instagibyellow"
-	inhand_icon_state = "instagibyellow"
-	ammo_type = list(/obj/item/ammo_casing/energy/instakill/yellow)
-
-/obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
-	return
-
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
@@ -366,6 +351,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	inhand_icon_state = "gravity_gun"
 	icon_state = "gravity_gun"
+	automatic_charge_overlays = FALSE
 	var/power = 4
 	var/firing_core = FALSE
 
@@ -392,6 +378,6 @@
 	shaded_charge = TRUE
 	weapon_weight = WEAPON_HEAVY
 
-/obj/item/gun/energy/tesla_cannon/Initialize()
+/obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)

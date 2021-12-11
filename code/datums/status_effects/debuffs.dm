@@ -91,6 +91,23 @@
 	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
+//INCAPACITATED
+/// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
+/datum/status_effect/incapacitating/incapacitated
+	id = "incapacitated"
+
+// What happens when you get the incapacitated status. You get TRAIT_INCAPACITATED added to you for the duration of the status effect.
+/datum/status_effect/incapacitating/incapacitated/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+
+// When the status effect runs out, your TRAIT_INCAPACITATED is removed.
+/datum/status_effect/incapacitating/incapacitated/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
@@ -183,11 +200,10 @@
 		owner.adjustStaminaLoss(healing)
 	if(human_owner?.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
-		if(carbon_owner)
-			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > owner.crit_threshold)
-			owner.emote("snore")
+	if(carbon_owner)
+		carbon_owner.handle_dreams()
+	if(prob(2) && owner.health > owner.crit_threshold)
+		owner.emote("snore")
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
@@ -624,7 +640,7 @@
 /obj/effect/temp_visual/curse
 	icon_state = "curse"
 
-/obj/effect/temp_visual/curse/Initialize()
+/obj/effect/temp_visual/curse/Initialize(mapload)
 	. = ..()
 	deltimer(timerid)
 
@@ -700,8 +716,8 @@
 	var/mob/living/carbon/C = owner
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
 	// The brain trauma itself does its own set of logging, but this is the only place the source of the hypnosis phrase can be found.
-	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_ATTACK)
-	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK, log_globally = FALSE)
+	hearing_speaker.log_message("has hypnotised [key_name(C)] with the phrase '[hearing_args[HEARING_RAW_MESSAGE]]'", LOG_ATTACK)
+	C.log_message("has been hypnotised by the phrase '[hearing_args[HEARING_RAW_MESSAGE]]' spoken by [key_name(hearing_speaker)]", LOG_VICTIM, log_globally = FALSE)
 	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
@@ -969,6 +985,94 @@
 	. = ..()
 	QDEL_NULL(mob_overlay)
 
+//Deals with ants covering someone.
+/datum/status_effect/ants
+	id = "ants"
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/ants
+	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
+	examine_text = "<span class='warning'>SUBJECTPRONOUN is covered in ants!</span>"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	/// Will act as the main timer as well as changing how much damage the ants do.
+	var/ants_remaining = 0
+
+/datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
+	if(isnum(amount_left) && new_owner.stat < HARD_CRIT)
+		if(new_owner.stat < UNCONSCIOUS) // Unconcious people won't get messages
+			to_chat(new_owner, "<span class='userdanger'>You're covered in ants!</span>")
+		ants_remaining += amount_left
+		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
+	. = ..()
+
+/datum/status_effect/ants/refresh(effect, amount_left)
+	var/mob/living/carbon/human/victim = owner
+	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat < HARD_CRIT)
+		if(victim.stat < UNCONSCIOUS) // Unconcious people won't get messages
+			if(!prob(1)) // 99%
+				to_chat(victim, "<span class='userdanger'>You're covered in MORE ants!</span>")
+			else // 1%
+				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+		ants_remaining += amount_left
+	. = ..()
+
+/datum/status_effect/ants/on_remove()
+	ants_remaining = 0
+	to_chat(owner, "<span class='notice'>All of the ants are off of your body!</span>")
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
+	. = ..()
+
+/datum/status_effect/ants/proc/ants_washed()
+	SIGNAL_HANDLER
+	owner.remove_status_effect(STATUS_EFFECT_ANTS)
+	return COMPONENT_CLEANED
+
+/datum/status_effect/ants/tick()
+	var/mob/living/carbon/human/victim = owner
+	victim.adjustBruteLoss(max(0.1, round((ants_remaining * 0.004),0.1))) //Scales with # of ants (lowers with time). Roughly 10 brute over 50 seconds.
+	if(victim.stat <= SOFT_CRIT) //Makes sure people don't scratch at themselves while they're in a critical condition
+		if(prob(15))
+			switch(rand(1,2))
+				if(1)
+					victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!", "MAKE IT END!!", "THEY'RE EVERYWHERE!!", "GET THEM OFF!!", "SOMEBODY HELP ME!!"), forced = /datum/status_effect/ants)
+				if(2)
+					victim.emote("scream")
+		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
+			switch(rand(1,50))
+				if (1 to 8) //16% Chance
+					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
+					to_chat(victim, "<span class='danger'>You scratch at the ants on your scalp!.</span>")
+					hed.receive_damage(1,0)
+				if (9 to 29) //40% chance
+					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
+					to_chat(victim, "<span class='danger'>You scratch at the ants on your arms!</span>")
+					arm.receive_damage(3,0)
+				if (30 to 49) //38% chance
+					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
+					to_chat(victim, "<span class='danger'>You scratch at the ants on your leg!</span>")
+					leg.receive_damage(3,0)
+				if(50) // 2% chance
+					to_chat(victim, "<span class='danger'>You rub some ants away from your eyes!</span>")
+					victim.blur_eyes(3)
+					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
+	ants_remaining--
+	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
+		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them or are dead, they are no longer affected.
+
+/atom/movable/screen/alert/status_effect/ants
+	name = "Ants!"
+	desc = "<span class='warning'>JESUS FUCKING CHRIST! CLICK TO GET THOSE THINGS OFF!</span>"
+	icon_state = "antalert"
+
+/atom/movable/screen/alert/status_effect/ants/Click()
+	var/mob/living/living = owner
+	if(!istype(living) || !living.can_resist() || living != owner)
+		return
+	to_chat(living, "<span class='notice'>You start to shake the ants off!</span>")
+	if(!do_after(living, 2 SECONDS, target = living))
+		return
+	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
+		to_chat(living, "<span class='notice'>You manage to get some of the ants off!</span>")
+		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
 
 /datum/status_effect/ghoul
 	id = "ghoul"
@@ -980,4 +1084,48 @@
 	name = "Flesh Servant"
 	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
 	icon_state = "mind_control"
-	
+
+
+/datum/status_effect/stagger
+	id = "stagger"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 30 SECONDS
+	tick_interval = 1 SECONDS
+	alert_type = null
+
+/datum/status_effect/stagger/on_apply()
+	owner.next_move_modifier *= 1.5
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/simple_owner = owner
+		simple_owner.ranged_cooldown_time *= 2.5
+	return TRUE
+
+/datum/status_effect/stagger/on_remove()
+	. = ..()
+	if(QDELETED(owner))
+		return
+	owner.next_move_modifier /= 1.5
+	if(ishostile(owner))
+		var/mob/living/simple_animal/hostile/simple_owner = owner
+		simple_owner.ranged_cooldown_time /= 2.5
+
+/datum/status_effect/freezing_blast
+	id = "freezing_blast"
+	alert_type = /atom/movable/screen/alert/status_effect/freezing_blast
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/freezing_blast
+	name = "Freezing Blast"
+	desc = "You've been struck by a freezing blast! Your body moves more slowly!"
+	icon_state = "frozen"
+
+/datum/status_effect/freezing_blast/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/freezing_blast, update = TRUE)
+	return ..()
+
+/datum/status_effect/freezing_blast/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/freezing_blast, update = TRUE)
+
+/datum/movespeed_modifier/freezing_blast
+	multiplicative_slowdown = 1

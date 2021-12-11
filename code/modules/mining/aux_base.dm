@@ -32,23 +32,11 @@
 	/// If blind drop option is available
 	var/blind_drop_ready = TRUE
 
-/obj/machinery/computer/auxiliary_base/directional/north
-	dir = SOUTH
-	pixel_y = 32
+	density = FALSE //this is a wallmount
 
-/obj/machinery/computer/auxiliary_base/directional/south
-	dir = NORTH
-	pixel_y = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
-/obj/machinery/computer/auxiliary_base/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/computer/auxiliary_base/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/computer/auxiliary_base/Initialize()
+/obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
 

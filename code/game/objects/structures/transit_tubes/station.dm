@@ -3,7 +3,7 @@
 
 // A place where tube pods stop, and people can get in or out.
 // Mappers: use "Generate Instances from Directions" for this
-//  one.
+// one.
 
 
 /obj/structure/transit_tube/station
@@ -21,8 +21,8 @@
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
 
-/obj/structure/transit_tube/station/New()
-	..()
+/obj/structure/transit_tube/station/Initialize(mapload)
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/transit_tube/station/Destroy()
@@ -252,7 +252,7 @@
 	. += span_notice("This station will create a pod for you to ride, no need to wait for one.")
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
-	if(!(istype(AM) && AM.dir == boarding_dir))
+	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))

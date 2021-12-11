@@ -18,7 +18,7 @@
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
 	var/awakened = FALSE
 	var/bloodthirst = HIS_GRACE_SATIATED
 	var/prev_bloodthirst = HIS_GRACE_SATIATED
@@ -27,10 +27,10 @@
 	var/victims_needed = 25
 	var/ascend_bonus = 15
 
-/obj/item/his_grace/Initialize()
+/obj/item/his_grace/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
 	update_appearance()
 

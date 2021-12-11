@@ -13,14 +13,14 @@
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
 
-/obj/effect/decal/cleanable/robot_debris/Initialize()
+/obj/effect/decal/cleanable/robot_debris/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions, mapload=FALSE)
 	set waitfor = FALSE
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4, 17; 50), i++) //the 3% chance of 50 steps is intentional and played for laughs.
+	for (var/i in 1 to pick(1, 200; 2, 150; 3, 50; 4, 17; 50)) //the 3% chance of 50 steps is intentional and played for laughs.
 		if (!mapload)
 			sleep(2)
 		if (i > 0)
@@ -70,7 +70,7 @@
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
 
-/obj/effect/decal/cleanable/oil/Initialize()
+/obj/effect/decal/cleanable/oil/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/fuel/oil, 30)
 

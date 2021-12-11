@@ -5,8 +5,11 @@
  */
 /obj/item/circuit_component/select
 	display_name = "Select Query"
-	display_desc = "A component used with USB cables that can perform select queries on a list based on the column name selected. The values are then compared with the comparison input."
+	desc = "A component used with USB cables that can perform select queries on a list based on the column name selected. The values are then compared with the comparison input."
+	category = "List"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+	var/datum/port/input/option/comparison_options
 
 	/// The list to perform the filter on
 	var/datum/port/input/received_table
@@ -31,25 +34,17 @@
 		COMP_COMPARISON_GREATER_THAN_OR_EQUAL,
 		COMP_COMPARISON_LESS_THAN_OR_EQUAL,
 	)
-	options = component_options
+	comparison_options = add_option_port("Comparison Options", component_options)
 
-/obj/item/circuit_component/select/Initialize()
-	. = ..()
+/obj/item/circuit_component/select/populate_ports()
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	column_name = add_input_port("Column Name", PORT_TYPE_STRING)
 	comparison_input = add_input_port("Comparison Input", PORT_TYPE_ANY)
 
 	filtered_table = add_output_port("Output", PORT_TYPE_TABLE)
 
-/obj/item/circuit_component/select/Destroy()
-	received_table = null
-	column_name = null
-	comparison_input = null
-	filtered_table = null
-	return ..()
-
-/obj/item/circuit_component/select/input_received(datum/port/input/port)
-	. = ..()
+/obj/item/circuit_component/select/pre_input_received(datum/port/input/port)
+	var/current_option = comparison_options.value
 	switch(current_option)
 		if(COMP_COMPARISON_EQUAL, COMP_COMPARISON_NOT_EQUAL)
 			if(current_type != PORT_TYPE_ANY)
@@ -60,17 +55,17 @@
 				current_type = PORT_TYPE_NUMBER
 				comparison_input.set_datatype(PORT_TYPE_NUMBER)
 
-	if(.)
+
+/obj/item/circuit_component/select/input_received(datum/port/input/port)
+	var/current_option = comparison_options.value
+	var/list/input_list = received_table.value
+	if(!islist(input_list) || isnum(column_name.value))
 		return
 
-	var/list/input_list = received_table.input_value
-	if(!islist(input_list) || isnum(column_name.input_value))
-		return
-
-	var/comparison_value = comparison_input.input_value
+	var/comparison_value = comparison_input.value
 	var/list/new_list = list()
 	for(var/list/entry in input_list)
-		var/anything = entry[column_name.input_value]
+		var/anything = entry[column_name.value]
 		if(islist(anything))
 			continue
 		if(current_option != COMP_COMPARISON_EQUAL && current_option != COMP_COMPARISON_NOT_EQUAL && !isnum(anything))

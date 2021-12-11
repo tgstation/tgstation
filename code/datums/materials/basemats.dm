@@ -25,7 +25,7 @@
 	shard_type = /obj/item/shard
 	value_per_unit = 0.0025
 	beauty_modifier = 0.05
-	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, LASER = 0, ENERGY = 1, BOMB = 0, BIO = 0.2, RAD = 0.2, FIRE = 1, ACID = 0.2)
+	armor_modifiers = list(MELEE = 0.2, BULLET = 0.2, LASER = 0, ENERGY = 1, BOMB = 0, BIO = 0.2, FIRE = 1, ACID = 0.2)
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
@@ -62,7 +62,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	value_per_unit = 0.0625
 	beauty_modifier = 0.15
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, RAD = 1, FIRE = 0.7, ACID = 1.1)
+	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 0.7, ACID = 1.1)
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
@@ -79,7 +79,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 132
 	value_per_unit = 0.25
 	beauty_modifier = 0.3
-	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
+	armor_modifiers = list(MELEE = 1.3, BULLET = 1.3, LASER = 0.6, ENERGY = 1, BOMB = 1.2, BIO = 1, FIRE = 1, ACID = 1)
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -95,15 +95,25 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 0.05
 	beauty_modifier = 0.3 //It shines so beautiful
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, BOMB = 0, BIO = 0, RAD = 0, FIRE = 1, ACID = 1)
+	armor_modifiers = list(MELEE = 1.5, BULLET = 1.4, LASER = 0.5, ENERGY = 0.5, BOMB = 0, BIO = 0, FIRE = 1, ACID = 1)
 
 /datum/material/uranium/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/radioactive, amount / 50, source, 0) //half-life of 0 because we keep on going. amount / 50 means 40 radiation per sheet.
+
+	// Uranium structures should irradiate, but not items, because item irradiation is a lot more annoying.
+	// For example, consider picking up uranium as a miner.
+	if (isitem(source))
+		return
+
+	source.AddElement(/datum/element/radioactive)
 
 /datum/material/uranium/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/radioactive))
+
+	if (isitem(source))
+		return
+
+	source.RemoveElement(/datum/element/radioactive)
 
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
@@ -121,17 +131,20 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	shard_type = /obj/item/shard/plasma
 	value_per_unit = 0.1
 	beauty_modifier = 0.15
-	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, LASER = 0, ENERGY = 1.2, BOMB = 0, BIO = 1.2, RAD = 1, FIRE = 0, ACID = 0.5)
+	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, LASER = 0, ENERGY = 1.2, BOMB = 0, BIO = 1.2, FIRE = 0, ACID = 0.5)
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250)
+		// Ideally exploding plasma objects should delete themselves but we still have the flooder and SSexplosions to rely on deleting it asynchronously so it's not that bad.
+		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250, FALSE)
+	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*0.05) //Empty temp arg, fully dependent on whatever ignited it.
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
+	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	qdel(source.GetComponent(/datum/component/explodable))
 
 /datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -166,7 +179,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	value_per_unit = 0.5
 	beauty_modifier = 0.5
-	armor_modifiers = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 0, RAD = 0, FIRE = 10, ACID = 0) //Clowns cant be blown away.
+	armor_modifiers = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 0, FIRE = 10, ACID = 0) //Clowns cant be blown away.
 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
@@ -194,7 +207,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	value_per_unit = 0.0625
 	beauty_modifier = 0.05
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, RAD = 1, FIRE = 0.7, ACID = 1)
+	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 0.7, ACID = 1)
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -210,7 +223,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/runite
 	value_per_unit = 0.3
 	beauty_modifier = 0.5
-	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, RAD = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
+	armor_modifiers = list(MELEE = 1.35, BULLET = 2, LASER = 0.5, ENERGY = 1.25, BOMB = 1.25, BIO = 1, FIRE = 1.4, ACID = 1) //rune is weak against magic lasers but strong against bullets. This is the combat triangle.
 
 /datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -227,7 +240,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	value_per_unit = 0.0125
 	beauty_modifier = -0.01
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1.1, ACID = 1)
+	armor_modifiers = list(MELEE = 1.5, BULLET = 1.1, LASER = 0.3, ENERGY = 0.5, BOMB = 1, BIO = 1, FIRE = 1.1, ACID = 1)
 
 /datum/material/plastic/on_accidental_mat_consumption(mob/living/carbon/eater, obj/item/food)
 	eater.reagents.add_reagent(/datum/reagent/plastic_polymers, rand(6, 8))
@@ -253,7 +266,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	value_per_unit = 0.01
 	beauty_modifier = 0.1
-	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, RAD = 0, FIRE = 0, ACID = 0.3)
+	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 0.4, ENERGY = 0.4, BOMB = 1, BIO = 0.2, FIRE = 0, ACID = 0.3)
 	texture_layer_icon_state = "woodgrain"
 
 /datum/material/wood/on_applied_obj(obj/source, amount, material_flags)
@@ -286,7 +299,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/adamantine
 	value_per_unit = 0.25
 	beauty_modifier = 0.4
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, RAD = 1, FIRE = 2.5, ACID = 1)
+	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.3, ENERGY = 1.3, BOMB = 1, BIO = 1, FIRE = 2.5, ACID = 1)
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -302,7 +315,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 0.75
 	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 1.5, BULLET = 1.5, LASER = 1.5, ENERGY = 1.5, BOMB = 1.5, BIO = 1.5, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.5
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
@@ -333,10 +346,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300)
+	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*1.5, amount*0.2+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300))
+	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	return ..()
 
 /datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -355,7 +368,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.35
 	beauty_modifier = 0.35
 	strength_modifier = 1.2
-	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, RAD = 1, FIRE = 1.3, ACID = 1)
+	armor_modifiers = list(MELEE = 1.35, BULLET = 1.3, LASER = 1.3, ENERGY = 1.25, BOMB = 0.7, BIO = 1, FIRE = 1.3, ACID = 1)
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
@@ -372,7 +385,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	value_per_unit = 0.001
 	strength_modifier = 0.5
 	integrity_modifier = 0.1
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 1.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 1.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.25
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
@@ -390,7 +403,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	value_per_unit = 0.0025
-	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 1.25, ENERGY = 0.5, BOMB = 0.5, BIO = 0.25, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
@@ -403,7 +416,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	value_per_unit = 0.0025
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, RAD = 1.5, FIRE = 0.25, ACID = 1.5)
+	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0.25, ACID = 1.5)
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
@@ -420,7 +433,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	value_per_unit = 0.75
-	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 1.2, BULLET = 1.2, LASER = 1, ENERGY = 1, BOMB = 1.2, BIO = 1.2, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = -0.15
 	texture_layer_icon_state = "runed"
 
@@ -437,7 +450,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/bronze
 	value_per_unit = 0.025
-	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = 0.2
 
 /datum/material/paper
@@ -448,7 +461,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/paperframes
 	value_per_unit = 0.0025
-	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, RAD = 1.5, FIRE = 0, ACID = 1.5)
+	armor_modifiers = list(MELEE = 0.1, BULLET = 0.1, LASER = 0.1, ENERGY = 0.1, BOMB = 0.1, BIO = 0.1, FIRE = 0, ACID = 1.5)
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "paper"
@@ -474,7 +487,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/cardboard
 	value_per_unit = 0.003
-	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, RAD = 1.5, FIRE = 0, ACID = 1.5)
+	armor_modifiers = list(MELEE = 0.25, BULLET = 0.25, LASER = 0.25, ENERGY = 0.25, BOMB = 0.25, BIO = 0.25, FIRE = 0, ACID = 1.5)
 	beauty_modifier = -0.1
 
 /datum/material/cardboard/on_applied_obj(obj/source, amount, material_flags)
@@ -498,7 +511,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/bone
 	value_per_unit = 0.05
-	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, RAD = 1.5, FIRE = 1.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 1.2, BULLET = 0.75, LASER = 0.75, ENERGY = 1.2, BOMB = 1, BIO = 1, FIRE = 1.5, ACID = 1.5)
 	beauty_modifier = -0.2
 
 /datum/material/bamboo
@@ -509,7 +522,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	value_per_unit = 0.0025
-	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, RAD = 1.5, FIRE = 0.5, ACID = 1.5)
+	armor_modifiers = list(MELEE = 0.5, BULLET = 0.5, LASER = 0.5, ENERGY = 0.5, BOMB = 0.5, BIO = 0.51, FIRE = 0.5, ACID = 1.5)
 	beauty_modifier = 0.2
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "bamboo"
@@ -522,7 +535,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/zaukerite
 	value_per_unit = 0.45
-	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, RAD = 1.75, FIRE = 0.1, ACID = 1)
+	armor_modifiers = list(MELEE = 0.9, BULLET = 0.9, LASER = 1.75, ENERGY = 1.75, BOMB = 0.5, BIO = 1, FIRE = 0.1, ACID = 1)
 	beauty_modifier = 0.001
 
 /datum/material/zaukerite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

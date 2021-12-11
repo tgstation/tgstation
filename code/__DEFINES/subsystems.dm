@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 15
+#define DB_MINOR_VERSION 20
 
 
 //! ## Timing subsystem
@@ -95,8 +95,11 @@
 #define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
 	..();\
 	if(!(flags_1 & INITIALIZED_1)) {\
+		var/previous_initialized_value = SSatoms.initialized;\
+		SSatoms.initialized = INITIALIZATION_INNEW_MAPLOAD;\
 		args[1] = TRUE;\
 		SSatoms.InitAtom(src, FALSE, args);\
+		SSatoms.initialized = previous_initialized_value;\
 	}\
 }
 
@@ -115,19 +118,21 @@
 #define INIT_ORDER_INSTRUMENTS 82
 #define INIT_ORDER_GREYSCALE 81
 #define INIT_ORDER_VIS 80
+#define INIT_ORDER_DISCORD 78
 #define INIT_ORDER_ACHIEVEMENTS 77
 #define INIT_ORDER_RESEARCH 75
 #define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
+#define INIT_ORDER_QUIRKS 73
+#define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
 #define INIT_ORDER_EVENTS 70
 #define INIT_ORDER_IDACCESS 66
-#define INIT_ORDER_JOBS 65
-#define INIT_ORDER_QUIRKS 60
+#define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
 #define INIT_ORDER_AI_MOVEMENT 56 //We need the movement setup
 #define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
 #define INIT_ORDER_TICKER 55
 #define INIT_ORDER_TCG 55
-#define INIT_ORDER_REAGENTS 55 //HAS to be before mapping - mapping creates objects, which creates reagents, which relies on lists made in this subsystem
 #define INIT_ORDER_MAPPING 50
+#define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_TIMETRACK 47
 #define INIT_ORDER_NETWORKS 45
 #define INIT_ORDER_ECONOMY 40
@@ -140,7 +145,8 @@
 #define INIT_ORDER_TIMER 1
 #define INIT_ORDER_DEFAULT 0
 #define INIT_ORDER_AIR -1
-#define INIT_ORDER_PERSISTENCE -2 //before assets because some assets take data from SSPersistence
+#define INIT_ORDER_PERSISTENCE -2
+#define INIT_ORDER_PERSISTENT_PAINTINGS -3 // Assets relies on this
 #define INIT_ORDER_ASSETS -4
 #define INIT_ORDER_ICON_SMOOTHING -5
 #define INIT_ORDER_OVERLAY -6
@@ -150,10 +156,9 @@
 #define INIT_ORDER_SHUTTLE -21
 #define INIT_ORDER_MINOR_MAPPING -40
 #define INIT_ORDER_PATH -50
-#define INIT_ORDER_DISCORD -60
 #define INIT_ORDER_EXPLOSIONS -69
 #define INIT_ORDER_STATPANELS -98
-#define INIT_ORDER_DEMO -99  // o avoid a bunch of changes related to initialization being written, do this last
+#define INIT_ORDER_INIT_PROFILER -99 //Near the end, logs the costs of initialize
 #define INIT_ORDER_CHAT -100 //Should be last to ensure chat remains smooth during init.
 
 // Subsystem fire priority, from lowest to highest priority
@@ -170,6 +175,7 @@
 #define FIRE_PRIORITY_AIR 20
 #define FIRE_PRIORITY_NPC 20
 #define FIRE_PRIORITY_NPC_MOVEMENT 21
+#define FIRE_PRIORITY_NPC_ACTIONS 22
 #define FIRE_PRIORITY_PROCESS 25
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
@@ -253,7 +259,7 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
-//Pipeline rebuild helper defines, these suck but it'll do for now
+//Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
 
@@ -261,6 +267,25 @@
 #define SSEXPLOSIONS_MOVABLES 1
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
+
+// Wardrobe subsystem tasks
+#define SSWARDROBE_STOCK 1
+#define SSWARDROBE_INSPECT 2
+
+//Wardrobe cache metadata indexes
+#define WARDROBE_CACHE_COUNT 1
+#define WARDROBE_CACHE_LAST_INSPECT 2
+#define WARDROBE_CACHE_CALL_INSERT 3
+#define WARDROBE_CACHE_CALL_REMOVAL 4
+
+//Wardrobe preloaded stock indexes
+#define WARDROBE_STOCK_CONTENTS 1
+#define WARDROBE_STOCK_CALL_INSERT 2
+#define WARDROBE_STOCK_CALL_REMOVAL 3
+
+//Wardrobe callback master list indexes
+#define WARDROBE_CALLBACK_INSERT 1
+#define WARDROBE_CALLBACK_REMOVE 2
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
 // Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()

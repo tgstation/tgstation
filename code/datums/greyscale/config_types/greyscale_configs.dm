@@ -116,6 +116,10 @@
 	name = "Chaplain PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
 
+/datum/greyscale_config/pda/captain
+	name = "Captain PDA"
+	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
+
 /datum/greyscale_config/pda/clown
 	name = "Clown PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_clown.json'
@@ -283,6 +287,39 @@
 	icon_file = 'icons/obj/items/cleric_mace.dmi'
 	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace_worn_gold.json'
 
+/datum/greyscale_config/ceremonial_blade
+	name = "Base Ceremonial Blade"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade.json'
+
+/datum/greyscale_config/ceremonial_blade_lefthand
+	name = "Base Held Ceremonial Blade, Left"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_lefthand.json'
+
+/datum/greyscale_config/ceremonial_blade_righthand
+	name = "Base Held Ceremonial Blade, Right"
+	icon_file = 'icons/obj/items/ritual_weapon.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/ceremonial_blade_righthand.json'
+
+/datum/greyscale_config/beret
+	name = "Beret"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret.json'
+
+/datum/greyscale_config/beret/worn
+	name = "Beret Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_worn.json'
+
+/datum/greyscale_config/beret_badge
+	name = "Beret With Badge"
+	icon_file = 'icons/obj/clothing/head/beret.dmi'
+	json_config = 'code/datums/greyscale/json_configs/beret_badge.json'
+
+/datum/greyscale_config/beret_badge/worn
+	name = "Beret With Badge Worn"
+	json_config = 'code/datums/greyscale/json_configs/beret_badge_worn.json'
+
 /datum/greyscale_config/suspenders
 	name = "Suspenders"
 	icon_file = 'icons/obj/clothing/belts.dmi'
@@ -338,6 +375,16 @@
 	icon_file = 'icons/obj/stack_objects.dmi'
 	json_config = 'code/datums/greyscale/json_configs/wrap_paper.json'
 
+/datum/greyscale_config/meter
+	name = "Meter"
+	icon_file = 'icons/obj/atmospherics/pipes/meter.dmi'
+	json_config = 'code/datums/greyscale/json_configs/meter.json'
+
+/datum/greyscale_config/thermomachine
+	name = "Thermomachine"
+	icon_file = 'icons/obj/atmospherics/components/thermomachine.dmi'
+	json_config = 'code/datums/greyscale/json_configs/thermomachine.json'
+
 /datum/greyscale_config/janicart_upgrade
 	name = "Janicart Upgrade"
 	icon_file = 'icons/obj/janicart_upgrade.dmi'
@@ -345,3 +392,43 @@
 
 /datum/greyscale_config/janicart_upgrade/installed
 	json_config = 'code/datums/greyscale/json_configs/janicart_upgrade_installed.json'
+
+/datum/greyscale_config/bench_middle
+	name = "Bench Middle"
+	icon_file = 'icons/obj/sofa.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bench_middle.json'
+
+/datum/greyscale_config/bench_left
+	name = "Bench Left"
+	icon_file = 'icons/obj/sofa.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bench_left.json'
+
+/datum/greyscale_config/bench_right
+	name = "Bench Right"
+	icon_file = 'icons/obj/sofa.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bench_right.json'
+
+/datum/greyscale_config/bench_corner
+	name = "Bench Corner"
+	icon_file = 'icons/obj/sofa.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bench_corner.json'
+
+/datum/greyscale_config/ctf_standard
+	name = "CTF Standard Vest"
+	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_standard.json'
+
+/datum/greyscale_config/ctf_standard_worn
+	name = "Worn CTF Standard Vest"
+	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_standard_worn.json'
+
+/datum/greyscale_config/ctf_light
+	name = "CTF Light Vest"
+	icon_file = 'icons/obj/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_light.json'
+
+/datum/greyscale_config/ctf_light_worn
+	name = "Worn CTF Light Vest"
+	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'

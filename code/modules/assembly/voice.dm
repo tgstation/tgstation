@@ -8,7 +8,6 @@
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
-	flags_1 = HEAR_1
 	attachable = TRUE
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -23,7 +22,11 @@
 		"voice sensor",
 	)
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
+
+/obj/item/assembly/voice/Initialize(mapload)
+	. = ..()
+	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()
@@ -51,15 +54,15 @@
 		if(INCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", message_language)
+			say("Activation message is '[recorded]'.", sanitize = FALSE, language = message_language)
 		if(EXCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", message_language)
+			say("Activation message is '[recorded]'.", sanitize = FALSE, language = message_language)
 		if(RECOGNIZER_MODE)
 			recorded = speaker.GetVoice()
 			listening = FALSE
-			say("Your voice pattern is saved.", message_language)
+			say("Your voice pattern is saved.", language = message_language)
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
 				send_pulse()

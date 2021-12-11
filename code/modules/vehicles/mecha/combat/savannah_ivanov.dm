@@ -28,7 +28,7 @@
 	dir_in = 2 //Facing South.
 	max_integrity = 450 //really tanky, like damn
 	deflect_chance = 25
-	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, RAD = 80, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	infra_luminosity = 3
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
@@ -372,6 +372,9 @@
 
 /obj/effect/skyfall_landingzone/Initialize(mapload, obj/vehicle/sealed/mecha/combat/mecha)
 	. = ..()
+	if(!mecha)
+		stack_trace("Skyfall landing zone created without mecha")
+		return INITIALIZE_HINT_QDEL
 	src.mecha = mecha
 	animate(src, alpha = 255, TOTAL_SKYFALL_LEAP_TIME/2, easing = CIRCULAR_EASING|EASE_OUT)
 	RegisterSignal(mecha, COMSIG_MOVABLE_MOVED, .proc/follow)

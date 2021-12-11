@@ -6,8 +6,8 @@
 	var/disease_name = ""
 
 /datum/antagonist/disease/on_gain()
-	owner.special_role = "Sentient Disease"
-	owner.assigned_role = "Sentient Disease"
+	owner.set_assigned_role(SSjob.GetJobType(/datum/job/sentient_disease))
+	owner.special_role = ROLE_SENTIENT_DISEASE
 	var/datum/objective/O = new /datum/objective/disease_infect()
 	O.owner = owner
 	objectives += O
@@ -73,6 +73,11 @@
 
 	return result.Join("<br>")
 
+/datum/antagonist/disease/get_preview_icon()
+	var/icon/icon = icon('icons/mob/huds/antag_hud.dmi', "virus_infected")
+	icon.Blend(COLOR_GREEN_GRAY, ICON_MULTIPLY)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	return icon
 
 /datum/objective/disease_infect
 	explanation_text = "Survive and infect as many people as possible."

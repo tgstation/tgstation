@@ -18,41 +18,13 @@
 /// the type of wallframe it 'disassembles' into
 	var/wallframe_type = /obj/item/wallframe/defib_mount
 
-/obj/machinery/defibrillator_mount/directional/north
-	dir = SOUTH
-	pixel_y = 32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
-/obj/machinery/defibrillator_mount/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/defibrillator_mount/loaded/Initialize() //loaded subtype for mapping use
+/obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
 
-/obj/machinery/defibrillator_mount/loaded/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/defibrillator_mount/loaded/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/defibrillator_mount/loaded/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
 	if(defib)
@@ -98,6 +70,7 @@
 
 //defib interaction
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
 	if(!defib)
 		to_chat(user, span_warning("There's no defibrillator unit loaded!"))
 		return
@@ -166,7 +139,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/defibrillator_mount/wrench_act(mob/living/user, obj/item/wrench/W)
+/obj/machinery/defibrillator_mount/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!wallframe_type)
 		return ..()
 	if(user.combat_mode)
@@ -177,9 +150,9 @@
 		return TRUE
 	new wallframe_type(get_turf(src))
 	qdel(src)
-	W.play_tool_sound(user)
+	tool.play_tool_sound(user)
 	to_chat(user, span_notice("You remove [src] from the wall."))
-
+	return TRUE
 
 /obj/machinery/defibrillator_mount/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
@@ -212,7 +185,7 @@
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 
-/obj/machinery/defibrillator_mount/charging/Initialize()
+/obj/machinery/defibrillator_mount/charging/Initialize(mapload)
 	. = ..()
 	if(is_operational)
 		begin_processing()
@@ -243,7 +216,7 @@
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
-	pixel_shift = -28
+	pixel_shift = 28
 
 /obj/item/wallframe/defib_mount/charging
 	name = "unhooked PENLITE defibrillator mount"

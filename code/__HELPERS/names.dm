@@ -50,9 +50,9 @@ GLOBAL_VAR(command_name)
 
 	var/config_server_name = CONFIG_GET(string/servername)
 	if(config_server_name)
-		world.name = "[config_server_name][config_server_name == GLOB.station_name ? "" : ": [GLOB.station_name]"]"
+		world.name = "[config_server_name][config_server_name == GLOB.station_name ? "" : ": [html_decode(GLOB.station_name)]"]"
 	else
-		world.name = GLOB.station_name
+		world.name = html_decode(GLOB.station_name)
 
 
 /proc/new_station_name()
@@ -227,6 +227,9 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
+
+/proc/hive_name()
+	return "[pick(GLOB.hive_names)]-hive"
 
 /**
  * returns an ic name of the tool needed

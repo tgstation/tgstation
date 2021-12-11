@@ -8,7 +8,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 /datum/outfit/vr/pre_equip(mob/living/carbon/human/H)
-	H.dna.species.before_equip_job(null, H)
+	H.dna.species.pre_equip_species_outfit(null, H)
 
 /datum/outfit/vr/syndicate
 	name = "Syndicate VR Operative - Basic"
@@ -19,7 +19,7 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
 		/obj/item/storage/box/survival/syndie = 1,
-		/obj/item/kitchen/knife/combat/survival = 1,
+		/obj/item/knife/combat/survival = 1,
 )
 	belt = /obj/item/gun/ballistic/automatic/pistol
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated

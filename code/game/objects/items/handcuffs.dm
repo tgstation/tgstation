@@ -10,23 +10,11 @@
 /obj/item/restraints
 	breakouttime = 1 MINUTES
 	dye_color = DYE_PRISONER
+	icon = 'icons/obj/restraints.dmi'
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(OXYLOSS)
-
-/obj/item/restraints/Destroy()
-	if(iscarbon(loc))
-		var/mob/living/carbon/M = loc
-		if(M.handcuffed == src)
-			M.set_handcuffed(null)
-			M.update_handcuffed()
-			if(M.buckled && M.buckled.buckle_requires_restraints)
-				M.buckled.unbuckle_mob(M)
-		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.update_inv_legcuffed()
-	return ..()
 
 /**
  * # Handcuffs
@@ -39,7 +27,6 @@
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuff"
 	worn_icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -52,7 +39,7 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
 	breakouttime = 1 MINUTES
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	custom_price = PAYCHECK_HARD * 0.35
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -72,12 +59,13 @@
 
 	if(!C.handcuffed)
 		if(C.canBeHandcuffed())
-			C.visible_message(span_danger("[user] is trying to put [src.name] on [C]!"), \
-								span_userdanger("[user] is trying to put [src.name] on you!"))
-
+			C.visible_message(span_danger("[user] is trying to put [name] on [C]!"), \
+								span_userdanger("[user] is trying to put [name] on you!"))
+			if(C.is_blind())
+				to_chat(C, span_userdanger("You feel someone grab your wrists, the cold metal of [name] starting to dig into your skin!"))
 			playsound(loc, cuffsound, 30, TRUE, -2)
 			log_combat(user, C, "attempted to handcuff")
-			if(do_mob(user, C, 30) && C.canBeHandcuffed())
+			if(do_mob(user, C, 30, timed_action_flags = IGNORE_SLOWDOWNS) && C.canBeHandcuffed())
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
@@ -115,10 +103,8 @@
 	else if(dispense)
 		cuffs = new type()
 
-	cuffs.forceMove(target)
-	target.set_handcuffed(cuffs)
+	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	target.update_handcuffed()
 	if(trashtype && !dispense)
 		qdel(src)
 	return
@@ -169,7 +155,6 @@
 /obj/item/restraints/handcuffs/cable/sinew
 	name = "sinew restraints"
 	desc = "A pair of restraints fashioned from long strands of flesh."
-	icon = 'icons/obj/mining.dmi'
 	icon_state = "sinewcuff"
 	inhand_icon_state = "sinewcuff"
 	custom_materials = null
@@ -291,7 +276,6 @@
 	name = "leg cuffs"
 	desc = "Use this to keep prisoners in line."
 	gender = PLURAL
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "handcuff"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -317,7 +301,7 @@
 	///How much damage the trap deals when triggered.
 	var/trap_damage = 20
 
-/obj/item/restraints/legcuffs/beartrap/Initialize()
+/obj/item/restraints/legcuffs/beartrap/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	var/static/list/loc_connections = list(
@@ -353,41 +337,42 @@
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, AM as mob|obj)
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(datum/source, atom/movable/AM, thrown_at = FALSE)
 	SIGNAL_HANDLER
-	if(armed && isturf(loc))
-		if(isliving(AM))
-			var/mob/living/L = AM
-			var/snap = TRUE
-			if(istype(L.buckled, /obj/vehicle))
-				var/obj/vehicle/ridden_vehicle = L.buckled
-				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
-					close_trap()
-					ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]."))
+	if(!armed || !isturf(loc) || !isliving(AM))
+		return
+	var/mob/living/L = AM
+	var/snap = TRUE
+	if(istype(L.buckled, /obj/vehicle))
+		var/obj/vehicle/ridden_vehicle = L.buckled
+		if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
+			close_trap()
+			ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]."))
 
-			if(L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
-				snap = FALSE
+	if(!thrown_at && L.movement_type & (FLYING|FLOATING)) //don't close the trap if they're flying/floating over it.
+		snap = FALSE
 
-			var/def_zone = BODY_ZONE_CHEST
-			if(snap && iscarbon(L))
-				var/mob/living/carbon/C = L
-				if(C.body_position == STANDING_UP)
-					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-					if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
-						C.legcuffed = src
-						forceMove(C)
-						C.update_equipment_speed_mods()
-						C.update_inv_legcuffed()
-						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-			else if(snap && isanimal(L))
-				var/mob/living/simple_animal/SA = L
-				if(SA.mob_size <= MOB_SIZE_TINY) //don't close the trap if they're as small as a mouse.
-					snap = FALSE
-			if(snap)
-				close_trap()
-				L.visible_message(span_danger("[L] triggers \the [src]."), \
-						span_userdanger("You trigger \the [src]!"))
-				L.apply_damage(trap_damage, BRUTE, def_zone)
+	var/def_zone = BODY_ZONE_CHEST
+	if(snap && iscarbon(L))
+		var/mob/living/carbon/C = L
+		if(C.body_position == STANDING_UP)
+			def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+				INVOKE_ASYNC(C, /mob/living/carbon.proc/equip_to_slot, src, ITEM_SLOT_LEGCUFFED)
+				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+	else if(snap && isanimal(L))
+		var/mob/living/simple_animal/SA = L
+		if(SA.mob_size <= MOB_SIZE_TINY) //don't close the trap if they're as small as a mouse.
+			snap = FALSE
+	if(snap)
+		close_trap()
+		if(!thrown_at)
+			L.visible_message(span_danger("[L] triggers \the [src]."), \
+					span_userdanger("You trigger \the [src]!"))
+		else
+			L.visible_message(span_danger("\The [src] ensnares [L]!"), \
+					span_userdanger("\The [src] ensnares you!"))
+		L.apply_damage(trap_damage, BRUTE, def_zone)
 
 /**
  * # Energy snare
@@ -405,7 +390,7 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
@@ -457,13 +442,9 @@
  */
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/C)
 	if(!C.legcuffed && C.num_legs >= 2)
-		visible_message(span_danger("\The [src] ensnares [C]!"))
-		C.legcuffed = src
-		forceMove(C)
-		C.update_equipment_speed_mods()
-		C.update_inv_legcuffed()
+		visible_message(span_danger("\The [src] ensnares [C]!"), span_userdanger("\The [src] ensnares you!"))
+		C.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-		to_chat(C, span_userdanger("\The [src] ensnares you!"))
 		C.Knockdown(knockdown)
 		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
@@ -495,12 +476,14 @@
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_HARD * 0.35
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(iscarbon(hit_atom))
-		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
-		B.spring_trap(null, hit_atom)
-		qdel(src)
+/obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_UNCATCHABLE, TRAIT_GENERIC) // People said energy bolas being uncatchable is a feature.
+
+/obj/item/restraints/legcuffs/bola/energy/ensnare(atom/hit_atom)
+	var/obj/item/restraints/legcuffs/beartrap/energy/cyborg/B = new (get_turf(hit_atom))
+	B.spring_trap(null, hit_atom, TRUE)
+	qdel(src)
 
 /**
  * A pacifying variant of the bola.

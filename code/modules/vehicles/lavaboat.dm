@@ -11,7 +11,7 @@
 	key_type = /obj/item/oar
 	var/allowed_turf = /turf/open/lava
 
-/obj/vehicle/ridden/lavaboat/Initialize()
+/obj/vehicle/ridden/lavaboat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat)
 
@@ -73,7 +73,8 @@
 	name = "mysterious boat"
 	desc = "This boat moves where you will it, without the need for an oar."
 	icon_state = "dragon_boat"
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 
-/obj/vehicle/ridden/lavaboat/dragon/Initialize()
+/obj/vehicle/ridden/lavaboat/dragon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat/dragonboat)

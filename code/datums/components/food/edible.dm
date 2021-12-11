@@ -3,7 +3,7 @@
 This component makes it possible to make things edible. What this means is that you can take a bite or force someone to take a bite (in the case of items).
 These items take a specific time to eat, and can do most of the things our original food items could.
 
-Behavior that's still missing from this component that original food items had that should either be put into seperate components or somewhere else:
+Behavior that's still missing from this component that original food items had that should either be put into separate components or somewhere else:
 	Components:
 	Drying component (jerky etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
@@ -45,6 +45,7 @@ Behavior that's still missing from this component that original food items had t
 	///The type of atom this creates when the object is microwaved.
 	var/atom/microwaved_type
 
+
 /datum/component/edible/Initialize(
 	list/initial_reagents,
 	food_flags = NONE,
@@ -69,11 +70,15 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
 	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
 	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
+	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, .proc/on_ooze_eat)
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	if(!isturf(parent))
+		var/static/list/loc_connections = list(
+			COMSIG_ATOM_ENTERED = .proc/on_entered,
+		)
+		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+	else
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -260,6 +265,8 @@ Behavior that's still missing from this component that original food items had t
 	if(feeder.combat_mode)
 		return
 
+	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
+
 	if(IsFoodGone(owner, feeder))
 		return
 
@@ -267,28 +274,46 @@ Behavior that's still missing from this component that original food items had t
 		return
 	var/fullness = eater.get_fullness() + 10 //The theoretical fullness of the person eating if they were to eat this
 
-	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return I suppose
-
 	if(eater == feeder)//If you're eating it yourself.
 		if(eat_time && !do_mob(feeder, eater, eat_time, timed_action_flags = food_flags & FOOD_FINGER_FOOD ? IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE : NONE)) //Gotta pass the minimal eat time
 			return
 		if(IsFoodGone(owner, feeder))
 			return
 		var/eatverb = pick(eatverbs)
+
+		var/message_to_nearby_audience = ""
+		var/message_to_consumer = ""
+		var/message_to_blind_consumer = ""
+
 		if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(eater, TRAIT_VORACIOUS))
 			to_chat(eater, span_warning("You don't feel like eating any more junk food at the moment!"))
 			return
-		else if(fullness <= 50)
-			eater.visible_message(span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!"), span_notice("You hungrily [eatverb] \the [parent], gobbling it down!"))
-		else if(fullness > 50 && fullness < 150)
-			eater.visible_message(span_notice("[eater] hungrily [eatverb]s \the [parent]."), span_notice("You hungrily [eatverb] \the [parent]."))
-		else if(fullness > 150 && fullness < 500)
-			eater.visible_message(span_notice("[eater] [eatverb]s \the [parent]."), span_notice("You [eatverb] \the [parent]."))
-		else if(fullness > 500 && fullness < 600)
-			eater.visible_message(span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent]."), span_notice("You unwillingly [eatverb] a bit of \the [parent]."))
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
-			eater.visible_message(span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!"), span_warning("You cannot force any more of \the [parent] to go down your throat!"))
+			message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
+			message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
+			message_to_blind_consumer = message_to_consumer
+			eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
+			eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
+			//if we're too full, return because we can't eat whatever it is we're trying to eat
 			return
+		else if(fullness > 500)
+			message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
+			message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
+		else if(fullness > 150)
+			message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
+			message_to_consumer = span_notice("You [eatverb] \the [parent].")
+		else if(fullness > 50)
+			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent].")
+			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent].")
+		else
+			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!")
+			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent], gobbling it down!")
+
+		//if we're blind, we want to feel how hungrily we ate that food
+		message_to_blind_consumer = message_to_consumer
+		eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
+		eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
+
 	else //If you're feeding it to someone else.
 		if(isbrain(eater))
 			to_chat(feeder, span_warning("[eater] doesn't seem to have a mouth!"))
@@ -402,6 +427,10 @@ Behavior that's still missing from this component that original food items had t
 			to_chat(H,span_notice("I love this taste!"))
 			H.adjust_disgust(-5 + -2.5 * fraction)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "fav_food", /datum/mood_event/favorite_food)
+			if(istype(parent, /obj/item/food))
+				var/obj/item/food/memorable_food = parent
+				if(memorable_food.venue_value >= FOOD_PRICE_EXOTIC)
+					H.mind?.add_memory(MEMORY_MEAL, list(DETAIL_FOOD = memorable_food), story_value = STORY_VALUE_OKAY)
 
 ///Delete the item when it is fully eaten
 /datum/component/edible/proc/On_Consume(mob/living/eater, mob/living/feeder)
@@ -460,3 +489,14 @@ Behavior that's still missing from this component that original food items had t
 			tastes[t] += E.tastes[t]
 	foodtypes |= E.foodtypes
 
+/// Response to oozes trying to eat something edible
+/datum/component/edible/proc/on_ooze_eat(datum/source, mob/eater, edible_flags)
+	SIGNAL_HANDLER
+
+	if(foodtypes & edible_flags)
+		var/atom/eaten_food = parent
+		eaten_food.reagents.trans_to(eater, eaten_food.reagents.total_volume, transfered_by = eater)
+		eater.visible_message(span_warning("[src] eats [eaten_food]!"), span_notice("You eat [eaten_food]."))
+		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
+		qdel(eaten_food)
+		return COMPONENT_ATOM_EATEN

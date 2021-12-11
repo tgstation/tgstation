@@ -12,6 +12,7 @@
 	throw_range = 7
 	max_amount = 60
 	novariants = TRUE
+	material_flags = MATERIAL_EFFECTS
 	/// What type of turf does this tile produce.
 	var/turf_type = null
 	/// What dir will the turf have?
@@ -334,7 +335,7 @@
 	var/mutable_appearance/neon_overlay = mutable_appearance(icon_file, neon_inhand_icon_state)
 	neon_overlay.color = neon_color
 	. += neon_overlay
-	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha, appearance_flags = KEEP_APART)
+	. += emissive_appearance(icon_file, neon_inhand_icon_state, alpha = emissive_alpha)
 
 /obj/item/stack/tile/carpet/neon/simple
 	name = "simple neon carpet"
@@ -1016,7 +1017,7 @@
 	throwforce = 10
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
 
 /obj/item/stack/tile/material/place_tile(turf/open/T)
@@ -1098,7 +1099,7 @@
 
 /obj/item/stack/tile/emissive_test/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
-	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha, appearance_flags = KEEP_APART)
+	. += emissive_appearance(standing.icon, standing.icon_state, alpha = standing.alpha)
 
 /obj/item/stack/tile/emissive_test/sixty
 	amount = 60
@@ -1110,4 +1111,90 @@
 	merge_type = /obj/item/stack/tile/emissive_test/white
 
 /obj/item/stack/tile/emissive_test/white/sixty
+	amount = 60
+
+//Catwalk Tiles
+/obj/item/stack/tile/catwalk_tile //This is our base type, sprited to look maintenance-styled
+	name = "catwalk plating"
+	singular_name = "catwalk plating tile"
+	desc = "Flooring that shows its contents underneath. Engineers love it!"
+	icon_state = "maint_catwalk"
+	inhand_icon_state = "tile-catwalk"
+	mats_per_unit = list(/datum/material/iron=100)
+	turf_type = /turf/open/floor/catwalk_floor
+	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with eachother
+	tile_reskin_types = list(
+		/obj/item/stack/tile/catwalk_tile,
+		/obj/item/stack/tile/catwalk_tile/iron,
+		/obj/item/stack/tile/catwalk_tile/iron_white,
+		/obj/item/stack/tile/catwalk_tile/iron_dark,
+		/obj/item/stack/tile/catwalk_tile/flat_white,
+		/obj/item/stack/tile/catwalk_tile/titanium,
+		/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the original greenish one
+	)
+
+/obj/item/stack/tile/catwalk_tile/sixty
+	amount = 60
+
+/obj/item/stack/tile/catwalk_tile/iron
+	name = "iron catwalk floor"
+	singular_name = "iron catwalk floor tile"
+	icon_state = "iron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron
+
+/obj/item/stack/tile/catwalk_tile/iron_white
+	name = "white catwalk floor"
+	singular_name = "white catwalk floor tile"
+	icon_state = "whiteiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_white
+
+/obj/item/stack/tile/catwalk_tile/iron_dark
+	name = "dark catwalk floor"
+	singular_name = "dark catwalk floor tile"
+	icon_state = "darkiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_dark
+
+/obj/item/stack/tile/catwalk_tile/flat_white
+	name = "flat white catwalk floor"
+	singular_name = "flat white catwalk floor tile"
+	icon_state = "flatwhite_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/flat_white
+
+/obj/item/stack/tile/catwalk_tile/titanium
+	name = "titanium catwalk floor"
+	singular_name = "titanium catwalk floor tile"
+	icon_state = "titanium_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/titanium
+
+/obj/item/stack/tile/catwalk_tile/iron_smooth //this is the greenish one
+	name = "smooth iron catwalk floor"
+	singular_name = "smooth iron catwalk floor tile"
+	icon_state = "smoothiron_catwalk"
+	turf_type = /turf/open/floor/catwalk_floor/iron_smooth
+
+// Glass floors
+/obj/item/stack/tile/glass
+	name = "glass floor"
+	singular_name = "glass floor tile"
+	desc = "Glass window floors, to let you see... Whatever that is down there."
+	icon_state = "tile_glass"
+	turf_type = /turf/open/floor/glass
+	inhand_icon_state = "tile-glass"
+	merge_type = /obj/item/stack/tile/glass
+	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+
+/obj/item/stack/tile/glass/sixty
+	amount = 60
+
+/obj/item/stack/tile/rglass
+	name = "reinforced glass floor"
+	singular_name = "reinforced glass floor tile"
+	desc = "Reinforced glass window floors. These bad boys are 50% stronger than their predecessors!"
+	icon_state = "tile_rglass"
+	inhand_icon_state = "tile-rglass"
+	turf_type = /turf/open/floor/glass/reinforced
+	merge_type = /obj/item/stack/tile/rglass
+	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.125, /datum/material/glass=MINERAL_MATERIAL_AMOUNT * 0.25) // 4 tiles per sheet
+
+/obj/item/stack/tile/rglass/sixty
 	amount = 60

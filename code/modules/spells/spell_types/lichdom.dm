@@ -89,11 +89,14 @@
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
 	. = ..()
+	if(!mind)
+		stack_trace("A phylactery was created with no target mind")
+		return INITIALIZE_HINT_QDEL
 	mind = newmind
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/phylactery/Destroy(force=FALSE)

@@ -14,11 +14,11 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
-	var/mob/living/owner
+	var/datum/weakref/owner
 
-/obj/effect/proc_holder/Initialize(mob/living/owner)
+/obj/effect/proc_holder/Initialize(mapload, mob/living/new_owner)
 	. = ..()
-	src.owner = owner
+	owner = WEAKREF(new_owner)
 	if(has_action)
 		action = new base_action(src)
 
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		var/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
+		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/suit/space/hardsuit/wizard,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/helmet/space/hardsuit/wizard,
@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/playMagSound()
 	playsound(get_turf(usr), sound,50,TRUE)
 
-/obj/effect/proc_holder/spell/Initialize()
+/obj/effect/proc_holder/spell/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -452,7 +452,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				//Adds a safety check post-input to make sure those targets are actually in range.
 				var/mob/M
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in sortNames(possible_targets)
+					M = input("Choose the target for the spell.", "Targeting") as null|mob in sort_names(possible_targets)
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
@@ -475,7 +475,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				if(!can_target(target, user, TRUE))
 					continue
 				possible_targets += target
-			for(var/i=1,i<=max_targets,i++)
+			for(var/i in 1 to max_targets)
 				if(!possible_targets.len)
 					break
 				if(target_ignore_prev)
@@ -523,7 +523,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	dummy.pass_flags |= PASSTABLE
 	var/turf/previous_step = get_turf(A)
 	var/first_step = TRUE
-	for(var/turf/next_step as anything in (getline(A, B) - previous_step))
+	for(var/turf/next_step as anything in (get_line(A, B) - previous_step))
 		if(first_step)
 			for(var/obj/blocker in previous_step)
 				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))

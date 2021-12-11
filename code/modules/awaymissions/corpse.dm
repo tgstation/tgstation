@@ -32,7 +32,8 @@
 	var/burn_damage = 0
 	var/datum/disease/disease = null //Do they start with a pre-spawned disease?
 	var/mob_color //Change the mob's color
-	var/assignedrole
+	/// Typepath indicating the kind of job datum this ert member will have.
+	var/spawner_job_path = /datum/job/ghost_role
 	var/show_flavour = TRUE
 	var/banType = ROLE_LAVALAND
 	var/ghost_usable = TRUE
@@ -41,13 +42,14 @@
 	/// If the spawner uses radials
 	var/radial_based = FALSE
 
+
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
 		return
 	if(!radial_based)
 		var/ghost_role = tgui_alert(usr, "Become [mob_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
-		if(ghost_role == "No" || !loc || QDELETED(user))
+		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
 		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
@@ -72,7 +74,7 @@
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		INVOKE_ASYNC(src, .proc/create)
 	else if(ghost_usable)
-		AddElement(/datum/element/point_of_interest)
+		SSpoints_of_interest.make_point_of_interest(src)
 		LAZYADD(GLOB.mob_spawners[name], src)
 
 /obj/effect/mob_spawn/Destroy()
@@ -137,8 +139,7 @@
 				var/datum/objective/O = new/datum/objective(objective)
 				O.owner = MM
 				A.objectives += O
-		if(assignedrole)
-			M.mind.assigned_role = assignedrole
+		M.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
 		special(M)
 		MM.name = M.real_name
 	if(uses > 0)
@@ -155,7 +156,7 @@
 	var/datum/outfit/outfit = /datum/outfit //If this is a path, it will be instanced in Initialize()
 	var/disable_pda = TRUE
 	var/disable_sensors = TRUE
-	assignedrole = "Ghost Role"
+	spawner_job_path = /datum/job/ghost_role
 
 	var/husk = null
 	//these vars are for lazy mappers to override parts of the outfit
@@ -185,7 +186,7 @@
 	var/facial_haircolor
 	var/skin_tone
 
-/obj/effect/mob_spawn/human/Initialize()
+/obj/effect/mob_spawn/human/Initialize(mapload)
 	if(ispath(outfit))
 		outfit = new outfit()
 	if(!outfit)
@@ -213,11 +214,11 @@
 	if(haircolor)
 		H.hair_color = haircolor
 	else
-		H.hair_color = random_short_color()
+		H.hair_color = "#[random_color()]"
 	if(facial_haircolor)
 		H.facial_hair_color = facial_haircolor
 	else
-		H.facial_hair_color = random_short_color()
+		H.facial_hair_color = "#[random_color()]"
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else
@@ -450,7 +451,7 @@
 	name = "rotting corpse"
 	mob_name = "zombie"
 	mob_species = /datum/species/zombie
-	assignedrole = "Zombie"
+	spawner_job_path = /datum/job/zombie
 
 /obj/effect/mob_spawn/human/abductor
 	name = "abductor"

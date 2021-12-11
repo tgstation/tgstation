@@ -60,21 +60,21 @@
 	var/last_projectile_params
 
 
-/obj/machinery/power/emitter/welded/Initialize()
+/obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE
 	. = ..()
 
 /obj/machinery/power/emitter/ctf
 	name = "Energy Cannon"
 	active = TRUE
-	active_power_usage = FALSE
-	idle_power_usage = FALSE
+	active_power_usage = 0
+	idle_power_usage = 0
 	locked = TRUE
 	req_access_txt = "100"
 	welded = TRUE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 
-/obj/machinery/power/emitter/Initialize()
+/obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
@@ -110,7 +110,7 @@
 	fire_delay = fire_shoot_delay
 	for(var/obj/item/stock_parts/manipulator/manipulator in component_parts)
 		power_usage -= 50 * manipulator.rating
-	active_power_usage = power_usage
+	update_mode_power_usage(ACTIVE_POWER_USE, power_usage)
 
 /obj/machinery/power/emitter/examine(mob/user)
 	. = ..()
@@ -130,7 +130,7 @@
 		. += span_notice("Its status display is glowing faintly.")
 	else
 		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
-		. += span_notice("Power consumption at <b>[DisplayPower(active_power_usage)]</b>.")
+		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
 
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
@@ -194,6 +194,10 @@
 		. = ..()
 	if(. && !anchored)
 		step(src, get_dir(user, src))
+
+/obj/machinery/power/emitter/attack_ai_secondary(mob/user, list/modifiers)
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/emitter/process(delta_time)
 	if(machine_stat & (BROKEN))
@@ -326,20 +330,23 @@
 	default_deconstruction_screwdriver(user, "emitter_open", "emitter", item)
 	return TRUE
 
+/// Attempt to toggle the controls lock of the emitter
+/obj/machinery/power/emitter/proc/togglelock(mob/user)
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("The lock seems to be broken!"))
+		return
+	if(!allowed(user))
+		to_chat(user, span_danger("Access denied."))
+		return
+	if(!active)
+		to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
+		return
+	locked = !locked
+	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
 /obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
 	if(item.GetID())
-		if(obj_flags & EMAGGED)
-			to_chat(user, span_warning("The lock seems to be broken!"))
-			return
-		if(!allowed(user))
-			to_chat(user, span_danger("Access denied."))
-			return
-		if(!active)
-			to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
-			return
-		locked = !locked
-		to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+		togglelock(user)
 		return
 
 	if(is_wire_tool(item) && panel_open)
@@ -408,7 +415,7 @@
 
 //BUCKLE HOOKS
 
-/obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob,force = 0)
+/obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	manual = FALSE
 	for(var/obj/item/item in buckled_mob.held_items)
@@ -500,7 +507,7 @@
 	///Ticks before being able to shoot
 	var/delay = 0
 
-/obj/item/turret_control/Initialize()
+/obj/item/turret_control/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

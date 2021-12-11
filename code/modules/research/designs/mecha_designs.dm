@@ -12,7 +12,7 @@
 
 /datum/design/board/ripley_peri
 	name = "APLU \"Ripley\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
+	desc = "Allows for the construction of a \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	build_path = /obj/item/circuitboard/mecha/ripley/peripherals
 	category = list("Exosuit Modules")
@@ -143,7 +143,7 @@
 
 /datum/design/board/clarke_peri
 	name = "\"Clarke\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Clarke\" Peripheral Control module."
+	desc = "Allows for the construction of a \"Clarke\" Peripheral Control module."
 	id = "clarke_peri"
 	build_path = /obj/item/circuitboard/mecha/clarke/peripherals
 	category = list("Exosuit Modules")
@@ -398,7 +398,7 @@
 	id = "mech_energy_relay"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	materials = list(/datum/material/iron=10000,/datum/material/glass =  2000,/datum/material/gold=2000,/datum/material/silver=3000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 2000,/datum/material/gold=2000,/datum/material/silver=3000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -432,16 +432,6 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_generator_nuclear
-	name = "Exosuit Module (ExoNuclear Reactor)"
-	desc = "Compact nuclear reactor module."
-	id = "mech_generator_nuclear"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	materials = list(/datum/material/iron=10000,/datum/material/glass =  1000,/datum/material/silver=500)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
 /datum/design/mech_plasma_cutter
 	name = "Exosuit Mining (217-D Heavy Plasma Cutter)"
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
@@ -449,6 +439,16 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000, /datum/material/plasma = 2000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
+/datum/design/mecha_kineticgun
+	name = "Exosuit Mining (Proto-kinetic Accelerator)"
+	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
+	id = "mecha_kineticgun"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 1000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -479,7 +479,7 @@
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	materials = list(/datum/material/iron=5000, /datum/material/glass =  10000)
+	materials = list(/datum/material/iron=5000, /datum/material/glass = 10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 

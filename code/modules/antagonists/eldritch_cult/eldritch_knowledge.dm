@@ -146,12 +146,12 @@
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
 		fingerprints |= requirements.return_fingerprints()
-	listclearnulls(fingerprints)
+	list_clear_nulls(fingerprints)
 	if(fingerprints.len == 0)
 		return FALSE
 	return TRUE
 
-/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user,list/atoms,loc)
+/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user, list/atoms,loc)
 
 	var/list/compiled_list = list()
 
@@ -164,7 +164,7 @@
 		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
-	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse","Your target", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
 	if(!chosen_mob)
 		return FALSE
 	curse(compiled_list[chosen_mob])
@@ -182,10 +182,10 @@
 	var/mob/living/mob_to_summon
 
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user, list/atoms, loc)
-	//we need to spawn the mob first so that we can use it in pollCandidatesForMob, we will move it from nullspace down the code
+	//we need to spawn the mob first so that we can use it in poll_candidates_for_mob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 100, summoned)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
 	if(!LAZYLEN(candidates))
 		to_chat(user,span_warning("No ghost could be found..."))
 		qdel(summoned)
@@ -260,7 +260,9 @@
 		if(heart.target && heart.target.stat == DEAD)
 			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
 			var/mob/living/carbon/human/current_target = heart.target
-			current_target.gib()
+			current_target.spill_organs()
+			current_target.adjustBruteLoss(250)
+			new /obj/effect/gibspawner/generic(get_turf(current_target))
 			heart.target = null
 			var/datum/antagonist/heretic/heretic_datum = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
@@ -281,7 +283,7 @@
 					teams |= team
 			var/list/targets = list()
 			for(var/i in 0 to 3)
-				var/datum/mind/targeted =  temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
+				var/datum/mind/targeted = temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
 				var/is_teammate = FALSE
 				for(var/datum/team/team as anything in teams)
 					if(targeted in team.members)
@@ -289,7 +291,7 @@
 						break
 				if(!targeted)
 					break
-				targets["[targeted.current.real_name] the [targeted.assigned_role][is_teammate ? " (ally)" : ""]"] = targeted.current
+				targets["[targeted.current.real_name] the [targeted.assigned_role.title][is_teammate ? " (ally)" : ""]"] = targeted.current
 			heart.target = targets[input(user,"Choose your next target","Target") in targets]
 			qdel(temp_objective)
 			if(heart.target)

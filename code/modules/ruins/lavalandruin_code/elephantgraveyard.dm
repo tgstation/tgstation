@@ -43,7 +43,7 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
 	return list("wasteland")
 
-/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
+/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize(mapload)
 	.=..()
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,6)]"
@@ -74,7 +74,7 @@
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
 
-/obj/structure/sink/oil_well/Initialize()
+/obj/structure/sink/oil_well/Initialize(mapload)
 	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
@@ -128,6 +128,7 @@
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/grave/filled/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()

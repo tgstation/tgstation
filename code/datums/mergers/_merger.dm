@@ -19,10 +19,7 @@
 #endif
 
 	/// Signals in members to trigger a refresh
-	var/static/list/refresh_signals = list(
-		COMSIG_PARENT_QDELETING,
-		COMSIG_MOVABLE_MOVED,
-	)
+	var/static/list/refresh_signals = list(COMSIG_MOVABLE_MOVED)
 
 /datum/merger/New(id, list/merged_typecache, atom/origin, attempt_merge_proc)
 #if MERGERS_DEBUG
@@ -42,18 +39,21 @@
 /datum/merger/proc/RemoveMember(atom/thing, clean=TRUE)
 	SEND_SIGNAL(thing, COMSIG_MERGER_REMOVING, src)
 	UnregisterSignal(thing, refresh_signals)
+	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
 	if(!thing.mergers)
 		return
 	thing.mergers -= id
 	if(clean && !length(thing.mergers))
 		thing.mergers = null
 	members -= thing
+	origin = null
 	if(origin == thing && length(members))
 		origin = pick(members)
 
-/datum/merger/proc/AddMember(atom/thing, connected_dir)
+/datum/merger/proc/AddMember(atom/thing, connected_dir) // note that this fires for the origin of the merger as well
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
 	RegisterSignal(thing, refresh_signals, .proc/QueueRefresh)
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/HandleMemberDel)
 	if(!thing.mergers)
 		thing.mergers = list()
 	else if(thing.mergers[id])
@@ -73,16 +73,22 @@
 		sleep(1 SECONDS)
 #endif
 
+/datum/merger/proc/HandleMemberDel(atom/source)
+	SIGNAL_HANDLER
+	RemoveMember(source)
+	QueueRefresh()
+
 /datum/merger/proc/QueueRefresh()
 	SIGNAL_HANDLER
 	addtimer(CALLBACK(src, .proc/Refresh), 1, TIMER_UNIQUE)
 
 /datum/merger/proc/Refresh()
 	var/list/tips = list()
-	tips[origin] = NORTH|EAST|SOUTH|WEST
 	var/list/checked_turfs = list()
 	var/list/new_members = list()
-	new_members[origin] = NONE
+	if(origin)
+		tips[origin] = NORTH|EAST|SOUTH|WEST
+		new_members[origin] = NONE
 	while(length(tips))
 		var/atom/focus = tips[length(tips)]
 		var/dirs_to_check = tips[focus]

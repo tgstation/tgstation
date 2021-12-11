@@ -55,6 +55,9 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"gas_filter",
+		"plasmaman_gas_filter",
+		"oven_tray"
 	)
 
 /datum/techweb_node/mmi
@@ -142,6 +145,7 @@
 		"plant_analyzer",
 		"plunger",
 		"pushbroom",
+		"razor",
 		"screwdriver",
 		"secateurs",
 		"shovel",
@@ -151,6 +155,7 @@
 		"tscanner",
 		"welding_helmet",
 		"welding_tool",
+		"wirebrush",
 		"wirecutters",
 		"wrench",
 	)
@@ -195,29 +200,42 @@
 	design_ids = list(
 		"circuit_multitool",
 		"comp_arithmetic",
+		"comp_binary_convert",
 		"comp_clock",
-		"comp_combiner",
 		"comp_comparison",
 		"comp_concat",
 		"comp_concat_list",
+		"comp_decimal_convert",
 		"comp_delay",
 		"comp_direction",
+		"comp_filter_list",
+		"comp_foreach",
 		"comp_get_column",
 		"comp_gps",
 		"comp_health",
 		"comp_hear",
 		"comp_index",
+		"comp_index_assoc",
 		"comp_index_table",
 		"comp_length",
 		"comp_light",
+		"comp_list_literal",
+		"comp_list_assoc_literal",
 		"comp_logic",
+		"comp_matscanner",
 		"comp_mmi",
+		"comp_module",
 		"comp_multiplexer",
 		"comp_not",
+		"comp_ntnet_receive",
+		"comp_ntnet_send",
+		"comp_pinpointer",
 		"comp_pressuresensor",
+		"comp_printer",
 		"comp_radio",
-		"comp_ram",
 		"comp_random",
+		"comp_reagents",
+		"comp_router",
 		"comp_select_query",
 		"comp_self",
 		"comp_soundemitter",
@@ -228,11 +246,16 @@
 		"comp_string_contains",
 		"comp_tempsensor",
 		"comp_textcase",
+		"comp_timepiece",
+		"comp_tonumber",
 		"comp_tostring",
+		"comp_trigonometry",
+		"comp_typecast",
 		"comp_typecheck",
 		"compact_remote_shell",
 		"component_printer",
 		"integrated_circuit",
+		"module_duplicator",
 		"usb_cable",
 	)
 
@@ -249,6 +272,7 @@
 		"blood_pack",
 		"chem_dispenser",
 		"chem_heater",
+		"chem_mass_spec",
 		"chem_master",
 		"chem_pack",
 		"crewpinpointerprox",
@@ -266,7 +290,7 @@
 		"soda_dispenser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	required_experiments = list(/datum/experiment/scanning/points/slime/calibration)
+	required_experiments = list(/datum/experiment/dissection/human)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
@@ -288,7 +312,7 @@
 		"smoke_machine",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	required_experiments = list(/datum/experiment/scanning/points/slime/easy)
+	required_experiments = list(/datum/experiment/dissection/nonhuman)
 	discount_experiments = list(/datum/experiment/scanning/random/material/meat = 4000) //Big discount to reinforce doing it.
 
 /datum/techweb_node/xenoorgan_biotech
@@ -303,7 +327,11 @@
 		"limbdesign_plasmaman",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 6500)
-	discount_experiments = list(/datum/experiment/scanning/random/cytology/easy = 1000, /datum/experiment/scanning/points/slime/expert = 5000)
+	discount_experiments = list(
+		/datum/experiment/scanning/random/cytology/easy = 1000,
+		/datum/experiment/scanning/points/slime/hard = 5000,
+		/datum/experiment/dissection/xenomorph = 5000,
+	)
 
 /datum/techweb_node/bio_process
 	id = "bio_process"
@@ -319,6 +347,7 @@
 		"griddle",
 		"microwave",
 		"monkey_recycler",
+		"oven",
 		"processor",
 		"reagentgrinder",
 		"smartfridge",
@@ -438,7 +467,6 @@
 		"pneumatic_seal",
 		"power control",
 		"powermonitor",
-		"rad_collector",
 		"recharger",
 		"recycler",
 		"rped",
@@ -498,6 +526,7 @@
 		"super_matter_bin",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_lathes = 5000)
 
 /datum/techweb_node/adv_power
 	id = "adv_power"
@@ -514,7 +543,8 @@
 		"super_cell",
 		"superpacman",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_capacitors = 2500)
 
 /////////////////////////Bluespace tech/////////////////////////
 /datum/techweb_node/bluespace_basic //Bluespace-memery
@@ -545,6 +575,7 @@
 		"teleconsole",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_bluespacemachines = 4000)
 
 /datum/techweb_node/micro_bluespace
 	id = "micro_bluespace"
@@ -561,7 +592,8 @@
 		"wormholeprojector",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	discount_experiments = list(/datum/experiment/exploration_scan/random/condition)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_variety = 5000)
+		/* /datum/experiment/exploration_scan/random/condition) this should have a point cost but im not even sure the experiment works properly lmao*/
 
 /datum/techweb_node/advanced_bluespace
 	id = "bluespace_storage"
@@ -589,6 +621,7 @@
 		"roastingstick",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_scanmodules = 3500)
 
 /datum/techweb_node/bluespace_power
 	id = "bluespace_power"
@@ -599,7 +632,8 @@
 		"bluespace_cell",
 		"quadratic_capacitor",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 4000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_cells = 3000)
 
 /datum/techweb_node/regulated_bluespace
 	id = "regulated_bluespace"
@@ -651,12 +685,33 @@
 	description = "Grants access to more complicated shell designs."
 	prereq_ids = list("basic_circuitry", "engineering")
 	design_ids = list(
+		"assembly_shell",
 		"bot_shell",
-		"door_shell",
 		"controller_shell",
+		"dispenser_shell",
+		"door_shell",
+		"gun_shell",
 		"money_bot_shell",
+		"scanner_gate_shell",
+		"scanner_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/bci_shells
+	id = "bci_shells"
+	display_name = "Brain-Computer Interfaces"
+	description = "Grants access to biocompatable shell designs and components."
+	prereq_ids = list("adv_shells")
+	design_ids = list(
+		"bci_implanter",
+		"bci_shell",
+		"comp_bar_overlay",
+		"comp_bci_action",
+		"comp_target_intercept",
+		"comp_counter_overlay",
+		"comp_object_overlay",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
 /datum/techweb_node/movable_shells_tech
 	id = "movable_shells"
@@ -664,6 +719,7 @@
 	description = "Grants access to movable shells."
 	prereq_ids = list("adv_shells", "robotics")
 	design_ids = list(
+		"comp_pathfind",
 		"comp_pull",
 		"drone_shell",
 	)
@@ -710,16 +766,6 @@
 		"exodrone_launcher",
 		"exoscanner",
 		"exoscanner_console",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/datum/techweb_node/dex_robotics
-	id = "dex_robotics"
-	display_name = "Dexterous Robotics Research"
-	description = "The fine art of opposable thumbs."
-	prereq_ids = list("adv_engi", "adv_robotics", "biotech")
-	design_ids = list(
-		"maint_drone",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -843,6 +889,7 @@
 		"ultra_micro_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier2_microlaser = 1500)
 
 /datum/techweb_node/emp_super
 	id = "emp_super"
@@ -852,7 +899,8 @@
 	design_ids = list(
 		"quadultra_micro_laser",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000)
 
 /////////////////////////Clown tech/////////////////////////
 /datum/techweb_node/clown
@@ -1149,6 +1197,7 @@
 		"rangemod",
 		"superresonator",
 		"triggermod",
+		"mecha_kineticgun",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1434,7 +1483,8 @@
 		"gygax_targ",
 		"gygax_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 5000)
 
 /datum/techweb_node/durand
 	id = "mech_durand"
@@ -1454,7 +1504,8 @@
 		"durand_targ",
 		"durand_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3500)
 
 /datum/techweb_node/phazon
 	id = "mecha_phazon"
@@ -1474,7 +1525,8 @@
 		"phazon_targ",
 		"phazon_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 2500)
 
 /datum/techweb_node/savannah_ivanov
 	id = "mecha_savannah_ivanov"
@@ -1494,7 +1546,8 @@
 		"savannah_ivanov_targ",
 		"savannah_ivanov_torso",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier3_mechbay = 3000)
 
 /datum/techweb_node/adv_mecha_tools
 	id = "adv_mecha_tools"
@@ -1527,7 +1580,6 @@
 	design_ids = list(
 		"mech_ccw_armor",
 		"mech_energy_relay",
-		"mech_generator_nuclear",
 		"mech_proj_armor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
@@ -1596,7 +1648,7 @@
 
 /datum/techweb_node/mech_disabler
 	id = "mech_disabler"
-	display_name =  "Exosuit Weapon (CH-DS \"Peacemaker\" Mounted Disabler)"
+	display_name = "Exosuit Weapon (CH-DS \"Peacemaker\" Mounted Disabler)"
 	description = "A basic piece of mech weaponry"
 	prereq_ids = list("beam_weapons")
 	design_ids = list(
@@ -1670,195 +1722,13 @@
 
 /datum/techweb_node/mech_diamond_drill
 	id = "mech_diamond_drill"
-	display_name =  "Exosuit Diamond Drill"
+	display_name = "Exosuit Diamond Drill"
 	description = "A diamond drill fit for a large exosuit"
 	prereq_ids = list("adv_mining")
 	design_ids = list(
 		"mech_diamond_drill",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
-/////////////////////////Nanites/////////////////////////
-/datum/techweb_node/nanite_base
-	id = "nanite_base"
-	display_name = "Basic Nanite Programming"
-	description = "The basics of nanite construction and programming."
-	prereq_ids = list("datatheory")
-	design_ids = list(
-		"access_nanites",
-		"debugging_nanites",
-		"monitoring_nanites",
-		"nanite_chamber",
-		"nanite_chamber_control",
-		"nanite_cloud_control",
-		"nanite_comm_remote",
-		"nanite_disk",
-		"nanite_program_hub",
-		"nanite_programmer",
-		"nanite_remote",
-		"nanite_scanner",
-		"public_nanite_chamber",
-		"relay_nanites",
-		"relay_repeater_nanites",
-		"repairing_nanites",
-		"repeater_nanites",
-		"sensor_nanite_volume",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
-
-/datum/techweb_node/nanite_smart
-	id = "nanite_smart"
-	display_name = "Smart Nanite Programming"
-	description = "Nanite programs that require nanites to perform complex actions, act independently, roam or seek targets."
-	prereq_ids = list("nanite_base","robotics")
-	design_ids = list(
-		"memleak_nanites",
-		"metabolic_nanites",
-		"purging_nanites",
-		"sensor_voice_nanites",
-		"stealth_nanites",
-		"voice_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
-
-/datum/techweb_node/nanite_mesh
-	id = "nanite_mesh"
-	display_name = "Mesh Nanite Programming"
-	description = "Nanite programs that require static structures and membranes."
-	prereq_ids = list("nanite_base","engineering")
-	design_ids = list(
-		"conductive_nanites",
-		"cryo_nanites",
-		"dermal_button_nanites",
-		"emp_nanites",
-		"hardening_nanites",
-		"refractive_nanites",
-		"shock_nanites",
-		"temperature_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
-
-/datum/techweb_node/nanite_bio
-	id = "nanite_bio"
-	display_name = "Biological Nanite Programming"
-	description = "Nanite programs that require complex biological interaction."
-	prereq_ids = list("nanite_base","biotech")
-	design_ids = list(
-		"bloodheal_nanites",
-		"coagulating_nanites",
-		"flesheating_nanites",
-		"poison_nanites",
-		"regenerative_nanites",
-		"sensor_crit_nanites",
-		"sensor_damage_nanites",
-		"sensor_death_nanites",
-		"sensor_health_nanites",
-		"sensor_species_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500, TECHWEB_POINT_TYPE_NANITES = 500)
-
-/datum/techweb_node/nanite_neural
-	id = "nanite_neural"
-	display_name = "Neural Nanite Programming"
-	description = "Nanite programs affecting nerves and brain matter."
-	prereq_ids = list("nanite_bio")
-	design_ids = list(
-		"bad_mood_nanites",
-		"brainheal_nanites",
-		"good_mood_nanites",
-		"nervous_nanites",
-		"paralyzing_nanites",
-		"selfscan_nanites",
-		"stun_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
-
-/datum/techweb_node/nanite_synaptic
-	id = "nanite_synaptic"
-	display_name = "Synaptic Nanite Programming"
-	description = "Nanite programs affecting mind and thoughts."
-	prereq_ids = list("nanite_neural","neural_programming")
-	design_ids = list(
-		"blinding_nanites",
-		"hallucination_nanites",
-		"mindshield_nanites",
-		"mute_nanites",
-		"pacifying_nanites",
-		"sleep_nanites",
-		"speech_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
-
-/datum/techweb_node/nanite_harmonic
-	id = "nanite_harmonic"
-	display_name = "Harmonic Nanite Programming"
-	description = "Nanite programs that require seamless integration between nanites and biology. Passively increases nanite regeneration rate for all clouds upon researching."
-	prereq_ids = list("nanite_bio","nanite_smart","nanite_mesh")
-	design_ids = list(
-		"aggressive_nanites",
-		"brainheal_plus_nanites",
-		"defib_nanites",
-		"fakedeath_nanites",
-		"purging_plus_nanites",
-		"regenerative_plus_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 3000)
-
-/datum/techweb_node/nanite_combat
-	id = "nanite_military"
-	display_name = "Military Nanite Programming"
-	description = "Nanite programs that perform military-grade functions."
-	prereq_ids = list("nanite_harmonic", "syndicate_basic")
-	design_ids = list(
-		"explosive_nanites",
-		"meltdown_nanites",
-		"nanite_sting_nanites",
-		"pyro_nanites",
-		"viral_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500, TECHWEB_POINT_TYPE_NANITES = 2500)
-
-/datum/techweb_node/nanite_hazard
-	id = "nanite_hazard"
-	display_name = "Hazard Nanite Programs"
-	description = "Extremely advanced Nanite programs with the potential of being extremely dangerous."
-	prereq_ids = list("nanite_harmonic", "alientech")
-	design_ids = list(
-		"mindcontrol_nanites",
-		"mitosis_nanites",
-		"spreading_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000, TECHWEB_POINT_TYPE_NANITES = 4000)
-
-/datum/techweb_node/nanite_replication_protocols
-	id = "nanite_replication_protocols"
-	display_name = "Nanite Replication Protocols"
-	description = "Protocols that overwrite the default nanite replication routine to achieve more efficiency in certain circumstances."
-	prereq_ids = list("nanite_smart")
-	design_ids = list(
-		"factory_nanites",
-		"kickstart_nanites",
-		"offline_nanites",
-		"pyramid_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/nanite_storage_protocols
-	id = "nanite_storage_protocols"
-	display_name = "Nanite Storage Protocols"
-	description = "Protocols that overwrite the default nanite storage routine to achieve more efficiency or greater capacity."
-	prereq_ids = list("nanite_smart")
-	design_ids = list(
-		"free_range_nanites",
-		"hive_nanites",
-		"unsafe_storage_nanites",
-		"zip_nanites",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 2500)
-	hidden = TRUE
-	experimental = TRUE
 
 ////////////////////////Alien technology////////////////////////
 /datum/techweb_node/alientech //AYYYYYYYYLMAOO tech

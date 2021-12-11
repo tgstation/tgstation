@@ -50,6 +50,11 @@
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
+/datum/export/stack/skin/carp
+	cost = CARGO_CRATE_VALUE * 0.5
+	unit_name = "carp skin"
+	export_types = list(/obj/item/stack/sheet/animalhide/carp)
+
 /datum/export/stack/licenseplate
 	cost = CARGO_CRATE_VALUE * 0.125
 	unit_name = "license plate"

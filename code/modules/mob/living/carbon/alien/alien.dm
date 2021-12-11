@@ -24,7 +24,7 @@
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
-/mob/living/carbon/alien/Initialize()
+/mob/living/carbon/alien/Initialize(mapload)
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -127,11 +127,8 @@ Des: Removes all infected images from the alien.
 		new_xeno.name = name
 		new_xeno.real_name = real_name
 	if(mind)
+		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
-	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
-	if(nanites)
-		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
-		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

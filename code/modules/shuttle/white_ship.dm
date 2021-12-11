@@ -51,16 +51,10 @@
 	y_offset = 0
 	designate_time = 0
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize(mapload)
 	. = ..()
 	GLOB.jam_on_wardec += src
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Destroy()
 	GLOB.jam_on_wardec -= src
 	return ..()
-
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley
-	name = "25% mech 75% wreckage ripley spawner"
-	loot = list(/obj/vehicle/sealed/mecha/working/ripley/mining = 1,
-				/obj/structure/mecha_wreckage/ripley = 5)
-	lootdoubles = FALSE

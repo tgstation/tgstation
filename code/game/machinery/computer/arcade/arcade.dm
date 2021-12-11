@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/Initialize()
+/obj/machinery/computer/arcade/Initialize(mapload)
 	. = ..()
 
 	Reset()
@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		span_notice("You hear a flurry of buttons being pressed."))
 		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
-	for(var/i = 0, i < prizes, i++)
+	for(var/i in 1 to prizes)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
 			new /obj/item/gun/energy/pulse/prize(src)
@@ -99,9 +99,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		var/prizeselect
 		if(prize_override)
-			prizeselect = pickweight(prize_override)
+			prizeselect = pick_weight(prize_override)
 		else
-			prizeselect = pickweight(GLOB.arcade_prize_pool)
+			prizeselect = pick_weight(GLOB.arcade_prize_pool)
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))
@@ -124,9 +124,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
 		if(override)
-			empprize = pickweight(prize_override)
+			empprize = pick_weight(prize_override)
 		else
-			empprize = pickweight(GLOB.arcade_prize_pool)
+			empprize = pick_weight(GLOB.arcade_prize_pool)
 		new empprize(loc)
 	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
@@ -641,6 +641,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user

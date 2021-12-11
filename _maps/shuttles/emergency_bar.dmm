@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -166,9 +166,8 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/stool/directional/east{
-	can_buckle = 1;
-	
+/obj/structure/chair/stool/directional/west{
+	can_buckle = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
@@ -224,7 +223,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/table/wood/bar{
+/obj/structure/table/wood/shuttle_bar{
 	boot_dir = 9
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -234,7 +233,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -242,7 +241,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "aR" = (
-/obj/structure/table/wood/bar{
+/obj/structure/table/wood/shuttle_bar{
 	boot_dir = 8
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -307,8 +306,8 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/table/wood/bar,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/structure/table/wood/shuttle_bar,
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bc" = (
@@ -320,7 +319,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/table/wood/bar{
+/obj/structure/table/wood/shuttle_bar{
 	boot_dir = 10
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -330,7 +329,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "be" = (
-/obj/structure/table/wood/bar{
+/obj/structure/table/wood/shuttle_bar{
 	boot_dir = 2
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -463,7 +462,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bI" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/instrument/guitar,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -472,7 +471,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bJ" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
@@ -483,7 +482,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bL" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bM" = (
@@ -504,12 +503,12 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bO" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/folder/red,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bP" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood/shuttle_bar,
 /obj/item/toy/cards/deck/cas,
 /obj/item/toy/cards/deck/cas/black{
 	pixel_y = 6
@@ -559,7 +558,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bV" = (
-/obj/structure/table/wood/bar{
+/obj/structure/table/wood/shuttle_bar{
 	boot_dir = 8
 	},
 /obj/effect/fun_balloon/sentience/emergency_shuttle{

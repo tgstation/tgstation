@@ -37,20 +37,43 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
 	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
-	var/static/summoned_minions = 0
+	///How many minions we summoned
+	var/summoned_minions = 0
+	///How many minions we can have at once
+	var/max_minions = 6
+	///How many minions we should spawn
+	var/minions_to_summon = 3
+
+/datum/action/boss/wizard_summon_minions/IsAvailable()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(summoned_minions >= max_minions)
+		return FALSE
+	return TRUE
 
 /datum/action/boss/wizard_summon_minions/Trigger()
-	if(summoned_minions <= 6 && ..())
-		var/list/minions = list(
-		/mob/living/simple_animal/hostile/stickman,
-		/mob/living/simple_animal/hostile/stickman/ranged,
-		/mob/living/simple_animal/hostile/stickman/dog)
-		var/list/directions = GLOB.cardinals.Copy()
-		for(var/i in 1 to 3)
-			var/minions_chosen = pick_n_take(minions)
-			new minions_chosen (get_step(boss,pick_n_take(directions)), 1)
-		summoned_minions += 3;
+	. = ..()
+	if(!.)
+		return
+	var/list/minions = list(
+		/mob/living/basic/stickman,
+		/mob/living/basic/stickman/ranged,
+		/mob/living/basic/stickman/dog)
+	var/list/directions = GLOB.cardinals.Copy()
+	var/summon_amount = min(minions_to_summon, max_minions - summoned_minions)
+	for(var/i in 1 to summon_amount)
+		var/atom/chosen_minion = pick_n_take(minions)
+		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
+		RegisterSignal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_minion)
+		summoned_minions++
 
+/// Called when a minion is qdeleted or dies, removes it from our minion list
+/datum/action/boss/wizard_summon_minions/proc/lost_minion(mob/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	summoned_minions--
 
 //Mimic Ability
 //Summons mimics of himself with magical papercraft
@@ -131,7 +154,10 @@
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	. = ..()
-	qdel(src) //I see through your ruse!
+	if(isobserver(user))
+		. += span_notice("It's an illusion - what is it hiding?")
+	else
+		qdel(src) //I see through your ruse!
 
 //fancy effects
 /obj/effect/temp_visual/paper_scatter
@@ -154,7 +180,7 @@
 	duration = 18
 	randomdir = FALSE
 
-/obj/effect/temp_visual/paperwiz_dying/Initialize()
+/obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
 	visible_message(span_boldannounce("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
 	playsound(get_turf(src),'sound/magic/mandswap.ogg', 50, TRUE, TRUE)

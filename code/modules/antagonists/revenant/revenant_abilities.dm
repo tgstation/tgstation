@@ -7,6 +7,9 @@
 	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickNoInteract(src, A)
 		return
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		ranged_secondary_attack(A, modifiers)
+		return
 
 	if(ishuman(A))
 		if(A in drained_mobs)
@@ -14,6 +17,13 @@
 		else if(in_range(src, A))
 			Harvest(A)
 
+/mob/living/simple_animal/revenant/ranged_secondary_attack(atom/target, modifiers)
+	if(revealed || notransform || inhibited || !Adjacent(target) || !incorporeal_move_check(target))
+		return
+	var/icon/I = icon(target.icon,target.icon_state,target.dir)
+	var/orbitsize = (I.Width()+I.Height())*0.5
+	orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+	orbit(target, orbitsize)
 
 //Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
@@ -133,7 +143,7 @@
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize()
+/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize(mapload)
 	. = ..()
 	if(locked)
 		name = "[initial(name)] ([unlock_amount]SE)"
@@ -247,17 +257,17 @@
 
 	if(!isplatingturf(T) && !istype(T, /turf/open/floor/engine/cult) && isfloorturf(T) && prob(15))
 		var/turf/open/floor/floor = T
-		if(floor.intact && floor.floor_tile)
+		if(floor.overfloor_placed && floor.floor_tile)
 			new floor.floor_tile(floor)
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(TRUE)
-	if(T.type == /turf/closed/wall && prob(15))
+	if(T.type == /turf/closed/wall && prob(15) && !HAS_TRAIT(T, TRAIT_RUSTY))
 		new /obj/effect/temp_visual/revenant(T)
-		T.ChangeTurf(/turf/closed/wall/rust)
-	if(T.type == /turf/closed/wall/r_wall && prob(10))
+		T.AddElement(/datum/element/rust)
+	if(T.type == /turf/closed/wall/r_wall && prob(10) && !HAS_TRAIT(T, TRAIT_RUSTY))
 		new /obj/effect/temp_visual/revenant(T)
-		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
+		T.AddElement(/datum/element/rust)
 	for(var/obj/effect/decal/cleanable/food/salt/salt in T)
 		new /obj/effect/temp_visual/revenant(T)
 		qdel(salt)
@@ -293,11 +303,11 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
-		if(!bot.emagged)
+		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.locked = FALSE
-			bot.open = TRUE
-			bot.emag_act()
+			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
+			bot.bot_cover_flags |= BOT_COVER_OPEN
+			bot.emag_act(user)
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
@@ -312,7 +322,7 @@
 		if(prob(20))
 			if(prob(50))
 				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.emag_act(null)
+			thing.emag_act(user)
 	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
 		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
 		new /obj/effect/temp_visual/revenant(S.loc)
@@ -369,6 +379,6 @@
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)
 		new /obj/effect/temp_visual/revenant(tray.loc)
-		tray.pestlevel = rand(8, 10)
-		tray.weedlevel = rand(8, 10)
-		tray.toxic = rand(45, 55)
+		tray.set_pestlevel(rand(8, 10))
+		tray.set_weedlevel(rand(8, 10))
+		tray.set_toxic(rand(45, 55))

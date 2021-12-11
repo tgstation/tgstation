@@ -64,10 +64,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (
@@ -126,7 +126,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/djstation)
 "aB" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
 "aC" = (
@@ -217,7 +217,7 @@
 /area/ruin/space/djstation)
 "aP" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "aQ" = (
@@ -330,7 +330,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "bi" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ruskie DJ Station"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -344,7 +344,7 @@
 /turf/open/floor/plating/airless,
 /area/template_noop)
 "Co" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ruskie DJ Station"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{

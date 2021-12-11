@@ -14,7 +14,7 @@
 			continue
 		if(!H.getorgan(/obj/item/organ/brain)) // If only I had a brain
 			continue
-		if(!SSjob.GetJob(H.mind.assigned_role) || (H.mind.assigned_role in GLOB.nonhuman_positions)) //please stop giving my centcom admin gimmicks full body paralysis
+		if(!(H.mind.assigned_role.job_flags & JOB_CREW_MEMBER)) //please stop giving my centcom admin gimmicks full body paralysis
 			continue
 		traumatize(H)
 		announce_to_ghosts(H)
@@ -27,7 +27,7 @@
 		15;TRAUMA_RESILIENCE_LOBOTOMY,
 		5;TRAUMA_RESILIENCE_MAGIC)
 
-	var/trauma_type = pickweight(list(
+	var/trauma_type = pick_weight(list(
 		BRAIN_TRAUMA_MILD = 60,
 		BRAIN_TRAUMA_SEVERE = 30,
 		BRAIN_TRAUMA_SPECIAL = 10

@@ -51,7 +51,7 @@
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots."
-	targetitem =  /obj/item/clothing/shoes/magboots/advance
+	targetitem = /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list("Chief Engineer")
 
@@ -101,6 +101,17 @@
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/nuke
 	..()
+
+/datum/objective_item/steal/hdd_extraction
+	name = "the source code for Project Goon from the master R&D server mainframe."
+	targetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
+	difficulty = 10
+	excludefromjob = list("Research Director","Scientist", "Geneticist", "Roboticist")
+
+/datum/objective_item/steal/hdd_extraction/New()
+	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
+	return ..()
+
 
 /datum/objective_item/steal/supermatter
 	name = "a sliver of a supermatter crystal. Be sure to use the proper safety equipment when extracting the sliver!"

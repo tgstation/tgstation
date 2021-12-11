@@ -15,7 +15,7 @@
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
 		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
 		switch(damage_type)
 			if(BURN)
@@ -31,7 +31,10 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	///Whether or not the web is from the genetics power
 	var/genetic = FALSE
+	///Whether or not the web is a sealed web
+	var/sealed = FALSE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -47,8 +50,8 @@
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
 	user.put_in_hands(woven_cloth)
 
-/obj/structure/spider/stickyweb/Initialize()
-	if(prob(50))
+/obj/structure/spider/stickyweb/Initialize(mapload)
+	if(!sealed && prob(50))
 		icon_state = "stickyweb2"
 	. = ..()
 
@@ -56,6 +59,8 @@
 	. = ..()
 	if(genetic)
 		return
+	if(sealed)
+		return FALSE
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return TRUE
 	else if(isliving(mover))
@@ -66,6 +71,13 @@
 			return FALSE
 	else if(istype(mover, /obj/projectile))
 		return prob(30)
+
+/obj/structure/spider/stickyweb/sealed
+	name = "sealed web"
+	desc = "A solid thick wall of web, airtight enough to block air flow."
+	icon_state = "sealedweb"
+	sealed = TRUE
+	can_atmos_pass = ATMOS_PASS_NO
 
 /obj/structure/spider/stickyweb/genetic //for the spider genes in genetics
 	genetic = TRUE
@@ -95,7 +107,7 @@
 	/// Mob spawner handling the actual spawn of the spider
 	var/obj/effect/mob_spawn/spider/spawner
 
-/obj/structure/spider/eggcluster/Initialize()
+/obj/structure/spider/eggcluster/Initialize(mapload)
 	pixel_x = base_pixel_x + rand(3,-3)
 	pixel_y = base_pixel_y + rand(3,-3)
 	return ..()
@@ -136,7 +148,7 @@
 	short_desc = "You are a spider."
 	important_info = "Follow your directives at all costs."
 	faction = list("spiders")
-	assignedrole = "Spider"
+	spawner_job_path = /datum/job/spider
 	banType = ROLE_ALIEN
 	ready = FALSE
 	radial_based = TRUE
@@ -215,7 +227,7 @@
 	name = "bloody egg cluster"
 	color = rgb(255, 0, 0)
 	short_desc = "You are a bloody spider."
-	directive = "You are the spawn of a visicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
+	directive = "You are the spawn of a vicious changeling. You have no ambitions except to wreak havoc and ensure your own survival. You are aggressive to all living beings outside of your species, including changelings."
 	cluster_type = /obj/structure/spider/eggcluster/bloody
 	potentialspawns = list(
 		/mob/living/simple_animal/hostile/giant_spider/hunter/flesh,
@@ -249,7 +261,7 @@
 		option.image = image(icon = initial(spider.icon), icon_state = initial(spider.icon_state))
 		option.info = span_boldnotice("[initial(spider.menu_description)]")
 		display_spiders[initial(spider.name)] = option
-	sortList(display_spiders)
+	sort_list(display_spiders)
 	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
 	chosen_spider = spider_list[chosen_spider]
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
@@ -275,7 +287,7 @@
 	new/obj/item/food/spiderling(get_turf(src))
 	. = ..()
 
-/obj/structure/spider/spiderling/Initialize()
+/obj/structure/spider/spiderling/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
@@ -342,7 +354,7 @@
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
 			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmos_machines)
 				vents.Add(temp_vent)
 			if(!vents.len)
 				entry_vent = null
@@ -389,7 +401,7 @@
 	icon_state = "cocoon1"
 	max_integrity = 60
 
-/obj/structure/spider/cocoon/Initialize()
+/obj/structure/spider/cocoon/Initialize(mapload)
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 	. = ..()
 

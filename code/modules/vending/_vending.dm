@@ -12,8 +12,6 @@
 	products = list()
 	contraband = list()
 	premium = list()
-
-IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
 */
 
 #define MAX_VENDING_INPUT_AMOUNT 30
@@ -56,7 +54,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	verb_exclaim = "beeps"
 	max_integrity = 300
 	integrity_failure = 0.33
-	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	armor = list(MELEE = 20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
@@ -75,6 +73,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/forcecrit = 0
 	var/num_shards = 7
 	var/list/pinned_mobs = list()
+	///Icon for the maintenance panel overlay
+	var/panel_type = "panel1"
 
 	/**
 	  * List of products this machine sells
@@ -262,12 +262,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/update_overlays()
 	. = ..()
-	if(!light_mask)
-		return
-	if(!(machine_stat & BROKEN) && powered())
+	if(panel_open)
+		. += panel_type
+	if(light_mask && !(machine_stat & BROKEN) && powered())
 		. += emissive_appearance(icon, light_mask)
 
-/obj/machinery/vending/obj_break(damage_flag)
+/obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
@@ -313,7 +313,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(isnull(amount))
 			amount = 0
 
-		var/atom/temp = typepath
+		var/obj/item/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		GLOB.vending_products[typepath] = 1
 		R.name = initial(temp.name)
@@ -325,7 +325,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		R.custom_price = round(initial(temp.custom_price) * SSeconomy.inflation_value())
 		R.custom_premium_price = round(initial(temp.custom_premium_price) * SSeconomy.inflation_value())
 		R.age_restricted = initial(temp.age_restricted)
-		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors))
+		R.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))
 		recordlist += R
 
 /**
@@ -341,11 +341,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 	extra_price = round(initial(extra_price) * SSeconomy.inflation_value())
 	for(var/R in recordlist)
 		var/datum/data/vending_product/record = R
-		var/atom/potential_product = record.product_path
+		var/obj/item/potential_product = record.product_path
 		record.custom_price = round(initial(potential_product.custom_price) * SSeconomy.inflation_value())
 	for(var/R in premiumlist)
 		var/datum/data/vending_product/record = R
-		var/atom/potential_product = record.product_path
+		var/obj/item/potential_product = record.product_path
 		var/premium_sanity = round(initial(potential_product.custom_premium_price))
 		if(premium_sanity)
 			record.custom_premium_price = round(premium_sanity * SSeconomy.inflation_value())
@@ -432,9 +432,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return TRUE
 	if(anchored)
 		default_deconstruction_screwdriver(user, icon_state, icon_state, I)
-		cut_overlays()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-panel")
+		update_appearance()
 		updateUsrDialog()
 	else
 		to_chat(user, span_warning("You must first secure [src]."))
@@ -540,6 +538,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 			SEND_SIGNAL(L, COMSIG_ON_VENDOR_CRUSH)
 
+
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
@@ -567,7 +566,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 							span_userdanger("You are pinned down by [src]!"))
 					if(3) // glass candy
 						crit_rebate = 50
-						for(var/i = 0, i < num_shards, i++)
+						for(var/i in 1 to num_shards)
 							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
 							shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=1, pain_chance=5)
 							shard.updateEmbedding()
@@ -618,6 +617,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			. = TRUE
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+			add_memory_in_range(L, 7, MEMORY_VENDING_CRUSHED, list(DETAIL_PROTAGONIST = L, DETAIL_WHAT_BY = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLINDNESS, protagonist_memory_flags = MEMORY_SKIP_UNCONSCIOUS)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, span_notice("You insert [I] into [src]'s input compartment."))
 	loaded_items++
 
-/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!force)
 		return
 	. = ..()
@@ -735,7 +735,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Vending")
+		ui = new(user, src, "Vending", name)
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)
@@ -1090,6 +1090,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/max_loaded_items = 20
 	/// Base64 cache of custom icons.
 	var/list/base64_cache = list()
+	panel_type = "panel20"
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
@@ -1122,20 +1123,22 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(vending_machine_input[O] > 0)
 			var/base64
 			var/price = 0
-			for(var/obj/T in contents)
-				if(T.name == O)
+			for(var/obj/item/T in contents)
+				if(format_text(T.name) == O)
 					price = T.custom_price
 					if(!base64)
 						if(base64_cache[T.type])
 							base64 = base64_cache[T.type]
 						else
-							base64 = icon2base64(icon(T.icon, T.icon_state))
+							base64 = icon2base64(getFlatIcon(T, no_anim=TRUE))
 							base64_cache[T.type] = base64
 					break
 			var/list/data = list(
 				name = O,
 				price = price,
-				img = base64
+				img = base64,
+				amount = vending_machine_input[O],
+				colorable = FALSE
 			)
 			.["vending_machine_input"] += list(data)
 
@@ -1149,7 +1152,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(!vend_ready)
 				return
 			var/N = params["item"]
-			var/obj/S
+			var/obj/item/S
 			vend_ready = FALSE
 			var/obj/item/card/id/C
 			if(isliving(usr))
@@ -1167,7 +1170,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				return
 			var/datum/bank_account/account = C.registered_account
 			for(var/obj/O in contents)
-				if(O.name == N)
+				if(format_text(O.name) == N)
 					S = O
 					break
 			if(S)
@@ -1265,6 +1268,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"
 	icon_deny = "greed-deny"
+	panel_type = "panel4"
 	light_mask = "greed-light-mask"
 	custom_materials = list(/datum/material/gold = MINERAL_MATERIAL_AMOUNT * 5)
 
@@ -1273,12 +1277,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 	//starts in a state where you can move it
 	panel_open = TRUE
 	set_anchored(FALSE)
-	add_overlay("[initial(icon_state)]-panel")
+	add_overlay(panel_type)
 	//and references the deity
 	name = "[GLOB.deity]'s Consecrated Vendor"
 	desc = "A vending machine created by [GLOB.deity]."
 	slogan_list = list("[GLOB.deity] says: It's your divine right to buy!")
 	add_filter("vending_outline", 9, list("type" = "outline", "color" = COLOR_VERY_SOFT_YELLOW))
 	add_filter("vending_rays", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
-
-

@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(vote)
 			else if(mode == "map")
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
-					var/preferred_map = C.prefs.preferred_map
+					var/preferred_map = C.prefs.read_preference(/datum/preference/choiced/preferred_map)
 					if(isnull(global.config.defaultmap))
 						continue
 					if(!preferred_map)
@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(vote)
 			text += "<b>[question]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
-		for(var/i=1,i<=choices.len,i++)
+		for(var/i in 1 to choices.len)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
@@ -191,7 +191,7 @@ SUBSYSTEM_DEF(vote)
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
 					return FALSE
-				for(var/i=1,i<=10,i++)
+				for(var/i in 1 to 10)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
 						break

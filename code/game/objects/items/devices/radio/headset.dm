@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	else
 		. += span_notice("A small screen on the headset flashes, it's too small to read without holding or wearing the headset.")
 
-/obj/item/radio/headset/Initialize()
+/obj/item/radio/headset/Initialize(mapload)
 	. = ..()
 	recalculateChannels()
 
@@ -79,6 +79,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 	.["headset"] = TRUE
 
+/obj/item/radio/headset/MouseDrop(mob/over, src_location, over_location)
+	var/mob/headset_user = usr
+	if((headset_user == over) && headset_user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return attack_self(headset_user)
+	return ..()
+
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
 /obj/item/radio/headset/syndicate/alt //undisguised bowman with flash protection
@@ -95,12 +101,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/radio/headset/syndicate/Initialize()
+/obj/item/radio/headset/syndicate/Initialize(mapload)
 	. = ..()
 	make_syndie()
 
 /obj/item/radio/headset/binary
-/obj/item/radio/headset/binary/Initialize()
+/obj/item/radio/headset/binary/Initialize(mapload)
 	. = ..()
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/binary

@@ -1,5 +1,3 @@
-
-
 /obj/item/stack/sticky_tape
 	name = "sticky tape"
 	singular_name = "sticky tape"
@@ -14,43 +12,43 @@
 	max_amount = 5
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
-	splint_factor = 0.8
+	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
 	var/list/conferred_embed = EMBED_HARMLESS
 
-/obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user, proximity)
+/obj/item/stack/sticky_tape/afterattack(obj/item/target, mob/living/user, proximity)
 	if(!proximity)
 		return
 
-	if(!istype(I))
+	if(!istype(target))
 		return
 
-	if(I.embedding && I.embedding == conferred_embed)
-		to_chat(user, span_warning("[I] is already coated in [src]!"))
+	if(target.embedding && target.embedding == conferred_embed)
+		to_chat(user, span_warning("[target] is already coated in [src]!"))
 		return
 
-	user.visible_message(span_notice("[user] begins wrapping [I] with [src]."), span_notice("You begin wrapping [I] with [src]."))
+	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
 
-	if(do_after(user, 30, target=I))
+	if(do_after(user, 3 SECONDS, target=target))
 		use(1)
-		if(istype(I, /obj/item/clothing/gloves/fingerless))
+		if(istype(target, /obj/item/clothing/gloves/fingerless))
 			var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
-			to_chat(user, span_notice("You turn [I] into [O] with [src]."))
-			QDEL_NULL(I)
+			to_chat(user, span_notice("You turn [target] into [O] with [src]."))
+			QDEL_NULL(target)
 			user.put_in_hands(O)
 			return
 
-		if(I.embedding && I.embedding == conferred_embed)
-			to_chat(user, span_warning("[I] is already coated in [src]!"))
+		if(target.embedding && target.embedding == conferred_embed)
+			to_chat(user, span_warning("[target] is already coated in [src]!"))
 			return
 
-		I.embedding = conferred_embed
-		I.updateEmbedding()
-		to_chat(user, span_notice("You finish wrapping [I] with [src]."))
-		I.name = "[prefix] [I.name]"
+		target.embedding = conferred_embed
+		target.updateEmbedding()
+		to_chat(user, span_notice("You finish wrapping [target] with [src]."))
+		target.name = "[prefix] [target.name]"
 
-		if(istype(I, /obj/item/grenade))
-			var/obj/item/grenade/sticky_bomb = I
+		if(istype(target, /obj/item/grenade))
+			var/obj/item/grenade/sticky_bomb = target
 			sticky_bomb.sticky = TRUE
 
 /obj/item/stack/sticky_tape/super
@@ -60,7 +58,7 @@
 	icon_state = "tape_y"
 	prefix = "super sticky"
 	conferred_embed = EMBED_HARMLESS_SUPERIOR
-	splint_factor = 0.6
+	splint_factor = 0.4
 	merge_type = /obj/item/stack/sticky_tape/super
 
 /obj/item/stack/sticky_tape/pointy
@@ -88,6 +86,6 @@
 	//icon_state = "tape_spikes"
 	prefix = "surgical"
 	conferred_embed = list("embed_chance" = 30, "pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
-	splint_factor = 0.4
+	splint_factor = 0.5
 	custom_price = PAYCHECK_MEDIUM
 	merge_type = /obj/item/stack/sticky_tape/surgical

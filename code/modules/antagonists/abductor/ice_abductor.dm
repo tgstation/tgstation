@@ -2,7 +2,7 @@
 	name = "Mysterious Block of Ice"
 	desc = "A shadowy figure lies in this sturdy-looking block of ice. Who knows where it came from?"
 	icon = 'icons/effects/freeze.dmi'
-	icon_state =  "ice_ayy"
+	icon_state = "ice_ayy"
 	density = TRUE
 	deconstructible = FALSE
 
