@@ -1,6 +1,6 @@
 import { classes } from "common/react";
 import { Component } from "inferno";
-import { Section, Stack, Box, Button, Flex } from "../../components";
+import { Section, Stack, Box, Button, Flex, Tooltip } from "../../components";
 import { calculateProgression, getReputation, Rank } from "./calculateReputationLevel";
 import { ObjectiveState } from "./constants";
 
@@ -13,6 +13,7 @@ export type Objective = {
   telecrystal_reward: number,
   ui_buttons?: ObjectiveUiButton[],
   objective_state: ObjectiveState,
+  original_progression: number,
 }
 
 export type ObjectiveUiButton = {
@@ -278,6 +279,7 @@ const ObjectiveFunction = (
       telecrystalReward={objective.telecrystal_reward}
       progressionReward={objective.progression_reward}
       objectiveState={objective.objective_state}
+      originalProgression={objective.original_progression}
       handleCompletion={(event) => {
         if (handleCompletion) {
           handleCompletion(objective);
@@ -317,6 +319,7 @@ type ObjectiveElementProps = {
   progressionReward: number;
   uiButtons?: JSX.Element;
   objectiveState: ObjectiveState;
+  originalProgression: number;
 
   handleCompletion: (event: MouseEvent) => void;
 }
@@ -331,6 +334,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     progressionReward,
     objectiveState,
     handleCompletion,
+    originalProgression,
     ...rest
   } = props;
 
@@ -339,6 +343,10 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     || objectiveState === ObjectiveState.Failed;
 
   const objectiveFailed = objectiveState === ObjectiveState.Failed;
+
+  const progressionDiff = Math.round(
+    (1 - (progressionReward / originalProgression))*1000
+  )/10;
 
   return (
     <Box {...rest}>
@@ -385,6 +393,24 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                 {telecrystalReward} TC,
                 <Box ml={1} as="span">
                   {calculateProgression(progressionReward)} Reputation
+                  {Math.abs(progressionDiff) > 5 && (
+                    <Tooltip
+                      content={(
+                        <Box>
+                          This is because you are {progressionDiff > 0? "ahead " : "behind "}
+                          of where you should be at.
+                        </Box>
+                      )}
+                    >
+                      <Box
+                        ml={1}
+                        color={progressionDiff > 0? "red" : "green"}
+                        as="span"
+                      >
+                        ({progressionDiff > 0? "-" : "+"}{progressionDiff}%)
+                      </Box>
+                    </Tooltip>
+                  )}
                 </Box>
               </Box>
             </Stack>

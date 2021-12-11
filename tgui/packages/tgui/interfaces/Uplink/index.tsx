@@ -7,7 +7,7 @@ import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
 import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import { calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
+import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
 
 type UplinkItem = {
   id: string,
@@ -22,19 +22,16 @@ type UplinkItem = {
   progression_minimum: number,
 }
 
-export type ObjectiveUiButton = {
-  name: string,
-  tooltip: string,
-  icon: string,
-  action: string,
-}
-
 type UplinkData = {
   telecrystals: number,
   progression_points: number,
+  current_expected_progression: number,
+  progression_scaling_deviance: number,
+  current_progression_scaling: number,
   uplink_flag: number,
   assigned_role: string,
   debug: BooleanLike,
+
   has_objectives: BooleanLike,
   has_progression: BooleanLike,
   potential_objectives: Objective[],
@@ -99,12 +96,15 @@ export class Uplink extends Component<{}, UplinkState> {
         return false;
       }
       { if (value.purchasable_from & uplinkFlag) {
-        if (!availableCategories.includes(value.category)) {
-          availableCategories.push(value.category);
-        }
         return true;
       } }
       return false;
+    });
+
+    uplinkData.items.forEach(item => {
+      if (!availableCategories.includes(item.category)) {
+        availableCategories.push(item.category);
+      }
     });
 
     uplinkData.categories = uplinkData.categories.filter(value =>
@@ -127,6 +127,9 @@ export class Uplink extends Component<{}, UplinkState> {
       has_progression,
       maximum_active_objectives,
       maximum_potential_objectives,
+      current_expected_progression,
+      progression_scaling_deviance,
+      current_progression_scaling,
     } = data;
     const {
       allItems,
@@ -166,6 +169,16 @@ export class Uplink extends Component<{}, UplinkState> {
         disabled: !canBuy || !hasEnoughProgression,
       });
     }
+    // Get the difference between the current progression and
+    // expected progression
+    let progressionPercentage
+      = (current_expected_progression - progression_points);
+    // Clamp it down between 0 and 2
+    progressionPercentage
+      = Math.min(Math.max(
+        progressionPercentage / progression_scaling_deviance, -1), 1);
+    // Round it and convert it into a percentage
+    progressionPercentage = Math.round(progressionPercentage * 1000)/10;
     return (
       <Window
         width={820}
@@ -189,7 +202,36 @@ export class Uplink extends Component<{}, UplinkState> {
                   </Stack.Item>
                   <Stack.Item align="center">
                     <Box bold fontSize={1.2}>
-                      <Tooltip content={reputationLevelsTooltip}>
+                      <Tooltip content={(
+                        <Box>
+                          <Box>
+                            Your current level of reputation.&nbsp;
+                            Reputation determines what quality of objective
+                            you get and what items you can purchase.&nbsp;
+                            <Box mt={0.5}>
+                              {/* A minute in deciseconds */}
+                              Reputation passively increases by <Box color="green" as="span">{calculateProgression(current_progression_scaling)}</Box>
+                              &nbsp;every minute
+                            </Box>
+                            {Math.abs(progressionPercentage) > 0 && (
+                              <Box mt={0.5}>
+                                Because you are {progressionPercentage < 0? "ahead " : "behind "}
+                                of where you should be, you are getting
+                                <Box
+                                  as="span"
+                                  color={progressionPercentage < 0? "red" : "green"}
+                                  ml={1}
+                                  mr={1}
+                                >
+                                  {progressionPercentage}%
+                                </Box>
+                                {progressionPercentage < 0? "less": "more"} reputation every minute
+                              </Box>
+                            )}
+                            {reputationLevelsTooltip}
+                          </Box>
+                        </Box>
+                      )}>
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression

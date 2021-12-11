@@ -1,4 +1,3 @@
-import { multiline } from 'common/string';
 import { Box, Flex } from '../../components';
 
 export const calculateProgression = (progression_points: number) => {
@@ -76,11 +75,6 @@ export const reputationDefault = 50*600;
 let lastMinutesThan = -1;
 export const reputationLevelsTooltip = (
   <Box preserveWhitespace>
-    {multiline`
-Your current level of reputation. \
-Reputation determines what quality of objective \
-you get and what items you can purchase.\
-`}
     <Flex direction="column" mt={1}>
       {ranks.map(value => {
         if (lastMinutesThan === -1) {

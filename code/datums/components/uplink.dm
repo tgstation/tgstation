@@ -150,7 +150,11 @@
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
+	data["current_expected_progression"] = SStraitor.current_global_progression
 	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
+	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
+	data["current_progression_scaling"] = SStraitor.current_progression_scaling
+
 	data["maximum_potential_objectives"] = CONFIG_GET(number/maximum_potential_objectives)
 	if(uplink_handler.has_objectives)
 		var/list/potential_objectives = list()

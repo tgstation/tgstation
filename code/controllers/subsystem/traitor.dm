@@ -1,13 +1,13 @@
 SUBSYSTEM_DEF(traitor)
 	name = "Traitor"
 	flags = SS_KEEP_TIMING
-	wait = 1 MINUTES
+	wait = 10 SECONDS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	/// The coefficient multiplied by the current_global_progression for new joining traitors to calculate their progression
 	var/newjoin_progression_coeff = 0.6
 	/// The current progression that all traitors should be at in the round
 	var/current_global_progression = 0
-	/// The amount of deviance from the current global progression before you start getting 2x then current scaling or no scaling at all
+	/// The amount of deviance from the current global progression before you start getting 2x the current scaling or no scaling at all
 	var/progression_scaling_deviance = 10 MINUTES
 	/// The current uplink handlers being managed
 	var/list/datum/uplink_handler/uplink_handlers = list()
@@ -19,19 +19,27 @@ SUBSYSTEM_DEF(traitor)
 	// Has a maximum of 1 minute, however the value can be lower if there are lower players than the ideal
 	// player count for a traitor to be threatening. Rounds to the nearest 10% of a minute to prevent weird
 	// values from appearing in the UI.
-	current_progression_scaling = min(
-		round(player_count / (CONFIG_GET(number/traitor_ideal_player_count) * 1 MINUTES), 0.1 MINUTES),
+	current_progression_scaling = max(min(
+		(player_count / CONFIG_GET(number/traitor_ideal_player_count)) * 1 MINUTES,
 		1 MINUTES
-	)
+	), 0.1 MINUTES)
 
-	current_global_progression += current_progression_scaling
+	var/progression_scaling_delta = (wait / (1 MINUTES)) * current_progression_scaling
+	var/previous_global_progression = current_global_progression
+
+	current_global_progression += progression_scaling_delta
 	for(var/datum/uplink_handler/handler in uplink_handlers)
 		if(!handler.has_progression || QDELETED(handler))
 			uplink_handlers -= handler
-		var/deviance = (current_global_progression - handler.progression_points) / progression_scaling_deviance
-		var/amount_to_give = round(current_progression_scaling + (current_progression_scaling * deviance), 0.1 MINUTES)
-		amount_to_give = clamp(amount_to_give, 0, current_progression_scaling * 2)
-		handler.progression_points += current_progression_scaling
+		var/deviance = (previous_global_progression - handler.progression_points) / progression_scaling_deviance
+		if(abs(deviance) < 0.01)
+			// If deviance is less than 1%, just set them to the current global progression
+			// Prevents problems with precision errors.
+			handler.progression_points = current_global_progression
+		else
+			var/amount_to_give = progression_scaling_delta + (progression_scaling_delta * deviance)
+			amount_to_give = clamp(amount_to_give, 0, progression_scaling_delta * 2)
+			handler.progression_points += amount_to_give
 		handler.on_update()
 
 /datum/controller/subsystem/traitor/proc/get_possible_objectives(progression_points)
@@ -41,7 +49,7 @@ SUBSYSTEM_DEF(traitor)
 			continue
 		if(progression_points > initial(objective_path.progression_maximum))
 			continue
-		possible_objectives += objective_path
+		possible_objectives[objective_path] = initial(objective_path.weight)
 	return possible_objectives
 
 /datum/controller/subsystem/traitor/proc/register_uplink_handler(datum/uplink_handler/uplink_handler)

@@ -83,7 +83,7 @@
 	for(var/i in 1 to maximum_iteration)
 		if(potential_objectives_left <= 0 || !length(objectives))
 			break
-		var/objective_typepath = pick(objectives)
+		var/objective_typepath = pick_weight(objectives)
 		var/datum/traitor_objective/objective = new objective_typepath(src)
 		if(!objective.generate_objective(owner))
 			objectives -= objective_typepath
@@ -95,15 +95,28 @@
 	on_update()
 
 /datum/uplink_handler/proc/handle_duplicate(datum/traitor_objective/potential_duplicate)
-	if(!potential_duplicate_objectives[potential_duplicate.type])
-		potential_duplicate_objectives[potential_duplicate.type] = list(potential_duplicate)
-		return TRUE
+	if(!istype(potential_duplicate))
+		return FALSE
 
-	for(var/datum/traitor_objective/duplicate_checker as anything in potential_duplicate_objectives[potential_duplicate.type])
-		if(duplicate_checker.is_duplicate(potential_duplicate))
-			return FALSE
-	potential_duplicate_objectives[potential_duplicate.type] += potential_duplicate
+	var/datum/traitor_objective/current_type = potential_duplicate.type
+	while(current_type != /datum/traitor_objective)
+		if(!potential_duplicate_objectives[current_type])
+			potential_duplicate_objectives[current_type] = list(potential_duplicate)
+		else
+			for(var/datum/traitor_objective/duplicate_checker as anything in potential_duplicate_objectives[current_type])
+				if(duplicate_checker.is_duplicate(potential_duplicate))
+					return FALSE
+			potential_duplicate_objectives[current_type] += potential_duplicate
+
+		current_type = type2parent(current_type)
 	return TRUE
+
+/datum/uplink_handler/proc/get_completion_count(datum/traitor_objective/type)
+	var/amount_completed = 0
+	for(var/datum/traitor_objective/objective as anything in potential_duplicate_objectives[type])
+		if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
+			amount_completed += 1
+	return amount_completed
 
 /// Used to complete objectives, failed or successful.
 /datum/uplink_handler/proc/complete_objective(datum/traitor_objective/to_remove)
@@ -113,6 +126,8 @@
 	potential_objectives -= to_remove
 	active_objectives -= to_remove
 	completed_objectives += to_remove
+	for(var/datum/traitor_objective/objective as anything in active_objectives)
+		objective.update_progression_cost()
 	generate_objectives()
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)

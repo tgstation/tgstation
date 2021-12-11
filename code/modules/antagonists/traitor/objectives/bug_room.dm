@@ -2,14 +2,17 @@
 	name = "Bug the \[DEPARTMENT HEAD]'s office"
 	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it down in the \[DEPARTMENT HEAD]'s office. If it gets destroyed before you are able to plant it, this objective will fail."
 
-	progression_reward = 10 MINUTES
+	progression_reward = list(2 MINUTES, 8 MINUTES)
+	telecrystal_reward = list(0, 1)
 
-	var/static/list/applicable_heads = list(
+	var/list/applicable_heads = list(
 		"Research Director" = /area/command/heads_quarters/rd,
 		"Chief Medical Officer" = /area/command/heads_quarters/cmo,
-		"Chief Engineer" = /area/command/heads_quarters/ce
+		"Chief Engineer" = /area/command/heads_quarters/ce,
+		"Head of Personnel" = /area/command/heads_quarters/hop,
 	)
 	var/datum/job/target_office
+	var/requires_head_as_supervisor = TRUE
 
 	var/obj/item/traitor_bug/bug
 
@@ -35,7 +38,11 @@
 
 /datum/traitor_objective/bug_room/generate_objective(datum/mind/generating_for)
 	var/datum/job/role = generating_for.assigned_role
-	var/list/possible_heads = applicable_heads & role.department_head
+	var/list/possible_heads
+	if(requires_head_as_supervisor)
+		possible_heads = applicable_heads & role.department_head
+	else
+		possible_heads = applicable_heads
 	if(!length(possible_heads))
 		return FALSE
 	var/target_head = pick(possible_heads)
@@ -58,6 +65,7 @@
 	icon_state = "bug"
 
 	var/area/target_area
+	var/deploy_time = 10 SECONDS
 
 /obj/item/traitor_bug/interact(mob/user)
 	. = ..()
@@ -67,6 +75,8 @@
 	var/area/current_area = get_area(location)
 	if(!istype(current_area, target_area))
 		balloon_alert(user, "you can't deploy this here!")
+		return
+	if(!do_after(user, deploy_time, src))
 		return
 	new /obj/structure/traitor_bug(location)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED, location)
@@ -86,8 +96,32 @@
 	addtimer(CALLBACK(src, .proc/fade_out, 10 SECONDS), 3 MINUTES)
 
 /obj/structure/traitor_bug/proc/fade_out(seconds)
-	animate(src, alpha = 5, time = seconds)
+	animate(src, alpha = 30, time = seconds)
 
 /obj/structure/traitor_bug/deconstruct(disassembled)
 	explosion(src, 0, 0, 3, 5, explosion_cause = src) // Pretty god damn dangerous
+	return ..()
+
+/datum/traitor_objective/bug_room/risky
+	progression_minimum = 10 MINUTES
+	applicable_heads = list(
+		"Captain" = /area/command/heads_quarters/captain,
+	)
+	progression_reward = list(5 MINUTES, 10 MINUTES)
+	telecrystal_reward = list(1, 2)
+	requires_head_as_supervisor = FALSE
+
+/datum/traitor_objective/bug_room/super_risky
+	progression_minimum = 20 MINUTES
+	applicable_heads = list(
+		"Head of Security" = /area/command/heads_quarters/hos,
+	)
+	progression_reward = list(10 MINUTES, 15 MINUTES)
+	telecrystal_reward = list(2, 3)
+	requires_head_as_supervisor = FALSE
+
+/datum/traitor_objective/bug_room/super_risky/generate_objective(datum/mind/generating_for)
+	if(!handler.get_completion_count(/datum/traitor_objective/bug_room/risky))
+		// Locked if they don't have any of the risky bug room objective completed
+		return FALSE
 	return ..()

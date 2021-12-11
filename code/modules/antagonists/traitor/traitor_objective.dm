@@ -13,10 +13,22 @@
 	var/progression_reward = 0 MINUTES
 	/// The telecrystals that are rewarded from completing this traitor objective. Can either be a list of list(min,max) or a direct value
 	var/telecrystal_reward = 0
+	/// The weight of this objective being picked.
+	var/weight = 1
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
 
-	var/list/registered_objects = list()
+	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
+	var/global_progression_influence_intensity = 1
+	/// Determines the minimum and maximum progression this objective can be worth as a result of being influenced by global progression
+	/// Should only be smaller than or equal to 1
+	var/global_progression_limit_coeff = 0.5
+	/// The deviance coefficient used to determine the randomness of the progression rewards.
+	var/progression_cost_coeff_deviance = 0.05
+	/// This gets added onto the coeff when calculating the updated progression cost. Used for variability and a slight bit of randomness
+	var/progression_cost_coeff = 0
+	/// The percentage that this objective has been increased or decreased by as a result of progression. Used by the UI
+	var/original_progression = 0
 
 /datum/traitor_objective/New(datum/uplink_handler/handler)
 	. = ..()
@@ -26,6 +38,28 @@
 
 	if(islist(progression_reward))
 		progression_reward = rand(progression_reward[1], progression_reward[2])
+	original_progression = progression_reward
+	progression_cost_coeff = (rand()*2 - 1) * progression_cost_coeff_deviance
+
+	update_progression_cost()
+
+/// Updates the progression cost, scaling it depending on their current progression compared against the global progression
+/datum/traitor_objective/proc/update_progression_cost()
+	progression_reward = original_progression
+	if(global_progression_influence_intensity <= 0)
+		return
+	var/minimum_progression = progression_reward * global_progression_limit_coeff
+	var/maximum_progression = global_progression_limit_coeff != 0? progression_reward / global_progression_limit_coeff : INFINITY
+	var/deviance = (SStraitor.current_global_progression - handler.progression_points) / SStraitor.progression_scaling_deviance
+	var/coeff = global_progression_influence_intensity * deviance
+	// This has less of an effect as the coeff gets nearer to 1. Is linear
+	coeff += progression_cost_coeff * (1 - coeff)
+
+	progression_reward = clamp(
+		progression_reward + progression_reward * coeff,
+		minimum_progression,
+		maximum_progression
+	)
 
 /datum/traitor_objective/Destroy(force, ...)
 	handler = null
@@ -90,6 +124,7 @@
 		"telecrystal_reward" = telecrystal_reward,
 		"ui_buttons" = generate_ui_buttons(user),
 		"objective_state" = objective_state,
+		"original_progression" = original_progression,
 	)
 
 /// Used for generating the UI buttons for the UI. Use ui_perform_action to respond to clicks.
