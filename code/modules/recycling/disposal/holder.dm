@@ -83,16 +83,15 @@
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
 	//Moved to nullspace gang
-	if(!loc)
+	if(!loc || pipes_typecache[loc.type])
 		return
-	if(!pipes_typecache[loc.type])
-		var/turf/T = get_turf(loc)
-		if(T)
-			vent_gas(T)
-		for(var/A in contents)
-			var/atom/movable/AM = A
-			AM.forceMove(drop_location())
-		qdel(src)
+	var/turf/T = get_turf(loc)
+	if(T)
+		vent_gas(T)
+	for(var/A in contents)
+		var/atom/movable/AM = A
+		AM.forceMove(drop_location())
+	qdel(src)
 
 // find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
