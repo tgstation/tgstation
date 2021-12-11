@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - admin: "makes (the logging of xenobiology renaming potions better)"
