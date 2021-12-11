@@ -270,7 +270,25 @@
 	if(.)
 		return
 
-	bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
+		switch(action)
+		if("lock")
+			if(usr.has_unlimited_silicon_privilege)
+				bot_cover_flags ^= BOT_COVER_LOCKED
+				. = TRUE
+		if("power")
+			if(bot_mode_flags & BOT_MODE_ON)
+				turn_off()
+			else if(bot_cover_flags & BOT_COVER_OPEN)
+				to_chat(usr, span_warning("[name]'s maintenance panel is open!"))
+				return
+			else if(cell)
+				if(!turn_on())
+					to_chat(usr, span_warning("You can't switch on [src]!"))
+					return
+			. = TRUE
+		else
+			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
+			. = TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
