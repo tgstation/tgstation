@@ -48,10 +48,6 @@
 		message = FALSE
 	return ..()
 
-/mob/living/setDir(new_dir)
-	. = ..()
-	fov_handler?.dir_change(dir)
-
 /mob/living/proc/ZImpactDamage(turf/T, levels)
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))
@@ -710,7 +706,6 @@
 		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
 		updatehealth()
 		grab_ghost()
-	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
@@ -733,7 +728,8 @@
 	else if(admin_revive)
 		updatehealth()
 		get_up(TRUE)
-	fov_handler?.update_living()
+	// The signal is called after everything else so components can properly check the updated values
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 
 
 /mob/living/proc/remove_CC()
@@ -1530,8 +1526,6 @@
 		else
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
-
-		fov_handler?.update_eye()
 
 /mob/living/update_mouse_pointer()
 	..()

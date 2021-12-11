@@ -179,5 +179,3 @@
 	var/native_fov = FOV_90_DEGREES
 	/// Lazy list of FOV traits that will apply a FOV view when handled.
 	var/list/fov_traits
-	/// The datum which handles applying and managing FOV masks to clients
-	var/datum/field_of_view/fov_handler
