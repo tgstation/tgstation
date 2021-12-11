@@ -45,7 +45,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	///running average of how much each tick is already used when the MC is resumed to run by byond.
 	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume before the MC
 	var/average_starting_tick_usage = 0
-	
+
 	///running average of how much time was spent resuming other sleeping procs after the mc went back to sleep
 	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
 	var/average_sleeping_tick_usage = 0
@@ -453,7 +453,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 		if (processing * sleep_delta <= world.tick_lag)
 			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
-		
+
 		//setup code to track when the last sleep ends
 		var/slept_worldtime = world.time
 		var/slept_tickusage = TICK_USAGE
@@ -461,8 +461,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		spawn(0) //do not convert to add timer
 			if (world.time == slept_worldtime && TICK_USAGE >= slept_tickusage) //make sure we woke up during the same tick
 				average_sleeping_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_tick_usage, TICK_USAGE - slept_tickusage)
-				average_sleeping_overtime_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_overtime_usage, min(0, TICK_USAGE - 100))
-		
+				average_sleeping_overtime_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_overtime_usage, max(0, TICK_USAGE - 100))
+
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
@@ -657,7 +657,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 
 /datum/controller/master/stat_entry(msg)
-	msg = "(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)]) (Average Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)])"
+	msg = "(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)]) (Average Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)] \
+	(Average Sleeping TIck Usage: [round(Master.average_sleeping_tick_usage, 0.1)]) (Average Sleeping Overtime: [round(Master.average_sleeping_overtime_usage)]))"
 	return msg
 
 
