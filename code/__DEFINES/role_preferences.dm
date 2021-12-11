@@ -74,7 +74,6 @@
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
 #define ROLE_MORPH "Morph"
 #define ROLE_SANTA "Santa"
-#define ROLE_FUGITIVE "Fugitive"
 
 //Spawner roles
 #define ROLE_GHOST_ROLE "Ghost Role"
