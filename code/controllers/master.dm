@@ -68,18 +68,18 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	/// The type of the last subsystem to be fire()'d.
 	var/last_type_processed
 
-	///!Start of queue linked list
+	///Start of queue linked list
 	var/datum/controller/subsystem/queue_head
-	///!End of queue linked list (used for appending to the list)
+	///End of queue linked list (used for appending to the list)
 	var/datum/controller/subsystem/queue_tail
 	///Running total of all queued subsystem priorities so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count = 0
 	///running total of queued subsystem priority but for background subsystems
 	var/queue_priority_count_bg = 0
-	///!Are we loading in a new map?
+	///Are we loading in a new map?
 	var/map_loading = FALSE
 
-	///!for scheduling different subsystems for different stages of the round
+	///for scheduling different subsystems for different stages of the round
 	var/current_runlevel
 	var/sleep_offline_after_initializations = TRUE
 
