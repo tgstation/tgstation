@@ -30,6 +30,11 @@
 	/// The percentage that this objective has been increased or decreased by as a result of progression. Used by the UI
 	var/original_progression = 0
 
+/// Replaces a word in the name of the proc. Also does it for the description
+/datum/traitor_objective/proc/replace_in_name(replace, word)
+	name = replacetext(name, replace, word)
+	description = replacetext(description, replace, word)
+
 /datum/traitor_objective/New(datum/uplink_handler/handler)
 	. = ..()
 	src.handler = handler
@@ -38,10 +43,7 @@
 
 	if(islist(progression_reward))
 		progression_reward = rand(progression_reward[1], progression_reward[2])
-	original_progression = progression_reward
 	progression_cost_coeff = (rand()*2 - 1) * progression_cost_coeff_deviance
-
-	update_progression_cost()
 
 /// Updates the progression cost, scaling it depending on their current progression compared against the global progression
 /datum/traitor_objective/proc/update_progression_cost()
@@ -68,7 +70,7 @@
 /// Called when the objective should be generated. Should return if the objective has been successfully generated.
 /// If false is returned, the objective will be removed as a potential objective for the traitor it is being generated for.
 /// This is only temporary, it will run the proc again when objectives are generated for the traitor again.
-/datum/traitor_objective/proc/generate_objective(datum/mind/generating_for)
+/datum/traitor_objective/proc/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	return FALSE
 
 /// Used to clean up signals and stop listening to states.

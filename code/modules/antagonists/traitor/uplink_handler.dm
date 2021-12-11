@@ -85,11 +85,13 @@
 			break
 		var/objective_typepath = pick_weight(objectives)
 		var/datum/traitor_objective/objective = new objective_typepath(src)
-		if(!objective.generate_objective(owner))
+		if(!objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
 			objectives -= objective_typepath
 			continue
 		if(!handle_duplicate(objective))
 			return
+		objective.original_progression = objective.progression_reward
+		objective.update_progression_cost()
 		potential_objectives += objective
 		potential_objectives_left--
 	on_update()

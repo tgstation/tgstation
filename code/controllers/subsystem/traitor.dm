@@ -8,7 +8,8 @@ SUBSYSTEM_DEF(traitor)
 	/// The current progression that all traitors should be at in the round
 	var/current_global_progression = 0
 	/// The amount of deviance from the current global progression before you start getting 2x the current scaling or no scaling at all
-	var/progression_scaling_deviance = 10 MINUTES
+	/// Also affects objectives, so -50% progress reduction or 50% progress boost.
+	var/progression_scaling_deviance = 20 MINUTES
 	/// The current uplink handlers being managed
 	var/list/datum/uplink_handler/uplink_handlers = list()
 	/// The current scaling per minute of progression. Has a maximum value of 1 MINUTES.

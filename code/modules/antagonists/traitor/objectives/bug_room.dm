@@ -33,23 +33,25 @@
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_area = applicable_heads[target_office.title]
 			AddComponent(/datum/component/traitor_objective_register, bug, \
-				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED, \
-				fail_signals = COMSIG_PARENT_QDELETING)
+				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED_GROUND, \
+				fail_signals = COMSIG_PARENT_QDELETING, \
+				penalty = TRUE)
 
-/datum/traitor_objective/bug_room/generate_objective(datum/mind/generating_for)
+/datum/traitor_objective/bug_room/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/role = generating_for.assigned_role
 	var/list/possible_heads
 	if(requires_head_as_supervisor)
 		possible_heads = applicable_heads & role.department_head
 	else
 		possible_heads = applicable_heads
+	for(var/datum/traitor_objective/bug_room/room as anything in possible_duplicates)
+		possible_heads -= room.target_office.title
 	if(!length(possible_heads))
 		return FALSE
 	var/target_head = pick(possible_heads)
 
 	target_office = SSjob.name_occupations[target_head]
-	name = replacetext(name, "\[DEPARTMENT HEAD]", target_head)
-	description = replacetext(description, "\[DEPARTMENT HEAD]", target_head)
+	replace_in_name("\[DEPARTMENT HEAD]", target_head)
 	return TRUE
 
 /datum/traitor_objective/bug_room/is_duplicate(datum/traitor_objective/bug_room/objective_to_compare)
@@ -64,11 +66,19 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bug"
 
+	/// The area at which this bug can be planted at Has to be a type.
 	var/area/target_area
+	/// The object on which this bug can be planted on. Has to be a type.
+	var/obj/target_object
+	/// The object this bug is currently planted on
+	var/obj/planted_on
+
 	var/deploy_time = 10 SECONDS
 
 /obj/item/traitor_bug/interact(mob/user)
 	. = ..()
+	if(!target_area)
+		return
 	var/turf/location = drop_location()
 	if(!location)
 		return
@@ -79,8 +89,43 @@
 	if(!do_after(user, deploy_time, src))
 		return
 	new /obj/structure/traitor_bug(location)
-	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED, location)
+	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_GROUND, location)
 	qdel(src)
+
+/obj/item/traitor_bug/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!target_object)
+		return
+	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
+	if(!(result & COMPONENT_FORCE_PLACEMENT))
+		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object))
+			balloon_alert(user, "you can't attach this onto here!")
+			return
+	if(!do_after(user, deploy_time, src))
+		return
+	if(planted_on)
+		return
+	forceMove(target)
+	target.vis_contents += src
+	planted_on = target
+	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, .proc/handle_planted_on_deletion)
+	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
+
+/obj/item/traitor_bug/proc/handle_planted_on_deletion()
+	planted_on = null
+
+/obj/item/traitor_bug/Destroy()
+	if(planted_on)
+		planted_on.vis_contents -= src
+	return ..()
+
+/obj/item/traitor_bug/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(planted_on)
+		planted_on.vis_contents -= src
+		anchored = FALSE
+		UnregisterSignal(planted_on, COMSIG_PARENT_QDELETING)
+		planted_on = null
 
 /obj/structure/traitor_bug
 	name = "suspicious device"
@@ -120,7 +165,7 @@
 	telecrystal_reward = list(2, 3)
 	requires_head_as_supervisor = FALSE
 
-/datum/traitor_objective/bug_room/super_risky/generate_objective(datum/mind/generating_for)
+/datum/traitor_objective/bug_room/super_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(!handler.get_completion_count(/datum/traitor_objective/bug_room/risky))
 		// Locked if they don't have any of the risky bug room objective completed
 		return FALSE

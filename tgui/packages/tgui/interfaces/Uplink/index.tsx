@@ -215,8 +215,8 @@ export class Uplink extends Component<{}, UplinkState> {
                             </Box>
                             {Math.abs(progressionPercentage) > 0 && (
                               <Box mt={0.5}>
-                                Because you are {progressionPercentage < 0? "ahead " : "behind "}
-                                of where you should be, you are getting
+                                Because your reputation is {progressionPercentage < 0? "ahead " : "behind "}
+                                of where it should be, you are getting
                                 <Box
                                   as="span"
                                   color={progressionPercentage < 0? "red" : "green"}
