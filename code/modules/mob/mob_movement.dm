@@ -126,6 +126,9 @@
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
+
+	//Basically an optional override for our glide size
+	//Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
 
 	var/confusion = L.get_confusion()
