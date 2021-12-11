@@ -45,6 +45,14 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	///running average of how much each tick is already used when the MC is resumed to run by byond.
 	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume before the MC
 	var/average_starting_tick_usage = 0
+	
+	///running average of how much time was spent resuming other sleeping procs after the mc went back to sleep
+	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
+	var/average_sleeping_tick_usage = 0
+
+	///running average of how much overtime (in percents of a tick) was spent was spent resuming other sleeping procs after the mc went back to sleep
+	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
+	var/average_sleeping_overtime_usage = 0
 
 	/// How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)
 	var/sleep_delta = 1
@@ -445,7 +453,16 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 		if (processing * sleep_delta <= world.tick_lag)
 			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
-
+		
+		//setup code to track when the last sleep ends
+		var/slept_worldtime = world.time
+		var/slept_tickusage = TICK_USAGE
+		//from testing, sleeping for 0 will sleep to the end of the current tick, but not always.
+		spawn(0) //do not convert to add timer
+			if (world.time == slept_worldtime && TICK_USAGE >= slept_tickusage) //make sure we woke up during the same tick
+				average_sleeping_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_tick_usage, TICK_USAGE - slept_tickusage)
+				average_sleeping_overtime_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_overtime_usage, min(0, TICK_USAGE - 100))
+		
 		sleep(world.tick_lag * (processing * sleep_delta))
 
 
