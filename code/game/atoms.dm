@@ -1278,7 +1278,7 @@
 			return
 		switch(result)
 			if("Scale")
-				var/x = tgui_input_number(usr, "Choose x mod"," Transform Mod", min_value = null)
+				var/x = tgui_input_number(usr, "Choose x mod", "Transform Mod", min_value = null)
 				var/y = tgui_input_number(usr, "Choose y mod", "Transform Mod", min_value = null)
 				if(isnull(x) || isnull(y))
 					return
