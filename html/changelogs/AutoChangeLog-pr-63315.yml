@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Turning off tgui inputs in game preferences now disables tgui input lists."
-  - refactor: "Converted several list inputs to tgui, including: Many AI functions, wayfinders, most cult inputs, observer functions."

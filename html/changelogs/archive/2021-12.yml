@@ -299,3 +299,45 @@
   - bugfix: You can no longer duplicate rods with rough false walls.
   - code_imp: Due to code structural changes the mole amount from welding plasma related
       objects may get buffed or nerfed. Mostly buffed.
+2021-12-11:
+  CandleJaxx:
+  - bugfix: edited runechat layers for clarity and consistency with old PRs
+  EOBGames:
+  - rscadd: 'The release of the new cookbook, "Mothic Cuisine: of Fleet and Flotilla"
+      has brought Mothic food to the masses! Try out some new treats, like cheesecake
+      balls, cheese soup, and five-cheese pizza at the kitchen today! There might
+      even be some foods that don''t have cheese, too!'
+  - rscadd: "To coincide with the new popularity of Mothic cuisine, Nanotrasen now\
+      \ stocks seeds for T\xF6chta\xFCse Berries, a common ingredient in moth cooking,\
+      \ in the Megaseed vendors. Additionally, herbs and bell peppers have also made\
+      \ their way to the station's stock. Botanists, you know what to do."
+  Jackraxxus:
+  - bugfix: Deconstructing an active AI shell will no longer ghost the AI inhabiting
+      it.
+  JohnFulpWillard:
+  - bugfix: Closing the confirmation alert from headcrabs will no longer continue
+      to headcrab you.
+  LemonInTheDark:
+  - code_imp: Fixed some really insane move counts that were sourced from Login()
+      betraying me. I've killed it now so there should be slightly less stutter sometimes
+      depending on the weather and position of the moon
+  Melbert:
+  - bugfix: Fixes a runtime with starlight condensation
+  RandomGamer123:
+  - bugfix: Drones can no longer use the keycard authentication device.
+  - bugfix: Nuclear operatives will only win if they actually nuked the station and
+      didn't nuke space instead.
+  Seris02:
+  - bugfix: fixed bots getting stuck on railings and crashing anyone with a diagnostic
+      hud who dares come near
+  SuperNovaa41:
+  - bugfix: Pruno fermentation uses up the mix upon turning into pruno.
+  - bugfix: F2 works for quick screenshotting again.
+  carshalash:
+  - balance: Nerfs level of toxin/venom spat out by spiders.
+  jlsnow301:
+  - bugfix: Turning off tgui inputs in game preferences now disables tgui input lists.
+  - refactor: 'Converted several list inputs to tgui, including: Many AI functions,
+      wayfinders, most cult inputs, observer functions.'
+  tf-4:
+  - bugfix: A lack of candidates for certain antags will no longer runtime
