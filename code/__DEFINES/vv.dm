@@ -132,10 +132,6 @@
 #define VV_HK_COPY_OUTFIT "copy_outfit"
 #define VV_HK_MOD_MUTATIONS "quirkmut"
 #define VV_HK_MOD_QUIRKS "quirkmod"
-#define VV_HK_MAKE_MONKEY "human_monkify"
-#define VV_HK_MAKE_CYBORG "human_cyborgify"
-#define VV_HK_MAKE_SLIME "human_slimeify"
-#define VV_HK_MAKE_ALIEN "human_alienify"
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
 

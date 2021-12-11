@@ -150,7 +150,7 @@
 		return FALSE
 	return TRUE
 
-///Gets the ID's name, if one is inserted into the device. This is a seperate proc solely to be overridden by the syndicate version of the app.
+///Gets the ID's name, if one is inserted into the device. This is a separate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)

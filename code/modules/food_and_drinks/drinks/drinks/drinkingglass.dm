@@ -4,7 +4,7 @@
 	icon_state = "glass_empty"
 	base_icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
-	fill_icon_thresholds = list(1)
+	fill_icon_thresholds = list(0)
 	fill_icon_state = "drinking_glass"
 	volume = 50
 	custom_materials = list(/datum/material/glass=500)
@@ -36,7 +36,7 @@
 	desc = largest_reagent?.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
-	if(!length(reagents.reagent_list))
+	if(!reagents.total_volume)
 		icon_state = base_icon_state
 		return ..()
 
@@ -50,7 +50,7 @@
 		icon_state = base_icon_state
 	return ..()
 
-/obj/item/reagent_containers/food/drinks/proc/get_glass_icon(datum/reagent/largest_reagent)
+/obj/item/reagent_containers/food/drinks/drinkingglass/proc/get_glass_icon(datum/reagent/largest_reagent)
 	return largest_reagent?.glass_icon_state
 
 //Shot glasses!//
@@ -88,7 +88,7 @@
 	else
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
-/obj/item/reagent_containers/food/drinks/get_glass_icon(datum/reagent/largest_reagent)
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
 	return largest_reagent?.shot_glass_icon_state
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda

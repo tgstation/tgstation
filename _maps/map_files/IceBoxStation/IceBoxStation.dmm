@@ -12650,9 +12650,7 @@
 /area/construction)
 "cCh" = (
 /obj/item/bedsheet/red,
-/mob/living/simple_animal/bot/secbot/beepsky{
-	name = "Officer Beepsky"
-	},
+/mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/plating,
 /area/security/processing)
 "cCj" = (
@@ -55090,7 +55088,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Secondary Storage";
-	req_access_txt = "11"
+	req_one_access_txt = "10;24"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,

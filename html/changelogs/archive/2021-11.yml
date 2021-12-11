@@ -727,3 +727,223 @@
   - bugfix: People with robotic limbs are now incapable of using Sign Language if
       their limbs are disabled.
   - refactor: Refactored Sign Language
+2021-11-23:
+  ArcaneMusic:
+  - expansion: Laundry machines can shrink particularly old, worn t-shirts. Remember
+      kids, hand wash only.
+  AyyRobotics(Original PR), AzlanonPC(Sprites), Aspev(SafetyMoth):
+  - rscadd: Added Safety Mothposters!
+  - imageadd: Updated contraband.dmi to add new poster icons.
+  BlueMemesauce:
+  - qol: Adds Supply Request Consoles to cargo lobbies.
+  Colovorat:
+  - qol: Bonfire can be made with wood
+  Farquaar:
+  - imageadd: Due to lobbying pressure from the Yee-haw Conservation Society, Nanotrasen
+      vending machines now stock five new cowboy hats and an old-west vest.
+  Ghommie:
+  - bugfix: Fixed a mistake that made space bartenders sad (drinking glasses looking
+      all the same regardless of drink).
+  - bugfix: Hair gradient preference no longer shows for species that don't have hair
+  - bugfix: Abandoned crates no longer delete living mobs or indestructible objects
+      inside them when exploding.
+  - bugfix: They also no longer explode when deconstructed/emagged while unlocked.
+  - bugfix: Their anti-tampering mechanism will now properly reactive if locked again
+      after being unlocked.
+  GoldenAlpharex:
+  - bugfix: Areas loaded from map templates should generate their lighting objects
+      upon being loaded, which means that admin or game-spawned map templates will
+      now have functional lights.
+  Iamgoofball:
+  - expansion: The bureaucratic mistake station trait can now truly chose any job.
+  Melbert:
+  - bugfix: Harvesting plants says the correct number of produce again
+  - bugfix: Fixes random ice turf in icebox's bar
+  Ryll/Shaps:
+  - expansion: You can now *swear
+  axietheaxolotl:
+  - imageadd: new and redone HoP uniforms
+2021-11-24:
+  Ghilker:
+  - bugfix: fix message spam for manual pipe crafting
+  - code_imp: space heater now process on process_atmos()
+  Ghommie:
+  - spellcheck: Fixed a mistake in the Drone repair message feedback when repaired
+      by someone else.
+  - expansion: Handheld cameras (not the wallmounted security ones) can now be used
+      as circuit shells.
+  - bugfix: Lavaland ash storms once again replenish basalt turfs.
+  - bugfix: Vampire victims no longer receive messages about bloodsucking while unconscious.
+  Guillaume Prata:
+  - expansion: Ethereal lungs can be printed with a limb grower now.
+  LemonInTheDark:
+  - bugfix: Fixes the master controller dying in a rare case of the godslayer armor
+  Melbert:
+  - refactor: Refactored cult rune inscribing into a component
+  - refactor: Refactored null rod rune clearing into a component
+  Mothblocks:
+  - admin: The admin who adds a known alt is now logged in the table.
+  - rscadd: Added a station trait for varying colored assistant jumpsuits.
+  - admin: Added options to disable footstep sounds and parallax to the lag switch
+      panel.
+  - bugfix: Fixed comms console not acknowledging admin rejects.
+  - bugfix: Fix the space dragon's rift not healing the dragon.
+  OrionTheFox:
+  - bugfix: Catwalk Tiles will now properly show underfloor items
+  PositiveEntropy:
+  - imageadd: Resprites the Black, Red and Blue lawyer suits!
+  - expansion: Adds the Good Lawyer Suit, for those who truly want to be a CRIMINAL
+      lawyer!
+  - rscdel: Removes the Black Female Suit and Black Female Suit Skirt
+  RandomGamer123:
+  - bugfix: Certain pumps/filters in atmospherics and engineering now show their more
+      descriptive names which haven't been showing up properly for months.
+  Seris02:
+  - code_imp: better logic for plural_s()
+  Wallem:
+  - expansion: Glass & Reinforced glass floors are now craftable.
+  dragomagol:
+  - admin: hypnotized players now have a visible antag hud, are visible in the check
+      antag panel, and have objectives visible on the traitor panel
+  - expansion: hypnotized victims and their objectives are now visible on the round
+      end report
+  tralezab:
+  - rscdel: Batform is gone!
+  - rscadd: "...Replaced by vampire houses as a preference. Join your department as\
+      \ a vampire m\xE9nage!"
+  - bugfix: department order consoles include circuitboards
+2021-11-25:
+  Drag:
+  - expansion: Changes "says" to "chirps" for all slimeperson subtypes
+  Mothblocks:
+  - bugfix: Fixed vampire clan last names applying to everyone.
+  ShizCalev:
+  - bugfix: Fixed ghosts' boo ability going on cooldown when the light they tried
+      to flicker didn't flick
+  SuperNovaa41:
+  - bugfix: Armless people can now open emergency access doors.
+  - bugfix: You can tie your shoes in-hand again.
+  - bugfix: You can no longer try to tie lace-less shoes.
+  - bugfix: Toy shotguns (and toy crossbows) can be fired with only one hand again.
+  TheBonded:
+  - qol: Spades can now be used to dig up botanical soil plots as well as shovels.
+  - qol: Digging up botanical soil plots has been changed to a right click action.
+      Left clicking with a spade still uproots plants as expected.
+  tastyfish:
+  - bugfix: The captain is now at the top of the crew monitor again.
+  tralezab:
+  - bugfix: fixes non-chaplains being able to invoke rites
+  "\u041F\u0435\u043B\u044C\u043C\u0435\u0448\u043A\u0430":
+  - bugfix: You could see parallax over blackness
+2021-11-26:
+  BastardBlaster:
+  - bugfix: Cyborgs and those with rad immunity will no longer get the radiation burn
+      message when near something being dusted by the supermatter.
+  - spellcheck: Rewrote some messages when near something that was dusted by the SM
+  KathyRyals:
+  - balance: Heretics no longer gib their target when sacrificing them, instead outright
+      killing them and spilling all their organs everywhere in a gruesome manner.
+  Melbert:
+  - bugfix: Spading plants correctly updates the tray icon again
+  Mothblocks:
+  - rscadd: Added back dissection surgery, which can be used with an operating computer
+      to perform experiments for research.
+  - rscadd: Biological technology's requirement has been changed from scanning one
+      grey slime extract to performing a dissection surgery.
+  - rscadd: Advanced biotech's requirement has been changed from scanning three slime
+      extracts to performing a dissection surgery on a nonhuman.
+  - rscadd: Xeno-organ biology and Alien Biological Tools' now have additional discounts
+      for performing a dissection surgery on a xenomorph.
+  PositiveEntropy:
+  - imageadd: In no short effort of our best tailors, every Central Command outfit
+      have been either redesigned or reshaded! All of them!
+  TheBonded:
+  - qol: Chairs and beds are now deconstructed with right click, making them more
+      consistent with other object deconstructions.
+  itseasytosee:
+  - imageadd: added new sprites for the energy axe
+  jlsnow301:
+  - bugfix: 'Scams Deleted: You will no longer be charged full price for items listed
+      as discounted in the vendor.'
+2021-11-27:
+  Gandalf2k15:
+  - balance: Diagonal movement is now slightly faster
+  Ghommie:
+  - expansion: Gradients can now be applied to facial hair too.
+  - expansion: 'Two new hair gradients: Striped horizontal and Striped vertical.'
+  - bugfix: Fixed the dye kit missing a lot of checks which made it able to dye mobs
+      out of reach or while incapacitated.
+  - bugfix: Fixed clown mobs spawning banana peels on turfs they can't reach or while
+      inside objects.
+  - bugfix: Some things such as heretic influences won't spawn on open space anymore.
+  HarseTheef:
+  - bugfix: The space heater right click toggle now works correctly.
+  - bugfix: Pipe layer changes now occur on right + alt click
+  JohnFulpWillard:
+  - bugfix: Bots will no longer turn invisible when being turned on/off
+  Melbert:
+  - expansion: The Fission360 has been upgraded, operatives. Examining a tablet running
+      the Fission360 when a bomb is armed will show you the time remaining until detonation,
+      and it can now point back to the Infiltrator. Hopefully you'll stop missing
+      your pinpointers now.
+  - expansion: The Syndicate Infiltrator is now a point of interest in the orbit menu
+      that ghosts can jump to.
+  OrionTheFox:
+  - rscadd: Added new reskins of the Catwalk Tiles, which will blend better with other
+      types of floor! These can be selected via a radial on the base catwalk tile,
+      crafted with iron rods.
+  - expansion: Floorbots will automatically place catwalks when they're in a maintenance
+      area, and will repair damaged/burnt tiles rather than fully replacing them.
+  - bugfix: Floorbots will actually place a plating when repairing a breach with tiles,
+      rather than haphazardly laying a tile that has space below it.
+  cacogen:
+  - rscadd: Adds timezones to US Thanksgiving so it's active on the server when it's
+      celebrated in real life
+  carshalash:
+  - expansion: Abductors now have a limb grower to play with, for scientific purposes.
+      Brain traumas are no longer forced after abductions.
+  tralezab:
+  - bugfix: prison plates have fixed text in some interactions
+2021-11-28:
+  Ghommie:
+  - expansion: Falling for a pda bomb will now net you an achievement.
+  MMMiracles:
+  - expansion: Tramstation's Security has been transformed to accommodate a genpop
+      prisoners of all kinds to mingle together.
+  - rscadd: Genpop removes the usual isolated timed cells and adds the ability to
+      assign timers to prisoner IDs for holding them in a general prison area.
+  Mothblocks:
+  - bugfix: Fixed tend wounds being inacessible without an operating table + computer.
+  alexkar598:
+  - bugfix: Fixed the bitfield_to_field() proc not working
+  tf-4:
+  - code_imp: GAR glasses are now (mostly) subtypes rather than all their own thing
+  - qol: GAR glasses now layer above hair, rather than under it.
+2021-11-29:
+  Ghommie:
+  - bugfix: 'Fixed yet another couple TK teleportation tricks: airlock notes and cloth
+      cut from gauzes.'
+  - bugfix: The camera circuit will now actually work.
+  MMMiracles:
+  - bugfix: The Tramstation Tram no longer force unbuckles you from chairs/vehicles
+      when moving.
+  Pickle-Coding:
+  - spellcheck: Captain's wintercoat now has spaces separating between some words.
+  tralezab:
+  - rscadd: Malfunctioning Ais now roll for backstory, much like traitors!
+  - expansion: Malfunctioning Ais now get a unique antag panel!
+2021-11-30:
+  GoldenAlpharex:
+  - bugfix: Elevators are no longer defying the laws of physics and therefore can
+      no longer phase through ceilings or floors.
+  - bugfix: When an individual is interacting with an elevator and said elevator is
+      moved, their menu will be closed if they weren't the one to cause that move,
+      to prevent more physics-defying operations.
+  - code_imp: Improved the industrial lift code by adding documentation and trying
+      to enforce the coding standards in there while I was at it.
+  Krysonism:
+  - imageadd: The blast cannon & blast wave projectile has new sprites.
+  Melbert:
+  - rscadd: Deltastation - Service and arrivals complete revamp! Cargo tweaks!
+  Thunder12345:
+  - bugfix: Some erroneous green paint has been scraped off the hydroponics airlocks.

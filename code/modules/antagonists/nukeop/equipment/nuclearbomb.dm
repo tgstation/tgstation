@@ -1,3 +1,4 @@
+/// TRUE only if the station was actually hit by the nuke, otherwise FALSE
 GLOBAL_VAR_INIT(station_was_nuked, FALSE)
 GLOBAL_VAR(station_nuke_source)
 
@@ -424,6 +425,9 @@ GLOBAL_VAR(station_nuke_source)
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
+
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_ARMED, src)
+
 		countdown.start()
 		set_security_level("delta")
 	else
@@ -435,6 +439,9 @@ GLOBAL_VAR(station_nuke_source)
 			S.switch_mode_to(initial(S.mode))
 			S.alert = FALSE
 		countdown.stop()
+
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DISARMED, src)
+
 	update_appearance()
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
@@ -483,8 +490,11 @@ GLOBAL_VAR(station_nuke_source)
 	if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
-		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
+		else if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = NUKE_NEAR_MISS
+		else // station actually nuked
+			off_station = STATION_DESTROYED_NUKE
+			GLOB.station_was_nuked = TRUE
 	else if(bomb_location.onSyndieBase())
 		off_station = NUKE_SYNDICATE_BASE
 	else
@@ -493,9 +503,7 @@ GLOBAL_VAR(station_nuke_source)
 	if(off_station < NUKE_MISS_STATION)
 		SSshuttle.registerHostileEnvironment(src)
 		SSshuttle.lockdown = TRUE
-
 	//Cinematic
-	GLOB.station_was_nuked = TRUE
 	GLOB.station_nuke_source = off_station
 	really_actually_explode(off_station)
 	SSticker.roundend_check_paused = FALSE

@@ -252,7 +252,7 @@
 	. += span_notice("This station will create a pod for you to ride, no need to wait for one.")
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
-	if(!(istype(AM) && AM.dir == boarding_dir))
+	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
 		return
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
 	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
