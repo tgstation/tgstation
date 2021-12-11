@@ -268,10 +268,9 @@
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
 	. = ..()
 	if(.)
-		return TRUE
+		return
 
 	bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
-	return FALSE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.

@@ -145,7 +145,8 @@
 /mob/living/simple_animal/bot/floorbot/ui_act(action, params)
 	. = ..()
 	if(.)
-		return TRUE
+		return
+
 	switch(action)
 		if("place_custom")
 			replacetiles = !replacetiles
@@ -173,7 +174,6 @@
 					targetdirection = 8
 				if("disable")
 					targetdirection = null
-	return FALSE
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
 	if(!..())

@@ -421,9 +421,9 @@
 		else
 			if(attacking_item.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
-			..()
+	..()
 
-/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)
@@ -924,7 +924,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
 			if(!(issilicon(usr) || isAdminGhostAI(usr)))
-				return TRUE
+				return
 			if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 				bot_cover_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED|BOT_COVER_LOCKED)
 				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
@@ -942,7 +942,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			if(paicard)
 				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
 				ejectpai(usr)
-	return FALSE
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][get_bot_flag(BOT_MODE_ON)]"

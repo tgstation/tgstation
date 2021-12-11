@@ -385,7 +385,8 @@
 /mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
 	. = ..()
 	if(.)
-		return TRUE
+		return
+
 	switch(action)
 		if("clean_blood")
 			blood = !blood
@@ -396,4 +397,3 @@
 		if("clean_graffiti")
 			drawn = !drawn
 	get_targets()
-	return
