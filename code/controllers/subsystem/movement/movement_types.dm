@@ -43,7 +43,12 @@
 /datum/move_loop/proc/start_loop()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
-	src.timer = world.time + delay
+	//If this is our first time starting to move with this loop
+	//And we're meant to start instantly
+	if(!timer && flags & MOVEMENT_LOOP_START_FAST)
+		timer = world.time
+		return
+	timer = world.time + delay
 
 /datum/move_loop/proc/stop_loop()
 	SHOULD_CALL_PARENT(TRUE)
@@ -61,6 +66,11 @@
 	controller = null
 	extra_info = null
 	return ..()
+
+///Exists as a helper so outside code can modify delay while also modifying timer
+/datum/move_loop/proc/set_delay(new_delay)
+	delay = new_delay
+	timer = world.time + delay
 
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay
@@ -130,7 +140,7 @@
 
 
 /**
- * Like walk(), but it uses byond's pathfinding on a step by step basis
+ * Like move(), but it uses byond's pathfinding on a step by step basis
  *
  * Returns TRUE if the loop sucessfully started, or FALSE if it failed
  *
@@ -151,6 +161,30 @@
 
 /datum/move_loop/move/move_to/move()
 	. = step_to(moving, get_step(moving, direction))
+
+
+/**
+ * Like move(), but we don't care about collision at all
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * direction - The direction we want to move in
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+**/
+/datum/controller/subsystem/move_manager/proc/force_move_dir(moving, direction, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/move/force, priority, flags, extra_info, delay, timeout, direction)
+
+/datum/move_loop/move/force
+
+/datum/move_loop/move/force/move()
+	. = moving.forceMove(get_step(moving, direction))
 
 
 /datum/move_loop/has_target
