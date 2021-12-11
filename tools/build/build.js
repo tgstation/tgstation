@@ -271,7 +271,7 @@ const prependDefines = (...defines) => {
 };
 
 export const TgsTarget = new Juke.Target({
-  dependsOn: [TguiTarget, TgFontTarget],
+  // dependsOn: [TguiTarget, TgFontTarget],
   executes: async () => {
     throw new Error("Mothblocks wuz here");
     Juke.logger.info('Prepending TGS define');
