@@ -630,7 +630,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = stripped_multiline_input(U, "Please enter message", name, note)
+				var/n = tgui_input_text(U, "Please enter message", name, note, multiline = TRUE)
 				if (in_range(src, U) && loc == U)
 					if (ui_mode == PDA_UI_NOTEKEEPER && n)
 						note = n

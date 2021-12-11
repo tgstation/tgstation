@@ -316,7 +316,7 @@
 		if("setid")
 			var/new_id
 			if(pda)
-				new_id = stripped_input(user, "Enter ID:", name, id, MAX_NAME_LEN)
+				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
 			else
 				new_id = params["value"]
 			if(new_id)
