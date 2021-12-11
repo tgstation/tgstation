@@ -1221,7 +1221,7 @@
 	. = ..()
 	if(href_list[VV_HK_ADD_REAGENT] && check_rights(R_VAREDIT))
 		if(!reagents)
-			var/amount = input(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50) as num|null
+			var/amount = tgui_input_number(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50)
 			if(amount)
 				create_reagents(amount)
 
@@ -1231,7 +1231,7 @@
 				if("Search")
 					var/valid_id
 					while(!valid_id)
-						chosen_id = input(usr, "Enter the ID of the reagent you want to add.", "Search reagents") as null|text
+						chosen_id = tgui_input_number(usr, "ID of the reagent you want to add", "Search reagents")
 						if(isnull(chosen_id)) //Get me out of here!
 							break
 						if (!ispath(text2path(chosen_id)))
@@ -1243,11 +1243,11 @@
 						if(!valid_id)
 							to_chat(usr, span_warning("A reagent with that ID doesn't exist!"))
 				if("Choose from a list")
-					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
+					chosen_id = tgui_input_list(usr, "Reagent to add", "Reagent", sort_list(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc))
 				if("I'm feeling lucky")
 					chosen_id = pick(subtypesof(/datum/reagent))
 			if(chosen_id)
-				var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume) as num|null
+				var/amount = tgui_input_number(usr, "Amount to add", "Amount", max_value = reagents.maximum_volume)
 				if(amount)
 					reagents.add_reagent(chosen_id, amount)
 					log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to [src]")
@@ -1266,31 +1266,31 @@
 	if(href_list[VV_HK_ADD_AI])
 		if(!check_rights(R_VAREDIT))
 			return
-		var/result = input(usr, "Choose the AI controller to apply to this atom WARNING: Not all AI works on all atoms.", "AI controller") as null|anything in subtypesof(/datum/ai_controller)
+		var/result = tgui_input_list(usr, "Choose the AI controller to apply to this atom. WARNING: Not all AI works on all atoms.", "AI controller", subtypesof(/datum/ai_controller))
 		if(!result)
 			return
 		ai_controller = new result(src)
 
 	if(href_list[VV_HK_MODIFY_TRANSFORM] && check_rights(R_VAREDIT))
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate")
+		var/result = tgui_alert(usr, "Choose the transformation to apply", "Transform Mod", list("Scale","Translate","Rotate"))
 		var/matrix/M = transform
 		if(!result)
 			return
 		switch(result)
 			if("Scale")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = tgui_input_number(usr, "Choose x mod"," Transform Mod", min_value = null)
+				var/y = tgui_input_number(usr, "Choose y mod", "Transform Mod", min_value = null)
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Scale(x,y)
 			if("Translate")
-				var/x = input(usr, "Choose x mod (negative = left, positive = right)","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod (negative = down, positive = up)","Transform Mod") as null|num
+				var/x = tgui_input_number(usr, "Choose x mod (negative = left, positive = right)", "Transform Mod", min_value = null)
+				var/y = tgui_input_number(usr, "Choose y mod (negative = down, positive = up)", "Transform Mod", min_value = null)
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Translate(x,y)
 			if("Rotate")
-				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+				var/angle = tgui_input_number(usr, "Choose angle to rotate", "Transform Mod", min_value = null)
 				if(isnull(angle))
 					return
 				transform = M.Turn(angle)
@@ -1298,7 +1298,7 @@
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
 
 	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
-		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
+		var/newname = tgui_input_text(usr, "What do you want to rename this to?", "Automatic Rename")
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
 		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)

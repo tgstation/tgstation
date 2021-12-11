@@ -484,16 +484,14 @@
 	. = FALSE
 	var/datum/bank_account/old_account = registered_account
 
-	var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num | null
+	var/new_bank_id = tgui_input_number(user, "Enter your account ID number", "Account Reclamation", 111111, 999999, 111111)
 
 	if (isnull(new_bank_id))
 		return
 
 	if(!alt_click_can_use_id(user))
 		return
-	if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
-		to_chat(user, span_warning("The account ID number needs to be between 111111 and 999999."))
-		return
+
 	if (registered_account && registered_account.account_id == new_bank_id)
 		to_chat(user, span_warning("The account ID was already assigned to this card."))
 		return
@@ -524,7 +522,7 @@
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
 
-	var/amount_to_remove = FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove = FLOOR(tgui_input_number(user, "How much do you want to withdraw?", "Withdraw Funds", 5, registered_account.account_balance), 1)
 
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
@@ -983,12 +981,12 @@
 			STOP_PROCESSING(SSobj, src)
 			to_chat(user, "Restating prisoner ID to default parameters.")
 			return
-		time_to_assign = input(user,"Set sentence time in seconds.","Set sentence time in seconds.",0) as num|null
+		time_to_assign = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
 		if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
 		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
 		timed = TRUE
-		
+
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)
@@ -1266,7 +1264,7 @@
 			return
 		if(popup_input == "Forge/Reset")
 			if(!forged)
-				var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+				var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
 				input_name = sanitize_name(input_name)
 				if(!input_name)
 					// Invalid/blank names give a randomly generated one.
@@ -1294,15 +1292,15 @@
 							trim_list[fake_trim_name] = trim_path
 
 					var/selected_trim_path
-					selected_trim_path = input("Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", selected_trim_path) as null|anything in sort_list(trim_list, /proc/cmp_typepaths_asc)
+					selected_trim_path = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", sort_list(trim_list, /proc/cmp_typepaths_asc))
 					if(selected_trim_path)
 						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
 
-				var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
+				var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant")
 				if(target_occupation)
 					assignment = target_occupation
 
-				var/new_age = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
+				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", max_value = AGE_MAX, min_value = AGE_MIN)
 				if(new_age)
 					registered_age = max(round(text2num(new_age)), 0)
 

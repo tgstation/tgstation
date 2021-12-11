@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	else
 		var/A
 
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sort_names(possible_beacons)
+		A = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
 
 		if(!A)
 			return

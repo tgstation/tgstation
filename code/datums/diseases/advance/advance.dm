@@ -474,7 +474,7 @@
 
 		var/list/targets = list("Random")
 		targets += sort_names(GLOB.human_list)
-		var/target = input(user, "Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
+		var/target = tgui_input_list(user, "Viable human target", "Disease Target", targets)
 
 		var/mob/living/carbon/human/H
 		if(!target)

@@ -44,7 +44,7 @@
 
 	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
-	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
+	var/selected = tgui_input_list(usr, "Investigate what?", "Investigation", combined)
 
 	if(!(selected in combined) || selected == "---")
 		return

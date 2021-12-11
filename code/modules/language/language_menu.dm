@@ -85,7 +85,7 @@
 		if("grant_language")
 			if((is_admin || isobserver(AM)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
-				var/choice = input(user,"How do you want to add this language?","[language_datum]",null) as null|anything in choices
+				var/choice = tgui_input_list(user, "How do you want to add this language?", "[language_datum]", choices)
 				var/spoken = FALSE
 				var/understood = FALSE
 				switch(choice)
@@ -108,7 +108,7 @@
 		if("remove_language")
 			if((is_admin || isobserver(AM)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
-				var/choice = input(user,"Which part do you wish to remove?","[language_datum]",null) as null|anything in choices
+				var/choice = tgui_input_list(user, "Which part do you wish to remove?", "[language_datum]", choices)
 				var/spoken = FALSE
 				var/understood = FALSE
 				switch(choice)

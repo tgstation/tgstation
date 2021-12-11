@@ -584,7 +584,7 @@ What a mess.*/
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
-					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
+					var/wanted_name = tgui_input_text(usr, "Enter an alias for the criminal", "Print Wanted Poster", active1.fields["name"])
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
 						var/list/crimes = active2.fields["crim"]
@@ -594,9 +594,9 @@ What a mess.*/
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
-						var/headerText = stripped_input(usr, "Please enter Poster Heading (Max 7 Chars):", "Print Wanted Poster", "WANTED", 8)
+						var/headerText = tgui_input_text(usr, "Enter Poster Heading", "Print Wanted Poster", "WANTED", 8)
 
-						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
+						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Wanted Poster", default_description, multiline = TRUE)
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 							printing = 1
@@ -607,13 +607,13 @@ What a mess.*/
 							printing = 0
 			if("Print Missing")
 				if(!( printing ))
-					var/missing_name = stripped_input(usr, "Please enter an alias for the missing person:", "Print Missing Persons Poster", active1.fields["name"])
+					var/missing_name = tgui_input_text(usr, "Enter an alias for the missing person", "Print Missing Persons Poster", active1.fields["name"])
 					if(missing_name)
 						var/default_description = "A poster declaring [missing_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
 
-						var/headerText = stripped_input(usr, "Please enter Poster Heading (Max 7 Chars):", "Print Missing Persons Poster", "MISSING", 8)
+						var/headerText = tgui_input_text(usr, "Enter Poster Heading (Max 7 Chars)", "Print Missing Persons Poster", "MISSING", 8)
 
-						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Missing Persons Poster", default_description, null)
+						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Missing Persons Poster", default_description, multiline = TRUE)
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 							printing = 1
@@ -641,7 +641,7 @@ What a mess.*/
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
+				var/t1 = tgui_input_text(usr, "Add Comment", "Security Records", multiline = TRUE)
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1
@@ -735,7 +735,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input name:", "Secure. records", active1.fields["name"], MAX_MESSAGE_LEN)
+							var/t1 = tgui_input_text(usr, "Input name", "Security Records", active1.fields["name"], MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -744,7 +744,7 @@ What a mess.*/
 								active2.fields["name"] = t1
 					if("id")
 						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input id:", "Secure. records", active1.fields["id"], null)
+							var/t1 = tgui_input_text(usr, "Input id", "Security Records", active1.fields["id"])
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -753,7 +753,7 @@ What a mess.*/
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)
+							var/t1 = tgui_input_text(usr, "Input fingerprint hash", "Security Records", active1.fields["fingerprint"])
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1
@@ -767,7 +767,7 @@ What a mess.*/
 								active1.fields["gender"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num|null
+							var/t1 = tgui_input_number(usr, "Input age", "Security records", active1.fields["age"])
 
 							if (!t1)
 								return
@@ -777,7 +777,7 @@ What a mess.*/
 							active1.fields["age"] = t1
 					if("species")
 						if(istype(active1, /datum/data/record))
-							var/t1 = input("Select a species", "Species Selection") as null|anything in get_selectable_species()
+							var/t1 = tgui_input_list(usr, "Select a species", "Species Selection", get_selectable_species())
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
@@ -827,8 +827,8 @@ What a mess.*/
 								print_photo(P.picture.picture_image, active1.fields["name"])
 					if("crim_add")
 						if(istype(active1, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please input crime names:", "Secure. records", "", null)
-							var/t2 = stripped_input(usr, "Please input crime details:", "Secure. records", "", null)
+							var/t1 = tgui_input_text(usr, "Input crime names", "Security Records")
+							var/t2 = tgui_input_text(usr, "Input crime details", "Security Records", multiline = TRUE)
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
@@ -843,7 +843,7 @@ What a mess.*/
 					if("add_details")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
-								var/t1 = stripped_input(usr, "Please input crime details:", "Secure. records", "", null)
+								var/t1 = tgui_input_text(usr, "Input crime details", "Security Records", multiline = TRUE)
 								if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 									return
 								GLOB.data_core.addCrimeDetails(active1.fields["id"], href_list["cdataid"], t1)
@@ -852,16 +852,12 @@ What a mess.*/
 						if(istype(active1, /datum/data/record))
 							var/maxFine = CONFIG_GET(number/maxfine)
 
-							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
-							var/fine = FLOOR(input(usr, "Please input citation fine, up to [maxFine]:", "Secure. records", 50) as num|null, 1)
+							var/t1 = tgui_input_text(usr, "Input citation crime", "Security Records")
+							var/fine = FLOOR(tgui_input_number(usr, "Input citation fine", "Security Records", 50, max_value = maxFine), 1)
 
 							if (isnull(fine))
 								return
 							fine = min(fine, maxFine)
-
-							if(fine < 0)
-								to_chat(usr, span_warning("You're pretty sure that's not how money works."))
-								return
 
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
@@ -890,7 +886,7 @@ What a mess.*/
 								GLOB.data_core.removeCitation(active1.fields["id"], href_list["cdataid"])
 					if("notes")
 						if(istype(active2, /datum/data/record))
-							var/t1 = stripped_input(usr, "Please summarize notes:", "Secure. records", active2.fields["notes"], null)
+							var/t1 = tgui_input_text(usr, "Please summarize notes", "Security Records", active2.fields["notes"])
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							active2.fields["notes"] = t1

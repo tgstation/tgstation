@@ -561,7 +561,7 @@
 		display_vending_names_paths = list()
 		for(var/path in vending_names_paths)
 			display_vending_names_paths[vending_names_paths[path]] = path
-	var/choice = input(user, "Choose a new brand", "Select an Item") as null|anything in sort_list(display_vending_names_paths)
+	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(display_vending_names_paths))
 	set_type(display_vending_names_paths[choice])
 	return TRUE
 
@@ -731,7 +731,7 @@
 
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
-	var/new_cost = input("Set a new cost for using this medical kiosk.", "New cost", custom_cost) as num|null
+	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk.", "Pricing", custom_cost)
 	if(!new_cost || (loc != user))
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
 		return

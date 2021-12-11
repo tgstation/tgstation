@@ -697,14 +697,14 @@
 				rolelist_dict = list("CANCEL", "FINISH") + rolelist_dict
 				while(!done)
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
-					var/chosen_role_name = input(usr,"Select a role!","Custom Setup Creation",rolelist_dict[1]) as null|anything in rolelist_dict
+					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
 					if(chosen_role_name == "CANCEL")
 						return
 					if(chosen_role_name == "FINISH")
 						break
 					var/found_path = rolelist_dict[chosen_role_name]
-					var/role_count = input(usr,"How many? Zero to cancel.","Custom Setup Creation",0) as null|num
-					if(role_count > 0)
+					var/role_count = tgui_input_number(usr, "How many?", "Custom Setup Creation")
+					if(role_count)
 						debug_setup[found_path] = role_count
 				custom_setup = debug_setup
 				try_autostart()//don't worry, this fails if there's a game in progress
