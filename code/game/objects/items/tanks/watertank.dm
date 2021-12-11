@@ -318,6 +318,7 @@
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5)
+		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/resin_stop_check)
 		RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/resin_landed)
 		return
 
@@ -337,8 +338,16 @@
 			to_chat(user, span_warning("Resin foam mix is still being synthesized..."))
 			return
 
+/obj/item/extinguisher/mini/nozzle/proc/resin_stop_check(datum/move_loop/source, succeeded)
+	SIGNAL_HANDLER
+	if(succeeded)
+		return
+	resin_landed(source)
+	qdel(source)
+
 /obj/item/extinguisher/mini/nozzle/proc/resin_landed(datum/move_loop/source)
-	if(!istype(source.moving, /obj/effect/resin_container))
+	SIGNAL_HANDLER
+	if(!istype(source.moving, /obj/effect/resin_container) || QDELETED(source.moving))
 		return
 	var/obj/effect/resin_container/resin = source.moving
 	resin.Smoke()
