@@ -35,34 +35,31 @@
 	botcount = 0
 	current_user = user
 
-	for(var/mob/living/simple_animal/bot/Bot as anything in GLOB.bots_list)
-		if(Bot.z != zlevel || !(Bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
+		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer)
-			if(!Bot.check_access(current_user)) // Only check Bots we can access
-				continue
+		if(computer && !simple_bot.check_access(current_user) // Only check Bots we can access)
+			continue
 		var/list/newbot = list(
-			"name" = Bot.name,
-			"mode" = Bot.get_mode_ui(),
-			"model" = Bot.bot_type,
-			"locat" = get_area(Bot),
-			"bot_ref" = REF(Bot),
+			"name" = simple_bot.name,
+			"mode" = simple_bot.get_mode_ui(),
+			"model" = simple_bot.bot_type,
+			"locat" = get_area(simple_bot),
+			"bot_ref" = REF(simple_bot),
 			"mule_check" = FALSE,
 		)
-		if(Bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/MULE = Bot
-			mulelist += list(
-				list(
-					"name" = MULE.name,
-					"dest" = MULE.destination,
-					"power" = MULE.cell ? MULE.cell.percent() : 0,
-					"home" = MULE.home_destination,
-					"autoReturn" = MULE.auto_return,
-					"autoPickup" = MULE.auto_pickup,
-					"reportDelivery" = MULE.report_delivery,
-					"mule_ref" = REF(MULE),
-				),
-			)
+		if(simple_bot.bot_type == MULE_BOT)
+			var/mob/living/simple_animal/bot/mulebot/MULE = simple_bot
+			mulelist += list(list(
+				"name" = MULE.name,
+				"dest" = MULE.destination,
+				"power" = MULE.cell ? MULE.cell.percent() : 0,
+				"home" = MULE.home_destination,
+				"autoReturn" = MULE.auto_return,
+				"autoPickup" = MULE.auto_pickup,
+				"reportDelivery" = MULE.report_delivery,
+				"mule_ref" = REF(MULE),
+			))
 			if(MULE.load)
 				data["load"] = MULE.load.name
 			newbot["mule_check"] = TRUE
