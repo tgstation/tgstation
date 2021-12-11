@@ -13,6 +13,55 @@
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
 
+//No department
+#define JOB_ASSISTANT "Assistant"
+#define JOB_PRISONER "Prisoner"
+//Command
+#define JOB_CAPTAIN "Captain"
+#define JOB_HEAD_OF_PERSONNEL "Head of Personnel"
+#define JOB_HEAD_OF_SECURITY "Head of Security"
+#define JOB_RESEARCH_DIRECTOR "Research Director"
+#define JOB_CHIEF_ENGINEER "Chief Engineer"
+#define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+//Silicon
+#define JOB_AI "AI"
+#define JOB_CYBORG "Cyborg"
+//Security
+#define JOB_WARDEN "Warden"
+#define JOB_DETECTIVE "Detective"
+#define JOB_SECURITY_OFFICER "Security Officer"
+#define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
+#define JOB_SECURITY_OFFICER_ENGINEERING "Security Officer (Engineering)"
+#define JOB_SECURITY_OFFICER_SCIENCE "Security Officer (Science)"
+#define JOB_SECURITY_OFFICER_SUPPLY "Security Officer (Cargo)"
+//Engineering
+#define JOB_STATION_ENGINEER "Station Engineer"
+#define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
+//Medical
+#define JOB_MEDICAL_DOCTOR "Medical Doctor"
+#define JOB_PARAMEDIC "Paramedic"
+#define JOB_CHEMIST "Chemist"
+#define JOB_VIROLOGIST "Virologist"
+//Science
+#define JOB_SCIENTIST "Scientist"
+#define JOB_ROBOTICIST "Roboticist"
+#define JOB_GENETICIST "Geneticist"
+//Supply
+#define JOB_QUARTERMASTER "Quartermaster"
+#define JOB_CARGO_TECHNICIAN "Cargo Technician"
+#define JOB_SHAFT_MINER "Shaft Miner"
+//Service
+#define JOB_BARTENDER "Bartender"
+#define JOB_BOTANIST "Botanist"
+#define JOB_COOK "Cook"
+#define JOB_JANITOR "Janitor"
+#define JOB_CLOWN "Clown"
+#define JOB_MIME "Mime"
+#define JOB_CURATOR "Curator"
+#define JOB_LAWYER "Lawyer"
+#define JOB_CHAPLAIN "Chaplain"
+#define JOB_PSYCHOLOGIST "Psychologist"
+
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
 #define JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL 3
@@ -51,6 +100,7 @@
 
 
 #define DEPARTMENT_UNASSIGNED "No department assigned"
+
 #define DEPARTMENT_BITFLAG_SECURITY (1<<0)
 #define DEPARTMENT_SECURITY "Security"
 #define DEPARTMENT_BITFLAG_COMMAND (1<<1)

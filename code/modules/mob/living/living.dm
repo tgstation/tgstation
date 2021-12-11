@@ -1164,7 +1164,7 @@
 			if(issilicon(new_mob))
 				new_mob.gender = gender
 				new_mob.invisibility = 0
-				new_mob.job = "Cyborg"
+				new_mob.job = JOB_CYBORG
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.lawupdate = FALSE
 				Robot.connected_ai = null

@@ -22,7 +22,7 @@
 	minbodytemp = 0
 	status_flags = CANPUSH
 	del_on_death = 1
-	var/zombiejob = "Medical Doctor"
+	var/zombiejob = JOB_MEDICAL_DOCTOR
 	var/infection_chance = 0
 	var/obj/effect/mob_spawn/human/corpse/delayed/corpse
 
