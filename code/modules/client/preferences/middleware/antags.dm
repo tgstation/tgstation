@@ -112,8 +112,8 @@
 /datum/asset/spritesheet/antagonists/register()
 	// Antagonists that don't have a dynamic ruleset, but do have a preference
 	var/static/list/non_ruleset_antagonists = list(
-		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
+		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
 	)
 
 	var/list/antagonists = non_ruleset_antagonists.Copy()
