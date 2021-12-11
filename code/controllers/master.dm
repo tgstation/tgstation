@@ -353,7 +353,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = TICK_USAGE
 
-		average_starting_tick_usage = MC_AVERAGE(average_starting_tick_usage, starting_tick_usage)
+		average_starting_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_starting_tick_usage, starting_tick_usage)
 
 		if (processing <= 0)
 			current_ticklimit = TICK_LIMIT_RUNNING
