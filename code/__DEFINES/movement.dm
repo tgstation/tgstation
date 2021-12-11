@@ -16,9 +16,9 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define DELAY_TO_GLIDE_SIZE(delay) (clamp(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
 
 ///Similar to DELAY_TO_GLIDE_SIZE, except without the clamping, and it supports piping in an unrelated scalar
-#define MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, movement_disparity) (32 / ((delay) / world.tick_lag) * movement_disparity)
+#define MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, movement_disparity) (32 / ((delay) / world.tick_lag) * movement_disparity * GLOB.glide_size_multiplier)
 
-//Movement subsystem priority. Only one loop can run at a time, this dictates that
+//Movement loop priority. Only one loop can run at a time, this dictates that
 // Higher numbers beat lower numbers
 ///Standard, go lower then this if you want to override, higher otherwise
 #define MOVEMENT_DEFAULT_PRIORITY 10
