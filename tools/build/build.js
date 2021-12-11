@@ -135,7 +135,6 @@ export const TgFontTarget = new Juke.Target({
   outputs: [
     'tgui/packages/tgfont/dist/tgfont.css',
     'tgui/packages/tgfont/dist/tgfont.eot',
-    'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
   executes: () => yarn('tgfont:build'),
 });
