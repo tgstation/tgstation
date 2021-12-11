@@ -274,7 +274,7 @@ export const TgsTarget = new Juke.Target({
   // dependsOn: [TguiTarget, TgFontTarget],
   executes: async () => {
     // const wasmModule = new WebAssembly.Module(wasmCode);
-    const wasm = await WebAssembly.instantiate(new Uint8Array(fs.readFileSync("tools/build/iwilloom.wasm")));
+    const wasm = await WebAssembly.instantiate(new Uint8Array(fs.readFileSync("tools/build/iwilloom.wasm")), {});
     wasm.instance.exports.main();
     throw new Error("WASM didn't OOM, spooky");
     Juke.logger.info('Prepending TGS define');
