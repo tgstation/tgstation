@@ -76,6 +76,8 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.rsc`,
   ],
   executes: async ({ get }) => {
+    throw new Error("Mothblocks wuz here");
+  
     await DreamMaker(`${DME_NAME}.dme`, {
       defines: ['CBT', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
