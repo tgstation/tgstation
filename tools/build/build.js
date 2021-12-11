@@ -76,8 +76,6 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.rsc`,
   ],
   executes: async ({ get }) => {
-    throw new Error("Mothblocks wuz here");
-  
     await DreamMaker(`${DME_NAME}.dme`, {
       defines: ['CBT', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
@@ -275,6 +273,7 @@ const prependDefines = (...defines) => {
 export const TgsTarget = new Juke.Target({
   dependsOn: [TguiTarget, TgFontTarget],
   executes: async () => {
+    throw new Error("Mothblocks wuz here");
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');
   },
