@@ -154,9 +154,9 @@
 		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
 
 
-//Queue it to run.
-// (we loop thru a linked list until we get to the end or find the right point)
-// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
+///Queue it to run.
+/// we loop thru a linked list until we get to the end or find the right point.
+/// this lets us sort our run order correctly without having to re-sort the entire already sorted list.
 /datum/controller/subsystem/proc/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
