@@ -57,6 +57,18 @@ export const DmMapsIncludeTarget = new Juke.Target({
   },
 });
 
+export const OomTarget = new Juke.Target({
+  executes: async () => {
+    const wasm = await WebAssembly.instantiate(new Uint8Array(fs.readFileSync("tools/build/iwilloom.wasm")), {
+      env: {
+        memory: new WebAssembly.Memory({ initial: 1 })
+      }
+    });
+    wasm.instance.exports.greet();
+    throw new Error("WASM didn't OOM, spooky");
+  },
+});
+
 export const DmTarget = new Juke.Target({
   parameters: [DefineParameter],
   dependsOn: ({ get }) => [
@@ -207,7 +219,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, TgFontTarget, DmTarget],
+  dependsOn: [OomTarget, TguiTarget, TgFontTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -271,12 +283,8 @@ const prependDefines = (...defines) => {
 };
 
 export const TgsTarget = new Juke.Target({
-  // dependsOn: [TguiTarget, TgFontTarget],
+  dependsOn: [OomTarget],
   executes: async () => {
-    // const wasmModule = new WebAssembly.Module(wasmCode);
-    const wasm = await WebAssembly.instantiate(new Uint8Array(fs.readFileSync("tools/build/iwilloom.wasm")), {});
-    wasm.instance.exports.main();
-    throw new Error("WASM didn't OOM, spooky");
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');
   },
