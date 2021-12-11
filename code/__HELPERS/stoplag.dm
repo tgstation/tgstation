@@ -1,4 +1,3 @@
-//Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm. - Now with a dedicated file!
 
 ///Increases delay as the server gets more overloaded, as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
 #define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta-1,1)), 1)
