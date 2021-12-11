@@ -369,28 +369,31 @@
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	armor_value = round(armor_value,10) / 10
+	var/sign = ""
+	if (armor_value < 0)
+		sign = "-"
+	armor_value = round(abs(armor_value), 10) / 10
 	switch (armor_value)
 		if (1)
-			. = "I"
+			. = sign + "I"
 		if (2)
-			. = "II"
+			. = sign + "II"
 		if (3)
-			. = "III"
+			. = sign + "III"
 		if (4)
-			. = "IV"
+			. = sign + "IV"
 		if (5)
-			. = "V"
+			. = sign + "V"
 		if (6)
-			. = "VI"
+			. = sign + "VI"
 		if (7)
-			. = "VII"
+			. = sign + "VII"
 		if (8)
-			. = "VIII"
+			. = sign + "VIII"
 		if (9)
-			. = "IX"
+			. = sign + "IX"
 		if (10 to INFINITY)
-			. = "X"
+			. = sign + "X"
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)

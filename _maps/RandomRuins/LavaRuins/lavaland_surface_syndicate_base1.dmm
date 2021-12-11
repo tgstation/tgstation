@@ -2670,7 +2670,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/turretid{
 	ailock = 1;
-	control_area = "/area/ruin/unpowered/syndicate_lava_base/main";
+	control_area = "/area/ruin/syndicate_lava_base/main";
 	dir = 1;
 	icon_state = "control_kill";
 	lethal = 1;

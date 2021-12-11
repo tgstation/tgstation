@@ -1,5 +1,7 @@
 /datum/job/shaft_miner
 	title = "Shaft Miner"
+	description = "Travel to strange lands. Mine ores. \
+		Meet strange creatures. Kill them for their gold."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 3

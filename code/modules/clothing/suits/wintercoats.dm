@@ -24,6 +24,7 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
+		/obj/item/storage/bag/books,
 	)
 
 /obj/item/clothing/head/hooded/winterhood
@@ -217,6 +218,10 @@
 	inhand_icon_state = "coatchemistry"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 
+/obj/item/clothing/suit/hooded/wintercoat/medical/chemistry/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/storage/bag/chemistry
+
 /obj/item/clothing/head/hooded/winterhood/medical/chemistry
 	desc = "A white winter coat hood."
 	icon_state = "hood_chemistry"
@@ -228,6 +233,10 @@
 	icon_state = "coatviro"
 	inhand_icon_state = "coatviro"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/viro
+
+/obj/item/clothing/suit/hooded/wintercoat/medical/viro/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/storage/bag/bio
 
 /obj/item/clothing/head/hooded/winterhood/medical/viro
 	desc = "A white winter coat hood with green markings."
@@ -262,6 +271,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/pill_bottle,
+		/obj/item/storage/bag/bio,
 	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
@@ -327,6 +337,7 @@
 		/obj/item/construction/rcd,
 		/obj/item/pipe_dispenser,
 		/obj/item/t_scanner,
+		/obj/item/storage/bag/construction,
 	)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
@@ -416,6 +427,7 @@
 		/obj/item/resonator,
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
+		/obj/item/storage/bag/ore,
 	)
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner

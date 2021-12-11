@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	/// String name of owner
 	var/owner = null
-	/// Access level defined by cartridge
+	/// Typepath of the default cartridge to use
 	var/default_cartridge = 0
 	/// Current cartridge
 	var/obj/item/cartridge/cartridge = null
@@ -97,8 +97,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-
+	//This is the typepath to load "into" the pda
+	var/obj/item/insert_type = /obj/item/pen
+	//This is the currently inserted item
+	var/obj/item/inserted_item
 	var/underline_flag = TRUE //flag for underline
 
 /obj/item/pda/suicide_act(mob/living/carbon/user)
@@ -128,14 +130,25 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	GLOB.PDAs += src
 	if(default_cartridge)
-		cartridge = new default_cartridge(src)
-	if(inserted_item)
-		inserted_item = new inserted_item(src)
-	else
-		inserted_item = new /obj/item/pen(src)
+		cartridge = SSwardrobe.provide_type(default_cartridge, src)
+		cartridge.host_pda = src
+	if(insert_type)
+		inserted_item = SSwardrobe.provide_type(insert_type, src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	update_appearance()
+
+/obj/item/pda/Destroy()
+	GLOB.PDAs -= src
+	if(istype(id))
+		QDEL_NULL(id)
+	if(istype(cartridge))
+		QDEL_NULL(cartridge)
+	if(istype(pai))
+		QDEL_NULL(pai)
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
+	return ..()
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
@@ -159,6 +172,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
 			equipped = TRUE
+
+/obj/item/pda/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cartridge)
+		cartridge.host_pda = null
+		cartridge = null
+	if(gone == inserted_item)
+		inserted_item = null
 
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -401,7 +422,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						var/exp = targetmind.get_skill_exp(type)
 						var/xp_prog_to_level = targetmind.exp_needed_to_level_up(type)
 						var/xp_req_to_level = 0
-						if (xp_prog_to_level)//is it even possible to level up?
+						if (xp_prog_to_level && lvl_num < length(SKILL_EXP_LIST)) // is it even possible to level up?
 							xp_req_to_level = SKILL_EXP_LIST[lvl_num+1] - SKILL_EXP_LIST[lvl_num]
 						dat += "<HR><b>[S.name]</b>"
 						dat += "<br><i>[S.desc]</i>"
@@ -587,7 +608,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("Drone Phone")
-				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				var/alert_s = tgui_input_list(U, "Alert severity level", "Ping Drones", list("Low","Medium","High","Critical"))
 				var/area/A = get_area(U)
 				if(A && alert_s && !QDELETED(U))
 					var/msg = span_boldnotice("NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!")
@@ -678,6 +699,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						pai.attack_self(U)
 					if("2") // Eject pAI device
 						usr.put_in_hands(pai)
+						pai.slotted = FALSE
 						to_chat(usr, span_notice("You remove the pAI from the [name]."))
 
 //SKILL FUNCTIONS===================================
@@ -966,9 +988,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 
 	if(inserted_item)
-		user.put_in_hands(inserted_item)
 		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
-		inserted_item = null
+		user.put_in_hands(inserted_item) //Don't need to manage the pen ref, handled on Exited()
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
@@ -978,11 +999,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK disabled to stop cartridge teleporting into hand
 		return
 	if (!isnull(cartridge))
-		user.put_in_hands(cartridge)
 		to_chat(user, span_notice("You eject [cartridge] from [src]."))
+		user.put_in_hands(cartridge) //We don't manage reference clearing here, dealt with in Exited()
 		scanmode = PDA_SCANNER_NONE
-		cartridge.host_pda = null
-		cartridge = null
 		updateSelfDialog()
 		update_appearance()
 
@@ -1085,6 +1104,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!user.transferItemToLoc(C, src))
 			return
 		pai = C
+		pai.slotted = TRUE
 		to_chat(user, span_notice("You slot \the [C] into [src]."))
 		update_appearance()
 		updateUsrDialog()
@@ -1179,18 +1199,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
-
-/obj/item/pda/Destroy()
-	GLOB.PDAs -= src
-	if(istype(id))
-		QDEL_NULL(id)
-	if(istype(cartridge))
-		QDEL_NULL(cartridge)
-	if(istype(pai))
-		QDEL_NULL(pai)
-	if(istype(inserted_item))
-		QDEL_NULL(inserted_item)
-	return ..()
 
 //AI verb and proc for sending PDA messages.
 
@@ -1294,6 +1302,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/pda_no_detonate()
 	SIGNAL_HANDLER
 	return COMPONENT_PDA_NO_DETONATE
+
+/// Return a list of types you want to pregenerate and use later
+/// Do not pass in things that care about their init location, or expect extra input
+/// Also as a curtiousy to me, don't pass in any bombs
+/obj/item/pda/proc/get_types_to_preload()
+	var/list/preload = list()
+	preload += default_cartridge
+	preload += insert_type
+	return preload
+
+/// Callbacks for preloading pdas
+/obj/item/pda/proc/display_pda()
+	GLOB.PDAs += src
+
+/// See above, we don't want jerry from accounting to try and message nullspace his new bike
+/obj/item/pda/proc/cloak_pda()
+	GLOB.PDAs -= src
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL

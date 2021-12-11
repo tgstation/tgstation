@@ -1,5 +1,7 @@
 /datum/job/head_of_personnel
 	title = "Head of Personnel"
+	description = "Alter access on ID cards, manage civil and supply departments, \
+		protect Ian, run the station when the captain dies."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
 	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
