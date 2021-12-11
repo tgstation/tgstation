@@ -270,7 +270,7 @@
 	if(.)
 		return
 
-		switch(action)
+	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege)
 				bot_cover_flags ^= BOT_COVER_LOCKED
