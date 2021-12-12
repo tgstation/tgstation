@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - qol: "Plexagon is happy to announce its newest patch, which addresses a highly-requested quality of life change, consisting of adding the name of the person which had their ID modified to the name of their access report printout."
+  - bugfix: "The Access Report from the Plexagon Access Management app will now be smarter and actually remember who it was prepared by, even if the ID used for the login was removed before printing said Access Report."
