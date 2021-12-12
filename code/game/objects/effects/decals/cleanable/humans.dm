@@ -319,11 +319,18 @@
 	/// Insurance so that we don't keep moving once we hit a stoppoint
 	var/hit_endpoint = FALSE
 
-/obj/effect/decal/cleanable/blood/hitsplatter/Initialize(splatter_strength)
+/obj/effect/decal/cleanable/blood/hitsplatter/Initialize(mapload, splatter_strength)
 	. = ..()
 	prev_loc = loc //Just so we are sure prev_loc exists
 	if(splatter_strength)
 		src.splatter_strength = splatter_strength
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
+	if(isturf(loc) && !skip)
+		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
+		if(blood_source)
+			loc.add_mob_blood(blood_source)
+	return ..()
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/target_turf, range)
 	for(var/i in 1 to range)
@@ -378,12 +385,6 @@
 	else // This will only happen if prev_loc is not even a turf, which is highly unlikely.
 		loc = bumped_atom //Either way we got this.
 		qdel(src)
-
-/obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
-	if(isturf(loc) && !skip)
-		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
-		loc.add_mob_blood(blood_source)
-	return ..()
 
 /// A special case for hitsplatters hitting windows, since those can actually be moved around, store it in the window and slap it in the vis_contents
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
