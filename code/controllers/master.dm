@@ -672,7 +672,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 
 /datum/controller/master/stat_entry(msg)
-	msg = "(Base MC Iterations Per Tick:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(TICK_LIMIT_RUNNING, 0.1)]) (Avg Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)]) \
+	msg = "(Base MC Iterations Per Tick:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(Master.current_ticklimit, 0.1)]) (Avg Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)]) \
 	(Avg Sleeping Tick Usage: [round(Master.average_sleeping_tick_usage, 0.1)]) (Avg Sleeping Overtime: [round(Master.average_sleeping_overtime_usage, 0.1)])) \
 	(stoplag Threads: [stoplag_threads]) (Average Ticks Skipped [round(average_ticks_skipped, 0.1)])"
 	return msg
