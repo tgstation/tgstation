@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/item/stack/marker_beacon/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	var/input_color =  tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
+	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(input_color)
