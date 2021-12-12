@@ -80,7 +80,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
 		controller_choices += "[controller] (controller.type)"
 
-	var/datum/controller/controller_string = tgui_input_list(src, "Select controller to debug", "Debug Controller", controller_choices)
+	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
 	var/datum/controller/controller = controllers[controller_string]
 
 	if (!istype(controller))
