@@ -1,9 +1,11 @@
-/// Percentage of tick to leave for master controller to run
+/// Minimum percentage of tick to leave for the master controller to run on.
+/// if everything else uses (100 - MAPTICK_MC_MIN_RESERVE) percent of the tick, time dilation should increase
 #define MAPTICK_MC_MIN_RESERVE 70
 #define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
 
-/// Tick limit while running normally
+/// Extra percentage of the tick given to non MC processes when calculating how much time the MC has to use
 #define TICK_BYOND_RESERVE 2
+/// Tick limit while running normally
 #define TICK_LIMIT_RUNNING (max(100 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
 /// Tick limit used to resume things in stoplag
 #define TICK_LIMIT_TO_RUN 70
