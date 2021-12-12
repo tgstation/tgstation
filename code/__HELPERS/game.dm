@@ -352,10 +352,9 @@
 ///wrapper for flick_overlay(), flicks to everyone who can see the target atom
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
 	var/list/viewing = list()
-	for(var/viewer in viewers(target))
-		var/mob/viewer_mob = viewer
-		if(viewer_mob.client)
-			viewing += viewer_mob.client
+	for(var/mob/viewer as anything in viewers(target))
+		if(viewer.client)
+			viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
 ///Get active players who are playing in the round
@@ -364,19 +363,20 @@
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/player_mob = GLOB.player_list[i]
 		if(!player_mob?.client)
-			if(alive_check && player_mob.stat)
+			continue
+		if(alive_check && player_mob.stat)
+			continue
+		else if(afk_check && player_mob.client.is_afk())
+			continue
+		else if(human_check && !ishuman(player_mob))
+			continue
+		else if(isnewplayer(player_mob)) // exclude people in the lobby
+			continue
+		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+			var/mob/dead/observer/ghost_player = player_mob
+			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
-			else if(afk_check && player_mob.client.is_afk())
-				continue
-			else if(human_check && !ishuman(player_mob))
-				continue
-			else if(isnewplayer(player_mob)) // exclude people in the lobby
-				continue
-			else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
-				var/mob/dead/observer/ghost_player = player_mob
-				if(ghost_player.started_as_observer) // Exclude people who started as observers
-					continue
-			active_players++
+		active_players++
 	return active_players
 
 ///Show the poll window to the candidate mobs
@@ -579,7 +579,7 @@
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/possible_loc = list()
 
-	for(var/turf/found_turf in RANGE_TURFS(range, center))
+	for(var/turf/found_turf as anything in RANGE_TURFS(range, center))
 		// We check if both the turf is a floor, and that it's actually in the area.
 		// We also want a location that's clear of any obstructions.
 		if (specific_area && !istype(get_area(found_turf), specific_area))

@@ -584,6 +584,11 @@
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
+	if(wear_mask)
+		var/obj/item/clothing/mask/dressed_mask = wear_mask
+		if(dressed_mask.tint || initial(dressed_mask.tint))
+			update_tint()
+
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
@@ -606,13 +611,18 @@
 	if(!GLOB.tinted_weldhelh)
 		return
 	tinttotal = get_total_tint()
+	clear_fullscreen("tint", 0)
 	if(tinttotal >= TINT_BLIND)
 		become_blind(EYES_COVERED)
-	else if(tinttotal >= TINT_DARKENED)
-		cure_blind(EYES_COVERED)
-		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
-	else
-		cure_blind(EYES_COVERED)
+		return
+	cure_blind(EYES_COVERED)
+	if(tinttotal > TINT_DARKENED && tinttotal < TINT_BLIND)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2, clamp(tinttotal * 100, 0, 255))
+	else if(tinttotal > TINT_LIGHTER && tinttotal <= TINT_DARKENED)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1, clamp(tinttotal * 150, 0, 255))
+	else if(tinttotal > TINT_MINIMAL && tinttotal <= TINT_LIGHTER)
+		overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 0, clamp(tinttotal * 200, 0, 255))
+	else if(tinttotal <= TINT_MINIMAL)
 		clear_fullscreen("tint", 0)
 
 /mob/living/carbon/proc/get_total_tint()
@@ -1318,3 +1328,22 @@
 	to_chat(src, span_danger("You shove [target.name] into [name]!"))
 	log_combat(src, target, "shoved", "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
+
+
+// Checks to see how many hands this person has to sign with.
+/mob/living/carbon/proc/check_signables_state()
+	var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/right_arm = get_bodypart(BODY_ZONE_R_ARM)
+	var/empty_indexes = get_empty_held_indexes()
+	var/exit_right = (!right_arm || right_arm.bodypart_disabled)
+	var/exit_left = (!left_arm || left_arm.bodypart_disabled)
+	if(length(empty_indexes) == 0 || (length(empty_indexes) < 2 && (exit_left || exit_right)))//All existing hands full, can't sign
+		return SIGN_HANDS_FULL // These aren't booleans
+	if(exit_left && exit_right)//Can't sign with no arms!
+		return SIGN_ARMLESS
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+	if(handcuffed) // Cuffed, usually will show visual effort to sign
+		return SIGN_CUFFED
+	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
+		return SIGN_ONE_HAND

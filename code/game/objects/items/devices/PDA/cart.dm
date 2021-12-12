@@ -14,7 +14,9 @@
 
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
+	var/list/bot_access = list()
+//	Selection: SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
+
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/pda/host_pda = null
@@ -32,54 +34,65 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
-/obj/item/cartridge/Initialize(mapload)
-	. = ..()
-	var/obj/item/pda/pda = loc
-	if(istype(pda))
-		host_pda = pda
-
 /obj/item/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
 	access = CART_ENGINE | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT
+	bot_access = list(
+		FLOOR_BOT,
+	)
 
 /obj/item/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access = CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT | FIRE_BOT
+	bot_access = list(
+		FLOOR_BOT,
+		FIRE_BOT,
+	)
 
 /obj/item/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	access = CART_MEDICAL
-	bot_access_flags = MED_BOT
+	bot_access = list(
+		MED_BOT,
+	)
 
 /obj/item/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
 	access = CART_REAGENT_SCANNER
-	bot_access_flags = MED_BOT
+	bot_access = list(
+		MED_BOT,
+	)
 
 /obj/item/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY | CART_MANIFEST
-	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT
+	bot_access = list(
+		SEC_BOT,
+		ADVANCED_SEC_BOT,
+	)
 
 /obj/item/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
 	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
-	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT
+	bot_access = list(
+		SEC_BOT,
+		ADVANCED_SEC_BOT,
+	)
 
 /obj/item/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
 	access = CART_JANITOR | CART_DRONEPHONE
-	bot_access_flags = CLEAN_BOT
+	bot_access = list(
+		CLEAN_BOT,
+	)
 
 /obj/item/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
@@ -95,8 +108,14 @@
 /obj/item/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty quad-bot interlink!"
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	access = CART_DRONEPHONE
+	bot_access = list(
+		FLOOR_BOT,
+		CLEAN_BOT,
+		MED_BOT,
+		FIRE_BOT,
+		VIBE_BOT,
+	)
 
 /obj/item/cartridge/signal
 	name = "generic signaler cartridge"
@@ -112,14 +131,14 @@
 	. = ..()
 	radio = new(src)
 
-
-
 /obj/item/cartridge/quartermaster
 	name = "space parts & space vendors cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
 	access = CART_QUARTERMASTER
-	bot_access_flags = MULE_BOT
+	bot_access = list(
+		MULE_BOT,
+	)
 
 /obj/item/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
@@ -130,32 +149,50 @@
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
-	bot_access_flags = MULE_BOT | CLEAN_BOT | VIBE_BOT
+	bot_access = list(
+		MULE_BOT,
+		CLEAN_BOT,
+		VIBE_BOT,
+	)
 
 /obj/item/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_SECURITY
-	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT
+	bot_access = list(
+		SEC_BOT,
+		ADVANCED_SEC_BOT,
+	)
 
 
 /obj/item/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE | CART_DRONEACCESS
-	bot_access_flags = FLOOR_BOT | FIRE_BOT
+	bot_access = list(
+		FLOOR_BOT,
+		FIRE_BOT,
+	)
 
 /obj/item/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_MEDICAL
-	bot_access_flags = MED_BOT
+	bot_access = list(
+		MED_BOT,
+	)
 
 /obj/item/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
+	bot_access = list(
+		FLOOR_BOT,
+		CLEAN_BOT,
+		MED_BOT,
+		FIRE_BOT,
+		VIBE_BOT,
+	)
 
 /obj/item/cartridge/rd/Initialize(mapload)
 	. = ..()
@@ -166,8 +203,17 @@
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
-	bot_access_flags = SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 	spam_enabled = 1
+	bot_access = list(
+		SEC_BOT,
+		ADVANCED_SEC_BOT,
+		MULE_BOT,
+		FLOOR_BOT,
+		CLEAN_BOT,
+		MED_BOT,
+		FIRE_BOT,
+		VIBE_BOT,
+	)
 
 /obj/item/cartridge/captain/Initialize(mapload)
 	. = ..()
@@ -489,7 +535,7 @@
 						if (bl.z != cl.z)
 							continue
 						var/direction = get_dir(src, B)
-						ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.on ? "Online" : "Offline"]<br>"
+						ldat += "Cleanbot - <b>\[[bl.x],[bl.y] ([uppertext(dir2text(direction))])\]</b> - [B.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]<br>"
 
 				if (!ldat)
 					menu += "None"
@@ -661,14 +707,14 @@
 /obj/item/cartridge/proc/bot_control()
 	if(active_bot)
 		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
-		menu += "Model: [active_bot.model]<BR>"
+		menu += "Model: [active_bot.bot_type]<BR>"
 		menu += "Location: [get_area(active_bot)]<BR>"
 		menu += "Mode: [active_bot.get_mode()]"
-		if(active_bot.allow_pai)
+		if(active_bot.bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE)
 			menu += "<BR>pAI: "
 			if(active_bot.paicard && active_bot.paicard.pai)
 				menu += "[active_bot.paicard.pai.name]"
-				if(active_bot.bot_core.allowed(usr))
+				if(active_bot.check_access(usr))
 					menu += " (<A href='byond://?src=[REF(src)];op=ejectpai'><i>eject</i></A>)"
 			else
 				menu += "<i>none</i>"
@@ -704,7 +750,7 @@
 		var/botcount = 0
 		for(var/B in GLOB.bots_list) //Git da botz
 			var/mob/living/simple_animal/bot/Bot = B
-			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
+			if(!(Bot.bot_mode_flags & BOT_MODE_ON) || Bot.z != zlevel || !(Bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || !(Bot.bot_type in bot_access)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=[REF(src)];op=control;bot=[REF(Bot)]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"
 			botcount++

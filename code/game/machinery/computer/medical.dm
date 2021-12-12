@@ -161,7 +161,7 @@
 							continue //only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl) //if it can't find a turf for the medibot, then it probably shouldn't be showing up
-							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
+							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]<br>"
 					if(!bdat)
 						dat += "<br><center>None detected</center>"
 					else
@@ -242,20 +242,23 @@
 				active2 = null
 
 			else if(href_list["vir"])
-				var/type = href_list["vir"]
-				var/datum/disease/Dis = new type(0)
-				var/AfS = ""
-				for(var/mob/M in Dis.viable_mobtypes)
-					AfS += " [initial(M.name)];"
-				temp = {"<b>Name:</b> [Dis.name]
-<BR><b>Number of stages:</b> [Dis.max_stages]
-<BR><b>Spread:</b> [Dis.spread_text] Transmission
-<BR><b>Possible Cure:</b> [(Dis.cure_text||"none")]
-<BR><b>Affected Lifeforms:</b>[AfS]
+				var/type = text2path(href_list["vir"] || "")
+				if(!ispath(type, /datum/disease))
+					return
+
+				var/datum/disease/disease = new type(0)
+				var/applicable_mob_names = ""
+				for(var/mob/viable_mob as anything in disease.viable_mobtypes)
+					applicable_mob_names += " [initial(viable_mob.name)];"
+				temp = {"<b>Name:</b> [disease.name]
+<BR><b>Number of stages:</b> [disease.max_stages]
+<BR><b>Spread:</b> [disease.spread_text] Transmission
+<BR><b>Possible Cure:</b> [(disease.cure_text||"none")]
+<BR><b>Affected Lifeforms:</b>[applicable_mob_names]
 <BR>
-<BR><b>Notes:</b> [Dis.desc]
+<BR><b>Notes:</b> [disease.desc]
 <BR>
-<BR><b>Severity:</b> [Dis.severity]"}
+<BR><b>Severity:</b> [disease.severity]"}
 
 			else if(href_list["del_all"])
 				temp = "Are you sure you wish to delete all records?<br>\n\t<A href='?src=[REF(src)];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=[REF(src)];temp=1'>No</A><br>"

@@ -374,17 +374,17 @@
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<0)
 //Standard magic mirror (wizard)
-#define MIRROR_MAGIC  (1<<1)
+#define MIRROR_MAGIC (1<<1)
 //Pride ruin mirror
-#define MIRROR_PRIDE  (1<<2)
+#define MIRROR_PRIDE (1<<2)
 //Race swap wizard event
-#define RACE_SWAP     (1<<3)
+#define RACE_SWAP (1<<3)
 //ERT spawn template (avoid races that don't function without correct gear)
-#define ERT_SPAWN     (1<<4)
+#define ERT_SPAWN (1<<4)
 //xenobio black crossbreed
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
-#define WABBAJACK     (1<<6)
+#define WABBAJACK (1<<6)
 
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)
@@ -478,3 +478,20 @@
 
 //Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
 #define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
+
+//defines for grad_color and grad_styles list access keys
+#define GRADIENT_HAIR_KEY 1
+#define GRADIENT_FACIAL_HAIR_KEY 2
+//Keep up to date with the highest key value
+#define GRADIENTS_LEN 2
+
+// /datum/sprite_accessory/gradient defines
+#define GRADIENT_APPLIES_TO_HAIR (1<<0)
+#define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
+
+/// Sign Language defines
+#define SIGN_ONE_HAND 0
+#define SIGN_HANDS_FULL 1
+#define SIGN_ARMLESS 2
+#define SIGN_TRAIT_BLOCKED 3
+#define SIGN_CUFFED 4
