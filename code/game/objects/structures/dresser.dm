@@ -33,25 +33,25 @@
 			to_chat(user, span_warning("You are not capable of wearing underwear."))
 			return
 
-		var/choice = input(user, "Underwear, Undershirt, or Socks?", "Changing") as null|anything in list("Underwear","Underwear Color","Undershirt","Socks")
+		var/choice = tgui_input_list(user, "Underwear, Undershirt, or Socks?", "Changing", list("Underwear","Underwear Color","Undershirt","Socks"))
 
 		if(!Adjacent(user))
 			return
 		switch(choice)
 			if("Underwear")
-				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in GLOB.underwear_list
+				var/new_undies = tgui_input_list(user, "Select your underwear", "Changing", GLOB.underwear_list)
 				if(new_undies)
 					H.underwear = new_undies
 			if("Underwear Color")
-				var/new_underwear_color = input(H, "Choose your underwear color", "Underwear Color",H.underwear_color) as color|null
+				var/new_underwear_color = input(H, "Choose your underwear color", "Underwear Color", H.underwear_color) as color|null
 				if(new_underwear_color)
 					H.underwear_color = sanitize_hexcolor(new_underwear_color)
 			if("Undershirt")
-				var/new_undershirt = input(user, "Select your undershirt", "Changing") as null|anything in GLOB.undershirt_list
+				var/new_undershirt = tgui_input_list(user, "Select your undershirt", "Changing", GLOB.undershirt_list)
 				if(new_undershirt)
 					H.undershirt = new_undershirt
 			if("Socks")
-				var/new_socks = input(user, "Select your socks", "Changing") as null|anything in GLOB.socks_list
+				var/new_socks = tgui_input_list(user, "Select your socks", "Changing", GLOB.socks_list)
 				if(new_socks)
 					H.socks= new_socks
 

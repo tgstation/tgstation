@@ -29,7 +29,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 	//handle facial hair (if necessary)
 	if(hairdresser.gender != FEMALE)
-		var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
+		var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return TRUE //no tele-grooming
 		if(new_style)
@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 		hairdresser.facial_hairstyle = "Shaved"
 
 	//handle normal hair
-	var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
+	var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return TRUE //no tele-grooming
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
@@ -146,14 +146,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 	var/mob/living/carbon/human/amazed_human = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
+	var/choice = tgui_input_list(user, "Something to change?", "Magical Grooming", list("Name", "Race", "Gender", "Hair", "Eyes"))
 
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return TRUE
 
 	switch(choice)
 		if("name")
-			var/newname = sanitize_name(stripped_input(amazed_human, "Who are we again?", "Name change", amazed_human.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
+			var/newname = sanitize_name(tgui_input_text(amazed_human, "Who are we again?", "Name change", amazed_human.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
 			if(!newname)
 				return TRUE
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -166,7 +166,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 				amazed_human.mind.name = newname
 
 		if("race")
-			var/racechoice = input(amazed_human, "What are we again?", "Race change") as null|anything in selectable_races
+			var/racechoice = tgui_input_list(amazed_human, "What are we again?", "Race change", selectable_races)
 			if(!racechoice || !selectable_races[racechoice])
 				return TRUE
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -176,7 +176,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			amazed_human.set_species(newrace, icon_update = FALSE)
 
 			if(amazed_human.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
+				var/new_s_tone = tgui_input_list(user, "Choose your skin tone", "Race change", GLOB.skin_tones)
 				if(new_s_tone)
 					amazed_human.skin_tone = new_s_tone
 					amazed_human.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
