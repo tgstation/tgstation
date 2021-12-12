@@ -64,9 +64,6 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/ruin/pizzeria)
