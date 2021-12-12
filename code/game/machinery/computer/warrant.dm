@@ -99,6 +99,9 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				var/obj/item/card/id/scan = L.get_idcard(TRUE)
+				if (!scan)
+					say("You do not have a registered ID!")
+					return
 				authenticated = scan.registered_name
 				if(authenticated)
 					for(var/datum/data/record/R in GLOB.data_core.security)
