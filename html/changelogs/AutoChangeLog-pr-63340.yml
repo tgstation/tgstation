@@ -1,0 +1,6 @@
+author: "Bumtickley00"
+delete-after: True
+changes: 
+  - qol: "Health analyzers have had significant readability improvements!"
+  - qol: "Health analyzers now display allergy information when performing a reagent scan."
+  - qol: "Health analyzer limb readout toggle moved from a verb to alt-click."
