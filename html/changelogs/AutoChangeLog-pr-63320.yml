@@ -1,0 +1,4 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes: 
+  - bugfix: "cigarette pack has correct sprite now."
