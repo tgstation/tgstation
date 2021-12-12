@@ -123,6 +123,8 @@
 	. = ..()
 	if(!target_object)
 		return
+	if(!user.Adjacent(target))
+		return
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
 	if(!(result & COMPONENT_FORCE_PLACEMENT))
 		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object))

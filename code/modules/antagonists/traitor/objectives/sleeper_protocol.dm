@@ -22,6 +22,8 @@
 /datum/traitor_objective/sleeper_protocol/ui_perform_action(mob/living/user, action)
 	switch(action)
 		if("summon_disk")
+			if(!disk)
+				return
 			disk = new(user.drop_location())
 			user.put_in_hand(disk)
 
