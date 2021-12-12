@@ -325,9 +325,9 @@
 	if(splatter_strength)
 		src.splatter_strength = splatter_strength
 
-/obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/T, var/range)
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/target_turf, range)
 	for(var/i in 1 to range)
-		step_towards(src,T)
+		step_towards(src,target_turf)
 		sleep(2) // Will be resolved pending Potato's moveloop rework
 		prev_loc = loc
 		for(var/atom/iter_atom in get_turf(src))
@@ -337,8 +337,7 @@
 				break
 
 			if(isitem(iter_atom))
-				var/obj/item/I = iter_atom
-				I.add_mob_blood(blood_source)
+				iter_atom.add_mob_blood(blood_source)
 				splatter_strength--
 			else if(ishuman(iter_atom))
 				var/mob/living/carbon/human/splashed_human = iter_atom

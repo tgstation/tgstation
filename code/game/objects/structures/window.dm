@@ -227,7 +227,6 @@
 				to_chat(user, span_notice("You pry the window into the frame."))
 			return
 
-
 	return ..()
 
 /obj/structure/window/set_anchored(anchorvalue)
