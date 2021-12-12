@@ -438,7 +438,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			continue
 
 		if (queue_head)
-			if (RunQueue() <= RUNQUEUE_ERRORED)
+			if (RunQueue() <= FALSE)
 				if (!SoftReset(ticker_subsystems, runlevel_sorted_subsystems))
 					log_world("MC: SoftReset() failed, crashing")
 					return
@@ -484,7 +484,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /// This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystems_to_check)
-	. = CHECKQUEUE_ERRORED //so the mc knows if we runtimed
+	. = FALSE //so the mc knows if we runtimed
 
 	var/SS_flags
 
@@ -508,12 +508,12 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			subsystem.update_nextfire()
 			continue
 		subsystem.enqueue()
-	. = CHECKQUEUE_SUCCESSFUL_RUN
+	. = TRUE
 
 
 /// Run through the queue of subsystems to run, running them while balancing out their allocated tick precentage
 /datum/controller/master/proc/RunQueue()
-	. = RUNQUEUE_ERRORED//if we runtime for any reason then Master can compensate for it
+	. = FALSE//if we runtime for any reason then Master can compensate for it
 
 	var/datum/controller/subsystem/queue_node
 	var/queue_node_flags
@@ -580,6 +580,12 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			var/subsystem_state_after_fire = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
 
+			var/ticks_since_last_ignite = DS2TICKS(world.time) - queue_node.last_ignite_tick
+
+			queue_node.average_percentage_of_tick = MC_AVERAGE_SLOW(queue_node.average_percentage_of_tick, ticks_since_last_ignite > 0 ? (tick_usage / ticks_since_last_ignite) : queue_node.average_percentage_of_tick)
+
+			queue_node.last_ignite_tick = DS2TICKS(world.time)
+
 			if (subsystem_state_after_fire == SS_RUNNING)
 				subsystem_state_after_fire = SS_IDLE
 			current_tick_budget -= queue_node_priority
@@ -622,7 +628,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 			queue_node = queue_node.queue_next
 
-	. = RUNQUEUE_SUCCESSFUL_RUN
+	. = TRUE
 
 ///resets the queue, and all subsystems, while filtering out the subsystem lists.
 /// called if any mc's queue procs runtime or exit improperly.
@@ -673,7 +679,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /datum/controller/master/stat_entry(msg)
 	msg = "(Base MC Iterations Per Tick:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(Master.current_ticklimit, 0.1)]) (Avg Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)]) \
-	(Avg Sleeping Tick Usage: [round(Master.average_sleeping_tick_usage, 0.1)]) (Avg Sleeping Overtime: [round(Master.average_sleeping_overtime_usage, 0.1)])) \
+	(Avg Sleeping Tick Usage: [round(Master.average_sleeping_tick_usage, 0.1)]) (Avg Sleeping Overtime: [round(Master.average_sleeping_overtime_usage, 0.1)]) \
 	(stoplag Threads: [stoplag_threads]) (Average Ticks Skipped [round(average_ticks_skipped, 0.1)])"
 	return msg
 

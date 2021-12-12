@@ -41,6 +41,8 @@
 
 	/// Last world.time the subsystem completed a run (as in wasn't paused by [MC_TICK_CHECK])
 	var/last_fire = 0
+	/// Last world tick that the subsystem was ignited.
+	var/last_ignite_tick = 0
 
 	/// Scheduled world.time for next fire()
 	var/next_fire = 0
@@ -53,6 +55,10 @@
 
 	/// Running average of the amount of tick usage (in percents of a game tick) the subsystem has spent past its allocated time without pausing
 	var/tick_overrun = 0
+
+	/// Running average of this subsystems tick usage per ignite() divided by the time between ignites.
+	/// represents how much processing this subsystem takes in the "average" tick since its adjusted for how often it runs.
+	var/average_percentage_of_tick = 0
 
 	/// Tracks the current execution state of the subsystem. Used to handle subsystems that sleep in fire so the mc doesn't run them again while they are sleeping
 	var/state = SS_IDLE
@@ -252,7 +258,7 @@
 
 /datum/controller/subsystem/stat_entry(msg)
 	if(can_fire && !(SS_NO_FIRE & flags))
-		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
+		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]|[round(average_percentage_of_tick, 0.1)]%\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
 	return msg

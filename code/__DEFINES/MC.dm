@@ -80,13 +80,3 @@
 }\
 /datum/controller/subsystem/processing/##X
 
-///RunQueue() didnt complete a run and something fucked up
-#define RUNQUEUE_ERRORED FALSE
-///RunQueue() successfully completed a run
-#define RUNQUEUE_SUCCESSFUL_RUN TRUE
-
-///CheckQueue() wasnt able to go through its list of subsystems and something fucked up
-#define CHECKQUEUE_ERRORED FALSE
-///CheckQueue() was able to go through its list of subsystems
-#define CHECKQUEUE_SUCCESSFUL_RUN TRUE
-
