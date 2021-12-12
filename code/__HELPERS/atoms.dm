@@ -251,6 +251,7 @@ rough example of the "cone" made by the 3 dirs checked
 		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
 		if (isnull(value))
 			return
+	value = trim(value)
 
 	var/random = FALSE
 	if(findtext(value, "?"))
