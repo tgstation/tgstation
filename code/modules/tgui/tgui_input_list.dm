@@ -9,7 +9,7 @@
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_list(mob/user, message, title, list/buttons, timeout = 0)
+/proc/tgui_input_list(mob/user, message, title = "Select", list/buttons, timeout = 0)
 	if (!user)
 		user = usr
 	if(!length(buttons))
@@ -20,6 +20,9 @@
 			user = client.mob
 		else
 			return
+	/// Client does NOT have tgui_input on: Returns regular input
+	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
+		return input(user, message, title) as null|anything in buttons
 	var/datum/tgui_list_input/input = new(user, message, title, buttons, timeout)
 	input.ui_interact(user)
 	input.wait()

@@ -1,5 +1,6 @@
 /datum/job/cook
 	title = "Cook"
+	description = "Serve food, cook meat, keep the crew fed."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 2
@@ -109,3 +110,8 @@
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
 			J.cooks++
+
+/datum/outfit/job/cook/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/suit/apron/chef
+	. += /obj/item/clothing/head/soft/mime

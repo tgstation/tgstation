@@ -26,7 +26,7 @@
 	INVOKE_ASYNC(src, .proc/do_changewarcry, user)
 
 /datum/component/wearertargeting/punchcooldown/proc/do_changewarcry(mob/user)
-	var/input = stripped_input(user,"What do you want your battlecry to be? Max length of 6 characters.", ,"", 7)
+	var/input = tgui_input_text(user, "What do you want your battlecry to be?", "Battle Cry", max_length = 6)
 	if(!QDELETED(src) && !QDELETED(user) && !user.Adjacent(parent))
 		return
 	if(input)

@@ -145,7 +145,7 @@
 	log_admin("[key_name(user)] uploaded new event arena: [friendly_name].")
 
 /obj/machinery/computer/arena/proc/load_team(user,team)
-	var/rawteam = stripped_multiline_input(user,"Enter team list (ckeys separated by newline)")
+	var/rawteam = tgui_input_text(user, "Enter team list (ckeys separated by newline)", "Team List", multiline = TRUE)
 	for(var/i in splittext(rawteam,"\n"))
 		var/key = ckey(i)
 		if(!i)

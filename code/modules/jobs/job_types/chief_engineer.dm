@@ -1,5 +1,7 @@
 /datum/job/chief_engineer
 	title = "Chief Engineer"
+	description = "Coordinate engineering, ensure equipment doesn't get stolen, \
+		make sure the Supermatter doesn't blow up, maintain telecommunications."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	department_head = list("Captain")
 	head_announce = list("Engineering")

@@ -37,10 +37,10 @@
 		to_chat(user, span_warning("You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now."))
 		return
 
-	var/new_name = stripped_input(user, message="What do you want to name \
+	var/new_name = tgui_input_text(user, "What do you want to name \
 		[station_name()]? Keep in mind particularly terrible names may be \
-		rejected by your employers, while names using the standard format, \
-		will automatically be accepted.", max_length=MAX_CHARTER_LEN)
+		rejected by your employers, while names using the standard format \
+		will be accepted automatically.", "Station Name", max_length = MAX_CHARTER_LEN)
 
 	if(response_timer_id)
 		to_chat(user, span_warning("You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now."))

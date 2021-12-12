@@ -68,3 +68,15 @@
 	)
 	result = /obj/item/food/spaghetti/butternoodles
 	subcategory = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/mac_n_cheese
+	name = "Mac n' cheese"
+	reqs = list(
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/bechamel_sauce = 1,
+		/obj/item/food/cheese = 2,
+		/obj/item/food/breadslice = 1,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/spaghetti/mac_n_cheese
+	subcategory = CAT_SPAGHETTI
