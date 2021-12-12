@@ -29,6 +29,8 @@
 	var/progression_cost_coeff = 0
 	/// The percentage that this objective has been increased or decreased by as a result of progression. Used by the UI
 	var/original_progression = 0
+	/// Abstract type that won't be included as a possible objective
+	var/abstract_type = /datum/traitor_objective
 
 /// Replaces a word in the name of the proc. Also does it for the description
 /datum/traitor_objective/proc/replace_in_name(replace, word)

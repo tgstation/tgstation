@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(traitor)
 /datum/controller/subsystem/traitor/proc/get_possible_objectives(progression_points)
 	var/list/possible_objectives = list()
 	for(var/datum/traitor_objective/objective_path as anything in subtypesof(/datum/traitor_objective))
+		if(initial(objective_path.abstract_type) == objective_path)
+			continue
 		if(progression_points < initial(objective_path.progression_minimum))
 			continue
 		if(progression_points > initial(objective_path.progression_maximum))

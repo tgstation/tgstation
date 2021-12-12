@@ -80,15 +80,14 @@
 	if(!length(objectives))
 		return
 	var/maximum_iteration = CONFIG_GET(number/maximum_potential_objectives) * 2
-	for(var/i in 1 to maximum_iteration)
-		if(potential_objectives_left <= 0 || !length(objectives))
-			break
+	while(length(objectives) && potential_objectives_left > 0)
 		var/objective_typepath = pick_weight(objectives)
 		var/datum/traitor_objective/objective = new objective_typepath(src)
 		if(!objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
 			objectives -= objective_typepath
 			continue
 		if(!handle_duplicate(objective))
+			objectives -= objective_typepath
 			return
 		objective.original_progression = objective.progression_reward
 		objective.update_progression_cost()

@@ -16,6 +16,30 @@
 
 	var/obj/item/traitor_bug/bug
 
+/datum/traitor_objective/bug_room/risky
+	progression_minimum = 10 MINUTES
+	applicable_heads = list(
+		"Captain" = /area/command/heads_quarters/captain,
+	)
+	progression_reward = list(5 MINUTES, 10 MINUTES)
+	telecrystal_reward = list(1, 2)
+	requires_head_as_supervisor = FALSE
+
+/datum/traitor_objective/bug_room/super_risky
+	progression_minimum = 20 MINUTES
+	applicable_heads = list(
+		"Head of Security" = /area/command/heads_quarters/hos,
+	)
+	progression_reward = list(10 MINUTES, 15 MINUTES)
+	telecrystal_reward = list(2, 3)
+	requires_head_as_supervisor = FALSE
+
+/datum/traitor_objective/bug_room/super_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(!handler.get_completion_count(/datum/traitor_objective/bug_room/risky))
+		// Locked if they don't have any of the risky bug room objective completed
+		return FALSE
+	return ..()
+
 /datum/traitor_objective/bug_room/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!bug)
@@ -53,6 +77,9 @@
 	target_office = SSjob.name_occupations[target_head]
 	replace_in_name("\[DEPARTMENT HEAD]", target_head)
 	return TRUE
+
+/datum/traitor_objective/bug_room/ungenerate_objective()
+	bug = null
 
 /datum/traitor_objective/bug_room/is_duplicate(datum/traitor_objective/bug_room/objective_to_compare)
 	if(objective_to_compare.target_office == target_office)
@@ -145,28 +172,4 @@
 
 /obj/structure/traitor_bug/deconstruct(disassembled)
 	explosion(src, 0, 0, 3, 5, explosion_cause = src) // Pretty god damn dangerous
-	return ..()
-
-/datum/traitor_objective/bug_room/risky
-	progression_minimum = 10 MINUTES
-	applicable_heads = list(
-		"Captain" = /area/command/heads_quarters/captain,
-	)
-	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = list(1, 2)
-	requires_head_as_supervisor = FALSE
-
-/datum/traitor_objective/bug_room/super_risky
-	progression_minimum = 20 MINUTES
-	applicable_heads = list(
-		"Head of Security" = /area/command/heads_quarters/hos,
-	)
-	progression_reward = list(10 MINUTES, 15 MINUTES)
-	telecrystal_reward = list(2, 3)
-	requires_head_as_supervisor = FALSE
-
-/datum/traitor_objective/bug_room/super_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!handler.get_completion_count(/datum/traitor_objective/bug_room/risky))
-		// Locked if they don't have any of the risky bug room objective completed
-		return FALSE
 	return ..()

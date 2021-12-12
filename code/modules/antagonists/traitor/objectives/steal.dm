@@ -6,13 +6,7 @@
 	progression_reward = 5 MINUTES
 	telecrystal_reward = list(2, 4)
 
-	var/list/possible_items = list(
-		/datum/objective_item/steal/magboots,
-		/datum/objective_item/steal/hypo,
-		/datum/objective_item/steal/reactive,
-		/datum/objective_item/steal/handtele,
-		/datum/objective_item/steal/blueprints,
-	)
+	var/list/possible_items = list()
 	/// The current target item that we are stealing.
 	var/datum/objective_item/steal/target_item
 	/// A list of 2 elements, which contain the range that the time will be in. Represented in minutes.
@@ -25,6 +19,8 @@
 	var/obj/item/traitor_bug/bug
 	/// Any special equipment that may be needed
 	var/list/special_equipment
+
+	abstract_type = /datum/traitor_objective/steal_item
 
 /datum/traitor_objective/steal_item/low_risk_cap
 	progression_minimum = 5 MINUTES
@@ -51,6 +47,24 @@
 		/datum/objective_item/steal/low_risk/clown_shoes,
 	)
 
+/datum/traitor_objective/steal_item/somewhat_risky
+	progression_minimum = 20 MINUTES
+	progression_reward = 5 MINUTES
+	telecrystal_reward = list(1, 2)
+
+	possible_items = list(
+		/datum/objective_item/steal/magboots,
+		/datum/objective_item/steal/hypo,
+		/datum/objective_item/steal/reactive,
+		/datum/objective_item/steal/handtele,
+		/datum/objective_item/steal/blueprints,
+	)
+
+/datum/traitor_objective/steal_item/somewhat_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/low_risk))
+		return FALSE
+	return ..()
+
 /datum/traitor_objective/steal_item/risky
 	progression_minimum = 30 MINUTES
 	progression_reward = 5 MINUTES
@@ -64,6 +78,11 @@
 		/datum/objective_item/steal/documents,
 	)
 
+/datum/traitor_objective/steal_item/risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/somewhat_risky))
+		return FALSE
+	return ..()
+
 /datum/traitor_objective/steal_item/very_risky
 	progression_minimum = 40 MINUTES
 	progression_reward = 8 MINUTES
@@ -76,6 +95,11 @@
 		/datum/objective_item/steal/supermatter,
 	)
 
+/datum/traitor_objective/steal_item/very_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/risky))
+		return FALSE
+	return ..()
+
 /datum/traitor_objective/steal_item/most_risky
 	progression_minimum = 50 MINUTES
 	progression_reward = 13 MINUTES
@@ -84,6 +108,11 @@
 	possible_items = list(
 		/datum/objective_item/steal/nukedisc,
 	)
+
+/datum/traitor_objective/steal_item/most_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/very_risky))
+		return FALSE
+	return ..()
 
 /datum/traitor_objective/steal_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/role = generating_for.assigned_role
@@ -112,6 +141,7 @@
 /datum/traitor_objective/steal_item/ungenerate_objective()
 	STOP_PROCESSING(SSprocessing, src)
 	UnregisterSignal(bug, list(COMSIG_TRAITOR_BUG_PLANTED_OBJECT, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT))
+	bug = null
 
 /datum/traitor_objective/steal_item/is_duplicate(datum/traitor_objective/steal_item/objective_to_compare)
 	if(objective_to_compare.target_item.type == target_item.type)
