@@ -130,7 +130,22 @@
 	completed_objectives += to_remove
 	for(var/datum/traitor_objective/objective as anything in active_objectives)
 		objective.update_progression_cost()
-	generate_objectives()
+	if(prune_invalid_objectives() == 0)
+		generate_objectives()
+
+/datum/uplink_handler/proc/prune_invalid_objectives()
+	var/list/potential_objectives_copy = potential_objectives.Copy()
+	var/removed_objectives = 0
+	for(var/datum/traitor_objective/objective as anything in potential_objectives_copy)
+		if(progression_points <= objective.progression_maximum)
+			continue
+		objective.objective_state = OBJECTIVE_STATE_FAILED
+		objective -= potential_objectives
+		removed_objectives++
+
+	if(removed_objectives > 0)
+		generate_objectives()
+	return removed_objectives
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))

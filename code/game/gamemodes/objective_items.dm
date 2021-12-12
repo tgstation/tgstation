@@ -8,6 +8,7 @@
 	var/list/excludefromjob = list() //If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
 	var/list/altitems = list() //Items which can serve as an alternative to the objective (darn you blueprints)
 	var/list/special_equipment = list()
+	var/objective_type = OBJECTIVE_ITEM_TYPE_NORMAL
 
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
 	return 1
@@ -26,6 +27,81 @@
 	GLOB.possible_items -= src
 	return ..()
 
+// Low risk steal objectives
+/datum/objective_item/steal/low_risk
+	objective_type = OBJECTIVE_ITEM_TYPE_TRAITOR
+
+/datum/objective_item/steal/low_risk/techboard
+	name = "the (TECH BOARD) circuitboard in secure tech storage"
+	var/circuitboard_name
+	excludefromjob = list(
+		"Captain",
+		"Chief Engineer",
+		"Research Director",
+	)
+
+/datum/objective_item/steal/low_risk/techboard/aiupload
+	targetitem = /obj/item/circuitboard/computer/aiupload
+	circuitboard_name = "ai upload"
+
+/datum/objective_item/steal/low_risk/techboard/borgupload
+	targetitem = /obj/item/circuitboard/computer/borgupload
+	circuitboard_name = "cyborg upload"
+
+/datum/objective_item/steal/low_risk/techboard/New()
+	. = ..()
+	name = replacetext(name, "(TECH BOARD)", circuitboard_name)
+
+/datum/objective_item/steal/low_risk/aicard
+	targetitem = /obj/item/aicard
+	name = "an aicard"
+	excludefromjob = list(
+		"Captain",
+		"Chief Engineer",
+		"Research Director",
+		"Chief Medical Officer",
+		"Head of Security",
+		"Station Engineer",
+		"Scientist",
+		"Atmospheric Technician",
+	)
+
+// Unique-ish low risk objectives
+/datum/objective_item/steal/low_risk/bartender_shotgun
+	name = "the bartender's shotgun"
+	targetitem = /obj/item/gun/ballistic/shotgun/doublebarrel
+	excludefromjob = list("Bartender")
+
+/datum/objective_item/steal/low_risk/fireaxe
+	name = "a fireaxe"
+	targetitem = /obj/item/fireaxe
+	excludefromjob = list("Chief Engineer","Station Engineer","Atmospheric Technician")
+
+/datum/objective_item/steal/low_risk/nullrod
+	name = "the chaplain's nullrod"
+	targetitem = /obj/item/nullrod
+	excludefromjob = list("Chaplain")
+
+/datum/objective_item/steal/low_risk/clown_shoes
+	name = "the clown's shoes"
+	targetitem = /obj/item/clothing/shoes/clown_shoes
+	excludefromjob = list("Clown", "Cargo Technician", "Quartermaster")
+
+/datum/objective_item/steal/low_risk/clown_shoes/TargetExists()
+	for(var/mob/player as anything in GLOB.player_list)
+		if(player.stat == DEAD)
+			continue
+		if(player.job == "Clown" && player.z)
+
+/datum/objective_item/steal/low_risk/clown_shoes/check_special_completion(obj/item/clothing/shoes/clown_shoes/shoes)
+	if(shoes)
+
+/datum/objective_item/steal/low_risk/cargo_budget
+	name = "cargo's departmental budget"
+	targetitem = /obj/item/card/id/departmental_budget/car
+	excludefromjob = list("Quartermaster", "Cargo Technician")
+
+// High risk steal objectives
 /datum/objective_item/steal/caplaser
 	name = "the captain's antique laser gun"
 	targetitem = /obj/item/gun/energy/laser/captain

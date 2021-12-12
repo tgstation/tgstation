@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(traitor)
 			var/amount_to_give = progression_scaling_delta + (progression_scaling_delta * deviance)
 			amount_to_give = clamp(amount_to_give, 0, progression_scaling_delta * 2)
 			handler.progression_points += amount_to_give
+		handler.prune_invalid_objectives()
 		handler.on_update()
 
 /datum/controller/subsystem/traitor/proc/get_possible_objectives(progression_points)

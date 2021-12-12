@@ -201,6 +201,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
 
+// Defines for objective items to determine what they can appear in
+/// Can appear in everything
+#define OBJECTIVE_ITEM_TYPE_NORMAL "normal"
+/// Only appears in traitor objectives
+#define OBJECTIVE_ITEM_TYPE_TRAITOR "traitor"
+
 // Progression traitor defines
 
 /// How many telecrystals a normal traitor starts with

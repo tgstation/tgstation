@@ -569,6 +569,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/approved_targets = list()
 	check_items:
 		for(var/datum/objective_item/possible_item in GLOB.possible_items)
+			if(possible_item.objective_type != OBJECTIVE_ITEM_TYPE_NORMAL)
+				continue
 			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
 				continue
 			for(var/datum/mind/M in owners)

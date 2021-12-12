@@ -11,6 +11,7 @@
 		/datum/objective_item/steal/hypo,
 		/datum/objective_item/steal/reactive,
 		/datum/objective_item/steal/handtele,
+		/datum/objective_item/steal/blueprints,
 	)
 	/// The current target item that we are stealing.
 	var/datum/objective_item/steal/target_item
@@ -24,6 +25,31 @@
 	var/obj/item/traitor_bug/bug
 	/// Any special equipment that may be needed
 	var/list/special_equipment
+
+/datum/traitor_objective/steal_item/low_risk_cap
+	progression_minimum = 5 MINUTES
+	progression_maximum = 20 MINUTES
+
+	progression_reward = list(5 MINUTES, 10 MINUTES)
+	telecrystal_reward = 1
+	possible_items = list(
+		/datum/objective_item/steal/low_risk/techboard/borgupload,
+		/datum/objective_item/steal/low_risk/techboard/aiupload,
+		/datum/objective_item/steal/low_risk/aicard,
+	)
+
+/datum/traitor_objective/steal_item/low_risk
+	progression_minimum = 10 MINUTES
+	progression_reward = list(5 MINUTES, 10 MINUTES)
+	telecrystal_reward = 1
+
+	possible_items = list(
+		/datum/objective_item/steal/low_risk/bartender_shotgun,
+		/datum/objective_item/steal/low_risk/fireaxe,
+		/datum/objective_item/steal/low_risk/nullrod,
+		/datum/objective_item/steal/low_risk/cargo_budget,
+		/datum/objective_item/steal/low_risk/clown_shoes,
+	)
 
 /datum/traitor_objective/steal_item/risky
 	progression_minimum = 30 MINUTES
@@ -82,6 +108,10 @@
 	replace_in_name("\[ITEM]", target_item.name)
 	replace_in_name("\[TIME]", hold_time_required)
 	return TRUE
+
+/datum/traitor_objective/steal_item/ungenerate_objective()
+	STOP_PROCESSING(SSprocessing, src)
+	UnregisterSignal(bug, list(COMSIG_TRAITOR_BUG_PLANTED_OBJECT, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT))
 
 /datum/traitor_objective/steal_item/is_duplicate(datum/traitor_objective/steal_item/objective_to_compare)
 	if(objective_to_compare.target_item.type == target_item.type)
