@@ -539,7 +539,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!removed || !removed.total_moles() || isspaceturf(local_turf)) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
-		if(!isspaceturf(local_turf) && produces_gas && power) //There is no gas to process, but we are not in a space turf. Lets make them.
+		if(!istype(env, /datum/gas_mixture/immutable) && produces_gas && power) //There is no gas to process, but we are not in a space turf. Lets make them.
 			//Power * 0.55 * a value between 1 and 0.8
 			var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
 			//Can't do stuff if it's null, so lets make a new gasmix.
