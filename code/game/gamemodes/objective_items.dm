@@ -91,10 +91,12 @@
 	for(var/mob/player as anything in GLOB.player_list)
 		if(player.stat == DEAD)
 			continue
-		if(player.job == "Clown" && player.z)
-
-/datum/objective_item/steal/low_risk/clown_shoes/check_special_completion(obj/item/clothing/shoes/clown_shoes/shoes)
-	if(shoes)
+		if(player.job != "Clown")
+			continue
+		if(is_centcom_level(player.z))
+			continue
+		return TRUE
+	return FALSE
 
 /datum/objective_item/steal/low_risk/cargo_budget
 	name = "cargo's departmental budget"

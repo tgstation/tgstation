@@ -79,7 +79,6 @@
 	var/list/objectives = SStraitor.get_possible_objectives(progression_points)
 	if(!length(objectives))
 		return
-	var/maximum_iteration = CONFIG_GET(number/maximum_potential_objectives) * 2
 	while(length(objectives) && potential_objectives_left > 0)
 		var/objective_typepath = pick_weight(objectives)
 		var/datum/traitor_objective/objective = new objective_typepath(src)
