@@ -29,9 +29,9 @@ SUBSYSTEM_DEF(speech_controller)
 
 	for(var/list/say_to_process as anything in says_to_process)
 
-		var/mob/mob_to_speak = say_to_process[1]//index 1 is the mob, 2 is the message, 3 is the message category
-		var/message = say_to_process[2]
-		var/message_category = say_to_process[3]
+		var/mob/mob_to_speak = say_to_process[MOB_INDEX]//index 1 is the mob, 2 is the message, 3 is the message category
+		var/message = say_to_process[MESSAGE_INDEX]
+		var/message_category = say_to_process[CATEGORY_INDEX]
 
 		process_single_say(mob_to_speak, message, message_category)
 
