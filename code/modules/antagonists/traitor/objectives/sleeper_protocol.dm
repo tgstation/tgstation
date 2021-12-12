@@ -48,7 +48,7 @@
 	/datum/surgery_step/retract_skin,
 	/datum/surgery_step/saw,
 	/datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/brainwash/sleeper,
+	/datum/surgery_step/brainwash/sleeper_agent,
 	/datum/surgery_step/close)
 
 	target_mobtypes = list(/mob/living/carbon/human)
