@@ -104,9 +104,7 @@
 					return
 				authenticated = scan.registered_name
 				if(authenticated)
-					for(var/datum/data/record/R in GLOB.data_core.security)
-						if(R.fields["name"] == authenticated)
-							current = R
+					current = find_record("name", authenticated, GLOB.data_core.security)
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("Logout")
 			current = null
