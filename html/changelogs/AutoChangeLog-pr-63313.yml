@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - refactor: "Several input prompts have been converted to TGUI. Nukie prompts, newscasters, stacks of materials, hand labelers, station charters. Check them out!"

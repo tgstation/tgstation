@@ -341,3 +341,23 @@
       wayfinders, most cult inputs, observer functions.'
   tf-4:
   - bugfix: A lack of candidates for certain antags will no longer runtime
+2021-12-12:
+  Iamgoofball:
+  - admin: Admins are now told what Theme that Families has rolled.
+  JohnFulpWillard:
+  - bugfix: Bot covers now respect access again.
+  LemonInTheDark:
+  - bugfix: Fixed hitting a move input inside a small grace period in move code leading
+      to teleportation. It's a side effect of when movement used to be verbs, and
+      holding a button down meant constantly sending the server move commands
+  Pepsilawn:
+  - qol: Account registration devices will now tell the user their new account ID
+      number, previously unobtainable.
+  - rscadd: Account registration devices added to service and cargo techfabs.
+  TheBonded:
+  - admin: makes (the logging of xenobiology renaming potions better)
+  jlsnow301:
+  - refactor: Several input prompts have been converted to TGUI. Nukie prompts, newscasters,
+      stacks of materials, hand labelers, station charters. Check them out!
+  tf-4:
+  - bugfix: Cameras will no longer runtime if the mob has no client
