@@ -175,13 +175,13 @@
 		queue_node_flags = queue_node.flags
 
 		if (queue_node_flags & SS_TICKER)
-			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)
+			if ((SS_flags & (SS_TICKER|SS_BACKGROUND)) != SS_TICKER)//if we either dont have ticker or we have ticker and background we go after purely ticker SS's
 				continue
 			if (queue_node_priority < SS_priority)
 				break
 
 		else if (queue_node_flags & SS_BACKGROUND)
-			if (!(SS_flags & SS_BACKGROUND))
+			if (!(SS_flags & SS_BACKGROUND))//a non background SS never goes after a background SS
 				break
 			if (queue_node_priority < SS_priority)
 				break
@@ -236,7 +236,7 @@
 
 
 /datum/controller/subsystem/proc/pause()
-	. = 1
+	. = TRUE
 	switch(state)
 		if(SS_RUNNING)
 			state = SS_PAUSED

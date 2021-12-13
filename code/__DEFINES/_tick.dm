@@ -1,5 +1,5 @@
 /// Minimum percentage of tick to leave for the master controller to run on.
-/// if everything else uses (100 - MAPTICK_MC_MIN_RESERVE) percent of the tick, time dilation should increase
+/// if everything else uses >= (100 - MAPTICK_MC_MIN_RESERVE) percent of the tick, time dilation should increase
 #define MAPTICK_MC_MIN_RESERVE 70
 #define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
 
