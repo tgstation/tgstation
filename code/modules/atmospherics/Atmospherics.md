@@ -271,6 +271,7 @@ All of these are averages by the way.
 * *`tick_usage`* The percent of each byond tick the last fire() took. Tends to be twice cost, good for comparing with overrun.
 * *`tick_overrun`* A percentage of how far past our allotted time we ran. This is what causes Time Dilation, it's bad.
 * *`ticks`* The amount of subsystem fires it takes to run through all the subprocesses once.
+* *`average_percentage_of_tick`* The percentage of the average tick this subsystem takes up while processing. If this is 5% then 5% of server time is spent in this one subsystem.
 
 The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving. (The only exception to this is pipenet rebuilds, the last entry. Because of its nature as something that can happen at any time, it doesn't have a rolling average, instead it just displays the time it used last process)
 

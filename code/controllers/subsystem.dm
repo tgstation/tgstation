@@ -257,7 +257,7 @@
 	return time
 
 /datum/controller/subsystem/stat_entry(msg)
-	if(can_fire && !(SS_NO_FIRE & flags))
+	if(can_fire && !(flags & SS_NO_FIRE))
 		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]|[round(average_percentage_of_tick, 0.1)]%\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
