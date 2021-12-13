@@ -73,6 +73,7 @@
 	stored_research = SSresearch.science_tech
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	update_menu_tech
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
@@ -169,10 +170,6 @@
 					category_override += "H.O.N.K"
 				if(mech_types & EXOSUIT_MODULE_PHAZON)
 					category_override += "Phazon"
-
-		else if(ispath(built_item, /obj/item/borg_restart_board))
-			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
-
 
 
 	var/list/part = list(
@@ -461,32 +458,6 @@
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
 	var/list/data = list()
 
-	var/list/final_sets = list()
-	var/list/buildable_parts = list()
-
-	for(var/part_set in part_sets)
-		final_sets += part_set
-
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(D.build_type & MECHFAB)
-			// This is for us.
-			var/list/part = output_part_info(D, TRUE)
-
-			if(part["category_override"])
-				for(var/cat in part["category_override"])
-					buildable_parts[cat] += list(part)
-					if(!(cat in part_sets))
-						final_sets += cat
-				continue
-
-			for(var/cat in part_sets)
-				// Find all matching categories.
-				if(!(cat in D.category))
-					continue
-
-				buildable_parts[cat] += list(part)
-
 	data["partSets"] = final_sets
 	data["buildableParts"] = buildable_parts
 
@@ -531,6 +502,7 @@
 	switch(action)
 		if("sync_rnd")
 			// Syncronises designs on interface with R&D techweb.
+			update_menu_tech()
 			update_static_data(usr)
 			say("Successfully synchronized with R&D server.")
 			return
