@@ -4,7 +4,19 @@
 // Threatscale is a multiplier for the 'threat' of the grenade. If you're increasing the affected range drastically, you might want to improve this.
 // Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
 
-
+/**
+ * The basic chemical bomb proc.
+ * Combines a set of reagent holders into one holder and reacts it.
+ * If there are any reagents left over it spreads them across the surrounding environment.
+ *
+ * Arguments:
+ * - [epicenter][/turf]: The epicenter of the splash if some of the reagents aren't consumed.
+ * - [holder][/datum/reagents]: The holder to combine all of the reagents into. A temporary one is created if this is null.
+ * - [reactants][/list/datum/reagents]: The set of reagent holders to combine.
+ * - extra_heat: Some amount to heat the combined reagents by before reacting them.
+ * - threatscale: A multiplier for the reagent quantities involved.
+ * - adminlog: Whether to alert the admins that this has occured.
+ */
 /proc/chem_splash(turf/epicenter, datum/reagents/holder = null, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
 	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
 		return
@@ -46,7 +58,12 @@
 
 
 /**
+ * Exposes all accessible atoms within some distance of an epicenter to some reagents.
  *
+ * Arguments:
+ * - [source][/datum/reagents]: The reagents to spread around.
+ * - [epicenter][/atom]: The epicenter/source location of the reagent spread.
+ * - spread_range: The range in which to spread the reagents.
  */
 /proc/spread_reagents(datum/reagents/source, atom/epicenter, spread_range)
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()

@@ -2,6 +2,7 @@
 	name = "chemical grenade"
 	desc = "A custom made grenade."
 	icon_state = "chemg"
+	base_icon_state = "chemg"
 	inhand_icon_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
@@ -16,15 +17,15 @@
 	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition." // Appears when examining empty casings.
 	var/obj/item/assembly/prox_sensor/landminemode = null
 
-/obj/item/grenade/chem_grenade/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
-
 /obj/item/grenade/chem_grenade/Initialize(mapload)
 	. = ..()
 	create_reagents(1000)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
 	wires = new /datum/wires/explosive/chem_grenade(src)
+
+/obj/item/grenade/chem_grenade/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state
@@ -45,6 +46,42 @@
 		else
 			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
 				. += span_notice("You see a [glass_beaker.name] inside the grenade.")
+
+/obj/item/grenade/chem_grenade/update_name(updates)
+	switch(stage)
+		if(GRENADE_EMPTY)
+			name = "[initial(name)] casing"
+		if(GRENADE_WIRED)
+			name = "unsecured [initial(name)]"
+		if(GRENADE_READY)
+			name = initial(name)
+	return ..()
+
+/obj/item/grenade/chem_grenade/update_desc(updates)
+	switch(stage)
+		if(GRENADE_EMPTY)
+			desc = "A do it yourself [initial(name)]! [initial(casedesc)]"
+		if(GRENADE_WIRED)
+			desc = "An unsecured [initial(name)] assembly."
+		if(GRENADE_READY)
+			desc = initial(desc)
+	return ..()
+
+
+/obj/item/grenade/chem_grenade/update_icon_state()
+	if(active)
+		icon_state = "[base_icon_state]_active"
+		return ..()
+
+	switch(stage)
+		if(GRENADE_EMPTY)
+			icon_state = base_icon_state
+		if(GRENADE_WIRED)
+			icon_state = "[base_icon_state]_ass"
+		if(GRENADE_READY)
+			icon_state = "[base_icon_state]_locked"
+	return ..()
+
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == GRENADE_READY && !active)
@@ -126,18 +163,7 @@
 /obj/item/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
 		stage = N
-	if(stage == GRENADE_EMPTY)
-		name = "[initial(name)] casing"
-		desc = "A do it yourself [initial(name)]! [initial(casedesc)]"
-		icon_state = initial(icon_state)
-	else if(stage == GRENADE_WIRED)
-		name = "unsecured [initial(name)]"
-		desc = "An unsecured [initial(name)] assembly."
-		icon_state = "[initial(icon_state)]_ass"
-	else if(stage == GRENADE_READY)
-		name = initial(name)
-		desc = initial(desc)
-		icon_state = "[initial(icon_state)]_locked"
+	update_appearance()
 
 /obj/item/grenade/chem_grenade/on_found(mob/finder)
 	var/obj/item/assembly/assembly = wires.get_attached(wires.get_wire(1))
@@ -164,12 +190,13 @@
 				to_chat(user, span_warning("You prime [src], activating its proximity sensor."))
 			else
 				to_chat(user, span_warning("You prime [src]! [DisplayTimeText(det_time)]!"))
+
+	active = TRUE
+	update_icon_state()
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
-	icon_state = initial(icon_state) + "_active"
 	if(landminemode)
 		landminemode.activate()
 		return
-	active = TRUE
 	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/chem_grenade/detonate(mob/living/lanced_by)
@@ -187,7 +214,6 @@
 		log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
 	active = FALSE
-	icon_state = "[initial(icon_state)]_locked"
 	update_appearance()
 
 
@@ -197,6 +223,7 @@
 	desc = "A custom made large grenade. Larger splash range and increased ignition temperature compared to basic grenades. Fits exotic and bluespace based containers."
 	casedesc = "This casing affects a larger area than the basic model and can fit exotic containers, including slime cores and bluespace beakers. Heats contents by 25 K upon ignition."
 	icon_state = "large_grenade"
+	base_icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment, /obj/item/reagent_containers/food/drinks)
 	banned_containers = list()
 	affected_area = 5
@@ -246,6 +273,7 @@
 	desc = "A custom made cryogenic grenade. Rapidly cools contents upon ignition."
 	casedesc = "Upon ignition, it rapidly cools contents by 100 K. Smaller splash range than regular casings."
 	icon_state = "cryog"
+	base_icon_state = "cryog"
 	affected_area = 2
 	ignition_temp = -100
 
@@ -254,6 +282,7 @@
 	desc = "A custom made pyrotechnical grenade. Heats up contents upon ignition."
 	casedesc = "Upon ignition, it rapidly heats contents by 500 K."
 	icon_state = "pyrog"
+	base_icon_state = "pyrog"
 	ignition_temp = 500 // This is enough to expose a hotspot.
 
 /obj/item/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
@@ -261,6 +290,7 @@
 	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
 	casedesc = "This casing is able to detonate more than once. Can be configured using a multitool."
 	icon_state = "timeg"
+	base_icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/multitool_act(mob/living/user, obj/item/tool)
@@ -566,6 +596,7 @@
 	name = "holy hand grenade"
 	desc = "A vessel of concentrated religious might."
 	icon_state = "holy_grenade"
+	base_icon_state = "holy_grenade"
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/holy/Initialize(mapload)
