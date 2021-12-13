@@ -198,7 +198,7 @@
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(D.build_type & MECHFAB)
 			// This is for us.
-			var/list/part = output_part_info_eff(D, TRUE)
+			var/list/part = output_part_info(D, TRUE)
 
 			if(part["category_override"])
 				for(var/cat in part["category_override"])
