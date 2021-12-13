@@ -1,4 +1,0 @@
-author: "FernandoJ8"
-delete-after: True
-changes: 
-  - bugfix: "Removes hypnosis from the list of traumas neruwhine can cause, fixing a pair of related bugs."

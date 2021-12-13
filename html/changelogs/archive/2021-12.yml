@@ -361,3 +361,33 @@
       stacks of materials, hand labelers, station charters. Check them out!
   tf-4:
   - bugfix: Cameras will no longer runtime if the mob has no client
+2021-12-13:
+  Bumtickley00:
+  - qol: Health analyzers have had significant readability improvements!
+  - qol: Health analyzers now display allergy information when performing a reagent
+      scan.
+  - qol: Health analyzer limb readout toggle moved from a verb to alt-click.
+  FernandoJ8:
+  - bugfix: Removes hypnosis from the list of traumas neruwhine can cause, fixing
+      a pair of related bugs.
+  Ghommie:
+  - admin: PDA bomb logging shouldn't be as confusing now.
+  GoldenAlpharex:
+  - qol: Plexagon is happy to announce its newest patch, which addresses a highly-requested
+      quality of life change, consisting of adding the name of the person which had
+      their ID modified to the name of their access report printout.
+  - bugfix: The Access Report from the Plexagon Access Management app will now be
+      smarter and actually remember who it was prepared by, even if the ID used for
+      the login was removed before printing said Access Report.
+  JohnFulpWillard:
+  - bugfix: HoPs can now use security record consoles again.
+  LemonInTheDark:
+  - bugfix: Removed a hidden doublepipe, you'll never find the rest, FOOLS
+  Melbert:
+  - bugfix: You can actually reskin the pride pin now
+  OneAsianTortoise:
+  - bugfix: cigarette pack has correct sprite now.
+  RandomGamer123:
+  - bugfix: Cyborgs can no longer attack clown cars when inside them.
+  unit0016:
+  - bugfix: The archmagister's ID card icon now exists. Whoopsies.

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - admin: "PDA bomb logging shouldn't be as confusing now."
