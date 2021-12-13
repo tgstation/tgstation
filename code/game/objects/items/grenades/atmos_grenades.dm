@@ -108,7 +108,7 @@
 
 	var/turf/detonation_turf = get_turf(src)
 
-	chem_splash(detonation_turf, breach_range, reactants)
+	chem_splash(detonation_turf, null, breach_range, reactants)
 
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
 	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")

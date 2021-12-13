@@ -182,22 +182,14 @@
 		reactants += glass_beaker.reagents
 
 	var/turf/detonation_turf = get_turf(src)
+	if (chem_splash(detonation_turf, reagents, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
+		// logs from custom assemblies priming are handled by the wire component
+		log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
-	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
-		if(beakers.len)
-			for(var/obj/beaker as anything in beakers)
-				beaker.forceMove(drop_location())
-			beakers = list()
-		stage_change(GRENADE_EMPTY)
-		active = FALSE
-		return
-// logs from custom assemblies priming are handled by the wire component
-	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
+	active = FALSE
+	icon_state = "[initial(icon_state)]_locked"
+	update_appearance()
 
-	update_mob()
-
-	qdel(src)
 
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/grenade/chem_grenade/large
@@ -291,14 +283,15 @@
 	for(var/obj/item/reagent_containers/reagent_container in beakers)
 		total_volume += reagent_container.reagents.total_volume
 	if(!total_volume)
-		qdel(src)
+		active = FALSE
+		update_appearance()
 		return
 	var/fraction = unit_spread/total_volume
 	var/datum/reagents/reactants = new(unit_spread)
 	reactants.my_atom = src
 	for(var/obj/item/reagent_containers/reagent_container in beakers)
 		reagent_container.reagents.trans_to(reactants, reagent_container.reagents.total_volume*fraction, threatscale, 1, 1)
-	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
+	chem_splash(get_turf(src), reagents, affected_area, list(reactants), ignition_temp, threatscale)
 
 	var/turf/detonated_turf = get_turf(src)
 	addtimer(CALLBACK(src, .proc/detonate), det_time)

@@ -386,6 +386,10 @@
 	var/temp_boost = 50
 	var/time_release = 0
 
+/obj/item/bombcore/chemical/Initialize(mapload)
+	. = ..()
+	create_reagents(100)
+
 /obj/item/bombcore/chemical/detonate()
 
 	if(time_release > 0)
@@ -404,7 +408,7 @@
 		reactants.my_atom = src
 		for(var/obj/item/reagent_containers/RC in beakers)
 			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
-		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
+		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
 		addtimer(CALLBACK(src, .proc/detonate), 10)
@@ -424,7 +428,7 @@
 			if(S && S.reagents && S.reagents.total_volume)
 				reactants += S.reagents
 
-	if(!chem_splash(get_turf(src), spread_range, reactants, temp_boost))
+	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
 		playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
@@ -433,10 +437,6 @@
 		log_game(adminlog)
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
-
-	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
-		qdel(loc)
-	qdel(src)
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
