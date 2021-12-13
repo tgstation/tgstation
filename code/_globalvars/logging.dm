@@ -89,3 +89,7 @@ GLOBAL_PROTECT(picture_logging_id)
 GLOBAL_VAR(picture_logging_prefix)
 GLOBAL_PROTECT(picture_logging_prefix)
 /////
+#ifdef REFERENCE_DOING_IT_LIVE
+GLOBAL_LIST_EMPTY(harddel_log)
+GLOBAL_PROTECT(harddel_log)
+#endif
