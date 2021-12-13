@@ -19,7 +19,7 @@
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	init_fov()
 	if(!max_filters || !starting_filter_type)
 		return
 
@@ -76,6 +76,10 @@
 	if(LAZYLEN(gas_filters) <= 0)
 		has_filter = FALSE
 	return filtered_breath
+
+/// Initializes the FoV component for the gas mask
+/obj/item/clothing/mask/gas/proc/init_fov()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /**
  * Getter for overall filter durability, takes into consideration all filters filter_status
@@ -179,6 +183,9 @@
 	tint = 0
 	var/list/clownmask_designs = list()
 
+/obj/item/clothing/mask/gas/clown_hat/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
@@ -226,6 +233,9 @@
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
 
+/obj/item/clothing/mask/gas/sexyclown/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
@@ -239,6 +249,9 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
 	var/list/mimemask_designs = list()
+
+/obj/item/clothing/mask/gas/mime/init_fov()
+	return
 
 /obj/item/clothing/mask/gas/mime/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -293,6 +306,9 @@
 	tint = 0
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/mask/gas/sexymime/init_fov()
+	return
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
