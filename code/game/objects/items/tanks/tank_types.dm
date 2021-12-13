@@ -135,7 +135,23 @@
 /obj/item/tank/internals/plasmaman/belt/empty/populate_gas()
 	return
 
+//below is atmos grudge code so people stop demanding to have interaction with my plasma canisters. jk i like plasmemes. -unstagrav
+//both below sets are needed to spawn the correct plasma internals.  the top ELSE however interacts with ALL plasmaman internal variants
 
+/obj/item/tank/internals/plasmaman/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/mineral/plasma/P = W
+		to_chat(user, span_notice("The [src] devours the plasma sheet hungrily, hisses, and falls onto the floor under you."))
+		var/obj/item/tank/internals/plasmaman/full/new_item = new(usr.loc)
+		var/replace = (user.get_inactive_held_item() == P)
+		if(!P && replace)
+			user.put_in_hands(new_item)
+		qdel(src)
+		return TRUE
+	else
+		to_chat(user, span_warning("The internals interface displays in red, PLASMA SHEETS ONLY."))
+		return TRUE
+	..()
 
 /*
  * Emergency Oxygen
