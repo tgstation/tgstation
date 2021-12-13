@@ -388,7 +388,7 @@
 
 /obj/item/bombcore/chemical/Initialize(mapload)
 	. = ..()
-	create_reagents(100)
+	create_reagents(1000)
 
 /obj/item/bombcore/chemical/detonate()
 
