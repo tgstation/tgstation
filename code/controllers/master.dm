@@ -633,7 +633,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 ///resets the queue, and all subsystems, while filtering out the subsystem lists.
 /// called if any mc's queue procs runtime or exit improperly.
 /datum/controller/master/proc/SoftReset(list/ticker_SS, list/runlevel_SS)
-	. = 0
+	. = FALSE
 	log_world("MC: SoftReset called, resetting MC queue state.")
 	if (!istype(subsystems) || !istype(ticker_SS) || !istype(runlevel_SS))
 		log_world("MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[runlevel_SS]'")
@@ -669,7 +669,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	queue_priority_count = 0
 	queue_priority_count_bg = 0
 	log_world("MC: SoftReset: Finished.")
-	. = 1
+	. = TRUE
 
 /// Warns us that the end of tick byond map_update will be laggier then normal, so that we can just skip running subsystems this tick.
 /datum/controller/master/proc/laggy_byond_map_update_incoming()
@@ -678,7 +678,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 
 /datum/controller/master/stat_entry(msg)
-	msg = "(Base MC Iterations Per Tick:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(Master.current_ticklimit, 0.1)]) (Avg Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)]) \
+	msg = "(Ticks Per MC Iteration:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(Master.current_ticklimit, 0.1)]) (Avg Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)]) \
 	(Avg Sleeping Tick Usage: [round(Master.average_sleeping_tick_usage, 0.1)]) (Avg Sleeping Overtime: [round(Master.average_sleeping_overtime_usage, 0.1)]) \
 	(stoplag Threads: [stoplag_threads]) (Average Ticks Skipped [round(average_ticks_skipped, 0.1)])"
 	return msg
