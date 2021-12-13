@@ -278,7 +278,7 @@
 	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
 
 	//Directional checks to make sure that we're not shoving through a windoor or something like that
-	if(shove_blocked && can_hit_something && shove_dir in GLOB.cardinals)
+	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
 		var/target_turf = get_turf(target)
 		for(var/obj/obj_content in target_turf)
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
