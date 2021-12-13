@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "fugitives are now their own antagonist toggle, instead of polling for traitors for some reason"
