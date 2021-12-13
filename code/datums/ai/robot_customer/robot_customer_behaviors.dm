@@ -47,7 +47,8 @@
 	var/mob/living/simple_animal/robot_customer/customer_pawn = controller.pawn
 	var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 
-	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]?.resolve()
+	var/datum/weakref/seat_ref = controller.blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/structure/holosign/robot_seat/seat_marker = seat_ref?.resolve()
 	if(get_turf(seat_marker) == get_turf(customer_pawn))
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(customer_pawn)
 		if(my_seat)
@@ -80,7 +81,8 @@
 		var/datum/customer_data/customer_data = controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 		customer_pawn.say(pick(customer_data.wait_for_food_lines))
 
-	var/obj/structure/holosign/robot_seat/seat_marker = controller.blackboard[BB_CUSTOMER_MY_SEAT]?.resolve()
+	var/datum/weakref/seat_ref = controller.blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/structure/holosign/robot_seat/seat_marker = seat_ref?.resolve()
 	if(get_turf(seat_marker) == get_turf(controller.pawn))
 		var/obj/structure/chair/my_seat = locate(/obj/structure/chair) in get_turf(controller.pawn)
 		if(my_seat)
