@@ -7,10 +7,14 @@
 import { sendMessage } from 'tgui/backend';
 import { storage } from 'common/storage';
 import { createLogger } from 'tgui/logging';
+import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 const logger = createLogger('telemetry');
 
 const MAX_CONNECTIONS_STORED = 10;
+
+// should this be done somewhere later maybe
+const fpPromise = FingerprintJS.load({ monitoring: false });
 
 const connectionsMatch = (a, b) => (
   a.ckey === b.ckey
@@ -36,11 +40,16 @@ export const telemetryMiddleware = store => {
       // Trim connections according to the server limit
       const connections = telemetry.connections
         .slice(0, limits.connections);
-      sendMessage({
-        type: 'telemetry',
-        payload: {
-          connections,
-        },
+
+      fpPromise.then(async (fp_js) => {
+        const fp_result = await fp_js.get();
+        sendMessage({
+          type: 'telemetry',
+          payload: {
+            connections,
+            fingerprint: fp_result.visitorId,
+          },
+        });
       });
       return;
     }

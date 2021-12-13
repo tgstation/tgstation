@@ -218,3 +218,6 @@
 
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
+
+	/// Last fingerprint recieved from the tg-panel
+	var/last_known_ui_fingerprint

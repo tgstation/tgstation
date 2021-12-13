@@ -40,7 +40,9 @@
 		var/full_version = "Unknown"
 		if(M.client.byond_version)
 			full_version = "[M.client.byond_version].[M.client.byond_build ? M.client.byond_build : "xxx"]"
-		body += "<br>\[<b>Byond version:</b> [full_version]\]<br>"
+		body += "<br>\[<b>Byond version:</b> [full_version]\]"
+		if(M.client.last_known_ui_fingerprint)
+			body += "<br>\[<b>UI Fingerprint:</b> [M.client.last_known_ui_fingerprint]\]"
 
 
 	body += "<br><br>\[ "

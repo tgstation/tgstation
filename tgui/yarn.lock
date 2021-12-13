@@ -1349,6 +1349,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fingerprintjs/fingerprintjs@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "@fingerprintjs/fingerprintjs@npm:3.3.1"
+  dependencies:
+    tslib: ^2.0.1
+  checksum: 0a0dfa99a19e3726286a6a1ed0a5600ecc29316ef19e1acfdbb94c70ab76bf9f2f20420b5deeb904583567c146c4153c2d1176e4b87b555ca8548ec4f9e5fcfd
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.5.0":
   version: 0.5.0
   resolution: "@humanwhocodes/config-array@npm:0.5.0"
@@ -8138,6 +8147,7 @@ resolve@^2.0.0-next.3:
   version: 0.0.0-use.local
   resolution: "tgui-panel@workspace:packages/tgui-panel"
   dependencies:
+    "@fingerprintjs/fingerprintjs": ^3.3.1
     common: "workspace:*"
     dompurify: ^2.3.1
     inferno: ^7.4.8
@@ -8320,6 +8330,13 @@ resolve@^2.0.0-next.3:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.0.1":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 
