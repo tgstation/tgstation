@@ -13,8 +13,6 @@
 	var/progression_reward = 0 MINUTES
 	/// The telecrystals that are rewarded from completing this traitor objective. Can either be a list of list(min,max) or a direct value
 	var/telecrystal_reward = 0
-	/// The weight of this objective being picked.
-	var/weight = 1
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
 

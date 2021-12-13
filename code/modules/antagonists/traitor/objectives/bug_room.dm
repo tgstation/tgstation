@@ -1,3 +1,11 @@
+/datum/traitor_objective_category/bug_room
+	name = "Bug Room"
+	objectives = list(
+		/datum/traitor_objective/bug_room = 1,
+		/datum/traitor_objective/bug_room/risky = 1,
+		/datum/traitor_objective/bug_room/super_risky = 1,
+	)
+
 /datum/traitor_objective/bug_room
 	name = "Bug the \[DEPARTMENT HEAD]'s office"
 	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it down in the \[DEPARTMENT HEAD]'s office. If it gets destroyed before you are able to plant it, this objective will fail."

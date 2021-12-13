@@ -14,6 +14,12 @@ SUBSYSTEM_DEF(traitor)
 	var/list/datum/uplink_handler/uplink_handlers = list()
 	/// The current scaling per minute of progression. Has a maximum value of 1 MINUTES.
 	var/current_progression_scaling = 1 MINUTES
+	/// Used to handle the probability of getting an objective.
+	var/datum/traitor_category_handler/category_handler
+
+/datum/controller/subsystem/traitor/Initialize(start_timeofday)
+	. = ..()
+	category_handler = new()
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)
@@ -43,18 +49,6 @@ SUBSYSTEM_DEF(traitor)
 			handler.progression_points += amount_to_give
 		handler.update_objectives()
 		handler.on_update()
-
-/datum/controller/subsystem/traitor/proc/get_possible_objectives(progression_points)
-	var/list/possible_objectives = list()
-	for(var/datum/traitor_objective/objective_path as anything in subtypesof(/datum/traitor_objective))
-		if(initial(objective_path.abstract_type) == objective_path)
-			continue
-		if(progression_points < initial(objective_path.progression_minimum))
-			continue
-		if(progression_points > initial(objective_path.progression_maximum))
-			continue
-		possible_objectives[objective_path] = initial(objective_path.weight)
-	return possible_objectives
 
 /datum/controller/subsystem/traitor/proc/register_uplink_handler(datum/uplink_handler/uplink_handler)
 	if(!uplink_handler.has_progression)

@@ -76,18 +76,29 @@
 /// Generates objectives for this uplink handler
 /datum/uplink_handler/proc/generate_objectives()
 	var/potential_objectives_left = CONFIG_GET(number/maximum_potential_objectives) - (length(potential_objectives) + length(active_objectives))
-	var/list/objectives = SStraitor.get_possible_objectives(progression_points)
+	var/list/objectives = SStraitor.category_handler.get_possible_objectives(progression_points)
 	if(!length(objectives))
 		return
 	while(length(objectives) && potential_objectives_left > 0)
 		var/objective_typepath = pick_weight(objectives)
+		var/list/target_list = objectives
+		while(islist(objective_typepath))
+			if(!length(objective_typepath))
+				// Need to wrap this in a list or else it list unrolls and the list doesn't actually get removed.
+				// Thank you byond, very cool!
+				target_list -= list(objective_typepath)
+				break
+			target_list = objective_typepath
+			objective_typepath = pick_weight(objective_typepath)
+		if(islist(objective_typepath))
+			continue
 		var/datum/traitor_objective/objective = new objective_typepath(src)
 		if(!objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
-			objectives -= objective_typepath
+			target_list -= objective_typepath
 			continue
 		if(!handle_duplicate(objective))
-			objectives -= objective_typepath
-			return
+			target_list -= objective_typepath
+			continue
 		objective.original_progression = objective.progression_reward
 		objective.update_progression_cost()
 		potential_objectives += objective

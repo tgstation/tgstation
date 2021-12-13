@@ -1999,6 +1999,7 @@
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\swarmer\swarmer.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"
+#include "code\modules\antagonists\traitor\objective_category.dm"
 #include "code\modules\antagonists\traitor\traitor_objective.dm"
 #include "code\modules\antagonists\traitor\uplink_handler.dm"
 #include "code\modules\antagonists\traitor\components\traitor_objective_helpers.dm"

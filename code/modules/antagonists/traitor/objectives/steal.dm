@@ -1,3 +1,15 @@
+/datum/traitor_objective_category/steal_item
+	name = "Steal Item"
+	objectives = list(
+		list(
+			/datum/traitor_objective/steal_item/low_risk = 1,
+			/datum/traitor_objective/steal_item/low_risk_cap = 1,
+		) = 1,
+		/datum/traitor_objective/steal_item/somewhat_risky = 1,
+		/datum/traitor_objective/steal_item/risky = 1,
+		/datum/traitor_objective/steal_item/most_risky = 1
+	)
+
 /datum/traitor_objective/steal_item
 	name = "Steal \[ITEM] and place a bug on it. Hold it for \[TIME] minutes"
 	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. After that, you must keep it near you for \[TIME] minutes"
