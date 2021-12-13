@@ -172,7 +172,7 @@ the new instance inside the host to be updated to the template's stats.
 			taken_names[initial(D.name)] = TRUE
 	var/set_name
 	while(!set_name)
-		var/input = sanitize_name(stripped_input(src, "Select a name for your disease", "Select Name", "", MAX_NAME_LEN))
+		var/input = sanitize_name(tgui_input_text(src, "Select a name for your disease", "Select Name", max_length = MAX_NAME_LEN))
 		if(!input)
 			set_name = "Sentient Virus"
 			break

@@ -16,7 +16,7 @@ type TextInputData = {
 };
 
 export const TextInputModal = (_, context) => {
-  const { data } = useBackend<TextInputData>(context);
+  const { act, data } = useBackend<TextInputData>(context);
   const {
     max_length,
     message,
@@ -31,7 +31,7 @@ export const TextInputModal = (_, context) => {
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
     'inputIsValid',
-    { isValid: false, error: null }
+    { isValid: !!placeholder, error: null }
   );
   const onType = (event) => {
     event.preventDefault();
@@ -46,7 +46,13 @@ export const TextInputModal = (_, context) => {
   return (
     <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          if (keyCode === KEY_ENTER && inputIsValid.isValid) {
+            act('submit', { entry: input });
+          }
+        }}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
@@ -69,9 +75,9 @@ export const TextInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
+  const { data } = useBackend<TextInputData>(context);
   const { multiline } = data;
-  const { input, inputIsValid, onType } = props;
+  const { input, onType } = props;
 
   if (!multiline) {
     return (
@@ -80,12 +86,6 @@ const InputArea = (props, context) => {
           autoFocus
           fluid
           onInput={(event) => onType(event)}
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_ENTER && inputIsValid) {
-              act('submit', { entry: input });
-            }
-          }}
           placeholder="Type something..."
           value={input}
         />
@@ -98,13 +98,6 @@ const InputArea = (props, context) => {
           autoFocus
           height="100%"
           onInput={(event) => onType(event)}
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_ENTER && inputIsValid) {
-
-              act('submit', { entry: input });
-            }
-          }}
           placeholder="Type something..."
           value={input}
         />

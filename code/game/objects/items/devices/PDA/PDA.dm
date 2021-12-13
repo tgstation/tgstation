@@ -649,7 +649,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
+				var/t = tgui_input_text(U, "Enter a new ringtone", "PDA Ringtone", ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
@@ -767,7 +767,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = stripped_input(U, "Please enter message", name)
+	var/t = tgui_input_text(U, "Enter a message", "PDA Messaging")
 	if (!t || toff)
 		return
 	if(!U.canUseTopic(src, BE_CLOSE))
