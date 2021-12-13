@@ -447,7 +447,7 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/pen))
-		var/choice = tgui_input_list(usr, "What would you like to change?",, list("Plant Name", "Seed Description", "Product Description", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		switch(choice)

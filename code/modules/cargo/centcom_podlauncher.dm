@@ -406,7 +406,7 @@
 				return
 
 			var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-			var/target = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in possible_destinations
+			var/target = tgui_input_list(usr, "Select a mob! (Smiting does this automatically)", "Target", possible_destinations)
 
 			if (isnull(target))
 				return
