@@ -153,6 +153,21 @@
 		return TRUE
 	..()
 
+/obj/item/tank/internals/plasmaman/belt/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/sheet/mineral/plasma))
+		var/obj/item/stack/sheet/mineral/plasma/P = W
+		if(!P.use(1))
+			to_chat(user, span_warning("The internals interface displays in red, PLASMA SHEETS ONLY."))
+			return ..()
+		to_chat(user, span_notice("The [src] devours the plasma sheet hungrily, hisses, and falls onto the floor under you."))
+		var/obj/item/tank/internals/plasmaman/belt/full/new_item = new(usr.loc)
+		var/replace = (user.get_inactive_held_item() == P)
+		if(!P && replace)
+			user.put_in_hands(new_item)
+		qdel(src)
+		return TRUE
+	..()
+
 /*
  * Emergency Oxygen
  */
