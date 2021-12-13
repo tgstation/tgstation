@@ -373,7 +373,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 		if (processing <= 0)
 			current_ticklimit = TICK_LIMIT_RUNNING
-			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max((10 / world.tick_lag) - 1, 0))
+			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max(DS2TICKS(10) - 1, 0))
 			sleep(10)
 			continue
 
@@ -433,7 +433,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				iteration++
 			error_level++
 			current_ticklimit = TICK_LIMIT_RUNNING
-			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max((10 / world.tick_lag) - 1, 0))
+			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max(DS2TICKS(10) - 1, 0))
 			sleep(10)
 			continue
 
@@ -446,7 +446,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 					iteration++
 				error_level++
 				current_ticklimit = TICK_LIMIT_RUNNING
-				average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max((10 / world.tick_lag) - 1, 0))
+				average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max(DS2TICKS(10) - 1, 0))
 				sleep(10)
 				continue
 		error_level--

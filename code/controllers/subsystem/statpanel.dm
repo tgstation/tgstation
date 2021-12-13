@@ -29,28 +29,34 @@ SUBSYSTEM_DEF(statpanels)
 		encoded_global_data = url_encode(json_encode(global_data))
 		src.currentrun = GLOB.clients.Copy()
 		mc_data_encoded = null
+
 	var/list/currentrun = src.currentrun
 	while(length(currentrun))
 		var/client/target = currentrun[length(currentrun)]
 		currentrun.len--
 		if(!target.statbrowser_ready)
 			continue
+
 		if(target.stat_tab == "Status")
 			var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
 			var/other_str = url_encode(json_encode(target.mob.get_status_tab_items()))
 			target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
+
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
 			target << output("[!!(target.prefs.toggles & SPLIT_ADMIN_TABS)]", "statbrowser:update_split_admin_tabs")
+
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target << output("[url_encode(target.holder.href_token)]", "statbrowser:add_admin_tabs")
+
 			if(target.stat_tab == "MC")
 				var/turf/eye_turf = get_turf(target.eye)
 				var/coord_entry = url_encode(COORD(eye_turf))
 				if(!mc_data_encoded)
 					generate_mc_data()
 				target << output("[mc_data_encoded];[coord_entry]", "statbrowser:update_mc")
+
 			if(target.stat_tab == "Tickets")
 				var/list/ahelp_tickets = GLOB.ahelp_tickets.stat_entry()
 				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
@@ -82,8 +88,10 @@ SUBSYSTEM_DEF(statpanels)
 
 				// Push update
 				target << output("[url_encode(json_encode(data))];", "statbrowser:update_interviews")
+
 			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
 				target << output("", "statbrowser:remove_sdql2")
+
 			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)))
 				var/list/sdql2A = list()
 				sdql2A[++sdql2A.len] = list("", "Access Global SDQL2 List", REF(GLOB.sdql2_vv_statobj))
@@ -93,34 +101,42 @@ SUBSYSTEM_DEF(statpanels)
 					sdql2B = Q.generate_stat()
 				sdql2A += sdql2B
 				target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
+
 		if(target.mob)
 			var/mob/M = target.mob
+
 			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(M.mob_spell_list) || length(M.mind?.spell_list)))
 				var/list/proc_holders = M.get_proc_holders()
 				target.spell_tabs.Cut()
-				for(var/phl in proc_holders)
-					var/list/proc_holder_list = phl
+
+				for(var/list/proc_holder_list as anything in proc_holders)
 					target.spell_tabs |= proc_holder_list[1]
+
 				var/proc_holders_encoded = ""
 				if(length(proc_holders))
 					proc_holders_encoded = url_encode(json_encode(proc_holders))
+
 				target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
+
 			if(M?.listed_turf)
 				var/mob/target_mob = M
+
 				if(!target_mob.TurfAdjacent(target_mob.listed_turf))
 					target << output("", "statbrowser:remove_listedturf")
 					target_mob.listed_turf = null
+
 				else if(target.stat_tab == M?.listed_turf.name || !(M?.listed_turf.name in target.panel_tabs))
 					var/list/overrides = list()
 					var/list/turfitems = list()
-					for(var/img in target.images)
-						var/image/target_image = img
+
+					for(var/image/target_image as anything in target.images)
 						if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 							continue
 						overrides += target_image.loc
+
 					turfitems[++turfitems.len] = list("[target_mob.listed_turf]", REF(target_mob.listed_turf), icon2html(target_mob.listed_turf, target, sourceonly=TRUE))
-					for(var/tc in target_mob.listed_turf)
-						var/atom/movable/turf_content = tc
+
+					for(var/atom/movable/turf_content as anything in target_mob.listed_turf)
 						if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
 							continue
 						if(turf_content.invisibility > target_mob.see_invisible)
