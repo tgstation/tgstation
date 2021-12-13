@@ -12,6 +12,7 @@
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
+	tag = "ATTN MAPPERS: Please use /sec variant for normal usage"
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
