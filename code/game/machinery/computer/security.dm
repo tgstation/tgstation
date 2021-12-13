@@ -853,7 +853,7 @@ What a mess.*/
 							var/maxFine = CONFIG_GET(number/maxfine)
 
 							var/t1 = tgui_input_text(usr, "Input citation crime", "Security Records")
-							var/fine = FLOOR(tgui_input_number(usr, "Input citation fine", "Security Records", 50, max_value = maxFine), 1)
+							var/fine = FLOOR(tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine), 1)
 
 							if (isnull(fine))
 								return
