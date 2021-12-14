@@ -7,13 +7,13 @@
 	/// The owner of this uplink handler.
 	var/datum/mind/owner
 	/// The amount of telecrystals contained in this traitor has
-	var/telecrystals = 0
+	var/telecrystals = 200
 	/// The current uplink flag of this uplink
 	var/uplink_flag = NONE
 	/// This uplink has progression
 	var/has_progression = TRUE
 	/// The amount of experience points this traitor has
-	var/progression_points = 0
+	var/progression_points = 1000
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
 	/// Associative array of uplink item = stock left
