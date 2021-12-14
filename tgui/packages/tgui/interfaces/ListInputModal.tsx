@@ -17,10 +17,10 @@ export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
   const { items = [], message, preferences, title, timeout } = data;
   const { large_buttons } = preferences;
-  const [selected, setSelected] = useSharedState<string | null>(
+  const [selected, setSelected] = useSharedState<number | null>(
     context,
     'input',
-    null
+    0
   );
   const [searchBarVisible, setSearchBarVisible] = useSharedState<boolean>(
     context,
@@ -38,41 +38,51 @@ export const ListInputModal = (_, context) => {
     { isValid: true, error: null }
   );
   const onArrowKey = (key: any) => {
+    const len = items.length - 1;
     if (key === KEY_DOWN) {
       if (selected === null) {
-        setSelected(items[0]);
+        setSelected(0);
       } else {
-        setSelected(items[(items.indexOf(selected) + 1) % items.length]);
+        setSelected((len + (selected + 1)) % len);
       }
     } else if (key === KEY_UP) {
       if (selected === null) {
-        setSelected(items[items.length - 1]);
+        setSelected(len);
       } else {
-        setSelected(
-          items[(items.indexOf(selected) - 1 + items.length) % items.length]
-        );
+        setSelected((len + (selected - 1)) % len);
       }
     }
+    if (selected) {
+      document!.getElementById(selected.toString())?.focus();
+      setInputIsValid({ isValid: true, error: null });
+    }
   };
-  const onClick = (item: string) => {
-    if (item === undefined || item === selected) {
+  const onClick = (index: number) => {
+    if (index === undefined || index === selected) {
       setInputIsValid({ isValid: false, error: 'No selection' });
       setSelected(null);
     } else {
       setInputIsValid({ isValid: true, error: null });
-      setSelected(item);
+      setSelected(index);
     }
   };
   const onSearch = (query: string) => {
+    setSelected(0);
     setSearchQuery(query);
   };
   const onSearchBarToggle = () => {
     setSearchBarVisible(!searchBarVisible);
     setSearchQuery('');
   };
+  const filteredItems = items.filter((item) =>
+    item?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  // Dynamically changes the window height based on the message.
+  const windowHeight
+    = 325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
 
   return (
-    <Window title={title} width={325} height={325 + (large_buttons ? 5 : 0)}>
+    <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
@@ -101,8 +111,8 @@ export const ListInputModal = (_, context) => {
           <Stack fill vertical>
             <Stack.Item grow>
               <ListDisplay
+                filteredItems={filteredItems}
                 onClick={onClick}
-                searchQuery={searchQuery}
                 selected={selected}
               />
             </Stack.Item>
@@ -121,24 +131,19 @@ export const ListInputModal = (_, context) => {
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
-const ListDisplay = (props, context) => {
-  const { data } = useBackend<ListInputData>(context);
-  const { items } = data;
-  const { onClick, searchQuery, selected } = props;
-  const filteredItems = items.filter((item) =>
-    item.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
+const ListDisplay = (props) => {
+  const { filteredItems, onClick, selected } = props;
   return (
-    <Section fill scrollable tabIndex={4}>
+    <Section autoFocus fill scrollable tabIndex={0}>
       {filteredItems.map((item, index) => {
         return (
           <Button
             color="transparent"
             fluid
+            id={index}
             key={index}
-            onClick={() => onClick(item)}
-            selected={item === selected}
+            onClick={() => onClick(index)}
+            selected={index === selected}
             style={{
               'animation': 'none',
               'transition': 'none',
