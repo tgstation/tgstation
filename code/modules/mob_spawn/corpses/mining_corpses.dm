@@ -205,7 +205,6 @@
 	uniform = /obj/item/clothing/under/costume/roman
 	suit = /obj/item/clothing/suit/hooded/cultrobes
 	suit_store = /obj/item/tome
-	l_pocket = /obj/item/melee/cultblade/dagger
 	back = /obj/item/storage/backpack/cultpack
 	r_pocket = /obj/item/clothing/glasses/hud/health/night/cultblind
 	backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
