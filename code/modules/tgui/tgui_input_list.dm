@@ -7,7 +7,7 @@
  * * message - The content of the input box, shown in the body of the TGUI window.
  * * title - The title of the input box, shown on the top of the TGUI window.
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  */
 /proc/tgui_input_list(mob/user, message, title = "Select", list/items, timeout = 0)
 	if (!user)
@@ -40,7 +40,7 @@
  * * title - The title of the input box, shown on the top of the TGUI window.
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  */
 /proc/tgui_input_list_async(mob/user, message, title, list/items, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
@@ -99,12 +99,12 @@
 		src.items += string_key
 		src.items_map[string_key] = i
 
-		if (timeout)
-			src.timeout = timeout
-			start_time = world.time
-			QDEL_IN(src, timeout)
-			src.items += string_key
-			src.items_map[string_key] = i
+	if (timeout)
+		src.timeout = timeout
+		start_time = world.time
+		QDEL_IN(src, timeout)
+		src.items += string_key
+		src.items_map[string_key] = i
 
 /datum/tgui_list_input/Destroy(force, ...)
 	SStgui.close_uis(src)
