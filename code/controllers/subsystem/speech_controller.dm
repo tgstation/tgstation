@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(speech_controller)
 
 	///	cache for sanic speed (lists are references anyways)
 	var/list/says_to_process = queued_says_to_execute.Copy()
-	says_to_process.Cut()//we should be going through the entire list every single iteration
+	queued_says_to_execute.Cut()//we should be going through the entire list every single iteration
 
 	for(var/list/say_to_process as anything in says_to_process)
 
