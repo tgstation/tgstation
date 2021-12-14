@@ -361,9 +361,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "bq" = (
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
-	head = null;
-	name = "Tradeport Officer";
-	random = 1
+	outfit_override = list("head" = null)
 	},
 /obj/item/paper/crumpled/ruins/bigderelict1/coward,
 /obj/effect/decal/cleanable/blood/old{
