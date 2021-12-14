@@ -80,6 +80,10 @@
 	. = ..()
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
 
+/atom/movable/screen/plane_master/game_world/above
+	name = "above game world plane master"
+	plane = ABOVE_GAME_PLANE
+
 /atom/movable/screen/plane_master/massive_obj
 	name = "massive object plane master"
 	plane = MASSIVE_OBJ_PLANE
