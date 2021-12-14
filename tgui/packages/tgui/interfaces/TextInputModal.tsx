@@ -27,7 +27,11 @@ export const TextInputModal = (_, context) => {
     title,
   } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useLocalState<string>(context, 'input', placeholder);
+  const [input, setInput] = useLocalState<string>(
+    context,
+    'input',
+    placeholder,
+  );
   const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
     context,
     'inputIsValid',
@@ -39,7 +43,10 @@ export const TextInputModal = (_, context) => {
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125 + Math.ceil(message?.length / 3) + (multiline ? 75 : 0);
+    = 125
+    + Math.ceil(message?.length / 3)
+    + (multiline ? 75 : 0)
+    + (large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>

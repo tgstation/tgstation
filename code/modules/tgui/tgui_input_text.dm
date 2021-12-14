@@ -135,19 +135,18 @@
 
 /datum/tgui_input_text/ui_static_data(mob/user)
 	. = list(
-		"preferences" = list()
+		"max_length" = max_length,
+		"message" = message,
+		"multiline" = multiline,
+		"placeholder" = default, /// You cannot use default as a const
+		"preferences" = list(),
+		"title" = title
 	)
 	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
 	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
 
 /datum/tgui_input_text/ui_data(mob/user)
-	. = list(
-		"max_length" = max_length,
-		"message" = message,
-		"multiline" = multiline,
-		"placeholder" = default, /// You cannot use default as a const
-		"title" = title,
-	)
+	. = list()
 	if(timeout)
 		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 
