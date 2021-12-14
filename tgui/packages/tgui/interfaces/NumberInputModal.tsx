@@ -1,7 +1,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { KEY_ENTER } from 'common/keycodes';
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -19,7 +19,7 @@ export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
   const { message, placeholder, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useSharedState(context, 'input', placeholder);
+  const [input, setInput] = useLocalState(context, 'input', placeholder);
   const onChange = (value: number) => {
     setInput(value);
   };
