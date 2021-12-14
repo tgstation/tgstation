@@ -28,14 +28,6 @@
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
 
-	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
-	var/datum/objective/ending_objective
-
-	/// The amount of telecrystals contained in this traitor has
-	var/telecrystals = 0
-	/// The amount of experience points this traitor has
-	var/experience_points = 0
-
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
 
@@ -87,11 +79,6 @@
 /datum/antagonist/traitor/proc/pick_employer(faction)
 	var/list/possible_employers = list()
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
-
-	if(istype(ending_objective, /datum/objective/hijack))
-		possible_employers -= GLOB.normal_employers
-	else //escape or martyrdom
-		possible_employers -= GLOB.hijack_employers
 
 	switch(faction)
 		if(FACTION_SYNDICATE)

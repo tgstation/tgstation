@@ -6,7 +6,7 @@
 
 ///smuggle! bring a traitor item from its arrival area to the cargo shuttle, where the objective completes on selling the item
 /datum/traitor_objective/smuggle
-	name = "Smuggle \[CONTRABAND] from \[AREA], off the station via cargo shuttle."
+	name = "Smuggle \[CONTRABAND] from \[AREA] off the station via cargo shuttle."
 	description = "Go to a designated area, pick up syndicate contraband, and get it off the station via the cargo shuttle. \
 	You will instantly fail this objective if anyone else picks up your contraband. If you fail, you are liable for the costs \
 	of the smuggling item."
@@ -18,10 +18,17 @@
 	var/obj/item/contraband
 	///type of contraband to spawn
 	var/obj/item/contraband_type
+	/// possible objective items. Mapped by item type = penalty cost for failing
+	var/list/possible_contrabands = list(
+		/obj/item/pen/edagger/prototype = 2,
+		/obj/item/gun/syringe/syndicate/prototype = 4,
+		/obj/item/reagent_containers/glass/bottle/ritual_wine = 6, //poison kit price
+	)
 
-/datum/traitor_objective/smuggle/is_duplicate(datum/traitor_objective/objective_to_compare)
-	. = ..()
-	//it's too similar if its from the same area, who cares about the contraband in question
+/datum/traitor_objective/smuggle/is_duplicate(datum/traitor_objective/smuggle/objective_to_compare)
+	if(objective_to_compare.contraband_type == objective_to_compare)
+		return TRUE
+	//it's too similar if its from the same area
 	if(objective_to_compare.smuggle_spawn_type == smuggle_spawn_type)
 		return TRUE
 	return FALSE
@@ -29,7 +36,7 @@
 /datum/traitor_objective/smuggle/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!contraband)
-		buttons += add_ui_button("", "Pressing this will materialize the contraband you need to deliver. You must be in [initial(smuggle_spawn_type.name)] to recieve it!", "box", "summon_contraband")
+		buttons += add_ui_button("", "Pressing this will materialize the contraband you need to deliver. You must be in [initial(smuggle_spawn_type.name)] to receive it!", "box", "summon_contraband")
 	return buttons
 
 /datum/traitor_objective/smuggle/ui_perform_action(mob/living/user, action)
@@ -46,11 +53,10 @@
 			AddComponent(/datum/component/traitor_objective_register, contraband, \
 				succeed_signals = COMSIG_ITEM_SOLD, \
 				fail_signals = list(COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING), \
-				penalty = TRUE \
+				penalty = telecrystal_penalty \
 			)
 
 /datum/traitor_objective/smuggle/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	. = ..()
 	//anyone working cargo should not get almost free objectives by having direct access to the cargo shuttle
 	if(generating_for.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO)
 		return FALSE
@@ -63,13 +69,17 @@
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
 		if(istype(possible_area, /area/cargo) || istype(possible_area, /area/hallway) || istype(possible_area, /area/security))
 			possible_areas -= possible_area
+	for(var/datum/traitor_objective/smuggle/smuggle_objective as anything in possible_duplicates)
+		possible_areas -= smuggle_objective.smuggle_spawn_type
+		possible_contrabands -= smuggle_objective.contraband_type
+	if(!length(possible_contrabands))
+		return FALSE
+	if(!length(possible_areas))
+		return FALSE
 	smuggle_spawn_type = pick(possible_areas)
 	//choose contraband type to spawn when reaching starting area
-	contraband_type = pick(
-		/obj/item/pen/edagger/prototype,
-		/obj/item/gun/syringe/syndicate/prototype,
-		/obj/item/reagent_containers/glass/bottle/ritual_wine,
-	)
+	contraband_type = pick(possible_contrabands)
+	telecrystal_penalty = possible_contrabands[contraband_type]
 	replace_in_name("\[CONTRABAND]", initial(contraband_type.name))
 	replace_in_name("\[AREA]", initial(smuggle_spawn_type.name))
 	return TRUE
@@ -83,23 +93,10 @@
 		UnregisterSignal(contraband, COMSIG_ITEM_PICKUP)
 		contraband = null
 
-/datum/traitor_objective/smuggle/fail_objective(punish)
-	if(punish)
-		to_chat(smuggler, span_boldwarning("For failing to deliver the contraband, you have been deducted the telecrystal price of the item."))
-		var/static/list/punishment_costs = list(
-			/obj/item/pen/edagger/prototype = 2,
-			/obj/item/gun/syringe/syndicate/prototype = 4,
-			/obj/item/reagent_containers/glass/bottle/ritual_wine = 6, //poison kit price
-		)
-		var/cost_of_failure = punishment_costs[contraband_type]
-		//technically you can get a discount on the item if you have less tc than the price of the item, but honestly at that point you need the help
-		handler.telecrystals = max(handler.telecrystals - cost_of_failure, 0)
-	. = ..()
-
 /datum/traitor_objective/smuggle/proc/on_contraband_pickup(datum/source, mob/taker)
 	SIGNAL_HANDLER
 	if(taker != smuggler)
-		fail_objective(TRUE)
+		fail_objective(telecrystal_penalty)
 
 //smuggling container
 /obj/item/reagent_containers/glass/bottle/ritual_wine

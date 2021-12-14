@@ -11,6 +11,7 @@ export type Objective = {
   progression_minimum: number,
   progression_reward: number,
   telecrystal_reward: number,
+  telecrystal_penalty: number,
   ui_buttons?: ObjectiveUiButton[],
   objective_state: ObjectiveState,
   original_progression: number,
@@ -283,6 +284,7 @@ const ObjectiveFunction = (
       description={objective.description}
       reputation={reputation}
       telecrystalReward={objective.telecrystal_reward}
+      telecrystalPenalty={objective.telecrystal_penalty}
       progressionReward={objective.progression_reward}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
@@ -327,6 +329,7 @@ type ObjectiveElementProps = {
   uiButtons?: JSX.Element;
   objectiveState: ObjectiveState;
   originalProgression: number;
+  telecrystalPenalty: number;
   grow: boolean;
 
   handleCompletion: (event: MouseEvent) => void;
@@ -341,6 +344,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     telecrystalReward,
     progressionReward,
     objectiveState,
+    telecrystalPenalty,
     handleCompletion,
     originalProgression,
     grow,
@@ -349,9 +353,23 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
 
   const objectiveFinished
     = objectiveState === ObjectiveState.Completed
-    || objectiveState === ObjectiveState.Failed;
+    || objectiveState === ObjectiveState.Failed
+    || objectiveState === ObjectiveState.Invalid;
 
-  const objectiveFailed = objectiveState === ObjectiveState.Failed;
+  const objectiveFailed = objectiveState !== ObjectiveState.Completed;
+  let objectiveCompletionText;
+  switch (objectiveState) {
+    case ObjectiveState.Invalid:
+      objectiveCompletionText = "Invalidated";
+      break;
+    case ObjectiveState.Completed:
+      objectiveCompletionText = "Completed";
+      break;
+    case ObjectiveState.Failed:
+      objectiveCompletionText = "Failed";
+      break;
+  }
+
 
   const progressionDiff = Math.round(
     (1 - (progressionReward / originalProgression))*1000
@@ -368,7 +386,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
           width="100%"
           height="100%"
         >
-          {name} {!objectiveFinished? null : objectiveFailed? "- Failed" : "- Completed"}
+          {name} {!objectiveFinished? null : `- ${objectiveCompletionText}`}
         </Box>
       </Flex.Item>
       <Flex.Item grow={grow} basis="content">
@@ -378,6 +396,9 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         >
           <Box>
             {description}
+          </Box>
+          <Box mt={1}>
+            Failing this objective will deduct {telecrystalPenalty} TC.
           </Box>
         </Box>
       </Flex.Item>

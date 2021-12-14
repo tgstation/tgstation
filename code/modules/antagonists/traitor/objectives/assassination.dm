@@ -8,14 +8,14 @@
 		) = 1,
 		//above but for heads
 		list(
-			/datum/traitor_objective/assassinate/calling_card = 1,
-			/datum/traitor_objective/assassinate/behead = 1,
+			/datum/traitor_objective/assassinate/calling_card/heads_of_staff = 1,
+			/datum/traitor_objective/assassinate/behead/heads_of_staff = 1,
 		) = 1,
 	)
 
 ///base objective prototype
 /datum/traitor_objective/assassinate
-	name = "Assassinate \[TARGET], the \[JOB TITLE]."
+	name = "Assassinate \[TARGET] the \[JOB TITLE]."
 	description = "Simply kill your target to accomplish this objective."
 
 	abstract_type = /datum/traitor_objective/assassinate
@@ -79,20 +79,20 @@
 /datum/traitor_objective/assassinate/calling_card/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_PARENT_QDELETING)
 	. = ..() //unsets kill target
-	UnregisterSignal(card, COMSIG_ITEM_EQUIPPED)
+	if(card)
+		UnregisterSignal(card, COMSIG_ITEM_EQUIPPED)
 	card = null
 
 /datum/traitor_objective/assassinate/calling_card/on_target_qdeleted()
-	SIGNAL_HANDLER
 	//you cannot plant anything on someone who is gone gone, so even if this happens after you're still liable to fail
-	fail_objective(penalty = FALSE)
+	fail_objective(telecrystal_penalty)
 
 /datum/traitor_objective/assassinate/calling_card/heads_of_staff
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/assassinate/behead
 	name = "Behead \[TARGET], the \[JOB TITLE]."
-	description = "Behead and hold your target's head to succeed this objective."
+	description = "Behead and hold \[TARGET]'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
 
 	///the body who needs to hold the head
 	var/mob/living/needs_to_hold_head
@@ -112,6 +112,7 @@
 		return FALSE
 	var/mob/living/carbon/possible_current = generating_for.current
 	behead_goal = possible_current.get_bodypart(BODY_ZONE_HEAD)
+	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
 	needs_to_hold_head = generating_for.current
 	RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, .proc/on_head_pickup)
 	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, .proc/on_target_dismembered)
@@ -173,6 +174,8 @@
 			if((possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue
 		possible_targets += possible_target
+	for(var/datum/traitor_objective/assassinate/objective as anything in possible_duplicates)
+		possible_targets -= objective.kill_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/datum/mind/possible_target in all_possible_targets)
@@ -187,7 +190,7 @@
 	var/datum/mind/kill_target_mind = pick(possible_targets)
 	kill_target = kill_target_mind.current
 	replace_in_name("\[TARGET]", kill_target.real_name)
-	replace_in_name("\[JOB TITLE]", kill_target_mind.assigned_role)
+	replace_in_name("\[JOB TITLE]", kill_target_mind.assigned_role.title)
 	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
 	return TRUE
 

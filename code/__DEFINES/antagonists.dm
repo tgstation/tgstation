@@ -225,5 +225,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define OBJECTIVE_STATE_ACTIVE 2
 /// If the objective has been completed.
 #define OBJECTIVE_STATE_COMPLETED 3
-/// If the objective has failed. Also applies if it has been invalidated.
+/// If the objective has failed.
 #define OBJECTIVE_STATE_FAILED 4
+/// If the objective is no longer valid
+#define OBJECTIVE_STATE_INVALID 5

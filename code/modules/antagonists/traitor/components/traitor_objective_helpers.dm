@@ -10,7 +10,7 @@
 	/// Signals to listen out for to automatically fail the objective.
 	var/fail_signals
 	/// Whether failing has a penalty
-	var/penalty = FALSE
+	var/penalty = 0
 
 /datum/component/traitor_objective_register/Initialize(datum/target, succeed_signals, fail_signals, penalty)
 	. = ..()

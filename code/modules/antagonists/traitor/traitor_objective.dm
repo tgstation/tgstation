@@ -13,8 +13,11 @@
 	var/progression_reward = 0 MINUTES
 	/// The telecrystals that are rewarded from completing this traitor objective. Can either be a list of list(min,max) or a direct value
 	var/telecrystal_reward = 0
+	/// TC penalty for failing an objective or cancelling it
+	var/telecrystal_penalty = 1
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
+
 
 	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
 	var/global_progression_influence_intensity = 1
@@ -84,10 +87,14 @@
 		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active
 
 /// Used to fail objectives. Players can clear completed objectives in the UI
-/datum/traitor_objective/proc/fail_objective()
+/datum/traitor_objective/proc/fail_objective(penalty_cost)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
-	objective_state = OBJECTIVE_STATE_FAILED
+	if(penalty_cost)
+		handler.telecrystals -= penalty_cost
+		objective_state = OBJECTIVE_STATE_FAILED
+	else
+		objective_state = OBJECTIVE_STATE_INVALID
 	handler.on_update() // Trigger an update to the UI
 
 /// Used to succeed objectives. Allows the player to cash it out in the UI.
@@ -100,7 +107,7 @@
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
 /datum/traitor_objective/proc/finish_objective()
 	switch(objective_state)
-		if(OBJECTIVE_STATE_FAILED)
+		if(OBJECTIVE_STATE_FAILED, OBJECTIVE_STATE_INVALID)
 			return TRUE
 		if(OBJECTIVE_STATE_COMPLETED)
 			completion_payout()
@@ -127,6 +134,7 @@
 		"ui_buttons" = generate_ui_buttons(user),
 		"objective_state" = objective_state,
 		"original_progression" = original_progression,
+		"telecrystal_penalty" = telecrystal_penalty,
 	)
 
 /// Used for generating the UI buttons for the UI. Use ui_perform_action to respond to clicks.

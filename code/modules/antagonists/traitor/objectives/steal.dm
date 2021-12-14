@@ -152,7 +152,8 @@
 
 /datum/traitor_objective/steal_item/ungenerate_objective()
 	STOP_PROCESSING(SSprocessing, src)
-	UnregisterSignal(bug, list(COMSIG_TRAITOR_BUG_PLANTED_OBJECT, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT))
+	if(bug)
+		UnregisterSignal(bug, list(COMSIG_TRAITOR_BUG_PLANTED_OBJECT, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT))
 	bug = null
 
 /datum/traitor_objective/steal_item/is_duplicate(datum/traitor_objective/steal_item/objective_to_compare)
@@ -181,7 +182,8 @@
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_object = target_item.targetitem
 			AddComponent(/datum/component/traitor_objective_register, bug, \
-				fail_signals = COMSIG_PARENT_QDELETING)
+				fail_signals = COMSIG_PARENT_QDELETING, \
+				penalty = telecrystal_penalty)
 			RegisterSignal(bug, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, .proc/on_bug_planted)
 			RegisterSignal(bug, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, .proc/handle_special_case)
 		if("summon_gear")
