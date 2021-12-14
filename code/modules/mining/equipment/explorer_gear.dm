@@ -47,6 +47,9 @@
 	resistance_flags = FIRE_PROOF
 	tint = 0.25
 
+/obj/item/clothing/mask/gas/explorer/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
 

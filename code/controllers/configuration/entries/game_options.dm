@@ -377,3 +377,5 @@
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
 /datum/config_entry/flag/sdql_spells
+
+/datum/config_entry/flag/native_fov
