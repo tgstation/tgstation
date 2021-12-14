@@ -605,8 +605,8 @@ GLOBAL_VAR(station_nuke_source)
 		return
 	for(var/_victim in GLOB.mob_living_list)
 		var/mob/living/victim = _victim
-		to_chat(victim, span_userdanger("You are shredded to atoms!"))
 		if(victim.stat != DEAD && victim.z == z)
+			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
 
 /*
