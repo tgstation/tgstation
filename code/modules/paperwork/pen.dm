@@ -147,7 +147,7 @@
 	. = ..()
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = input(user, "What would you like to edit?", "Rename, change description or reset both?") as null|anything in list("Rename","Change description","Reset")
+		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename","Change description","Reset"))
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 			return
 		if(penchoice == "Rename")

@@ -10,7 +10,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
-	bot_core = /obj/machinery/bot_core/honkbot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
@@ -349,6 +349,3 @@
 				INVOKE_ASYNC(src, /mob/living/simple_animal/bot/proc/speak, "Honk!")
 			sensor_blink()
 			return
-
-/obj/machinery/bot_core/honkbot
-	req_one_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)

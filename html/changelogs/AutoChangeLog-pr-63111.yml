@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Fix all tend wounds showing when selecting a surgery after upgrading."

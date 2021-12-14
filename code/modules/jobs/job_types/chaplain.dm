@@ -1,5 +1,7 @@
 /datum/job/chaplain
 	title = "Chaplain"
+	description = "Hold services and funerals, cremate people, preach your \
+		religion, protect the crew against cults."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 1

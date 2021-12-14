@@ -243,13 +243,14 @@
 	QDEL_NULL(moth_snack)
 	return ..()
 
-/obj/item/clothing/dropped(mob/user)
+/obj/item/clothing/dropped(mob/living/user)
 	..()
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
 		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+
 
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
@@ -258,7 +259,7 @@
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
-/obj/item/clothing/equipped(mob/user, slot)
+/obj/item/clothing/equipped(mob/living/user, slot)
 	. = ..()
 	if (!istype(user))
 		return
@@ -369,28 +370,31 @@
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	armor_value = round(armor_value,10) / 10
+	var/sign = ""
+	if (armor_value < 0)
+		sign = "-"
+	armor_value = round(abs(armor_value), 10) / 10
 	switch (armor_value)
 		if (1)
-			. = "I"
+			. = sign + "I"
 		if (2)
-			. = "II"
+			. = sign + "II"
 		if (3)
-			. = "III"
+			. = sign + "III"
 		if (4)
-			. = "IV"
+			. = sign + "IV"
 		if (5)
-			. = "V"
+			. = sign + "V"
 		if (6)
-			. = "VI"
+			. = sign + "VI"
 		if (7)
-			. = "VII"
+			. = sign + "VII"
 		if (8)
-			. = "VIII"
+			. = sign + "VIII"
 		if (9)
-			. = "IX"
+			. = sign + "IX"
 		if (10 to INFINITY)
-			. = "X"
+			. = sign + "X"
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)
@@ -457,6 +461,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
@@ -468,6 +473,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	icon_state = "[initial(icon_state)]"

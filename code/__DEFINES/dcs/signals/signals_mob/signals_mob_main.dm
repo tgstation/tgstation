@@ -31,6 +31,10 @@
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 /// From base of /client/Move()
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
+/// From base of /client/proc/change_view() (mob/source, new_size)
+#define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
+/// From base of /mob/proc/reset_perspective() (mob/source)
+#define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
@@ -93,7 +97,6 @@
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
-///also from /mob/living/stripPanel(Un)equip)()
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
 ///From /datum/component/creamed/Initialize()

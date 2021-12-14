@@ -25,6 +25,8 @@
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 	var/being_held_open = FALSE
+	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glassbash.ogg'
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
@@ -82,7 +84,7 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/latetoggle)
 
-/obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
+/obj/machinery/door/firedoor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -90,9 +92,14 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	user.visible_message(span_notice("[user] bangs on \the [src]."), \
-		span_notice("You bang on \the [src]."))
-	playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
+	if(!user.combat_mode)
+		user.visible_message(span_notice("[user] knocks on [src]."), \
+			span_notice("You knock on [src]."))
+		playsound(src, knock_sound, 50, TRUE)
+	else
+		user.visible_message(span_warning("[user] bashes [src]!"), \
+			span_warning("You bash [src]!"))
+		playsound(src, bash_sound, 100, TRUE)
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
@@ -286,7 +293,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/firedoor/border_only/can_atmos_pass(turf/T)
+/obj/machinery/door/firedoor/border_only/can_atmos_pass(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

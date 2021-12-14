@@ -1,0 +1,5 @@
+author: "armhulen"
+delete-after: True
+changes: 
+  - refactor: "Mob spawns are refactored, no more assortment of \"random, instant, and roundstart\" vars on every mob spawn type"
+  - refactor: "if there are some minimal differences in how mob spawners feel, that's why!"

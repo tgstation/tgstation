@@ -388,3 +388,4 @@
 
 /datum/config_entry/flag/sdql_spells
 
+/datum/config_entry/flag/native_fov

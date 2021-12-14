@@ -437,6 +437,7 @@
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 		return 1
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
 /**
  * Examine a mob
@@ -736,38 +737,10 @@
  * * handles the strip panel equip and unequip as well if "item" sent
  */
 /mob/Topic(href, href_list)
-	var/mob/user = usr
-
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
-
-	if(user != src)
-		if(href_list["item"] && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
-			var/slot = text2num(href_list["item"])
-			var/hand_index = text2num(href_list["hand_index"])
-			var/obj/item/what
-			if(hand_index)
-				what = get_item_for_held_index(hand_index)
-				slot = list(slot,hand_index)
-			else
-				what = get_item_by_slot(slot)
-			if(what)
-				if(!(what.item_flags & ABSTRACT))
-					user.stripPanelUnequip(what,src,slot)
-			else
-				user.stripPanelEquip(what,src,slot)
-
-// The src mob is trying to strip an item from someone
-// Defined in living.dm
-/mob/proc/stripPanelUnequip(obj/item/what, mob/who)
-	return
-
-// The src mob is trying to place an item on someone
-// Defined in living.dm
-/mob/proc/stripPanelEquip(obj/item/what, mob/who)
-	return
 
 /**
  * Controls if a mouse drop succeeds (return null if it doesnt)

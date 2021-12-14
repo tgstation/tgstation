@@ -28,6 +28,10 @@
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
 
+/datum/antagonist/traitor/New(give_objectives = TRUE)
+	. = ..()
+	src.give_objectives = give_objectives
+
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
 

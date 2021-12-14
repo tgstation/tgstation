@@ -141,7 +141,7 @@
 			if(params["scan"] == "wounds")
 				hostscan.attack_self(usr)
 			if(params["scan"] == "limbs")
-				hostscan.toggle_mode()
+				hostscan.AltClick(usr)
 		if("internal_gps")
 			if(!internal_gps)
 				internal_gps = new(src)
@@ -277,6 +277,8 @@
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [turf.loc].</b></font>")
 		else
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress. Unable to pinpoint location.</b></font>")
+	if(!hackbar)
+		hackbar = new(src, HACK_COMPLETE, hacking_cable.machine)
 	hacking = TRUE
 
 /**

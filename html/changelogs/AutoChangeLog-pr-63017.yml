@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed solars and nearstation areas being pitch black, restores the fullbright they ought to have"

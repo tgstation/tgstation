@@ -650,6 +650,25 @@
 	tastes = list("peaches" = 1, "tin" = 7)
 	venue_value = FOOD_EXOTIC
 
+/obj/item/food/canned/tomatoes
+	name = "canned San Marzano tomatoes"
+	desc = "A can of premium San Marzano tomatoes, from the hills of Southern Italy."
+	icon_state = "tomatoescan"
+	trash_type = /obj/item/trash/can/food/tomatoes
+	food_reagents = list(/datum/reagent/consumable/tomatojuice = 20, /datum/reagent/consumable/salt = 2)
+	tastes = list("tomato" = 7, "tin" = 1)
+	foodtypes = VEGETABLES //fuck you, real life!
+
+/obj/item/food/canned/pine_nuts
+	name = "canned pine nuts"
+	desc = "A small can of pine nuts. Can be eaten on their own, if you're into that."
+	icon_state = "pinenutscan"
+	trash_type = /obj/item/trash/can/food/pine_nuts
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("pine nuts" = 1)
+	foodtypes = NUTS
+	w_class = WEIGHT_CLASS_SMALL
+
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
@@ -760,3 +779,163 @@
 	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet)//If there is no dog mom, we assume the pet fed itself.
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(src)
+
+//Curd cheese, a general term which I will now proceed to stretch as thin as the toppings on a supermarket sandwich:
+//I'll use it as a substitute for ricotta, cottage cheese and quark, as well as any other non-aged, soft grainy cheese
+/obj/item/food/curd_cheese
+	name = "curd cheese"
+	desc = "Known by many names throughout human cuisine, curd cheese is useful for a wide variety of dishes."
+	icon_state = "curd_cheese"
+	microwaved_type = /obj/item/food/cheese_curds
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cream = 1)
+	tastes = list("cream" = 1, "cheese" = 1)
+	foodtypes = DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cheese_curds
+	name = "cheese curds"
+	desc = "Not to be mistaken for curd cheese. Tasty deep fried."
+	icon_state = "cheese_curds"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	tastes = list("cheese" = 1)
+	foodtypes = DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cheese_curds/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/dryable,  /obj/item/food/firm_cheese)
+
+/obj/item/food/firm_cheese
+	name = "firm cheese"
+	desc = "Firm aged cheese, similar in texture to firm tofu. Due to its lack of moisture it's particularly useful for cooking with, as it doesn't melt easily."
+	icon_state = "firm_cheese"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	tastes = list("aged cheese" = 1)
+	foodtypes = DAIRY | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/firm_cheese/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/firm_cheese_slice, 3, 30)
+
+/obj/item/food/firm_cheese_slice
+	name = "firm cheese slice"
+	desc = "A slice of firm cheese. Perfect for grilling or making into delicious pesto."
+	icon_state = "firm_cheese_slice"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	tastes = list("aged cheese" = 1)
+	foodtypes = DAIRY | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+
+/obj/item/food/firm_cheese_slice/MakeGrillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
+
+/obj/item/food/mozzarella
+	name = "mozzarella cheese"
+	desc = "Delicious, creamy, and cheesy, all in one simple package."
+	icon_state = "mozzarella"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
+	tastes = list("mozzarella" = 1)
+	foodtypes = DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/griddle_toast
+	name = "griddle toast"
+	desc = "Thick cut bread, griddled to perfection."
+	icon_state = "griddle_toast"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("toast" = 1)
+	foodtypes = GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	burns_on_grill = TRUE
+
+/obj/item/food/pesto
+	name = "pesto"
+	desc = "A combination of firm cheese, salt, herbs, garlic, oil, and pine nuts. Frequently used as a sauce for pasta or pizza, or eaten on bread."
+	icon_state = "pesto"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("pesto" = 1)
+	foodtypes = VEGETABLES | DAIRY | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/tomato_sauce
+	name = "tomato sauce"
+	desc = "Tomato sauce, perfect for pizza or pasta. Mamma mia!"
+	icon_state = "tomato_sauce"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("tomato" = 1, "herbs" = 1)
+	foodtypes = VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/bechamel_sauce
+	name = "béchamel sauce"
+	desc = "A classic white sauce common to several European cultures."
+	icon_state = "bechamel_sauce"
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("cream" = 1)
+	foodtypes = DAIRY | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/roasted_bell_pepper
+	name = "roasted bell pepper"
+	desc = "A blackened, blistered bell pepper. Great for making sauces."
+	icon_state = "roasted_bell_pepper"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/char = 1)
+	tastes = list("bell pepper" = 1, "char" = 1)
+	foodtypes = VEGETABLES
+
+//DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
+/obj/item/food/ready_donk
+	name = "\improper Ready-Donk: Bachelor Chow"
+	desc = "A quick Donk-dinner: now with flavour!"
+	icon_state = "ready_donk"
+	trash_type = /obj/item/trash/ready_donk
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	microwaved_type = /obj/item/food/ready_donk/warm
+	tastes = list("food?" = 2, "laziness" = 1)
+	foodtypes = MEAT | JUNKFOOD
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/ready_donk/examine_more(mob/user)
+	var/list/msg = list(span_notice("<i>You browse the back of the box...</i>"))
+	msg += "\t[span_info("Ready-Donk: a product of Donk Co.")]"
+	msg += "\t[span_info("Heating instructions: open box and pierce film, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
+	msg += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
+	return msg
+
+/obj/item/food/ready_donk/warm
+	name = "warm Ready-Donk: Bachelor Chow"
+	desc = "A quick Donk-dinner, now with flavour! And it's even hot!"
+	icon_state = "ready_donk_warm"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/omnizine = 3)
+	microwaved_type = null
+	tastes = list("food?" = 2, "laziness" = 1)
+
+/obj/item/food/ready_donk/mac_n_cheese
+	name = "\improper Ready-Donk: Donk-a-Roni"
+	desc = "Neon-orange mac n' cheese in seconds!"
+	microwaved_type = /obj/item/food/ready_donk/warm/mac_n_cheese
+	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+/obj/item/food/ready_donk/warm/mac_n_cheese
+	name = "warm Ready-Donk: Donk-a-Roni"
+	desc = "Neon-orange mac n' cheese, ready to eat!"
+	icon_state = "ready_donk_warm_mac"
+	tastes = list("cheesy pasta" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+/obj/item/food/ready_donk/donkhiladas
+	name = "\improper Ready-Donk: Donkhiladas"
+	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
+	microwaved_type = /obj/item/food/ready_donk/warm/donkhiladas
+	tastes = list("enchiladas" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/ready_donk/warm/donkhiladas
+	name = "warm Ready-Donk: Donkhiladas"
+	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
+	icon_state = "ready_donk_warm_mex"
+	tastes = list("enchiladas" = 2, "laziness" = 1)
+	foodtypes = GRAIN | DAIRY | JUNKFOOD

@@ -11,8 +11,12 @@
 	custom_premium_price = PAYCHECK_HARD * 1.25
 	///don't spam alert messages.
 	var/alert_cooldown
+	/// If the pAIcard is slotted in a PDA
+	var/slotted = FALSE
+	/// Any pAI personalities inserted
 	var/mob/living/silicon/pai/pai
-	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
+	///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
+	var/emotion_icon = "off"
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
 /obj/item/paicard/suicide_act(mob/living/user)
@@ -63,7 +67,7 @@
 		ui.open()
 
 /obj/item/paicard/ui_state(mob/user)
-	return GLOB.inventory_state
+	return GLOB.paicard_state
 
 /obj/item/paicard/ui_data(mob/user)
 	. = ..()
@@ -130,7 +134,7 @@
 				to_chat(pai, span_notice("You have been bound to a new master."))
 				pai.emittersemicd = FALSE
 		if("set_laws")
-			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
+			var/newlaws = tgui_input_text(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN, TRUE)
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
 		if("toggle_holo")
