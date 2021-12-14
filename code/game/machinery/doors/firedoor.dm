@@ -43,7 +43,7 @@
 	var/alarm_type = null
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
-	var/merger_typecache
+	var/static/list/merger_typecache
 	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
@@ -65,7 +65,7 @@
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	GetMergeGroup(merger_id, allowed_types = typecacheof(/obj/machinery/door/firedoor))
+	GetMergeGroup(merger_id, allowed_types = merger_typecache)
 
 /**
  * Sets the offset for the warning lights.
