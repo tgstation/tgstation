@@ -12,8 +12,9 @@
  * * default - The default (or current) value, shown as a placeholder. Users can press refresh with this.
  * * max_value - Specifies a maximum value. If none is set, any number can be entered. Pressing "max" defaults to 1000.
  * * min_value - Specifies a minimum value. Often 0.
+ * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number(mob/user, message = null, title = "Number Input", default = null, max_value = null, min_value = 0)
+/proc/tgui_input_number(mob/user, message = null, title = "Number Input", default = null, max_value = null, min_value = 0, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -25,7 +26,7 @@
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title, default) as null|num
-	var/datum/tgui_input_number/number_input = new(user, message, title, default, max_value, min_value)
+	var/datum/tgui_input_number/number_input = new(user, message, title, default, max_value, min_value, timeout)
 	number_input.ui_interact(user)
 	number_input.wait()
 	if (number_input)
@@ -45,8 +46,9 @@
  * * max_value - Specifies a maximum value. If none is set, any number can be entered. Pressing "max" defaults to 1000.
  * * min_value - Specifies a minimum value. Often 0.
  * * callback - The callback to be invoked when a choice is made.
+ * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number_async(mob/user, message = null, title = "Number Input", default = null, max_value = null, min_value = 0, datum/callback/callback)
+/proc/tgui_input_number_async(mob/user, message = null, title = "Number Input", default = null, max_value = null, min_value = 0, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -55,14 +57,14 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_input_number/async/number_input = new(user, message, title, default, max_value, min_value, callback)
+	var/datum/tgui_input_number/async/number_input = new(user, message, title, default, max_value, min_value, callback, timeout)
 	number_input.ui_interact(user)
 
 /**
  * # tgui_input_number
  *
  * Datum used for instantiating and using a TGUI-controlled number input that prompts the user with
- * a message and has an input for text entry.
+ * a message and has an input for number entry.
  */
 /datum/tgui_input_number
 	/// Boolean field describing if the tgui_input_number was closed by the user.
@@ -77,16 +79,24 @@
 	var/message
 	/// The minimum value that can be entered.
 	var/min_value
+	/// The time at which the number input was created, for displaying timeout progress.
+	var/start_time
+	/// The lifespan of the number input, after which the window will close and delete itself.
+	var/timeout
 	/// The title of the TGUI window
 	var/title
 
 
-/datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value)
+/datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout)
 	src.default = default
 	src.max_value = max_value
 	src.message = message
 	src.min_value = min_value
 	src.title = title
+	if (timeout)
+		src.timeout = timeout
+		start_time = world.time
+		QDEL_IN(src, timeout)
 
 /datum/tgui_input_number/Destroy(force, ...)
 	SStgui.close_uis(src)
@@ -126,6 +136,11 @@
 	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
 	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
 
+/datum/tgui_input_number/ui_data(mob/user)
+	. = list()
+	if(timeout)
+		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+
 /datum/tgui_input_number/ui_act(action, list/params)
 	. = ..()
 	if (.)
@@ -156,8 +171,8 @@
 	/// The callback to be invoked by the tgui_input_number upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_input_number/async/New(mob/user, message, title, default, max_value, min_value, callback)
-	..(user, message, title, default, max_value, min_value)
+/datum/tgui_input_number/async/New(mob/user, message, title, default, max_value, min_value, callback, timeout)
+	..(user, message, title, default, max_value, min_value, timeout)
 	src.callback = callback
 
 /datum/tgui_input_number/async/Destroy(force, ...)
