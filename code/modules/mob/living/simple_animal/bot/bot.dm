@@ -962,7 +962,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
-	if(bot_cover_flags & BOT_COVER_LOCKED || bot_cover_flags & BOT_COVER_OPEN)
+	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
 		to_chat(user, span_warning("The personality slot is locked."))
 		return
 	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || key) //Not pAI controllable or is already player controlled.
