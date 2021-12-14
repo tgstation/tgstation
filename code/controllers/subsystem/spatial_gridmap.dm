@@ -1,3 +1,4 @@
+///the subsystem creates this many [/mob/oranges_ear] mob instances during init. allocations that require more than this create more.
 #define NUMBER_OF_PREGENERATED_ORANGES_EARS 2500
 
 // macros meant specifically to add/remove movables from the hearing_contents and client_contents lists of
@@ -26,6 +27,13 @@
 		cell_contents_list = dummy_list; \
 	};
 
+/**
+ * # Spatial Grid Cell
+ *
+ * used by [/datum/controller/subsystem/spatial_grid] to cover every z level so that the coordinates of every turf in the world corresponds to one of these in
+ * the subsystems list of grid cells by z level. each one of these contains content lists holding all atoms meeting a certain criteria that is in our borders.
+ * these datums shouldnt have significant behavior, they should just hold data. the lists are filled and emptied by the subsystem.
+ */
 /datum/spatial_grid_cell
 	///our x index in the list of cells. this is our index inside of our row list
 	var/cell_x
@@ -37,7 +45,7 @@
 
 	//when empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
 	//this is meant to allow a great compromise between memory usage and speed.
-	//now orthogonal_range_search() doesnt need to check if the list is null and each empty list isnt taking 24 bytes but instead 12
+	//now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
 	//the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
 
 	///every hearing sensitive movable inside this cell
@@ -68,20 +76,21 @@
 
 /**
  * # Spatial Grid
- * a gamewide grid of spatial_grid_cell datums, each "covering" SPATIAL_GRID_CELLSIZE ^ 2 turfs
+ *
+ * a gamewide grid of spatial_grid_cell datums, each "covering" [SPATIAL_GRID_CELLSIZE] ^ 2 turfs.
  * each spatial_grid_cell datum stores information about what is inside its covered area, so that searches through that area dont have to literally search
  * through all turfs themselves to know what is within it since view() calls are expensive, and so is iterating through stuff you dont want.
- * this allows you to only go through lists of what you want very cheaply
+ * this allows you to only go through lists of what you want very cheaply.
  *
  * you can also register to objects entering and leaving a spatial cell, this allows you to do things like stay idle until a player enters, so you wont
  * have to use expensive view() calls or iteratite over the global list of players and call get_dist() on every one. which is fineish for a few things, but is
- * k * n operations for k objects iterating through n players
+ * k * n operations for k objects iterating through n players.
  *
- * currently this system is only designed for searching for relatively uncommon things, small subsets of /atom/movable
+ * currently this system is only designed for searching for relatively uncommon things, small subsets of /atom/movable.
  * dont add stupid shit to the cells please, keep the information that the cells store to things that need to be searched for often
  *
  * as of right now this system operates on a subset of the important_recursive_contents list for atom/movable, specifically
- * RECURSIVE_CONTENTS_HEARING_SENSITIVE and RECURSIVE_CONTENTS_CLIENT_MOBS because both are those are both 1. important and 2. commonly searched for
+ * [RECURSIVE_CONTENTS_HEARING_SENSITIVE] and [RECURSIVE_CONTENTS_CLIENT_MOBS] because both are those are both 1. important and 2. commonly searched for
  */
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
@@ -173,7 +182,7 @@ SUBSYSTEM_DEF(spatial_grid)
 			var/datum/spatial_grid_cell/cell = new(x, y, z_level.z_value)
 			new_cell_grid[y] += cell
 
-///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears
+///creates number_to_generate new oranges_ear's and adds them to the subsystems list of ears.
 ///i really fucking hope this never gets called after init :clueless:
 /datum/controller/subsystem/spatial_grid/proc/pregenerate_more_oranges_ears(number_to_generate)
 	for(var/new_ear in 1 to number_to_generate)
@@ -181,6 +190,8 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	number_of_oranges_ears = length(pregenerated_oranges_ears)
 
+///allocate one [/mob/oranges_ear] mob per turf containing atoms_that_need_ears and give them a reference to every listed atom in their turf.
+///if an oranges_ear is allocated to a turf that already has an oranges_ear then the second one fails to allocate (and gives the existing one the atom it was assigned to)
 /datum/controller/subsystem/spatial_grid/proc/assign_oranges_ears(list/atoms_that_need_ears)
 	if(length(atoms_that_need_ears) > number_of_oranges_ears)
 		stack_trace("somehow, for some reason, more than the preset generated number of oranges ears was requested. thats fucking [number_of_oranges_ears]. this is not good that should literally never happen")
@@ -193,7 +204,8 @@ SUBSYSTEM_DEF(spatial_grid)
 		if(current_ear.assign(atoms_that_need_ears[current_ear_index]))
 			. += current_ear //for tracking
 
-///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed
+///adds cells to the grid for every z level when world.maxx or world.maxy is expanded after this subsystem is initialized. hopefully this is never needed.
+///because i never tested this.
 /datum/controller/subsystem/spatial_grid/proc/after_world_bounds_expanded(datum/controller/subsystem/processing/dcs/fucking_dcs, has_expanded_world_maxx, has_expanded_world_maxy)
 	SIGNAL_HANDLER
 	var/old_x_axis = cells_on_x_axis
@@ -225,10 +237,10 @@ SUBSYSTEM_DEF(spatial_grid)
 				old_cell_that_needs_updating.cell_x = grid_cell_for_expanded_x_axis
 				old_cell_that_needs_updating.cell_y = cell_row_for_expanded_y_axis
 
-//the left or bottom side index of a box composed of spatial grid cells with the given actual center x or y coordinate
+///the left or bottom side index of a box composed of spatial grid cells with the given actual center x or y coordinate
 #define BOUNDING_BOX_MIN(center_coord) max(ROUND_UP((center_coord - range) / SPATIAL_GRID_CELLSIZE), 1)
-//the right or upper side index of a box composed of spatial grid cells with the given center x or y coordinate.
-//outputted value cant exceed the number of cells on that axis
+///the right or upper side index of a box composed of spatial grid cells with the given center x or y coordinate.
+///outputted value cant exceed the number of cells on that axis
 #define BOUNDING_BOX_MAX(center_coord, axis_size) min(ROUND_UP((center_coord + range) / SPATIAL_GRID_CELLSIZE), axis_size)
 
 /**
@@ -333,6 +345,7 @@ SUBSYSTEM_DEF(spatial_grid)
 /**
  * find the spatial map cell that target used to belong to, then subtract target's important_recusive_contents from it.
  * make sure to provide the turf old_target used to be "in"
+ *
  * * old_target - the thing we want to remove from the spatial grid cell
  * * target_turf - the turf we use to determine the cell we're removing from
  * * exclusive_type - either null or a valid contents channel. if you just want to remove a single type from the grid cell then use this
@@ -384,7 +397,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
 	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
 
-///if shit goes south, this will find hanging references for qdeleting movables inside
+///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
 
 	var/list/queues_containing_movable = list()
