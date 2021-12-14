@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(speech_controller)
 	init_order = INIT_ORDER_SPEECH_CONTROLLER
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
-	///used so that an admin can force all speech verbs
+	///used so that an admin can force all speech verbs to execute immediately instead of queueing
 	var/FOR_ADMINS_IF_BROKE_immediately_execute_all_speech = FALSE
 
 	///list of the form: list(client mob, message that mob is queued to say, other say arguments (if any)).
