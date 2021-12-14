@@ -453,7 +453,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aV" = (
-/obj/effect/mob_spawn/human/pirate{
+/obj/effect/mob_spawn/ghost_role/human/pirate{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -1137,7 +1137,7 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "RY" = (
-/obj/effect/mob_spawn/human/pirate/captain{
+/obj/effect/mob_spawn/ghost_role/human/pirate/captain{
 	dir = 4
 	},
 /obj/machinery/airalarm/all_access{

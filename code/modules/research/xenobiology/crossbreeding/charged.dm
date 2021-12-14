@@ -263,7 +263,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
 	user.visible_message(span_notice("[src] produces a fully formed golem shell!"))
-	new /obj/effect/mob_spawn/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
 	..()
 
 /obj/item/slimecross/charged/rainbow
