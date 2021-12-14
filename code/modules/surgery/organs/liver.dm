@@ -4,6 +4,7 @@
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
+	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
@@ -140,13 +141,13 @@
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.4 * delta_time,forced = TRUE)
-			owner.drowsyness += 0.25 * delta_time
+			owner.adjust_drowsyness(0.25 * delta_time)
 			owner.adjust_disgust(0.3 * delta_time)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.6 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-			owner.drowsyness += 0.5 * delta_time
+			owner.adjust_drowsyness(0.5 * delta_time)
 			owner.adjust_disgust(0.6 * delta_time)
 
 			if(DT_PROB(1.5, delta_time))
@@ -155,7 +156,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.drowsyness += 0.8 * delta_time
+			owner.adjust_drowsyness(0.8 * delta_time)
 			owner.adjust_disgust(1.2 * delta_time)
 
 			if(DT_PROB(3, delta_time))

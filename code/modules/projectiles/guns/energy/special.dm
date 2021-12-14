@@ -7,7 +7,7 @@
 	shaded_charge = TRUE
 	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	flight_x_offset = 17
@@ -89,6 +89,7 @@
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
+	base_icon_state = "crossbow"
 	inhand_icon_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=2000)
@@ -100,12 +101,13 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	can_flashlight = FALSE
-	max_mod_capacity = 0
+	max_mod_capacity = -1
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."
 	icon_state = "crossbow_halloween"
+	base_icon_state = "crossbow_halloween"
 	inhand_icon_state = "crossbow"
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
 
@@ -113,6 +115,7 @@
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
+	base_icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null

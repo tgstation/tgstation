@@ -65,6 +65,13 @@
 	icon_state = "armorfish_fillet"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 
+/obj/item/food/fishmeat/donkfish
+	name = "donkfillet"
+	desc = "The dreaded donkfish fillet. No sane spaceman would eat this, and it does not get better when cooked."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "donkfillet"
+	food_reagents = list(/datum/reagent/yuck = 3)
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."
@@ -305,19 +312,21 @@
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
-	var/roasted = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/sausage/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 30)
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/american_sausage, 1, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 30)
 
-/obj/item/food/american_sausage
+/obj/item/food/sausage/american
 	name = "american sausage"
 	desc = "Snip."
 	icon_state = "american_sausage"
+
+/obj/item/food/sausage/american/MakeProcessable()
+	return
 
 /obj/item/food/salami
 	name = "salami"

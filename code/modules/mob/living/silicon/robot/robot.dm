@@ -91,6 +91,25 @@
 		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
 	return ..()
 
+/**
+ * Sets the tablet theme and icon
+ *
+ * These variables are based on if the borg is a syndicate type or is emagged. This gets used in model change code
+ * and also borg emag code.
+ */
+/mob/living/silicon/robot/proc/set_modularInterface_theme()
+	if(istype(model, /obj/item/robot_model/syndicate) || emagged)
+		modularInterface.device_theme = "syndicate"
+		modularInterface.icon_state = "tablet-silicon-syndicate"
+		modularInterface.icon_state_powered = "tablet-silicon-syndicate"
+		modularInterface.icon_state_unpowered = "tablet-silicon-syndicate"
+	else
+		modularInterface.device_theme = "ntos"
+		modularInterface.icon_state = "tablet-silicon"
+		modularInterface.icon_state_powered = "tablet-silicon"
+		modularInterface.icon_state_unpowered = "tablet-silicon"
+	modularInterface.update_icon()
+
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
 	var/atom/T = drop_location()//To hopefully prevent run time errors.
@@ -145,11 +164,13 @@
 		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
 		return
 
-	var/list/model_list = list("Engineering" = /obj/item/robot_model/engineering, \
-	"Medical" = /obj/item/robot_model/medical, \
-	"Miner" = /obj/item/robot_model/miner, \
-	"Janitor" = /obj/item/robot_model/janitor, \
-	"Service" = /obj/item/robot_model/service)
+	var/list/model_list = list(
+		"Engineering" = /obj/item/robot_model/engineering,
+		"Medical" = /obj/item/robot_model/medical,
+		"Miner" = /obj/item/robot_model/miner,
+		"Janitor" = /obj/item/robot_model/janitor,
+		"Service" = /obj/item/robot_model/service,
+	)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
@@ -308,11 +329,11 @@
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_l"
 			eye_lights.color = lamp_doom? COLOR_RED : lamp_color
-			eye_lights.plane = 19 //glowy eyes
+			eye_lights.plane = ABOVE_LIGHTING_PLANE //glowy eyes
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
-			eye_lights.plane = -1
+			eye_lights.plane = GAME_PLANE
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -329,7 +350,15 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-/mob/living/silicon/robot/proc/self_destruct()
+/mob/living/silicon/robot/proc/self_destruct(mob/usr)
+	var/turf/groundzero = get_turf(src)
+	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
+	log_game("[key_name(usr)] detonated [key_name(src)]!")
+	log_combat(usr, src, "detonated cyborg")
+	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
+	if(connected_ai)
+		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
+
 	if(emagged)
 		QDEL_NULL(mmi)
 		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
@@ -342,6 +371,7 @@
 	lawupdate = FALSE
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
+	log_silicon("CYBORG: [key_name(src)] has been unlinked from an AI.")
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
 		QDEL_NULL(builtInCamera)
@@ -395,6 +425,7 @@
 		throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	else
 		clear_alert("hacked")
+	set_modularInterface_theme()
 
 /// Special handling for getting hit with a light eater
 /mob/living/silicon/robot/proc/on_light_eater(mob/living/silicon/robot/source, datum/light_eater)
@@ -451,6 +482,8 @@
 
 /mob/living/silicon/robot/proc/deconstruct()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
+	if(shell)
+		undeploy()
 	var/turf/T = get_turf(src)
 	if (robot_suit)
 		robot_suit.forceMove(T)
@@ -497,15 +530,15 @@
 	if(!connected_ai)
 		return
 	switch(notifytype)
-		if(NEW_BORG) //New Cyborg
+		if(AI_NOTIFICATION_NEW_BORG) //New Cyborg
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
-		if(NEW_MODEL) //New Model
+		if(AI_NOTIFICATION_NEW_MODEL) //New Model
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.")]<br>")
-		if(RENAME) //New Name
+		if(AI_NOTIFICATION_CYBORG_RENAMED) //New Name
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].")]<br>")
-		if(AI_SHELL) //New Shell
+		if(AI_NOTIFICATION_AI_SHELL) //New Shell
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
-		if(DISCONNECT) //Tampering with the wires
+		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
@@ -547,10 +580,12 @@
 	if(!client)
 		return
 	if(stat == DEAD)
-		if(!SSmapping.level_trait(z, ZTRAIT_SECRET))
-			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		else
+		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+			sight = null
+		else if(is_secret_level(z))
 			sight = initial(sight)
+		else
+			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		return
@@ -588,6 +623,10 @@
 
 	if(see_override)
 		see_invisible = see_override
+
+	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+		sight = null
+
 	sync_lighting_plane_alpha()
 
 /mob/living/silicon/robot/update_stat()
@@ -606,6 +645,7 @@
 	diag_hud_set_health()
 	diag_hud_set_aishell()
 	update_health_hud()
+	update_icons() //Updates eye_light overlay
 
 /mob/living/silicon/robot/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
@@ -613,7 +653,7 @@
 			builtInCamera.toggle_cam(src,0)
 		if(admin_revive)
 			locked = TRUE
-		notify_ai(NEW_BORG)
+		notify_ai(AI_NOTIFICATION_NEW_BORG)
 		. = TRUE
 		toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
 
@@ -622,7 +662,7 @@
 	. = ..()
 	if(!.)
 		return
-	notify_ai(RENAME, oldname, newname)
+	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	custom_name = newname
@@ -640,6 +680,7 @@
 		hasExpanded = FALSE
 		update_transform()
 	logevent("Chassis model has been reset.")
+	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
 	model.transform_to(/obj/item/robot_model)
 
 	// Remove upgrades.

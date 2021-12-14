@@ -124,7 +124,6 @@
 	id = SPECIES_SLIMEPERSON
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
-	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -232,7 +231,7 @@
 
 	spare.underwear = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
-	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	spare.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
 	spare.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
@@ -299,8 +298,7 @@
 			continue
 
 		var/list/L = list()
-		// HTML colors need a # prefix
-		L["htmlcolor"] = "#[body.dna.features["mcolor"]]"
+		L["htmlcolor"] = body.dna.features["mcolor"]
 		L["area"] = get_area_name(body, TRUE)
 		var/stat = "error"
 		switch(body.stat)
@@ -409,7 +407,6 @@
 /datum/species/jelly/luminescent
 	name = "Luminescent"
 	id = SPECIES_LUMINESCENT
-	say_mod = "says"
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -554,8 +551,17 @@
 
 /datum/action/innate/use_extract/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
 	..(current_button, TRUE)
-	var/datum/species/jelly/luminescent/species = owner
-	if(species?.current_extract)
+
+	if(!ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/gazer = owner
+	var/datum/species/jelly/luminescent/species = gazer?.dna?.species
+
+	if(!istype(species, /datum/species/jelly/luminescent))
+		return
+
+	if(species.current_extract)
 		current_button.add_overlay(mutable_appearance(species.current_extract.icon, species.current_extract.icon_state))
 
 /datum/action/innate/use_extract/Activate()
@@ -720,7 +726,7 @@
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(H))
 		options += Ms
-	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sortNames(options)
+	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sort_names(options)
 	if(!M)
 		return
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))

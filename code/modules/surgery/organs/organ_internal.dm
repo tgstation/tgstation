@@ -33,6 +33,8 @@
 	var/reagent_vol = 10
 
 	var/failure_time = 0
+	///Do we effect the appearance of our mob. Used to save time in preference code
+	var/visual = TRUE
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -42,6 +44,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
+	START_PROCESSING(SSobj, src)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
@@ -121,7 +124,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	applyOrganDamage(decay_factor * maxHealth * delta_time)
 
 /obj/item/organ/proc/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing
-	check_failing_thresholds(owner) // Check if an organ should/shouldnt be failing
+	check_failing_thresholds() // Check if an organ should/shouldnt be failing
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(delta_time)
 		return
@@ -153,9 +156,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(damage > high_threshold)
 		. += span_warning("[src] is starting to look discolored.")
 
-/obj/item/organ/Initialize(mapload)
-	. = ..()
+///Used as callbacks by object pooling
+/obj/item/organ/proc/exit_wardrobe()
 	START_PROCESSING(SSobj, src)
+
+//See above
+/obj/item/organ/proc/enter_wardrobe()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
 	if(owner)
@@ -180,6 +187,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	damage = clamp(damage + damage_amount, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
+	check_failing_thresholds()
 	prev_damage = damage
 	if(mess && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, mess)
@@ -213,11 +221,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		if(prev_damage == maxHealth)
 			return now_fixed
 
-/**check_failing_thresholds
- * input: mob/organ_owner (a mob, the owner of the organ we call the proc on)
- * output: failing organ flags on a failing/no longer failing organ.
- */
-/obj/item/organ/proc/check_failing_thresholds(mob/organ_owner)
+///Checks if an organ should/shouldn't be failing and gives the appropriate organ flag
+/obj/item/organ/proc/check_failing_thresholds()
 	if(damage >= maxHealth)
 		organ_flags |= ORGAN_FAILING
 	if(damage < maxHealth)

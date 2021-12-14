@@ -834,7 +834,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		templates[S.port_id]["templates"] += list(L)
 
-	data["templates_tabs"] = sortList(data["templates_tabs"])
+	data["templates_tabs"] = sort_list(data["templates_tabs"])
 
 	data["existing_shuttle"] = null
 

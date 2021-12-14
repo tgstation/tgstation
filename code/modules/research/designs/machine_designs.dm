@@ -467,14 +467,6 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/rad_collector
-	name = "Machine Design (Radiation Collector Board)"
-	desc = "The circuit board for a radiation collector array."
-	id = "rad_collector"
-	build_path = /obj/item/circuitboard/machine/rad_collector
-	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
 	desc = "The circuit board for a grounding rod."
@@ -679,7 +671,7 @@
 	name = "Machine Design (Account Registration Device)"
 	desc = "The circuit board for a Account Registration Device."
 	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
 

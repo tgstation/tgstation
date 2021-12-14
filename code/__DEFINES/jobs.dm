@@ -4,6 +4,8 @@
 #define JOB_UNAVAILABLE_PLAYTIME 3
 #define JOB_UNAVAILABLE_ACCOUNTAGE 4
 #define JOB_UNAVAILABLE_SLOTFULL 5
+/// Job unavailable due to incompatibility with an antag role.
+#define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
@@ -65,6 +67,10 @@
 #define DEPARTMENT_MEDICAL "Medical"
 #define DEPARTMENT_BITFLAG_SILICON (1<<7)
 #define DEPARTMENT_SILICON "Silicon"
+#define DEPARTMENT_BITFLAG_ASSISTANT (1<<8)
+#define DEPARTMENT_ASSISTANT "Assistant"
+#define DEPARTMENT_BITFLAG_CAPTAIN (1<<9)
+#define DEPARTMENT_CAPTAIN "Captain"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.

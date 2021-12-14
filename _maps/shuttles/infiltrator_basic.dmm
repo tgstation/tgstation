@@ -398,7 +398,7 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "aW" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ready Room";
 	req_access_txt = "150"
 	},
@@ -428,18 +428,7 @@
 	id = "smindicate";
 	name = "outer blast door"
 	},
-/obj/docking_port/mobile{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	hidden = 1;
-	id = "syndicate";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "syndicate infiltrator";
-	port_direction = 4;
-	width = 23
-	},
+/obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -455,7 +444,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "ba" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "E.V.A. Gear Storage";
 	req_access_txt = "150"
 	},
@@ -472,7 +461,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "bb" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/tile/neutral{

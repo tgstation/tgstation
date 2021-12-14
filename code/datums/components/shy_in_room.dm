@@ -52,8 +52,10 @@
 		to_chat(owner, span_warning("[replacetext(message, "%ROOM", room)]"))
 		return TRUE
 
-/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/target, params)
+/datum/component/shy_in_room/proc/on_clickon(datum/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+	if(modifiers[SHIFT_CLICK]) //let them examine their surroundings.
+		return
 	return is_shy(target) && COMSIG_MOB_CANCEL_CLICKON
 
 /datum/component/shy_in_room/proc/on_try_pull(datum/source, atom/movable/target, force)

@@ -5,10 +5,12 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
+
 	baton_type = /obj/item/melee/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
-	var/block_chance = 50
 	weapon_force = 30
+
+	var/block_chance = 50
 
 
 /mob/living/simple_animal/bot/secbot/grievous/toy //A toy version of general beepsky!
@@ -56,14 +58,14 @@
 
 
 /mob/living/simple_animal/bot/secbot/grievous/handle_automated_action()
-	if(!on)
+	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	switch(mode)
 		if(BOT_IDLE) // idle
 			update_appearance()
 			walk_to(src,0)
 			look_for_perp() // see if any criminals are in range
-			if(!mode && auto_patrol) // still idle, and set to patrol
+			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
 		if(BOT_HUNT) // hunting for perp
 			update_appearance()
@@ -127,24 +129,9 @@
 		else
 			continue
 
-
 /mob/living/simple_animal/bot/secbot/grievous/explode()
-
-	walk_to(src,0)
-	visible_message(span_boldannounce("[src] lets out a huge cough as it blows apart!"))
+	..()
 	var/atom/Tsec = drop_location()
-
-	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
-	Sa.build_step = 1
-	Sa.add_overlay("hs_hole")
-	Sa.created_name = name
-	new /obj/item/assembly/prox_sensor(Tsec)
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
-
-	do_sparks(3, TRUE, src)
-	for(var/IS = 0 to 4)
-		drop_part(baton_type, Tsec)
-	new /obj/effect/decal/cleanable/oil(Tsec)
-	qdel(src)
+	//Parent is dropping the weapon, so let's drop 3 more to make up for it.
+	for(var/IS = 0 to 3)
+		drop_part(weapon, Tsec)

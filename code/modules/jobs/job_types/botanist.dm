@@ -1,5 +1,6 @@
 /datum/job/botanist
 	title = "Botanist"
+	description = "Grow plants for the cook, for medicine, and for recreation."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 3
@@ -31,21 +32,20 @@
 	)
 
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
-
+	rpg_title = "Gardener"
 
 /datum/outfit/job/botanist
 	name = "Botanist"
 	jobtype = /datum/job/botanist
 
-	belt = /obj/item/pda/botanist
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/botanist
 	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
 	suit = /obj/item/clothing/suit/apron
-	gloves  =/obj/item/clothing/gloves/botanic_leather
 	suit_store = /obj/item/plant_analyzer
+	belt = /obj/item/pda/botanist
+	ears = /obj/item/radio/headset/headset_srv
+	gloves = /obj/item/clothing/gloves/botanic_leather
 
 	backpack = /obj/item/storage/backpack/botany
 	satchel = /obj/item/storage/backpack/satchel/hyd
 	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
-
-	id_trim = /datum/id_trim/job/botanist

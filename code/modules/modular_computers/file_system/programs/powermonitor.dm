@@ -80,8 +80,8 @@
 	data["interval"] = record_interval / 10
 	data["attached"] = connected_powernet ? TRUE : FALSE
 	if(connected_powernet)
-		data["supply"] = DisplayPower(connected_powernet.viewavail)
-		data["demand"] = DisplayPower(connected_powernet.viewload)
+		data["supply"] = display_power(connected_powernet.viewavail)
+		data["demand"] = display_power(connected_powernet.viewload)
 	data["history"] = history
 
 	data["areas"] = list()
@@ -92,7 +92,7 @@
 				data["areas"] += list(list(
 					"name" = A.area.name,
 					"charge" = A.cell ? A.cell.percent() : 0,
-					"load" = DisplayPower(A.lastused_total),
+					"load" = display_power(A.lastused_total),
 					"charging" = A.charging,
 					"eqp" = A.equipment,
 					"lgt" = A.lighting,

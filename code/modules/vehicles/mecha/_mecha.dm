@@ -23,7 +23,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
-	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 100, ACID = 100)
 	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG
@@ -520,13 +520,14 @@
 ////////////////////////////
 
 ///Called when a driver clicks somewhere. Handles everything like equipment, punches, etc.
-/obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, params)
+/obj/vehicle/sealed/mecha/proc/on_mouseclick(mob/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
+	if(modifiers[SHIFT_CLICK]) //Allows things to be examined.
+		return
 	if(!isturf(target) && !isturf(target.loc)) // Prevents inventory from being drilled
 		return
 	if(completely_disabled || is_currently_ejecting || (mecha_flags & CANNOT_INTERACT))
 		return
-	var/list/modifiers = params2list(params)
 	if(isAI(user) == !LAZYACCESS(modifiers, MIDDLE_CLICK))//BASICALLY if a human uses MMB, or an AI doesn't, then do nothing.
 		return
 	if(phasing)
@@ -557,7 +558,7 @@
 				return
 			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 				return
-			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
 			return
 		if((selected.range & MECHA_MELEE) && Adjacent(target))
 			if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
@@ -565,7 +566,7 @@
 				return
 			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 				return
-			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, params)
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
 			return
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(livinguser, span_warning("You're in the wrong seat to interact with your hands."))
@@ -701,7 +702,7 @@
 	if(dir != direction && !strafe || forcerotate || keyheld)
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
-		setDir(direction)
+		set_dir_mecha(direction)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -710,7 +711,7 @@
 	if(phasing)
 		use_power(phasing_energy_drain)
 	if(strafe)
-		setDir(olddir)
+		set_dir_mecha(olddir)
 
 
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
@@ -829,7 +830,7 @@
 				to_chat(user, span_warning("No AI detected in the [name] onboard computer."))
 				return
 			if(ai_pilots.len > 1) //Input box for multiple AIs, but if there's only one we'll default to them.
-				AI = input(user,"Which AI do you wish to card?", "AI Selection") as null|anything in sortList(ai_pilots)
+				AI = input(user,"Which AI do you wish to card?", "AI Selection") as null|anything in sort_list(ai_pilots)
 			else
 				AI = ai_pilots[1]
 			if(!AI)
@@ -975,7 +976,7 @@
 	newoccupant.update_mouse_pointer()
 	add_fingerprint(newoccupant)
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
-	setDir(dir_in)
+	set_dir_mecha(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1022,7 +1023,7 @@
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
 	brain_mob.update_mouse_pointer()
-	setDir(dir_in)
+	set_dir_mecha(dir_in)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
 		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1089,7 +1090,7 @@
 			remove_occupant(ejector)
 		mmi.set_mecha(null)
 		mmi.update_appearance()
-	setDir(dir_in)
+	set_dir_mecha(dir_in)
 	return ..()
 
 
@@ -1252,3 +1253,9 @@
 	for(var/occupant in occupants)
 		remove_action_type_from_mob(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, occupant)
 	return COMPONENT_BLOCK_LIGHT_EATER
+
+/// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
+/obj/vehicle/sealed/mecha/proc/set_dir_mecha(new_dir)
+	setDir(new_dir)
+	for(var/mob/living/occupant as anything in occupants)
+		occupant.setDir(new_dir)

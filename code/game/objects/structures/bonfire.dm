@@ -62,6 +62,8 @@
 	if(used_item.get_temperature())
 		start_burning()
 	if(grill)
+		if(istype(used_item, /obj/item/melee/roastingstick))
+			return FALSE
 		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
 				used_item.forceMove(get_turf(src))
@@ -157,7 +159,7 @@
 	if(..())
 		buckled_mob.pixel_y += 13
 
-/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(..())
 		buckled_mob.pixel_y -= 13
 

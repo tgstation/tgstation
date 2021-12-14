@@ -19,7 +19,7 @@
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
 
-	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
+	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
 	update_multiz(our_turf, TRUE, TRUE)
 
@@ -28,7 +28,7 @@
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
 	UnregisterSignal(our_turf, list(COMSIG_TURF_MULTIZ_NEW, COMSIG_TURF_MULTIZ_DEL))
-	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, TURF_TRAIT)
+	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
 ///Updates the viscontents or underlays below this tile.
 /datum/element/turf_z_transparency/proc/update_multiz(turf/our_turf, prune_on_fail = FALSE, init = FALSE)

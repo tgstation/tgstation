@@ -16,7 +16,7 @@
 /obj/item/clothing/head/kitty/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user))
-		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+		add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 
 /obj/item/clothing/head/kitty/genuine
 	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""

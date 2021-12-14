@@ -1,13 +1,3 @@
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
-///Returns a list of turf in a square
-#define RANGE_TURFS(RADIUS, CENTER) \
-	block( \
-	locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-	locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-	)
-
-///Returns all turfs in a zlevel
-#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 ///Time before being allowed to select a new cult leader again
 #define CULT_POLL_WAIT 240 SECONDS
 
@@ -47,7 +37,7 @@
 		get_area(get_ranged_target_turf(center, EAST, 1)),
 		get_area(get_ranged_target_turf(center, WEST, 1))
 		)
-	listclearnulls(.)
+	list_clear_nulls(.)
 
 ///Returns the open turf next to the center in a specific direction
 /proc/get_open_turf_in_dir(atom/center, dir)
@@ -63,7 +53,7 @@
 		get_open_turf_in_dir(center, EAST),
 		get_open_turf_in_dir(center, WEST)
 		)
-	listclearnulls(.)
+	list_clear_nulls(.)
 
 ///Returns a list with all the adjacent areas by getting the adjacent open turfs
 /proc/get_adjacent_open_areas(atom/center)
@@ -362,10 +352,9 @@
 ///wrapper for flick_overlay(), flicks to everyone who can see the target atom
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
 	var/list/viewing = list()
-	for(var/viewer in viewers(target))
-		var/mob/viewer_mob = viewer
-		if(viewer_mob.client)
-			viewing += viewer_mob.client
+	for(var/mob/viewer as anything in viewers(target))
+		if(viewer.client)
+			viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
 ///Get active players who are playing in the round
@@ -374,19 +363,20 @@
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
 		var/mob/player_mob = GLOB.player_list[i]
 		if(!player_mob?.client)
-			if(alive_check && player_mob.stat)
+			continue
+		if(alive_check && player_mob.stat)
+			continue
+		else if(afk_check && player_mob.client.is_afk())
+			continue
+		else if(human_check && !ishuman(player_mob))
+			continue
+		else if(isnewplayer(player_mob)) // exclude people in the lobby
+			continue
+		else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
+			var/mob/dead/observer/ghost_player = player_mob
+			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
-			else if(afk_check && player_mob.client.is_afk())
-				continue
-			else if(human_check && !ishuman(player_mob))
-				continue
-			else if(isnewplayer(player_mob)) // exclude people in the lobby
-				continue
-			else if(isobserver(player_mob)) // Ghosts are fine if they were playing once (didn't start as observers)
-				var/mob/dead/observer/ghost_player = player_mob
-				if(ghost_player.started_as_observer) // Exclude people who started as observers
-					continue
-			active_players++
+		active_players++
 	return active_players
 
 ///Show the poll window to the candidate mobs
@@ -459,7 +449,7 @@
 		if(!asking_mob.key || !asking_mob.client)
 			result -= asking_mob
 
-	listclearnulls(result)
+	list_clear_nulls(result)
 
 	return result
 
@@ -589,7 +579,7 @@
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/possible_loc = list()
 
-	for(var/turf/found_turf in RANGE_TURFS(range, center))
+	for(var/turf/found_turf as anything in RANGE_TURFS(range, center))
 		// We check if both the turf is a floor, and that it's actually in the area.
 		// We also want a location that's clear of any obstructions.
 		if (specific_area && !istype(get_area(found_turf), specific_area))

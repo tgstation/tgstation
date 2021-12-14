@@ -13,7 +13,7 @@
 /datum/export/weapon/knife
 	cost = CARGO_CRATE_VALUE * 0.5
 	unit_name = "combat knife"
-	export_types = list(/obj/item/kitchen/knife/combat)
+	export_types = list(/obj/item/knife/combat)
 
 
 /datum/export/weapon/taser

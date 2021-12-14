@@ -29,7 +29,7 @@
 	icon_state = "compressor"
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_compressor
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
@@ -54,7 +54,7 @@
 	icon_state = "turbine"
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_turbine
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
@@ -263,7 +263,7 @@
 	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.machine_stat & BROKEN)) ? TRUE : FALSE
 	data["online"] = compressor?.starter
-	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["power"] = display_power(compressor?.turbine?.lastgen)
 	data["rpm"] = compressor?.rpm
 	data["temp"] = compressor?.gas_contained.temperature
 	return data
@@ -325,7 +325,7 @@
 	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.machine_stat & BROKEN)) ? TRUE : FALSE
 	data["online"] = compressor?.starter
-	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["power"] = display_power(compressor?.turbine?.lastgen)
 	data["rpm"] = compressor?.rpm
 	data["temp"] = compressor?.gas_contained.temperature
 	return data

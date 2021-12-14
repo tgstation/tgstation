@@ -24,14 +24,20 @@
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = 35
-	actions_types = list(/datum/action/item_action/cult_dagger)
-	var/drawing_rune = FALSE
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
-	var/image/I = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
-	I.override = TRUE
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", I)
+	var/image/silicon_image = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", silicon_image)
+
+	var/examine_text = {"Allows the scribing of blood runes of the cult of Nar'Sie.
+Hitting a cult structure will unanchor or reanchor it. Cult Girders will be destroyed in a single blow.
+Can be used to scrape blood runes away, removing any trace of them.
+Striking another cultist with it will purge all holy water from them and transform it into unholy water.
+Striking a noncultist, however, will tear their flesh."}
+
+	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/block_message = "[owner] parries [attack_text] with [src]"
@@ -210,7 +216,7 @@
 /obj/item/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
 	if(dash_toggled && !proximity)
-		jaunt.Teleport(user, target)
+		jaunt.teleport(user, target)
 		return
 	if(!proximity)
 		return
@@ -322,7 +328,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -335,7 +341,7 @@
 	inhand_icon_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 40,ENERGY = 40, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -371,7 +377,7 @@
 	inhand_icon_state = "magus"
 	desc = "A helm worn by the followers of Nar'Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
@@ -381,7 +387,7 @@
 	inhand_icon_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, RAD = 0, FIRE = 10, ACID = 10)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 50,ENERGY = 50, BOMB = 25, BIO = 10, FIRE = 10, ACID = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
@@ -389,7 +395,7 @@
 	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	inhand_icon_state = "cult_helmet"
-	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, RAD = 30, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, FIRE = 100, ACID = 100)
 	light_system = NO_LIGHT_SUPPORT
 	light_range = 0
 	actions_types = list()
@@ -401,7 +407,7 @@
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
-	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, RAD = 30, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, FIRE = 100, ACID = 100)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
 /obj/item/clothing/suit/space/hardsuit/cult/real
@@ -426,7 +432,7 @@
 	icon_state = "cult_armor"
 	inhand_icon_state = "cult_armor"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, FIRE = 50, ACID = 60)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
@@ -443,7 +449,7 @@
 	name = "empowered cultist helmet"
 	desc = "Empowered helmet which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, RAD = 30, FIRE = 50, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, FIRE = 50, ACID = 60)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
@@ -458,14 +464,14 @@
 	name = "flagellant's robes"
 	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage."
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = -45, RAD = -45, FIRE = 0, ACID = 0)
+	armor = list(MELEE = -45, BULLET = -45, LASER = -45,ENERGY = -55, BOMB = -45, BIO = -45, FIRE = 0, ACID = 0)
 	slowdown = -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
 	desc = "Blood-soaked hood infused with dark magic."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -659,7 +665,7 @@
 		for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
 			if(M.current && M.current.stat != DEAD)
 				cultists |= M.current
-		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+		var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
 		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)
@@ -674,7 +680,7 @@
 			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
 			log_game("Void torch failed - target was deconverted")
 			return
-		if(A in user.GetAllContents())
+		if(A in user.get_all_contents())
 			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
 			return
 		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
@@ -898,7 +904,7 @@
 	if(firing || charging)
 		return
 	if(ishuman(user))
-		angle = Get_Angle(user, A)
+		angle = get_angle(user, A)
 	else
 		qdel(src)
 		return
@@ -953,7 +959,7 @@
 		playsound(src, 'sound/magic/exit_blood.ogg', 75, TRUE)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
-		for(var/turf/T in getline(targets_from,temp_target))
+		for(var/turf/T in get_line(targets_from,temp_target))
 			if (locate(/obj/effect/blessing, T))
 				temp_target = T
 				playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 50, TRUE)

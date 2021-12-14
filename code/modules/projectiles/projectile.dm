@@ -13,6 +13,7 @@
 	wound_bonus = CANT_WOUND // can't wound by default
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	plane = GAME_PLANE_FOV_HIDDEN
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -127,7 +128,8 @@
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
-	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	///Defines what armor to use when it hits things.  Must be set to bullet, laser, energy, or bomb
+	var/flag = BULLET
 	///How much armor this projectile pierces.
 	var/armour_penetration = 0
 	///Whether or not our bullet lacks penetrative power, and is easily stopped by armor.
@@ -143,7 +145,6 @@
 	var/paralyze = 0
 	var/immobilize = 0
 	var/unconscious = 0
-	var/irradiate = 0
 	var/stutter = 0
 	var/slur = 0
 	var/eyeblur = 0
@@ -316,13 +317,13 @@
 	for(var/mob/living/L in range(ricochet_auto_aim_range, src.loc))
 		if(L.stat == DEAD || !is_in_sight(src, L))
 			continue
-		var/our_angle = abs(closer_angle_difference(Angle, Get_Angle(src.loc, L.loc)))
+		var/our_angle = abs(closer_angle_difference(Angle, get_angle(src.loc, L.loc)))
 		if(our_angle < best_angle)
 			best_angle = our_angle
 			unlucky_sob = L
 
 	if(unlucky_sob)
-		set_angle(Get_Angle(src, unlucky_sob.loc))
+		set_angle(get_angle(src, unlucky_sob.loc))
 
 /obj/projectile/proc/store_hitscan_collision(datum/point/point_cache)
 	beam_segments[beam_index] = point_cache
@@ -626,7 +627,7 @@
 /obj/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
 	var/turf/current = get_turf(src)
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
-	return getline(current, ending)
+	return get_line(current, ending)
 
 /obj/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE //Bullets don't drift in space
@@ -678,7 +679,7 @@
 			qdel(src)
 			return
 		var/turf/target = locate(clamp(starting + xo, 1, world.maxx), clamp(starting + yo, 1, world.maxy), starting.z)
-		set_angle(Get_Angle(src, target))
+		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
 		var/matrix/matrix = new
@@ -690,6 +691,7 @@
 	trajectory = new(starting.x, starting.y, starting.z, pixel_x, pixel_y, Angle, SSprojectiles.global_pixel_speed)
 	last_projectile_move = world.time
 	fired = TRUE
+	play_fov_effect(starting, 6, "gunfire", dir = NORTH, angle = Angle)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_FIRE)
 	if(hitscan)
 		process_hitscan()
@@ -870,7 +872,7 @@
 	if(targloc || !length(modifiers))
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		set_angle(Get_Angle(src, targloc) + spread)
+		set_angle(get_angle(src, targloc) + spread)
 
 	if(isliving(source) && length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, modifiers)
@@ -881,7 +883,7 @@
 	else if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
-		set_angle(Get_Angle(src, targloc) + spread)
+		set_angle(get_angle(src, targloc) + spread)
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)

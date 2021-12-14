@@ -60,16 +60,16 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 		/datum/exploration_event/simple/resource = 1
 	)
 	/// Weight mods scaled by distance, resources are more easily found on farther sites
-	var/static/list/distance_modifiers  = list(
+	var/static/list/distance_modifiers = list(
 		/datum/exploration_event/simple/trader = 0.3,
-		/datum/exploration_event/simple/resource = 0.3
+		/datum/exploration_event/simple/resource = 0.3,
 	)
 	var/list/category_weights = base_weights.Copy()
 	for(var/modifier in distance_modifiers)
 		category_weights[modifier] += distance*distance_modifiers[modifier]
 	var/min_events_amount = CEILING(0.4*distance+0.2,1)
 	for(var/i in 1 to rand(min_events_amount,min_events_amount+2))
-		var/chosen_category = pickweight(category_weights)
+		var/chosen_category = pick_weight(category_weights)
 		var/datum/exploration_event/event = generate_event(site_traits,chosen_category)
 		if(event)
 			add_event(event)
@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(exploration_sites)
 
 /datum/exploration_site/abandoned_refueling_station
 	name = "abandoned refueling station"
-	description =  "old shuttle refueling station drifting through the void."
+	description = "old shuttle refueling station drifting through the void."
 	band_info = list(EXOSCANNER_BAND_TECH = 1)
 	site_traits = list(EXPLORATION_SITE_RUINS,EXPLORATION_SITE_TECHNOLOGY,EXPLORATION_SITE_STATION)
 

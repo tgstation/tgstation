@@ -34,7 +34,7 @@
 		if(C!=src && Adjacent(C))
 			choices += C
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sortNames(choices)
+	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sort_names(choices)
 	if(!M)
 		return FALSE
 	if(CanFeedon(M))
@@ -177,7 +177,7 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			var/turf/drop_loc = drop_location()
 
-			for(var/i=1,i<=4,i++)
+			for(var/i in 1 to 4)
 				var/child_colour
 				if(mutation_chance >= 100)
 					child_colour = "rainbow"

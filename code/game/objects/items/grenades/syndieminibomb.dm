@@ -51,7 +51,8 @@
 	icon_state = "bluefrag"
 	inhand_icon_state = "flashbang"
 	var/freeze_range = 4
-	var/rad_damage = 350
+	var/rad_range = 4
+	var/rad_threshold = RAD_EXTREME_INSULATION
 	var/stamina_damage = 30
 	var/temp_adjust = -230
 
@@ -59,7 +60,7 @@
 	. = ..()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
-	radiation_pulse(src, rad_damage)
+	radiation_pulse(src, max_range = rad_range, threshold = rad_threshold, chance = 100)
 	for (var/turf/open/floor/floor in view(freeze_range, loc))
 		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 		for(var/mob/living/carbon/victim in floor)

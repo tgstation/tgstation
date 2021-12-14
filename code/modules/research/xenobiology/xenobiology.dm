@@ -260,7 +260,7 @@
 	name = "yellow slime extract"
 	icon_state = "yellow slime extract"
 	effectmod = "charged"
-	activate_reagents = list(/datum/reagent/blood,/datum/reagent/water)
+	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -605,7 +605,7 @@
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+			user.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
 			user.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 			user.updateappearance(mutcolor_update=1)
 			species.update_glow(user)
@@ -972,6 +972,7 @@
 
 	M.visible_message(span_notice("[span_name("[M]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[M.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], letting them rename themselves into [new_name].")
+	log_game("[key_name(user)] used [src] on [key_name(M)], letting them rename themselves into [new_name].")
 
 	// pass null as first arg to not update records or ID/PDA
 	M.fully_replace_character_name(null, new_name)

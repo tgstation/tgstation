@@ -142,6 +142,7 @@
 		3. Don't get messed up in their affairs."
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
+	default_storage = null
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
@@ -273,7 +274,7 @@
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
 	///If the atom entering the gate is a vehicle, we store it here to add to the approved list to enter/leave the scanner gate.
 	var/obj/vehicle/vehicle
-	///We store the driver of vehicles seperately so that we can add them to the approved list once payment is fully processed.
+	///We store the driver of vehicles separately so that we can add them to the approved list once payment is fully processed.
 	var/mob/living/driver_holdout
 	if(!isliving(AM) && !isvehicle(AM))
 		alarm_beep()
@@ -314,17 +315,17 @@
 
 	//Here is all the possible paygate payment methods.
 	var/list/counted_money = list()
-	for(var/obj/item/coin/C in AM.GetAllContents()) //Coins.
+	for(var/obj/item/coin/C in AM.get_all_contents()) //Coins.
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += C.value
 		counted_money += C
-	for(var/obj/item/stack/spacecash/S in AM.GetAllContents()) //Paper Cash
+	for(var/obj/item/stack/spacecash/S in AM.get_all_contents()) //Paper Cash
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += S.value * S.amount
 		counted_money += S
-	for(var/obj/item/holochip/H in AM.GetAllContents()) //Holocredits
+	for(var/obj/item/holochip/H in AM.get_all_contents()) //Holocredits
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += H.credits

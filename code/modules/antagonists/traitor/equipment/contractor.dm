@@ -6,7 +6,7 @@
 	show_in_roundend = FALSE /// We're already adding them in to the contractor's roundend.
 	give_objectives = TRUE /// We give them their own custom objective.
 	show_in_antagpanel = FALSE /// Not a proper/full antag.
-	should_equip = FALSE /// Don't give them an uplink.
+	give_uplink = FALSE /// Don't give them an uplink.
 
 	var/datum/team/contractor_team/contractor_team
 
@@ -77,7 +77,7 @@
 		start_index = assigned_contracts.len + 1
 
 	// Generate contracts, and find the lowest paying.
-	for (var/i = 1; i <= to_generate.len; i++)
+	for(var/i in 1 to to_generate.len)
 		var/datum/syndicate_contract/contract_to_add = new(owner, assigned_targets, to_generate[i])
 		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
 

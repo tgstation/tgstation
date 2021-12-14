@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define ORBITRON "Orbitron"
 #define SHARE "Share Tech Mono"
 
-GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
+GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
@@ -463,11 +463,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define AREASELECT_CORNERA "corner A"
 #define AREASELECT_CORNERB "corner B"
 
-#define VARSET_FROM_LIST(L, V) if(L && L[#V]) V = L[#V]
-#define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
-#define VARSET_TO_LIST(L, V) if(L) L[#V] = V
-#define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
-
 #define DICE_NOT_RIGGED 1
 #define DICE_BASICALLY_RIGGED 2
 #define DICE_TOTALLY_RIGGED 3
@@ -482,11 +477,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
-
-// possible bitflag return values of intercept_zImpact(atom/movable/AM, levels = 1) calls
-#define FALL_INTERCEPTED (1<<0) //Stops the movable from falling further and crashing on the ground
-#define FALL_NO_MESSAGE (1<<1) //Used to suppress the "[A] falls through [old_turf]" messages where it'd make little sense at all, like going downstairs.
-#define FALL_STOP_INTERCEPTING (1<<2) //Used in situations where halting the whole "intercept" loop would be better, like supermatter dusting (and thus deleting) the atom.
 
 
 // Play time / EXP
@@ -521,3 +511,5 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 /// Emoji icon set
 #define EMOJI_SET 'icons/emoji.dmi'
+/// Achievements icon set
+#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'

@@ -30,6 +30,7 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
+	native_fov = null
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
@@ -163,9 +164,13 @@
 	deploy_action.Grant(src)
 
 	if(isturf(loc))
-		add_verb(src, list(/mob/living/silicon/ai/proc/ai_network_change, /mob/living/silicon/ai/proc/ai_hologram_change, \
-		/mob/living/silicon/ai/proc/botcall, /mob/living/silicon/ai/proc/control_integrated_radio, \
-		/mob/living/silicon/ai/proc/set_automatic_say_channel))
+		add_verb(src, list(
+			/mob/living/silicon/ai/proc/ai_network_change,
+			/mob/living/silicon/ai/proc/ai_hologram_change,
+			/mob/living/silicon/ai/proc/botcall,
+			/mob/living/silicon/ai/proc/control_integrated_radio,
+			/mob/living/silicon/ai/proc/set_automatic_say_channel,
+		))
 
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
@@ -558,7 +563,7 @@
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = input(U, "Which network would you like to view?") as null|anything in sortList(cameralist)
+	network = tgui_input_list(U, "Which network would you like to view?", sort_list(cameralist))
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -585,21 +590,35 @@
 	if(incapacitated())
 		return
 	var/input
-	switch(tgui_alert(usr,"Would you like to select a hologram based on a crew member, an animal, or switch to a unique avatar?",,list("Crew Member","Unique","Animal")))
-		if("Crew Member")
-			var/list/personnel_list = list()
+	switch(tgui_alert(usr,"Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?",,list("Custom Character","Unique","Animal")))
+		if("Custom Character")
+			switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?",,list("My Character","Station Member")))
+				if("Station Member")
+					var/list/personnel_list = list()
 
-			for(var/datum/data/record/t in GLOB.data_core.locked)//Look in data core locked.
-				personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
+					for(var/datum/data/record/record_datum in GLOB.data_core.locked)//Look in data core locked.
+						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["image"]//Pull names, rank, and image.
 
-			if(personnel_list.len)
-				input = input("Select a crew member:") as null|anything in sortList(personnel_list)
-				var/icon/character_icon = personnel_list[input]
-				if(character_icon)
-					qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-					holo_icon = getHologramIcon(icon(character_icon))
-			else
-				tgui_alert(usr,"No suitable records found. Aborting.")
+					if(personnel_list.len)
+						input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
+						var/icon/character_icon = personnel_list[input]
+						if(character_icon)
+							qdel(holo_icon)//Clear old icon so we're not storing it in memory.
+							holo_icon = getHologramIcon(icon(character_icon))
+					else
+						tgui_alert(usr,"No suitable records found. Aborting.")
+				if("My Character")
+					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?",,list("Yes","No")))
+						if("Yes")
+							var/mob/living/carbon/human/dummy/ai_dummy = new
+							var/mutable_appearance/appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
+							var/icon/character_icon = getHologramIcon(getFlatIcon(appearance))
+							if(character_icon)
+								qdel(holo_icon)
+								qdel(ai_dummy)
+								holo_icon = character_icon
+						if("No")
+							return FALSE
 
 		if("Animal")
 			var/list/icon_list = list(
@@ -618,7 +637,7 @@
 			"spider" = 'icons/mob/animal.dmi'
 			)
 
-			input = input("Please select a hologram:") as null|anything in sortList(icon_list)
+			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -639,7 +658,7 @@
 				"clock" = 'icons/mob/ai.dmi'
 				)
 
-			input = input("Please select a hologram:") as null|anything in sortList(icon_list)
+			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -826,8 +845,9 @@
 	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
-	modules_action = new(malf_picker)
-	modules_action.Grant(src)
+	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade
+		modules_action = new(malf_picker)
+		modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/A)
 	if(camera_light_on)
@@ -909,7 +929,7 @@
 		to_chat(src, "No usable AI shell beacons detected.")
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
-		target = input(src, "Which body to control?") as null|anything in sortNames(possible)
+		target = tgui_input_list(src, "Which body to control?", "Direct Control", sort_names(possible))
 
 	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
 		return
@@ -977,12 +997,15 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
-	if(zMove(UP, TRUE))
+	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/living/silicon/ai/zMove(dir, feedback = FALSE)
-	. = eyeobj.zMove(dir, feedback)
+/mob/living/silicon/ai/down()
+	set name = "Move Down"
+	set category = "IC"
 
+	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
+		to_chat(src, span_notice("You move down."))
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
 /mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)

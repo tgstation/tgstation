@@ -3,7 +3,6 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	job_rank = ROLE_OBSESSED
-	antag_hud_type = ANTAG_HUD_OBSESSED
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
@@ -37,17 +36,9 @@
 		qdel(trauma)
 	. = ..()
 
-/datum/antagonist/obsessed/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/obsessed/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
-
 /datum/antagonist/obsessed/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
-	victim_dummy.hair_color = "b96" // Brown
+	victim_dummy.hair_color = "#bb9966" // Brown
 	victim_dummy.hairstyle = "Messy"
 	victim_dummy.update_hair()
 
@@ -268,7 +259,7 @@
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/photo))
 				var/obj/item/photo/P = I

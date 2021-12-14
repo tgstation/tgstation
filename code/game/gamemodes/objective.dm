@@ -1,5 +1,4 @@
 GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
-GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective
 	var/datum/mind/owner //The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
@@ -15,13 +14,11 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(text)
-	GLOB.objectives += src
 	if(text)
 		explanation_text = text
 
 //Apparently objectives can be qdel'd. Learn a new thing every day
 /datum/objective/Destroy()
-	GLOB.objectives -= src
 	return ..()
 
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
@@ -40,7 +37,7 @@ GLOBAL_LIST_EMPTY(objectives)
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-	possible_targets = list("Free objective", "Random") + sortNames(possible_targets)
+	possible_targets = list("Free objective", "Random") + sort_names(possible_targets)
 
 
 	if(target?.current)
@@ -246,7 +243,13 @@ GLOBAL_LIST_EMPTY(objectives)
 
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
+	if (!target)
+		return TRUE
+	if (!considered_alive(target))
+		return TRUE
+	if (!target.current.onCentCom() && !target.current.onSyndieBase())
+		return TRUE
+	return FALSE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
@@ -394,21 +397,21 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/block
 	name = "no organics on shuttle"
-	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
+	explanation_text = "Do not allow any organic lifeforms with sapience to escape on the shuttle alive."
 	martyr_compatible = 1
 
 /datum/objective/block/check_completion()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.mind && player.stat != DEAD && !issilicon(player))
+		if(player.mind && player.stat != DEAD && (player.mob_biotypes & MOB_ORGANIC))
 			if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 				return FALSE
 	return TRUE
 
 /datum/objective/purge
 	name = "no mutants on shuttle"
-	explanation_text = "Ensure no mutant humanoid species are present aboard the escape shuttle."
+	explanation_text = "Ensure no nonhuman humanoid species with sapience are present aboard the escape shuttle."
 	martyr_compatible = TRUE
 
 /datum/objective/purge/check_completion()
@@ -595,7 +598,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/admin_edit(mob/admin)
 	var/list/possible_items_all = GLOB.possible_items
-	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sortNames(possible_items_all)+"custom"
+	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sort_names(possible_items_all)+"custom"
 	if (!new_target)
 		return
 
@@ -622,7 +625,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		if(!isliving(M.current))
 			continue
 
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 
 		for(var/obj/I in all_items) //Check for items
 			if(istype(I, steal_target))
@@ -829,7 +832,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sortNames(possible_targets)
+		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sort_names(possible_targets)
 		target = new_target.mind
 	else
 		to_chat(admin, span_boldwarning("No active AIs with minds."))
@@ -853,7 +856,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
@@ -879,7 +882,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/book/granter/spell))
 				var/obj/item/book/granter/spell/spellbook = I
@@ -902,7 +905,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sortList(list(
+	var/list/allowed_types = sort_list(list(
 		/datum/objective/assassinate,
 		/datum/objective/maroon,
 		/datum/objective/debrain,

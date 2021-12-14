@@ -261,6 +261,16 @@
 	crate_name = "weed control crate"
 	crate_type = /obj/structure/closet/crate/secure/hydroponics
 
+/datum/supply_pack/emergency/mothic_rations
+	name = "Surplus Mothic Rations Triple-Pak"
+	desc = "Crew starving? Chef slacking off? Keep everyone fed on the barest minimum of what can be considered food with surplus ration packs, directly from the Mothic Fleet! Pack includes 3 packs of 3 bars each."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/box/mothic_rations,
+					/obj/item/storage/box/mothic_rations,
+					/obj/item/storage/box/mothic_rations,)
+	crate_name = "surplus rations box"
+	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -478,15 +488,6 @@
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
-
-/datum/supply_pack/security/armory/combatknives
-	name = "Combat Knives Crate"
-	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat)
-	crate_name = "combat knife crate"
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
@@ -918,27 +919,18 @@
 	name = "Grounding Rod Crate"
 	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod,
-					/obj/machinery/power/grounding_rod)
+	contains = list(/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod,
+					/obj/machinery/power/energy_accumulator/grounding_rod)
 	crate_name = "grounding rod crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
-
-/datum/supply_pack/engine/collector
-	name = "Radiation Collector Crate"
-	desc = "Contains three radiation collectors. Useful for collecting energy off nearby Supermatter Crystals, Singularities or Teslas!"
-	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/obj/machinery/power/rad_collector,
-					/obj/machinery/power/rad_collector,
-					/obj/machinery/power/rad_collector)
-	crate_name = "collector crate"
 
 /datum/supply_pack/engine/solar
 	name = "Solar Panel Crate"
 	desc = "Go green with this DIY advanced solar array. Contains twenty one solar assemblies, a solar-control circuit board, and tracker. If you have any questions, please check out the enclosed instruction book."
 	cost = CARGO_CRATE_VALUE * 8
-	contains  = list(/obj/item/solar_assembly,
+	contains = list(/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
@@ -979,10 +971,10 @@
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old assistant electrofrying: This pack of four Tesla coils can do it all!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil,
-					/obj/machinery/power/tesla_coil)
+	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil,
+					/obj/machinery/power/energy_accumulator/tesla_coil)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -1644,6 +1636,15 @@
 	crate_name = "shaft miner starter kit"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/service/survivalknives
+	name = "Survival Knives Crate"
+	desc = "Contains three sharpened survival knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/knife/combat/survival,
+					/obj/item/knife/combat/survival,
+					/obj/item/knife/combat/survival)
+	crate_name = "survival knife crate"
+
 /datum/supply_pack/service/wedding
 	name = "Wedding Crate"
 	desc = "Everything you need to host a wedding! Now you just need an officiant."
@@ -1693,6 +1694,20 @@
 	crate_name = "donk pocket crate"
 
 /datum/supply_pack/service/randomized/donkpockets/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 3)
+		var/item = pick(contains)
+		new item(C)
+
+/datum/supply_pack/service/randomized/ready_donk
+	name = "Ready-Donk Variety Crate"
+	desc = "Featuring a line up of Donk Co.'s most popular pastry!"
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/food/ready_donk,
+	/obj/item/food/ready_donk/mac_n_cheese,
+	/obj/item/food/ready_donk/donkhiladas)
+	crate_name = "\improper Ready-Donk crate"
+
+/datum/supply_pack/service/randomized/ready_donk/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 3)
 		var/item = pick(contains)
 		new item(C)
@@ -1911,7 +1926,7 @@
 				continue
 
 		//here we randomly replace our pizzas for a chance at the full range
-		var/obj/item/food/pizza/replacement_type = pickweight(pizza_types)
+		var/obj/item/food/pizza/replacement_type = pick_weight(pizza_types)
 		pizza_types -= replacement_type
 		if(replacement_type && !istype(P.pizza, replacement_type))
 			QDEL_NULL(P.pizza)
@@ -2379,7 +2394,7 @@
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
-			the_toy = pickweight(GLOB.arcade_prize_pool)
+			the_toy = pick_weight(GLOB.arcade_prize_pool)
 		else
 			the_toy = pick(subtypesof(/obj/item/toy/plush))
 		new the_toy(C)
@@ -2533,6 +2548,13 @@
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/exodrone)
 	crate_name = "exodrone crate"
+
+/datum/supply_pack/misc/exploration_fuel
+	name = "Drone Fuel Pellet"
+	desc = "A fresh tank of exploration drone fuel."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/fuel_pellet)
+	crate_name = "exodrone fuel crate"
 
 /datum/supply_pack/misc/paper
 	name = "Bureaucracy Crate"

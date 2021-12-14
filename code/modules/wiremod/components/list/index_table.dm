@@ -6,6 +6,7 @@
 /obj/item/circuit_component/index_table
 	display_name = "Index Table"
 	desc = "Gets the row of a table using the index inputted. Will return no value if the index is invalid or a proper table is not returned."
+	category = "List"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// The list to perform the filter on
@@ -21,7 +22,7 @@
 	received_table = add_input_port("Input", PORT_TYPE_TABLE)
 	target_index = add_input_port("Index", PORT_TYPE_NUMBER)
 
-	output_list = add_output_port("Output", PORT_TYPE_LIST)
+	output_list = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_ANY))
 
 /obj/item/circuit_component/index_table/input_received(datum/port/input/port)
 

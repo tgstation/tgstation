@@ -15,7 +15,7 @@
 	var/old_real_name = user.real_name
 	user.real_name += " (suicide)"
 	// no conflicts with their identification card
-	for(var/atom/A in user.GetAllContents())
+	for(var/atom/A in user.get_all_contents())
 		if(istype(A, /obj/item/card/id))
 			var/obj/item/card/id/their_card = A
 
@@ -72,8 +72,8 @@
 	if(mode)
 		to_chat(user, span_notice("You turn on [src]."))
 		//Now let them chose the text.
-		var/str = reject_bad_text(stripped_input(user, "Label text?", "Set label","", MAX_NAME_LEN))
-		if(!str || !length(str))
+		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", max_length = 64))
+		if(!str)
 			to_chat(user, span_warning("Invalid text!"))
 			return
 		label = str

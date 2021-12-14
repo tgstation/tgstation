@@ -3,7 +3,7 @@
 	desc = "Used to view and edit personnel's security records."
 	icon_screen = "security"
 	icon_keyboard = "security_key"
-	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS, ACCESS_HOP)
 	circuit = /obj/item/circuitboard/computer/secure_data
 	light_color = COLOR_SOFT_RED
 	var/rank = null
@@ -285,7 +285,7 @@
 <th>Criminal Status</th>
 </tr>"}
 					if(!isnull(GLOB.data_core.general))
-						for(var/datum/data/record/R in sortRecord(GLOB.data_core.general, sortBy, order))
+						for(var/datum/data/record/R in sort_record(GLOB.data_core.general, sortBy, order))
 							var/crimstat = ""
 							for(var/datum/data/record/E in GLOB.data_core.security)
 								if((E.fields["name"] == R.fields["name"]) && (E.fields["id"] == R.fields["id"]))
@@ -339,6 +339,7 @@
 						<tr><td>Age:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=age'>&nbsp;[active1.fields["age"]]&nbsp;</A></td></tr>"}
 						dat += "<tr><td>Species:</td><td><A href ='?src=[REF(src)];choice=Edit Field;field=species'>&nbsp;[active1.fields["species"]]&nbsp;</A></td></tr>"
 						dat += {"<tr><td>Rank:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=rank'>&nbsp;[active1.fields["rank"]]&nbsp;</A></td></tr>
+						<tr><td>Initial Rank:</td><td>[active1.fields["initial_rank"]]</td>
 						<tr><td>Fingerprint:</td><td><A href='?src=[REF(src)];choice=Edit Field;field=fingerprint'>&nbsp;[active1.fields["fingerprint"]]&nbsp;</A></td></tr>
 						<tr><td>Physical Status:</td><td>&nbsp;[active1.fields["p_stat"]]&nbsp;</td></tr>
 						<tr><td>Mental Status:</td><td>&nbsp;[active1.fields["m_stat"]]&nbsp;</td></tr>
@@ -683,6 +684,8 @@ What a mess.*/
 				G.fields["name"] = "New Record"
 				G.fields["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
 				G.fields["rank"] = "Unassigned"
+				G.fields["trim"] = "Unassigned"
+				G.fields["initial_rank"] = "Unassigned"
 				G.fields["gender"] = "Male"
 				G.fields["age"] = "Unknown"
 				G.fields["species"] = "Human"
@@ -871,8 +874,8 @@ What a mess.*/
 										"name" = "Security Citation",
 										"job" = "Citation Server",
 										"message" = message,
-										"targets" = list("[P.owner] ([P.ownjob])"),
-										"automated" = 1
+										"targets" = list(STRINGIFY_PDA_TARGET(P.owner, P.ownjob)),
+										"automated" = TRUE
 									))
 									signal.send_to_receivers()
 									usr.log_message("(PDA: Citation Server) sent \"[message]\" to [signal.format_target()]", LOG_PDA)
@@ -919,8 +922,7 @@ What a mess.*/
 					if("Change Rank")
 						if(active1)
 							active1.fields["rank"] = strip_html(href_list["rank"])
-							if(href_list["rank"] in SSjob.station_jobs)
-								active1.fields["real_rank"] = href_list["real_rank"]
+							active1.fields["trim"] = active1.fields["rank"]
 
 					if("Change Criminal Status")
 						if(active2)
