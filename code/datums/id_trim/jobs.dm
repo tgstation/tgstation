@@ -17,8 +17,6 @@
 	var/list/minimal_wildcard_access = list()
 	/// Static list. Cache of any mapping config job changes.
 	var/static/list/job_changes
-	/// What config entry relates to this job.
-	var/config_job
 	/// An ID card with an access in this list can apply this trim to IDs or use it as a job template when adding access to a card. If the list is null, cannot be used as a template. Should be Head of Staff or ID Console accesses or it may do nothing.
 	var/list/template_access
 	/// The typepath to the job datum from the id_trim. This is converted to one of the job singletons in New().
@@ -30,25 +28,6 @@
 
 	if(isnull(job_changes))
 		job_changes = SSmapping.config.job_changes
-
-	if(!length(job_changes) || !config_job)
-		refresh_trim_access()
-		return
-
-	var/list/access_changes = job_changes[config_job]
-
-	if(!length(access_changes))
-		refresh_trim_access()
-		return
-
-	if(islist(access_changes["additional_access"]))
-		extra_access |= access_changes["additional_access"]
-	if(islist(access_changes["additional_minimal_access"]))
-		minimal_access |= access_changes["additional_minimal_access"]
-	if(islist(access_changes["additional_wildcard_access"]))
-		extra_wildcard_access |= access_changes["additional_wildcard_access"]
-	if(islist(access_changes["additional_minimal_wildcard_access"]))
-		minimal_wildcard_access |= access_changes["additional_minimal_wildcard_access"]
 
 	refresh_trim_access()
 
@@ -83,7 +62,6 @@
 	trim_state = "trim_assistant"
 	extra_access = list(ACCESS_MAINT_TUNNELS)
 	minimal_access = list()
-	config_job = JOB_ASSISTANT
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/assistant
 
@@ -103,7 +81,6 @@
 	extra_access = list(ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)
 	minimal_access = list(ACCESS_ATMOSPHERICS, ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_MAINT_TUNNELS, ACCESS_MECH_ENGINE,
 					ACCESS_MINERAL_STOREROOM)
-	config_job = JOB_ATMOSPHERIC_TECHNICIAN
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CE, ACCESS_CHANGE_IDS)
 	job = /datum/job/atmospheric_technician
 
@@ -112,7 +89,6 @@
 	trim_state = "trim_bartender"
 	extra_access = list(ACCESS_HYDROPONICS, ACCESS_KITCHEN, ACCESS_MORGUE)
 	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE, ACCESS_WEAPONS)
-	config_job = JOB_BARTENDER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/bartender
 
@@ -121,14 +97,12 @@
 	trim_state = "trim_botanist"
 	extra_access = list(ACCESS_BAR, ACCESS_KITCHEN)
 	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE)
-	config_job = JOB_BOTANIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/botanist
 
 /datum/id_trim/job/captain
 	assignment = "Captain"
 	trim_state = "trim_captain"
-	config_job = JOB_CAPTAIN
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 	job = /datum/job/captain
 
@@ -146,7 +120,6 @@
 	trim_state = "trim_cargotechnician"
 	extra_access = list(ACCESS_QM, ACCESS_MINING, ACCESS_MINING_STATION)
 	minimal_access = list(ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MAINT_TUNNELS, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM)
-	config_job = JOB_CARGO_TECHNICIAN
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/cargo_technician
 
@@ -155,7 +128,6 @@
 	trim_state = "trim_chaplain"
 	extra_access = list()
 	minimal_access = list(ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_MORGUE, ACCESS_THEATRE)
-	config_job = JOB_CHAPLAIN
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/chaplain
 
@@ -164,7 +136,6 @@
 	trim_state = "trim_chemist"
 	extra_access = list(ACCESS_SURGERY, ACCESS_VIROLOGY)
 	minimal_access = list(ACCESS_CHEMISTRY, ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY)
-	config_job = JOB_CHEMIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
 	job = /datum/job/chemist
 
@@ -177,7 +148,6 @@
 					ACCESS_EXTERNAL_AIRLOCKS, ACCESS_HEADS, ACCESS_KEYCARD_AUTH, ACCESS_MAINT_TUNNELS, ACCESS_MECH_ENGINE,
 					ACCESS_MINERAL_STOREROOM, ACCESS_MINISAT, ACCESS_RC_ANNOUNCE, ACCESS_SEC_DOORS, ACCESS_TCOMSAT, ACCESS_TECH_STORAGE)
 	minimal_wildcard_access = list(ACCESS_CE)
-	config_job = JOB_CHIEF_ENGINEER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 	job = /datum/job/chief_engineer
 
@@ -190,7 +160,6 @@
 					ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_PSYCHOLOGY, ACCESS_RC_ANNOUNCE,
 					ACCESS_SEC_DOORS, ACCESS_SURGERY, ACCESS_VIROLOGY)
 	minimal_wildcard_access = list(ACCESS_CMO)
-	config_job = JOB_CHIEF_MEDICAL_OFFICER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 	job = /datum/job/chief_medical_officer
 
@@ -199,7 +168,6 @@
 	trim_state = "trim_clown"
 	extra_access = list()
 	minimal_access = list(ACCESS_THEATRE)
-	config_job = JOB_CLOWN
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/clown
 
@@ -208,7 +176,6 @@
 	trim_state = "trim_cook"
 	extra_access = list(ACCESS_BAR, ACCESS_HYDROPONICS)
 	minimal_access = list(ACCESS_KITCHEN, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE)
-	config_job = JOB_COOK
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/cook
 
@@ -217,7 +184,6 @@
 	trim_state = "trim_curator"
 	extra_access = list()
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_LIBRARY, ACCESS_MINING_STATION)
-	config_job = JOB_CURATOR
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/curator
 
@@ -227,7 +193,6 @@
 	extra_access = list()
 	minimal_access = list(ACCESS_BRIG, ACCESS_COURT, ACCESS_FORENSICS_LOCKERS, ACCESS_SEC_DOORS,ACCESS_MAINT_TUNNELS, ACCESS_MORGUE,
 					ACCESS_MECH_SECURITY, ACCESS_MINERAL_STOREROOM, ACCESS_WEAPONS)
-	config_job = JOB_DETECTIVE
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/detective
 
@@ -246,7 +211,6 @@
 	trim_state = "trim_geneticist"
 	extra_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_XENOBIOLOGY)
 	minimal_access = list(ACCESS_GENETICS, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_RND)
-	config_job = JOB_GENETICIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_RD, ACCESS_CHANGE_IDS)
 	job = /datum/job/geneticist
 
@@ -262,7 +226,6 @@
 					ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MORGUE, ACCESS_PSYCHOLOGY, ACCESS_QM, ACCESS_RC_ANNOUNCE,
 					ACCESS_RESEARCH, ACCESS_SEC_DOORS, ACCESS_TELEPORTER, ACCESS_THEATRE, ACCESS_VAULT, ACCESS_WEAPONS)
 	minimal_wildcard_access = list(ACCESS_HOP)
-	config_job = JOB_HEAD_OF_PERSONNEL
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 	job = /datum/job/head_of_personnel
 
@@ -276,7 +239,6 @@
 					ACCESS_MAILSORTING, ACCESS_MAINT_TUNNELS, ACCESS_MECH_SECURITY, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM,
 					ACCESS_MINING, ACCESS_MORGUE, ACCESS_RC_ANNOUNCE, ACCESS_RESEARCH, ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_WEAPONS)
 	minimal_wildcard_access = list(ACCESS_HOS)
-	config_job = JOB_HEAD_OF_SECURITY
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 	job = /datum/job/head_of_security
 
@@ -295,7 +257,6 @@
 	trim_state = "trim_janitor"
 	extra_access = list()
 	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
-	config_job = JOB_JANITOR
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/janitor
 
@@ -304,7 +265,6 @@
 	trim_state = "trim_lawyer"
 	extra_access = list()
 	minimal_access = list(ACCESS_COURT, ACCESS_LAWYER, ACCESS_SEC_DOORS)
-	config_job = JOB_LAWYER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/lawyer
 
@@ -313,7 +273,6 @@
 	trim_state = "trim_medicaldoctor"
 	extra_access = list(ACCESS_CHEMISTRY, ACCESS_VIROLOGY)
 	minimal_access = list(ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_PHARMACY, ACCESS_SURGERY)
-	config_job = JOB_MEDICAL_DOCTOR
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
 	job = /datum/job/doctor
 
@@ -322,7 +281,6 @@
 	trim_state = "trim_mime"
 	extra_access = list()
 	minimal_access = list(ACCESS_THEATRE)
-	config_job = JOB_MIME
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/mime
 
@@ -332,14 +290,12 @@
 	extra_access = list(ACCESS_SURGERY)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_CARGO, ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_EVA, ACCESS_HYDROPONICS,
 					ACCESS_MAINT_TUNNELS, ACCESS_MECH_MEDICAL, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_RESEARCH)
-	config_job = JOB_PARAMEDIC
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
 	job = /datum/job/paramedic
 
 /datum/id_trim/job/prisoner
 	assignment = "Prisoner"
 	trim_state = "trim_prisoner"
-	config_job = JOB_PRISONER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/prisoner
 
@@ -376,7 +332,6 @@
 	trim_state = "trim_psychologist"
 	extra_access = list()
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY)
-	config_job = JOB_PSYCHOLOGIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CMO, ACCESS_CHANGE_IDS)
 	job = /datum/job/psychologist
 
@@ -386,7 +341,6 @@
 	extra_access = list()
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_CARGO, ACCESS_MAILSORTING, ACCESS_MAINT_TUNNELS, ACCESS_MECH_MINING, ACCESS_MINING_STATION,
 					ACCESS_MINERAL_STOREROOM, ACCESS_MINING, ACCESS_QM, ACCESS_RC_ANNOUNCE, ACCESS_VAULT)
-	config_job = JOB_QUARTERMASTER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/quartermaster
 
@@ -401,7 +355,6 @@
 					ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_RC_ANNOUNCE, ACCESS_RESEARCH, ACCESS_RND, ACCESS_ROBOTICS,
 					ACCESS_SEC_DOORS, ACCESS_TECH_STORAGE, ACCESS_TELEPORTER, ACCESS_XENOBIOLOGY)
 	minimal_wildcard_access = list(ACCESS_RD)
-	config_job = JOB_RESEARCH_DIRECTOR
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
 	job = /datum/job/research_director
 
@@ -411,7 +364,6 @@
 	extra_access = list(ACCESS_GENETICS, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE, ACCESS_XENOBIOLOGY)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_RND,
 					ACCESS_ROBOTICS, ACCESS_TECH_STORAGE)
-	config_job = JOB_ROBOTICIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_RD, ACCESS_CHANGE_IDS)
 	job = /datum/job/roboticist
 
@@ -421,7 +373,6 @@
 	extra_access = list(ACCESS_GENETICS, ACCESS_ROBOTICS)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_MECH_SCIENCE, ACCESS_MINERAL_STOREROOM, ACCESS_ORDNANCE, ACCESS_ORDNANCE_STORAGE,
 					ACCESS_RESEARCH, ACCESS_RND, ACCESS_XENOBIOLOGY)
-	config_job = JOB_SCIENTIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_RD, ACCESS_CHANGE_IDS)
 	job = /datum/job/scientist
 
@@ -434,7 +385,6 @@
 					ACCESS_MINERAL_STOREROOM, ACCESS_WEAPONS)
 	/// List of bonus departmental accesses that departmental sec officers get.
 	var/department_access = list()
-	config_job = JOB_SECURITY_OFFICER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/security_officer
 
@@ -476,7 +426,6 @@
 	extra_access = list(ACCESS_CARGO, ACCESS_MAINT_TUNNELS, ACCESS_QM)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_MAILSORTING, ACCESS_MECH_MINING, ACCESS_MINERAL_STOREROOM, ACCESS_MINING,
 					ACCESS_MINING_STATION)
-	config_job = JOB_SHAFT_MINER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/shaft_miner
 
@@ -492,7 +441,6 @@
 	extra_access = list(ACCESS_ATMOSPHERICS)
 	minimal_access = list(ACCESS_AUX_BASE, ACCESS_CONSTRUCTION, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_EXTERNAL_AIRLOCKS,
 					ACCESS_MAINT_TUNNELS, ACCESS_MECH_ENGINE, ACCESS_MINERAL_STOREROOM, ACCESS_TCOMSAT, ACCESS_TECH_STORAGE)
-	config_job = JOB_STATION_ENGINEER
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CE, ACCESS_CHANGE_IDS)
 	job = /datum/job/station_engineer
 
@@ -501,7 +449,6 @@
 	trim_state = "trim_virologist"
 	extra_access = list(ACCESS_CHEMISTRY, ACCESS_MORGUE, ACCESS_SURGERY)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_VIROLOGY)
-	config_job = JOB_VIROLOGIST
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CMO, ACCESS_CHANGE_IDS)
 	job = /datum/job/virologist
 
@@ -511,7 +458,6 @@
 	extra_access = list(ACCESS_FORENSICS_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE)
 	minimal_access = list(ACCESS_ARMORY, ACCESS_BRIG, ACCESS_COURT, ACCESS_MECH_SECURITY, ACCESS_MINERAL_STOREROOM,
 					ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_WEAPONS) // See /datum/job/warden/get_access()
-	config_job = JOB_WARDEN
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/warden
 
