@@ -128,7 +128,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/effect/mob_spawn/human/corpse,
+/obj/effect/mob_spawn/corpse/human,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
 /obj/machinery/light/small/directional/west,
 /obj/item/food/cakeslice/birthday,

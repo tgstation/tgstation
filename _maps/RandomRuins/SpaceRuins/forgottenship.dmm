@@ -36,7 +36,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ag" = (
-/obj/effect/mob_spawn/human/syndicatespace/captain,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ah" = (
@@ -515,7 +515,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bE" = (
-/obj/effect/mob_spawn/human/syndicatespace,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
@@ -1048,7 +1048,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cY" = (
-/obj/effect/mob_spawn/human/syndicatespace,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
