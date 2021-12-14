@@ -33,6 +33,7 @@
 		owner = creator
 
 /obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, name)
+	. = ..()
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)

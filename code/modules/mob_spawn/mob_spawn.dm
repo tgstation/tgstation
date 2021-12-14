@@ -44,6 +44,7 @@
 	return spawned_mob
 
 /obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
+	SHOULD_CALL_PARENT(TRUE)
 	if(faction)
 		spawned_mob.faction = faction
 	if(ishuman(spawned_mob))

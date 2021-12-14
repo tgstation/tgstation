@@ -78,6 +78,7 @@
 	you_are_text = "You're, like, totally a dudebro, bruh."
 	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
 	spawner_job_path = /datum/job/beach_bum
+	outfit = /datum/outfit/beachbum
 
 /obj/effect/mob_spawn/ghost_role/human/beach/lifeguard
 	you_are_text = "You're a spunky lifeguard!"
@@ -117,6 +118,7 @@
 	you_are_text = "You are a space bartender!"
 	flavour_text = "Time to mix drinks and change lives. Smoking space drugs makes it easier to understand your patrons' odd dialect."
 	spawner_job_path = /datum/job/space_bartender
+	outfit = /datum/outfit/spacebartender
 
 /datum/outfit/spacebartender
 	name = "Space Bartender"
@@ -230,6 +232,7 @@
 	return FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/ash_walker/special(mob/living/carbon/human/spawned_human)
+	. = ..()
 	spawned_human.fully_replace_character_name(null,random_unique_lizard_name(gender))
 	to_chat(spawned_human, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Invade the strange structure of the outsiders if you must. Do not cause unnecessary destruction, as littering the wastes with ugly wreckage is certain to not gain you favor. Glory to the Necropolis!</b>")
 
@@ -270,6 +273,7 @@
 	spawner_job_path = /datum/job/lavaland_syndicate
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
+	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms

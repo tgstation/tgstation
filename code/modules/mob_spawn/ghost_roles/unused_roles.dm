@@ -25,6 +25,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/prisoner_transport/special(mob/living/carbon/human/spawned_human)
+	. = ..()
 	spawned_human.fully_replace_character_name(null, "NTP #LL-0[rand(111,999)]") //Nanotrasen Prisoner #Lavaland-(numbers)
 
 /datum/outfit/lavalandprisoner
@@ -141,7 +142,7 @@
 	icon_state = "sleeper_s"
 	prompt_name = "a syndicate operative"
 	you_are_text = "You are a syndicate operative."
-	flavour_text = "You have awoken, without instruction. Death to nanotrasen! If there are some clues around as to what you're supposed to be doing, you best follow those."
+	flavour_text = "You have awoken, without instruction. Death to Nanotrasen! If there are some clues around as to what you're supposed to be doing, you best follow those."
 	outfit = /datum/outfit/syndicate_empty
 	spawner_job_path = /datum/job/space_syndicate
 
@@ -166,7 +167,7 @@
 	prompt_name = "a space bar patron"
 	you_are_text = "You're a patron!"
 	flavour_text = "Hang out at the bar and chat with your buddies. Feel free to hop back in the cryogenics when you're done chatting."
-	outfit = /datum/outfit/spacebartender
+	outfit = /datum/outfit/cryobartender
 	spawner_job_path = /datum/job/space_bar_patron
 
 /obj/effect/mob_spawn/ghost_role/human/space_bar_patron/attack_hand(mob/user, list/modifiers)
@@ -202,6 +203,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/exile/special(mob/living/new_spawn)
+	. = ..()
 	new_spawn.fully_replace_character_name(null,"Wish Granter's Victim ([rand(1,999)])")
 	var/wish = rand(1,4)
 	var/message = ""
@@ -244,6 +246,7 @@
 	prompt_name = "a space doctor"
 	you_are_text = "You are a space doctor!"
 	flavour_text = "It's your job- no, your duty as a doctor, to care and heal those in need."
+	outfit = /datum/outfit/job/doctor
 	spawner_job_path = /datum/job/space_doctor
 
 /obj/effect/mob_spawn/ghost_role/human/doctor/alive/equip(mob/living/carbon/human/doctor)
@@ -319,6 +322,7 @@
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
+	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/datum/job/spawn_job = SSjob.GetJobType(spawner_job_path)
 	var/policy = get_policy(spawn_job.policy_index)
@@ -338,7 +342,7 @@
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
+	new /obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
 	return ..()
 
 /datum/outfit/syndicatespace/syndicrew

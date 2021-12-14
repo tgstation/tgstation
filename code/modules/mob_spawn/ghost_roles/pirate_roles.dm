@@ -19,9 +19,10 @@
 	///Whether or not it will spawn a fluff structure upon opening.
 	var/spawn_oldpod = TRUE
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/special(mob/living/new_spawn)
-	new_spawn.fully_replace_character_name(new_spawn.real_name, generate_pirate_name(new_spawn.gender))
-	new_spawn.mind.add_antag_datum(/datum/antagonist/pirate)
+/obj/effect/mob_spawn/ghost_role/human/pirate/special(mob/living/spawned_mob, mob/mob_possessor)
+	. = ..()
+	mob_possessor.fully_replace_character_name(mob_possessor.real_name, generate_pirate_name(mob_possessor.gender))
+	mob_possessor.mind.add_antag_datum(/datum/antagonist/pirate)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/proc/generate_pirate_name(spawn_gender)
 	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")

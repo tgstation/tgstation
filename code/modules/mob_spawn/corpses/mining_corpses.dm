@@ -133,18 +133,29 @@
 	box = /obj/item/storage/box/hug/survival
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
+	///drops a pie cannon on post_equip. i'm so done with this stupid outfit trying to put shit that doesn't fit in the backpack!
+	var/drop_a_pie_cannon = FALSE
 
 /datum/outfit/consumed_clown/pre_equip(mob/living/carbon/human/clown, visualsOnly = FALSE)
 	if(!visualsOnly)
 		clown.fully_replace_character_name(clown.name, pick(GLOB.clown_names))
 	if(prob(70))
-		backpack_contents += pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie = 1))
+		var/backpack_loot = pick(list(/obj/item/stamp/clown = 1, /obj/item/reagent_containers/spray/waterflower = 1, /obj/item/food/grown/banana = 1, /obj/item/megaphone/clown = 1, /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter = 1, /obj/item/pneumatic_cannon/pie))
+		if(backpack_loot == /obj/item/pneumatic_cannon/pie)
+			drop_a_pie_cannon = TRUE
+		else
+			backpack_contents += backpack_loot
 	if(prob(30))
 		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(list( 1 = 3, 2 = 2, 3 = 1)))
 	if(prob(10))
 		l_pocket = pick_weight(list(/obj/item/bikehorn/golden = 3, /obj/item/bikehorn/airhorn = 1))
 	if(prob(10))
 		r_pocket = /obj/item/implanter/sad_trombone
+
+/datum/outfit/consumed_clown/post_equip(mob/living/carbon/human/clown, visualsOnly)
+	. = ..()
+	if(drop_a_pie_cannon)
+		new /obj/item/pneumatic_cannon/pie(get_turf(clown))
 
 /datum/outfit/consumed_golem
 	name = "Legion-Consumed Golem"

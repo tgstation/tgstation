@@ -209,6 +209,7 @@
 		spawned_spider.directive = directive
 
 /obj/effect/mob_spawn/ghost_role/spider/special(mob/user)
+	. = ..()
 	egg.spawner = null
 	QDEL_NULL(egg)
 
