@@ -2,7 +2,7 @@ import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
 import { KEY_ENTER, KEY_DOWN, KEY_UP } from 'common/keycodes';
 import { Window } from '../layouts';
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 
 type ListInputData = {
   items: string[];
@@ -15,22 +15,22 @@ export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
   const { items = [], message, preferences, title } = data;
   const { large_buttons } = preferences;
-  const [selected, setSelected] = useSharedState<number | null>(
+  const [selected, setSelected] = useLocalState<number | null>(
     context,
     'input',
     0
   );
-  const [searchBarVisible, setSearchBarVisible] = useSharedState<boolean>(
+  const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
     'searchBarVisible',
     items.length > 9
   );
-  const [searchQuery, setSearchQuery] = useSharedState<string>(
+  const [searchQuery, setSearchQuery] = useLocalState<string>(
     context,
     'searchQuery',
     ''
   );
-  const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
+  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
     context,
     'inputIsValid',
     { isValid: true, error: null }

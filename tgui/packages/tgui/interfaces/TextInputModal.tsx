@@ -1,6 +1,6 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences, Validator } from './common/InputButtons';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { KEY_ENTER } from 'common/keycodes';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
@@ -27,8 +27,8 @@ export const TextInputModal = (_, context) => {
     title,
   } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
+  const [input, setInput] = useSharedState(context, 'input', placeholder);
+  const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
     'inputIsValid',
     { isValid: false, error: null }
