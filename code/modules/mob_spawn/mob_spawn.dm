@@ -94,9 +94,10 @@
 	if(outfit)
 		var/mob/living/carbon/human/spawned_human = spawned_mob
 		if(outfit_override)
+			outfit = new outfit //create it now to apply vars
 			for(var/outfit_var in outfit_override)
-				if(!ispath(outfit_override[outfit_var]))
-					CRASH("outfit_override var on [mob_name] spawner has incorrect values! it must be an assoc list with outfit var = path")
+				if(!ispath(outfit_override[outfit_var]) && !isnull(outfit_override[outfit_var]))
+					CRASH("outfit_override var on [mob_name] spawner has incorrect values! it must be an assoc list with outfit \"var\" = path | null")
 				outfit.vars[outfit_var] = outfit_override[outfit_var]
 		spawned_human.equipOutfit(outfit)
 
@@ -144,7 +145,7 @@
 /obj/effect/mob_spawn/ghost_role/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return
-	if(!prompt_ghost)
+	if(prompt_ghost)
 		var/ghost_role = tgui_alert(usr, "Become [prompt_name]? (Warning, You can no longer be revived!)",, list("Yes", "No"))
 		if(ghost_role != "Yes" || !loc || QDELETED(user))
 			return
@@ -176,7 +177,6 @@
 		to_chat(spawned_mob, output_message)
 	var/datum/mind/spawned_mind = spawned_mob.mind
 	spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
-	special(spawned_mob)
 	spawned_mind.name = spawned_mob.real_name
 
 //multiple use mob spawner functionality here- doesn't make sense on corpses
