@@ -594,7 +594,7 @@ What a mess.*/
 								default_description += "\n[c.crimeName]\n"
 								default_description += "[c.crimeDetails]\n"
 
-						var/headerText = tgui_input_text(usr, "Enter Poster Heading", "Print Wanted Poster", "WANTED", 8)
+						var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Wanted Poster", "WANTED", 7)
 
 						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Wanted Poster", default_description, multiline = TRUE)
 						if(info)
@@ -611,7 +611,7 @@ What a mess.*/
 					if(missing_name)
 						var/default_description = "A poster declaring [missing_name] to be a missing individual, missed by Nanotrasen. Report any sightings to security immediately."
 
-						var/headerText = tgui_input_text(usr, "Enter Poster Heading (Max 7 Chars)", "Print Missing Persons Poster", "MISSING", 8)
+						var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Missing Persons Poster", "MISSING", 7)
 
 						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Missing Persons Poster", default_description, multiline = TRUE)
 						if(info)
@@ -641,7 +641,7 @@ What a mess.*/
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = tgui_input_text(usr, "Add Comment", "Security Records", multiline = TRUE)
+				var/t1 = tgui_input_text(usr, "Add a comment", "Security Records", multiline = TRUE)
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1
@@ -735,7 +735,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = tgui_input_text(usr, "Input name", "Security Records", active1.fields["name"], MAX_MESSAGE_LEN)
+							var/t1 = tgui_input_text(usr, "Input a name", "Security Records", active1.fields["name"], MAX_MESSAGE_LEN)
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -744,7 +744,7 @@ What a mess.*/
 								active2.fields["name"] = t1
 					if("id")
 						if(istype(active2, /datum/data/record) || istype(active1, /datum/data/record))
-							var/t1 = tgui_input_text(usr, "Input id", "Security Records", active1.fields["id"])
+							var/t1 = tgui_input_text(usr, "Input an id", "Security Records", active1.fields["id"])
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -753,7 +753,7 @@ What a mess.*/
 								active2.fields["id"] = t1
 					if("fingerprint")
 						if(istype(active1, /datum/data/record))
-							var/t1 = tgui_input_text(usr, "Input fingerprint hash", "Security Records", active1.fields["fingerprint"])
+							var/t1 = tgui_input_text(usr, "Input a fingerprint hash", "Security Records", active1.fields["fingerprint"])
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["fingerprint"] = t1

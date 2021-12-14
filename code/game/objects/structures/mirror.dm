@@ -146,7 +146,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 	var/mob/living/carbon/human/amazed_human = user
 
-	var/choice = tgui_input_list(user, "Something to change?", "Magical Grooming", list("Name", "Race", "Gender", "Hair", "Eyes"))
+	var/choice = tgui_input_list(user, "Something to change?", "Magical Grooming", list("name", "race", "gender", "hair", "eyes"))
 
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return TRUE
