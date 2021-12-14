@@ -103,8 +103,6 @@
 		src.timeout = timeout
 		start_time = world.time
 		QDEL_IN(src, timeout)
-		src.items += string_key
-		src.items_map[string_key] = i
 
 /datum/tgui_list_input/Destroy(force, ...)
 	SStgui.close_uis(src)
