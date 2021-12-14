@@ -149,7 +149,7 @@
 		return ..()
 
 	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
+		var/newtime = tgui_input_number(user, "Please enter a new detonation time", name)
 		if (newtime != null && user.canUseTopic(src, BE_CLOSE))
 			if(change_det_time(newtime))
 				to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))

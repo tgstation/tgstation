@@ -407,6 +407,7 @@
  * reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
  */
 /mob/proc/reset_perspective(atom/new_eye)
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 	if(!client)
 		return
 

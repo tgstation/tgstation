@@ -252,7 +252,7 @@
 	antag_flag_override = ROLE_FAMILIES
 	protected_roles = list("Prisoner", "Head of Personnel")
 	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
-	required_candidates = 9
+	required_candidates = 3
 	weight = 2
 	cost = 19
 	requirements = list(101,101,40,40,30,20,10,10,10,10)
@@ -272,6 +272,8 @@
 		else if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
 			candidates -= player
 		else if(HAS_TRAIT(player, TRAIT_MINDSHIELD))
+			candidates -= player
+		else if(player.mind.assigned_role.title in restricted_roles)
 			candidates -= player
 
 

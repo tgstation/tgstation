@@ -56,6 +56,8 @@ Assistant
 
 	var/index = (jumpsuit_number % GLOB.colored_assistant.jumpsuits.len) + 1
 
+	//We don't cache these, because they can delete on init
+	//Too fragile, better to just eat the cost
 	if (target.jumpsuit_style == PREF_SUIT)
 		uniform = GLOB.colored_assistant.jumpsuits[index]
 	else
@@ -73,6 +75,7 @@ Assistant
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
+		H.update_inv_w_uniform()
 
 /proc/get_configured_colored_assistant_type()
 	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/random

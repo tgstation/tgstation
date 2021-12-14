@@ -629,8 +629,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!(DT_PROB(creation_purity*10, delta_time)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
-	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
-	traumalist -= /datum/brain_trauma/special/obsessed //Sets the owner as an antag - I presume this will lead to problems, so we'll remove it
+	var/list/forbiddentraumas = list(/datum/brain_trauma/severe/split_personality,  // Split personality uses a ghost, I don't want to use a ghost for a temp thing
+		/datum/brain_trauma/special/obsessed, // Obsessed sets the owner as an antag - I presume this will lead to problems, so we'll remove it
+		/datum/brain_trauma/hypnosis // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
+		)
+	traumalist -= forbiddentraumas
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	traumalist = shuffle(traumalist)
 	for(var/trauma in traumalist)
