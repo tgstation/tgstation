@@ -36,7 +36,7 @@
 /**
  * Creates an asynchronous TGUI number input window with an associated callback.
  *
- * This proc should be used to create number inputes that invoke a callback with the user's entry.
+ * This proc should be used to create number inputs that invoke a callback with the user's entry.
  *
  * Arguments:
  * * user - The user to show the number input to.
