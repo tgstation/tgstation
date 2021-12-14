@@ -27,17 +27,15 @@ export const TextInputModal = (_, context) => {
     title,
   } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useSharedState(context, 'input', placeholder);
+  const [input, setInput] = useSharedState<string>(context, 'input', placeholder);
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
     'inputIsValid',
     { isValid: !!placeholder, error: null }
   );
-  const onType = (event) => {
-    event.preventDefault();
-    const target = event.target;
-    setInputIsValid(validateInput(target.value, max_length));
-    setInput(target.value);
+  const onType = (value: string) => {
+    setInputIsValid(validateInput(value, max_length));
+    setInput(value);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
@@ -85,7 +83,7 @@ const InputArea = (props, context) => {
         <Input
           autoFocus
           fluid
-          onInput={(event) => onType(event)}
+          onInput={(_, value) => onType(value)}
           placeholder="Type something..."
           value={input}
         />
@@ -97,7 +95,7 @@ const InputArea = (props, context) => {
         <TextArea
           autoFocus
           height="100%"
-          onInput={(event) => onType(event)}
+          onInput={(_, value) => onType(value)}
           placeholder="Type something..."
           value={input}
         />
