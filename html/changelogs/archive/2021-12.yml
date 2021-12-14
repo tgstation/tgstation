@@ -391,3 +391,14 @@
   - bugfix: Cyborgs can no longer attack clown cars when inside them.
   unit0016:
   - bugfix: The archmagister's ID card icon now exists. Whoopsies.
+2021-12-14:
+  Iamgoofball:
+  - bugfix: Fixes being able to telekinesis through cameras.
+  - bugfix: Fixes being able to telekinesis across z-levels.
+  Mothblocks:
+  - bugfix: Fixed the skin tones on the preferences menu not having colors.
+  - bugfix: Jumpsuits, such as in species icons, are now grey again instead of white
+      on the preferences menu.
+  tralezab:
+  - bugfix: fugitives are now their own antagonist toggle, instead of polling for
+      traitors for some reason

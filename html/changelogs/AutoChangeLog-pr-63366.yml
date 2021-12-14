@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - bugfix: "Jumpsuits, such as in species icons, are now grey again instead of white on the preferences menu."
