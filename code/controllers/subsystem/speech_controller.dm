@@ -6,6 +6,9 @@ SUBSYSTEM_DEF(speech_controller)
 	init_order = INIT_ORDER_SPEECH_CONTROLLER
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
+	///used so that an admin can force all speech verbs
+	var/FOR_ADMINS_IF_BROKE_immediately_execute_all_speech = FALSE
+
 	///list of the form: list(client mob, message that mob is queued to say, other say arguments (if any)).
 	///this is our process queue, processed every tick.
 	var/list/queued_says_to_execute = list()
@@ -13,7 +16,7 @@ SUBSYSTEM_DEF(speech_controller)
 ///queues mob_to_queue into our process list so they say(message) near the start of the next tick
 /datum/controller/subsystem/speech_controller/proc/queue_say_for_mob(mob/mob_to_queue, message, message_type)
 
-	if(!TICK_CHECK)
+	if(!TICK_CHECK || FOR_ADMINS_IF_BROKE_immediately_execute_all_speech)
 		process_single_say(mob_to_queue, message, message_type)
 		return TRUE
 
