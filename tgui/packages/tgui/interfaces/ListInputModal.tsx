@@ -37,26 +37,26 @@ export const ListInputModal = (_, context) => {
     'inputIsValid',
     { isValid: true, error: null }
   );
-  const onArrowKey = (key: any) => {
-    const len = items.length - 1;
+  // User presses up or down on keyboard
+  const onArrowKey = (key: number) => {
+    const len = filteredItems.length;
     if (key === KEY_DOWN) {
       if (selected === null) {
-        setSelected(0);
+        onClick(0);
       } else {
-        setSelected((len + (selected + 1)) % len);
+        onClick((len + (selected + 1)) % len);
       }
     } else if (key === KEY_UP) {
       if (selected === null) {
-        setSelected(len);
+        onClick(len);
       } else {
-        setSelected((len + (selected - 1)) % len);
+        onClick((len + (selected - 1)) % len);
       }
     }
-    if (selected) {
-      document!.getElementById(selected.toString())?.focus();
-      setInputIsValid({ isValid: true, error: null });
-    }
+    document!.getElementById(selected?.toString() || '0')?.focus();
+    setInputIsValid({ isValid: true, error: null });
   };
+  // User selects an item with mouse
   const onClick = (index: number) => {
     if (index === undefined || index === selected) {
       setInputIsValid({ isValid: false, error: 'No selection' });
@@ -66,10 +66,23 @@ export const ListInputModal = (_, context) => {
       setSelected(index);
     }
   };
+  // User doesn't have search bar visible & presses a key
+  const onLetterKey = (key: number) => {
+    const keyChar = String.fromCharCode(key);
+    const foundItem = items.find((item) => {
+      return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
+    });
+    if (foundItem) {
+      setSelected(items.indexOf(foundItem));
+      document!.getElementById(items.indexOf(foundItem)!.toString())?.focus();
+    }
+  };
+  // User types into search bar
   const onSearch = (query: string) => {
     setSelected(0);
     setSearchQuery(query);
   };
+  // User presses the search button
   const onSearchBarToggle = () => {
     setSearchBarVisible(!searchBarVisible);
     setSearchQuery('');
@@ -92,6 +105,9 @@ export const ListInputModal = (_, context) => {
           }
           if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
             onArrowKey(keyCode);
+          }
+          if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
+            onLetterKey(keyCode);
           }
         }}>
         <Section
@@ -134,7 +150,7 @@ export const ListInputModal = (_, context) => {
 const ListDisplay = (props) => {
   const { filteredItems, onClick, selected } = props;
   return (
-    <Section autoFocus fill scrollable tabIndex={0}>
+    <Section fill scrollable tabIndex={0}>
       {filteredItems.map((item, index) => {
         return (
           <Button
@@ -165,10 +181,12 @@ const SearchBar = (props) => {
 
   return (
     <Input
+      autoFocus
       fluid
       onInput={(e, value) => {
         onSearch(value);
       }}
+      placeholder="Search..."
       value={searchQuery}
     />
   );
