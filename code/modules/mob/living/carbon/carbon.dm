@@ -8,7 +8,6 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
-	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
@@ -1308,7 +1307,6 @@
 
 
 /mob/living/carbon/proc/attach_rot()
-	SIGNAL_HANDLER
 	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
 		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
