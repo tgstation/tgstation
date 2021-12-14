@@ -1,4 +1,3 @@
-import { Loader } from './common/Loader';
 import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER } from 'common/keycodes';
@@ -11,7 +10,6 @@ type TextInputData = {
   multiline: boolean;
   placeholder: string;
   preferences: Preferences;
-  timeout: number;
   title: string;
 };
 
@@ -23,14 +21,13 @@ export const TextInputModal = (_, context) => {
     multiline,
     placeholder,
     preferences,
-    timeout,
     title,
   } = data;
   const { large_buttons } = preferences;
   const [input, setInput] = useLocalState<string>(
     context,
     'input',
-    placeholder,
+    placeholder || "",
   );
   const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
     context,
@@ -50,7 +47,6 @@ export const TextInputModal = (_, context) => {
 
   return (
     <Window title={title} width={325} height={windowHeight}>
-      {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;

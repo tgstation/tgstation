@@ -1,4 +1,3 @@
-import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { KEY_ENTER } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
@@ -11,13 +10,12 @@ type NumberInputData = {
   min_value: number | null;
   placeholder: number;
   preferences: Preferences;
-  timeout: number;
   title: string;
 };
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, placeholder, preferences, timeout, title } = data;
+  const { message, placeholder, preferences, title } = data;
   const { large_buttons } = preferences;
   const [input, setInput] = useLocalState(context, 'input', placeholder);
   const onChange = (value: number) => {
@@ -34,7 +32,6 @@ export const NumberInputModal = (_, context) => {
 
   return (
     <Window title={title} width={270} height={windowHeight}>
-      {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
