@@ -2810,7 +2810,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	metabolization_rate = 1 * REM //Fast as fuck, boi
 
-/datum/reagent/nightcrawler_saliva/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+/datum/reagent/nightcrawler_enzymes/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
 		var/slime = chems.get_reagent_amount(type)

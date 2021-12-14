@@ -55,6 +55,8 @@
 	var/self_sustaining = FALSE
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
+	///How many pixels to offset the plant overlay on the y axis.
+	var/plant_y_offset = 0
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -332,6 +334,7 @@
 	else
 		var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
 		plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
+	plant_overlay.pixel_y = plant_y_offset
 	return plant_overlay
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
@@ -912,8 +915,8 @@
 
 /obj/machinery/hydroponics/soil/worm
 	name = "worm castings"
-	desc = "A patch of fetrile soil straight from disgestive tract of the gardeners slimy friends."
+	desc = "A patch of fetrile soil straight from disgestive tract of our slimy friends."
 	icon_state = "soil_worm"
 	maxnutri = 20
-
+	plant_y_offset = 8
 
