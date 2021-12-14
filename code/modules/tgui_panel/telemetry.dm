@@ -61,7 +61,7 @@
 			//qdel(client)
 			return
 		client.last_known_ui_fingerprint = sanitize(fingerprint)
-		message_admins("[key_name(client)] fingerprint: [fingerprint]")
+		//message_admins("[key_name(client)] fingerprint: [fingerprint]")
 	var/len = length(telemetry_connections)
 	if(len == 0)
 		return
