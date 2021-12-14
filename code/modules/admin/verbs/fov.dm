@@ -1,6 +1,6 @@
 /client/proc/cmd_admin_toggle_fov()
 	set name = "Enable/Disable Field of View"
-	set category = "Admin.Debug"
+	set category = "Debug"
 
 	if(!check_rights(R_ADMIN) || !check_rights(R_DEBUG))
 		return
