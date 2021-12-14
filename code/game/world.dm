@@ -141,6 +141,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
+	GLOB.telemetry_log = "[GLOB.log_directory]/telemetry.log"
 
 	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
@@ -162,6 +163,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_job_debug_log)
 	start_log(GLOB.tgui_log)
 	start_log(GLOB.world_shuttle_log)
+	start_log(GLOB.telemetry_log)
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently

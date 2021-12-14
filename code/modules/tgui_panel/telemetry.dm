@@ -58,10 +58,10 @@
 	if(fingerprint)
 		if(length(fingerprint) > 32)
 			message_admins("[key_name(client)] was kicked for too large fingerprint")
-			//qdel(client)
+			qdel(client)
 			return
 		client.last_known_ui_fingerprint = sanitize(fingerprint)
-		//message_admins("[key_name(client)] fingerprint: [fingerprint]")
+		log_telemetry("[key_name(client)] provided fingerprint: [fingerprint]")
 	var/len = length(telemetry_connections)
 	if(len == 0)
 		return
