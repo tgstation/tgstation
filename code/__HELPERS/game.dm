@@ -285,7 +285,8 @@
 
 ///clean this oranges_ear up for future use
 /mob/oranges_ear/proc/unassign()
-	loc:assigned_oranges_ear = null//trollface. our loc should ALWAYS be a turf, no exceptions. if it isnt then this doubles as an error message ;)
+	var/turf/turf_loc = loc
+	turf_loc.assigned_oranges_ear = null//trollface. our loc should ALWAYS be a turf, no exceptions. if it isnt then this doubles as an error message ;)
 	loc = null
 	references.Cut()
 
@@ -330,8 +331,6 @@
 	//on a whole this can outperform iterating through all movables in view() by ~2x especially when hearables are a tiny percentage of movables in view
 	for(var/mob/oranges_ear/ear in view(view_radius, center_turf))
 		. += ear.references
-		ear.unassign()
-		assigned_oranges_ears -= ear
 
 	for(var/mob/oranges_ear/remaining_ear as anything in assigned_oranges_ears)//we need to clean up our mess
 		remaining_ear.unassign()
