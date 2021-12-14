@@ -42,15 +42,15 @@ export const ListInputModal = (_, context) => {
     const len = filteredItems.length;
     if (key === KEY_DOWN) {
       if (selected === null) {
-        onClick(0);
+        setSelected(0);
       } else {
-        onClick((len + (selected + 1)) % len);
+        setSelected((len + (selected + 1)) % len);
       }
     } else if (key === KEY_UP) {
       if (selected === null) {
-        onClick(len);
+        setSelected(len);
       } else {
-        onClick((len + (selected - 1)) % len);
+        setSelected((len + (selected - 1)) % len);
       }
     }
     document!.getElementById(selected?.toString() || '0')?.focus();
