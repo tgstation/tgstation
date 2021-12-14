@@ -1308,6 +1308,7 @@
 
 
 /mob/living/carbon/proc/attach_rot()
+	SIGNAL_HANDLER
 	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
 		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
