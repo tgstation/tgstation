@@ -149,6 +149,7 @@ export const ListInputModal = (_, context) => {
  */
 const ListDisplay = (props) => {
   const { filteredItems, onClick, selected } = props;
+
   return (
     <Section fill scrollable tabIndex={0}>
       {filteredItems.map((item, index) => {
