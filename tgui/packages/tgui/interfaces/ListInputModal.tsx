@@ -1,3 +1,4 @@
+import { Loader } from './common/Loader';
 import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
 import { KEY_ENTER, KEY_DOWN, KEY_UP } from 'common/keycodes';
@@ -8,12 +9,13 @@ type ListInputData = {
   items: string[];
   message: string;
   preferences: Preferences;
+  timeout: number;
   title: string;
 };
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, preferences, title } = data;
+  const { items = [], message, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
   const [selected, setSelected] = useLocalState<number | null>(
     context,
@@ -94,6 +96,7 @@ export const ListInputModal = (_, context) => {
 
   return (
     <Window title={title} width={325} height={windowHeight}>
+      {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
