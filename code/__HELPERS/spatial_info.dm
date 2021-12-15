@@ -65,26 +65,6 @@
 	SHOULD_CALL_PARENT(FALSE)
 	return FALSE
 
-/**
- * assigns this ear to the turf at get_turf(assigned_atom) and adds it to this ears references list then moves to the turf.
- * used when SSspatial_grid assigns oranges_ear instances to a list of movables such that there will only be one oranges_ear per turf
- */
-/mob/oranges_ear/proc/assign(atom/assigned_atom)
-	var/turf/assigned_turf_loc = get_turf(assigned_atom)
-	if(!assigned_turf_loc)
-		return FALSE
-
-	if(assigned_turf_loc.assigned_oranges_ear)
-		assigned_turf_loc.assigned_oranges_ear.references |= assigned_atom
-		return FALSE//we dont put ourselves in assigned_turf_loc if it already has an oranges ear, we just give it assigned_atom and dont move there
-
-	references += assigned_atom
-
-	loc = assigned_turf_loc//normally setting loc directly like this isnt allowed but we literally JUST need to exist in that loc without wasting cpu time
-	assigned_turf_loc.assigned_oranges_ear = src
-
-	return TRUE
-
 ///clean this oranges_ear up for future use
 /mob/oranges_ear/proc/unassign()
 	var/turf/turf_loc = loc
