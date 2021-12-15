@@ -1,0 +1,6 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "TGUI text input will now let you submit default values without rewriting the input"
+  - bugfix: "TGUI text and number input will now accept pressing ENTER anywhere on the window (assuming the input is valid)"
+  - refactor: "Many more inputs have been converted to TGUI - PDA messaging, GPS tags, cult runes, roulette machines, custom vendors, more."
