@@ -2948,7 +2948,6 @@
 #include "code\modules\mob\living\carbon\life.dm"
 #include "code\modules\mob\living\carbon\skillchip.dm"
 #include "code\modules\mob\living\carbon\status_procs.dm"
-#include "code\modules\mob\living\carbon\alien\humanoid\humanoid_update_icons.dm"
 #include "code\modules\mob\living\carbon\human\death.dm"
 #include "code\modules\mob\living\carbon\human\dummy.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"

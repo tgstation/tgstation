@@ -22,7 +22,7 @@
 		return
 	if(!owner.mind)
 		return
-	var/mob/queen = get_alien_type(/mob/living/carbon/human/species/alien/royal/queen)
+	var/mob/queen = get_alien_type(mob/living/carbon/human/species/alien/praetorian/queen)
 	if(!queen || queen == owner)
 		return
 	scan_target = queen

@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		return pick (list("xttrails_1", "xttrails2"))
 
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/human/species/alien/royal/update_inv_hands()
+mob/living/carbon/human/species/alien/praetorian/update_inv_hands()
 	..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()
