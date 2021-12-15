@@ -328,7 +328,10 @@
 	// Find a blood decal or create a new one.
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(T, get_static_viruses())
+		var/blood_type = /obj/effect/decal/cleanable/blood/splatter
+		if(isalien(src))
+			blood_type = /obj/effect/decal/cleanable/xenoblood
+		B = new blood_type(T, get_static_viruses())
 	if(QDELETED(B)) //Give it up
 		return
 	B.bloodiness = min((B.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
@@ -339,14 +342,6 @@
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
-
-/mob/living/carbon/human/species/alien/add_splatter_floor(turf/T, small_drip)
-	if(!T)
-		T = get_turf(src)
-	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents
-	if(!B)
-		B = new(T)
-	B.add_blood_DNA(list("UNKNOWN DNA" = "X*"))
 
 /mob/living/silicon/robot/add_splatter_floor(turf/T, small_drip)
 	if(!T)

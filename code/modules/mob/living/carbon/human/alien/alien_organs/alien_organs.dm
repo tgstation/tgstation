@@ -93,16 +93,14 @@
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/user, special = FALSE)
-	..()
+	. = ..()
 	if(isalien(user))
-		var/mob/living/carbon/human/species/alien/alien_user = user
-		alien_user.updatePlasmaDisplay()
+		user.updatePlasmaDisplay()
 
 /obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/user, special = FALSE)
 	if(isalien(user))
-		var/mob/living/carbon/human/species/alien/alien_user = user
-		alien_user.updatePlasmaDisplay()
-	..()
+		user.updatePlasmaDisplay()
+	return ..()
 
 #define QUEEN_DEATH_DEBUFF_DURATION 4 MINUTES
 

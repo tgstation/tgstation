@@ -75,6 +75,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	liked_food = NONE
 	disliked_food = NONE
+	exotic_bloodtype = "X"
 	gib_type = /obj/effect/gibspawner/xeno
 	gib_type_bodypartless = /obj/effect/gibspawner/xeno/bodypartless
 	deathsound = 'sound/voice/hiss6.ogg'
@@ -201,6 +202,7 @@
 		/obj/item/organ/alien/resinspinner,
 		/obj/item/organ/alien/acid,
 	)
+	armor = 25
 
 /datum/species/alien/drone/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
@@ -220,6 +222,7 @@
 		/obj/item/organ/alien/hivenode,
 		/obj/item/organ/alien/plasmavessel/small,
 	)
+	armor = 25
 	///The stored tackling datum, to delete.
 	var/datum/component/tackler
 
@@ -242,6 +245,7 @@
 		/obj/item/organ/alien/acid,
 		/obj/item/organ/alien/neurotoxin,
 	)
+	armor = 50
 
 /datum/species/alien/sentinel/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
@@ -292,6 +296,7 @@
 		/obj/item/organ/alien/neurotoxin,
 		/obj/item/organ/alien/eggsac,
 	)
+	armor = 300
 	///Small sprite given to the user to see properly around themselves.
 	var/datum/action/small_sprite/smallsprite = new /datum/action/small_sprite/queen()
 

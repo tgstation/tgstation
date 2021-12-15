@@ -48,7 +48,7 @@
 	if(user.incapacitated()) //something happened to us while we were choosing.
 		return
 
-	var/mob/living/carbon/human/species/alien/new_xeno
+	var/mob/living/carbon/human/new_xeno
 	switch(alien_caste)
 		if("Hunter")
 			new_xeno = new /mob/living/carbon/human/species/alien/hunter(L.loc)

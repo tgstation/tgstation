@@ -151,28 +151,6 @@
 			bodypart.change_bodypart_status(BODYPART_ROBOTIC)
 	. = bodypart
 
-/mob/living/carbon/human/species/alien/newBodyPart(zone, robotic, fixed_icon)
-	var/obj/item/bodypart/new_bodypart
-	switch(zone)
-		if(BODY_ZONE_L_ARM)
-			new_bodypart = new /obj/item/bodypart/l_arm/alien()
-		if(BODY_ZONE_R_ARM)
-			new_bodypart = new /obj/item/bodypart/r_arm/alien()
-		if(BODY_ZONE_HEAD)
-			new_bodypart = new /obj/item/bodypart/head/alien()
-		if(BODY_ZONE_L_LEG)
-			new_bodypart = new /obj/item/bodypart/l_leg/alien()
-		if(BODY_ZONE_R_LEG)
-			new_bodypart = new /obj/item/bodypart/r_leg/alien()
-		if(BODY_ZONE_CHEST)
-			new_bodypart = new /obj/item/bodypart/chest/alien()
-	if(new_bodypart)
-		new_bodypart.update_limb(fixed_icon, src)
-		if(robotic)
-			new_bodypart.change_bodypart_status(BODYPART_ROBOTIC)
-	. = new_bodypart
-
-
 /proc/skintone2hex(skin_tone)
 	. = 0
 	switch(skin_tone)

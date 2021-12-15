@@ -12,8 +12,8 @@
 	icon = 'icons/hud/screen_alien.dmi'
 	icon_state = "queen_finder"
 
-/mob/living/carbon/human/species/alien/proc/updatePlasmaDisplay()
-	if(!hud_used) //clientless aliens
+/mob/living/carbon/proc/updatePlasmaDisplay()
+	if(!hud_used)
 		return
 	hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(getPlasma())]</font></div>")
 

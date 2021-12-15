@@ -822,9 +822,6 @@
 	else if(direct & WEST)
 		set_lying_angle(270)
 
-/mob/living/carbon/human/species/alien/lying_angle_on_movement(direct)
-	return
-
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
@@ -1100,9 +1097,6 @@
 	return TRUE
 
 /mob/living/proc/update_stamina()
-	return
-
-/mob/living/carbon/human/species/alien/update_stamina()
 	return
 
 /mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)

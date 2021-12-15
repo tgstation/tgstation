@@ -111,10 +111,11 @@
 	action_icon_state = "alien_transfer"
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
-	var/list/mob/living/carbon/human/species/aliens_around = list()
+	var/list/mob/living/carbon/human/aliens_around = list()
 	for(var/mob/living/carbon/A in oview(user))
-		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
-			aliens_around.Add(A)
+		if(!A.getorgan(/obj/item/organ/alien/plasmavessel))
+			continue
+		aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in sort_names(aliens_around)
 	if(!M)
 		return
@@ -281,7 +282,7 @@
 
 	action_icon_state = "alien_sneak"
 
-/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/human/species/alien/user)
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/human/user)
 	if(!active)
 		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
 		user.sneaking = 1
@@ -307,15 +308,12 @@
 		return FALSE
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
 	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
-	for(var/X in abilities)
-		var/obj/effect/proc_holder/alien/APH = X
-		if(APH.has_action)
-			APH.action.UpdateButtonIcon()
-	return TRUE
-
-/mob/living/carbon/human/species/alien/adjustPlasma(amount)
-	. = ..()
+	for(var/obj/effect/proc_holder/alien/vessel_abilities as anything in abilities)
+		if(!vessel_abilities.has_action)
+			continue
+		vessel_abilities.action.UpdateButtonIcon()
 	updatePlasmaDisplay()
+	return TRUE
 
 /mob/living/carbon/proc/usePlasma(amount)
 	if(getPlasma() >= amount)

@@ -8,7 +8,7 @@
 
 	action_icon_state = "alien_evolve_drone"
 
-/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/human/species/alien/user)
+/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/human/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
 		to_chat(user, span_danger("Without the hivemind, you can't possibly hold the responsibility of leadership!"))
@@ -38,7 +38,7 @@
 
 	action_icon_state = "alien_evolve_praetorian"
 
-/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/human/species/alien/user)
+/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/human/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
 		to_chat(user, span_warning("Without the hivemind, you would be unfit to rule as queen!"))
@@ -68,7 +68,7 @@
 
 
 
-/obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/human/species/alien/user)
+/obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/human/user)
 	var/obj/item/queenpromote/prom
 	if(get_alien_type(/mob/living/carbon/human/species/alien/praetorian))
 		to_chat(user, span_noticealien("You already have a Praetorian!"))
@@ -98,7 +98,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-/obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/human/species/alien/user)
+/obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/human/user)
 	if(!isalien(M))
 		to_chat(user, span_noticealien("You may only use this with your adult, non-royal children!"))
 		return

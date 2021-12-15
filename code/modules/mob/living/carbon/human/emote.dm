@@ -89,6 +89,24 @@
 		return TRUE
 	return ..()
 
+/datum/emote/living/carbon/human/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/numbersign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	hands_use_check = TRUE
+
 /datum/emote/living/carbon/human/pale
 	key = "pale"
 	message = "goes pale for a second."
@@ -171,36 +189,6 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
-
-///Snowflake emotes only for le epic chimp
-/datum/emote/living/carbon/human/monkey
-
-/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional)
-	if(ismonkey(user))
-		return ..()
-	return FALSE
-
-/datum/emote/living/carbon/human/monkey/roll
-	key = "roll"
-	key_third_person = "rolls"
-	message = "rolls."
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/human/monkey/scratch
-	key = "scratch"
-	key_third_person = "scratches"
-	message = "scratches."
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/human/monkey/tail
-	key = "tail"
-	message = "waves their tail."
-
-/datum/emote/living/carbon/human/monkeysign
-	key = "sign"
-	key_third_person = "signs"
-	message_param = "signs the number %t."
-	hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/alien
 

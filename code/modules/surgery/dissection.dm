@@ -2,7 +2,6 @@
 	name = "Dissection"
 	target_mobtypes = list(
 		/mob/living/carbon/human,
-		/mob/living/carbon/human/species/alien,
 	)
 	possible_locs = list(BODY_ZONE_CHEST)
 	requires_real_bodypart = TRUE

@@ -251,24 +251,18 @@ Des: Removes all infected images from the alien.
 	name = "alien drone"
 	race = /datum/species/alien/drone
 	caste = "d"
-	maxHealth = 125
-	health = 125
 	icon_state = "aliend"
 
 /mob/living/carbon/human/species/alien/hunter
 	name = "alien hunter"
 	race = /datum/species/alien/hunter
 	caste = "h"
-	maxHealth = 125
-	health = 125
 	icon_state = "alienh"
 
 /mob/living/carbon/human/species/alien/sentinel
 	name = "alien sentinel"
 	race = /datum/species/alien/sentinel
 	caste = "s"
-	maxHealth = 150
-	health = 150
 	icon_state = "aliens"
 
 /mob/living/carbon/human/species/alien/praetorian
@@ -289,6 +283,4 @@ Des: Removes all infected images from the alien.
 	name = "alien queen"
 	race = /datum/species/alien/praetorian/queen
 	caste = "q"
-	maxHealth = 400
-	health = 400
 	icon_state = "alienq"

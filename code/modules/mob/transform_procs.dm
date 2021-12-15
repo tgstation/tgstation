@@ -197,7 +197,7 @@
 		qdel(t)
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
-	var/mob/living/carbon/human/species/alien/new_xeno
+	var/mob/living/carbon/human/new_xeno
 	switch(alien_caste)
 		if("Hunter")
 			new_xeno = new /mob/living/carbon/human/species/alien/hunter(loc)
