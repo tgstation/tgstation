@@ -75,6 +75,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	liked_food = NONE
 	disliked_food = NONE
+	blood_trail_icon_state = list("xttrails_1", "xttrails2")
+	blood_trail_heavy_icon_state = list("xltrails_1", "xltrails2")
 	exotic_bloodtype = "X"
 	gib_type = /obj/effect/gibspawner/xeno
 	gib_type_bodypartless = /obj/effect/gibspawner/xeno/bodypartless

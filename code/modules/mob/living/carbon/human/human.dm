@@ -989,6 +989,12 @@
 		return FALSE
 	return ..()
 
+/mob/living/carbon/human/getTrail()
+	if(getBruteLoss() < 300)
+		return pick(dna.species.blood_trail_heavy_icon_state)
+	else
+		return pick(dna.species.blood_trail_icon_state)
+
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()
 

@@ -39,6 +39,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/exotic_blood = ""
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
+	///The type of blood trail when this mob is bleeding out
+	var/blood_trail_icon_state = list("trails_1", "trails_2")
+	///The type of blood trail when this mob is bleeding out & heavily damaged
+	var/blood_trail_heavy_icon_state = list("ltrails_1", "ltrails_2")
 	///What kind of gibs do we get when this mob is... gibbed?
 	var/gib_type = /obj/effect/gibspawner/human
 	///Same as above, but for bodypartless

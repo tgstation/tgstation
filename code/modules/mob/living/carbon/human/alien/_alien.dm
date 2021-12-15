@@ -144,12 +144,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
-/mob/living/carbon/human/species/alien/getTrail()
-	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
-	else
-		return pick (list("xttrails_1", "xttrails2"))
-
 //Royals have bigger sprites, so inhand things must be handled differently.
 /mob/living/carbon/human/species/alien/praetorian/update_inv_hands()
 	..()
