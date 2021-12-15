@@ -38,7 +38,7 @@
 	var/list/traitor_flavor
 
 	///reference to the uplink this traitor was given, if they were.
-	var/datum/component/uplink/uplink
+	var/datum/weakref/uplink_ref
 
 	var/datum/contractor_hub/contractor_hub
 
@@ -55,7 +55,7 @@
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
-	uplink = owner.find_syndicate_uplink()
+	uplink_ref = WEAKREF(owner.find_syndicate_uplink())
 
 	if(give_objectives)
 		forge_traitor_objectives()
@@ -204,6 +204,7 @@
 		component.delete_if_from_source(src)
 
 /datum/antagonist/traitor/ui_static_data(mob/user)
+	var/datum/component/uplink/uplink = uplink_ref?.resolve()
 	var/list/data = list()
 	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)

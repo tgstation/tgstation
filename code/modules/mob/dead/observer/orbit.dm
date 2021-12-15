@@ -1,8 +1,6 @@
 GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 /datum/orbit_menu
-	/// Serialised list of all valid POIs. Master list that holds all POIs from all other lists.
-	var/list/pois = list()
 	/// Serialised list of all alive POIs.
 	var/list/alive = list()
 	/// Serialised list of all antagonist POIs.
@@ -74,8 +72,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	var/list/new_mob_pois = SSpoints_of_interest.get_mob_pois(CALLBACK(src, .proc/validate_mob_poi), append_dead_role = FALSE)
 	var/list/new_other_pois = SSpoints_of_interest.get_other_pois()
 
-	pois.Cut()
-
 	alive.Cut()
 	antagonists.Cut()
 	dead.Cut()
@@ -92,8 +88,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		var/poi_ref = REF(mob_poi)
 		serialized["ref"] = poi_ref
 		serialized["name"] = name
-
-		pois[poi_ref] = mob_poi
 
 		if(isobserver(mob_poi))
 			var/number_of_orbiters = length(mob_poi.get_all_orbiters())
@@ -136,7 +130,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		serialized["ref"] = poi_ref
 		serialized["name"] = name
 
-		pois[poi_ref] = atom_poi
 		misc += list(serialized)
 
 /// Shows the UI to the specified user.
