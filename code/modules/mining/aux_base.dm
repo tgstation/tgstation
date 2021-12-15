@@ -24,7 +24,7 @@
 	/// If we give warnings before base is launched
 	var/launch_warning = TRUE
 	/// List of connected turrets
-	var/list/turrets = list()
+	var/list/turrets
 	/// List of all possible destinations
 	var/possible_destinations
 	/// ID of the currently selected destination of the attached base
@@ -39,6 +39,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 /obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
+
+/obj/machinery/computer/auxiliary_base/Destroy() // Shouldn't be destroyable... but just in case
+	LAZYCLEARLIST(turrets)
+	return ..()
 
 /obj/machinery/computer/auxiliary_base/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -171,7 +175,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			destination = target_destination
 			return TRUE
 		if("turrets_power")
-			for(var/obj/machinery/porta_turret/aux_base/base_turret in turrets)
+			for(var/obj/machinery/porta_turret/aux_base/base_turret as anything in turrets)
 				base_turret.toggle_on()
 			return TRUE
 		if("single_turret_power")
@@ -237,6 +241,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	to_chat(user, span_notice("Landing zone set."))
 	return ZONE_SET
 
+/*
+ * Add [new_turret] to our list of turrets, and handle the case in which they're pre-emptively deleted.
+ */
+/obj/machinery/computer/auxiliary_base/proc/add_turret(obj/machinery/porta_turret/aux_base/new_turret)
+	LAZYADD(turrets, new_turret)
+	RegisterSignal(new_turret, COMSIG_PARENT_QDELETING, .proc/remove_turret)
+
+/*
+ * Signal proc for [COMSIG_PARENT_QDELETING], set on turrets the aux base creates.
+ *
+ * Remove [new_turret] from our list of turrets in the event they're deleted.
+ */
+/obj/machinery/computer/auxiliary_base/proc/remove_turret(datum/source, force)
+	SIGNAL_HANDLER
+
+	LAZYREMOVE(turrets, source)
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
