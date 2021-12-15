@@ -64,7 +64,7 @@
 				return
 			input_response.set_output(player_input)
 		if(COMP_INPUT_NUMBER)
-			var/player_input = tgui_input_number(player, "Input a value", "Input value", min_value = null)
+			var/player_input = tgui_input_number(player, "Input a value", "Input value")
 			if(!player_input)
 				return
 			input_response.set_output(player_input)
