@@ -6,25 +6,25 @@
 
 /obj/item/organ/alien/Initialize(mapload)
 	. = ..()
-	for(var/A in alien_powers)
-		if(!ispath(A))
+	for(var/alien_power in alien_powers)
+		if(!ispath(alien_power))
 			continue
-		alien_powers -= A
-		alien_powers += new A(src)
+		alien_powers -= alien_power
+		alien_powers += new alien_power(src)
 
 /obj/item/organ/alien/Destroy()
 	QDEL_LIST(alien_powers)
 	return ..()
 
-/obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Insert(mob/living/carbon/user, special = FALSE)
 	..()
-	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.AddAbility(P)
+	for(var/obj/effect/proc_holder/alien/alien_power in alien_powers)
+		user.AddAbility(alien_power)
 
 
-/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
-	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.RemoveAbility(P)
+/obj/item/organ/alien/Remove(mob/living/carbon/user, special = FALSE)
+	for(var/obj/effect/proc_holder/alien/alien_power in alien_powers)
+		user.RemoveAbility(alien_power)
 	..()
 
 
@@ -34,23 +34,26 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_XENO_PLASMAVESSEL
-	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
+	alien_powers = list(
+		/obj/effect/proc_holder/alien/plant,
+		/obj/effect/proc_holder/alien/transfer,
+	)
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/plasma = 10)
 
-	/// The current amount of stored plasma.
-	var/storedPlasma = 100
-	/// The maximum plasma this organ can store.
+	///The current amount of stored plasma.
+	var/stored_plasma = 100
+	///The maximum plasma this organ can store.
 	var/max_plasma = 250
-	/// The rate this organ regenerates its owners health at per damage type per second.
+	///The rate this organ regenerates its owners health at per damage type per second.
 	var/heal_rate = 2.5
-	/// The rate this organ regenerates plasma at per second.
+	///The rate this organ regenerates plasma at per second.
 	var/plasma_rate = 5
 
 /obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
 	icon_state = "plasma_large"
 	w_class = WEIGHT_CLASS_BULKY
-	storedPlasma = 200
+	stored_plasma = 200
 	max_plasma = 500
 	plasma_rate = 7.5
 
@@ -61,7 +64,7 @@
 	name = "small plasma vessel"
 	icon_state = "plasma_small"
 	w_class = WEIGHT_CLASS_SMALL
-	storedPlasma = 100
+	stored_plasma = 100
 	max_plasma = 150
 	plasma_rate = 2.5
 
@@ -89,16 +92,16 @@
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
-/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/user, special = FALSE)
 	..()
-	if(isalien(M))
-		var/mob/living/carbon/human/species/alien/A = M
-		A.updatePlasmaDisplay()
+	if(isalien(user))
+		var/mob/living/carbon/human/species/alien/alien_user = user
+		alien_user.updatePlasmaDisplay()
 
-/obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
-	if(isalien(M))
-		var/mob/living/carbon/human/species/alien/A = M
-		A.updatePlasmaDisplay()
+/obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/user, special = FALSE)
+	if(isalien(user))
+		var/mob/living/carbon/human/species/alien/alien_user = user
+		alien_user.updatePlasmaDisplay()
 	..()
 
 #define QUEEN_DEATH_DEBUFF_DURATION 4 MINUTES
@@ -114,19 +117,19 @@
 	///Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/user, special = FALSE)
 	..()
-	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	user.faction |= ROLE_ALIEN
+	ADD_TRAIT(user, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
-	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+/obj/item/organ/alien/hivenode/Remove(mob/living/carbon/user, special = FALSE)
+	user.faction -= ROLE_ALIEN
+	REMOVE_TRAIT(user, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
 /obj/item/organ/alien/hivenode/proc/queen_death()
-	if(!owner|| owner.stat == DEAD)
+	if(!owner || owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
 		to_chat(owner, span_userdanger("Your Queen has been struck down!"))

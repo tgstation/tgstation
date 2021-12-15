@@ -396,7 +396,7 @@
 	. = ..()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(vessel)
-		. += "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]"
+		. += "Plasma Stored: [vessel.stored_plasma]/[vessel.max_plasma]"
 	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
 	if(darkheart)
 		. += "Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM]."

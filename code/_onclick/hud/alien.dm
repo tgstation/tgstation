@@ -1,15 +1,6 @@
 /atom/movable/screen/alien
 	icon = 'icons/hud/screen_alien.dmi'
 
-/atom/movable/screen/alien/leap
-	name = "toggle leap"
-	icon_state = "leap_off"
-
-/atom/movable/screen/alien/leap/Click()
-	if(isalienhunter(usr))
-		var/mob/living/carbon/human/species/alien/humanoid/hunter/AH = usr
-		AH.toggle_leap()
-
 /atom/movable/screen/alien/plasma_display
 	name = "plasma stored"
 	icon_state = "power_display"
@@ -28,12 +19,6 @@
 
 /datum/hud/human/alien/New(mob/living/carbon/human/species/alien/humanoid/owner)
 	..()
-
-	if(isalienhunter(mymob))
-		var/mob/living/carbon/human/species/alien/humanoid/hunter/H = mymob
-		H.leap_icon = new /atom/movable/screen/alien/leap()
-		H.leap_icon.screen_loc = ui_alien_storage_r
-		static_inventory += H.leap_icon
 
 	//remove old ones
 

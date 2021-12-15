@@ -14,8 +14,6 @@
 
 	else if((stat == UNCONSCIOUS && !asleep) || stat == HARD_CRIT || stat == SOFT_CRIT || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
-	else if(leap_on_click)
-		icon_state = "alien[caste]_pounce"
 
 	else if(body_position == LYING_DOWN)
 		icon_state = "alien[caste]_sleep"
@@ -48,7 +46,7 @@
 
 /mob/living/carbon/human/species/alien/humanoid/regenerate_icons()
 	if(!..())
-	// update_icons() //Handled in update_transform(), leaving this here as a reminder
+//		update_icons() //Handled in update_transform(), leaving this here as a reminder
 		update_transform()
 
 /mob/living/carbon/human/species/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.

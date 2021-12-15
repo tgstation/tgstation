@@ -306,15 +306,15 @@ Doesn't work on other aliens/AI.*/
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
 		return 0
-	return vessel.storedPlasma
+	return vessel.stored_plasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
-	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
-	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
+	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/X in abilities)
 		var/obj/effect/proc_holder/alien/APH = X
 		if(APH.has_action)

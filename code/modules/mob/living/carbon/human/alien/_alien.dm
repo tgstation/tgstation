@@ -16,7 +16,7 @@
 
 
 /**
- * ALL of these should be removed eventually...
+ * These should eventually get removed
  */
 
 /mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
@@ -28,6 +28,8 @@
 /mob/living/carbon/human/species/alien/update_body_parts()//we don't use the bodyparts layer for aliens.
 	return
 
+
+
 /mob/living/carbon/human/species/alien/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
 		new /obj/effect/gibspawner/xeno(drop_location(), src)
@@ -37,29 +39,44 @@
 /mob/living/carbon/human/species/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/human/species/alien/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
-	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the environment and natural stabilization
-	. = ..()
+/mob/living/carbon/human/species/alien/check_breath(datum/gas_mixture/breath)
+	if(status_flags & GODMODE)
+		return
 
-	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		//Body temperature is too hot.
-		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
-		switch(bodytemperature)
-			if(360 to 400)
-				apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
-			if(400 to 460)
-				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
-			if(460 to INFINITY)
-				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
-				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
+	if(!breath || (breath.total_moles() == 0))
+		//Aliens breathe in vaccuum
+		return FALSE
+
+	if(health <= HEALTH_THRESHOLD_CRIT)
+		adjustOxyLoss(2)
+
+	var/plasma_used = 0
+	var/plas_detect_threshold = 0.02
+	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/list/breath_gases = breath.gases
+
+	breath.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+
+	//Partial pressure of the plasma in our breath
+	var/Plasma_pp = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+
+	if(Plasma_pp > plas_detect_threshold) // Detect plasma in air
+		adjustPlasma(breath_gases[/datum/gas/plasma][MOLES]*250)
+		throw_alert("alien_plas", /atom/movable/screen/alert/alien_plas)
+
+		plasma_used = breath_gases[/datum/gas/plasma][MOLES]
+
 	else
-		clear_alert("alien_fire")
+		clear_alert("alien_plas")
 
-/mob/living/carbon/human/species/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
-	return FALSE
+	//Breathe in plasma and out oxygen
+	breath_gases[/datum/gas/plasma][MOLES] -= plasma_used
+	breath_gases[/datum/gas/oxygen][MOLES] += plasma_used
+
+	breath.garbage_collect()
+
+	//BREATH TEMPERATURE
+	handle_breath_temperature(breath)
 
 /mob/living/carbon/human/species/alien/getTrail()
 	if(getBruteLoss() < 200)
@@ -133,3 +150,11 @@ Des: Removes all infected images from the alien.
 	maxHealth = 125
 	health = 125
 	icon_state = "aliend"
+
+/mob/living/carbon/human/species/alien/humanoid/hunter
+	name = "alien hunter"
+	race = /datum/species/alien/hunter
+	caste = "h"
+	maxHealth = 125
+	health = 125
+	icon_state = "alienh"

@@ -27,6 +27,7 @@
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_TOXIMMUNE,
 		TRAIT_STUNRESISTANCE,
+		TRAIT_NOBREATH,
 	)
 	inherent_traits = list(
 		TRAIT_CAN_STRIP,
@@ -56,6 +57,20 @@
 		ITEM_SLOT_LPOCKET,
 		ITEM_SLOT_RPOCKET,
 	)
+	bodypart_overides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/alien,\
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/alien,\
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/alien,\
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/alien,\
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/alien,\
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/alien,\
+	)
+	mutantbrain = /obj/item/organ/brain/alien
+	mutanttongue = /obj/item/organ/tongue/alien
+	mutanteyes = /obj/item/organ/eyes/night_vision/alien
+	mutantears = /obj/item/organ/ears
+	mutantliver = /obj/item/organ/liver/alien
+
 	sexes = FALSE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	liked_food = NONE
@@ -69,20 +84,6 @@
 	punchdamagelow = 20
 	punchdamagehigh = 20
 	species_language_holder = /datum/language_holder/alien
-	bodypart_overides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/alien,\
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/alien,\
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/alien,\
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/alien,\
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/alien,\
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/alien,\
-	)
-
-	mutantbrain = /obj/item/organ/brain/alien
-	mutanttongue = /obj/item/organ/tongue/alien
-	mutanteyes = /obj/item/organ/eyes/night_vision/alien
-	mutantears = /obj/item/organ/ears
-	mutantliver = /obj/item/organ/liver/alien
 
 
 /datum/species/alien/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
@@ -93,8 +94,29 @@
 	C.remove_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
 	return ..()
 
-/datum/species/alien/get_scream_sound(mob/living/carbon/human/alien)
-	return 'sound/voice/hiss5.ogg'
+/datum/species/alien/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
+	return FALSE
+
+/datum/species/alien/handle_environment(mob/living/carbon/human/alien, datum/gas_mixture/environment, delta_time, times_fired)
+	// Run base mob body temperature proc before taking damage
+	// this balances body temp to the environment and natural stabilization
+	. = ..()
+
+	if(alien.bodytemperature <= BODYTEMP_HEAT_DAMAGE_LIMIT)
+		alien.clear_alert("alien_fire")
+		return
+	//Body temperature is too hot.
+	alien.throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
+	switch(alien.bodytemperature)
+		if(360 to 400)
+			apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
+		if(400 to 460)
+			apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
+		if(460 to INFINITY)
+			if(alien.on_fire)
+				apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
+			else
+				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 
 /datum/species/alien/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_shields(user, 0, "the [user.name]"))
@@ -127,6 +149,9 @@
 		return FALSE
 	. = ..()
 
+/datum/species/alien/get_scream_sound(mob/living/carbon/human/alien)
+	return 'sound/voice/hiss5.ogg'
+
 /**
  * ALIEN SUBTYPES
  *
@@ -154,8 +179,30 @@
 	return ..()
 
 
+#define XENO_TACKLING_RANGE 7
+#define XENO_TACKLING_SPEED 2
+#define XENO_TACKLING_SKILL 5
 
 /datum/species/alien/hunter
+	mutant_organs = list(
+		/obj/item/organ/alien/hivenode,
+		/obj/item/organ/alien/plasmavessel/small,
+	)
+	///The stored tackling datum, to delete.
+	var/datum/component/tackler
+
+/datum/species/alien/hunter/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	tackler = C.AddComponent(/datum/component/tackler, range = XENO_TACKLING_RANGE, speed = XENO_TACKLING_SPEED, skill_mod = XENO_TACKLING_SKILL)
+
+/datum/species/alien/hunter/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	QDEL_NULL(tackler)
+	return ..()
+
+#undef XENO_TACKLING_RANGE
+#undef XENO_TACKLING_SPEED
+#undef XENO_TACKLING_SKILL
+
 /datum/species/alien/sentinel
 /datum/species/alien
 /datum/species/alien
