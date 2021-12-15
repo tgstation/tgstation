@@ -4,7 +4,7 @@ GLOBAL_DATUM(colored_assistant, /datum/colored_assistant)
 Assistant
 */
 /datum/job/assistant
-	title = "Assistant"
+	title = JOB_ASSISTANT
 	description = "Get your space legs, assist people, ask the HoP to give you a job."
 	faction = FACTION_STATION
 	total_positions = 5
