@@ -360,20 +360,24 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/sleep_delta = 1
 	var/list/subsystems_to_check
 
+	var/last_ending_tick_usage = 0
+
 	//setup the stack overflow detector
 	stack_end_detector = new()
 	var/datum/stack_canary/canary = stack_end_detector.prime_canary()
 	canary.use_variable()
 	//the actual loop.
 	while (1)
-		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = TICK_USAGE
+		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 
 		average_starting_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_starting_tick_usage, starting_tick_usage)
 
 		if (processing <= 0)
 			current_ticklimit = TICK_LIMIT_RUNNING
 			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max(DS2TICKS(10) - 1, 0))
+			last_ending_tick_usage = TICK_USAGE
+
 			sleep(10)
 			continue
 
@@ -384,6 +388,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			sleep_delta *= 2
 			current_ticklimit = TICK_LIMIT_RUNNING * 0.5
 			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max((processing * sleep_delta) - 1, 0))
+			last_ending_tick_usage = TICK_USAGE
+
 			sleep(world.tick_lag * (processing * sleep_delta))
 			continue
 
@@ -434,6 +440,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			error_level++
 			current_ticklimit = TICK_LIMIT_RUNNING
 			average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max(DS2TICKS(10) - 1, 0))
+			last_ending_tick_usage = TICK_USAGE
 			sleep(10)
 			continue
 
@@ -447,6 +454,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				error_level++
 				current_ticklimit = TICK_LIMIT_RUNNING
 				average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max(DS2TICKS(10) - 1, 0))
+				last_ending_tick_usage = TICK_USAGE
 				sleep(10)
 				continue
 		error_level--
@@ -466,20 +474,25 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if (processing * sleep_delta <= world.tick_lag)
 			current_ticklimit -= (TICK_LIMIT_RUNNING * 0.25) //reserve the tail 1/4 of the next tick for the mc if we plan on running next tick
 
-		//setup code to track when the last sleep ends
-		var/slept_worldtime = world.time
-		var/slept_tickusage = TICK_USAGE
-		//from testing, sleeping for 0 will sleep to the end of the current tick, but not always.
-		spawn(0) //do not convert to add timer
-			if (world.time == slept_worldtime && TICK_USAGE >= slept_tickusage) //make sure we woke up during the same tick
-				average_sleeping_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_tick_usage, TICK_USAGE - slept_tickusage)
-				average_sleeping_overtime_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_overtime_usage, max(0, TICK_USAGE - 100))
-
 		average_ticks_skipped = MC_AVG_FAST_UP_SLOW_DOWN(average_ticks_skipped, max((processing * sleep_delta) - 1, 0))
 
+		average_MC_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_MC_tick_usage, max(last_ending_tick_usage - starting_tick_usage, 0))
+
+		average_post_maptick_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_post_maptick_tick_usage, max(last_post_maptick_tick_usage - (last_ending_tick_usage + MAPTICK_LAST_INTERNAL_TICK_USAGE), 0))
+		last_post_maptick_tick_usage = 0 //any client procs/verbs that execute later in this tick updates this number
+
+		//setup code to track when the last sleep ends
+		var/slept_worldtime = world.time
+		last_ending_tick_usage = TICK_USAGE
+
+		//attempt to measure the tick usage from sleeping procs resuming after the MC went to sleep but before maptick processes
+		//from testing, sleeping for 0 will sleep to the end of the current tick, but not always.
+		spawn(0) //do not convert to add timer
+			if (world.time == slept_worldtime && TICK_USAGE >= last_ending_tick_usage) //make sure we woke up during the same tick
+				average_sleeping_tick_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_tick_usage, TICK_USAGE - last_ending_tick_usage)
+				average_sleeping_overtime_usage = MC_AVG_FAST_UP_SLOW_DOWN(average_sleeping_overtime_usage, max(0, TICK_USAGE - 100))
+
 		sleep(world.tick_lag * (processing * sleep_delta))
-
-
 
 
 /// This is what decides if something should run.

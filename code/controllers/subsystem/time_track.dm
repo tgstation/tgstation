@@ -63,6 +63,7 @@ SUBSYSTEM_DEF(time_track)
 			"avg_sleeping_usage",
 			"avg_sleeping_overtime",
 			"master_avg_ticks_skipped",
+			"avg_post_maptick_tick_usage",
 			"stoplag_threads",
 			"num_timers",
 			"air_turf_cost",
@@ -89,7 +90,7 @@ SUBSYSTEM_DEF(time_track)
 
 	var/current_realtime = REALTIMEOFDAY
 	var/current_byondtime = world.time
-	var/current_tickcount = world.time/world.tick_lag
+	var/current_tickcount = world.time / world.tick_lag
 
 	if (!first_run)
 		var/tick_drift = max(0, (((current_realtime - last_tick_realtime) - (current_byondtime - last_tick_byond_time)) / world.tick_lag))
@@ -137,6 +138,7 @@ SUBSYSTEM_DEF(time_track)
 			Master.average_sleeping_tick_usage,
 			Master.average_sleeping_overtime_usage,
 			Master.average_ticks_skipped,
+			Master.average_post_maptick_tick_usage,
 			Master.stoplag_threads,
 			length(SStimer.timer_id_dict),
 			SSair.cost_turfs,

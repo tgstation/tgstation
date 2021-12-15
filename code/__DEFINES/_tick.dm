@@ -27,4 +27,7 @@
 /// Returns true if tick usage is above 95, for high priority usage
 #define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 95 )
 /// runs stoplag if tick_usage is above 95, for high priority usage
-#define CHECK_TICK_HIGH_PRIORITY ( TICK_CHECK_HIGH_PRIORITY? stoplag() : 0 )
+#define CHECK_TICK_HIGH_PRIORITY ( TICK_CHECK_HIGH_PRIORITY ? stoplag() : 0 )
+
+/// Added to the ends of hot client procs/verbs that execute after maptick so master can estimate their cost
+#define POST_MAPTICK_MAX_TICK_USAGE Master.last_post_maptick_tick_usage = TICK_USAGE;

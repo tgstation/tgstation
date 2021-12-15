@@ -2091,6 +2091,8 @@
 		else
 			usr.hud_used.screentip_text.maptext = MAPTEXT("<span style='text-align: center'><span style='font-size: 32px'><span style='color:[usr.hud_used.screentip_color]: 32px'>[name]</span>")
 
+	POST_MAPTICK_MAX_TICK_USAGE
+
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)
 	RETURN_TYPE(/datum/merger)

@@ -43,6 +43,8 @@
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
+	POST_MAPTICK_MAX_TICK_USAGE
+
 /atom/DblClick(location,control,params)
 	if(flags_1 & INITIALIZED_1)
 		usr.DblClickOn(src,params)

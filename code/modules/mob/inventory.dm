@@ -434,6 +434,8 @@
 			return
 		I.forceMove(drop_location())
 
+	POST_MAPTICK_MAX_TICK_USAGE
+
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
 	return ITEM_SLOT_BACK

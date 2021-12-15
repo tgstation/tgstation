@@ -477,6 +477,8 @@
 	to_chat(src, "<span class='infoplain'>[result.Join("\n")]</span>")
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, examinify)
 
+	POST_MAPTICK_MAX_TICK_USAGE
+
 
 /mob/proc/blind_examine_check(atom/examined_thing)
 	return TRUE //The non-living will always succeed at this check.

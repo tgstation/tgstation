@@ -77,6 +77,8 @@
 	mob.focus?.key_down(_key, src)
 	mob.update_mouse_pointer()
 
+	POST_MAPTICK_MAX_TICK_USAGE
+
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
@@ -106,4 +108,6 @@
 	holder?.key_up(_key, src)
 	mob.focus?.key_up(_key, src)
 	mob.update_mouse_pointer()
+
+	POST_MAPTICK_MAX_TICK_USAGE
 

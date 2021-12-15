@@ -10,6 +10,8 @@
 	if(message)
 		say(message)
 
+	POST_MAPTICK_MAX_TICK_USAGE
+
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
@@ -18,6 +20,8 @@
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 	whisper(message)
+
+	POST_MAPTICK_MAX_TICK_USAGE
 
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
@@ -35,6 +39,8 @@
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message,TRUE)
+
+	POST_MAPTICK_MAX_TICK_USAGE
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
@@ -90,6 +96,8 @@
 	if(client?.holder?.fakekey)
 		displayed_key = null
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = displayed_key)
+
+	POST_MAPTICK_MAX_TICK_USAGE
 
 ///Check if this message is an emote
 /mob/proc/check_emote(message, forced)
