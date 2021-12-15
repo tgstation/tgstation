@@ -251,7 +251,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 /*
  * Signal proc for [COMSIG_PARENT_QDELETING], set on turrets the aux base creates.
  *
- * Remove [new_turret] from our list of turrets in the event they're deleted.
+ * Remove [source] from our list of turrets, in the event they're deleted.
  */
 /obj/machinery/computer/auxiliary_base/proc/remove_turret(datum/source, force)
 	SIGNAL_HANDLER
