@@ -1,78 +1,62 @@
-/mob/living/carbon/human/species/alien/royal
-	//Common stuffs for Praetorian and Queen
-	icon = 'icons/mob/alienqueen.dmi'
-	status_flags = 0
-	pixel_x = -16
-	base_pixel_x = -16
-	bubble_icon = "alienroyal"
-	mob_size = MOB_SIZE_LARGE
-	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
-	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+/**
+ * DRONE EVOLUTION ABILITY
+ */
+/obj/effect/proc_holder/alien/evolve
+	name = "Evolve to Praetorian"
+	desc = "Praetorian"
+	plasma_cost = 500
 
-	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
+	action_icon_state = "alien_evolve_drone"
 
-/mob/living/carbon/human/species/alien/royal/Initialize(mapload)
-	. = ..()
-	// as a wise man once wrote: "pull over that ass too fat"
-	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/mob/living/carbon/human/species/alien/royal/can_inject(mob/user, target_zone, injection_flags)
-	return FALSE
-
-/mob/living/carbon/human/species/alien/royal/queen
-	name = "alien queen"
-	caste = "q"
-	maxHealth = 400
-	health = 400
-	icon_state = "alienq"
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
-
-/mob/living/carbon/human/species/alien/royal/queen/Initialize(mapload)
-	//there should only be one queen
-	for(var/mob/living/carbon/human/species/alien/royal/queen/Q in GLOB.carbon_list)
-		if(Q == src)
-			continue
-		if(Q.stat == DEAD)
-			continue
-		if(Q.client)
-			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
-			break
-
-	real_name = src.name
-
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
-	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
-	smallsprite.Grant(src)
-	return ..()
-
-/mob/living/carbon/human/species/alien/royal/queen/create_internal_organs()
-	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
-	internal_organs += new /obj/item/organ/alien/resinspinner
-	internal_organs += new /obj/item/organ/alien/acid
-	internal_organs += new /obj/item/organ/alien/neurotoxin
-	internal_organs += new /obj/item/organ/alien/eggsac
-	..()
-
-//Queen verbs
-/obj/effect/proc_holder/alien/lay_egg
-	name = "Lay Egg"
-	desc = "Lay an egg to produce huggers to impregnate prey with."
-	plasma_cost = 75
-	check_turf = TRUE
-	action_icon_state = "alien_egg"
-
-/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
-	if(!check_vent_block(user))
+/obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/human/species/alien/user)
+	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
+	if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
+		to_chat(user, span_danger("Without the hivemind, you can't possibly hold the responsibility of leadership!"))
+		return FALSE
+	if(node.recent_queen_death)
+		to_chat(user, span_danger("Your thoughts are still too scattered to take up the position of leadership."))
 		return FALSE
 
-	if(locate(/obj/structure/alien/egg) in get_turf(user))
-		to_chat(user, span_alertalien("There's already an egg here."))
+	if(!isturf(user.loc))
+		to_chat(user, span_warning("You can't evolve here!"))
+		return FALSE
+	if(!get_alien_type(/mob/living/carbon/human/species/alien/royal))
+		var/mob/living/carbon/human/species/alien/royal/praetorian/new_xeno = new (user.loc)
+		user.alien_evolve(new_xeno)
+		return TRUE
+	else
+		to_chat(user, span_warning("We already have a living royal!"))
 		return FALSE
 
-	user.visible_message(span_alertalien("[user] lays an egg!"))
-	new /obj/structure/alien/egg(user.loc)
-	return TRUE
+/**
+ * PRAETORIAN EVOLUTION ABILITY
+ */
+/obj/effect/proc_holder/alien/royal/praetorian/evolve
+	name = "Evolve"
+	desc = "Produce an internal egg sac capable of spawning children. Only one queen can exist at a time."
+	plasma_cost = 500
+
+	action_icon_state = "alien_evolve_praetorian"
+
+/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/human/species/alien/user)
+	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
+	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
+		to_chat(user, span_warning("Without the hivemind, you would be unfit to rule as queen!"))
+		return FALSE
+	if(node.recent_queen_death)
+		to_chat(user, span_warning("You are still too burdened with guilt to evolve into a queen."))
+		return FALSE
+	if(!get_alien_type(/mob/living/carbon/human/species/alien/royal/queen))
+		var/mob/living/carbon/human/species/alien/royal/queen/new_xeno = new (user.loc)
+		user.alien_evolve(new_xeno)
+		return TRUE
+	else
+		to_chat(user, span_warning("We already have an alive queen!"))
+		return FALSE
+
+/**
+ * QUEEN PROMOTION ABILITY
+ */
 
 //Button to let queen choose her praetorian.
 /obj/effect/proc_holder/alien/royal/queen/promote

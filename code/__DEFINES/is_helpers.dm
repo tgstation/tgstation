@@ -78,9 +78,9 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 //more carbon mobs
 
-#define isalien(A) (istype(A, /mob/living/carbon/human/species/alien))
-
 #define islarva(A) (istype(A, /mob/living/simple_animal/hostile/alien_larva))
+
+#define isalien(A) (istype(A, /mob/living/carbon/human/species/alien))
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/human/species/alien) || istype(A, /mob/living/simple_animal/hostile/alien))
 

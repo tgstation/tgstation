@@ -240,5 +240,71 @@
 	return ..()
 
 
-/datum/species/alien
-/datum/species/alien
+/datum/species/alien/praetorian
+	knife_butcher_results = list(
+		/obj/item/food/meat/slab/xeno = 20,
+		/obj/item/stack/sheet/animalhide/xeno = 3,
+	)
+	inherent_traits = list(
+		TRAIT_CAN_STRIP,
+		TRAIT_PRIMITIVE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RADIMMUNE,
+		TRAIT_GENELESS,
+		TRAIT_NOHUNGER,
+		TRAIT_NEVER_WOUNDED,
+		TRAIT_PIERCEIMMUNE,
+	)
+	mutant_organs = list(
+		/obj/item/organ/alien/plasmavessel/large,
+		/obj/item/organ/alien/resinspinner,
+		/obj/item/organ/alien/acid,
+		/obj/item/organ/alien/neurotoxin,
+	)
+
+/datum/species/alien/praetorian/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve)
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno)
+
+/datum/species/alien/praetorian/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	C.RemoveSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno)
+	C.RemoveAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve)
+	return ..()
+
+/datum/species/alien/praetorian/queen
+	mutant_organs = list(
+		/obj/item/organ/alien/plasmavessel/large/queen,
+		/obj/item/organ/alien/resinspinner,
+		/obj/item/organ/alien/acid,
+		/obj/item/organ/alien/neurotoxin,
+		/obj/item/organ/alien/eggsac,
+	)
+	///Small sprite given to the user to see properly around themselves.
+	var/datum/action/small_sprite/smallsprite = new /datum/action/small_sprite/queen()
+
+/datum/species/alien/praetorian/queen/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	//We don't want to evolve anymore.
+	C.RemoveAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve)
+
+	C.AddAbility(new /obj/effect/proc_holder/alien/royal/queen/promote)
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno)
+	smallsprite.Grant(C)
+
+/datum/species/alien/praetorian/queen/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	smallsprite.Remove(C)
+	C.RemoveSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno)
+	C.RemoveAbility(new /obj/effect/proc_holder/alien/royal/queen/promote)
+	return ..()
+
+/datum/species/alien/praetorian/queen/death(gibbed, mob/living/carbon/human/H)
+	for(var/mob/living/carbon/all_carbons in GLOB.alive_mob_list)
+		if(all_carbons == H)
+			continue
+		var/obj/item/organ/alien/hivenode/node = all_carbons.getorgan(/obj/item/organ/alien/hivenode)
+		if(!istype(node))
+			continue
+		node.queen_death()
+
+	. = ..()

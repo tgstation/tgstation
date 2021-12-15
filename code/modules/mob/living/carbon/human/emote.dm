@@ -217,5 +217,5 @@
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/human/alien/hiss/get_sound(mob/living/user)
-	if(isalienadult(user))
+	if(isalien(user))
 		return "hiss"

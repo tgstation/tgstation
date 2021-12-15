@@ -322,3 +322,26 @@
 		adjustPlasma(-amount)
 		return TRUE
 	return FALSE
+
+/**
+ * LAY EGG POWER
+ */
+
+/obj/effect/proc_holder/alien/lay_egg
+	name = "Lay Egg"
+	desc = "Lay an egg to produce huggers to impregnate prey with."
+	plasma_cost = 75
+	check_turf = TRUE
+	action_icon_state = "alien_egg"
+
+/obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
+	if(!check_vent_block(user))
+		return FALSE
+
+	if(locate(/obj/structure/alien/egg) in get_turf(user))
+		to_chat(user, span_alertalien("There's already an egg here."))
+		return FALSE
+
+	user.visible_message(span_alertalien("[user] lays an egg!"))
+	new /obj/structure/alien/egg(user.loc)
+	return TRUE
