@@ -41,8 +41,6 @@
 
 	/// Last world.time the subsystem completed a run (as in wasn't paused by [MC_TICK_CHECK])
 	var/last_fire = 0
-	/// Last world tick that the subsystem was ignited.
-	var/last_ignite_tick = 0
 
 	/// Scheduled world.time for next fire()
 	var/next_fire = 0
@@ -67,7 +65,7 @@
 	var/paused_ticks = 0
 
 	/// Tracks how much of a tick the subsystem has consumed in the current run
-	var/paused_tick_usage
+	var/paused_tick_usage = 0
 
 	/// Tracks how many fires the subsystem takes to complete a run on average.
 	var/ticks = 1
@@ -105,24 +103,30 @@
 /datum/controller/subsystem/proc/PreInit()
 	return
 
-//This is used so the mc knows when the subsystem sleeps. do not override.
+///Wrapper for fire(), used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	set waitfor = FALSE
 	. = SS_SLEEPING
 	fire(resumed)
 	. = state
+
 	if (state == SS_SLEEPING)
 		state = SS_IDLE
+
 	if (state == SS_PAUSING)
 		var/QT = queued_time
 		enqueue()
 		state = SS_PAUSED
 		queued_time = QT
 
-//previously, this would have been named 'process()' but that name is used everywhere for different things!
-//fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
-//Sleeping in here prevents future fires until returned.
+//previously, this would have been named 'process()' but that name is used everywhere for different things! fire() seems more suitable.
+/**
+ * called by master whenever its this subsystems turn to process: which is wait deciseconds or wait ticks depending on if we're SS_TICKER.
+ * sleeping in here prevents future fires until returned.
+ *
+ * resumed - if TRUE this subsystem is resuming a run that it couldnt complete due to running out of time. if FALSE this subsystem is starting a new run.
+ */
 /datum/controller/subsystem/proc/fire(resumed = FALSE)
 	flags |= SS_NO_FIRE
 	CRASH("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
@@ -137,6 +141,7 @@
 
 
 /** Update next_fire for the next run.
+ *
  *  reset_time (bool) - Ignore things that would normally alter the next fire, like tick_overrun, and last_fire. (also resets postpone)
  */
 /datum/controller/subsystem/proc/update_nextfire(reset_time = FALSE)
@@ -220,16 +225,18 @@
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
 
-
+/// take this subsystem out of the linked list master iterates to fire subsystems
 /datum/controller/subsystem/proc/dequeue()
 	if (queue_next)
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
 		queue_prev.queue_next = queue_next
+
 	if (Master && (src == Master.queue_tail))
 		Master.queue_tail = queue_prev
 	if (Master && (src == Master.queue_head))
 		Master.queue_head = queue_next
+
 	queued_time = 0
 	if (state == SS_QUEUED)
 		state = SS_IDLE

@@ -33,28 +33,18 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	/// world.time of last fire, for tracking lag outside of the mc
 	var/last_run
 
-	/// List of subsystems to process().
+	/// List of subsystems to fire().
 	var/list/subsystems
 
 	// Vars for keeping track of tick drift.
 	var/init_timeofday
 	var/init_time
-	///smoothed running average of how much the game has fallen behind the time it should be at, in number of ticks.
-	///every time a tick is delayed from the time it was supposed to start (50 milliseconds after it started), this is increased.
+	///running average of how much the game has fallen behind the time it should be at, in number of ticks.
+	///every time a tick is delayed from the time it was supposed to start (world.tick_lag deciseconds after the start of the last one), this is increased.
 	var/tickdrift = 0
-	///running average of how much each tick is already used when the MC is resumed to run by byond.
-	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume before the MC
-	var/average_starting_tick_usage = 0
 
-	///running average of how much time was spent resuming other sleeping procs after the mc went back to sleep
-	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
-	var/average_sleeping_tick_usage = 0
-
-	///running average of how much overtime (in percents of a tick) was spent was spent resuming other sleeping procs after the mc went back to sleep
-	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
-	var/average_sleeping_overtime_usage = 0
-
-	/// How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics)
+	/// How long is the MC sleeping between runs, read only (set by Loop() based off of anti-tick-contention heuristics).
+	/// also is used by stoplag() to determine how long to go back to sleep if resumed and the server is still overloaded.
 	var/sleep_delta = 1
 
 	///running average of how many ticks the MC skipped processing on.
@@ -72,10 +62,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	/// The type of the last subsystem to be fire()'d.
 	var/last_type_processed
 
-	///Start of queue linked list
+	///Start of the linked list that master uses to fire() subsystems every MC iteration
 	var/datum/controller/subsystem/queue_head
 	///End of queue linked list (used for appending to the list)
 	var/datum/controller/subsystem/queue_tail
+
 	///Running total of all queued subsystem priorities so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count = 0
 	///running total of queued subsystem priority but for background subsystems
@@ -103,6 +94,28 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	///number of stoplag() processes are sleeping, used for stat tracking
 	var/stoplag_threads = 0
+
+	///running average of how much each tick is already used when the MC is resumed to run by byond.
+	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume before the MC
+	var/average_starting_tick_usage = 0
+
+	///running average of tick usage Master last used when it ended
+	var/average_MC_tick_usage = 0
+
+	///running average of how much time was spent resuming other sleeping procs after the mc went back to sleep.
+	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
+	var/average_sleeping_tick_usage = 0
+
+	///running average of how much overtime (in percents of a tick) was spent was spent resuming other sleeping procs after the mc went back to sleep.
+	///this exists because sleeping procs are scheduled to resume by byond which we cant control, so procs that sleep can resume after the MC
+	var/average_sleeping_overtime_usage = 0
+
+	///verbs and procs called from client commands usually execute after SendMaps has executed which means they can delay the end of the tick.
+	///the last of these important verbs/procs to execute sets this var to the current tick_usage when it stops, thus telling master how much that delayed the tick.
+	var/last_post_maptick_tick_usage = 0
+
+	///running average of how much of the tick post maptick client procs and verbs cost
+	var/average_post_maptick_tick_usage = 0
 
 /datum/controller/master/New()
 	if(!config)
@@ -523,8 +536,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		subsystem.enqueue()
 	. = TRUE
 
-
-/// Run through the queue of subsystems to run, running them while balancing out their allocated tick precentage
+/// Run through the queue of subsystems to run, running them while balancing out their allocated tick precentage.
+/// After each iteration the only subsystems left in the queue are ones currently paused, if the MC has time left it will go through them again.
 /datum/controller/master/proc/RunQueue()
 	. = FALSE//if we runtime for any reason then Master can compensate for it
 
@@ -593,16 +606,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			var/subsystem_state_after_fire = queue_node.ignite(queue_node_paused)
 			tick_usage = TICK_USAGE - tick_usage
 
-			var/ticks_since_last_ignite = DS2TICKS(world.time) - queue_node.last_ignite_tick
-
-			queue_node.average_percentage_of_tick = MC_AVERAGE_SLOW(queue_node.average_percentage_of_tick, ticks_since_last_ignite > 0 ? (tick_usage / ticks_since_last_ignite) : queue_node.average_percentage_of_tick)
-
-			queue_node.last_ignite_tick = DS2TICKS(world.time)
-
 			if (subsystem_state_after_fire == SS_RUNNING)
 				subsystem_state_after_fire = SS_IDLE
-			current_tick_budget -= queue_node_priority
 
+			current_tick_budget -= queue_node_priority
 
 			if (tick_usage < 0)
 				tick_usage = 0
@@ -616,11 +623,15 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				continue
 
 			queue_node.ticks = MC_AVERAGE(queue_node.ticks, queue_node.paused_ticks)
-			tick_usage += queue_node.paused_tick_usage
+
+			tick_usage += queue_node.paused_tick_usage //time this last fire took + time all previous fires took
 
 			queue_node.tick_usage = MC_AVERAGE_FAST(queue_node.tick_usage, tick_usage)
 
 			queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_DELTA_TO_MS(tick_usage))
+
+			queue_node.average_percentage_of_tick = MC_AVERAGE_FAST(queue_node.average_percentage_of_tick, tick_usage / (DS2TICKS(world.time - queue_node.last_fire) + queue_node.paused_ticks + 1))
+
 			queue_node.paused_ticks = 0
 			queue_node.paused_tick_usage = 0
 
