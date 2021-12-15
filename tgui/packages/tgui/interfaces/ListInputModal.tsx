@@ -74,12 +74,11 @@ export const ListInputModal = (_, context) => {
     });
     if (foundItem) {
       setSelected(foundItem);
-      document!.getElementById(selected!)?.focus();
+      document!.getElementById(foundItem)?.focus();
     }
   };
   // User types into search bar
   const onSearch = (query: string) => {
-    setSelected(filteredItems[0]);
     setSearchQuery(query);
   };
   // User presses the search button
