@@ -702,11 +702,20 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 
 /datum/controller/master/stat_entry(msg)
-	msg = "(Ticks Per MC Iteration:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(Master.current_ticklimit, 0.1)]) (Avg Starting Tick Usage: [round(Master.average_starting_tick_usage, 0.1)]) \
-	(Avg Sleeping Tick Usage: [round(Master.average_sleeping_tick_usage, 0.1)]) (Avg Sleeping Overtime: [round(Master.average_sleeping_overtime_usage, 0.1)]) \
-	(stoplag Threads: [stoplag_threads]) (Average Ticks Skipped [round(average_ticks_skipped, 0.1)])"
+	msg = "(Ticks Per MC Iteration:[Master.processing]) (Iteration:[Master.iteration]) (Max Tick Limit: [round(Master.current_ticklimit, 0.1)])\
+	 (Sleeping Overtime: [round(Master.average_sleeping_overtime_usage, 0.1)]) \
+	(stoplag Threads: [stoplag_threads]) (Ticks Skipped [round(average_ticks_skipped, 0.1)])"
 	return msg
 
+///returns stats on how recent ticks have been divvied up between the MC, pre MC sleeping procs, post MC sleeping procs, maptick, and post maptick client verbs and procs
+/datum/controller/master/proc/return_tick_divisions()
+	var/message = "(Pre MC: [round(Master.average_starting_tick_usage, 0.1)]%)"//accurate
+	message += " (MC: [round(Master.average_MC_tick_usage, 0.1)]%)"//accurate
+	message += " (Post MC: [round(Master.average_sleeping_tick_usage, 0.1)]%)"//probably accurate
+	message += " (Maptick: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"//accurate
+	message += " (Post Maptick: [round(Master.average_post_maptick_tick_usage, 0.1)]%)"//not very accurate since we need to use an average to derive this and not all verbs covered
+
+	return message
 
 /datum/controller/master/StartLoadingMap()
 	//disallow more than one map to load at once, multithreading it will just cause race conditions
