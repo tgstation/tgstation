@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = START_PROCESSING_MANUALLY
 	subsystem_type = /datum/controller/subsystem/processing/conveyors
-	/// The current operating status. CONVEYOR_OFF (0) if off, CONVEYOR_FORWARD (1) if running forward, CONVEYOR_BACKWARDS (-1) if backwards.
+	/// The current state of the switch.
 	var/operating = CONVEYOR_OFF
 	/// This is the default (forward) direction, set by the map dir.
 	var/forwards
@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/id = ""
 	/// Inverts the direction the conveyor belt moves when true.
 	var/inverted = FALSE
-	/// Is the conveyor's belt flipped? Useful mostly for conveyor belt corners. DIFFERENT FROM INVERTED FOR CORNERS!
+	/// Is the conveyor's belt flipped? Useful mostly for conveyor belt corners. It makes the belt point in the other direction, rather than just going in reverse.
 	var/flipped = FALSE
 	/// Are we currently conveying items?
 	var/conveying = FALSE
@@ -54,8 +54,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(mapload && !(ISDIAGONALDIR(dir)))
 		log_mapping("[src] at [AREACOORD(src)] spawned without using a diagonal dir. Please replace with a normal version.")
 
-// Auto conveyour is always on unless unpowered
 
+// Auto conveyor is always on unless unpowered.
 /obj/machinery/conveyor/auto
 	processing_flags = START_PROCESSING_ON_INIT
 
@@ -69,7 +69,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		operating = TRUE
 		update_appearance()
 
-// create a conveyor
 /obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	. = ..()
 	if(new_dir)
@@ -133,7 +132,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	// We need to do this this way to ensure good functionality on corner belts.
 	// Basically, this allows the conveyor belts that used a flipped belt sprite to
 	// still convey items in the direction of their arrows. It's different from inverted,
-	// so they need to be ran separately.
+	// which makes them go backwards so they need to be ran separately, so a flipped conveyor
+	// can also be reversed.
 	if(flipped)
 		var/temp = forwards
 		forwards = backwards
@@ -149,8 +149,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	return ..()
 
 /**
- * Proc to update the conveyor depending on if it's without power (there used to be more
- * checks, but they were broken and thus removed).
+ * Proc to update the conveyor depending on if it's got power or not.
  *
  * Returns TRUE if it is still able to be operating after the update, FALSE if not.
  */
@@ -174,8 +173,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	use_power(6)
 
 	// Get the first 30 items in contents.
-	var/turf/locturf = loc
-	var/list/items = locturf.contents - src
+	var/turf/loc_turf = loc
+	var/list/items = loc_turf.contents - src
 	if(!LAZYLEN(items)) // Don't do anything at all if theres nothing there but the conveyor.
 		return
 
@@ -193,10 +192,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
  * Proc to handle moving items along the conveyor belt.
  */
 /obj/machinery/conveyor/proc/convey(list/affecting)
-	for(var/am in affecting)
-		if(!ismovable(am)) // This is like a third faster than for(var/atom/movable in affecting)
+	for(var/thing in affecting)
+		if(!ismovable(thing)) // This is like a third faster than for(var/atom/movable in affecting)
 			continue
-		var/atom/movable/movable_thing = am
+		var/atom/movable/movable_thing = thing
 		// Give this a chance to yield if the server is busy
 		stoplag()
 
@@ -216,7 +215,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	conveying = FALSE
 
-// attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_notice("[user] struggles to pry up [src] with [attacking_item]."), \
@@ -278,9 +276,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	base_icon_state = "switch"
 	processing_flags = START_PROCESSING_MANUALLY
 
-	/// The current direction of the switch. CONVEYOR_OFF (0) if off, CONVEYOR_FORWARD (1) if tilted forward, CONVEYOR_BACKWARDS (-1) if tilted backwards..
+	/// The current state of the switch.
 	var/position = CONVEYOR_OFF
-	/// Last direction setting
+	/// Last direction setting.
 	var/last_pos = CONVEYOR_BACKWARDS
 	/// If the switch only operates the conveyor belts in a single direction.
 	var/oneway = FALSE
@@ -319,9 +317,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // update the icon depending on the position
 /obj/machinery/conveyor_switch/update_icon_state()
 	icon_state = "[base_icon_state]-off"
-	if(position < 0)
+	if(position < CONVEYOR_OFF)
 		icon_state = "[base_icon_state]-[invert_icon ? "fwd" : "rev"]"
-	else if(position > 0)
+	else if(position > CONVEYOR_OFF)
 		icon_state = "[base_icon_state]-[invert_icon ? "rev" : "fwd"]"
 	return ..()
 
