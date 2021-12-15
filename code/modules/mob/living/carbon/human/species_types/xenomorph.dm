@@ -10,7 +10,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	meat = /obj/item/food/meat/slab/xeno
 	allowed_animal_origin = ALIEN_BODY
-//	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
+	knife_butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	species_traits = list(
 		HAS_FLESH,
 		HAS_BONE,
@@ -56,7 +56,7 @@
 	liked_food = NONE
 	disliked_food = NONE
 	limbs_id = "alien"
-//	damage_overlay_type = "monkey"
+	damage_overlay_type = "" //Todo: add sprites
 	sexes = FALSE
 	heatmod = 0.5 // minor heat insulation
 	punchdamagelow = 20
@@ -70,7 +70,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/alien,\
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/alien,\
 	)
-//	fire_overlay = "Monkey_burning"
+	fire_overlay = "Generic_mob_burning"
 	dust_anim = "dust-a"
 	gib_anim = "gibbed-a"
 
@@ -132,6 +132,7 @@
 	if(!human_target.dismembering_strike(user, user.zone_selected)) //Dismemberment successful
 		return TRUE
 	target.apply_damage(damage, BRUTE, affecting, armor_block)
+	return TRUE
 
 /datum/species/alien/spec_life(mob/living/carbon/human/species/alien/alien_current, delta_time, times_fired)
 	alien_current.findQueen()
