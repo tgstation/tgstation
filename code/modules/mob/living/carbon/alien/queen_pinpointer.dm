@@ -45,7 +45,7 @@
 	if(!owner.mind)
 		return
 	var/mob/queen = get_alien_type(/mob/living/carbon/human/species/alien/humanoid/royal/queen)
-	if(!queen || queen = owner)
+	if(!queen || queen == owner)
 		return
 	scan_target = queen
 
