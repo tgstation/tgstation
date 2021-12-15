@@ -32,7 +32,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/blobpwrdisplay
 
 	var/atom/movable/screen/alien_plasma_display
-	var/atom/movable/screen/alien_queen_finder
 
 	var/atom/movable/screen/combo/combo_display
 
@@ -139,7 +138,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null
-	alien_queen_finder = null
 	combo_display = null
 
 	QDEL_LIST_ASSOC_VAL(plane_masters)

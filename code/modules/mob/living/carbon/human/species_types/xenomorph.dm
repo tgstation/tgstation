@@ -26,7 +26,7 @@
 		NOAUGMENTS,
 		TRAIT_VIRUSIMMUNE,
 		TRAIT_TOXIMMUNE,
-		TRAIT_STUNRESISTANCE,
+		TRAIT_STUNIMMUNE,
 		TRAIT_NOBREATH,
 	)
 	inherent_traits = list(
@@ -75,10 +75,13 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	liked_food = NONE
 	disliked_food = NONE
+	gib_type = /obj/effect/gibspawner/xeno
+	gib_type_bodypartless = /obj/effect/gibspawner/xeno/bodypartless
 	deathsound = 'sound/voice/hiss6.ogg'
 	limbs_id = "alien"
 	damage_overlay_type = "" //Todo: add sprites
 	fire_overlay = "Generic_mob_burning"
+	dust_icon_state = /obj/effect/decal/remains/xeno
 	dust_anim = "dust-a"
 	gib_anim = "gibbed-a"
 	armor = 20
@@ -119,6 +122,9 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_3 * delta_time, BURN)
 			else
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
+
+/datum/species/alien/spec_can_hold_items(obj/item/held_item)
+	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /datum/species/alien/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -172,6 +178,8 @@
 		to_chat(user, span_warning("You attempt to touch [target]!"))
 		return FALSE
 	. = ..()
+
+/datum/species/alien/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 
 /datum/species/alien/get_scream_sound(mob/living/carbon/human/alien)
 	return 'sound/voice/hiss5.ogg'

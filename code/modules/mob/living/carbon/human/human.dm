@@ -99,6 +99,9 @@
 			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
 			. += "Absorbed DNA: [changeling.absorbedcount]"
 
+/mob/living/carbon/human/can_hold_items(obj/item/I)
+	return dna.species.spec_can_hold_items(I) && ..()
+
 // called when something steps onto a human
 /mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

@@ -13,8 +13,9 @@
 	icon_state = "queen_finder"
 
 /mob/living/carbon/human/species/alien/proc/updatePlasmaDisplay()
-	if(hud_used) //clientless aliens
-		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(getPlasma())]</font></div>")
+	if(!hud_used) //clientless aliens
+		return
+	hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(getPlasma())]</font></div>")
 
 /datum/hud/human/alien
 	ui_style = 'icons/hud/screen_alien.dmi'
@@ -27,7 +28,7 @@
 	qdel(healths)
 	qdel(healthdoll)
 
-	//begin indicators
+	//add new ones
 
 	healths = new /atom/movable/screen/healths/alien()
 	healths.hud = src

@@ -31,6 +31,11 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
  * These should eventually get removed
  */
 
+/mob/living/carbon/human/species/alien/mind_initialize()
+	..()
+	if(!mind.has_antag_datum(/datum/antagonist/xeno))
+		mind.add_antag_datum(/datum/antagonist/xeno)
+
 /mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
 	return
 
@@ -96,15 +101,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
-
-/mob/living/carbon/human/species/alien/spawn_gibs(with_bodyparts)
-	if(with_bodyparts)
-		new /obj/effect/gibspawner/xeno(drop_location(), src)
-	else
-		new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), src)
-
-/mob/living/carbon/human/species/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
-	return -10
 
 /mob/living/carbon/human/species/alien/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
@@ -213,9 +209,6 @@ Des: Removes all infected images from the alien.
 		var/searchfor = "infected"
 		if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 			qdel(I)
-
-/mob/living/carbon/human/species/alien/can_hold_items(obj/item/I)
-	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /mob/living/carbon/human/species/alien/proc/alien_evolve(mob/living/carbon/human/species/alien/new_xeno)
 	to_chat(src, span_noticealien("You begin to evolve!"))

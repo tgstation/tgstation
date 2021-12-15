@@ -39,6 +39,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/exotic_blood = ""
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
+	///What kind of gibs do we get when this mob is... gibbed?
+	var/gib_type = /obj/effect/gibspawner/human
+	///Same as above, but for bodypartless
+	var/gib_type_bodypartless = /obj/effect/gibspawner/human/bodypartless
 	///What the species drops when gibbed by a gibber machine.
 	var/meat = /obj/item/food/meat/slab/human
 	///What skin the species drops when gibbed by a gibber machine.
@@ -167,6 +171,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///What gas does this species breathe? Used by suffocation screen alerts, most of actual gas breathing is handled by mutantlungs. See [life.dm][code/modules/mob/living/carbon/human/life.dm]
 	var/breathid = "o2"
 
+	///icon state for the dusted remains
+	var/dust_icon_state = /obj/effect/decal/remains/human
 	///What anim to use for dusting
 	var/dust_anim = "dust-h"
 	///What anim to use for gibbing
@@ -1045,6 +1051,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
+
+/datum/species/proc/spec_can_hold_items(obj/item/held_item)
+	return ..()
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)

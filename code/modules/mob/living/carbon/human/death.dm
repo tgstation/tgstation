@@ -7,15 +7,15 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
-		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
+		new dna.species.gib_type(drop_location(), src, get_static_viruses())
 	else
-		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
+		new dna.species.gib_type_bodypartless(drop_location(), src, get_static_viruses())
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
 	if(just_ash)
 		new /obj/effect/decal/cleanable/ash(loc)
 	else
-		new /obj/effect/decal/remains/human(loc)
+		new dna.species.dust_icon_state(loc)
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
