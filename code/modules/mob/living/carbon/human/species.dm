@@ -1053,7 +1053,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /datum/species/proc/spec_can_hold_items(obj/item/held_item)
-	return ..()
+	return TRUE
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
