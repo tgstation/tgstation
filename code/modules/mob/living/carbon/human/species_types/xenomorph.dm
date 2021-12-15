@@ -120,7 +120,7 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 
 /datum/species/alien/spec_death(gibbed, mob/living/carbon/human/H)
-	if(stat == DEAD)
+	if(H.stat == DEAD)
 		return
 	. = ..()
 
@@ -157,14 +157,14 @@
 		to_chat(user, span_warning("You attempt to touch [target]!"))
 		return FALSE
 	if(isalien(target))
-		set_resting(FALSE)
-		AdjustStun(-60)
-		AdjustKnockdown(-60)
-		AdjustImmobilized(-60)
-		AdjustParalyzed(-60)
-		AdjustUnconscious(-60)
-		AdjustSleeping(-100)
-		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
+		target.set_resting(FALSE)
+		target.AdjustStun(-60)
+		target.AdjustKnockdown(-60)
+		target.AdjustImmobilized(-60)
+		target.AdjustParalyzed(-60)
+		target.AdjustUnconscious(-60)
+		target.AdjustSleeping(-100)
+		user.visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
 		return TRUE
 	. = ..()
 
