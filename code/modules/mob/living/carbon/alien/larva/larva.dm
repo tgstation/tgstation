@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva
+/mob/living/carbon/human/species/alien/larva
 	name = "alien larva"
 	real_name = "alien larva"
 	icon_state = "larva0"
@@ -30,45 +30,45 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/larva/Initialize(mapload)
+/mob/living/carbon/human/species/alien/larva/Initialize(mapload)
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
 	. = ..()
 
-/mob/living/carbon/alien/larva/create_internal_organs()
+/mob/living/carbon/human/species/alien/larva/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small/tiny
 	..()
 
 //This needs to be fixed
-/mob/living/carbon/alien/larva/get_status_tab_items()
+/mob/living/carbon/human/species/alien/larva/get_status_tab_items()
 	. = ..()
 	. += "Progress: [amount_grown]/[max_grown]"
 
-/mob/living/carbon/alien/larva/Login()
+/mob/living/carbon/human/species/alien/larva/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 	to_chat(src, "<b>You are an alien larva. Hide from danger until you can evolve.<br>Use say :a to communicate with the hivemind.</b>")
 
-/mob/living/carbon/alien/larva/adjustPlasma(amount)
+/mob/living/carbon/human/species/alien/larva/adjustPlasma(amount)
 	if(stat != DEAD && amount > 0)
 		amount_grown = min(amount_grown + 1, max_grown)
 	..(amount)
 
 //can't equip anything
-/mob/living/carbon/alien/larva/attack_ui(slot_id, params)
+/mob/living/carbon/human/species/alien/larva/attack_ui(slot_id, params)
 	return
 
 
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field
 
-/mob/living/carbon/alien/larva/toggle_throw_mode()
+/mob/living/carbon/human/species/alien/larva/toggle_throw_mode()
 	return
 
-/mob/living/carbon/alien/larva/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
+/mob/living/carbon/human/species/alien/larva/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
-/mob/living/carbon/alien/larva/canBeHandcuffed()
+/mob/living/carbon/human/species/alien/larva/canBeHandcuffed()
 	return TRUE

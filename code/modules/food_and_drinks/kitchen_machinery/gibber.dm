@@ -172,11 +172,8 @@
 			typeofskin = gibee.dna.species.skinned_type
 
 	else if(iscarbon(occupant))
-		var/mob/living/carbon/C = occupant
-		typeofmeat = C.type_of_meat
-		gibtype = C.gib_type
-		if(isalien(C))
-			typeofskin = /obj/item/stack/sheet/animalhide/xeno
+		typeofmeat = /obj/item/food/meat/slab
+		gibtype = /obj/effect/decal/cleanable/blood/gibs
 
 	var/occupant_volume
 	if(occupant?.reagents)

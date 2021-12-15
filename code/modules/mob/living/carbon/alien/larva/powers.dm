@@ -5,7 +5,7 @@
 
 	action_icon_state = "alien_hide"
 
-/obj/effect/proc_holder/alien/hide/fire(mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/hide/fire(mob/living/carbon/human/species/alien/user)
 	if(user.stat != CONSCIOUS)
 		return
 
@@ -27,10 +27,10 @@
 
 	action_icon_state = "alien_evolve_larva"
 
-/obj/effect/proc_holder/alien/larva_evolve/fire(mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/larva_evolve/fire(mob/living/carbon/human/species/alien/user)
 	if(!islarva(user))
 		return
-	var/mob/living/carbon/alien/larva/L = user
+	var/mob/living/carbon/human/species/alien/larva/L = user
 
 	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
 		to_chat(user, span_warning("You cannot evolve when you are cuffed!"))
@@ -51,14 +51,14 @@
 		if(user.incapacitated()) //something happened to us while we were choosing.
 			return
 
-		var/mob/living/carbon/alien/humanoid/new_xeno
+		var/mob/living/carbon/human/species/alien/humanoid/new_xeno
 		switch(alien_caste)
 			if("Hunter")
-				new_xeno = new /mob/living/carbon/alien/humanoid/hunter(L.loc)
+				new_xeno = new /mob/living/carbon/human/species/alien/humanoid/hunter(L.loc)
 			if("Sentinel")
-				new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(L.loc)
+				new_xeno = new /mob/living/carbon/human/species/alien/humanoid/sentinel(L.loc)
 			if("Drone")
-				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
+				new_xeno = new /mob/living/carbon/human/species/alien/humanoid/drone(L.loc)
 
 		L.alien_evolve(new_xeno)
 		return

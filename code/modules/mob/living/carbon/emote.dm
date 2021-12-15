@@ -46,12 +46,12 @@
 	if(!iscarbon(user) || user.usable_hands < 2)
 		return FALSE
 	return ..()
-	
+
 /datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
 	hands_use_check = TRUE
-	
+
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!length(user.get_empty_held_indexes()))
@@ -67,7 +67,7 @@
 	message = "moans!"
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
-	
+
 /datum/emote/living/carbon/noogie
 	key = "noogie"
 	key_third_person = "noogies"
@@ -88,23 +88,23 @@
 	key = "roll"
 	key_third_person = "rolls"
 	message = "rolls."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	mob_type_allowed_typecache = list(/mob/living/carbon/human/species/alien)
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/scratch
 	key = "scratch"
 	key_third_person = "scratches"
 	message = "scratches."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	mob_type_allowed_typecache = list(/mob/living/carbon/human/species/alien)
 	hands_use_check = TRUE
 
 /datum/emote/living/carbon/sign
 	key = "sign"
 	key_third_person = "signs"
 	message_param = "signs the number %t."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	mob_type_allowed_typecache = list(/mob/living/carbon/human/species/alien)
 	hands_use_check = TRUE
-	
+
 /datum/emote/living/carbon/sign/select_param(mob/user, params)
 	. = ..()
 	if(!isnum(text2num(params)))
@@ -116,13 +116,13 @@
 	message_param = "raises %t fingers."
 	mob_type_allowed_typecache = list(/mob/living/carbon/human)
 	hands_use_check = TRUE
-	
+
 /datum/emote/living/carbon/slap
 	key = "slap"
 	key_third_person = "slaps"
 	hands_use_check = TRUE
 	cooldown = 3 SECONDS // to prevent endless table slamming
-	
+
 /datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!.)
@@ -137,7 +137,7 @@
 /datum/emote/living/carbon/tail
 	key = "tail"
 	message = "waves their tail."
-	mob_type_allowed_typecache = list(/mob/living/carbon/alien)
+	mob_type_allowed_typecache = list(/mob/living/carbon/human/species/alien)
 
 /datum/emote/living/carbon/wink
 	key = "wink"

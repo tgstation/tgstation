@@ -531,7 +531,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return TRUE
 
 /obj/item/attack_alien(mob/user, list/modifiers)
-	var/mob/living/carbon/alien/ayy = user
+	var/mob/living/carbon/human/species/alien/ayy = user
 
 	if(!user.can_hold_items(src))
 		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets

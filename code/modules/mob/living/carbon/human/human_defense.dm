@@ -266,60 +266,9 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
-	if(check_shields(user, 0, "the [user.name]"))
-		visible_message(span_danger("[user] attempts to touch [src]!"), \
-						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
-		to_chat(user, span_warning("You attempt to touch [src]!"))
-		return FALSE
-	. = ..()
-	if(!.)
-		return
-
-	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stun instead.
-		var/obj/item/I = get_active_held_item()
-		if(I && dropItemToGround(I))
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user] disarms [src]!"), \
-							span_userdanger("[user] disarms you!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You disarm [src]!"))
-		else
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-			Paralyze(100)
-			log_combat(user, src, "tackled")
-			visible_message(span_danger("[user] tackles [src] down!"), \
-							span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
-			to_chat(user, span_danger("You tackle [src] down!"))
-		return TRUE
-
-	if(user.combat_mode)
-		if (w_uniform)
-			w_uniform.add_fingerprint(user)
-		var/damage = prob(90) ? rand(user.melee_damage_lower, user.melee_damage_upper) : 0
-		if(!damage)
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
-			visible_message(span_danger("[user] lunges at [src]!"), \
-							span_userdanger("[user] lunges at you!"), span_hear("You hear a swoosh!"), null, user)
-			to_chat(user, span_danger("You lunge at [src]!"))
-			return FALSE
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
-		if(!affecting)
-			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, MELEE,"","",10)
-
-		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-		visible_message(span_danger("[user] slashes at [src]!"), \
-						span_userdanger("[user] slashes at you!"), span_hear("You hear a sickening sound of a slice!"), null, user)
-		to_chat(user, span_danger("You slash at [src]!"))
-		log_combat(user, src, "attacked")
-		if(!dismembering_strike(user, user.zone_selected)) //Dismemberment successful
-			return TRUE
-		apply_damage(damage, BRUTE, affecting, armor_block)
 
 
-
-
-/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/carbon/human/attack_larva(mob/living/carbon/human/species/alien/larva/L)
 	. = ..()
 	if(!.)
 		return //successful larva bite.

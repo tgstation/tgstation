@@ -1,11 +1,11 @@
 
-/mob/living/carbon/alien/get_eye_protection()
+/mob/living/carbon/human/species/alien/get_eye_protection()
 	return ..() + 2 //potential cyber implants + natural eye protection
 
-/mob/living/carbon/alien/get_ear_protection()
+/mob/living/carbon/human/species/alien/get_ear_protection()
 	return 2 //no ears
 
-/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+/mob/living/carbon/human/species/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 
@@ -13,7 +13,7 @@
 As such, they can either help or harm other aliens. Help works like the human help command while harm is a simple nibble.
 In all, this is a lot like the monkey code. /N
 */
-/mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+/mob/living/carbon/human/species/alien/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(user, "No attacking people at spawn, you jackass.")
 		return
@@ -43,11 +43,11 @@ In all, this is a lot like the monkey code. /N
 
 
 
-/mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/carbon/human/species/alien/attack_larva(mob/living/carbon/human/species/alien/larva/L)
 	return attack_alien(L)
 
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/human/user, list/modifiers)
+/mob/living/carbon/human/species/alien/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(.) //to allow surgery to return properly.
 		return FALSE
@@ -66,68 +66,14 @@ In all, this is a lot like the monkey code. /N
 		help_shake_act(user)
 
 
-/mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
+/mob/living/carbon/human/species/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..())
 		if (stat != DEAD)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
 			apply_damage(rand(1, 3), BRUTE, affecting)
 
-
-/mob/living/carbon/alien/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	. = ..()
-	if(.)
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		switch(user.melee_damage_type)
-			if(BRUTE)
-				adjustBruteLoss(damage)
-			if(BURN)
-				adjustFireLoss(damage)
-			if(TOX)
-				adjustToxLoss(damage)
-			if(OXY)
-				adjustOxyLoss(damage)
-			if(CLONE)
-				adjustCloneLoss(damage)
-			if(STAMINA)
-				adjustStaminaLoss(damage)
-
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		var/damage = rand(5, 35)
-		if(M.is_adult)
-			damage = rand(10, 40)
-		adjustBruteLoss(damage)
-		log_combat(M, src, "attacked")
-		updatehealth()
-
-/mob/living/carbon/alien/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
-		return FALSE
-
-	. = ..()
-	if(QDELETED(src))
-		return
-
-	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
-	switch (severity)
-		if (EXPLODE_DEVASTATE)
-			gib()
-			return
-
-		if (EXPLODE_HEAVY)
-			take_overall_damage(60, 60)
-			if(ears)
-				ears.adjustEarDamage(30,120)
-
-		if(EXPLODE_LIGHT)
-			take_overall_damage(30,0)
-			if(prob(50))
-				Unconscious(20)
-			if(ears)
-				ears.adjustEarDamage(15,60)
-
-/mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
+/mob/living/carbon/human/species/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	return 0
 
-/mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
+/mob/living/carbon/human/species/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.

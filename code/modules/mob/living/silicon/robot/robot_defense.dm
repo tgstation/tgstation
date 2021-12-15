@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(body_position == STANDING_UP)
 			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)

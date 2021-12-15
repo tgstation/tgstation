@@ -7,9 +7,10 @@
 /obj/item/organ/alien/Initialize(mapload)
 	. = ..()
 	for(var/A in alien_powers)
-		if(ispath(A))
-			alien_powers -= A
-			alien_powers += new A(src)
+		if(!ispath(A))
+			continue
+		alien_powers -= A
+		alien_powers += new A(src)
 
 /obj/item/organ/alien/Destroy()
 	QDEL_LIST(alien_powers)
@@ -91,16 +92,16 @@
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
+		var/mob/living/carbon/human/species/alien/A = M
 		A.updatePlasmaDisplay()
 
 /obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
-	..()
 	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
+		var/mob/living/carbon/human/species/alien/A = M
 		A.updatePlasmaDisplay()
+	..()
 
-#define QUEEN_DEATH_DEBUFF_DURATION 2400
+#define QUEEN_DEATH_DEBUFF_DURATION 4 MINUTES
 
 /obj/item/organ/alien/hivenode
 	name = "hive node"
@@ -108,9 +109,10 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_XENO_HIVENODE
 	w_class = WEIGHT_CLASS_TINY
+	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
+
 	///Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
-	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()

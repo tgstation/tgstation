@@ -1,56 +1,42 @@
-/mob/living/carbon/alien
+/mob/living/carbon/human/species/alien
 	name = "alien"
 	icon = 'icons/mob/alien.dmi'
+	race = /datum/species/alien
 	gender = FEMALE //All xenos are girls!!
-	dna = null
 	faction = list(ROLE_ALIEN)
 	sight = SEE_MOBS
-	see_in_dark = 4
-	verb_say = "hisses"
-	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
-	type_of_meat = /obj/item/food/meat/slab/xeno
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-
-	var/move_delay_add = 0 // movement delay to add
-
-	status_flags = CANUNCONSCIOUS|CANPUSH
-
-	heat_protection = 0.5 // minor heat insulation
-
-	var/leaping = FALSE
-	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
+	status_flags = (CANUNCONSCIOUS | CANPUSH)
 	unique_name = TRUE
 
+	///Xenomorph names, changed overtime through evolution
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
-/mob/living/carbon/alien/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
-	add_verb(src, /mob/living/proc/toggle_resting)
 
-	create_bodyparts() //initialize bodyparts
+/**
+ * should remove these eventually
+ */
 
-	create_internal_organs()
+/mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
+	return
 
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+/mob/living/carbon/human/species/alien/update_body() // we don't use the bodyparts or body layers for aliens.
+	return
 
-	. = ..()
+/mob/living/carbon/human/species/alien/update_body_parts()//we don't use the bodyparts layer for aliens.
+	return
 
-/mob/living/carbon/alien/create_internal_organs()
-	internal_organs += new /obj/item/organ/brain/alien
-	internal_organs += new /obj/item/organ/alien/hivenode
-	internal_organs += new /obj/item/organ/tongue/alien
-	internal_organs += new /obj/item/organ/eyes/night_vision/alien
-	internal_organs += new /obj/item/organ/liver/alien
-	internal_organs += new /obj/item/organ/ears
-	..()
+/mob/living/carbon/human/species/alien/spawn_gibs(with_bodyparts)
+	if(with_bodyparts)
+		new /obj/effect/gibspawner/xeno(drop_location(), src)
+	else
+		new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), src)
 
-/mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
+/mob/living/carbon/human/species/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
+/mob/living/carbon/human/species/alien/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
@@ -71,23 +57,22 @@
 	else
 		clear_alert("alien_fire")
 
-/mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
+/mob/living/carbon/human/species/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
 	return FALSE
 
-/mob/living/carbon/alien/get_status_tab_items()
-	. = ..()
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
-
-/mob/living/carbon/alien/getTrail()
+/mob/living/carbon/human/species/alien/getTrail()
 	if(getBruteLoss() < 200)
 		return pick (list("xltrails_1", "xltrails2"))
 	else
 		return pick (list("xttrails_1", "xttrails2"))
+
+
 /*----------------------------------------
 Proc: AddInfectionImages()
 Des: Gives the client of the alien an image on each infected mob.
+Todo: remove this
 ----------------------------------------*/
-/mob/living/carbon/alien/proc/AddInfectionImages()
+/mob/living/carbon/human/species/alien/proc/AddInfectionImages()
 	if (client)
 		for (var/i in GLOB.mob_living_list)
 			var/mob/living/L = i
@@ -103,7 +88,7 @@ Des: Gives the client of the alien an image on each infected mob.
 Proc: RemoveInfectionImages()
 Des: Removes all infected images from the alien.
 ----------------------------------------*/
-/mob/living/carbon/alien/proc/RemoveInfectionImages()
+/mob/living/carbon/human/species/alien/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
 			var/searchfor = "infected"
@@ -111,12 +96,7 @@ Des: Removes all infected images from the alien.
 				qdel(I)
 	return
 
-/mob/living/carbon/alien/canBeHandcuffed()
-	if(num_hands < 2)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
+/mob/living/carbon/human/species/alien/proc/alien_evolve(mob/living/carbon/human/species/alien/new_xeno)
 	to_chat(src, span_noticealien("You begin to evolve!"))
 	visible_message(span_alertalien("[src] begins to twist and contort!"))
 	new_xeno.setDir(dir)
@@ -131,13 +111,16 @@ Des: Removes all infected images from the alien.
 		mind.transfer_to(new_xeno)
 	qdel(src)
 
-/mob/living/carbon/alien/can_hold_items(obj/item/I)
+/mob/living/carbon/human/species/alien/can_hold_items(obj/item/I)
 	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
-/mob/living/carbon/alien/on_lying_down(new_lying_angle)
+/*
+
+/mob/living/carbon/human/species/alien/on_lying_down(new_lying_angle)
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/on_standing_up()
+/mob/living/carbon/human/species/alien/on_standing_up()
 	. = ..()
 	update_icons()
+*/

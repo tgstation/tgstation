@@ -64,7 +64,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
-/mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/simple_animal/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
@@ -82,7 +82,7 @@
 			log_combat(user, src, "attacked")
 		return 1
 
-/mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/simple_animal/attack_larva(mob/living/carbon/human/species/alien/larva/L)
 	. = ..()
 	if(. && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)

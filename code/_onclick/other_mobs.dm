@@ -146,18 +146,18 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/carbon/human/species/alien/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
 	attack_target.attack_alien(src, modifiers)
 
-/atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+/atom/proc/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
 	attack_paw(user, modifiers)
 	return
 
 
 // Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/carbon/human/species/alien/larva/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
 	attack_target.attack_larva(src)

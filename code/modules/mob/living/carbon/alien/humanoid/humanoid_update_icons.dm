@@ -1,5 +1,5 @@
 
-/mob/living/carbon/alien/humanoid/update_icons()
+/mob/living/carbon/human/species/alien/humanoid/update_icons()
 	cut_overlays()
 	for(var/I in overlays_standing)
 		add_overlay(I)
@@ -28,7 +28,7 @@
 		if(drooling)
 			add_overlay("alienspit")
 
-	if(leaping)
+	if(HAS_TRAIT_FROM(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT))
 		if(alt_icon == initial(alt_icon))
 			var/old_icon = icon
 			icon = alt_icon
@@ -46,16 +46,16 @@
 	update_inv_hands()
 	update_inv_handcuffed()
 
-/mob/living/carbon/alien/humanoid/regenerate_icons()
+/mob/living/carbon/human/species/alien/humanoid/regenerate_icons()
 	if(!..())
 	// update_icons() //Handled in update_transform(), leaving this here as a reminder
 		update_transform()
 
-/mob/living/carbon/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
+/mob/living/carbon/human/species/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/humanoid/update_inv_handcuffed()
+/mob/living/carbon/human/species/alien/humanoid/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)
 	var/cuff_icon = "aliencuff"
 	var/dmi_file = 'icons/mob/alien.dmi'
@@ -73,7 +73,7 @@
 		apply_overlay(HANDCUFF_LAYER)
 
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/alien/humanoid/royal/update_inv_hands()
+/mob/living/carbon/human/species/alien/humanoid/royal/update_inv_hands()
 	..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()

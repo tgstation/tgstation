@@ -174,7 +174,7 @@
 	if(machine_stat & NOPOWER)
 		open(TRUE)
 
-/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
 		add_fingerprint(user)
 		user.visible_message(span_warning("[user] begins prying open [src]."),\

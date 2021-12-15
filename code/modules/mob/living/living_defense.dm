@@ -303,7 +303,7 @@
 
 	return FALSE
 
-/mob/living/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/attack_larva(mob/living/carbon/human/species/alien/larva/L)
 	if(L.combat_mode)
 		if(HAS_TRAIT(L, TRAIT_PACIFISM))
 			to_chat(L, span_warning("You don't want to hurt anyone!"))
@@ -328,7 +328,7 @@
 		return FALSE
 	return FALSE
 
-/mob/living/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)

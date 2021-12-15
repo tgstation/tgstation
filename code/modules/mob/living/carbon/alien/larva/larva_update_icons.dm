@@ -1,9 +1,9 @@
 
-/mob/living/carbon/alien/larva/regenerate_icons()
+/mob/living/carbon/human/species/alien/larva/regenerate_icons()
 	cut_overlays()
 	update_icons()
 
-/mob/living/carbon/alien/larva/update_icons()
+/mob/living/carbon/human/species/alien/larva/update_icons()
 	var/state = 0
 	if(amount_grown > 80)
 		state = 2
@@ -21,13 +21,13 @@
 	else
 		icon_state = "larva[state]"
 
-/mob/living/carbon/alien/larva/perform_update_transform() //All this is handled in update_icons()
+/mob/living/carbon/human/species/alien/larva/perform_update_transform() //All this is handled in update_icons()
 	. = ..()
 	update_icons()
 
-/mob/living/carbon/alien/larva/update_inv_handcuffed()
+/mob/living/carbon/human/species/alien/larva/update_inv_handcuffed()
 	update_icons() //larva icon_state changes if cuffed/uncuffed.
 
 
-/mob/living/carbon/alien/larva/lying_angle_on_lying_down(new_lying_angle)
+/mob/living/carbon/human/species/alien/larva/lying_angle_on_lying_down(new_lying_angle)
 	return // Larvas don't rotate on lying down, they have their own custom icons.

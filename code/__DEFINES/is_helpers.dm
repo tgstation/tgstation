@@ -78,19 +78,19 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 //more carbon mobs
 
-#define isalien(A) (istype(A, /mob/living/carbon/alien))
+#define isalien(A) (istype(A, /mob/living/carbon/human/species/alien))
 
-#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
+#define islarva(A) (istype(A, /mob/living/carbon/human/species/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
+#define isalienadult(A) (istype(A, /mob/living/carbon/human/species/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
 
-#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+#define isalienhunter(A) (istype(A, /mob/living/carbon/human/species/alien/humanoid/hunter))
 
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/human/species/alien/humanoid/sentinel))
 
-#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
+#define isalienroyal(A) (istype(A, /mob/living/carbon/human/species/alien/humanoid/royal))
 
-#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
+#define isalienqueen(A) (istype(A, /mob/living/carbon/human/species/alien/humanoid/royal/queen))
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))

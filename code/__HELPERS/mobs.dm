@@ -440,7 +440,7 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/ishumanbasic(target)
 	if (!ishuman(target))
 		return FALSE
-	
+
 	var/mob/living/carbon/human/human_target = target
 	return human_target.dna?.species?.type == /datum/species/human
 
@@ -704,8 +704,6 @@ GLOBAL_LIST_EMPTY(species_list)
 	for(var/mob/living/carbon/human/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/living/brain/mob_to_sort in sortmob)
-		moblist += mob_to_sort
-	for(var/mob/living/carbon/alien/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/dead/observer/mob_to_sort in sortmob)
 		moblist += mob_to_sort

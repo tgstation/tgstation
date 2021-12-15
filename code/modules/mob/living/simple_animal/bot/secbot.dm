@@ -480,7 +480,7 @@
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
 	..()
 	if(!isalien(target))
 		target = user

@@ -99,7 +99,7 @@
 /obj/effect/gibspawner/xeno
 	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/up, /obj/effect/decal/cleanable/xenoblood/xgibs/down, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/xenoblood/xgibs/body, /obj/effect/decal/cleanable/xenoblood/xgibs/limb, /obj/effect/decal/cleanable/xenoblood/xgibs/core)
 	gibamounts = list(1, 1, 1, 1, 1, 1, 1)
-	gib_mob_type = /mob/living/carbon/alien
+	gib_mob_type = /mob/living/carbon/human/species/alien
 
 /obj/effect/gibspawner/xeno/Initialize(mapload)
 	if(!gibdirections.len)
@@ -122,7 +122,7 @@
 /obj/effect/gibspawner/larva
 	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body)
 	gibamounts = list(1, 1, 1, 1)
-	gib_mob_type = /mob/living/carbon/alien/larva
+	gib_mob_type = /mob/living/carbon/human/species/alien/larva
 
 /obj/effect/gibspawner/larva/Initialize(mapload)
 	if(!gibdirections.len)

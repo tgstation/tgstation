@@ -94,7 +94,7 @@
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)
-	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
+	var/mob/living/carbon/human/species/alien/larva/new_xeno = new(xeno_loc)
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	ADD_TRAIT(new_xeno, TRAIT_IMMOBILIZED, type) //so we don't move during the bursting animation
@@ -129,7 +129,7 @@ Proc: AddInfectionImages(C)
 Des: Adds the infection image to all aliens for this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
-	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
+	for(var/mob/living/carbon/human/species/alien/alien in GLOB.player_list)
 		var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
 		alien.client?.images += I
 
@@ -138,7 +138,7 @@ Proc: RemoveInfectionImage(C)
 Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
-	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
+	for(var/mob/living/carbon/human/species/alien/alien in GLOB.player_list)
 		for(var/image/I in alien.client?.images)
 			var/searchfor = "infected"
 			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))

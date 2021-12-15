@@ -65,10 +65,10 @@
 
 
 ///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
-#define HUMAN_BODY (1 << 0)
-#define MONKEY_BODY (1 << 1)
-#define ALIEN_BODY (1 << 2)
-#define LARVA_BODY (1 << 3)
+#define HUMAN_BODY (1<<0)
+#define MONKEY_BODY (1<<1)
+#define ALIEN_BODY (1<<2)
+#define LARVA_BODY (1<<3)
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines

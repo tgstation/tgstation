@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/hostile/zombie,
 	)),
 	"aliens" = typecacheof(list(
-		/mob/living/carbon/alien,
+		/mob/living/carbon/human/species/alien,
 		/mob/living/simple_animal/slime,
 	)),
 	"conspiracies" = typecacheof(list(

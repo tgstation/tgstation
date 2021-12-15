@@ -36,7 +36,7 @@
 	return finish_preview_icon(icon('icons/mob/alien.dmi', "alienh"))
 
 //XENO
-/mob/living/carbon/alien/mind_initialize()
+/mob/living/carbon/human/species/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
 		mind.add_antag_datum(/datum/antagonist/xeno)

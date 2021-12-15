@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/alien/larva/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/species/alien/larva/Life(delta_time = SSMOBS_DT, times_fired)
 	if (notransform)
 		return
 	if(!..() || IS_IN_STASIS(src) || (amount_grown >= max_grown))
@@ -10,7 +10,7 @@
 	update_icons()
 
 
-/mob/living/carbon/alien/larva/update_stat()
+/mob/living/carbon/human/species/alien/larva/update_stat()
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)

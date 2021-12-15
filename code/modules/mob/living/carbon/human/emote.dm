@@ -44,6 +44,11 @@
 	message = "mumbles!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/human/gnarl
+	key = "gnarl"
+	key_third_person = "gnarls"
+	message = "gnarls and shows its teeth..."
+
 /datum/emote/living/carbon/human/scream
 	key = "scream"
 	key_third_person = "screams"
@@ -70,6 +75,17 @@
 
 /datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
 	if(ismonkey(user))
+		return TRUE
+	return ..()
+
+/datum/emote/living/carbon/human/scream/screech/roar
+	key = "roar"
+	key_third_person = "roars"
+	message = "roars."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/scream/screech/roar/should_play_sound(mob/user, intentional)
+	if(isalien(user))
 		return TRUE
 	return ..()
 
@@ -164,11 +180,6 @@
 		return ..()
 	return FALSE
 
-/datum/emote/living/carbon/human/monkey/gnarl
-	key = "gnarl"
-	key_third_person = "gnarls"
-	message = "gnarls and shows its teeth..."
-
 /datum/emote/living/carbon/human/monkey/roll
 	key = "roll"
 	key_third_person = "rolls"
@@ -181,12 +192,6 @@
 	message = "scratches."
 	hands_use_check = TRUE
 
-/datum/emote/living/carbon/human/monkey/screech/roar
-	key = "roar"
-	key_third_person = "roars"
-	message = "roars."
-	emote_type = EMOTE_AUDIBLE
-
 /datum/emote/living/carbon/human/monkey/tail
 	key = "tail"
 	message = "waves their tail."
@@ -196,3 +201,21 @@
 	key_third_person = "signs"
 	message_param = "signs the number %t."
 	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/alien
+
+/datum/emote/living/carbon/human/alien/can_run_emote(mob/user, status_check = TRUE, intentional)
+	if(isalien(user))
+		return ..()
+	return FALSE
+
+/datum/emote/living/carbon/human/alien/hiss
+	key = "hiss"
+	key_third_person = "hisses"
+	message_alien = "hisses."
+	message_larva = "hisses softly."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien/hiss/get_sound(mob/living/user)
+	if(isalienadult(user))
+		return "hiss"

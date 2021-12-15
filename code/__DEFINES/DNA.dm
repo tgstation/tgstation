@@ -253,6 +253,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_FLY "fly"
 #define SPECIES_MONKEY "monkey"
+#define SPECIES_XENOMORPH "xenomorph"
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
 #define SPECIES_LUMINESCENT "lum"

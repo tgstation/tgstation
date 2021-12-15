@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/Login()
+/mob/living/carbon/human/species/alien/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE

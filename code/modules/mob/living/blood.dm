@@ -340,7 +340,7 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 
-/mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)
+/mob/living/carbon/human/species/alien/add_splatter_floor(turf/T, small_drip)
 	if(!T)
 		T = get_turf(src)
 	var/obj/effect/decal/cleanable/xenoblood/B = locate() in T.contents

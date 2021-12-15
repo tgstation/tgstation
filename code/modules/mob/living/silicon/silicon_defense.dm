@@ -5,7 +5,7 @@
 /mob/living/silicon/get_ear_protection()//no ears
 	return 2
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
 	if(..()) //if harm or disarm intent
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		if (prob(90))
@@ -45,7 +45,7 @@
 /mob/living/silicon/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
+/mob/living/silicon/attack_larva(mob/living/carbon/human/species/alien/larva/L)
 	if(!L.combat_mode)
 		visible_message(span_notice("[L.name] rubs its head against [src]."))
 

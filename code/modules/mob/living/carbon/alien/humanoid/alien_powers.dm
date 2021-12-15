@@ -119,7 +119,7 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_transfer"
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
-	var/list/mob/living/carbon/aliens_around = list()
+	var/list/mob/living/carbon/human/species/aliens_around = list()
 	for(var/mob/living/carbon/A in oview(user))
 		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
@@ -163,7 +163,7 @@ Doesn't work on other aliens/AI.*/
 	return FALSE
 
 
-/obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
+/obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/human/species/alien/user)
 	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
 	if(!O || user.incapacitated())
 		return FALSE
@@ -239,13 +239,13 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user,msg,forced)
 	..()
 	if(isalienadult(user))
-		var/mob/living/carbon/alien/humanoid/A = user
+		var/mob/living/carbon/human/species/alien/humanoid/A = user
 		A.drooling = 1
 		A.update_icons()
 
 /obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
 	if(isalienadult(ranged_ability_user))
-		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
+		var/mob/living/carbon/human/species/alien/humanoid/A = ranged_ability_user
 		A.drooling = 0
 		A.update_icons()
 	..()
@@ -289,7 +289,7 @@ Doesn't work on other aliens/AI.*/
 
 	action_icon_state = "alien_sneak"
 
-/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/human/species/alien/humanoid/user)
 	if(!active)
 		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
 		user.sneaking = 1
@@ -321,7 +321,7 @@ Doesn't work on other aliens/AI.*/
 			APH.action.UpdateButtonIcon()
 	return TRUE
 
-/mob/living/carbon/alien/adjustPlasma(amount)
+/mob/living/carbon/human/species/alien/adjustPlasma(amount)
 	. = ..()
 	updatePlasmaDisplay()
 
