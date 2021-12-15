@@ -337,7 +337,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/I = rand(1, turf_list.len)
 			var/turf/checked_turf = turf_list[I]
 			var/area/turf_area = get_area(checked_turf)
-			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY))
+			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
 				var/clear = TRUE
 				for(var/obj/checked_object in checked_turf)
 					if(checked_object.density)

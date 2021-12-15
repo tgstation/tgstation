@@ -30,16 +30,12 @@
 
 /datum/portrait_picker/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/simple/portraits/library),
-		get_asset_datum(/datum/asset/simple/portraits/library_secure),
-		get_asset_datum(/datum/asset/simple/portraits/library_private)
+		get_asset_datum(/datum/asset/simple/portraits)
 	)
 
 /datum/portrait_picker/ui_data(mob/user)
 	var/list/data = list()
-	data["library"] = SSpersistent_paintings.paintings["library"] ? SSpersistent_paintings.paintings["library"] : 0
-	data["library_secure"] = SSpersistent_paintings.paintings["library_secure"] ? SSpersistent_paintings.paintings["library_secure"] : 0
-	data["library_private"] = SSpersistent_paintings.paintings["library_private"] ? SSpersistent_paintings.paintings["library_private"] : 0 //i'm gonna regret this, won't i?
+	data["paintings"] = SSpersistent_paintings.painting_ui_data(filter = PAINTINGS_FILTER_AI_PORTRAIT)
 	return data
 
 /datum/portrait_picker/ui_act(action, params)
@@ -48,11 +44,13 @@
 		return
 	switch(action)
 		if("select")
-			var/list/tab2key = list(TAB_LIBRARY = "library", TAB_SECURE = "library_secure", TAB_PRIVATE = "library_private")
-			var/folder = tab2key[params["tab"]]
-			var/list/current_list = SSpersistent_paintings.paintings[folder]
-			var/list/chosen_portrait = current_list[params["selected"]]
-			var/png = "data/paintings/[folder]/[chosen_portrait["md5"]].png"
+			//var/list/tab2key = list(TAB_LIBRARY = "library", TAB_SECURE = "library_secure", TAB_PRIVATE = "library_private")
+			//var/folder = tab2key[params["tab"]]
+			//var/list/current_list = SSpersistent_paintings.paintings[folder]
+			var/datum/painting/chosen_portrait = locate(params["selected"]) in SSpersistent_paintings.paintings
+			if(!chosen_portrait)
+				return
+			var/png = "data/paintings/images/[chosen_portrait.md5].png"
 			var/icon/portrait_icon = new(png)
 			var/mob/living/ai = holder.mob
 			var/w = portrait_icon.Width()

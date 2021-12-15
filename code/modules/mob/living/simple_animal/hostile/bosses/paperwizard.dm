@@ -154,7 +154,10 @@
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	. = ..()
-	qdel(src) //I see through your ruse!
+	if(isobserver(user))
+		. += span_notice("It's an illusion - what is it hiding?")
+	else
+		qdel(src) //I see through your ruse!
 
 //fancy effects
 /obj/effect/temp_visual/paper_scatter

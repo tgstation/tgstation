@@ -151,7 +151,7 @@
 		return FALSE
 	return TRUE
 
-/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user,list/atoms,loc)
+/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user, list/atoms,loc)
 
 	var/list/compiled_list = list()
 
@@ -164,7 +164,7 @@
 		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
-	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sort_list(compiled_list, /proc/cmp_mob_realname_dsc)
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse","Your target", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
 	if(!chosen_mob)
 		return FALSE
 	curse(compiled_list[chosen_mob])
@@ -260,7 +260,9 @@
 		if(heart.target && heart.target.stat == DEAD)
 			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
 			var/mob/living/carbon/human/current_target = heart.target
-			current_target.gib()
+			current_target.spill_organs()
+			current_target.adjustBruteLoss(250)
+			new /obj/effect/gibspawner/generic(get_turf(current_target))
 			heart.target = null
 			var/datum/antagonist/heretic/heretic_datum = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 

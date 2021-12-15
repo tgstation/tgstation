@@ -24,47 +24,56 @@
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
-
-	var/ram = 100 // Used as currency to purchase different abilities
+	/// Used as currency to purchase different abilities
+	var/ram = 100
+	/// Installed software on the pAI
 	var/list/software = list()
-	var/userDNA // The DNA string of our assigned user
-	var/obj/item/paicard/card // The card we inhabit
-	var/hacking = FALSE //Are we hacking a door?
+	/// current user's DNA
+	var/userDNA
+	/// The card we inhabit
+	var/obj/item/paicard/card
+	/// Are we hacking a door?
+	var/hacking = FALSE
+	/// The progress for hacking
+	var/datum/progressbar/hackbar
+	/// Changes the display to syndi if true
+	var/emagged = FALSE
 
 	var/speakStatement = "states"
 	var/speakExclamation = "declares"
 	var/speakDoubleExclamation = "alarms"
 	var/speakQuery = "queries"
-
-	var/obj/item/pai_cable/hacking_cable // The cable we produce when hacking a door
-
-	var/master // Name of the one who commands us
-	var/master_dna // DNA string for owner verification
+	/// The cable we produce when hacking a door
+	var/obj/item/pai_cable/hacking_cable
+	/// Name of the one who commands us
+	var/master
+	/// DNA string for owner verification
+	var/master_dna
 
 // Various software-specific vars
 
-	var/temp // General error reporting text contained here will typically be shown once and cleared
-	var/screen // Which screen our main window displays
-	var/subscreen // Which specific function of the main screen is being displayed
+	/// Toggles whether the Security HUD is active or not
+	var/secHUD = FALSE
+	/// Toggles whether the Medical  HUD is active or not
+	var/medHUD = FALSE
+	/// Toggles whether universal translator has been activated. Cannot be reversed
+	var/languages_granted = FALSE
+	/// The airlock being hacked
+	var/obj/machinery/door/hackdoor
+	/// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/hackprogress = 0
 
-	var/secHUD = 0 // Toggles whether the Security HUD is active or not
-	var/medHUD = 0 // Toggles whether the Medical  HUD is active or not
-
-	var/datum/data/record/medicalActive1 // Datacore record declarations for record software
-	var/datum/data/record/medicalActive2
-
-	var/datum/data/record/securityActive1 // Could probably just combine all these into one
-	var/datum/data/record/securityActive2
-
-	var/obj/machinery/door/hackdoor // The airlock being hacked
-	var/hackprogress = 0 // Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
-
-	var/obj/item/assembly/signaler/internal/signaler // AI's signaler
-
+	// Software
+	/// Atmospheric analyzer
+	var/obj/item/analyzer/atmos_analyzer
+	/// AI's signaler
+	var/obj/item/assembly/signaler/internal/signaler
+	/// Synthesizer
 	var/obj/item/instrument/piano_synth/internal_instrument
-	var/obj/machinery/newscaster //pAI Newscaster
-	var/obj/item/healthanalyzer/hostscan //pAI healthanalyzer
-
+	/// pAI Newscaster
+	var/obj/machinery/newscaster
+	/// pAI healthanalyzer
+	var/obj/item/healthanalyzer/hostscan
 	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
 	var/obj/item/gps/pai/internal_gps = null
 
@@ -97,6 +106,8 @@
 		hacking_cable = null
 		if(!QDELETED(card))
 			card.update_appearance()
+	if(A == atmos_analyzer)
+		atmos_analyzer = null
 	if(A == internal_instrument)
 		internal_instrument = null
 	if(A == newscaster)
@@ -110,6 +121,7 @@
 	return ..()
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(internal_instrument)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(newscaster)
@@ -136,6 +148,7 @@
 	forceMove(P)
 	card = P
 	job = "Personal AI"
+	atmos_analyzer = new /obj/item/analyzer(src)
 	signaler = new /obj/item/assembly/signaler/internal(src)
 	hostscan = new /obj/item/healthanalyzer(src)
 	newscaster = new /obj/machinery/newscaster(src)
@@ -163,26 +176,28 @@
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 /mob/living/silicon/pai/proc/process_hack(delta_time, times_fired)
-
-
-	if(hacking_cable && hacking_cable.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = clamp(hackprogress + (2 * delta_time), 0, 100)
+	if(hacking_cable?.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
+		hackprogress = clamp(hackprogress + (2 * delta_time), 0, HACK_COMPLETE)
+		hackbar.update(hackprogress)
 	else
-		temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
+		to_chat(src, span_notice("Door Jack: Connection to airlock has been lost. Hack aborted."))
 		hackprogress = 0
 		hacking = FALSE
 		hackdoor = null
+		hackbar.end_progress()
+		QDEL_NULL(hackbar)
 		QDEL_NULL(hacking_cable)
 		if(!QDELETED(card))
 			card.update_appearance()
 		return
-	if(screen == "doorjack" && subscreen == 0) // Update our view, if appropriate
-		paiInterface()
-	if(hackprogress >= 100)
+	if(hackprogress >= HACK_COMPLETE)
 		hackprogress = 0
-		var/obj/machinery/door/D = hacking_cable.machine
-		D.open()
 		hacking = FALSE
+		hackbar.end_progress()
+		var/obj/machinery/door/door = hacking_cable.machine
+		door.open()
+		QDEL_NULL(hackbar)
+		QDEL_NULL(hacking_cable)
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -238,7 +253,7 @@
 
 /datum/action/innate/pai/software/Trigger()
 	..()
-	P.paiInterface()
+	P.ui_act()
 
 /datum/action/innate/pai/shell
 	name = "Toggle Holoform"
@@ -340,6 +355,7 @@
 	to_chat(user, span_notice("You override [pai]'s directive system, clearing its master string and supplied directive."))
 	to_chat(pai, span_userdanger("Warning: System override detected, check directive sub-system for any changes."))
 	log_game("[key_name(user)] emagged [key_name(pai)], wiping their master DNA and supplemental directive.")
+	pai.emagged = TRUE
 	pai.master = null
 	pai.master_dna = null
 	pai.laws.supplied[1] = "None." // Sets supplemental directive to this

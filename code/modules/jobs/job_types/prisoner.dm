@@ -1,5 +1,6 @@
 /datum/job/prisoner
-	title = "Prisoner"
+	title = JOB_PRISONER
+	description = "Keep yourself occupied in permabrig."
 	department_head = list("The Security Team")
 	faction = FACTION_STATION
 	total_positions = 0
@@ -13,6 +14,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
+	department_for_prefs = /datum/job_department/security
 
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (

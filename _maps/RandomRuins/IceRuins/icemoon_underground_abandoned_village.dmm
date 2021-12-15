@@ -98,7 +98,7 @@
 /area/icemoon/underground/explored)
 "ks" = (
 /obj/structure/flora/rock/icy,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "kY" = (
@@ -107,7 +107,7 @@
 /area/ruin/powered)
 "la" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /mob/living/simple_animal/hostile/skeleton/eskimo{
 	name = "Village Hunter"
 	},
