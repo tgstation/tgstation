@@ -34,6 +34,7 @@
 
 	AddAbility(new/obj/effect/proc_holder/alien/hide(null))
 	AddAbility(new/obj/effect/proc_holder/alien/larva_evolve(null))
+	apply_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
 	. = ..()
 
 /mob/living/carbon/human/species/alien/larva/create_internal_organs()

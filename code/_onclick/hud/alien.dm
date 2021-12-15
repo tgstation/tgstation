@@ -15,11 +15,13 @@
 	icon_state = "power_display"
 	screen_loc = ui_alienplasmadisplay
 
-/atom/movable/screen/alien/alien_queen_finder
+/atom/movable/screen/alert/status_effect/agent_pinpointer/xeno
 	name = "queen sense"
 	desc = "Allows you to sense the general direction of your Queen."
+	icon = 'icons/hud/screen_alien.dmi'
 	icon_state = "queen_finder"
-	screen_loc = ui_alien_queen_finder
+
+
 
 /datum/hud/alien
 	ui_style = 'icons/hud/screen_alien.dmi'
@@ -29,12 +31,10 @@
 
 	var/atom/movable/screen/using
 
-//equippable shit
-
-//hands
+	//hands
 	build_hand_slots()
 
-//begin buttons
+	//begin buttons
 
 	using = new /atom/movable/screen/swap_hand()
 	using.icon = ui_style
@@ -101,11 +101,6 @@
 	alien_plasma_display = new /atom/movable/screen/alien/plasma_display()
 	alien_plasma_display.hud = src
 	infodisplay += alien_plasma_display
-
-	if(!isalienqueen(mymob))
-		alien_queen_finder = new /atom/movable/screen/alien/alien_queen_finder
-		alien_queen_finder.hud = src
-		infodisplay += alien_queen_finder
 
 	zone_select = new /atom/movable/screen/zone_sel/alien()
 	zone_select.hud = src

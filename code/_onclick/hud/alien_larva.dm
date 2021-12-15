@@ -15,10 +15,6 @@
 	healths.hud = src
 	infodisplay += healths
 
-	alien_queen_finder = new /atom/movable/screen/alien/alien_queen_finder()
-	alien_queen_finder.hud = src
-	infodisplay += alien_queen_finder
-
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = 'icons/hud/screen_alien.dmi'
 	pull_icon.update_appearance()

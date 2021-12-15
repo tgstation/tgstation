@@ -2955,6 +2955,7 @@
 #include "code\modules\mob\living\carbon\alien\login.dm"
 #include "code\modules\mob\living\carbon\alien\logout.dm"
 #include "code\modules\mob\living\carbon\alien\organs.dm"
+#include "code\modules\mob\living\carbon\alien\queen_pinpointer.dm"
 #include "code\modules\mob\living\carbon\alien\screen.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\alien_powers.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\death.dm"

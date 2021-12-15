@@ -6,11 +6,14 @@
 	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
+	allowed_animal_origin = ALIEN_BODY
 	mutant_organs = list(/obj/item/organ/alien/hivenode)
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	meat = /obj/item/food/meat/slab/xeno
-	allowed_animal_origin = ALIEN_BODY
-	knife_butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	knife_butcher_results = list(
+		/obj/item/food/meat/slab/xeno = 5,
+		/obj/item/stack/sheet/animalhide/xeno = 1,
+	)
 	species_traits = list(
 		HAS_FLESH,
 		HAS_BONE,
@@ -52,12 +55,15 @@
 		ITEM_SLOT_LPOCKET,
 		ITEM_SLOT_RPOCKET,
 	)
+	sexes = FALSE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	liked_food = NONE
 	disliked_food = NONE
 	limbs_id = "alien"
 	damage_overlay_type = "" //Todo: add sprites
-	sexes = FALSE
+	fire_overlay = "Generic_mob_burning"
+	dust_anim = "dust-a"
+	gib_anim = "gibbed-a"
 	heatmod = 0.5 // minor heat insulation
 	punchdamagelow = 20
 	punchdamagehigh = 20
@@ -70,15 +76,22 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/alien,\
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/alien,\
 	)
-	fire_overlay = "Generic_mob_burning"
-	dust_anim = "dust-a"
-	gib_anim = "gibbed-a"
 
 	mutantbrain = /obj/item/organ/brain/alien
 	mutanttongue = /obj/item/organ/tongue/alien
 	mutanteyes = /obj/item/organ/eyes/night_vision/alien
 	mutantears = /obj/item/organ/ears
 	mutantliver = /obj/item/organ/liver/alien
+
+
+/datum/species/alien/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.apply_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
+
+/datum/species/alien/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	C.remove_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
+	return ..()
+
 
 /datum/species/alien/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_shields(user, 0, "the [user.name]"))
@@ -133,10 +146,6 @@
 		return TRUE
 	target.apply_damage(damage, BRUTE, affecting, armor_block)
 	return TRUE
-
-/datum/species/alien/spec_life(mob/living/carbon/human/species/alien/alien_current, delta_time, times_fired)
-	alien_current.findQueen()
-	return ..()
 
 /datum/species/monkey/get_scream_sound(mob/living/carbon/human/alien)
 	return 'sound/voice/hiss5.ogg'

@@ -251,7 +251,7 @@
 	burn *= wound_damage_multiplier
 
 	switch(animal_origin)
-		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
+		if(ALIEN_BODYPART, LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
 	/*
