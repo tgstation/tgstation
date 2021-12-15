@@ -90,8 +90,8 @@ export const ListInputModal = (_, context) => {
     item?.toLowerCase().includes(searchQuery.toLowerCase())
   );
   // Dynamically changes the window height based on the message.
-  const windowHeight =
-    325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
+  const windowHeight
+    = 325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
