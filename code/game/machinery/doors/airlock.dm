@@ -1239,7 +1239,7 @@
 		loseMainPower()
 		loseBackupPower()
 
-/obj/machinery/door/airlock/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
+/obj/machinery/door/airlock/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
 		add_fingerprint(user)
 		return

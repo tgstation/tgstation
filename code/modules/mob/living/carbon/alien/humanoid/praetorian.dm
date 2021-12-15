@@ -25,7 +25,7 @@
 
 	action_icon_state = "alien_evolve_praetorian"
 
-/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/human/species/alien/humanoid/user)
+/obj/effect/proc_holder/alien/royal/praetorian/evolve/fire(mob/living/carbon/human/species/alien/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 	if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
 		to_chat(user, span_warning("Without the hivemind, you would be unfit to rule as queen!"))

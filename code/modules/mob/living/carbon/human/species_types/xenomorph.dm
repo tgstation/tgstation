@@ -81,6 +81,7 @@
 	fire_overlay = "Generic_mob_burning"
 	dust_anim = "dust-a"
 	gib_anim = "gibbed-a"
+	armor = 20
 	heatmod = 0.5 // minor heat insulation
 	punchdamagelow = 20
 	punchdamagehigh = 20

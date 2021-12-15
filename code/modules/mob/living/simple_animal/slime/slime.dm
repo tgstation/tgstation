@@ -350,7 +350,7 @@
 		if(..()) //successful attack
 			attacked += 10
 
-/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/human/species/alien/humanoid/user, list/modifiers)
+/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
 		attacked += 10
 		discipline_slime(user)

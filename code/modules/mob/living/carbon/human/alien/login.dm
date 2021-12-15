@@ -3,4 +3,7 @@
 	if(!. || !client)
 		return FALSE
 	AddInfectionImages()
-	return
+
+/mob/living/carbon/human/species/alien/Logout()
+	..()
+	RemoveInfectionImages()
