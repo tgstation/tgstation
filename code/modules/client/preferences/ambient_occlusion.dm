@@ -6,5 +6,8 @@
 
 /datum/preference/toggle/ambient_occlusion/apply_to_client(client/client, value)
 	/// Backdrop for all game world planes.
-	for(var/atom/movable/screen/plane_master/game_world/game_world_plane_master in client?.screen)
-		game_world_plane_master.backdrop(client.mob)
+	var/atom/movable/screen/plane_master/game_world/plane_master = locate() in client?.screen
+	if (!plane_master)
+		return
+
+	plane_master.backdrop(client.mob)
