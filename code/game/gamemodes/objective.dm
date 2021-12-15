@@ -675,7 +675,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/human/species/alien/larva/M in A)//Larva are important for research.
+	for(var/mob/living/simple_animal/hostile/alien_larva/M in A)//Larva are important for research.
 		if(M.stat == DEAD)
 			captured_amount+=0.5
 			continue

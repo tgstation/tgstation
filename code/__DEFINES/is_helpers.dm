@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isalien(A) (istype(A, /mob/living/carbon/human/species/alien))
 
-#define islarva(A) (istype(A, /mob/living/carbon/human/species/alien/larva))
+#define islarva(A) (istype(A, /mob/living/simple_animal/hostile/alien_larva))
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/human/species/alien) || istype(A, /mob/living/simple_animal/hostile/alien))
 

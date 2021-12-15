@@ -122,7 +122,7 @@
 /obj/effect/gibspawner/larva
 	gibtypes = list(/obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body, /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body)
 	gibamounts = list(1, 1, 1, 1)
-	gib_mob_type = /mob/living/carbon/human/species/alien/larva
+	gib_mob_type = /mob/living/simple_animal/hostile/alien_larva
 
 /obj/effect/gibspawner/larva/Initialize(mapload)
 	if(!gibdirections.len)

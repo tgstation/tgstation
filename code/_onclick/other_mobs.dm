@@ -156,16 +156,6 @@
 	return
 
 
-// Babby aliens
-/mob/living/carbon/human/species/alien/larva/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
-		return
-	attack_target.attack_larva(src)
-
-/atom/proc/attack_larva(mob/user)
-	return
-
-
 /*
 	Slimes
 	Nothing happening here

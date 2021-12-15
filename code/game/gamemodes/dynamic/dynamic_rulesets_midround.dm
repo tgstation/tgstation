@@ -527,7 +527,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/generate_ruleset_body(mob/applicant)
 	var/obj/vent = pick_n_take(vents)
-	var/mob/living/carbon/human/species/alien/larva/new_xeno = new(vent.loc)
+	var/mob/living/simple_animal/hostile/alien_larva/new_xeno = new(vent.loc)
 	new_xeno.key = applicant.key
 	new_xeno.move_into_vent(vent)
 	message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by the midround ruleset.")

@@ -71,7 +71,7 @@
 		var/datum/mind/candidate_mind = candidate_client.mob.mind
 		if(!candidate_mind)
 			continue
-		var/mob/living/carbon/human/species/alien/larva/new_xeno = new(vent.loc)
+		var/mob/living/simple_animal/hostile/alien_larva/new_xeno = new(vent.loc)
 		candidate_mind.transfer_to(new_xeno)
 		candidate_mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
 		candidate_mind.special_role = ROLE_ALIEN

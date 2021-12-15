@@ -303,31 +303,6 @@
 
 	return FALSE
 
-/mob/living/attack_larva(mob/living/carbon/human/species/alien/larva/L)
-	if(L.combat_mode)
-		if(HAS_TRAIT(L, TRAIT_PACIFISM))
-			to_chat(L, span_warning("You don't want to hurt anyone!"))
-			return
-
-		L.do_attack_animation(src)
-		if(prob(90))
-			log_combat(L, src, "attacked")
-			visible_message(span_danger("[L.name] bites [src]!"), \
-							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_danger("You bite [src]!"))
-			playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-			return TRUE
-		else
-			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
-							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_warning("Your bite misses [src]!"))
-	else
-		visible_message(span_notice("[L.name] rubs its head against [src]."), \
-						span_notice("[L.name] rubs its head against you."), null, null, L)
-		to_chat(L, span_notice("You rub your head against [src]."))
-		return FALSE
-	return FALSE
-
 /mob/living/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

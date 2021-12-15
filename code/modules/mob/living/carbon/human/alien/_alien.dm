@@ -152,6 +152,9 @@ Des: Removes all infected images from the alien.
 		if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 			qdel(I)
 
+/mob/living/carbon/human/species/alien/can_hold_items(obj/item/I)
+	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
+
 /mob/living/carbon/human/species/alien/proc/alien_evolve(mob/living/carbon/human/species/alien/new_xeno)
 	to_chat(src, span_noticealien("You begin to evolve!"))
 	visible_message(span_alertalien("[src] begins to twist and contort!"))
@@ -167,9 +170,6 @@ Des: Removes all infected images from the alien.
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
 	qdel(src)
-
-/mob/living/carbon/human/species/alien/can_hold_items(obj/item/I)
-	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
 /proc/get_alien_type(alienpath)

@@ -125,9 +125,6 @@
 /obj/structure/ladder/attack_alien(mob/user, list/modifiers)
 	return use(user)
 
-/obj/structure/ladder/attack_larva(mob/user)
-	return use(user)
-
 /obj/structure/ladder/attack_animal(mob/user)
 	return use(user)
 

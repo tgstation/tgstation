@@ -85,14 +85,6 @@
 			log_combat(user, src, "attacked")
 		return 1
 
-/mob/living/basic/attack_larva(mob/living/carbon/human/species/alien/larva/L)
-	. = ..()
-	if(. && stat != DEAD) //successful larva bite
-		var/damage = rand(5, 10)
-		. = attack_threshold_check(damage)
-		if(.)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-
 /mob/living/basic/attack_basic_mob(mob/living/basic/user, list/modifiers)
 	. = ..()
 	if(.)

@@ -39,9 +39,6 @@
 /obj/structure/signpost/attack_hulk(mob/user)
 	return
 
-/obj/structure/signpost/attack_larva(mob/user)
-	return interact(user)
-
 /obj/structure/signpost/attack_robot(mob/user)
 	if (Adjacent(user))
 		return interact(user)

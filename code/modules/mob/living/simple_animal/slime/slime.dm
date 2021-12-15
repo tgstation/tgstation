@@ -303,10 +303,6 @@
 	if(..()) //successful monkey bite.
 		attacked += 10
 
-/mob/living/simple_animal/slime/attack_larva(mob/living/carbon/human/species/alien/larva/L)
-	if(..()) //successful larva bite.
-		attacked += 10
-
 /mob/living/simple_animal/slime/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)

@@ -125,8 +125,8 @@
 		return
 	. = ..()
 
-	update_icons()
-	status_flags |= CANPUSH
+	H.update_icons()
+	H.status_flags |= CANPUSH
 
 /datum/species/alien/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_shields(user, 0, "the [user.name]"))

@@ -267,25 +267,6 @@
 		return TRUE
 
 
-
-/mob/living/carbon/human/attack_larva(mob/living/carbon/human/species/alien/larva/L)
-	. = ..()
-	if(!.)
-		return //successful larva bite.
-	var/damage = rand(L.melee_damage_lower, L.melee_damage_upper)
-	if(!damage)
-		return
-	if(check_shields(L, damage, "the [L.name]"))
-		return FALSE
-	if(stat != DEAD)
-		L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
-		if(!affecting)
-			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, MELEE)
-		apply_damage(damage, BRUTE, affecting, armor_block)
-
-
 /mob/living/carbon/human/attack_basic_mob(mob/living/basic/user, list/modifiers)
 	. = ..()
 	if(!.)

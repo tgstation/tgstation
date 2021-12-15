@@ -42,7 +42,7 @@
 	return FALSE
 
 
-/mob/living/carbon/human/species/alien/larva/has_left_hand()
+/mob/living/simple_animal/hostile/alien_larva/has_left_hand()
 	return TRUE
 
 
@@ -58,7 +58,7 @@
 	return FALSE
 
 
-/mob/living/carbon/human/species/alien/larva/has_right_hand()
+/mob/living/simple_animal/hostile/alien_larva/has_right_hand()
 	return TRUE
 
 
@@ -73,7 +73,7 @@
 			full -= zone
 	return full
 
-/mob/living/carbon/human/species/alien/larva/get_missing_limbs()
+/mob/living/simple_animal/hostile/alien_larva/get_missing_limbs()
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
 	for(var/zone in full)
 		if(get_bodypart(zone))
@@ -92,7 +92,7 @@
 			disabled += zone
 	return disabled
 
-/mob/living/carbon/human/species/alien/larva/get_disabled_limbs()
+/mob/living/simple_animal/hostile/alien_larva/get_disabled_limbs()
 	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
 	var/list/disabled = list()
 	for(var/zone in full)
@@ -150,19 +150,6 @@
 		if(robotic)
 			bodypart.change_bodypart_status(BODYPART_ROBOTIC)
 	. = bodypart
-
-/mob/living/carbon/human/species/alien/larva/newBodyPart(zone, robotic, fixed_icon)
-	var/obj/item/bodypart/new_bodypart
-	switch(zone)
-		if(BODY_ZONE_HEAD)
-			new_bodypart = new /obj/item/bodypart/head/larva()
-		if(BODY_ZONE_CHEST)
-			new_bodypart = new /obj/item/bodypart/chest/larva()
-	if(new_bodypart)
-		new_bodypart.update_limb(fixed_icon, src)
-		if(robotic)
-			new_bodypart.change_bodypart_status(BODYPART_ROBOTIC)
-	. = new_bodypart
 
 /mob/living/carbon/human/species/alien/newBodyPart(zone, robotic, fixed_icon)
 	var/obj/item/bodypart/new_bodypart

@@ -936,9 +936,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_hulk(mob/user)
 	dust_mob(user, cause = "hulk attack")
 
-/obj/machinery/power/supermatter_crystal/attack_larva(mob/user)
-	dust_mob(user, cause = "larva attack")
-
 /obj/machinery/power/supermatter_crystal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
