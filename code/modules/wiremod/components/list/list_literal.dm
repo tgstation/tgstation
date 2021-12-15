@@ -103,7 +103,7 @@
 		if(islist(value) && get_list_count(value, max_list_count) >= max_list_count)
 			visible_message("[src] begins to overheat!")
 			return
-		if(is_proper_datum(value))
+		if(isproperdatum(value))
 			new_literal += WEAKREF(value)
 		else
 			new_literal += list(value)
