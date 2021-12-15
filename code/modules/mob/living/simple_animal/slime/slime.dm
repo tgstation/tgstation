@@ -346,12 +346,6 @@
 		if(..()) //successful attack
 			attacked += 10
 
-/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	if(..()) //if harm or disarm intent.
-		attacked += 10
-		discipline_slime(user)
-
-
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
 		var/list/modifiers = params2list(params)

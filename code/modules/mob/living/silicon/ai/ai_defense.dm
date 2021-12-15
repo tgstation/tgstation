@@ -11,12 +11,6 @@
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	if(!SSticker.HasRoundStarted())
-		to_chat(user, "You cannot attack people before the game has started.")
-		return
-	..()
-
 /mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user)
 	return //immune to slimes
 

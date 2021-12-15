@@ -303,9 +303,6 @@
 /obj/structure/alien/egg/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/alien/egg/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	return attack_hand(user, modifiers)
-
 /obj/structure/alien/egg/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)

@@ -49,8 +49,6 @@
 
 ///from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_APPLY_DAMAGE "mob_apply_damage"
-///from base of /mob/living/attack_alien(): (user)
-#define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
 ///from base of /mob/verb/examinate(): (atom/target)

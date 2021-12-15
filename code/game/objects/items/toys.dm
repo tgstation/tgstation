@@ -583,10 +583,6 @@
 	var/chattering = FALSE
 	var/phomeme
 
-// Talking toys are language universal, and thus all species can use them
-/obj/item/toy/talking/attack_alien(mob/user, list/modifiers)
-	return attack_hand(user, modifiers)
-
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
 		activation_message(user)

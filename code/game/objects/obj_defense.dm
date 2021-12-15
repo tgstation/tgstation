@@ -49,10 +49,6 @@
 			return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
-/obj/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	if(attack_generic(user, 60, BRUTE, MELEE, 0))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
-
 /obj/attack_basic_mob(mob/living/basic/user, list/modifiers)
 	if(!user.melee_damage_upper && !user.obj_damage) //No damage
 		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")

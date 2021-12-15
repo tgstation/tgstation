@@ -302,16 +302,6 @@
 	. = ..()
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
-		return
-	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
-	welded = FALSE
-	update_appearance()
-	pipe_vision_img = image(src, loc, dir = dir)
-	pipe_vision_img.plane = ABOVE_HUD_PLANE
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
-
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = AREA_USAGE_EQUIP

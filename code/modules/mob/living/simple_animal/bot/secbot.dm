@@ -480,12 +480,6 @@
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	..()
-	if(!isalien(target))
-		target = user
-		mode = BOT_HUNT
-
 /mob/living/simple_animal/bot/secbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(has_gravity() && ismob(AM) && target)

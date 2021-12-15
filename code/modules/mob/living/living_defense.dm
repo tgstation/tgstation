@@ -303,23 +303,6 @@
 
 	return FALSE
 
-/mob/living/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_ALIEN, user, modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
-		return TRUE
-	if(user.combat_mode)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM))
-			to_chat(user, span_warning("You don't want to hurt anyone!"))
-			return FALSE
-		user.do_attack_animation(src)
-		return TRUE
-	else
-		visible_message(span_notice("[user] caresses [src] with its scythe-like arm."), \
-						span_notice("[user] caresses you with its scythe-like arm."), null, null, user)
-		to_chat(user, span_notice("You caress [src] with your scythe-like arm."))
-		return FALSE
-
 /mob/living/attack_hulk(mob/living/carbon/human/user)
 	..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))

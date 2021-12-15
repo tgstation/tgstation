@@ -92,6 +92,9 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
+	if(isalien(user))
+		open()
+		return
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
@@ -196,13 +199,6 @@
 
 /obj/machinery/door/firedoor/attack_robot(mob/user)
 	return attack_ai(user)
-
-/obj/machinery/door/firedoor/attack_alien(mob/user, list/modifiers)
-	add_fingerprint(user)
-	if(welded)
-		to_chat(user, span_warning("[src] refuses to budge!"))
-		return
-	open()
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)

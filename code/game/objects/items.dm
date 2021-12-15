@@ -506,6 +506,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	if(anchored)
 		return
+	if(!user.can_hold_items(src))
+		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
+		return
 
 	. = TRUE
 
@@ -529,16 +532,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 		return TRUE
-
-/obj/item/attack_alien(mob/user, list/modifiers)
-	var/mob/living/carbon/human/species/alien/ayy = user
-
-	if(!user.can_hold_items(src))
-		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
-			ayy.dropItemToGround(src)
-		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
-		return
-	attack_paw(ayy, modifiers)
 
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/robot_model))

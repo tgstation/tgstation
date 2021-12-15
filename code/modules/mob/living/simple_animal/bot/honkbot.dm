@@ -323,12 +323,6 @@
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/honkbot/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	..()
-	if(!isalien(target))
-		target = user
-		mode = BOT_HUNT
-
 /mob/living/simple_animal/bot/honkbot/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	if(ismob(AM) && (bot_mode_flags & BOT_MODE_ON)) //only if its online

@@ -154,13 +154,6 @@
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
-/obj/structure/grille/attack_alien(mob/living/user, list/modifiers)
-	user.do_attack_animation(src)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message(span_warning("[user] mangles [src]."), null, null, COMBAT_MESSAGE_RANGE)
-	if(!shock(user, 70))
-		take_damage(20, BRUTE, MELEE, 1)
-
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(!. && istype(mover, /obj/projectile))

@@ -149,12 +149,7 @@
 /mob/living/carbon/human/species/alien/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
-	attack_target.attack_alien(src, modifiers)
-
-/atom/proc/attack_alien(mob/living/carbon/human/species/alien/user, list/modifiers)
-	attack_paw(user, modifiers)
-	return
-
+	attack_target.attack_paw(src, modifiers)
 
 /*
 	Slimes

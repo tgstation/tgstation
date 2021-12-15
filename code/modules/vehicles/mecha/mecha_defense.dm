@@ -64,11 +64,6 @@
 /obj/vehicle/sealed/mecha/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
-	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
-
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
