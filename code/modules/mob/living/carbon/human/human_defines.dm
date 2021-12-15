@@ -57,6 +57,9 @@
 
 	var/name_override //For temporary visible name changes
 
+	///What can be stripped from this mob
+	var/possible_strippable = GLOB.strippable_human_items
+
 	var/datum/physiology/physiology
 
 	var/list/datum/bioware = list()

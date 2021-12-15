@@ -13,7 +13,7 @@
 
 /// Our special proc for our special dismembering, the wounding type only matters for what text we have
 /datum/wound/loss/proc/apply_dismember(obj/item/bodypart/dismembered_part, wounding_type=WOUND_SLASH, outright = FALSE)
-	if(!istype(dismembered_part) || !dismembered_part.owner || !(dismembered_part.body_zone in viable_zones) || isalien(dismembered_part.owner) || !dismembered_part.can_dismember())
+	if(!istype(dismembered_part) || !dismembered_part.owner || !(dismembered_part.body_zone in viable_zones) || !dismembered_part.can_dismember())
 		qdel(src)
 		return
 

@@ -233,13 +233,13 @@
 				if(iscarbon(M)) //Carbon stuff
 					if(ismonkey(M))
 						M_job = "Monkey"
-					else if(ishuman(M))
-						M_job = M.job
 					else if(isalien(M)) //aliens
 						if(islarva(M))
 							M_job = "Alien larva"
 						else
 							M_job = ROLE_ALIEN
+					else if(ishuman(M))
+						M_job = M.job
 					else
 						M_job = "Carbon-based"
 

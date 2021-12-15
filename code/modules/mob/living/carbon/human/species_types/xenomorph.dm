@@ -10,6 +10,7 @@
 	mutant_organs = list(/obj/item/organ/alien/hivenode)
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	meat = /obj/item/food/meat/slab/xeno
+	ass_image = 'icons/ass/assalien.png'
 	knife_butcher_results = list(
 		/obj/item/food/meat/slab/xeno = 5,
 		/obj/item/stack/sheet/animalhide/xeno = 1,

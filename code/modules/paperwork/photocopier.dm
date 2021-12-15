@@ -61,7 +61,7 @@
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-	
+
 	try
 		var/list/blanks = json_decode(file2text("config/blanks.json"))
 		if (blanks != null)
@@ -72,7 +72,7 @@
 			data["forms_exist"] = FALSE
 	catch()
 		data["forms_exist"] = FALSE
-	
+
 	if(photo_copy)
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
@@ -327,8 +327,6 @@
 			temp_img = icon(spec.ass_image)
 		else
 			temp_img = icon(ass.gender == FEMALE ? 'icons/ass/assfemale.png' : 'icons/ass/assmale.png')
-	else if(isalienadult(ass) || istype(ass, /mob/living/simple_animal/hostile/alien)) //Xenos have their own asses, thanks to Pybro.
-		temp_img = icon('icons/ass/assalien.png')
 	else if(issilicon(ass))
 		temp_img = icon('icons/ass/assmachine.png')
 	else if(isdrone(ass)) //Drones are hot

@@ -1,3 +1,10 @@
+GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
+	/datum/strippable_item/hand/left,
+	/datum/strippable_item/hand/right,
+	/datum/strippable_item/mob_item_slot/handcuffs,
+	/datum/strippable_item/mob_item_slot/legcuffs,
+)))
+
 /mob/living/carbon/human/species/alien/humanoid
 	name = "alien"
 	icon_state = "alien"
@@ -5,6 +12,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	limb_destroyer = 1
 	hud_type = /datum/hud/alien
+	possible_strippable = GLOB.strippable_alien_humanoid_items
 	melee_damage_lower = 20 //Refers to unarmed damage, aliens do unarmed attacks.
 	melee_damage_upper = 20
 	var/caste = ""
@@ -24,17 +32,9 @@
 		/obj/item/bodypart/l_leg/alien,
 		)
 
-GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
-	/datum/strippable_item/hand/left,
-	/datum/strippable_item/hand/right,
-	/datum/strippable_item/mob_item_slot/handcuffs,
-	/datum/strippable_item/mob_item_slot/legcuffs,
-)))
-
 /mob/living/carbon/human/species/alien/humanoid/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
-	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
 /mob/living/carbon/human/species/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
