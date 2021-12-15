@@ -253,7 +253,6 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_FLY "fly"
 #define SPECIES_MONKEY "monkey"
-#define SPECIES_XENOMORPH "xenomorph"
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
 #define SPECIES_LUMINESCENT "lum"
@@ -277,6 +276,13 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_SNAIL "snail"
 #define SPECIES_SYNTH "synth"
 #define SPECIES_SYNTH_MILITARY "military_synth"
+
+#define SPECIES_XENOMORPH "xenomorph"
+#define SPECIES_XENOMORPH_DRONE "xenomorph_drone"
+#define SPECIES_XENOMORPH_HUNTER "xenomorph_hunter"
+#define SPECIES_XENOMORPH_SENTINEL "xenomorph_sentinel"
+#define SPECIES_XENOMORPH_PRAETORIAN "xenomorph_praetorian"
+#define SPECIES_XENOMORPH_QUEEN "xenomorph_queen"
 
 //Defines for Golem Species IDs
 #define SPECIES_GOLEM "iron_golem"

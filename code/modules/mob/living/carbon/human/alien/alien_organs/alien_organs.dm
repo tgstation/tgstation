@@ -116,14 +116,18 @@
 	var/recent_queen_death = FALSE
 
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/user, special = FALSE)
-	..()
+	. = ..()
 	user.faction |= ROLE_ALIEN
 	ADD_TRAIT(user, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+	var/datum/atom_hud/xenomorph/hud = GLOB.huds[DATA_HUD_XENOMORPH]
+	hud.add_hud_to(user)
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/user, special = FALSE)
+	var/datum/atom_hud/xenomorph/hud = GLOB.huds[DATA_HUD_XENOMORPH]
+	hud.remove_hud_from(user)
 	user.faction -= ROLE_ALIEN
 	REMOVE_TRAIT(user, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
-	..()
+	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
 /obj/item/organ/alien/hivenode/proc/queen_death()

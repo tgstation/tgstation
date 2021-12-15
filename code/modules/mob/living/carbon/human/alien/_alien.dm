@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	status_flags = NONE // CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 	pixel_x = -16
 	base_pixel_x = -16
-	bubble_icon = "alienroyal"
+	bubble_icon = "alienroyal" // Don't forget to use early returns.
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
 /mob/living/carbon/human/species/alien/praetorian/queen
+	// Don't forget to use clearly defined var names to not get confused between them.
 	name = "alien queen"
 	race = /datum/species/alien/praetorian/queen
 	caste = "q"
@@ -90,6 +91,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
  */
 
 /mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
+	// remember to use 'as anything' in for()
 	return
 
 /mob/living/carbon/human/species/alien/update_body() // we don't use the bodyparts or body layers for aliens.
@@ -222,37 +224,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
-
-
-
-/*----------------------------------------
-Proc: AddInfectionImages()
-Des: Gives the client of the alien an image on each infected mob.
-Todo: remove this
-----------------------------------------*/
-/mob/living/carbon/human/species/alien/proc/AddInfectionImages()
-	if(!client)
-		return
-	for(var/mob/living/L as anything in GLOB.mob_living_list)
-		if(!HAS_TRAIT(L, TRAIT_XENO_HOST))
-			continue
-		var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
-		if(A)
-			var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
-			client.images += I
-
-
-/*----------------------------------------
-Proc: RemoveInfectionImages()
-Des: Removes all infected images from the alien.
-----------------------------------------*/
-/mob/living/carbon/human/species/alien/proc/RemoveInfectionImages()
-	if(!client)
-		return
-	for(var/image/I in client.images)
-		var/searchfor = "infected"
-		if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-			qdel(I)
 
 /mob/living/carbon/human/species/alien/proc/alien_evolve(mob/living/carbon/human/species/alien/new_xeno)
 	to_chat(src, span_noticealien("You begin to evolve!"))

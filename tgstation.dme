@@ -2972,7 +2972,6 @@
 #include "code\modules\mob\living\carbon\human\alien\alien_powers.dm"
 #include "code\modules\mob\living\carbon\human\alien\alien_say.dm"
 #include "code\modules\mob\living\carbon\human\alien\facehugger.dm"
-#include "code\modules\mob\living\carbon\human\alien\login.dm"
 #include "code\modules\mob\living\carbon\human\alien\queen_pinpointer.dm"
 #include "code\modules\mob\living\carbon\human\alien\alien_organs\alien_embryo.dm"
 #include "code\modules\mob\living\carbon\human\alien\alien_organs\alien_organs.dm"

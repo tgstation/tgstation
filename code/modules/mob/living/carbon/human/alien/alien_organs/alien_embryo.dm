@@ -59,8 +59,8 @@
 	if(stage >= 6)
 		return
 	if(++stage < 6)
-		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
 		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+		INVOKE_ASYNC(src, .proc/refresh_hud_icon)
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
@@ -123,23 +123,12 @@
 		owner.cut_overlay(overlay)
 	qdel(src)
 
-
-/*----------------------------------------
-Proc: AddInfectionImages(C)
-Des: Adds the infection image to all aliens for this embryo
-----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
-	for(var/mob/living/carbon/human/species/alien/alien in GLOB.player_list)
-		var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
-		alien.client?.images += I
-
-/*----------------------------------------
-Proc: RemoveInfectionImage(C)
-Des: Removes all images from the mob infected by this embryo
-----------------------------------------*/
-/obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
-	for(var/mob/living/carbon/human/species/alien/alien in GLOB.player_list)
-		for(var/image/I in alien.client?.images)
-			var/searchfor = "infected"
-			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
+/**
+ * Refreshing HUD icons whenever the disease advances
+ * This is so all Xenos could know how far into their development the egg is.
+ */
+/obj/item/organ/body_egg/alien_embryo/proc/refresh_hud_icon()
+	var/image/holder = hud_list[XENO_HUD]
+	holder.icon_state = "infected[stage]"
+	var/icon/I = icon('icons/mob/alien.dmi', icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size

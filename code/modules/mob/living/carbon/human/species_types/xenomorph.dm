@@ -7,7 +7,10 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	allowed_animal_origin = ALIEN_BODY
-	mutant_organs = list(/obj/item/organ/alien/hivenode)
+	mutant_organs = list(
+		/obj/item/organ/alien/hivenode,
+		/obj/item/organ/alien/plasmavessel,
+	)
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	meat = /obj/item/food/meat/slab/xeno
 	ass_image = 'icons/ass/assalien.png'
@@ -99,8 +102,12 @@
 	C.apply_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
 	if(!C.mind.has_antag_datum(/datum/antagonist/xeno))
 		C.mind.add_antag_datum(/datum/antagonist/xeno)
+	var/datum/atom_hud/xeno_hud = GLOB.huds[DATA_HUD_XENOMORPH]
+	xeno_hud.add_hud_to(C)
 
 /datum/species/alien/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	var/datum/atom_hud/xeno_hud = GLOB.huds[DATA_HUD_XENOMORPH]
+	xeno_hud.remove_hud_from(C)
 	if(C.mind.has_antag_datum(/datum/antagonist/xeno))
 		C.mind.remove_antag_datum(/datum/antagonist/xeno)
 	C.remove_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
@@ -202,6 +209,8 @@
  */
 
 /datum/species/alien/drone
+	name = "Xenomorph Drone"
+	id = SPECIES_XENOMORPH_DRONE
 	mutant_organs = list(
 		/obj/item/organ/alien/hivenode,
 		/obj/item/organ/alien/plasmavessel/large,
@@ -224,6 +233,8 @@
 #define XENO_TACKLING_SKILL 5
 
 /datum/species/alien/hunter
+	name = "Xenomorph Hunter"
+	id = SPECIES_XENOMORPH_HUNTER
 	mutant_organs = list(
 		/obj/item/organ/alien/hivenode,
 		/obj/item/organ/alien/plasmavessel/small,
@@ -245,6 +256,8 @@
 #undef XENO_TACKLING_SKILL
 
 /datum/species/alien/sentinel
+	name = "Xenomorph Hunter"
+	id = SPECIES_XENOMORPH_HUNTER
 	mutant_organs = list(
 		/obj/item/organ/alien/hivenode,
 		/obj/item/organ/alien/plasmavessel,
@@ -263,6 +276,8 @@
 
 
 /datum/species/alien/praetorian
+	name = "Xenomorph Praetorian"
+	id = SPECIES_XENOMORPH_PRAETORIAN
 	knife_butcher_results = list(
 		/obj/item/food/meat/slab/xeno = 20,
 		/obj/item/stack/sheet/animalhide/xeno = 3,
@@ -283,6 +298,7 @@
 		/obj/item/organ/alien/acid,
 		/obj/item/organ/alien/neurotoxin,
 	)
+	armor = 100
 
 /datum/species/alien/praetorian/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
@@ -295,6 +311,8 @@
 	return ..()
 
 /datum/species/alien/praetorian/queen
+	name = "Xenomorph Queen"
+	id = SPECIES_XENOMORPH_QUEEN
 	mutant_organs = list(
 		/obj/item/organ/alien/plasmavessel/large/queen,
 		/obj/item/organ/alien/resinspinner,

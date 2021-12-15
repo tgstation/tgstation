@@ -20,14 +20,17 @@
 	ADD_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
 	ADD_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	owner.med_hud_set_status()
-	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
+
+	var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_XENOMORPH]
+	my_hud.add_to_hud(M)
 
 /obj/item/organ/body_egg/Remove(mob/living/carbon/M, special = FALSE)
 	if(owner)
 		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
 		REMOVE_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 		owner.med_hud_set_status()
-		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
+		var/datum/atom_hud/my_hud = GLOB.huds[DATA_HUD_XENOMORPH]
+		my_hud.remove_from_hud(M)
 	..()
 
 /obj/item/organ/body_egg/on_death(delta_time, times_fired)
@@ -41,14 +44,4 @@
 	egg_process(delta_time, times_fired)
 
 /obj/item/organ/body_egg/proc/egg_process(delta_time, times_fired)
-	return
-
-/obj/item/organ/body_egg/proc/RefreshInfectionImage()
-	RemoveInfectionImages()
-	AddInfectionImages()
-
-/obj/item/organ/body_egg/proc/AddInfectionImages()
-	return
-
-/obj/item/organ/body_egg/proc/RemoveInfectionImages()
 	return

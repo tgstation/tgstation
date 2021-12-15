@@ -11,6 +11,7 @@ GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_DIAGNOSTIC_BASIC = new/datum/atom_hud/data/diagnostic/basic(),
 	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(),
 	DATA_HUD_ABDUCTOR = new/datum/atom_hud/abductor(),
+	DATA_HUD_XENOMORPH = new/datum/atom_hud/xenomorph(),
 	DATA_HUD_SENTIENT_DISEASE = new/datum/atom_hud/sentient_disease(),
 	DATA_HUD_AI_DETECT = new/datum/atom_hud/ai_detector(),
 	DATA_HUD_FAN = new/datum/atom_hud/data/human/fan_hud(),
