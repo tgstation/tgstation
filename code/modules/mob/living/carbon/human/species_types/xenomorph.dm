@@ -68,7 +68,7 @@
 	mutantbrain = /obj/item/organ/brain/alien
 	mutanttongue = /obj/item/organ/tongue/alien
 	mutanteyes = /obj/item/organ/eyes/night_vision/alien
-	mutantears = /obj/item/organ/ears
+	mutantears = /obj/item/organ/ears/alien
 	mutantliver = /obj/item/organ/liver/alien
 
 	sexes = FALSE
@@ -118,6 +118,14 @@
 			else
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 
+/datum/species/alien/spec_death(gibbed, mob/living/carbon/human/H)
+	if(stat == DEAD)
+		return
+	. = ..()
+
+	update_icons()
+	status_flags |= CANPUSH
+
 /datum/species/alien/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_shields(user, 0, "the [user.name]"))
 		user.visible_message(span_danger("[user] attempts to touch [target]!"), \
@@ -147,6 +155,16 @@
 						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
 		to_chat(user, span_warning("You attempt to touch [target]!"))
 		return FALSE
+	if(isalien(target))
+		set_resting(FALSE)
+		AdjustStun(-60)
+		AdjustKnockdown(-60)
+		AdjustImmobilized(-60)
+		AdjustParalyzed(-60)
+		AdjustUnconscious(-60)
+		AdjustSleeping(-100)
+		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
+		return TRUE
 	. = ..()
 
 /datum/species/alien/get_scream_sound(mob/living/carbon/human/alien)
@@ -172,10 +190,10 @@
 
 /datum/species/alien/drone/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
-	C.AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
+	C.AddAbility(new /obj/effect/proc_holder/alien/evolve)
 
 /datum/species/alien/drone/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	C.RemoveAbility(new/obj/effect/proc_holder/alien/evolve(null))
+	C.RemoveAbility(new /obj/effect/proc_holder/alien/evolve)
 	return ..()
 
 
@@ -204,5 +222,21 @@
 #undef XENO_TACKLING_SKILL
 
 /datum/species/alien/sentinel
+	mutant_organs = list(
+		/obj/item/organ/alien/hivenode,
+		/obj/item/organ/alien/plasmavessel,
+		/obj/item/organ/alien/acid,
+		/obj/item/organ/alien/neurotoxin,
+	)
+
+/datum/species/alien/sentinel/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.AddAbility(new /obj/effect/proc_holder/alien/sneak)
+
+/datum/species/alien/sentinel/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	C.RemoveAbility(new /obj/effect/proc_holder/alien/sneak)
+	return ..()
+
+
 /datum/species/alien
 /datum/species/alien

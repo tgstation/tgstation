@@ -82,6 +82,11 @@
 		ear_owner.dna.species.mutant_bodyparts -= "ears"
 		ear_owner.update_body()
 
+/obj/item/organ/ears/alien
+	name = "alien ears"
+	desc = "Ears adapted to be contained within a Xenomorph."
+	bang_protect = 4
+
 /obj/item/organ/ears/penguin
 	name = "penguin ears"
 	desc = "The source of a penguin's happy feet."

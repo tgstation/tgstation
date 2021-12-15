@@ -28,6 +28,8 @@
 /mob/living/carbon/human/species/alien/update_body_parts()//we don't use the bodyparts layer for aliens.
 	return
 
+/mob/living/carbon/human/species/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 
 /mob/living/carbon/human/species/alien/spawn_gibs(with_bodyparts)
@@ -158,3 +160,11 @@ Des: Removes all infected images from the alien.
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh"
+
+/mob/living/carbon/human/species/alien/humanoid/sentinel
+	name = "alien sentinel"
+	race = /datum/species/alien/sentinel
+	caste = "s"
+	maxHealth = 150
+	health = 150
+	icon_state = "aliens"

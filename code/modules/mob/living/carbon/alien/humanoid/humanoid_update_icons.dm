@@ -45,9 +45,11 @@
 	update_inv_handcuffed()
 
 /mob/living/carbon/human/species/alien/humanoid/regenerate_icons()
-	if(!..())
-//		update_icons() //Handled in update_transform(), leaving this here as a reminder
-		update_transform()
+	. = ..()
+	if(.)
+		return
+//	update_icons() //Handled in update_transform(), leaving this here as a reminder
+	update_transform()
 
 /mob/living/carbon/human/species/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
 	. = ..()

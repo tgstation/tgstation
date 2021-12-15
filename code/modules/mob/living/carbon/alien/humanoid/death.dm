@@ -1,12 +1,3 @@
-/mob/living/carbon/human/species/alien/humanoid/death(gibbed)
-	if(stat == DEAD)
-		return
-
-	. = ..()
-
-	update_icons()
-	status_flags |= CANPUSH
-
 //When the alien queen dies, all others must pay the price for letting her die.
 /mob/living/carbon/human/species/alien/humanoid/royal/queen/death(gibbed)
 	if(stat == DEAD)
