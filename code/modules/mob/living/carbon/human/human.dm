@@ -20,12 +20,14 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	var/list/possible_strippable = GLOB.strippable_human_items
+	var/footstep_sounds = FOOTSTEP_MOB_HUMAN
 	if(isalien(src))
+		footstep_sounds = FOOTSTEP_MOB_CLAW
 		possible_strippable = GLOB.strippable_alien_humanoid_items
+	AddElement(/datum/element/footstep, footstep_sounds, 1, -6)
 	AddElement(/datum/element/strippable, possible_strippable, /mob/living/carbon/human/.proc/should_strip)
 	GLOB.human_list += src
 	var/static/list/loc_connections = list(
@@ -548,6 +550,9 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
+	if(isalien(src))
+		playsound(src, 'sound/voice/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
+		return ..(I, cuff_break = INSTANT_CUFFBREAK)
 	if(dna?.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))

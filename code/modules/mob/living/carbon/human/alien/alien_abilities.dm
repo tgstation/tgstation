@@ -1,20 +1,6 @@
-/mob/living/carbon/human/species/alien/humanoid/drone
-	name = "alien drone"
-	caste = "d"
-	maxHealth = 125
-	health = 125
-	icon_state = "aliend"
-
-/mob/living/carbon/human/species/alien/humanoid/drone/Initialize(mapload)
-	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
-	. = ..()
-
-/mob/living/carbon/human/species/alien/humanoid/drone/create_internal_organs()
-	internal_organs += new /obj/item/organ/alien/plasmavessel/large
-	internal_organs += new /obj/item/organ/alien/resinspinner
-	internal_organs += new /obj/item/organ/alien/acid
-	..()
-
+/**
+ * DRONE EVOLUTION ABILITY
+ */
 /obj/effect/proc_holder/alien/evolve
 	name = "Evolve to Praetorian"
 	desc = "Praetorian"

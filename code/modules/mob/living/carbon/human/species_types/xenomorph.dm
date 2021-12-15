@@ -2,7 +2,7 @@
 	name = "Xenomorph"
 	id = SPECIES_XENOMORPH
 	say_mod = "hisses"
-	attack_verb = "slashes"
+	attack_verb = "slash"
 	attack_effect = ATTACK_EFFECT_CLAW
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -93,6 +93,8 @@
 	C.remove_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
 	return ..()
 
+/datum/species/alien/get_scream_sound(mob/living/carbon/human/alien)
+	return 'sound/voice/hiss5.ogg'
 
 /datum/species/alien/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_shields(user, 0, "the [user.name]"))
@@ -107,13 +109,13 @@
 		user.visible_message(span_danger("[user] disarms [target]!"), \
 						span_userdanger("[user] disarms you!"), span_hear("You hear aggressive shuffling!"), null, user)
 		to_chat(user, span_danger("You disarm [target]!"))
-	else
-		playsound(target.loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-		target.Paralyze(100)
-		log_combat(user, target, "tackled")
-		user.visible_message(span_danger("[user] tackles [target] down!"), \
-						span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
-		to_chat(user, span_danger("You tackle [target] down!"))
+		return TRUE
+	playsound(target.loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
+	target.Paralyze(100)
+	log_combat(user, target, "tackled")
+	user.visible_message(span_danger("[user] tackles [target] down!"), \
+					span_userdanger("[user] tackles you down!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
+	to_chat(user, span_danger("You tackle [target] down!"))
 	return TRUE
 
 
@@ -123,30 +125,37 @@
 						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
 		to_chat(user, span_warning("You attempt to touch [target]!"))
 		return FALSE
+	. = ..()
 
-	if(target.w_uniform)
-		target.w_uniform.add_fingerprint(user)
-	var/damage = prob(90) ? rand(user.melee_damage_lower, user.melee_damage_upper) : 0
-	if(!damage)
-		playsound(target.loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
-		user.visible_message(span_danger("[user] lunges at [target]!"), \
-						span_userdanger("[user] lunges at you!"), span_hear("You hear a swoosh!"), null, user)
-		to_chat(user, span_danger("You lunge at [target]!"))
-		return FALSE
-	var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
-	if(!affecting)
-		affecting = target.get_bodypart(BODY_ZONE_CHEST)
-	var/armor_block = target.run_armor_check(affecting, MELEE,"","",10)
+/**
+ * ALIEN SUBTYPES
+ *
+ * - Drone
+ * - Hunter
+ * - Sentinel
+ * - Praetorian
+ * - Queen
+ */
 
-	playsound(target.loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
-	user.visible_message(span_danger("[user] slashes at [target]!"), \
-					span_userdanger("[user] slashes at you!"), span_hear("You hear a sickening sound of a slice!"), null, user)
-	to_chat(user, span_danger("You slash at [target]!"))
-	log_combat(user, target, "attacked")
-	if(!target.dismembering_strike(user, user.zone_selected)) //Dismemberment successful
-		return TRUE
-	target.apply_damage(damage, BRUTE, affecting, armor_block)
-	return TRUE
+/datum/species/alien/drone
+	mutant_organs = list(
+		/obj/item/organ/alien/hivenode,
+		/obj/item/organ/alien/plasmavessel/large,
+		/obj/item/organ/alien/resinspinner,
+		/obj/item/organ/alien/acid,
+	)
 
-/datum/species/monkey/get_scream_sound(mob/living/carbon/human/alien)
-	return 'sound/voice/hiss5.ogg'
+/datum/species/alien/drone/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
+
+/datum/species/alien/drone/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	C.RemoveAbility(new/obj/effect/proc_holder/alien/evolve(null))
+	return ..()
+
+
+
+/datum/species/alien/hunter
+/datum/species/alien/sentinel
+/datum/species/alien
+/datum/species/alien

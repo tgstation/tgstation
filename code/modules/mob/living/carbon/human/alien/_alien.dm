@@ -7,6 +7,7 @@
 	sight = SEE_MOBS
 	bubble_icon = "alien"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	pass_flags = PASSTABLE
 	status_flags = (CANUNCONSCIOUS | CANPUSH)
 	unique_name = TRUE
 
@@ -15,7 +16,7 @@
 
 
 /**
- * should remove these eventually
+ * ALL of these should be removed eventually...
  */
 
 /mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
@@ -73,15 +74,15 @@ Des: Gives the client of the alien an image on each infected mob.
 Todo: remove this
 ----------------------------------------*/
 /mob/living/carbon/human/species/alien/proc/AddInfectionImages()
-	if (client)
-		for (var/i in GLOB.mob_living_list)
-			var/mob/living/L = i
-			if(HAS_TRAIT(L, TRAIT_XENO_HOST))
-				var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
-				if(A)
-					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
-					client.images += I
-	return
+	if(!client)
+		return
+	for(var/mob/living/L as anything in GLOB.mob_living_list)
+		if(!HAS_TRAIT(L, TRAIT_XENO_HOST))
+			continue
+		var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
+		if(A)
+			var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
+			client.images += I
 
 
 /*----------------------------------------
@@ -89,12 +90,12 @@ Proc: RemoveInfectionImages()
 Des: Removes all infected images from the alien.
 ----------------------------------------*/
 /mob/living/carbon/human/species/alien/proc/RemoveInfectionImages()
-	if (client)
-		for(var/image/I in client.images)
-			var/searchfor = "infected"
-			if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
-				qdel(I)
-	return
+	if(!client)
+		return
+	for(var/image/I in client.images)
+		var/searchfor = "infected"
+		if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
+			qdel(I)
 
 /mob/living/carbon/human/species/alien/proc/alien_evolve(mob/living/carbon/human/species/alien/new_xeno)
 	to_chat(src, span_noticealien("You begin to evolve!"))
@@ -114,13 +115,21 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/human/species/alien/can_hold_items(obj/item/I)
 	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
-/*
 
-/mob/living/carbon/human/species/alien/on_lying_down(new_lying_angle)
-	. = ..()
-	update_icons()
+/**
+ * ALIEN SUBTYPES
+ *
+ * - Drone
+ * - Hunter
+ * - Sentinel
+ * - Praetorian
+ * - Queen
+ */
 
-/mob/living/carbon/human/species/alien/on_standing_up()
-	. = ..()
-	update_icons()
-*/
+/mob/living/carbon/human/species/alien/humanoid/drone
+	name = "alien drone"
+	race = /datum/species/alien/drone
+	caste = "d"
+	maxHealth = 125
+	health = 125
+	icon_state = "aliend"
