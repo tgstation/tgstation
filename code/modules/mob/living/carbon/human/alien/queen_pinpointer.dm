@@ -27,3 +27,5 @@
 		return
 	scan_target = queen
 
+#undef XENO_PINPOINTER_MINIMUM_RANGE
+#undef XENO_PINPOINTER_EXTRA_RANDOM_RANGE
