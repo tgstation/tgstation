@@ -123,8 +123,8 @@
 		to_chat(user, span_warning("You attempt to touch [target]!"))
 		return FALSE
 
-	if(human_target.w_uniform)
-		human_target.w_uniform.add_fingerprint(user)
+	if(target.w_uniform)
+		target.w_uniform.add_fingerprint(user)
 	var/damage = prob(90) ? rand(user.melee_damage_lower, user.melee_damage_upper) : 0
 	if(!damage)
 		playsound(target.loc, 'sound/weapons/slashmiss.ogg', 50, TRUE, -1)
@@ -142,7 +142,7 @@
 					span_userdanger("[user] slashes at you!"), span_hear("You hear a sickening sound of a slice!"), null, user)
 	to_chat(user, span_danger("You slash at [target]!"))
 	log_combat(user, target, "attacked")
-	if(!human_target.dismembering_strike(user, user.zone_selected)) //Dismemberment successful
+	if(!target.dismembering_strike(user, user.zone_selected)) //Dismemberment successful
 		return TRUE
 	target.apply_damage(damage, BRUTE, affecting, armor_block)
 	return TRUE
