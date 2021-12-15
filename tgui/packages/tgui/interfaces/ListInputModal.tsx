@@ -57,7 +57,7 @@ export const ListInputModal = (_, context) => {
   };
   // User selects an item with mouse
   const onClick = (item: string) => {
-    if (!item) {
+    if (!item || item === selected) {
       setInputIsValid({ isValid: false, error: 'No selection' });
       setSelected(null);
     } else {
@@ -127,6 +127,7 @@ export const ListInputModal = (_, context) => {
               <ListDisplay
                 filteredItems={filteredItems}
                 onClick={onClick}
+                isValid={inputIsValid.isValid}
                 selected={selected}
               />
             </Stack.Item>
@@ -147,7 +148,7 @@ export const ListInputModal = (_, context) => {
  */
 const ListDisplay = (props, context) => {
   const { act } = useBackend<ListInputData>(context);
-  const { filteredItems, onClick, selected } = props;
+  const { filteredItems, isValid, onClick, selected } = props;
 
   return (
     <Section fill scrollable tabIndex={0}>
@@ -161,7 +162,7 @@ const ListDisplay = (props, context) => {
             onClick={() => onClick(item)}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
-              if (keyCode === KEY_ENTER) {
+              if (keyCode === KEY_ENTER && isValid) {
                 event.preventDefault();
                 act('submit', { entry: selected });
               }
