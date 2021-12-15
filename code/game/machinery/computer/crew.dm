@@ -138,19 +138,26 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 68,
 		JOB_LAWYER = 69,
 		JOB_PSYCHOLOGIST = 71,
+		// 200-229: Centcom
+		JOB_CENTCOM_ADMIRAL = 200,
+		JOB_CENTCOM = 201,
+		JOB_CENTCOM_OFFICIAL = 210,
+		JOB_CENTCOM_COMMANDER = 211,
+		JOB_CENTCOM_BARTENDER = 212,
+		JOB_CENTCOM_CUSTODIAN = 213,
+		JOB_CENTCOM_MEDICAL_DOCTOR = 214,
+		JOB_CENTCOM_RESEARCH_OFFICER = 215,
+		JOB_ERT_COMMANDER = 220,
+		JOB_ERT_OFFICER = 221,
+		JOB_ERT_ENGINEER = 222,
+		JOB_ERT_MEDICAL_DOCTOR = 223,
+		JOB_ERT_CLOWN = 224,
+		JOB_ERT_CHAPLAIN = 225,
+		JOB_ERT_JANITOR = 226,
+		JOB_ERT_DEATHSQUAD = 227,
+
 		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
 		JOB_ASSISTANT = 999,
-
-		// 200-229: Centcom
-		"Admiral" = 200,
-		"CentCom Commander" = 210,
-		"Custodian" = 211,
-		"Medical Officer" = 212,
-		"Research Officer" = 213,
-		"Emergency Response Team Commander" = 220,
-		"Security Response Officer" = 221,
-		"Engineer Response Officer" = 222,
-		"Medical Response Officer" = 223,
 	)
 
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)

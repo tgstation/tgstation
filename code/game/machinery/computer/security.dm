@@ -905,7 +905,12 @@ What a mess.*/
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
 					if("rank")
-						var/list/L = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_AI, "Central Command")
+						var/list/L = list(
+							JOB_CAPTAIN,
+							JOB_HEAD_OF_PERSONNEL,
+							JOB_AI,
+							JOB_CENTCOM,
+						)
 						//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
 							temp = "<h5>Rank:</h5>"

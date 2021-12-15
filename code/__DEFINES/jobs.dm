@@ -61,6 +61,29 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+//ERTs
+#define JOB_ERT_COMMANDER "Emergency Response Team Commander"
+#define JOB_ERT_OFFICER "Security Response Officer"
+#define JOB_ERT_ENGINEER "Engineering Response Officer"
+#define JOB_ERT_MEDICAL_DOCTOR "Medical Response Officer"
+#define JOB_ERT_CLOWN "Entertainment Response Officer"
+#define JOB_ERT_CHAPLAIN "Religious Response Officer"
+#define JOB_ERT_JANITOR "Janitorial Response Officer"
+#define JOB_ERT_DEATHSQUAD "Death Commando"
+//CentCom
+#define JOB_CENTCOM "Central Command"
+#define JOB_CENTCOM_OFFICIAL "CentCom Official"
+#define JOB_CENTCOM_ADMIRAL "Admiral"
+#define JOB_CENTCOM_COMMANDER "CentCom Commander"
+#define JOB_CENTCOM_VIP "VIP Guest"
+#define JOB_CENTCOM_BARTENDER "CentCom Bartender"
+#define JOB_CENTCOM_CUSTODIAN "Custodian"
+#define JOB_CENTCOM_THUNDERDOME_OVERSEER "Thunderdome Overseer"
+#define JOB_CENTCOM_MEDICAL_DOCTOR "Medical Officer"
+#define JOB_CENTCOM_RESEARCH_OFFICER "Research Officer"
+#define JOB_CENTCOM_SPECIAL_OFFICER "Special Ops Officer"
+#define JOB_CENTCOM_PRIVATE_SECURITY "Private Security Force"
+
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
