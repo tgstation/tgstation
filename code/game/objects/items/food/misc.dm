@@ -17,6 +17,9 @@
 /obj/item/food/cheese/wheel/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
 
+/obj/item/food/cheese/wheel/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+
 /obj/item/food/cheese/royal
 	name = "royal cheese"
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
