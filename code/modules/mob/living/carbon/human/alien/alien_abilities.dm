@@ -20,8 +20,8 @@
 	if(!isturf(user.loc))
 		to_chat(user, span_warning("You can't evolve here!"))
 		return FALSE
-	if(!get_alien_type(/mob/living/carbon/human/species/alien/humanoid/royal))
-		var/mob/living/carbon/human/species/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
+	if(!get_alien_type(/mob/living/carbon/human/species/alien/royal))
+		var/mob/living/carbon/human/species/alien/royal/praetorian/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return TRUE
 	else

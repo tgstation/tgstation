@@ -1,5 +1,5 @@
 
-/mob/living/carbon/human/species/alien/humanoid/update_icons()
+/mob/living/carbon/human/species/alien/update_icons()
 	cut_overlays()
 	for(var/I in overlays_standing)
 		add_overlay(I)
@@ -26,54 +26,13 @@
 		if(drooling)
 			add_overlay("alienspit")
 
-	if(HAS_TRAIT_FROM(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT))
-		if(alt_icon == initial(alt_icon))
-			var/old_icon = icon
-			icon = alt_icon
-			alt_icon = old_icon
-		icon_state = "alien[caste]_leap"
-		pixel_x = base_pixel_x - 32
-		pixel_y = base_pixel_y - 32
-	else
-		if(alt_icon != initial(alt_icon))
-			var/old_icon = icon
-			icon = alt_icon
-			alt_icon = old_icon
 	pixel_x = base_pixel_x + body_position_pixel_x_offset
 	pixel_y = base_pixel_y + body_position_pixel_y_offset
 	update_inv_hands()
 	update_inv_handcuffed()
 
-/mob/living/carbon/human/species/alien/humanoid/regenerate_icons()
-	. = ..()
-	if(.)
-		return
-//	update_icons() //Handled in update_transform(), leaving this here as a reminder
-	update_transform()
-
-/mob/living/carbon/human/species/alien/humanoid/perform_update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
-	. = ..()
-	update_icons()
-
-/mob/living/carbon/human/species/alien/humanoid/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
-	var/cuff_icon = "aliencuff"
-	var/dmi_file = 'icons/mob/alien.dmi'
-
-	if(mob_size == MOB_SIZE_LARGE)
-		cuff_icon = "aliencuff_[caste]"
-		dmi_file = 'icons/mob/alienqueen.dmi'
-
-	if(handcuffed)
-		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
-		if(handcuffed.blocks_emissive)
-			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
-
-		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
-		apply_overlay(HANDCUFF_LAYER)
-
 //Royals have bigger sprites, so inhand things must be handled differently.
-/mob/living/carbon/human/species/alien/humanoid/royal/update_inv_hands()
+/mob/living/carbon/human/species/alien/royal/update_inv_hands()
 	..()
 	remove_overlay(HANDS_LAYER)
 	var/list/hands = list()

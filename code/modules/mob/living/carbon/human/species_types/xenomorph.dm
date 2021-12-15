@@ -75,6 +75,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	liked_food = NONE
 	disliked_food = NONE
+	deathsound = 'sound/voice/hiss6.ogg'
 	limbs_id = "alien"
 	damage_overlay_type = "" //Todo: add sprites
 	fire_overlay = "Generic_mob_burning"

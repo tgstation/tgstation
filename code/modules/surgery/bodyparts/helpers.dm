@@ -164,7 +164,7 @@
 			new_bodypart.change_bodypart_status(BODYPART_ROBOTIC)
 	. = new_bodypart
 
-/mob/living/carbon/human/species/alien/humanoid/newBodyPart(zone, robotic, fixed_icon)
+/mob/living/carbon/human/species/alien/newBodyPart(zone, robotic, fixed_icon)
 	var/obj/item/bodypart/new_bodypart
 	switch(zone)
 		if(BODY_ZONE_L_ARM)

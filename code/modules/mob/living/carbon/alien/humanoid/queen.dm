@@ -1,4 +1,4 @@
-/mob/living/carbon/human/species/alien/humanoid/royal
+/mob/living/carbon/human/species/alien/royal
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
 	status_flags = 0
@@ -12,15 +12,15 @@
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
-/mob/living/carbon/human/species/alien/humanoid/royal/Initialize(mapload)
+/mob/living/carbon/human/species/alien/royal/Initialize(mapload)
 	. = ..()
 	// as a wise man once wrote: "pull over that ass too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-/mob/living/carbon/human/species/alien/humanoid/royal/can_inject(mob/user, target_zone, injection_flags)
+/mob/living/carbon/human/species/alien/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
-/mob/living/carbon/human/species/alien/humanoid/royal/queen
+/mob/living/carbon/human/species/alien/royal/queen
 	name = "alien queen"
 	caste = "q"
 	maxHealth = 400
@@ -28,9 +28,9 @@
 	icon_state = "alienq"
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
-/mob/living/carbon/human/species/alien/humanoid/royal/queen/Initialize(mapload)
+/mob/living/carbon/human/species/alien/royal/queen/Initialize(mapload)
 	//there should only be one queen
-	for(var/mob/living/carbon/human/species/alien/humanoid/royal/queen/Q in GLOB.carbon_list)
+	for(var/mob/living/carbon/human/species/alien/royal/queen/Q in GLOB.carbon_list)
 		if(Q == src)
 			continue
 		if(Q.stat == DEAD)
@@ -46,7 +46,7 @@
 	smallsprite.Grant(src)
 	return ..()
 
-/mob/living/carbon/human/species/alien/humanoid/royal/queen/create_internal_organs()
+/mob/living/carbon/human/species/alien/royal/queen/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
@@ -86,7 +86,7 @@
 
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/human/species/alien/user)
 	var/obj/item/queenpromote/prom
-	if(get_alien_type(/mob/living/carbon/human/species/alien/humanoid/royal/praetorian/))
+	if(get_alien_type(/mob/living/carbon/human/species/alien/royal/praetorian/))
 		to_chat(user, span_noticealien("You already have a Praetorian!"))
 		return
 	else
@@ -118,11 +118,11 @@
 	if(!isalienadult(M) || isalienroyal(M))
 		to_chat(user, span_noticealien("You may only use this with your adult, non-royal children!"))
 		return
-	if(get_alien_type(/mob/living/carbon/human/species/alien/humanoid/royal/praetorian/))
+	if(get_alien_type(/mob/living/carbon/human/species/alien/royal/praetorian/))
 		to_chat(user, span_noticealien("You already have a Praetorian!"))
 		return
 
-	var/mob/living/carbon/human/species/alien/humanoid/A = M
+	var/mob/living/carbon/human/species/alien/A = M
 	if(A.stat == CONSCIOUS && A.mind && A.key)
 		if(!user.usePlasma(500))
 			to_chat(user, span_noticealien("You must have 500 plasma stored to use this!"))
@@ -130,7 +130,7 @@
 
 		to_chat(A, span_noticealien("The queen has granted you a promotion to Praetorian!"))
 		user.visible_message(span_alertalien("[A] begins to expand, twist and contort!"))
-		var/mob/living/carbon/human/species/alien/humanoid/royal/praetorian/new_prae = new (A.loc)
+		var/mob/living/carbon/human/species/alien/royal/praetorian/new_prae = new (A.loc)
 		A.mind.transfer_to(new_prae)
 		qdel(A)
 		qdel(src)

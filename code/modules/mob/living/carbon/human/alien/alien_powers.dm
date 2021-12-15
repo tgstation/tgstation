@@ -231,13 +231,13 @@
 /obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user,msg,forced)
 	..()
 	if(isalienadult(user))
-		var/mob/living/carbon/human/species/alien/humanoid/A = user
+		var/mob/living/carbon/human/species/alien/A = user
 		A.drooling = 1
 		A.update_icons()
 
 /obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
 	if(isalienadult(ranged_ability_user))
-		var/mob/living/carbon/human/species/alien/humanoid/A = ranged_ability_user
+		var/mob/living/carbon/human/species/alien/A = ranged_ability_user
 		A.drooling = 0
 		A.update_icons()
 	..()

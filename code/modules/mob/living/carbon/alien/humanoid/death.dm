@@ -1,5 +1,5 @@
 //When the alien queen dies, all others must pay the price for letting her die.
-/mob/living/carbon/human/species/alien/humanoid/royal/queen/death(gibbed)
+/mob/living/carbon/human/species/alien/royal/queen/death(gibbed)
 	if(stat == DEAD)
 		return
 

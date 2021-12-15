@@ -822,7 +822,7 @@
 	else if(direct & WEST)
 		set_lying_angle(270)
 
-/mob/living/carbon/human/species/alien/humanoid/lying_angle_on_movement(direct)
+/mob/living/carbon/human/species/alien/lying_angle_on_movement(direct)
 	return
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
@@ -1181,12 +1181,12 @@
 			var/xeno_type
 			if(ckey)
 				xeno_type = pick(
-					/mob/living/carbon/human/species/alien/humanoid/hunter,
-					/mob/living/carbon/human/species/alien/humanoid/sentinel,
+					/mob/living/carbon/human/species/alien/hunter,
+					/mob/living/carbon/human/species/alien/sentinel,
 				)
 			else
 				xeno_type = pick(
-					/mob/living/carbon/human/species/alien/humanoid/hunter,
+					/mob/living/carbon/human/species/alien/hunter,
 					/mob/living/simple_animal/hostile/alien/sentinel,
 				)
 			new_mob = new xeno_type(loc)

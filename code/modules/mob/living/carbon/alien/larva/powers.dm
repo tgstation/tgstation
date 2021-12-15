@@ -51,14 +51,14 @@
 		if(user.incapacitated()) //something happened to us while we were choosing.
 			return
 
-		var/mob/living/carbon/human/species/alien/humanoid/new_xeno
+		var/mob/living/carbon/human/species/alien/new_xeno
 		switch(alien_caste)
 			if("Hunter")
-				new_xeno = new /mob/living/carbon/human/species/alien/humanoid/hunter(L.loc)
+				new_xeno = new /mob/living/carbon/human/species/alien/hunter(L.loc)
 			if("Sentinel")
-				new_xeno = new /mob/living/carbon/human/species/alien/humanoid/sentinel(L.loc)
+				new_xeno = new /mob/living/carbon/human/species/alien/sentinel(L.loc)
 			if("Drone")
-				new_xeno = new /mob/living/carbon/human/species/alien/humanoid/drone(L.loc)
+				new_xeno = new /mob/living/carbon/human/species/alien/drone(L.loc)
 
 		L.alien_evolve(new_xeno)
 		return

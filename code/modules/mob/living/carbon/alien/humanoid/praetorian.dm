@@ -1,17 +1,17 @@
-/mob/living/carbon/human/species/alien/humanoid/royal/praetorian
+/mob/living/carbon/human/species/alien/royal/praetorian
 	name = "alien praetorian"
 	caste = "p"
 	maxHealth = 250
 	health = 250
 	icon_state = "alienp"
 
-/mob/living/carbon/human/species/alien/humanoid/royal/praetorian/Initialize(mapload)
+/mob/living/carbon/human/species/alien/royal/praetorian/Initialize(mapload)
 	real_name = name
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
 	. = ..()
 
-/mob/living/carbon/human/species/alien/humanoid/royal/praetorian/create_internal_organs()
+/mob/living/carbon/human/species/alien/royal/praetorian/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
@@ -33,8 +33,8 @@
 	if(node.recent_queen_death)
 		to_chat(user, span_warning("You are still too burdened with guilt to evolve into a queen."))
 		return FALSE
-	if(!get_alien_type(/mob/living/carbon/human/species/alien/humanoid/royal/queen))
-		var/mob/living/carbon/human/species/alien/humanoid/royal/queen/new_xeno = new (user.loc)
+	if(!get_alien_type(/mob/living/carbon/human/species/alien/royal/queen))
+		var/mob/living/carbon/human/species/alien/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return TRUE
 	else

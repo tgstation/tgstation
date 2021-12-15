@@ -1,11 +1,19 @@
+GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
+	/datum/strippable_item/hand/left,
+	/datum/strippable_item/hand/right,
+	/datum/strippable_item/mob_item_slot/handcuffs,
+	/datum/strippable_item/mob_item_slot/legcuffs,
+)))
+
 /mob/living/carbon/human/species/alien
 	name = "alien"
 	icon = 'icons/mob/alien.dmi'
 	race = /datum/species/alien
 	gender = FEMALE //All xenos are girls!!
 	faction = list(ROLE_ALIEN)
-	sight = SEE_MOBS
+	limb_destroyer = TRUE
 	bubble_icon = "alien"
+	hud_type = /datum/hud/human/alien
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	pass_flags = PASSTABLE
 	status_flags = (CANUNCONSCIOUS | CANPUSH)
@@ -13,6 +21,10 @@
 
 	///Xenomorph names, changed overtime through evolution
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+
+	var/caste = ""
+	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
+	var/drooling = 0 //For Neruotoxic spit overlays
 
 
 /**
@@ -31,6 +43,27 @@
 /mob/living/carbon/human/species/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
+/mob/living/carbon/human/species/alien/set_name()
+	if(numba)
+		name = "[name] ([numba])"
+		real_name = name
+
+/mob/living/carbon/human/species/alien/update_inv_handcuffed()
+	remove_overlay(HANDCUFF_LAYER)
+	var/cuff_icon = "aliencuff"
+	var/dmi_file = 'icons/mob/alien.dmi'
+
+	if(mob_size == MOB_SIZE_LARGE)
+		cuff_icon = "aliencuff_[caste]"
+		dmi_file = 'icons/mob/alienqueen.dmi'
+
+	if(handcuffed)
+		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
+		if(handcuffed.blocks_emissive)
+			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
+
+		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
+		apply_overlay(HANDCUFF_LAYER)
 
 /mob/living/carbon/human/species/alien/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
@@ -48,6 +81,9 @@
 	if(!breath || (breath.total_moles() == 0))
 		//Aliens breathe in vaccuum
 		return FALSE
+
+	if(breath.total_moles() > 0 && !sneaking)
+		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 
 	if(health <= HEALTH_THRESHOLD_CRIT)
 		adjustOxyLoss(2)
@@ -134,6 +170,16 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/human/species/alien/can_hold_items(obj/item/I)
 	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
+//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+/proc/get_alien_type(alienpath)
+	for(var/mob/living/carbon/human/species/alien/A in GLOB.alive_mob_list)
+		if(!istype(A, alienpath))
+			continue
+		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		return A
+	return FALSE
+
 
 /**
  * ALIEN SUBTYPES
@@ -145,7 +191,7 @@ Des: Removes all infected images from the alien.
  * - Queen
  */
 
-/mob/living/carbon/human/species/alien/humanoid/drone
+/mob/living/carbon/human/species/alien/drone
 	name = "alien drone"
 	race = /datum/species/alien/drone
 	caste = "d"
@@ -153,7 +199,7 @@ Des: Removes all infected images from the alien.
 	health = 125
 	icon_state = "aliend"
 
-/mob/living/carbon/human/species/alien/humanoid/hunter
+/mob/living/carbon/human/species/alien/hunter
 	name = "alien hunter"
 	race = /datum/species/alien/hunter
 	caste = "h"
@@ -161,7 +207,7 @@ Des: Removes all infected images from the alien.
 	health = 125
 	icon_state = "alienh"
 
-/mob/living/carbon/human/species/alien/humanoid/sentinel
+/mob/living/carbon/human/species/alien/sentinel
 	name = "alien sentinel"
 	race = /datum/species/alien/sentinel
 	caste = "s"

@@ -680,8 +680,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/human/species/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/human/species/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
+	for(var/mob/living/carbon/human/species/alien/M in A)//Aliens are worth twice as much as humans.
+		if(istype(M, /mob/living/carbon/human/species/alien/royal/queen))//Queens are worth three times as much as humans.
 			if(M.stat == DEAD)
 				captured_amount+=1.5
 			else
