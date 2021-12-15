@@ -26,9 +26,67 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 	var/drooling = 0 //For Neruotoxic spit overlays
 
+//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+/proc/get_alien_type(alienpath)
+	for(var/mob/living/carbon/human/species/alien/A in GLOB.alive_mob_list)
+		if(!istype(A, alienpath))
+			continue
+		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		return A
+	return FALSE
 
 /**
- * These should eventually get removed
+ * ALIEN SUBTYPES
+ *
+ * - Drone
+ * - Hunter
+ * - Sentinel
+ * - Praetorian
+ * - Queen
+ */
+
+/mob/living/carbon/human/species/alien/drone
+	name = "alien drone"
+	race = /datum/species/alien/drone
+	caste = "d"
+	icon_state = "aliend"
+
+/mob/living/carbon/human/species/alien/hunter
+	name = "alien hunter"
+	race = /datum/species/alien/hunter
+	caste = "h"
+	icon_state = "alienh"
+
+/mob/living/carbon/human/species/alien/sentinel
+	name = "alien sentinel"
+	race = /datum/species/alien/sentinel
+	caste = "s"
+	icon_state = "aliens"
+
+/mob/living/carbon/human/species/alien/praetorian
+	icon = 'icons/mob/alienqueen.dmi'
+	race = /datum/species/alien/praetorian
+	status_flags = NONE // CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
+	pixel_x = -16
+	base_pixel_x = -16
+	bubble_icon = "alienroyal"
+	mob_size = MOB_SIZE_LARGE
+	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
+	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
+
+	///File used for the inhand items
+	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
+
+/mob/living/carbon/human/species/alien/praetorian/queen
+	name = "alien queen"
+	race = /datum/species/alien/praetorian/queen
+	caste = "q"
+	icon_state = "alienq"
+
+
+/**
+ * CHOPPING BLOCK LIST BELOW
  */
 
 /mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
@@ -211,62 +269,3 @@ Des: Removes all infected images from the alien.
 		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
 	qdel(src)
-
-//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-/proc/get_alien_type(alienpath)
-	for(var/mob/living/carbon/human/species/alien/A in GLOB.alive_mob_list)
-		if(!istype(A, alienpath))
-			continue
-		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
-			continue
-		return A
-	return FALSE
-
-
-/**
- * ALIEN SUBTYPES
- *
- * - Drone
- * - Hunter
- * - Sentinel
- * - Praetorian
- * - Queen
- */
-
-/mob/living/carbon/human/species/alien/drone
-	name = "alien drone"
-	race = /datum/species/alien/drone
-	caste = "d"
-	icon_state = "aliend"
-
-/mob/living/carbon/human/species/alien/hunter
-	name = "alien hunter"
-	race = /datum/species/alien/hunter
-	caste = "h"
-	icon_state = "alienh"
-
-/mob/living/carbon/human/species/alien/sentinel
-	name = "alien sentinel"
-	race = /datum/species/alien/sentinel
-	caste = "s"
-	icon_state = "aliens"
-
-/mob/living/carbon/human/species/alien/praetorian
-	icon = 'icons/mob/alienqueen.dmi'
-	race = /datum/species/alien/praetorian
-	status_flags = NONE // CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
-	pixel_x = -16
-	base_pixel_x = -16
-	bubble_icon = "alienroyal"
-	mob_size = MOB_SIZE_LARGE
-	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
-
-	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
-
-
-/mob/living/carbon/human/species/alien/praetorian/queen
-	name = "alien queen"
-	race = /datum/species/alien/praetorian/queen
-	caste = "q"
-	icon_state = "alienq"
