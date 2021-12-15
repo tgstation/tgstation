@@ -1,4 +1,0 @@
-author: "gbfree"
-delete-after: True
-changes: 
-  - bugfix: "fix kilostation emergency pods controls staying locked at red and delta alerts"

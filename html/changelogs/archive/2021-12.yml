@@ -402,3 +402,26 @@
   tralezab:
   - bugfix: fugitives are now their own antagonist toggle, instead of polling for
       traitors for some reason
+2021-12-15:
+  Azarak:
+  - rscadd: Gas Masks now limit your field of view
+  - rscadd: Added field of view mechanics. It's darkness can be tweaked by a pref
+  - rscadd: Blind, nearsighted and fov-limited people will now see sounds as visual
+      effects.
+  Ghilker:
+  - bugfix: fix oversight where HFR can EMP its own APC
+  LemonInTheDark:
+  - bugfix: Fixed gas flowing into windows from above, I am.... so tired
+  - bugfix: Fixes gas sometimes not moving up from below after a structure change,
+      see above
+  Sealed101:
+  - bugfix: CentCom has finally begun shipping helmets with working flashlight mounts
+      to Deltastation's armory.
+  armhulen:
+  - refactor: Mob spawns are refactored, no more assortment of "random, instant, and
+      roundstart" vars on every mob spawn type
+  - refactor: if there are some minimal differences in how mob spawners feel, that's
+      why!
+  gbfree:
+  - bugfix: fix kilostation emergency pods controls staying locked at red and delta
+      alerts
