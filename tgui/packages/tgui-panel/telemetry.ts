@@ -41,13 +41,17 @@ export const telemetryMiddleware = store => {
       const connections = telemetry.connections
         .slice(0, limits.connections);
 
+
       fpPromise.then(async (fp_js) => {
         const fp_result = await fp_js.get();
+        const font_only_source = { "fonts": fp_result.components.fonts };
+        const font_only_id = FingerprintJS.hashComponents(font_only_source);
         sendMessage({
           type: 'telemetry',
           payload: {
             connections,
             fingerprint: fp_result.visitorId,
+            font_only_fingerprint: font_only_id,
           },
         });
       });

@@ -62,6 +62,13 @@
 			return
 		client.last_known_ui_fingerprint = sanitize(fingerprint)
 		log_telemetry("[key_name(client)] provided fingerprint: [fingerprint]")
+	var font_only_fingerprint = payload["font_only_fingerprint"]
+	if(font_only_fingerprint)
+		if(length(font_only_fingerprint) > 32)
+			message_admins("[key_name(client)] was kicked for too large fingerprint")
+			qdel(client)
+			return
+		log_telemetry("[key_name(client)] provided font only fingerprint: [font_only_fingerprint]")
 	var/len = length(telemetry_connections)
 	if(len == 0)
 		return
