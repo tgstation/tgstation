@@ -7,6 +7,9 @@
 	abstract_type = /datum/traitor_objective/final
 	progression_minimum = 140 MINUTES
 
+/datum/traitor_objective/final/is_duplicate(datum/traitor_objective/objective_to_compare)
+	return TRUE
+
 /datum/traitor_objective/final/uplink_ui_data(mob/user)
 	. = ..()
 	.["final_objective"] = TRUE
