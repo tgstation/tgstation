@@ -105,7 +105,7 @@
 			else
 				body += "<A href='?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(M)]'>Make Ghost</A> | "
 
-			if(ishuman(M) && !ismonkey(M))
+			if(ishuman(M) && !ismonkey(M) && !isalien(M))
 				body += "<b>Human</b> | "
 			else
 				body += "<A href='?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(M)]'>Make Human</A> | "

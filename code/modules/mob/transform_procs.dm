@@ -196,7 +196,11 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/alien_caste = pick("Hunter","Sentinel","Drone")
+	var/alien_caste = pick(
+		"Hunter",
+		"Sentinel",
+		"Drone",
+	)
 	var/mob/living/carbon/human/new_xeno
 	switch(alien_caste)
 		if("Hunter")
