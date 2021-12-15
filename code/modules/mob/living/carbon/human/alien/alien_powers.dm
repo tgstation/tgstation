@@ -282,7 +282,7 @@
 
 	action_icon_state = "alien_sneak"
 
-/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/human/user)
+/obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/human/species/alien/user)
 	if(!active)
 		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
 		user.sneaking = 1

@@ -125,7 +125,7 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 
 /datum/species/alien/spec_can_hold_items(obj/item/held_item)
-	return (I && (I.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
+	return (held_item && (held_item.item_flags & XENOMORPH_HOLDABLE || ISADVANCEDTOOLUSER(src)) && ..())
 
 /datum/species/alien/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H.stat == DEAD)
