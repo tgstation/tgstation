@@ -128,6 +128,20 @@
 	H.update_icons()
 	H.status_flags |= CANPUSH
 
+
+/datum/species/alien/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+	if(isalien(target))
+		target.set_resting(FALSE)
+		target.AdjustStun(-60)
+		target.AdjustKnockdown(-60)
+		target.AdjustImmobilized(-60)
+		target.AdjustParalyzed(-60)
+		target.AdjustUnconscious(-60)
+		target.AdjustSleeping(-100)
+		user.visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
+		return TRUE
+	. = ..()
+
 /datum/species/alien/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_shields(user, 0, "the [user.name]"))
 		user.visible_message(span_danger("[user] attempts to touch [target]!"), \
@@ -157,16 +171,6 @@
 						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
 		to_chat(user, span_warning("You attempt to touch [target]!"))
 		return FALSE
-	if(isalien(target))
-		target.set_resting(FALSE)
-		target.AdjustStun(-60)
-		target.AdjustKnockdown(-60)
-		target.AdjustImmobilized(-60)
-		target.AdjustParalyzed(-60)
-		target.AdjustUnconscious(-60)
-		target.AdjustSleeping(-100)
-		user.visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
-		return TRUE
 	. = ..()
 
 /datum/species/alien/get_scream_sound(mob/living/carbon/human/alien)

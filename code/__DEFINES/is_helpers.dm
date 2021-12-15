@@ -74,23 +74,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
+#define isalien(A) (istype(A, /mob/living/carbon/human/species/alien) || istype(A, /mob/living/simple_animal/hostile/alien))
 #define isandroid(A) (is_species(A, /datum/species/android))
-
-//more carbon mobs
-
-#define islarva(A) (istype(A, /mob/living/simple_animal/hostile/alien_larva))
-
-#define isalien(A) (istype(A, /mob/living/carbon/human/species/alien))
-
-#define isalienadult(A) (istype(A, /mob/living/carbon/human/species/alien) || istype(A, /mob/living/simple_animal/hostile/alien))
-
-#define isalienhunter(A) (istype(A, /mob/living/carbon/human/species/alien/hunter))
-
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/human/species/alien/sentinel))
-
-#define isalienroyal(A) (istype(A, /mob/living/carbon/human/species/alien/royal))
-
-#define isalienqueen(A) (istype(A, /mob/living/carbon/human/species/alien/royal/queen))
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
@@ -136,6 +121,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
+
+#define islarva(A) (istype(A, /mob/living/simple_animal/hostile/alien_larva))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 

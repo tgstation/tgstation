@@ -234,10 +234,7 @@
 					if(ismonkey(M))
 						M_job = "Monkey"
 					else if(isalien(M)) //aliens
-						if(islarva(M))
-							M_job = "Alien larva"
-						else
-							M_job = ROLE_ALIEN
+						M_job = ROLE_ALIEN
 					else if(ishuman(M))
 						M_job = M.job
 					else
@@ -258,6 +255,8 @@
 						M_job = "Corgi"
 					else if(isslime(M))
 						M_job = "slime"
+					else if(islarva(M))
+						M_job = "Alien larva"
 					else
 						M_job = "Animal"
 
