@@ -23,6 +23,9 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
+	var/list/possible_strippable = GLOB.strippable_human_items
+	if(isalien(src))
+		possible_strippable = GLOB.strippable_alien_humanoid_items
 	AddElement(/datum/element/strippable, possible_strippable, /mob/living/carbon/human/.proc/should_strip)
 	GLOB.human_list += src
 	var/static/list/loc_connections = list(

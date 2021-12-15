@@ -11,8 +11,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
 	limb_destroyer = 1
-	hud_type = /datum/hud/alien
-	possible_strippable = GLOB.strippable_alien_humanoid_items
+	hud_type = /datum/hud/human/alien
 	melee_damage_lower = 20 //Refers to unarmed damage, aliens do unarmed attacks.
 	melee_damage_upper = 20
 	var/caste = ""
