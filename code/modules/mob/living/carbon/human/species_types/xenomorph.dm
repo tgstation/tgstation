@@ -97,8 +97,12 @@
 /datum/species/alien/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
 	C.apply_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
+	if(!C.mind.has_antag_datum(/datum/antagonist/xeno))
+		C.mind.add_antag_datum(/datum/antagonist/xeno)
 
 /datum/species/alien/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	if(C.mind.has_antag_datum(/datum/antagonist/xeno))
+		C.mind.remove_antag_datum(/datum/antagonist/xeno)
 	C.remove_status_effect(/datum/status_effect/agent_pinpointer/xeno_queen)
 	return ..()
 

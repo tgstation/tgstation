@@ -31,11 +31,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
  * These should eventually get removed
  */
 
-/mob/living/carbon/human/species/alien/mind_initialize()
-	..()
-	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		mind.add_antag_datum(/datum/antagonist/xeno)
-
 /mob/living/carbon/human/species/alien/update_damage_overlays() //aliens don't have damage overlays.
 	return
 
@@ -44,9 +39,6 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/human/species/alien/update_body_parts()//we don't use the bodyparts layer for aliens.
 	return
-
-/mob/living/carbon/human/species/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 /mob/living/carbon/human/species/alien/set_name()
 	if(numba)
