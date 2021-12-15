@@ -20,7 +20,7 @@
 	if(!isturf(user.loc))
 		to_chat(user, span_warning("You can't evolve here!"))
 		return FALSE
-	if(!get_alien_type(mob/living/carbon/human/species/alien/praetorian))
+	if(!get_alien_type(/mob/living/carbon/human/species/alien/praetorian))
 		var/mob/living/carbon/human/species/alien/praetorian/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return TRUE
@@ -46,8 +46,8 @@
 	if(node.recent_queen_death)
 		to_chat(user, span_warning("You are still too burdened with guilt to evolve into a queen."))
 		return FALSE
-	if(!get_alien_type(mob/living/carbon/human/species/alien/praetorian/queen))
-		varmob/living/carbon/human/species/alien/praetorian/queen/new_xeno = new (user.loc)
+	if(!get_alien_type(/mob/living/carbon/human/species/alien/praetorian/queen))
+		var/mob/living/carbon/human/species/alien/praetorian/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return TRUE
 	else
@@ -70,7 +70,7 @@
 
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/human/species/alien/user)
 	var/obj/item/queenpromote/prom
-	if(get_alien_type(mob/living/carbon/human/species/alien/praetorian))
+	if(get_alien_type(/mob/living/carbon/human/species/alien/praetorian))
 		to_chat(user, span_noticealien("You already have a Praetorian!"))
 		return
 	else
@@ -102,7 +102,7 @@
 	if(!isalien(M))
 		to_chat(user, span_noticealien("You may only use this with your adult, non-royal children!"))
 		return
-	if(get_alien_type(mob/living/carbon/human/species/alien/praetorian))
+	if(get_alien_type(/mob/living/carbon/human/species/alien/praetorian))
 		to_chat(user, span_noticealien("You already have a Praetorian!"))
 		return
 

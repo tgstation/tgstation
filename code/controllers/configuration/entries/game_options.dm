@@ -179,7 +179,7 @@
 	/mob/living/silicon/pai = 1,
 	/mob/living/carbon/human/species/alien/hunter = -1,
 	/mob/living/carbon/human/species/alien/praetorian = 1,
-	mob/living/carbon/human/species/alien/praetorian/queen = 3
+	/mob/living/carbon/human/species/alien/praetorian/queen = 3
 	)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()

@@ -302,7 +302,7 @@
 	C.RemoveAbility(new /obj/effect/proc_holder/alien/royal/queen/promote)
 	return ..()
 
-/datum/species/alien/praetorian/queen/death(gibbed, mob/living/carbon/human/H)
+/datum/species/alien/praetorian/queen/spec_death(gibbed, mob/living/carbon/human/H)
 	for(var/mob/living/carbon/all_carbons in GLOB.alive_mob_list)
 		if(all_carbons == H)
 			continue
