@@ -14,6 +14,8 @@
 
 	var/obj/item/disk/surgery/sleeper_protocol/disk
 
+	var/mob/living/current_registered_mob
+
 /datum/traitor_objective/sleeper_protocol/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!disk)
@@ -26,13 +28,31 @@
 				return
 			disk = new(user.drop_location())
 			user.put_in_hand(disk)
+			AddComponent(/datum/component/traitor_objective_register, disk \
+				fail_signals = COMSIG_PARENT_QDELETING)
 
+/datum/traitor_objective/sleeper_protocol/proc/handle_mind_swap(datum/mind/source, mob/old_target)
+	SIGNAL_HANDLER
+	if(current_registered_mob)
+		UnregisterSignal(current_registered_mob, COMSIG_MOB_SURGEY_STEP_SUCCESS)
+	RegisterSignal(mind.current, COMSIG_MOB_SURGERY_STEP_SUCCESS, .proc/on_surgery_success)
+	current_registered_mob = mind.current
+
+/datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	SIGNAL_HANDLER
+	if(istype(source, /datum/surgery_step/brainwash/sleeper_agent))
+		succeed_objective()
 
 /datum/traitor_objective/sleeper_protocol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/job = generating_for.assigned_role
 	if(!(job.title in limited_to))
 		return FALSE
+	RegisterSignal(generating_for, COMSIG_MIND_TRANSFERRED, .proc/handle_mind_swap)
+	handle_mind_swap(generating_for)
 	return TRUE
+
+/datum/traitor_objective/sleeper_protocol/ungenerate_objective()
+	disk = null
 
 /datum/traitor_objective/sleeper_protocol/is_duplicate()
 	return TRUE
@@ -56,7 +76,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
 
-/datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/advanced/brainwashing_sleeper/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)

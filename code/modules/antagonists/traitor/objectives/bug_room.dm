@@ -97,6 +97,7 @@
 /obj/item/traitor_bug
 	name = "suspicious device"
 	desc = "It looks dangerous"
+	item_flags = EXAMINE_SKIP
 
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bug"
