@@ -89,6 +89,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 			icon_state = "[base_icon]_open"
 	return ..()
 
+/obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
+	if(gone == internal_tank)
+		internal_tank = null
+	return ..()
+
 /obj/machinery/bluespace_vendor/process()
 	if(mode == BS_MODE_OPEN)
 		return
