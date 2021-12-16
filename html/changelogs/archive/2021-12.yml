@@ -425,3 +425,17 @@
   gbfree:
   - bugfix: fix kilostation emergency pods controls staying locked at red and delta
       alerts
+2021-12-16:
+  SuperNovaa41:
+  - bugfix: Fixes the security warrant computer runtiming if you have no ID.
+  jlsnow301:
+  - bugfix: TGUI text input will now let you submit default values without rewriting
+      the input
+  - bugfix: TGUI text and number input will now accept pressing ENTER anywhere on
+      the window (assuming the input is valid)
+  - refactor: Many more inputs have been converted to TGUI - PDA messaging, GPS tags,
+      cult runes, roulette machines, custom vendors, more.
+  vincentiusvin:
+  - bugfix: fixed rough iron false wall telling you that you need two rods instead
+      of five.
+  - bugfix: fixed rough iron wall dropping two rods instead of five.

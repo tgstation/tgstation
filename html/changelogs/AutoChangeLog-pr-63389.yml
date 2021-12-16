@@ -1,5 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixed rough iron false wall telling you that you need two rods instead of five."
-  - bugfix: "fixed rough iron wall dropping two rods instead of five."
