@@ -16,9 +16,9 @@
 	var/list/jobs_to_revolt = list()
 	var/list/citizens = list()
 
-	///departments that are already independent, these will be disallowed to be randomly picked
+	//departments that are already independent, these will be disallowed to be randomly picked
 	var/list/independent_departments = list()
-	///reference to all independent nation teams
+	//reference to all independent nation teams
 	var/list/team_datums = list()
 	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
 		var/independent_department_type = separatist_datum.owner?.assigned_role.departments_list[1]
@@ -29,7 +29,7 @@
 		//picks a random department if none was given
 		department = pick(list(/datum/job_department/assistant, /datum/job_department/medical, /datum/job_department/engineering, /datum/job_department/science, /datum/job_department/cargo, /datum/job_department/service, /datum/job_department/security) - independent_departments)
 		if(!department)
-			return "Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!"
+			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
 
 	department = SSjob.get_department_type(department)
 
@@ -61,9 +61,8 @@
 	//if we didn't convert anyone we just kill the team datum, otherwise cleanup and make official
 	if(!citizens.len)
 		qdel(nation)
-		return "The nation of [nation.name] did not have enough potential members to be created."
-
-
+		message_admins("The nation of [nation.name] did not have enough potential members to be created.")
+		return
 	var/jobs_english_list = english_list(jobs_to_revolt)
 	message_admins("The nation of [nation.name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
 	if(announcement)

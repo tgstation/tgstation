@@ -213,10 +213,3 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
-
-///Separatist specific vars
-
-/// Example of this naming scheme: "Powertopia"
-#define NATION_NAMING_PREFIXSUFFIX "prefixsuffix"
-/// Example of this naming scheme: "The roving clans of Powertopia"
-#define NATION_NAMING_THE_GROUP_OF_PREFIXSUFFIX "the group of prefixsuffix"
