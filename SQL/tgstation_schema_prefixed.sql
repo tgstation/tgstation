@@ -689,7 +689,7 @@ CREATE TABLE `SS13_telemetry_connections` (
     `computer_id` VARCHAR(32) NOT NULL,
     `first_round_id` INT(11) UNSIGNED NULL,
     `latest_round_id` INT(11) UNSIGNED NULL,
-	PRIMARY KEY (`id`),
+    PRIMARY KEY (`id`),
     UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
 );
 
