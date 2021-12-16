@@ -851,7 +851,7 @@
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
-	icon = "lightbulb"
+	icon = "house-user"
 	value = -1
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
 	hardcore_value = 2
