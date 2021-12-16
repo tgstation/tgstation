@@ -34,7 +34,7 @@
 	name = "plain cake slice"
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "plaincake_slice"
-	tastes = list("sweetness" = 2,"cake" = 5)
+	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
 
 /obj/item/food/cake/carrot
@@ -185,7 +185,7 @@
 /obj/item/food/cake/birthday/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday, 5, 30)
 
-/obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/M) //super sekrit club
+/obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/microwave) //super sekrit club
 	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
 	qdel(src)
 
@@ -211,14 +211,14 @@
 
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
-	user.apply_damage(30,BRUTE,BODY_ZONE_HEAD)
+	user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
 
-/obj/item/food/cake/birthday/energy/attack(mob/living/M, mob/living/user)
+/obj/item/food/cake/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM) && M != user) //Prevents pacifists from attacking others directly
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && target_mob != user) //Prevents pacifists from attacking others directly
 		return
-	energy_bite(M, user)
+	energy_bite(target_mob, user)
 
 /obj/item/food/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
 	new /obj/item/clothing/head/hardhat/cakehat/energycake(get_turf(src))
@@ -235,14 +235,14 @@
 
 /obj/item/food/cakeslice/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!</font>")
-	user.apply_damage(18,BRUTE,BODY_ZONE_HEAD)
+	user.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
 	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
 
-/obj/item/food/cakeslice/birthday/energy/attack(mob/living/M, mob/living/user)
+/obj/item/food/cakeslice/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_PACIFISM) && M != user) //Prevents pacifists from attacking others directly
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && target_mob != user) //Prevents pacifists from attacking others directly
 		return
-	energy_bite(M, user)
+	energy_bite(target_mob, user)
 
 /obj/item/food/cake/apple
 	name = "apple cake"
@@ -316,7 +316,7 @@
 	name = "blackberry and strawberry vanilla cake slice"
 	desc = "Just a slice of cake  filled with assortment of blackberries and strawberries!"
 	icon_state = "blackbarry_strawberries_cake_vanilla_slice"
-	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2,"cake" = 3)
+	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2, "cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/bscc // blackbarry strawberries chocolate cake <- this is a relic from before resprite
@@ -324,7 +324,7 @@
 	desc = "A chocolate cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF."
 	icon_state = "liars_cake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/coco = 5)
-	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
+	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2, "cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/bscc/MakeProcessable()
@@ -334,7 +334,7 @@
 	name = "strawberry chocolate cake slice"
 	desc = "Just a slice of cake with five strawberries on top. For some reason, this configuration of cake is particularly aesthetically pleasing to AIs in SELF." //yes, I know the one referenced has cherries, but I'm not implementing a new cake today.
 	icon_state = "liars_slice"
-	tastes = list("strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
+	tastes = list("strawberries" = 2, "chocolate" = 2, "sweetness" = 2, "cake" = 3)
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
 /obj/item/food/cake/holy_cake

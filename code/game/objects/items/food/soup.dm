@@ -7,7 +7,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("tasteless soup" = 1)
 	foodtypes = VEGETABLES
-	eatverbs = list("slurp","sip","inhale","drink")
+	eatverbs = list("slurp", "sip", "inhale", "drink")
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/soup/wish
@@ -185,7 +185,7 @@
 
 /obj/item/food/soup/beet/Initialize(mapload)
 	. = ..()
-	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
+	name = pick("borsch", "bortsch", "borstch", "borsh", "borshch", "borscht")
 	tastes = list(name = 1)
 
 

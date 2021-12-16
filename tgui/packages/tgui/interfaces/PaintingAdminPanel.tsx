@@ -1,3 +1,4 @@
+import { decodeHtmlEntities } from 'common/string';
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
@@ -50,7 +51,7 @@ export const PaintingAdminPanel = (props, context) => {
             <LabeledList>
               <LabeledList.Item label="md5" content={chosenPainting.md5} />
               <LabeledList.Item label="title">
-                <Box inline>{chosenPainting.title}</Box>
+                <Box inline style={{ "word-break": "break-all" }}>{decodeHtmlEntities(chosenPainting.title)}</Box>
                 <Button onClick={() => act("rename", { ref: chosenPainting.ref })} icon="edit" />
               </LabeledList.Item>
               <LabeledList.Item label="creator ckey" content={chosenPainting.creator_ckey} />
@@ -99,7 +100,10 @@ export const PaintingAdminPanel = (props, context) => {
               <Table.Row
                 key={painting.ref}
                 className="candystripe">
-                <Table.Cell>{painting.title}</Table.Cell>
+                <Table.Cell
+                  style={{ "word-break": "break-all" }}>
+                  {decodeHtmlEntities(painting.title)}
+                </Table.Cell>
                 <Table.Cell>{painting.creator_ckey}</Table.Cell>
                 <Table.Cell><img
                   src={resolveAsset(`paintings_${painting.md5}`)}

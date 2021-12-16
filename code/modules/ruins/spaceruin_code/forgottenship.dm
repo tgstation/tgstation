@@ -167,7 +167,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	minimum_distance = 4
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
-	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
 
 /mob/living/simple_animal/hostile/nanotrasen/elite
 	name = "Nanotrasen Elite Assault Officer"

@@ -36,8 +36,6 @@
 	var/list/required_experiments = list()
 	/// If completed, these experiments give a specific point amount discount to the node.area
 	var/list/discount_experiments = list()
-	/// When we apply a discount to a node we add the experiment for it here to prevent excess discount applications
-	var/list/discount_used = list()
 
 /datum/techweb_node/error_node
 	id = "ERROR"
@@ -72,7 +70,7 @@
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
 	if(host)
-		var/list/actual_costs = research_costs
+		var/list/actual_costs = research_costs.Copy()
 		if(host.boosted_nodes[id])
 			var/list/boostlist = host.boosted_nodes[id]
 			for(var/booster in boostlist)
@@ -80,9 +78,8 @@
 					actual_costs[booster] -= boostlist[booster]
 		for(var/cost_type in actual_costs)
 			for(var/experiment_type in discount_experiments)
-				if(host.completed_experiments[experiment_type] && !discount_used[experiment_type]) //do we have this discount_experiment unlocked AND it wasn't applied already?
+				if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked AND it wasn't applied already?
 					actual_costs[cost_type] -= discount_experiments[experiment_type]
-					discount_used[experiment_type] = experiment_type
 		return actual_costs
 	else
 		return research_costs

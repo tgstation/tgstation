@@ -114,6 +114,8 @@ GLOBAL_VAR(families_override_theme)
 		current_theme = new theme_to_use
 	else
 		current_theme = new GLOB.families_override_theme
+	message_admins("Families has chosen the theme: [current_theme.name]")
+	log_game("FAMILIES: The following theme has been chosen: [current_theme.name]")
 	var/gangsters_to_make = length(current_theme.involved_gangs) * current_theme.starting_gangsters
 	for(var/i in 1 to gangsters_to_make)
 		if (!antag_candidates.len)
