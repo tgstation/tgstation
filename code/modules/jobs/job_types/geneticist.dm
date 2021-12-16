@@ -1,7 +1,7 @@
 /datum/job/geneticist
-	title = "Geneticist"
+	title = JOB_GENETICIST
 	description = "Alter genomes, turn monkeys into humans (and vice-versa), and make DNA backups."
-	department_head = list("Research Director")
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2

@@ -1,7 +1,7 @@
 /datum/job/roboticist
-	title = "Roboticist"
+	title = JOB_ROBOTICIST
 	description = "Build and repair the AI and cyborgs, create mechs."
-	department_head = list("Research Director")
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2

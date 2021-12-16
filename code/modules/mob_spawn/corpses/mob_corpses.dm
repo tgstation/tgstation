@@ -1,14 +1,7 @@
-//Meant for simple animals to drop lootable human bodies.
 
-//If someone can do this in a neater way, be my guest-Kor
+///all the corpses meant as mob drops yes, these definitely could be sorted properly. i invite (you) to do it!!
 
-//This has to be separate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
-
-//To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
-
-//List of different corpse types
-
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier
 	name = "Syndicate Operative"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -27,7 +20,7 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
-/obj/effect/mob_spawn/human/corpse/syndicatecommando
+/obj/effect/mob_spawn/corpse/human/syndicatecommando
 	name = "Syndicate Commando"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -46,7 +39,7 @@
 	id_trim = /datum/id_trim/chameleon/operative
 
 
-/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
+/obj/effect/mob_spawn/corpse/human/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
@@ -64,13 +57,11 @@
 	id_trim = /datum/id_trim/chameleon/operative
 
 /obj/effect/mob_spawn/human/clown/corpse
-	roundstart = FALSE
-	instant = TRUE
 	skin_tone = "caucasian1"
 	hairstyle = "Bald"
 	facial_hairstyle = "Shaved"
 
-/obj/effect/mob_spawn/human/corpse/pirate
+/obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
@@ -85,7 +76,7 @@
 	head = /obj/item/clothing/head/bandana
 
 
-/obj/effect/mob_spawn/human/corpse/pirate/ranged
+/obj/effect/mob_spawn/corpse/human/pirate/ranged
 	name = "Pirate Gunner"
 	outfit = /datum/outfit/piratecorpse/ranged
 
@@ -95,7 +86,7 @@
 	head = /obj/item/clothing/head/pirate
 
 
-/obj/effect/mob_spawn/human/corpse/russian
+/obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"
 	outfit = /datum/outfit/russiancorpse
 	hairstyle = "Bald"
@@ -111,7 +102,7 @@
 
 
 
-/obj/effect/mob_spawn/human/corpse/russian/ranged
+/obj/effect/mob_spawn/corpse/human/russian/ranged
 	outfit = /datum/outfit/russiancorpse/ranged
 
 /datum/outfit/russiancorpse/ranged
@@ -119,7 +110,7 @@
 	head = /obj/item/clothing/head/ushanka
 
 
-/obj/effect/mob_spawn/human/corpse/russian/ranged/trooper
+/obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
 	outfit = /datum/outfit/russiancorpse/ranged/trooper
 
 /datum/outfit/russiancorpse/ranged/trooper
@@ -133,7 +124,7 @@
 	mask = /obj/item/clothing/mask/balaclava
 
 
-/obj/effect/mob_spawn/human/corpse/russian/ranged/officer
+/obj/effect/mob_spawn/corpse/human/russian/ranged/officer
 	name = "Russian Officer"
 	outfit = /datum/outfit/russiancorpse/officer
 
@@ -146,7 +137,7 @@
 	head = /obj/item/clothing/head/ushanka
 
 
-/obj/effect/mob_spawn/human/corpse/wizard
+/obj/effect/mob_spawn/corpse/human/wizard
 	name = "Space Wizard Corpse"
 	outfit = /datum/outfit/wizardcorpse
 	hairstyle = "Bald"
@@ -162,7 +153,7 @@
 	head = /obj/item/clothing/head/wizard
 
 
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
 	outfit = /datum/outfit/nanotrasensoldiercorpse2
 	hairstyle = "Bald"
@@ -181,7 +172,7 @@
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
 
-/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier
+/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier
 	name = "Nanotrasen Private Security Officer"
 	outfit = /datum/outfit/nanotrasenassaultsoldiercorpse
 	hairstyle = "Bald"
@@ -200,7 +191,7 @@
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/assault
 
-/obj/effect/mob_spawn/human/corpse/cat_butcher
+/obj/effect/mob_spawn/corpse/human/cat_butcher
 	name = "The Cat Surgeon"
 	hairstyle = "Cut Hair"
 	facial_hairstyle = "Watson Mustache"
@@ -219,7 +210,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 	id_trim = /datum/id_trim/away/cat_surgeon
 
-/obj/effect/mob_spawn/human/corpse/bee_terrorist
+/obj/effect/mob_spawn/corpse/human/bee_terrorist
 	name = "BLF Operative"
 	outfit = /datum/outfit/bee_terrorist
 

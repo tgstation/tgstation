@@ -608,7 +608,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("Drone Phone")
-				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				var/alert_s = tgui_input_list(U, "Alert severity level", "Ping Drones", list("Low","Medium","High","Critical"))
 				var/area/A = get_area(U)
 				if(A && alert_s && !QDELETED(U))
 					var/msg = span_boldnotice("NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!")
@@ -630,7 +630,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = stripped_multiline_input(U, "Please enter message", name, note)
+				var/n = tgui_input_text(U, "Please enter message", name, note, multiline = TRUE)
 				if (in_range(src, U) && loc == U)
 					if (ui_mode == PDA_UI_NOTEKEEPER && n)
 						note = n
@@ -649,7 +649,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
+				var/t = tgui_input_text(U, "Enter a new ringtone", "PDA Ringtone", ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
@@ -767,7 +767,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = stripped_input(U, "Please enter message", name)
+	var/t = tgui_input_text(U, "Enter a message", "PDA Messaging")
 	if (!t || toff)
 		return
 	if(!U.canUseTopic(src, BE_CLOSE))
@@ -825,6 +825,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		"rigged" = rigged,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
+		signal.data["rigged_user"] = REF(user) // Used for bomb logging
 		signal.server_type = /obj/machinery/telecomms/hub
 		signal.data["reject"] = FALSE // Do not refuse the message
 	if (picture)
@@ -853,7 +854,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(name)] to [target_text]")
 	if(rigged)
-		log_bomber(user, "Sent a Rigged PDA message (Name: [fakename || owner]. Job: [fakejob || ownjob]) to [english_list(string_targets)] [!is_special_character(user) ? "(TRIGGED BY NON-ANTAG)" : ""]")
+		log_bomber(user, "sent a rigged PDA message (Name: [fakename || owner]. Job: [fakejob || ownjob]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [target_text]: \"[message]\""))
 	if(!silent)
 		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
@@ -865,7 +866,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return TRUE
 
 /obj/item/pda/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
-	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];target=[signal.data["rigged"] || REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
+	var/ref_target = signal.data["rigged"] ? signal.data["rigged_user"] : REF(signal.source)
+	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];target=[ref_target]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -1182,7 +1184,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/T = get_turf(src)
 
-	log_bomber(bomber, "PDA-bombed", target, "as [target.p_they()] tried to [from_message_menu ? "open the PDA message menu" : "reply to the rigged PDA message"] [bomber && !is_special_character(bomber) ? "(TRIGGED BY NON-ANTAG)" : ""]")
+	if(from_message_menu)
+		log_bomber(null, null, target, "'s PDA exploded as [target.p_they()] tried to open their PDA message menu because of a recent pda bomb.")
+	else
+		log_bomber(bomber, "successfully PDA-bombed", target, "as [target.p_they()] tried to reply to a rigged PDA message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
 
 	if (ismob(loc))
 		var/mob/M = loc

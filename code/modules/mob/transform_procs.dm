@@ -145,11 +145,11 @@
 			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
 			R.mmi.brainmob.name = real_name
 
-	R.job = "Cyborg"
+	R.job = JOB_CYBORG
 	R.notify_ai(AI_NOTIFICATION_NEW_BORG)
 
 	. = R
-	if(R.ckey && is_banned_from(R.ckey, "Cyborg"))
+	if(R.ckey && is_banned_from(R.ckey, JOB_CYBORG))
 		INVOKE_ASYNC(R, /mob/living/silicon/robot.proc/replace_banned_cyborg)
 	qdel(src)
 

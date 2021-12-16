@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - code_imp: "I've changed how job equipment and organs are loaded, if you end up with someone else's head/id card/eyes, please let me know yeah?"
-  - code_imp: "The preferences menu is now much more efficient. Hopefully you'll see less small jitters at highpop."
