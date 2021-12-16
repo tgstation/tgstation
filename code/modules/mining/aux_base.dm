@@ -24,7 +24,7 @@
 	/// If we give warnings before base is launched
 	var/launch_warning = TRUE
 	/// List of connected turrets
-	var/list/turrets
+	var/list/datum/weakref/turrets
 	/// List of all possible destinations
 	var/possible_destinations
 	/// ID of the currently selected destination of the attached base
@@ -62,28 +62,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	data["destination"] = destination
 	data["blind_drop"] = blind_drop_ready
 	data["turrets"] = list()
-	if(LAZYLEN(turrets))
-		for(var/turret in turrets)
-			var/obj/machinery/porta_turret/aux_base/base_turret = turret
-			var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
-			var/turret_status
-			if(base_turret.machine_stat & BROKEN)
-				turret_status = "ERROR"
-			else if(!base_turret.on)
-				turret_status = "Disabled"
-			else if(base_turret.raised)
-				turret_status = "Firing"
-			else
-				turret_status = "All Clear"
-			var/list/turret_data = list(
-				name = base_turret.name,
-				integrity = turret_integrity,
-				status = turret_status,
-				direction = dir2text(get_dir(src, base_turret)),
-				distance = get_dist(src, base_turret),
-				ref = REF(base_turret)
-			)
-			data["turrets"] += list(turret_data)
+	for(var/datum/weakref/turret_ref as anything in turrets)
+		var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
+		if(!istype(base_turret)) // null or invalid in turrets list? axe it
+			LAZYREMOVE(turrets, turret_ref)
+			continue
+
+		var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
+		var/turret_status
+		if(base_turret.machine_stat & BROKEN)
+			turret_status = "ERROR"
+		else if(!base_turret.on)
+			turret_status = "Disabled"
+		else if(base_turret.raised)
+			turret_status = "Firing"
+		else
+			turret_status = "All Clear"
+		var/list/turret_data = list(
+			name = base_turret.name,
+			integrity = turret_integrity,
+			status = turret_status,
+			direction = dir2text(get_dir(src, base_turret)),
+			distance = get_dist(src, base_turret),
+			ref = REF(base_turret)
+		)
+		data["turrets"] += list(turret_data)
 	if(!M)
 		data["status"] = "Missing"
 		return data
@@ -175,13 +178,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			destination = target_destination
 			return TRUE
 		if("turrets_power")
-			for(var/obj/machinery/porta_turret/aux_base/base_turret as anything in turrets)
+			for(var/datum/weakref/turret_ref as anything in turrets)
+				var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
+				if(!istype(base_turret)) // null or invalid in turrets list
+					LAZYREMOVE(turrets, turret_ref)
+					continue
+
 				base_turret.toggle_on()
 			return TRUE
 		if("single_turret_power")
-			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"]) in turrets
-			if(!istype(base_turret))
+			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"])
+			if(!istype(base_turret) || !(WEAKREF(base_turret) in turrets))
 				return
+
 			base_turret.toggle_on()
 			return TRUE
 
@@ -240,23 +249,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	minor_announce("Auxiliary base landing zone coordinates locked in for [A]. Launch command now available!")
 	to_chat(user, span_notice("Landing zone set."))
 	return ZONE_SET
-
-/*
- * Add [new_turret] to our list of turrets, and handle the case in which they're pre-emptively deleted.
- */
-/obj/machinery/computer/auxiliary_base/proc/add_turret(obj/machinery/porta_turret/aux_base/new_turret)
-	LAZYADD(turrets, new_turret)
-	RegisterSignal(new_turret, COMSIG_PARENT_QDELETING, .proc/remove_turret)
-
-/*
- * Signal proc for [COMSIG_PARENT_QDELETING], set on turrets the aux base creates.
- *
- * Remove [source] from our list of turrets, in the event they're deleted.
- */
-/obj/machinery/computer/auxiliary_base/proc/remove_turret(datum/source, force)
-	SIGNAL_HANDLER
-
-	LAZYREMOVE(turrets, source)
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"
