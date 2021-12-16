@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Cat ears will no longer display only on every other render in the preferences menu. God who added these things"
