@@ -27,7 +27,7 @@
 	icon_state = "corpseengineer"
 
 /obj/effect/mob_spawn/corpse/human/engineer/mod
-	outfit = /datum/outfit/job/engineer/gloved/mod
+	outfit = /datum/outfit/job/engineer/mod
 
 /obj/effect/mob_spawn/corpse/human/clown
 	name = "Clown"
@@ -45,7 +45,7 @@
 	icon_state = "corpseminer"
 
 /obj/effect/mob_spawn/corpse/human/miner/mod
-	outfit = /datum/outfit/job/miner/equipped/hardsuit
+	outfit = /datum/outfit/job/miner/equipped/mod
 
 /obj/effect/mob_spawn/corpse/human/miner/explorer
 	outfit = /datum/outfit/job/miner/equipped
