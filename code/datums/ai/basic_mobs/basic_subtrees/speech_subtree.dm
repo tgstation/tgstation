@@ -36,7 +36,7 @@
 
 /datum/ai_planning_subtree/random_speech/cockroach
 	speech_chance = 5
-	emote_hear = list("chitters")
+	emote_hear = list("chitters.")
 
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
