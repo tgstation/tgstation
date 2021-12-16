@@ -83,6 +83,14 @@
 	create_objectives()
 	. = ..()
 
+//give ais their role as UN
+/datum/antagonist/separatist/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	if(isAI(mob_override))
+		var/mob/living/silicon/ai/united_nations_ai = mob_override
+		united_nations_ai.laws = new /datum/ai_laws/united_nations
+		united_nations_ai.laws.associate(united_nations_ai)
+
 /datum/antagonist/separatist/on_removal()
 	remove_objectives()
 	. = ..()

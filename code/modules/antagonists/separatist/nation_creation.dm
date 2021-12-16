@@ -11,22 +11,23 @@
  *
  * Returns null if everything went well, otherwise a string describing what went wrong.
  */
-/proc/create_separatist_nation(department, announcement = FALSE, dangerous = FALSE)
+/proc/create_separatist_nation(datum/job_department/department, announcement = FALSE, dangerous = FALSE)
 
 	var/list/jobs_to_revolt = list()
-	var/nation_name
 	var/list/citizens = list()
 
-	///departments that are already independent with a reference to their nation, these will be disallowed to be randomly picked
+	///departments that are already independent, these will be disallowed to be randomly picked
 	var/list/independent_departments = list()
+	///reference to all independent nation teams
+	var/list/team_datums = list()
 	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
-		if(!separatist_datum.nation)
-			continue
-		independent_departments[separatist_datum.department] = separatist_datum.nation
+		var/independent_department_type = separatist_datum.owner?.assigned_role.departments_list[1]
+		independent_departments |= independent_department_type
+		team_datums |= separatist_datum.nation
 
 	if(!department)
 		//picks a random department if none was given
-		department = pick(list(/datum/job_department/assistant, /datum/job_department/medical, /datum/job_department/engineering, /datum/job_department/science, /datum/job_department/cargo, /datum/job_department/service, /datum/job_department/security) - cannot_pick)
+		department = pick(list(/datum/job_department/assistant, /datum/job_department/medical, /datum/job_department/engineering, /datum/job_department/science, /datum/job_department/cargo, /datum/job_department/service, /datum/job_department/security) - independent_departments)
 		if(!department)
 			return "Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!"
 
@@ -37,18 +38,15 @@
 			continue
 		jobs_to_revolt += job.title
 
-	nation_name += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
-	if(department == "Uprising of Assistants")
-		var/prefix = pick("roving clans", "barbaric tribes", "tides", "bandit kingdom", "tribal society", "marauder clans", "horde")
-		nation_name = "The [prefix] of [nation_name]"
-
+	//setup team datum
 	var/datum/team/nation/nation = new(null, jobs_to_revolt, department)
-	nation.name = nation_name
+	nation.name = department.generate_nation_name()
 	var/datum/team/department_target //dodges unfortunate runtime
-	if(independent_departments.len)
-		department_target = pick(independent_departments)
+	if(team_datums.len)
+		department_target = pick(team_datums)
 	nation.generate_nation_objectives(dangerous, department_target)
 
+	//convert current members of the department
 	for(var/mob/living/carbon/human/possible_separatist as anything in GLOB.human_list)
 		if(!possible_separatist.mind)
 			continue
@@ -58,16 +56,18 @@
 		citizens += possible_separatist
 		separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
 		nation.add_member(separatist_mind)
-		possible_separatist.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
+		possible_separatist.log_message("Was made into a separatist, long live [nation.name]!", LOG_ATTACK, color="red")
 
-	if(citizens.len)
-		var/jobs_english_list = english_list(jobs_to_revolt)
-		message_admins("The nation of [nation_name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
-		if(announcement)
-			var/announce_text = "The new independent state of [nation_name] has formed from the ashes of the [department] department!"
-			if(department == "Uprising of Assistants") //the text didn't really work otherwise
-				announce_text = "The assistants of the station have risen to form the new independent state of [nation_name]!"
-			priority_announce(announce_text, "Secession from [GLOB.station_name]",  has_important_message = TRUE)
-	else
-		return "The nation of [nation_name] did not have enough potential members to be created."
+	//if we didn't convert anyone we just kill the team datum, otherwise cleanup and make official
+	if(!citizens.len)
 		qdel(nation)
+		return "The nation of [nation.name] did not have enough potential members to be created."
+
+
+	var/jobs_english_list = english_list(jobs_to_revolt)
+	message_admins("The nation of [nation.name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
+	if(announcement)
+		var/announce_text = "The new independent state of [nation.name] has formed from the ashes of the [department.department_name] department!"
+		if(istype(department, /datum/job_department/assistant)) //the text didn't really work otherwise
+			announce_text = "The assistants of the station have risen to form the new independent state of [nation.name]!"
+		priority_announce(announce_text, "Secession from [GLOB.station_name]",  has_important_message = TRUE)

@@ -17,21 +17,30 @@
 	/// Job singleton datums associated to this department. Populated on job initialization.
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
-	var/list/nation_prefixes
-	/// For separatists, what independent name suffix does their nation get named?
-	var/list/nation_suffixes
+	var/list/nation_prefixes = list()
+
 
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
 	department_jobs += job
 	job.departments_bitflags |= department_bitflags
 
+/// Returns a nation name for this department.
+/datum/job_department/proc/generate_nation_name()
+	var/list/nation_suffixes = list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
+	return pick(nation_prefixes) + pick(nation_suffixes)
+
 /// A special assistant only department, primarily for use by the preferences menu
 /datum/job_department/assistant
 	department_name = DEPARTMENT_ASSISTANT
 	department_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
-	nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
+	nation_prefixes = list("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 	// Don't add department_head! Assistants names should not be in bold.
+
+/datum/job_department/assistant/generate_nation_name()
+	. = ..()
+	var/nomadic_name = pick("roving clans", "barbaric tribes", "tides", "bandit kingdom", "tribal society", "marauder clans", "horde")
+	return "The [nomadic_name] of [.]"
 
 /// A special captain only department, for use by the preferences menu
 /datum/job_department/captain
@@ -57,8 +66,7 @@
 	display_order = 2
 	label_class = "security"
 	latejoin_color = "#ffdddd"
-	nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
-
+	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
 /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING
@@ -68,7 +76,7 @@
 	display_order = 3
 	label_class = "engineering"
 	latejoin_color = "#ffeeaa"
-	nation_name = pick("Atomo", "Engino", "Power", "Teleco")
+	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
 
 
 /datum/job_department/medical
@@ -79,7 +87,7 @@
 	display_order = 4
 	label_class = "medical"
 	latejoin_color = "#ffddf0"
-	nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
+	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 
 
 /datum/job_department/science
@@ -90,7 +98,7 @@
 	display_order = 5
 	label_class = "science"
 	latejoin_color = "#ffddff"
-	nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
+	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 
 
 /datum/job_department/cargo
@@ -101,7 +109,7 @@
 	display_order = 6
 	label_class = "supply"
 	latejoin_color = "#ddddff"
-	nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
+	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 
 
 /datum/job_department/service
@@ -112,7 +120,7 @@
 	display_order = 7
 	label_class = "service"
 	latejoin_color = "#bbe291"
-	nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
+	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
 
 /datum/job_department/silicon
@@ -124,6 +132,8 @@
 	label_class = "silicon"
 	latejoin_color = "#ccffcc"
 
+/datum/job_department/silicon/generate_nation_name()
+	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons
 
 /// Catch-all department for undefined jobs.
 /datum/job_department/undefined
