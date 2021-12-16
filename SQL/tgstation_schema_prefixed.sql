@@ -683,7 +683,7 @@ CREATE TABLE `SS13_known_alts` (
 DROP TABLE IF EXISTS `SS13_telemetry_connections`;
 CREATE TABLE `SS13_telemetry_connections` (
     `id` INT NOT NULL AUTO_INCREMENT,
-	`ckey` VARCHAR(32) NOT NULL,
+    `ckey` VARCHAR(32) NOT NULL,
     `telemetry_ckey` VARCHAR(32) NOT NULL,
     `address` INT(10) NOT NULL,
     `computer_id` VARCHAR(32) NOT NULL,
