@@ -80,12 +80,12 @@
 	obscuredTurfs = turfs - newVisibleTurfs
 
 	var/static/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque //ba dum tsss
-	for(var/turf/added_turf as anything in visAdded)
-		added_turf.vis_contents -= vis_contents_opaque
+	//for(var/turf/added_turf as anything in visAdded)
+	//	added_turf.vis_contents -= vis_contents_opaque
 
-	for(var/turf/removed_turf as anything in visRemoved)
-		if(obscuredTurfs[removed_turf] && !istype(removed_turf, /turf/open/ai_visible))
-			removed_turf.vis_contents += vis_contents_opaque
+	//for(var/turf/removed_turf as anything in visRemoved)
+	//	if(obscuredTurfs[removed_turf] && !istype(removed_turf, /turf/open/ai_visible))
+	//		removed_turf.vis_contents += vis_contents_opaque
 
 	changed = FALSE
 
@@ -122,9 +122,9 @@
 
 	obscuredTurfs = turfs - visibleTurfs
 
-	var/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
-	for(var/turf/obscured_turf as anything in obscuredTurfs)
-		obscured_turf.vis_contents += vis_contents_opaque
+	//var/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
+	//for(var/turf/obscured_turf as anything in obscuredTurfs)
+	//	obscured_turf.vis_contents += vis_contents_opaque
 
 #undef UPDATE_BUFFER_TIME
 #undef CHUNK_SIZE
