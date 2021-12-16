@@ -24,23 +24,23 @@
 	. = ..()
 	var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[catwalk_type]_below", TURF_LAYER)
 	underlays += plating_underlay
-	update_icon(UPDATE_OVERLAYS)
-
-/turf/open/floor/catwalk_floor/update_overlays()
-	layer = covered ? CATWALK_LAYER : TURF_LAYER
-	plane = covered ? GAME_PLANE : FLOOR_PLANE
-	icon_state = covered ? "[catwalk_type]_above" : "[catwalk_type]_below"
-	. = ..()
+	update_appearance()
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	covered = !covered
 	if(!covered)
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+		layer = TURF_LAYER
+		plane = FLOOR_PLANE
+		icon_state = "[catwalk_type]_below"
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
+		layer = CATWALK_LAYER
+		plane = GAME_PLANE
+		icon_state = "[catwalk_type]_above"
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
-	update_icon(UPDATE_OVERLAYS)
+	update_appearance()
 
 /turf/open/floor/catwalk_floor/crowbar_act(mob/user, obj/item/crowbar)
 	if(covered)
