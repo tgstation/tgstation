@@ -84,21 +84,32 @@
 	theme = /datum/mod_theme/responsory
 	cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/emp_shield, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
+	var/insignia_type = /obj/item/mod/module/insignia
+
+/obj/item/mod/control/pre_equipped/responsory/Initialize(mapload, new_theme, new_skin)
+	initial_modules.Insert(1, insignia_type)
+	return ..()
 
 /obj/item/mod/control/pre_equipped/responsory/commander
+	insignia_type = /obj/item/mod/module/insignia/commander
 
 /obj/item/mod/control/pre_equipped/responsory/security
+	insignia_type = /obj/item/mod/module/insignia/security
 
 /obj/item/mod/control/pre_equipped/responsory/engineer
+	insignia_type = /obj/item/mod/module/insignia/engineer
 
 /obj/item/mod/control/pre_equipped/responsory/medic
+	insignia_type = /obj/item/mod/module/insignia/medic
 
 /obj/item/mod/control/pre_equipped/responsory/janitor
+	insignia_type = /obj/item/mod/module/insignia/janitor
 
 /obj/item/mod/control/pre_equipped/responsory/clown
+	insignia_type = /obj/item/mod/module/insignia/clown
 
 /obj/item/mod/control/pre_equipped/responsory/chaplain
-	applied_skin = "paranormal"
+	insignia_type = /obj/item/mod/module/insignia/chaplain
 
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal

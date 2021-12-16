@@ -1727,3 +1727,38 @@
 		has_tk = FALSE
 		return
 	mod.wearer.dna.remove_mutation(TK)
+
+/obj/item/mod/module/insignia
+	name = "MOD insignia module"
+	desc = "Insignia displaying your role in the response team, loud and proud."
+	icon_state = "insignia"
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/insignia)
+	overlay_state_inactive = "insignia"
+
+/obj/item/mod/module/insignia/generate_worn_overlay()
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	. = ..()
+	for(var/mutable_appearance/appearance as anything in .)
+		appearance.color = color
+
+/obj/item/mod/module/insignia/commander
+	color = COLOR_ASSEMBLY_BEIGE
+
+/obj/item/mod/module/insignia/security
+	color = COLOR_ASSEMBLY_BEIGE
+
+/obj/item/mod/module/insignia/engineer
+	color = COLOR_ASSEMBLY_BEIGE
+
+/obj/item/mod/module/insignia/medic
+	color = COLOR_ASSEMBLY_BEIGE
+
+/obj/item/mod/module/insignia/janitor
+	color = COLOR_ASSEMBLY_BEIGE
+
+/obj/item/mod/module/insignia/clown
+	color = COLOR_ASSEMBLY_BEIGE
+
+/obj/item/mod/module/insignia/chaplain
+	color = COLOR_ASSEMBLY_BEIGE

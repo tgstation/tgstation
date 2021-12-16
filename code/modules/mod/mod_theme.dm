@@ -636,7 +636,7 @@
 
 			),
 		),
-		"paranormal" = list(
+		"inquisitory" = list(
 			HELMET_FLAGS = list(
 
 			),
