@@ -88,17 +88,30 @@
 		if (!row || row.len < 3 || (!row["ckey"] || !row["address"] || !row["computer_id"]))
 			return
 
-		var/datum/db_query/insert_query = SSdbcore.NewQuery({"
-			INSERT IGNORE INTO [format_table_name("telemetry_connections")] (ckey, telemetry_ckey, address, computer_id)
-			VALUES(:ckey, :telemetry_ckey, INET_ATON(:address), :computer_id)
-		"}, list(
-			"ckey" = ckey,
-			"telemetry_ckey" = row["ckey"],
-			"address" = row["address"],
-			"computer_id" = row["computer_id"],
-		))
-
-		insert_queries += insert_query
+		if (!isnull(GLOB.round_id))
+			insert_queries += SSdbcore.NewQuery({"
+				INSERT INTO [format_table_name("telemetry_connections")] (
+					ckey,
+					telemetry_ckey,
+					address,
+					computer_id,
+					first_round_id,
+					latest_round_id
+				) VALUES(
+					:ckey,
+					:telemetry_ckey,
+					INET_ATON(:address),
+					:computer_id,
+					:round_id,
+					:round_id
+				) ON DUPLICATE KEY UPDATE latest_round_id = :round_id
+			"}, list(
+				"ckey" = ckey,
+				"telemetry_ckey" = row["ckey"],
+				"address" = row["address"],
+				"computer_id" = row["computer_id"],
+				"round_id" = GLOB.round_id,
+			))
 
 		if (row["ckey"] in our_known_alts)
 			continue
