@@ -16,7 +16,10 @@
 	var/latejoin_color = "#6681a5"
 	/// Job singleton datums associated to this department. Populated on job initialization.
 	var/list/department_jobs = list()
-
+	/// For separatists, what independent name prefix does their nation get named?
+	var/list/nation_prefixes
+	/// For separatists, what independent name suffix does their nation get named?
+	var/list/nation_suffixes
 
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
@@ -27,6 +30,7 @@
 /datum/job_department/assistant
 	department_name = DEPARTMENT_ASSISTANT
 	department_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
+	nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 	// Don't add department_head! Assistants names should not be in bold.
 
 /// A special captain only department, for use by the preferences menu
@@ -53,6 +57,7 @@
 	display_order = 2
 	label_class = "security"
 	latejoin_color = "#ffdddd"
+	nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
 
 
 /datum/job_department/engineering
@@ -63,6 +68,7 @@
 	display_order = 3
 	label_class = "engineering"
 	latejoin_color = "#ffeeaa"
+	nation_name = pick("Atomo", "Engino", "Power", "Teleco")
 
 
 /datum/job_department/medical
@@ -73,6 +79,7 @@
 	display_order = 4
 	label_class = "medical"
 	latejoin_color = "#ffddf0"
+	nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
 
 
 /datum/job_department/science
@@ -83,6 +90,7 @@
 	display_order = 5
 	label_class = "science"
 	latejoin_color = "#ffddff"
+	nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
 
 
 /datum/job_department/cargo
@@ -93,6 +101,7 @@
 	display_order = 6
 	label_class = "supply"
 	latejoin_color = "#ddddff"
+	nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
 
 
 /datum/job_department/service
@@ -103,6 +112,7 @@
 	display_order = 7
 	label_class = "service"
 	latejoin_color = "#bbe291"
+	nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
 
 
 /datum/job_department/silicon
