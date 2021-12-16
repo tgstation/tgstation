@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - code_imp: "Fixed some really insane move counts that were sourced from Login() betraying me. I've killed it now so there should be slightly less stutter sometimes depending on the weather and position of the moon"

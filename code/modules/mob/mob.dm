@@ -437,6 +437,7 @@
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 		return 1
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
 /**
  * Examine a mob

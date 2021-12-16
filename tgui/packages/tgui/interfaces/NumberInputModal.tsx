@@ -1,7 +1,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { KEY_ENTER } from 'common/keycodes';
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -16,10 +16,10 @@ type NumberInputData = {
 };
 
 export const NumberInputModal = (_, context) => {
-  const { data } = useBackend<NumberInputData>(context);
+  const { act, data } = useBackend<NumberInputData>(context);
   const { message, placeholder, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useSharedState(context, 'input', placeholder);
+  const [input, setInput] = useLocalState(context, 'input', placeholder);
   const onChange = (value: number) => {
     setInput(value);
   };
@@ -30,12 +30,18 @@ export const NumberInputModal = (_, context) => {
   const defaultValidState = { isValid: true, error: null };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 130 + Math.ceil(message.length / 5) + (large_buttons ? 5 : 0);
+    = 125 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={270} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          if (keyCode === KEY_ENTER) {
+            act('submit', { entry: input });
+          }
+        }}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
@@ -77,12 +83,6 @@ const InputArea = (props, context) => {
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_ENTER && input) {
-              act('submit', { entry: input });
-            }
-          }}
           value={input || placeholder || 0}
         />
       </Stack.Item>

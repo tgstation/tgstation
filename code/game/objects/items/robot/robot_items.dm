@@ -545,7 +545,7 @@
 /obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
 	. = ..()
 	var/obj/item/food/lollipop/S = new ammo_type(src)
-	color2 = S.headcolor
+	color2 = S.head_color
 	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
 	head.color = color2
 	add_overlay(head)

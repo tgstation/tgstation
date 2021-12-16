@@ -22,7 +22,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	status_flags = (CANPUSH | CANSTUN)
 
-	bot_core = /obj/machinery/bot_core/medbot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL
 	bot_type = MED_BOT
@@ -584,9 +584,6 @@
 	var/area/location = get_area(src)
 	speak("Medical emergency! [crit_patient || "A patient"] is in critical condition at [location]!", radio_channel)
 	declare_cooldown = world.time + 200
-
-/obj/machinery/bot_core/medbot
-	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
 
 #undef MEDBOT_PANIC_NONE
 #undef MEDBOT_PANIC_LOW

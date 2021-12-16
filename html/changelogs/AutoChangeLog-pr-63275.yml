@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Closing the confirmation alert from headcrabs will no longer continue to headcrab you."

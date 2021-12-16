@@ -188,14 +188,14 @@
 	special = TRUE
 	var/objective = "Obey the law. Praise Nanotrasen."
 	var/custom = FALSE
-
+  
 /obj/machinery/implantchair/brainwash/implant_action(mob/living/target_carbon, mob/user)
 	if(!istype(target_carbon) || !target_carbon.mind) // I don't know how this makes any sense for silicons but laws trump objectives anyway.
 		return FALSE
 	if(custom)
 		if(!user || !user.Adjacent(src))
 			return FALSE
-		objective = stripped_input(user, "What order do you want to imprint on [target_carbon]?", "Enter the order", "", max_length = 120)
+		objective = tgui_input_text(user, "What order do you want to imprint on [target_carbon]?", "Brainwashing", max_length = 120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
 		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
 	if(HAS_TRAIT(target_carbon, TRAIT_MINDSHIELD))

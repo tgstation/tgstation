@@ -1214,9 +1214,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(compartmentLoadAccessCheck(user))
 		if(istype(I, /obj/item/pen))
-			name = stripped_input(user,"Set name","Name", name, 20)
-			desc = stripped_input(user,"Set description","Description", desc, 60)
-			slogan_list += stripped_input(user,"Set slogan","Slogan","Epic", 60)
+			name = tgui_input_text(user, "Set name", "Name", name, 20)
+			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
+			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
 			last_slogan = world.time + rand(0, slogan_delay)
 			return
 
