@@ -71,9 +71,9 @@
 				newVisibleTurfs[vis_turf] = vis_turf
 
 	//new turfs will be in visibleTurfs but werent last update
-	var/list/visAdded = newVisibleTurfs - visibleTurfs
+	//var/list/visAdded = newVisibleTurfs - visibleTurfs
 	//old turfs that will no longer be in visibleTurfs but were last update
-	var/list/visRemoved = visibleTurfs - newVisibleTurfs
+	//var/list/visRemoved = visibleTurfs - newVisibleTurfs
 
 	visibleTurfs = newVisibleTurfs
 	//turfs that are included in the chunks normal turfs list minus the turfs the cameras CAN see
