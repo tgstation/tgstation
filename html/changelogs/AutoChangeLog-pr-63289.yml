@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Burnt-out flashes once again update their in-hands correctly"
-  - bugfix: "Flashing no longer goes through when the attempt has burnt out the flash"

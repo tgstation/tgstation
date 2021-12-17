@@ -135,16 +135,11 @@
 ///AI Camera Static
 #define CAMERA_STATIC_PLANE 200
 
-///Popup Chat Messages
-#define RUNECHAT_PLANE 250
-
-/// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE 251
-
 ///Debug Atmos Overlays
 #define ATMOS_GROUP_PLANE 450
 
 ///--------------- FULLSCREEN IMAGES ------------
+
 #define FULLSCREEN_PLANE 500
 #define FLASH_LAYER 1
 #define FULLSCREEN_LAYER 2
@@ -153,6 +148,12 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+
+///Popup Chat Messages
+#define RUNECHAT_PLANE 501
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 502
 
 //-------------------- Rendering ---------------------
 #define RENDER_PLANE_GAME 990

@@ -1,6 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - rscadd: "You can now become patron of your favorite painting by buying sponsorship from Nanotrasen Trust Foundation."
-  - rscadd: "Painter's palettes are now available at library vendor."
-  - qol: "Can use strokes in paintings now"

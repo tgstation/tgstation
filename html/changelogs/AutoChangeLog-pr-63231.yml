@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "AI shells will no longer be instantly converted into a construct shell by the Twisted Construction spell."

@@ -262,3 +262,40 @@
   jlsnow301:
   - rscadd: TGUI input boxes are on the way! You can find new preferences in the menu.
       They will be on by default.
+2021-12-10:
+  AnturK:
+  - rscadd: You can now become patron of your favorite painting by buying sponsorship
+      from Nanotrasen Trust Foundation.
+  - rscadd: Painter's palettes are now available at library vendor.
+  - qol: Can use strokes in paintings now
+  Fikou:
+  - expansion: dunking cold people in the deep fryer causes fun stuff
+  - expansion: dunking the Freeze Cube artifact from lavaland causes !FUN! stuff
+  LemonInTheDark:
+  - code_imp: I've changed how job equipment and organs are loaded, if you end up
+      with someone else's head/id card/eyes, please let me know yeah?
+  - code_imp: The preferences menu is now much more efficient. Hopefully you'll see
+      less small jitters at highpop.
+  - bugfix: You can no longer use the disease browsing console to summon satan
+  - bugfix: The disease browsing console will now properly show you the mobs the disease
+      effects
+  SuperNovaa41:
+  - bugfix: AI shells will no longer be instantly converted into a construct shell
+      by the Twisted Construction spell.
+  - bugfix: Fixes clothing protection tags being displayed incorrectly.
+  TheBonded:
+  - bugfix: you can no longer buckle onto chairs that are under dense atoms (like
+      machines)
+  cacogen:
+  - bugfix: Burnt-out flashes once again update their in-hands correctly
+  - bugfix: Flashing no longer goes through when the attempt has burnt out the flash
+  twilightwanderer:
+  - bugfix: Hints in bureaucracy forms
+  vincentiusvin:
+  - bugfix: Plasma material objects that didn't spawn plasma gas when ignited due
+      to weird code reasons will now do just that.
+  - bugfix: Fixed plasma material objects exploding when used with condenser.
+  - bugfix: Fixed uranium manual doors and false walls not radiating.
+  - bugfix: You can no longer duplicate rods with rough false walls.
+  - code_imp: Due to code structural changes the mole amount from welding plasma related
+      objects may get buffed or nerfed. Mostly buffed.
