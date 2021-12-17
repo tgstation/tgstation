@@ -694,11 +694,13 @@
 		return
 	if(!opened && !shove_blocked)
 		return
-	if(opened)
+	var/was_opened = opened
+	if(!toggle())
+		return
+	if(was_opened)
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
