@@ -14,13 +14,13 @@ type ListInputData = {
 };
 
 export const ListInputModal = (_, context) => {
-  const { act, data } = useBackend<ListInputData>(context);
+  const { data } = useBackend<ListInputData>(context);
   const { items = [], message, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [selected, setSelected] = useLocalState<string | null>(
+  const [selected, setSelected] = useLocalState<number | null>(
     context,
     'selected',
-    items[0]
+    0
   );
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
@@ -42,28 +42,28 @@ export const ListInputModal = (_, context) => {
   const onArrowKey = (key: number) => {
     const len = filteredItems.length - 1;
     if (key === KEY_DOWN) {
-      if (selected === null || selected === filteredItems[len]) {
-        onClick(filteredItems[0]);
+      if (selected === null || selected === len) {
+        onClick(0);
       } else {
-        onClick(filteredItems[filteredItems.indexOf(selected) + 1]);
+        onClick(selected + 1);
       }
     } else if (key === KEY_UP) {
-      if (selected === null || selected === filteredItems[0]) {
-        onClick(filteredItems[len]);
+      if (selected === null || selected === 0) {
+        onClick(len);
       } else {
-        onClick(filteredItems[filteredItems.indexOf(selected) - 1]);
+        onClick(selected - 1);
       }
     }
   };
   // User selects an item with mouse
-  const onClick = (item: string) => {
-    if (!item || item === selected) {
+  const onClick = (index: number) => {
+    if (isNaN(index) || index === selected) {
       setInputIsValid({ isValid: false, error: 'No selection' });
       setSelected(null);
     } else {
       setInputIsValid({ isValid: true, error: null });
-      setSelected(item);
-      document!.getElementById(item)?.focus();
+      setSelected(index);
+      document!.getElementById(index.toString())?.focus();
     }
   };
   // User doesn't have search bar visible & presses a key
@@ -73,8 +73,10 @@ export const ListInputModal = (_, context) => {
       return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
     });
     if (foundItem) {
-      setSelected(foundItem);
-      document!.getElementById(foundItem)?.focus();
+      setSelected(filteredItems.indexOf(foundItem));
+      document!.getElementById(filteredItems
+        .indexOf(foundItem)
+        .toString())?.focus();
     }
   };
   // User types into search bar
@@ -120,6 +122,7 @@ export const ListInputModal = (_, context) => {
               onClick={() => onSearchBarToggle()}
             />
           }
+          className="ListInput__Section"
           fill
           title={message}>
           <Stack fill vertical>
@@ -152,22 +155,22 @@ const ListDisplay = (props, context) => {
 
   return (
     <Section fill scrollable tabIndex={0}>
-      {filteredItems.map((item) => {
+      {filteredItems.map((item, index) => {
         return (
           <Button
             color="transparent"
             fluid
-            id={item}
-            key={item}
-            onClick={() => onClick(item)}
+            id={index}
+            key={index}
+            onClick={() => onClick(index)}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
               if (keyCode === KEY_ENTER && isValid) {
                 event.preventDefault();
-                act('submit', { entry: selected });
+                act('submit', { entry: filteredItems[selected] });
               }
             }}
-            selected={item === selected}
+            selected={index === selected}
             style={{
               'animation': 'none',
               'transition': 'none',
