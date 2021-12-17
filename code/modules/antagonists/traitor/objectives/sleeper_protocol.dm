@@ -28,15 +28,15 @@
 				return
 			disk = new(user.drop_location())
 			user.put_in_hand(disk)
-			AddComponent(/datum/component/traitor_objective_register, disk \
+			AddComponent(/datum/component/traitor_objective_register, disk, \
 				fail_signals = COMSIG_PARENT_QDELETING)
 
 /datum/traitor_objective/sleeper_protocol/proc/handle_mind_swap(datum/mind/source, mob/old_target)
 	SIGNAL_HANDLER
 	if(current_registered_mob)
-		UnregisterSignal(current_registered_mob, COMSIG_MOB_SURGEY_STEP_SUCCESS)
-	RegisterSignal(mind.current, COMSIG_MOB_SURGERY_STEP_SUCCESS, .proc/on_surgery_success)
-	current_registered_mob = mind.current
+		UnregisterSignal(current_registered_mob, COMSIG_MOB_SURGERY_STEP_SUCCESS)
+	RegisterSignal(source.current, COMSIG_MOB_SURGERY_STEP_SUCCESS, .proc/on_surgery_success)
+	current_registered_mob = source.current
 
 /datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
