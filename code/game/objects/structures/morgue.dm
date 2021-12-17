@@ -334,6 +334,10 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	if(.)
 		return
 	if (src.connected)
+		for (var/obj/obj in loc.contents)
+			if (istype(obj, /obj/structure/closet))
+				to_chat(user, span_warning("[obj.name] is blocking the tray!"))
+				return
 		connected.close()
 		add_fingerprint(user)
 	else
