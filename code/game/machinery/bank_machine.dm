@@ -17,6 +17,7 @@
 	radio = new(src)
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
+	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
 /obj/machinery/computer/bank_machine/Destroy()

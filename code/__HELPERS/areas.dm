@@ -74,11 +74,8 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 	var/area/newA
 	var/area/oldA = get_area(get_turf(creator))
 	if(!isarea(area_choice))
-		var/str = stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN)
-		if(!str || !length(str)) //cancel
-			return
-		if(length(str) > 50)
-			to_chat(creator, span_warning("The given name is too long. The area remains undefined."))
+		var/str = tgui_input_text(creator, "New area name", "Blueprint Editing", max_length = MAX_NAME_LEN)
+		if(!str)
 			return
 		newA = new area_choice
 		newA.setup(str)

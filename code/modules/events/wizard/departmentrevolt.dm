@@ -56,7 +56,7 @@
 
 	switch(department)
 		if("Uprising of Assistants") //God help you
-			jobs_to_revolt += "Assistant"
+			jobs_to_revolt += JOB_ASSISTANT
 			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
 		if("Medical")
 			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/medical)

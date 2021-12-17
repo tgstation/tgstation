@@ -4,10 +4,14 @@
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	r_pocket = /obj/item/knife/shiv
 
-/datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visualsOnly=FALSE)
+	// This outfit is used by the assets SS, which is ran before the atoms SS
+	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
+		prisoner.w_uniform?.update_greyscale()
+		prisoner.update_inv_w_uniform()
 	if(visualsOnly)
 		return
-	H.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
 
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"

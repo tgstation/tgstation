@@ -1,0 +1,50 @@
+@font-face {
+    font-family: "tgfont";
+    src: url("./tgfont.woff2?45c3c7acc69dd413375d77898d24e41e") format("woff2"),
+url("./tgfont.eot?45c3c7acc69dd413375d77898d24e41e#iefix") format("embedded-opentype");
+}
+
+i[class^="tg-"]:before, i[class*=" tg-"]:before {
+    font-family: tgfont !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.tg-air-tank-slash:before {
+    content: "\f101";
+}
+.tg-air-tank:before {
+    content: "\f102";
+}
+.tg-bad-touch:before {
+    content: "\f103";
+}
+.tg-image-minus:before {
+    content: "\f104";
+}
+.tg-image-plus:before {
+    content: "\f105";
+}
+.tg-nanotrasen-logo:before {
+    content: "\f106";
+}
+.tg-non-binary:before {
+    content: "\f107";
+}
+.tg-prosthetic-leg:before {
+    content: "\f108";
+}
+.tg-sound-minus:before {
+    content: "\f109";
+}
+.tg-sound-plus:before {
+    content: "\f10a";
+}
+.tg-syndicate-logo:before {
+    content: "\f10b";
+}
