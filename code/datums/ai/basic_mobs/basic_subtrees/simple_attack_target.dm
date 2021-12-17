@@ -9,9 +9,22 @@
 	controller.queue_behavior(melee_attack_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 	return SUBTREE_RETURN_FINISH_PLANNING //we are going into battle...no distractions.
 
-//If you give this to something without the element you are a dumbass.
 /datum/ai_planning_subtree/basic_ranged_attack_subtree
 	var/datum/ai_behavior/basic_ranged_attack/ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/SetupSubtree(datum/ai_controller/controller)
+	controller.pawn.AddElement(/datum/element/ranged_attacks, \
+		controller.blackboard[BB_BASIC_MOB_CASING_TYPE], \
+		controller.blackboard[BB_BASIC_MOB_PROJECTILE_SOUND], \
+		controller.blackboard[BB_BASIC_MOB_PROJECTILE_TYPE] \
+	)
+
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/ForgetSubtree(datum/ai_controller/controller)
+	controller.pawn.RemoveElement(/datum/element/ranged_attacks, \
+		controller.blackboard[BB_BASIC_MOB_CASING_TYPE], \
+		controller.blackboard[BB_BASIC_MOB_PROJECTILE_SOUND], \
+		controller.blackboard[BB_BASIC_MOB_PROJECTILE_TYPE] \
+	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()

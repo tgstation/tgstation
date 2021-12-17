@@ -192,6 +192,13 @@
 
 ///Basic Mob Keys
 
+///mobs with ranged subtree !must! have either this or projectile type, tells it what to shoot
+#define BB_BASIC_MOB_CASING_TYPE "BB_basic_casing_type"
+///mobs with ranged subtree !must! have either this or casing type, tells it what to shoot
+#define BB_BASIC_MOB_PROJECTILE_TYPE "BB_basic_projectile_type"
+///mobs that use the ranged subtree !can! have a blackboard for their shooting sounds
+#define BB_BASIC_MOB_PROJECTILE_SOUND "BB_basic_projectile_sound"
+
 ///Tipped blackboards
 ///Bool that means a basic mob will start reacting to being tipped in it's planning
 #define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"

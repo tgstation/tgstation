@@ -78,11 +78,11 @@
 	faction = list("hostile")
 	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 
-/mob/living/basic/cockroach/glockroach/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
-
 /datum/ai_controller/basic_controller/cockroach/glockroach
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_BASIC_MOB_CASING_TYPE = /obj/item/ammo_casing/glockroach,
+	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,

@@ -61,6 +61,7 @@ multiple modular subtrees with behaviors
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
+	forget_subtrees()
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	return ..()
@@ -80,9 +81,15 @@ multiple modular subtrees with behaviors
 		return
 	var/list/temp_subtree_list = list()
 	for(var/subtree in planning_subtrees)
-		var/subtree_instance = SSai_controllers.ai_subtrees[subtree]
+		var/datum/ai_planning_subtree/subtree_instance = SSai_controllers.ai_subtrees[subtree]
 		temp_subtree_list += subtree_instance
+		subtree_instance.SetupSubtree(src)
 	planning_subtrees = temp_subtree_list
+
+///Loops over the subtrees in planning_subtrees and calls `ForgetSubtree()`. This must be called before an ai stops using a set of subtrees to clean up signals
+/datum/ai_controller/proc/forget_subtrees()
+	for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
+		subtree.ForgetSubtree(src)
 
 ///Proc to move from one pawn to another, this will destroy the target's existing controller.
 /datum/ai_controller/proc/PossessPawn(atom/new_pawn)

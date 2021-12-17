@@ -72,9 +72,13 @@
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/death_drops, list(/obj/item/gun/ballistic/automatic/pistol/stickman))
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/c9mm, 'sound/misc/bang.ogg')
 
 /datum/ai_controller/basic_controller/stickman/ranged
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_BASIC_MOB_CASING_TYPE = /obj/item/ammo_casing/c9mm,
+		BB_BASIC_MOB_PROJECTILE_SOUND = 'sound/misc/bang.ogg',
+	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/stickman
