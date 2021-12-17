@@ -9,6 +9,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	requires_bodypart_type = 0
+	organ_to_manipulate = ORGAN_SLOT_EYES
 
 //fix eyes
 /datum/surgery_step/fix_eyes

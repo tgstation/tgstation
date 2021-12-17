@@ -11,6 +11,7 @@
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
+	organ_to_manipulate = ORGAN_SLOT_BRAIN
 
 /datum/surgery_step/fix_brain
 	name = "fix brain"

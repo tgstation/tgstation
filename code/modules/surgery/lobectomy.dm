@@ -8,6 +8,7 @@
 		/datum/surgery_step/lobectomy,
 		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
+	organ_to_manipulate = ORGAN_SLOT_LUNGS
 
 /datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/lungs/target_lungs = target.getorganslot(ORGAN_SLOT_LUNGS)
