@@ -280,12 +280,10 @@
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
 	var/list/all_items = M.get_all_contents()
 
-	for(var/obj/I in all_items)
-		if(istype(I, /obj/item/radio/))
-			var/obj/item/radio/r = I
-			r.listening = 0
-			if(!istype(I, /obj/item/radio/headset))
-				r.broadcasting = 0 //goddamned headset hacks
+	for(var/obj/item/radio/radio in all_items)
+		radio.set_listening(FALSE)
+		if(!istype(radio, /obj/item/radio/headset))
+			radio.set_broadcasting(FALSE) //goddamned headset hacks
 
 /obj/item/abductor/mind_device
 	name = "mental interface device"
