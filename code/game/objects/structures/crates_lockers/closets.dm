@@ -579,12 +579,12 @@
 	if(istype(loc, /obj/structure/bodycontainer))
 		var/obj/structure/bodycontainer/gbj = loc
 		to_chat(user, span_notice("You attempt to break out of [gbj.name]... (This will take around 30 seconds.)"))
-		if(do_after(user, 10 SECONDS))
+		if(do_after(user, 30 SECONDS))
 			gbj?.open()
 	if(istype(loc, /obj/structure/closet))
 		var/obj/structure/closet/gbj = loc
 		to_chat(user, span_notice("You attempt to break out of [gbj.name]... (This will take around 30 seconds.)"))
-		if(do_after(user, 10 SECONDS))
+		if(do_after(user, 30 SECONDS))
 			gbj?.open()
 	if(opened)
 		return
