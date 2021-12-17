@@ -218,10 +218,6 @@
 
 /obj/structure/closet/proc/can_close(mob/living/user)
 	var/turf/T = get_turf(src)
-	for (var/obj/obj in loc.contents)
-		if (istype(obj, /obj/structure/closet) && obj != src)
-			to_chat(user, span_warning("[obj.name] is too big for [name]!"))
-			return FALSE
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
 			return FALSE
