@@ -8363,8 +8363,7 @@
 	idDoor = "mostleft_upper_external";
 	idSelf = "mostleft_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -8392,8 +8391,7 @@
 	idDoor = "mostleft_upper_internal";
 	idSelf = "mostleft_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -9606,7 +9604,6 @@
 /obj/machinery/door_timer{
 	id = "medcell";
 	name = "Medical Cell";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -10500,8 +10497,7 @@
 	idDoor = "mostleft_lower_internal";
 	idSelf = "mostleft_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -15045,8 +15041,7 @@
 	idDoor = "middleright_lower_eva_internal";
 	idSelf = "middleright_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -20744,8 +20739,7 @@
 	idDoor = "middleright_upper_internal";
 	idSelf = "middleright_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -27999,8 +27993,7 @@
 	idDoor = "middleleft_upper_external";
 	idSelf = "middleleft_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -31668,8 +31661,7 @@
 	idDoor = "rightmost_lower_eva_internal";
 	idSelf = "rightmost_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
@@ -36678,8 +36670,7 @@
 	idDoor = "rightmost_lower_eva_internal";
 	idSelf = "rightmost_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -40793,8 +40784,7 @@
 	idDoor = "middleleft_lower_eva_external";
 	idSelf = "middleleft_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
@@ -47700,8 +47690,7 @@
 	idDoor = "middleleft_upper_internal";
 	idSelf = "middleleft_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -50929,8 +50918,7 @@
 	idDoor = "rightmost_upper_eva_internal";
 	idSelf = "rightmost_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -51343,8 +51331,7 @@
 	idDoor = "middleright_lower_eva_external";
 	idSelf = "middleright_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
@@ -52136,8 +52123,7 @@
 	idDoor = "rightmost_upper_eva_external";
 	idSelf = "rightmost_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -53644,8 +53630,7 @@
 	idDoor = "middleright_upper_eva_external";
 	idSelf = "middleright_upper_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = 24;
-	req_access_txt = "0"
+	pixel_y = 24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -58662,8 +58647,7 @@
 	idDoor = "middleleft_lower_eva_internal";
 	idSelf = "middleleft_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -70623,8 +70607,7 @@
 	idDoor = "mostleft_lower_external";
 	idSelf = "mostleft_lower_eva_airlock_control";
 	name = "External Access Button";
-	pixel_y = -24;
-	req_access_txt = "0"
+	pixel_y = -24
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/catwalk_floor,
@@ -94526,7 +94509,7 @@ aBM
 aBM
 dhe
 dhe
-aBM
+dhe
 dhe
 dhe
 dhe
