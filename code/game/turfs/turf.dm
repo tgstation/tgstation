@@ -73,6 +73,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
 	var/rcd_memory
 
+	//nullspace lazylists
+
+	/// lazy list of atmos machines on this tile that can connect to other machines. used so that they can be nullspaced
+	var/list/pipenet_nodes
+	/// lazy list of cables associated with this turf. used so that they can be nullspaced
+	var/list/cable_nodes
+	/// lazy list of disposals pipes associated with this turf. used so that they can be nullspaced
+	var/list/disposals_nodes
+
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
@@ -491,7 +501,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
+		for(var/obj/O in (contents | cable_nodes | pipenet_nodes | disposals_nodes)) //this is for deleting things like wires contained in the turf
 			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				O.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -520,8 +530,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 
 /turf/contents_explosion(severity, target)
-	for(var/thing in contents)
-		var/atom/movable/movable_thing = thing
+	for(var/atom/movable/movable_thing as anything in contents)
 		if(QDELETED(movable_thing))
 			continue
 		switch(severity)
@@ -535,8 +544,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
-	for(var/I in src)
-		var/atom/A = I
+	for(var/atom/A as anything in src)
 		if(ignore_mobs && ismob(A))
 			continue
 		if(ismob(A) || .)

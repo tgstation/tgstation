@@ -7,10 +7,6 @@
 // Pipes -> Pipelines
 // Pipelines + Other Objects -> Pipe network
 
-/turf
-	/// list of atmos machines on this tile that can connect to other machines. used so that they can be nullspaced
-	var/list/pipenet_nodes
-
 #define VENT_SOUND_DELAY 30
 
 /obj/effect/ventcrawl_holder

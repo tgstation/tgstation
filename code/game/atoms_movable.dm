@@ -402,6 +402,11 @@
 	var/mob/living/pulled_mob = moving_atom
 	set_pull_offsets(pulled_mob, grab_state)
 
+/atom/movable/drop_location()
+	var/atom/location = associated_loc || loc
+	if(!location)
+		return null
+	return location.AllowDrop() ? location : location.drop_location()
 /**
  * Checks if the pulling and pulledby should be stopped because they're out of reach.
  * If z_allowed is TRUE, the z level of the pulling will be ignored.This is to allow things to be dragged up and down stairs.

@@ -168,8 +168,7 @@
 /datum/component/singularity/proc/eat()
 	var/atom/atom_parent = parent
 
-	for (var/_tile in spiral_range_turfs(grav_pull, parent))
-		var/turf/tile = _tile
+	for (var/turf/tile as anything in spiral_range_turfs(grav_pull, parent))
 		if (!tile || !isturf(atom_parent.loc))
 			continue
 		if (get_dist(tile, parent) > consume_range)
@@ -177,8 +176,7 @@
 		else
 			consume(src, tile)
 
-		for (var/_thing in tile)
-			var/atom/thing = _thing
+		for (var/atom/thing as anything in tile)
 
 			// Because we can possibly yield in the middle of iteration, let's make sure what were looking at is still there
 			// Without this, you get "Qdeleted thing being thrown around"

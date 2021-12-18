@@ -26,26 +26,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 
-/obj/structure/cable/layer1
-	color = "red"
-	cable_layer = CABLE_LAYER_1
-	machinery_layer = null
-	layer = WIRE_LAYER - 0.01
-	icon_state = "l1-1-2-4-8-node"
-
-/obj/structure/cable/layer3
-	color = "blue"
-	cable_layer = CABLE_LAYER_3
-	machinery_layer = null
-	layer = WIRE_LAYER + 0.01
-	icon_state = "l4-1-2-4-8-node"
-
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 
+	associated_loc = loc
+	if(associated_loc)
+		LAZYADD(associated_loc.cable_nodes, src)
+
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
 /obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
@@ -61,23 +51,25 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/under_thing = NONE
 	if(clear_before_updating)
 		linked_dirs = 0
+
 	var/obj/machinery/power/search_parent
-	for(var/obj/machinery/power/P in loc)
-		if(istype(P, /obj/machinery/power/terminal))
+	for(var/obj/machinery/power/power_machine in associated_loc)
+		if(istype(power_machine, /obj/machinery/power/terminal))
 			under_thing = UNDER_TERMINAL
-			search_parent = P
+			search_parent = power_machine
 			break
-		if(istype(P, /obj/machinery/power/smes))
+		if(istype(power_machine, /obj/machinery/power/smes))
 			under_thing = UNDER_SMES
-			search_parent = P
+			search_parent = power_machine
 			break
+
 	for(var/check_dir in GLOB.cardinals)
-		var/TB = get_step(src, check_dir)
+		var/turf/step_turf = get_step(associated_loc, check_dir)
 		//don't link from smes to its terminal
 		if(under_thing)
 			switch(under_thing)
 				if(UNDER_SMES)
-					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in TB
+					var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in step_turf
 					//Why null or equal to the search parent?
 					//during map init it's possible for a placed smes terminal to not have initialized to the smes yet
 					//but the cable underneath it is ready to link.
@@ -87,15 +79,17 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					if(term && (!term.master || term.master == search_parent))
 						continue
 				if(UNDER_TERMINAL)
-					var/obj/machinery/power/smes/S = locate(/obj/machinery/power/smes) in TB
-					if(S && (!S.terminal || S.terminal == search_parent))
+					var/obj/machinery/power/smes/smes = locate(/obj/machinery/power/smes) in step_turf
+					if(smes && (!smes.terminal || smes.terminal == search_parent))
 						continue
+
 		var/inverse = turn(check_dir, 180)
-		for(var/obj/structure/cable/C in TB)
-			if(C.cable_layer & cable_layer)
+
+		for(var/obj/structure/cable/other_cable in step_turf.cable_nodes)
+			if(other_cable.cable_layer & cable_layer)
 				linked_dirs |= check_dir
-				C.linked_dirs |= inverse
-				C.update_appearance()
+				other_cable.linked_dirs |= inverse
+				other_cable.update_appearance()
 
 	update_appearance()
 
@@ -103,12 +97,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/proc/Disconnect_cable()
 	for(var/check_dir in GLOB.cardinals)
 		var/inverse = turn(check_dir, 180)
-		if(linked_dirs & check_dir)
-			var/TB = get_step(loc, check_dir)
-			for(var/obj/structure/cable/C in TB)
-				if(cable_layer & C.cable_layer)
-					C.linked_dirs &= ~inverse
-					C.update_appearance()
+		if(!(linked_dirs & check_dir))
+			continue
+
+		var/turf/neighbor_turf = get_step(associated_loc, check_dir)
+
+		for(var/obj/structure/cable/neighbor_cable in neighbor_turf.cable_nodes)
+			if(cable_layer & neighbor_cable.cable_layer)
+				neighbor_cable.linked_dirs &= ~inverse
+				neighbor_cable.update_appearance()
 
 /obj/structure/cable/Destroy() // called when a cable is deleted
 	Disconnect_cable()
@@ -120,8 +117,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
+	if(associated_loc && !loc)
+		loc = associated_loc
+
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
+
+	LAZYREMOVE(associated_loc.cable_nodes, src)
+
 	qdel(src)
 
 ///////////////////////////////////
@@ -137,17 +140,23 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	for(var/check_dir in GLOB.cardinals)
 		if(linked_dirs & check_dir)
 			dir_icon_list += "[check_dir]"
+
 	var/dir_string = dir_icon_list.Join("-")
+
 	if(dir_icon_list.len > 1)
-		for(var/obj/O in loc)
+		for(var/obj/O in (associated_loc.contents | associated_loc.cable_nodes))
+
 			if(GLOB.wire_node_generating_types[O.type])
 				dir_string = "[dir_string]-node"
 				break
+
 			else if(istype(O, /obj/machinery/power))
 				var/obj/machinery/power/P = O
+
 				if(P.should_have_node())
 					dir_string = "[dir_string]-node"
 					break
+
 	dir_string = "l[cable_layer]-[dir_string]"
 	icon_state = dir_string
 	return ..()
@@ -158,16 +167,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(isobserver(user))
 		. += get_power_info()
 
-
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
-	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+	if(associated_loc.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
 		user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
-		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
+		investigate_log("was cut by [key_name(usr)] in [AREACOORD(associated_loc)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
 
@@ -176,7 +183,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		shock(user, 5, 0.2)
 
 	add_fingerprint(user)
-
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
@@ -226,7 +232,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail - powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -256,32 +262,32 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Cable laying helpers
 ////////////////////////////////////////////////
 
-// merge with the powernets of power objects in the given direction
+/// merge with the powernets of power objects in the given direction
 /obj/structure/cable/proc/mergeConnectedNetworks(direction)
 
 	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
-	var/turf/TB = get_step(src, direction)
+	var/turf/step_turf = get_step(associated_loc, direction)
 
-	for(var/obj/structure/cable/C in TB)
-		if(!C)
+	for(var/obj/structure/cable/adjacent_cable in step_turf.cable_nodes)
+		if(!adjacent_cable)
 			continue
 
-		if(src == C)
+		if(src == adjacent_cable)
 			continue
 
-		if(!(cable_layer & C.cable_layer))
+		if(!(cable_layer & adjacent_cable.cable_layer))
 			continue
 
-		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
-			if(!C.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
+		if(adjacent_cable.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
+			if(!adjacent_cable.powernet) //if the matching cable somehow got no powernet, make him one (should not happen for cables)
 				var/datum/powernet/newPN = new()
-				newPN.add_cable(C)
+				newPN.add_cable(adjacent_cable)
 
 			if(powernet) //if we already have a powernet, then merge the two powernets
-				merge_powernets(powernet, C.powernet)
+				merge_powernets(powernet, adjacent_cable.powernet)
 			else
-				C.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
+				adjacent_cable.powernet.add_cable(src) //else, we simply connect to the matching cable powernet
 
 // merge with the powernets of power objects in the source turf
 /obj/structure/cable/proc/mergeConnectedNetworksOnTurf()
@@ -294,24 +300,24 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	//first let's add turf cables to our powernet
 	//then we'll connect machines on turf where a cable is present
-	for(var/atom/movable/AM in loc)
-		if(istype(AM, /obj/machinery/power/apc))
-			var/obj/machinery/power/apc/N = AM
-			if(!N.terminal)
+	for(var/obj/machinery/machine in associated_loc)
+		if(istype(machine, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/apc = machine
+			if(!apc.terminal)
 				continue // APC are connected through their terminal
 
-			if(N.terminal.powernet == powernet) //already connected
+			if(apc.terminal.powernet == powernet) //already connected
 				continue
 
-			to_connect += N.terminal //we'll connect the machines after all cables are merged
+			to_connect += apc.terminal //we'll connect the machines after all cables are merged
 
-		else if(istype(AM, /obj/machinery/power)) //other power machines
-			var/obj/machinery/power/M = AM
+		else if(istype(machine, /obj/machinery/power)) //other power machines
+			var/obj/machinery/power/powered_machine = machine
 
-			if(M.powernet == powernet)
+			if(powered_machine.powernet == powernet)
 				continue
 
-			to_connect += M //we'll connect the machines after all cables are merged
+			to_connect += powered_machine //we'll connect the machines after all cables are merged
 
 	//now that cables are done, let's connect found machines
 	for(var/obj/machinery/power/PM in to_connect)
@@ -325,28 +331,28 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/get_cable_connections(powernetless_only)
 	. = list()
-	var/turf/T = get_turf(src)
+
 	for(var/check_dir in GLOB.cardinals)
 		if(linked_dirs & check_dir)
-			T = get_step(src, check_dir)
-			for(var/obj/structure/cable/C in T)
-				if(cable_layer & C.cable_layer)
-					. += C
+			var/turf/adjacent_turf = get_step(associated_loc, check_dir)
+
+			for(var/obj/structure/cable/adjacent_cable in adjacent_turf.cable_nodes)
+				if(cable_layer & adjacent_cable.cable_layer)
+					. += adjacent_cable
 
 /obj/structure/cable/proc/get_all_cable_connections(powernetless_only)
 	. = list()
-	var/turf/T
 	for(var/check_dir in GLOB.cardinals)
-		T = get_step(src, check_dir)
-		for(var/obj/structure/cable/C in T.contents - src)
-			. += C
+		var/turf/adjacent_turf = get_step(associated_loc, check_dir)
+		for(var/obj/structure/cable/adjacent_cable in adjacent_turf.cable_nodes - src)
+			. += adjacent_cable
 
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
 	. = list()
-	for(var/obj/machinery/power/P in get_turf(src))
-		if(!powernetless_only || !P.powernet)
-			if(P.anchored)
-				. += P
+	for(var/obj/machinery/power/power_machine in associated_loc)
+		if(!powernetless_only || !power_machine.powernet)
+			if(power_machine.anchored)
+				. += power_machine
 
 /obj/structure/cable/proc/auto_propagate_cut_cable(obj/O)
 	if(O && !QDELETED(O))
@@ -365,19 +371,20 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!powernet)
 		return
 
-	var/turf/T1 = loc
-	if(!T1)
+	if(!associated_loc)
 		return
 
 	//clear the powernet of any machines on tile first
-	for(var/obj/machinery/power/P in T1)
-		P.disconnect_from_network()
+	for(var/obj/machinery/power/power_machine in associated_loc)
+		power_machine.disconnect_from_network()
 
-	var/list/P_list = list()
+	var/list/cable_list = list()
+
 	for(var/dir_check in GLOB.cardinals)
 		if(linked_dirs & dir_check)
-			T1 = get_step(loc, dir_check)
-			P_list += locate(/obj/structure/cable) in T1
+			var/turf/adjacent_turf = get_step(associated_loc, dir_check)
+
+			cable_list += locate(/obj/structure/cable) in adjacent_turf.cable_nodes
 
 	// remove the cut cable from its turf and powernet, so that it doesn't get count in propagate_network worklist
 	if(remove)
@@ -385,7 +392,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	powernet.remove_cable(src) //remove the cut cable from its powernet
 
 	var/first = TRUE
-	for(var/obj/O in P_list)
+	for(var/obj/O in cable_list)
 		if(first)
 			first = FALSE
 			continue
@@ -476,6 +483,20 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
+
+/obj/structure/cable/layer1
+	color = "red"
+	cable_layer = CABLE_LAYER_1
+	machinery_layer = null
+	layer = WIRE_LAYER - 0.01
+	icon_state = "l1-1-2-4-8-node"
+
+/obj/structure/cable/layer3
+	color = "blue"
+	cable_layer = CABLE_LAYER_3
+	machinery_layer = null
+	layer = WIRE_LAYER + 0.01
+	icon_state = "l4-1-2-4-8-node"
 
 /obj/item/stack/cable_coil/attack_self(mob/living/user)
 	if(!user)
@@ -579,7 +600,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		to_chat(user, span_warning("You can't lay cable at a place that far away!"))
 		return
 
-	for(var/obj/structure/cable/C in T)
+	for(var/obj/structure/cable/C in T.cable_nodes)
 		if(C.cable_layer & target_layer)
 			to_chat(user, span_warning("There's already a cable at that position!"))
 			return
@@ -674,7 +695,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	. = ..()
 
 	var/turf/T = get_turf(src)
-	for(var/obj/structure/cable/C in T.contents - src)
+	for(var/obj/structure/cable/C in T.cable_nodes - src)
 		if(C.cable_layer & cable_layer)
 			C.deconstruct() // remove adversary cable
 	if(!mapload)
@@ -761,7 +782,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 ///Reset powernet in this hub.
 /obj/structure/cable/multilayer/proc/Reload()
 	var/turf/T = get_turf(src)
-	for(var/obj/structure/cable/C in T.contents - src)
+	for(var/obj/structure/cable/C in T.cable_nodes - src)
 		if(C.cable_layer & cable_layer)
 			C.deconstruct() // remove adversary cable
 	auto_propagate_cut_cable(src) // update the powernets

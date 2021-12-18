@@ -341,7 +341,8 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
-	for(var/obj/machinery/atmospherics/device in get_turf(src))
+
+	for(var/obj/machinery/atmospherics/device in associated_loc.pipenet_nodes)
 		if(device == src)
 			continue
 		if(device.piping_layer == piping_layer)

@@ -293,7 +293,7 @@
 	if(prob(40))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
-			var/obj/structure/cable/C = locate() in F
+			var/obj/structure/cable/C = locate() in F.cable_nodes
 			if(C && prob(15))
 				if(C.avail())
 					visible_message(span_warning("[src] chews through the [C]. It's toast!"))

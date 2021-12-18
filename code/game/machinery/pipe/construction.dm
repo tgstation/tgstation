@@ -159,7 +159,8 @@ Buildable meters
 	var/flags = initial(fakeA.pipe_flags)
 	var/list/potentially_conflicting_machines = list()
 	// Work out which machines we would potentially conflict with
-	for(var/obj/machinery/atmospherics/machine in loc)
+	var/turf/turf_loc = get_turf(src)
+	for(var/obj/machinery/atmospherics/machine in turf_loc.pipenet_nodes)
 		// Only one dense/requires density object per tile, eg connectors/cryo/heater/coolers.
 		if(machine.pipe_flags & flags & PIPING_ONE_PER_TURF)
 			to_chat(user, span_warning("Something is hogging the tile!"))
@@ -332,7 +333,9 @@ Buildable meters
 /obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
 	. = ..()
 	var/obj/machinery/atmospherics/pipe/pipe
-	for(var/obj/machinery/atmospherics/pipe/P in loc)
+	var/turf/our_loc = get_turf(src)
+
+	for(var/obj/machinery/atmospherics/pipe/P in our_loc.pipenet_nodes)
 		if(P.piping_layer == piping_layer)
 			pipe = P
 			break

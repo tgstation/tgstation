@@ -51,7 +51,9 @@
 
 /obj/machinery/meter/proc/reattach_to_layer()
 	var/obj/machinery/atmospherics/candidate
-	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
+	var/turf/turf_loc = get_turf(src)
+
+	for(var/obj/machinery/atmospherics/pipe/pipe in turf_loc.pipenet_nodes)
 		if(pipe.piping_layer == target_layer)
 			candidate = pipe
 	if(candidate)
