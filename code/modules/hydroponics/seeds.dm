@@ -465,9 +465,6 @@
 				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newdesc) > 180)
-					to_chat(user, span_warning("That description is too long!"))
-					return
 				if(!newdesc)
 					to_chat(user, span_warning("That description is invalid."))
 					return
