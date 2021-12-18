@@ -1,5 +1,5 @@
 /datum/antagonist/brother
-	name = "Brother"
+	name = "\improper Brother"
 	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
@@ -26,8 +26,6 @@
 	return ..()
 
 /datum/antagonist/brother/on_removal()
-	if(owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [special_role]!"))
 	owner.special_role = null
 	return ..()
 

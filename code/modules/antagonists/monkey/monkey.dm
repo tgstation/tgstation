@@ -4,7 +4,7 @@
 #define DISEASE_LIVED 4
 
 /datum/antagonist/monkey
-	name = "Monkey"
+	name = "\improper Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
@@ -40,7 +40,7 @@
 		QDEL_NULL(D)
 
 /datum/antagonist/monkey/greet()
-	to_chat(owner, "<b>You are a monkey now!</b>")
+	. = ..()
 	to_chat(owner, "<b>Bite humans to infect them, follow the orders of the monkey leaders, and help fellow monkeys!</b>")
 	to_chat(owner, "<b>Ensure at least one infected monkey escapes on the Emergency Shuttle!</b>")
 	to_chat(owner, "<b><i>As an intelligent monkey, you know how to use technology and how to ventcrawl while wearing things.</i></b>")
@@ -101,7 +101,7 @@
 	. = ..()
 
 /datum/antagonist/monkey/leader
-	name = "Monkey Leader"
+	name = "\improper Monkey Leader"
 	monkey_only = FALSE
 
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)

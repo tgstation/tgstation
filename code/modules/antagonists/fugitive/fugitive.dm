@@ -1,6 +1,6 @@
 
 /datum/antagonist/fugitive
-	name = "Fugitive"
+	name = "\improper Fugitive"
 	roundend_category = "Fugitive"
 	job_rank = ROLE_FUGITIVE
 	silent = TRUE //greet called by the event
@@ -47,7 +47,7 @@
 	objectives += survive
 
 /datum/antagonist/fugitive/greet(back_story)
-	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Fugitive!</B></font></span>")
+	. = ..()
 	backstory = back_story
 	var/message = "<span class='warningplain'>"
 	switch(backstory)

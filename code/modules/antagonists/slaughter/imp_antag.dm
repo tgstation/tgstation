@@ -5,14 +5,13 @@
  * kinda sitting in limbo... Well, whatever! They're kinda cool anyways!
  */
 /datum/antagonist/imp
-	name = "Imp"
+	name = "\improper Imp"
 	show_in_antagpanel = FALSE
 	show_in_roundend = FALSE
 	ui_name = "AntagInfoDemon"
 
 /datum/antagonist/imp/on_gain()
 	. = ..()
-	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	give_objectives()
 
 /datum/antagonist/imp/proc/give_objectives()

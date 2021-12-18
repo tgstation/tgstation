@@ -1,5 +1,5 @@
 /datum/antagonist/slaughter
-	name = "Slaughter demon"
+	name = "\improper Slaughter Demon"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoDemon"
 	job_rank = ROLE_ALIEN
@@ -10,7 +10,6 @@
 	var/datum/mind/summoner
 
 /datum/antagonist/slaughter/on_gain()
-	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	forge_objectives()
 	. = ..()
 

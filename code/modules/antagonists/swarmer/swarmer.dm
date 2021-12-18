@@ -9,7 +9,7 @@
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/antagonist/swarmer
-	name = "Swarmer"
+	name = "\improper Swarmer"
 	job_rank = ROLE_SWARMER
 	show_to_ghosts = TRUE
 	show_in_antagpanel = FALSE

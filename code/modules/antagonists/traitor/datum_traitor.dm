@@ -14,7 +14,7 @@
 #define MAROON_PROB 30
 
 /datum/antagonist/traitor
-	name = "Traitor"
+	name = "\improper Traitor"
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
@@ -69,15 +69,10 @@
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
-	to_chat(owner.current, span_big("You are the [employer] [owner.special_role]!"))
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(!silent && owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
-
 	owner.special_role = null
-
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer(faction)

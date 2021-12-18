@@ -15,8 +15,8 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic_monster/greet()
+	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-	to_chat(owner, span_userdanger("You became an Eldritch Horror!"))
 
 /datum/antagonist/heretic_monster/on_removal()
 	if(master)

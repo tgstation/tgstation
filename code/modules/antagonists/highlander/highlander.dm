@@ -1,5 +1,5 @@
 /datum/antagonist/highlander
-	name = "highlander"
+	name = "\improper Highlander"
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
@@ -84,7 +84,7 @@
 	H.put_in_hands(antiwelder)
 
 /datum/antagonist/highlander/robot
-	name="highlander"
+	name = "\improper highlander"
 
 /datum/antagonist/highlander/robot/greet()
 	to_chat(owner, "<span class='boldannounce'>Your integrated claymore cries out for blood. Claim the lives of others, and your own will be restored!\n\

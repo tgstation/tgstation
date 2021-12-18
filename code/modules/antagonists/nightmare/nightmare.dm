@@ -1,5 +1,5 @@
 /datum/antagonist/nightmare
-	name = "Nightmare"
+	name = "\improper Nightmare"
 	antagpanel_category = "Nightmare"
 	job_rank = ROLE_NIGHTMARE
 	show_in_antagpanel = FALSE
@@ -14,6 +14,3 @@
 
 /datum/outfit/nightmare/post_equip(mob/living/carbon/human/human, visualsOnly)
 	human.set_species(/datum/species/shadow/nightmare)
-
-/datum/antagonist/nightmare/greet()
-	to_chat(owner.current, span_big("You are a [owner.special_role]!"))

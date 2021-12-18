@@ -3,7 +3,7 @@
 #define LING_ABSORB_RECENT_SPEECH 8 //The amount of recent spoken lines to gain on absorbing a mob
 
 /datum/antagonist/changeling
-	name = "Changeling"
+	name = "\improper Changeling"
 	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
@@ -84,7 +84,6 @@
 	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
-	to_chat(owner.current, span_big("You are a [owner.special_role]!"))
 	create_actions()
 	reset_powers()
 	create_initial_profile()
@@ -715,7 +714,7 @@
 
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
-	name = "Headslug Changeling"
+	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
 	soft_antag = TRUE
