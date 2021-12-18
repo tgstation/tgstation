@@ -1,7 +1,8 @@
 //Speech verbs.
 
 ///Say verb
-/mob/verb/say_verb(message as text)
+/mob/verb/say_verb()
+	var/message = tgui_input_text(usr, title = "Say", encode = FALSE)
 	set name = "Say"
 	set category = "IC"
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
@@ -11,7 +12,8 @@
 		say(message)
 
 ///Whisper verb
-/mob/verb/whisper_verb(message as text)
+/mob/verb/whisper_verb()
+	var/message = tgui_input_text(usr, title = "Whisper", encode = FALSE)
 	set name = "Whisper"
 	set category = "IC"
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
@@ -24,7 +26,8 @@
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
 ///The me emote verb
-/mob/verb/me_verb(message as text)
+/mob/verb/me_verb()
+	var/message = tgui_input_text(usr, title = "Me", encode = FALSE)
 	set name = "Me"
 	set category = "IC"
 

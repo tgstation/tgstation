@@ -4,6 +4,7 @@ import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER } from 'common/keycodes';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
+import { KEY_ESCAPE } from '../../common/keycodes';
 
 type TextInputData = {
   max_length: number;
@@ -44,7 +45,7 @@ export const TextInputModal = (_, context) => {
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 125
-    + Math.ceil(message?.length / 3)
+    + Math.ceil(message.length / 3)
     + (multiline ? 75 : 0)
     + (large_buttons ? 5 : 0);
 
@@ -56,6 +57,9 @@ export const TextInputModal = (_, context) => {
           const keyCode = window.event ? event.which : event.keyCode;
           if (keyCode === KEY_ENTER && inputIsValid.isValid) {
             act('submit', { entry: input });
+          }
+          if (keyCode === KEY_ESCAPE) {
+            act('cancel');
           }
         }}>
         <Section fill>
