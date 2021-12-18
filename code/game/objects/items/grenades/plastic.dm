@@ -77,7 +77,7 @@
 	if(user.get_active_held_item() == src)
 		newtime = clamp(newtime, 10, 60000)
 		det_time = newtime
-		to_chat(user, "Timer set for [det_time] seconds.")
+		to_chat(user, span_notice("Timer set for [det_time] seconds."))
 
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()

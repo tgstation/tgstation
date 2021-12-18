@@ -94,10 +94,10 @@
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it "))
+		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it"))
 	else
 		user.put_in_active_hand(input_shock_kit)
-		to_chat(user, "<span class='notice'> You cannot fit the shock kit onto the [name]!")
+		to_chat(user, span_warning("You cannot fit the shock kit onto the [name]!"))
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
@@ -107,7 +107,7 @@
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
 	return TRUE
-	
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
 		return ..()

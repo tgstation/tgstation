@@ -43,7 +43,7 @@
 	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.getOrganLoss(ORGAN_SLOT_BRAIN) - 50) //we set damage in this case in order to clear the "failing" flag
 	target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(target.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
-		to_chat(user, "[target]'s brain looks like it could be fixed further.")
+		to_chat(user, span_notice("[target]'s brain looks like it could be fixed further."))
 	return ..()
 
 /datum/surgery_step/fix_brain/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

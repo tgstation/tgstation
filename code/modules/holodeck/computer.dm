@@ -392,7 +392,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(obj_flags & EMAGGED)
 		return
 	if(!LAZYLEN(emag_programs))
-		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
+		to_chat(user, span_warning("[src] does not seem to have a card swipe port. It must be an inferior model."))
 		return
 	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED

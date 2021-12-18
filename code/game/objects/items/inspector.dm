@@ -111,10 +111,10 @@
 */
 /obj/item/inspector/proc/print_report(mob/user)
 	if(!cell)
-		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?")
+		to_chat(user, span_info("\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?"))
 		return
 	if(cell.charge == 0)
-		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+		to_chat(user, span_info("\The [src] doesn't seem to be on... Perhaps it ran out of power?"))
 		return
 	if(!cell.use(power_per_print))
 		if(cell.use(power_to_speak))
@@ -301,7 +301,7 @@
 		if(cell.use(power_to_speak))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
-			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+			to_chat(user, span_info("\The [src] doesn't seem to be on... Perhaps it ran out of power?"))
 		return
 	paper_charges--
 	return ..()

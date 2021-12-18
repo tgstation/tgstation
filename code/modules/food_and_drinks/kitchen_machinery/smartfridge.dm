@@ -250,12 +250,12 @@
 		if(I.use_tool(src, user, 40, volume=50))
 			if(!(machine_stat & BROKEN))
 				return
-			to_chat(user, "<span class='notice'>You repair [src].</span>")
+			to_chat(user, span_notice("You repair [src]."))
 			atom_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
 			update_icon()
 	else
-		to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
+		to_chat(user, span_warning("[src] does not need repairs."))
 // ----------------------------
 //  Drying Rack 'smartfridge'
 // ----------------------------

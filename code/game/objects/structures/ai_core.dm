@@ -318,7 +318,7 @@ That prevents a few funky behaviors.
 		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
 		to_chat(AI, span_notice("You have been uploaded to a stationary terminal. Remote device connection restored."))
-		to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+		to_chat(user, span_boldnotice("Transfer successful: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."))
 		card.AI = null
 		AI.battery = circuit.battery
 		qdel(src)

@@ -8,14 +8,14 @@
 
 /obj/item/clothing/head/hooded/ablative/equipped(mob/living/carbon/human/user, slot)
 	..()
-	to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
+	to_chat(user, span_notice("As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!"))
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	H.add_hud_to(user)
 
 /obj/item/clothing/head/hooded/ablative/dropped(mob/living/carbon/human/user)
 	..()
-	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.")
+	to_chat(user, span_notice("You take off the hood, removing the visor in the process and disabling its integrated hud."))
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	H.remove_hud_from(user)

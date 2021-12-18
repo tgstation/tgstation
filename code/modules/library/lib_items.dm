@@ -357,7 +357,7 @@
 	mode += 1
 	if(mode > 3)
 		mode = 0
-	to_chat(user, "[src] Status Display:")
+	to_chat(user, span_notice("[src] Status Display:"))
 	var/modedesc
 	switch(mode)
 		if(0)
@@ -370,11 +370,11 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	to_chat(user, span_info(" - Mode [mode] : [modedesc]"))
 	if(computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		to_chat(user, span_green("Computer has been associated with this unit."))
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
+		to_chat(user, span_warning("No associated computer found. Only local scans will function properly."))
 	to_chat(user, "\n")
 
 

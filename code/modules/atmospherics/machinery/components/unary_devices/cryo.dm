@@ -395,8 +395,8 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		update_appearance()
 		return
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
-		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
+		to_chat(user, span_warning("You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + "!"))
 		return
 	return ..()
 

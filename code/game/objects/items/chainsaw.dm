@@ -60,7 +60,7 @@
 
 /obj/item/chainsaw/attack_self(mob/user)
 	on = !on
-	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]")
+	to_chat(user, span_notice("As you pull the starting cord dangling from [src], [on ? "it begins to whirr." : "the chain stops moving."]"))
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"

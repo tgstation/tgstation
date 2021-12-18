@@ -15,7 +15,7 @@ In all, this is a lot like the monkey code. /N
 */
 /mob/living/carbon/alien/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(user, "No attacking people at spawn, you jackass.")
+		to_chat(user, span_userdanger("No attacking people at spawn, you jackass."))
 		return
 
 	if(user.combat_mode)

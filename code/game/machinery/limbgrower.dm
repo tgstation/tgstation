@@ -105,7 +105,7 @@
 
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
-		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
 		return
 
 	if(istype(user_item, /obj/item/disk/design_disk/limbs))

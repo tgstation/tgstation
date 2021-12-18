@@ -250,7 +250,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	if(calibrated)
 		to_chat(user, span_alert("The gate is already calibrated, there is no work for you to do here."))
 	else
-		to_chat(user, "[span_boldnotice("Recalibration successful!")]: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
+		to_chat(user, span_boldnotice("Recalibration successful! This gate's systems have been fine tuned. Travel to this gate will now be on target."))
 		calibrated = TRUE
 	return TRUE
 

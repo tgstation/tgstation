@@ -95,7 +95,7 @@
 /obj/item/clothing/accessory/AltClick(mob/user)
 	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		above_suit = !above_suit
-		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
+		to_chat(user, span_notice("[src] will be worn [above_suit ? "above" : "below"] your suit."))
 		return
 
 	return ..()

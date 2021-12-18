@@ -9,8 +9,8 @@
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	..()
-	to_chat(user, "<span class='notice'>You feel an itching, both inside and \
-		outside as your tissues knit and reknit.</span>")
+	to_chat(user, span_notice("You feel an itching, both inside and \
+		outside as your tissues knit and reknit.")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/list/missing = C.get_missing_limbs()

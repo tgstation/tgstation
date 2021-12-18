@@ -13,10 +13,10 @@
 /obj/item/gang_induction_package/attack_self(mob/living/user)
 	..()
 	if(HAS_TRAIT(user, TRAIT_MINDSHIELD))
-		to_chat(user, "You attended a seminar on not signing up for a gang and are not interested.")
+		to_chat(user, span_warning("You attended a seminar on signing up for a gang and are not interested."))
 		return
 	if(user.mind.has_antag_datum(/datum/antagonist/ert/families))
-		to_chat(user, "As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
+		to_chat(user, span_warning("As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up."))
 		for(var/threads in team_to_use.free_clothes)
 			new threads(get_turf(user))
 		qdel(src)
@@ -24,9 +24,9 @@
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
 	if(is_gangster?.starter_gangster)
 		if(is_gangster.my_gang == team_to_use)
-			to_chat(user, "You started your family. You don't need to join it.")
+			to_chat(user, span_warning("You started your family. You don't need to join it."))
 			return
-		to_chat(user, "You started your family. You can't turn your back on it now.")
+		to_chat(user, span_warning("You started your family. You can't turn your back on it now."))
 		return
 	attempt_join_gang(user)
 

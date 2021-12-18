@@ -101,7 +101,7 @@
 			if(do_after(user, 25, target = src))
 				smile = TRUE
 				smile_color = CR.paint_color
-				to_chat(user, "You draw a smiley on the helmet visor.")
+				to_chat(user, span_notice("You draw a smiley on the helmet visor."))
 				update_appearance()
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
@@ -109,13 +109,13 @@
 	if(istype(hitting_item, /obj/item/clothing/head))
 		var/obj/item/clothing/hitting_clothing = hitting_item
 		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
-			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
+			to_chat(user, span_warning("You cannot place [hitting_clothing.name] on helmet!"))
 			return
 		if(attached_hat)
-			to_chat(user, span_notice("There's already something placed on helmet!"))
+			to_chat(user, span_warning("There's already something placed on helmet!"))
 			return
 		attached_hat = hitting_clothing
-		to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
+		to_chat(user, span_boldnotice("You placed [hitting_clothing.name] on helmet!"))
 		hitting_clothing.forceMove(src)
 		update_appearance()
 

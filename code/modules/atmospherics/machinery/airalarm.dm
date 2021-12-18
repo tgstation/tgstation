@@ -159,7 +159,7 @@
 
 /obj/machinery/airalarm/ui_status(mob/user)
 	if(user.has_unlimited_silicon_privilege && aidisabled)
-		to_chat(user, "AI control has been disabled.")
+		to_chat(user, span_warning("AI control has been disabled."))
 	else if(!shorted)
 		return ..()
 	return UI_CLOSE

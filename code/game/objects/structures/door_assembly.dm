@@ -108,7 +108,7 @@
 					name = "secured airlock assembly"
 					set_anchored(TRUE)
 			else
-				to_chat(user, "There is another door here!")
+				to_chat(user, span_warning("There is another door here!"))
 
 		else
 			user.visible_message(span_notice("[user] unsecures the airlock assembly from the floor."), \

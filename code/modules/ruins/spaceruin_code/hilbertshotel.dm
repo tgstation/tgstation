@@ -476,17 +476,17 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			return
 		var/obj/item/hilbertshotel/sphere = target
 		if(sphere.activeRooms.len)
-			to_chat(user, "Currently Occupied Rooms:")
+			to_chat(user, span_info("Currently Occupied Rooms:"))
 			for(var/roomnumber in sphere.activeRooms)
 				to_chat(user, roomnumber)
 		else
-			to_chat(user, "No currenty occupied rooms.")
+			to_chat(user, span_info("No currenty occupied rooms."))
 		if(sphere.storedRooms.len)
-			to_chat(user, "Vacated Rooms:")
+			to_chat(user, span_info("Vacated Rooms:"))
 			for(var/roomnumber in sphere.storedRooms)
 				to_chat(user, roomnumber)
 		else
-			to_chat(user, "No vacated rooms.")
+			to_chat(user, span_info("No vacated rooms."))
 
 /obj/effect/mob_spawn/corpse/human/doctorhilbert
 	name = "Doctor Hilbert"

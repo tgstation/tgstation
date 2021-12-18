@@ -489,13 +489,13 @@
 					found = H.ForceContractDisease(D)
 					break
 				if(!found)
-					to_chat(user, "Could not find a valid target for the disease.")
+					to_chat(user, span_warning("Could not find a valid target for the disease."))
 		else
 			H = target
 			if(istype(H) && D.infectable_biotypes & H.mob_biotypes)
 				H.ForceContractDisease(D)
 			else
-				to_chat(user, "Target could not be infected. Check mob biotype compatibility or resistances.")
+				to_chat(user, span_warning("Target could not be infected. Check mob biotype compatibility or resistances."))
 				return
 
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()] in [ADMIN_LOOKUPFLW(H)]")

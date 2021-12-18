@@ -67,7 +67,7 @@
 /obj/item/extinguisher/crafted/attack_self(mob/user)
 	safety = !safety
 	icon_state = "[sprite_name][!safety]"
-	to_chat(user, "[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"].")
+	to_chat(user, span_notice("[safety ? "You remove the straw and put it on the side of the cool canister" : "You insert the straw, readying it for use"]."))
 
 /obj/item/extinguisher/proc/refill()
 	if(!chem)
@@ -112,7 +112,7 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	to_chat(user, "<span class='infoplain'>The safety is [safety ? "on" : "off"].</span>")
+	to_chat(user, span_info("The safety is [safety ? "on" : "off"]."))
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)

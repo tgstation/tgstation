@@ -765,8 +765,8 @@
 		radio_enabled = FALSE //No talking on the built-in radio for you either!
 		forceMove(card)
 		card.AI = src
-		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-		to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+		to_chat(src, span_boldnotice("You have been downloaded to a mobile storage device. Remote device connection severed."))
+		to_chat(user, span_boldnotice("Transfer successful: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."))
 
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	if(control_disabled)

@@ -317,7 +317,7 @@
 		if (current_color_index > colors.len)
 			current_color_index = 1
 		var/cwname = colors[current_color_index]
-		to_chat(user, "Color changed to [cwname]!")
+		to_chat(user, span_notice("Color changed to [cwname]!"))
 		if(loaded)
 			loaded.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
 			loaded.update_appearance()

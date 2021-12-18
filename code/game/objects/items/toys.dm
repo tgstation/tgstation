@@ -1051,14 +1051,14 @@
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
-		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
+		to_chat(user, span_alert("Nothing happens, and <span class="alert">[round(timeleft/10)]</span> appears on the small display."))
 		sleep(5)
 
 
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class = 'notice'> You short-circuit \the [src].</span>")
+	to_chat(user, span_notice("You short-circuit \the [src]."))
 	obj_flags |= EMAGGED
 /*
  * Fake meteor
@@ -1074,7 +1074,7 @@
 /obj/item/toy/minimeteor/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class = 'notice'> You short-circuit whatever electronics exist inside \the [src], if there even are any.</span>")
+	to_chat(user, span_notice("You short-circuit whatever electronics exist inside \the [src], if there even are any."))
 	obj_flags |= EMAGGED
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

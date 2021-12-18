@@ -268,7 +268,7 @@
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(isturf(loc) && istype(loc.loc, /area/start))
-		to_chat(user, "No attacking people at spawn, you jackass.")
+		to_chat(user, span_userdanger("No attacking people at spawn, you jackass."))
 		return FALSE
 
 	var/martial_result = user.apply_martial_art(src, modifiers)

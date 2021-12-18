@@ -121,10 +121,10 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when selecting a sect.")
 		return
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
+		to_chat(user, span_warning("You are not the high priest, and therefore cannot select a religious sect."))
 		return
 	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,span_warning("You cannot select a sect at this time."))
+		to_chat(user, span_warning("You cannot select a sect at this time."))
 		return
 	if(GLOB.religious_sect)
 		return
@@ -146,15 +146,15 @@
 		return
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		if(user.mind.holy_role == HOLY_ROLE_DEACON)
-			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+			to_chat(user, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
 		else
-			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
+			to_chat(user, span_warning("You are not holy, and therefore cannot perform rites."))
 		return
 	if(performing_rite)
-		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
+		to_chat(user, span_notice("There is a rite currently being performed here already."))
 		return
 	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user,span_warning("You are not close enough to perform the rite."))
+		to_chat(user, span_warning("You are not close enough to perform the rite."))
 		return
 	performing_rite = new path(parent)
 	if(!performing_rite.perform_rite(user, parent))

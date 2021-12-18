@@ -58,9 +58,9 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/examine(mob/user)
 	. = ..()
 	if(exploding)
-		to_chat(user, "It is in the process of exploding. Perhaps reviewing your affairs is in order.")
+		to_chat(user, span_danger("It is in the process of exploding. Perhaps reviewing your affairs is in order."))
 	if(timing)
-		to_chat(user, "There are [get_time_left()] seconds until detonation.")
+		to_chat(user, span_warning("There are [get_time_left()] seconds until detonation."))
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"

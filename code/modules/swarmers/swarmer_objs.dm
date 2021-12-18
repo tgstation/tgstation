@@ -63,7 +63,7 @@
 /obj/structure/swarmer_beacon/attack_ghost(mob/user)
 	. = ..()
 	if(processing_swarmer)
-		to_chat(user, "<b>A swarmer is currently being created. Try again soon.</b>")
+		to_chat(user, span_warning("A swarmer is currently being created. Try again soon."))
 		return
 	if(is_banned_from(user.ckey, ROLE_SWARMER))
 		to_chat(user, span_danger("You are banned from playing as a Swarmer."))

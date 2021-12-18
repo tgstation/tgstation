@@ -981,12 +981,12 @@
 			time_to_assign = initial(time_to_assign)
 			registered_name = initial(registered_name)
 			STOP_PROCESSING(SSobj, src)
-			to_chat(user, "Restating prisoner ID to default parameters.")
+			to_chat(user, span_notice("Restating prisoner ID to default parameters."))
 			return
 		time_to_assign = input(user,"Set sentence time in seconds.","Set sentence time in seconds.",0) as num|null
 		if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
-		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+		to_chat(user, span_notice("You set the sentence time to [time_to_assign] seconds."))
 		timed = TRUE
 
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
@@ -1102,10 +1102,10 @@
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN to cancel any part of the following the attack chain.
 	if(istype(target, /mob/living/carbon/human))
-		to_chat(user, "<span class='notice'>You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal...</span>")
+		to_chat(user, span_notice("You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal..."))
 
 		if(!do_mob(user, target, 2 SECONDS))
-			to_chat(user, "<span class='notice'>The scan was interrupted.</span>")
+			to_chat(user, span_warning("The scan was interrupted.")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/mob/living/carbon/human/human_target = target
@@ -1113,11 +1113,11 @@
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
-			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
+			to_chat(user, span_warning("The scan failed to locate any ID cards."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		to_chat(user, span_notice("You successfully sync your [src] with \the [selected_id].")
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1125,7 +1125,7 @@
 	if(istype(target, /obj/item))
 		var/obj/item/target_item = target
 
-		to_chat(user, "<span class='notice'>You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal...</span>")
+		to_chat(user, span_notice("You covertly start to scan [target] with your [src], hoping to pick up a wireless ID card signal..."))
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
 
@@ -1135,11 +1135,11 @@
 			target_id_cards |= target_item_id
 
 		if(!length(target_id_cards))
-			to_chat(user, "<span class='notice'>The scan failed to locate any ID cards.</span>")
+			to_chat(user, span_warning("The scan failed to locate any ID cards."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, "<span class='notice'>You successfully sync your [src] with \the [selected_id].</span>")
+		to_chat(user, span_notice("You successfully sync your [src] with \the [selected_id]."))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

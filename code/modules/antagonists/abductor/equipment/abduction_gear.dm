@@ -597,8 +597,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			else
 				helptext = span_warning("Subject unsuitable for experiments.")
 
-	to_chat(user, "[span_notice("Probing result:")][species]")
-	to_chat(user, "[helptext]")
+	to_chat(user, span_notice("Probing result: [species]"))
+	to_chat(user, span_info("[helptext]"))
 
 /obj/item/restraints/handcuffs/energy
 	name = "hard-light energy field"

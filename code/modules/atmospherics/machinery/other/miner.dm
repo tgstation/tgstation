@@ -141,7 +141,7 @@
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)
-		to_chat(user, "[src] seems to be broken. Its debug interface outputs: [broken_message]")
+		to_chat(user, span_warning("[src] seems to be broken. Its debug interface outputs: [broken_message]"))
 	..()
 
 /obj/machinery/atmospherics/miner/n2o

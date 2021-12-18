@@ -207,13 +207,13 @@
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+		to_chat(user, span_notice("The analyzer beeps once, then reports:"))
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
+			to_chat(user, span_info("Progress to Critical Mass: [overmind.blobs_legit.len]/[overmind.blobwincount]."))
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
-			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
+			to_chat(user, span_warning("Blob core neutralized. Critical mass no longer attainable."))
 		to_chat(user, typereport(user).Join("\n"))
 	else
 		return ..()

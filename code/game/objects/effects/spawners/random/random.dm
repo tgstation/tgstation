@@ -119,7 +119,7 @@
 	make_table()
 
 /obj/item/loot_table_maker/attack_self(mob/user)
-	to_chat(user, "Loot pool re-rolled.")
+	to_chat(user, span_notice("Loot pool re-rolled."))
 	make_table()
 
 /obj/item/loot_table_maker/proc/make_table()

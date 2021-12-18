@@ -106,7 +106,7 @@
 		to_chat(AI, span_notice("The remains of your file system have been recovered on a mobile storage device."))
 	else //Give the AI a heads-up that it is probably going to get fixed.
 		AI.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
-	to_chat(user, "[span_boldnotice("Backup files recovered")]: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
+	to_chat(user, span_boldnotice("Backup files recovered: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory."))
 	AI = null
 
 /obj/structure/mecha_wreckage/gygax

@@ -210,7 +210,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday/energy, 5, 30)
 
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)
-	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
+	to_chat(user, span_userdanger("As you eat the cake, you accidentally hurt yourself on the embedded energy sword!"))
 	user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
 
@@ -234,7 +234,7 @@
 	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
 
 /obj/item/food/cakeslice/birthday/energy/proc/energy_bite(mob/living/user)
-	to_chat(user, "<font color='red' size='5'>As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!</font>")
+	to_chat(user, span_userdanger("As you eat the cake slice, you accidentally hurt yourself on the embedded energy dagger!"))
 	user.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
 	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
 

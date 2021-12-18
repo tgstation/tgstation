@@ -21,11 +21,11 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 /obj/item/gangster_cellphone/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!activated)
-		to_chat(user, "You turn on [src].")
+		to_chat(user, span_notice("You turn on [src]."))
 		icon_state = "phone_on"
 		activated = TRUE
 	else
-		to_chat(user, "You turn off [src].")
+		to_chat(user, span_notice("You turn off [src]."))
 		icon_state = "phone_off"
 		activated = FALSE
 
@@ -51,9 +51,9 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 		if(get_dist(player_mob, src) > 7 || player_mob.z != z) //they're out of range of normal hearing
 			if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 				continue
-		var/link = FOLLOW_LINK(player_mob, src)	
+		var/link = FOLLOW_LINK(player_mob, src)
 		to_chat(player_mob, span_gangradio("[link] <b>[speaker.name]</b> \[CELL: [gang_id]\] says, \"[message]\""))
-		
+
 /obj/item/gangster_cellphone/proc/say_message(message, atom/movable/speaker)
 	for(var/mob/living/carbon/human/cellphone_hearer in get_turf(src))
 		if(HAS_TRAIT(cellphone_hearer, TRAIT_DEAF))

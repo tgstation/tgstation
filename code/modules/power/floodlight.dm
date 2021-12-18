@@ -24,7 +24,7 @@
 			state = FLOODLIGHT_NEEDS_SECURING
 			return
 		else
-			to_chat(user, "You need 5 cables to wire [src].")
+			to_chat(user, span_warning("You need 5 cables to wire [src]."))
 			return
 	if(O.tool_behaviour == TOOL_SCREWDRIVER && state == FLOODLIGHT_NEEDS_SECURING)
 		to_chat(user, span_notice("You fasten the wiring and electronics in [src]."))

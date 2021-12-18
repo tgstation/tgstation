@@ -324,7 +324,7 @@
 		return TRUE
 	var/datum/martial_art/MA = martial
 	if(user.mind.has_martialart(initial(MA.id)))
-		to_chat(user,span_warning("You already know [martialname]!"))
+		to_chat(user, span_warning("You already know [martialname]!"))
 		return TRUE
 	return FALSE
 
@@ -332,7 +332,7 @@
 	to_chat(user, span_notice("You start reading about [martialname]..."))
 
 /obj/item/book/granter/martial/on_reading_finished(mob/user)
-	to_chat(user, "[greet]")
+	to_chat(user, span_boldnotice("[greet]"))
 	var/datum/martial_art/MA = new martial
 	MA.teach(user)
 	user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")

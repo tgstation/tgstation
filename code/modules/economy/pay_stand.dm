@@ -45,7 +45,7 @@
 			name = msg
 			desc = "Owned by [new_card.registered_account.account_holder], pays directly into [user.p_their()] account."
 			my_card = new_card
-			to_chat(user, "You link the stand to your account.")
+			to_chat(user, span_notice("You link the stand to your account."))
 			return
 		var/obj/item/card/id/pay_card = W
 		if(pay_card.registered_account)
@@ -78,16 +78,16 @@
 		var/cashmoney = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
 		if(H.spend(cashmoney, FALSE))
 			purchase(user, cashmoney)
-			to_chat(user, "Thanks for purchasing! The vendor has been informed.")
+			to_chat(user, span_notice("Thanks for purchasing! The vendor has been informed."))
 			return
 		else
 			to_chat(user, span_warning("ERROR: Insufficient funds to make transaction."))
 			return
 	if(istype(W, /obj/item/stack/spacecash))
-		to_chat(user, "What is this, the 2000s? We only take card here.")
+		to_chat(user, span_warning("What is this, the 2000s? We only take card here."))
 		return
 	if(istype(W, /obj/item/coin))
-		to_chat(user, "What is this, the 1800s? We only take card here.")
+		to_chat(user, span_warning("What is this, the 1800s? We only take card here."))
 		return
 	if(istype(W, /obj/item/assembly/signaler))
 		var/obj/item/assembly/signaler/S = W
@@ -106,7 +106,7 @@
 				S.forceMove(src)
 				signaler = S
 				signaler_threshold = cash_limit
-				to_chat(user, "You attach the signaler to the paystand.")
+				to_chat(user, span_notice("You attach the signaler to the paystand."))
 				desc += " A signaler appears to be attached to the scanner."
 		else
 			to_chat(user, span_warning("A signaler is already attached to this unit!"))

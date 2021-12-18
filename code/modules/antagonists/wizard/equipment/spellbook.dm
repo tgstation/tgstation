@@ -693,7 +693,7 @@
 		return
 	if(user != owner)
 		if(user.mind.special_role == ROLE_WIZARD_APPRENTICE)
-			to_chat(user, "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not.")
+			to_chat(user, span_danger("If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."))
 		else
 			to_chat(user, span_warning("The [name] does not recognize you as its owner and refuses to open!"))
 		return

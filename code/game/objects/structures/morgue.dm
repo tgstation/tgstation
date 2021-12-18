@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		to_chat(user, span_danger("It's locked."))
 		return
 	if(!connected)
-		to_chat(user, "That doesn't appear to have a tray.")
+		to_chat(user, span_warning("That doesn't appear to have a tray."))
 		return
 	if(connected.loc == src)
 		open()

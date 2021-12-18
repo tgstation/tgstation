@@ -261,21 +261,21 @@
 	if(contents.len)
 		return FALSE
 	if(!forced && (grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD))
-		to_chat(user, "[span_userdanger("Capture failed!")]: Kill or maim the victim first!")
+		to_chat(user, span_cultbold("Capture failed! Kill or maim the victim first!"))
 		return FALSE
 	if(victim.client)
 		victim.unequip_everything()
 		init_shade(victim, user)
 		return TRUE
 	else
-		to_chat(user, "[span_userdanger("Capture failed!")]: The soul has already fled its mortal frame. You attempt to bring it back...")
+		to_chat(user, span_cultbold("Capture failed! The soul has already fled its mortal frame. You attempt to bring it back..."))
 		INVOKE_ASYNC(src, .proc/getCultGhost, victim, user)
 		return TRUE //it'll probably get someone ;)
 
 ///captures a shade that was previously released from a soulstone.
 /obj/item/soulstone/proc/capture_shade(mob/living/simple_animal/shade/shade, mob/user)
 	if(contents.len)
-		to_chat(user, "[span_userdanger("Capture failed!")]: [src] is full! Free an existing soul to make room.")
+		to_chat(user, span_cultbold("Capture failed! [src] is full! Free an existing soul to make room."))
 		return FALSE
 	shade.AddComponent(/datum/component/soulstoned, src)
 	if(theme == THEME_HOLY)
@@ -286,16 +286,16 @@
 	if(theme == THEME_CULT)
 		icon_state = "soulstone2"
 	name = "soulstone: Shade of [shade.real_name]"
-	to_chat(shade, span_notice("Your soul has been captured by [src]. Its arcane energies are reknitting your ethereal form."))
+	to_chat(shade, span_userdanger("Your soul has been captured by [src]. Its arcane energies are reknitting your ethereal form."))
 	if(user != shade)
-		to_chat(user, "[span_info("<b>Capture successful!</b>:")] [shade.real_name]'s soul has been captured and stored within [src].")
+		to_chat(user, span_cult("Capture successful! [shade.real_name]'s soul has been captured and stored within [src]."))
 	return TRUE
 
 ///transfer the mind of the shade to a construct mob selected by the user, then deletes both the shade and src.
 /obj/item/soulstone/proc/transfer_to_construct(obj/structure/constructshell/shell, mob/user)
 	var/mob/living/simple_animal/shade/shade = locate() in src
 	if(!shade)
-		to_chat(user, "[span_userdanger("Creation failed!")]: [src] is empty! Go kill someone!")
+		to_chat(user, span_cultbold("Creation failed! [src] is empty! Go kill someone!"))
 		return FALSE
 	var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user, shell), require_near = TRUE, tooltips = TRUE)
 	if(!shell || !construct_class)
@@ -406,11 +406,11 @@
 			icon_state = "soulstone2"
 	if(user)
 		if(IS_CULTIST(user))
-			to_chat(soulstone_spirit, "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs.")
+			to_chat(soulstone_spirit, span_userdanger("Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs."))
 		else if(role_check(user))
-			to_chat(soulstone_spirit, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
+			to_chat(soulstone_spirit, span_userdanger("Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs."))
 		if(message_user)
-			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [victim.real_name]'s soul has been ripped from [victim.p_their()] body and stored within [src].")
+			to_chat(user, span_cult("Capture successful! [victim.real_name]'s soul has been ripped from [victim.p_their()] body and stored within [src]."))
 	victim.dust()
 
 

@@ -20,7 +20,7 @@
 	for(var/obj/structure/transit_tube/tube in source_turf)
 		existing_tubes +=1
 		if(existing_tubes >= 2)
-			to_chat(user, "[span_warning("You cannot wrench any more transit tubes!")] ")
+			to_chat(user, span_warning("You cannot wrench any more transit tubes!"))
 			return FALSE
 	return TRUE
 

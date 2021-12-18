@@ -195,10 +195,10 @@
 /obj/machinery/atmospherics/components/binary/volume_pump/multitool_act(mob/living/user, obj/item/I)
 	if(!overclocked)
 		overclocked = TRUE
-		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
+		to_chat(user, span_notice("The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits."))
 	else
 		overclocked = FALSE
-		to_chat(user, "The pump quiets down as you turn its limiters back on.")
+		to_chat(user, span_notice("The pump quiets down as you turn its limiters back on."))
 	return TRUE
 
 // mapping

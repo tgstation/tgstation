@@ -42,7 +42,7 @@
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!changeling.chosen_sting)
-		to_chat(user, "We haven't prepared our sting yet!")
+		to_chat(user, span_warning("We haven't prepared our sting yet!"))
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))

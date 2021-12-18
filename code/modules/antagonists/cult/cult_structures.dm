@@ -94,7 +94,7 @@
 		to_chat(user, span_cultitalic("You need to anchor [src] to the floor with your dagger first."))
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, span_cultitalic("The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)]."))
 		return
 	var/list/items = list(
 		"Eldritch Whetstone" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener"),
@@ -138,7 +138,7 @@
 		to_chat(user, span_cultitalic("You need to anchor [src] to the floor with your dagger first."))
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, span_cultitalic("The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)]."))
 		return
 	var/list/items = list(
 		"Nar'Sien Hardened Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
@@ -254,7 +254,7 @@
 		to_chat(user, span_cultitalic("You need to anchor [src] to the floor with your dagger first."))
 		return
 	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		to_chat(user, span_cultitalic("The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)]."))
 		return
 	var/list/items = list(
 		"Zealot's Blindfold" = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold"),

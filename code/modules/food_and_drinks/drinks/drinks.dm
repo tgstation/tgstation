@@ -701,7 +701,7 @@
 		burst_soda(user)
 		return
 
-	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
+	to_chat(user, span_notice("You pull back the tab of [src] with a satisfying pop.")) //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE

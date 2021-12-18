@@ -13,7 +13,7 @@
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(!SSticker.HasRoundStarted())
-		to_chat(user, "You cannot attack people before the game has started.")
+		to_chat(user, span_userdanger("You cannot attack people before the game has started."))
 		return
 	..()
 

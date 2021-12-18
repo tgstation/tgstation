@@ -70,7 +70,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 /obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
 	if(processing_reagents)
-		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
+		to_chat(user, span_warning("The [src] is currently processing a batch!"))
 		return ..()
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
@@ -96,7 +96,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	. = ..()
 
 	if(processing_reagents)
-		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
+		to_chat(user, span_warning("The [src] is currently processing a batch!"))
 		return
 
 	if(default_deconstruction_crowbar(item))
@@ -116,7 +116,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/AltClick(mob/living/user)
 	. = ..()
 	if(processing_reagents)
-		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
+		to_chat(user, span_warning("The [src] is currently processing a batch!"))
 		return
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return ..()
@@ -125,7 +125,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 /obj/machinery/chem_mass_spec/alt_click_secondary(mob/living/user)
 	. = ..()
 	if(processing_reagents)
-		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
+		to_chat(user, span_warning("The [src] is currently processing a batch!"))
 		return
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return

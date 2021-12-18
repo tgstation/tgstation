@@ -25,7 +25,7 @@
  */
 /datum/plant_gene/trait/anti_magic/proc/block_magic(mob/user, major, obj/item/our_plant)
 	if(major)
-		to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
+		to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
 
 /*
  * The proc called when the holymelon uses up all of its anti-magic charges.
@@ -35,7 +35,7 @@
  * our_plant - our plant, who tragically melted protecting us from magics
  */
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)
-	to_chat(user, "<span class='warning'>[our_plant] rapidly turns into ash!</span>")
+	to_chat(user, span_warning("[our_plant] rapidly turns into ash!"))
 	new /obj/effect/decal/cleanable/ash(our_plant.drop_location())
 	qdel(our_plant)
 
@@ -85,7 +85,7 @@
 	. = ..()
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	to_chat(target, "<span class='danger'>You are lit on fire from the intense heat of [our_plant]!</span>")
+	to_chat(target, span_userdanger("You are lit on fire from the intense heat of [our_plant]!"))
 	target.adjust_fire_stacks(our_seed.potency / 20)
 	if(target.IgniteMob())
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [ADMIN_LOOKUPFLW(target)] on fire with [our_plant] at [AREACOORD(user)]")
@@ -100,7 +100,7 @@
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 	else
-		to_chat(user, "<span class='warning'>All the petals have fallen off [our_plant] from violent whacking!</span>")
+		to_chat(user, span_warning("All the petals have fallen off [our_plant] from violent whacking!"))
 		qdel(our_plant)
 
 /// Sunflower's attack effect (shows cute text)
@@ -115,8 +115,8 @@
 	var/mob/target_mob = target
 	user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
 	if(target_mob != user)
-		to_chat(target_mob, "<font color='green'>[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>")
-	to_chat(user, "<font color='green'>Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target_mob]!</font>")
+		to_chat(target_mob, span_green("[user] smacks you with [our_plant]!<font color='orange'><b>FLOWER POWER!</b></font></font>"))
+	to_chat(user, span_green("Your [our_plant.name]'s <font color='orange'><b>FLOWER POWER</b></font> strikes [target_mob]!</font>"))
 
 /// Normal nettle's force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack
@@ -131,7 +131,7 @@
 	if(our_plant.force > 0)
 		our_plant.force -= rand(1, (our_plant.force / 3) + 1)
 	else
-		to_chat(user, "<span class='warning'>All the leaves have fallen off [our_plant] from violent whacking!</span>")
+		to_chat(user, span_warning("All the leaves have fallen off [our_plant] from violent whacking!"))
 		qdel(our_plant)
 
 /// Deathnettle force + degradation on attack
@@ -176,10 +176,10 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(!our_seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
-		to_chat(user, "<span class='danger'>[our_plant]'s thorns nearly prick your hand. Best be careful.</span>")
+		to_chat(user, span_userdanger("[our_plant]'s thorns nearly prick your hand. Best be careful."))
 		return
 
-	to_chat(user, "<span class='danger'>[our_plant]'s thorns prick your hand. Ouch.</span>")
+	to_chat(user, span_userdanger("[our_plant]'s thorns prick your hand. Ouch."))
 	our_plant.investigate_log("rose-pricked [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(2))
@@ -193,7 +193,7 @@
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
 
-	to_chat(user, "<span class='danger'>[our_plant] singes your bare hand!</span>")
+	to_chat(user, span_userdanger("[our_plant] singes your bare hand!"))
 	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
@@ -206,7 +206,7 @@
 /datum/plant_gene/trait/backfire/nettle_burn/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	. = ..()
 
-	to_chat(user, "<span class='danger'>[our_plant] burns your bare hand!</span>")
+	to_chat(user, span_userdanger("[our_plant] burns your bare hand!"))
 	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND))
@@ -222,7 +222,7 @@
 
 	if(prob(50))
 		user.Paralyze(100)
-		to_chat(user, "<span class='userdanger'>You are stunned by the powerful acids of [our_plant]!</span>")
+		to_chat(user, span_userdanger("You are stunned by the powerful acids of [our_plant]!"))
 
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
@@ -291,7 +291,7 @@
 	. = ..()
 
 	if(prob(50))
-		to_chat(user, "<span class='danger'>[our_plant] slips out of your hand!</span>")
+		to_chat(user, span_userdanger("[our_plant] slips out of your hand!"))
 		INVOKE_ASYNC(our_plant, /obj/item/.proc/attack_self, user)
 
 /// Traits for plants that can be activated to turn into a mob.
@@ -339,8 +339,8 @@
 		return
 
 	if(target != user)
-		to_chat(user, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from feeding it to [target].</span>")
-	to_chat(target, "<span class='warning'>[our_plant] is twitching and shaking, preventing you from eating it.</span>")
+		to_chat(user, span_warning("[our_plant] is twitching and shaking, preventing you from feeding it to [target]."))
+	to_chat(target, span_warning("[our_plant] is twitching and shaking, preventing you from eating it."))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /*
@@ -357,10 +357,10 @@
 		return
 
 	if(dangerous && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='notice'>You decide not to awaken [our_plant]. It may be very dangerous!</span>")
+		to_chat(user, span_notice("You decide not to awaken [our_plant]. It may be very dangerous!"))
 		return
 
-	to_chat(user, "<span class='notice'>You begin to awaken [our_plant]...</span>")
+	to_chat(user, span_notice("You begin to awaken [our_plant]..."))
 	begin_awaken(our_plant, 3 SECONDS)
 	log_game("[key_name(user)] awakened a [our_plant] at [AREACOORD(user)].")
 
@@ -374,7 +374,7 @@
 	SIGNAL_HANDLER
 
 	if(!awakening && !isspaceturf(user.loc) && prob(25))
-		to_chat(user, "<span class='danger'>[our_plant] begins to growl and shake!</span>")
+		to_chat(user, span_userdanger("[our_plant] begins to growl and shake!"))
 		begin_awaken(our_plant, 1 SECONDS)
 
 /*
@@ -407,7 +407,7 @@
 		spawned_simplemob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
 		spawned_simplemob.move_to_delay -= round(our_seed.production * mob_speed_multiplier)
 	our_plant.forceMove(our_plant.drop_location())
-	spawned_mob.visible_message("<span class='notice'>[our_plant] growls as it suddenly awakens!</span>")
+	spawned_mob.visible_message(span_notice("[our_plant] growls as it suddenly awakens!"))
 	qdel(our_plant)
 
 /// Killer Tomato's transformation gene.
@@ -496,7 +496,7 @@
 		our_plant.color = COLOR_RED
 
 	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
-	user.visible_message("<span class='warning'>[user] plucks the stem from [our_plant]!</span>", "<span class='userdanger'>You pluck the stem from [our_plant], which begins to hiss loudly!</span>")
+	user.visible_message(span_warning("[user] plucks the stem from [our_plant]!</span>", span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"))
 	log_bomber(user, "primed a", our_plant, "for detonation")
 	detonate(our_plant)
 
@@ -542,7 +542,7 @@
 	name = "Explosive Nature"
 
 /datum/plant_gene/trait/bomb_plant/potency_based/trigger_detonation(obj/item/our_plant, mob/living/user)
-	user.visible_message("<span class='warning'>[user] primes [our_plant]!</span>", "<span class='userdanger'>You prime [our_plant]!</span>")
+	user.visible_message(span_warning("[user] primes [our_plant]!</span>", span_userdanger("You prime [our_plant]!"))
 	log_bomber(user, "primed a", our_plant, "for detonation")
 
 	var/obj/item/food/grown/grown_plant = our_plant

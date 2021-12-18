@@ -56,13 +56,13 @@
 			mode = 0
 	switch(mode)
 		if(0)
-			to_chat(user, "<span class='infoplain'>Power reset. Hugs!</span>")
+			to_chat(user, span_info("Power reset. Hugs!"))
 		if(1)
-			to_chat(user, "<span class='infoplain'>Power increased!</span>")
+			to_chat(user, span_info("Power increased!"))
 		if(2)
-			to_chat(user, "<span class='warningplain'>BZZT. Electrifying arms...</span>")
+			to_chat(user, span_warning("BZZT. Electrifying arms..."))
 		if(3)
-			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
+			to_chat(user, span_warning("ERROR: ARM ACTUATORS OVERLOADED."))
 
 /obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user, params)
 	if(M == user)
@@ -284,14 +284,14 @@
 /obj/item/harmalarm/emag_act(mob/user)
 	obj_flags ^= EMAGGED
 	if(obj_flags & EMAGGED)
-		to_chat(user, "<font color='red'>You short out the safeties on [src]!</font>")
+		to_chat(user, span_warning("You short out the safeties on [src]!"))
 	else
-		to_chat(user, "<font color='red'>You reset the safeties on [src]!</font>")
+		to_chat(user, span_warning("You reset the safeties on [src]!"))
 
 /obj/item/harmalarm/attack_self(mob/user)
 	var/safety = !(obj_flags & EMAGGED)
 	if(cooldown > world.time)
-		to_chat(user, "<font color='red'>The device is still recharging!</font>")
+		to_chat(user, span_warning("The device is still recharging!"))
 		return
 
 	if(iscyborg(user))

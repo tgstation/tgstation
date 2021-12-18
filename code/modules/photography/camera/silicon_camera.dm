@@ -16,17 +16,17 @@
 
 /obj/item/camera/siliconcam/proc/camera_mode_off(mob/user)
 	in_camera_mode = FALSE
-	to_chat(user, "<span class='infoplain'><B>Camera Mode deactivated</B></span>")
+	to_chat(user, span_notice("Camera Mode deactivated."))
 
 /obj/item/camera/siliconcam/proc/camera_mode_on(mob/user)
 	in_camera_mode = TRUE
-	to_chat(user, "<span class='infoplain'><B>Camera Mode activated</B></span>")
+	to_chat(user, span_notice("Camera Mode activated."))
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
 	var/list/nametemp = list()
 	var/find
 	if(!stored.len)
-		to_chat(usr, "<span class='infoplain'><font color=red><b>No images saved</b></font></span>")
+		to_chat(usr, span_warning("No images saved."))
 		return
 	var/list/temp = list()
 	for(var/i in stored)
