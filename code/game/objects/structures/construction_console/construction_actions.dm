@@ -133,7 +133,7 @@
 	structure_path = /obj/structure/fans/tiny
 	place_sound = 'sound/machines/click.ogg'
 
-/datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
+/datum/action/innate/construction/place_structure/fan/after_place(obj/placed_structure, remaining)
 	to_chat(owner, span_notice("Tiny fan placed. [remaining] fans remaining."))
 
 /datum/action/innate/construction/place_structure/turret
@@ -148,5 +148,6 @@
 	if(!turret_controller)
 		to_chat(owner, span_notice("<b>Warning:</b> Aux base controller not found. Turrets might not work properly."))
 		return
-	turret_controller.turrets += placed_structure
+
+	LAZYADD(turret_controller.turrets, WEAKREF(placed_structure))
 	to_chat(owner, span_notice("You've constructed an additional turret. [remaining] turrets remaining."))
