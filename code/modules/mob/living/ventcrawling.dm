@@ -6,7 +6,7 @@
 	// Cache the vent_movement bitflag var from atmos machineries
 	var/vent_movement = ventcrawl_target.vent_movement
 
-	if(!Adjacent(ventcrawl_target))
+	if(!Adjacent(ventcrawl_target.associated_loc))
 		return
 	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
 		return
@@ -35,12 +35,12 @@
 
 	if(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		//Handle the exit here
-		if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
+		if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/effect/ventcrawl_holder) && movement_type & VENTCRAWLING)
 			visible_message(span_notice("[src] begins climbing out from the ventilation system...") ,span_notice("You begin climbing out from the ventilation system..."))
 			if(!client)
 				return
 			visible_message(span_notice("[src] scrambles out from the ventilation ducts!"),span_notice("You scramble out from the ventilation ducts."))
-			forceMove(ventcrawl_target.loc)
+			forceMove(ventcrawl_target.associated_loc)
 			REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 			update_pipe_vision()
 
@@ -49,7 +49,7 @@
 			var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
 			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
 				visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
-				if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target))
+				if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target.associated_loc))
 					return
 				if(!client)
 					return

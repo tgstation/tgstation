@@ -22,20 +22,19 @@
 	var/environment_temperature = 0
 	var/datum/gas_mixture/pipe_air = return_air()
 
-	var/turf/local_turf = loc
-	if(istype(local_turf))
-		if(islava(local_turf))
+	if(istype(associated_loc))
+		if(islava(associated_loc))
 			environment_temperature = 5000 //Yuck
-		else if(local_turf.blocks_air)
-			environment_temperature = local_turf.temperature
+		else if(associated_loc.blocks_air)
+			environment_temperature = associated_loc.temperature
 		else
-			var/turf/open/open_local = local_turf
+			var/turf/open/open_local = associated_loc
 			environment_temperature = open_local.GetTemperature()
 	else
-		environment_temperature = local_turf.temperature
-	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
-		parent.temperature_interact(local_turf, volume, thermal_conductivity)
+		environment_temperature = associated_loc.temperature
 
+	if(abs(environment_temperature - pipe_air.temperature) > minimum_temperature_difference)
+		parent.temperature_interact(associated_loc, volume, thermal_conductivity)
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
 	if(has_buckled_mobs())

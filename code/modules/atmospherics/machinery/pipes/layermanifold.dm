@@ -82,16 +82,21 @@
 	front_nodes = list()
 	back_nodes = list()
 	nodes = list()
+
 	for(var/iter in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 		var/obj/machinery/atmospherics/foundfront = find_connecting(dir, iter)
 		var/obj/machinery/atmospherics/foundback = find_connecting(turn(dir, 180), iter)
+
 		front_nodes += foundfront
 		back_nodes += foundback
+
 		if(foundfront && !QDELETED(foundfront))
 			nodes += foundfront
 		if(foundback && !QDELETED(foundback))
 			nodes += foundback
+
 	update_appearance()
+
 	return nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/atmos_init()
@@ -108,6 +113,7 @@
 	if(istype(reference, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/pipe_reference = reference
 		pipe_reference.destroy_network()
+
 	while(reference in nodes)
 		var/i = nodes.Find(reference)
 		nodes[i] = null
@@ -117,6 +123,7 @@
 		i = back_nodes.Find(reference)
 		if(i)
 			back_nodes[i] = null
+
 	update_appearance()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, direction)

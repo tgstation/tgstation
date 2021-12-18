@@ -238,7 +238,7 @@ All ShuttleMove procs go here
 			var/obj/machinery/atmospherics/node = nodes[i]
 			var/connected = FALSE
 			for(var/D in GLOB.cardinals)
-				if(node in get_step(src, D))
+				if(node.associated_loc == get_step(associated_loc, D))//TODOKYLER: dicey
 					connected = TRUE
 					break
 

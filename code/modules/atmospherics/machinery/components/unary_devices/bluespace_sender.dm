@@ -38,8 +38,7 @@
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
 	if(bluespace_network.total_moles())
-		var/turf/local_turf = get_turf(src)
-		local_turf.assume_air(bluespace_network)
+		associated_loc.assume_air(bluespace_network)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()

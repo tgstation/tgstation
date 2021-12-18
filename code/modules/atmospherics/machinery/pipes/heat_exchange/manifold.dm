@@ -27,7 +27,8 @@
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			. += get_pipe_image(icon, "pipe-[piping_layer]", get_dir(src, nodes[i]))
+			var/turf/adjacent_node_loc = nodes[i].associated_loc
+			. += get_pipe_image(icon, "pipe-[piping_layer]", get_dir(associated_loc, adjacent_node_loc))
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold/layer2
 	piping_layer = 2

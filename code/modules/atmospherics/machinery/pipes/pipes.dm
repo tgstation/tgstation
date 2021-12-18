@@ -1,12 +1,9 @@
 /obj/machinery/atmospherics/pipe
 	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
 	damage_deflection = 12
-	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
-	var/volume = 0
 
 	use_power = NO_POWER_USE
 	can_unwrench = 1
-	var/datum/pipeline/parent = null
 
 	paintable = TRUE
 
@@ -17,6 +14,13 @@
 
 	vis_flags = VIS_INHERIT_PLANE
 
+	var/datum/pipeline/parent = null
+
+	///used when reconstructing a pipeline that broke
+	var/datum/gas_mixture/air_temporary
+
+	var/volume = 0
+
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
@@ -26,8 +30,8 @@
 /obj/machinery/atmospherics/pipe/Initialize(mapload)
 	. = ..()
 
-	if(hide)
-		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+	//if(hide)
+	//	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/nullify_node(i)
 	var/obj/machinery/atmospherics/old_node = nodes[i]
@@ -46,8 +50,7 @@
 
 /obj/machinery/atmospherics/pipe/proc/releaseAirToTurf()
 	if(air_temporary)
-		var/turf/T = loc
-		T.assume_air(air_temporary)
+		associated_loc.assume_air(air_temporary)
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)
@@ -83,11 +86,10 @@
 
 	releaseAirToTurf()
 
-	var/turf/local_turf = loc
-	for(var/obj/machinery/meter/meter in local_turf)
+	for(var/obj/machinery/meter/meter in associated_loc)
 		if(meter.target != src)
 			continue
-		var/obj/item/pipe_meter/meter_object = new (local_turf)
+		var/obj/item/pipe_meter/meter_object = new (associated_loc)
 		meter.transfer_fingerprints_to(meter_object)
 		qdel(meter)
 	return ..()
@@ -100,8 +102,9 @@
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/connected_dir = get_dir(src, node)
+		var/connected_dir = get_dir(associated_loc, node.associated_loc)
 		connections |= connected_dir
+
 	bitfield = CARDINAL_TO_FULLPIPES(connections)
 	bitfield |= CARDINAL_TO_SHORTPIPES(initialize_directions & ~connections)
 	icon_state = "[bitfield]_[piping_layer]"

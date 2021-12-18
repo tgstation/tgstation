@@ -21,8 +21,9 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		if(!nodes[i])
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
-		var/connected_dir = get_dir(src, node)
+		var/connected_dir = get_dir(associated_loc, node.associated_loc)
 		connections |= connected_dir
+
 	var/bitfield = CARDINAL_TO_FULLPIPES(connections)
 	dir = check_binary_direction(connections)
 

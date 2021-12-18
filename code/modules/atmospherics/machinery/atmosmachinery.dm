@@ -7,6 +7,69 @@
 // Pipes -> Pipelines
 // Pipelines + Other Objects -> Pipe network
 
+/turf
+	/// list of atmos machines on this tile that can connect to other machines. used so that they can be nullspaced
+	var/list/pipenet_nodes
+
+#define VENT_SOUND_DELAY 30
+
+/obj/effect/ventcrawl_holder
+	name = "the pipe"//should be set to the name of the pipe we should be in
+	density = FALSE
+	anchored = FALSE
+
+	///what machine we're currently in
+	var/obj/machinery/atmospherics/current_node
+
+/obj/effect/ventcrawl_holder/proc/setup_on_node(mob/living/package, obj/machinery/atmospherics/starting_node)
+	if(!starting_node?.associated_loc || !package)
+		return FALSE
+
+	package.client?.eye = src
+	package.forceMove(src)
+	RegisterSignal(package, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PREQDELETED), .proc/check_package)
+
+/obj/effect/ventcrawl_holder/proc/check_package(mob/living/package)
+	SIGNAL_HANDLER
+
+	if(QDELETED(package) || package.loc != src)
+		qdel(src)
+
+// Handles mob movement inside a pipenet
+/obj/effect/ventcrawl_holder/relaymove(mob/living/user, direction)//TODOKYLER: put this somewhere sane
+	if(!direction || !(direction in GLOB.cardinals_multiz)) //cant go this way.
+		return
+	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
+		return
+
+	var/obj/machinery/atmospherics/target_node = current_node.find_connecting(direction, user.ventcrawl_layer)
+
+	if(!target_node)
+		return
+
+	var/turf/target_move = target_node.associated_loc
+
+	if(!target_move)
+		return
+
+	if(target_node.vent_movement & VENTCRAWL_ALLOWED)
+		abstract_move(target_move)
+		var/list/pipenetdiff = current_node.return_pipenets() ^ target_node.return_pipenets()
+
+		if(pipenetdiff.len)
+			user.update_pipe_vision()
+
+		current_node = target_node
+
+		if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
+			user.last_played_vent = world.time
+			playsound(loc, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
+
+	//Would be great if this could be implemented when someone alt-clicks the image.
+	if (target_node.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
+		user.handle_ventcrawl(target_node)
+		//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
+
 #define PIPE_VISIBLE_LEVEL 2
 #define PIPE_HIDDEN_LEVEL 1
 
@@ -57,39 +120,44 @@
 
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
-	
-	///keeps the name of the object from being overridden if it's vareditted. 
+
+	///keeps the name of the object from being overridden if it's vareditted.
 	var/override_naming
 
-/obj/machinery/atmospherics/LateInitialize()
-	. = ..()
-	update_name()
-
-/obj/machinery/atmospherics/examine(mob/user)
-	. = ..()
-	. += span_notice("[src] is on layer [piping_layer].")
-	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
-		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += span_notice("Alt-click to crawl through it.")
+	///what turf our connections are centered on. used so that pipenet connections work regardless of whether we're nullspaced or not
+	var/turf/associated_loc
 
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
 	if(!isnull(setdir))
 		setDir(setdir)
+
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
+
 	nodes = new(device_type)
+
 	if (!armor)
 		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 100, ACID = 70)
+
 	..()
+
 	if(process)
 		SSair.start_processing_machine(src)
+
 	set_init_directions(init_dir)
+
+	if(loc)
+		associated_loc = get_turf(src)
+		LAZYADD(associated_loc.pipenet_nodes, src)
 
 /obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
-	return ..()	
+	return ..()
+
+/obj/machinery/atmospherics/LateInitialize()
+	. = ..()
+	update_name()
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
@@ -101,8 +169,23 @@
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
+	LAZYREMOVE(associated_loc.pipenet_nodes, src)
+
 	return ..()
-	//return QDEL_HINT_FINDREFERENCE
+
+/obj/machinery/atmospherics/Moved(atom/OldLoc, Dir)
+	. = ..()
+
+	message_admins("an atmospherics machine moved! [src]") //TODOKYLER: fix this
+
+
+/obj/machinery/atmospherics/examine(mob/user)
+	. = ..()
+	. += span_notice("[src] is on layer [piping_layer].")
+	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
+		var/mob/living/L = user
+		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
+			. += span_notice("Alt-click to crawl through it.")
 
 /**
  * Called by the machinery disconnect(), custom for each type
@@ -139,20 +222,23 @@
 /**
  * Getter for node_connects
  *
- * Return a list of the nodes that can connect to other machines, get called by atmos_init()
+ * Return a list of directions where there are nodes that can connect to other us, get called by atmos_init()
  */
 /obj/machinery/atmospherics/proc/get_node_connects()
 	var/list/node_connects = list()
 	node_connects.len = device_type
 
 	var/init_directions = get_init_directions()
+
 	for(var/i in 1 to device_type)
-		for(var/direction in GLOB.cardinals)
-			if(!(direction & init_directions))
+		for(var/cardinal in GLOB.cardinals)
+
+			if(!(cardinal & init_directions))
 				continue
-			if(direction in node_connects)
+			if(cardinal in node_connects)
 				continue
-			node_connects[i] = direction
+
+			node_connects[i] = cardinal
 			break
 
 	return node_connects
@@ -181,7 +267,10 @@
 		node_connects = get_node_connects()
 
 	for(var/i in 1 to device_type)
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[i]))
+
+		var/turf/target_turf = get_step(associated_loc, node_connects[i])
+
+		for(var/obj/machinery/atmospherics/target in target_turf.pipenet_nodes)
 			if(can_be_node(target, i))
 				nodes[i] = target
 				break
@@ -220,8 +309,10 @@
  * * prompted_layer - the piping_layer we are inside
  */
 /obj/machinery/atmospherics/proc/find_connecting(direction, prompted_layer)
-	for(var/obj/machinery/atmospherics/target in get_step_multiz(src, direction))
-		if(!(target.initialize_directions & get_dir(target,src)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
+	var/turf/step_turf = get_step_multiz(associated_loc, direction)
+
+	for(var/obj/machinery/atmospherics/target in step_turf.pipenet_nodes)
+		if(!(target.initialize_directions & get_dir(target.associated_loc, associated_loc)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
 			continue
 		if(connection_check(target, prompted_layer))
 			return target
@@ -247,7 +338,7 @@
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
  */
 /obj/machinery/atmospherics/proc/check_init_directions(obj/machinery/atmospherics/target)
-	if((initialize_directions & get_dir(src, target) && target.initialize_directions & get_dir(target,src)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
+	if((initialize_directions & get_dir(associated_loc, target.associated_loc) && target.initialize_directions & get_dir(target.associated_loc, associated_loc)) || istype(target, /obj/machinery/atmospherics/pipe/multiz))
 		return TRUE
 	return FALSE
 
@@ -261,7 +352,7 @@
 /obj/machinery/atmospherics/proc/is_connectable(obj/machinery/atmospherics/target, given_layer)
 	if(isnull(given_layer))
 		given_layer = piping_layer
-	if(check_connectable_layer(target, given_layer) && target.loc != loc && check_connectable_color(target))
+	if(check_connectable_layer(target, given_layer) && target.associated_loc != associated_loc && check_connectable_color(target))
 		return TRUE
 	return FALSE
 
@@ -336,13 +427,15 @@
  *
  * Called by nullify_node(), it disconnects two nodes by removing the reference id from the node itself that called this proc
  * Arguments:
- * * obj/machinery/atmospherics/reference - the machinery we are removing from the node connection
+ * * obj/machinery/atmospherics/machine_to_disconnect - the machinery we are disconnecting from us.
  */
-/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-	if(istype(reference, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = reference
-		P.destroy_network()
-	nodes[nodes.Find(reference)] = null
+/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/machine_to_disconnect)
+	if(istype(machine_to_disconnect, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/pipe_target = machine_to_disconnect
+		pipe_target.destroy_network()
+
+	nodes[nodes.Find(machine_to_disconnect)] = null
+
 	update_appearance()
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user, params)
@@ -359,15 +452,15 @@
 		return ..()
 
 	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
+	var/datum/gas_mixture/env_air = associated_loc.return_air()
 	add_fingerprint(user)
 
 	var/unsafe_wrenching = FALSE
-	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+	var/internal_pressure = int_air.return_pressure() - env_air.return_pressure()
 
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
-	if (internal_pressure > 2*ONE_ATMOSPHERE)
+	if (internal_pressure > 2 * ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
@@ -376,6 +469,7 @@
 			"[user] unfastens \the [src].", \
 			span_notice("You unfasten \the [src]."), \
 			span_hear("You hear ratchet."))
+
 		investigate_log("was [span_warning("REMOVED")] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
@@ -408,7 +502,7 @@
 		return
 	if(!pressures)
 		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
+		var/datum/gas_mixture/env_air = associated_loc.return_air()
 		pressures = int_air.return_pressure() - env_air.return_pressure()
 
 	user.visible_message(span_danger("[user] is sent flying by pressure!"),span_userdanger("The pressure sends you flying!"))
@@ -417,7 +511,7 @@
 	// otherwise, edge_target_turf uses a random cardinal direction
 	// range is pressures / 250
 	// speed is pressures / 1250
-	user.throw_at(get_edge_target_turf(user, get_dir(src, user) || pick(GLOB.cardinals)), pressures / 250, pressures / 1250)
+	user.throw_at(get_edge_target_turf(user, get_dir(associated_loc, user) || pick(GLOB.cardinals)), pressures / 250, pressures / 1250)
 
 /**
  * Pipe deconstruction
@@ -425,14 +519,18 @@
  * Called by wrench_act(), create a pipe fitting and remove the pipe
  */
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
-			stored.set_piping_layer(piping_layer)
-			if(!disassembled)
-				stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
-			transfer_fingerprints_to(stored)
-			. = stored
+	if((flags_1 & NODECONSTRUCT_1) || !can_unwrench)
+		return ..()
+
+	LAZYREMOVE(associated_loc.pipenet_nodes, src)
+
+	var/obj/item/pipe/stored = new construction_type(associated_loc, null, dir, src, pipe_color)
+	stored.set_piping_layer(piping_layer)
+	if(!disassembled)
+		stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
+	transfer_fingerprints_to(stored)
+	. = stored
+
 	..()
 
 /**
@@ -450,18 +548,23 @@
 /obj/machinery/atmospherics/proc/get_pipe_image(iconfile, iconstate, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, trinary = FALSE)
 	var/image/pipe_overlay = image(iconfile, iconstate, dir = direction)
 	pipe_overlay.color = color
+
 	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
+
 	if(trinary == TRUE && (piping_layer == 1 || piping_layer == 5))
 		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
+
 	return pipe_overlay
 
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
+
 	update_name()
 	set_piping_layer(set_layer)
 	atmos_init()
+
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
 		A.atmos_init()
@@ -489,7 +592,7 @@
 		deconstruct(FALSE)
 	return ..()
 
-#define VENT_SOUND_DELAY 30
+//#define VENT_SOUND_DELAY 30
 
 // Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)

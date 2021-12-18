@@ -26,7 +26,7 @@
 	return list(turn(dir, 180), dir)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction/is_connectable(obj/machinery/atmospherics/target, given_layer, he_type_check)
-	if(dir == get_dir(target, src))
+	if(dir == get_dir(target.associated_loc, associated_loc))
 		return ..(target, given_layer, FALSE) //we want a normal pipe instead
 	return ..(target, given_layer, TRUE)
 
