@@ -2,7 +2,7 @@ GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwis
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /client/verb/ooc()
-	var/msg = tgui_input_text(usr, title = "OOC", encode = FALSE)
+	var/msg = tgui_input_text(usr, title = "Out of Character", encode = FALSE)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
