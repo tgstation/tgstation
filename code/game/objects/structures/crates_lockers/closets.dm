@@ -576,16 +576,8 @@
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user)
-	if(istype(loc, /obj/structure/bodycontainer))
-		var/obj/structure/bodycontainer/gbj = loc
-		to_chat(user, span_notice("You attempt to break out of [gbj.name]... (This will take around 30 seconds.)"))
-		if(do_after(user, 30 SECONDS))
-			gbj?.open()
-	if(istype(loc, /obj/structure/closet))
-		var/obj/structure/closet/gbj = loc
-		to_chat(user, span_notice("You attempt to break out of [gbj.name]... (This will take around 30 seconds.)"))
-		if(do_after(user, 30 SECONDS))
-			gbj?.open()
+	if(isstructure(loc))
+		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
@@ -614,6 +606,10 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+
+/obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
+	container.container_resist_act()
+
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER
