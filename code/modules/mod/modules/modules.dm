@@ -1678,11 +1678,10 @@
 
 /obj/item/mod/module/anti_magic/wizard
 	name = "MOD magic neutralizer module"
-	desc = "A series of obsidian rods installed into critical points around the suit, \
-		vibrated at a certain low frequency to enable them to resonate. \
-		This creates a low-range, yet strong, magic nullification field around the user, \
-		aided by a full replacement of the suit's normal coolant with holy water. \
-		Spells will spall right off this field, though it'll do nothing to help others believe you about all this."
+	desc = "The caster wielding this spell gains an invisible barrier around them, channeling arcane power through \
+		specialized runes engraved onto the surface of the suit to generate anti-magic field. \
+		The field will neutralize all magic that comes into contact with the user. \
+		It will not protect the caster from social ridicule."
 	icon_state = "magic_neutralizer"
 
 /obj/item/mod/module/anti_magic/wizard/on_suit_activation()
@@ -1730,7 +1729,10 @@
 
 /obj/item/mod/module/insignia
 	name = "MOD insignia module"
-	desc = "Insignia displaying your role in the response team, loud and proud."
+	desc = "Despite the existence of IFF systems, radio communique, and modern methods of deductive reasoning involving \
+		the wearer's own eyes, colorful paint jobs remain a popular way for different factions in the galaxy to display who \
+		they are. This system utilizes a series of tiny moving paint sprayers to both apply and remove different \
+		color patterns to and from the suit."
 	icon_state = "insignia"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
