@@ -439,3 +439,35 @@
   - bugfix: fixed rough iron false wall telling you that you need two rods instead
       of five.
   - bugfix: fixed rough iron wall dropping two rods instead of five.
+2021-12-17:
+  Azarak:
+  - bugfix: Fixes some effects appearing below mob (smoke, blur, chairrests)
+  - bugfix: Fixed FOV not applying if you were inside contents of something
+  LemonInTheDark:
+  - bugfix: Cat ears will no longer display only on every other render in the preferences
+      menu. God who added these things
+  RandomGamer123:
+  - bugfix: Stops malf AIs in intellicards from activating doomsday device.
+  tralezab:
+  - bugfix: fixes fugitives preference having missing textures
+2021-12-18:
+  Iamgoofball:
+  - bugfix: Fixes Families runtimes and not making enough gang leaders
+  JohnFulpWillard:
+  - spellcheck: Fixed a small typo in Cargo's mail console, saying mail had homing
+      beacons in them.
+  LemonInTheDark:
+  - bugfix: Fixes shoving people into lockers sometimes trapping them in lockerspace.
+      Crummy vacation destination, don't go there.
+  - bugfix: Fixes directional shoving just not working
+  - bugfix: Fixes shoving people carrying other people being weird
+  Melbert:
+  - bugfix: Placing tiny fans in the aux base gives feedback
+  - bugfix: Breaking / deconstructing aux base turrets no longer brick the console
+  Pepsilawn:
+  - bugfix: The rat spit's OD effect will no longer repeat on players already under
+      the Rat King's rule.
+  ike709:
+  - bugfix: Fixed a bug with taste description generation for fruit wine.
+  jlsnow301:
+  - bugfix: Bot cover lock button is now disabled when you lack sufficient access.

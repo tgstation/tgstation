@@ -849,17 +849,17 @@
 		modules_action = new(malf_picker)
 		modules_action.Grant(src)
 
-/mob/living/silicon/ai/reset_perspective(atom/A)
+/mob/living/silicon/ai/reset_perspective(atom/new_eye)
 	if(camera_light_on)
 		light_cameras()
-	if(istype(A, /obj/machinery/camera))
-		current = A
+	if(istype(new_eye, /obj/machinery/camera))
+		current = new_eye
 	if(client)
-		if(ismovable(A))
-			if(A != GLOB.ai_camera_room_landmark)
+		if(ismovable(new_eye))
+			if(new_eye != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
+			client.eye = new_eye
 		else
 			end_multicam()
 			if(isturf(loc))
