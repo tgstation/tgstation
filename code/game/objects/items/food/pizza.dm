@@ -325,7 +325,7 @@
 
 /obj/item/food/proc/i_kill_you(obj/item/item, mob/living/user)
 	if(istype(item, /obj/item/food/pineappleslice))
-		to_chat(user, span_userdanger("If you want something crazy like pineapple, I'll kill you.")
+		to_chat(user, span_userdanger("If you want something crazy like pineapple, I'll kill you."))
 		user.gib() //if you want something crazy like pineapple, i'll kill you
 	else if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
 		to_chat(user, span_userdanger("So, if you want mushroom, shut up."))

@@ -159,7 +159,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and stops time."
 
 /obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
-	to_chat(target, "<span class=notice>You try to forget how you feel.</span>")
+	to_chat(target, span_notice("You try to forget how you feel.")
 	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean
@@ -172,7 +172,7 @@ Regenerative extracts:
 	X.name = name
 	X.desc = desc
 	user.put_in_active_hand(X)
-	to_chat(user, span_notice("Some of the milky goo congeals in your hand!"))
+	to_chat(user, span_boldnotice("Some of the milky goo congeals in your hand!"))
 
 /obj/item/slimecross/regenerative/pyrite
 	colour = "pyrite"

@@ -71,7 +71,7 @@
 
 /obj/machinery/wish_granter_dark/interact(mob/living/carbon/human/user)
 	if(chargesa <= 0)
-		to_chat(user, span_notice("The Wish Granter lies silent.")
+		to_chat(user, span_notice("The Wish Granter lies silent."))
 		return
 
 	else if(!ishuman(user))

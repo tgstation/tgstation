@@ -10,7 +10,7 @@
 	to_chat(user, span_info("***********************************************************\n\
 		Right Mouse Button on buildmode button = Select smite to use.\n\
 		Left Mouse Button on mob/living = Smite the mob.\n\
-		***********************************************************")
+		***********************************************************"))
 
 /datum/buildmode_mode/smite/change_settings(client/user)
 	var/punishment = input(user, "Choose a punishment", "DIVINE SMITING") as null|anything in GLOB.smites

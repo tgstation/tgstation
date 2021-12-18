@@ -1105,7 +1105,7 @@
 		to_chat(user, span_notice("You covertly start to scan [target] with \the [src], hoping to pick up a wireless ID card signal..."))
 
 		if(!do_mob(user, target, 2 SECONDS))
-			to_chat(user, span_warning("The scan was interrupted.")
+			to_chat(user, span_warning("The scan was interrupted."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/mob/living/carbon/human/human_target = target
@@ -1117,7 +1117,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		var/selected_id = pick(target_id_cards)
-		to_chat(user, span_notice("You successfully sync your [src] with \the [selected_id].")
+		to_chat(user, span_notice("You successfully sync your [src] with \the [selected_id]."))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -37,9 +37,9 @@
 		deltimer(timer_id)
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
-	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \
+	to_chat(finder, span_warning("Inside the head is a disgusting black \
 		web of pus and viscera, bound tightly around the brain like some \
-		biological harness.</span>")
+		biological harness."))
 
 /obj/item/organ/zombie_infection/process(delta_time)
 	if(!owner)
@@ -61,9 +61,9 @@
 	if(!owner.getorgan(/obj/item/organ/brain))
 		return
 	if(!iszombie(owner))
-		to_chat(owner, "<span class='cultlarge'>You can feel your heart stopping, but something isn't right... \
+		to_chat(owner, span_cultlarge("You can feel your heart stopping, but something isn't right... \
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
-		not even death can stop, you will rise again!</span>")
+		not even death can stop, you will rise again!"))
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)

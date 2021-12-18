@@ -47,7 +47,7 @@
 	var/number = stored.len
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded")]</span>")
+	to_chat(usr, span_infoplain("[span_unconscious("Image recorded.")]"))
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -59,12 +59,12 @@
 		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		C.connected_ai.aicamera.stored[picture] = TRUE
-		to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded and saved to remote database")]</span>")
+		to_chat(usr, span_infoplain("[span_unconscious("Image recorded and saved to remote database")]"))
 	else
 		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
-		to_chat(usr, "<span class='infoplain'>[span_unconscious("Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.")]</span>")
+		to_chat(usr, span_infoplain("[span_unconscious("Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.")]"))
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/user)
 	var/mob/living/silicon/robot/R = loc

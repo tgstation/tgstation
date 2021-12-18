@@ -496,7 +496,7 @@
 		our_plant.color = COLOR_RED
 
 	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
-	user.visible_message(span_warning("[user] plucks the stem from [our_plant]!</span>", span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"))
+	user.visible_message(span_warning("[user] plucks the stem from [our_plant]!"), span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"))
 	log_bomber(user, "primed a", our_plant, "for detonation")
 	detonate(our_plant)
 
@@ -542,7 +542,7 @@
 	name = "Explosive Nature"
 
 /datum/plant_gene/trait/bomb_plant/potency_based/trigger_detonation(obj/item/our_plant, mob/living/user)
-	user.visible_message(span_warning("[user] primes [our_plant]!</span>", span_userdanger("You prime [our_plant]!"))
+	user.visible_message(span_warning("[user] primes [our_plant]!"), span_userdanger("You prime [our_plant]!"))
 	log_bomber(user, "primed a", our_plant, "for detonation")
 
 	var/obj/item/food/grown/grown_plant = our_plant

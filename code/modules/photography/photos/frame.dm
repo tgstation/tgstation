@@ -139,7 +139,7 @@
 			framed = P
 			update_appearance()
 		else
-			to_chat(user, span_warning("\The [src] already contains a photo.")
+			to_chat(user, span_warning("\The [src] already contains a photo."))
 
 	..()
 

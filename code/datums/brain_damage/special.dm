@@ -316,13 +316,13 @@
 		return
 	var/duration = rand(5 SECONDS, 45 SECONDS)
 	veil = new(owner.drop_location())
-	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
+	to_chat(owner, span_warning("[pick("You stop thinking for a moment. Therefore you are not.",\
 												"To be or not to be...",\
 												"Why exist?",\
 												"You stop keeping it real.",\
 												"Your grip on existence slips.",\
 												"Do you even exist?",\
-												"You simply fade away.")]</span>")
+												"You simply fade away.")]"))
 	owner.forceMove(veil)
 	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	for(var/thing in owner)

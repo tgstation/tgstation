@@ -120,7 +120,7 @@
 	else //Uploading AI from terminal to card
 		if(occupier && !restoring)
 			to_chat(occupier, span_notice("You have been downloaded to a mobile storage device. Still no remote access."))
-			to_chat(user, span_notice("Transfer successful: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+			to_chat(user, span_notice("Transfer successful: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."))
 			occupier.forceMove(card)
 			card.AI = occupier
 			occupier = null

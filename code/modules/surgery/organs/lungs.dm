@@ -308,7 +308,7 @@
 		var/nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
 		if (prob(nitrium_pp) && nitrium_pp > 15)
 			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
-			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
+			to_chat(breather, span_warning("You feel a burning sensation in your chest."))
 		gas_breathed = breath_gases[/datum/gas/nitrium][MOLES]
 		if (nitrium_pp > 5)
 			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)

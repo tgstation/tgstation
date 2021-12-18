@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(vote)
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
 	remove_action_buttons()
-	to_chat(world, "\n<span class='infoplain'><font color='purple'>[text]</font></span>")
+	to_chat(world, span_purple("[text]"))
 	return .
 
 /datum/controller/subsystem/vote/proc/result()
@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(vote)
 			// No delay in case the restart is due to lag
 			SSticker.Reboot("Restart vote successful.", "restart vote", 1)
 		else
-			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
+			to_chat(world, span_boldannounce("Notice: Restart vote will not restart the server automatically because there are active admins on."))
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
 	return .

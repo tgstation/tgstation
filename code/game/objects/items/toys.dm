@@ -1051,7 +1051,7 @@
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
-		to_chat(user, span_alert("Nothing happens, and <span class="alert">[round(timeleft/10)]</span> appears on the small display."))
+		to_chat(user, span_alert("Nothing happens, and [round(timeleft/10)] appears on the small display."))
 		sleep(5)
 
 

@@ -25,7 +25,7 @@
 		return
 
 	if(COOLDOWN_FINISHED(src, damage_warning_cooldown))
-		to_chat(owner, span_warning("<b>The light burns you!</b>"))
+		to_chat(owner, span_userdanger("The light burns you!"))
 		COOLDOWN_START(src, damage_warning_cooldown, 10 SECONDS)
 	owner.take_overall_damage(0, 1.5 * delta_time)
 
