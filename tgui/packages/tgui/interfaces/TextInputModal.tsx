@@ -4,7 +4,6 @@ import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
-import { createRef } from "inferno";
 
 type TextInputData = {
   max_length: number;
@@ -85,10 +84,8 @@ export const TextInputModal = (_, context) => {
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
   const { data } = useBackend<TextInputData>(context);
-  const inputRef = createRef(null);
   const { multiline } = data;
   const { input, onType } = props;
-
 
   if (!multiline) {
     return (
@@ -112,7 +109,6 @@ const InputArea = (props, context) => {
           height="100%"
           onInput={(_, value) => onType(value)}
           placeholder="Type something..."
-          ref={inputRef}
           value={input}
         />
       </Stack.Item>
