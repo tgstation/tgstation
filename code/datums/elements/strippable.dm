@@ -148,6 +148,9 @@
 	if (isnull(item))
 		return FALSE
 
+	if (item.item_flags & EXAMINE_SKIP)
+		return FALSE
+
 	source.visible_message(
 		span_warning("[user] tries to remove [source]'s [item.name]."),
 		span_userdanger("[user] tries to remove your [item.name]."),
@@ -363,7 +366,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item))
+		if (isnull(item) || (item.item_flags & EXAMINE_SKIP))
 			items[strippable_key] = result
 			continue
 
