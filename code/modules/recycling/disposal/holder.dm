@@ -94,27 +94,26 @@
 			AM.forceMove(drop_location())
 		qdel(src)
 
-// find the turf which should contain the next pipe
+/// find the turf which should contain the next pipe
 /obj/structure/disposalholder/proc/nextloc()
 	return get_step(src, dir)
 
 // find a matching pipe on a turf
-/obj/structure/disposalholder/proc/findpipe(turf/T)
-	if(!T)
+/obj/structure/disposalholder/proc/findpipe(turf/destination_turf)
+	if(!destination_turf)
 		return null
 
 	var/fdir = turn(dir, 180) // flip the movement direction
-	for(var/obj/structure/disposalpipe/P in T)
-		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
-			return P
+	for(var/obj/structure/disposalpipe/destination_pipe in destination_turf.disposals_nodes)
+		if(fdir & destination_pipe.dpdir) // find pipe direction mask that matches flipped dir
+			return destination_pipe
 	// if no matching pipe, return null
 	return null
 
 // merge two holder objects
 // used when a holder meets a stuck holder
 /obj/structure/disposalholder/proc/merge(obj/structure/disposalholder/other)
-	for(var/A in other)
-		var/atom/movable/AM = A
+	for(var/atom/movable/AM as anything in other)
 		AM.forceMove(src) // move everything in other holder to this one
 		if(ismob(AM))
 			var/mob/M = AM

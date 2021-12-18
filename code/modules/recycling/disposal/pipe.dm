@@ -12,14 +12,21 @@
 	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 90, ACID = 30)
 	layer = DISPOSAL_PIPE_LAYER // slightly lower than wires and other pipes
 	damage_deflection = 10
-	var/dpdir = NONE // bitmask of pipe directions
-	var/initialize_dirs = NONE // bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
-	var/flip_type // If set, the pipe is flippable and becomes this type when flipped
+	/// bitmask of pipe directions
+	var/dpdir = NONE
+	/// bitflags of pipe directions added on init, see \code\_DEFINES\pipe_construction.dm
+	var/initialize_dirs = NONE
+	/// If set, the pipe is flippable and becomes this type when flipped
+	var/flip_type
 	var/obj/structure/disposalconstruct/stored
 
 
 /obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
+
+	associated_loc = get_turf(src)
+	if(associated_loc)
+		LAZYADD(associated_loc.disposals_nodes, src)
 
 	if(!QDELETED(make_from))
 		setDir(make_from.dir)
@@ -41,16 +48,20 @@
 		if(initialize_dirs & DISP_DIR_FLIP)
 			dpdir |= turn(dir, 180)
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
 
 // pipe is deleted
 // ensure if holder is present, it is expelled
 /obj/structure/disposalpipe/Destroy()
-	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		H.active = FALSE
-		expel(H, get_turf(src), 0)
+	var/obj/structure/disposalholder/holder = locate() in associated_loc
+	if(holder)
+		holder.active = FALSE
+		expel(holder, associated_loc, 0)
 	stored = null //The qdel is handled in expel()
+
+	if(associated_loc)
+		LAZYREMOVE(associated_loc.disposals_nodes, src)
+
 	return ..()
 
 /obj/structure/disposalpipe/handle_atom_del(atom/A)
@@ -68,57 +79,57 @@
 /obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
 	return transfer_to_dir(H, nextdir(H))
 
-/obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
-	H.setDir(nextdir)
-	var/turf/T = H.nextloc()
-	var/obj/structure/disposalpipe/P = H.findpipe(T)
+/obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/holder, nextdir)
+	holder.setDir(nextdir)
+	var/turf/destination_turf = holder.nextloc()
+	var/obj/structure/disposalpipe/destination_pipe = holder.findpipe(destination_turf)
 
-	if(!P) // if there wasn't a pipe, then they'll be expelled.
+	if(!destination_pipe) // if there wasn't a pipe, then they'll be expelled.
 		return
 	// find other holder in next loc, if inactive merge it with current
-	var/obj/structure/disposalholder/H2 = locate() in P
-	if(H2 && !H2.active)
-		H.merge(H2)
+	var/obj/structure/disposalholder/other_holder = locate() in destination_pipe.associated_loc
+	if(other_holder && !other_holder.active)
+		holder.merge(other_holder)
 
-	H.forceMove(P)
-	return P
+	holder.forceMove(destination_turf)
+	return destination_pipe
 
 // expel the held objects into a turf
 // called when there is a break in the pipe
-/obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/H, turf/T, direction)
-	if(!T)
-		T = get_turf(src)
+/obj/structure/disposalpipe/proc/expel(obj/structure/disposalholder/holder, turf/target_turf, direction)
+	if(!target_turf)
+		target_turf = associated_loc
 	var/turf/target
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
 
-	if(isfloorturf(T) && T.overfloor_placed) // pop the tile if present
-		floorturf = T
+	if(isfloorturf(target_turf) && target_turf.overfloor_placed) // pop the tile if present
+		floorturf = target_turf
 		if(floorturf.floor_tile)
-			new floorturf.floor_tile(T)
+			new floorturf.floor_tile(target_turf)
 		floorturf.make_plating(TRUE)
 
 	if(direction) // direction is specified
-		if(isspaceturf(T)) // if ended in space, then range is unlimited
-			target = get_edge_target_turf(T, direction)
+		if(isspaceturf(target_turf)) // if ended in space, then range is unlimited
+			target = get_edge_target_turf(target_turf, direction)
 		else // otherwise limit to 10 tiles
-			target = get_ranged_target_turf(T, direction, 10)
+			target = get_ranged_target_turf(target_turf, direction, 10)
 
 		eject_range = 10
 
 	else if(floorturf)
-		target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
+		target = get_offset_target_turf(target_turf, rand(5) - rand(5), rand(5) - rand(5))
 
-	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
-	pipe_eject(H, direction, TRUE, target, eject_range)
-	H.vent_gas(T)
-	qdel(H)
+	playsound(associated_loc, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
+	pipe_eject(holder, direction, TRUE, target, eject_range)
+	holder.vent_gas(target_turf)
+	qdel(holder)
 
 
 // pipe affected by explosion
 /obj/structure/disposalpipe/contents_explosion(severity, target)
-	var/obj/structure/disposalholder/H = locate() in src
-	H?.contents_explosion(severity, target)
+	var/obj/structure/disposalholder/holder = locate() in associated_loc
+	holder?.contents_explosion(severity, target)
 
 
 //welding tool: unfasten and convert to obj/disposalconstruct
@@ -145,16 +156,15 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			if(stored)
-				stored.forceMove(loc)
+				stored.forceMove(associated_loc)
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
 		else
-			var/turf/T = get_turf(src)
-			for(var/D in GLOB.cardinals)
-				if(D & dpdir)
-					var/obj/structure/disposalpipe/broken/P = new(T)
-					P.setDir(D)
+			for(var/direction in GLOB.cardinals)
+				if(direction & dpdir)
+					var/obj/structure/disposalpipe/broken/P = new(associated_loc)
+					P.setDir(direction)
 	qdel(src)
 
 
@@ -213,7 +223,8 @@
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
-	var/obj/linked // the linked obj/machinery/disposal or obj/disposaloutlet
+	/// the linked obj/machinery/disposal or obj/disposaloutlet
+	var/obj/linked
 
 /obj/structure/disposalpipe/trunk/Initialize(mapload)
 	. = ..()
@@ -231,16 +242,15 @@
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
-	var/turf/T = get_turf(src)
-	var/obj/machinery/disposal/D = locate() in T
-	if(D)
-		linked = D
-		if (!D.trunk)
-			D.trunk = src
+	var/obj/machinery/disposal/disposal_chute = locate() in associated_loc
+	if(disposal_chute)
+		linked = disposal_chute
+		if (!disposal_chute.trunk)
+			disposal_chute.trunk = src
 
-	var/obj/structure/disposaloutlet/O = locate() in T
-	if(O)
-		linked = O
+	var/obj/structure/disposaloutlet/outlet = locate() in associated_loc
+	if(outlet)
+		linked = outlet
 
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
@@ -252,23 +262,23 @@
 // would transfer to next pipe segment, but we are in a trunk
 // if not entering from disposal bin,
 // transfer to linked object (outlet or bin)
-/obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/H)
-	if(H.dir == DOWN) // we just entered from a disposer
+/obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/holder)
+	if(holder.dir == DOWN) // we just entered from a disposer
 		return ..() // so do base transfer proc
 	// otherwise, go to the linked object
 	if(linked)
-		var/obj/structure/disposaloutlet/O = linked
-		if(istype(O))
-			O.expel(H) // expel at outlet
+		var/obj/structure/disposaloutlet/outlet = linked
+		if(istype(outlet))
+			outlet.expel(holder) // expel at outlet
 		else
-			var/obj/machinery/disposal/D = linked
-			D.expel(H) // expel at disposal
+			var/obj/machinery/disposal/disposal_can = linked
+			disposal_can.expel(holder) // expel at disposal
 
 	// Returning null without expelling holder makes the holder expell itself
 	return null
 
-/obj/structure/disposalpipe/trunk/nextdir(obj/structure/disposalholder/H)
-	if(H.dir == DOWN)
+/obj/structure/disposalpipe/trunk/nextdir(obj/structure/disposalholder/holder)
+	if(holder.dir == DOWN)
 		return dir
 	else
 		return NONE
