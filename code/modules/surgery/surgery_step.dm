@@ -68,7 +68,7 @@
 	var/advance = FALSE
 
 	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
-		to_chat(user, span_warning("This operation can not be done on [target]!"))
+		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
 		return FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == -1)
