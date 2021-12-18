@@ -441,12 +441,9 @@
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/datum/mind/rev_head_mind as anything in ex_revs)
-			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(!istype(rev_head_body) || rev_head_body.stat != DEAD)
-				continue
-			ADD_TRAIT(rev_head_body, TRAIT_DEFIB_BLACKLISTED, REF(src))
-			rev_head_body.med_hud_set_status()
+		for (var/datum/mind/rev_head as anything in ex_revs)
+			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			rev_head.current.med_hud_set_status()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
