@@ -69,6 +69,7 @@
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
+	to_chat(owner.current, span_big("You are the [employer] [owner.special_role]!"))
 	return ..()
 
 /datum/antagonist/traitor/on_removal()

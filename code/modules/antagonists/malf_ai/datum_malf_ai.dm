@@ -106,6 +106,7 @@
 			objectives += yandere_two
 
 /datum/antagonist/malf_ai/greet()
+	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	if(should_give_codewords)
 		give_codewords()
 

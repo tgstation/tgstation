@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	return ..()
 
 /datum/antagonist/abductor/greet()
-	to_chat(owner.current, span_notice("You are the [owner.special_role]!"))
+	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	to_chat(owner.current, span_notice("With the help of your teammate, kidnap and experiment on station crew members!"))
 	to_chat(owner.current, span_notice("[greet_text]"))
 	owner.announce_objectives()

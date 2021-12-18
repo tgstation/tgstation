@@ -12,6 +12,7 @@
 
 /datum/antagonist/imp/on_gain()
 	. = ..()
+	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	give_objectives()
 
 /datum/antagonist/imp/proc/give_objectives()

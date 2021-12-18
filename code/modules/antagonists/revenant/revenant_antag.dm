@@ -5,6 +5,7 @@
 	show_to_ghosts = TRUE
 
 /datum/antagonist/revenant/greet()
+	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	owner.announce_objectives()
 
 /datum/antagonist/revenant/proc/forge_objectives()

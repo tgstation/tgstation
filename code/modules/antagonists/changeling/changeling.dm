@@ -84,6 +84,7 @@
 	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
+	to_chat(owner.current, span_big("You are a [owner.special_role]!"))
 	create_actions()
 	reset_powers()
 	create_initial_profile()

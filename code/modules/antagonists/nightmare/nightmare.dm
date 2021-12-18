@@ -14,3 +14,6 @@
 
 /datum/outfit/nightmare/post_equip(mob/living/carbon/human/human, visualsOnly)
 	human.set_species(/datum/species/shadow/nightmare)
+
+/datum/antagonist/nightmare/greet()
+	to_chat(owner.current, span_big("You are a [owner.special_role]!"))

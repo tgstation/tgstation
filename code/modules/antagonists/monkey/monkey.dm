@@ -134,7 +134,7 @@
 	. = ..()
 
 /datum/antagonist/monkey/leader/greet()
-	to_chat(owner, "<B>[span_notice("You are the Jungle Fever patient zero!!</B>")]")
+	to_chat(owner, "<B>[span_big("You are the Jungle Fever patient zero!!</B>")]")
 	to_chat(owner, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
 	to_chat(owner, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(owner, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")

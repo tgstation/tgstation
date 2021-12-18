@@ -10,6 +10,7 @@
 	var/datum/mind/summoner
 
 /datum/antagonist/slaughter/on_gain()
+	to_chat(owner.current, span_big("You are the [owner.special_role]!"))
 	forge_objectives()
 	. = ..()
 
