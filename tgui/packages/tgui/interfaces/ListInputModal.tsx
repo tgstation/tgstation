@@ -1,7 +1,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_ENTER, KEY_DOWN, KEY_UP } from 'common/keycodes';
+import { KEY_ENTER, KEY_DOWN, KEY_UP } from '../../common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
