@@ -900,7 +900,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "dX" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Andrew Thorn";
 	name = "Andrew Thorn"
 	},
@@ -1063,7 +1063,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "eH" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Peter West";
 	name = "Peter West"
 	},
@@ -1176,7 +1176,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fa" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Eric Abnett";
 	name = "Eric Abnett"
 	},
@@ -1761,7 +1761,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "gO" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	name = "Jeremy Tailor"
 	},
 /obj/effect/decal/cleanable/blood,
@@ -1863,7 +1863,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hh" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Dan Hedricks";
 	name = "Dan Hedricks"
 	},
@@ -2009,7 +2009,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hL" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "William Gannon";
 	name = "William Gannon"
 	},
