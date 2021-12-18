@@ -435,7 +435,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return new_baseturfs
 
 /turf/proc/levelupdate()
-	for(var/obj/O in src)
+	var/list/check_list = contents + pipenet_nodes
+
+	for(var/obj/O in check_list)
 		if(O.flags_1 & INITIALIZED_1)
 			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, underfloor_accessibility < UNDERFLOOR_VISIBLE)
 

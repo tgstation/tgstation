@@ -21,6 +21,8 @@
 
 	var/volume = 0
 
+	var/mutable_appearance/t_ray_overlay // TODOKYLER: fix this
+
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
@@ -30,8 +32,8 @@
 /obj/machinery/atmospherics/pipe/Initialize(mapload)
 	. = ..()
 
-	//if(hide)
-	//	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+	if(hide)
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/nullify_node(i)
 	var/obj/machinery/atmospherics/old_node = nodes[i]

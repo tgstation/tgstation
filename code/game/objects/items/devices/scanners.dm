@@ -61,18 +61,30 @@ GENE SCANNER
 /obj/item/t_scanner/proc/scan()
 	t_ray_scan(loc)
 
-/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3)
+/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3)//TODOKYLER: this fucking SUCKS fix it later
 	if(!ismob(viewer) || !viewer.client)
 		return
 	var/list/t_ray_images = list()
-	for(var/obj/O in orange(distance, viewer) )
+	for(var/turf/turf_to_scan as anything in RANGE_TURFS(distance, viewer))
+		var/list/list_to_scan = turf_to_scan.pipenet_nodes
+
+		for(var/obj/object_to_scan as anything in list_to_scan)
+			if(!HAS_TRAIT(object_to_scan, TRAIT_T_RAY_VISIBLE))
+				continue
+
+			var/mutable_appearance/new_image = new()
+			new_image.loc = object_to_scan.associated_loc
+			new_image.alpha = 128
+			new_image.dir = object_to_scan.dir
+			t_ray_images += new_image
+
+	for(var/obj/O in orange(distance, viewer))
 		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			var/image/I = new(loc = get_turf(O))
-			var/mutable_appearance/MA = new(O)
-			MA.alpha = 128
-			MA.dir = O.dir
-			I.appearance = MA
-			t_ray_images += I
+			var/mutable_appearance/new_image = new()
+			new_image.loc = get_turf(O)
+			new_image.alpha = 128
+			new_image.dir = O.dir
+			t_ray_images += new_image
 	if(t_ray_images.len)
 		flick_overlay(t_ray_images, list(viewer.client), flick_time)
 
@@ -97,7 +109,7 @@ GENE SCANNER
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 	custom_price = PAYCHECK_HARD
-	
+
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click [src] to toggle the limb damage readout.")
@@ -170,9 +182,9 @@ GENE SCANNER
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
 	render_list += "[span_info("Analyzing results for [target]:")]\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
-	
+
 	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
-	
+
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
 		if(humantarget.undergoing_cardiac_arrest() && humantarget.stat != DEAD)
@@ -229,7 +241,7 @@ GENE SCANNER
 
 	if(advanced && target.hallucinating())
 		render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
-		
+
 	//Eyes and ears
 	if(advanced && iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
@@ -319,14 +331,14 @@ GENE SCANNER
 				missing_organs += "ears"
 			if(!humantarget.getorganslot(ORGAN_SLOT_EYES))
 				missing_organs += "eyes"
-				
+
 			if(length(missing_organs))
 				render = TRUE
 				for(var/organ in missing_organs)
 					toReport += "<tr><td><font color='#cc3333'>[organ]:</font></td>\
 						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
 						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			
+
 			if(render)
 				render_list += toReport + "</table>" // tables do not need extra linebreak
 
@@ -423,7 +435,7 @@ GENE SCANNER
 
 	if(istype(target) && target.reagents)
 		var/render_list = list()
-		
+
 		// Blood reagents
 		if(target.reagents.reagent_list.len)
 			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span>\n"
@@ -434,7 +446,7 @@ GENE SCANNER
 				render_list += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span>\n"
-			
+
 		// Stomach reagents
 		var/obj/item/organ/stomach/belly = target.getorganslot(ORGAN_SLOT_STOMACH)
 		if(belly)
@@ -452,7 +464,7 @@ GENE SCANNER
 							render_list += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
-				
+
 		// Addictions
 		if(LAZYLEN(target.mind?.active_addictions))
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following types of drug:</span>\n"
@@ -462,7 +474,7 @@ GENE SCANNER
 		// Special eigenstasium addiction
 		if(target.has_status_effect(/datum/status_effect/eigenstasium))
 			render_list += "<span class='notice ml-1'>Subject is temporally unstable. Stabilising agent is recommended to reduce disturbances.</span>\n"
-		
+
 		// Allergies
 		for(var/datum/quirk/quirky as anything in target.quirks)
 			if(istype(quirky, /datum/quirk/item_quirk/allergic))
@@ -470,13 +482,13 @@ GENE SCANNER
 				var/allergies = allergies_quirk.allergy_string
 				render_list += "<span class='alert ml-1'>Subject is extremely allergic to the following chemicals:</span>\n"
 				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
-		
+
 		// we handled the last <br> so we don't need handholding
 		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
-	
+
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 

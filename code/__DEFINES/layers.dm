@@ -99,6 +99,7 @@
 
 #define AREA_PLANE 60
 #define MASSIVE_OBJ_PLANE 70
+#define T_RAY_PLANE 75
 #define GHOST_PLANE 80
 #define POINT_PLANE 90
 

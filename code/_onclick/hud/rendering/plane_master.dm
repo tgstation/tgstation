@@ -90,6 +90,14 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
+/atom/movable/screen/plane_master/t_ray
+	name = "t-ray plane master"
+	plane = T_RAY_PLANE
+	appearance_flags = PLANE_MASTER
+	alpha = 0
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_GAME
+
 /atom/movable/screen/plane_master/massive_obj
 	name = "massive object plane master"
 	plane = MASSIVE_OBJ_PLANE
