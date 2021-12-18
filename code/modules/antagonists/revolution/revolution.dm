@@ -445,7 +445,8 @@
 			var/mob/living/carbon/rev_head_body = rev_head_mind.current
 			if(!istype(rev_head_body) || rev_head_body.stat != DEAD)
 				continue
-			ADD_TRAIT(rev_head_body, TRAIT_DEFIB_BLACKLISTED, JOB_TRAIT)
+			ADD_TRAIT(rev_head_body, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			rev_head_body.med_hud_set_status()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
@@ -468,7 +469,8 @@
 				continue
 
 			if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-				ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, JOB_TRAIT)
+				ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+				player.med_hud_set_status()
 
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
