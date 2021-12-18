@@ -428,16 +428,6 @@
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
 				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
-				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
-					charter_given = TRUE
-					podspawn(list(
-						"target" = get_turf(rev_mind.current),
-						"style" = STYLE_SYNDICATE,
-						"spawn" = /obj/item/station_charter/revolution
-					))
-					to_chat(rev_mind.current, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \
-						\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-						<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\"</span>")
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
@@ -450,6 +440,21 @@
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
+		for(var/datum/mind/headrevs as anything in ex_headrevs)
+			if(charter_given)
+				break
+			if(!headrevs.current || headrevs.current.stat != CONSCIOUS)
+				continue
+			charter_given = TRUE
+			podspawn(list(
+				"target" = get_turf(headrevs.current),
+				"style" = STYLE_SYNDICATE,
+				"spawn" = /obj/item/station_charter/revolution,
+			))
+			to_chat(headrevs.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
+				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
+
 		for (var/_player in GLOB.player_list)
 			var/mob/player = _player
 			var/datum/mind/mind = player.mind
