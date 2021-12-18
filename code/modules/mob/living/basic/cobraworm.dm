@@ -43,3 +43,33 @@
 /obj/projectile/worm_spit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/venomous, /datum/reagent/nightcrawler_enzymes, 3)
+
+/obj/projectile/wormling_ball
+	name = "mud ball"
+	icon_state = "mud"
+	damage = 6
+
+/obj/projectile/wormling_ball/Impact(atom/A)
+	. = ..()
+	var/muddy_turf = get_turf(A)
+	if(!muddy_turf)
+		return
+	if(!isopenturf(muddy_turf))
+		return
+	if(locate(/obj/machinery/hydroponics/soil) in muddy_turf)
+		return
+	new /obj/machinery/hydroponics/soil/worm(muddy_turf)
+	new /obj/effect/wormling_trap(muddy_turf)
+
+/obj/effect/wormling_trap
+	name = "wriggling worms"
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "worm_effect"
+
+/obj/effect/wormling_trap/Initialize(mapload)
+	. = ..()
+	QDEL_IN(src, 10 SECONDS)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
