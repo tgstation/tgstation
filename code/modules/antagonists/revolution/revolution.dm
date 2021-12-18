@@ -445,6 +445,7 @@
 			var/datum/mind/rev_head_mind = _rev_head_mind
 			var/mob/living/carbon/rev_head_body = rev_head_mind.current
 			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
+				rev_head.ghostize(can_reenter_corpse = FALSE)
 				rev_head_body.makeUncloneable()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
@@ -471,6 +472,7 @@
 				continue
 
 			if (target_body.stat == DEAD)
+				target_body.ghostize(can_reenter_corpse = FALSE)
 				target_body.makeUncloneable()
 			else
 				mind.announce_objectives()
