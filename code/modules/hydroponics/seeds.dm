@@ -452,11 +452,8 @@
 			return
 		switch(choice)
 			if("Plant Name")
-				var/newplantname = reject_bad_text(stripped_input(user, "Write a new plant name:", name, plantname))
+				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, 20))
 				if(!user.canUseTopic(src, BE_CLOSE))
-					return
-				if (length(newplantname) > 20)
-					to_chat(user, span_warning("That name is too long!"))
 					return
 				if(!newplantname)
 					to_chat(user, span_warning("That name is invalid."))
@@ -465,7 +462,7 @@
 					name = "[lowertext(newplantname)]"
 					plantname = newplantname
 			if("Seed Description")
-				var/newdesc = stripped_input(user, "Write a new description:", name, desc)
+				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newdesc) > 180)
@@ -479,11 +476,8 @@
 			if("Product Description")
 				if(product && !productdesc)
 					productdesc = initial(product.desc)
-				var/newproductdesc = stripped_input(user, "Write a new description:", name, productdesc)
+				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, 180)
 				if(!user.canUseTopic(src, BE_CLOSE))
-					return
-				if (length(newproductdesc) > 180)
-					to_chat(user, span_warning("That description is too long!"))
 					return
 				if(!newproductdesc)
 					to_chat(user, span_warning("That description is invalid."))

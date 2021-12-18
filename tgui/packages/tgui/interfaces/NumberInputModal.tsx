@@ -1,6 +1,6 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
-import { KEY_ENTER } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -41,6 +41,9 @@ export const NumberInputModal = (_, context) => {
           if (keyCode === KEY_ENTER) {
             act('submit', { entry: input });
           }
+          if (keyCode === KEY_ESCAPE) {
+            act('cancel');
+          }
         }}>
         <Section fill>
           <Stack fill vertical>
@@ -78,6 +81,7 @@ const InputArea = (props, context) => {
       <Stack.Item grow>
         <NumberInput
           autoFocus
+          autoSelect
           fluid
           minValue={min_value}
           maxValue={max_value}

@@ -78,7 +78,7 @@
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
-		var/new_label = stripped_input(user, "Choose a new label.", "Sound Emitter")
+		var/new_label = tgui_input_text(user, "Choose a new label.", "Sound Emitter")
 		if(!new_label)
 			return
 		maptext = MAPTEXT(new_label)

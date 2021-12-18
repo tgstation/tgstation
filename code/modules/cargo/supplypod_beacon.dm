@@ -88,7 +88,7 @@
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
-		var/new_beacon_name = stripped_input(user, "What would you like the tag to be?")
+		var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag")
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(new_beacon_name)

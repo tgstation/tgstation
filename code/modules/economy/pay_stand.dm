@@ -21,7 +21,7 @@
 			)
 			var/choice = show_radial_menu(user, src, items, null, require_near = TRUE, tooltips = TRUE)
 			if(choice == "Rename")
-				var/rename_msg = stripped_input(user, "Rename the Paystand:", "Paystand Naming", name)
+				var/rename_msg = tgui_input_text(user, "Rename the Paystand", "Paystand Name", name)
 				if(!rename_msg || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				name = rename_msg
@@ -39,7 +39,7 @@
 			var/obj/item/card/id/new_card = W
 			if(!new_card.registered_account)
 				return
-			var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "Paystand (owned by [new_card.registered_account.account_holder])")
+			var/msg = tgui_input_text(user, "Name of pay stand", "Paystand Naming", "Paystand (owned by [new_card.registered_account.account_holder])")
 			if(!msg)
 				return
 			name = msg
@@ -54,7 +54,7 @@
 				return
 			var/credit_amount = 0
 			if(!force_fee)
-				credit_amount = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
+				credit_amount = tgui_input_number(user, "How much would you like to deposit?", "Money Deposit")
 			else
 				credit_amount = force_fee
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -75,7 +75,7 @@
 			return
 	if(istype(W, /obj/item/holochip))
 		var/obj/item/holochip/H = W
-		var/cashmoney = input(user, "How much would you like to deposit?", "Money Deposit") as null|num
+		var/cashmoney = tgui_input_number(user, "How much would you like to deposit?", "Money Deposit")
 		if(H.spend(cashmoney, FALSE))
 			purchase(user, cashmoney)
 			to_chat(user, "Thanks for purchasing! The vendor has been informed.")
@@ -98,10 +98,7 @@
 			to_chat(user, span_warning("ERROR: No identification card has been assigned to this paystand yet!"))
 			return
 		if(!signaler)
-			var/cash_limit = input(user, "Enter the minimum amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold") as null|num
-			if(cash_limit < 1)
-				to_chat(user, span_warning("ERROR: Invalid amount designated."))
-				return
+			var/cash_limit = tgui_input_number(user, "Enter the minimum amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold", 1, min_value = 1)
 			if(cash_limit)
 				S.forceMove(src)
 				signaler = S

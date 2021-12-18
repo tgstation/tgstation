@@ -502,7 +502,7 @@
 	if(!istype(owner, /mob/living/simple_animal/hostile/giant_spider/midwife))
 		return
 	var/mob/living/simple_animal/hostile/giant_spider/midwife/spider = owner
-	spider.directive = stripped_input(spider, "Enter the new directive", "Create directive", "[spider.directive]")
+	spider.directive = tgui_input_text(spider, "Enter the new directive", "Create directive", "[spider.directive]")
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
 	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
 
@@ -519,7 +519,7 @@
 		return TRUE
 
 /datum/action/innate/spider/comm/Trigger()
-	var/input = stripped_input(owner, "Input a command for your legions to follow.", "Command", "")
+	var/input = tgui_input_text(owner, "Input a command for your legions to follow.", "Command")
 	if(QDELETED(src) || !input || !IsAvailable())
 		return FALSE
 	spider_command(owner, input)

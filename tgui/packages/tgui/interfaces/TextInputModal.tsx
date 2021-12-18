@@ -1,9 +1,10 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
+import { createRef } from "inferno";
 
 type TextInputData = {
   max_length: number;
@@ -44,9 +45,9 @@ export const TextInputModal = (_, context) => {
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 125
-    + Math.ceil(message?.length / 3)
+    + Math.ceil(message.length / 3)
     + (multiline ? 75 : 0)
-    + (large_buttons ? 5 : 0);
+    + (message.length && large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -56,6 +57,9 @@ export const TextInputModal = (_, context) => {
           const keyCode = window.event ? event.which : event.keyCode;
           if (keyCode === KEY_ENTER && inputIsValid.isValid) {
             act('submit', { entry: input });
+          }
+          if (keyCode === KEY_ESCAPE) {
+            act('cancel');
           }
         }}>
         <Section fill>
@@ -81,14 +85,17 @@ export const TextInputModal = (_, context) => {
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
   const { data } = useBackend<TextInputData>(context);
+  const inputRef = createRef(null);
   const { multiline } = data;
   const { input, onType } = props;
+
 
   if (!multiline) {
     return (
       <Stack.Item>
         <Input
           autoFocus
+          autoSelect
           fluid
           onInput={(_, value) => onType(value)}
           placeholder="Type something..."
@@ -101,9 +108,11 @@ const InputArea = (props, context) => {
       <Stack.Item grow>
         <TextArea
           autoFocus
+          autoSelect
           height="100%"
           onInput={(_, value) => onType(value)}
           placeholder="Type something..."
+          ref={inputRef}
           value={input}
         />
       </Stack.Item>

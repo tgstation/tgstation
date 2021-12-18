@@ -100,7 +100,7 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = stripped_input(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
+			var/newname = tgui_input_text(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
 			if(newname)
 				drip.name = newname
 		if("save")

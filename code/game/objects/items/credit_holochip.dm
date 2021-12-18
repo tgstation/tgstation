@@ -101,7 +101,7 @@
 /obj/item/holochip/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
-	var/split_amount = round(input(user,"How many credits do you want to extract from the holochip?") as null|num)
+	var/split_amount = round(tgui_input_number(user, "How many credits do you want to extract from the holochip?", "Holochip"))
 	if(split_amount == null || split_amount <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
 	else

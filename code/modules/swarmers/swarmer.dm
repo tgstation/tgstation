@@ -418,7 +418,7 @@
  * Proc which is used for a swarmer to input a message on a pop-up box, then attempt to send that message to the other swarmers
  */
 /mob/living/simple_animal/hostile/swarmer/proc/contact_swarmers()
-	var/message = stripped_input(src, "Announce to other swarmers", "Swarmer contact")
+	var/message = tgui_input_text(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
 	if(message)
 		swarmer_chat(message)

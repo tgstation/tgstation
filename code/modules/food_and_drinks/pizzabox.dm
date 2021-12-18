@@ -224,7 +224,7 @@
 				to_chat(user, span_notice("You scribble illegibly on [src]!"))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
-			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
+			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
 			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			to_chat(user, span_notice("You write with [I] on [src]."))

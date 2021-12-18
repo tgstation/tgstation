@@ -214,7 +214,7 @@
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
-				desired = input("How many items?", "How many items would you like to take out?", 1) as null|num
+				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", 1)
 				if(!desired)
 					return FALSE
 
