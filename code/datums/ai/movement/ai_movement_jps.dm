@@ -8,6 +8,10 @@
 /datum/ai_movement/jps/process(delta_time)
 	for(var/datum/ai_controller/controller as anything in moving_controllers)
 
+		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
+			continue
+		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
+
 		var/atom/movable/movable_pawn = controller.pawn
 
 		// Check if this controller can actually run, so we don't chase people with corpses
@@ -15,10 +19,6 @@
 			walk(controller.pawn, 0) //stop moving
 			controller.CancelActions()
 			continue
-
-		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
-			continue
-		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
 
 		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
 			continue
