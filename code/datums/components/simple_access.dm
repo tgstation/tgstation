@@ -16,6 +16,7 @@
 		RegisterSignal(donor_atom, COMSIG_ORGAN_REMOVED, .proc/on_donor_removed)
 	else if(istype(donor_atom, /obj/item/implant))
 		RegisterSignal(donor_atom, COMSIG_IMPLANT_REMOVED, .proc/on_donor_removed)
+	RegisterSignal(donor_atom, COMSIG_PARENT_QDELETING, .proc/on_donor_removed)
 
 /datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing)
 	SIGNAL_HANDLER
