@@ -604,8 +604,7 @@ GLOBAL_VAR(station_nuke_source)
 	stationwide_foam()
 
 /proc/KillEveryoneOnStation()
-	for(var/_victim in GLOB.mob_living_list)
-		var/mob/living/victim = _victim
+	for(var/mob/living/victim as anything in GLOB.mob_living_list)
 		if(victim.stat != DEAD && is_station_level(victim.z))
 			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
