@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixes shoving people into lockers sometimes trapping them in lockerspace. Crummy vacation destination, don't go there."
-  - bugfix: "Fixes directional shoving just not working"
-  - bugfix: "Fixes shoving people carrying other people being weird"

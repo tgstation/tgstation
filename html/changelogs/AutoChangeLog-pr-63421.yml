@@ -1,4 +1,0 @@
-author: "ike709"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug with taste description generation for fruit wine."
