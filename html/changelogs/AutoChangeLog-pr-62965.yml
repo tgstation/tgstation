@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed ghosts' boo ability going on cooldown when the light they tried to flicker didn't flick"

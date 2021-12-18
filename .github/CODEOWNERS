@@ -76,6 +76,10 @@
 
 /code/modules/wiremod/ @Watermelon914
 
+# Kylerace
+/code/controllers/subsystem/spatial_gridmap.dm @Kylerace
+/code/__DEFINES/spatial_gridmap.dm @Kylerace
+
 # CONTRIBUTORS
 
 # Ghilker
@@ -85,6 +89,7 @@
 
 # JohnFulpWizard
 
+/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 /goon/ @JohnFulpWillard
 
 # MrStonedOne
@@ -106,7 +111,7 @@
 
 # MULTIPLE OWNERS
 
-/icons/ @Twaticus @Krysonism
+/icons/ @Twaticus @Krysonism @Imaginos16
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 /_maps/ @EOBGames @ShizCalev @Maurukas
 /tools/build/ @MrStonedOne @stylemistake

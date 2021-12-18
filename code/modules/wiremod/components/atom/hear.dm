@@ -36,6 +36,7 @@
 	REMOVE_TRAIT(shell, TRAIT_HEARING_SENSITIVE, CIRCUIT_HEAR_TRAIT)
 
 /obj/item/circuit_component/hear/proc/on_shell_hear(datum/source, list/arguments)
+	SIGNAL_HANDLER
 	return Hear(arglist(arguments))
 
 /obj/item/circuit_component/hear/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)

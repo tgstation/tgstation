@@ -211,6 +211,7 @@ const Blanks = (props, context) => {
         {visibleBlanks.map(blank => (
           <Button
             key={blank.code}
+            title={blank.name}
             disabled={!has_toner}
             onClick={() => act("print_blank", {
               name: blank.name,

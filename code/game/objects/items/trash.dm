@@ -121,3 +121,22 @@
 	name = "dog eat dog envirochow"
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "envirochow_empty"
+
+/obj/item/trash/can/food/tomatoes
+	name = "canned San Marzano tomatoes"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tomatoescan_empty"
+
+/obj/item/trash/can/food/pine_nuts
+	name = "canned pine nuts"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pine_nuts_empty"
+
+/obj/item/trash/spacers_sidekick
+	name = "\improper Spacer's Sidekick packet"
+	icon_state = "spacers_sidekick"
+
+/obj/item/trash/ready_donk
+	name = "empty Ready-donk"
+	desc = "It's been Donk-decimated."
+	icon_state = "ready_donk"
