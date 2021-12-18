@@ -3161,7 +3161,7 @@
 /area/maintenance/fore)
 "anZ" = (
 /obj/docking_port/stationary/random{
-	id = "pod_lavaland3";
+	id = "pod_3_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -23855,7 +23855,7 @@
 "cCX" = (
 /obj/docking_port/stationary/random{
 	dir = 2;
-	id = "pod_lavaland1";
+	id = "pod_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -24493,7 +24493,7 @@
 "cGA" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_lavaland2";
+	id = "pod_2_lavaland";
 	name = "lavaland"
 	},
 /turf/open/space,
@@ -29020,7 +29020,7 @@
 /obj/structure/chair/stool/bar/directional/west,
 /mob/living/simple_animal/hostile/russian{
 	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian);
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
 	name = "Russian Mobster"
 	},
 /turf/open/floor/wood,
@@ -37590,8 +37590,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/commons/toilet/restrooms)
 "hqi" = (
-/mob/living/simple_animal/butterfly,
 /obj/effect/spawner/random/engineering/tracking_beacon,
+/mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/service/chapel)
 "hqu" = (
@@ -59378,7 +59378,7 @@
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
 "piY" = (
-/obj/effect/mob_spawn/human/corpse/charredskeleton,
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -71725,7 +71725,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/simple_animal/hostile/russian{
 	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian);
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
 	name = "Russian Mobster"
 	},
 /turf/open/floor/carpet/green,
@@ -79569,6 +79569,15 @@
 "wHX" = (
 /turf/closed/wall/rust,
 /area/security/checkpoint/medical)
+"wIb" = (
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_4_lavaland";
+	name = "lavaland"
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "wIl" = (
 /obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/bot,
@@ -79810,7 +79819,7 @@
 /obj/effect/landmark/event_spawn,
 /mob/living/simple_animal/hostile/russian{
 	environment_smash = 0;
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian);
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian);
 	name = "Russian Mobster"
 	},
 /turf/open/floor/carpet/green,
@@ -129570,7 +129579,7 @@ aeU
 aof
 qJs
 acK
-acm
+wIb
 acK
 qJs
 aeu

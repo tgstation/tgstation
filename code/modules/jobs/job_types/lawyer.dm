@@ -1,6 +1,8 @@
 /datum/job/lawyer
-	title = "Lawyer"
-	department_head = list("Head of Personnel")
+	title = JOB_LAWYER
+	description = "Advocate for prisoners, create law-binding contracts, \
+		ensure Security is following protocol and Space Law."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -54,3 +56,8 @@
 	else
 		use_purple_suit = TRUE
 	..()
+
+/datum/outfit/job/lawyer/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
+	. += /obj/item/clothing/suit/toggle/lawyer/purple

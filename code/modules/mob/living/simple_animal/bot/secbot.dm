@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
-	bot_core = /obj/machinery/bot_core/secbot
+	maints_access_required = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
@@ -493,9 +493,6 @@
 		if(!istype(C) || !C || in_range(src, target))
 			return
 		knockOver(C)
-
-/obj/machinery/bot_core/secbot
-	req_access = list(ACCESS_SECURITY)
 
 /// Returns false if the current target is unable to pay the fair_market_price for being arrested/detained
 /mob/living/simple_animal/bot/secbot/proc/check_nap_violations()

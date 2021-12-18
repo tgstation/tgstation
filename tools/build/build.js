@@ -207,7 +207,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, TgFontTarget, DmTarget],
+  dependsOn: [TguiTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -271,7 +271,7 @@ const prependDefines = (...defines) => {
 };
 
 export const TgsTarget = new Juke.Target({
-  dependsOn: [TguiTarget, TgFontTarget],
+  dependsOn: [TguiTarget],
   executes: async () => {
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');
