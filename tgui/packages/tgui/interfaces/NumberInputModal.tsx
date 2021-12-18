@@ -1,6 +1,6 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
-import { KEY_ENTER } from 'common/keycodes';
+import { KEY_ENTER } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';

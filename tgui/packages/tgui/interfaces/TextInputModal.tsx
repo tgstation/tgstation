@@ -1,10 +1,9 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences, Validator } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
-import { KEY_ESCAPE } from '../../common/keycodes';
 
 type TextInputData = {
   max_length: number;
