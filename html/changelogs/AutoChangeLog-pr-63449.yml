@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Nested containers (lockers, crates, etc) can be resisted out of."
