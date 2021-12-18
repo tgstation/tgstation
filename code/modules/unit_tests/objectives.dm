@@ -1,0 +1,14 @@
+/datum/unit_test/objectives_category/Run()
+	var/datum/traitor_category_handler/category = allocate(/datum/traitor_category_handler)
+	for(var/datum/traitor_objective_category/category as anything in category.all_categories)
+		var/list/current_list = category.objectives
+		for(var/value in category.objectives)
+			TEST_ASSERT(isnum(category.objectives[value]), "[category.type] does not have a valid format for its objectives as an objective category!")
+			if(islist(value))
+				recursive_check_list(category.type, value)
+
+/datum/unit_test/objectives_category/proc/recursive_check_list(base_type, list/to_check)
+	for(var/value in to_check)
+		TEST_ASSERT(isnum(to_check[value]), "[base_type] does not have a valid format for its objectives as an objective category!")
+		if(islist(value))
+			recursive_check_list(base_type, value)

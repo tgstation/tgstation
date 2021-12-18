@@ -1,3 +1,10 @@
+/datum/traitor_objective_category/sleeper_protocol
+	name = "Sleeper Protocol"
+	objectives = list(
+		/datum/traitor_objective/sleeper_protocol = 1,
+	)
+
+
 /datum/traitor_objective/sleeper_protocol
 	name = "Perform the sleeper protocol on a crewmember"
 	description = "Use the button below to materialize a surgery disk in your hand, where you'll then be able to perform the sleeper protocol on a crewmember. If the disk gets destroyed, the objective will fail. This will only work on living and sentient crewmembers."
@@ -20,14 +27,15 @@
 	var/list/buttons = list()
 	if(!disk)
 		buttons += add_ui_button("", "Clicking this will materialize the sleeper protocol surgery in your hand", "save", "summon_disk")
+	return buttons
 
 /datum/traitor_objective/sleeper_protocol/ui_perform_action(mob/living/user, action)
 	switch(action)
 		if("summon_disk")
-			if(!disk)
+			if(disk)
 				return
 			disk = new(user.drop_location())
-			user.put_in_hand(disk)
+			user.put_in_hands(disk)
 			AddComponent(/datum/component/traitor_objective_register, disk, \
 				fail_signals = COMSIG_PARENT_QDELETING)
 
@@ -38,9 +46,9 @@
 	RegisterSignal(source.current, COMSIG_MOB_SURGERY_STEP_SUCCESS, .proc/on_surgery_success)
 	current_registered_mob = source.current
 
-/datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	SIGNAL_HANDLER
-	if(istype(source, /datum/surgery_step/brainwash/sleeper_agent))
+	if(istype(step, /datum/surgery_step/brainwash/sleeper_agent))
 		succeed_objective()
 
 /datum/traitor_objective/sleeper_protocol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -60,10 +68,10 @@
 /obj/item/disk/surgery/sleeper_protocol
 	name = "Suspicious Surgery Disk"
 	desc = "The disk provides instructions on how to turn someone into a sleeper agent for the Syndicate"
-	surgeries = list(/datum/surgery/advanced/brainwashing)
+	surgeries = list(/datum/surgery/advanced/brainwashing_sleeper)
 
 /datum/surgery/advanced/brainwashing_sleeper
-	name = "Brainwashing"
+	name = "Sleeper Agent Surgery"
 	desc = "A surgical procedure which implants the sleeper protocol into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	steps = list(
 	/datum/surgery_step/incise,
@@ -103,6 +111,9 @@
 	display_pain(target, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
 
 /datum/surgery_step/brainwash/sleeper_agent/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
+	if(target.stat == DEAD)
+		to_chat(user, span_warning("They need to be alive to perform this surgery!"))
+		return FALSE
 	. = ..()
 	if(!.)
 		return

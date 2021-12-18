@@ -81,6 +81,7 @@
 #include "mob_spawn.dm"
 #include "ntnetwork_tests.dm"
 #include "outfit_sanity.dm"
+#include "objectives.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
 #include "preferences.dm"
