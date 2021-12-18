@@ -453,6 +453,18 @@
 	desc = "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
 	icon_state = "poster51"
 
+/obj/structure/sign/poster/contraband/donk_co/examine_more(mob/user)
+	var/list/msg = list(span_notice("<i>You browse some of the poster's information...</i>"))
+	msg += "\t[span_info("DONK CO. BRAND DONK POCKETS: IRRESISTABLY DONK!")]"
+	msg += "\t[span_info("AVAILABLE IN OVER 200 DONKTASTIC FLAVOURS: TRY CLASSIC MEAT, HOT AND SPICY, NEW YORK PEPPERONI PIZZA, BREAKFAST SAUSAGE AND EGG, PHILADELPHIA CHEESESTEAK, HAMBURGER DONK-A-RONI, CHEESE-O-RAMA, AND MANY MORE!")]"
+	msg += "\t[span_info("AVAILABLE FROM ALL GOOD RETAILERS, AND MANY BAD ONES TOO!")]"
+	return msg
+
+/obj/structure/sign/poster/contraband/cybersun_woodblock
+	name = "Saibāsan: 600 Years Commemorative Poster"
+	desc = "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
+	icon_state = "poster52"
+
 /obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
 	name = "Syndie Moth - Nuclear Operation"
 	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
@@ -654,6 +666,37 @@
 	desc = "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
 	// And yet people still believe...
 	icon_state = "poster37_legit"
+
+/obj/structure/sign/poster/official/periodic_table
+	name = "Periodic Table of the Elements"
+	desc = "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
+	icon_state = "poster38_legit"
+
+/obj/structure/sign/poster/official/plasma_effects
+	name = "Plasma and the Body"
+	desc = "This informational poster provides information on the effects of long-term plasma exposure on the brain."
+	icon_state = "poster39_legit"
+
+/obj/structure/sign/poster/official/plasma_effects/examine_more(mob/user)
+	var/list/msg = list(span_notice("<i>You browse some of the poster's information...</i>"))
+	msg += "\t[span_info("Plasma (scientific name Amenthium) is classified by TerraGov as a Grade 1 Health Hazard, and has significant effects due to chronic exposure.")]"
+	msg += "\t[span_info("Plasma is known to cross the blood/brain barrier and bioaccumulate in brain tissue, where it begins to result in degradation of brain function. The mechanism for attack is not yet fully known, and as such no concrete preventative advice is available barring proper use of PPE (gloves + protective jumpsuit + respirator).")]"
+	msg += "\t[span_info("In small doses, plasma induces confusion, short-term amnesia, and heightened aggression. These effects persist with continual exposure.")]"
+	msg += "\t[span_info("In individuals with chronic exposure, severe effects have been noted. Further heightened aggression, long-term amnesia, Alzheimer's symptoms, schizophrenia, macular degeneration, aneurysms, heightened risk of stroke, and Parkinsons symptoms have all been noted.")]"
+	msg += "\t[span_info("It is recommended that all individuals in unprotected contact with raw plasma regularly check with company health officials.")]"
+	msg += "\t[span_info("For more information, please check with TerraGov's extranet site on Amenthium: www.terra.gov/health_and_safety/amenthium/, or our internal risk-assessment documents (document numbers #47582-b (Plasma safety data sheets) and #64210 through #64225 (PPE regulations for working with Plasma), available via NanoDoc to all employees).")]"
+	msg += "\t[span_info("Nanotrasen: Always looking after your health.")]"
+	return msg
+
+/obj/structure/sign/poster/official/terragov
+	name = "TerraGov: United for Humanity"
+	desc = "A poster depicting TerraGov's logo and motto, reminding viewers of who's looking out for humankind."
+	icon_state = "poster40_legit"
+
+/obj/structure/sign/poster/official/corporate_perks_vacation
+	name = "NanoTrasen Corporate Perks: Vacation"
+	desc = "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
+	icon_state = "poster41_legit"
 
 //SafetyMoth Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982)
 //SafetyMoth art credit goes to AspEv
