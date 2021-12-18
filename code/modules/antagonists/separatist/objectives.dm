@@ -31,18 +31,17 @@
 /datum/objective/separatist_fluff
 
 /datum/objective/separatist_fluff/New(text, nation_name)
-	var/list/explanationTexts = list(
-		"The rest of the station must be taxed for their use of [nation_name]'s services.", \
-		"Make statues everywhere of your glorious leader of [nation_name]. If you have nobody, crown one amongst yourselves!", \
-		"[nation_name] must be absolutely blinged out.", \
-		"Damage as much of the station as you can, keep it in disrepair. [nation_name] must be the untouched paragon!", \
-		"Heavily reinforce [nation_name] against the dangers of the outside world.", \
-		"Make sure [nation_name] is fully off the grid, not requiring power or any other services from other departments!", \
-		"Use a misaligned teleporter to make you and your fellow citizens of [nation_name] flypeople. Bring toxin medication!", \
-		"Save the station when it needs you most. [nation_name] will be remembered as the protectors.", \
+	explanation_text = pick(list(
+		"The rest of the station must be taxed for their use of [nation_name]'s services.",
+		"Make statues everywhere of your glorious leader of [nation_name]. If you have nobody, crown one amongst yourselves!",
+		"[nation_name] must be absolutely blinged out.",
+		"Damage as much of the station as you can, keep it in disrepair. [nation_name] must be the untouched paragon!",
+		"Heavily reinforce [nation_name] against the dangers of the outside world.",
+		"Make sure [nation_name] is fully off the grid, not requiring power or any other services from other departments!",
+		"Use a misaligned teleporter to make you and your fellow citizens of [nation_name] flypeople. Bring toxin medication!",
+		"Save the station when it needs you most. [nation_name] will be remembered as the protectors.",
 		"Arm up. The citizens of [nation_name] have a right to bear arms.",
-	)
-	explanation_text = pick(explanationTexts)
+	))
 	..()
 
 /datum/objective/separatist_fluff/check_completion()

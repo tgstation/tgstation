@@ -38,9 +38,8 @@
 	// Don't add department_head! Assistants names should not be in bold.
 
 /datum/job_department/assistant/generate_nation_name()
-	. = ..()
 	var/nomadic_name = pick("roving clans", "barbaric tribes", "tides", "bandit kingdom", "tribal society", "marauder clans", "horde")
-	return "The [nomadic_name] of [.]"
+	return "The [nomadic_name] of [..()]"
 
 /// A special captain only department, for use by the preferences menu
 /datum/job_department/captain

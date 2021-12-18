@@ -687,12 +687,7 @@
 
 	spawn_meteors(ramp_up_final, wavetype)
 
-//////////////////////////////////////////////
-//                                          //
-//               NATIONS (oh god)           //
-//                                          //
-//////////////////////////////////////////////
-
+/// Ruleset for Nations
 /datum/dynamic_ruleset/roundstart/nations
 	name = "Nations"
 	required_candidates = 0
@@ -711,7 +706,7 @@
 		/datum/job_department/science,
 		/datum/job_department/security,
 		/datum/job_department/service,
-
 	)
+	
 	for(var/department_type in department_types)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE)

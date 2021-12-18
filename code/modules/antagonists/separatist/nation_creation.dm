@@ -12,7 +12,6 @@
  * Returns null if everything went well, otherwise a string describing what went wrong.
  */
 /proc/create_separatist_nation(datum/job_department/department, announcement = FALSE, dangerous = FALSE)
-
 	var/list/jobs_to_revolt = list()
 	var/list/citizens = list()
 
@@ -56,7 +55,7 @@
 		citizens += possible_separatist
 		separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
 		nation.add_member(separatist_mind)
-		possible_separatist.log_message("Was made into a separatist, long live [nation.name]!", LOG_ATTACK, color="red")
+		possible_separatist.log_message("was made into a separatist, long live [nation.name]!", LOG_ATTACK, color="red")
 
 	//if we didn't convert anyone we just kill the team datum, otherwise cleanup and make official
 	if(!citizens.len)
