@@ -467,7 +467,7 @@
 			if (!istype(player))
 				continue
 
-			if(player_mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND))
+			if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 				ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, JOB_TRAIT)
 
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
