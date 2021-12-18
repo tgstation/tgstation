@@ -22,7 +22,7 @@
 
 	//this is a prototype so this progression is for all basic level kill objectives
 	progression_reward = list(8 MINUTES, 12 MINUTES)
-	telecrystal_reward = 0
+	telecrystal_reward = list(1, 2)
 
 	/**
 	 * Makes the objective only set heads as targets when true, and block them from being targets when false.
@@ -88,6 +88,9 @@
 	fail_objective(telecrystal_penalty)
 
 /datum/traitor_objective/assassinate/calling_card/heads_of_staff
+	progression_reward = list(12 MINUTES, 15 MINUTES)
+	telecrystal_reward = list(2, 3)
+
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/assassinate/behead
@@ -142,6 +145,9 @@
 		fail_objective()
 
 /datum/traitor_objective/assassinate/behead/heads_of_staff
+	progression_reward = list(12 MINUTES, 15 MINUTES)
+	telecrystal_reward = list(2, 3)
+
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/assassinate/generate_objective(datum/mind/generating_for, list/possible_duplicates)
