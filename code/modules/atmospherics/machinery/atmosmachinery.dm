@@ -124,9 +124,6 @@
 	///keeps the name of the object from being overridden if it's vareditted.
 	var/override_naming
 
-	///what turf our connections are centered on. used so that pipenet connections work regardless of whether we're nullspaced or not
-	var/turf/associated_loc
-
 /obj/machinery/atmospherics/New(loc, process = TRUE, setdir, init_dir = ALL_CARDINALS)
 	if(!isnull(setdir))
 		setDir(setdir)

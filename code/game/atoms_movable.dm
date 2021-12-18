@@ -83,6 +83,10 @@
 	/// The degree of pressure protection that mobs in list/contents have from the external environment, between 0 and 1
 	var/contents_pressure_protection = 0
 
+	///some movables need a concept of "real loc" thats separate from the loc var because they get nullspaced. no handling for this should exist at the
+	///movable level, subtypes that use it should do all handling themselves.
+	var/turf/associated_loc
+
 /atom/movable/Initialize(mapload)
 	. = ..()
 	switch(blocks_emissive)
