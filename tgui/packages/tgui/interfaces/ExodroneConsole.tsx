@@ -818,8 +818,7 @@ export const AdventureScreen = (
           <DroneStatus
             drone_integrity={drone_integrity}
             drone_max_integrity={drone_max_integrity}
-          />
-      )
+          />)
       }>
       <Stack>
         <Stack.Item>
