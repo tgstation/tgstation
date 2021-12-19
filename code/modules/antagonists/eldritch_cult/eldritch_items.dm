@@ -197,7 +197,7 @@
 	var/mob/living/carbon/carbon_user = loc
 	to_chat(carbon_user,span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
 	item_flags &= ~EXAMINE_SKIP
-	REMOVE_TAIT(src, TRAIT_NO_STRIP, src)
+	REMOVE_TRAIT(src, TRAIT_NO_STRIP, src)
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
