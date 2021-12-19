@@ -179,7 +179,7 @@
 		to_chat(user, span_userdanger("[our_plant]'s thorns nearly prick your hand. Best be careful."))
 		return
 
-	to_chat(user, span_userdanger("[our_plant]'s thorns prick your hand. Ouch."))
+	to_chat(user, span_danger("[our_plant]'s thorns prick your hand. Ouch."))
 	our_plant.investigate_log("rose-pricked [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	var/obj/item/bodypart/affecting = user.get_active_hand()
 	if(affecting?.receive_damage(2))
