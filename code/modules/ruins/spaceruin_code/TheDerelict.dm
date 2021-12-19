@@ -52,7 +52,7 @@
 ///Looks for a cable connection beneath the machine.
 /obj/machinery/computer/vaultcontroller/proc/update_cable()
 	var/turf/T = get_turf(src)
-	attached_cable = locate(/obj/structure/cable) in T.cable_nodes
+	attached_cable = locate(/obj/structure/cable) in T.nullspaced_contents
 
 ///Initializes airlock links.
 /obj/machinery/computer/vaultcontroller/proc/find_airlocks()

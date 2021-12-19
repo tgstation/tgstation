@@ -36,12 +36,7 @@
 
 	source.invisibility = completely_covered ? invisibility_level : 0
 
-	var/turf/acting_loc
-	if(nullspace_target)
-		acting_loc = source.associated_loc
-
-	else
-		acting_loc = get_turf(source)
+	var/turf/acting_loc = get_turf(source)
 
 	if(completely_covered)
 		if(invisibility_trait)

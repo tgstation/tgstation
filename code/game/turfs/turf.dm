@@ -73,14 +73,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
 	var/rcd_memory
 
-	//nullspace lazylists
-
-	/// lazy list of atmos machines on this tile that can connect to other machines. used so that they can be nullspaced
-	var/list/pipenet_nodes
-	/// lazy list of cables associated with this turf. used so that they can be nullspaced
-	var/list/cable_nodes
-	/// lazy list of disposals pipes associated with this turf. used so that they can be nullspaced
-	var/list/disposals_nodes
+	/// lazy list of all movables that can get nullspaced but still associated with this loc. causes bugs, but also maptick savings.
+	///dont use this unless you have a good reason. everything in this list may or may not actually be in this turf's contents
+	var/list/nullspaced_contents
 
 
 /turf/vv_edit_var(var_name, new_value)
@@ -445,7 +440,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return new_baseturfs
 
 /turf/proc/levelupdate()
-	var/list/check_list = contents | pipenet_nodes | cable_nodes | disposals_nodes
+	var/list/check_list = contents | nullspaced_contents
 
 	for(var/obj/O in check_list)
 		if(O.flags_1 & INITIALIZED_1)
@@ -501,8 +496,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		for(var/obj/O in (contents | cable_nodes | pipenet_nodes | disposals_nodes)) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+		for(var/obj/O in (contents | nullspaced_contents)) //this is for deleting things like wires contained in the turf
+			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE)) //TODOKYLER: this sucks fix it
 				O.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)

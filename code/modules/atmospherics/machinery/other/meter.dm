@@ -53,7 +53,7 @@
 	var/obj/machinery/atmospherics/candidate
 	var/turf/turf_loc = get_turf(src)
 
-	for(var/obj/machinery/atmospherics/pipe/pipe in turf_loc.pipenet_nodes)
+	for(var/obj/machinery/atmospherics/pipe/pipe in turf_loc.nullspaced_contents)
 		if(pipe.piping_layer == target_layer)
 			candidate = pipe
 	if(candidate)

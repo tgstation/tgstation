@@ -71,7 +71,7 @@
 
 /obj/machinery/power/floodlight/process()
 	var/turf/T = get_turf(src)
-	var/obj/structure/cable/C = locate() in T.cable_nodes
+	var/obj/structure/cable/C = locate() in T.nullspaced_contents
 	if(!C && powernet)
 		disconnect_from_network()
 	if(setting > FLOODLIGHT_OFF) //If on

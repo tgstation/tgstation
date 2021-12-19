@@ -342,7 +342,7 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
 
-	for(var/obj/machinery/atmospherics/device in associated_loc.pipenet_nodes)
+	for(var/obj/machinery/atmospherics/device in associated_loc.nullspaced_contents)
 		if(device == src)
 			continue
 		if(device.piping_layer == piping_layer)

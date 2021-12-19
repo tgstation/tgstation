@@ -66,7 +66,7 @@ GENE SCANNER
 		return
 	var/list/t_ray_images = list()
 	for(var/turf/turf_to_scan as anything in RANGE_TURFS(distance, viewer))
-		var/list/list_to_scan = turf_to_scan.pipenet_nodes
+		var/list/list_to_scan = turf_to_scan.nullspaced_contents
 
 		for(var/obj/object_to_scan as anything in list_to_scan)
 			if(!HAS_TRAIT(object_to_scan, TRAIT_T_RAY_VISIBLE))

@@ -100,7 +100,7 @@
 
 	var/has_possible_loc = FALSE
 
-	for(var/obj/structure/disposalpipe/possible_loc in turf_loc?.disposals_nodes)
+	for(var/obj/structure/disposalpipe/possible_loc in turf_loc?.nullspaced_contents)
 		if(pipes_typecache[possible_loc.type])
 			has_possible_loc = TRUE
 			break
@@ -132,7 +132,7 @@
 	else
 		fdir = turn(dir, 180) // flip the movement direction (turn doesnt work with UP|DOWN)
 
-	for(var/obj/structure/disposalpipe/destination_pipe in destination_turf.disposals_nodes)
+	for(var/obj/structure/disposalpipe/destination_pipe in destination_turf.nullspaced_contents)
 		if(fdir & destination_pipe.dpdir) // find pipe direction mask that matches flipped dir
 			return destination_pipe
 	// if no matching pipe, return null

@@ -92,7 +92,7 @@
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
-			var/obj/structure/cable/C = locate() in F.cable_nodes
+			var/obj/structure/cable/C = locate() in F.nullspaced_contents
 			if(C && prob(15))
 				var/powered = C.avail()
 				if(powered && !HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))

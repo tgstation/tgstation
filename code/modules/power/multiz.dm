@@ -13,8 +13,8 @@
 	var/turf/below_turf = SSmapping.get_turf_below(T)
 	var/turf/above_turf = SSmapping.get_turf_above(T)
 
-	. += locate(/obj/structure/cable/multilayer/multiz) in (below_turf?.cable_nodes)
-	. += locate(/obj/structure/cable/multilayer/multiz) in (above_turf?.cable_nodes)
+	. += locate(/obj/structure/cable/multilayer/multiz) in (below_turf?.nullspaced_contents)
+	. += locate(/obj/structure/cable/multilayer/multiz) in (above_turf?.nullspaced_contents)
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
@@ -23,6 +23,6 @@
 	var/turf/below_turf = SSmapping.get_turf_below(T)
 	var/turf/above_turf = SSmapping.get_turf_above(T)
 
-	. += span_notice("[locate(/obj/structure/cable/multilayer/multiz) in (below_turf?.cable_nodes) ? "Detected" : "Undetected"] hub UP.")
-	. += span_notice("[locate(/obj/structure/cable/multilayer/multiz) in (above_turf?.cable_nodes) ? "Detected" : "Undetected"] hub DOWN.")
+	. += span_notice("[locate(/obj/structure/cable/multilayer/multiz) in (below_turf?.nullspaced_contents) ? "Detected" : "Undetected"] hub UP.")
+	. += span_notice("[locate(/obj/structure/cable/multilayer/multiz) in (above_turf?.nullspaced_contents) ? "Detected" : "Undetected"] hub DOWN.")
 

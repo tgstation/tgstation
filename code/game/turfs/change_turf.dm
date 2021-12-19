@@ -78,9 +78,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_directional_opacity = directional_opacity
 	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_rcd_memory = rcd_memory
-	var/list/old_pipenet_nodes = pipenet_nodes
-	var/old_cable_nodes = cable_nodes
-	var/old_disposals_nodes = disposals_nodes
+	var/list/old_nullspaced_contents = nullspaced_contents
 
 	var/old_bp = blueprint_data
 	blueprint_data = null
@@ -114,9 +112,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		W.baseturfs = baseturfs_string_list(old_baseturfs, W) //Just to be safe
 
-	pipenet_nodes = old_pipenet_nodes
-	cable_nodes = old_cable_nodes
-	disposals_nodes = old_disposals_nodes
+	nullspaced_contents = old_nullspaced_contents
 
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		W.AfterChange(flags, old_type)

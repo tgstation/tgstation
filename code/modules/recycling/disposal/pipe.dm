@@ -26,7 +26,7 @@
 
 	associated_loc = get_turf(src)
 	if(associated_loc)
-		LAZYADD(associated_loc.disposals_nodes, src)
+		LAZYADD(associated_loc.nullspaced_contents, src)
 
 	if(!QDELETED(make_from))
 		setDir(make_from.dir)
@@ -53,7 +53,7 @@
 			dpdir |= DOWN
 
 	//AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
-	AddComponent(/datum/component/nullspace_undertile, nullspace_when_underfloor_visible = TRUE)
+	AddComponent(/datum/component/nullspace_undertile, nullspace_when_underfloor_visible = FALSE)
 
 // pipe is deleted
 // ensure if holder is present, it is expelled
@@ -65,7 +65,7 @@
 	stored = null //The qdel is handled in expel()
 
 	if(associated_loc)
-		LAZYREMOVE(associated_loc.disposals_nodes, src)
+		LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	return ..()
 

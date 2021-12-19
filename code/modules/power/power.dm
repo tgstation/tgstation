@@ -232,7 +232,7 @@
 	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
 
-		for(var/obj/structure/cable/C in T.cable_nodes)
+		for(var/obj/structure/cable/C in T.nullspaced_contents)
 			if(C.powernet)
 				continue
 			. += C
@@ -247,7 +247,7 @@
 	for(var/card in GLOB.cardinals)
 		T = get_step(loc,card)
 
-		for(var/obj/structure/cable/C in T.cable_nodes)
+		for(var/obj/structure/cable/C in T.nullspaced_contents)
 			. += C
 	return .
 
@@ -256,14 +256,14 @@
 	. = list()
 	var/turf/turf_loc = get_turf(src)
 
-	for(var/obj/structure/cable/C in turf_loc.cable_nodes)
+	for(var/obj/structure/cable/C in turf_loc.nullspaced_contents)
 		if(C.powernet)
 			continue
 		. += C
 	return .
 
 /proc/update_cable_icons_on_turf(turf/T)
-	for(var/obj/structure/cable/C in T.cable_nodes)
+	for(var/obj/structure/cable/C in T.nullspaced_contents)
 		C.update_appearance()
 
 ///////////////////////////////////////////
@@ -415,7 +415,7 @@
 /turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
-	for(var/obj/structure/cable/C in cable_nodes)
+	for(var/obj/structure/cable/C in nullspaced_contents)
 		if(C.machinery_layer & machinery_layer)
 			C.update_appearance()
 			return C

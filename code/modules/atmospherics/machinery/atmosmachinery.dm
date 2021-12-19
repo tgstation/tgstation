@@ -141,7 +141,7 @@
 
 	if(loc)
 		associated_loc = get_turf(src)
-		LAZYADD(associated_loc.pipenet_nodes, src)
+		LAZYADD(associated_loc.nullspaced_contents, src)
 
 /obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
@@ -162,7 +162,7 @@
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	LAZYREMOVE(associated_loc.pipenet_nodes, src)
+	LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	return ..()
 
@@ -257,7 +257,7 @@
 
 		var/turf/target_turf = get_step(associated_loc, node_connects[i])
 
-		for(var/obj/machinery/atmospherics/target in target_turf.pipenet_nodes)
+		for(var/obj/machinery/atmospherics/target in target_turf.nullspaced_contents)
 			if(can_be_node(target, i))
 				nodes[i] = target
 				break
@@ -298,7 +298,7 @@
 /obj/machinery/atmospherics/proc/find_connecting(direction, prompted_layer)
 	var/turf/step_turf = get_step_multiz(associated_loc, direction)
 
-	for(var/obj/machinery/atmospherics/target in step_turf.pipenet_nodes)
+	for(var/obj/machinery/atmospherics/target in step_turf.nullspaced_contents)
 		if(!(target.initialize_directions & get_dir(target.associated_loc, associated_loc)) && !istype(target, /obj/machinery/atmospherics/pipe/multiz))
 			continue
 		if(connection_check(target, prompted_layer))
@@ -509,7 +509,7 @@
 	if((flags_1 & NODECONSTRUCT_1) || !can_unwrench)
 		return ..()
 
-	LAZYREMOVE(associated_loc.pipenet_nodes, src)
+	LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	var/obj/item/pipe/stored = new construction_type(associated_loc, null, dir, src, pipe_color)
 	stored.set_piping_layer(piping_layer)

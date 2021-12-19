@@ -49,7 +49,7 @@
 
 /obj/machinery/disposal/proc/trunk_check()
 	var/turf/turf_loc = get_turf(src)
-	trunk = locate() in turf_loc.disposals_nodes
+	trunk = locate() in turf_loc.nullspaced_contents
 
 	if(!trunk)
 		pressure_charging = FALSE

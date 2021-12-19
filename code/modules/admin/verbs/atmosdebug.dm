@@ -46,14 +46,14 @@
 
 	for(var/turf/T in world.contents)
 		var/found_one = FALSE
-		for(var/obj/structure/cable/C in T.cable_nodes)
+		for(var/obj/structure/cable/C in T.nullspaced_contents)
 			if(found_one)
 				results += "Doubled wire at [ADMIN_VERBOSEJMP(C)]"
 			else
 				found_one = TRUE
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T.contents
 		if(term)
-			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.cable_nodes
+			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.nullspaced_contents
 			if(!C)
 				results += "Unwired terminal at [ADMIN_VERBOSEJMP(term)]"
 	to_chat(usr, "[results.Join("\n")]", confidential = TRUE)
