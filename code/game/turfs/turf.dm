@@ -449,7 +449,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	for(var/obj/O in check_list)
 		if(O.flags_1 & INITIALIZED_1)
-			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, underfloor_accessibility < UNDERFLOOR_VISIBLE)
+			SEND_SIGNAL(O, COMSIG_OBJ_HIDE, underfloor_accessibility)
 
 // override for space turfs, since they should never hide anything
 /turf/open/space/levelupdate()

@@ -695,6 +695,8 @@
 	if(updates & UPDATE_ICON)
 		. |= update_icon(updates)
 
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_APPEARANCE, updates)
+
 /// Updates the name of the atom
 /atom/proc/update_name(updates=ALL)
 	SHOULD_CALL_PARENT(TRUE)

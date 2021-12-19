@@ -684,6 +684,7 @@
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\multiple_lives.dm"
 #include "code\datums\components\ntnet_interface.dm"
+#include "code\datums\components\nullspace_undertile.dm"
 #include "code\datums\components\omen.dm"
 #include "code\datums\components\orbiter.dm"
 #include "code\datums\components\overlay_lighting.dm"

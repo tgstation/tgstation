@@ -166,12 +166,6 @@
 
 	return ..()
 
-/obj/machinery/atmospherics/Moved(atom/OldLoc, Dir)
-	. = ..()
-
-	message_admins("an atmospherics machine moved! [src]") //TODOKYLER: fix this
-
-
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
 	. += span_notice("[src] is on layer [piping_layer].")

@@ -46,6 +46,7 @@ GLOBAL_LIST_EMPTY(catwalk_overlay_masterlist)	//Stores all the above_states for 
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
+	levelupdate()
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	update_icon(UPDATE_OVERLAYS)
 

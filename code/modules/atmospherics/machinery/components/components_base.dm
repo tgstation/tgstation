@@ -5,7 +5,7 @@
 	hide = FALSE
 	///Is the component welded?
 	var/welded = FALSE
-	///Should the component should show the pipe underneath it?
+	///Should the component show the pipe underneath it?
 	var/showpipe = TRUE
 	///When the component is on a non default layer should we shift everything? Or just the underlay pipe
 	var/shift_underlay_only = TRUE
@@ -48,9 +48,9 @@
 /**
  * Called in Initialize(), set the showpipe var to true or false depending on the situation, calls update_icon()
  */
-/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, underfloor_accessibility)
 	SIGNAL_HANDLER
-	showpipe = !covered
+	showpipe = !(underfloor_accessibility < UNDERFLOOR_VISIBLE)
 	update_appearance()
 
 /obj/machinery/atmospherics/components/update_icon()
