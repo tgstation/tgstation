@@ -1,5 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "When the nuke goes off, the \"you are shredded to atoms\" message no longer displays to people not on the z-level or on the station."
-  - bugfix: "The nuke now kills everyone on a station z-level if blown up on the station."
