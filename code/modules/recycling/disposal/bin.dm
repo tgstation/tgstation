@@ -48,7 +48,9 @@
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/proc/trunk_check()
-	trunk = locate() in loc
+	var/turf/turf_loc = get_turf(src)
+	trunk = locate() in turf_loc.disposals_nodes
+
 	if(!trunk)
 		pressure_charging = FALSE
 		flush = FALSE

@@ -26,7 +26,9 @@
 
 	target = get_ranged_target_turf(src, dir, 10)
 
-	trunk = locate() in loc
+	var/turf/turf_loc = get_turf(src)
+
+	trunk = locate() in turf_loc?.disposals_nodes
 	if(trunk)
 		trunk.linked = src // link the pipe trunk to self
 

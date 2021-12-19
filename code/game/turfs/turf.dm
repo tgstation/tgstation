@@ -445,7 +445,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return new_baseturfs
 
 /turf/proc/levelupdate()
-	var/list/check_list = contents + pipenet_nodes
+	var/list/check_list = contents | pipenet_nodes | cable_nodes | disposals_nodes
 
 	for(var/obj/O in check_list)
 		if(O.flags_1 & INITIALIZED_1)

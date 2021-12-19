@@ -13,6 +13,8 @@
 #define DISP_DIR_RIGHT 2
 #define DISP_DIR_FLIP 4
 #define DISP_DIR_NONE 8
+#define DISP_DIR_UP 16
+#define DISP_DIR_DOWN 32
 
 //Transit tubes
 #define TRANSIT_TUBE_STRAIGHT 0

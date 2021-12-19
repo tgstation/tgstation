@@ -47,6 +47,10 @@
 			dpdir |= turn(dir, -90)
 		if(initialize_dirs & DISP_DIR_FLIP)
 			dpdir |= turn(dir, 180)
+		if(initialize_dirs & DISP_DIR_UP)
+			dpdir |= UP
+		if(initialize_dirs & DISP_DIR_DOWN)
+			dpdir |= DOWN
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
 
@@ -69,15 +73,22 @@
 		stored = null
 		deconstruct(FALSE) //pipe has broken.
 
-// returns the direction of the next pipe object, given the entrance dir
-// by default, returns the bitmask of remaining directions
-/obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/H)
-	return dpdir & (~turn(H.dir, 180))
+/// returns the direction of the next pipe object, given the entrance dir.
+/// by default, returns the bitfield of directions this pipe is connected in and the directions that holder didnt come from
+/obj/structure/disposalpipe/proc/nextdir(obj/structure/disposalholder/holder)
+	if(holder.dir == UP)
+		return dpdir & ~DOWN//if holder is vertical, return everything shared between our directions and the opposite direction holder came from
 
-// transfer the holder through this pipe segment
-// overridden for special behaviour
-/obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/H)
-	return transfer_to_dir(H, nextdir(H))
+	else if(holder.dir == DOWN)
+		return dpdir & ~UP
+
+	else //holder didnt come from a multiz turf
+		return dpdir & ~turn(holder.dir & ~(UP|DOWN), 180)//turn() doesnt work with UP|DOWN so we need to make sure it doesnt get those directions
+
+/// transfer the holder through this pipe segment.
+/// overridden for special behaviour
+/obj/structure/disposalpipe/proc/transfer(obj/structure/disposalholder/holder)
+	return transfer_to_dir(holder, nextdir(holder))
 
 /obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/holder, nextdir)
 	holder.setDir(nextdir)
@@ -186,9 +197,9 @@
 	initialize_dirs = DISP_DIR_RIGHT | DISP_DIR_FLIP
 	flip_type = /obj/structure/disposalpipe/junction/flip
 
-// next direction to move
-// if coming in from secondary dirs, then next is primary dir
-// if coming in from primary dir, then next is equal chance of other dirs
+/// next direction to move.
+/// if coming in from secondary dirs, then next is primary dir.
+/// if coming in from primary dir, then next is equal chance of other dirs.
 /obj/structure/disposalpipe/junction/nextdir(obj/structure/disposalholder/H)
 	var/flipdir = turn(H.dir, 180)
 	if(flipdir != dir) // came from secondary dir, so exit through primary
@@ -263,7 +274,7 @@
 // if not entering from disposal bin,
 // transfer to linked object (outlet or bin)
 /obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/holder)
-	if(holder.dir == DOWN) // we just entered from a disposer
+	if(holder.dir == DOWN || dpdir & (UP|DOWN)) // we just entered from a disposer or we're a multiz pipe
 		return ..() // so do base transfer proc
 	// otherwise, go to the linked object
 	if(linked)
@@ -278,8 +289,12 @@
 	return null
 
 /obj/structure/disposalpipe/trunk/nextdir(obj/structure/disposalholder/holder)
-	if(holder.dir == DOWN)
+	if(dpdir & (UP|DOWN))
+		return ..()
+
+	else if(holder.dir == DOWN)
 		return dir
+
 	else
 		return NONE
 
