@@ -106,8 +106,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 // basic mobs
 #define isbasicmob(A) (istype(A, /mob/living/basic))
 
-// either basic mob OR simple animal
-
+/// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
 //Simple animals
