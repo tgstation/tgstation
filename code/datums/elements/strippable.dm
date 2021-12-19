@@ -148,7 +148,7 @@
 	if (isnull(item))
 		return FALSE
 
-	if (item.item_flags & EXAMINE_SKIP)
+	if (HAS_TRAIT(item, TRAIT_NO_STRIP))
 		return FALSE
 
 	source.visible_message(
@@ -366,7 +366,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (item.item_flags & EXAMINE_SKIP))
+		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP)))
 			items[strippable_key] = result
 			continue
 
