@@ -60,7 +60,7 @@
 		amount += newC.amount
 	else
 		amount += _amount
-	if (thermite_timer) // prevent people from skipping a shorter timer
+	if (thermite_timer) // prevent people from skipping a longer timer
 		deltimer(burn_timer)
 		var/fakefire
 		for (var/obj/effect/overlay/thermite/fire in parent)
