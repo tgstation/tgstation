@@ -10505,7 +10505,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/external{
 	autoclose = 0;
-	frequency = 1449];
+	frequency = 1449;
 	id_tag = "mostleft_lower_eva_internal";
 	name = "External Access"
 	},
