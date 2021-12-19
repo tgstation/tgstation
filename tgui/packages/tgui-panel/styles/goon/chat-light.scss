@@ -336,6 +336,13 @@ em {
   color: #5c00e6;
 }
 
+.binaryannounce {
+  color: #20c20e;
+  background-color: #000000;
+  font-size: 185%;
+  font-weight: bold;
+}
+
 .binarysay {
   color: #20c20e;
   background-color: #000000;
@@ -349,6 +356,12 @@ em {
 .binarysay a:active,
 .binarysay a:visited {
   color: #88ff88;
+}
+
+.binarynotice {
+  color: #20c20e;
+  background-color: #000000;
+  font-weight: bold;
 }
 
 .radio {

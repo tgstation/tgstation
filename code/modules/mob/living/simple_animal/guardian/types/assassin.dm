@@ -57,7 +57,7 @@
 		environment_smash = initial(environment_smash)
 		alpha = initial(alpha)
 		if(!forced)
-			to_chat(src, "[span_danger("<B>You exit stealth.")]</B>")
+			to_chat(src, span_notice("You exit stealth."))
 		else
 			visible_message(span_danger("\The [src] suddenly appears!"))
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
@@ -66,7 +66,7 @@
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
 		if(src.loc == summoner)
-			to_chat(src, "[span_danger("<B>You have to be manifested to enter stealth!")]</B>")
+			to_chat(src, span_warning("You have to be manifested to enter stealth!"))
 			return
 		melee_damage_lower = 50
 		melee_damage_upper = 50
@@ -76,11 +76,11 @@
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
 		alpha = 15
 		if(!forced)
-			to_chat(src, "[span_danger("<B>You enter stealth, empowering your next attack.")]</B>")
+			to_chat(src, span_notice("You enter stealth, empowering your next attack."))
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		to_chat(src, "[span_danger("<B>You cannot yet enter stealth, wait another [DisplayTimeText(stealthcooldown - world.time)]!")]</B>")
+		to_chat(src, span_warning("You cannot yet enter stealth, wait another [DisplayTimeText(stealthcooldown - world.time)]!"))
 
 /mob/living/simple_animal/hostile/guardian/assassin/proc/updatestealthalert()
 	if(stealthcooldown <= world.time)

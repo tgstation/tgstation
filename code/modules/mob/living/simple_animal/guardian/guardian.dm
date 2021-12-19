@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
 	if(!is_deployed())
-		to_chat(src, "[span_danger("<B>You must be manifested to attack!")]</B>")
+		to_chat(src, span_warning("You must be manifested to attack!"))
 		return FALSE
 	else
 		return ..()
@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	drop_all_held_items()
 	..()
 	if(summoner)
-		to_chat(summoner, "[span_danger("<B>Your [name] died somehow!")]</B>")
+		to_chat(summoner, span_danger("Your [name] died somehow!"))
 		summoner.dust()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
@@ -261,11 +261,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			return FALSE
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
-			to_chat(summoner, "[span_danger("<B>Your [name] is under attack! You take damage!")]</B>")
-			summoner.visible_message(span_danger("<B>Blood sprays from [summoner] as [src] takes damage!</B>"))
+			to_chat(summoner, span_danger("Your [name] is under attack! You take damage!"))
+			summoner.visible_message(span_danger("Blood sprays from [summoner] as [src] takes damage!"))
 			switch(summoner.stat)
 				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(summoner, "[span_danger("<B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!")]</B>")
+					to_chat(summoner, span_userdanger("Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!"))
 					summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
@@ -281,7 +281,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
-		to_chat(summoner, "[span_danger("<B>Your [src] was blown up!")]</B>")
+		to_chat(summoner, span_userdanger("Your [src] was blown up!"))
 		summoner.gib()
 	ghostize()
 	qdel(src)
@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	return TRUE
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleMode()
-	to_chat(src, "[span_danger("<B>You don't have another mode!")]</B>")
+	to_chat(src, span_warning("You don't have another mode!"))
 
 
 /mob/living/simple_animal/hostile/guardian/proc/ToggleLight()

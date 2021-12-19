@@ -751,7 +751,9 @@
 		new_upgrade.forceMove(loc) //gets lost otherwise
 		return FALSE
 	to_chat(user, span_notice("You apply the upgrade to [src]."))
-	to_chat(src, "----------------\nNew hardware detected...Identified as \"<b>[new_upgrade]</b>\"...Setup complete.\n----------------")
+	to_chat(src, span_binarysay("----------------"))
+	to_chat(src, span_binarysay("New hardware detected...Identified as \"<b>[new_upgrade]</b>\"...Setup complete."))
+	to_chat(src, span_binarysay("----------------"))
 	if(new_upgrade.one_use)
 		logevent("Firmware [new_upgrade] run successfully.")
 		qdel(new_upgrade)

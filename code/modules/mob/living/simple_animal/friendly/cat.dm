@@ -296,12 +296,13 @@
 	if(!B || !B.brainmob || !B.brainmob.mind)
 		return
 	B.brainmob.mind.transfer_to(src)
-	to_chat(src, "<span class='big bold'>You are a cak!</span><b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	to_chat(src, span_boldannounce("You are a cak!"))
+	to_chat(src, span_notice("You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
-	free cake to the station!</b>")
+	free cake to the station!"))
 	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
 	if(new_name)
-		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
+		to_chat(src, span_boldnotice("Your name is now [new_name]!"))
 		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)

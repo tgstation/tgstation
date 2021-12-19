@@ -179,7 +179,7 @@
 		death(FALSE)
 		ghostize(FALSE) // Disallows reentering body and disassociates mind
 	else
-		to_chat(src, "Aborting suicide attempt.")
+		to_chat(src, span_warning("Aborting suicide attempt."))
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = TRUE

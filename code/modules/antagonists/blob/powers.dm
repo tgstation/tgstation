@@ -261,7 +261,7 @@
 			last_attack = world.time + CLICK_CD_RAPID
 
 /mob/camera/blob/proc/rally_spores(turf/T)
-	to_chat(src, "You rally your spores.")
+	to_chat(src, span_notice("You rally your spores."))
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return

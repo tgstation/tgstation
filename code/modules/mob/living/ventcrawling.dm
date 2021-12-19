@@ -60,7 +60,7 @@
 
 /mob/living/simple_animal/slime/handle_ventcrawl(atom/A)
 	if(buckled)
-		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
+		to_chat(src, span_warning("I can't vent crawl while feeding..."))
 		return
 	return ..()
 

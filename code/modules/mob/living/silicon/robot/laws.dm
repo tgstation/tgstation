@@ -14,25 +14,25 @@
 	if(lawupdate)
 		if (connected_ai)
 			if(connected_ai.stat || connected_ai.control_disabled)
-				to_chat(src, "<b>AI signal lost, unable to sync laws.</b>")
+				to_chat(src, span_warning("AI signal lost, unable to sync laws."))
 
 			else
 				lawsync()
-				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
+				to_chat(src, span_notice("Laws synced with AI, be sure to note any changes."))
 		else
-			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
+			to_chat(src, span_warning("No AI selected to sync laws with, disabling lawsync protocol."))
 			lawupdate = FALSE
 
-	to_chat(who, "<b>Obey these laws:</b>")
+	to_chat(who, span_boldnotice("Obey these laws:"))
 	laws.show_laws(who)
 	if (shell) //AI shell
-		to_chat(who, "<b>Remember, you are an AI remotely controlling your shell, other AIs can be ignored.</b>")
+		to_chat(who, span_binarynotice("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))
 	else if (connected_ai)
-		to_chat(who, "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>")
+		to_chat(who, span_binarynotice("Remember, [connected_ai.name] is your master, other AIs can be ignored."))
 	else if (emagged)
-		to_chat(who, "<b>Remember, you are not required to listen to the AI.</b>")
+		to_chat(who, span_binarynotice("Remember, you are not required to listen to the AI."))
 	else
-		to_chat(who, "<b>Remember, you are not bound to any AI, you are not required to listen to them.</b>")
+		to_chat(who, span_binarynotice("Remember, you are not bound to any AI, you are not required to listen to them."))
 
 
 /mob/living/silicon/robot/proc/lawsync()
