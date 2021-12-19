@@ -41,7 +41,7 @@
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)
 		return FALSE
-	var/turf/T = get_turf(src)
+	var/turf/T = associated_loc
 	if(!isopenturf(T))
 		broken_message = span_boldnotice("VENT BLOCKED")
 		set_broken(TRUE)
@@ -82,7 +82,7 @@
 /obj/machinery/atmospherics/miner/proc/update_power()
 	if(!active)
 		active_power_usage = idle_power_usage
-	var/turf/T = get_turf(src)
+	var/turf/T = associated_loc
 	var/datum/gas_mixture/G = T.return_air()
 	var/P = G.return_pressure()
 	switch(power_draw)
@@ -98,7 +98,7 @@
 			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
-	var/turf/T = get_turf(src)
+	var/turf/T = associated_loc
 	if(T && istype(T))
 		var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
 		if(C && C.powernet && (C.powernet.avail > amount))
@@ -130,7 +130,7 @@
 			mine_gas(delta_time)
 
 /obj/machinery/atmospherics/miner/proc/mine_gas(delta_time = 2)
-	var/turf/open/O = get_turf(src)
+	var/turf/open/O = associated_loc
 	if(!isopenturf(O))
 		return FALSE
 	var/datum/gas_mixture/merger = new

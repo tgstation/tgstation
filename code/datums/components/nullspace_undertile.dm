@@ -9,11 +9,15 @@
 	///used so we can keep our maptick improvements when parent is on a turf that shows undertiles but doesnt allow interacting with them.
 	var/mutable_appearance/nullspace_underlay
 
-/datum/component/nullspace_undertile/Initialize(mutable_appearance/tile_overlay, nullspace_when_underfloor_visible = FALSE)
+	///essentially used by t-ray scanners
+	var/invisibility_trait
+
+/datum/component/nullspace_undertile/Initialize(mutable_appearance/tile_overlay, invisibility_trait, nullspace_when_underfloor_visible = FALSE)
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.tile_overlay = tile_overlay
+	src.invisibility_trait = invisibility_trait
 
 	if(nullspace_when_underfloor_visible)
 		nullspace_underlay = new()
@@ -37,6 +41,8 @@
 				real_loc.add_overlay(tile_overlay)
 			if(nullspace_underlay)
 				real_loc.underlays -= nullspace_underlay
+			if(invisibility_trait)
+				ADD_TRAIT(parent, invisibility_trait, TRAIT_GENERIC)
 
 		if(UNDERFLOOR_VISIBLE)
 			if(nullspace_underlay) //if this exists then we nullspace in this case
@@ -49,12 +55,17 @@
 			if(tile_overlay)
 				real_loc.overlays -= tile_overlay
 
+			if(invisibility_trait)
+				REMOVE_TRAIT(parent, invisibility_trait, TRAIT_GENERIC)
+
 		if(UNDERFLOOR_INTERACTABLE)
 			source.loc = real_loc
 			if(tile_overlay)
 				real_loc.overlays -= tile_overlay
 			if(nullspace_underlay)
 				real_loc.underlays -= nullspace_underlay
+			if(invisibility_trait)
+				REMOVE_TRAIT(parent, invisibility_trait, TRAIT_GENERIC)
 
 /datum/component/nullspace_undertile/proc/on_updated_appearance(obj/source, updates)
 	SIGNAL_HANDLER

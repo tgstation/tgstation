@@ -72,15 +72,16 @@ GENE SCANNER
 			if(!HAS_TRAIT(object_to_scan, TRAIT_T_RAY_VISIBLE))
 				continue
 
-			var/mutable_appearance/new_image = new()
+			var/mutable_appearance/new_image = new(object_to_scan)
 			new_image.loc = object_to_scan.associated_loc
 			new_image.alpha = 128
 			new_image.dir = object_to_scan.dir
 			t_ray_images += new_image
 
 	for(var/obj/O in orange(distance, viewer))
-		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-			var/mutable_appearance/new_image = new()
+		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE) && !(O.associated_loc == O.loc))
+			//var/image/new_image = new(loc = O.associated_loc)
+			var/mutable_appearance/new_image = new(O)
 			new_image.loc = get_turf(O)
 			new_image.alpha = 128
 			new_image.dir = O.dir

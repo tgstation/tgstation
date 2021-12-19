@@ -296,7 +296,7 @@
 			user.visible_message(span_notice("[user] unwelds the scrubber."), span_notice("You unweld the scrubber."), span_hear("You hear welding."))
 			welded = FALSE
 		update_appearance()
-		pipe_vision_img = image(src, loc, dir = dir)
+		pipe_vision_img = image(src, associated_loc, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
 		add_fingerprint(user)

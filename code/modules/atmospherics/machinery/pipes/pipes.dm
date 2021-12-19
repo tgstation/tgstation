@@ -35,7 +35,7 @@
 	if(hide)
 		//var/mutable_appearance/t_ray_overlay = mutable_appearance(icon, icon_state, layer, T_RAY_PLANE, 128)
 		//AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, tile_overlay = t_ray_overlay, nullspace_target = TRUE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
-		AddComponent(/datum/component/nullspace_undertile, nullspace_when_underfloor_visible = TRUE)
+		AddComponent(/datum/component/nullspace_undertile, invisibility_trait = TRAIT_T_RAY_VISIBLE, nullspace_when_underfloor_visible = TRUE)
 
 /obj/machinery/atmospherics/pipe/nullify_node(i)
 	var/obj/machinery/atmospherics/old_node = nodes[i]

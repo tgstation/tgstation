@@ -53,7 +53,7 @@
 			dpdir |= DOWN
 
 	//AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
-	AddComponent(/datum/component/nullspace_undertile, nullspace_when_underfloor_visible = FALSE)
+	AddComponent(/datum/component/nullspace_undertile, invisibility_trait = TRAIT_T_RAY_VISIBLE, nullspace_when_underfloor_visible = FALSE)
 
 // pipe is deleted
 // ensure if holder is present, it is expelled
