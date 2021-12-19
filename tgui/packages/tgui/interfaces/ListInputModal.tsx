@@ -66,17 +66,21 @@ export const ListInputModal = (_, context) => {
       document!.getElementById(index.toString())?.focus();
     }
   };
-  // User doesn't have search bar visible & presses a key
+  // User presses a key elsewhere on the page
   const onLetterKey = (key: number) => {
-    const keyChar = String.fromCharCode(key);
-    const foundItem = items.find((item) => {
-      return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
-    });
-    if (foundItem) {
-      setSelected(filteredItems.indexOf(foundItem));
-      document!.getElementById(filteredItems
-        .indexOf(foundItem)
-        .toString())?.focus();
+    if (searchBarVisible) {
+      setSearchQuery(searchQuery + String.fromCharCode(key).toLowerCase());
+    } else {
+      const keyChar = String.fromCharCode(key);
+      const foundItem = items.find((item) => {
+        return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
+      });
+      if (foundItem) {
+        setSelected(filteredItems.indexOf(foundItem));
+        document!.getElementById(filteredItems
+          .indexOf(foundItem)
+          .toString())?.focus();
+      }
     }
   };
   // User types into search bar
@@ -105,7 +109,7 @@ export const ListInputModal = (_, context) => {
             event.preventDefault();
             onArrowKey(keyCode);
           }
-          if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
+          if (keyCode >= 65 && keyCode <= 90) {
             event.preventDefault();
             onLetterKey(keyCode);
           }
@@ -138,7 +142,8 @@ export const ListInputModal = (_, context) => {
                 selected={selected}
               />
             </Stack.Item>
-            {searchBarVisible && <SearchBar onSearch={onSearch} />}
+            {searchBarVisible
+            && <SearchBar onSearch={onSearch} searchQuery={searchQuery} />}
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
               <InputButtons
                 input={selected !== null ? filteredItems[selected] : null}
@@ -200,6 +205,7 @@ const SearchBar = (props) => {
     <Input
       autoFocus
       fluid
+      id="searchBar"
       onInput={(_, value) => {
         onSearch(value);
       }}
