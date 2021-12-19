@@ -28,7 +28,7 @@
 
 /datum/preference_middleware/antags/get_ui_assets()
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/antagonists),
+		get_asset_datum(/datum/asset/spritesheet/preferences/antagonists),
 	)
 
 /datum/preference_middleware/antags/proc/set_antags(list/params, mob/user)
@@ -105,11 +105,10 @@
 	return serialized_antags
 
 /// Sprites generated for the antagonists panel
-/datum/asset/spritesheet/antagonists
+/datum/asset/spritesheet/preferences/antagonists
 	name = "antagonists"
-	early = TRUE
 
-/datum/asset/spritesheet/antagonists/register()
+/datum/asset/spritesheet/preferences/antagonists/create_spritesheets()
 	// Antagonists that don't have a dynamic ruleset, but do have a preference
 	var/static/list/non_ruleset_antagonists = list(
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
@@ -155,8 +154,6 @@
 
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])
-
-	return ..()
 
 /// Serializes an antag name to be used for preferences UI
 /proc/serialize_antag_name(antag_name)

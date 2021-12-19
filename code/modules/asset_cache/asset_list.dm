@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[SSassets.transport.get_asset_url("[name]_[size_id].png")]') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[get_background_url("[name]_[size_id].png")]') no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -175,6 +175,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		out += ".[name][size_id].[sprite_id]{background-position:-[x]px -[y]px;}"
 
 	return out.Join("\n")
+
+/// Returns the URL to put in the background:url of the CSS asset
+/datum/asset/spritesheet/proc/get_background_url(asset)
+	return SSassets.transport.get_asset_url(asset)
 
 /datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)

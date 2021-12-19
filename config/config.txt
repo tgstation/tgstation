@@ -583,3 +583,10 @@ URGENT_AHELP_COOLDOWN 300
 ## Based on config directory, so "motd.txt" points to "config/motd.txt"
 MOTD motd.txt
 #MOTD motd_extra.txt
+
+## By default, preference assets will cache between git revisions.
+## This lowers init times by around ~20 seconds (almost entirely non-sleeping)
+## but will create odd to debug/notice errors in preference assets, such as antagonists.
+## This should be disabled (through `CACHE_PREFERENCE_ASSETS 0`) on development,
+## but enabled on production.
+CACHE_PREFERENCE_ASSETS 0
