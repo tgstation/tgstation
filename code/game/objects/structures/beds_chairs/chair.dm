@@ -94,7 +94,7 @@
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it"))
+		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it."))
 	else
 		user.put_in_active_hand(input_shock_kit)
 		to_chat(user, span_warning("You cannot fit the shock kit onto the [name]!"))

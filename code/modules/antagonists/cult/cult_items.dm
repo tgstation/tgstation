@@ -656,7 +656,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!proximity)
 		return
 	if(!IS_CULTIST(user))
-		to_chat(user, span_notice("That doesn't seem to do anything useful."))
+		to_chat(user, span_warning("That doesn't seem to do anything useful."))
 		return
 
 	if(istype(A, /obj/item))

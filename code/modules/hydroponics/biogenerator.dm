@@ -166,7 +166,7 @@
 	if(machine_stat != NONE)
 		return
 	if(processing)
-		to_chat(user, span_warning("The biogenerator is in the process of working."))
+		to_chat(user, span_warning("The biogenerator is currently processing."))
 		return
 	var/S = 0
 	for(var/obj/item/food/grown/I in contents)

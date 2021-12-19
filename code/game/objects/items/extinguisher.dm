@@ -112,7 +112,7 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	to_chat(user, span_info("The safety is [safety ? "on" : "off"]."))
+	to_chat(user, span_infoplain("The safety is [safety ? "on" : "off"]."))
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)

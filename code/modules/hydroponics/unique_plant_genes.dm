@@ -291,7 +291,7 @@
 	. = ..()
 
 	if(prob(50))
-		to_chat(user, span_userdanger("[our_plant] slips out of your hand!"))
+		to_chat(user, span_danger("[our_plant] slips out of your hand!"))
 		INVOKE_ASYNC(our_plant, /obj/item/.proc/attack_self, user)
 
 /// Traits for plants that can be activated to turn into a mob.
@@ -357,7 +357,7 @@
 		return
 
 	if(dangerous && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You decide not to awaken [our_plant]. It may be very dangerous!"))
+		to_chat(user, span_warning("You decide not to awaken [our_plant]. It may be very dangerous!"))
 		return
 
 	to_chat(user, span_notice("You begin to awaken [our_plant]..."))
@@ -374,7 +374,7 @@
 	SIGNAL_HANDLER
 
 	if(!awakening && !isspaceturf(user.loc) && prob(25))
-		to_chat(user, span_userdanger("[our_plant] begins to growl and shake!"))
+		to_chat(user, span_danger("[our_plant] begins to growl and shake!"))
 		begin_awaken(our_plant, 1 SECONDS)
 
 /*

@@ -256,7 +256,7 @@
 	if(!forced)
 		var/datum/antagonist/cult/C = user?.mind?.has_antag_datum(/datum/antagonist/cult,TRUE)
 		if(C?.cult_team.is_sacrifice_target(victim.mind))
-			to_chat(user, span_cult("<b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\""))
+			to_chat(user, span_cultbold("This soul is mine. <span class='cultlarge'>SACRIFICE THEM!</span>"))
 			return FALSE
 	if(contents.len)
 		return FALSE
@@ -410,7 +410,7 @@
 		else if(role_check(user))
 			to_chat(soulstone_spirit, span_userdanger("Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs."))
 		if(message_user)
-			to_chat(user, span_cult("Capture successful! [victim.real_name]'s soul has been ripped from [victim.p_their()] body and stored within [src]."))
+			to_chat(user, span_cultbold("Capture successful! [victim.real_name]'s soul has been ripped from [victim.p_their()] body and stored within [src]."))
 	victim.dust()
 
 

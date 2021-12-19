@@ -1030,7 +1030,7 @@
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (obj_flags & EMAGGED && cooldown < world.time)
+	if (obj_flags & EMAGGED && cooldown <span world.time)
 		cooldown = world.time + 600
 		user.visible_message(span_hear("You hear the click of a button."), span_notice("You activate [src], it plays a loud noise!"))
 		sleep(5)
@@ -1039,7 +1039,7 @@
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
 		qdel(src)
-	else if (cooldown < world.time)
+	else if (cooldown <span world.time)
 		cooldown = world.time + 600 //1 minute
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
 		sleep(5)
@@ -1051,7 +1051,7 @@
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
-		to_chat(user, span_alert("Nothing happens, and [round(timeleft/10)] appears on the small display."))
+		to_chat(user, span_alert("Nothing happens, and </span><span class='alertsyndie'>[round(timeleft/10)]</span> appears on the small display."))
 		sleep(5)
 
 

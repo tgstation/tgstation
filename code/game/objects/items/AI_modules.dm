@@ -35,7 +35,7 @@ AI MODULES
 
 /obj/item/ai_module/proc/show_laws(mob/user as mob)
 	if(laws.len)
-		to_chat(user, span_boldnotice("Programmed Law[(laws.len > 1) ? "s" : ""]"))
+		to_chat(user, span_boldnotice("Programmed Law[(laws.len > 1) ? "s" : ""]:"))
 		for(var/law in laws)
 			to_chat(user, span_notice("\"[law]\""))
 

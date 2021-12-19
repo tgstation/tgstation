@@ -21,9 +21,9 @@
 			charge_counter = charge_max
 			return
 		log_directed_talk(user, M, msg, LOG_SAY, "[name]")
-		to_chat(user, span_boldnotice("You transmit to [M]:</span> <span class='[notice]'>[msg]"))
+		to_chat(user, "<span class='[boldnotice]'>You transmit to [M]:</span> <span class='[notice]'>[msg]</span>")
 		if(!M.anti_magic_check(magic_check, holy_check, tinfoil_check, 0)) //hear no evil
-			to_chat(M, span_boldnotice("You hear something behind you talking...</span> <span class='[notice]'>[msg]"))
+			to_chat(M, "<span class='[boldnotice]'>You hear something behind you talking...</span> <span class='[notice]'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))
 				continue

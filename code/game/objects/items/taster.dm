@@ -19,4 +19,4 @@
 		to_chat(user, span_notice("[src] cannot taste [O], since [O.p_they()] [O.p_are()] empty."))
 	else
 		var/message = O.reagents.generate_taste_message(user, taste_sensitivity)
-		to_chat(user, span_notice("[src] tastes [message] in [O]."))
+		to_chat(user, span_notice("[src] tastes <span class='italics'>[message]</span> in [O]."))

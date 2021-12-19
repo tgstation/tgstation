@@ -120,7 +120,7 @@
 	if(LAZYLEN(cont.reagents.reagent_list) == null)
 		return
 	var/list/out_message = list()
-	to_chat(user, span_notice("The chemistry meter beeps and displays:"))
+	to_chat(user, span_boldnotice("The chemistry meter beeps and displays:"))
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
