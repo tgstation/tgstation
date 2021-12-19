@@ -553,10 +553,10 @@ LINEN BINS
 		if(flags_1 & NODECONSTRUCT_1)
 			return
 		if(amount)
-			to_chat(user, "<span clas='warn'>The [src] must be empty first!</span>")
+			to_chat(user, "<span class='warn'>The [src] must be empty first!</span>")
 			return
 		if(I.use_tool(src, user, 5, volume=50))
-			to_chat(user, "<span clas='notice'>You disassemble the [src].</span>")
+			to_chat(user, "<span class='notice'>You disassemble the [src].</span>")
 			new /obj/item/stack/rods(loc, 2)
 			qdel(src)
 

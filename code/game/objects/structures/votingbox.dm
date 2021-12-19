@@ -154,7 +154,7 @@
 	for(var/obj/item/paper/P in contents)
 		options += P
 	if(!length(options))
-		to_chat(user,"<span class='warning>[src] is empty!</span>")
+		to_chat(user,"<span class='warning'>[src] is empty!</span>")
 	else
 		var/obj/item/paper/P = pick(options)
 		user.put_in_hands(P)

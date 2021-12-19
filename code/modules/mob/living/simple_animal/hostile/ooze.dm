@@ -213,7 +213,7 @@
 	if(vored_mob)
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
-	owner.visible_message("<span class='warning>[ooze] starts attempting to devour [target]!</span>", span_notice("You start attempting to devour [target]."))
+	owner.visible_message("<span class='warning'>[ooze] starts attempting to devour [target]!</span>", span_notice("You start attempting to devour [target]."))
 	if(!do_after(ooze, 15, target = ooze.pulling))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
@@ -229,7 +229,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message("<span class='warning>[src] devours [target]!</span>", span_notice("You devour [target]."))
+	owner.visible_message("<span class='warning'>[src] devours [target]!</span>", span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
 
 ///Stop consuming the mob; dump them on the floor
@@ -237,7 +237,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-	owner.visible_message("<span class='warning>[owner] pukes out [vored_mob]!</span>", span_notice("You puke out [vored_mob]."))
+	owner.visible_message("<span class='warning'>[owner] pukes out [vored_mob]!</span>", span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_PARENT_PREQDELETED)
 	vored_mob = null
 
@@ -473,7 +473,7 @@
 	inhabitant.forceMove(get_turf(src))
 	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
 	inhabitant.Paralyze(10)
-	inhabitant.visible_message("<span class='warning>[inhabitant] falls out of [src]!</span>", span_notice("You fall out of [src]."))
+	inhabitant.visible_message("<span class='warning'>[inhabitant] falls out of [src]!</span>", span_notice("You fall out of [src]."))
 	if(destroy_after)
 		qdel(src)
 

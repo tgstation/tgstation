@@ -578,4 +578,4 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	<i>Choose a room, and enter the sphere<br>
 	Lay your head to rest, it soon becomes clear<br>
 	There's always more room around every bend<br>
-	Not all that's countable has an end...<i>"}
+	Not all that's countable has an end...</i>"}

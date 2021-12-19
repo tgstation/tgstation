@@ -84,7 +84,7 @@
 	if(chassis.is_currently_ejecting)
 		return FALSE
 	if(chassis.equipment_disabled)
-		to_chat(chassis.occupants, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
+		to_chat(chassis.occupants, "<span class='warn'>Error -- Equipment control unit is unresponsive.</span>")
 		return FALSE
 	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT))
 		return FALSE

@@ -46,7 +46,7 @@
 	if(!chambered)
 		return
 	if(!drawn)
-		to_chat(user, "<span clasas='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
+		to_chat(user, "<span class='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
 		drop_arrow()
 		update_appearance()
 		return

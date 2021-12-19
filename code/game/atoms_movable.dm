@@ -261,9 +261,9 @@
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			if(rider)
-				to_chat(rider, "<span class='notice'>[src] is is not capable of flight.<span>")
+				to_chat(rider, "<span class='notice'>[src] is is not capable of flight.</span>")
 			else
-				to_chat(src, "<span class='notice'>You are not Superman.<span>")
+				to_chat(src, "<span class='notice'>You are not Superman.</span>")
 		return FALSE
 	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
