@@ -438,18 +438,18 @@
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
-		for(var/datum/mind/headrevs as anything in ex_headrevs)
+		for(var/datum/mind/headrev_mind as anything in ex_headrevs)
 			if(charter_given)
 				break
-			if(!headrevs.current || headrevs.current.stat != CONSCIOUS)
+			if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
 				continue
 			charter_given = TRUE
 			podspawn(list(
-				"target" = get_turf(headrevs.current),
+				"target" = get_turf(headrev_mind.current),
 				"style" = STYLE_SYNDICATE,
 				"spawn" = /obj/item/station_charter/revolution,
 			))
-			to_chat(headrevs.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+			to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 		for (var/mob/living/player as anything in GLOB.player_list)
