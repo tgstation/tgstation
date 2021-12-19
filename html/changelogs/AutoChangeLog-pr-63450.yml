@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "TramStation's tram console is no longer shifted over to the right"

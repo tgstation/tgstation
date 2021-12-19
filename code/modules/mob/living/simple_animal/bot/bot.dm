@@ -882,6 +882,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
+	data["has_access"] = check_access(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["pai"] = list()
 	data["settings"] = list()

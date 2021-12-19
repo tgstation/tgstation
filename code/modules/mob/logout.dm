@@ -15,4 +15,6 @@
 			var/datum/callback/CB = foo
 			CB.Invoke()
 
+		clear_important_client_contents(client)
+
 	return TRUE

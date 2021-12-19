@@ -227,6 +227,7 @@ Doesn't work on other aliens/AI.*/
 	user.visible_message(span_danger("[user] spits neurotoxin!"), span_alertalien("You spit neurotoxin."))
 	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(user.loc)
 	neurotoxin.preparePixelProjectile(target, user, modifiers)
+	neurotoxin.firer = user
 	neurotoxin.fire()
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)

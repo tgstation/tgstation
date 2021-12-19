@@ -377,7 +377,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return (mover.movement_type & PHASING)
 	return TRUE
 
-
 /turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	//melting

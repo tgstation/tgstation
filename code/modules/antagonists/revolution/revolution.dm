@@ -431,11 +431,9 @@
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/_rev_head_mind in ex_revs)
-			var/datum/mind/rev_head_mind = _rev_head_mind
-			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
-				rev_head_body.makeUncloneable()
+		for (var/datum/mind/rev_head as anything in ex_revs)
+			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			rev_head.current.med_hud_set_status()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
@@ -454,31 +452,26 @@
 			to_chat(headrevs.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
+		for (var/mob/living/player as anything in GLOB.player_list)
+			var/datum/mind/player_mind = player.mind
 
-		for (var/_player in GLOB.player_list)
-			var/mob/player = _player
-			var/datum/mind/mind = player.mind
-
-			if (isnull(mind))
+			if (isnull(player_mind))
 				continue
 
-			if (!(mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
+			if (!(player_mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
 				continue
 
-			if (mind in ex_revs + ex_headrevs)
+			if (player_mind in ex_revs + ex_headrevs)
 				continue
 
-			var/mob/living/carbon/target_body = mind.current
+			player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
-			mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
-
-			if (!istype(target_body))
+			if (!istype(player))
 				continue
 
-			if (target_body.stat == DEAD)
-				target_body.makeUncloneable()
-			else
-				mind.announce_objectives()
+			if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+				ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+				player.med_hud_set_status()
 
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
