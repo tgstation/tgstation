@@ -176,7 +176,7 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(!our_seed.get_gene(/datum/plant_gene/trait/sticky) && prob(66))
-		to_chat(user, span_userdanger("[our_plant]'s thorns nearly prick your hand. Best be careful."))
+		to_chat(user, span_danger("[our_plant]'s thorns nearly prick your hand. Best be careful."))
 		return
 
 	to_chat(user, span_danger("[our_plant]'s thorns prick your hand. Ouch."))
