@@ -686,7 +686,7 @@
 	camera_light_on = !camera_light_on
 
 	if (!camera_light_on)
-		to_chat(src, span_notice("Camera lights deactivated.")
+		to_chat(src, span_notice("Camera lights deactivated."))
 
 		for (var/obj/machinery/camera/C in lit_cameras)
 			C.set_light(0)
@@ -696,7 +696,7 @@
 
 	light_cameras()
 
-	to_chat(src, span_notice("Camera lights activated.")
+	to_chat(src, span_notice("Camera lights activated."))
 
 //AI_CAMERA_LUMINOSITY
 
@@ -728,7 +728,7 @@
 	if(incapacitated())
 		return
 
-	to_chat(src, span_notice("Accessing Subspace Transceiver control...")
+	to_chat(src, span_notice("Accessing Subspace Transceiver control..."))
 	if (radio)
 		radio.interact(src)
 
@@ -750,7 +750,7 @@
 		return
 	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		if(!can_be_carded)
-			to_chat(user, span_boldwarning("Transfer failed."))
+			to_chat(user, span_warning("Transfer failed."))
 			return
 		disconnect_shell() //If the AI is controlling a borg, force the player back to core!
 		if(!mind)
@@ -841,8 +841,8 @@
 	module_picker.ui_interact(owner)
 
 /mob/living/silicon/ai/proc/add_malf_picker()
-	to_chat(src, span_info("In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
-	to_chat(src, span_info("You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
+	to_chat(src, span_info("In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."))
+	to_chat(src, span_info("You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."))
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
 	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade

@@ -13,7 +13,7 @@
 		who = world
 	else
 		who = src
-	to_chat(who, "<b>Obey these laws:</b>")
+	to_chat(who, span_boldnotice("Obey these laws:"))
 
 	src.laws_sanity_check()
 	src.laws.show_laws(who)

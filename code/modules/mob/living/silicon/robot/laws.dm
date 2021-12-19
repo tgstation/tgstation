@@ -23,7 +23,7 @@
 			to_chat(src, span_warning("No AI selected to sync laws with, disabling lawsync protocol."))
 			lawupdate = FALSE
 
-	to_chat(who, span_boldnotice("Obey these laws:"))
+	to_chat(who, span_binarynotice("Obey these laws:"))
 	laws.show_laws(who)
 	if (shell) //AI shell
 		to_chat(who, span_binarynotice("Remember, you are an AI remotely controlling your shell, other AIs can be ignored."))

@@ -411,7 +411,7 @@
 /datum/ai_laws/proc/show_laws(who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
 	for(var/law in printable_laws)
-		to_chat(who,law)
+		to_chat(who, span_binarysay("[law]"))
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
