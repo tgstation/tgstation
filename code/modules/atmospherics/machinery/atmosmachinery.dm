@@ -7,64 +7,7 @@
 // Pipes -> Pipelines
 // Pipelines + Other Objects -> Pipe network
 
-#define VENT_SOUND_DELAY 30
 
-/obj/effect/ventcrawl_holder
-	name = "the pipe"//should be set to the name of the pipe we should be in
-	density = FALSE
-	anchored = FALSE
-
-	///what machine we're currently in
-	var/obj/machinery/atmospherics/current_node
-
-/obj/effect/ventcrawl_holder/proc/setup_on_node(mob/living/package, obj/machinery/atmospherics/starting_node)
-	if(!starting_node?.associated_loc || !package)
-		return FALSE
-
-	package.client?.eye = src
-	package.forceMove(src)
-	RegisterSignal(package, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PREQDELETED), .proc/check_package)
-
-/obj/effect/ventcrawl_holder/proc/check_package(mob/living/package)
-	SIGNAL_HANDLER
-
-	if(QDELETED(package) || package.loc != src)
-		qdel(src)
-
-// Handles mob movement inside a pipenet
-/obj/effect/ventcrawl_holder/relaymove(mob/living/user, direction)//TODOKYLER: put this somewhere sane
-	if(!direction || !(direction in GLOB.cardinals_multiz)) //cant go this way.
-		return
-	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
-		return
-
-	var/obj/machinery/atmospherics/target_node = current_node.find_connecting(direction, user.ventcrawl_layer)
-
-	if(!target_node)
-		return
-
-	var/turf/target_move = target_node.associated_loc
-
-	if(!target_move)
-		return
-
-	if(target_node.vent_movement & VENTCRAWL_ALLOWED)
-		abstract_move(target_move)
-		var/list/pipenetdiff = current_node.return_pipenets() ^ target_node.return_pipenets()
-
-		if(pipenetdiff.len)
-			user.update_pipe_vision()
-
-		current_node = target_node
-
-		if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
-			user.last_played_vent = world.time
-			playsound(loc, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
-
-	//Would be great if this could be implemented when someone alt-clicks the image.
-	if (target_node.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
-		user.handle_ventcrawl(target_node)
-		//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 #define PIPE_VISIBLE_LEVEL 2
 #define PIPE_HIDDEN_LEVEL 1
@@ -165,6 +108,16 @@
 	LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	return ..()
+
+/obj/machinery/atmospherics/Moved(atom/old_loc, Dir)
+	. = ..()
+	if(old_loc)
+		var/turf/old_real_loc = get_turf(old_loc)
+		LAZYREMOVE(old_real_loc.nullspaced_contents, src)
+	if(loc)
+		var/turf/real_loc = get_turf(src)
+		associated_loc = real_loc
+		LAZYADD(real_loc.nullspaced_contents, src)
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
@@ -578,34 +531,6 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 	return ..()
-
-//#define VENT_SOUND_DELAY 30
-
-// Handles mob movement inside a pipenet
-/obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-
-	if(!direction || !(direction in GLOB.cardinals_multiz)) //cant go this way.
-		return
-	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
-		return
-	var/obj/machinery/atmospherics/target_move = find_connecting(direction, user.ventcrawl_layer)
-
-	if(!target_move)
-		return
-	if(target_move.vent_movement & VENTCRAWL_ALLOWED)
-		user.forceMove(target_move)
-		user.client.eye = target_move  //Byond only updates the eye every tick, This smooths out the movement
-		var/list/pipenetdiff = return_pipenets() ^ target_move.return_pipenets()
-		if(pipenetdiff.len)
-			user.update_pipe_vision()
-		if(world.time - user.last_played_vent > VENT_SOUND_DELAY)
-			user.last_played_vent = world.time
-			playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
-
-	//Would be great if this could be implemented when someone alt-clicks the image.
-	if (target_move.vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
-		user.handle_ventcrawl(target_move)
-		//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
