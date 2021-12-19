@@ -62,7 +62,7 @@
 			var/datum/species/golem/G = H.dna.species
 			G.owner = owner
 		H.set_cloned_appearance()
-	if(has_owner)
+	if(has_owner && new_spawn.mind)
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/servant_golem))
 	else
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
