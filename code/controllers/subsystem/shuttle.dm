@@ -920,7 +920,7 @@ SUBSYSTEM_DEF(shuttle)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
-					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 				shuttle_loading = FALSE
 
@@ -950,7 +950,7 @@ SUBSYSTEM_DEF(shuttle)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
 					message_admins("[key_name_admin(usr)] load/replaced [mdp] with the shuttle manipulator.")
-					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.")
+					log_admin("[key_name(usr)] load/replaced [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 				shuttle_loading = FALSE
 				if(emergency == mdp) //you just changed the emergency shuttle, there are events in game + captains that can change your snowflake choice.
