@@ -40,7 +40,7 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
 		damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
-		to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
+		to_chat(src, span_notice("You switch to combat mode."))
 		toggle = FALSE
 	else
 		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
@@ -51,7 +51,7 @@
 		melee_damage_upper = 2
 		speed = 1
 		damage_coeff = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, CLONE = 0.05, STAMINA = 0, OXY = 0.05) //damage? what's damage?
-		to_chat(src, "[span_danger("<B>You switch to protection mode.")]</B>")
+		to_chat(src, span_notice("You switch to protection mode."))
 		toggle = TRUE
 
 /mob/living/simple_animal/hostile/guardian/protector/snapback() //snap to what? snap to the guardian!

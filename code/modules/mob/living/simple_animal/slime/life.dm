@@ -186,7 +186,7 @@
 					if(DT_PROB(30, delta_time))
 						add_friendship(last_to_hurt, 1)
 		else
-			to_chat(src, "<i>This subject does not have a strong enough life energy anymore...</i>")
+			to_chat(src, span_warning("This subject does not have a strong enough life energy anymore..."))
 
 		if(M.client && ishuman(M))
 			if(DT_PROB(61, delta_time))

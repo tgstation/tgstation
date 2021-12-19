@@ -76,31 +76,31 @@
 	if(isslime(M))
 		if(silent)
 			return FALSE
-		to_chat(src, span_warning("<i>I can't latch onto another slime...</i>"))
+		to_chat(src, span_warning("I can't latch onto another slime..."))
 		return FALSE
 
 	if(docile)
 		if(silent)
 			return FALSE
-		to_chat(src, span_notice("<i>I'm not hungry anymore...</i>"))
+		to_chat(src, span_warning("I'm not hungry anymore..."))
 		return FALSE
 
 	if(stat)
 		if(silent)
 			return FALSE
-		to_chat(src, span_warning("<i>I must be conscious to do this...</i>"))
+		to_chat(src, span_warning("I must be conscious to do this..."))
 		return FALSE
 
 	if(M.stat == DEAD)
 		if(silent)
 			return FALSE
-		to_chat(src, span_warning("<i>This subject does not have a strong enough life energy...</i>"))
+		to_chat(src, span_warning("This subject does not have a strong enough life energy..."))
 		return FALSE
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
 		if(silent)
 			return FALSE
-		to_chat(src, span_warning("<i>Another slime is already feeding on this subject...</i>"))
+		to_chat(src, span_warning("Another slime is already feeding on this subject..."))
 		return FALSE
 	return TRUE
 
@@ -111,7 +111,7 @@
 		M.visible_message(span_danger("[name] latches onto [M]!"), \
 						span_userdanger("[name] latches onto [M]!"))
 	else
-		to_chat(src, span_warning("<i>I have failed to latch onto the subject!</i>"))
+		to_chat(src, span_warning("I have failed to latch onto the subject!"))
 
 /mob/living/simple_animal/slime/proc/Feedstop(silent = FALSE, living=1)
 	if(buckled)
@@ -122,7 +122,7 @@
 			"I do not feel nourished", "This subject is not food")]!"))
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
-							span_notice("<i>I stopped feeding.</i>"))
+							span_notice("I stopped feeding."))
 		layer = initial(layer)
 		buckled.unbuckle_mob(src,force=TRUE)
 
@@ -131,7 +131,7 @@
 	set desc = "This will let you evolve from baby to adult slime."
 
 	if(stat)
-		to_chat(src, "<i>I must be conscious to do this...</i>")
+		to_chat(src, span_warning("I must be conscious to do this..."))
 		return
 	if(!is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
@@ -145,9 +145,9 @@
 			regenerate_icons()
 			update_name()
 		else
-			to_chat(src, "<i>I am not ready to evolve yet...</i>")
+			to_chat(src, span_warning("I am not ready to evolve yet..."))
 	else
-		to_chat(src, "<i>I have already evolved...</i>")
+		to_chat(src, span_warning("I have already evolved..."))
 
 /datum/action/innate/slime/evolve
 	name = "Evolve"
@@ -163,13 +163,13 @@
 	set desc = "This will make you split into four Slimes."
 
 	if(stat)
-		to_chat(src, "<i>I must be conscious to do this...</i>")
+		to_chat(src, span_warning("I must be conscious to do this..."))
 		return
 
 	if(is_adult)
 		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 			if(stat)
-				to_chat(src, "<i>I must be conscious to do this...</i>")
+				to_chat(src, span_warning("I must be conscious to do this..."))
 				return
 
 			var/list/babies = list()
@@ -205,9 +205,9 @@
 				new_slime.key = src.key
 			qdel(src)
 		else
-			to_chat(src, "<i>I am not ready to reproduce yet...</i>")
+			to_chat(src, span_warning("I am not ready to reproduce yet..."))
 	else
-		to_chat(src, "<i>I am not old enough to reproduce yet...</i>")
+		to_chat(src, span_warning("I am not old enough to reproduce yet..."))
 
 /datum/action/innate/slime/reproduce
 	name = "Reproduce"

@@ -18,7 +18,7 @@
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
 	range = 13
-	playstyle_string = "<span class='holoparasite'>As a <b>ranged</b> type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
+	playstyle_string = "<span class='holoparasite'>As a <b>ranged type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
@@ -39,7 +39,7 @@
 			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = initial(range)
-			to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
+			to_chat(src, span_warning("You switch to combat mode."))
 			toggle = FALSE
 		else
 			ranged = 0
@@ -49,10 +49,10 @@
 			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255
-			to_chat(src, "[span_danger("<B>You switch to scout mode.")]</B>")
+			to_chat(src, span_warning("You switch to scout mode."))
 			toggle = TRUE
 	else
-		to_chat(src, "[span_danger("<B>You have to be recalled to toggle modes!")]</B>")
+		to_chat(src, span_warning("You have to be recalled to toggle modes!"))
 
 /mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
 	. = ..()
@@ -90,9 +90,9 @@
 		S.spawner = src
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 		snares |= S
-		to_chat(src, "[span_danger("<B>Surveillance snare deployed!")]</B>")
+		to_chat(src, span_boldnotice("Surveillance snare deployed!"))
 	else
-		to_chat(src, "[span_danger("<B>You have too many snares deployed. Remove some first.")]</B>")
+		to_chat(src, span_warning("You have too many snares deployed. Remove some first."))
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/DisarmSnare()
 	set name = "Remove Surveillance Snare"
@@ -102,7 +102,7 @@
 	if(picked_snare)
 		snares -= picked_snare
 		qdel(picked_snare)
-		to_chat(src, "[span_danger("<B>Snare disarmed.")]</B>")
+		to_chat(src, span_notice("Snare disarmed."))
 
 /obj/effect/snare
 	name = "snare"
@@ -120,10 +120,10 @@
 /obj/effect/snare/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
-		to_chat(spawner.summoner, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
+		to_chat(spawner.summoner, span_danger("[AM] has crossed surveillance snare, [name]."))
 		var/list/guardians = spawner.summoner.hasparasites()
 		for(var/para in guardians)
-			to_chat(para, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
+			to_chat(para, span_danger("[AM] has crossed surveillance snare, [name]."))
 
 /obj/effect/snare/singularity_act()
 	return

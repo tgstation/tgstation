@@ -7,7 +7,7 @@
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
+	playstyle_string = "<span class='holoparasite'>As a support type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the CMO, a potent force of life... and death.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught a support carp. It's a kleptocarp!</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Support modules active. Holoparasite swarm online.</span>"
@@ -51,7 +51,7 @@
 			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
 			melee_damage_upper = 15
-			to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
+			to_chat(src, span_notice("You switch to combat mode."))
 			toggle = FALSE
 		else
 			set_combat_mode(FALSE)
@@ -59,10 +59,10 @@
 			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0
 			melee_damage_upper = 0
-			to_chat(src, "[span_danger("<B>You switch to healing mode.")]</B>")
+			to_chat(src, span_notice("You switch to healing mode."))
 			toggle = TRUE
 	else
-		to_chat(src, "[span_danger("<B>You have to be recalled to toggle modes!")]</B>")
+		to_chat(src, span_warning("You have to be recalled to toggle modes!"))
 
 
 /mob/living/simple_animal/hostile/guardian/healer/verb/Beacon()
@@ -71,7 +71,7 @@
 	set desc = "Mark a floor as your beacon point, allowing you to warp targets to it. Your beacon will not work at extreme distances."
 
 	if(beacon_cooldown >= world.time)
-		to_chat(src, "[span_danger("<B>Your power is on cooldown. You must wait five minutes between placing beacons.")]</B>")
+		to_chat(src, span_warning("Your power is on cooldown. You must wait five minutes between placing beacons."))
 		return
 
 	var/turf/beacon_loc = get_turf(src.loc)
@@ -84,7 +84,7 @@
 
 	beacon = new(beacon_loc, src)
 
-	to_chat(src, "[span_danger("<B>Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click.")]</B>")
+	to_chat(src, span_boldnotice("Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click."))
 
 	beacon_cooldown = world.time + 3000
 
@@ -111,30 +111,30 @@
 	if(!istype(A))
 		return
 	if(src.loc == summoner)
-		to_chat(src, "[span_danger("<B>You must be manifested to warp a target!")]</B>")
+		to_chat(src, span_warning("You must be manifested to warp a target!"))
 		return
 	if(!beacon)
-		to_chat(src, "[span_danger("<B>You need a beacon placed to warp things!")]</B>")
+		to_chat(src, span_warning("You need a beacon placed to warp things!"))
 		return
 	if(!Adjacent(A))
-		to_chat(src, "[span_danger("<B>You must be adjacent to your target!")]</B>")
+		to_chat(src, span_warning("You must be adjacent to your target!"))
 		return
 	if(A.anchored)
-		to_chat(src, "[span_danger("<B>Your target cannot be anchored!")]</B>")
+		to_chat(src, span_warning("Your target cannot be anchored!"))
 		return
 
 	var/turf/T = get_turf(A)
 	if(beacon.z != T.z)
-		to_chat(src, "[span_danger("<B>The beacon is too far away to warp to!")]</B>")
+		to_chat(src, span_warning("The beacon is too far away to warp to!"))
 		return
 
-	to_chat(src, "[span_danger("<B>You begin to warp [A].")]</B>")
+	to_chat(src, span_notice("You begin to warp [A]."))
 	A.visible_message(span_danger("[A] starts to glow faintly!"), \
 	span_userdanger("You start to faintly glow, and you feel strangely weightless!"))
 	do_attack_animation(A)
 
 	if(!do_mob(src, A, 60)) //now start the channel
-		to_chat(src, "[span_danger("<B>You need to hold still!")]</B>")
+		to_chat(src, span_warning("You need to hold still!"))
 		return
 
 	new /obj/effect/temp_visual/guardian/phase/out(T)

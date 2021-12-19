@@ -20,7 +20,7 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
 	if(isliving(target) && target != src && target != summoner)
-		to_chat(src, "[span_danger("<B>Your punch has applied heavy gravity to [target]!")]</B>")
+		to_chat(src, span_danger("Your punch has applied heavy gravity to [target]!"))
 		add_gravity(target, 5)
 		to_chat(target, span_userdanger("Everything feels really heavy!"))
 
@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Recall(forced)
 	. = ..()
-	to_chat(src, "[span_danger("<B>You have released your gravitokinetic powers!")]</B>")
+	to_chat(src, span_danger("You have released your gravitokinetic powers!"))
 	for(var/i in gravito_targets)
 		remove_gravity(i)
 
