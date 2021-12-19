@@ -1745,22 +1745,22 @@
 		appearance.color = color
 
 /obj/item/mod/module/insignia/commander
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#4f94ad"
 
 /obj/item/mod/module/insignia/security
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#820a16"
 
 /obj/item/mod/module/insignia/engineer
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#c68200"
 
 /obj/item/mod/module/insignia/medic
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#ebebf5"
 
 /obj/item/mod/module/insignia/janitor
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#901f9f"
 
 /obj/item/mod/module/insignia/clown
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#cc0099"
 
 /obj/item/mod/module/insignia/chaplain
-	color = COLOR_ASSEMBLY_BEIGE
+	color = "#411f9f"
