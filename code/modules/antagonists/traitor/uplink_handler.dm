@@ -137,8 +137,6 @@
 	potential_objectives -= to_remove
 	active_objectives -= to_remove
 	completed_objectives += to_remove
-	for(var/datum/traitor_objective/objective as anything in active_objectives)
-		objective.update_progression_cost()
 	update_objectives()
 	generate_objectives()
 
