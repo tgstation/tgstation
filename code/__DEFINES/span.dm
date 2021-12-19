@@ -31,7 +31,7 @@
 #define span_comradio(str) ("<span class='comradio'>" + str + "</span>")
 #define span_cult(str) ("<span class='cult'>" + str + "</span>")
 #define span_cultbold(str) ("<span class='cultbold'>" + str + "</span>")
-#define span_cultboldtalic(str) ("<span class='cultboldtalic'>" + str + "</span>")
+#define span_cultbolditalic(str) ("<span class='cultbolditalic'>" + str + "</span>")
 #define span_cultitalic(str) ("<span class='cultitalic'>" + str + "</span>")
 #define span_cultlarge(str) ("<span class='cultlarge'>" + str + "</span>")
 #define span_danger(str) ("<span class='danger'>" + str + "</span>")

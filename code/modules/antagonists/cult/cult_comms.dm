@@ -70,7 +70,7 @@
 	var/my_message
 	if(!message)
 		return
-	my_message = span_cultboldtalic("The [user.name]: [message]")
+	my_message = span_cultbolditalic("The [user.name]: [message]")
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		if(IS_CULTIST(M))
