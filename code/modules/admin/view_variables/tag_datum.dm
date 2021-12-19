@@ -1,5 +1,5 @@
 /client/proc/tag_datum(datum/target_datum)
-	if(!holder || !target_datum)
+	if(!holder || QDELETED(target_datum))
 		return
 	holder.add_tagged_datum(target_datum)
 
