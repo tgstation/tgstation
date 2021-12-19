@@ -25,13 +25,13 @@
 /datum/brain_trauma/hypnosis/on_gain()
 	message_admins("[ADMIN_LOOKUPFLW(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
 	log_game("[key_name(owner)] was hypnotized with the phrase '[hypnotic_phrase]'.")
-	to_chat(owner, span_hypnophrase("[hypnotic_phrase]"))
+	to_chat(owner, span_hypnophraselarge("[hypnotic_phrase]"))
 	to_chat(owner, span_notice("[pick("You feel your thoughts focusing on this phrase... you can't seem to get it out of your head.",\
 												"Your head hurts, but this is all you can think of. It must be vitally important.",\
 												"You feel a part of your mind repeating this over and over. You need to follow these words.",\
 												"Something about this sounds... right, for some reason. You feel like you should follow these words.",\
 												"These words keep echoing in your mind. You find yourself completely fascinated by them.")]"))
-	to_chat(owner, span_danger("You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
+	to_chat(owner, span_boldwarning("You've been hypnotized by this sentence. You must follow these words. If it isn't a clear order, you can freely interpret how to do so,\
 										as long as you act like the words are your highest priority."))
 	var/atom/movable/screen/alert/hypnosis/hypno_alert = owner.throw_alert("hypnosis", /atom/movable/screen/alert/hypnosis)
 	owner.mind.add_antag_datum(/datum/antagonist/hypnotized)

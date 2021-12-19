@@ -39,10 +39,10 @@
 		var/datum/atom_hud/S = GLOB.huds[AI.sec_hud]
 		S.unhide_single_atomhud_from(AI,target)
 
-/datum/element/digitalcamo/proc/on_examine(datum/source, mob/M)
+/datum/element/digitalcamo/proc/on_examine(datum/source, mob/viewer)
 	SIGNAL_HANDLER
 
-	to_chat(M, "<span class = 'warning'>[source.p_their()] skin seems to be shifting and morphing like is moving around below it.</span>")
+	to_chat(viewer, span_warning("[source.p_their()] skin seems to be shifting and morphing, like something is moving below it."))
 
 /datum/element/digitalcamo/proc/can_track(datum/source)
 	SIGNAL_HANDLER

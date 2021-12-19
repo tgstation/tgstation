@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(mind)
 		mind.name = "[real_name]"
 	if(!summoner)
-		to_chat(src, "<span class='holoparasite bold'>For some reason, somehow, you have no summoner. Please report this bug immediately.</span>")
+		to_chat(src, span_holoparasitebold("For some reason, somehow, you have no summoner. Please report this bug immediately."))
 		return
 	to_chat(src, span_holoparasite("You are a <b>[real_name]</b>, bound to serve [summoner.real_name]."))
 	to_chat(src, span_holoparasite("You are capable of manifesting or recalling to your master with the buttons on your HUD. You will also find a button to communicate with [summoner.p_them()] privately there."))

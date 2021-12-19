@@ -471,8 +471,8 @@
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
+	to_chat(loc, span_boldnotice("Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you."))
 
 /obj/item/robot_model/security
 	name = "Security"

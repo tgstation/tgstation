@@ -53,28 +53,28 @@ BONUS
 	if(A.totalStageSpeed() >= 6) //cough more often
 		symptom_delay_max = 10
 
-/datum/symptom/cough/Activate(datum/disease/advance/A)
+/datum/symptom/cough/Activate(datum/disease/advance/adv_disease)
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/M = A.affected_mob
-	if(HAS_TRAIT(M, TRAIT_SOOTHED_THROAT))
+	var/mob/living/infected = adv_disease.affected_mob
+	if(HAS_TRAIT(infected, TRAIT_SOOTHED_THROAT))
 		return
-	switch(A.stage)
+	switch(adv_disease.stage)
 		if(1, 2, 3)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(M, "<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
+				to_chat(infected, span_warning("[pick("You swallow excess mucus.", "You lightly cough.")]"))
 		else
-			M.emote("cough")
-			if(M.CanSpreadAirborneDisease())
-				A.spread(spread_range)
+			infected.emote("cough")
+			if(infected.CanSpreadAirborneDisease())
+				adv_disease.spread(spread_range)
 			if(power >= 1.5)
-				var/obj/item/I = M.get_active_held_item()
-				if(I && I.w_class == WEIGHT_CLASS_TINY)
-					M.dropItemToGround(I)
+				var/obj/item/held = infected.get_active_held_item()
+				if(held && held.w_class == WEIGHT_CLASS_TINY)
+					infected.dropItemToGround(held)
 			if(power >= 2 && prob(30))
-				to_chat(M, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
-				M.Immobilize(20)
-				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 6)
-				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 12)
-				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 18)
+				to_chat(infected, span_userdanger("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
+				infected.Immobilize(20)
+				addtimer(CALLBACK(infected, /mob/.proc/emote, "cough"), 6)
+				addtimer(CALLBACK(infected, /mob/.proc/emote, "cough"), 12)
+				addtimer(CALLBACK(infected, /mob/.proc/emote, "cough"), 18)

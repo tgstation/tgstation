@@ -142,7 +142,7 @@
 
 /obj/structure/trap/eldritch/alert/trap_effect(mob/living/L)
 	if(owner)
-		to_chat(owner,"<span class='big boldwarning'>[L.real_name] has stepped foot on the alert rune in [get_area(src)]!</span>")
+		to_chat(owner, span_boldwarning("[L.real_name] has stepped foot on the alert rune in [get_area(src)]!"))
 	return ..()
 
 //this trap can only get destroyed by rune carving knife or nullrod

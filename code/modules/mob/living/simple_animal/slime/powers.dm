@@ -67,10 +67,10 @@
 		if(S.damage_coeff[TOX] <= 0 && S.damage_coeff[CLONE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
 			if(silent)
 				return FALSE
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+			to_chat(src, span_warning("[pick("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
+			"I do not feel nourished", "This subject is not food")]!"))
 			return FALSE
 
 	if(isslime(M))
@@ -116,10 +116,10 @@
 /mob/living/simple_animal/slime/proc/Feedstop(silent = FALSE, living=1)
 	if(buckled)
 		if(!living)
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+			to_chat(src, span_warning("[pick("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
+			"I do not feel nourished", "This subject is not food")]!"))
 		if(!silent)
 			visible_message(span_warning("[src] lets go of [buckled]!"), \
 							span_notice("<i>I stopped feeding.</i>"))

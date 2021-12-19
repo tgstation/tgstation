@@ -565,8 +565,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	..()
 	for(var/mob/living/simple_animal/pet/P in range(1, src))
 		if(P != src && !istype(P,/mob/living/simple_animal/pet/dog/corgi/narsie))
-			visible_message(span_warning("[src] devours [P]!"), \
-			"<span class='cult big bold'>DELICIOUS SOULS</span>")
+			visible_message(span_warning("[src] devours [P]!"), span_cultlarge("DELICIOUS SOULS"))
 			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 			narsie_act()
 			P.gib()

@@ -862,7 +862,7 @@
 				fake_msg = pick(span_warning("[pick("Your head hurts.", "Your head pounds.")]"),
 				span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"),
 				span_warning("[pick("You feel dizzy.", "Your head spins.")]"),
-				"<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>",
+				span_warning("[pick("You swallow excess mucus.", "You lightly cough.")]"),
 				span_warning("[pick("Your head hurts.", "Your mind blanks for a moment.")]"),
 				span_warning("[pick("Your throat hurts.", "You clear your throat.")]"))
 		if(301 to 600)
@@ -999,7 +999,7 @@
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left) && new_owner.stat < HARD_CRIT)
 		if(new_owner.stat < UNCONSCIOUS) // Unconcious people won't get messages
-			to_chat(new_owner, "<span class='userdanger'>You're covered in ants!</span>")
+			to_chat(new_owner, span_danger("You're covered in ants!"))
 		ants_remaining += amount_left
 		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
@@ -1009,7 +1009,7 @@
 	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat < HARD_CRIT)
 		if(victim.stat < UNCONSCIOUS) // Unconcious people won't get messages
 			if(!prob(1)) // 99%
-				to_chat(victim, "<span class='userdanger'>You're covered in MORE ants!</span>")
+				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
 				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
@@ -1017,7 +1017,7 @@
 
 /datum/status_effect/ants/on_remove()
 	ants_remaining = 0
-	to_chat(owner, "<span class='notice'>All of the ants are off of your body!</span>")
+	to_chat(owner, span_notice("All of the ants are off of your body! You feel a little less antsy.")) // Github copilot wrote this joke
 	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
 

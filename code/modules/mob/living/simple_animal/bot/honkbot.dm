@@ -336,13 +336,13 @@
 			var/mob/living/carbon/C = AM
 			if(!istype(C) || !C || in_range(src, target))
 				return
-			C.visible_message("<span class='warning'>[pick( \
+			C.visible_message(span_warning("[pick( \
 						  	"[C] dives out of [src]'s way!", \
 						  	"[C] stumbles over [src]!", \
 						  	"[C] jumps out of [src]'s path!", \
 						  	"[C] trips over [src] and falls!", \
 						  	"[C] topples over [src]!", \
-						  	"[C] leaps out of [src]'s way!")]</span>")
+						  	"[C] leaps out of [src]'s way!")]"))
 			C.Paralyze(10)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 			if(!client)

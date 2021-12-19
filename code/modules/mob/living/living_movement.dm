@@ -75,7 +75,7 @@
 /mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
 	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated())
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, "<span class='warning'>[rider ? src : "You"] can't do that right now!</span>")
+			to_chat(rider || src, span_warning("[rider ? src : "You"] can't do that right now!"))
 		return FALSE
 	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
 		return ..()
@@ -88,7 +88,7 @@
 			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)
 				return buckled.can_z_move(direction, start, destination, z_move_flags, src)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, "<span class='notice'>Unbuckle from [buckled] first.<span>")
+				to_chat(src, span_warning("Unbuckle from [buckled] first."))
 			return FALSE
 
 /mob/set_currently_z_moving(value)
