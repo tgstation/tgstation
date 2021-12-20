@@ -147,6 +147,9 @@
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
 		return
+	if(HAS_TRAIT(M, TRAIT_NO_SOUL))
+		to_chat(user, span_warning("This body does not possess a soul to capture."))
+		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	capture_soul(M, user)
 
