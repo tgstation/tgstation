@@ -80,23 +80,25 @@ export const ListInputModal = (_, context) => {
   // User doesn't have search bar visible & presses a key
   const onLetterKey = (key: number) => {
     if (searchBarVisible) {
-      const searchBar = document!.getElementById('searchBar');
-      searchBar?.focus();
+      setSearchBarVisible(false);
+      setSearchBarVisible(true);
     } else {
-      const keyChar = String.fromCharCode(key).toLowerCase();
+      const keyChar = String.fromCharCode(key);
       const foundItem = items.find((item) => {
-        return item.toLowerCase().startsWith(keyChar);
+        return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
       });
       if (foundItem) {
         const foundIndex = items.indexOf(foundItem);
         setSelected(foundIndex);
       document!.getElementById(foundIndex.toString())?.scrollIntoView();
-      } }
+      }
+    }
   };
   // User types into search bar
   const onSearch = (query: string) => {
     setSearchQuery(query);
     setSelected(0);
+    document!.getElementById('0')?.scrollIntoView();
   };
   // User presses the search button
   const onSearchBarToggle = () => {
@@ -120,7 +122,7 @@ export const ListInputModal = (_, context) => {
             event.preventDefault();
             onArrowKey(keyCode);
           }
-          if (keyCode >= 65 && keyCode <= 90) {
+          if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
             event.preventDefault();
             onLetterKey(keyCode);
           }
@@ -150,6 +152,7 @@ export const ListInputModal = (_, context) => {
                 filteredItems={filteredItems}
                 isValid={inputIsValid.isValid}
                 onClick={onClick}
+                onLetterKey={onLetterKey}
                 selected={selected}
               />
             </Stack.Item>
@@ -157,7 +160,6 @@ export const ListInputModal = (_, context) => {
               <SearchBar
                 filteredItems={filteredItems}
                 isValid={inputIsValid.isValid}
-                onArrowKey={onArrowKey}
                 onSearch={onSearch}
                 searchQuery={searchQuery}
                 selected={selected}
@@ -182,7 +184,7 @@ export const ListInputModal = (_, context) => {
  */
 const ListDisplay = (props, context) => {
   const { act } = useBackend<ListInputData>(context);
-  const { filteredItems, isValid, onClick, selected } = props;
+  const { filteredItems, isValid, onClick, onLetterKey, selected } = props;
 
   return (
     <Section fill scrollable tabIndex={0}>
@@ -199,6 +201,10 @@ const ListDisplay = (props, context) => {
               if (keyCode === KEY_ENTER && isValid) {
                 event.preventDefault();
                 act('submit', { entry: filteredItems[selected] });
+              }
+              if (keyCode >= 65 && keyCode <= 90) {
+                event.preventDefault();
+                onLetterKey(keyCode);
               }
             }}
             selected={index === selected}
@@ -234,13 +240,7 @@ const SearchBar = (props, context) => {
           act('submit', { entry: filteredItems[selected] });
         }
       }}
-      onInput={(event, value) => {
-        const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode >= 65 && keyCode <= 90) {
-          event.preventDefault();
-          onSearch(value);
-        }
-      }}
+      onInput={(_, value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />
