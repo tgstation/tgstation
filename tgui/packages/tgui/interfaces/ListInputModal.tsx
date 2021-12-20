@@ -122,6 +122,10 @@ export const ListInputModal = (_, context) => {
             event.preventDefault();
             onArrowKey(keyCode);
           }
+          if (keyCode === KEY_ENTER && inputIsValid.isValid) {
+            event.preventDefault();
+            act('submit', { entry: filteredItems[selected!] });
+          }
           if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
             event.preventDefault();
             onLetterKey(keyCode);
@@ -182,9 +186,8 @@ export const ListInputModal = (_, context) => {
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
-const ListDisplay = (props, context) => {
-  const { act } = useBackend<ListInputData>(context);
-  const { filteredItems, isValid, onClick, onLetterKey, selected } = props;
+const ListDisplay = (props) => {
+  const { filteredItems, onClick, onLetterKey, selected } = props;
 
   return (
     <Section fill scrollable tabIndex={0}>
@@ -198,10 +201,6 @@ const ListDisplay = (props, context) => {
             onClick={() => onClick(index)}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
-              if (keyCode === KEY_ENTER && isValid) {
-                event.preventDefault();
-                act('submit', { entry: filteredItems[selected] });
-              }
               if (keyCode >= 65 && keyCode <= 90) {
                 event.preventDefault();
                 onLetterKey(keyCode);
