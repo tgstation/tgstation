@@ -77,7 +77,7 @@ export const ListInputModal = (_, context) => {
       setSelected(index);
     }
   };
-  // User presses while not focused on the search bar
+  // User presses a key while not focused on the search bar
   const onLetterKey = (key: number) => {
     if (searchBarVisible) {
       setSearchBarVisible(false);

@@ -22,7 +22,7 @@
 		else
 			return
 	if (!default || !(default in items))
-		default = items[0]
+		default = items[1]
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title) as null|anything in items
@@ -58,7 +58,7 @@
 		else
 			return
 	if (!default || !(default in items))
-		default = items[0]
+		default = items[1]
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title) as null|anything in items
