@@ -1,6 +1,7 @@
 /datum/job/scientist
-	title = "Scientist"
-	department_head = list("Research Director")
+	title = JOB_SCIENTIST
+	description = "Do experiments, perform research, feed the slimes, make bombs."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -37,20 +38,25 @@
 	name = "Scientist"
 	jobtype = /datum/job/scientist
 
+	id_trim = /datum/id_trim/job/scientist
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
+	suit = /obj/item/clothing/suit/toggle/labcoat/science
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/science = 1,
+		)
 	belt = /obj/item/pda/science
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/science=1)
-
-	id_trim = /datum/id_trim/job/scientist
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+
+/datum/outfit/job/scientist/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/neck/tie/horrible

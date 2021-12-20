@@ -90,6 +90,8 @@
 				id_insert(usr)
 			return TRUE
 		if("set_goal")
+			if(!contained_id)
+				return
 			var/new_goal = text2num(params["value"])
 			if(!isnum(new_goal))
 				return

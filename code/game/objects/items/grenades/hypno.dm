@@ -16,52 +16,52 @@
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/effects/screech.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, LIGHT_COLOR_PURPLE, 2)
-	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
-		bang(get_turf(M), M)
+	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
+		bang(get_turf(living_mob), living_mob)
 	qdel(src)
 
-/obj/item/grenade/hypnotic/proc/bang(turf/T, mob/living/M)
-	if(M.stat == DEAD) //They're dead!
+/obj/item/grenade/hypnotic/proc/bang(turf/turf, mob/living/living_mob)
+	if(living_mob.stat == DEAD) //They're dead!
 		return
-	var/distance = max(0,get_dist(get_turf(src),T))
+	var/distance = max(0, get_dist(get_turf(src), turf))
 
 	//Bang
 	var/hypno_sound = FALSE
 
 	//Hearing protection check
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
+	if(iscarbon(living_mob))
+		var/mob/living/carbon/target = living_mob
 		var/list/reflist = list(1)
-		SEND_SIGNAL(C, COMSIG_CARBON_SOUNDBANG, reflist)
+		SEND_SIGNAL(target, COMSIG_CARBON_SOUNDBANG, reflist)
 		var/intensity = reflist[1]
-		var/ear_safety = C.get_ear_protection()
+		var/ear_safety = target.get_ear_protection()
 		var/effect_amount = intensity - ear_safety
 		if(effect_amount > 0)
 			hypno_sound = TRUE
 
-	if(!distance || loc == M || loc == M.loc)
-		M.Paralyze(10)
-		M.Knockdown(100)
-		to_chat(M, span_hypnophrase("The sound echoes in your brain..."))
-		M.hallucination += 50
+	if(!distance || loc == living_mob || loc == living_mob.loc)
+		living_mob.Paralyze(10)
+		living_mob.Knockdown(100)
+		to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
+		living_mob.hallucination += 50
 	else
 		if(distance <= 1)
-			M.Paralyze(5)
-			M.Knockdown(30)
+			living_mob.Paralyze(5)
+			living_mob.Knockdown(30)
 		if(hypno_sound)
-			to_chat(M, span_hypnophrase("The sound echoes in your brain..."))
-			M.hallucination += 50
+			to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
+			living_mob.hallucination += 50
 
 	//Flash
-	if(M.flash_act(affect_silicon = 1))
-		M.Paralyze(max(10/max(1,distance), 5))
-		M.Knockdown(max(100/max(1,distance), 40))
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(C.hypnosis_vulnerable()) //The sound causes the necessary conditions unless the target has mindshield or hearing protection
-				C.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
+	if(living_mob.flash_act(affect_silicon = 1))
+		living_mob.Paralyze(max(10/max(1, distance), 5))
+		living_mob.Knockdown(max(100/max(1, distance), 40))
+		if(iscarbon(living_mob))
+			var/mob/living/carbon/target = living_mob
+			if(target.hypnosis_vulnerable()) //The sound causes the necessary conditions unless the target has mindshield or hearing protection
+				target.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
 			else
-				to_chat(C, span_hypnophrase("The light is so pretty..."))
-				C.add_confusion(min(C.get_confusion() + 10, 20))
-				C.dizziness += min(C.dizziness + 10, 20)
-				C.adjust_drowsyness(min(C.drowsyness + 10, 20))
+				to_chat(target, span_hypnophrase("The light is so pretty..."))
+				target.add_confusion(min(target.get_confusion() + 10, 20))
+				target.dizziness += min(target.dizziness + 10, 20)
+				target.adjust_drowsyness(min(target.drowsyness + 10, 20))

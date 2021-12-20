@@ -1394,7 +1394,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fj" = (
-/obj/effect/mob_spawn/human/skeleton/alive{
+/obj/effect/mob_spawn/ghost_role/human/skeleton{
 	name = "spooky skeleton remains"
 	},
 /turf/open/floor/plating/asteroid/basalt{
@@ -1781,7 +1781,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
 "gI" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -17007,7 +17007,7 @@ fy
 gi
 fy
 fy
-nG
+gq
 gy
 fH
 cj
@@ -17777,9 +17777,9 @@ bM
 fy
 fW
 ev
-nG
+gq
 gm
-nG
+gq
 dW
 bL
 bL

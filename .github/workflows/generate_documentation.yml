@@ -7,6 +7,7 @@ jobs:
   generate_documentation:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     runs-on: ubuntu-20.04
+    concurrency: gen-docs
     steps:
       - uses: actions/checkout@v2
       - name: Setup cache

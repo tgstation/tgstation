@@ -4,6 +4,7 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
+	panel_type = "panel2"
 	light_mask = "snack-light-mask"
 	products = list(
 		/obj/item/food/spacetwinkie = 6,
@@ -27,6 +28,9 @@
 		/obj/item/food/syndicake = 6,
 		/obj/item/food/peanuts/ban_appeal = 3,
 		/obj/item/food/candy/bronx = 1
+	)
+	premium = list(
+		/obj/item/food/spacers_sidekick = 3
 	)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)

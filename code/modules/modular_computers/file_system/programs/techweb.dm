@@ -81,7 +81,7 @@
 	var/obj/item/computer_hardware/card_slot/card_slot
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/user_id_card = card_slot.stored_card
+	var/obj/item/card/id/user_id_card = card_slot?.stored_card
 
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
@@ -197,6 +197,8 @@
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))

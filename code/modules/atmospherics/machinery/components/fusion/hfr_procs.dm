@@ -21,29 +21,29 @@
 		if(istype(object,/obj/machinery/hypertorus/corner))
 			var/dir = get_dir(src,object)
 			if(dir in GLOB.cardinals)
-				. =  FALSE
+				. = FALSE
 			switch(dir)
 				if(SOUTHEAST)
 					if(object.dir != dir)
 						. = FALSE
 				if(SOUTHWEST)
 					if(object.dir != dir)
-						. =  FALSE
+						. = FALSE
 				if(NORTHEAST)
 					if(object.dir != dir)
-						. =  FALSE
+						. = FALSE
 				if(NORTHWEST)
 					if(object.dir != dir)
-						. =  FALSE
+						. = FALSE
 			corners |= object
 			continue
 
 		if(get_step(object,turn(object.dir,180)) != loc)
-			. =  FALSE
+			. = FALSE
 
 		if(istype(object,/obj/machinery/hypertorus/interface))
 			if(linked_interface && linked_interface != object)
-				. =  FALSE
+				. = FALSE
 			linked_interface = object
 
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/object in orange(1,src))
@@ -54,23 +54,23 @@
 			. = FALSE
 
 		if(get_step(object,turn(object.dir,180)) != loc)
-			. =  FALSE
+			. = FALSE
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/fuel_input))
 			if(linked_input && linked_input != object)
-				. =  FALSE
+				. = FALSE
 			linked_input = object
 			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/waste_output))
 			if(linked_output && linked_output != object)
-				. =  FALSE
+				. = FALSE
 			linked_output = object
 			machine_parts |= object
 
 		if(istype(object,/obj/machinery/atmospherics/components/unary/hypertorus/moderator_input))
 			if(linked_moderator && linked_moderator != object)
-				. =  FALSE
+				. = FALSE
 			linked_moderator = object
 			machine_parts |= object
 
@@ -183,11 +183,16 @@
 	linked_output.update_parents()
 	linked_moderator.update_parents()
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/update_temperature_status(delta_time)
+	fusion_temperature_archived = fusion_temperature
 	fusion_temperature = internal_fusion.temperature
+	moderator_temperature_archived = moderator_temperature
 	moderator_temperature = moderator_internal.temperature
+	coolant_temperature_archived = coolant_temperature
 	coolant_temperature = airs[1].temperature
+	output_temperature_archived = output_temperature
 	output_temperature = linked_output.airs[1].temperature
+	temperature_period = delta_time
 
 	//Set the power level of the fusion process
 	switch(fusion_temperature)
@@ -314,6 +319,23 @@
 	return integrity
 
 /**
+ * Get how charged the area's APC is
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/get_area_cell_percent()
+	// Make sure to get APC levels from the same area the core draws from
+	// Just in case people build an HFR across boundaries
+	var/area/area = get_area(src)
+	if (!area)
+		return 0
+	var/obj/machinery/power/apc/apc = area.apc
+	if (!apc)
+		return 0
+	var/obj/item/stock_parts/cell/cell = apc.cell
+	if (!cell)
+		return 0
+	return cell.percent()
+
+/**
  * Called by process_atmos() in hfr_main_processes.dm
  * Called after checking the damage of the machine, calls alarm() and countdown()
  * Broadcast messages into engi and common radio
@@ -393,7 +415,6 @@
 	var/emp_light_size = 0
 	var/emp_heavy_size = 0
 	var/rad_pulse_size = 0
-	var/rad_pulse_strength = 0
 	var/gas_spread = 0
 	var/gas_pockets = 0
 	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
@@ -418,8 +439,7 @@
 			emp_light_size = power_level * 3
 			emp_heavy_size = power_level * 1
 		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 1))
-			rad_pulse_strength = power_level * 3000
+			rad_pulse_size = 2 * power_level + 8
 		gas_pockets = 5
 		gas_spread = power_level * 2
 
@@ -428,8 +448,7 @@
 			emp_light_size = power_level * 5
 			emp_heavy_size = power_level * 3
 		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 3))
-			rad_pulse_strength = power_level * 5000
+			rad_pulse_size = power_level + 24
 		gas_pockets = 7
 		gas_spread = power_level * 4
 
@@ -438,8 +457,7 @@
 			emp_light_size = power_level * 7
 			emp_heavy_size = power_level * 5
 		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 5))
-			rad_pulse_strength = power_level * 7000
+			rad_pulse_size = power_level + 34
 		gas_pockets = 10
 		gas_spread = power_level * 6
 
@@ -448,8 +466,7 @@
 			emp_light_size = power_level * 9
 			emp_heavy_size = power_level * 7
 		if(rad_pulse)
-			rad_pulse_size = (1 / (power_level + 7))
-			rad_pulse_strength = power_level * 9000
+			rad_pulse_size = power_level + 44
 		gas_pockets = 15
 		gas_spread = power_level * 8
 
@@ -491,10 +508,9 @@
 	if(rad_pulse)
 		radiation_pulse(
 			source = loc,
-			intensity = rad_pulse_strength,
-			range_modifier = rad_pulse_size,
-			log = TRUE
-			)
+			max_range = rad_pulse_size,
+			threshold = 0.05,
+		)
 
 	if(em_pulse)
 		empulse(
@@ -522,9 +538,12 @@
 /**
  * Emit radiation
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads(radiation)
-	rad_power = clamp(radiation / 1e5, 0, FUSION_RAD_MAX)
-	radiation_pulse(loc, rad_power)
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads()
+	radiation_pulse(
+		src,
+		max_range = 6,
+		threshold = 0.3,
+	)
 
 /*
  * HFR cracking related procs

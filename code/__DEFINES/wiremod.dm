@@ -52,6 +52,8 @@
 
 #define COMPONENT_DEFAULT_NAME "component"
 
+#define COMPONENT_DEFAULT_CATEGORY "Unassigned"
+
 /// The minimum position of the x and y co-ordinates of the component in the UI
 #define COMPONENT_MIN_RANDOM_POS 200
 /// The maximum position of the x and y co-ordinates of the component in the UI
@@ -92,6 +94,7 @@
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
+#define SHELL_CAPACITY_TINY 12
 #define SHELL_CAPACITY_SMALL 25
 #define SHELL_CAPACITY_MEDIUM 50
 #define SHELL_CAPACITY_LARGE 100
@@ -105,16 +108,14 @@
 #define CIRCUIT_FLAG_INPUT_SIGNAL (1<<0)
 /// Creates an output trigger that sends a pulse whenever the component is successfully triggered
 #define CIRCUIT_FLAG_OUTPUT_SIGNAL (1<<1)
-/// Prohibits the component from being duplicated via the module duplicator
-#define CIRCUIT_FLAG_UNDUPEABLE (1<<2)
 /// Marks a circuit component as admin only. Admins will only be able to link/unlink with these circuit components.
-#define CIRCUIT_FLAG_ADMIN (1<<3)
+#define CIRCUIT_FLAG_ADMIN (1<<2)
 /// This circuit component does not show in the menu.
-#define CIRCUIT_FLAG_HIDDEN (1<<4)
+#define CIRCUIT_FLAG_HIDDEN (1<<3)
 /// This circuit component has been marked as a component that has instant execution and will show up in the UI as so. This will only cause a visual change.
-#define CIRCUIT_FLAG_INSTANT (1<<5)
+#define CIRCUIT_FLAG_INSTANT (1<<4)
 /// This circuit component can't be loaded in module component. Saves us some headaches.
-#define CIRCUIT_FLAG_REFUSE_MODULE (1<<6)
+#define CIRCUIT_FLAG_REFUSE_MODULE (1<<5)
 
 // Datatype flags
 /// The datatype supports manual inputs

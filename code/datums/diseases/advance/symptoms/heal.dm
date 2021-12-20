@@ -85,24 +85,44 @@
 	var/area/area_to_check = get_area(turf_to_check)
 	var/levels_of_glass = 0 // Since starlight condensation only works 2 tiles to the side anyways, it shouldn't work with like 100 z-levels of glass
 	while(levels_of_glass <= STARLIGHT_MAX_RANGE)
-		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == ZTRAIT_DOWN)) // Outdoors covers lavaland and unroofed areas but with tiles under, while space covers normal space and those caused by explosions, if there is a floor tile when checking above, that means a roof exists so the outdoors should only work downwards
+		// Outdoors covers lavaland and unroofed areas but with tiles under,
+		// while space covers normal space and those caused by explosions,
+		// if there is a floor tile when checking above, that means
+		// a roof exists so the outdoors should only work downwards
+		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == ZTRAIT_DOWN))
 			if (levels_of_glass)
-				return STARLIGHT_CAN_HEAL_WITH_PENALTY // glass gives penalty
-			return STARLIGHT_CAN_HEAL // if can heal fully
+				return STARLIGHT_CAN_HEAL_WITH_PENALTY // Glass gives a penalty.
+			return STARLIGHT_CAN_HEAL // No glass = can heal fully.
+
+		// Our turf is transparent, but it's NOT openspace - it's something like glass which reduces power
 		if(istransparentturf(turf_to_check) && !(istype(turf_to_check, /turf/open/openspace)))
 			levels_of_glass += 1
+
+		// Our turf is transparent OR openspace - we can check higher or lower z-levels
 		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
+			// Check above or below us
 			if(direction == ZTRAIT_UP)
 				turf_to_check = turf_to_check.above()
 			else
 				turf_to_check = turf_to_check.below()
-			if(!turf_to_check && (direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))) // if does not exist, assume its space since space station if below, however when checking upwards, only assume that its space if the area is outdoors
-				if(levels_of_glass)
-					return STARLIGHT_CAN_HEAL_WITH_PENALTY
-				return STARLIGHT_CAN_HEAL
-			area_to_check = get_area(turf_to_check)
-			continue
-		return STARLIGHT_CANNOT_HEAL // hit a non-space non-transparent turf
+
+			// If we found a turf above or below us,
+			// then we can rerun the loop on the newly found turf / area
+			// (Probably, with +1 to levels_of_glass)
+			if(turf_to_check)
+				area_to_check = get_area(turf_to_check)
+				continue
+
+			// If we didn't find a turf above or below us -
+			// Checking below, we assume that space is below us (as we're standing on station)
+			// Checking above, we check that the area is "outdoors" before assuming if it is space or not.
+			else
+				if(direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))
+					if (levels_of_glass)
+						return STARLIGHT_CAN_HEAL_WITH_PENALTY
+					return STARLIGHT_CAN_HEAL
+
+		return STARLIGHT_CANNOT_HEAL // Hit a non-space, Non-transparent turf - no healsies
 
 /datum/symptom/heal/starlight/proc/CanTileHeal(turf/original_turf, satisfied_with_penalty)
 	var/current_heal_level = CanTileHealDirectional(original_turf, ZTRAIT_DOWN)
@@ -471,7 +491,7 @@
 		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. +=  power * 0.75
+		. += power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
@@ -529,20 +549,7 @@
 		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	switch(M.radiation)
-		if(0)
-			return FALSE
-		if(1 to RAD_MOB_SAFE)
-			return 0.25
-		if(RAD_MOB_SAFE to RAD_BURN_THRESHOLD)
-			return 0.5
-		if(RAD_BURN_THRESHOLD to RAD_MOB_MUTATE)
-			return 0.75
-		if(RAD_MOB_MUTATE to RAD_MOB_KNOCKDOWN)
-			return 1
-		else
-			return 1.5
+	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
 
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power

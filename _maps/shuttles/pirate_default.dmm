@@ -5,7 +5,7 @@
 	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -90,7 +90,7 @@
 /area/shuttle/pirate)
 "ak" = (
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -165,7 +165,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -182,7 +182,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "aq" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -310,7 +310,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/tile/red{
@@ -424,7 +423,7 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/south{
-	id = "pirateportstarboardexternal";
+	id = "piratestarboardexternal";
 	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
@@ -454,7 +453,7 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aV" = (
-/obj/effect/mob_spawn/human/pirate{
+/obj/effect/mob_spawn/ghost_role/human/pirate{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -546,6 +545,7 @@
 	},
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -654,7 +654,7 @@
 /area/shuttle/pirate)
 "bC" = (
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/light/small/directional/east,
@@ -746,7 +746,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "bO" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -991,6 +991,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1108,6 +1109,7 @@
 /area/shuttle/pirate)
 "OD" = (
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/structure/sign/poster/contraband/random{
@@ -1135,10 +1137,11 @@
 /turf/open/floor/iron,
 /area/shuttle/pirate)
 "RY" = (
-/obj/effect/mob_spawn/human/pirate/captain{
+/obj/effect/mob_spawn/ghost_role/human/pirate/captain{
 	dir = 4
 	},
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,

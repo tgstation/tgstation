@@ -33,10 +33,6 @@
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
-/obj/item/assembly/flash/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
 		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!"))
@@ -49,6 +45,7 @@
 	return FIRELOSS
 
 /obj/item/assembly/flash/update_icon(updates=ALL, flash = FALSE)
+	inhand_icon_state = "[burnt_out ? "flashtool_burnt" : "[initial(inhand_icon_state)]"]"
 	flashing = flash
 	. = ..()
 	if(flash)
@@ -67,10 +64,6 @@
 
 /obj/item/assembly/flash/update_name()
 	name = "[burnt_out ? "burnt-out [initial(name)]" : "[initial(name)]"]"
-	return ..()
-
-/obj/item/assembly/flash/update_desc()
-	desc = "[burnt_out ? "[initial(desc)] It's burnt out." : "[initial(desc)]"]"
 	return ..()
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
@@ -103,6 +96,7 @@
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
 	if(user)
 		targets -= user
+		to_chat(user, span_danger("[src] emits a blinding light!"))
 	for(var/mob/living/carbon/C in targets)
 		flash_carbon(C, user, power, targeted, TRUE)
 	return TRUE
@@ -125,8 +119,10 @@
 	set_light_on(TRUE)
 	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
-	flash_recharge()
+	if(!flash_recharge())
+		return FALSE
 	update_icon(ALL, TRUE)
+	update_name(ALL) //so if burnt_out was somehow reverted to 0 the name changes back to flash
 	if(user && !clown_check(user))
 		return FALSE
 	return TRUE
@@ -268,7 +264,6 @@
 		return FALSE
 	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
 		return FALSE
-	to_chat(user, span_danger("[src] emits a blinding light!"))
 
 /obj/item/assembly/flash/emp_act(severity)
 	. = ..()

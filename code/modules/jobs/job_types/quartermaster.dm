@@ -1,6 +1,8 @@
 /datum/job/quartermaster
-	title = "Quartermaster"
-	department_head = list("Head of Personnel")
+	title = JOB_QUARTERMASTER
+	description = "Coordinate cargo technicians and shaft miners, assist with \
+		economical purchasing."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -34,14 +36,15 @@
 	name = "Quartermaster"
 	jobtype = /datum/job/quartermaster
 
+	id_trim = /datum/id_trim/job/quartermaster
+	uniform = /obj/item/clothing/under/rank/cargo/qm
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1,
+		)
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/qm
-	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1)
 
 	chameleon_extras = /obj/item/stamp/qm
-
-	id_trim = /datum/id_trim/job/quartermaster

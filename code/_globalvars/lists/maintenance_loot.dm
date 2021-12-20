@@ -180,11 +180,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/glasses/hud/diagnostic = 1,
 		/obj/item/storage/belt/utility = 1,
 		/obj/item/storage/belt/medical = 1,
-		/obj/item/clothing/suit/armor/vest/old  = 1,
+		/obj/item/clothing/suit/armor/vest/old = 1,
 		/obj/item/clothing/head/helmet/old = 1,
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/ears/earmuffs = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
+		/obj/item/clothing/glasses/salesman = 1,
 		) = 8,
 
 	list(//strange objects
@@ -236,6 +237,11 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/storage/box/donkpockets/donkpocketpizza = 1,
 			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
+			) = 1,
+		list(//Donk-dinner Varieties
+			/obj/item/food/ready_donk = 1,
+			/obj/item/food/ready_donk/mac_n_cheese = 1,
+			/obj/item/food/ready_donk/donkhiladas = 1,
 			) = 1,
 		/obj/item/food/monkeycube = 1,
 		) = 8,
@@ -319,6 +325,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
 		/obj/item/tattoo_kit = 1,
+		/obj/item/skillchip/brainwashing = 1,
 		) = 1,
 
 ))

@@ -29,7 +29,7 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	max_integrity = 500
-	armor = list(MELEE = 45, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 30, RAD = 30, FIRE = 30, ACID = 30)
+	armor = list(MELEE = 45, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 10, BIO = 30, FIRE = 30, ACID = 30)
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
 	"18" = "red", "19" = "red", "21" = "red", "23" = "red", "25" = "red", "27" = "red", "30" = "red", "32" = "red", "34" = "red", "36" = "red",\
 	"2" = "black", "4" = "black", "6" = "black", "8" = "black", "10" = "black", "11" = "black", "13" = "black", "15" = "black", "17" = "black", "20" = "black",\
@@ -126,7 +126,7 @@
 		if(my_card)
 			var/obj/item/card/id/player_card = W
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
-				audible_message(span_warning("You do not have the funds to play! Lower your bet or get more money."))
+				say("You do not have the funds to play! Lower your bet or get more money.")
 				playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 				return FALSE
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
@@ -171,7 +171,7 @@
 		else
 			var/obj/item/card/id/new_card = W
 			if(new_card.registered_account)
-				var/msg = stripped_input(user, "Name of your roulette wheel:", "Roulette Naming", "Roulette Machine")
+				var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Naming", "Roulette Machine", MAX_NAME_LEN)
 				if(!msg)
 					return
 				name = msg
@@ -223,14 +223,14 @@
 	var/color = numbers["[rolled_number]"] //Weird syntax, but dict uses strings.
 	var/result = "[rolled_number] [color]" //e.g. 31 black
 
-	audible_message(span_notice("The result is: [result]"))
+	say("The result is: [result]")
 
 	playing = FALSE
 	update_icon(ALL, potential_payout, color, rolled_number, is_winner)
 	handle_color_light(color)
 
 	if(!is_winner)
-		audible_message(span_warning("You lost! Better luck next time"))
+		say("You lost! Better luck next time")
 		playsound(src, 'sound/machines/synth_no.ogg', 50)
 		return FALSE
 
@@ -238,7 +238,7 @@
 	var/account_balance = my_card?.registered_account?.account_balance
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
-	audible_message(span_notice("You have won [potential_payout] credits! Congratulations!"))
+	say("You have won [potential_payout] credits! Congratulations!")
 	playsound(src, 'sound/machines/synth_yes.ogg', 50)
 
 	dispense_prize(potential_payout)
@@ -343,7 +343,7 @@
 /obj/machinery/roulette/proc/check_bartender_funds(payout)
 	if(my_card.registered_account.account_balance >= payout)
 		return TRUE //We got the betting amount
-	audible_message(span_warning("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!"))
+	say("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
 	playsound(src, 'sound/machines/buzz-two.ogg', 30, TRUE)
 	return FALSE
 

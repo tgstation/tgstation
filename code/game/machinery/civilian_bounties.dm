@@ -117,10 +117,10 @@
 	var/datum/bank_account/pot_acc = inserted_scan_id.registered_account
 	if((pot_acc.civilian_bounty && ((world.time) < pot_acc.bounty_timer + 5 MINUTES)) || pot_acc.bounties)
 		var/curr_time = round(((pot_acc.bounty_timer + (5 MINUTES))-world.time)/ (1 MINUTES), 0.01)
-		to_chat(usr, span_warning("Internal ID network spools coiling, try again in [curr_time] minutes!"))
+		say("Internal ID network spools coiling, try again in [curr_time] minutes!")
 		return FALSE
 	if(!pot_acc.account_job)
-		to_chat(usr, span_warning("The console smartly rejects your ID card, as it lacks a job assignment!"))
+		say("Requesting ID card has no job assignment registered!")
 		return FALSE
 	var/list/datum/bounty/crumbs = list(random_bounty(pot_acc.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
 										random_bounty(pot_acc.account_job.bounty_types), // and 1 guarenteed assistant bounty if the other 2 suck.
@@ -277,7 +277,7 @@
 	. = ..()
 	radio = new(src)
 	radio.keyslot = new radio_key
-	radio.listening = FALSE
+	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
 /obj/item/bounty_cube/Destroy()

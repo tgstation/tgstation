@@ -84,7 +84,7 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "bb" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/dark,
@@ -135,7 +135,7 @@
 /area/shuttle/escape)
 "bn" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -240,9 +240,8 @@
 "cL" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/light/small/directional/south,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Monastery Dock";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -279,9 +278,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cY" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Monastery Transit";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /obj/machinery/power/smes,
@@ -324,7 +322,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -380,9 +378,8 @@
 /area/shuttle/escape)
 "dJ" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Monastery Dining Room";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -424,9 +421,8 @@
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
 /obj/item/pen,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Library";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -447,9 +443,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "eg" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Asteroid Dock Port";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plating/asteroid,
@@ -538,9 +533,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fi" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Monastery Asteroid Dock Staboard";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plating/asteroid,
@@ -751,16 +745,15 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iJ" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iK" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Monastery Asteroid Primary Entrance";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/plating/asteroid,
@@ -786,9 +779,8 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "iV" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Cloister Port";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /obj/structure/cable,
@@ -883,9 +875,8 @@
 /area/shuttle/escape/brig)
 "ka" = (
 /obj/structure/flora/ausbushes/fernybush,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Monastery Asteroid Starboard Aft";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /obj/effect/turf_decal/sand,
@@ -899,7 +890,7 @@
 /area/shuttle/escape)
 "ki" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Chapel Crematorium";
 	network = list("ss13","monastery")
 	},
@@ -1078,9 +1069,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "mK" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Chapel Office Tunnel";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /obj/effect/turf_decal/sand,
@@ -1187,9 +1177,8 @@
 /area/shuttle/escape)
 "ov" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Chapel Starboard";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -1233,7 +1222,8 @@
 /area/shuttle/escape)
 "oI" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23
+	pixel_y = 23;
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -1363,7 +1353,7 @@
 /area/shuttle/escape)
 "qp" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Monastery Cemetary"
+	name = "Monastery Cemetery"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -1424,7 +1414,7 @@
 /area/shuttle/escape)
 "qU" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Chapel Port Access";
 	network = list("ss13","monastery")
 	},
@@ -1569,7 +1559,7 @@
 /area/shuttle/escape)
 "sz" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Chapel Starboard Access";
 	network = list("ss13","monastery")
 	},
@@ -1668,7 +1658,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "tV" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1825,9 +1815,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "vW" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Chapel Office";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -1936,7 +1925,7 @@
 /area/shuttle/escape)
 "wM" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Monastery Cloister Fore";
 	network = list("ss13","monastery")
 	},
@@ -1959,9 +1948,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "wS" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Monastery Secondary Dock";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -2042,9 +2030,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Archives Access Tunnel";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -2444,7 +2431,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Dc" = (
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/cable,
@@ -2468,9 +2455,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Dr" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Kitchen";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron,
@@ -2559,9 +2545,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ep" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Art Storage";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /obj/structure/cable,
@@ -2850,7 +2835,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Monastery Archives Fore";
 	network = list("ss13","monastery")
 	},
@@ -2871,9 +2856,8 @@
 /area/shuttle/escape)
 "IT" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Monastery Cloister Starboard";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2920,9 +2904,8 @@
 	name = "skeletal minibar"
 	},
 /obj/item/book/codex_gigas,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Monastery Archives Aft";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -2930,7 +2913,7 @@
 "Jv" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Monastery Garden";
 	network = list("ss13","monastery")
 	},
@@ -3123,9 +3106,8 @@
 /area/shuttle/escape)
 "LC" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Chapel Port";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -3173,9 +3155,8 @@
 /area/shuttle/escape)
 "LV" = (
 /obj/machinery/light/small/directional/south,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Monastery Cloister Aft";
-	dir = 1;
 	network = list("ss13","monastery")
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -3212,9 +3193,8 @@
 /area/shuttle/escape)
 "Md" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Monastery Archives Starboard";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -3468,9 +3448,8 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
-/obj/machinery/camera{
-	c_tag = "Monastery Cemetary";
-	dir = 4;
+/obj/machinery/camera/directional/west{
+	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -3788,9 +3767,8 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "RJ" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/east{
 	c_tag = "Monastery Art Gallery";
-	dir = 8;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/carpet,
@@ -4040,7 +4018,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -4074,9 +4052,8 @@
 /area/shuttle/escape)
 "UJ" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/west{
 	c_tag = "Monastery Archives Port";
-	dir = 4;
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,
@@ -4510,7 +4487,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Zr" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
