@@ -79,7 +79,7 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world/fov_hidden/Initialize()
+/atom/movable/screen/plane_master/game_world_fov_hidden/Initialize()
 	. = ..()
 	add_filter("vision_cone", 1, alpha_mask_filter(render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE))
 
