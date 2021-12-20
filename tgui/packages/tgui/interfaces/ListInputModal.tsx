@@ -77,7 +77,7 @@ export const ListInputModal = (_, context) => {
       setSelected(index);
     }
   };
-  // User a key on the page and the search bar is hidden
+  // User doesn't have search bar visible & presses a key
   const onLetterKey = (key: number) => {
     const keyChar = String.fromCharCode(key).toLowerCase();
     const foundItem = items.find((item) => {
