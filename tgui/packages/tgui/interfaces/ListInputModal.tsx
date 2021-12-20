@@ -1,5 +1,5 @@
 import { Loader } from './common/Loader';
-import { InputButtons, Preferences, Validator } from './common/InputButtons';
+import { InputButtons, Preferences } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
 import { KEY_ENTER, KEY_DOWN, KEY_UP, KEY_ESCAPE } from '../../common/keycodes';
 import { Window } from '../layouts';
@@ -25,7 +25,7 @@ export const ListInputModal = (_, context) => {
     title,
   } = data;
   const { large_buttons } = preferences;
-  const [selected, setSelected] = useLocalState<number | null>(
+  const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
     items.indexOf(initValue),
@@ -39,11 +39,6 @@ export const ListInputModal = (_, context) => {
     context,
     'searchQuery',
     ''
-  );
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    context,
-    'inputIsValid',
-    { isValid: true, error: null }
   );
   // User presses up or down on keyboard
   // Simulates clicking an item
@@ -69,13 +64,10 @@ export const ListInputModal = (_, context) => {
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
-    if (isNaN(index) || index === selected) {
-      setInputIsValid({ isValid: false, error: 'No selection' });
-      setSelected(null);
-    } else {
-      setInputIsValid({ isValid: true, error: null });
-      setSelected(index);
+    if (index === selected) {
+      return;
     }
+    setSelected(index);
   };
   // User presses a letter key and searchbar is visible
   const onFocusSearch = () => {
@@ -114,6 +106,8 @@ export const ListInputModal = (_, context) => {
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
+  // Null selection is no longer a thing, no need to grey the button
+  const defaultValidState = { isValid: true, error: null };
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -125,9 +119,9 @@ export const ListInputModal = (_, context) => {
             event.preventDefault();
             onArrowKey(keyCode);
           }
-          if (keyCode === KEY_ENTER && inputIsValid.isValid) {
+          if (keyCode === KEY_ENTER) {
             event.preventDefault();
-            act('submit', { entry: filteredItems[selected!] });
+            act('submit', { entry: filteredItems[selected] });
           }
           if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
             event.preventDefault();
@@ -165,7 +159,6 @@ export const ListInputModal = (_, context) => {
             {searchBarVisible && (
               <SearchBar
                 filteredItems={filteredItems}
-                isValid={inputIsValid.isValid}
                 onSearch={onSearch}
                 searchQuery={searchQuery}
                 selected={selected}
@@ -173,8 +166,8 @@ export const ListInputModal = (_, context) => {
             )}
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
               <InputButtons
-                input={selected !== null ? filteredItems[selected] : null}
-                inputIsValid={inputIsValid}
+                input={filteredItems[selected]}
+                inputIsValid={defaultValidState}
               />
             </Stack.Item>
           </Stack>
@@ -188,7 +181,8 @@ export const ListInputModal = (_, context) => {
  * Displays the list of selectable items.
  * If a search query is provided, filters the items.
  */
-const ListDisplay = (props) => {
+const ListDisplay = (props, context) => {
+  const { act } = useBackend<ListInputData>(context);
   const { filteredItems, onClick, onFocusSearch, selected } = props;
 
   return (
@@ -201,6 +195,10 @@ const ListDisplay = (props) => {
             id={index}
             key={index}
             onClick={() => onClick(index)}
+            onDblClick={(event) => {
+              event.preventDefault();
+              act('submit', { entry: filteredItems[selected] });
+            }}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
               if (keyCode >= 65 && keyCode <= 90) {
@@ -227,7 +225,7 @@ const ListDisplay = (props) => {
  */
 const SearchBar = (props, context) => {
   const { act } = useBackend<ListInputData>(context);
-  const { filteredItems, isValid, onSearch, searchQuery, selected } = props;
+  const { filteredItems, onSearch, searchQuery, selected } = props;
 
   return (
     <Input
@@ -235,10 +233,8 @@ const SearchBar = (props, context) => {
       autoSelect
       fluid
       onEnter={(event) => {
-        if (isValid) {
-          event.preventDefault();
-          act('submit', { entry: filteredItems[selected] });
-        }
+        event.preventDefault();
+        act('submit', { entry: filteredItems[selected] });
       }}
       onInput={(_, value) => onSearch(value)}
       placeholder="Search..."
