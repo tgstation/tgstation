@@ -98,12 +98,12 @@
 						new /obj/item/stack/sheet/iron(src)
 		if(EXPLODE_LIGHT)
 			if (prob(50))
-				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
+				break_tile()
+				hotspot_expose(1000,CELL_VOLUME)
 
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
-		return 1
+		return TRUE
 
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return

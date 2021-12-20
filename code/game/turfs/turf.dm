@@ -525,7 +525,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 
 /turf/contents_explosion(severity, target)
-	for(var/atom/movable/movable_thing as anything in contents)
+	for(var/atom/movable/movable_thing as anything in contents | nullspaced_contents)
 		if(QDELETED(movable_thing))
 			continue
 		switch(severity)

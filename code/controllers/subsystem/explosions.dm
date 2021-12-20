@@ -35,6 +35,110 @@ SUBSYSTEM_DEF(explosions)
 
 	var/currentpart = SSAIR_PIPENETS
 
+/datum/controller/subsystem/explosions/fire(resumed = 0)
+	if (!is_exploding())
+		return
+	var/timer
+	Master.current_ticklimit = TICK_LIMIT_RUNNING //force using the entire tick if we need it.
+
+	if(currentpart == SSEXPLOSIONS_TURFS)
+		currentpart = SSEXPLOSIONS_MOVABLES
+
+		timer = TICK_USAGE_REAL
+		var/list/low_turf = lowturf
+		lowturf = list()
+		for(var/turf/turf_thing as anything in low_turf)
+			turf_thing.ex_act(EXPLODE_LIGHT)
+		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		timer = TICK_USAGE_REAL
+		var/list/med_turf = medturf
+		medturf = list()
+		for(var/turf/turf_thing as anything in med_turf)
+			turf_thing.ex_act(EXPLODE_HEAVY)
+		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		timer = TICK_USAGE_REAL
+		var/list/high_turf = highturf
+		highturf = list()
+		for(var/turf/turf_thing as anything in high_turf)
+			turf_thing.ex_act(EXPLODE_DEVASTATE)
+		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		timer = TICK_USAGE_REAL
+		var/list/flame_turf = flameturf
+		flameturf = list()
+		for(var/turf/turf_to_flame as anything in flame_turf)
+			if(turf_to_flame)
+				new /obj/effect/hotspot(turf_to_flame) //Mostly for ambience!
+
+		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		if (length(low_turf) || length(med_turf) || length(high_turf))
+			Master.laggy_byond_map_update_incoming()
+
+	if(currentpart == SSEXPLOSIONS_MOVABLES)
+		currentpart = SSEXPLOSIONS_THROWS
+
+		timer = TICK_USAGE_REAL
+		var/list/local_high_mov_atom = high_mov_atom
+		high_mov_atom = list()
+		for(var/atom/movable/movable_thing as anything in local_high_mov_atom)
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_DEVASTATE)
+		cost_high_mov_atom = MC_AVERAGE(cost_high_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		timer = TICK_USAGE_REAL
+		var/list/local_med_mov_atom = med_mov_atom
+		med_mov_atom = list()
+		for(var/atom/movable/movable_thing as anything in local_med_mov_atom)
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_HEAVY)
+		cost_med_mov_atom = MC_AVERAGE(cost_med_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+		timer = TICK_USAGE_REAL
+		var/list/local_low_mov_atom = low_mov_atom
+		low_mov_atom = list()
+		for(var/atom/movable/movable_thing as anything in local_low_mov_atom)
+			if(QDELETED(movable_thing))
+				continue
+			movable_thing.ex_act(EXPLODE_LIGHT)
+		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+
+	if (currentpart == SSEXPLOSIONS_THROWS)
+		currentpart = SSEXPLOSIONS_TURFS
+		timer = TICK_USAGE_REAL
+		var/list/throw_turf = throwturf
+		throwturf = list()
+		for (var/turf/throwing_turf as anything in throw_turf)
+			if (!throwing_turf)
+				continue
+
+			var/list/throw_details = throwing_turf.explosion_throw_details
+			throwing_turf.explosion_throw_details = null
+
+			if (length(throw_details) != 3)
+				continue
+
+			var/throw_range = throw_details[1]
+			var/throw_dir = throw_details[2]
+			var/max_range = throw_details[3]
+
+			for(var/atom/movable/movable_to_throw as anything in throwing_turf)
+				if(movable_to_throw.anchored || movable_to_throw.move_resist == INFINITY)
+					continue
+
+				var/atom_throw_range = rand(throw_range, max_range)
+				var/turf/throw_at = get_ranged_target_turf(movable_to_throw, throw_dir, atom_throw_range)
+				movable_to_throw.throw_at(throw_at, atom_throw_range, EXPLOSION_THROW_SPEED, quickstart = FALSE)
+
+		cost_throwturf = MC_AVERAGE(cost_throwturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+	currentpart = SSEXPLOSIONS_TURFS
+
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
@@ -261,7 +365,7 @@ SUBSYSTEM_DEF(explosions)
 /**
  * Handles the effects of an explosion originating from a given point.
  *
- * Primarily handles popagating the balstwave of the explosion to the relevant turfs.
+ * Primarily handles popagating the blastwave of the explosion to the relevant turfs.
  * Also handles the fireball from the explosion.
  * Also handles the smoke cloud from the explosion.
  * Also handles sfx and screenshake.
@@ -388,13 +492,12 @@ SUBSYSTEM_DEF(explosions)
 
 	//lists are guaranteed to contain at least 1 turf at this point
 
-	for(var/TI in affected_turfs)
-		var/turf/T = TI
-		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+	for(var/turf/affected_turf as anything in affected_turfs)
+		var/init_dist = cheap_hypotenuse(affected_turf.x, affected_turf.y, x0, y0)
 		var/dist = init_dist
 
 		if(reactionary)
-			var/turf/Trajectory = T
+			var/turf/Trajectory = affected_turf
 			while(Trajectory != epicenter)
 				Trajectory = get_step_towards(Trajectory, epicenter)
 				dist += cached_exp_block[Trajectory]
@@ -411,14 +514,13 @@ SUBSYSTEM_DEF(explosions)
 		else
 			dist = EXPLODE_NONE
 
-		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
+		if(affected_turf == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/items = list()
-			for(var/I in T)
-				var/atom/A = I
-				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += A.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
-			for(var/thing in items)
-				var/atom/movable/movable_thing = thing
+			for(var/atom/affected_atom as anything in affected_turf)
+				if (length(affected_atom.contents) && !(affected_atom.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+					items += affected_atom.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
+
+			for(var/atom/movable/movable_thing as anything in items)
 				if(QDELETED(movable_thing))
 					continue
 				switch(dist)
@@ -430,28 +532,28 @@ SUBSYSTEM_DEF(explosions)
 						SSexplosions.low_mov_atom += movable_thing
 		switch(dist)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highturf += T
+				SSexplosions.highturf += affected_turf
 			if(EXPLODE_HEAVY)
-				SSexplosions.medturf += T
+				SSexplosions.medturf += affected_turf
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowturf += T
+				SSexplosions.lowturf += affected_turf
 
 
-		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
-			flameturf += T
+		if(flame_dist && prob(40) && !isspaceturf(affected_turf) && !affected_turf.density)
+			flameturf += affected_turf
 
 		//--- THROW ITEMS AROUND ---
-		var/throw_dir = get_dir(epicenter,T)
-		var/throw_range = max_range-throw_dist
-		var/list/throwingturf = T.explosion_throw_details
+		var/throw_dir = get_dir(epicenter, affected_turf)
+		var/throw_range = max_range - throw_dist
+		var/list/throwingturf = affected_turf.explosion_throw_details
 		if (throwingturf)
 			if (throwingturf[1] < throw_range)
 				throwingturf[1] = throw_range
 				throwingturf[2] = throw_dir
 				throwingturf[3] = max_range
 		else
-			T.explosion_throw_details = list(throw_range, throw_dir, max_range)
-			throwturf += T
+			affected_turf.explosion_throw_details = list(throw_range, throw_dir, max_range)
+			throwturf += affected_turf
 
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
@@ -629,107 +731,3 @@ SUBSYSTEM_DEF(explosions)
 			current_exp_block += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
 		.[T] = current_exp_block
-
-/datum/controller/subsystem/explosions/fire(resumed = 0)
-	if (!is_exploding())
-		return
-	var/timer
-	Master.current_ticklimit = TICK_LIMIT_RUNNING //force using the entire tick if we need it.
-
-	if(currentpart == SSEXPLOSIONS_TURFS)
-		currentpart = SSEXPLOSIONS_MOVABLES
-
-		timer = TICK_USAGE_REAL
-		var/list/low_turf = lowturf
-		lowturf = list()
-		for(var/thing in low_turf)
-			var/turf/turf_thing = thing
-			turf_thing.ex_act(EXPLODE_LIGHT)
-		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-		timer = TICK_USAGE_REAL
-		var/list/med_turf = medturf
-		medturf = list()
-		for(var/thing in med_turf)
-			var/turf/turf_thing = thing
-			turf_thing.ex_act(EXPLODE_HEAVY)
-		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-		timer = TICK_USAGE_REAL
-		var/list/high_turf = highturf
-		highturf = list()
-		for(var/thing in high_turf)
-			var/turf/turf_thing = thing
-			turf_thing.ex_act(EXPLODE_DEVASTATE)
-		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-		timer = TICK_USAGE_REAL
-		var/list/flame_turf = flameturf
-		flameturf = list()
-		for(var/thing in flame_turf)
-			if(thing)
-				var/turf/T = thing
-				new /obj/effect/hotspot(T) //Mostly for ambience!
-		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-		if (low_turf.len || med_turf.len || high_turf.len)
-			Master.laggy_byond_map_update_incoming()
-
-	if(currentpart == SSEXPLOSIONS_MOVABLES)
-		currentpart = SSEXPLOSIONS_THROWS
-
-		timer = TICK_USAGE_REAL
-		var/list/local_high_mov_atom = high_mov_atom
-		high_mov_atom = list()
-		for(var/thing in local_high_mov_atom)
-			var/atom/movable/movable_thing = thing
-			if(QDELETED(movable_thing))
-				continue
-			movable_thing.ex_act(EXPLODE_DEVASTATE)
-		cost_high_mov_atom = MC_AVERAGE(cost_high_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-		timer = TICK_USAGE_REAL
-		var/list/local_med_mov_atom = med_mov_atom
-		med_mov_atom = list()
-		for(var/thing in local_med_mov_atom)
-			var/atom/movable/movable_thing = thing
-			if(QDELETED(movable_thing))
-				continue
-			movable_thing.ex_act(EXPLODE_HEAVY)
-		cost_med_mov_atom = MC_AVERAGE(cost_med_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-		timer = TICK_USAGE_REAL
-		var/list/local_low_mov_atom = low_mov_atom
-		low_mov_atom = list()
-		for(var/thing in local_low_mov_atom)
-			var/atom/movable/movable_thing = thing
-			if(QDELETED(movable_thing))
-				continue
-			movable_thing.ex_act(EXPLODE_LIGHT)
-		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-
-	if (currentpart == SSEXPLOSIONS_THROWS)
-		currentpart = SSEXPLOSIONS_TURFS
-		timer = TICK_USAGE_REAL
-		var/list/throw_turf = throwturf
-		throwturf = list()
-		for (var/thing in throw_turf)
-			if (!thing)
-				continue
-			var/turf/T = thing
-			var/list/L = T.explosion_throw_details
-			T.explosion_throw_details = null
-			if (length(L) != 3)
-				continue
-			var/throw_range = L[1]
-			var/throw_dir = L[2]
-			var/max_range = L[3]
-			for(var/atom/movable/A in T)
-				if(!A.anchored && A.move_resist != INFINITY)
-					var/atom_throw_range = rand(throw_range, max_range)
-					var/turf/throw_at = get_ranged_target_turf(A, throw_dir, atom_throw_range)
-					A.throw_at(throw_at, atom_throw_range, EXPLOSION_THROW_SPEED, quickstart = FALSE)
-		cost_throwturf = MC_AVERAGE(cost_throwturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-
-	currentpart = SSEXPLOSIONS_TURFS
