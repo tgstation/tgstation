@@ -132,17 +132,17 @@
 		DestroySurroundings()
 		hit_target(source, A, charge_damage)
 
-/datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/A, damage_dealt)
-	if(SEND_SIGNAL(owner, COMSIG_BUMPED_CHARGE, A) & COMPONENT_OVERRIDE_CHARGE_BUMP)
+/datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
+	if(SEND_SIGNAL(owner, COMSIG_BUMPED_CHARGE, target) & COMPONENT_OVERRIDE_CHARGE_BUMP)
 		return
-	if(!isliving(A))
+	if(!isliving(target))
 		return
-	var/mob/living/L = A
-	L.visible_message("<span class='danger'>[source] slams into [L]!</span>", "<span class='userdanger'>[source] tramples you into the ground!</span>")
-	source.forceMove(get_turf(L))
-	L.apply_damage(damage_dealt, BRUTE, wound_bonus = CANT_WOUND)
-	playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	shake_camera(L, 4, 3)
+	var/mob/living/living_target = target
+	living_target.visible_message("<span class='danger'>[source] slams into [living_target]!</span>", "<span class='userdanger'>[source] tramples you into the ground!</span>")
+	source.forceMove(get_turf(living_target))
+	living_target.apply_damage(damage_dealt, BRUTE, wound_bonus = CANT_WOUND)
+	playsound(get_turf(living_target), 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	shake_camera(living_target, 4, 3)
 	shake_camera(source, 2, 3)
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
@@ -198,13 +198,13 @@
 			owner.forceMove(place)
 			self_placed = TRUE
 			continue
-		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(place)
-		B.appearance = owner.appearance
-		B.name = "[owner]'s hallucination"
-		B.alpha = 127.5
-		B.move_through_mob = owner
-		B.spawn_blood = spawn_blood
-		INVOKE_ASYNC(src, .proc/do_charge, B, target_atom, delay, past)
+		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/our_clone = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(place)
+		our_clone.appearance = owner.appearance
+		our_clone.name = "[owner]'s hallucination"
+		our_clone.alpha = 127.5
+		our_clone.move_through_mob = owner
+		our_clone.spawn_blood = spawn_blood
+		INVOKE_ASYNC(src, .proc/do_charge, our_clone, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 

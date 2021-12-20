@@ -697,15 +697,15 @@
 	UpdateButtonIcon()
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/action/cooldown/Trigger(atom/A)
+/datum/action/cooldown/Trigger(atom/target)
 	. = ..()
 	if(.)
 		if(!owner)
 			return FALSE
 		if(click_to_activate)
-			if(A)
+			if(target)
 				// For automatic / mob handling
-				return InterceptClickOn(owner, null, A)
+				return InterceptClickOn(owner, null, target)
 			if(owner.click_intercept == src)
 				owner.click_intercept = null
 				to_chat(owner, "<b>[src] is no longer active</b>")

@@ -22,18 +22,18 @@
 	var/turf/own_turf = get_turf(owner)
 	if(!QDELETED(dash_target))
 		self_dist_to_target += get_dist(dash_target, own_turf)
-	for(var/turf/open/O in RANGE_TURFS(dash_range, own_turf))
+	for(var/turf/open/check_turf in RANGE_TURFS(dash_range, own_turf))
 		var/turf_dist_to_target = 0
 		if(!QDELETED(dash_target))
-			turf_dist_to_target += get_dist(dash_target, O)
-		if(get_dist(owner, O) >= dash_range && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
+			turf_dist_to_target += get_dist(dash_target, check_turf)
+		if(get_dist(owner, check_turf) >= dash_range && turf_dist_to_target <= self_dist_to_target && !islava(check_turf) && !ischasm(check_turf))
 			var/valid = TRUE
-			for(var/turf/T in get_line(own_turf, O))
+			for(var/turf/T in get_line(own_turf, check_turf))
 				if(T.is_blocked_turf(TRUE))
 					valid = FALSE
 					continue
 			if(valid)
-				accessable_turfs[O] = turf_dist_to_target
+				accessable_turfs[check_turf] = turf_dist_to_target
 	var/turf/target_turf
 	if(!QDELETED(dash_target))
 		var/closest_dist = dash_range
