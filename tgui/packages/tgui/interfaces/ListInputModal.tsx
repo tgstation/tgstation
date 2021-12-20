@@ -16,19 +16,12 @@ type ListInputData = {
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const {
-    items = [],
-    message,
-    initValue,
-    preferences,
-    timeout,
-    title,
-  } = data;
+  const { items = [], message, initValue, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
-    items.indexOf(initValue),
+    items.indexOf(initValue)
   );
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
@@ -83,7 +76,7 @@ export const ListInputModal = (_, context) => {
     if (foundItem) {
       const foundIndex = items.indexOf(foundItem);
       setSelected(foundIndex);
-        document!.getElementById(foundIndex.toString())?.scrollIntoView();
+      document!.getElementById(foundIndex.toString())?.scrollIntoView();
     }
   };
   // User types into search bar
