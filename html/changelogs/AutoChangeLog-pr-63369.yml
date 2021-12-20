@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Removed a floating teleport beacon in Icebox's chapel"
+  - bugfix: "Fixed APC visibilty in icebox science outpost / RD office"
+  - bugfix: "Fixed Air alarm accessibility in icebox atmos office"
