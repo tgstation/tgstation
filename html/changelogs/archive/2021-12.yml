@@ -483,3 +483,29 @@
   - bugfix: TGUI list input will now respond to having large/swapped buttons in preferences.
   - bugfix: BYOND functionality restored in TGUI input lists - keyboard support. Up/Down,
       type a letter to jump to it (while search is not visible).
+2021-12-20:
+  Fikou:
+  - bugfix: neurotoxin spit no longer hits the xeno that spat it
+  JohnFulpWillard:
+  - bugfix: Enemies of the State and (Command-only) Enemies of the Revolution are
+      now ACTUALLY blacklisted from being defibrilated.
+  - bugfix: Basic mobs (Cows, cockroaches), count as Animals for the DNA vault.
+  - bugfix: The Pirate's shuttle scrambler will now ONLY work if you tell it to.
+  - admin: Actions done from the R&D console is now logged
+  MMMiracles:
+  - bugfix: "The prison gate in Tramstation's Prison is no longer made of Papier-m\xE2\
+      ch\xE9"
+  SuperNovaa41:
+  - bugfix: Ninjas can no longer call reinforcements if the comms console is depowered
+  jlsnow301:
+  - bugfix: Camera consoles now require you to be close by and alive in order to operate.
+  - bugfix: TramStation's tram console is no longer shifted over to the right
+  - bugfix: Mr. Pingsky no longer spams AI private because he wants to leave AI satellite
+      but can't (free him). Autopatrol set to off.
+  - bugfix: Power control consoles now alert you if you lack access.
+  - bugfix: Pandemic machine no longer blue screens while inserting premade viruses.
+  - bugfix: Long civilian bounty texts (specifically viro) no longer overflow the
+      button. The window is slightly wider as a result.
+  san7890:
+  - bugfix: Adds the High-performance liquid chromatography machine to the Syndicate
+      Lavaland Base.

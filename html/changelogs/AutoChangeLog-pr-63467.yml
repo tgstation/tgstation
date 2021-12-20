@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Basic mobs (Cows, cockroaches), count as Animals for the DNA vault."
