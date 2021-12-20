@@ -23,7 +23,7 @@
 			user = client.mob
 		else
 			return
-	/// Client does NOT have tgui_input on: Returns regular input
+	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title, default) as null|num
 	var/datum/tgui_input_number/number_input = new(user, message, title, default, max_value, min_value, timeout)
@@ -57,6 +57,9 @@
 			user = client.mob
 		else
 			return
+	// Client does NOT have tgui_input on: Returns regular input
+	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
+		return input(user, message, title, default) as null|num
 	var/datum/tgui_input_number/async/number_input = new(user, message, title, default, max_value, min_value, callback, timeout)
 	number_input.ui_interact(user)
 
@@ -126,7 +129,7 @@
 
 /datum/tgui_input_number/ui_static_data(mob/user)
 	. = list(
-		"initValue" = default || 0, /// Default is a reserved keyword
+		"initValue" = default || 0, // Default is a reserved keyword
 		"max_value" = max_value,
 		"message" = message,
 		"min_value"	= min_value,
