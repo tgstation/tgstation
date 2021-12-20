@@ -111,6 +111,22 @@
 /obj/item/mod/control/pre_equipped/responsory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
 
+/obj/item/mod/control/pre_equipped/responsory/inquisitory
+	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/anti_magic, /obj/item/mod/module/welding, /obj/item/mod/module/emp_shield, /obj/item/mod/module/flashlight, /obj/item/mod/module/holster)
+	applied_skin = "inquisitory"
+
+/obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
+	insignia_type = /obj/item/mod/module/insignia/commander
+
+/obj/item/mod/control/pre_equipped/responsory/inquisitory/security
+	insignia_type = /obj/item/mod/module/insignia/security
+
+/obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
+	insignia_type = /obj/item/mod/module/insignia/medic
+
+/obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
+	insignia_type = /obj/item/mod/module/insignia/chaplain
+
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal
 	cell = /obj/item/stock_parts/cell/bluespace

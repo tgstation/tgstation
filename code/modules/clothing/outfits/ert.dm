@@ -219,7 +219,7 @@
 	name = "Inquisition Commander"
 
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
 	r_hand = /obj/item/nullrod/scythe/talking/chainsword
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
@@ -229,7 +229,7 @@
 	name = "Inquisition Security"
 
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -241,7 +241,7 @@
 	name = "Inquisition Medic"
 
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -275,6 +275,7 @@
 /datum/outfit/centcom/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
 
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
 	backpack_contents = list(
 		/obj/item/grenade/chem_grenade/holy = 1,
 		/obj/item/nullrod = 1,
