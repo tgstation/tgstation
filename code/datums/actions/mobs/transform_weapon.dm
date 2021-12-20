@@ -14,15 +14,14 @@
 	StartCooldown(rand(cooldown_time, max_cooldown_time))
 
 /datum/action/cooldown/mob_cooldown/transform_weapon/proc/do_transform(atom/target)
-	if(!istype(target, /obj/item/melee/cleaving_saw/miner))
+	if(!istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))
 		return
-	var/obj/item/melee/cleaving_saw/miner/miner_saw = target
+	var/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/BDM = owner
+	var/obj/item/melee/cleaving_saw/miner/miner_saw = BDM.miner_saw
 	miner_saw.attack_self(owner)
-	if(istype(owner, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner))
-		var/mob/living/simple_animal/hostile/H = owner
-		if(!miner_saw.is_open)
-			H.rapid_melee = 5 // 4 deci cooldown before changes, npcpool subsystem wait is 20, 20/4 = 5
-		else
-			H.rapid_melee = 3 // same thing but halved (slightly rounded up)
-		H.icon_state = "miner[miner_saw.is_open ? "_transformed":""]"
-		H.icon_living = "miner[miner_saw.is_open ? "_transformed":""]"
+	if(!miner_saw.is_open)
+		BDM.rapid_melee = 5 // 4 deci cooldown before changes, npcpool subsystem wait is 20, 20/4 = 5
+	else
+		BDM.rapid_melee = 3 // same thing but halved (slightly rounded up)
+	BDM.icon_state = "miner[miner_saw.is_open ? "_transformed":""]"
+	BDM.icon_living = "miner[miner_saw.is_open ? "_transformed":""]"

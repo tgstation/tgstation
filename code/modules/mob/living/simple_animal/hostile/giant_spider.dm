@@ -191,17 +191,48 @@
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-	charger = TRUE
-	charge_distance = 4
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
-	///Whether or not the tarantula is currently walking on webbing.
+	/// Whether or not the tarantula is currently walking on webbing.
 	var/silk_walking = TRUE
+	/// Charging ability
+	var/datum/action/cooldown/mob_cooldown/charge/charge
 
-/mob/living/simple_animal/hostile/giant_spider/tarantula/ranged_secondary_attack(atom/target, modifiers)
-	if(COOLDOWN_FINISHED(src, charge_cooldown))
-		INVOKE_ASYNC(src, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
-	else
-		to_chat(src, span_notice("Your charge is still on cooldown!"))
+/mob/living/simple_animal/hostile/giant_spider/tarantula/Initialize(mapload)
+	. = ..()
+	charge = new /datum/action/cooldown/mob_cooldown/charge()
+	charge.charge_distance = 4
+	charge.cooldown_time = 6 SECONDS
+	charge.charge_indicator = FALSE
+	charge.Grant(src)
+	RegisterSignal(src, COMSIG_STARTED_CHARGE, .proc/before_charge)
+	RegisterSignal(src, COMSIG_BUMPED_CHARGE, .proc/hit_target)
+
+/mob/living/simple_animal/hostile/giant_spider/tarantula/OpenFire()
+	if(client)
+		return
+	charge.Trigger(target)
+
+/mob/living/simple_animal/hostile/giant_spider/tarantula/proc/before_charge()
+	Shake(15, 15, 1 SECONDS)
+
+/mob/living/simple_animal/hostile/giant_spider/tarantula/proc/hit_target(atom/hit_atom)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
+		var/blocked = FALSE
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.check_shields(src, 0, "the [name]", attack_type = LEAP_ATTACK))
+				blocked = TRUE
+		if(!blocked)
+			L.visible_message(span_danger("[src] charges on [L]!"), span_userdanger("[src] charges into you!"))
+			L.Knockdown(6)
+		else
+			Stun(6, ignore_canstun = TRUE)
+	else if(hit_atom.density && !hit_atom.CanPass(src, get_dir(hit_atom, src)))
+		visible_message(span_danger("[src] smashes into [hit_atom]!"))
+		Stun(6, ignore_canstun = TRUE)
+	update_icons()
+	return COMPONENT_OVERRIDE_CHARGE_BUMP
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()

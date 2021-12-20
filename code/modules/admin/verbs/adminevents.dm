@@ -519,7 +519,10 @@
 
 	var/mob/living/marked_mob = holder.marked_datum
 
-	var/ability_type = input("Choose an ability", "Ability")  as null|anything in sortList(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+	var/ability_type = input("Choose an ability", "Ability")  as null|anything in sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+
+	if(!ability_type)
+		return
 
 	var/datum/action/cooldown/mob_cooldown/add_ability = new ability_type()
 	add_ability.Grant(marked_mob)

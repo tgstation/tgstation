@@ -81,7 +81,7 @@ Difficulty: Medium
 			kinetic_accelerator.Trigger(target)
 	else
 		kinetic_accelerator.Trigger(target)
-	transform_weapon.Trigger(miner_saw)
+	transform_weapon.Trigger(target)
 
 /obj/item/melee/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6

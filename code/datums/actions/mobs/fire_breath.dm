@@ -29,7 +29,7 @@
 	if(!target)
 		return
 	var/turf/T = get_ranged_target_turf_direct(owner, target, range, offset)
-	return (getline(owner, T) - get_turf(owner))
+	return (get_line(owner, T) - get_turf(owner))
 
 /datum/action/cooldown/mob_cooldown/fire_breath/cone
 	name = "Fire Cone"

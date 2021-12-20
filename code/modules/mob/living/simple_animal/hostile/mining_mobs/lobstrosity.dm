@@ -32,6 +32,7 @@
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	gold_core_spawnable = HOSTILE_SPAWN
+	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/charge
 
 /mob/living/simple_animal/hostile/asteroid/lobstrosity/Initialize()

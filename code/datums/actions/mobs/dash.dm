@@ -28,7 +28,7 @@
 			turf_dist_to_target += get_dist(dash_target, O)
 		if(get_dist(owner, O) >= dash_range && turf_dist_to_target <= self_dist_to_target && !islava(O) && !ischasm(O))
 			var/valid = TRUE
-			for(var/turf/T in getline(own_turf, O))
+			for(var/turf/T in get_line(own_turf, O))
 				if(T.is_blocked_turf(TRUE))
 					valid = FALSE
 					continue
