@@ -77,25 +77,28 @@ export const ListInputModal = (_, context) => {
       setSelected(index);
     }
   };
-  // User presses a key while not focused on the search bar
-  const onLetterKey = (key: number) => {
-    if (searchBarVisible) {
-      setSearchBarVisible(false);
-      setSearchBarVisible(true);
-    } else {
-      const keyChar = String.fromCharCode(key);
-      const foundItem = items.find((item) => {
-        return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
-      });
-      if (foundItem) {
-        const foundIndex = items.indexOf(foundItem);
-        setSelected(foundIndex);
+  // User presses a letter key and searchbar is visible
+  const onFocusSearch = () => {
+    setSearchBarVisible(false);
+    setSearchBarVisible(true);
+  };
+  // User presses a letter key with no searchbar visible
+  const onLetterSearch = (key: number) => {
+    const keyChar = String.fromCharCode(key);
+    const foundItem = items.find((item) => {
+      return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
+    });
+    if (foundItem) {
+      const foundIndex = items.indexOf(foundItem);
+      setSelected(foundIndex);
         document!.getElementById(foundIndex.toString())?.scrollIntoView();
-      }
     }
   };
   // User types into search bar
   const onSearch = (query: string) => {
+    if (query === searchQuery) {
+      return;
+    }
     setSearchQuery(query);
     setSelected(0);
     document!.getElementById('0')?.scrollIntoView();
@@ -128,7 +131,7 @@ export const ListInputModal = (_, context) => {
           }
           if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
             event.preventDefault();
-            onLetterKey(keyCode);
+            onLetterSearch(keyCode);
           }
           if (keyCode === KEY_ESCAPE) {
             event.preventDefault();
@@ -154,9 +157,8 @@ export const ListInputModal = (_, context) => {
             <Stack.Item grow>
               <ListDisplay
                 filteredItems={filteredItems}
-                isValid={inputIsValid.isValid}
                 onClick={onClick}
-                onLetterKey={onLetterKey}
+                onFocusSearch={onFocusSearch}
                 selected={selected}
               />
             </Stack.Item>
@@ -187,7 +189,7 @@ export const ListInputModal = (_, context) => {
  * If a search query is provided, filters the items.
  */
 const ListDisplay = (props) => {
-  const { filteredItems, onClick, onLetterKey, selected } = props;
+  const { filteredItems, onClick, onFocusSearch, selected } = props;
 
   return (
     <Section fill scrollable tabIndex={0}>
@@ -203,7 +205,7 @@ const ListDisplay = (props) => {
               const keyCode = window.event ? event.which : event.keyCode;
               if (keyCode >= 65 && keyCode <= 90) {
                 event.preventDefault();
-                onLetterKey(keyCode);
+                onFocusSearch();
               }
             }}
             selected={index === selected}
@@ -232,7 +234,6 @@ const SearchBar = (props, context) => {
       autoFocus
       autoSelect
       fluid
-      id="searchBar"
       onEnter={(event) => {
         if (isValid) {
           event.preventDefault();
