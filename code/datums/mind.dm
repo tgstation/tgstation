@@ -486,7 +486,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = tgui_input_list(usr, "Select new role", "Assigned role", assigned_role.title, sort_list(SSjob.station_jobs))
+		var/new_role = tgui_input_list(usr, "Select new role", "Assigned role", sort_list(SSjob.station_jobs))
 		if(isnull(new_role))
 			return
 		var/datum/job/new_job = SSjob.GetJob(new_role)
