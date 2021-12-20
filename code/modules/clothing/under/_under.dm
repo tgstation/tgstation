@@ -247,7 +247,7 @@
 		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	var/switchMode = tgui_input_list(M, "Select a sensor mode", "Suit Sensor Mode", modes, modes[sensor_mode + 1])
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, span_warning("You have moved too far away!"))
 		return

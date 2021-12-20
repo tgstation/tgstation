@@ -32,13 +32,17 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 //Shared by few objective types
 /datum/objective/proc/admin_simple_target_pick(mob/admin)
 	var/list/possible_targets = list()
+	var/def_value
 	for(var/datum/mind/possible_target in SSticker.minds)
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
 	possible_targets = list("Free objective", "Random") + sort_names(possible_targets)
 
-	var/mob/new_target = tgui_input_list(admin, "Select target", "Objective target", possible_targets)
+	if(target?.current)
+		def_value = target.current
+
+	var/mob/new_target = tgui_input_list(admin, "Select target", "Objective target", possible_targets, def_value)
 	if (!new_target)
 		return
 	if (new_target == "Free objective")
@@ -592,7 +596,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/admin_edit(mob/admin)
 	var/list/possible_items_all = GLOB.possible_items
-	var/new_target = tgui_input_list(admin, "Select target", "Objective target", sort_names(possible_items_all) + "custom")
+	var/new_target = tgui_input_list(admin, "Select target", "Objective target", sort_names(possible_items_all) + "custom", steal_target)
 	if (!new_target)
 		return
 
