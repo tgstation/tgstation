@@ -80,23 +80,17 @@
 /obj/item/radio/intercom/ui_state(mob/user)
 	return GLOB.default_state
 
-/obj/item/radio/intercom/can_receive(freq, level)
-	if(!on)
-		return FALSE
-	if(wires.is_cut(WIRE_RX))
-		return FALSE
-	if(!(0 in level))
+/obj/item/radio/intercom/can_receive(freq, list/levels)
+	if(levels != RADIO_NO_Z_LEVEL_RESTRICTION)
 		var/turf/position = get_turf(src)
-		if(isnull(position) || !(position.z in level))
+		if(isnull(position) || !(position.z in levels))
 			return FALSE
-	if(!listening)
-		return FALSE
+
 	if(freq == FREQ_SYNDICATE)
 		if(!(syndie))
 			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
 	return TRUE
-
 
 /obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(message_mods[RADIO_EXTENSION] == MODE_INTERCOM)
@@ -126,9 +120,9 @@
 	SIGNAL_HANDLER
 	var/area/current_area = get_area(src)
 	if(!current_area)
-		on = FALSE
+		set_on(FALSE)
 	else
-		on = current_area.powered(AREA_USAGE_EQUIP) // set "on" to the equipment power status of our area.
+		set_on(current_area.powered(AREA_USAGE_EQUIP)) // set "on" to the equipment power status of our area.
 	update_appearance()
 
 /obj/item/radio/intercom/add_blood_DNA(list/blood_dna)
@@ -148,8 +142,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
 	anonymize = TRUE
-	frequency = 1481
-	broadcasting = TRUE
+
+/obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
+	. = ..()
+	set_frequency(1481)
+	set_broadcasting(TRUE)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 26)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 26)

@@ -54,8 +54,8 @@
 	return "[icon_state]_inbox"
 
 ///Override for checkliked in edible component, because all cops LOVE donuts
-/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/H)
-	if(!HAS_TRAIT(H, TRAIT_AGEUSIA) && H.mind && HAS_TRAIT(H.mind, TRAIT_DONUT_LOVER))
+/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && consumer.mind && HAS_TRAIT(consumer.mind, TRAIT_DONUT_LOVER))
 		return FOOD_LIKED
 
 //Use this donut ingame
@@ -367,7 +367,7 @@
 
 /obj/item/food/muffin/moffin/Initialize(mapload)
 	. = ..()
-	icon_state = "[icon_state]_[rand(1,3)]"
+	icon_state = "[icon_state]_[rand(1, 3)]"
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
@@ -785,7 +785,7 @@
 	name = contents.len ? "stack of pancakes" : initial(name)
 	return ..()
 
-/obj/item/food/pancakes/update_icon(updates=ALL)
+/obj/item/food/pancakes/update_icon(updates = ALL)
 	if(!(updates & UPDATE_OVERLAYS))
 		return ..()
 
@@ -843,17 +843,17 @@
 	..()
 
 /obj/item/food/pancakes/proc/update_snack_overlays(obj/item/pancake)
-	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.inhand_icon_state]_[rand(1,3)]")
-	pancake_visual.pixel_x = rand(-1,1)
+	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.inhand_icon_state]_[rand(1, 3)]")
+	pancake_visual.pixel_x = rand(-1, 1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
 	add_overlay(pancake_visual)
 	update_appearance()
 
-/obj/item/food/pancakes/attack(mob/M, mob/living/user, params, stacked = TRUE)
+/obj/item/food/pancakes/attack(mob/target, mob/living/user, params, stacked = TRUE)
 	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
-	var/obj/item/O = contents[contents.len]
-	. = O.attack(M, user, params, FALSE)
+	var/obj/item/item = contents[contents.len]
+	. = item.attack(target, user, params, FALSE)
 	update_appearance()
 
 #undef PANCAKE_MAX_STACK

@@ -511,6 +511,9 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/really_actually_explode(off_station)
 	var/turf/bomb_location = get_turf(src)
 	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
+	if(off_station == STATION_DESTROYED_NUKE)
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnStation)
+		return
 	if(off_station != NUKE_NEAR_MISS) // Don't kill people in the station if the nuke missed, even if we are technically on the same z-level
 		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, bomb_location.z)
 
@@ -600,13 +603,19 @@ GLOBAL_VAR(station_nuke_source)
 	disarm()
 	stationwide_foam()
 
+/proc/KillEveryoneOnStation()
+	for(var/mob/living/victim as anything in GLOB.mob_living_list)
+		if(victim.stat != DEAD && is_station_level(victim.z))
+			to_chat(victim, span_userdanger("You are shredded to atoms!"))
+			victim.gib()
+
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
 		return
 	for(var/_victim in GLOB.mob_living_list)
 		var/mob/living/victim = _victim
-		to_chat(victim, span_userdanger("You are shredded to atoms!"))
 		if(victim.stat != DEAD && victim.z == z)
+			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
 
 /*

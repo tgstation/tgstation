@@ -1,4 +1,5 @@
 import { Color } from 'common/color';
+import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef, RefObject } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex } from '../components';
@@ -233,7 +234,7 @@ export const Canvas = (props, context) => {
                 textAlign="left"
                 backgroundColor="white"
                 style={{ "border-style": "inset" }}>
-                <Box mb={1} fontSize="18px" bold>{data.name}</Box>
+                <Box mb={1} fontSize="18px" bold>{decodeHtmlEntities(data.name)}</Box>
                 <Box bold>
                   {data.author}
                   {!!data.date && `- ${new Date(data.date).getFullYear()+540}`}

@@ -173,6 +173,8 @@
 		return INVALID_DRAIN
 	if(ninja_gloves.communication_console_hack_success)
 		return
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
 	AI_notify_hack()
 	if(do_after(ninja, 300))
 		var/announcement_pick = rand(0, 1)
