@@ -90,7 +90,7 @@ export const ListInputModal = (_, context) => {
       if (foundItem) {
         const foundIndex = items.indexOf(foundItem);
         setSelected(foundIndex);
-      document!.getElementById(foundIndex.toString())?.scrollIntoView();
+        document!.getElementById(foundIndex.toString())?.scrollIntoView();
       }
     }
   };
