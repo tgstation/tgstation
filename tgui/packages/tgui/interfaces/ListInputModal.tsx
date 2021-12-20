@@ -79,15 +79,19 @@ export const ListInputModal = (_, context) => {
   };
   // User doesn't have search bar visible & presses a key
   const onLetterKey = (key: number) => {
-    const keyChar = String.fromCharCode(key).toLowerCase();
-    const foundItem = items.find((item) => {
-      return item.toLowerCase().startsWith(keyChar);
-    });
-    if (foundItem) {
-      const foundIndex = items.indexOf(foundItem);
-      setSelected(foundIndex);
+    if (searchBarVisible) {
+      const searchBar = document!.getElementById('searchBar');
+      searchBar?.focus();
+    } else {
+      const keyChar = String.fromCharCode(key).toLowerCase();
+      const foundItem = items.find((item) => {
+        return item.toLowerCase().startsWith(keyChar);
+      });
+      if (foundItem) {
+        const foundIndex = items.indexOf(foundItem);
+        setSelected(foundIndex);
       document!.getElementById(foundIndex.toString())?.scrollIntoView();
-    }
+      } }
   };
   // User types into search bar
   const onSearch = (query: string) => {
@@ -116,7 +120,7 @@ export const ListInputModal = (_, context) => {
             event.preventDefault();
             onArrowKey(keyCode);
           }
-          if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
+          if (keyCode >= 65 && keyCode <= 90) {
             event.preventDefault();
             onLetterKey(keyCode);
           }
@@ -221,17 +225,19 @@ const SearchBar = (props, context) => {
   return (
     <Input
       autoFocus
+      autoSelect
       fluid
       id="searchBar"
+      onEnter={(event) => {
+        if (isValid) {
+          event.preventDefault();
+          act('submit', { entry: filteredItems[selected] });
+        }
+      }}
       onInput={(event, value) => {
         const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_ENTER) {
-          if (isValid) {
-            // we need to intercept the enter key here from trying to search
-            event.preventDefault();
-            act('submit', { entry: filteredItems[selected] });
-          }
-        } else {
+        if (keyCode >= 65 && keyCode <= 90) {
+          event.preventDefault();
           onSearch(value);
         }
       }}
