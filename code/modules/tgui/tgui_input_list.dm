@@ -57,6 +57,11 @@
 			user = client.mob
 		else
 			return
+	if (!default || !(default in items))
+		default = items[0]
+	/// Client does NOT have tgui_input on: Returns regular input
+	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
+		return input(user, message, title) as null|anything in items
 	var/datum/tgui_list_input/async/input = new(user, message, title, items, default, callback, timeout)
 	input.ui_interact(user)
 
@@ -140,9 +145,9 @@
 
 /datum/tgui_list_input/ui_static_data(mob/user)
 	. = list(
+		"initValue" = default,
 		"items" = items,
 		"message" = message,
-		"placeholder" = default, /// Can't use default as it's a reserved word
 		"preferences" = list(),
 		"title" = title
 	)

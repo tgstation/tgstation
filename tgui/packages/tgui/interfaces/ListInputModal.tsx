@@ -8,7 +8,7 @@ import { useBackend, useLocalState } from '../backend';
 type ListInputData = {
   items: string[];
   message: string;
-  placeholder?: string;
+  initValue: string;
   preferences: Preferences;
   timeout: number;
   title: string;
@@ -19,7 +19,7 @@ export const ListInputModal = (_, context) => {
   const {
     items = [],
     message,
-    placeholder,
+    initValue,
     preferences,
     timeout,
     title,
@@ -28,7 +28,7 @@ export const ListInputModal = (_, context) => {
   const [selected, setSelected] = useLocalState<number | null>(
     context,
     'selected',
-    placeholder ? items.indexOf(placeholder) : 0
+    items.indexOf(initValue),
   );
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
