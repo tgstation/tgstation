@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "The Pirate's shuttle scrambler will now ONLY work if you tell it to."

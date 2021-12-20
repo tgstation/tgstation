@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "Ninjas can no longer call reinforcements if the comms console is depowered"
