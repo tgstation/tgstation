@@ -6,7 +6,6 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 	roundend_category = "abductors"
 	antagpanel_category = "Abductor"
 	job_rank = ROLE_ABDUCTOR
-	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
@@ -109,8 +108,6 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 			H.forceMove(LM.loc)
 			break
 
-	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
-
 /datum/antagonist/abductor/scientist/on_gain()
 	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
 	ADD_TRAIT(owner, TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
@@ -145,7 +142,7 @@ GLOBAL_LIST_INIT(possible_abductor_names, list("Alpha","Beta","Gamma","Delta","E
 		to_chat(admin, span_warning("This only works on humans!"))
 		return
 	var/mob/living/carbon/human/H = owner.current
-	var/gear = tgui_alert(admin,"Agent or Scientist Gear","Gear",list("Agent","Scientist"))
+	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
 		if(gear=="Agent")
 			H.equipOutfit(/datum/outfit/abductor/agent)

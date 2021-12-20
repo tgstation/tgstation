@@ -71,7 +71,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
 	dir = 1
 	},
 /obj/effect/turf_decal/box,
@@ -115,7 +115,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "Am" = (
-/obj/effect/mob_spawn/human/fugitive/spacepol{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
 	dir = 8
 	},
 /obj/effect/turf_decal/box,

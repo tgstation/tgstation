@@ -93,10 +93,12 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		if(initial(above_suit))
-			above_suit = !above_suit
-			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
+	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		above_suit = !above_suit
+		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
+		return
+
+	return ..()
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
@@ -110,6 +112,14 @@
 	icon_state = "waistcoat"
 	inhand_icon_state = "waistcoat"
 	minimize_when_attached = FALSE
+	attachment_slot = null
+
+/obj/item/clothing/accessory/vest_sheriff
+	name = "sheriff vest"
+	desc = "Now you just have to pick your favourite deputy."
+	icon_state = "vest_sheriff"
+	inhand_icon_state = "vest_sheriff"
+	minimize_when_attached = TRUE
 	attachment_slot = null
 
 /obj/item/clothing/accessory/maidapron
@@ -439,3 +449,16 @@
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list += "The dogtag has a listing of allergies : [display]"
+
+/obj/item/clothing/accessory/pride
+	name = "pride pin"
+	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
+	icon_state = "pride"
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Rainbow Pride" = "pride",
+						"Bisexual Pride" = "pride_bi",
+						"Pansexual Pride" = "pride_pan",
+						"Asexual Pride" = "pride_ace",
+						"Non-binary Pride" = "pride_enby",
+						"Transgender Pride" = "pride_trans",
+						)

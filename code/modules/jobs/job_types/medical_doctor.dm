@@ -1,6 +1,8 @@
 /datum/job/doctor
-	title = "Medical Doctor"
-	department_head = list("Chief Medical Officer")
+	title = JOB_MEDICAL_DOCTOR
+	description = "Save lives, run around the station looking for victims, \
+		scan everyone in sight"
+	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -43,7 +45,7 @@
 
 	id_trim = /datum/id_trim/job/medical_doctor
 	uniform = /obj/item/clothing/under/rank/medical/doctor
-	suit =  /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med

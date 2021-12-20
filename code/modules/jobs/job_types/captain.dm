@@ -1,5 +1,8 @@
 /datum/job/captain
-	title = "Captain"
+	title = JOB_CAPTAIN
+	description = "Be responsible for the station, manage your Heads of Staff, \
+		keep the crew alive, be prepared to do anything and everything or die \
+		horribly trying."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("CentCom")
 	faction = FACTION_STATION
@@ -23,9 +26,10 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	department_for_prefs = /datum/job_department/captain
 	departments_list = list(
 		/datum/job_department/command,
-		)
+	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
@@ -51,7 +55,7 @@
 
 	id = /obj/item/card/id/advanced/gold
 	id_trim = /datum/id_trim/job/captain
-	uniform =  /obj/item/clothing/under/rank/captain
+	uniform = /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,

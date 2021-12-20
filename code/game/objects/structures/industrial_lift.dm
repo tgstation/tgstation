@@ -70,7 +70,7 @@
  * This is a SAFE proc, ensuring every part of the lift moves SANELY.
  * It also locks controls for the (miniscule) duration of the movement, so the elevator cannot be broken by spamming.
  */
-/datum/lift_master/proc/MoveLiftHorizontal(going, z)
+/datum/lift_master/proc/MoveLiftHorizontal(going, z, gliding_amount = 8)
 	var/max_x = 1
 	var/max_y = 1
 	var/min_x = world.maxx
@@ -93,12 +93,12 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 	else
 		//Go along the X axis from max to min, from right to left
 		for(var/x in max_x to min_x step -1)
@@ -106,12 +106,12 @@
 				//Go along the Y axis from max to min, from up to down
 				for(var/y in max_y to min_y step -1)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 			else
 				//Go along the Y axis from min to max, from down to up
 				for(var/y in min_y to max_y)
 					var/obj/structure/industrial_lift/lift_platform = locate(/obj/structure/industrial_lift, locate(x, y, z))
-					lift_platform?.travel(going)
+					lift_platform?.travel(going, gliding_amount)
 	set_controls(UNLOCKED)
 
 ///Check destination turfs
@@ -121,7 +121,9 @@
 		var/turf/T = get_step_multiz(lift_platform, check_dir)
 		if(!T)//the edges of multi-z maps
 			return FALSE
-		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/openspace))
+		if(check_dir == UP && !istype(T, /turf/open/openspace)) // We don't want to go through the ceiling!
+			return FALSE
+		if(check_dir == DOWN && !istype(get_turf(lift_platform), /turf/open/openspace)) // No going through the floor!
 			return FALSE
 	return TRUE
 
@@ -180,6 +182,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	SIGNAL_HANDLER
 	if(!(potential_rider in lift_load))
 		return
+	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
+		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)		
 	LAZYREMOVE(lift_load, potential_rider)
 	UnregisterSignal(potential_rider, COMSIG_PARENT_QDELETING)
 
@@ -189,6 +193,8 @@ GLOBAL_LIST_EMPTY(lifts)
 		return
 	if(AM in lift_load)
 		return
+	if(isliving(AM) && !HAS_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED))
+		ADD_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)		
 	LAZYADD(lift_load, AM)
 	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
@@ -209,7 +215,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		tram_part.travel_distance = 0
 		tram_part.set_travelling(FALSE)
 		if(prob(15) || locate(/mob/living) in tram_part.lift_load) //always go boom on people on the track
-			explosion(tram_part, devastation_range = rand(0,1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
+			explosion(tram_part, devastation_range = rand(0, 1), heavy_impact_range = 2, light_impact_range = 3) //50% chance of gib
 		qdel(tram_part)
 
 /obj/structure/industrial_lift/proc/lift_platform_expansion(datum/lift_master/lift_master_datum)
@@ -220,13 +226,15 @@ GLOBAL_LIST_EMPTY(lifts)
 			continue
 		. += neighbor
 
-/obj/structure/industrial_lift/proc/travel(going)
-	var/list/things2move = LAZYCOPY(lift_load)
+/obj/structure/industrial_lift/proc/travel(going, gliding_amount = 8)
+	var/list/things_to_move = LAZYCOPY(lift_load)
 	var/turf/destination
 	if(!isturf(going))
 		destination = get_step_multiz(src, going)
 	else
 		destination = going
+	///handles any special interactions objects could have with the lift/tram, handled on the item itself	
+	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER)
 
 	if(istype(destination, /turf/closed/wall))
 		var/turf/closed/wall/C = destination
@@ -243,38 +251,38 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	else if(going != UP) //can't really crush something upwards
 		var/atom/throw_target = get_edge_target_turf(src, turn(going, pick(45, -45))) //finds a spot to throw the victim at for daring to be hit by a tram
-		for(var/obj/structure/victimstructure in destination.contents)
-			if(QDELETED(victimstructure))
+		for(var/obj/structure/victim_structure in destination.contents)
+			if(QDELETED(victim_structure))
 				continue
-			if(!istype(victimstructure, /obj/structure/holosign) && victimstructure.layer >= LOW_OBJ_LAYER)
-				if(victimstructure.anchored && initial(victimstructure.anchored) == TRUE)
-					visible_message("<span class='danger'>[src] smashes through [victimstructure]!</span>")
-					victimstructure.deconstruct(FALSE)
+			if(!istype(victim_structure, /obj/structure/holosign) && victim_structure.layer >= LOW_OBJ_LAYER)
+				if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
+					visible_message(span_danger("[src] smashes through [victim_structure]!"))
+					victim_structure.deconstruct(FALSE)
 				else
-					visible_message("<span class='danger'>[src] violently rams [victimstructure] out of the way!</span>")
-					victimstructure.anchored = FALSE
-					victimstructure.take_damage(rand(20,25))
-					victimstructure.throw_at(throw_target, 200, 4)
-		for(var/obj/machinery/victimmachine in destination.contents)
-			if(QDELETED(victimmachine))
+					visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
+					victim_structure.anchored = FALSE
+					victim_structure.take_damage(rand(20, 25))
+					victim_structure.throw_at(throw_target, 200, 4)
+		for(var/obj/machinery/victim_machine in destination.contents)
+			if(QDELETED(victim_machine))
 				continue
-			if(istype(victimmachine, /obj/machinery/field)) //graceful break handles this scenario
+			if(istype(victim_machine, /obj/machinery/field)) //graceful break handles this scenario
 				continue
-			if(victimmachine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
+			if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
 				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-				visible_message("<span class='danger'>[src] smashes through [victimmachine]!</span>")
-				qdel(victimmachine)
+				visible_message(span_danger("[src] smashes through [victim_machine]!"))
+				qdel(victim_machine)
 
 		for(var/mob/living/collided in destination.contents)
 			to_chat(collided, span_userdanger("[src] collides into you!"))
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-			var/damage = rand(5,10)
-			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD)
-			collided.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM)
-			collided.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM)
+			var/damage = rand(5, 10)
+			collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
+			collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
+			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
+			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
+			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
+			collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
 
 			if(QDELETED(collided)) //in case it was a mob that dels on death
 				continue
@@ -285,8 +293,11 @@ GLOBAL_LIST_EMPTY(lifts)
 			//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
 			var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
 			collided.throw_at(throw_target, 200, 4, callback = land_slam)
+
+	set_glide_size(gliding_amount)
 	forceMove(destination)
-	for(var/atom/movable/thing as anything in things2move)
+	for(var/atom/movable/thing as anything in things_to_move)
+		thing.set_glide_size(gliding_amount) //matches the glide size of the moving platform to stop them from jittering on it.
 		thing.forceMove(destination)
 
 /obj/structure/industrial_lift/proc/use(mob/living/user)
@@ -306,15 +317,24 @@ GLOBAL_LIST_EMPTY(lifts)
 		to_chat(user, span_warning("[src] has its controls locked! It must already be trying to do something!"))
 		add_fingerprint(user)
 		return
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user, src.loc), require_near = TRUE, tooltips = TRUE)
 	if(!isliving(user) || !in_range(src, user) || user.combat_mode)
 		return //nice try
 	switch(result)
 		if("Up")
+			// We have to make sure that they don't do illegal actions by not having their radial menu refresh from someone else moving the lift.
+			if(!lift_master_datum.Check_lift_move(UP))
+				to_chat(user, span_warning("[src] doesn't seem to able to move up!"))
+				add_fingerprint(user)
+				return
 			lift_master_datum.MoveLift(UP, user)
 			show_fluff_message(TRUE, user)
 			use(user)
 		if("Down")
+			if(!lift_master_datum.Check_lift_move(DOWN))
+				to_chat(user, span_warning("[src] doesn't seem to able to move down!"))
+				add_fingerprint(user)
+				return
 			lift_master_datum.MoveLift(DOWN, user)
 			show_fluff_message(FALSE, user)
 			use(user)
@@ -322,8 +342,17 @@ GLOBAL_LIST_EMPTY(lifts)
 			return
 	add_fingerprint(user)
 
-/obj/structure/industrial_lift/proc/check_menu(mob/user)
-	if(user.incapacitated() || !user.Adjacent(src))
+/**
+ * Proc to ensure that the radial menu closes when it should.
+ * Arguments:
+ * * user - The person that opened the menu.
+ * * starting_loc - The location of the lift when the menu was opened, used to prevent the menu from being interacted with after the lift was moved by someone else.
+ *
+ * Returns:
+ * * boolean, FALSE if the menu should be closed, TRUE if the menu is clear to stay opened.
+ */
+/obj/structure/industrial_lift/proc/check_menu(mob/user, starting_loc)
+	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != src.loc)
 		return FALSE
 	return TRUE
 
@@ -351,6 +380,12 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(R.Adjacent(src))
 		return use(R)
 
+/**
+ * Shows a message indicating that the lift has moved up or down.
+ * Arguments:
+ * * going_up - Boolean on whether or not we're going up, to adjust the message appropriately.
+ * * user - The mob that caused the lift to move, for the visible message.
+ */
 /obj/structure/industrial_lift/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
 		user.visible_message(span_notice("[user] moves the lift upwards."), span_notice("You move the lift upwards."))
@@ -431,10 +466,10 @@ GLOBAL_LIST_EMPTY(lifts)
 	canSmoothWith = null
 	//kind of a centerpiece of the station, so pretty tough to destroy
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	///set by the tram control console in late initialize
+	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 	var/travel_distance = 0
-	///for finding the landmark initially - should be the exact same as the landmark's destination id.
+	/// For finding the landmark initially - should be the exact same as the landmark's destination id.
 	var/initial_id = "middle_part"
 	var/obj/effect/landmark/tram/from_where
 	var/travel_direction
@@ -496,7 +531,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		return PROCESS_KILL
 	else
 		travel_distance--
-		lift_master_datum.MoveLiftHorizontal(travel_direction, z)
+		lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
 
 /**
  * Handles moving the tram
@@ -510,7 +545,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 	if(to_where == from_where)
 		return
 
-	visible_message("<span class='notice'>[src] has been called to the [to_where]!</span")
+	visible_message(span_notice("[src] has been called to the [to_where]!"))
 
 	lift_master_datum.set_controls(LOCKED)
 	travel_direction = get_dir(from_where, to_where)
@@ -522,7 +557,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
 		SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
 		other_tram_part.set_travelling(TRUE)
 		other_tram_part.from_where = to_where
-	lift_master_datum.MoveLiftHorizontal(travel_direction, z)
+	lift_master_datum.MoveLiftHorizontal(travel_direction, z, DELAY_TO_GLIDE_SIZE(SStramprocess.wait))
 	travel_distance--
 
 	START_PROCESSING(SStramprocess, src)
@@ -535,7 +570,7 @@ GLOBAL_DATUM(central_tram, /obj/structure/industrial_lift/tram/central)
  * Tram finds its location at this point before fully unlocking controls to the user.
  */
 /obj/structure/industrial_lift/tram/proc/unlock_controls()
-	visible_message("<span class='notice'>[src]'s controls are now unlocked.</span")
+	visible_message(span_notice("[src]'s controls are now unlocked."))
 	for(var/obj/structure/industrial_lift/tram/tram_part as anything in lift_master_datum.lift_platforms) //only thing everyone needs to know is the new location.
 		tram_part.set_travelling(FALSE)
 		lift_master_datum.set_controls(UNLOCKED)
@@ -545,8 +580,9 @@ GLOBAL_LIST_EMPTY(tram_landmarks)
 /obj/effect/landmark/tram
 	name = "tram destination" //the tram buttons will mention this.
 	icon_state = "tram"
+	/// The ID of that particular destination.
 	var/destination_id
-	///icons for the tgui console to list out for what is at this location
+	/// Icons for the tgui console to list out for what is at this location
 	var/list/tgui_icons = list()
 
 /obj/effect/landmark/tram/Initialize(mapload)

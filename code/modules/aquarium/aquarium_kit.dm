@@ -39,6 +39,13 @@
 /obj/item/storage/fish_case/random/freshwater/select_fish_type()
 	return random_fish_type(required_fluid=AQUARIUM_FLUID_FRESHWATER)
 
+/obj/item/storage/fish_case/syndicate
+	name = "ominous fish case"
+
+/obj/item/storage/fish_case/syndicate/PopulateContents()
+	. = ..()
+	generate_fish(src, pick(/datum/aquarium_behaviour/fish/donkfish, /datum/aquarium_behaviour/fish/emulsijack))
+
 ///Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog
 	name = "Fish Encyclopedia"

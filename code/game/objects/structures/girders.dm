@@ -59,14 +59,14 @@
 		if(istype(W, /obj/item/stack/rods))
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
-					to_chat(user, span_warning("You need at least two rods to create a false wall!"))
+				if(S.get_amount() < 5)
+					to_chat(user, span_warning("You need at least five rods to create a false wall!"))
 					return
-				to_chat(user, span_notice("You start building a reinforced false wall..."))
+				to_chat(user, span_notice("You start building a false wall..."))
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(S.get_amount() < 5)
 						return
-					S.use(2)
+					S.use(5)
 					to_chat(user, span_notice("You create a false wall. Push on it to open or close the passage."))
 					var/obj/structure/falsewall/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)
@@ -346,12 +346,7 @@
 
 /obj/structure/girder/cult/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user)) //Cultists can demolish cult girders instantly with their tomes
-		user.visible_message(span_warning("[user] strikes [src] with [W]!"), span_notice("You demolish [src]."))
-		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
-		qdel(src)
-
-	else if(W.tool_behaviour == TOOL_WELDER)
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 

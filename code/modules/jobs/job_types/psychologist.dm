@@ -1,6 +1,8 @@
 /datum/job/psychologist
-	title = "Psychologist"
-	department_head = list("Head of Personnel","Chief Medical Officer")
+	title = JOB_PSYCHOLOGIST
+	description = "Advocate sanity, self-esteem, and teamwork in a station \
+		staffed with headcases."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -23,7 +25,7 @@
 
 	family_heirlooms = list(/obj/item/storage/pill_bottle)
 
-	mail_goodies =  list(
+	mail_goodies = list(
 		/obj/item/storage/pill_bottle/mannitol = 30,
 		/obj/item/storage/pill_bottle/happy = 5,
 		/obj/item/gun/syringe = 1

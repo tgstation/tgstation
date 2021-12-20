@@ -154,7 +154,7 @@
 	invocation_type = INVOCATION_EMOTE
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
-	sound =  null
+	sound = null
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	range = -1
@@ -176,7 +176,7 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot a mimed bullet from your fingers that stuns and does some damage."
+	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets."
 	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300

@@ -2,6 +2,7 @@
 #define VV_TEXT "Text"
 #define VV_MESSAGE "Mutiline Text"
 #define VV_COLOR "Color"
+#define VV_COLOR_MATRIX "Color Matrix"
 #define VV_ICON "Icon"
 #define VV_ATOM_REFERENCE "Atom Reference"
 #define VV_DATUM_REFERENCE "Datum Reference"
@@ -89,6 +90,7 @@
 #define VV_HK_TRIGGER_EXPLOSION "explode"
 #define VV_HK_AUTO_RENAME "auto_rename"
 #define VV_HK_EDIT_FILTERS "edit_filters"
+#define VV_HK_EDIT_COLOR_MATRIX "edit_color_matrix"
 #define VV_HK_ADD_AI "add_ai"
 
 // /atom/movable
@@ -130,10 +132,6 @@
 #define VV_HK_COPY_OUTFIT "copy_outfit"
 #define VV_HK_MOD_MUTATIONS "quirkmut"
 #define VV_HK_MOD_QUIRKS "quirkmod"
-#define VV_HK_MAKE_MONKEY "human_monkify"
-#define VV_HK_MAKE_CYBORG "human_cyborgify"
-#define VV_HK_MAKE_SLIME "human_slimeify"
-#define VV_HK_MAKE_ALIEN "human_alienify"
 #define VV_HK_SET_SPECIES "setspecies"
 #define VV_HK_PURRBATION "purrbation"
 

@@ -145,9 +145,7 @@
 	temperature_archived = temperature
 
 /turf/open/archive()
-	air.archive()
-	archived_cycle = SSair.times_fired
-	temperature_archived = temperature
+	LINDA_CYCLE_ARCHIVE(src)
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
@@ -242,7 +240,7 @@
 
 /turf/open/process_cell(fire_count)
 	if(archived_cycle < fire_count) //archive self if not already done
-		archive()
+		LINDA_CYCLE_ARCHIVE(src)
 
 	current_cycle = fire_count
 	var/cached_ticker = significant_share_ticker
@@ -259,12 +257,10 @@
 	max_share = 0 //Gotta reset our tracker
 	#endif
 
-	for(var/t in adjacent_turfs)
-		var/turf/open/enemy_tile = t
-
+	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
-		enemy_tile.archive()
+		LINDA_CYCLE_ARCHIVE(enemy_tile)
 
 	/******************* GROUP HANDLING START *****************************************************************/
 
@@ -311,7 +307,7 @@
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
-		archive()
+		LINDA_CYCLE_ARCHIVE(src)
 		if(our_air.compare(planetary_mix))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
@@ -371,15 +367,6 @@
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
-/*
-	I've got a problem with excited groups
-	Adding tiles works out fine, but if you try and remove them, we get issues
-	The main one is to do with how sleeping tiles are processed
-	If a tile is sleeping, it is removed from the active turfs list and not processed at all
-	The issue comes when we try and reform excited groups after a removal like this
-	and the turfs just poof go fully to sleep.
-	We solve this with excited group cleanup. See the documentation for more details.
-*/
 /datum/excited_group
 	///Stores a reference to the turfs we are controlling
 	var/list/turf_list = list()

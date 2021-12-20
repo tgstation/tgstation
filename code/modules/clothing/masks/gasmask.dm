@@ -18,6 +18,7 @@
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
+	init_fov()
 	if(!max_filters || !starting_filter_type)
 		return
 
@@ -75,6 +76,10 @@
 		has_filter = FALSE
 	return filtered_breath
 
+/// Initializes the FoV component for the gas mask
+/obj/item/clothing/mask/gas/proc/init_fov()
+	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
 /**
  * Getter for overall filter durability, takes into consideration all filters filter_status
  */
@@ -107,6 +112,9 @@
 /obj/item/clothing/mask/gas/atmos/centcom
 	name = "\improper CentCom gas mask"
 	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	worn_icon_state = "centcomspace"
 	icon_state = "gas_centcom"
 	inhand_icon_state = "gas_centcom"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -170,6 +178,9 @@
 	species_exception = list(/datum/species/golem/bananium)
 	var/list/clownmask_designs = list()
 
+/obj/item/clothing/mask/gas/clown_hat/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
@@ -216,6 +227,9 @@
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
 
+/obj/item/clothing/mask/gas/sexyclown/init_fov()
+	return
+
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
@@ -228,6 +242,9 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
 	var/list/mimemask_designs = list()
+
+/obj/item/clothing/mask/gas/mime/init_fov()
+	return
 
 /obj/item/clothing/mask/gas/mime/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -280,6 +297,9 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/mask/gas/sexymime/init_fov()
+	return
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"

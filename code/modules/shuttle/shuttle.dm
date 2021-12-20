@@ -718,7 +718,7 @@
 		if(!T || !istype(T.loc, area_type))
 			continue
 		for (var/atom/movable/movable as anything in T)
-			if (length(movable.client_mobs_in_contents))
+			if (movable.client_mobs_in_contents)
 				movable.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()
@@ -950,7 +950,7 @@
 		var/delta = initial_engines - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
 		if(initial_engines > 0)
-			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
+			change_per_engine = (ENGINE_COEFF_MAX - 1) / initial_engines //just linear drop to max delay
 		return clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 
 

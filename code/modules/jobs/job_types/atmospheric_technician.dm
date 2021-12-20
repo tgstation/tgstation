@@ -1,6 +1,7 @@
 /datum/job/atmospheric_technician
-	title = "Atmospheric Technician"
-	department_head = list("Chief Engineer")
+	title = JOB_ATMOSPHERIC_TECHNICIAN
+	description = "Ensure the air is breathable on the station, fill oxygen tanks, fight fires, purify the air."
+	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
@@ -61,7 +62,7 @@
 /datum/outfit/job/atmos/rig
 	name = "Atmospheric Technician (Hardsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
+	suit = /obj/item/clothing/suit/space/hardsuit/atmos
 	suit_store = /obj/item/tank/internals/oxygen
 	mask = /obj/item/clothing/mask/gas/atmos
 	internals_slot = ITEM_SLOT_SUITSTORE

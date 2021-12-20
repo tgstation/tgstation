@@ -106,6 +106,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	else
 		. += span_notice("There is no power cell installed.")
 
+/obj/item/integrated_circuit/drop_location()
+	if(shell)
+		return shell.drop_location()
+	return ..()
+
 /**
  * Sets the cell of the integrated circuit.
  *
@@ -625,6 +630,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			return TRUE
 
 #undef WITHIN_RANGE
+
+/obj/item/integrated_circuit/balloon_alert(mob/viewer, text)
+	if(shell)
+		return shell.balloon_alert(viewer, text)
+	return ..()
 
 /obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
 	SIGNAL_HANDLER

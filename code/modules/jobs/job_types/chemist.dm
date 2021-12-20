@@ -1,5 +1,7 @@
 /datum/job/chemist
-	title = "Chemist"
+	title = JOB_CHEMIST
+	description = "Supply the doctors with chemicals, make medicine, as well as \
+		less likable substances in the comfort of a fully reinforced room."
 	department_head = list("Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 2
@@ -42,7 +44,7 @@
 
 	id_trim = /datum/id_trim/job/chemist
 	uniform = /obj/item/clothing/under/rank/medical/chemist
-	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
+	suit = /obj/item/clothing/suit/toggle/labcoat/chemist
 	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
 	glasses = /obj/item/clothing/glasses/science

@@ -1,7 +1,9 @@
 /datum/job/detective
-	title = "Detective"
+	title = JOB_DETECTIVE
+	description = "Investigate crimes, gather evidence, perform interrogations, \
+		look badass, smoke cigarettes."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Head of Security")
+	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -52,6 +54,7 @@
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
 		/obj/item/melee/baton = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		/obj/item/storage/box/evidence = 1,
 		)
 	belt = /obj/item/pda/detective

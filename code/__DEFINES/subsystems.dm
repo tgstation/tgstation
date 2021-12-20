@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 17
+#define DB_MINOR_VERSION 20
 
 
 //! ## Timing subsystem
@@ -135,6 +135,7 @@
 #define INIT_ORDER_EARLY_ASSETS 48
 #define INIT_ORDER_TIMETRACK 47
 #define INIT_ORDER_NETWORKS 45
+#define INIT_ORDER_SPATIAL_GRID 43
 #define INIT_ORDER_ECONOMY 40
 #define INIT_ORDER_OUTPUTS 35
 #define INIT_ORDER_RESTAURANT 34
@@ -158,7 +159,7 @@
 #define INIT_ORDER_PATH -50
 #define INIT_ORDER_EXPLOSIONS -69
 #define INIT_ORDER_STATPANELS -98
-#define INIT_ORDER_DEMO -99  // o avoid a bunch of changes related to initialization being written, do this last
+#define INIT_ORDER_INIT_PROFILER -99 //Near the end, logs the costs of initialize
 #define INIT_ORDER_CHAT -100 //Should be last to ensure chat remains smooth during init.
 
 // Subsystem fire priority, from lowest to highest priority
@@ -259,7 +260,7 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_PROCESS_ATOMS 8
 
-//Pipeline rebuild helper defines, these suck but it'll do for now
+//Pipeline rebuild helper defines, these suck but it'll do for now //Fools you actually merged it
 #define SSAIR_REBUILD_PIPELINE 1
 #define SSAIR_REBUILD_QUEUE 2
 
@@ -267,6 +268,25 @@
 #define SSEXPLOSIONS_MOVABLES 1
 #define SSEXPLOSIONS_TURFS 2
 #define SSEXPLOSIONS_THROWS 3
+
+// Wardrobe subsystem tasks
+#define SSWARDROBE_STOCK 1
+#define SSWARDROBE_INSPECT 2
+
+//Wardrobe cache metadata indexes
+#define WARDROBE_CACHE_COUNT 1
+#define WARDROBE_CACHE_LAST_INSPECT 2
+#define WARDROBE_CACHE_CALL_INSERT 3
+#define WARDROBE_CACHE_CALL_REMOVAL 4
+
+//Wardrobe preloaded stock indexes
+#define WARDROBE_STOCK_CONTENTS 1
+#define WARDROBE_STOCK_CALL_INSERT 2
+#define WARDROBE_STOCK_CALL_REMOVAL 3
+
+//Wardrobe callback master list indexes
+#define WARDROBE_CALLBACK_INSERT 1
+#define WARDROBE_CALLBACK_REMOVE 2
 
 // Subsystem delta times or tickrates, in seconds. I.e, how many seconds in between each process() call for objects being processed by that subsystem.
 // Only use these defines if you want to access some other objects processing delta_time, otherwise use the delta_time that is sent as a parameter to process()

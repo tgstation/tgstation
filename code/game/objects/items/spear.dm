@@ -122,19 +122,26 @@
 	if(user.canUseTopic(src, BE_CLOSE))
 		..()
 		if(istype(user) && loc == user)
-			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
+			var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
 			if(input)
 				src.war_cry = input
 
 /obj/item/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity || !wielded || !istype(AM))
 		return
-	if(wielded)
-		user.say("[war_cry]", forced="spear warcry")
-		explosive.forceMove(AM)
-		explosive.detonate(lanced_by=user)
-		qdel(src)
+	if(AM.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
+		return
+	if(ismob(AM))
+		var/mob/mob_target = AM
+		if(mob_target.status_flags & GODMODE) //no embedding grenade phylacteries inside of ghost poly either
+			return
+	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
+		return
+	user.say("[war_cry]", forced="spear warcry")
+	explosive.forceMove(AM)
+	explosive.detonate(lanced_by=user)
+	qdel(src)
 
 //GREY TIDE
 /obj/item/spear/grey_tide

@@ -1,6 +1,6 @@
 /obj/item/food/drug
 	name = "generic drug"
-	desc =  "I am error"
+	desc = "I am error"
 	icon = 'icons/obj/drugs.dmi'
 	foodtypes = GROSS
 	food_flags = FOOD_FINGER_FOOD

@@ -16,14 +16,14 @@
 	// It's a simple purple beam, works well enough for the purple hiero effects.
 	beam_effect = "plasmabeam"
 
-/datum/action/innate/dash/hierophant/Teleport(mob/user, atom/target)
+/datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		to_chat(user, span_hierophant_warning("Blink destination out of range."))
+		user.balloon_alert(user, "destination out of range!")
 		return
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
-		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		user.balloon_alert(user, "destination blocked!")
 		return
 	. = ..()
 	if(!current_charges)
@@ -117,7 +117,7 @@
 	if((target == beacon) && target.Adjacent(src))
 		return
 	if(blink_activated)
-		blink.Teleport(user, target)
+		blink.teleport(user, target)
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"

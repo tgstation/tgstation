@@ -49,6 +49,20 @@
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
 	. = ..()
 	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+	if(iscarbon(M))
+		var/mob/living/carbon/forced_mob = M
+		if(forced_mob.has_reagent(/datum/reagent/consumable/ethanol/irishcarbomb))
+			var/reagent_amount = forced_mob.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/irishcarbomb)
+			forced_mob.reagents.del_reagent(/datum/reagent/consumable/ethanol/irishcarbomb)
+			if(reagent_amount >= 30)
+				message_admins("[ADMIN_LOOKUPFLW(forced_mob)] was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.")
+				forced_mob.log_message("was forced into a clown car with [reagent_amount] unit(s) of Irish Car Bomb, causing an explosion.", LOG_GAME)
+				audible_message(span_userdanger("You hear a rattling sound coming from the engine. That can't be good..."), null, 1)
+				addtimer(CALLBACK(src, .proc/irish_car_bomb), 5 SECONDS)
+
+/obj/vehicle/sealed/car/clowncar/proc/irish_car_bomb()
+	dump_mobs()
+	explosion(src, light_impact_range = 1)
 
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()

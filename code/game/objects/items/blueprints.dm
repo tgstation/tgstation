@@ -190,7 +190,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
-	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
+	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
