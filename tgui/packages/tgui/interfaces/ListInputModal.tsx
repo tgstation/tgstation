@@ -99,8 +99,6 @@ export const ListInputModal = (_, context) => {
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
-  // Null selection is no longer a thing, no need to grey the button
-  const defaultValidState = { isValid: true, error: null };
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -160,7 +158,6 @@ export const ListInputModal = (_, context) => {
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
               <InputButtons
                 input={filteredItems[selected]}
-                inputIsValid={defaultValidState}
               />
             </Stack.Item>
           </Stack>

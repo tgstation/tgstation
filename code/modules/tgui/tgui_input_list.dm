@@ -10,7 +10,7 @@
  * * default - If an option is already preselected on the UI. Current values, etc.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default = null, timeout = 0)
+/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -21,8 +21,6 @@
 			user = client.mob
 		else
 			return
-	if (!default || !(default in items))
-		default = items[1]
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title) as null|anything in items
@@ -46,7 +44,7 @@
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default = null, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -57,8 +55,6 @@
 			user = client.mob
 		else
 			return
-	if (!default || !(default in items))
-		default = items[1]
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		return input(user, message, title) as null|anything in items
@@ -148,7 +144,7 @@
 
 /datum/tgui_list_input/ui_static_data(mob/user)
 	. = list(
-		"initValue" = default,
+		"initValue" = default || items[1],
 		"items" = items,
 		"message" = message,
 		"preferences" = list(),
