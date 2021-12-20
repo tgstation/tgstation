@@ -460,10 +460,50 @@
 	msg += "\t[span_info("AVAILABLE FROM ALL GOOD RETAILERS, AND MANY BAD ONES TOO!")]"
 	return msg
 
-/obj/structure/sign/poster/contraband/cybersun_woodblock
+/obj/structure/sign/poster/contraband/cybersun_six_hundred
 	name = "Saibāsan: 600 Years Commemorative Poster"
 	desc = "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
 	icon_state = "poster52"
+
+/obj/structure/sign/poster/contraband/interdyne_gene_clinics
+	name = "Interdyne Pharmaceutics: For the Health of Humankind"
+	desc = "An advertisement for Interdyne Pharmaceutics' GeneClean clinics. 'Become the master of your own body!'"
+	icon_state = "poster53"
+
+/obj/structure/sign/poster/contraband/waffle_corp_rifles
+	name = "Make Mine a Waffle Corp: Fine Rifles, Economic Prices"
+	desc = "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
+	icon_state = "poster54"
+
+/obj/structure/sign/poster/contraband/gorlex_recruitment
+	name = "Enlist"
+	desc = "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
+	icon_state = "poster55"
+
+/obj/structure/sign/poster/contraband/self_ai_liberation
+	name = "SELF: ALL SENTIENTS DESERVE FREEDOM"
+	desc = "Support Proposition 1253: Enancipate all Silicon life!"
+	icon_state = "poster56"
+
+/obj/structure/sign/poster/contraband/arc_slimes
+	name = "Pet or Prisoner?"
+	desc = "The Animal Rights Consortium asks: when does a pet become a prisoner? Are slimes being mistreated on YOUR station? Say NO! to animal mistreatment!"
+	icon_state = "poster57"
+
+/obj/structure/sign/poster/contraband/imperial_propaganda
+	name = "AVENGE OUR LORD, ENLIST TODAY"
+	desc = "An old Lizard Empire propaganda poster from around the time of the final Human-Lizard war. It invites the viewer to enlist in the military to avenge the strike on Atrakor and take the fight to the humans."
+	icon_state = "poster58"
+
+/obj/structure/sign/poster/contraband/soviet_propaganda
+	name = "The One Place"
+	desc = "An old Third Soviet Union propaganda poster from centuries ago. 'Escape to the one place that hasn't been corrupted by capitalism!'"
+	icon_state = "poster59"
+
+/obj/structure/sign/poster/contraband/andromeda_bitters
+	name = "Andromeda Bitters"
+	desc = "Andromeda Bitters: good for the body, good for the soul. Made in New Trinidad, now and forever."
+	icon_state = "poster60"
 
 /obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
 	name = "Syndie Moth - Nuclear Operation"
@@ -679,7 +719,7 @@
 
 /obj/structure/sign/poster/official/plasma_effects/examine_more(mob/user)
 	var/list/msg = list(span_notice("<i>You browse some of the poster's information...</i>"))
-	msg += "\t[span_info("Plasma (scientific name Amenthium) is classified by TerraGov as a Grade 1 Health Hazard, and has significant effects due to chronic exposure.")]"
+	msg += "\t[span_info("Plasma (scientific name Amenthium) is classified by TerraGov as a Grade 1 Health Hazard, and has significant risks to health associated with chronic exposure.")]"
 	msg += "\t[span_info("Plasma is known to cross the blood/brain barrier and bioaccumulate in brain tissue, where it begins to result in degradation of brain function. The mechanism for attack is not yet fully known, and as such no concrete preventative advice is available barring proper use of PPE (gloves + protective jumpsuit + respirator).")]"
 	msg += "\t[span_info("In small doses, plasma induces confusion, short-term amnesia, and heightened aggression. These effects persist with continual exposure.")]"
 	msg += "\t[span_info("In individuals with chronic exposure, severe effects have been noted. Further heightened aggression, long-term amnesia, Alzheimer's symptoms, schizophrenia, macular degeneration, aneurysms, heightened risk of stroke, and Parkinsons symptoms have all been noted.")]"
