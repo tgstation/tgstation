@@ -10820,10 +10820,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
 "FT" = (
-/obj/structure/destructible/cult/item_dispenser/forge/engine{
-	desc = "An engine used in powering the wizard's ship";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "FU" = (
