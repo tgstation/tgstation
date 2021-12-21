@@ -98,13 +98,13 @@
 	next_move_allowed[source] = expected_dir & ~real_dir
 	if(charging[source])
 		new /obj/effect/temp_visual/decoy/fading(source.loc, source)
-		DestroySurroundings(source)
+		INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	SIGNAL_HANDLER
 	if(charging[source])
 		playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
-		DestroySurroundings(source)
+		INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
@@ -136,7 +136,7 @@
 				SSexplosions.med_mov_atom += target
 			else
 				SSexplosions.medturf += target
-		DestroySurroundings()
+		INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
 		hit_target(source, target, charge_damage)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
