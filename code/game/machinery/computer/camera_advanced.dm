@@ -285,6 +285,8 @@
 	for (var/obj/machinery/camera/netcam in L)
 		var/list/tempnetwork = netcam.network & origin.networks
 		if (tempnetwork.len)
+			if(!netcam.c_tag)
+				continue
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
