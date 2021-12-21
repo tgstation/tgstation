@@ -16,7 +16,7 @@
 	///How many units of nutrients will be drained in the tray.
 	var/nutridrain = 1
 	///The maximum nutrient of water in the tray
-	var/maxnutri = 10
+	var/maxnutri = 20
 	///The amount of pests in the tray (max 10)
 	var/pestlevel = 0
 	///The amount of weeds in the tray (max 10)
@@ -933,6 +933,7 @@
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
+	maxnutri = 10
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()
