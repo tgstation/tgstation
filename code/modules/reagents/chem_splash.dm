@@ -8,6 +8,8 @@
  * The basic chemical bomb proc.
  * Combines a set of reagent holders into one holder and reacts it.
  * If there are any reagents left over it spreads them across the surrounding environment.
+ * The maximum volume of the holder is temporarily adjusted to allow for reactions which increase total volume to work at full effectiveness.
+ * The maximum volume of the holder is then reset to its original value.
  *
  * Arguments:
  * - [epicenter][/turf]: The epicenter of the splash if some of the reagents aren't consumed.
@@ -32,13 +34,15 @@
 		return FALSE
 
 	var/tmp_holder = null
+	var/original_max_volume = null
 	if (isnull(holder))
 		tmp_holder = TRUE
-		holder = new /datum/reagents(total_reagents * threatscale)
+		holder = new /datum/reagents(INFINITY)
 		holder.my_atom = epicenter
 	else
 		tmp_holder = FALSE
-		holder.maximum_volume += total_reagents * threatscale
+		original_max_volume = holder.maximum_volume
+		holder.maximum_volume = INFINITY
 
 	for(var/datum/reagents/reactant in reactants)
 		reactant.trans_to(holder, reactant.total_volume, threatscale, preserve_data = TRUE, no_react = TRUE)
@@ -46,19 +50,22 @@
 	holder.chem_temp += extra_heat // Average temperature of reagents + extra heat.
 	holder.handle_reactions() // React them now.
 
-	if(holder.total_volume && affected_range >= 0)
-		spread_reagents(holder, epicenter, affected_range)
+	if(holder.total_volume)
+		if(affected_range >= 0)
+			spread_reagents(holder, epicenter, affected_range)
+		holder.clear_reagents()
 
 	if(tmp_holder)
 		qdel(holder)
 	else
-		holder.maximum_volume -= total_reagents * threatscale
+		holder.maximum_volume = original_max_volume
 
 	return TRUE
 
 
 /**
  * Exposes all accessible atoms within some distance of an epicenter to some reagents.
+ * Does not clear the source reagent holder; that must be done manually if it is desired.
  *
  * Arguments:
  * - [source][/datum/reagents]: The reagents to spread around.
