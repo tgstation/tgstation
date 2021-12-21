@@ -45,7 +45,7 @@
 		/obj/item/seeds/tea = 3,
 		/obj/item/seeds/tobacco = 3,
 		/obj/item/seeds/tomato = 3,
-		/obj/item/seeds/toechtauese =3,
+		/obj/item/seeds/toechtauese = 3,
 		/obj/item/seeds/tower = 3,
 		/obj/item/seeds/watermelon = 3,
 		/obj/item/seeds/wheat = 3,
