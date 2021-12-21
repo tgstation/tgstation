@@ -168,7 +168,8 @@
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
-	spawned_mob.ckey = mob_possessor.ckey
+	if(mob_possessor)
+		spawned_mob.ckey = mob_possessor.ckey
 	if(show_flavor)
 		var/output_message = "<span class='infoplain'><span class='big bold'>[you_are_text]</span></span>"
 		if(flavour_text != "")
@@ -177,8 +178,9 @@
 			output_message += "\n[span_userdanger("[important_text]")]"
 		to_chat(spawned_mob, output_message)
 	var/datum/mind/spawned_mind = spawned_mob.mind
-	spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
-	spawned_mind.name = spawned_mob.real_name
+	if(spawned_mind)
+		spawned_mob.mind.set_assigned_role(SSjob.GetJobType(spawner_job_path))
+		spawned_mind.name = spawned_mob.real_name
 
 //multiple use mob spawner functionality here- doesn't make sense on corpses
 /obj/effect/mob_spawn/ghost_role/create(mob/mob_possessor, newname)
