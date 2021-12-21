@@ -81,10 +81,6 @@
 /obj/item/paper_bin,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-"ax" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
 "ay" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/mirror/magic/lesser{
@@ -123,7 +119,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aJ" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives,
 /obj/item/dice/d20/fate,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)

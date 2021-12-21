@@ -2150,7 +2150,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "and" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /turf/open/floor/engine/cult,
 /area/service/library)
 "ane" = (

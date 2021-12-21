@@ -8435,7 +8435,7 @@
 /turf/open/floor/iron,
 /area/centcom/evac)
 "zo" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "zp" = (
@@ -8583,8 +8583,8 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "zO" = (
-/obj/structure/destructible/cult/talisman{
-	desc = "An altar dedicated to the Wizards' Federation"
+/obj/structure/destructible/cult/item_dispenser/altar{
+	desc = "An altar dedicated to the Wizard Federation."
 	},
 /obj/item/knife/ritual,
 /turf/open/floor/engine/cult,
@@ -10820,7 +10820,7 @@
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
 "FT" = (
-/obj/structure/destructible/cult/forge{
+/obj/structure/destructible/cult/item_dispenser/forge/engine{
 	desc = "An engine used in powering the wizard's ship";
 	name = "magma engine"
 	},
@@ -13719,7 +13719,7 @@
 /turf/open/floor/wood,
 /area/centcom/admin)
 "Mu" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/item/book/codex_gigas,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{

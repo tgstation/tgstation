@@ -27101,7 +27101,7 @@
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "jWk" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/item/book/codex_gigas,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,

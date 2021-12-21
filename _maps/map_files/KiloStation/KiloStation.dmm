@@ -26869,7 +26869,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/item/storage/fancy/candle_box{
 	pixel_x = 4;
 	pixel_y = 4

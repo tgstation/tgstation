@@ -65417,7 +65417,7 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "nbt" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/item/book/codex_gigas,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -80217,7 +80217,7 @@
 /turf/open/floor/iron/dark,
 /area/security/checkpoint)
 "qXG" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
