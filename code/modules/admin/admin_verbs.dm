@@ -189,6 +189,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_sdql_spell_menu,
 	/client/proc/adventure_manager,
 	/client/proc/load_circuit,
+	/client/proc/cmd_admin_toggle_fov,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
