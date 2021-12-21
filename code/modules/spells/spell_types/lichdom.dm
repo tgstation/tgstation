@@ -94,6 +94,7 @@
 		stack_trace("A phylactery was created with no target mind")
 		return INITIALIZE_HINT_QDEL
 	mind = newmind
+	mind.has_phylactery = TRUE
 	name = "phylactery of [mind.name]"
 
 	active_phylacteries++
@@ -101,6 +102,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/phylactery/Destroy(force=FALSE)
+	mind.has_phylactery = FALSE
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
 	. = ..()
@@ -151,6 +153,4 @@
 			old_body.visible_message(span_warning("Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!"))
 			body_turf.Beam(item_turf,icon_state="lichbeam", time = 10 + 10 * resurrections)
 		old_body.dust()
-
-
 	return "Respawn of [mind] successful."
