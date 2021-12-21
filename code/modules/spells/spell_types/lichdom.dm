@@ -70,8 +70,7 @@
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
-		
-		ADD_TRAIT(M, TRAIT_NO_SOUL, INNNATE_TRAIT)
+		ADD_TRAIT(M, TRAIT_NO_SOUL, LICH_TRAIT)
 
 
 /obj/item/phylactery
