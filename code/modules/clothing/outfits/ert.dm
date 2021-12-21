@@ -271,7 +271,6 @@
 	var/obj/item/radio/R = H.ears
 	R.keyslot = new /obj/item/encryptionkey/heads/hop
 	R.recalculateChannels()
-	efawfdf)()
 
 /datum/outfit/centcom/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
