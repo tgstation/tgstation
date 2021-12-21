@@ -36,19 +36,20 @@
 
 /obj/item/clothing/suit/hooded/ablative/ToggleHood()
 	. = ..()
+	if (!hood_up)
+		return
 	var/mob/living/carbon/user = loc
-	if (hood_up)
-		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
-		ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-		hud.add_hud_to(user)
-	else
-		to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.") // send chat message here, since RemoveHood() is called a couple times
-		RemoveHood()
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
+	hud.add_hud_to(user)
+	to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
 
 /obj/item/clothing/suit/hooded/ablative/RemoveHood()
 	. = ..()
-	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	var/mob/living/carbon/user = loc
+	if (!HAS_TRAIT(user, TRAIT_SECURITY_HUD))
+		return
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	hud.remove_hud_from(user)
+	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.") // send chat message here, since RemoveHood() is called a couple times
