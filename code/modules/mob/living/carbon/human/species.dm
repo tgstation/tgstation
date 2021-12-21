@@ -1987,10 +1987,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ////////////////
 
 /datum/species/proc/can_wag_tail(mob/living/carbon/human/H)
-	return FALSE
+	return mutant_bodyparts["tail_lizard"] || mutant_bodyparts["waggingtail_lizard"] || mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
 
 /datum/species/proc/is_wagging_tail(mob/living/carbon/human/H)
-	return FALSE
+	return mutant_bodyparts["waggingtail_human"] || mutant_bodyparts["waggingtail_lizard"]
 
 /*
  * This proc is called when a mob loses their tail.
@@ -2050,8 +2050,26 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	stop_wagging_tail(former_tail_owner)
 
 /datum/species/proc/start_wagging_tail(mob/living/carbon/human/H)
+	if(mutant_bodyparts["tail_human"])
+		mutant_bodyparts["waggingtail_human"] = mutant_bodyparts["tail_human"]
+		mutant_bodyparts -= "tail_human"
+	else if(mutant_bodyparts["tail_lizard"])
+		mutant_bodyparts["waggingtail_lizard"] = mutant_bodyparts["tail_lizard"]
+		mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
+		mutant_bodyparts -= "tail_lizard"
+		mutant_bodyparts -= "spines"
+	H.update_body()
 
 /datum/species/proc/stop_wagging_tail(mob/living/carbon/human/H)
+	if(mutant_bodyparts["waggingtail_human"])
+		mutant_bodyparts["tail_human"] = mutant_bodyparts["waggingtail_human"]
+		mutant_bodyparts -= "waggingtail_human"
+	else if(mutant_bodyparts["waggingtail_lizard"])
+		mutant_bodyparts["tail_lizard"] = mutant_bodyparts["waggingtail_lizard"]
+		mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
+		mutant_bodyparts -= "waggingtail_lizard"
+		mutant_bodyparts -= "waggingspines"
+	H.update_body()
 
 ///////////////
 //FLIGHT SHIT//

@@ -35,24 +35,6 @@
 		var/datum/reagent/toxin/carpotoxin/fish = chem
 		fish.toxpwr = 0
 
-/datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
-
-/datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["waggingtail_human"]
-
-/datum/species/human/felinid/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["tail_human"])
-		mutant_bodyparts["waggingtail_human"] = mutant_bodyparts["tail_human"]
-		mutant_bodyparts -= "tail_human"
-	H.update_body()
-
-/datum/species/human/felinid/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["waggingtail_human"])
-		mutant_bodyparts["tail_human"] = mutant_bodyparts["waggingtail_human"]
-		mutant_bodyparts -= "waggingtail_human"
-	H.update_body()
-
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

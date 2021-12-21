@@ -65,28 +65,6 @@
 		stop_wagging_tail(H)
 	. = ..()
 
-/datum/species/lizard/can_wag_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["tail_lizard"] || mutant_bodyparts["waggingtail_lizard"]
-
-/datum/species/lizard/is_wagging_tail(mob/living/carbon/human/H)
-	return mutant_bodyparts["waggingtail_lizard"]
-
-/datum/species/lizard/start_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["tail_lizard"])
-		mutant_bodyparts["waggingtail_lizard"] = mutant_bodyparts["tail_lizard"]
-		mutant_bodyparts["waggingspines"] = mutant_bodyparts["spines"]
-		mutant_bodyparts -= "tail_lizard"
-		mutant_bodyparts -= "spines"
-	H.update_body()
-
-/datum/species/lizard/stop_wagging_tail(mob/living/carbon/human/H)
-	if(mutant_bodyparts["waggingtail_lizard"])
-		mutant_bodyparts["tail_lizard"] = mutant_bodyparts["waggingtail_lizard"]
-		mutant_bodyparts["spines"] = mutant_bodyparts["waggingspines"]
-		mutant_bodyparts -= "waggingtail_lizard"
-		mutant_bodyparts -= "waggingspines"
-	H.update_body()
-
 /datum/species/lizard/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	var/real_tail_type = C.dna.features["tail_lizard"]
 	var/real_spines = C.dna.features["spines"]
