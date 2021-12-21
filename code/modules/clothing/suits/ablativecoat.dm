@@ -52,4 +52,4 @@
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	hud.remove_hud_from(user)
-	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.") // send chat message here, since RemoveHood() is called a couple times
+	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.")
