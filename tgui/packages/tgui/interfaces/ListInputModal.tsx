@@ -1,14 +1,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import {
-  KEY_ENTER,
-  KEY_DOWN,
-  KEY_UP,
-  KEY_ESCAPE,
-  KEY_A,
-  KEY_Z,
-} from '../../common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
@@ -46,18 +39,18 @@ export const ListInputModal = (_, context) => {
     const len = filteredItems.length - 1;
     if (key === KEY_DOWN) {
       if (selected === null || selected === len) {
-        onClick(0);
+        setSelected(0);
         document!.getElementById('0')?.scrollIntoView();
       } else {
-        onClick(selected + 1);
+        setSelected(selected + 1);
         document!.getElementById((selected + 1).toString())?.scrollIntoView();
       }
     } else if (key === KEY_UP) {
       if (selected === null || selected === 0) {
-        onClick(len);
+        setSelected(len);
         document!.getElementById(len.toString())?.scrollIntoView();
       } else {
-        onClick(selected - 1);
+        setSelected(selected - 1);
         document!.getElementById((selected - 1).toString())?.scrollIntoView();
       }
     }
