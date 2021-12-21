@@ -132,7 +132,7 @@
 		"initValue" = default || 0, // Default is a reserved keyword
 		"max_value" = max_value,
 		"message" = message,
-		"min_value"	= min_value || 0,
+		"min_value" = min_value || 0,
 		"preferences" = list(),
 		"title" = title
 	)
