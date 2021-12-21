@@ -71,5 +71,8 @@
 
 /obj/item/assembly/health/attack_self(mob/user)
 	. = ..()
-	to_chat(user, span_notice("You toggle [src] [src.scanning ? "off" : "on"]."))
+	if (secured)
+		to_chat(user, span_notice("You toggle [src] [src.scanning ? "off" : "on"]."))
+	else
+		to_chat(user, span_warning("This must be secured first!"))
 	toggle_scan()
