@@ -47,6 +47,7 @@
 	var/list/restricted_roles = list()
 
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
+	var/has_phylactery = FALSE // Wizard using a phylactery to become a Lich
 
 	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
