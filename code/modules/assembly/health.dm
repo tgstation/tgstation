@@ -74,5 +74,5 @@
 	if (secured)
 		to_chat(user, span_notice("You toggle [src] [src.scanning ? "off" : "on"]."))
 	else
-		to_chat(user, span_warning("This must be secured first!"))
+		to_chat(user, span_warning("This device must be secured first!"))
 	toggle_scan()
