@@ -372,6 +372,8 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		to_chat(user, span_notice("You remove the fuel tank from [src]."))
 		fuel_canister.forceMove(drop_location())
 		fuel_canister = null
+		update_appearance(UPDATE_ICON)
+		return TRUE
 
 /obj/machinery/exodrone_launcher/Destroy()
 	. = ..()
