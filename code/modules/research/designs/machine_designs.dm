@@ -528,7 +528,7 @@
 	name = "Machine Design (Donksoft Toy Vendor Board)"
 	desc = "The circuit board for a Donksoft Toy Vendor."
 	id = "donksofttoyvendor"
-	build_path = /obj/item/circuitboard/machine/vending/donksofttoyvendor
+	build_path = /obj/item/circuitboard/machine/vendor/donksofttoyvendor
 	category = list ("Misc. Machinery")
 
 
