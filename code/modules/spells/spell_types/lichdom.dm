@@ -108,7 +108,6 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/phylactery/Destroy(force=FALSE)
-	mind.has_phylactery = FALSE
 	STOP_PROCESSING(SSobj, src)
 	active_phylacteries--
 	. = ..()
