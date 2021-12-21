@@ -183,7 +183,7 @@
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
-	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon [chameleon_name]", sort_list(chameleon_list, /proc/cmp_typepaths_asc), picked_name)
+	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon [chameleon_name]", sort_list(chameleon_list, /proc/cmp_typepaths_asc))
 	if(!picked_name)
 		return
 	picked_item = chameleon_list[picked_name]
