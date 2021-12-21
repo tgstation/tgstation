@@ -98,6 +98,13 @@ Difficulty: Hard
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
+	QDEL_NULL(triple_charge)
+	QDEL_NULL(hallucination_charge)
+	QDEL_NULL(hallucination_charge_surround)
+	QDEL_NULL(blood_warp)
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/update_cooldowns(list/cooldown_updates, ignore_staggered = FALSE)
 	. = ..()
 	if(cooldown_updates[COOLDOWN_UPDATE_SET_ENRAGE])

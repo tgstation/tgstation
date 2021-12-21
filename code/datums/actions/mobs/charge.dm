@@ -14,8 +14,6 @@
 	var/charge_speed = 0.5
 	/// The damage the charger does when bumping into something
 	var/charge_damage = 30
-	/// Bitflags for indications of charging
-	var/charge_indicator = TRUE
 	/// If we destroy objects while charging
 	var/destroy_objects = TRUE
 	/// Associative boolean list of chargers that are currently charging
@@ -58,17 +56,13 @@
 	if(!T)
 		return
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
-	if(charge_indicator)
-		new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	charging[charger] = TRUE
 	DestroySurroundings(charger)
 	charger.setDir(get_dir(charger, target_atom))
-	if(charge_indicator)
-		var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
-		animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	do_charge_indicator(charger, target_atom)
 	SLEEP_CHECK_DEATH(delay, charger)
 	var/distance = min(get_dist(charger, T), charge_distance)
 	for(var/i in 1 to distance)
@@ -84,7 +78,16 @@
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	return TRUE
 
+/datum/action/cooldown/mob_cooldown/charge/proc/do_charge_indicator(atom/charger, atom/charge_target)
+	var/turf/target_turf = get_turf(charge_target)
+	if(!target_turf)
+		return
+	new /obj/effect/temp_visual/dragon_swoop/bubblegum(target_turf)
+	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(charger.loc, charger)
+	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+
 /datum/action/cooldown/mob_cooldown/charge/proc/on_move(atom/source, atom/new_loc)
+	SIGNAL_HANDLER
 	var/expected_dir = next_move_allowed[source]
 	if(!expected_dir)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
@@ -98,6 +101,7 @@
 		DestroySurroundings(source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
+	SIGNAL_HANDLER
 	if(charging[source])
 		playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 		DestroySurroundings(source)
@@ -120,21 +124,22 @@
 				O.attack_animal(charger)
 				break
 
-/datum/action/cooldown/mob_cooldown/charge/proc/on_bump(atom/movable/source, atom/A)
-	if(charging[source])
-		if(owner == A)
-			return
-		if(isturf(A) || isobj(A) && A.density)
-			if(isobj(A))
-				SSexplosions.med_mov_atom += A
-			else
-				SSexplosions.medturf += A
-		DestroySurroundings()
-		hit_target(source, A, charge_damage)
-
-/datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
+/datum/action/cooldown/mob_cooldown/charge/proc/on_bump(atom/movable/source, atom/target)
+	SIGNAL_HANDLER
 	if(SEND_SIGNAL(owner, COMSIG_BUMPED_CHARGE, target) & COMPONENT_OVERRIDE_CHARGE_BUMP)
 		return
+	if(charging[source])
+		if(owner == target)
+			return
+		if(isturf(target) || isobj(target) && target.density)
+			if(isobj(target))
+				SSexplosions.med_mov_atom += target
+			else
+				SSexplosions.medturf += target
+		DestroySurroundings()
+		hit_target(source, target, charge_damage)
+
+/datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
@@ -144,6 +149,36 @@
 	playsound(get_turf(living_target), 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	shake_camera(living_target, 4, 3)
 	shake_camera(source, 2, 3)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge
+	name = "Basic Charge"
+	cooldown_time = 6 SECONDS
+	charge_distance = 4
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
+	charger.Shake(15, 15, 1 SECONDS)
+
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
+	if(!isliving(target))
+		if(target.density && !target.CanPass(source, get_dir(target, source)))
+			source.visible_message(span_danger("[source] smashes into [target]!"))
+			if(isliving(source))
+				var/mob/living/living_source = source
+				living_source.Stun(6, ignore_canstun = TRUE)
+		return
+	var/mob/living/living_target = target
+	var/blocked = FALSE
+	if(ishuman(living_target))
+		var/mob/living/carbon/human/human_target = living_target
+		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK))
+			blocked = TRUE
+	if(!blocked)
+		living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
+		living_target.Knockdown(6)
+	else
+		if(isliving(source))
+			var/mob/living/living_source = source
+			living_source.Stun(6, ignore_canstun = TRUE)
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"

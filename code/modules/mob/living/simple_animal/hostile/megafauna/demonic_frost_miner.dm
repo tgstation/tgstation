@@ -68,6 +68,12 @@ Difficulty: Extremely Hard
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
+	QDEL_NULL(frost_orbs)
+	QDEL_NULL(snowball_machine_gun)
+	QDEL_NULL(ice_shotgun)
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	if(client)
 		return
@@ -107,7 +113,8 @@ Difficulty: Extremely Hard
 
 /// Pre-ability usage stuff
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_projectile_attack()
-	check_enraged()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/check_enraged)
 	var/projectile_speed_multiplier = 1 - enraged * 0.5
 	frost_orbs.projectile_speed_multiplier = projectile_speed_multiplier
 	snowball_machine_gun.projectile_speed_multiplier = projectile_speed_multiplier

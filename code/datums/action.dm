@@ -699,23 +699,24 @@
 
 /datum/action/cooldown/Trigger(atom/target)
 	. = ..()
-	if(.)
-		if(!owner)
-			return FALSE
-		if(click_to_activate)
-			if(target)
-				// For automatic / mob handling
-				return InterceptClickOn(owner, null, target)
-			if(owner.click_intercept == src)
-				owner.click_intercept = null
-				to_chat(owner, "<b>[src] is no longer active</b>")
-			else
-				owner.click_intercept = src
-				to_chat(owner, "<b>You are now prepared to use [src]</b>")
-			for(var/datum/action/cooldown/C in owner.actions)
-				C.UpdateButtonIcon()
-			return TRUE
-		return Activate(owner)
+	if(!.)
+		return
+	if(!owner)
+		return FALSE
+	if(click_to_activate)
+		if(target)
+			// For automatic / mob handling
+			return InterceptClickOn(owner, null, target)
+		if(owner.click_intercept == src)
+			owner.click_intercept = null
+			to_chat(owner, "<b>[src] is no longer active</b>")
+		else
+			owner.click_intercept = src
+			to_chat(owner, "<b>You are now prepared to use [src]</b>")
+		for(var/datum/action/cooldown/C in owner.actions)
+			C.UpdateButtonIcon()
+		return TRUE
+	return Activate(owner)
 
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/A)
 	if(!IsAvailable())

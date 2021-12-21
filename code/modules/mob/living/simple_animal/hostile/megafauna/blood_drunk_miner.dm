@@ -59,7 +59,7 @@ Difficulty: Medium
 	/// Transform weapon ability
 	var/datum/action/cooldown/mob_cooldown/transform_weapon/transform_weapon
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize(mapload)
 	. = ..()
 	miner_saw = new(src)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
@@ -69,6 +69,12 @@ Difficulty: Medium
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
 	transform_weapon.Grant(src)
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
+	QDEL_NULL(dash)
+	QDEL_NULL(kinetic_accelerator)
+	QDEL_NULL(transform_weapon)
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	if(client)
@@ -188,6 +194,6 @@ Difficulty: Medium
 	move_to_delay = 8
 	ranged_cooldown_time = 0.8 SECONDS
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom/Initialize()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom/Initialize(mapload)
 	. = ..()
 	dash.cooldown_time = 0.8 SECONDS

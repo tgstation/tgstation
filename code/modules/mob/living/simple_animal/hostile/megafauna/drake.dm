@@ -94,7 +94,14 @@
 	RegisterSignal(src, COMSIG_SWOOP_ATTACK_STARTED, .proc/swoop_started)
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, .proc/swoop_invulnerability_started)
 	RegisterSignal(src, COMSIG_SWOOP_ATTACK_FINISHED, .proc/swoop_finished)
-	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, .proc/arena_escape_enrage)
+	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, .proc/on_arena_fail)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
+	QDEL_NULL(fire_cone)
+	QDEL_NULL(meteors)
+	QDEL_NULL(mass_fire)
+	QDEL_NULL(lava_swoop)
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
@@ -124,15 +131,22 @@
 		INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_started()
+	SIGNAL_HANDLER
 	icon_state = "shadow"
 	swooping = SWOOP_DAMAGEABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_invulnerability_started()
+	SIGNAL_HANDLER
 	swooping = SWOOP_INVULNERABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_finished()
+	SIGNAL_HANDLER
 	icon_state = initial(icon_state)
 	swooping = NONE
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/on_arena_fail()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/arena_escape_enrage)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0, src)
