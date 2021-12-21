@@ -14,7 +14,7 @@
  * * min_value - Specifies a minimum value. Often 0.
  * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value, min_value = 0, timeout = 0)
+/proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value, min_value, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -48,7 +48,7 @@
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value, min_value = 0, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value, min_value, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -132,7 +132,7 @@
 		"initValue" = default || 0, // Default is a reserved keyword
 		"max_value" = max_value,
 		"message" = message,
-		"min_value"	= min_value,
+		"min_value"	= min_value || 0,
 		"preferences" = list(),
 		"title" = title
 	)
