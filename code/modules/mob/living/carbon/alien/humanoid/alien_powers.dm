@@ -271,7 +271,7 @@ Doesn't work on other aliens/AI.*/
 	if(!check_vent_block(user))
 		return FALSE
 
-	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
+	var/choice = tgui_input_list(user, "Choose what you wish to shape.","Resin building", structures)
 	if(!choice)
 		return FALSE
 	if (!cost_check(check_turf,user))
