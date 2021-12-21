@@ -32,7 +32,7 @@
 		CHECK_OUTFIT_SLOT(l_pocket, ITEM_SLOT_LPOCKET)
 		CHECK_OUTFIT_SLOT(r_pocket, ITEM_SLOT_RPOCKET)
 		for(var/obj/item/equipped_item in H.contents) //before suit storage, as equipped items for example could extend a suit item
-			equipped_item.on_outfit_equip(H, TRUE)
+			equipped_item.on_outfit_equip(H, FALSE)
 		CHECK_OUTFIT_SLOT(suit_store, ITEM_SLOT_SUITSTORE)
 		if (outfit.backpack_contents || outfit.box)
 			var/list/backpack_contents = outfit.backpack_contents?.Copy()
