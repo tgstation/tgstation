@@ -338,7 +338,7 @@
 /datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
 	var/mob/living/carbon/victim = M
-	if (istype(victim))
+	if (istype(victim) && !("rat" in victim.faction))
 		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
 		victim.faction |= "rat"
 		victim.vomit()

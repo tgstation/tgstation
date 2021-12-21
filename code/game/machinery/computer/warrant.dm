@@ -99,11 +99,12 @@
 			if(isliving(M))
 				var/mob/living/L = M
 				var/obj/item/card/id/scan = L.get_idcard(TRUE)
+				if (!scan)
+					say("You do not have a registered ID!")
+					return
 				authenticated = scan.registered_name
 				if(authenticated)
-					for(var/datum/data/record/R in GLOB.data_core.security)
-						if(R.fields["name"] == authenticated)
-							current = R
+					current = find_record("name", authenticated, GLOB.data_core.security)
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
 		if("Logout")
 			current = null
