@@ -8,9 +8,9 @@
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	/// Length of the cooldown in between tile corruptions. Doubled if no turfs are found.
-	var/corrupt_cooldown_length = 5 SECONDS
+	var/corruption_cooldown_duration = 5 SECONDS
 	/// The cooldown for corruptions.
-	COOLDOWN_DECLARE(corruption_time)
+	COOLDOWN_DECLARE(corruption_cooldown)
 
 /obj/structure/destructible/cult/pylon/Initialize(mapload)
 	. = ..()
@@ -36,7 +36,7 @@
 /obj/structure/destructible/cult/pylon/process()
 	if(!anchored)
 		return
-	if(!COOLDOWN_FINISHED(src, corruption_time))
+	if(!COOLDOWN_FINISHED(src, corruption_cooldown))
 		return
 
 	var/list/validturfs = list()
@@ -68,10 +68,10 @@
 
 	else
 		// Are we in space or something? No cult turfs or convertable turfs? Double the cooldown
-		COOLDOWN_START(src, corruption_time, corrupt_cooldown_length * 2)
+		COOLDOWN_START(src, corruption_cooldown, corruption_cooldown_duration * 2)
 		return
 
-	COOLDOWN_START(src, corruption_time, corrupt_cooldown_length)
+	COOLDOWN_START(src, corruption_cooldown, corruption_cooldown_duration)
 
 /obj/structure/destructible/cult/pylon/conceal()
 	. = ..()

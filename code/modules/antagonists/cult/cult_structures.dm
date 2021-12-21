@@ -73,7 +73,7 @@
 // Cult buildings that dispense items to cultists.
 /obj/structure/destructible/cult/item_dispenser
 	/// Length of the cooldown between item dispenses.
-	var/item_creation_cooldown = 5 MINUTES
+	var/use_cooldown_duration = 5 MINUTES
 	/// If provided, a bonus tip displayed to cultists on examined.
 	var/cult_examine_tip
 	/// The cooldown for when items can be dispensed.
@@ -107,7 +107,7 @@
 	if(QDELETED(src) || !anchored || !Adjacent(user) || !check_menu(user) || !COOLDOWN_FINISHED(src, use_cooldown))
 		return
 
-	COOLDOWN_START(src, use_cooldown, item_creation_cooldown)
+	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
 	for(var/item_to_make in spawned_items)
 		var/obj/item/made_item = new item_to_make(get_turf(src))
 		succcess_message(user, made_item)
