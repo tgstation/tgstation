@@ -24,7 +24,7 @@
 			user = client.mob
 		else
 			return
-	/// Client does NOT have tgui_input on: Returns regular input
+	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
 		if(max_length)
 			if(multiline)
@@ -63,6 +63,15 @@
 			user = client.mob
 		else
 			return
+	// Client does NOT have tgui_input on: Returns regular input
+	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
+		if(max_length)
+			if(multiline)
+				return stripped_multiline_input(user, message, title, default, max_length)
+			else
+				return stripped_input(user, message, title, default, max_length)
+		else
+			return input(user, message, title, default)
 	var/datum/tgui_input_text/async/text_input = new(user, message, title, default, max_length, multiline, encode, callback, timeout)
 	text_input.ui_interact(user)
 
@@ -138,7 +147,7 @@
 		"max_length" = max_length,
 		"message" = message,
 		"multiline" = multiline,
-		"placeholder" = default, /// You cannot use default as a const
+		"placeholder" = default, // You cannot use default as a const
 		"preferences" = list(),
 		"title" = title
 	)
@@ -179,7 +188,7 @@
  * An asynchronous version of tgui_input_text to be used with callbacks instead of waiting on user responses.
  */
 /datum/tgui_input_text/async
-	/// The callback to be invoked by the tgui_input_text upon having a choice made.
+	// The callback to be invoked by the tgui_input_text upon having a choice made.
 	var/datum/callback/callback
 
 /datum/tgui_input_text/async/New(mob/user, message, title, default, max_length, multiline, encode, callback, timeout)
