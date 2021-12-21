@@ -72,7 +72,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	aggressiveness = AGGR_SHIT_COP
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDEEYES | HIDEEARS | HIDEHAIR | HIDESNOUT
 	visor_flags_inv = 0
-	tint = 1.5
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 
