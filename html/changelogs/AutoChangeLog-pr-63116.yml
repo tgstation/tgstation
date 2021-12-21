@@ -1,5 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - bugfix: "Cows, roaches and their subtypes can be sentienced and mind transfer potioned again."
-  - refactor: "refactored syndicate sentience potion and abductor all access gland to use the new simple_access component."
