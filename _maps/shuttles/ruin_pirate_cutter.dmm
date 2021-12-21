@@ -93,7 +93,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/red{
@@ -190,6 +190,7 @@
 "jo" = (
 /obj/structure/table,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/item/ammo_box/a40mm,
@@ -646,7 +647,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
@@ -670,11 +671,11 @@
 /obj/machinery/door/poddoor{
 	id = "caravanpirate_bridge"
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "BC" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "caravanpirate_bridge"
 	},
@@ -702,7 +703,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/cable,
@@ -711,6 +712,7 @@
 "DY" = (
 /obj/structure/closet/crate/secure/loot,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /turf/open/floor/iron/dark,
@@ -821,7 +823,7 @@
 "Jb" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_port"
 	},
 /obj/docking_port/mobile{
@@ -847,7 +849,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/iron/white,
@@ -855,7 +856,7 @@
 "Ku" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_starboard"
 	},
 /turf/open/floor/plating,
@@ -914,7 +915,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravanpirate_bolt_port"
 	},
 /turf/open/floor/plating,
@@ -991,7 +992,7 @@
 "Xq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/item/melee/classic_baton,
+/obj/item/melee/baton,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/pirate)

@@ -10,7 +10,7 @@
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
-	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
@@ -50,7 +50,7 @@
 	stamp_max = 2
 	stamp_offset_y = 5
 
-/obj/item/mail/Initialize()
+/obj/item/mail/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 	AddElement(/datum/element/item_scaling, 0.75, 1)
@@ -69,7 +69,7 @@
 	// Add some random stamps.
 	if(stamped == TRUE)
 		var/stamp_count = rand(1, stamp_max)
-		for(var/i = 1, i <= stamp_count, i++)
+		for(var/i in 1 to stamp_count)
 			stamps += list("stamp_[rand(2, 6)]")
 	update_icon()
 
@@ -157,8 +157,8 @@
 			else
 				goodies += job_goodies
 
-	for(var/iterator = 0, iterator < goodie_count, iterator++)
-		var/target_good = pickweight(goodies)
+	for(var/iterator in 1 to goodie_count)
+		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
 		body.log_message("[key_name(body)] received [target_atom.name] in the mail ([target_good])", LOG_GAME)
 
@@ -193,7 +193,7 @@
 		disposal_holder.destinationTag = sort_tag
 
 /// Subtype that's always junkmail
-/obj/item/mail/junkmail/Initialize()
+/obj/item/mail/junkmail/Initialize(mapload)
 	. = ..()
 	junk_mail()
 
@@ -202,6 +202,7 @@
 	name = "mail crate"
 	desc = "A certified post crate from CentCom."
 	icon_state = "mail"
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -243,7 +244,7 @@
 	update_icon()
 
 /// Crate for mail that automatically depletes the economy subsystem's pending mail counter.
-/obj/structure/closet/crate/mail/economy/Initialize()
+/obj/structure/closet/crate/mail/economy/Initialize(mapload)
 	. = ..()
 	populate(SSeconomy.mail_waiting)
 	SSeconomy.mail_waiting = 0
@@ -253,7 +254,7 @@
 	name = "brimming mail crate"
 	desc = "A certified post crate from CentCom. Looks stuffed to the gills."
 
-/obj/structure/closet/crate/mail/full/Initialize()
+/obj/structure/closet/crate/mail/full/Initialize(mapload)
 	. = ..()
 	populate(INFINITY)
 
@@ -285,7 +286,7 @@
 	icon_state = "scrap"
 	var/nuclear_option_odds = 0.1
 
-/obj/item/paper/fluff/junkmail_redpill/Initialize()
+/obj/item/paper/fluff/junkmail_redpill/Initialize(mapload)
 	. = ..()
 	if(!prob(nuclear_option_odds)) // 1 in 1000 chance of getting 2 random nuke code characters.
 		info = "<i>You need to escape the simulation. Don't forget the numbers, they help you remember:</i> '[rand(0,9)][rand(0,9)][rand(0,9)]...'"
@@ -303,6 +304,6 @@
 	name = "important document"
 	icon_state = "paper_words"
 
-/obj/item/paper/fluff/junkmail_generic/Initialize()
+/obj/item/paper/fluff/junkmail_generic/Initialize(mapload)
 	. = ..()
 	info = pick(GLOB.junkmail_messages)

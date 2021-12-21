@@ -7,14 +7,16 @@
 	anchored = TRUE
 	opacity = TRUE
 	layer = CLOSED_DOOR_LAYER
+	material_flags = MATERIAL_EFFECTS
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 	max_integrity = 200
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 50, ACID = 50)
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 50, ACID = 50)
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
+	material_flags = MATERIAL_EFFECTS
+	material_modifier = 0.25
 
 	var/door_opened = FALSE //if it's open or not.
 	var/isSwitchingStates = FALSE //don't try to change stats if we're already opening
@@ -24,10 +26,13 @@
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 
 	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
-	var/sheetAmount = 7 //how much we drop when deconstructed
+	var/sheetAmount = 10 //how much it takes to construct us.
 
-/obj/structure/mineral_door/Initialize()
+/obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
+	var/obj/item/stack/initialized_mineral = new sheetType // Okay this kinda sucks.
+	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
+	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/mineral_door/Destroy()
@@ -206,6 +211,7 @@
 /obj/structure/mineral_door/iron
 	name = "iron door"
 	max_integrity = 300
+	sheetAmount = 20
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
@@ -248,32 +254,6 @@
 	name = "plasma door"
 	icon_state = "plasma"
 	sheetType = /obj/item/stack/sheet/mineral/plasma
-
-/obj/structure/mineral_door/transparent/plasma/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/mineral_door/transparent/plasma/welder_act(mob/living/user, obj/item/I)
-	return
-
-/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature())
-		var/turf/T = get_turf(src)
-		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
-		TemperatureAct()
-	else
-		return ..()
-
-/obj/structure/mineral_door/transparent/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/mineral_door/transparent/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	TemperatureAct()
-
-/obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()
-	atmos_spawn_air("plasma=500;TEMP=1000")
-	deconstruct(FALSE)
 
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"
@@ -318,14 +298,14 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
 
-/obj/structure/mineral_door/paperframe/Initialize()
+/obj/structure/mineral_door/paperframe/Initialize(mapload)
 	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH_NEIGHBORS(src)
 
 /obj/structure/mineral_door/paperframe/examine(mob/user)
 	. = ..()
-	if(obj_integrity < max_integrity)
+	if(atom_integrity < max_integrity)
 		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
 
 /obj/structure/mineral_door/paperframe/pickaxe_door(mob/living/user, obj/item/I)
@@ -342,10 +322,10 @@
 		fire_act(I.get_temperature())
 		return
 
-	if((!user.combat_mode) && istype(I, /obj/item/paper) && (obj_integrity < max_integrity))
+	if((!user.combat_mode) && istype(I, /obj/item/paper) && (atom_integrity < max_integrity))
 		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
 		if(do_after(user, 2 SECONDS, src))
-			obj_integrity = min(obj_integrity+4,max_integrity)
+			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(I)
 			user.visible_message(span_notice("[user] patches some of the holes in [src]."), span_notice("You patch some of the holes in [src]!"))
 			return TRUE

@@ -127,7 +127,7 @@
 /turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 "B" = (
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "C" = (
@@ -238,7 +238,7 @@
 /area/hilbertshotel)
 "V" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/three_course_meal,
+/obj/effect/spawner/random/food_or_drink/three_course_meal,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "Z" = (

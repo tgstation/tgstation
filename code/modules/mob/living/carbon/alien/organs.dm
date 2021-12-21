@@ -1,9 +1,10 @@
 /obj/item/organ/alien
 	icon_state = "xgibmid2"
+	visual = FALSE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/list/alien_powers = list()
 
-/obj/item/organ/alien/Initialize()
+/obj/item/organ/alien/Initialize(mapload)
 	. = ..()
 	for(var/A in alien_powers)
 		if(ispath(A))
@@ -114,11 +115,11 @@
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

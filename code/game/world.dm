@@ -29,7 +29,6 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-	enable_debugger()
 
 	log_world("World loaded at [time_stamp()]!")
 
@@ -119,6 +118,8 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
+	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
@@ -130,6 +131,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
 	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
 	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
+	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
 	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
 	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
 	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
@@ -154,6 +156,7 @@ GLOBAL_VAR(restart_counter)
 	start_log(GLOB.world_telecomms_log)
 	start_log(GLOB.world_manifest_log)
 	start_log(GLOB.world_href_log)
+	start_log(GLOB.world_mob_tag_log)
 	start_log(GLOB.world_qdel_log)
 	start_log(GLOB.world_runtime_log)
 	start_log(GLOB.world_job_debug_log)

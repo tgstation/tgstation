@@ -210,13 +210,6 @@
 	},
 /turf/open/floor/plating/beach/water,
 /area/awaymission/beach)
-"aJ" = (
-/obj/item/reagent_containers/food/drinks/beer/light{
-	pixel_x = -14;
-	pixel_y = 15
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "aK" = (
 /mob/living/simple_animal/crab,
 /turf/open/floor/plating/beach/sand,
@@ -649,11 +642,6 @@
 /obj/machinery/vending/cola/starkist,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
-"ce" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/spawner/randomsnackvend,
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "cf" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/sign/poster/contraband/smoke{
@@ -687,19 +675,12 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "ck" = (
-/obj/effect/mob_spawn/human/bartender/alive,
+/obj/effect/mob_spawn/corpse/human/bartender,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cl" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/shaker,
-/turf/open/floor/wood,
-/area/awaymission/beach)
-"cm" = (
-/obj/structure/table/wood,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cn" = (
@@ -795,11 +776,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
-"cB" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/ale,
-/turf/open/floor/wood,
-/area/awaymission/beach)
 "cC" = (
 /obj/structure/table/wood,
 /obj/item/food/burger/crab{
@@ -849,16 +825,6 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
 	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"cK" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "cL" = (
@@ -1005,6 +971,11 @@
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"hw" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/ale,
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "iy" = (
 /obj/item/toy/seashell,
 /turf/open/floor/plating/beach/coastline_t,
@@ -1023,6 +994,11 @@
 	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
+"lx" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
 "lA" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/maltliquor{
@@ -1038,9 +1014,23 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
+"mV" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer/light{
+	pixel_x = -14;
+	pixel_y = 15
+	},
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
 "oE" = (
 /obj/structure/table/wood,
 /obj/item/food/burger/crab,
+/turf/open/floor/wood,
+/area/awaymission/beach)
+"sG" = (
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "wr" = (
@@ -1132,6 +1122,16 @@
 	pixel_x = 7;
 	pixel_y = -5
 	},
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
+"Nr" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "QQ" = (
@@ -6600,7 +6600,7 @@ ci
 bd
 bd
 bd
-cB
+hw
 cH
 ba
 ak
@@ -6701,13 +6701,13 @@ bQ
 aX
 ak
 ba
-ce
+lx
 aX
 cj
 bd
 bd
 bd
-cB
+hw
 cH
 ba
 ak
@@ -7024,7 +7024,7 @@ ak
 ba
 ba
 aX
-cm
+sG
 bd
 bd
 bd
@@ -7557,7 +7557,7 @@ bQ
 aX
 ak
 ba
-ce
+lx
 aX
 bd
 bd
@@ -8208,7 +8208,7 @@ ak
 ak
 ak
 ak
-cK
+Nr
 cM
 ap
 bw
@@ -8611,7 +8611,7 @@ ac
 ad
 ag
 ak
-aJ
+mV
 aE
 ak
 aX

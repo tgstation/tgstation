@@ -86,7 +86,7 @@
 		var/obj/machinery/hydroponics/H = target
 		if(!H.myseed)
 			return
-		if(!H.harvest)// So it's bit harder.
+		if(H.plant_status != HYDROTRAY_PLANT_HARVESTABLE)// So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
@@ -97,7 +97,7 @@
 
 	//animals
 	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
+	if(isanimal_or_basicmob(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
@@ -145,7 +145,7 @@
 
 	var/list/obj/structure/fillers = list()
 
-/obj/machinery/dna_vault/Initialize()
+/obj/machinery/dna_vault/Initialize(mapload)
 	//TODO: Replace this,bsa and gravgen with some big machinery datum
 	var/list/occupied = list()
 	for(var/direct in list(EAST,WEST,SOUTHEAST,SOUTHWEST))
@@ -254,8 +254,8 @@
 			to_chat(H, span_notice("You feel resistant to airborne toxins."))
 			if(locate(/obj/item/organ/lungs) in H.internal_organs)
 				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
-				L.tox_breath_dam_min = 0
-				L.tox_breath_dam_max = 0
+				L.plas_breath_dam_min = 0
+				L.plas_breath_dam_max = 0
 			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
 		if(VAULT_NOBREATH)
 			to_chat(H, span_notice("Your lungs feel great."))

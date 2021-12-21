@@ -1,5 +1,6 @@
 import { BasicInput } from './BasicInput';
-import { NumberInput, Button, Stack, Input } from '../../components';
+import { NumberInput, Button, Stack, Input, Dropdown } from '../../components';
+import { OPTION_DROPDOWN_LARGE_CHAR_AMOUNT } from './constants';
 
 export const FUNDAMENTAL_DATA_TYPES = {
   'string': (props, context) => {
@@ -10,6 +11,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
           placeholder={name}
           value={value}
           onChange={(e, val) => setValue(val)}
+          width="96px"
         />
       </BasicInput>
     );
@@ -32,7 +34,19 @@ export const FUNDAMENTAL_DATA_TYPES = {
     );
   },
   'entity': (props, context) => {
-    const { name, setValue, color } = props;
+    const { name, setValue } = props;
+    return (
+      <Button
+        content={name}
+        color="transparent"
+        icon="upload"
+        compact
+        onClick={() => setValue(null, { marked_atom: true })}
+      />
+    );
+  },
+  'datum': (props, context) => {
+    const { name, setValue } = props;
     return (
       <Button
         content={name}
@@ -51,6 +65,35 @@ export const FUNDAMENTAL_DATA_TYPES = {
         color="transparent"
         compact
         onClick={() => setValue()}
+      />
+    );
+  },
+  'option': (props, context) => {
+    const {
+      value,
+      setValue,
+    } = props;
+    let large = false;
+    const extraData = props.extraData || [];
+    const data = Array.isArray(extraData)
+      ? extraData
+      : Object.keys(extraData);
+
+    data.forEach(element => {
+      if (element.length > OPTION_DROPDOWN_LARGE_CHAR_AMOUNT) {
+        large = true;
+      }
+    });
+
+    return (
+      <Dropdown
+        className="IntegratedCircuit__BlueBorder"
+        color={"transparent"}
+        options={data}
+        onSelected={setValue}
+        displayText={value}
+        openWidth={large ? "200px" : undefined}
+        noscroll
       />
     );
   },
@@ -75,10 +118,17 @@ export const FUNDAMENTAL_DATA_TYPES = {
               placeholder={name}
               value={value}
               onChange={(e, val) => setValue(val)}
+              width="64px"
             />
           </Stack.Item>
         </Stack>
       </BasicInput>
     );
+  },
+};
+
+export const DATATYPE_DISPLAY_HANDLERS = {
+  'option': (port) => {
+    return port.name.toLowerCase();
   },
 };

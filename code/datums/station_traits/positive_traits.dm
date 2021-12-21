@@ -28,7 +28,7 @@
 	var/obj/item/pizzabox/pizza_to_spawn = pick(list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/vegetable, /obj/item/pizzabox/pineapple))
 	new pizza_to_spawn(toLaunch)
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/drinks/beer(toLaunch)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer(toLaunch)
 	new /obj/effect/pod_landingzone(T, toLaunch)
 
 /datum/station_trait/galactic_grant
@@ -114,6 +114,9 @@
 	blacklist = list(/datum/station_trait/empty_maint)
 	trait_to_give = STATION_TRAIT_FILLED_MAINT
 
+	// This station trait is checked when loot drops initialize, so it's too late
+	can_revert = FALSE
+
 /datum/station_trait/quick_shuttle
 	name = "Quick Shuttle"
 	trait_type = STATION_TRAIT_POSITIVE
@@ -141,7 +144,6 @@
 	. = ..()
 	deathrattle_group = new("[department_name] group")
 	blacklist += subtypesof(/datum/station_trait/deathrattle_department) - type //All but ourselves
-	name = "deathrattled [department_name]"
 	report_message = "All members of [department_name] have received an implant to notify each other if one of them dies. This should help improve job-safety!"
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
 
@@ -149,7 +151,7 @@
 /datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
-	if(!(job.departments & department_to_apply_to))
+	if(!(job.departments_bitflags & department_to_apply_to))
 		return
 
 	var/obj/item/implant/deathrattle/implant_to_give = new()
@@ -158,49 +160,56 @@
 
 
 /datum/station_trait/deathrattle_department/service
+	name = "Deathrattled Service"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_SERVICE
+	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
+	name = "Deathrattled Cargo"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_CARGO
+	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
+	name = "Deathrattled Engineering"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_ENGINEERING
+	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
+	name = "Deathrattled Command"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_COMMAND
+	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
+	name = "Deathrattled Science"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_SCIENCE
+	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
+	name = "Deathrattled Security"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_SECURITY
+	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
+	name = "Deathrattled Medical"
 	trait_flags = NONE
 	weight = 1
-	department_to_apply_to = DEPARTMENT_MEDICAL
+	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
 
 /datum/station_trait/deathrattle_all
-	name = "deathrattled station"
+	name = "Deathrattled Station"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
 	weight = 1
@@ -256,7 +265,7 @@
 	new /obj/item/holochip(wallet, holochip_amount)
 	id_card.registered_account.adjust_money(-holochip_amount)
 
-	new /obj/effect/spawner/lootdrop/wallet_loot(wallet)
+	new /obj/effect/spawner/random/entertainment/wallet_storage(wallet)
 
 	// Put our filthy fingerprints all over the contents
 	for(var/obj/item/item in wallet)

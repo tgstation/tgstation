@@ -30,10 +30,11 @@
 	var/total_count_reset = 0
 	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
 	var/externalreplyamount = 0
-	///When was the last time we warned them about not cryoing without an ahelp, set to -5 minutes so that rounstart cryo still warns
-	COOLDOWN_DECLARE(cryo_warned)
 	///Tracks say() usage for ic/dchat while slowmode is enabled
 	COOLDOWN_DECLARE(say_slowmode)
+	/// The last urgent ahelp that this player sent
+	COOLDOWN_DECLARE(urgent_ahelp_cooldown)
+
 		/////////
 		//OTHER//
 		/////////
@@ -158,11 +159,12 @@
 	var/list/panel_tabs = list()
 	/// list of tabs containing spells and abilities
 	var/list/spell_tabs = list()
-	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
+	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
+	///this is the last recorded client eye by SSparallax/fire()
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	///world.time of when we can state animate()ing parallax again
@@ -211,3 +213,9 @@
 
 	/// If the client is currently under the restrictions of the interview system
 	var/interviewee = FALSE
+
+	/// Whether or not this client has standard hotkeys enabled
+	var/hotkeys = TRUE
+
+	/// Whether or not this client has the combo HUD enabled
+	var/combo_hud_enabled = FALSE

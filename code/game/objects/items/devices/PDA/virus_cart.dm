@@ -15,7 +15,7 @@
 
 /obj/item/cartridge/virus/special(mob/living/user, list/params)
 	var/obj/item/pda/P = locate(params["target"]) in GLOB.PDAs  //Leaving it alone in case it may do something useful, I guess.
-	send_virus(P,user)
+	INVOKE_ASYNC(src, .proc/send_virus, P, user)
 
 /obj/item/cartridge/virus/clown
 	name = "\improper Honkworks 5.0 cartridge"
@@ -56,27 +56,41 @@
 	icon_state = "cart"
 	access = CART_REMOTE_DOOR
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!! //don't ask about the name, testing.
-	charges = 4
+	charges = 6
 
-/obj/item/cartridge/virus/syndicate/send_virus(obj/item/pda/target, mob/living/U)
+/obj/item/cartridge/virus/syndicate/send_virus(obj/item/pda/target, mob/living/user)
 	if(charges <= 0)
-		to_chat(U, span_notice("Out of charges."))
+		to_chat(user, span_notice("Out of charges."))
 		return
-	if(!isnull(target) && !target.toff)
+	if(!target || target.toff)
+		to_chat(user, span_alert("PDA not found."))
+		return
+
+	var/difficulty = 0
+	if(target.cartridge)
+		difficulty += bit_count(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
+		if(target.cartridge.access & CART_MANIFEST)
+			difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
+	if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
+		user.show_message(span_danger("An error flashes on your [src]."), MSG_VISUAL)
 		charges--
-		var/difficulty = 0
-		if(target.cartridge)
-			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL | CART_SECURITY | CART_ENGINE | CART_CLOWN | CART_JANITOR | CART_MANIFEST))
-			if(target.cartridge.access & CART_MANIFEST)
-				difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
-		if(SEND_SIGNAL(target, COMSIG_PDA_CHECK_DETONATE) & COMPONENT_PDA_NO_DETONATE || prob(difficulty * 15))
-			U.show_message(span_danger("An error flashes on your [src]."), MSG_VISUAL)
-		else
-			log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
-			U.show_message(span_notice("Success!"), MSG_VISUAL)
-			target.explode()
-	else
-		to_chat(U, span_alert("PDA not found."))
+		return
+
+	var/original_host = host_pda
+	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
+	if(!fakename || host_pda != original_host || !user.canUseTopic(host_pda, BE_CLOSE))
+		return
+	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
+	if(!fakejob || host_pda != original_host || !user.canUseTopic(host_pda, BE_CLOSE))
+		return
+	if(charges > 0 && host_pda.send_message(user, list(target), rigged = REF(user), fakename = fakename, fakejob = fakejob))
+		charges--
+		user.show_message(span_notice("Success!"), MSG_VISUAL)
+		//Rigs the PDA to explode if they try to outsmart us by using the message function menu.
+		var/reference = REF(src)
+		ADD_TRAIT(target, TRAIT_PDA_CAN_EXPLODE, reference)
+		ADD_TRAIT(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference)
+		addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_PDA_MESSAGE_MENU_RIGGED, reference), 10 SECONDS)
 
 /obj/item/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"

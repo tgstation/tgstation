@@ -25,6 +25,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
+	burns_in_oven = TRUE
 
 /obj/item/food/pie/cream
 	name = "banana cream pie"
@@ -43,8 +44,8 @@
 /obj/item/food/pie/cream/proc/splat(atom/movable/hit_atom)
 	if(isliving(loc)) //someone caught us!
 		return
-	var/turf/T = get_turf(hit_atom)
-	new/obj/effect/decal/cleanable/food/pie_smudge(T)
+	var/turf/hit_turf = get_turf(hit_atom)
+	new/obj/effect/decal/cleanable/food/pie_smudge(hit_turf)
 	if(reagents?.total_volume)
 		reagents.expose(hit_atom, TOUCH)
 	if(isliving(hit_atom))
@@ -112,7 +113,7 @@
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES
 
-/obj/item/food/pie/plump_pie/Initialize()
+/obj/item/food/pie/plump_pie/Initialize(mapload)
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"

@@ -31,12 +31,12 @@
 	speak_emote = list("squeaks")
 	var/max_co2 = 0 //to be removed once metastation map no longer use those for Sgt Araneus
 	var/min_oxy = 0
-	var/max_tox = 0
+	var/max_plas = 0
 	//Space bats need no air to fly in.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
-/mob/living/simple_animal/hostile/retaliate/bat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/bat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
@@ -56,7 +56,7 @@
 	maxHealth = 250
 	health = 250
 	max_co2 = 5
-	max_tox = 2
+	max_plas = 2
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	min_oxy = 5
@@ -65,6 +65,6 @@
 	response_help_simple = "pet"
 	turns_per_move = 10
 
-/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus/Initialize()
+/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "chitters proudly!")

@@ -53,7 +53,7 @@
 		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * delta_time)
 
 	if(flesh_healing > 0) // good bandages multiply the length of flesh healing
-		var/bandage_factor = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
+		var/bandage_factor = limb.current_gauze?.burn_cleanliness_bonus || 1
 		flesh_damage = max(flesh_damage - (0.5 * delta_time), 0)
 		flesh_healing = max(flesh_healing - (0.5 * bandage_factor * delta_time), 0) // good bandages multiply the length of flesh healing
 
@@ -69,7 +69,7 @@
 
 	// sanitization is checked after the clearing check but before the actual ill-effects, because we freeze the effects of infection while we have sanitization
 	if(sanitization > 0)
-		var/bandage_factor = (limb.current_gauze ? limb.current_gauze.splint_factor : 1)
+		var/bandage_factor = limb.current_gauze?.burn_cleanliness_bonus || 1
 		infestation = max(infestation - (WOUND_BURN_SANITIZATION_RATE * delta_time), 0)
 		sanitization = max(sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor * delta_time), 0)
 		return
@@ -198,6 +198,8 @@
 /// if someone is using ointment or mesh on our burns
 /datum/wound/burn/proc/ointmentmesh(obj/item/stack/medical/I, mob/user)
 	user.visible_message(span_notice("[user] begins applying [I] to [victim]'s [limb.name]..."), span_notice("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name]..."))
+	if (I.amount <= 0)
+		return
 	if(!do_after(user, (user == victim ? I.self_delay : I.other_delay), extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
@@ -299,3 +301,10 @@
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
 	scar_keyword = "burncritical"
+
+///special severe wound caused by sparring interference or other god related punishments.
+/datum/wound/burn/severe/brand
+	name = "Holy Brand"
+	desc = "Patient is suffering extreme burns from a strange brand marking, creating serious risk of infection and greatly reduced limb integrity."
+	examine_desc = "appears to have holy symbols painfully branded into their flesh, leaving severe burns."
+	occur_text = "chars rapidly into a strange pattern of holy symbols, burned into the flesh."

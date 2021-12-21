@@ -27,7 +27,7 @@
 	var/obj/item/bombcore/payload = /obj/item/bombcore
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE //delay wire pulsed?
-	var/delayedlittle  = FALSE //activation wire pulsed?
+	var/delayedlittle = FALSE //activation wire pulsed?
 	var/obj/effect/countdown/syndicatebomb/countdown
 
 	var/next_beep
@@ -39,11 +39,11 @@
 	if(.)
 		payload.detonate()
 
-/obj/machinery/syndicatebomb/obj_break()
+/obj/machinery/syndicatebomb/atom_break()
 	if(!try_detonate())
 		..()
 
-/obj/machinery/syndicatebomb/obj_destruction()
+/obj/machinery/syndicatebomb/atom_destruction()
 	if(!try_detonate())
 		..()
 
@@ -81,7 +81,7 @@
 		update_appearance()
 		try_detonate(TRUE)
 
-/obj/machinery/syndicatebomb/Initialize()
+/obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/syndicatebomb(src)
 	if(payload)
@@ -170,9 +170,9 @@
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
-		var/old_integ = obj_integrity
+		var/old_integ = atom_integrity
 		. = ..()
-		if((old_integ > obj_integrity) && active  && (payload in src))
+		if((old_integ > atom_integrity) && active  && (payload in src))
 			to_chat(user, span_warning("That seems like a really bad idea..."))
 
 /obj/machinery/syndicatebomb/interact(mob/user)
@@ -193,7 +193,7 @@
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num|null
+	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
 
 	if (isnull(new_timer))
 		return
@@ -205,6 +205,7 @@
 		if(!active)
 			visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
 			activate()
+			user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_AMAZING)
 			update_appearance()
 			add_fingerprint(user)
 
@@ -245,7 +246,7 @@
 	open_panel = TRUE
 	timer_set = 120
 
-/obj/machinery/syndicatebomb/empty/Initialize()
+/obj/machinery/syndicatebomb/empty/Initialize(mapload)
 	. = ..()
 	wires.cut_all()
 

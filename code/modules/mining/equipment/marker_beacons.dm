@@ -1,5 +1,5 @@
 /*****************Marker Beacons**************************/
-GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
+GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 "Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
-	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 100, RAD = 100, FIRE = 25, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 75, LASER = 75, ENERGY = 75, BOMB = 25, BIO = 100, FIRE = 25, ACID = 0)
 	max_integrity = 50
 	anchored = TRUE
 	light_range = 2

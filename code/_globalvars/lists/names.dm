@@ -30,27 +30,8 @@ GLOBAL_LIST_INIT(martial_prefix, world.file2list("strings/names/martial_prefix.t
 GLOBAL_LIST_INIT(adverbs, world.file2list("strings/names/adverbs.txt"))
 GLOBAL_LIST_INIT(adjectives, world.file2list("strings/names/adjectives.txt"))
 GLOBAL_LIST_INIT(gross_adjectives,  world.file2list("strings/names/gross_adjectives.txt"))
+GLOBAL_LIST_INIT(hive_names,  world.file2list("strings/names/hive_names.txt"))
 GLOBAL_LIST_INIT(dream_strings, world.file2list("strings/dreamstrings.txt"))
+GLOBAL_LIST_INIT(vampire_house_names, world.file2list("strings/names/vampire_house_names.txt"))
 //loaded on startup because of "
 //would include in rsc if ' was used
-
-/*
-List of configurable names in preferences and their metadata
-"id" = list(
-	"pref_name" = "name", //pref label
-	"qdesc" =  "name", //popup question text
-	"allow_numbers" = FALSE, // numbers allowed in the name
-	"group" = "whatever", // group (these will be grouped together on pref ui ,order still follows the list so they need to be concurrent to be grouped)
-	"allow_null" = FALSE // if empty name is entered it's replaced with default value
-	),
-*/
-GLOBAL_LIST_INIT(preferences_custom_names, list(
-	"human" = list("pref_name" = "Backup Human", "qdesc" = "backup human name, used in the event you are assigned a command role as another species (leave empty to pick random name)", "allow_numbers" = FALSE , "group" = "backup_human", "allow_null" = TRUE),
-	"clown" = list("pref_name" = "Clown" , "qdesc" = "clown name (leave empty to pick random name)", "allow_numbers" = FALSE , "group" = "fun", "allow_null" = TRUE),
-	"mime" = list("pref_name" = "Mime", "qdesc" = "mime name (leave empty to pick random name)" , "allow_numbers" = FALSE , "group" = "fun", "allow_null" = TRUE),
-	"cyborg" = list("pref_name" = "Cyborg", "qdesc" = "cyborg name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
-	"ai" = list("pref_name" = "AI", "qdesc" = "AI name (leave empty to pick random name)", "allow_numbers" = TRUE , "group" = "silicons", "allow_null" = TRUE),
-	"religion" = list("pref_name" = "Chaplain religion", "qdesc" = "religion (leave empty to pick random religion)" , "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
-	"deity" = list("pref_name" = "Chaplain deity", "qdesc" = "deity (leave empty to pick default name)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE),
-	"bible" = list("pref_name" = "Chaplain bible name", "qdesc" = "bible name (leave empty to use default naming scheme)", "allow_numbers" = TRUE , "group" = "chaplain", "allow_null" = TRUE)
-	))

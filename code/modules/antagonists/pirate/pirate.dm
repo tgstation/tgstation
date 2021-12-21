@@ -5,6 +5,7 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR ME MATEYS!!"
+	hijack_speed = 2 // That is without doubt the worst pirate I have ever seen.
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
@@ -36,6 +37,18 @@
 	if(crew)
 		objectives |= crew.objectives
 	. = ..()
+
+/datum/antagonist/pirate/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/owner_mob = mob_override || owner.current
+	var/datum/language_holder/holder = owner_mob.get_language_holder()
+	holder.grant_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	holder.selected_language = /datum/language/piratespeak
+
+/datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/owner_mob = mob_override || owner.current
+	owner_mob.remove_language(/datum/language/piratespeak, TRUE, TRUE, LANGUAGE_PIRATE)
+	return ..()
 
 /datum/team/pirate
 	name = "Pirate crew"

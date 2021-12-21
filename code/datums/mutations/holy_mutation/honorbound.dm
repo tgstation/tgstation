@@ -48,21 +48,23 @@
 	. = ..()
 
 /// Signal to see if the mutation allows us to attack a target
-/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, params)
+/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
 	SIGNAL_HANDLER
 
-	var/obj/item/weapon = honorbound.get_active_held_item()
-	var/list/modifiers = params2list(params)
-
+	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+		return
 	if(!isliving(clickingon))
 		return
-	if(!honorbound.DirectAccess(clickingon) && !isgun(weapon))
-		return
-	if(weapon.item_flags & NOBLUDGEON)
-		return
-	if(!honorbound.combat_mode && ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
-		return
+
 	var/mob/living/clickedmob = clickingon
+	var/obj/item/weapon = honorbound.get_active_held_item()
+
+	if(!honorbound.DirectAccess(clickedmob) && !isgun(weapon))
+		return
+	if(weapon?.item_flags & NOBLUDGEON)
+		return
+	if(!honorbound.combat_mode && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+		return
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
@@ -80,7 +82,7 @@
 	var/datum/mind/guilty_conscience = user.mind
 	if(guilty_conscience) //sec and medical are immune to becoming guilty through attack (we don't check holy because holy shouldn't be able to attack eachother anyways)
 		var/datum/job/job = guilty_conscience.assigned_role
-		if(job.departments & (DEPARTMENT_MEDICAL | DEPARTMENT_SECURITY))
+		if(job.departments_bitflags & (DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SECURITY))
 			return
 	if(declaration)
 		to_chat(owner, span_notice("[user] is now considered guilty by [GLOB.deity] from your declaration."))
@@ -109,10 +111,10 @@
 		var/mob/living/carbon/human/target_human = target_creature
 		var/datum/job/job = target_human.mind?.assigned_role
 		var/is_holy = target_human.mind?.holy_role
-		if(is_holy || (job?.departments & DEPARTMENT_SECURITY))
+		if(is_holy || (job?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
 			to_chat(honorbound_human, span_warning("There is nothing righteous in attacking the <b>just</b>."))
 			return FALSE
-		if(job?.departments & DEPARTMENT_MEDICAL)
+		if(job?.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)
 			to_chat(honorbound_human, span_warning("If you truly think this healer is not <b>innocent</b>, declare them guilty."))
 			return FALSE
 	//THE INNOCENT
@@ -199,15 +201,6 @@
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
-/datum/mutation/human/honorbound/proc/lightningbolt(mob/living/user)
-	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
-	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
-	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
-	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_target = user
-		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
-
 /obj/effect/proc_holder/spell/pointed/declare_evil
 	name = "Declare Evil"
 	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."
@@ -272,7 +265,7 @@
 		if(!silent)
 			to_chat(user, span_warning("Followers of [GLOB.deity] cannot be evil!"))
 		return FALSE
-	if(guilty_conscience.assigned_role.departments & DEPARTMENT_SECURITY)
+	if(guilty_conscience.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 		if(!silent)
 			to_chat(user, span_warning("Members of security are uncorruptable! You cannot declare one evil!"))
 		return FALSE

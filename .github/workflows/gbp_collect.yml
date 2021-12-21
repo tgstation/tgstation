@@ -14,8 +14,8 @@ jobs:
         ENABLER_SECRET: ${{ secrets.ACTION_ENABLER }}
       run: |
         unset SECRET_EXISTS
-        if [ -n $ENABLER_SECRET ]; then SECRET_EXISTS='true' ; fi
-        echo ::set-output name=ACTIONS_ENABLED::${SECRET_EXISTS}
+        if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+        echo "::set-output name=ACTIONS_ENABLED::$SECRET_EXISTS"
     - name: Checkout
       if: steps.value_holder.outputs.ACTIONS_ENABLED
       uses: actions/checkout@v2
@@ -37,7 +37,7 @@ jobs:
       run: cp ./.github/gbp.toml ./gbp-balances/.github/gbp.toml
     - name: GBP action
       if: steps.value_holder.outputs.ACTIONS_ENABLED
-      uses: Mothblocks/gbp-action@collate-changes
+      uses: tgstation/gbp-action@master
       with:
         collect: "true"
         directory: ./gbp-balances

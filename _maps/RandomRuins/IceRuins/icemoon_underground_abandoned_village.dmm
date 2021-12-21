@@ -62,10 +62,6 @@
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
-"hI" = (
-/obj/item/reagent_containers/food/drinks/beer,
-/turf/open/floor/plating/ice/icemoon,
-/area/icemoon/underground/explored)
 "iz" = (
 /obj/structure/fence/door/opened{
 	dir = 8
@@ -79,6 +75,19 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/ruin/powered)
+"jH" = (
+/obj/item/clothing/head/bearpelt,
+/obj/structure/table/wood,
+/obj/item/food/burger/fish,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
 "jP" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -89,12 +98,16 @@
 /area/icemoon/underground/explored)
 "ks" = (
 /obj/structure/flora/rock/icy,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"kY" = (
+/obj/effect/spawner/random/vending/snackvend,
+/turf/open/floor/holofloor/wood,
+/area/ruin/powered)
 "la" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /mob/living/simple_animal/hostile/skeleton/eskimo{
 	name = "Village Hunter"
 	},
@@ -298,7 +311,7 @@
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/reagent_containers/glass/bottle/venom,
 /obj/item/reagent_containers/glass/bottle/curare,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/meat/slab/human,
 /obj/item/food/meat/slab/human,
@@ -318,7 +331,7 @@
 "Cl" = (
 /obj/structure/sacrificealtar,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/bloodletter,
+/obj/item/knife/bloodletter,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Dm" = (
@@ -377,19 +390,6 @@
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"GK" = (
-/obj/item/clothing/head/bearpelt,
-/obj/structure/table/wood,
-/obj/item/food/burger/fish,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -4
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = 10;
-	pixel_y = 6
-	},
-/turf/open/floor/wood,
-/area/ruin/powered)
 "Hf" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/wood,
@@ -435,10 +435,6 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/ruin/powered)
-"Pp" = (
-/obj/effect/spawner/randomsnackvend,
-/turf/open/floor/holofloor/wood,
 /area/ruin/powered)
 "PQ" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -537,6 +533,10 @@
 /area/ruin/powered)
 "Ze" = (
 /turf/closed/wall,
+/area/icemoon/underground/explored)
+"Zw" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/open/floor/plating/ice/icemoon,
 /area/icemoon/underground/explored)
 "Zx" = (
 /obj/structure/chair/wood{
@@ -837,7 +837,7 @@ SZ
 zT
 zT
 Vn
-Pp
+kY
 aM
 pP
 Vn
@@ -995,7 +995,7 @@ zT
 zT
 zR
 cB
-GK
+jH
 Vn
 Ei
 Ei
@@ -1198,7 +1198,7 @@ Og
 Og
 pc
 xc
-hI
+Zw
 Zx
 xc
 xc

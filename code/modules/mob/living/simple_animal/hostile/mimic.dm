@@ -24,7 +24,7 @@
 	speak_emote = list("creaks")
 	taunt_chance = 30
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 	faction = list("mimic")
@@ -98,7 +98,8 @@
 		O.forceMove(C)
 	..()
 
-GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/cable, /obj/structure/window))
+/// Mimics can't be made out of these objects
+GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cable, /obj/structure/window, /obj/structure/blob))
 
 /mob/living/simple_animal/hostile/mimic/copy
 	health = 100
@@ -132,6 +133,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	return . - creator
 
+/mob/living/simple_animal/hostile/mimic/copy/wabbajack()
+	visible_message(span_warning("[src] resists polymorphing into a new creature!"))
+
 /mob/living/simple_animal/hostile/mimic/copy/proc/ChangeOwner(mob/owner)
 	if(owner != creator)
 		LoseTarget()
@@ -139,7 +143,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		faction |= "[REF(owner)]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
-	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.protected_objects))
+	if((isitem(O) || isstructure(O)) && !is_type_in_list(O, GLOB.mimic_blacklist))
 		return TRUE
 	return FALSE
 
@@ -293,7 +297,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/locked = FALSE
 	var/datum/action/innate/mimic/lock/lock
 
-/mob/living/simple_animal/hostile/mimic/xenobio/Initialize()
+/mob/living/simple_animal/hostile/mimic/xenobio/Initialize(mapload)
 	. = ..()
 	lock = new
 	lock.Grant(src)

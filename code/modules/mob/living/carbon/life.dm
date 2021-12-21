@@ -157,7 +157,7 @@
 
 	var/safe_oxy_min = 16
 	var/safe_co2_max = 10
-	var/safe_tox_max = 0.05
+	var/safe_plas_max = 0.05
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
@@ -166,7 +166,7 @@
 	var/list/breath_gases = breath.gases
 	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
 	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
-	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+	var/Plasma_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
 	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
 
 
@@ -209,13 +209,13 @@
 	else
 		co2overloadtime = 0
 
-	//TOXINS/PLASMA
-	if(Toxins_partialpressure > safe_tox_max)
-		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
+	//PLASMA
+	if(Plasma_partialpressure > safe_plas_max)
+		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_tox", /atom/movable/screen/alert/too_much_tox)
+		throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
 	else
-		clear_alert("too_much_tox")
+		clear_alert("too_much_plas")
 
 	//NITROUS OXIDE
 	if(breath_gases[/datum/gas/nitrous_oxide])
@@ -246,15 +246,13 @@
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
 
-	//TRITIUM
-	if(breath_gases[/datum/gas/tritium])
-		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
-		radiation += tritium_partialpressure/10
-
-	//NITRYL
-	if(breath_gases[/datum/gas/nitryl])
-		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
-		adjustFireLoss(nitryl_partialpressure/4)
+	//NITRIUM
+	if(breath_gases[/datum/gas/nitrium])
+		var/nitrium_partialpressure = (breath_gases[/datum/gas/nitrium][MOLES]/breath.total_moles())*breath_pressure
+		if(nitrium_partialpressure > 0.5)
+			adjustFireLoss(nitrium_partialpressure * 0.15)
+		if(nitrium_partialpressure > 5)
+			adjustToxLoss(nitrium_partialpressure * 0.05)
 
 	//FREON
 	if(breath_gases[/datum/gas/freon])
@@ -351,8 +349,8 @@
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			O.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
+			var/obj/item/organ/organ = V
+			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases(delta_time, times_fired)
 	for(var/thing in diseases)
@@ -381,45 +379,42 @@
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 
-/mob/living/carbon/handle_mutations_and_radiation(delta_time, times_fired)
-	if(dna?.temporary_mutations.len)
-		for(var/mut in dna.temporary_mutations)
-			if(dna.temporary_mutations[mut] < world.time)
-				if(mut == UI_CHANGED)
-					if(dna.previous["UI"])
-						dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
-						updateappearance(mutations_overlay_update=1)
-						dna.previous.Remove("UI")
-					dna.temporary_mutations.Remove(mut)
-					continue
-				if(mut == UF_CHANGED)
-					if(dna.previous["UF"])
-						dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
-						updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-						dna.previous.Remove("UF")
-					dna.temporary_mutations.Remove(mut)
-					continue
-				if(mut == UE_CHANGED)
-					if(dna.previous["name"])
-						real_name = dna.previous["name"]
-						name = real_name
-						dna.previous.Remove("name")
-					if(dna.previous["UE"])
-						dna.unique_enzymes = dna.previous["UE"]
-						dna.previous.Remove("UE")
-					if(dna.previous["blood_type"])
-						dna.blood_type = dna.previous["blood_type"]
-						dna.previous.Remove("blood_type")
-					dna.temporary_mutations.Remove(mut)
-					continue
-		for(var/datum/mutation/human/HM in dna.mutations)
-			if(HM?.timed)
-				dna.remove_mutation(HM.type)
+/mob/living/carbon/handle_mutations(time_since_irradiated, delta_time, times_fired)
+	if(!dna?.temporary_mutations.len)
+		return
 
-	radiation = max(radiation - (RAD_LOSS_PER_SECOND * delta_time), 0)
-	if(radiation > RAD_MOB_SAFE)
-		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT*delta_time)
-
+	for(var/mut in dna.temporary_mutations)
+		if(dna.temporary_mutations[mut] < world.time)
+			if(mut == UI_CHANGED)
+				if(dna.previous["UI"])
+					dna.unique_identity = merge_text(dna.unique_identity,dna.previous["UI"])
+					updateappearance(mutations_overlay_update=1)
+					dna.previous.Remove("UI")
+				dna.temporary_mutations.Remove(mut)
+				continue
+			if(mut == UF_CHANGED)
+				if(dna.previous["UF"])
+					dna.unique_features = merge_text(dna.unique_features,dna.previous["UF"])
+					updateappearance(mutcolor_update=1, mutations_overlay_update=1)
+					dna.previous.Remove("UF")
+				dna.temporary_mutations.Remove(mut)
+				continue
+			if(mut == UE_CHANGED)
+				if(dna.previous["name"])
+					real_name = dna.previous["name"]
+					name = real_name
+					dna.previous.Remove("name")
+				if(dna.previous["UE"])
+					dna.unique_enzymes = dna.previous["UE"]
+					dna.previous.Remove("UE")
+				if(dna.previous["blood_type"])
+					dna.blood_type = dna.previous["blood_type"]
+					dna.previous.Remove("blood_type")
+				dna.temporary_mutations.Remove(mut)
+				continue
+	for(var/datum/mutation/human/HM in dna.mutations)
+		if(HM?.timed)
+			dna.remove_mutation(HM.type)
 
 /*
 Alcohol Poisoning Chart
@@ -482,7 +477,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		dizziness = max(dizziness - (restingpwr * delta_time), 0)
 
 	if(drowsyness)
-		drowsyness = max(drowsyness - (restingpwr * delta_time), 0)
+		adjust_drowsyness(-1 * restingpwr * delta_time)
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(100)

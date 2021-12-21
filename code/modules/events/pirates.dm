@@ -53,7 +53,7 @@
 	threat.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat, ship_template, FALSE), response_max_time)
 	SScommunications.send_message(threat,unique = TRUE)
-	
+
 /proc/pirates_answered(datum/comm_message/threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
 	if(world.time > initial_send_time + response_max_time)
 		priority_announce("Too late to beg for mercy!",sender_override = ship_name)
@@ -72,7 +72,7 @@
 	if(!skip_answer_check && threat?.answered == 1)
 		return
 
-	var/list/candidates = pollGhostCandidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
+	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/shuttle/pirate/ship = new ship_template
@@ -87,7 +87,7 @@
 		CRASH("Loading pirate ship failed!")
 
 	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
 				spawner.create(our_candidate)
@@ -137,16 +137,17 @@
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
-	if(!active)
-		if(tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel")) == "Cancel")
-			return
-		if(active || !user.canUseTopic(src, BE_CLOSE))
-			return
-		toggle_on(user)
-		update_appearance()
-		send_notification()
-	else
+	if(active)
 		dump_loot(user)
+		return
+	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
+	if(scramble_response != "Yes")
+		return
+	if(active || !user.canUseTopic(src, BE_CLOSE))
+		return
+	toggle_on(user)
+	update_appearance()
+	send_notification()
 
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
@@ -270,7 +271,7 @@
 	var/sending_timer
 	var/cargo_hold_id
 
-/obj/machinery/computer/piratepad_control/Initialize()
+/obj/machinery/computer/piratepad_control/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -426,7 +427,7 @@
 		return 0
 	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
-	else if(H.mind.assigned_role.title in GLOB.command_positions)
+	else if(H.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		return 3000
 	else
 		return 1000

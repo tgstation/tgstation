@@ -9,10 +9,11 @@
 	///optional proc to callback to when the udder is milked
 	var/datum/callback/on_milk_callback
 
-/datum/component/udder/Initialize(udder_type = /obj/item/udder, on_milk_callback, on_generate_callback)
+//udder_type and reagent_produced_typepath are typepaths, not reference
+/datum/component/udder/Initialize(udder_type = /obj/item/udder, datum/callback/on_milk_callback, datum/callback/on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
 	if(!isliving(parent)) //technically is possible to drop this on carbons... but you wouldn't do that to me, would you?
 		return COMPONENT_INCOMPATIBLE
-	udder = new udder_type(null, parent, on_generate_callback)
+	udder = new udder_type(null, parent, on_generate_callback, reagent_produced_typepath)
 	src.on_milk_callback = on_milk_callback
 
 /datum/component/udder/RegisterWithParent()
@@ -60,6 +61,8 @@
  */
 /obj/item/udder
 	name = "udder"
+	///typepath of reagent produced by the udder
+	var/reagent_produced_typepath = /datum/reagent/consumable/milk
 	///how much the udder holds
 	var/size = 50
 	///mob that has the udder component
@@ -67,10 +70,11 @@
 	///optional proc to callback to when the udder generates milk
 	var/datum/callback/on_generate_callback
 
-/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback)
+/obj/item/udder/Initialize(mapload, udder_mob, on_generate_callback, reagent_produced_typepath = /datum/reagent/consumable/milk)
 	src.udder_mob = udder_mob
 	src.on_generate_callback = on_generate_callback
 	create_reagents(size, REAGENT_HOLDER_ALIVE)
+	src.reagent_produced_typepath = reagent_produced_typepath
 	initial_conditions()
 	. = ..()
 
@@ -84,30 +88,28 @@
 		generate() //callback is on generate() itself as sometimes generate does not add new reagents, or is not called via process
 
 /**
- * # initial_conditions
- *
  * Proc called on creation separate from the reagent datum creation to allow for signalled milk generation instead of processing milk generation
  * also useful for changing initial amounts in reagent holder (cows start with milk, gutlunches start empty)
  */
 /obj/item/udder/proc/initial_conditions()
-	reagents.add_reagent(/datum/reagent/consumable/milk, 20)
+	reagents.add_reagent(reagent_produced_typepath, 20)
 	START_PROCESSING(SSobj, src)
 
 /**
- * # generate
- *
  * Proc called every 2 seconds from SSMobs to add whatever reagent the udder is generating.
  */
 /obj/item/udder/proc/generate()
 	if(prob(5))
-		reagents.add_reagent(/datum/reagent/consumable/milk, rand(5, 10))
+		reagents.add_reagent(reagent_produced_typepath, rand(5, 10))
 		if(on_generate_callback)
 			on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
 
 /**
- * # milk
- *
  * Proc called from attacking the component parent with the correct item, moves reagents into the glass basically.
+ *
+ * Arguments:
+ * * obj/item/reagent_containers/glass/milk_holder - what we are trying to transfer the reagents to
+ * * mob/user - who is trying to do this
  */
 /obj/item/udder/proc/milk(obj/item/reagent_containers/glass/milk_holder, mob/user)
 	if(milk_holder.reagents.total_volume >= milk_holder.volume)
@@ -129,6 +131,8 @@
 	name = "nutrient sac"
 
 /obj/item/udder/gutlunch/initial_conditions()
+	if(!udder_mob)
+		return
 	if(udder_mob.gender == FEMALE)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(udder_mob, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_mob_attacking)
@@ -142,13 +146,15 @@
 		//usually this would be a callback but this is a specifically gutlunch feature so fuck it, gutlunch specific proccall
 		gutlunch.regenerate_icons(reagents.total_volume, reagents.maximum_volume)
 
-///signal called on parent attacking an atom
-/obj/item/udder/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
+/**
+ * signal called on parent attacking an atom
+*/
+/obj/item/udder/gutlunch/proc/on_mob_attacking(mob/living/simple_animal/hostile/gutlunch, atom/target)
 	SIGNAL_HANDLER
 
 	if(is_type_in_typecache(target, gutlunch.wanted_objects)) //we eats
 		generate()
-		gutlunch.visible_message(span_notice("[src] slurps up [target]."))
+		gutlunch.visible_message(span_notice("[udder_mob] slurps up [target]."))
 		qdel(target)
 	return COMPONENT_HOSTILE_NO_ATTACK //there is no longer a target to attack
 

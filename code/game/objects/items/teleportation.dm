@@ -65,7 +65,7 @@
 					var/area/A = get_area(W)
 					beacon_name = A.name
 
-				var/D =  dir2text(get_dir(sr, tr))
+				var/D = dir2text(get_dir(sr, tr))
 				tele_beacons += list(list(name = beacon_name, direction = D, distance = distance))
 
 		data["telebeacons"] = tele_beacons
@@ -86,7 +86,7 @@
 			if(distance > tracking_range)
 				continue
 
-			var/D =  dir2text(get_dir(sr, tr))
+			var/D = dir2text(get_dir(sr, tr))
 			track_implants += list(list(name = W.imp_in.name, direction = D, distance = distance))
 		data["trackimplants"] = track_implants
 	return data
@@ -111,7 +111,7 @@
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=10000)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
@@ -126,7 +126,7 @@
 	*/
 	var/last_portal_location
 
-/obj/item/hand_tele/Initialize()
+/obj/item/hand_tele/Initialize(mapload)
 	. = ..()
 	active_portal_pairs = list()
 
@@ -253,9 +253,7 @@
 	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 
-	var/turf/check_turf = get_turf(get_step(user, user.dir))
-	if(check_turf.CanPass(user, get_dir(check_turf, user)))
-		portal1.forceMove(check_turf)
+	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2
 
 	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(portal1)] and [AREACOORD(portal2)].", INVESTIGATE_PORTAL)

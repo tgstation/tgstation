@@ -20,7 +20,7 @@ RSF
 	density = FALSE
 	anchored = FALSE
 	item_flags = NOBLUDGEON
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	///The current matter count
 	var/matter = 0
 	///The max amount of matter in the device
@@ -30,10 +30,10 @@ RSF
 	///The cost of the object we are going to dispense
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
-	///An associated list of atoms and charge costs. This can contain a seperate list, as long as it's associated item is an object
+	///An associated list of atoms and charge costs. This can contain a separate list, as long as it's associated item is an object
 	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
 								/obj/item/paper = 10,
-								/obj/item/storage/pill_bottle/dice = 200,
+								/obj/item/storage/dice = 200,
 								/obj/item/pen = 50,
 								/obj/item/clothing/mask/cigarette = 10,
 								)
@@ -50,7 +50,7 @@ RSF
 	///How long should the minimum period between this RSF's item dispensings be?
 	var/cooldowndelay = 0 SECONDS
 
-/obj/item/rsf/Initialize()
+/obj/item/rsf/Initialize(mapload)
 	. = ..()
 	to_dispense = cost_by_item[1]
 	dispense_cost = cost_by_item[to_dispense]

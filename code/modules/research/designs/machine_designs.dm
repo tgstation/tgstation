@@ -159,6 +159,14 @@
 	build_path = /obj/item/circuitboard/machine/chem_heater
 	category = list ("Medical Machinery")
 
+/datum/design/board/chem_mass_spec
+	name = "Machine Design (High-Performance Liquid Chromatography)"
+	desc = "The circuit board for a High-Performance Liquid Chromatography (Machine Board)"
+	id = "chem_mass_spec"
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
+	build_path = /obj/item/circuitboard/machine/chem_mass_spec
+	category = list ("Medical Machinery")
+
 /datum/design/board/smoke_machine
 	name = "Machine Design (Smoke Machine)"
 	desc = "The circuit board for a smoke machine."
@@ -459,14 +467,6 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/rad_collector
-	name = "Machine Design (Radiation Collector Board)"
-	desc = "The circuit board for a radiation collector array."
-	id = "rad_collector"
-	build_path = /obj/item/circuitboard/machine/rad_collector
-	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
-
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
 	desc = "The circuit board for a grounding rod."
@@ -513,6 +513,14 @@
 	desc = "The circuit board for a Griddle."
 	id = "griddle"
 	build_path = /obj/item/circuitboard/machine/griddle
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/oven
+	name = "Machine Design (Oven)"
+	desc = "The circuit board for a Oven."
+	id = "oven"
+	build_path = /obj/item/circuitboard/machine/oven
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -663,7 +671,7 @@
 	name = "Machine Design (Account Registration Device)"
 	desc = "The circuit board for a Account Registration Device."
 	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
 

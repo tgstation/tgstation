@@ -17,11 +17,11 @@
 	var/datum/action/innate/camera_multiz_down/move_down_action = new
 	var/list/actions = list()
 	///Should we supress any view changes?
-	var/should_supress_view_changes  = TRUE
+	var/should_supress_view_changes = TRUE
 
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_SET_MACHINE | INTERACT_MACHINE_REQUIRES_SIGHT
 
-/obj/machinery/computer/camera_advanced/Initialize()
+/obj/machinery/computer/camera_advanced/Initialize(mapload)
 	. = ..()
 	for(var/i in networks)
 		networks -= i
@@ -209,13 +209,7 @@
 		return eye_user.client
 	return null
 
-/mob/camera/ai_eye/remote/xenobio/canZMove(direction, turf/target)
-	var/area/new_area = get_area(target)
-	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
-		return TRUE
-	return FALSE
-
-/mob/camera/ai_eye/remote/setLoc(destination)
+/mob/camera/ai_eye/remote/setLoc(turf/destination, force_update = FALSE)
 	if(eye_user)
 		destination = get_turf(destination)
 		if (destination)
@@ -291,10 +285,12 @@
 	for (var/obj/machinery/camera/netcam in L)
 		var/list/tempnetwork = netcam.network & origin.networks
 		if (tempnetwork.len)
+			if(!netcam.c_tag)
+				continue
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
-	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
+	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", T)
 	var/obj/machinery/camera/final = T[camera]
 	playsound(src, "terminal_type", 25, FALSE)
 	if(final)
@@ -315,7 +311,7 @@
 		return
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
-	if(remote_eye.zMove(UP, FALSE))
+	if(remote_eye.zMove(UP))
 		to_chat(user_mob, span_notice("You move upwards."))
 	else
 		to_chat(user_mob, span_notice("You couldn't move upwards!"))
@@ -330,7 +326,7 @@
 		return
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
-	if(remote_eye.zMove(DOWN, FALSE))
+	if(remote_eye.zMove(DOWN))
 		to_chat(user_mob, span_notice("You move downwards."))
 	else
 		to_chat(user_mob, span_notice("You couldn't move downwards!"))

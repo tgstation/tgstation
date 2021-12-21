@@ -24,6 +24,7 @@
 	name = "regenerative core"
 	desc = "All that remains of a hivelord. It can be used to help keep your body going, but it will rapidly decay into uselessness."
 	icon_state = "roro core 2"
+	visual = FALSE
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_REGENERATIVE_CORE
 	organ_flags = NONE
@@ -32,7 +33,7 @@
 	var/inert = 0
 	var/preserved = 0
 
-/obj/item/organ/regenerative_core/Initialize()
+/obj/item/organ/regenerative_core/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/inert_check), 2400)
 
@@ -116,7 +117,7 @@
 	desc = "A strange rock that crackles with power. It can be used to heal completely, but it will rapidly decay into uselessness."
 	icon_state = "legion_soul"
 
-/obj/item/organ/regenerative_core/legion/Initialize()
+/obj/item/organ/regenerative_core/legion/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

@@ -12,10 +12,10 @@
 	attack_verb_continuous = list("bans")
 	attack_verb_simple = list("ban")
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/banhammer/Initialize()
+/obj/item/banhammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 
@@ -74,10 +74,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/claymore/Initialize()
+/obj/item/claymore/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
 
@@ -111,7 +111,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
-/obj/item/claymore/highlander/Initialize()
+/obj/item/claymore/highlander/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HIGHLANDER_TRAIT)
 	START_PROCESSING(SSobj, src)
@@ -234,12 +234,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "claymore_cyborg"
 	var/mob/living/silicon/robot/robot
 
-/obj/item/claymore/highlander/robot/Initialize()
+/obj/item/claymore/highlander/robot/Initialize(mapload)
 	var/obj/item/robot_model/kiltkit = loc
 	robot = kiltkit.loc
+	. = ..()
 	if(!istype(robot))
-		qdel(src)
-	return ..()
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
 	loc.layer = LARGE_MOB_LAYER
@@ -263,26 +263,15 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	block_chance = 50
 	sharpness = SHARP_EDGED
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return(BRUTELOSS)
 
-/obj/item/katana/cursed
+/obj/item/katana/cursed //used by wizard events, see the tendril_loot.dm file for the miner one
 	slot_flags = null
-	item_flags = DROPDEL
-
-/obj/item/katana/cursed/equipped(mob/living/carbon/human/user)
-	. = ..()
-	if(!istype(user))
-		return
-	user.gain_trauma(/datum/brain_trauma/magic/stalker, TRAUMA_RESILIENCE_MAGIC)
-
-/obj/item/katana/cursed/Initialize()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/wirerod
 	name = "wired rod"
@@ -311,7 +300,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 
 	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
-		var/obj/item/melee/baton/cattleprod/P = new /obj/item/melee/baton/cattleprod
+		var/obj/item/melee/baton/security/cattleprod/prod = new
 
 		remove_item_from_storage(user)
 
@@ -320,7 +309,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		qdel(I)
 		qdel(src)
 
-		user.put_in_hands(P)
+		user.put_in_hands(prod)
 	else
 		return ..()
 
@@ -375,48 +364,30 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	resistance_flags = FIRE_PROOF
-	var/extended = FALSE
+	/// Whether the switchblade starts extended or not.
+	var/start_extended = FALSE
 
-/obj/item/switchblade/Initialize()
+/obj/item/switchblade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/butchering, 7 SECONDS, 100)
-	set_extended(extended)
-
-/obj/item/switchblade/attack_self(mob/user)
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-	set_extended(!extended)
-
-/obj/item/switchblade/update_icon_state()
-	icon_state = "[base_icon_state][extended ? "_ext" : ""]"
-	return ..()
-
-/obj/item/switchblade/proc/set_extended(new_extended)
-	extended = new_extended
-	update_icon_state()
-	if(extended)
-		force = 20
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 23
-		attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-		attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = SHARP_EDGED
-	else
-		force = 3
-		w_class = WEIGHT_CLASS_SMALL
-		throwforce = 5
-		attack_verb_continuous = list("stubs", "pokes")
-		attack_verb_simple = list("stub", "poke")
-		hitsound = 'sound/weapons/genhit.ogg'
-		sharpness = NONE
+	AddComponent(/datum/component/transforming, \
+		start_transformed = start_extended, \
+		force_on = 20, \
+		throwforce_on = 23, \
+		throw_speed_on = throw_speed, \
+		sharpness_on = SHARP_EDGED, \
+		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		w_class_on = WEIGHT_CLASS_NORMAL, \
+		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
 
 /obj/item/switchblade/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] own throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/switchblade/extended
-	extended = TRUE
+	start_extended = TRUE
 
 /obj/item/phone
 	name = "red phone"
@@ -531,7 +502,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
 
-/obj/item/mounted_chainsaw/Initialize()
+/obj/item/mounted_chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -560,7 +531,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_simple = list("bust")
 	var/impressiveness = 45
 
-/obj/item/statuebust/Initialize()
+/obj/item/statuebust/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/art, impressiveness)
 	AddElement(/datum/element/beauty, 1000)
@@ -659,7 +630,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
-/obj/item/melee/baseball_bat/Initialize()
+/obj/item/melee/baseball_bat/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		name = "cricket bat"
@@ -696,7 +667,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
-	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	// we obtain the relative direction from the bat itself to the target
+	var/relative_direction = get_cardinal_dir(src, target)
+	var/atom/throw_target = get_edge_target_turf(target, relative_direction)
 	if(homerun_ready)
 		user.visible_message(span_userdanger("It's a home run!"))
 		target.throw_at(throw_target, rand(8,10), 14, user)
@@ -742,14 +715,16 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
-/obj/item/melee/flyswatter/Initialize()
+/obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/bee/,
 					/mob/living/simple_animal/butterfly,
-					/mob/living/simple_animal/hostile/cockroach,
+					/mob/living/basic/cockroach,
 					/obj/item/queen_bee,
-					/obj/structure/spider/spiderling
+					/obj/structure/spider/spiderling,
+					/mob/living/simple_animal/ant,
+					/obj/effect/decal/cleanable/ants
 	))
 
 
@@ -831,7 +806,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/vibro_weapon/Initialize()
+/obj/item/vibro_weapon/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

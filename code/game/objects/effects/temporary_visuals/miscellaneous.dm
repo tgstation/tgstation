@@ -520,3 +520,12 @@
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
+
+/obj/effect/temp_visual/electricity
+	icon_state = "electricity3"
+	duration = 0.5 SECONDS
+
+/obj/effect/temp_visual/thunderbolt
+	icon_state = "thunderbolt"
+	icon = 'icons/effects/32x96.dmi'
+	duration = 0.6 SECONDS

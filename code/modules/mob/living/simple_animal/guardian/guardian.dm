@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	combat_mode = TRUE
 	stop_automated_movement = 1
 	attack_sound = 'sound/weapons/punch1.ogg'
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	attack_verb_continuous = "punches"
@@ -61,6 +61,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
 	var/miner_fluff_string = "<span class='holoparasite'>You encounter... Mythril, it shouldn't exist... Submit a bug report!</span>"
+	///Are we forced to not be able to manifest/recall?
+	var/locked = FALSE
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
@@ -331,7 +333,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			client.screen |= r_hand
 
 	if(l_hand)
-		hands_overlays +=  l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		hands_overlays += l_hand.build_worn_icon(default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.plane = ABOVE_HUD_PLANE
@@ -348,7 +350,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
 /mob/living/simple_animal/hostile/guardian/proc/Manifest(forced)
-	if(istype(summoner.loc, /obj/effect) || (cooldown > world.time && !forced))
+	if(istype(summoner.loc, /obj/effect) || (cooldown > world.time && !forced) || locked)
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
@@ -359,7 +361,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	return FALSE
 
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
-	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
+	if(!summoner || loc == summoner || (cooldown > world.time && !forced) || locked)
 		return FALSE
 	new /obj/effect/temp_visual/guardian/phase/out(loc)
 
@@ -452,10 +454,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(P.reset)
 			guardians -= P //clear out guardians that are already reset
 	if(guardians.len)
-		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in sortNames(guardians)
+		var/mob/living/simple_animal/hostile/guardian/G = tgui_input_list(src, "Pick the guardian you wish to reset", "Guardian Reset", sort_names(guardians))
 		if(G)
 			to_chat(src, span_holoparasite("You attempt to reset <font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font>'s personality..."))
-			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, FALSE, 100)
+			var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, FALSE, 100)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
 				to_chat(G, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
@@ -517,6 +519,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
 	var/allowguardian = FALSE
+	var/datum/antagonist/antag_datum_to_give
 
 /obj/item/guardiancreator/attack_self(mob/living/user)
 	if(isguardian(user) && !allowguardian)
@@ -534,7 +537,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	used = TRUE
 	to_chat(user, "[use_message]")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/candidate = pick(candidates)
@@ -549,7 +552,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sortList(possible_guardians)
+		guardiantype = tgui_input_list(user, "Pick the type of [mob_name]", "[mob_name] Creation", sort_list(possible_guardians))
 		if(!guardiantype || !candidate.client)
 			to_chat(user, "[failure_message]" )
 			used = FALSE
@@ -618,6 +621,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						/mob/living/proc/guardian_recall, \
 						/mob/living/proc/guardian_reset))
 	G?.client.init_verbs()
+	return G
 
 /obj/item/guardiancreator/choose
 	random = FALSE
@@ -628,6 +632,18 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/choose/wizard
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Gravitokinetic")
 	allowmultiple = TRUE
+
+/obj/item/guardiancreator/choose/wizard/spawn_guardian(mob/living/user, mob/dead/candidate)
+	. = ..()
+	var/mob/guardian = .
+	if(!guardian)
+		return
+
+	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
+	if(antag_datum)
+		if(!antag_datum.wiz_team)
+			antag_datum.create_wiz_team()
+		guardian.mind.add_antag_datum(/datum/antagonist/wizard_minion, antag_datum.wiz_team)
 
 /obj/item/guardiancreator/tech
 	name = "holoparasite injector"

@@ -37,7 +37,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "ii" = (
-/obj/effect/mob_spawn/human/hermit,
+/obj/effect/mob_spawn/ghost_role/human/hermit,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "lH" = (
@@ -120,7 +120,7 @@
 "UL" = (
 /obj/item/pickaxe/improvised,
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/combat,
+/obj/item/knife/combat,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Wb" = (

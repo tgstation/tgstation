@@ -14,7 +14,7 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/tank/jetpack/Initialize()
+/obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
 	ion_trail = new
 	ion_trail.auto_process = FALSE
@@ -149,7 +149,7 @@
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
-	inhand_icon_state =  "jetpack-void"
+	inhand_icon_state = "jetpack-void"
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
@@ -187,7 +187,7 @@
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	icon_state = "jetpack-black"
-	inhand_icon_state =  "jetpack-black"
+	inhand_icon_state = "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
 
@@ -209,7 +209,7 @@
 	var/obj/item/clothing/suit/space/hardsuit/active_hardsuit = null
 
 
-/obj/item/tank/jetpack/suit/Initialize()
+/obj/item/tank/jetpack/suit/Initialize(mapload)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	tempair_contents = air_contents

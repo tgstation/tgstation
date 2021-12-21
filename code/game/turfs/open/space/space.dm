@@ -2,7 +2,8 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
-	intact = 0
+	overfloor_placed = FALSE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -16,7 +17,7 @@
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	always_lit = TRUE
 	bullet_bounce_sound = null
 	vis_flags = VIS_INHERIT_ID //when this be added to vis_contents of something it be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
@@ -29,7 +30,7 @@
  *
  * Doesn't call parent, see [/atom/proc/Initialize]
  */
-/turf/open/space/Initialize()
+/turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
@@ -49,9 +50,9 @@
 			smoothing_flags |= SMOOTH_OBJ
 		SET_BITFLAG_LIST(canSmoothWith)
 
-	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
-		add_overlay(/obj/effect/fullbright)
+	var/area/our_area = loc
+	if(our_area.area_has_base_lighting && always_lit) //Only provide your own lighting if the area doesn't for you
+		add_overlay(GLOB.fullbright_overlay)
 
 	if(requires_activation)
 		SSair.add_to_active(src, TRUE)
@@ -158,12 +159,13 @@
 		else
 			to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
 
+
 /turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(!arrived || src != arrived.loc)
 		return
 
-	if(destination_z && destination_x && destination_y && !(arrived.pulledby || !arrived.can_be_z_moved))
+	if(destination_z && destination_x && destination_y && !arrived.pulledby && !arrived.currently_z_moving)
 		var/tx = destination_x
 		var/ty = destination_y
 		var/turf/DT = locate(tx, ty, destination_z)
@@ -182,21 +184,13 @@
 				ty--
 			DT = locate(tx, ty, destination_z)
 
-		var/atom/movable/pulling = arrived.pulling
-		var/atom/movable/puller = arrived
-		arrived.forceMove(DT)
+		arrived.zMove(null, DT, ZMOVE_ALLOW_BUCKLED)
 
-		while (pulling != null)
-			var/next_pulling = pulling.pulling
-
-			var/turf/T = get_step(puller.loc, turn(puller.dir, 180))
-			pulling.can_be_z_moved = FALSE
-			pulling.forceMove(T)
-			puller.start_pulling(pulling)
-			pulling.can_be_z_moved = TRUE
-
-			puller = pulling
-			pulling = next_pulling
+		var/atom/movable/current_pull = arrived.pulling
+		while (current_pull)
+			var/turf/target_turf = get_step(current_pull.pulledby.loc, REVERSE_DIR(current_pull.pulledby.dir)) || current_pull.pulledby.loc
+			current_pull.zMove(null, target_turf, ZMOVE_ALLOW_BUCKLED)
+			current_pull = current_pull.pulling
 
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)

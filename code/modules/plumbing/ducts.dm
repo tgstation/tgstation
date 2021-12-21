@@ -70,11 +70,8 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 
 	for(var/atom/movable/AM in loc)
-		for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-			if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-				continue
-			var/datum/component/plumbing/plumb = plumber
-			if(plumb.active)
+		for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
+			if(plumber.active)
 				disconnect_duct() //let's not built under plumbing machinery
 				return
 
@@ -91,9 +88,7 @@ All the important duct code:
 	if(istype(AM, /obj/machinery/duct))
 		return connect_duct(AM, direction, ignore_color)
 
-	for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-		if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-			continue
+	for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
@@ -168,6 +163,7 @@ All the important duct code:
 	update_appearance()
 	if(ispath(drop_on_wrench))
 		new drop_on_wrench(drop_location())
+		drop_on_wrench = null
 	if(!QDELETED(src))
 		qdel(src)
 
@@ -333,7 +329,7 @@ All the important duct code:
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/ducts
 	///Color of our duct
-	var/duct_color = "grey"
+	var/duct_color = "omni"
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
@@ -344,10 +340,10 @@ All the important duct code:
 	. += span_notice("It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
 	if(new_layer)
 		duct_layer = new_layer
-	var/new_color = input("Select a color", "Color") as null|anything in GLOB.pipe_paint_colors
+	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors)
 	if(new_color)
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)

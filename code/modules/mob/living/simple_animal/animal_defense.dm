@@ -4,6 +4,8 @@
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(user.move_force < move_resist)
+			return
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		var/shove_dir = get_dir(user, src)
@@ -90,6 +92,12 @@
 		if(.)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
+/mob/living/simple_animal/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	. = ..()
+	if(.)
+		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+		return attack_threshold_check(damage, user.melee_damage_type)
+
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -135,25 +143,37 @@
 	. = ..()
 	if(QDELETED(src))
 		return
-	var/bomb_armor = getarmor(null, BOMB)
 	switch (severity)
 		if (EXPLODE_DEVASTATE)
-			if(prob(bomb_armor))
-				adjustBruteLoss(500)
-			else
-				gib()
-				return
+			ex_act_devastate()
 		if (EXPLODE_HEAVY)
-			var/bloss = 60
-			if(prob(bomb_armor))
-				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
-
+			ex_act_heavy()
 		if (EXPLODE_LIGHT)
-			var/bloss = 30
-			if(prob(bomb_armor))
-				bloss = bloss / 1.5
-			adjustBruteLoss(bloss)
+			ex_act_light()
+
+/// Called when a devastating explosive acts on this mob
+/mob/living/simple_animal/proc/ex_act_devastate()
+	var/bomb_armor = getarmor(null, BOMB)
+	if(prob(bomb_armor))
+		adjustBruteLoss(500)
+	else
+		gib()
+
+/// Called when a heavy explosive acts on this mob
+/mob/living/simple_animal/proc/ex_act_heavy()
+	var/bomb_armor = getarmor(null, BOMB)
+	var/bloss = 60
+	if(prob(bomb_armor))
+		bloss = bloss / 1.5
+	adjustBruteLoss(bloss)
+
+/// Called when a light explosive acts on this mob
+/mob/living/simple_animal/proc/ex_act_light()
+	var/bomb_armor = getarmor(null, BOMB)
+	var/bloss = 30
+	if(prob(bomb_armor))
+		bloss = bloss / 1.5
+	adjustBruteLoss(bloss)
 
 /mob/living/simple_animal/blob_act(obj/structure/blob/B)
 	adjustBruteLoss(20)

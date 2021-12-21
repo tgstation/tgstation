@@ -4,11 +4,11 @@
 	//make sure we have a target
 	var/mob/living/carbon/curse_target = controller.blackboard[BB_CURSE_TARGET]
 	if(!curse_target)
-		LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/find_and_set/cursed))
+		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_CURSE_TARGET, /mob/living/carbon, CURSED_VIEW_RANGE)
 		return
 	//make sure attack is valid
 	if(get_dist(curse_target, item_pawn) > CURSED_VIEW_RANGE)
 		controller.blackboard[BB_CURSE_TARGET] = null
 		return
 	controller.current_movement_target = curse_target
-	LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/item_move_close_and_attack/cursed))
+	controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/cursed)

@@ -9,12 +9,12 @@
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	pass_flags_self = PASSBLOB
-	CanAtmosPass = ATMOS_PASS_PROC
+	can_atmos_pass = ATMOS_PASS_PROC
 	obj_flags = CAN_BE_HIT|BLOCK_Z_OUT_DOWN // stops blob mobs from falling on multiz.
 	/// How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/point_return = 0
 	max_integrity = BLOB_REGULAR_MAX_HP
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 70)
 	/// how much health this blob regens when pulsed
 	var/health_regen = BLOB_REGULAR_HP_REGEN
 	/// We got pulsed when?
@@ -46,7 +46,8 @@
 	if(atmosblock)
 		air_update_turf(TRUE, TRUE)
 	ConsumeTile()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
+	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
+		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -80,10 +81,10 @@
 						result++
 		. -= result - 1
 
-/obj/structure/blob/BlockSuperconductivity()
+/obj/structure/blob/block_superconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanAtmosPass(turf/T)
+/obj/structure/blob/can_atmos_pass(turf/T, vertical = FALSE)
 	return !atmosblock
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
@@ -97,7 +98,7 @@
 	if(COOLDOWN_FINISHED(src, pulse_timestamp))
 		ConsumeTile()
 		if(COOLDOWN_FINISHED(src, heal_timestamp))
-			obj_integrity = min(max_integrity, obj_integrity+health_regen)
+			atom_integrity = min(max_integrity, atom_integrity+health_regen)
 			COOLDOWN_START(src, heal_timestamp, 20)
 		update_appearance()
 		COOLDOWN_START(src, pulse_timestamp, 10)
@@ -230,7 +231,7 @@
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
 	return list("<b>Blob Type:</b> [span_notice("[uppertext(initial(name))]")]",
-							"<b>Health:</b> [span_notice("[obj_integrity]/[max_integrity]")]",
+							"<b>Health:</b> [span_notice("[atom_integrity]/[max_integrity]")]",
 							"<b>Effects:</b> [span_notice("[scannerreport()]")]")
 
 
@@ -249,7 +250,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			damage_amount *= brute_resist
@@ -268,10 +269,10 @@
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		update_appearance()
 
-/obj/structure/blob/obj_destruction(damage_flag)
+/obj/structure/blob/atom_destruction(damage_flag)
 	if(overmind)
 		overmind.blobstrain.death_reaction(src, damage_flag)
 	..()
@@ -324,17 +325,17 @@
 	update_integrity(initial_integrity)
 
 /obj/structure/blob/normal/scannerreport()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/structure/blob/normal/update_name()
 	. = ..()
-	name = "[(obj_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
+	name = "[(atom_integrity <= 15) ? "fragile " : (overmind ? null : "dead ")][initial(name)]"
 
 /obj/structure/blob/normal/update_desc()
 	. = ..()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		desc = "A thin lattice of slightly twitching tendrils."
 	else if(overmind)
 		desc = "A thick wall of writhing tendrils."
@@ -342,10 +343,10 @@
 		desc = "A thick wall of lifeless tendrils."
 
 /obj/structure/blob/normal/update_icon_state()
-	icon_state = "blob[(obj_integrity <= 15) ? "_damaged" : null]"
+	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"
 
 	/// - [] TODO: Move this elsewhere
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		brute_resist = BLOB_BRUTE_RESIST
 	else if (overmind)
 		brute_resist = BLOB_BRUTE_RESIST * 0.5

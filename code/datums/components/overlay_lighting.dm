@@ -250,8 +250,8 @@
 		if(directional)
 			RegisterSignal(new_holder, COMSIG_ATOM_DIR_CHANGE, .proc/on_holder_dir_change)
 	if(overlay_lighting_flags & LIGHTING_ON)
-		make_luminosity_update()
 		add_dynamic_lumi()
+		make_luminosity_update()
 
 
 ///Used to determine the new valid current_holder from the parent's loc.

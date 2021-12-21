@@ -165,7 +165,7 @@
 	/// Should this fish type show in fish catalog
 	var/show_in_catalog = TRUE
 	/// Should this fish spawn in random fish cases
-	var/availible_in_random_cases = TRUE
+	var/available_in_random_cases = TRUE
 	/// How rare this fish is in the random cases
 	var/random_case_rarity = FISH_RARITY_BASIC
 
@@ -223,15 +223,24 @@
 	var/obj/structure/aquarium/aquarium = parent.current_aquarium
 	if(!aquarium)
 		return FALSE
-	if(aquarium.fluid_type != required_fluid_type)
-		return FALSE
+
+	if(required_fluid_type != AQUARIUM_FLUID_ANADROMOUS)
+		if(aquarium.fluid_type != required_fluid_type)
+			return FALSE
+	else
+		if(aquarium.fluid_type != AQUARIUM_FLUID_SALTWATER && aquarium.fluid_type != AQUARIUM_FLUID_FRESHWATER)
+			return FALSE
 	if(aquarium.fluid_temp < required_temperature_min || aquarium.fluid_temp > required_temperature_max)
 		return FALSE
 	return TRUE
 
 /datum/aquarium_behaviour/fish/process(delta_time)
 	set waitfor = FALSE
+	process_health(delta_time)
+	if(status != FISH_DEAD && ready_to_reproduce())
+		try_to_reproduce()
 
+/datum/aquarium_behaviour/fish/proc/process_health(delta_time)
 	var/health_change_per_second = 0
 	if(!proper_environment())
 		health_change_per_second -= 3 //Dying here
@@ -239,11 +248,12 @@
 		health_change_per_second -= 0.5 //Starving
 	else
 		health_change_per_second += 0.5 //Slowly healing
-	health = clamp(health + health_change_per_second * delta_time, 0, initial(health))
+	adjust_health(health + health_change_per_second * delta_time)
+
+/datum/aquarium_behaviour/fish/proc/adjust_health(amt)
+	health = clamp(amt, 0, initial(health))
 	if(health <= 0)
 		death()
-	else if(ready_to_reproduce())
-		try_to_reproduce()
 
 /datum/aquarium_behaviour/fish/proc/death()
 	STOP_PROCESSING(SSobj, src)
@@ -290,7 +300,7 @@
 /datum/aquarium_behaviour/fish/auto
 	name = "automatic fish"
 	desc = "generates fish appearance automatically from component parent appearance"
-	availible_in_random_cases = FALSE
+	available_in_random_cases = FALSE
 	sprite_width = 8
 	sprite_height = 8
 	show_in_catalog = FALSE

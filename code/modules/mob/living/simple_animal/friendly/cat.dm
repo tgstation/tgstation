@@ -20,7 +20,7 @@
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
-	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten = 1)
 	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -42,7 +42,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/cat/Initialize()
+/mob/living/simple_animal/pet/cat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
@@ -117,7 +117,7 @@
 	var/memory_saved = FALSE
 	held_state = "cat"
 
-/mob/living/simple_animal/pet/cat/runtime/Initialize()
+/mob/living/simple_animal/pet/cat/runtime/Initialize(mapload)
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"

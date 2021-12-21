@@ -131,7 +131,8 @@
 	custom_price = PAYCHECK_ASSISTANT * 2
 	absorption_rate = 0.125
 	absorption_capacity = 5
-	splint_factor = 0.35
+	splint_factor = 0.7
+	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
@@ -173,10 +174,14 @@
 		if(get_amount() < 2)
 			to_chat(user, span_warning("You need at least two gauzes to do this!"))
 			return
-		new /obj/item/stack/sheet/cloth(user.drop_location())
-		user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
-			span_notice("You cut [src] into pieces of cloth with [I]."), \
-			span_hear("You hear cutting."))
+		new /obj/item/stack/sheet/cloth(I.drop_location())
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
+				span_notice("You cut [src] into pieces of cloth with [I]."), \
+				span_hear("You hear cutting."))
+		else //telekinesis
+			visible_message(span_notice("[I] cuts [src] into pieces of cloth."), \
+				blind_message = span_hear("You hear cutting."))
 		use(2)
 	else
 		return ..()
@@ -191,6 +196,8 @@
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
 	self_delay = 6 SECONDS
 	other_delay = 3 SECONDS
+	splint_factor = 0.85
+	burn_cleanliness_bonus = 0.7
 	absorption_rate = 0.075
 	absorption_capacity = 4
 	merge_type = /obj/item/stack/medical/gauze/improvised

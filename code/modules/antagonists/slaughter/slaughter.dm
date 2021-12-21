@@ -23,7 +23,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
 	faction = list("hell")
@@ -40,9 +40,6 @@
 	del_on_death = TRUE
 	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole \
-							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable \
-							of intentionally harming a fellow devil.</B>"
 
 //////////////////The Man Behind The Slaughter
 
@@ -61,12 +58,6 @@
 	wound_bonus = -10
 	bare_wound_bonus = 0
 	sharpness = SHARP_EDGED
-	playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill. \
-							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
-							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
-							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. \
-							You gain strength the more attacks you land on live humanoids, though this resets when you return to the blood zone. You can also \
-							launch a devastating slam attack with right-click, capable of smashing bones in one strike.</B>"
 
 	loot = list(/obj/effect/decal/cleanable/blood, \
 				/obj/effect/decal/cleanable/blood/innards, \
@@ -203,7 +194,7 @@
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	attack_vis_effect = null
-	feast_sound = 'sound/spookoween/scary_horn2.ogg'
+	feast_sound = 'sound/misc/scary_horn.ogg'
 	deathsound = 'sound/misc/sadtrombone.ogg'
 
 	icon_state = "bowmon"
@@ -215,21 +206,7 @@
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
-	playstyle_string = "<span class='big bold'>You are a laughter \
-	demon,</span><B> a wonderful creature from another realm. You have a single \
-	desire: <span class='clown'>To hug and tickle.</span><BR>\
-	You may use the \"Blood Crawl\" ability near blood pools to travel \
-	through them, appearing and disappearing from the station at will. \
-	Pulling a dead or unconscious mob while you enter a pool will pull \
-	them in with you, allowing you to hug them and regain your health.<BR> \
-	You move quickly upon leaving a pool of blood, but the material world \
-	will soon sap your strength and leave you sluggish.<BR>\
-	What makes you a little sad is that people seem to die when you tickle \
-	them; but don't worry! When you die, everyone you hugged will be \
-	released and fully healed, because in the end it's just a jape, \
-	sibling!</B>"
-
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize()
+/mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize(mapload)
 	. = ..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		icon_state = "honkmon"

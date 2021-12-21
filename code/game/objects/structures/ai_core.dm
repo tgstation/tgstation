@@ -12,7 +12,7 @@
 	var/obj/item/mmi/brain
 	var/can_deconstruct = TRUE
 
-/obj/structure/ai_core/Initialize()
+/obj/structure/ai_core/Initialize(mapload)
 	. = ..()
 	laws = new
 	laws.set_laws_config()
@@ -40,7 +40,7 @@
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/ai_core/deactivated/Initialize()
+/obj/structure/ai_core/deactivated/Initialize(mapload)
 	. = ..()
 	circuit = new(src)
 
@@ -55,7 +55,7 @@
 	var/safety_checks = TRUE
 	var/active = TRUE
 
-/obj/structure/ai_core/latejoin_inactive/Initialize()
+/obj/structure/ai_core/latejoin_inactive/Initialize(mapload)
 	. = ..()
 	circuit = new(src)
 	GLOB.latejoin_ai_cores += src
@@ -197,7 +197,7 @@
 						return
 
 					var/mob/living/brain/B = M.brainmob
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, span_warning("This [M.name] does not seem to fit!"))
 						return

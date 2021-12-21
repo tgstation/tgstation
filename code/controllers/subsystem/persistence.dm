@@ -7,7 +7,12 @@ SUBSYSTEM_DEF(persistence)
 	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
 
-	var/list/obj/structure/chisel_message/chisel_messages = list()
+	///instantiated wall engraving components
+	var/list/wall_engravings = list()
+	///tattoo stories that we're saving.
+	var/list/prison_tattoos_to_save = list()
+	///tattoo stories that have been selected for this round.
+	var/list/prison_tattoos_to_use = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_maps = list()
@@ -16,71 +21,170 @@ SUBSYSTEM_DEF(persistence)
 	var/list/picture_logging_information = list()
 	var/list/obj/structure/sign/picture_frame/photo_frames
 	var/list/obj/item/storage/photo_album/photo_albums
-	var/list/obj/structure/sign/painting/painting_frames = list()
-	var/list/paintings = list()
+
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadPoly()
-	LoadChiselMessages()
+	load_wall_engravings()
+	load_prisoner_tattoos()
 	LoadTrophies()
 	LoadRecentMaps()
 	LoadPhotoPersistence()
 	LoadRandomizedRecipes()
-	LoadPaintings()
 	load_custom_outfits()
 
 	load_adventures()
 	return ..()
+
+/datum/controller/subsystem/persistence/proc/collect_data()
+	save_wall_engravings()
+	save_prisoner_tattoos()
+	CollectTrophies()
+	CollectMaps()
+	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
+	SaveRandomizedRecipes()
+	SaveScars()
+	save_custom_outfits()
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
 	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
 		twitterize(P.speech_buffer, "polytalk")
 		break //Who's been duping the bird?!
 
-/datum/controller/subsystem/persistence/proc/LoadChiselMessages()
-	var/list/saved_messages = list()
-	if(fexists("data/npc_saves/ChiselMessages.sav")) //legacy compatability to convert old format to new
-		var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
-		var/saved_json
-		chisel_messages_sav[SSmapping.config.map_name] >> saved_json
-		if(!saved_json)
-			return
-		saved_messages = json_decode(saved_json)
-		fdel("data/npc_saves/ChiselMessages.sav")
-	else
-		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
-		if(!fexists(json_file))
-			return
-		var/list/json = json_decode(file2text(json_file))
+/datum/controller/subsystem/persistence/proc/load_wall_engravings()
+	var/json_file = file(ENGRAVING_SAVE_FILE)
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
 
-		if(!json)
-			return
-		saved_messages = json["data"]
+	if(json["version"] < ENGRAVING_PERSISTENCE_VERSION)
+		update_wall_engravings(json)
 
-	for(var/item in saved_messages)
-		if(!islist(item))
+	var/successfully_loaded_engravings = 0
+
+	var/list/viable_turfs = get_area_turfs(/area/maintenance) + get_area_turfs(/area/security/prison)
+	var/list/turfs_to_pick_from = list()
+
+	for(var/turf/T as anything in viable_turfs)
+		if(!isclosedturf(T))
 			continue
+		turfs_to_pick_from += T
 
-		var/xvar = item["x"]
-		var/yvar = item["y"]
-		var/zvar = item["z"]
+	var/list/engraving_entries = json["entries"]
 
-		if(!xvar || !yvar || !zvar)
+	if(engraving_entries.len)
+		for(var/iteration in 1 to rand(MIN_PERSISTENT_ENGRAVINGS, MAX_PERSISTENT_ENGRAVINGS))
+			var/engraving = engraving_entries[rand(1, engraving_entries.len)] //This means repeats will happen for now, but its something I can live with. Just make more engravings!
+			if(!islist(engraving))
+				stack_trace("something's wrong with the engraving data! one of the saved engravings wasn't a list!")
+				continue
+
+			var/turf/closed/engraved_wall = pick(turfs_to_pick_from)
+
+			if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
+				continue
+
+			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+			successfully_loaded_engravings++
+			turfs_to_pick_from -= engraved_wall
+
+	log_world("Loaded [successfully_loaded_engravings] engraved messages on map [SSmapping.config.map_name]")
+
+/datum/controller/subsystem/persistence/proc/save_wall_engravings()
+	var/list/saved_data = list()
+
+	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
+	saved_data["entries"] = list()
+
+
+	var/json_file = file(ENGRAVING_SAVE_FILE)
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			saved_data["entries"] = old_json["entries"]
+
+	for(var/datum/component/engraved/engraving in wall_engravings)
+		if(!engraving.persistent_save)
 			continue
-
-		var/turf/T = locate(xvar, yvar, zvar)
-		if(!isturf(T))
+		var/area/engraved_area = get_area(engraving.parent)
+		if(!(engraved_area.area_flags & PERSISTENT_ENGRAVINGS))
 			continue
+		saved_data["entries"] += engraving.save_persistent()
 
-		if(locate(/obj/structure/chisel_message) in T)
-			continue
+	fdel(json_file)
 
-		var/obj/structure/chisel_message/M = new(T)
+	WRITE_FILE(json_file, json_encode(saved_data))
 
-		if(!QDELETED(M))
-			M.unpack(item)
+///This proc can update entries if the format has changed at some point.
+/datum/controller/subsystem/persistence/proc/update_wall_engravings(json)
 
-	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
+
+	for(var/engraving_entry in json["entries"])
+		continue //no versioning yet
+
+	//Save it to the file
+	var/json_file = file(ENGRAVING_SAVE_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(json))
+
+	return json
+
+/datum/controller/subsystem/persistence/proc/load_prisoner_tattoos()
+	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	if(!fexists(json_file))
+		return
+	var/list/json = json_decode(file2text(json_file))
+	if(!json)
+		return
+
+	if(json["version"] < TATTOO_PERSISTENCE_VERSION)
+		update_prisoner_tattoos(json)
+
+	var/datum/job/prisoner_datum = SSjob.name_occupations[JOB_PRISONER]
+	if(!prisoner_datum)
+		return
+	var/iterations_allowed = prisoner_datum.spawn_positions
+
+	var/list/entries = json["entries"]
+	if(entries.len)
+		for(var/index in 1 to iterations_allowed)
+			prison_tattoos_to_use += list(entries[rand(1, entries.len)])
+
+	log_world("Loaded [prison_tattoos_to_use.len] prison tattoos")
+
+/datum/controller/subsystem/persistence/proc/save_prisoner_tattoos()
+	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	var/list/saved_data = list()
+	var/list/entries = list()
+
+	if(fexists(json_file))
+		var/list/old_json = json_decode(file2text(json_file))
+		if(old_json)
+			entries += old_json["entries"]  //Save the old if its there
+
+	entries += prison_tattoos_to_save
+
+	saved_data["version"] = ENGRAVING_PERSISTENCE_VERSION
+	saved_data["entries"] = entries
+
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(saved_data))
+
+///This proc can update entries if the format has changed at some point.
+/datum/controller/subsystem/persistence/proc/update_prisoner_tattoos(json)
+
+	for(var/tattoo_entry in json["entries"])
+		continue //no versioning yet
+
+	//Save it to the file
+	var/json_file = file(PRISONER_TATTOO_SAVE_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(json))
+
+	return json
+
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
@@ -148,16 +252,6 @@ SUBSYSTEM_DEF(persistence)
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_appearance()
 
-/datum/controller/subsystem/persistence/proc/CollectData()
-	CollectChiselMessages()
-	CollectTrophies()
-	CollectMaps()
-	SavePhotoPersistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
-	SaveRandomizedRecipes()
-	SavePaintings()
-	SaveScars()
-	save_custom_outfits()
-
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
 	var/album_path = file("data/photo_albums.json")
 	if(fexists(album_path))
@@ -167,6 +261,19 @@ SUBSYSTEM_DEF(persistence)
 	var/frame_path = file("data/photo_frames.json")
 	if(fexists(frame_path))
 		return json_decode(file2text(frame_path))
+
+/// Removes the identifier of a persitent photo frame from the json.
+/datum/controller/subsystem/persistence/proc/RemovePhotoFrame(identifier)
+	var/frame_path = file("data/photo_frames.json")
+	if(!fexists(frame_path))
+		return
+
+	var/frame_json = json_decode(file2text(frame_path))
+	frame_json -= identifier
+
+	frame_json = json_encode(frame_json)
+	fdel(frame_path)
+	WRITE_FILE(frame_path, frame_json)
 
 /datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
 	var/album_path = file("data/photo_albums.json")
@@ -226,22 +333,6 @@ SUBSYSTEM_DEF(persistence)
 	frame_json = json_encode(frame_json)
 
 	WRITE_FILE(frame_path, frame_json)
-
-/datum/controller/subsystem/persistence/proc/CollectChiselMessages()
-	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
-
-	for(var/obj/structure/chisel_message/M in chisel_messages)
-		saved_messages += list(M.pack())
-
-	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
-	var/list/file_data = list()
-	file_data["data"] = saved_messages
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
-	saved_messages += list(M.pack()) // dm eats one list
-
 
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
 	var/json_file = file("data/npc_saves/TrophyItems.json")
@@ -328,22 +419,6 @@ SUBSYSTEM_DEF(persistence)
 
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/persistence/proc/LoadPaintings()
-	var/json_file = file("data/paintings.json")
-	if(fexists(json_file))
-		paintings = json_decode(file2text(json_file))
-
-	for(var/obj/structure/sign/painting/P in painting_frames)
-		P.load_persistent()
-
-/datum/controller/subsystem/persistence/proc/SavePaintings()
-	for(var/obj/structure/sign/painting/P in painting_frames)
-		P.save_persistent()
-
-	var/json_file = file("data/paintings.json")
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(paintings))
 
 /datum/controller/subsystem/persistence/proc/SaveScars()
 	for(var/i in GLOB.joined_player_list)

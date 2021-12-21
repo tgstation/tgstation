@@ -5,17 +5,25 @@
 	icon_state = "generic_camera"
 	var/allowed_area = null
 
-/mob/camera/ai_eye/remote/xenobio/Initialize()
+/mob/camera/ai_eye/remote/xenobio/Initialize(mapload)
 	var/area/A = get_area(loc)
 	allowed_area = A.name
 	. = ..()
 
-/mob/camera/ai_eye/remote/xenobio/setLoc(destination)
+/mob/camera/ai_eye/remote/xenobio/setLoc(turf/destination, force_update = FALSE)
 	var/area/new_area = get_area(destination)
 	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
 		return ..()
 	else
 		return
+
+/mob/camera/ai_eye/remote/xenobio/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	. = ..()
+	if(!.)
+		return
+	var/area/new_area = get_area(.)
+	if(new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
+		return FALSE
 
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
@@ -119,7 +127,9 @@
 		hotkey_help.Grant(user)
 		actions += hotkey_help
 
-	RegisterSignal(user, COMSIG_MOB_CTRL_CLICKED, .proc/on_ctrl_click)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
@@ -132,7 +142,9 @@
 				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	UnregisterSignal(user, COMSIG_MOB_CTRL_CLICKED)
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
 	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
@@ -351,17 +363,24 @@
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
 
-/obj/machinery/computer/camera_advanced/xenobio/proc/on_ctrl_click(datum/source, atom/clicked_atom)
-	SIGNAL_HANDLER
-	if(ismonkey(clicked_atom))
-		XenoMonkeyClickCtrl(source, clicked_atom)
-	if(isopenturf(clicked_atom))
-		XenoTurfClickCtrl(source, clicked_atom)
-	if(isslime(clicked_atom))
-		XenoSlimeClickCtrl(source, clicked_atom)
+//scans slimes
+/mob/living/simple_animal/slime/CtrlClick(mob/user)
+	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_CTRL, src)
+	..()
+
+//picks up dead monkies
+/mob/living/carbon/human/species/monkey/CtrlClick(mob/user)
+	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
+	..()
+
+//places monkies
+/turf/open/CtrlClick(mob/user)
+	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_CTRL, src)
+	..()
 
 // Scans slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/simple_animal/slime/S)
+	SIGNAL_HANDLER
 	if(!GLOB.cameranet.checkTurfVis(S.loc))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
@@ -429,6 +448,7 @@
 
 //Place monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/T)
+	SIGNAL_HANDLER
 	if(!GLOB.cameranet.checkTurfVis(T))
 		to_chat(user, span_warning("Target is not near a camera. Cannot proceed."))
 		return
@@ -449,6 +469,7 @@
 
 //Pick up monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/human/M)
+	SIGNAL_HANDLER
 	if(!ismonkey(M))
 		return
 	if(!isturf(M.loc) || !GLOB.cameranet.checkTurfVis(M.loc))

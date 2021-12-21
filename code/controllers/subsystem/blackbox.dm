@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE //time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
-							"explosion" = 2,
+							"explosion" = 3,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2,
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(blackbox)
 //no touchie
 /datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return debug_variable(var_name, deepCopyList(feedback), 0, src)
+		return debug_variable(var_name, deep_copy_list(feedback), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
@@ -288,14 +288,25 @@ Versioning
 	key = new_key
 	key_type = new_key_type
 
-/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender)
+/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender, urgent = FALSE)
 	if(!SSdbcore.Connect())
 		return
 
 	var/datum/db_query/query_log_ahelp = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp)
-		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, :time)
-	"}, list("ticket" = ticket, "action" = action, "message" = message, "recipient" = recipient, "sender" = sender, "server_ip" = world.internet_address || "0", "server_port" = world.port, "round_id" = GLOB.round_id, "time" = SQLtime()))
+		INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp, urgent)
+		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, :time, :urgent)
+	"}, list(
+		"ticket" = ticket,
+		"action" = action,
+		"message" = message,
+		"recipient" = recipient,
+		"sender" = sender,
+		"server_ip" = world.internet_address || "0",
+		"server_port" = world.port,
+		"round_id" = GLOB.round_id,
+		"time" = SQLtime(),
+		"urgent" = urgent,
+	))
 	query_log_ahelp.Execute()
 	qdel(query_log_ahelp)
 

@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/pinklight = "Light_Pink"
 	var/errorlight = "Error_Red"
 
-/obj/machinery/announcement_system/Initialize()
+/obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
 	GLOB.announcement_systems += src
 	radio = new /obj/item/radio/headset/silicon/ai(src)
@@ -83,8 +83,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(arrival, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
 		message = CompileText(newhead, user, rank)
-	else if(message_type == "CRYOSTORAGE")
-		message = "[user][rank ? ", [rank]" : ""] has been moved to cryo storage."
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
@@ -164,7 +162,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	if(!obj_break()) // if badmins flag this unbreakable or its already broken
+	if(!atom_break()) // if badmins flag this unbreakable or its already broken
 		return
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")

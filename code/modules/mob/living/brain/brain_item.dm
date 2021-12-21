@@ -2,6 +2,7 @@
 	name = "brain"
 	desc = "A piece of juicy meat found in a person's head."
 	icon_state = "brain"
+	visual = TRUE
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
@@ -300,6 +301,14 @@
 
 	// Any skillchips has been transferred over, time to empty the list.
 	LAZYCLEARLIST(skillchips)
+
+/obj/item/organ/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
+	. = ..()
+	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
+		setOrganDamage(0)
+		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
+	else
+		setOrganDamage(BRAIN_DAMAGE_DEATH)
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

@@ -39,20 +39,20 @@
 	if(turf_check(T))
 		var/chosen_keyword
 		if(initial(rune_type.req_keyword))
-			chosen_keyword = stripped_input(owner, "Enter a keyword for the new rune.", "Words of Power")
+			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
 			if(!chosen_keyword)
 				return
 	//the outer ring is always the same across all runes
 		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
 	//the rest are not always the same, so we need types for em
 		var/obj/effect/temp_visual/cult/rune_spawn/R2
-		if(rune_word_type)
+		if(ispath(rune_word_type, /obj/effect/temp_visual/cult/rune_spawn))
 			R2 = new rune_word_type(T, scribe_time, rune_color)
 		var/obj/effect/temp_visual/cult/rune_spawn/R3
-		if(rune_innerring_type)
+		if(ispath(rune_innerring_type, /obj/effect/temp_visual/cult/rune_spawn))
 			R3 = new rune_innerring_type(T, scribe_time, rune_color)
 		var/obj/effect/temp_visual/cult/rune_spawn/R4
-		if(rune_center_type)
+		if(ispath(rune_center_type, /obj/effect/temp_visual/cult/rune_spawn))
 			R4 = new rune_center_type(T, scribe_time, rune_color)
 
 		cooldown = base_cooldown + world.time

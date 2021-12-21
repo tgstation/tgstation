@@ -15,10 +15,10 @@ GLOBAL_LIST(labor_sheet_values)
 	/// Needed to send messages to sec radio
 	var/obj/item/radio/Radio
 
-/obj/machinery/mineral/labor_claim_console/Initialize()
+/obj/machinery/mineral/labor_claim_console/Initialize(mapload)
 	. = ..()
 	Radio = new /obj/item/radio(src)
-	Radio.listening = FALSE
+	Radio.set_listening(FALSE)
 	locate_stacking_machine()
 	//If we can't find a stacking machine end it all ok?
 	if(!stacking_machine)
@@ -31,12 +31,12 @@ GLOBAL_LIST(labor_sheet_values)
 			if(!initial(sheet.point_value) || (initial(sheet.merge_type) && initial(sheet.merge_type) != sheet_type)) //ignore no-value sheets and x/fifty subtypes
 				continue
 			sheet_list += list(list("ore" = initial(sheet.name), "value" = initial(sheet.point_value)))
-		GLOB.labor_sheet_values = sortList(sheet_list, /proc/cmp_sheet_list)
+		GLOB.labor_sheet_values = sort_list(sheet_list, /proc/cmp_sheet_list)
 
 /obj/machinery/mineral/labor_claim_console/Destroy()
 	QDEL_NULL(Radio)
 	if(stacking_machine)
-		stacking_machine.console = null
+		stacking_machine.labor_console = null
 		stacking_machine = null
 	return ..()
 
@@ -125,7 +125,7 @@ GLOBAL_LIST(labor_sheet_values)
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if(stacking_machine)
-		stacking_machine.console = src
+		stacking_machine.labor_console = src
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
@@ -138,6 +138,14 @@ GLOBAL_LIST(labor_sheet_values)
 	force_connect = TRUE
 	var/points = 0 //The unclaimed value of ore stacked.
 	damage_deflection = 21
+	var/obj/machinery/mineral/labor_claim_console/labor_console //This is abhorent. I know.
+
+/obj/machinery/mineral/stacking_machine/laborstacker/Destroy()
+	if(labor_console)
+		labor_console.stacking_machine = null
+		labor_console = null
+	return ..()
+
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	points += inp.point_value * inp.amount
 	..()

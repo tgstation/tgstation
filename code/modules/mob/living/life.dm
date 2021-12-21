@@ -12,6 +12,8 @@
 /mob/living/proc/Life(delta_time = SSMOBS_DT, times_fired)
 	set waitfor = FALSE
 
+	SEND_SIGNAL(src, COMSIG_LIVING_LIFE, delta_time, times_fired)
+
 	if (client)
 		var/turf/T = get_turf(src)
 		if(!T)
@@ -41,7 +43,7 @@
 
 		if(stat != DEAD)
 			//Mutations and radiation
-			handle_mutations_and_radiation(delta_time, times_fired)
+			handle_mutations(delta_time, times_fired)
 
 		if(stat != DEAD)
 			//Breathing, if applicable
@@ -78,10 +80,10 @@
 		return 1
 
 /mob/living/proc/handle_breathing(delta_time, times_fired)
+	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, delta_time, times_fired)
 	return
 
-/mob/living/proc/handle_mutations_and_radiation(delta_time, times_fired)
-	radiation = 0 //so radiation don't accumulate in simple animals
+/mob/living/proc/handle_mutations(delta_time, times_fired)
 	return
 
 /mob/living/proc/handle_diseases(delta_time, times_fired)

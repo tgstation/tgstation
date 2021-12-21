@@ -2,7 +2,7 @@
 #define MIDNIGHT_ROLLOVER 864000
 
 ///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
-#define ROUND_TIME ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round(world.time - SSticker.round_start_time/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
+#define ROUND_TIME ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round((world.time - SSticker.round_start_time)/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
 
 
 #define JANUARY 1
@@ -117,8 +117,14 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Eastern Daylight Time
 #define TIMEZONE_EDT -4
 
+/// Eastern Standard Time
+#define TIMEZONE_EST -5
+
 /// Central Daylight Time
 #define TIMEZONE_CDT -5
+
+/// Central Standard Time
+#define TIMEZONE_CST -6
 
 /// Mountain Daylight Time
 #define TIMEZONE_MDT -6
@@ -129,8 +135,14 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Pacific Daylight Time
 #define TIMEZONE_PDT -7
 
+/// Pacific Standard Time
+#define TIMEZONE_PST -8
+
 /// Alaska Daylight Time
 #define TIMEZONE_AKDT -8
+
+/// Alaska Standard Time
+#define TIMEZONE_AKST -9
 
 /// Hawaii-Aleutian Daylight Time
 #define TIMEZONE_HDT -9

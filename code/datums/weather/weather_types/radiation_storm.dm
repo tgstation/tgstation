@@ -21,7 +21,7 @@
 	/area/ai_monitored/turret_protected/ai, /area/commons/storage/emergency/starboard, /area/commons/storage/emergency/port, /area/shuttle, /area/security/prison/safe, /area/security/prison/toilet)
 	target_trait = ZTRAIT_STATION
 
-	immunity_type = WEATHER_RAD
+	immunity_type = TRAIT_RADSTORM_IMMUNE
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -29,21 +29,31 @@
 
 
 /datum/weather/rad_storm/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, RAD)
-	if(prob(40))
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.dna && !HAS_TRAIT(H, TRAIT_GENELESS))
-				if(prob(max(0,100-resist)))
-					H.random_mutate_unique_identity()
-					H.random_mutate_unique_features()
-					if(prob(50))
-						if(prob(90))
-							H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
-						else
-							H.easy_random_mutate(POSITIVE)
-						H.domutcheck()
-		L.rad_act(20)
+	if(!prob(40))
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	if(!H.dna || HAS_TRAIT(H, TRAIT_GENELESS))
+		return
+		
+	if(HAS_TRAIT(H, TRAIT_RADIMMUNE))
+		return
+
+	if (SSradiation.wearing_rad_protected_clothing(H))
+		return
+
+	H.random_mutate_unique_identity()
+	H.random_mutate_unique_features()
+
+	if(prob(50))
+		if(prob(90))
+			H.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
+		else
+			H.easy_random_mutate(POSITIVE)
+		H.domutcheck()
 
 /datum/weather/rad_storm/end()
 	if(..())

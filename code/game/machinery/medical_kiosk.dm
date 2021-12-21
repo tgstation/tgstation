@@ -43,9 +43,9 @@
 	/// Who's getting scanned?
 	var/mob/living/carbon/human/altPatient   //If scanning someone else, this will be the target.
 	/// Used to find the money.
-	var/obj/item/card/id/C          //the account of the person using the console.
+	var/obj/item/card/id/C //the account of the person using the console.
 
-/obj/machinery/medical_kiosk/Initialize() //loaded subtype for mapping use
+/obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
 	scanner_wand = new/obj/item/scanner_wand(src)
@@ -203,7 +203,7 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent =  round((altPatient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+	var/blood_percent = round((altPatient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 	var/blood_type = altPatient.dna.blood_type
 	var/blood_warning = " "
 
@@ -221,11 +221,6 @@
 		if(blood_percent <= 60)
 			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
 		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
-
-	var/rad_sickness_value = altPatient.radiation
-	var/rad_sickness_status = "Target within normal-low radiation levels."
-	var/rad_contamination_value = get_rad_contamination(altPatient)
-	var/rad_contamination_status = "Target clothes and person not radioactive"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/clone_loss = altPatient.getCloneLoss()
@@ -298,21 +293,6 @@
 	else if((brain_loss) >= 1)
 		brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
 
-	if(rad_sickness_value >= 1000)  //
-		rad_sickness_status = "Patient is suffering from extreme radiation poisoning, high toxen damage expected. Suggested treatment: Repeated dosages of Pentetic Acid or high amounts of Cold Seiver and anti-toxen"
-	else if(rad_sickness_value >= 300)
-		rad_sickness_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Take Cold Seiver or Potassium Iodine, watch the toxin levels."
-	else if(rad_sickness_value >= 100)
-		rad_sickness_status = "Patient has moderate radioactive signatures. Symptoms will subside in a few minutes"
-
-	if(rad_contamination_value >= 400)  //
-		rad_contamination_status = "Patient is wearing extremely radioactive clothing.  Suggested treatment: Isolation of patient and shower, remove all clothing and objects immediatly and place in a washing machine"
-	else if(rad_contamination_value >= 150)
-		rad_contamination_status = "Patient is wearing alarming radioactive clothing. Suggested treatment: Scan for contaminated objects and wash them with soap and water"
-	else if(rad_contamination_value >= 50)
-		rad_contamination_status = "Patient has moderate radioactive clothing.  Maintain a social distance for a few minutes"
-
-
 	if(pandemonium == TRUE)
 		chaos_modifier = 1
 	else if (user.hallucinating())
@@ -329,10 +309,6 @@
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
 	data["patient_status"] = patient_status
-	data["rad_sickness_value"] = rad_sickness_value+(chaos_modifier * (rand(1,500)))
-	data["rad_sickness_status"] = rad_sickness_status
-	data["rad_contamination_value"] = rad_contamination_value+(chaos_modifier * (rand(1,500)))
-	data["rad_contamination_status"] = rad_contamination_status
 	data["trauma_status"] = trauma_status
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data

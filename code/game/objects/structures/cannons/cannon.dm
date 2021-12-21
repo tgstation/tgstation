@@ -8,6 +8,7 @@
 	desc = "Holemaker Deluxe: A sporty model with a good stop power. Any cannon enthusiast should be expected to start here."
 	density = TRUE
 	anchored = TRUE
+	icon = 'icons/obj/cannons.dmi'
 	icon_state = "falconet_patina"
 	max_integrity = 300
 	///whether the cannon can be unwrenched from the ground.
@@ -18,7 +19,7 @@
 	var/charge_size = 15
 	var/fire_sound = 'sound/weapons/gun/general/cannon.ogg'
 
-/obj/structure/cannon/Initialize()
+/obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
 
@@ -63,7 +64,7 @@
 		return
 
 	else if(ignition_message)
-		if(!reagents.has_reagent(/datum/reagent/gunpowder,charge_size) || !reagents.has_reagent(/datum/reagent/fuel,charge_size))
+		if(!reagents.has_reagent(/datum/reagent/gunpowder,charge_size) && !reagents.has_reagent(/datum/reagent/fuel,charge_size))
 			balloon_alert(user, "needs [reagents.maximum_volume]u of charge!")
 			return
 		visible_message(ignition_message)

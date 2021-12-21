@@ -60,7 +60,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/valentine/Initialize()
+/obj/item/valentine/Initialize(mapload)
 	. = ..()
 	message = pick(strings(VALENTINE_FILE, "valentines"))
 
@@ -100,7 +100,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 2)
 	junkiness = 5
 
-/obj/item/food/candyheart/Initialize()
+/obj/item/food/candyheart/Initialize(mapload)
 	. = ..()
 	desc = pick(strings(VALENTINE_FILE, "candyhearts"))
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

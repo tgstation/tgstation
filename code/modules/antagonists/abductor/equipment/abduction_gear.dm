@@ -13,11 +13,10 @@
 	icon_state = "vest_stealth"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, RAD = 15, FIRE = 70, ACID = 70)
+	armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, FIRE = 70, ACID = 70)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
-		/obj/item/melee/baton/abductor,
 		/obj/item/melee/baton,
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
@@ -27,10 +26,10 @@
 	/// Cooldown in seconds
 	var/combat_cooldown = 20
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, RAD = 15, FIRE = 70, ACID = 70)
-	var/combat_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 90, ACID = 90)
+	var/stealth_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 15, BIO = 15, FIRE = 70, ACID = 70)
+	var/combat_armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, FIRE = 90, ACID = 90)
 
-/obj/item/clothing/suit/armor/abductor/vest/Initialize()
+/obj/item/clothing/suit/armor/abductor/vest/Initialize(mapload)
 	. = ..()
 	stealth_armor = getArmor(arglist(stealth_armor))
 	combat_armor = getArmor(arglist(combat_armor))
@@ -279,14 +278,12 @@
 		radio_off_mob(M)
 
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
-	var/list/all_items = M.GetAllContents()
+	var/list/all_items = M.get_all_contents()
 
-	for(var/obj/I in all_items)
-		if(istype(I, /obj/item/radio/))
-			var/obj/item/radio/r = I
-			r.listening = 0
-			if(!istype(I, /obj/item/radio/headset))
-				r.broadcasting = 0 //goddamned headset hacks
+	for(var/obj/item/radio/radio in all_items)
+		radio.set_listening(FALSE)
+		if(!istype(radio, /obj/item/radio/headset))
+			radio.set_broadcasting(FALSE) //goddamned headset hacks
 
 /obj/item/abductor/mind_device
 	name = "mental interface device"
@@ -333,8 +330,8 @@
 			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
 			return
 
-		var/command = stripped_input(user, "Enter the command for your target to follow.\
-											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]","Enter command")
+		var/command = tgui_input_text(user, "Enter the command for your target to follow.\
+											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]", "Enter command")
 
 		if(!command)
 			return
@@ -358,7 +355,7 @@
 		if(L.stat == DEAD)
 			to_chat(user, span_warning("Your target is dead!"))
 			return
-		var/message = stripped_input(user, "Write a message to send to your target's brain.","Enter message")
+		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message")
 		if(!message)
 			return
 		if(QDELETED(L) || L.stat == DEAD)
@@ -442,22 +439,15 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	inhand_icon_state = "wonderprod"
 
 	force = 7
-
-	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT
+	wound_bonus = FALSE
 
 	actions_types = list(/datum/action/item_action/toggle_mode)
-	convertible = FALSE
 
-	attack_cooldown = 0 SECONDS
-	confusion_amt = 0
-	stamina_loss_amt = 0
-	apply_stun_delay = 0 SECONDS
-	stun_time = 14 SECONDS
-
-	preload_cell_type = /obj/item/stock_parts/cell/infinite //Any sufficiently advanced technology is indistinguishable from magic
-	activate_sound = null
-	can_remove_cell = FALSE
+	cooldown = 0 SECONDS
+	stamina_damage = 0
+	knockdown_time = 14 SECONDS
+	on_stun_sound = 'sound/weapons/egloves.ogg'
+	affect_cyborg = TRUE
 
 	var/mode = BATON_STUN
 
@@ -483,8 +473,14 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_PROBE)
 			txt = "probing"
 
-	if(!turned_on)
-		toggle_on(user)
+	var/is_stun_mode = mode == BATON_STUN
+	var/is_stun_or_sleep = mode == BATON_STUN || mode == BATON_SLEEP
+
+	affect_cyborg = is_stun_mode
+	log_stun_attack = is_stun_mode // other modes have their own log entries.
+	stun_animation = is_stun_or_sleep
+	on_stun_sound = is_stun_or_sleep ? 'sound/weapons/egloves.ogg' : null
+
 	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
 	update_appearance()
 
@@ -504,67 +500,46 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			inhand_icon_state = "wonderprodProbe"
 
-/obj/item/melee/baton/abductor/attack(mob/target, mob/living/user)
+/obj/item/melee/baton/abductor/baton_attack(mob/target, mob/living/user, modifiers)
 	if(!AbductorCheck(user))
-		return FALSE
+		return BATON_ATTACK_DONE
+	return ..()
 
-	if(!deductcharge(cell_hit_cost))
-		to_chat(user, span_warning("[src] [cell ? "is out of charge" : "does not have a power source installed"]."))
-		return FALSE
-
-	if(!turned_on)
-		toggle_on(user)
-
-	if(iscyborg(target))
-		if(mode == BATON_STUN)
-			..()
-		return FALSE
-
-	if(!isliving(target))
-		return FALSE
-
-	if(clumsy_check(user))
-		return FALSE
-
-	var/mob/living/L = target
-
-	user.do_attack_animation(L)
-
-	if(shields_blocked(L, user))
-		return FALSE
-
+/obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	switch (mode)
 		if(BATON_STUN)
-			..()
+			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
+				span_userdanger("[user] stuns you with [src]!"))
+			target.Jitter(20)
+			target.set_confusion(max(10, target.get_confusion()))
+			target.stuttering = max(8, target.stuttering)
+			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
+			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_STUNRESISTANCE) ? 0.1 : 1))
 		if(BATON_SLEEP)
-			SleepAttack(L,user)
+			SleepAttack(target,user)
 		if(BATON_CUFF)
-			CuffAttack(L,user)
+			CuffAttack(target,user)
 		if(BATON_PROBE)
-			ProbeAttack(L,user)
-	return
+			ProbeAttack(target,user)
 
-/obj/item/melee/baton/abductor/apply_stun_effect_end(mob/living/target)
-	StunAttack(target)
+/obj/item/melee/baton/abductor/get_stun_description(mob/living/target, mob/living/user)
+	return // chat messages are handled in their own procs.
 
-/obj/item/melee/baton/abductor/proc/StunAttack(mob/living/L)
-	L.Paralyze(stun_time)
+/obj/item/melee/baton/abductor/get_cyborg_stun_description(mob/living/target, mob/living/user)
+	return // same as above.
 
 /obj/item/melee/baton/abductor/attack_self(mob/living/user)
+	. = ..()
 	toggle(user)
 
-/obj/item/melee/baton/abductor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	turned_on = FALSE
-	..()
-
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
-	playsound(src, stun_sound, 50, TRUE, -1)
+	playsound(src, on_stun_sound, 50, TRUE, -1)
 	if(L.incapacitated(TRUE, TRUE))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
 			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!"), \
 								span_userdanger("You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!"))
-			L.drowsyness += 2
+			L.adjust_drowsyness(2)
 			return
 		L.visible_message(span_danger("[user] induces sleep in [L] with [src]!"), \
 							span_userdanger("You suddenly feel very drowsy!"))
@@ -576,7 +551,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src], but [L.p_their()] tinfoil protection completely protected [L.p_them()]!"), \
 								span_userdanger("Any sense of drowsiness is quickly diminished as your tinfoil protection deflects the effects!"))
 			return
-		L.drowsyness += 1
+		L.adjust_drowsyness(1)
 		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
 		L.visible_message(span_danger("[user] tried to induce sleep in [L] with [src]!"), \
 							span_userdanger("You suddenly feel drowsy!"))
@@ -782,7 +757,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			for(var/i = 1, i <= framestackamount, i++)
+			for(var/i in 0 to framestackamount)
 				new framestack(get_turf(src))
 			qdel(src)
 			return
@@ -839,7 +814,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
 
-/obj/structure/table/optable/abductor/Initialize()
+/obj/structure/table/optable/abductor/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -870,6 +845,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor"
 	icon_door = "abductor"
 	can_weld_shut = FALSE
+	door_anim_time = 0
 	material_drop = /obj/item/stack/sheet/mineral/abductor
 
 /obj/structure/door_assembly/door_assembly_abductor
@@ -888,5 +864,5 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "abductor"
 	inhand_icon_state = "bl_suit"
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, fire = 0, acid = 0)
 	can_adjust = FALSE

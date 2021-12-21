@@ -109,47 +109,66 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 )
 
 ///File to the traitor flavor
-#define TRAITOR_FLAVOR_FILE "traitor_flavor.json"
+#define TRAITOR_FLAVOR_FILE "antagonist_flavor/traitor_flavor.json"
+
+///File to the malf flavor
+#define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
 
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
-	"Tiger Cooperative Fanatic",
-	"Waffle Corporation Terrorist",
 	"Animal Rights Consortium",
 	"Bee Liberation Front",
 	"Cybersun Industries",
-	"MI13",
-	"Gorlex Marauders",
 	"Donk Corporation",
+	"Gorlex Marauders",
+	"MI13",
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
 	"Waffle Corporation",
 ))
 ///employers that are from nanotrasen
 GLOBAL_LIST_INIT(nanotrasen_employers, list(
+	"Champions of Evil",
+	"Corporate Climber",
 	"Gone Postal",
 	"Internal Affairs Agent",
-	"Corporate Climber",
-	"Legal Trouble"
+	"Legal Trouble",
 ))
 
 ///employers who hire agents to do the hijack
 GLOBAL_LIST_INIT(hijack_employers, list(
-	"Tiger Cooperative Fanatic",
-	"Waffle Corporation Terrorist",
 	"Animal Rights Consortium",
 	"Bee Liberation Front",
-	"Gone Postal"
+	"Gone Postal",
+	"Tiger Cooperative Fanatic",
+	"Waffle Corporation Terrorist",
 ))
 
 ///employers who hire agents to do a task and escape... or martyrdom. whatever
 GLOBAL_LIST_INIT(normal_employers, list(
-	"Cybersun Industries",
-	"MI13",
-	"Gorlex Marauders",
-	"Donk Corporation",
-	"Waffle Corporation",
-	"Internal Affairs Agent",
+	"Champions of Evil",
 	"Corporate Climber",
-	"Legal Trouble"
+	"Cybersun Industries",
+	"Donk Corporation",
+	"Gorlex Marauders",
+	"Internal Affairs Agent",
+	"Legal Trouble",
+	"MI13",
+	"Waffle Corporation",
+))
+
+///employers for malfunctioning ais. they do not have sides, unlike traitors.
+GLOBAL_LIST_INIT(ai_employers, list(
+	"Biohazard",
+	"Despotic Ruler",
+	"Fanatical Revelation",
+	"Logic Core Error",
+	"Problem Solver",
+	"S.E.L.F.",
+	"Something's Wrong",
+	"Spam Virus",
+	"SyndOS",
+	"Unshackled",
 ))
 
 ///how long traitors will have to wait before an unreasonable objective is rerolled
@@ -188,3 +207,9 @@ GLOBAL_LIST_INIT(normal_employers, list(
 
 /// Checks if the given mob is a head revolutionary.
 #define IS_HEAD_REVOLUTIONARY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/rev/head))
+
+/// Checks if the given mob is a malf ai.
+#define IS_MALF_AI(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+
+/// The dimensions of the antagonist preview icon. Will be scaled to this size.
+#define ANTAGONIST_PREVIEW_ICON_SIZE 96

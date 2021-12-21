@@ -15,11 +15,16 @@
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
 	reflect_sect_in_icons()
+	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
+
+/obj/structure/altar_of_gods/Destroy()
+	GLOB.chaplain_altars -= src
+	return ..()
 
 /obj/structure/altar_of_gods/update_overlays()
 	. = ..()
@@ -84,7 +89,7 @@
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	item_flags = NO_PIXEL_RANDOM_DROP
 
-/obj/item/ritual_totem/Initialize()
+/obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)

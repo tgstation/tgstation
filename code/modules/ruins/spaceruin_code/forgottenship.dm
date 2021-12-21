@@ -133,7 +133,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon_state = "cybersun"
 	inhand_icon_state = "cybersun"
 	hardsuit_type = "cybersun"
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, RAD = 60, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, FIRE = 60, ACID = 60)
 	strip_delay = 600
 	actions_types = list()
 
@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	hardsuit_type = "cybersun"
 	name = "Cybersun hardsuit"
 	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, RAD = 60, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, FIRE = 60, ACID = 60)
 	slowdown = 0
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
 	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
@@ -167,7 +167,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	minimum_distance = 4
 	casingtype = /obj/item/ammo_casing/c46x30mm
 	projectilesound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
-	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasenassaultsoldier)
+	loot = list(/obj/effect/mob_spawn/corpse/human/nanotrasenassaultsoldier)
 
 /mob/living/simple_animal/hostile/nanotrasen/elite
 	name = "Nanotrasen Elite Assault Officer"
@@ -184,7 +184,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	rapid_melee = 3
 	retreat_distance = 0
 	minimum_distance = 1
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	projectiletype = /obj/projectile/beam/laser
 	projectilesound = 'sound/weapons/laser.ogg'

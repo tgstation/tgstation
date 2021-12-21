@@ -41,7 +41,7 @@
 /obj/item/organ/heart/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 
-/obj/item/organ/heart/fly/Initialize()
+/obj/item/organ/heart/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
@@ -53,7 +53,7 @@
 /obj/item/organ/lungs/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 
-/obj/item/organ/lungs/fly/Initialize()
+/obj/item/organ/lungs/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
@@ -62,7 +62,7 @@
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 	alcohol_tolerance = 0.007 //flies eat vomit, so a lower alcohol tolerance is perfect!
 
-/obj/item/organ/liver/fly/Initialize()
+/obj/item/organ/liver/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
@@ -70,7 +70,7 @@
 /obj/item/organ/stomach/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 
-/obj/item/organ/stomach/fly/Initialize()
+/obj/item/organ/stomach/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
@@ -88,7 +88,7 @@
 /obj/item/organ/appendix/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 
-/obj/item/organ/appendix/fly/Initialize()
+/obj/item/organ/appendix/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
@@ -99,8 +99,9 @@
 //useless organs we throw in just to fuck with surgeons a bit more
 /obj/item/organ/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+	visual = FALSE
 
-/obj/item/organ/fly/Initialize()
+/obj/item/organ/fly/Initialize(mapload)
 	. = ..()
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "stomach-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")

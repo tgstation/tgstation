@@ -60,10 +60,10 @@
 /turf/open/floor/pod/light,
 /area/ctf)
 "cK" = (
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
-	obj_integrity = 5000
+	atom_integrity = 5000
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -72,15 +72,15 @@
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "dq" = (
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
-	obj_integrity = 5000
+	atom_integrity = 5000
 	},
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	max_integrity = 5000;
 	name = "hardened window";
-	obj_integrity = 5000
+	atom_integrity = 5000
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -253,7 +253,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "mb" = (
-/obj/effect/mob_spawn/human/abductor,
+/obj/effect/mob_spawn/corpse/human/abductor,
 /obj/structure/table/optable/abductor,
 /obj/effect/light_emitter{
 	set_cap = 1;

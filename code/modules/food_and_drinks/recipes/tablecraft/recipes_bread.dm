@@ -33,6 +33,15 @@
 	result = /obj/item/food/bread/spidermeat
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/sausagebread
+	name = "Sausage bread"
+	reqs = list(
+		/obj/item/food/bread/plain = 1,
+		/obj/item/food/sausage = 2,
+	)
+	result = /obj/item/food/bread/sausage
+	subcategory = CAT_BREAD
+
 /datum/crafting_recipe/food/banananutbread
 	name = "Banana nut bread"
 	reqs = list(

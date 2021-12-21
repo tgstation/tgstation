@@ -53,7 +53,7 @@
 
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/plasma(location)
 
 /datum/chemical_reaction/gold_solidification
@@ -64,7 +64,7 @@
 
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
 /datum/chemical_reaction/uranium_solidification
@@ -75,7 +75,7 @@
 
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/uranium(location)
 
 /datum/chemical_reaction/capsaicincondensation
@@ -84,7 +84,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/soapification
-	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/lye  = 10) // requires two scooped gib tiles
+	required_reagents = list(/datum/reagent/liquidgibs = 10, /datum/reagent/lye = 10) // requires two scooped gib tiles
 	required_temp = 374
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -92,7 +92,7 @@
 
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/soap/homemade(location)
 
 /datum/chemical_reaction/omegasoapification
@@ -106,11 +106,11 @@
 
 /datum/chemical_reaction/omegasoapification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/soap/omega(location)
 
 /datum/chemical_reaction/candlefication
-	required_reagents = list(/datum/reagent/liquidgibs = 5, /datum/reagent/oxygen  = 5) //
+	required_reagents = list(/datum/reagent/liquidgibs = 5, /datum/reagent/oxygen = 5) //
 	required_temp = 374
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -118,7 +118,7 @@
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/candle(location)
 
 /datum/chemical_reaction/meatification
@@ -129,7 +129,7 @@
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/food/meat/slab/meatproduct(location)
 	return
 
@@ -559,7 +559,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = rand(1, created_volume), i <= created_volume, i++) // More lulz.
+	for(var/i in rand(1, created_volume) to created_volume) // More lulz.
 		new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
 
@@ -598,7 +598,7 @@
 
 /datum/chemical_reaction/butterflium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = rand(1, created_volume), i <= created_volume, i++)
+	for(var/i in rand(1, created_volume) to created_volume)
 		new /mob/living/simple_animal/butterfly(location)
 	..()
 //scream powder
@@ -671,7 +671,7 @@
 
 /datum/chemical_reaction/pax
 	results = list(/datum/reagent/pax = 3)
-	required_reagents  = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/medicine/synaptizine = 1, /datum/reagent/water = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/yuck
@@ -785,7 +785,7 @@
 	results = list(/datum/reagent/consumable/ice = 1.09)//density
 	required_reagents = list(/datum/reagent/water = 1)
 	is_cold_recipe = TRUE
-	required_temp = 274 // So we can be sure that basic ghetto rigged stuff can freeze
+	required_temp = WATER_MATTERSTATE_CHANGE_TEMP-0.5 //274 So we can be sure that basic ghetto rigged stuff can freeze
 	optimal_temp = 200
 	overheat_temp = 0
 	optimal_ph_min = 0
@@ -801,7 +801,7 @@
 /datum/chemical_reaction/water
 	results = list(/datum/reagent/water = 0.92)//rough density excahnge
 	required_reagents = list(/datum/reagent/consumable/ice = 1)
-	required_temp = 275
+	required_temp = WATER_MATTERSTATE_CHANGE_TEMP+0.5
 	optimal_temp = 350
 	overheat_temp = NO_OVERHEAT
 	optimal_ph_min = 0
@@ -837,7 +837,7 @@
 	mix_sound = 'sound/chemistry/bluespace.ogg'
 	//FermiChem vars:
 	required_temp = 350
-	optimal_temp =  600
+	optimal_temp = 600
 	overheat_temp = 650
 	optimal_ph_min = 9
 	optimal_ph_max = 12
@@ -909,9 +909,9 @@
 	clear_products(holder, step_volume_added)
 	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!"))
 
-/datum/chemical_reaction/ants
+/datum/chemical_reaction/ants // Breeding ants together, high sugar cost makes this take a while to farm.
 	results = list(/datum/reagent/ants = 3)
-	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 6)
+	required_reagents = list(/datum/reagent/ants = 2, /datum/reagent/consumable/sugar = 8)
 	//FermiChem vars:
 	optimal_ph_min = 3
 	optimal_ph_max = 12

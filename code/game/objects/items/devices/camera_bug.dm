@@ -31,7 +31,7 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/camera_bug/Initialize()
+/obj/item/camera_bug/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -82,12 +82,12 @@
 		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
 			if(camera.machine_stat || !camera.can_use())
 				continue
-			if(length(list("ss13","mine", "rd", "labor", "toxins", "minisat") & camera.network))
+			if(length(list("ss13","mine", "rd", "labor", "ordnance", "minisat") & camera.network))
 				var/datum/weakref/camera_ref = WEAKREF(camera)
 				if(!camera_ref || !camera.c_tag)
 					continue
 				bugged_cameras[camera.c_tag] = camera_ref
-	return sortList(bugged_cameras)
+	return sort_list(bugged_cameras)
 
 
 /obj/item/camera_bug/proc/menu(list/cameras)

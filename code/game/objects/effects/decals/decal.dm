@@ -5,7 +5,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/turf_loc_check = TRUE
 
-/obj/effect/decal/Initialize()
+/obj/effect/decal/Initialize(mapload)
 	. = ..()
 	if(turf_loc_check && (!isturf(loc) || NeverShouldHaveComeHere(loc)))
 		return INITIALIZE_HINT_QDEL
@@ -36,7 +36,7 @@
 	icon_state = "warningline"
 	layer = TURF_DECAL_LAYER
 
-/obj/effect/turf_decal/Initialize()
+/obj/effect/turf_decal/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_QDEL
 

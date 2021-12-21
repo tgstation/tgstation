@@ -36,7 +36,7 @@
 				targets["[client.mob.real_name](as [client.mob.name]) - [client]"] = client
 		else
 			targets["(No Mob) - [client]"] = client
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sort_list(targets)
 	cmd_admin_pm(targets[target],null)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -64,9 +64,19 @@
 
 	var/datum/admin_help/AH = C.current_ticket
 
+	var/message_prompt = "Message:"
+
+	if(AH?.opening_responders && length(AH.ticket_interactions) == 1)
+		SEND_SOUND(src, sound('sound/machines/buzz-sigh.ogg', volume=30))
+		message_prompt += "\n\n**This ticket is already being responded to by: [english_list(AH.opening_responders)]**"
+
 	if(AH)
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+		if(length(AH.ticket_interactions) == 1) // add the admin who is currently responding to the list of people responding
+			LAZYADD(AH.opening_responders, src)
+
+	var/msg = input(src, message_prompt, "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
+	LAZYREMOVE(AH.opening_responders, src)
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return
@@ -212,6 +222,8 @@
 		if(holder && recipient.holder && !current_ticket) //Both are admins, and this is not a reply to our own ticket.
 			badmin = TRUE
 		if(recipient.holder && !badmin)
+			SEND_SIGNAL(current_ticket, COMSIG_ADMIN_HELP_REPLIED)
+
 			if(holder)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
@@ -223,13 +235,13 @@
 					confidential = TRUE)
 				//omg this is dumb, just fill in both their tickets
 				var/interaction_message = "<font color='purple'>PM from-<b>[key_name(src, recipient, 1)]</b> to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>"
-				admin_ticket_log(src, interaction_message)
+				admin_ticket_log(src, interaction_message, log_in_blackbox = FALSE)
 				if(recipient != src) //reeee
-					admin_ticket_log(recipient, interaction_message)
+					admin_ticket_log(recipient, interaction_message, log_in_blackbox = FALSE)
 				SSblackbox.LogAhelp(current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 			else //recipient is an admin but sender is not
 				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"
-				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
+				admin_ticket_log(src, "<font color='red'>[replymsg]</font>", log_in_blackbox = FALSE)
 				to_chat(recipient,
 					type = MESSAGE_TYPE_ADMINPM,
 					html = span_danger("[replymsg]"),
@@ -243,7 +255,6 @@
 			//play the receiving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
-
 		else
 			if(holder) //sender is an admin but recipient is not. Do BIG RED TEXT
 				var/already_logged = FALSE
@@ -269,17 +280,13 @@
 					html = span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"),
 					confidential = TRUE)
 
-				admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
+				admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>", log_in_blackbox = FALSE)
 
 				if(!already_logged) //Reply to an existing ticket
 					SSblackbox.LogAhelp(recipient.current_ticket.id, "Reply", msg, recipient.ckey, src.ckey)
 
 				//always play non-admin recipients the adminhelp sound
 				SEND_SOUND(recipient, sound('sound/effects/adminhelp.ogg'))
-
-				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-				if(CONFIG_GET(flag/popup_admin_pm))
-					INVOKE_ASYNC(src, .proc/popup_admin_pm, recipient, msg)
 
 			else //neither are admins
 				if(!current_ticket)
@@ -311,16 +318,6 @@
 					type = MESSAGE_TYPE_ADMINPM,
 					html = span_notice("<B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]") ,
 					confidential = TRUE)
-
-/client/proc/popup_admin_pm(client/recipient, msg)
-	var/sender = src
-	var/sendername = key
-	var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as message|null //show message and await a reply
-	if(recipient && reply)
-		if(sender)
-			recipient.cmd_admin_pm(sender,reply) //sender is still about, let's reply to them
-		else
-			adminhelp(reply) //sender has left, adminhelp instead
 
 #define TGS_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/TgsPm(target,msg,sender)
@@ -413,7 +410,7 @@
 		html = span_adminsay("<i>Click on the administrator's name to reply.</i>"),
 		confidential = TRUE)
 
-	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>")
+	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>", log_in_blackbox = FALSE)
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound

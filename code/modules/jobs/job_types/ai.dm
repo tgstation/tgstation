@@ -1,5 +1,6 @@
 /datum/job/ai
-	title = "AI"
+	title = JOB_AI
+	description = "Assist the crew, follow your laws, coordinate your cyborgs."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 1
@@ -10,13 +11,16 @@
 	req_admin_notify = TRUE
 	minimal_player_age = 30
 	exp_requirements = 180
-	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_SILICON
+	exp_required_type = EXP_TYPE_CREW
+	exp_required_type_department = EXP_TYPE_SILICON
+	exp_granted_type = EXP_TYPE_CREW
 	display_order = JOB_DISPLAY_ORDER_AI
 	allow_bureaucratic_error = FALSE
-	departments = DEPARTMENT_SILICON
+	departments_list = list(
+		/datum/job_department/silicon,
+		)
 	random_spawns_possible = FALSE
-	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK
+	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT
 	var/do_special_check = TRUE
 
 
@@ -27,6 +31,8 @@
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
 				R.TryConnectToAI()
+	var/mob/living/silicon/ai/ai_spawn = spawned
+	ai_spawn.log_current_laws()
 
 
 /datum/job/ai/get_roundstart_spawn_point()

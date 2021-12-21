@@ -44,13 +44,13 @@
 	maptext_width = 32
 	maptext_y = -1
 
-/obj/machinery/door_timer/Initialize()
+/obj/machinery/door_timer/Initialize(mapload)
 	. = ..()
 
 	Radio = new/obj/item/radio(src)
-	Radio.listening = 0
+	Radio.set_listening(FALSE)
 
-/obj/machinery/door_timer/Initialize()
+/obj/machinery/door_timer/Initialize(mapload)
 	. = ..()
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
@@ -66,7 +66,7 @@
 				closets += WEAKREF(C)
 
 	if(!length(doors) && !length(flashers) && length(closets))
-		obj_break()
+		atom_break()
 	update_appearance()
 
 
@@ -131,7 +131,7 @@
 	for(var/datum/weakref/door_ref as anything in doors)
 		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
 		if(!door)
-			doors -=  door_ref
+			doors -= door_ref
 			continue
 		if(!door.density)
 			continue

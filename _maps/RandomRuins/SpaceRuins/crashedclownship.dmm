@@ -19,7 +19,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "g" = (
-/obj/effect/mob_spawn/human/clown,
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "h" = (
@@ -48,7 +48,7 @@
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /obj/item/gps/spaceruin,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "l" = (
@@ -94,7 +94,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered)
 "r" = (
-/obj/effect/mob_spawn/human/clown{
+/obj/effect/mob_spawn/corpse/human/clown{
 	name = "Clown Pilot"
 	},
 /turf/open/floor/mineral/bananium/airless,

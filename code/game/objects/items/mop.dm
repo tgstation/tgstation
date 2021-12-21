@@ -19,7 +19,7 @@
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
-/obj/item/mop/Initialize()
+/obj/item/mop/Initialize(mapload)
 	. = ..()
 	create_reagents(mopcap)
 
@@ -65,14 +65,6 @@
 			to_chat(user, span_notice("You finish mopping."))
 			clean(T, user)
 
-
-/obj/effect/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mop) || istype(I, /obj/item/soap))
-		return
-	else
-		return ..()
-
-
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)
 		J.put_in_cart(src, user)
@@ -102,7 +94,7 @@
 	var/refill_rate = 0.5
 	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
-/obj/item/mop/advanced/Initialize()
+/obj/item/mop/advanced/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

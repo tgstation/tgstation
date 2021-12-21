@@ -12,7 +12,7 @@
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
 
-/obj/item/organ/body_egg/alien_embryo/Initialize()
+/obj/item/organ/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
 	advance_embryo_stage()
 
@@ -77,7 +77,7 @@
 
 	bursting = TRUE
 
-	var/list/candidates = pollGhostCandidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/list/candidates = poll_ghost_candidates("Do you want to play as an alien larva that will burst out of [owner.real_name]?", ROLE_ALIEN, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
@@ -131,7 +131,7 @@ Des: Adds the infection image to all aliens for this embryo
 /obj/item/organ/body_egg/alien_embryo/AddInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
 		var/I = image('icons/mob/alien.dmi', loc = owner, icon_state = "infected[stage]")
-		alien.client.images += I
+		alien.client?.images += I
 
 /*----------------------------------------
 Proc: RemoveInfectionImage(C)
@@ -139,7 +139,7 @@ Des: Removes all images from the mob infected by this embryo
 ----------------------------------------*/
 /obj/item/organ/body_egg/alien_embryo/RemoveInfectionImages()
 	for(var/mob/living/carbon/alien/alien in GLOB.player_list)
-		for(var/image/I in alien.client.images)
+		for(var/image/I in alien.client?.images)
 			var/searchfor = "infected"
 			if(I.loc == owner && findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				qdel(I)

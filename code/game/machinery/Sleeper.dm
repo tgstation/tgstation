@@ -65,6 +65,7 @@
 	open_machine()
 
 /obj/machinery/sleeper/Exited(atom/movable/gone, direction)
+	. = ..()
 	if (!state_open && gone == occupant)
 		container_resist_act(gone)
 
@@ -145,6 +146,7 @@
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
+	. = ..()
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(state_open)

@@ -5,7 +5,7 @@
 	desc = "It has the unyielding gaze of a god eternally forgotten."
 	icon_state = "clockwork_helmet"
 	inhand_icon_state = "clockwork_helmet_inhand"
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 8 SECONDS
@@ -25,7 +25,7 @@
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	inhand_icon_state = "knight_templar"
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -81,7 +81,7 @@
 	icon_state = "witchhunterhat"
 	inhand_icon_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEEYES|HIDEHAIR
+	flags_inv = HIDEEYES
 
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
@@ -143,75 +143,46 @@
 	w_class = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	wound_bonus = -10
-	/// If this item has already been reskinned
-	var/reskinned = FALSE
-	/// If this item can be used in a reskin variant selection
+	/// boolean on whether it's allowed to be picked from the nullrod's transformation ability
 	var/chaplain_spawnable = TRUE
-	/// Short description of what this item is capable of, for radial menu uses
+	/// Short description of what this item is capable of, for radial menu uses.
 	var/menu_description = "A standard chaplain's weapon. Fits in pockets. Can be worn on the belt."
 
-/obj/item/nullrod/Initialize()
+/obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/eldritch))
+
+	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
+	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
+		var/list/rods = list()
+		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
+			if(!initial(nullrod_type.chaplain_spawnable))
+				continue
+			rods[nullrod_type] = initial(nullrod_type.menu_description)
+		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
+
+/obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
+	GLOB.holy_weapon_type = holy_weapon_type
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
+
+/obj/item/nullrod/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
-
-/obj/item/nullrod/attack_self(mob/user)
-	if(user.mind && (user.mind.holy_role) && !reskinned)
-		reskin_holy_weapon(user)
-
-/**
- * Shows a user a radial menu of all available null rod reskins and replaces the current null rod with the user's chosen reskinned variant
- *
- * Arguments:
- * * user The mob choosing a null rod reskin variant
- */
-/obj/item/nullrod/proc/reskin_holy_weapon(mob/user)
-	if(GLOB.holy_weapon_type)
-		return
-	var/list/display_names = list()
-	var/list/nullrod_icons = list()
-	for(var/rod in typesof(/obj/item/nullrod))
-		var/obj/item/nullrod/rodtype = rod
-		if(initial(rodtype.chaplain_spawnable))
-			var/datum/radial_menu_choice/option = new
-			option.image = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state))
-			option.info = span_boldnotice("[initial(rodtype.menu_description)]")
-			display_names[initial(rodtype.name)] = rodtype
-			nullrod_icons += list(initial(rodtype.name) = option)
-
-	nullrod_icons = sortList(nullrod_icons)
-	var/choice = show_radial_menu(user, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 42, require_near = TRUE)
-	if(!choice || !check_menu(user))
-		return
-
-	var/picked_rod_type = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
-	var/obj/item/nullrod/holy_weapon = new picked_rod_type(user.drop_location())
-	GLOB.holy_weapon_type = holy_weapon.type
-
-	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
-
-	if(holy_weapon)
-		holy_weapon.reskinned = TRUE
-		qdel(src)
-		user.put_in_hands(holy_weapon)
-
-/**
- * Checks if we are allowed to interact with a radial menu
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/item/nullrod/proc/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
-	if(QDELETED(src) || reskinned)
-		return FALSE
-	if(user.incapacitated() || !user.is_holding(src))
-		return FALSE
-	return TRUE
 
 /obj/item/nullrod/godhand
 	name = "god hand"
@@ -229,7 +200,7 @@
 	attack_verb_simple = list("punch", "cross counter", "pummel")
 	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/godhand/Initialize()
+/obj/item/nullrod/godhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 
@@ -244,7 +215,7 @@
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
-	menu_description = "A red staff which provides a high chance of blocking incoming attacks via a protective red aura around it's user, but deals very low amount of damage. Can be worn only on the back."
+	menu_description = "A red staff which provides a medium chance of blocking incoming attacks via a protective red aura around its user, but deals very low amount of damage. Can be worn only on the back."
 	/// The icon which appears over the mob holding the item
 	var/shield_icon = "shield-red"
 
@@ -258,7 +229,7 @@
 	icon_state = "godstaff-blue"
 	inhand_icon_state = "godstaff-blue"
 	shield_icon = "shield-old"
-	menu_description = "A blue staff which provides a high chance of blocking incoming attacks via a protective blue aura around it's user, but deals very low amount of damage. Can be worn only on the back."
+	menu_description = "A blue staff which provides a medium chance of blocking incoming attacks via a protective blue aura around its user, but deals very low amount of damage. Can be worn only on the back."
 
 /obj/item/nullrod/claymore
 	name = "holy claymore"
@@ -345,8 +316,8 @@
 	name = "light energy sword"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	icon = 'icons/obj/transforming_energy.dmi'
-	icon_state = "swordblue"
-	inhand_icon_state = "swordblue"
+	icon_state = "e_sword_on_blue"
+	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -355,15 +326,15 @@
 /obj/item/nullrod/claymore/saber/red
 	name = "dark energy sword"
 	desc = "Woefully ineffective when used on steep terrain."
-	icon_state = "swordred"
-	inhand_icon_state = "swordred"
+	icon_state = "e_sword_on_red"
+	inhand_icon_state = "e_sword_on_red"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/claymore/saber/pirate
 	name = "nautical energy sword"
 	desc = "Convincing HR that your religion involved piracy was no mean feat."
-	icon_state = "cutlass1"
-	inhand_icon_state = "cutlass1"
+	icon_state = "e_cutlass_on"
+	inhand_icon_state = "e_cutlass_on"
 	worn_icon_state = "swordred"
 
 /obj/item/nullrod/sord
@@ -402,7 +373,7 @@
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	menu_description = "A sharp scythe which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
-/obj/item/nullrod/scythe/Initialize()
+/obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
@@ -443,48 +414,10 @@
 	attack_verb_simple= list("chop", "slice", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Able to awaken a friendly spirit to provide guidance. Very effective at butchering bodies. Can be worn on the back."
-	/// If there is a ghost possessing the item
-	var/possessed = FALSE
 
-/obj/item/nullrod/scythe/talking/relaymove(mob/living/user, direction)
-	return //stops buckled message spam for the ghost.
-
-/obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
-	if(possessed)
-		return
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		to_chat(user, span_notice("Anomalous otherworldly energies block you from awakening the blade!"))
-		return
-
-	to_chat(user, span_notice("You attempt to wake the spirit of the blade..."))
-
-	possessed = TRUE
-
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
-
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		var/mob/living/simple_animal/shade/S = new(src)
-		S.ckey = C.ckey
-		S.fully_replace_character_name(null, "The spirit of [name]")
-		S.status_flags |= GODMODE
-		S.copy_languages(user, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the user.
-		S.update_atom_languages()
-		grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue
-		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
-
-		if(src && input)
-			name = input
-			S.fully_replace_character_name(null, "The spirit of [input]")
-	else
-		to_chat(user, span_warning("The blade is dormant. Maybe you can try again later."))
-		possessed = FALSE
-
-/obj/item/nullrod/scythe/talking/Destroy()
-	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, span_userdanger("You were destroyed!"))
-		qdel(S)
-	return ..()
+/obj/item/nullrod/scythe/talking/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/spirit_holding)
 
 /obj/item/nullrod/scythe/talking/chainsword
 	name = "possessed chainsaw sword"
@@ -499,8 +432,7 @@
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5 //faster than normal saw
-	chaplain_spawnable = FALSE
-	menu_description = "A sharp chainsaw sword dealing a very high amount of damage which partially penetrates armor. Able to awaken a friendly spirit providing guidance. Can be used as a faster saw tool. Very effective at butchering bodies. Can be worn on the belt."
+	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
 /obj/item/nullrod/hammer
 	name = "relic war hammer"
@@ -515,7 +447,7 @@
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 	menu_description = "A war hammer. Capable of tapping knees to measure brain health. Can be worn on the belt."
 
-/obj/item/nullrod/hammer/Initialize()
+/obj/item/nullrod/hammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 
@@ -537,7 +469,7 @@
 	toolspeed = 2 //slower than a real saw
 	menu_description = "An undroppable sharp chainsaw hand. Can be used as a very slow saw tool. Capable of slowly butchering bodies. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/chainsaw/Initialize()
+/obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
@@ -555,6 +487,8 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "A sharp dagger. Fits in pockets. Can be worn on the belt. Honk."
 
+#define CHEMICAL_TRANSFER_CHANCE 30
+
 /obj/item/nullrod/pride_hammer
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
@@ -570,21 +504,19 @@
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
 	hitsound = 'sound/weapons/blade1.ogg'
-	menu_description = "A hammer dealing a little less damage due to it's user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
+	menu_description = "A hammer dealing a little less damage due to its user's pride. Has a low chance of transferring some of the user's reagents to the target. Capable of tapping knees to measure brain health. Can be worn on the back."
 
-/obj/item/nullrod/pride_hammer/Initialize()
+/obj/item/nullrod/pride_hammer/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/kneejerk)
+	AddElement(
+		/datum/element/chemical_transfer,\
+		span_notice("Your pride reflects on %VICTIM."),\
+		span_userdanger("You feel insecure, taking on %ATTACKER's burden."),\
+		CHEMICAL_TRANSFER_CHANCE\
+	)
 
-/obj/item/nullrod/pride_hammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(prob(30) && ishuman(A))
-		var/mob/living/carbon/human/H = A
-		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0, transfered_by = user)
-		to_chat(user, span_notice("Your pride reflects on [H]."))
-		to_chat(H, span_userdanger("You feel insecure, taking on [user]'s burden."))
+#undef CHEMICAL_TRANSFER_CHANCE
 
 /obj/item/nullrod/whip
 	name = "holy whip"
@@ -616,6 +548,10 @@
 	attack_verb_simple = list("enlighten", "redpill")
 	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Fits in pockets. Can be worn on the head, obviously."
 
+/obj/item/nullrod/fedora/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
+	return (BRUTELOSS|FIRELOSS)
+
 /obj/item/nullrod/armblade
 	name = "dark blessing"
 	desc = "Particularly twisted deities grant gifts of dubious value."
@@ -632,7 +568,7 @@
 	bare_wound_bonus = 25
 	menu_description = "An undroppable sharp armblade capable of inflicting deep wounds. Capable of an ineffective butchering of bodies. Disappears if the arm holding it is cut off."
 
-/obj/item/nullrod/armblade/Initialize()
+/obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	AddComponent(/datum/component/butchering, 80, 70)
@@ -656,16 +592,11 @@
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	hitsound = 'sound/weapons/bite.ogg'
-	menu_description = "A plushie dealing a little less damage due to it's cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
-	/// If the item has already been used to bless someone
-	var/used_blessing = FALSE
+	menu_description = "A plushie dealing a little less damage due to its cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
 
-/obj/item/nullrod/carp/attack_self(mob/living/user)
-	if(used_blessing)
-	else if(user.mind && (user.mind.holy_role))
-		to_chat(user, span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
-		user.faction |= "carp"
-		used_blessing = TRUE
+/obj/item/nullrod/carp/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/faction_granter, "carp", holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
 /obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
@@ -684,7 +615,7 @@
 	worn_icon_state = "bostaff0"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	menu_description = "A staff which provides a medium chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
+	menu_description = "A staff which provides a medium-low chance of blocking incoming melee attacks and deals a little less damage due to being made of wood. Can be worn on the back."
 
 /obj/item/nullrod/tribal_knife
 	icon_state = "crysknife"
@@ -700,7 +631,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	item_flags = SLOWS_WHILE_IN_HAND
-	menu_description = "A sharp knife. Randomly speeds or slows it's user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
+	menu_description = "A sharp knife. Randomly speeds or slows its user at a regular intervals. Capable of butchering bodies. Cannot be worn anywhere."
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
@@ -722,7 +653,7 @@
 	name = "unholy pitchfork"
 	desc = "Holding this makes you look absolutely devilish."
 	icon_state = "pitchfork0"
-	worn_icon_state = "pitchfork0"
+	inhand_icon_state = "pitchfork0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	worn_icon_state = "pitchfork0"

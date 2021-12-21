@@ -20,7 +20,7 @@
 	protect_indoors = TRUE
 	target_trait = ZTRAIT_ASHSTORM
 
-	immunity_type = WEATHER_ASH
+	immunity_type = TRAIT_ASHSTORM_IMMUNE
 
 	probability = 90
 
@@ -61,32 +61,27 @@
 	GLOB.ash_storm_sounds -= weak_sounds
 	return ..()
 
-/datum/weather/ash_storm/proc/is_ash_immune(atom/L)
-	while (L && !isturf(L))
-		if(ismecha(L)) //Mechs are immune
-			return TRUE
-		if(ishuman(L)) //Are you immune?
-			var/mob/living/carbon/human/H = L
-			var/thermal_protection = H.get_thermal_protection()
-			if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
-				return TRUE
-		if(isliving(L))// if we're a non immune mob inside an immune mob we have to reconsider if that mob is immune to protect ourselves
-			var/mob/living/the_mob = L
-			if((WEATHER_ASH in the_mob.weather_immunities) || (WEATHER_ALL in the_mob.weather_immunities))
-				return TRUE
-		if(istype(L, /obj/structure/closet))
-			var/obj/structure/closet/the_locker = L
-			if(the_locker.weather_protection)
-				if((WEATHER_ASH in the_locker.weather_protection) || (WEATHER_ALL in the_locker.weather_protection))
-					return TRUE
-		L = L.loc //Check parent items immunities (recurses up to the turf)
-	return FALSE //RIP you
-
-/datum/weather/ash_storm/weather_act(mob/living/L)
-	if(is_ash_immune(L))
+/datum/weather/ash_storm/can_weather_act(mob/living/mob_to_check)
+	. = ..()
+	if(!. || !ishuman(mob_to_check))
 		return
-	L.adjustFireLoss(4)
+	var/mob/living/carbon/human/human_to_check = mob_to_check
+	if(human_to_check.get_thermal_protection() >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+		return FALSE
 
+/datum/weather/ash_storm/weather_act(mob/living/victim)
+	victim.adjustFireLoss(4)
+
+/datum/weather/ash_storm/end()
+	. = ..()
+	for(var/turf/open/floor/plating/asteroid/basalt/basalt as anything in GLOB.dug_up_basalt)
+		if(!(basalt.loc in impacted_areas) || !(basalt.z in impacted_z_levels))
+			continue
+		GLOB.dug_up_basalt -= basalt
+		basalt.dug = FALSE
+		basalt.icon_state = "[basalt.base_icon_state]"
+		if(prob(basalt.floor_variance))
+			basalt.icon_state += "[rand(0,12)]"
 
 //Emberfalls are the result of an ash storm passing by close to the playable area of lavaland. They have a 10% chance to trigger in place of an ash storm.
 /datum/weather/ash_storm/emberfall

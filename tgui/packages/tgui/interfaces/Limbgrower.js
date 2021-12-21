@@ -15,7 +15,7 @@ export const Limbgrower = (props, context) => {
     context, 'category', categories[0]?.name);
   const designList = categories
     .find(category => category.name === tab)
-    ?.designs;
+    ?.designs || [];
 
   return (
     <Window

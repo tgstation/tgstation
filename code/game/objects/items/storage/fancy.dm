@@ -79,7 +79,7 @@
 	icon = 'icons/obj/food/donuts.dmi'
 	icon_state = "donutbox_inner"
 	base_icon_state = "donutbox"
-	spawn_type = /obj/item/food/donut
+	spawn_type = /obj/item/food/donut/plain
 	is_open = TRUE
 	appearance_flags = KEEP_TOGETHER
 	custom_premium_price = PAYCHECK_HARD * 1.75
@@ -344,7 +344,7 @@
 	candy = TRUE
 	age_restricted = FALSE
 
-/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
+/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize(mapload)
 	. = ..()
 	if(prob(7))
 		spawn_type = /obj/item/clothing/mask/cigarette/candy/nicotine //uh oh!

@@ -96,6 +96,7 @@
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
+					M.adjust_status_effects_on_shake_up()
 					if(M.body_position == LYING_DOWN)
 						user.visible_message(span_notice("[user] shakes [M] trying to get [M.p_them()] up!"), \
 										span_notice("You shake [M] trying to get [M.p_them()] up!"))
@@ -541,10 +542,10 @@
 	nodamage = FALSE
 	embed_falloff_tile = 0
 
-/obj/projectile/bullet/reusable/lollipop/Initialize()
+/obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
 	. = ..()
 	var/obj/item/food/lollipop/S = new ammo_type(src)
-	color2 = S.headcolor
+	color2 = S.head_color
 	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
 	head.color = color2
 	add_overlay(head)
@@ -601,7 +602,7 @@
 	energy = 50000
 	energy_recharge = 5000
 
-/obj/item/borg/projectile_dampen/Initialize()
+/obj/item/borg/projectile_dampen/Initialize(mapload)
 	. = ..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
@@ -764,7 +765,7 @@
 	name = "medical hud"
 	icon_state = "healthhud"
 
-/obj/item/borg/sight/hud/med/Initialize()
+/obj/item/borg/sight/hud/med/Initialize(mapload)
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/health(src)
 
@@ -773,7 +774,7 @@
 	name = "security hud"
 	icon_state = "securityhud"
 
-/obj/item/borg/sight/hud/sec/Initialize()
+/obj/item/borg/sight/hud/sec/Initialize(mapload)
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
 
@@ -791,7 +792,7 @@
 	var/obj/item/stored
 	var/list/storable = list()
 
-/obj/item/borg/apparatus/Initialize()
+/obj/item/borg/apparatus/Initialize(mapload)
 	. = ..()
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
@@ -885,7 +886,7 @@
 	storable = list(/obj/item/reagent_containers/glass/beaker,
 					/obj/item/reagent_containers/glass/bottle)
 
-/obj/item/borg/apparatus/beaker/Initialize()
+/obj/item/borg/apparatus/beaker/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
@@ -947,7 +948,7 @@
 	storable = list(/obj/item/reagent_containers/food/drinks,
 					/obj/item/reagent_containers/food/condiment)
 
-/obj/item/borg/apparatus/beaker/service/Initialize()
+/obj/item/borg/apparatus/beaker/service/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
@@ -1015,7 +1016,7 @@
 	storable = list(/obj/item/circuitboard,
 				/obj/item/electronics)
 
-/obj/item/borg/apparatus/circuit/Initialize()
+/obj/item/borg/apparatus/circuit/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

@@ -341,7 +341,7 @@
 		if(!check)
 			break
 		T = check
-	return (getline(user, T) - get_turf(user))
+	return (get_line(user, T) - get_turf(user))
 
 /obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
@@ -413,7 +413,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/proc/fire_cascade(atom/centre,max_range)
 	playsound(get_turf(centre), 'sound/items/welder.ogg', 75, TRUE)
 	var/_range = 1
-	for(var/i = 0, i <= max_range,i++)
+	for(var/i in 0 to max_range)
 		for(var/turf/T in spiral_range_turfs(_range,centre))
 			new /obj/effect/hotspot(T)
 			T.hotspot_expose(700,50,1)
@@ -634,7 +634,7 @@
 	duration = 1 MINUTES
 	layer = LOW_SIGIL_LAYER
 
-/obj/effect/temp_visual/glowing_rune/Initialize()
+/obj/effect/temp_visual/glowing_rune/Initialize(mapload)
 	. = ..()
 	pixel_y = rand(-6,6)
 	pixel_x = rand(-6,6)

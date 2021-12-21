@@ -67,7 +67,7 @@
 					"name" = A.area.name,
 					"operating" = A.operating,
 					"charge" = (has_cell) ? A.cell.percent() : "NOCELL",
-					"load" = DisplayPower(A.lastused_total),
+					"load" = display_power(A.lastused_total),
 					"charging" = A.charging,
 					"chargeMode" = A.chargemode,
 					"eqp" = A.equipment,
@@ -101,6 +101,8 @@
 				else
 					auth_id = "[ID.registered_name] ([ID.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
+					playsound(src, 'sound/machines/terminal_error.ogg', 50, FALSE)
+					to_chat(usr, span_warning("ID REJECTED - Access Denied."))
 				return
 			auth_id = "Unknown (Unknown):"
 			log_activity("[auth_id] attempted to log into the terminal")

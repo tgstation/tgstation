@@ -4,8 +4,8 @@ import { StationAlertConsoleContent } from './StationAlertConsole';
 export const NtosStationAlertConsole = () => {
   return (
     <NtosWindow
-      width={315}
-      height={500}>
+      width={335}
+      height={587}>
       <NtosWindow.Content scrollable>
         <StationAlertConsoleContent />
       </NtosWindow.Content>

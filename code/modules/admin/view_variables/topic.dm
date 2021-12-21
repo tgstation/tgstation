@@ -32,7 +32,7 @@
 
 			// If the new name is something that would be restricted by IC chat filters,
 			// give the admin a warning but allow them to do it anyway if they want.
-			if(CHAT_FILTER_CHECK(new_name) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) == "Cancel")
+			if(is_ic_filtered(new_name) || is_soft_ic_filtered(new_name) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) == "Cancel")
 				return
 
 			if( !new_name || !M )
@@ -60,22 +60,6 @@
 			vv_update_display(A, "dir", dir2text(A.dir))
 
 
-		else if(href_list["makehuman"])
-			if(!check_rights(R_SPAWN))
-				return
-
-			var/mob/living/carbon/human/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
-			if(!ismonkey(Mo))
-				to_chat(usr, "This can only be done to monkeys", confidential = TRUE)
-				return
-
-			if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-				return
-			if(!Mo)
-				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
-				return
-			holder.Topic(href, list("humanone"=href_list["makehuman"]))
-
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(NONE))
 				return
@@ -86,7 +70,7 @@
 
 			var/Text = href_list["adjustDamage"]
 
-			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
+			var/amount = input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
 
 			if (isnull(amount))
 				return

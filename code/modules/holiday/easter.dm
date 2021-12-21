@@ -66,7 +66,7 @@
 	///passed to egg_layer component as how many eggs it starts out as able to lay.
 	var/initial_egg_amount = 10
 
-/mob/living/simple_animal/rabbit/Initialize()
+/mob/living/simple_animal/rabbit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
@@ -74,7 +74,7 @@
 	var/eggs_added_from_eating = rand(1, 4)
 	var/max_eggs_held = 8
 	AddComponent(/datum/component/egg_layer,\
-		/obj/item/food/egg/loaded,\
+		/obj/item/surprise_egg,\
 		list(/obj/item/food/grown/carrot),\
 		feed_messages,\
 		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
@@ -91,7 +91,7 @@
 	icon_living = "s_rabbit_white"
 	icon_dead = "s_rabbit_white_dead"
 	icon_prefix = "s_rabbit"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	unsuitable_atmos_damage = 0
@@ -100,7 +100,7 @@
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
 
-/obj/item/storage/basket/easter/Initialize()
+/obj/item/storage/basket/easter/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/food/egg, /obj/item/food/chocolateegg, /obj/item/food/boiledegg))
@@ -146,19 +146,24 @@
 	inhand_icon_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
-/obj/item/food/egg
-	var/containsPrize = FALSE
+/obj/item/surprise_egg
+	name = "wrapped egg"
+	desc = "A chocolate egg containing a little something special. Unwrap and enjoy!"
+	icon_state = "egg"
+	resistance_flags = FLAMMABLE
+	w_class = WEIGHT_CLASS_TINY
+	icon = 'icons/obj/food/food.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	obj_flags = UNIQUE_RENAME
 
-/obj/item/food/egg/loaded
-	containsPrize = TRUE
-
-/obj/item/food/egg/loaded/Initialize()
+/obj/item/surprise_egg/Initialize(mapload)
 	. = ..()
 	var/eggcolor = pick("blue","green","mime","orange","purple","rainbow","red","yellow")
 	icon_state = "egg-[eggcolor]"
 
-/obj/item/food/egg/proc/dispensePrize(turf/where)
-	var/prize_list = list(/obj/item/clothing/head/bunnyhead,
+/obj/item/surprise_egg/proc/dispensePrize(turf/where)
+	var/static/list/prize_list = list(/obj/item/clothing/head/bunnyhead,
 		/obj/item/clothing/suit/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
 		/obj/item/food/grown/carrot,
@@ -181,13 +186,11 @@
 	new won(where)
 	new/obj/item/food/chocolateegg(where)
 
-/obj/item/food/egg/attack_self(mob/user)
+/obj/item/surprise_egg/attack_self(mob/user)
 	..()
-	if(containsPrize)
-		to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
-		dispensePrize(get_turf(user))
-		containsPrize = FALSE
-		qdel(src)
+	to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
+	dispensePrize(get_turf(user))
+	qdel(src)
 
 //Easter Recipes + food
 /obj/item/food/hotcrossbun

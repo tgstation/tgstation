@@ -52,7 +52,7 @@
 		return FALSE
 	on_reading_start(user)
 	reading = TRUE
-	for(var/i=1, i<=pages_to_mastery, i++)
+	for(var/i in 1 to pages_to_mastery)
 		if(!turn_page(user))
 			on_reading_stopped()
 			reading = FALSE
@@ -159,7 +159,7 @@
 
 /obj/item/book/granter/spell/fireball/recoil(mob/user)
 	..()
-	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
+	explosion(user, devastation_range = 1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 	qdel(src)
 
 /obj/item/book/granter/spell/sacredflame
@@ -304,7 +304,7 @@
 /obj/item/book/granter/spell/random
 	icon_state = "random_book"
 
-/obj/item/book/granter/spell/random/Initialize()
+/obj/item/book/granter/spell/random/Initialize(mapload)
 	. = ..()
 	var/static/banned_spells = list(/obj/item/book/granter/spell/mimery_blockade, /obj/item/book/granter/spell/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)

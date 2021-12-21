@@ -18,7 +18,7 @@
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)
 	var/atom/changed_turf = ChangeTurf(/turf/open/floor/plating)
-	changed_turf.AddComponent(/datum/component/rust)
+	changed_turf.AddElement(/datum/element/rust)
 	return ..()
 
 

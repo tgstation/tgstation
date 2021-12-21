@@ -10,6 +10,7 @@
 	icon_state = "cameracase"
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
+	wall_external = TRUE
 
 /obj/structure/camera_assembly
 	name = "camera assembly"
@@ -202,7 +203,7 @@
 		droppable_parts += proxy_module
 	if(!droppable_parts.len)
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sortNames(droppable_parts)
+	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sort_names(droppable_parts)
 	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
@@ -218,7 +219,7 @@
 		return FALSE
 
 	tool.play_tool_sound(src)
-	var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
+	var/input = tgui_input_text(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret", "Set Network", "SS13", multiline = TRUE)
 	if(!input)
 		to_chat(user, span_warning("No input found, please hang up and try your call again!"))
 		return

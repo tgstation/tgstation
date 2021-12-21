@@ -59,11 +59,11 @@
 	/// Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_layer = AREA_LAYER
 	/// Plane for the overlay
-	var/overlay_plane = BLACKNESS_PLANE
+	var/overlay_plane = ABOVE_LIGHTING_PLANE
 	/// If the weather has no purpose other than looks
 	var/aesthetic = FALSE
-	/// Used by mobs to prevent them from being affected by the weather
-	var/immunity_type = WEATHER_STORM
+	/// Used by mobs (or movables containing mobs, such as enviro bags) to prevent them from being affected by the weather.
+	var/immunity_type
 
 	/// The stage of the weather, from 1-4
 	var/stage = END_STAGE
@@ -108,7 +108,7 @@
 		if(A.z in impacted_z_levels)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
-	START_PROCESSING(SSweather, src)
+	SSweather.processing |= src
 	update_areas()
 	for(var/z_level in impacted_z_levels)
 		for(var/mob/player as anything in SSmobs.clients_by_zlevel[z_level])
@@ -182,7 +182,7 @@
 		return
 	SEND_GLOBAL_SIGNAL(COMSIG_WEATHER_END(type))
 	stage = END_STAGE
-	STOP_PROCESSING(SSweather, src)
+	SSweather.processing -= src
 	update_areas()
 
 /**
@@ -198,14 +198,14 @@
 	if(!(mob_turf.z in impacted_z_levels))
 		return
 
-	if(istype(mob_to_check.loc, /obj/structure/closet))
-		var/obj/structure/closet/current_locker = mob_to_check.loc
-		if(current_locker.weather_protection)
-			if((immunity_type in current_locker.weather_protection) || (WEATHER_ALL in current_locker.weather_protection))
-				return
-
-	if((immunity_type in mob_to_check.weather_immunities) || (WEATHER_ALL in mob_to_check.weather_immunities))
+	if((immunity_type && HAS_TRAIT(mob_to_check, immunity_type)) || HAS_TRAIT(mob_to_check, TRAIT_WEATHER_IMMUNE))
 		return
+
+	var/atom/loc_to_check = mob_to_check.loc
+	while(loc_to_check != mob_turf)
+		if((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE))
+			return
+		loc_to_check = loc_to_check.loc
 
 	if(!(get_area(mob_to_check) in impacted_areas))
 		return

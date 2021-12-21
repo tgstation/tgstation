@@ -3,6 +3,7 @@
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "fire_extinguisher0"
+	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags_1 = CONDUCT_1
@@ -33,6 +34,7 @@
 	name = "pocket fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
+	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null //it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
@@ -48,6 +50,7 @@
 	name = "Improvised cooling spray"
 	desc = "Spraycan turned coolant dipsenser. Can be sprayed on containers to cool them. Refll using water."
 	icon_state = "coolant0"
+	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
@@ -72,7 +75,7 @@
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
-/obj/item/extinguisher/Initialize()
+/obj/item/extinguisher/Initialize(mapload)
 	. = ..()
 	refill()
 
@@ -85,6 +88,7 @@
 	name = "advanced fire extinguisher"
 	desc = "Used to stop thermonuclear fires from spreading inside your engine."
 	icon_state = "foam_extinguisher0"
+	worn_icon_state = "foam_extinguisher"
 	inhand_icon_state = "foam_extinguisher"
 	tank_holder_icon_state = "holder_foam_extinguisher"
 	dog_fashion = null
@@ -117,7 +121,7 @@
 	else
 		return ..()
 
-/obj/item/extinguisher/attack_obj(obj/O, mob/living/user, params)
+/obj/item/extinguisher/attack_atom(obj/O, mob/living/user, params)
 	if(AttemptRefill(O, user))
 		refilling = TRUE
 		return FALSE
@@ -193,7 +197,7 @@
 			the_targets.Add(T3,T4)
 
 		var/list/water_particles=list()
-		for(var/a=0, a<5, a++)
+		for(var/a in 1 to 5)
 			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
 			var/my_target = pick(the_targets)
 			water_particles[W] = my_target

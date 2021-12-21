@@ -24,21 +24,21 @@
 	if (oxy < 0.5)
 		return
 	. = air_gases[/datum/gas/plasma]
-	var/tox = . ? .[MOLES] : 0
+	var/plas = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/tritium]
 	var/trit = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/hydrogen]
 	var/h2 = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if(tox > 0.5 || trit > 0.5 || h2 > 0.5)
+			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5 || h2 > 0.5))
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5))
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 

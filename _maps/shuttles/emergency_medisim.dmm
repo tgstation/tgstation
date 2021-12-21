@@ -52,7 +52,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "fa" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Engine Maintenance Access"
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -581,7 +581,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape/simulation)
 "Aw" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Engine Maintenance Access";
 	req_access_txt = "19"
 	},
@@ -1182,7 +1182,7 @@
 /turf/template_noop,
 /area/shuttle/escape)
 "Vn" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -1365,7 +1365,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ZB" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ZI" = (

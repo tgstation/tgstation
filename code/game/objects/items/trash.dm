@@ -36,6 +36,10 @@
 	name = "chips"
 	icon_state = "chips"
 
+/obj/item/trash/shrimp_chips
+	name = "shrimp chips"
+	icon_state = "shrimp_chips"
+
 /obj/item/trash/boritos
 	name = "boritos bag"
 	icon_state = "boritos"
@@ -87,7 +91,7 @@
 
 /obj/item/trash/can/food/peaches
 	name = "canned peaches"
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan_empty"
 
 /obj/item/trash/can/food/peaches/maint
@@ -96,10 +100,10 @@
 
 /obj/item/trash/can/food/beans
 	name = "tin of beans"
-	icon = 'icons/obj/food/food.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "beans_empty"
 
-/obj/item/trash/can/Initialize()
+/obj/item/trash/can/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
@@ -112,3 +116,27 @@
 /obj/item/trash/cnds
 	name = "\improper C&Ds packet"
 	icon_state = "cnds"
+
+/obj/item/trash/can/food/envirochow
+	name = "dog eat dog envirochow"
+	icon = 'icons/obj/food/canned.dmi'
+	icon_state = "envirochow_empty"
+
+/obj/item/trash/can/food/tomatoes
+	name = "canned San Marzano tomatoes"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "tomatoescan_empty"
+
+/obj/item/trash/can/food/pine_nuts
+	name = "canned pine nuts"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "pine_nuts_empty"
+
+/obj/item/trash/spacers_sidekick
+	name = "\improper Spacer's Sidekick packet"
+	icon_state = "spacers_sidekick"
+
+/obj/item/trash/ready_donk
+	name = "empty Ready-donk"
+	desc = "It's been Donk-decimated."
+	icon_state = "ready_donk"

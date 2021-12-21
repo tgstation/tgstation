@@ -3,18 +3,19 @@
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "bci"
+	visual = FALSE
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/organ/cyberimp/bci/Initialize()
+/obj/item/organ/cyberimp/bci/Initialize(mapload)
 	. = ..()
+
+	var/obj/item/integrated_circuit/circuit = new(src)
+	circuit.add_component(new /obj/item/circuit_component/bci_action(null, "One"))
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
-		new /obj/item/circuit_component/bci_action("One"),
-		new /obj/item/circuit_component/bci_action("Two"),
-		new /obj/item/circuit_component/bci_action("Three"),
-	), SHELL_CAPACITY_SMALL)
+	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 
 /obj/item/organ/cyberimp/bci/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -33,13 +34,13 @@
 	else
 		return ..()
 
-/obj/item/circuit_component/bci
-	display_name = "Brain-Computer Interface"
-	display_desc = "Used to receive inputs for the brain-computer interface. User is presented with three buttons."
-
 /obj/item/circuit_component/bci_action
 	display_name = "BCI Action"
-	display_desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	desc = "Represents an action the user can take when implanted with the brain-computer interface."
+	required_shells = list(/obj/item/organ/cyberimp/bci)
+
+	/// The icon of the button
+	var/datum/port/input/option/icon_options
 
 	/// The name to use for the button
 	var/datum/port/input/button_name
@@ -54,7 +55,7 @@
 	. = ..()
 
 	if (!isnull(default_icon))
-		set_option(default_icon)
+		icon_options.set_input(default_icon)
 
 	button_name = add_input_port("Name", PORT_TYPE_STRING)
 
@@ -102,7 +103,7 @@
 		"Wireless",
 	)
 
-	options = action_options
+	icon_options = add_option_port("Icon", action_options)
 
 /obj/item/circuit_component/bci_action/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
@@ -119,17 +120,12 @@
 	QDEL_NULL(bci_action)
 
 /obj/item/circuit_component/bci_action/input_received(datum/port/input/port)
-	. = ..()
-
-	if (.)
-		return
-
 	if (!isnull(bci_action))
 		update_action()
 
 /obj/item/circuit_component/bci_action/proc/update_action()
-	bci_action.name = button_name.input_value
-	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(current_option), " ", "_")]"
+	bci_action.name = button_name.value
+	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
 
 /datum/action/innate/bci_action
 	name = "Action"
@@ -155,7 +151,7 @@
 
 /obj/item/circuit_component/bci_core
 	display_name = "BCI Core"
-	display_desc = "Controls the core operations of the BCI."
+	desc = "Controls the core operations of the BCI."
 
 	/// A reference to the action button to look at charge/get info
 	var/datum/action/innate/bci_charge_action/charge_action
@@ -167,8 +163,7 @@
 
 	var/datum/weakref/user
 
-/obj/item/circuit_component/bci_core/Initialize()
-	. = ..()
+/obj/item/circuit_component/bci_core/populate_ports()
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
@@ -199,24 +194,24 @@
 		COMSIG_ORGAN_REMOVED,
 	))
 
+/obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
+	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+		return FALSE
+	return ..()
+
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
-	. = ..()
-	if (.)
-		return .
+	var/sent_message = trim(message.value)
+	if (!sent_message)
+		return
 
-	if (COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		var/sent_message = trim(message.input_value)
-		if (!sent_message)
-			return
+	var/mob/living/carbon/resolved_owner = user?.resolve()
+	if (isnull(resolved_owner))
+		return
 
-		var/mob/living/carbon/resolved_owner = user?.resolve()
-		if (isnull(resolved_owner))
-			return
+	if (resolved_owner.stat == DEAD)
+		return
 
-		if (resolved_owner.stat == DEAD)
-			return
-
-		to_chat(resolved_owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+	to_chat(resolved_owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
 
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -341,9 +336,14 @@
 
 	COOLDOWN_DECLARE(message_cooldown)
 
-/obj/machinery/bci_implanter/Initialize()
+/obj/machinery/bci_implanter/Initialize(mapload)
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
+
+/obj/machinery/bci_implanter/on_deconstruction()
+	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
+	bci_to_implant_resolved?.forceMove(drop_location())
+	bci_to_implant = null
 
 /obj/machinery/bci_implanter/Destroy()
 	QDEL_NULL(bci_to_implant)
@@ -394,12 +394,15 @@
 	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
 
+	if(!user.Adjacent(src))
+		return
+
 	if (locked)
 		balloon_alert(user, "it's locked!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
-	if (isnull(bci_to_implant_resolved) && user.Adjacent(src))
+	if (isnull(bci_to_implant_resolved))
 		balloon_alert(user, "no bci inserted!")
 	else
 		user.put_in_hands(bci_to_implant_resolved)
@@ -419,7 +422,7 @@
 		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant?.resolve()
 
 		bci_to_implant = WEAKREF(weapon)
-		weapon.forceMove(src)
+		weapon.moveToNullspace()
 
 		if (isnull(previous_bci_to_implant))
 			balloon_alert(user, "inserted bci")
@@ -478,7 +481,7 @@
 
 		if (isnull(bci_to_implant_resolved))
 			say("Occupant's previous brain-computer interface has been transferred to internal storage unit.")
-			bci_organ.forceMove(src)
+			bci_organ.moveToNullspace()
 			bci_to_implant = WEAKREF(bci_organ)
 		else
 			say("Occupant's previous brain-computer interface has been ejected.")
@@ -524,7 +527,7 @@
 	if (!isnull(message))
 		if (COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 5 SECONDS)
-			balloon_alert(user, "it won't budge!")
+			balloon_alert(user, message)
 
 		return
 

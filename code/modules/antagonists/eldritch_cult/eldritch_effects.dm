@@ -8,7 +8,7 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
-/obj/effect/eldritch/Initialize()
+/obj/effect/eldritch/Initialize(mapload)
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	I.override = TRUE
@@ -25,13 +25,6 @@
 		return
 	if(!is_in_use)
 		INVOKE_ASYNC(src, .proc/activate , user)
-
-/obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
-	. = ..()
-	if(istype(I,/obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
-		to_chat(user, span_danger("You disrupt the magic of [src] with [I]."))
-		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
 	is_in_use = TRUE
@@ -134,7 +127,7 @@
  */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
 	SIGNAL_HANDLER
-	listclearnulls(smashes)
+	list_clear_nulls(smashes)
 	for(var/mind in targets)
 		if(isnull(mind))
 			stack_trace("A null somehow landed in a list of minds")
@@ -198,7 +191,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
-/obj/effect/broken_illusion/Initialize()
+/obj/effect/broken_illusion/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
 
@@ -246,7 +239,7 @@
 
 	var/datum/effect_system/reagents_explosion/explosion = new()
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
-	explosion.start()
+	explosion.start(src)
 
 
 /obj/effect/broken_illusion/examine(mob/user)
@@ -270,7 +263,7 @@
 	///Tracked image
 	var/image/img
 
-/obj/effect/reality_smash/Initialize()
+/obj/effect/reality_smash/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
 	img = image(icon, src, image_state, OBJ_LAYER)

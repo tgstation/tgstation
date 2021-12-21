@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(facial_hairstyles_list) //stores /datum/sprite_accessory/facia
 GLOBAL_LIST_EMPTY(facial_hairstyles_male_list) //stores only hair names
 GLOBAL_LIST_EMPTY(facial_hairstyles_female_list) //stores only hair names
 GLOBAL_LIST_EMPTY(hair_gradients_list) //stores /datum/sprite_accessory/hair_gradient indexed by name
+GLOBAL_LIST_EMPTY(facial_hair_gradients_list) //stores /datum/sprite_accessory/facial_hair_gradient indexed by name
 	//Underwear
 GLOBAL_LIST_EMPTY(underwear_list) //stores /datum/sprite_accessory/underwear indexed by name
 GLOBAL_LIST_EMPTY(underwear_m) //stores only underwear name
@@ -34,7 +35,6 @@ GLOBAL_LIST_EMPTY(animated_tails_list_human)
 GLOBAL_LIST_EMPTY(ears_list)
 GLOBAL_LIST_EMPTY(wings_list)
 GLOBAL_LIST_EMPTY(wings_open_list)
-GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(moth_antennae_list)
 GLOBAL_LIST_EMPTY(moth_markings_list)
@@ -42,25 +42,25 @@ GLOBAL_LIST_EMPTY(caps_list)
 GLOBAL_LIST_EMPTY(tails_list_monkey)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
-	"Red" = "ff4d4d",
-	"Faint Red" = "ffb3b3",
-	"Dark Red" = "9c3030",
-	"Orange" = "ffa64d",
-	"Burnt Orange" = "cc4400",
-	"Bright Yellow" = "ffff99",
-	"Dull Yellow" = "fbdf56",
-	"Faint Green" = "ddff99",
-	"Green" = "97ee63",
-	"Seafoam Green" = "00fa9a",
-	"Dark Green" = "37835b",
-	"Cyan Blue" = "00ffff",
-	"Faint Blue" = "b3d9ff",
-	"Blue" = "3399ff",
-	"Dark Blue" = "6666ff",
-	"Purple" = "ee82ee",
-	"Dark Fuschia" = "cc0066",
-	"Pink" = "ff99cc",
-	"White" = "f2f2f2",))
+	"Red" = "#ff4d4d",
+	"Faint Red" = "#ffb3b3",
+	"Dark Red" = "#9c3030",
+	"Orange" = "#ffa64d",
+	"Burnt Orange" = "#cc4400",
+	"Bright Yellow" = "#ffff99",
+	"Dull Yellow" = "#fbdf56",
+	"Faint Green" = "#ddff99",
+	"Green" = "#97ee63",
+	"Seafoam Green" = "#00fa9a",
+	"Dark Green" = "#37835b",
+	"Cyan Blue" = "#00ffff",
+	"Faint Blue" = "#b3d9ff",
+	"Blue" = "#3399ff",
+	"Dark Blue" = "#6666ff",
+	"Purple" = "#ee82ee",
+	"Dark Fuschia" = "#cc0066",
+	"Pink" = "#ff99cc",
+	"White" = "#f2f2f2",))
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 	"ghost",
@@ -92,9 +92,34 @@ GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 	"ghost_camo",
 	"catghost")) //stores the ghost forms that support directional sprites
 
-GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
+GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list(
+	"ghost",
+	"ghost_red",
+	"ghost_black",
+	"ghost_blue",
+	"ghost_yellow",
+	"ghost_green",
+	"ghost_pink",
+	"ghost_cyan",
+	"ghost_dblue",
+	"ghost_dred",
+	"ghost_dgreen",
+	"ghost_dcyan",
+	"ghost_grey",
+	"ghost_dyellow",
+	"ghost_dpink",
+	"skeleghost",
+	"ghost_purpleswirl",
+	"ghost_rainbow",
+	"ghost_fire",
+	"ghost_funkypurp",
+	"ghost_pinksherbert",
+	"ghost_blazeit",
+	"ghost_mellow",
+	"ghost_camo",))
+	//stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
+GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	":thinking:",
 	"Alien",
 	"Angel",
@@ -135,19 +160,27 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	"Triumvirate-M",
 	"Weird")))
 
-/proc/resolve_ai_icon(input)
+/// A form of resolve_ai_icon that is guaranteed to never sleep.
+/// Not always accurate, but always synchronous.
+/proc/resolve_ai_icon_sync(input)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	if(!input || !(input in GLOB.ai_core_display_screens))
 		return "ai"
 	else
 		if(input == "Random")
 			input = pick(GLOB.ai_core_display_screens - "Random")
-		if(input == "Portrait")
-			var/datum/portrait_picker/tgui  = new(usr)//create the datum
-			tgui.ui_interact(usr)//datum has a tgui component, here we open the window
-			return "ai-portrait" //just take this until they decide
 		return "ai-[lowertext(input)]"
 
-GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(
+/proc/resolve_ai_icon(input)
+	if (input == "Portrait")
+		var/datum/portrait_picker/tgui = new(usr)//create the datum
+		tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+		return "ai-portrait" //just take this until they decide
+
+	return resolve_ai_icon_sync(input)
+
+GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
 	SEC_DEPT_NONE,
 	SEC_DEPT_ENGINEERING,
 	SEC_DEPT_MEDICAL,
@@ -168,18 +201,12 @@ GLOBAL_LIST_INIT(backpacklist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, 
 	//Suit/Skirt
 #define PREF_SUIT "Jumpsuit"
 #define PREF_SKIRT "Jumpskirt"
-GLOBAL_LIST_INIT(jumpsuitlist, list(PREF_SUIT, PREF_SKIRT))
 
 //Uplink spawn loc
 #define UPLINK_PDA "PDA"
 #define UPLINK_RADIO "Radio"
 #define UPLINK_PEN "Pen" //like a real spy!
 #define UPLINK_IMPLANT "Implant"
-#define UPLINK_IMPLANT_WITH_PRICE "[UPLINK_IMPLANT] (-[UPLINK_IMPLANT_TELECRYSTAL_COST] TC)"
-// What we show to the user
-GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT_WITH_PRICE))
-// What is actually saved; if the uplink implant price changes, it won't affect save files then
-GLOBAL_LIST_INIT(uplink_spawn_loc_list_save, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN, UPLINK_IMPLANT))
 
 	//Female Uniforms
 GLOBAL_LIST_EMPTY(female_clothing_icons)
@@ -217,7 +244,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 22 Janitor
 23 Genetics
 24 Experimentor Lab
-25 Toxins
+25 Ordnance
 26 Dormitories
 27 Virology
 28 Xenobiology
@@ -237,7 +264,7 @@ GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
-	"Experimentor Lab", "Toxins", "Dormitories", "Virology",
+	"Experimentor Lab", "Ordnance", "Dormitories", "Virology",
 	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))

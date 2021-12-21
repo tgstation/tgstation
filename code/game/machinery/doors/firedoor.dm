@@ -19,14 +19,16 @@
 	layer = BELOW_OPEN_DOOR_LAYER
 	closingLayer = CLOSED_FIREDOOR_LAYER
 	assemblytype = /obj/structure/firelock_frame
-	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, RAD = 100, FIRE = 95, ACID = 70)
+	armor = list(MELEE = 10, BULLET = 30, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 100, FIRE = 95, ACID = 70)
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
 	var/being_held_open = FALSE
+	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glassbash.ogg'
 
-/obj/machinery/door/firedoor/Initialize()
+/obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
 	CalculateAffectingAreas()
 
@@ -82,7 +84,7 @@
 	. = ..()
 	INVOKE_ASYNC(src, .proc/latetoggle)
 
-/obj/machinery/door/firedoor/attack_hand(mob/user, list/modifiers)
+/obj/machinery/door/firedoor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -90,9 +92,14 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	user.visible_message(span_notice("[user] bangs on \the [src]."), \
-		span_notice("You bang on \the [src]."))
-	playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
+	if(!user.combat_mode)
+		user.visible_message(span_notice("[user] knocks on [src]."), \
+			span_notice("You knock on [src]."))
+		playsound(src, knock_sound, 50, TRUE)
+	else
+		user.visible_message(span_warning("[user] bashes [src]!"), \
+			span_warning("You bash [src]!"))
+		playsound(src, bash_sound, 100, TRUE)
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
@@ -121,7 +128,7 @@
 			return
 	return ..()
 
-/obj/machinery/door/firedoor/try_to_activate_door(mob/user)
+/obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return
 
 /obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
@@ -255,15 +262,13 @@
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
-	CanAtmosPass = ATMOS_PASS_PROC
-	glass = FALSE
+	can_atmos_pass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
-	opacity = TRUE
 	density = TRUE
 
-/obj/machinery/door/firedoor/border_only/Initialize()
+/obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
 
 	var/static/list/loc_connections = list(
@@ -279,6 +284,8 @@
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+	if(leaving.movement_type & PHASING)
+		return
 	if(leaving == src)
 		return // Let's not block ourselves.
 
@@ -286,7 +293,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/firedoor/border_only/CanAtmosPass(turf/T)
+/obj/machinery/door/firedoor/border_only/can_atmos_pass(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else

@@ -14,10 +14,10 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	var/obj/item/stored
 
-/obj/machinery/blackbox_recorder/Initialize()
+/obj/machinery/blackbox_recorder/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/blackbox(src)
 
@@ -75,6 +75,7 @@
 	icon_state = "message_server"
 	name = "Messaging Server"
 	desc = "A machine that processes and routes PDA and request console messages."
+	telecomms_type = /obj/machinery/telecomms/message_server
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10

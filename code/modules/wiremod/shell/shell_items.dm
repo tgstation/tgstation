@@ -53,7 +53,18 @@
 	shell_to_spawn = /obj/machinery/door/airlock/shell
 	screw_delay = 10 SECONDS
 
+/obj/item/shell/dispenser
+	name = "circuit dispenser assembly"
+	icon_state = "setup_drone_arms-open"
+	shell_to_spawn = /obj/structure/dispenser_bot
+
 /obj/item/shell/bci
 	name = "brain-computer interface assembly"
 	icon_state = "bci-open"
 	shell_to_spawn = /obj/item/organ/cyberimp/bci
+
+/obj/item/shell/scanner_gate
+	name = "scanner gate assembly"
+	icon = 'icons/obj/machines/scangate.dmi'
+	icon_state = "scangate_black_open"
+	shell_to_spawn = /obj/structure/scanner_gate_shell

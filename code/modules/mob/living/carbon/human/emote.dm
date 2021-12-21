@@ -56,30 +56,10 @@
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
-	if(H.mind?.miming)
+	var/mob/living/carbon/human/human = user
+	if(human.mind?.miming)
 		return
-	if(ishumanbasic(H) || isfelinid(H))
-		if(user.gender == FEMALE)
-			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
-		else
-			if(prob(1))
-				return 'sound/voice/human/wilhelm_scream.ogg'
-			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg')
-	else if(ismoth(H))
-		return 'sound/voice/moth/scream_moth.ogg'
-	else if(islizard(H))
-		return pick('sound/voice/lizard/lizard_scream_1.ogg', 'sound/voice/lizard/lizard_scream_2.ogg', 'sound/voice/lizard/lizard_scream_3.ogg')
-	else if(isethereal(H))
-		return pick('sound/voice/ethereal/ethereal_scream_1.ogg', 'sound/voice/ethereal/ethereal_scream_2.ogg', 'sound/voice/ethereal/ethereal_scream_3.ogg')
-	else if(ismonkey(user)) //If its a monkey, override it.
-		return pick('sound/creatures/monkey/monkey_screech_1.ogg',
-					'sound/creatures/monkey/monkey_screech_2.ogg',
-					'sound/creatures/monkey/monkey_screech_3.ogg',
-					'sound/creatures/monkey/monkey_screech_4.ogg',
-					'sound/creatures/monkey/monkey_screech_5.ogg',
-					'sound/creatures/monkey/monkey_screech_6.ogg',
-					'sound/creatures/monkey/monkey_screech_7.ogg')
+	return human.dna.species.get_scream_sound(human)
 
 /datum/emote/living/carbon/human/scream/screech //If a human tries to screech it'll just scream.
 	key = "screech"
@@ -87,6 +67,11 @@
 	message = "screeches."
 	emote_type = EMOTE_AUDIBLE
 	vary = FALSE
+
+/datum/emote/living/carbon/human/scream/screech/should_play_sound(mob/user, intentional)
+	if(ismonkey(user))
+		return TRUE
+	return ..()
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"

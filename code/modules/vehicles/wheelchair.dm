@@ -5,7 +5,7 @@
 	icon_state = "wheelchair"
 	layer = OBJ_LAYER
 	max_integrity = 100
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 20, ACID = 30) //Wheelchairs aren't super tough yo
+	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 20, ACID = 30) //Wheelchairs aren't super tough yo
 	density = FALSE //Thought I couldn't fix this one easily, phew
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
@@ -15,7 +15,7 @@
 	///Determines the typepath of what the object folds into
 	var/foldabletype = /obj/item/wheelchair
 
-/obj/vehicle/ridden/wheelchair/Initialize()
+/obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
 	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)
@@ -25,7 +25,7 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
-/obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
+/obj/vehicle/ridden/wheelchair/atom_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
@@ -78,12 +78,12 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
 /obj/vehicle/ridden/wheelchair/gold
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, he's been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
-	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 0, BOMB = 20, BIO = 0, RAD = 0, FIRE = 30, ACID = 40)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 0, BOMB = 20, BIO = 0, FIRE = 30, ACID = 40)
 	custom_materials = list(/datum/material/gold = 10000)
 	foldabletype = /obj/item/wheelchair/gold
 
@@ -110,6 +110,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 10
+	custom_materials = list(/datum/material/gold = 10000)
 	unfolded_type = /obj/vehicle/ridden/wheelchair/gold
 
 /obj/vehicle/ridden/wheelchair/MouseDrop(over_object, src_location, over_location)  //Lets you collapse wheelchair

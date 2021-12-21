@@ -39,7 +39,6 @@ SUBSYSTEM_DEF(economy)
 	var/bounty_modifier = 1
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
-	var/market_crashing = FALSE
 
 	/// Total value of exported materials.
 	var/export_total = 0
@@ -51,12 +50,21 @@ SUBSYSTEM_DEF(economy)
 	var/mail_blocked = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
-	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
+	//removes cargo from the split
+	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
 		mail_blocked = TRUE
-	for(var/A in department_accounts)
-		new /datum/bank_account/department(A, budget_to_hand_out)
+	for(var/dep_id in department_accounts)
+		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
+			new /datum/bank_account/department(dep_id, 0)
+			continue
+		new /datum/bank_account/department(dep_id, budget_to_hand_out)
 	return ..()
+
+/datum/controller/subsystem/economy/Recover()
+	generated_accounts = SSeconomy.generated_accounts
+	bank_accounts_by_id = SSeconomy.bank_accounts_by_id
+	dep_cards = SSeconomy.dep_cards
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
@@ -66,12 +74,11 @@ SUBSYSTEM_DEF(economy)
 	station_target_buffer += STATION_TARGET_BUFFER
 	for(var/account in bank_accounts_by_id)
 		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
-		if(bank_account?.account_job)
+		if(bank_account?.account_job && !ispath(bank_account.account_job))
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
-		if(!istype(bank_account, /datum/bank_account/department))
-			station_total += bank_account.account_balance
+		station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
-	if(!market_crashing)
+	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		price_update()
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
 	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)

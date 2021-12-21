@@ -64,7 +64,7 @@
 /obj/singularity/academy
 	move_self = FALSE
 
-/obj/singularity/academy/Initialize()
+/obj/singularity/academy/Initialize(mapload)
 	. = ..()
 
 	var/datum/component/singularity/singularity = singularity_component.resolve()
@@ -126,7 +126,7 @@
 
 	if(!current_wizard)
 		return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, ROLE_WIZARD, 50, current_wizard, POLL_IGNORE_ACADEMY_WIZARD)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, current_wizard, POLL_IGNORE_ACADEMY_WIZARD)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -271,7 +271,7 @@
 		if(8)
 			//Fuel tank Explosion
 			T.visible_message(span_userdanger("An explosion bursts into existence around [user]!"))
-			explosion(get_turf(user), devastation_range = -1, light_impact_range = 2, flame_range = 2)
+			explosion(get_turf(user), devastation_range = -1, light_impact_range = 2, flame_range = 2, explosion_cause = src)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold()
@@ -325,7 +325,7 @@
 			A.setup_master(user)
 			servant_mind.transfer_to(H)
 
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, ROLE_WIZARD, 50, H)
+			var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, ROLE_WIZARD, 5 SECONDS, H)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
 				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")

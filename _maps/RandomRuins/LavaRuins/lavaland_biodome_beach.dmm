@@ -2,6 +2,10 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
+"ad" = (
+/obj/machinery/oven,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "af" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/plating/beach/sand,
@@ -158,7 +162,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/beach/alive/lifeguard,
+/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bJ" = (
@@ -220,15 +224,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
-"cj" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	dir = 4;
-	name = "old sink";
-	pixel_x = -12
-	},
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "ct" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
@@ -242,7 +237,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "cR" = (
@@ -317,7 +312,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "gs" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "gC" = (
@@ -376,7 +371,7 @@
 "hC" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hF" = (
@@ -490,6 +485,16 @@
 /obj/machinery/washing_machine,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
+"nI" = (
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	req_access = null
+	},
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/mayonnaise,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "og" = (
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/pod/dark,
@@ -509,16 +514,6 @@
 	dir = 4
 	},
 /turf/open/floor/pod/light,
-/area/ruin/powered/beach)
-"pB" = (
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/mayonnaise,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = null
-	},
-/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "pE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
@@ -656,21 +651,21 @@
 /obj/item/reagent_containers/food/drinks/ice,
 /obj/item/reagent_containers/food/drinks/colocup,
 /obj/item/reagent_containers/food/drinks/colocup,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Beer advertised to be the best in space.";
 	name = "Masterbrand Beer"
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Beer advertised to be the best in space.";
 	name = "Masterbrand Beer"
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	desc = "Beer advertised to be the best in space.";
 	name = "Masterbrand Beer"
 	},
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "tn" = (
@@ -695,7 +690,7 @@
 "vf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/dice,
 /obj/item/stack/spacecash/c1000,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -808,6 +803,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
+"zT" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "Ay" = (
 /obj/item/toy/beach_ball,
 /turf/open/floor/plating/beach/sand,
@@ -879,7 +878,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "Cv" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "CE" = (
@@ -976,6 +975,15 @@
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
+"FC" = (
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 8;
+	name = "old sink";
+	pixel_x = 12
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "FF" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/barman_recipes,
@@ -1008,7 +1016,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
 /obj/item/clothing/glasses/sunglasses,
@@ -1044,10 +1052,10 @@
 	},
 /area/ruin/powered/beach)
 "HW" = (
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
 /obj/item/vending_refill/cigarette,
 /obj/item/vending_refill/boozeomat,
 /obj/structure/closet/secure_closet{
@@ -1057,16 +1065,16 @@
 	},
 /obj/item/storage/backpack/duffelbag,
 /obj/item/etherealballdeployer,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
-/obj/item/reagent_containers/food/drinks/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
+/obj/item/reagent_containers/food/drinks/bottle/beer/light,
 /obj/item/reagent_containers/food/drinks/colocup,
 /obj/item/reagent_containers/food/drinks/colocup,
 /obj/item/reagent_containers/food/drinks/colocup,
@@ -1265,7 +1273,7 @@
 /area/ruin/powered/beach)
 "Rb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Rk" = (
@@ -1339,7 +1347,7 @@
 	},
 /area/ruin/powered/beach)
 "TC" = (
-/obj/effect/mob_spawn/human/beach/alive{
+/obj/effect/mob_spawn/ghost_role/human/beach{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1500,7 +1508,7 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = -32
 	},
-/obj/effect/mob_spawn/human/bartender/alive{
+/obj/effect/mob_spawn/corpse/human/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1693,7 +1701,7 @@ aj
 NJ
 Bg
 Ti
-rn
+Fa
 zv
 aC
 Zi
@@ -1954,9 +1962,9 @@ ar
 NV
 aW
 fL
-aC
-aC
-aC
+nI
+RE
+NK
 aC
 aC
 qy
@@ -1986,10 +1994,10 @@ ar
 tQ
 rU
 aC
-fP
-RE
+Ds
 ww
-NK
+zT
+aC
 aC
 hO
 ar
@@ -2018,9 +2026,9 @@ ar
 sl
 hy
 TL
-aC
-cj
-aC
+fP
+RE
+ad
 aC
 aC
 zm
@@ -2050,10 +2058,10 @@ ar
 RE
 aS
 Rk
+FC
 aC
 aC
-pB
-Ds
+aC
 yN
 RE
 ar

@@ -49,7 +49,7 @@
 	var/ignore_signals = FALSE
 
 
-/obj/machinery/scanner_gate/Initialize()
+/obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
@@ -101,7 +101,7 @@
 		else
 			to_chat(user, span_warning("You try to lock [src] with [W], but nothing happens."))
 	else
-		if(!locked && default_deconstruction_screwdriver(user, "scangate_open", "scangate", W))
+		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), W))
 			return
 		if(panel_open && is_wire_tool(W))
 			wires.interact(user)
@@ -181,11 +181,13 @@
 		beep = !beep
 	if(beep)
 		alarm_beep()
+		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_TRIGGER, M)
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_ACCEPT)
 			var/obj/item/assembly/assembly = wires.get_attached(color)
 			assembly?.activate()
 	else
+		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_NO_TRIGGER, M)
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_DENY)
 			var/obj/item/assembly/assembly = wires.get_attached(color)

@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(hardcoded_gases, list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)) //the main four gases, which were at one time hardcoded
 //Now this is what I call history
-GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium, /datum/gas/stimulum, /datum/gas/nitryl))) //unable to react amongst themselves
+GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/pluoxium))) //unable to react amongst themselves
 
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
@@ -72,6 +72,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
+	dangerous = TRUE
 	rarity = 700
 	purchaseable = TRUE
 	base_value = 0.2
@@ -120,15 +121,16 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	purchaseable = TRUE
 	base_value = 3
 
-/datum/gas/nitryl
-	id = "no2"
-	specific_heat = 20
-	name = "Nitryl"
-	gas_overlay = "nitryl"
+/datum/gas/nitrium
+	id = "nitrium"
+	specific_heat = 10
+	name = "Nitrium"
+	fusion_power = 7
+	gas_overlay = "nitrium"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
-	rarity = 100
-	base_value = 5
+	rarity = 1
+	base_value = 100
 
 /datum/gas/tritium
 	id = "tritium"
@@ -151,14 +153,6 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	purchaseable = TRUE
 	base_value = 2
 
-/datum/gas/stimulum
-	id = "stim"
-	specific_heat = 5
-	name = "Stimulum"
-	fusion_power = 7
-	rarity = 1
-	base_value = 100
-
 /datum/gas/pluoxium
 	id = "pluox"
 	specific_heat = 80
@@ -171,6 +165,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "miasma"
 	specific_heat = 20
 	name = "Miasma"
+	dangerous = TRUE
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
@@ -180,6 +175,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "freon"
 	specific_heat = 600
 	name = "Freon"
+	dangerous = TRUE
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5

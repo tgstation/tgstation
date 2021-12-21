@@ -154,37 +154,37 @@ SUBSYSTEM_DEF(id_access)
 	sub_department_managers_tgui = list(
 		"[ACCESS_CAPTAIN]" = list(
 			"regions" = list(REGION_COMMAND),
-			"head" = "Captain",
+			"head" = JOB_CAPTAIN,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_HOP]" = list(
 			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
-			"head" = "Head of Personnel",
+			"head" = JOB_HEAD_OF_PERSONNEL,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_HOS]" = list(
 			"regions" = list(REGION_SECURITY),
-			"head" = "Head of Security",
+			"head" = JOB_HEAD_OF_SECURITY,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_CMO]" = list(
 			"regions" = list(REGION_MEDBAY),
-			"head" = "Chief Medical Officer",
+			"head" = JOB_CHIEF_MEDICAL_OFFICER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_RD]" = list(
 			"regions" = list(REGION_RESEARCH),
-			"head" = "Research Director",
+			"head" = JOB_RESEARCH_DIRECTOR,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_CE]" = list(
 			"regions" = list(REGION_ENGINEERING),
-			"head" = "Chief Engineer",
+			"head" = JOB_CHIEF_ENGINEER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
@@ -253,8 +253,8 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_GENETICS]"] = "Genetics Lab"
 	desc_by_access["[ACCESS_MORGUE]"] = "Morgue"
 	desc_by_access["[ACCESS_RND]"] = "R&D Lab"
-	desc_by_access["[ACCESS_TOXINS]"] = "Toxins Lab"
-	desc_by_access["[ACCESS_TOXINS_STORAGE]"] = "Toxins Storage"
+	desc_by_access["[ACCESS_ORDNANCE]"] = "Ordnance Lab"
+	desc_by_access["[ACCESS_ORDNANCE_STORAGE]"] = "Ordnance Storage"
 	desc_by_access["[ACCESS_CHEMISTRY]"] = "Chemistry Lab"
 	desc_by_access["[ACCESS_RD]"] = "RD Office"
 	desc_by_access["[ACCESS_BAR]"] = "Bar"

@@ -56,7 +56,7 @@
 			force_proj_busy = FALSE
 			return
 		force_proj_busy = FALSE
-	
+
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
 	var/obj/structure/projected_forcefield/F = new(T, src)
@@ -102,8 +102,8 @@
 	density = TRUE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	resistance_flags = INDESTRUCTIBLE
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list(MELEE = 0, BULLET = 25, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	can_atmos_pass = ATMOS_PASS_DENSITY
+	armor = list(MELEE = 0, BULLET = 25, LASER = 50, ENERGY = 50, BOMB = 25, BIO = 100, FIRE = 100, ACID = 100)
 	var/obj/item/forcefield_projector/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/forcefield_projector/origin)
@@ -113,8 +113,9 @@
 /obj/structure/projected_forcefield/Destroy()
 	visible_message(span_warning("[src] flickers and disappears!"))
 	playsound(src,'sound/weapons/resonator_blast.ogg',25,TRUE)
-	generator.current_fields -= src
-	generator = null
+	if(generator)
+		generator.current_fields -= src
+		generator = null
 	return ..()
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -123,4 +124,5 @@
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
-	generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)
+	if(generator)
+		generator.shield_integrity = max(generator.shield_integrity - damage_amount, 0)

@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
-/obj/structure/cable/proc/on_rat_eat(mob/living/simple_animal/hostile/regalrat/king)
+/obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
 	if(avail())
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 /obj/structure/cable/proc/get_power_info()
 	if(powernet?.avail > 0)
-		return span_danger("Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]")
+		return span_danger("Total power: [display_power(powernet.avail)]\nLoad: [display_power(powernet.load)]\nExcess power: [display_power(surplus())]")
 	else
 		return span_danger("The cable is not powered.")
 
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
-	var/turf/TB  = get_step(src, direction)
+	var/turf/TB = get_step(src, direction)
 
 	for(var/obj/structure/cable/C in TB)
 		if(!C)
@@ -481,7 +481,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!user)
 		return
 
-	var/image/restraints_icon = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cuff")
+	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
 	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
 
 	var/list/radial_menu = list(
@@ -557,14 +557,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	else
 		return ..()
 
-//add cables to the stack
-/obj/item/stack/cable_coil/proc/give(extra)
-	if(amount + extra > max_amount)
-		amount = max_amount
-	else
-		amount += extra
-	update_appearance()
-
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -575,7 +567,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.intact || !T.can_have_cabling())
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
 		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 
@@ -606,7 +598,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	if(C.shock(user, 50))
 		if(prob(50)) //fail
-			new /obj/item/stack/cable_coil(get_turf(C), 1)
 			C.deconstruct()
 
 	return C
@@ -776,7 +767,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 	auto_propagate_cut_cable(src) // update the powernets
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
-	to_chat(user, span_warning("You pust reset button."))
+	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active

@@ -1,6 +1,6 @@
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
-	icon_state = "pscrubber:0"
+	icon_state = "pscrubber"
 	density = TRUE
 	max_integrity = 250
 	volume = 1000
@@ -23,7 +23,7 @@
 		/datum/gas/carbon_dioxide,
 		/datum/gas/nitrous_oxide,
 		/datum/gas/bz,
-		/datum/gas/nitryl,
+		/datum/gas/nitrium,
 		/datum/gas/tritium,
 		/datum/gas/hypernoblium,
 		/datum/gas/water_vapor,
@@ -41,7 +41,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon_state()
-	icon_state = "pscrubber:[on]"
+	icon_state = "[initial(icon_state)]:[on]"
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_overlays()
@@ -169,9 +169,13 @@
 			. = TRUE
 	update_appearance()
 
+/obj/machinery/portable_atmospherics/scrubber/unregister_holding()
+	on = FALSE
+	return ..()
+
 /obj/machinery/portable_atmospherics/scrubber/huge
 	name = "huge air scrubber"
-	icon_state = "scrubber:0"
+	icon_state = "scrubber"
 	anchored = TRUE
 	active_power_usage = 500
 	idle_power_usage = 10
@@ -190,14 +194,14 @@
 	anchored = FALSE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
-	icon_state = "scrubber:[on]"
+	icon_state = "[initial(icon_state)]:[on]"
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
 	if((!anchored && !movable) || !is_operational)
 		on = FALSE
 		update_appearance()
-	use_power = on ? ACTIVE_POWER_USE : IDLE_POWER_USE
+	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	if(!on)
 		return ..()
 
@@ -205,7 +209,7 @@
 
 	if(!holding)
 		var/turf/T = get_turf(src)
-		for(var/turf/AT in T.GetAtmosAdjacentTurfs(alldir = TRUE))
+		for(var/turf/AT in T.get_atmos_adjacent_turfs(alldir = TRUE))
 			scrub(AT.return_air())
 
 	return ..()

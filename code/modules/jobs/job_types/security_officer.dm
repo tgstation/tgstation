@@ -1,7 +1,9 @@
 /datum/job/security_officer
-	title = "Security Officer"
+	title = JOB_SECURITY_OFFICER
+	description = "Protect company assets, follow the Standard Operating \
+		Procedure, eat donuts."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Head of Security")
+	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
@@ -9,7 +11,8 @@
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	exp_requirements = 300
-	exp_type = EXP_TYPE_CREW
+	exp_required_type = EXP_TYPE_CREW
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/security
 	plasmaman_outfit = /datum/outfit/plasmaman/security
@@ -22,7 +25,9 @@
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
 	bounty_types = CIV_JOB_SEC
-	departments = DEPARTMENT_SECURITY
+	departments_list = list(
+		/datum/job_department/security,
+		)
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
 
@@ -31,10 +36,10 @@
 		/obj/item/food/donut/matcha = 10,
 		/obj/item/food/donut/blumpkin = 5,
 		/obj/item/clothing/mask/whistle = 5,
-		/obj/item/melee/baton/boomerang/loaded = 1
+		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE
+	rpg_title = "Guard"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
@@ -64,7 +69,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 /// Returns the department this mob was assigned to, if any.
 /datum/job/security_officer/proc/setup_department(mob/living/carbon/human/spawning, client/player_client)
-	var/department = player_client?.prefs?.prefered_security_department
+	var/department = player_client?.prefs?.read_preference(/datum/preference/choiced/security_department)
 	if (!isnull(department))
 		department = get_my_department(spawning, department)
 
@@ -91,7 +96,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
 			dep_trim = /datum/id_trim/job/security_officer/medical
 			destination = /area/security/checkpoint/medical
-			accessory =  /obj/item/clothing/accessory/armband/medblue
+			accessory = /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/sci
 			dep_trim = /datum/id_trim/job/security_officer/science
@@ -109,7 +114,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	// If there's a departmental sec trim to apply to the card, overwrite.
 	if(dep_trim)
-		var/obj/item/card/id/worn_id = spawning.wear_id
+		var/obj/item/card/id/worn_id = spawning.get_idcard(hand_first = FALSE)
 		SSid_access.apply_trim_to_card(worn_id, dep_trim)
 		spawning.sec_hud_set_ID()
 
@@ -159,7 +164,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	if (partners.len)
 		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
 			if (pda.owner in partners)
-				targets += "[pda.owner] ([pda.ownjob])"
+				targets += STRINGIFY_PDA_TARGET(pda.owner, pda.ownjob)
 
 	if (!targets.len)
 		return
@@ -191,34 +196,39 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	name = "Security Officer"
 	jobtype = /datum/job/security_officer
 
+	id_trim = /datum/id_trim/job/security_officer
+	uniform = /obj/item/clothing/under/rank/security/officer
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	suit_store = /obj/item/gun/energy/disabler
+	backpack_contents = list(
+		/obj/item/evidencebag = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
+		)
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security/officer
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
-	suit_store = /obj/item/gun/energy/disabler
-	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
-	box = /obj/item/storage/box/survival/security
 
+	box = /obj/item/storage/box/survival/security
+	chameleon_extras = list(
+		/obj/item/clothing/glasses/hud/security/sunglasses,
+		/obj/item/clothing/head/helmet,
+		/obj/item/gun/energy/disabler,
+		)
+		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
 
-	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
-	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
-
-	id_trim = /datum/id_trim/job/security_officer
-
-/obj/item/radio/headset/headset_sec/alt/department/Initialize()
+/obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
-	secure_radio_connections = new
+	secure_radio_connections = list()
 	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi
@@ -378,7 +388,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			indices -= chosen
 			preferences[chosen] = null
 
-	listclearnulls(preferences)
+	list_clear_nulls(preferences)
 
 	departments -= biggest_preference
 

@@ -64,6 +64,7 @@
 	so i made radios not use the radio controller.
 */
 GLOBAL_LIST_EMPTY(all_radios)
+
 /proc/add_radio(obj/item/radio, freq)
 	if(!freq || !radio)
 		return
@@ -173,6 +174,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
 					continue
 			device.receive_signal(signal)
+			CHECK_TICK
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)

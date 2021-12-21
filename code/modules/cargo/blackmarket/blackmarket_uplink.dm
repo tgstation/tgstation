@@ -14,7 +14,7 @@
 	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
 	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
 
-/obj/item/blackmarket_uplink/Initialize()
+/obj/item/blackmarket_uplink/Initialize(mapload)
 	. = ..()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
@@ -37,7 +37,7 @@
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
-	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove = FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 

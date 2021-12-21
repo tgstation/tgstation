@@ -17,12 +17,21 @@
 	button_icon_state = "cult_comms"
 
 /datum/action/innate/cult/comm/Activate()
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
 	if(!input || !IsAvailable())
 		return
-	if(CHAT_FILTER_CHECK(input))
-		to_chat(usr, span_warning("You cannot send a message that contains a word prohibited in IC chat!"))
+
+	var/list/filter_result = CAN_BYPASS_FILTER(usr) ? null : is_ic_filtered(input)
+	if(filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
+
+	var/list/soft_filter_result = CAN_BYPASS_FILTER(usr) ? null : is_soft_ic_filtered(input)
+	if(soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[html_encode(input)]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[input]\"")
 	cultist_commune(usr, input)
 
 /datum/action/innate/cult/comm/proc/cultist_commune(mob/living/user, message)
@@ -30,7 +39,7 @@
 	if(!message)
 		return
 	user.whisper("O bidai nabora se[pick("'","`")]sma!", language = /datum/language/common)
-	user.whisper(html_decode(message))
+	user.whisper(html_decode(message), filterproof = TRUE)
 	var/title = "Acolyte"
 	var/span = "cult italic"
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/cult/master))
@@ -103,7 +112,7 @@
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
 			SEND_SOUND(B.current, 'sound/magic/exit_blood.ogg')
 			asked_cultists += B.current
-	var/list/yes_voters = pollCandidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
+	var/list/yes_voters = poll_candidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 300, group = asked_cultists)
 	if(QDELETED(Nominee) || Nominee.incapacitated())
 		team.cult_vote_called = FALSE
 		for(var/datum/mind/B in team.members)
@@ -356,13 +365,14 @@
 	if(!target)
 		return
 	C.cult_team.blood_target = target
-	var/area/A = get_area(target)
+	var/atom/atom_target = target
+	var/area/A = get_area(atom_target)
 	cooldown = world.time + base_cooldown
 	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
-	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', atom_target, "glow", ABOVE_MOB_LAYER)
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
-	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
-	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
+	C.cult_team.blood_target_image.pixel_x = -atom_target.pixel_x
+	C.cult_team.blood_target_image.pixel_y = -atom_target.pixel_y
 	SEND_SOUND(owner, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 	owner.client.images += C.cult_team.blood_target_image
 	for(var/datum/mind/B as anything in get_antag_minds(/datum/antagonist/cult))
@@ -370,7 +380,7 @@
 			to_chat(B.current, span_cultlarge("<b>[owner] has marked [C.cult_team.blood_target] in the [A.name] as the cult's top priority, get there immediately!</b>"))
 			SEND_SOUND(B.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'),0,1,75))
 			B.current.client.images += C.cult_team.blood_target_image
-	to_chat(owner,span_cultbold("You have marked the [target] for the cult! It will last for [DisplayTimeText(base_cooldown)]."))
+	to_chat(owner,span_cultbold("You have marked the [atom_target] for the cult! It will last for [DisplayTimeText(base_cooldown)]."))
 	name = "Clear the Blood Mark"
 	desc = "Remove the Blood Mark you previously set."
 	button_icon_state = "emp"
