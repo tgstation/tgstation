@@ -15,7 +15,7 @@
 	var/maxwater = 100
 	///How many units of nutrients will be drained in the tray.
 	var/nutridrain = 1
-	///The maximum nutrient of water in the tray
+	///The maximum nutrient reagent container size of the tray.
 	var/maxnutri = 20
 	///The amount of pests in the tray (max 10)
 	var/pestlevel = 0
