@@ -129,7 +129,7 @@
 
 /datum/tgui_input_number/ui_static_data(mob/user)
 	. = list(
-		"initValue" = default || 0, // Default is a reserved keyword
+		"init_value" = default || 0, // Default is a reserved keyword
 		"max_value" = max_value,
 		"message" = message,
 		"min_value" = min_value || 0,

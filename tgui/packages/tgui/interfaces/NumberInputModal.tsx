@@ -9,7 +9,7 @@ type NumberInputData = {
   max_value: number | null;
   message: string;
   min_value: number | null;
-  initValue: number;
+  init_value: number;
   preferences: Preferences;
   timeout: number;
   title: string;
@@ -17,9 +17,9 @@ type NumberInputData = {
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, initValue, preferences, timeout, title } = data;
+  const { message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useLocalState(context, 'input', initValue);
+  const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
     setInput(value);
   };
@@ -61,7 +61,7 @@ export const NumberInputModal = (_, context) => {
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
   const { data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, initValue } = data;
+  const { min_value, max_value, init_value } = data;
   const { input, onClick, onChange } = props;
 
   return (
@@ -81,7 +81,7 @@ const InputArea = (props, context) => {
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || initValue || 0}
+          value={input || init_value || 0}
         />
       </Stack.Item>
       <Stack.Item>
@@ -94,7 +94,7 @@ const InputArea = (props, context) => {
       <Stack.Item>
         <Button
           icon="redo"
-          onClick={() => onClick(initValue || 0)}
+          onClick={() => onClick(init_value || 0)}
           tooltip="Reset"
         />
       </Stack.Item>

@@ -144,7 +144,7 @@
 
 /datum/tgui_list_input/ui_static_data(mob/user)
 	. = list(
-		"initValue" = default || items[1],
+		"init_value" = default || items[1],
 		"items" = items,
 		"message" = message,
 		"preferences" = list(),

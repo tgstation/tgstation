@@ -63,9 +63,9 @@ export const InputButtons = (props: InputButtonsProps, context) => {
       )}
       {!large_buttons && (
         <Stack.Item grow>
-          {inputIsValid && !inputIsValid.isValid && (
+          {inputIsValid && !inputIsValid.isValid && inputIsValid.error && (
             <Box color="average" nowrap textAlign="center">
-              {inputIsValid.error || null}
+              {inputIsValid.error}
             </Box>
           )}
         </Stack.Item>

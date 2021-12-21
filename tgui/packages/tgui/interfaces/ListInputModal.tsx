@@ -1,14 +1,21 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_ENTER, KEY_DOWN, KEY_UP, KEY_ESCAPE } from '../../common/keycodes';
+import {
+  KEY_ENTER,
+  KEY_DOWN,
+  KEY_UP,
+  KEY_ESCAPE,
+  KEY_A,
+  KEY_Z,
+} from '../../common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
 type ListInputData = {
   items: string[];
   message: string;
-  initValue: string;
+  init_value: string;
   preferences: Preferences;
   timeout: number;
   title: string;
@@ -16,12 +23,12 @@ type ListInputData = {
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, initValue, preferences, timeout, title } = data;
+  const { items = [], message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
-    items.indexOf(initValue)
+    items.indexOf(init_value)
   );
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     context,
@@ -114,7 +121,7 @@ export const ListInputModal = (_, context) => {
             event.preventDefault();
             act('submit', { entry: filteredItems[selected] });
           }
-          if (!searchBarVisible && keyCode >= 65 && keyCode <= 90) {
+          if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
             event.preventDefault();
             onLetterSearch(keyCode);
           }
@@ -156,9 +163,7 @@ export const ListInputModal = (_, context) => {
               />
             )}
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
-              <InputButtons
-                input={filteredItems[selected]}
-              />
+              <InputButtons input={filteredItems[selected]} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -191,7 +196,7 @@ const ListDisplay = (props, context) => {
             }}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
-              if (keyCode >= 65 && keyCode <= 90) {
+              if (keyCode >= KEY_A && keyCode <= KEY_Z) {
                 event.preventDefault();
                 onFocusSearch();
               }
