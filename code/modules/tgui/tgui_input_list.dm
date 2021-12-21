@@ -91,6 +91,9 @@
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 
 	for(var/i in items)
+		if(!i)
+			continue
+
 		var/string_key = whitelistedWords.Replace("[i]", "")
 
 		//avoids duplicated keys E.g: when areas have the same name
