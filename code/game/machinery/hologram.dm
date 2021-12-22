@@ -103,6 +103,8 @@ Possible to do for anyone motivated enough:
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)

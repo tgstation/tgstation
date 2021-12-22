@@ -85,6 +85,15 @@
 			markstring = "[VV_MARKED_DATUM] (CURRENT: [(istype(holder) && istype(holder.marked_datum))? holder.marked_datum.type : "NULL"])"
 			classes += markstring
 
+		var/list/tagstrings = new
+		if(!(VV_TAGGED_DATUM in restricted_classes) && holder && LAZYLEN(holder.tagged_datums))
+			var/i = 0
+			for(var/datum/iter_tagged_datum as anything in holder.tagged_datums)
+				i++
+				var/new_tagstring = "[VV_TAGGED_DATUM] #[i]: [iter_tagged_datum.type])"
+				tagstrings[new_tagstring] = iter_tagged_datum
+				classes += new_tagstring
+
 		if(restricted_classes)
 			classes -= restricted_classes
 
@@ -94,6 +103,12 @@
 		.["class"] = input(src, "What kind of data?", "Variable Type", default_class) as null|anything in classes
 		if(holder && holder.marked_datum && .["class"] == markstring)
 			.["class"] = VV_MARKED_DATUM
+
+		if(holder && tagstrings[.["class"]])
+			var/datum/chosen_datum = tagstrings[.["class"]]
+			.["value"] = chosen_datum
+			.["class"] = VV_TAGGED_DATUM
+
 
 	switch(.["class"])
 		if(VV_TEXT)
@@ -206,6 +221,11 @@
 
 		if(VV_MARKED_DATUM)
 			.["value"] = holder.marked_datum
+			if(.["value"] == null)
+				.["class"] = null
+				return
+
+		if(VV_TAGGED_DATUM)
 			if(.["value"] == null)
 				.["class"] = null
 				return

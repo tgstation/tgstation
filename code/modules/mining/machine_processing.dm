@@ -129,6 +129,8 @@
 	var/datum/material/selected_material = null
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/mineral/processing_unit/Initialize(mapload)
 	. = ..()
