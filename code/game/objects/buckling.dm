@@ -19,7 +19,9 @@
 		return
 	if(can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sort_names(buckled_mobs)
+			var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			if(!unbuckled || !ismob(unbuckled))
+				return FALSE
 			if(user_unbuckle_mob(unbuckled,user))
 				return TRUE
 		else
@@ -45,7 +47,9 @@
 		return
 	if(Adjacent(user) && can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sort_names(buckled_mobs)
+			var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			if(!unbuckled || !ismob(unbuckled))
+				return FALSE
 			return user_unbuckle_mob(unbuckled,user)
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)

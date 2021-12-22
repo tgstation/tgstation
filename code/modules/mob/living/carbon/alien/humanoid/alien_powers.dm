@@ -88,13 +88,13 @@ Doesn't work on other aliens/AI.*/
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(user))
 		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in sort_names(options)
-	if(!M)
+	var/mob/living/M = input(user, "Select whisper recipient", "Whisper", sort_names(options))
+	if(!M || !isliving(M))
 		return FALSE
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(user, span_noticealien("As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
 		return FALSE
-	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
+	var/msg = tgui_input_text(user, title="Alien Whisper")
 	if(msg)
 		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 			to_chat(user, span_notice("As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
@@ -120,20 +120,23 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
-	for(var/mob/living/carbon/A in oview(user))
-		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
-			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in sort_names(aliens_around)
-	if(!M)
+	for(var/mob/living/carbon/alien in oview(user))
+		if(isalien(alien))
+			aliens_around.Add(alien)
+	if(!aliens_around)
+		to_chat(user, span_noticealien("There are no other aliens around."))
+		return FALSE
+	var/mob/living/carbon/donation_target = tgui_input_list(user, "Target to transfer to", "Plasma Donation", sort_names(aliens_around))
+	if(!donation_target || !ismob(donation_target))
 		return
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num|null
+	var/amount = tgui_input_number(user, "Amount", "Transfer Plasma to [donation_target]", max_value = user.getPlasma())
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
-		if (get_dist(user,M) <= 1)
-			M.adjustPlasma(amount)
+		if (get_dist(user, donation_target) <= 1)
+			donation_target.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
-			to_chat(M, span_noticealien("[user] has transferred [amount] plasma to you."))
-			to_chat(user, span_noticealien("You transfer [amount] plasma to [M]."))
+			to_chat(donation_target, span_noticealien("[user] has transferred [amount] plasma to you."))
+			to_chat(user, span_noticealien("You transfer [amount] plasma to [donation_target]."))
 		else
 			to_chat(user, span_noticealien("You need to be closer!"))
 	return
@@ -164,11 +167,14 @@ Doesn't work on other aliens/AI.*/
 
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
-	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
-	if(!O || user.incapacitated())
+	var/list/nearby_targets = list()
+	for(var/atom/target as obj|turf in oview(1, user))
+		nearby_targets.Add(target)
+	var/atom/dissolve_target = tgui_input_list(user, "Select what to dissolve", "Dissolve", nearby_targets)
+	if(!dissolve_target || QDELETED(dissolve_target) || user.incapacitated())
 		return FALSE
 	else
-		return corrode(O,user)
+		return corrode(dissolve_target, user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
 	set name = "Corrosive Acid"

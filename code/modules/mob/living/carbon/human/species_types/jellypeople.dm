@@ -726,8 +726,8 @@
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(H))
 		options += Ms
-	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sort_names(options)
-	if(!M)
+	var/mob/living/M = tgui_input_list(H, "Choose a telepathic message recipient", "Telepathy", sort_names(options))
+	if(!M || !isliving(M))
 		return
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(H, span_notice("As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
