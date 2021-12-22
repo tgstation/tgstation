@@ -241,5 +241,5 @@
 		/obj/item/food/grown/cherries = 1,
 		/datum/reagent/consumable/ethanol/rum = 5
 	)
-	result = /obj/item/food/cake/fruitcake
+	result = /obj/item/food/cake/fruit
 	subcategory = CAT_CAKE
