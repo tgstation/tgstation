@@ -501,12 +501,12 @@
 	throwforce = 7
 	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
 
-/obj/item/food/cake/orange/MakeProcessable()
+/obj/item/food/cake/fruit/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/fruit, 5, 30)
 
 /obj/item/food/cakeslice/fruit
 	name = "english fruitcake slice"
-	desc = "A proper good slice, innit."
+	desc = "A proper good slice, innit?"
 	icon_state = "fruitcake_slice1"
 	base_icon_state = "fruitcake_slice"
 	tastes = list("dried fruit" = 5, "treacle" = 2, "christmas" = 2)
