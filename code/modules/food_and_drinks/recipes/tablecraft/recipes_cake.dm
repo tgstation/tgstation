@@ -238,7 +238,8 @@
 	reqs = list(
 		/obj/item/food/cake/plain = 1,
 		/obj/item/food/no_raisin = 1,
-		/obj/item/food/grown/cherries = 1
+		/obj/item/food/grown/cherries = 1,
+		/datum/reagent/consumable/ethanol/rum = 5
 	)
 	result = /obj/item/food/cake/fruitcake
 	subcategory = CAT_CAKE
