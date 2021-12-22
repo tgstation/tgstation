@@ -380,7 +380,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/machinery/exodrone_launcher/Destroy()
 	GLOB.exodrone_launchers -= src
-	fuel_canister = null
+	QDEL_NULL(fuel_canister)
 	return ..()
 
 /obj/machinery/exodrone_launcher/update_overlays()
