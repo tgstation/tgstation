@@ -104,9 +104,9 @@
 	name = "Miasma Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/miasma_tank
 
-/obj/item/circuitboard/computer/atmos_control/tank/nitryl_tank
-	name = "Nitryl Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/nitryl_tank
+/obj/item/circuitboard/computer/atmos_control/tank/nitrium_tank
+	name = "Nitrium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/tank/nitrium_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/pluoxium_tank
 	name = "Pluoxium Supply Control (Computer Board)"
@@ -115,10 +115,6 @@
 /obj/item/circuitboard/computer/atmos_control/tank/proto_nitrate_tank
 	name = "Proto-Nitrate Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/proto_nitrate_tank
-
-/obj/item/circuitboard/computer/atmos_control/tank/stimulum_tank
-	name = "Stimulum Supply Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/stimulum_tank
 
 /obj/item/circuitboard/computer/atmos_control/tank/tritium_tank
 	name = "Tritium Supply Control (Computer Board)"
@@ -236,18 +232,16 @@
 	name = "Library Visitor Console (Computer Board)"
 	build_path = /obj/machinery/computer/libraryconsole
 
-/obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/bookmanagement)
-			name = "Library Visitor Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole
-			to_chat(user, span_notice("Defaulting access protocols."))
-		else
-			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/bookmanagement
-			to_chat(user, span_notice("Access protocols successfully updated."))
+/obj/item/circuitboard/computer/libraryconsole/screwdriver_act(mob/living/user, obj/item/tool)
+	if(build_path == /obj/machinery/computer/bookmanagement)
+		name = "Library Visitor Console (Computer Board)"
+		build_path = /obj/machinery/computer/libraryconsole
+		to_chat(user, span_notice("Defaulting access protocols."))
 	else
-		return ..()
+		name = "Book Inventory Management Console (Computer Board)"
+		build_path = /obj/machinery/computer/bookmanagement
+		to_chat(user, span_notice("Access protocols successfully updated."))
+	return TRUE
 
 /obj/item/circuitboard/computer/monastery_shuttle
 	name = "Monastery Shuttle (Computer Board)"
@@ -539,3 +533,28 @@
 /obj/item/circuitboard/computer/exodrone_console
 	name = "Exploration odrone control console (Computer Board)"
 	build_path = /obj/machinery/computer/exodrone_control_console
+
+/obj/item/circuitboard/computer/service_orders
+	name = "Service Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/service
+
+/obj/item/circuitboard/computer/engineering_orders
+	name = "Engineering Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/engineering
+
+/obj/item/circuitboard/computer/science_orders
+	name = "Science Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/science
+
+/obj/item/circuitboard/computer/security_orders
+	name = "Security Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/security
+
+/obj/item/circuitboard/computer/medical_orders
+	name = "Medical Order (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/department_orders/medical

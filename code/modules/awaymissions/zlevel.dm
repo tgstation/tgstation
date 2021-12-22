@@ -1,5 +1,5 @@
 // How much "space" we give the edge of the map
-GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "[global.config.directory]/awaymissionconfig.txt"))
+GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "awaymissionconfig.txt"))
 GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory = "[global.config.directory]/away_missions/"))
 
 /proc/createRandomZlevel(config_gateway = FALSE)
@@ -14,6 +14,8 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory =
 	var/loaded = load_new_z_level(map, "Away Mission", config_gateway)
 	to_chat(world, span_boldannounce("Away mission [loaded ? "loaded" : "aborted due to errors"]."))
 	if(!loaded)
+		message_admins("Away mission [map] loading failed due to errors.")
+		log_admin("Away mission [map] loading failed due to errors.")
 		createRandomZlevel(config_gateway)
 
 /obj/effect/landmark/awaystart
@@ -41,6 +43,7 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generateConfigMapList(directory =
 
 /proc/generateMapList(filename)
 	. = list()
+	filename = "[global.config.directory]/[SANITIZE_FILENAME(filename)]"
 	var/list/Lines = world.file2list(filename)
 
 	if(!Lines.len)

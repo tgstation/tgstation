@@ -54,11 +54,11 @@
 		if(!check_rights(NONE))
 			return
 		var/list/names = list()
-		var/list/componentsubtypes = sortList(subtypesof(/datum/component), /proc/cmp_typepaths_asc)
+		var/list/componentsubtypes = sort_list(subtypesof(/datum/component), /proc/cmp_typepaths_asc)
 		names += "---Components---"
 		names += componentsubtypes
 		names += "---Elements---"
-		names += sortList(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
+		names += sort_list(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
 		var/result = tgui_input_list(usr, "Choose a component/element to add", "Add Component", names)
 		if(!usr || !result || result == "---Components---" || result == "---Elements---")
 			return
@@ -93,10 +93,10 @@
 		var/list/names = list()
 		names += "---Components---"
 		if(length(components))
-			names += sortList(components, /proc/cmp_typepaths_asc)
+			names += sort_list(components, /proc/cmp_typepaths_asc)
 		names += "---Elements---"
 		// We have to list every element here because there is no way to know what element is on this object without doing some sort of hack.
-		names += sortList(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
+		names += sort_list(subtypesof(/datum/element), /proc/cmp_typepaths_asc)
 		var/path = tgui_input_list(usr, "Choose a component/element to remove. All elements listed here may not be on the datum.", "Remove element", names)
 		if(!usr || !path || path == "---Components---" || path == "---Elements---")
 			return

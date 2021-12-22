@@ -16,7 +16,7 @@
 
 /mob/living/silicon/ai/proc/show_camera_list()
 	var/list/cameras = get_camera_list()
-	var/camera = input(src, "Choose which camera you want to view", "Cameras") as null|anything in cameras
+	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
 	switchCamera(cameras[camera])
 
 /datum/trackable
@@ -53,7 +53,7 @@
 		else
 			track.others[name] = WEAKREF(L)
 
-	var/list/targets = sortList(track.humans) + sortList(track.others)
+	var/list/targets = sort_list(track.humans) + sort_list(track.others)
 
 	return targets
 

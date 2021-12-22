@@ -80,7 +80,7 @@
 		source.name = initial(source.name)
 	else
 		var/name_to_use = filled_name || initial(source.name)
-		var/list/unique_list = uniqueList(scoops)
+		var/list/unique_list = unique_list(scoops)
 		if(scoops_len > 1 && length(unique_list) == 1) // multiple flavours, and all of the same type
 			source.name = "[make_tuple(scoops_len)] [scoops[1]] [name_to_use]" // "double vanilla" sounds cooler than just "vanilla"
 		else
@@ -94,7 +94,7 @@
 	var/scoops_len = length(scoops)
 	if(!scoops_len)
 		source.desc = initial(source.desc)
-	else if(scoops_len == 1 || length(uniqueList(scoops)) == 1) /// Only one flavour.
+	else if(scoops_len == 1 || length(unique_list(scoops)) == 1) /// Only one flavour.
 		var/key = scoops[1]
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
 		if(!flavour?.desc) //I scream.
@@ -107,7 +107,7 @@
 /datum/component/ice_cream_holder/proc/on_examine_more(atom/source, mob/mob, list/examine_list)
 	SIGNAL_HANDLER
 	var/scoops_len = length(scoops)
-	if(scoops_len == 1 || length(uniqueList(scoops)) == 1) /// Only one flavour.
+	if(scoops_len == 1 || length(unique_list(scoops)) == 1) /// Only one flavour.
 		var/key = scoops[1]
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
 		if(flavour?.desc) //I scream.

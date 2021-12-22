@@ -15,17 +15,17 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "junction"
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction/SetInitDirections()
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/set_init_directions()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = SOUTH|NORTH
 		if(EAST, WEST)
 			initialize_directions = WEST|EAST
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction/getNodeConnects()
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/get_node_connects()
 	return list(turn(dir, 180), dir)
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction/isConnectable(obj/machinery/atmospherics/target, given_layer, he_type_check)
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction/is_connectable(obj/machinery/atmospherics/target, given_layer, he_type_check)
 	if(dir == get_dir(target, src))
 		return ..(target, given_layer, FALSE) //we want a normal pipe instead
 	return ..(target, given_layer, TRUE)

@@ -13,7 +13,7 @@
 	ai_controller = /datum/ai_controller/hostile_friend
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/food/fishmeat/carp = 2)
+	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -73,6 +73,7 @@
 		set_greyscale(new_config=/datum/greyscale_config/carp)
 		carp_randomify(rarechance)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
 	if(ai_controller)
@@ -167,7 +168,7 @@
 	obj_damage = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-
+	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 3)
 	var/regen_cooldown = 0
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize(mapload)

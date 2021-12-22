@@ -46,7 +46,7 @@
 /obj/effect/path_blocker/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(blocked_types.len)
-		var/list/mover_contents = mover.GetAllContents()
+		var/list/mover_contents = mover.get_all_contents()
 		for(var/atom/movable/thing in mover_contents)
 			if(blocked_types[thing.type])
 				return reverse
@@ -98,7 +98,7 @@
 		update_openspace()
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/AM in T)
-		if(!AM.zfalling)
+		if(!AM.currently_z_moving)
 			T.zFall(AM)
 
 /obj/structure/pitgrate/proc/reset_plane()

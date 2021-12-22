@@ -305,6 +305,8 @@ SILICON_MAX_LAW_AMOUNT 12
 ##-------------------------------------------------------------------------------------------
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
 
+## See code/__DEFINES/DNA.dm for more options than the ones below.
+
 ## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
 ROUNDSTART_RACES human
 
@@ -319,15 +321,36 @@ ROUNDSTART_RACES plasmaman
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
-#ROUNDSTART_RACES golem
-#ROUNDSTART_RACES adamantine
-#ROUNDSTART_RACES plasma
-#ROUNDSTART_RACES diamond
-#ROUNDSTART_RACES gold
-#ROUNDSTART_RACES silver
-#ROUNDSTART_RACES uranium
 #ROUNDSTART_RACES abductor
 #ROUNDSTART_RACES synth
+
+## Including all the various golem subtypes that are better than humans in some ways, but worse in others
+#ROUNDSTART_RACES iron_golem
+#ROUNDSTART_RACES adamantine_golem
+#ROUNDSTART_RACES plasma_golem
+#ROUNDSTART_RACES diamond_golem
+#ROUNDSTART_RACES gold_golem
+#ROUNDSTART_RACES silver_golem
+#ROUNDSTART_RACES uranium_golem
+#ROUNDSTART_RACES plasteel_golem
+#ROUNDSTART_RACES titanium_golem
+#ROUNDSTART_RACES plastitanium_golem
+#ROUNDSTART_RACES alloy_golem
+#ROUNDSTART_RACES wood_golem
+#ROUNDSTART_RACES sand_golem
+#ROUNDSTART_RACES glass_golem
+#ROUNDSTART_RACES bluespace_golem
+#ROUNDSTART_RACES bananium_golem
+#ROUNDSTART_RACES runic_golem
+#ROUNDSTART_RACES cloth_golem
+#ROUNDSTART_RACES plastic_golem
+#ROUNDSTART_RACES bronze_golem
+#ROUNDSTART_RACES cardboard_golem
+#ROUNDSTART_RACES leather_golem
+#ROUNDSTART_RACES durathread_golem
+#ROUNDSTART_RACES bone_golem
+#ROUNDSTART_RACES snow_golem
+#ROUNDSTART_RACES metallic_hydrogen_golem
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton
@@ -447,3 +470,6 @@ MAXFINE 2000
 ## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
 ## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
 #SDQL_SPELLS
+
+## Whether native FoV is enabled for all people.
+#NATIVE_FOV

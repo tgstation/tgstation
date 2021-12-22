@@ -134,7 +134,7 @@ const AntagSelection = (props: {
                       ? `You are banned from ${antagonist.name}.`
                       : antagonist.description.map((text, index) => {
                         return (
-                          <div key={index}>
+                          <div key={antagonist.key + index}>
                             {text}
                             {
                               index !== antagonist.description.length - 1

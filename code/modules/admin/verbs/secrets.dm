@@ -5,7 +5,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
 	set category = "Admin.Game"
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/secrets_menu/tgui  = new(usr)//create the datum
+	var/datum/secrets_menu/tgui = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
 /datum/secrets_menu
@@ -120,7 +120,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
+				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=manifest;size=440x410")
 		if("dna")
@@ -170,6 +170,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
+			var/confirmed = tgui_alert(usr,"Are you sure you want to reset the station name?", "Confirm", list("Yes", "No", "Cancel"))
+			if(confirmed != "Yes")
+				return
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
@@ -222,7 +225,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					E = DC.runEvent()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease), /proc/cmp_typepaths_asc)
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), /proc/cmp_typepaths_asc)
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
 					DO.virus_type = virus
@@ -346,6 +349,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
+				stoplag()
 		if("whiteout")
 			if(!is_funmin)
 				return
@@ -353,6 +357,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
+				stoplag()
 		if("customportal")
 			if(!is_funmin)
 				return
@@ -623,14 +628,19 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	SIGNAL_HANDLER
 	if(player.stat == DEAD || !player.mind)
 		return
-	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
-		return
 	if(is_special_character(player))
 		return
-	var/datum/antagonist/traitor/traitor_datum = new()
-	traitor_datum.give_objectives = FALSE
-	var/datum/objective/new_objective = new
-	new_objective.owner = player
-	new_objective.explanation_text = objective
-	traitor_datum.objectives += new_objective
-	player.mind.add_antag_datum(traitor_datum)
+	if(ishuman(player))
+		var/datum/antagonist/traitor/traitor_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		traitor_datum.objectives += new_objective
+		player.mind.add_antag_datum(traitor_datum)
+	else if(isAI(player))
+		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		malfunction_datum.objectives += new_objective
+		player.mind.add_antag_datum(malfunction_datum)

@@ -4,7 +4,7 @@
 	//make sure we have a target
 	var/mob/living/carbon/curse_target = controller.blackboard[BB_CURSE_TARGET]
 	if(!curse_target)
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/cursed)
+		controller.queue_behavior(/datum/ai_behavior/find_and_set, BB_CURSE_TARGET, /mob/living/carbon, CURSED_VIEW_RANGE)
 		return
 	//make sure attack is valid
 	if(get_dist(curse_target, item_pawn) > CURSED_VIEW_RANGE)

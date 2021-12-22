@@ -12,7 +12,7 @@
 
 
 /area/ruin/unpowered
-	always_unpowered = FALSE
+	always_unpowered = TRUE
 
 /area/ruin/unpowered/no_grav
 	has_gravity = FALSE

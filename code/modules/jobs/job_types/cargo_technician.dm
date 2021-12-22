@@ -1,5 +1,8 @@
 /datum/job/cargo_technician
 	title = "Cargo Technician"
+	description = "Distribute supplies to the departments that ordered them, \
+		collect empty crates, load and unload the supply shuttle, \
+		ship bounty cubes."
 	department_head = list("Head of Personnel")
 	faction = FACTION_STATION
 	total_positions = 3
@@ -28,7 +31,7 @@
 		/obj/item/stack/sheet/mineral/diamond = 3,
 		/obj/item/gun/ballistic/rifle/boltaction = 1
 	)
-
+	rpg_title = "Merchantman"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
@@ -36,9 +39,11 @@
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_technician
 
+	id_trim = /datum/id_trim/job/cargo_technician
+	uniform = /obj/item/clothing/under/rank/cargo/tech
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/cargo = 1,
+		)
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/tech
 	l_hand = /obj/item/export_scanner
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo = 1)
-	id_trim = /datum/id_trim/job/cargo_technician

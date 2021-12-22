@@ -3,7 +3,8 @@
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/machines/suit_storage.dmi'
-	icon_state = "close"
+	icon_state = "classic"
+	base_icon_state = "classic"
 	use_power = ACTIVE_POWER_USE
 	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
@@ -51,10 +52,6 @@
 	/// How fast it charges cells in a suit
 	var/charge_rate = 250
 
-/obj/machinery/suit_storage_unit/Initialize(mapload)
-	. = ..()
-	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
-
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
@@ -75,7 +72,7 @@
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/atmos
-	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
+	suit_type = /obj/item/clothing/suit/space/hardsuit/atmos
 	mask_type = /obj/item/clothing/mask/gas/atmos
 	storage_type = /obj/item/watertank/atmos
 
@@ -145,6 +142,11 @@
 	state_open = TRUE
 	density = FALSE
 
+/obj/machinery/suit_storage_unit/industrial
+	name = "industrial suit storage unit"
+	icon_state = "industrial"
+	base_icon_state = "industrial"
+
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
@@ -167,35 +169,36 @@
 
 /obj/machinery/suit_storage_unit/update_overlays()
 	. = ..()
-
-	if(uv)
-		if(uv_super)
-			. += "super"
-			return
-		if(occupant)
-			. += "uvhuman"
-			return
-
-		. += "uv"
-		return
-
+	//if things arent powered, these show anyways
+	if(panel_open)
+		. += "[base_icon_state]_panel"
 	if(state_open)
-		if(machine_stat & BROKEN)
-			. += "broken"
-			return
-
-		. += "open"
+		. += "[base_icon_state]_open"
 		if(suit)
-			. += "suit"
+			. += "[base_icon_state]_suit"
 		if(helmet)
-			. += "helm"
+			. += "[base_icon_state]_helm"
 		if(storage)
-			. += "storage"
-		return
+			. += "[base_icon_state]_storage"
+		if(uv && uv_super)
+			. += "[base_icon_state]_super"
+	if(!(machine_stat & BROKEN || machine_stat & NOPOWER))
+		if(state_open)
+			. += "[base_icon_state]_lights_open"
+		else
+			if(uv)
+				. += "[base_icon_state]_lights_red"
+			else
+				. += "[base_icon_state]_lights_closed"
+		//top lights
+		if(uv)
+			if(uv_super)
+				. += "[base_icon_state]_uvstrong"
+			else
+				. += "[base_icon_state]_uv"
+		else
+			. += "[base_icon_state]_ready"
 
-	if(occupant)
-		. += "human"
-		return
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
@@ -294,10 +297,12 @@
 			if (item_to_dispense)
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
+				update_icon()
 			else
 				var/obj/item/in_hands = user.get_active_held_item()
 				if (in_hands)
 					attackby(in_hands, user)
+				update_icon()
 
 	interact(user)
 
@@ -398,24 +403,24 @@
 				visible_message(span_notice("[src]'s door slides open. The glowing yellow lights dim to a gentle green."))
 			else
 				visible_message(span_warning("[src]'s door slides open, barraging you with the nauseating smell of charred flesh."))
-				mob_occupant.radiation = 0
+				qdel(mob_occupant.GetComponent(/datum/component/irradiated))
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
 				things_to_clear += suit
-				things_to_clear += suit.GetAllContents()
+				things_to_clear += suit.get_all_contents()
 			if(helmet)
 				things_to_clear += helmet
-				things_to_clear += helmet.GetAllContents()
+				things_to_clear += helmet.get_all_contents()
 			if(mask)
 				things_to_clear += mask
-				things_to_clear += mask.GetAllContents()
+				things_to_clear += mask.get_all_contents()
 			if(storage)
 				things_to_clear += storage
-				things_to_clear += storage.GetAllContents()
+				things_to_clear += storage.get_all_contents()
 			if(mob_occupant)
 				things_to_clear += mob_occupant
-				things_to_clear += mob_occupant.GetAllContents()
+				things_to_clear += mob_occupant.get_all_contents()
 			for(var/am in things_to_clear) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				var/atom/movable/dirty_movable = am
 				dirty_movable.wash(CLEAN_ALL)
@@ -524,7 +529,7 @@
 		wires.interact(user)
 		return
 	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "panel", "close", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "close", I))
 			return
 	if(default_pry_open(I))
 		dump_inventory_contents()

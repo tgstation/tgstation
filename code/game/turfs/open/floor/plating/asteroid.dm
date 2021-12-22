@@ -20,9 +20,7 @@
 	/// Itemstack to drop when dug by a shovel
 	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
 	/// Whether the turf has been dug or not
-	var/dug
-	/// Whether to change the turf's icon_state to "[base_icon_state]_dug" when its dugged up
-	var/postdig_icon_change = TRUE
+	var/dug = FALSE
 
 /turf/open/floor/plating/asteroid/setup_broken_states()
 	return list("asteroid_dug")
@@ -38,8 +36,7 @@
 /turf/open/floor/plating/asteroid/proc/getDug()
 	dug = TRUE
 	new digResult(src, 5)
-	if(postdig_icon_change)
-		icon_state = "[base_icon_state]_dug"
+	icon_state = "[base_icon_state]_dug"
 
 /// If the user can dig the turf
 /turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
@@ -93,6 +90,9 @@
 /turf/open/floor/plating/lavaland_baseturf
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
+/// Used by ashstorms to replenish basalt tiles that have been dug up without going through all of them.
+GLOBAL_LIST_EMPTY(dug_up_basalt)
+
 /turf/open/floor/plating/asteroid/basalt
 	name = "volcanic floor"
 	baseturfs = /turf/open/floor/plating/asteroid/basalt
@@ -101,6 +101,15 @@
 	base_icon_state = "basalt"
 	floor_variance = 15
 	digResult = /obj/item/stack/ore/glass/basalt
+
+/turf/open/floor/plating/asteroid/basalt/getDug()
+	set_light(0)
+	GLOB.dug_up_basalt |= src
+	return ..()
+
+/turf/open/floor/plating/asteroid/basalt/Destroy()
+	GLOB.dug_up_basalt -= src
+	return ..()
 
 /turf/open/floor/plating/asteroid/basalt/setup_broken_states()
 	return list("basalt_dug")
@@ -114,10 +123,6 @@
 /turf/open/floor/plating/asteroid/basalt/Initialize(mapload)
 	. = ..()
 	set_basalt_light(src)
-
-/turf/open/floor/plating/asteroid/getDug()
-	set_light(0)
-	return ..()
 
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)

@@ -4,11 +4,6 @@
 #define AI_STATUS_ON 1
 #define AI_STATUS_OFF 2
 
-
-///Monkey checks
-#define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
-
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 
@@ -27,21 +22,33 @@
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
 
-///Subtree defines
+//Base Subtree defines
 
 ///This subtree should cancel any further planning, (Including from other subtrees)
 #define SUBTREE_RETURN_FINISH_PLANNING 1
 
+//Generic subtree defines
+
+/// probability that the pawn should try resisting out of restraints
+#define RESIST_SUBTREE_PROB 50
+///macro for whether it's appropriate to resist right now, used by resist subtree
+#define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
+///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+
 //Generic BB keys
 #define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
+///time until we should next eat, set by the generic hunger subtree
+#define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
+///what we're going to eat next
+#define BB_FOOD_TARGET "bb_food_target"
 
 //for songs
 
-///song datum blackboard, set by instrument subtrees
-#define BB_SONG_DATUM "BB_SONG_DATUM"
+///song instrument blackboard, set by instrument subtrees
+#define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
 ///song lines blackboard, set by default on controllers
 #define BB_SONG_LINES "song_lines"
-
 
 // Monkey AI controller blackboard keys
 
@@ -59,7 +66,6 @@
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
-#define BB_MONKEY_NEXT_HUNGRY "BB_monkey_next_hungry"
 
 ///Haunted item controller defines
 

@@ -59,6 +59,7 @@
 	lighting_effect.blend_mode = BLEND_ADD
 	lighting_effect.alpha = base_lighting_alpha
 	lighting_effect.color = base_lighting_color
+	lighting_effect.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 	for(var/turf/T in src)
 		T.add_overlay(lighting_effect)
 		T.luminosity = 1

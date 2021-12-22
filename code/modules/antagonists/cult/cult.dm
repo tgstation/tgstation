@@ -14,7 +14,6 @@
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
-	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "cult"
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
@@ -69,6 +68,13 @@
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
 
+	ADD_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
+
+/datum/antagonist/cult/on_removal()
+	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
+
+	return ..()
+
 /datum/antagonist/cult/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 
@@ -122,7 +128,6 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
@@ -137,12 +142,13 @@
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
 
+	add_team_hud(current)
+
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
@@ -198,13 +204,14 @@
 
 /datum/antagonist/cult/proc/admin_take_all(mob/admin)
 	var/mob/living/current = owner.current
-	for(var/o in current.GetAllContents())
+	for(var/o in current.get_all_contents())
 		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
 			qdel(o)
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
 	show_in_antagpanel = FALSE //Feel free to add this later
+	antag_hud_name = "cultmaster"
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
 	var/datum/action/innate/cult/master/pulse/throwing = new
@@ -214,11 +221,6 @@
 	QDEL_NULL(bloodmark)
 	QDEL_NULL(throwing)
 	return ..()
-
-/datum/antagonist/cult/master/on_gain()
-	. = ..()
-	var/mob/living/current = owner.current
-	set_antag_hud(current, "cultmaster")
 
 /datum/antagonist/cult/master/greet()
 	to_chat(owner.current, "<span class='warningplain'><span class='cultlarge'>You are the cult's Master</span>. As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
@@ -239,6 +241,7 @@
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
+	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -323,31 +326,6 @@
 	reshape.Crop(-5,-3,26,30)
 	sac_objective.sac_image = reshape
 
-/datum/objective/sacrifice/find_target(dupe_search_range)
-	if(!istype(team, /datum/team/cult))
-		return
-	var/datum/team/cult/cult = team
-	var/list/target_candidates = list()
-	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
-			target_candidates += player.mind
-	if(target_candidates.len == 0)
-		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
-		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
-				target_candidates += player.mind
-	listclearnulls(target_candidates)
-	if(LAZYLEN(target_candidates))
-		target = pick(target_candidates)
-		update_explanation_text()
-	else
-		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
-	cult.make_image(src)
-	for(var/datum/mind/mind in cult.members)
-		if(mind.current)
-			mind.current.clear_alert("bloodsense")
-			mind.current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
-
 /datum/team/cult/proc/setup_objectives()
 	var/datum/objective/sacrifice/sacrifice_objective = new
 	sacrifice_objective.team = src
@@ -361,6 +339,75 @@
 /datum/objective/sacrifice
 	var/sacced = FALSE
 	var/sac_image
+
+/// Unregister signals from the old target so it doesn't cause issues when sacrificed of when a new target is found.
+/datum/objective/sacrifice/proc/clear_sacrifice()
+	if(!target)
+		return
+	UnregisterSignal(target, COMSIG_MIND_TRANSFERRED)
+	if(target.current)
+		UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	target = null
+
+/datum/objective/sacrifice/find_target(dupe_search_range)
+	clear_sacrifice()
+	if(!istype(team, /datum/team/cult))
+		return
+	var/datum/team/cult/cult = team
+	var/list/target_candidates = list()
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
+			target_candidates += player.mind
+	if(target_candidates.len == 0)
+		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
+		for(var/mob/living/carbon/human/player in GLOB.player_list)
+			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
+				target_candidates += player.mind
+	list_clear_nulls(target_candidates)
+	if(LAZYLEN(target_candidates))
+		target = pick(target_candidates)
+		update_explanation_text()
+		// Register a bunch of signals to both the target mind and its body
+		// to stop cult from softlocking everytime the target is deleted before being actually sacrificed.
+		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_transfer)
+		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	else
+		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
+		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
+	if(!sacced)
+		cult.make_image(src)
+	for(var/datum/mind/mind in cult.members)
+		if(mind.current)
+			mind.current.clear_alert("bloodsense")
+			mind.current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
+
+/datum/objective/sacrifice/proc/on_target_body_del()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/find_target)
+
+/datum/objective/sacrifice/proc/on_mind_transfer(datum/source, mob/previous_body)
+	SIGNAL_HANDLER
+	//If, for some reason, the mind was transferred to a ghost (better safe than sorry), find a new target.
+	if(!isliving(target.current))
+		INVOKE_ASYNC(src, .proc/find_target)
+		return
+	UnregisterSignal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+
+/datum/objective/sacrifice/proc/on_possible_mindswap(mob/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
+	addtimer(CALLBACK(src, .proc/do_we_have_a_body), 0 SECONDS)
+
+/datum/objective/sacrifice/proc/do_we_have_a_body()
+	if(!target.current) //The player was ghosted and the mind isn't probably going to be transferred to another mob at this point.
+		find_target()
+		return
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 
 /datum/objective/sacrifice/check_completion()
 	return sacced || completed
