@@ -269,7 +269,7 @@
 
 //Callback used to respond to interactions with the wiring menu
 /obj/item/rcl/proc/wiringGuiReact(mob/living/user,choice)
-	if(!choice) //close on a null choice (the center button)
+	if(isnull(choice)) //close on a null choice (the center button)
 		QDEL_NULL(wiring_gui_menu)
 		return
 

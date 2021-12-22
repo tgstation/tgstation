@@ -220,7 +220,7 @@
 			return
 		var/list/instruments = categories[cat]
 		var/choice = input(usr, "Select Instrument", "Instrument Selection") as null|anything in instruments
-		if(!choice)
+		if(isnull(choice))
 			return
 		choice = instruments[choice] //get id
 		if(choice)

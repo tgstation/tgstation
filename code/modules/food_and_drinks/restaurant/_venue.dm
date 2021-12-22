@@ -170,7 +170,7 @@
 
 	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
 
-	if(!choice)
+	if(isnull(choice))
 		return
 
 	var/datum/venue/chosen_venue = radial_results[choice]

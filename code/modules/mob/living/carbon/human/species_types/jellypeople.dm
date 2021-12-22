@@ -150,7 +150,7 @@
 		swap_body = new
 		swap_body.Grant(C)
 
-		if(!bodies || length(bodies))
+		if(!bodies || !length(bodies))
 			bodies = list(C)
 		else
 			bodies |= C

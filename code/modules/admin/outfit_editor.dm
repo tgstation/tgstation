@@ -114,7 +114,7 @@
 
 
 /datum/outfit_editor/proc/set_item(slot, obj/item/choice)
-	if(!choice)
+	if(isnull(choice))
 		return
 	if(!ispath(choice))
 		tgui_alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, list("oh no"))
@@ -130,7 +130,7 @@
 /datum/outfit_editor/proc/choose_any_item(slot)
 	var/obj/item/choice = pick_closest_path(FALSE)
 
-	if(!choice)
+	if(isnull(choice))
 		return
 
 	set_item(slot, choice)

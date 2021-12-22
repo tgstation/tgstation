@@ -42,7 +42,7 @@
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/rods = used_item
 		var/choice = tgui_alert(user, "What would you like to construct?", "Bonfire", list("Stake","Grill"))
-		if(!choice)
+		if(isnull(choice))
 			return
 		rods.use(1)
 		switch(choice)

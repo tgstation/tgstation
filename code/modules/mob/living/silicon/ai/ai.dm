@@ -601,6 +601,7 @@
 
 					if(!length(personnel_list))
 						tgui_alert(usr,"No suitable records found. Aborting.")
+						return
 					input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
 					if(isnull(input))
 						return

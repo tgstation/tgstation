@@ -821,6 +821,8 @@
 			var/locked_mutation = tgui_input_list(user, "Mutation to lock", "Plant Mutation Locks", sort_list(fresh_mut_list))
 			if(isnull(locked_mutation))
 				return
+			if(isnull(fresh_mut_list[locked_mutation]))
+				return
 			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])

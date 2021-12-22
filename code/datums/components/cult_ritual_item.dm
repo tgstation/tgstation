@@ -449,7 +449,7 @@
 		to_chat(cultist, span_warning("This veil is not weak enough here - it can only be scribed in [english_list(summon_objective.summon_spots)]!"))
 		return FALSE
 
-	if(fail_if_last_site && !length(summon_objective.summon_spots))
+	if(fail_if_last_site && length(summon_objective.summon_spots) <= 1)
 		to_chat(cultist, span_warning("This rune cannot be scribed here - the ritual site must be reserved for the final summoning!"))
 		return FALSE
 

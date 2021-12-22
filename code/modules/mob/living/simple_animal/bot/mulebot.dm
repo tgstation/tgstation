@@ -525,7 +525,7 @@
 				at_target()
 				return
 
-			else if(length(path) > 0 && target) // valid path
+			else if(length(path) && target) // valid path
 				var/turf/next = path[1]
 				reached_target = FALSE
 				if(next == loc)
@@ -574,14 +574,14 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
 	calc_path(avoid=next)
-	if(length(path) > 0)
+	if(length(path))
 		buzz(DELIGHT)
 	mode = BOT_BLOCKED
 
 /mob/living/simple_animal/bot/mulebot/proc/process_nav()
 	calc_path()
 
-	if(length(path) > 0)
+	if(length(path))
 		blockcount = 0
 		mode = BOT_BLOCKED
 		buzz(DELIGHT)

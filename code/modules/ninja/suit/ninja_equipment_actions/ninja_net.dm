@@ -21,7 +21,7 @@
 	var/mob/living/net_target = tgui_input_list(ninja, "Select who to capture", "Capture Target", sort_names(nearby_targets))
 	if(isnull(net_target))
 		return
-	if(QDELETED(net_target) || !(net_target in oview(ninja)) || !isliving(net_target))
+	if(QDELETED(net_target) || !(net_target in oview(ninja)) || !isliving(net_target) || ninja.incapacitated())
 		return
 	if(locate(/obj/structure/energy_net) in get_turf(net_target))//Check if they are already being affected by an energy net.
 		to_chat(ninja, span_warning("[net_target.p_they(TRUE)] are already trapped inside an energy net!"))
