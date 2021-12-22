@@ -1,4 +1,0 @@
-author: "Seris02"
-delete-after: True
-changes: 
-  - bugfix: "fixed bots getting stuck on railings and crashing anyone with a diagnostic hud who dares come near"

@@ -4,7 +4,7 @@ GLOBAL_DATUM(colored_assistant, /datum/colored_assistant)
 Assistant
 */
 /datum/job/assistant
-	title = "Assistant"
+	title = JOB_ASSISTANT
 	description = "Get your space legs, assist people, ask the HoP to give you a job."
 	faction = FACTION_STATION
 	total_positions = 5
@@ -75,6 +75,7 @@ Assistant
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
+		H.update_inv_w_uniform()
 
 /proc/get_configured_colored_assistant_type()
 	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/random

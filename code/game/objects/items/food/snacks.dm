@@ -46,8 +46,8 @@
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
-		var/datum/disease/P = new /datum/disease/parasite()
-		carl.ForceContractDisease(P, make_copy=FALSE, del_on_fail=TRUE)
+		var/datum/disease/disease = new /datum/disease/parasite()
+		carl.ForceContractDisease(disease, make_copy = FALSE, del_on_fail = TRUE)
 
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()

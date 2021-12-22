@@ -33,8 +33,6 @@
 	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
-	//Needs special input, let's be nice
-	ignore += typesof(/obj/effect/abstract/proximity_checker)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
 	//We can't pass a mind into this

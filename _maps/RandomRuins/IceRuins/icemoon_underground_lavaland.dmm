@@ -32,7 +32,7 @@
 /turf/open/floor/mineral/gold,
 /area/icemoon/underground)
 "A" = (
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

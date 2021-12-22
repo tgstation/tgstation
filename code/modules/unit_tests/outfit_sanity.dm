@@ -2,7 +2,7 @@
 	H.equip_to_slot_or_del(new outfit.##outfit_key(H), ##slot_name, TRUE); \
 	/* We don't check the result of equip_to_slot_or_del because it returns false for random jumpsuits, as they delete themselves on init */ \
 	if (!H.get_item_by_slot(##slot_name)) { \
-		Fail("[outfit.name]'s [#outfit_key] is invalid!"); \
+		Fail("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
 }
 
